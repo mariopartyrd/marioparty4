@@ -245,7 +245,7 @@ void ModuleProlog(void)
     WipeCreate(1, 0, 60);
 }
 
-void ExitProc(void)
+static void ExitProc(void)
 {
     while (TRUE) {
         if (omSysExitReq == 1) {
@@ -276,7 +276,7 @@ void ExitProc(void)
     }
 }
 
-void CreateStaff(void)
+static void CreateStaff(void)
 {
     void *var_r29;
     AnimData *var_r28;
@@ -327,7 +327,7 @@ void CreateStaff(void)
     HuPrcChildCreate(ExitProc, 0x1000, 0x1000, 0, HuPrcCurrentGet());
 }
 
-void MoveStaff(void)
+static void MoveStaff(void)
 {
     float sp8[2];
     Process *temp_ret;
@@ -424,7 +424,7 @@ void MoveStaff(void)
     }
 }
 
-void HidePicture(void)
+static void HidePicture(void)
 {
     s32 prevImg;
 
@@ -444,7 +444,7 @@ void HidePicture(void)
     }
 }
 
-void ShowPicture(void)
+static void ShowPicture(void)
 {
     float var_f31;
     s32 var_r31;
@@ -482,7 +482,7 @@ void ShowPicture(void)
     }
 }
 
-void MainProc(void)
+static void MainProc(void)
 {
     s32 var_r31;
     UnkStaffDllStruct *var_r30;
