@@ -1355,7 +1355,7 @@ config.libs = [
     Rel('staffDll',
         objects = {
             Object(Matching, "REL/executor.c"),
-            Object(NonMatching, "REL/staffDll/main.c"),
+            Object(Matching, "REL/staffDll/main.c"),
         }
     ),
     Rel('subchrselDll',
