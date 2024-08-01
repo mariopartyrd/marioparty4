@@ -161,7 +161,8 @@ void fn_1_EC(void)
 		OVL_W04,
 		OVL_W05,
 		OVL_W06,
-		OVL_W10
+		OVL_W10,
+		OVL_W07
 	};
 	WipeColorSet(255, 255, 255);
 	WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, -1);

@@ -11,3 +11,6 @@ orig/*/*
 /*.txt
 ctx.c
 tools/output/*
+rels_to_mod.py
+orig/root
+*.iso

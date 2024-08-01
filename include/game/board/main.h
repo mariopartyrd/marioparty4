@@ -15,6 +15,7 @@
 #define BOARD_ID_TUTORIAL 6 //TUTORIAL_BOARD
 #define BOARD_ID_EXTRA1 7 //MEGA_BOARD_MAYHEM
 #define BOARD_ID_EXTRA2 8 //MINI_BOARD_MAD_DASH
+#define BOARD_ID_CUSTOM 9 //Custom Test Board
 
 #define BOARD_FABS(value) ((value < 0) ? -(value) : (value))
 

@@ -34,8 +34,8 @@ typedef struct system_state {
 /* 0x06 */ u8 star_flag;
 /* 0x07 */ u8 star_total;
 /* 0x08 */ struct {
-    u8 star_pos : 3;
-    u8 board : 5;
+    u16 star_pos : 3;
+    u16 board : 10; //double board count
 };
 /* 0x09 */ s8 last5_effect;
 /* 0x0A */ s8 player_curr;

@@ -1542,6 +1542,18 @@ config.libs = [
         },
     ),
     Rel(
+        "w07Dll",  # Custom Board
+        objects={
+            Object(Matching, "REL/board_executor.c"),
+            # Object(Matching, "REL/w07Dll/main.c"),
+            # Object(Matching, "REL/w06Dll/mg_item.c"),
+            # Object(Matching, "REL/w06Dll/mg_coin.c"),
+            # Object(Matching, "REL/w06Dll/fire.c"),
+            # Object(Matching, "REL/w06Dll/bridge.c"),
+            # Object(Matching, "REL/w06Dll/bowser.c"),
+        },
+    ),
+    Rel(
         "w10Dll",  # Tutorial board
         objects={
             Object(Matching, "REL/board_executor.c"),
