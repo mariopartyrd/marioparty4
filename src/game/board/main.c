@@ -157,7 +157,7 @@ void BoardObjectSetup(BoardFunc create, BoardFunc destroy)
 		case OVL_W21:
 			GWSystem.board = BOARD_ID_EXTRA2;
 			break;
-		//TODO: this shifts something and causes the game to not work...figure out why
+			
 		case OVL_W07:
 			GWSystem.board = BOARD_ID_CUSTOM;
 			break;
