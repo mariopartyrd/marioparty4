@@ -682,6 +682,7 @@ static void CreateBoard(void)
 
 static void DestroyBoard(void)
 {
+	//mod: extend for custom board
 	s32 dir_table[] = {
 		DATADIR_W01,
 		DATADIR_W02,
@@ -691,7 +692,8 @@ static void DestroyBoard(void)
 		DATADIR_W06,
 		DATADIR_W10,
 		DATADIR_W20,
-		DATADIR_W21
+		DATADIR_W21,
+		DATADIR_W07
 	};
 	BoardTauntKill();
 	BoardAudSeqFadeOutAll();

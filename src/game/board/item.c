@@ -208,7 +208,7 @@ static s32 callAttackMotTbl[] = {
     DATA_MAKE_NUM(DATADIR_W05, 7),
     DATA_MAKE_NUM(DATADIR_W06, 19),
 
-    //dummy data for extra boards
+    //dummy data for tutorial and extra board
     DATA_MAKE_NUM(DATADIR_W06, 19),
     DATA_MAKE_NUM(DATADIR_W06, 19),
     DATA_MAKE_NUM(DATADIR_W06, 19),

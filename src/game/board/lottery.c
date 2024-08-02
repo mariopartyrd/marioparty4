@@ -260,7 +260,7 @@ static void CreateModel(void) {
         DATA_MAKE_NUM(DATADIR_BKUJIYA, 3),
         DATA_MAKE_NUM(DATADIR_BKUJIYA, 4)
     };
-    //Mod TODO: fix custom data for board
+    //mod: extend for custom board
     s32 sp20[10][4] = {
         {
             DATA_MAKE_NUM(DATADIR_BGUEST, 1),

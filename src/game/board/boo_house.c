@@ -21,7 +21,7 @@
 static s16 houseMdl[6];
 
 // data
-//mod: add entry for custom board
+//mod: extend for custom board
 static s32 hostMesTbl[10][9] = {
 /* [BOARD_ID_MAIN1] */ { 0x7000C, 0x7000D, 0x7000E, 0x7000F, 0x70010, 0x70011 },
 /* [BOARD_ID_MAIN2] */ { 0x70012, 0x70013, 0x70014, 0x70015, 0x70016, 0x70017 },
@@ -30,7 +30,7 @@ static s32 hostMesTbl[10][9] = {
 /* [BOARD_ID_MAIN5] */ { 0x70024, 0x70025, 0x70026, 0x70027, 0x70028, 0x70029 },
 /* [BOARD_ID_MAIN6] */ { 0x7002A, 0x7002B, 0x7002C, 0x7002D, 0x7002E, 0x7002F },
 
-    //dummy data
+    //dummy data for tutorial and extra board
 /* [BOARD_ID_TUTORIAL] */ { 0x7002A, 0x7002B, 0x7002C, 0x7002D, 0x7002E, 0x7002F },
 /* [BOARD_ID_EXTRA2] */ { 0x7002A, 0x7002B, 0x7002C, 0x7002D, 0x7002E, 0x7002F },
 
@@ -38,7 +38,7 @@ static s32 hostMesTbl[10][9] = {
 /* [BOARD_ID_CUSTOM] */ { 0x7002A, 0x7002B, 0x7002C, 0x7002D, 0x7002E, 0x7002F },
 };
 
-//mod: add entry for custom board
+//mod: extend for custom board
 static BoardModelParam houseMdlTbl[10] = {
 /* [BOARD_ID_MAIN1] */ { 0x90000, { 0, 1, 0, 0, 0 }, 0xFFFF },
 /* [BOARD_ID_MAIN2] */ { 0x90001, { 1, 1, 0, 0, 0 }, 0xFFFF },
@@ -47,7 +47,7 @@ static BoardModelParam houseMdlTbl[10] = {
 /* [BOARD_ID_MAIN5] */ { 0x90004, { 1, 1, 0, 0, 0 }, 0xFFFF },
 /* [BOARD_ID_MAIN6] */ { 0x90007, { 0, 1, 0, 0, 0 }, 0xFFFF },
 
-    //dummy data
+    //dummy data for tutorial and extra board
 /* [BOARD_ID_TUTORIAL] */ { 0x90007, { 0, 1, 0, 0, 0 }, 0xFFFF },
 /* [BOARD_ID_EXTRA1] */ { 0x90007, { 0, 1, 0, 0, 0 }, 0xFFFF },
 /* [BOARD_ID_EXTRA2] */ { 0x90007, { 0, 1, 0, 0, 0 }, 0xFFFF },

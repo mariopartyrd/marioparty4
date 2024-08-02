@@ -114,6 +114,7 @@ static s8 defaultItemTbl[5] = {
     0x05, 0x07, 0x02, 0x03, 0x00
 };
 
+//mod: extend for custom board
 static s32 hostMessTbl[] = {
     0x000F0004,
     0x000F0007,
@@ -123,6 +124,8 @@ static s32 hostMessTbl[] = {
     0x000F0013,
     0x000F0004,
     0x000F0024,
+    0x000F0024,
+    //Mod TODO: fix for custom board data
     0x000F0024
 };
 
@@ -133,7 +136,8 @@ static s8 itemPriceTbl[] = {
     30, 30,  0,  0
 };
 
-static s32 shopMotTbl[9][3] = {
+//mod: extend for custom data
+static s32 shopMotTbl[10][3] = {
     { 0x00020001, 0x00020003, 0x00020004 },
     { 0x00020009, 0x0002000B, 0x0002000C },
     { 0x0002000E, 0x00020010, 0x00020011 },
@@ -142,6 +146,9 @@ static s32 shopMotTbl[9][3] = {
     { 0x00020022, 0x00020024, 0x00020025 },
     { 0x00020009, 0x0002000B, 0x0002000C },
     { 0x0002002A, 0x0002002C, 0x0002002D },
+    { 0x0002002A, 0x0002002C, 0x0002002D },
+
+    //Mod TODO: fix for custom data
     { 0x0002002A, 0x0002002C, 0x0002002D }
 };
 

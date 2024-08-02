@@ -89,6 +89,7 @@ static s32 hitFX[4] = {
     -1, -1, -1, -1
 };
 
+//mod: extend for custom data
 static s32 startMesTbl[10][5] = {
     { 0x00150001, 0x00150007, 0x0015000D, 0x00150016, 0x0015001C },
     { 0x00150002, 0x00150008, 0x0015000E, 0x00150017, 0x0015001D },

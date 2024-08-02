@@ -150,6 +150,7 @@ static void ExecBattle(void) {
     s32 var_r23;
     MgInfo *var_r29;
     s32 var_r27 = 0;
+    //mod: extend for custom board
     s32 sp8[] = {
         DATADIR_W01,
         DATADIR_W02,
