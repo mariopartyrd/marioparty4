@@ -14,3 +14,4 @@ tools/output/*
 rels_to_mod.py
 orig/root
 *.iso
+mod_root/
