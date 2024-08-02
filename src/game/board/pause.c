@@ -113,6 +113,7 @@ static float padConfigPosTbl[4][2] = {
     { 458.0f, 160.0f }
 };
 
+//mod: extend for custom board
 static s32 boardLogoTbl[] = {
     DATA_MAKE_NUM(DATADIR_BOARD, 87),
     DATA_MAKE_NUM(DATADIR_BOARD, 88),
@@ -122,6 +123,8 @@ static s32 boardLogoTbl[] = {
     DATA_MAKE_NUM(DATADIR_BOARD, 92),
     DATA_MAKE_NUM(DATADIR_BOARD, 87),
     DATA_MAKE_NUM(DATADIR_BOARD, 93),
+    DATA_MAKE_NUM(DATADIR_BOARD, 94),
+    //added for custom board
     DATA_MAKE_NUM(DATADIR_BOARD, 94)
 };
 
@@ -288,7 +291,7 @@ void CreatePauseScreen(void) {
     HuSprZRotSet(pauseSprGrp, 2, -30.0f);
     HuSprPosSet(pauseSprGrp, 2, 87.0f, 245.0f);
     HuSprAttrSet(pauseSprGrp, 2, 8);
-    if (GWBoardGet() == 7 || GWBoardGet() == 8) {
+    if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
         HuSprAttrSet(pauseSprGrp, 2, 4);
     }
     if (GWPartyGet() == 1) {
@@ -332,7 +335,7 @@ void CreatePauseScreen(void) {
     hostOldLayer = BoardModelLayerGet(hostMdl);
     BoardModelLayerSet(hostMdl, 6);
     sp24.x = 68.0f;
-    if (GWBoardGet() == 3) {
+    if (GWBoardGet() == BOARD_ID_MAIN4) {
         sp24.y = 464.0f;
     } else {
         sp24.y = 434.0f;
@@ -466,7 +469,7 @@ static void DeletePauseScreen(void) {
     BoardModelVisibilitySet(hostMdl, 1);
     BoardModelMtxSet(hostMdl, &sp8);
     BoardStarHostSet(hostMdl);
-    if (GWBoardGet() == 7 || GWBoardGet() == 8) {
+    if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
         BoardModelVisibilitySet(hostMdl, 0);
     }
 }
@@ -1278,7 +1281,7 @@ static void CreatePauseControlWin(void) {
     HuWinMesSpeedSet(settingsControlWin, 0);
     HuWinMesSet(settingsControlWin, var_r31);
     HuWinDispOff(settingsControlWin);
-    if (GWBoardGet() == 7 || GWBoardGet() == 8) {
+    if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
         var_r31 = MAKE_MESSID(16, 73);
     } else {
         var_r31 = MAKE_MESSID(16, 52);
@@ -1325,7 +1328,7 @@ static s32 WaitPauseInput(void) {
     u32 temp_r30;
 
     mainScreenF = 1;
-    if (GWBoardGet() == 7 || GWBoardGet() == 8) {
+    if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
         var_r28 = 1;
     } else {
         var_r28 = 0;

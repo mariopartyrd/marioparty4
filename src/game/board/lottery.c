@@ -247,6 +247,7 @@ void BoardLotteryInit(void) {
     }
 }
 
+//mod: extend for custom board
 static void CreateModel(void) {
     s32 i;
     s32 sp10[4] = {
@@ -259,7 +260,8 @@ static void CreateModel(void) {
         DATA_MAKE_NUM(DATADIR_BKUJIYA, 3),
         DATA_MAKE_NUM(DATADIR_BKUJIYA, 4)
     };
-    s32 sp20[9][4] = {
+    //Mod TODO: fix custom data for board
+    s32 sp20[10][4] = {
         {
             DATA_MAKE_NUM(DATADIR_BGUEST, 1),
             DATA_MAKE_NUM(DATADIR_BGUEST, 2),
@@ -308,6 +310,13 @@ static void CreateModel(void) {
             DATA_MAKE_NUM(DATADIR_BGUEST, 44),
             DATA_MAKE_NUM(DATADIR_BGUEST, 45)
         },
+        {
+            DATA_MAKE_NUM(DATADIR_BGUEST, 42),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 43),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 44),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 45)
+        },
+        //Mod TODO: added for custom board
         {
             DATA_MAKE_NUM(DATADIR_BGUEST, 42),
             DATA_MAKE_NUM(DATADIR_BGUEST, 43),

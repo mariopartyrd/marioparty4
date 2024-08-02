@@ -58,40 +58,94 @@ static float overhead2DPos[][2] = {
     { 288.0f,  72.0f }
 };
 
+//mod: extend for custom board
 static float mapViewMinZ[] = {
-    -2000.0f, -1500.0f, -2200.0f,
-    -1800.0f, -2100.0f, -3000.0f,
-    -3000.0f, -1800.0f, -1800.0f
+    -2000.0f,
+    -1500.0f,
+    -2200.0f,
+    -1800.0f,
+    -2100.0f,
+    -3000.0f,
+    -3000.0f,
+    -1800.0f,
+    -1800.0f,
+    //Mod TODO: fix data for custom board
+    -1800.0f
 };
 
+//mod: extend for custom board
 static float mapViewMaxZ[] = {
-    2300.0f, 2500.0f, 2600.0f,
-    2000.0f, 2300.0f, 2500.0f,
-    2500.0f, 2000.0f, 2000.0f
+    2300.0f,
+    2500.0f,
+    2600.0f,
+    2000.0f,
+    2300.0f,
+    2500.0f,
+    2500.0f,
+    2000.0f,
+    2000.0f,
+    //Mod TODO: fix for custom board data
+    2000.0f
 };
 
+//mod: extend for custom board
 static float mapViewMinX[] = {
-    -3000.0f, -3000.0f, -3000.0f,
-    -3000.0f, -3000.0f, -3000.0f,
-    -3000.0f, -2000.0f, -2000.0f
+    -3000.0f,
+    -3000.0f,
+    -3000.0f,
+    -3000.0f,
+    -3000.0f,
+    -3000.0f,
+    -3000.0f,
+    -2000.0f,
+    -2000.0f,
+    //Mod TODO: fix for custom board data
+    -2000.0f
 };
 
+//mod: extend for custom board
 static float mapViewMaxX[] = {
-    3000.0f, 3000.0f, 3000.0f,
-    3000.0f, 3000.0f, 3000.0f,
-    3000.0f, 1600.0f, 2000.0f
+    3000.0f,
+    3000.0f,
+    3000.0f,
+    3000.0f,
+    3000.0f,
+    3000.0f,
+    3000.0f,
+    1600.0f,
+    2000.0f,
+    //Mod TODO: fix for custom board data
+    2000.0f,
 };
 
+//mod: extend for custom board
 static float overheadCamZoom[] = {
-    14370.0f, 14500.0f, 15000.0f,
-    15000.0f, 13000.0f, 15000.0f,
-      100.0f, 10000.0f, 10000.0f
+    14370.0f,
+    14500.0f,
+    15000.0f,
+    15000.0f,
+    13000.0f,
+    15000.0f,
+    100.0f,
+    10000.0f,
+    10000.0f,
+    //Mod TODO: fix for custom board data
+    10000.0f
 };
 
+//mod: extend for custom board
 static float overheadCamPosZ[] = {
-    0.0f,    0.0f, 0.0f,
-    0.0f,    0.0f, 0.0f,
-    0.0f, -160.0f, 0.0f
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    0.0f,
+    -160.0f,
+    0.0f,
+    //Mod TODO: fix for custom board data
+    0.0f
 };
 
 void BoardViewOverheadExec(s32 arg0) {

@@ -736,9 +736,9 @@ s32 BoardComJunctionInputGet(s32 item, Vec *input, s32 num_dirs, float *dirs) {
         choose_path = 0;
     }
     if (choose_path != 0) {
-        if (board >= 0 && board <= 5) {
+        if (board >= BOARD_ID_MAIN1 && board <= BOARD_ID_MAIN6) {
             space_next = BoardComPathBestGet(space);
-        } else if (board == 7) {
+        } else if (board == BOARD_ID_EXTRA1) {
             space_next = BoardComPathBestGetFlag(space, 0x10000000, 10);
         }
         if (space_next == -1) {

@@ -159,7 +159,8 @@ static void ExecBattle(void) {
         DATADIR_W06,
         DATADIR_W10,
         DATADIR_W20,
-        DATADIR_W21
+        DATADIR_W21,
+        DATADIR_W07
     };
 
     var_r29 = mgInfoTbl;

@@ -76,9 +76,19 @@ static Vec statusLayout2Vs2[4] = {
     { 406.0f, 260.0f, 0.0f },
     { 406.0f, 348.0f, 0.0f },
 };
-static s32 luckyMessTbl[9] = {
-    0x00140000, 0x00140005, 0x0014000A, 0x0014000F,
-    0x00140014, 0x00140019, 0x00140000, 0x00140000,
+
+//mod: extend for custom board
+static s32 luckyMessTbl[10] = {
+    0x00140000,
+    0x00140005,
+    0x0014000A,
+    0x0014000F,
+    0x00140014,
+    0x00140019,
+    0x00140000,
+    0x00140000,
+    0x00140000,
+    //added for custom board
     0x00140000
 };
 
@@ -144,10 +154,18 @@ static inline s32 setupObjGet(void) {
 }
 
 static void ExecMGSetup(void) {
-    s32 sp60[9] = {
-        0x750000, 0x760000, 0x770000,
-        0x780000, 0x790000, 0x7A0000,
-        0x7B0000, 0x7C0000, 0x7D0000
+    s32 sp60[10] = {
+        0x750000,
+        0x760000,
+        0x770000,
+        0x780000,
+        0x790000,
+        0x7A0000,
+        0x7B0000,
+        0x7C0000,
+        0x7D0000,
+        //added for custom board
+        0x7D0000
     };
     Vec sp54;
     u16 var_r24;

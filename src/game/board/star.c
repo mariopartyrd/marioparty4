@@ -72,7 +72,8 @@ static Process *starProc;
 static s16 starParman = -1;
 static s16 hostMdl = -1;
 
-const s32 lbl_8011E040[9] = {
+//mod: extend for custom board
+const s32 lbl_8011E040[10] = {
     MAKE_MESSID(12, 0),
     MAKE_MESSID(12, 9),
     MAKE_MESSID(12, 18),
@@ -81,10 +82,13 @@ const s32 lbl_8011E040[9] = {
     MAKE_MESSID(12, 45),
     MAKE_MESSID(12, 0),
     MAKE_MESSID(12, 0),
+    MAKE_MESSID(12, 0),
+    //Mod TODO: fix for custom board data
     MAKE_MESSID(12, 0)
 };
 
-const s32 lbl_8011E064[9][2] = {
+//mod: extend for custom board
+const s32 lbl_8011E064[10][2] = {
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
     { MAKE_MESSID(21, 35), MAKE_MESSID(21, 41) },
     { MAKE_MESSID(21, 36), MAKE_MESSID(21, 42) },
@@ -93,6 +97,9 @@ const s32 lbl_8011E064[9][2] = {
     { MAKE_MESSID(21, 39), MAKE_MESSID(21, 45) },
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
+    { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
+
+    //Mod TODO: fix for custom board data
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) }
 };
 
@@ -107,12 +114,21 @@ s32 boardStarSndTbl[] = {
     0x000002E0
 };
 
-static s32 hostMotTbl[9][2] = {
+//mod: extend for custom board
+static s32 hostMotTbl[10][2] = {
     { DATA_MAKE_NUM(DATADIR_W01, 33), DATA_MAKE_NUM(DATADIR_BOARD, 157) },
     { DATA_MAKE_NUM(DATADIR_W02, 7), DATA_MAKE_NUM(DATADIR_BOARD, 158) },
     { DATA_MAKE_NUM(DATADIR_W03, 31), DATA_MAKE_NUM(DATADIR_BOARD, 159) },
     { DATA_MAKE_NUM(DATADIR_W04, 11), DATA_MAKE_NUM(DATADIR_BOARD, 160) },
     { DATA_MAKE_NUM(DATADIR_W05, 9), DATA_MAKE_NUM(DATADIR_BOARD, 161) },
+    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) },
+
+    //dummy data
+    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) },
+    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) },
+    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) },
+
+    //Mod TODO: fix for custom board data
     { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) }
 };
 

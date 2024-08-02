@@ -8,10 +8,18 @@ static s16 boardSeq[2][2];
 
 static s32 boardFX = -1;
 
+//mod: add new music id for extra board
 static s16 boardMusTbl[] = {
-    0x000D, 0x0011, 0x0015,
-    0x001C, 0x0021, 0x0025,
-    0x0028, 0x0029, 0x002A
+/* [BOARD_ID_MAIN1] */ 0x000D,
+/* [BOARD_ID_MAIN2] */ 0x0011,
+/* [BOARD_ID_MAIN3] */ 0x0015,
+/* [BOARD_ID_MAIN4] */ 0x001C,
+/* [BOARD_ID_MAIN5] */ 0x0021,
+/* [BOARD_ID_MAIN6] */ 0x0025,
+/* [BOARD_ID_TUTORIAL] */ 0x0028,
+/* [BOARD_ID_EXTRA1] */ 0x0029,
+/* [BOARD_ID_EXTRA2] */ 0x002A,
+/* [BOARD_ID_CUSTOM] */ 0x002A,
 };
 
 void BoardMusStartBoard(void) {

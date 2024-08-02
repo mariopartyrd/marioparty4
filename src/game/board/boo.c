@@ -182,6 +182,7 @@ static s32 booSfxTbl[4][8] = {
     }
 };
 
+//mod: extend for custom board
 static s32 hostMess[] = {
     MAKE_MESSID(7, 14),
     MAKE_MESSID(7, 20),

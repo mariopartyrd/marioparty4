@@ -169,7 +169,12 @@ static s32 itemMdlTbl[] = {
 };
 
 static s32 forceMoveSfxTbl[] = {
-    0x38, 0x45, 0x42, 0x4D, 0x48, 0x3F
+    0x38,
+    0x45,
+    0x42,
+    0x4D,
+    0x48,
+    0x3F
 };
 
 static s32 callMotTbl[] = {
@@ -194,22 +199,39 @@ static char *callHookTbl[] = {
     "c007m01-itemhook-r"
 };
 
+//mod: add data for custom board
 static s32 callAttackMotTbl[] = {
     DATA_MAKE_NUM(DATADIR_W01, 31),
     DATA_MAKE_NUM(DATADIR_W02, 5),
     DATA_MAKE_NUM(DATADIR_W03, 29),
     DATA_MAKE_NUM(DATADIR_W04, 9),
     DATA_MAKE_NUM(DATADIR_W05, 7),
+    DATA_MAKE_NUM(DATADIR_W06, 19),
+
+    //dummy data for extra boards
+    DATA_MAKE_NUM(DATADIR_W06, 19),
+    DATA_MAKE_NUM(DATADIR_W06, 19),
+    DATA_MAKE_NUM(DATADIR_W06, 19),
+
+    //Mod TODO: update this to w07
     DATA_MAKE_NUM(DATADIR_W06, 19)
 };
 
+//mod: add data for custom board
 static s32 callAttackMotTbl2[] = {
     DATA_MAKE_NUM(DATADIR_W01, 32),
     DATA_MAKE_NUM(DATADIR_W02, 6),
     DATA_MAKE_NUM(DATADIR_W03, 30),
     DATA_MAKE_NUM(DATADIR_W04, 10),
     DATA_MAKE_NUM(DATADIR_W05, 8),
-    DATA_MAKE_NUM(DATADIR_W06, 20)
+    DATA_MAKE_NUM(DATADIR_W06, 20),
+
+    DATA_MAKE_NUM(DATADIR_W06, 20),
+    DATA_MAKE_NUM(DATADIR_W06, 20),
+    DATA_MAKE_NUM(DATADIR_W06, 20),
+
+    //Mod TODO: update this to w07
+    DATA_MAKE_NUM(DATADIR_W06, 20),
 };
 
 static s32 suitMotTbl[][2] = {
