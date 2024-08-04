@@ -667,7 +667,7 @@ void fn_1_E214(omObjData *object)
                 Hu3DModelScaleSet(object->model[5], var_f30, var_f30, var_f30);
                 var_r31->unk_50 += PSVECMag(&var_r31->unk_2C) / 3.125f;
                 PSMTXTrans(sp94, -var_r31->unk_68, -var_r31->unk_6C, -var_r31->unk_70);
-                PSMTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
+                MTXRotDeg(sp64, 0x78, var_r31->unk_50);
                 PSMTXConcat(sp64, sp94, sp34);
                 PSMTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
                 PSMTXConcat(sp94, sp34, var_r26->unk_F0);
@@ -691,7 +691,7 @@ void fn_1_E214(omObjData *object)
                 }
                 var_r31->unk_50 = fn_1_13AF4(var_r31->unk_50, 0.0f, 0.5f);
                 PSMTXTrans(sp94, -var_r31->unk_68, -var_r31->unk_6C, -var_r31->unk_70);
-                PSMTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
+                MTXRotDeg(sp64, 0x78, var_r31->unk_50);
                 PSMTXConcat(sp64, sp94, sp34);
                 PSMTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
                 PSMTXConcat(sp94, sp34, var_r26->unk_F0);
@@ -1346,7 +1346,7 @@ void fn_1_114A0(omObjData *object)
     mtxRot(sp9C, object->rot.x, object->rot.y, object->trans.z);
     mtxScaleCat(sp9C, object->scale.x, object->scale.y, object->scale.z);
     PSMTXTrans(sp9C, object->trans.x, object->trans.y, object->trans.z);
-    PSMTXRotRad(sp6C, 0x78, 0.017453292f * var_r31->unk_50);
+    MTXRotDeg(sp6C, 0x78, var_r31->unk_50);
     PSMTXConcat(sp9C, sp6C, sp9C);
     PSMTXCopy(sp9C, spC);
     mtxScaleCat(spC, 2.0f, 2.0f, 2.0f);

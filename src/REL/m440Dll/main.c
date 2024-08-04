@@ -2386,7 +2386,7 @@ void fn_1_9C04(ModelData* arg0, Mtx arg1) {
                 PSVECAdd(&sp5C, &var_r29->unk54, var_r31++);
             } else {
                 fn_1_A328(&temp_r30->unk2C, &sp38, &var_r29->unk48, 4);
-                PSMTXRotRad(spC8, 0x5A, 0.017453292f * var_r29->unk44);
+                MTXRotDeg(spC8, 0x5A, var_r29->unk44);
                 PSMTXConcat(sp128, spC8, sp98);
                 PSMTXMultVecArray(sp98, &sp38, &sp8, 4);
                 PSVECAdd(&sp8, &var_r29->unk54, var_r31++);

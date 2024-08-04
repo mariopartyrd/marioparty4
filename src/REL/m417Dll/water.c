@@ -561,7 +561,7 @@ void fn_1_4E64(omObjData *object)
                     }
                 }
                 PSMTXTrans(spC8, var_r31->unk_04.x, var_r31->unk_04.y, var_r31->unk_04.z);
-                PSMTXRotRad(sp98, 89, 0.017453292f * var_r31->unk_10);
+                MTXRotDeg(sp98, 89, var_r31->unk_10);
                 PSMTXConcat(spC8, sp98, sp68);
                 var_f31 = var_r31->unk_18 * var_r31->unk_1C;
                 PSMTXScale(spC8, var_f31, var_f31, var_f31 * var_r31->unk_28);
@@ -778,7 +778,7 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
     PSMTXConcat(sp68, sp98, sp68);
     GXLoadTexMtxImm(sp68, 36, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD2, GX_TG_MTX3x4, GX_TG_POS, 36, GX_FALSE, 125);
-    PSMTXRotRad(sp68, 90, 0.017453292f * lbl_1_bss_178.unk_6B8);
+    MTXRotDeg(sp68, 90, lbl_1_bss_178.unk_6B8);
     GXLoadTexMtxImm(sp68, 39, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD3, GX_TG_MTX2x4, GX_TG_TEXCOORD0, 39, GX_FALSE, 125);
     PSMTXScale(sp98, 1.2f, -1.2f, 1.2f);

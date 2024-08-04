@@ -482,16 +482,16 @@ void fn_1_310C(float arg8, float arg9, float argA, float *arg0, float *arg1, flo
     Mtx sp8;
 
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 88, 0.017453292f * arg8);
+        MTXRotDeg(sp38, 88, arg8);
     } else {
         PSMTXIdentity(sp38);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 89, 0.017453292f * arg9);
+        MTXRotDeg(sp8, 89, arg9);
         PSMTXConcat(sp38, sp8, sp38);
     }
     if (argA != 0.0f) {
-        PSMTXRotRad(sp8, 90, 0.017453292f * argA);
+        MTXRotDeg(sp8, 90, argA);
         PSMTXConcat(sp38, sp8, sp38);
     }
     fn_1_30D8(NULL, arg0, arg1, arg2);

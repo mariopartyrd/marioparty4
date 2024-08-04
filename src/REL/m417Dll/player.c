@@ -270,7 +270,7 @@ void fn_1_7C8C(omObjData *object)
     var_r31->unk_70 = 0.02f;
     if (var_r31->unk_0C) {
         Vec sp18 = { 0.0f, 1.0f, 0.0f };
-        PSMTXRotAxisRad(var_r31->unk_1C4, &sp18, 0.017453292f * var_r31->unk_64);
+        MTXRotAxisDeg(var_r31->unk_1C4, &sp18, var_r31->unk_64);
     } else {
         Vec spC = { 0.0f, 1.0f, 0.0f };
         PSMTXIdentity(var_r31->unk_1C4);
@@ -622,7 +622,7 @@ void fn_1_9298(omObjData *object)
         } else if (var_r31->unk_B4.x < 0.0f) {
             var_r31->unk_B4.x += 360.0f;
         }
-        PSMTXRotAxisRad(var_r31->unk_1C4, &sp8, 0.017453292f * var_r31->unk_B4.x);
+        MTXRotAxisDeg(var_r31->unk_1C4, &sp8, var_r31->unk_B4.x);
     }
     object->rot.y = var_r31->unk_68 = var_r31->unk_B4.x - 180.0f;
     object->trans.x = var_r31->unk_D4.x = var_r31->unk_F8.x = var_r31->unk_C8.x = var_r31->unk_B4.z * sind(var_r31->unk_B4.x);

@@ -1077,7 +1077,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
                 lbl_1_data_294[var_r31->unk_02].a = 255.0f * var_r31->unk_0C;
                 GXSetTevColor(GX_TEVREG0, lbl_1_data_294[var_r31->unk_02]);
                 PSMTXTrans(spF4, var_r31->unk_10.x, var_r31->unk_10.y, var_r31->unk_10.z);
-                PSMTXRotRad(sp124, 90, 0.017453292f * var_r31->unk_08);
+                MTXRotDeg(sp124, 90, var_r31->unk_08);
                 PSMTXConcat(spF4, sp124, spF4);
                 PSMTXScale(spC4, var_r31->unk_04, var_r31->unk_04, var_r31->unk_04);
                 PSMTXConcat(spF4, spC4, spF4);
@@ -1086,7 +1086,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
                 PSMTXConcat(sp34, sp64, sp124);
                 PSMTXConcat(sp94, sp124, spF4);
                 GXLoadTexMtxImm(spF4, 30, GX_MTX3x4);
-                PSMTXRotRad(sp124, 90, 0.017453292f * -var_r31->unk_08);
+                MTXRotDeg(sp124, 90, -var_r31->unk_08);
                 GXLoadTexMtxImm(sp124, 33, GX_MTX2x4);
                 GXCallDisplayList(var_r30->unk_120.unk_E5C, var_r30->unk_120.unk_E58);
             }
