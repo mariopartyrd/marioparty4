@@ -1331,14 +1331,14 @@ config.libs = [
         "mgmodedll",
         objects={
             Object(Matching, "REL/executor.c"),
-            Object(NonMatching, "REL/mgmodedll/mgmode.c"),
-            Object(NonMatching, "REL/mgmodedll/free_play.c"),
+            Object(Matching, "REL/mgmodedll/mgmode.c"),
+            Object(Matching, "REL/mgmodedll/free_play.c"),
             Object(NonMatching, "REL/mgmodedll/record.c"),
             Object(NonMatching, "REL/mgmodedll/battle.c"),
             Object(NonMatching, "REL/mgmodedll/tictactoe.c"),
             Object(NonMatching, "REL/mgmodedll/main.c"),
-            Object(NonMatching, "REL/mgmodedll/datalist.c"),
-            Object(NonMatching, "REL/mgmodedll/minigame.c"),
+            Object(Matching, "REL/mgmodedll/datalist.c"),
+            Object(Matching, "REL/mgmodedll/minigame.c"),
         },
     ),
     Rel(

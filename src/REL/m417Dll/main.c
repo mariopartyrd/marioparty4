@@ -232,7 +232,7 @@ void fn_1_13DC(omObjData *object)
 
 void fn_1_17C0(omObjData *object)
 {
-    s16 sp8;
+    s16 sp8; // ! - uninitialized
 
     UnkM417Struct *var_r30;
 

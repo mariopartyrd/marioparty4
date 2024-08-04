@@ -511,10 +511,9 @@ static inline void unkInline(unkStruct4* var_r31, s16 var_r29, s16* var_r28, s16
 }
 
 void fn_1_2484(omObjData* object) {
-    s16 var_r28;
+    s16 var_r28; // ! - uninitialized
     s16 var_r29;
     unkStruct4* var_r31;
-    s32 temp_r27;
 
     var_r31 = &lbl_1_bss_40[0];
     object->stat |= 0x100;

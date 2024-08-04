@@ -143,7 +143,7 @@ void ClusterMotionExec(ModelData *arg0) {
     s16 var_r20;
     HsfCluster *temp_r26;
     HsfData *temp_r28;
-    HsfMotion *temp_r27;
+    HsfMotion *temp_r27; // ! - uninitialized
     HsfTrack *var_r31;
     HsfTrack *var_r30;
     MotionData *var_r23;

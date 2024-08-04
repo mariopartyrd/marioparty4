@@ -964,8 +964,7 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8) {
     Vec sp5C;
     Vec sp50;
     Vec sp44;
-    f32 sp40;
-    f32 sp3C;
+    f32 sp3C[2];
     s32 sp38;
     s16 sp20;
     s16 spE;
@@ -998,10 +997,10 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8) {
             temp_r29->field00_bit5 = 0;
             temp_r29->unk_01 = 0;
             var_r28->scale.x = var_r28->scale.y = var_r28->scale.z = 3.0f;
-            HuWinMesMaxSizeGet(1, &sp3C, 0x90003);
+            HuWinMesMaxSizeGet(1, sp3C, 0x90003);
             var_f27 = -10000.0f;
             var_f28 = 304.0f;
-            temp_r29->unk_04 = HuWinCreate(var_f27, var_f28, sp3C, sp40, 0);
+            temp_r29->unk_04 = HuWinCreate(var_f27, var_f28, sp3C[0], sp3C[1], 0);
             HuWinBGTPLvlSet(temp_r29->unk_04, 0.0f);
             HuWinMesSpeedSet(temp_r29->unk_04, 0);
             HuWinMesSet(temp_r29->unk_04, 0x90003);
@@ -2847,6 +2846,7 @@ void BoardPlayerCopyEyeMat(s32 arg0, s32 arg1) {
     var_r29 = playerMatCopy[arg0];
     if (arg1 != 0) {
         temp_r28 = &eyeMatTbl[GWPlayer[arg0].character][0];
+        (void)temp_r28;
         for (var_r25 = 0; var_r25 < hsfData->materialCnt; var_r25++, material++, var_r29++) {
             var_r24 = 1;
             
@@ -2870,7 +2870,6 @@ void BoardPlayerCopyEyeMat(s32 arg0, s32 arg1) {
         }
     } else {
         memcpy(hsfData->material, var_r29, hsfData->materialCnt * 0x3C);
-        (void)temp_r28;
     }
     DCStoreRange(hsfData->material, hsfData->materialCnt * 0x3C);
 }

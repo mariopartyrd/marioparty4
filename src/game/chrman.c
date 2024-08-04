@@ -1824,7 +1824,7 @@ s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 s32 CharModelEffectNpcInitSilent(s16 arg0, s16 arg1, s16 arg2) {
-    s32 sp10;
+    s32 sp10; // ! - uninitialized
 
     CharModelEffectNpcInit(arg0, arg1, arg2, -1);
     return sp10;

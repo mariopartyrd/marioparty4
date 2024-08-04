@@ -1443,9 +1443,9 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     Mtx spA0;
     ROMtx sp70;
     Mtx sp40;
-    Vec sp34;
-    Vec sp28;
-    Vec sp1C;
+    Vec sp34; // ! - uninitialized
+    Vec sp28; // ! - uninitialized
+    Vec sp1C; // ! - uninitialized
     Vec sp10;
 
     float var_f31;

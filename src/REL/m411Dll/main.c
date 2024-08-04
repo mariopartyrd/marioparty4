@@ -1573,7 +1573,7 @@ void fn_1_5554(void) {
     float var_f26;
     float var_f31;
     float var_f30;
-    float var_f29;
+    float var_f29; // ! - uninitialized
     float sp8;
     float temp_f24;
     UnkBss138InnerStruct00 spC;

@@ -43,7 +43,7 @@ REL/mgmodedll/main.c:
 	.text       start:0x00018DF8 end:0x000267E8
 	.rodata     start:0x000005B0 end:0x00000718
 	.data       start:0x000001E0 end:0x00000490
-	.bss        start:0x000003C0 end:0x00002C9A
+	.bss        start:0x000003C0 end:0x000020A8
 
 REL/mgmodedll/datalist.c:
 	.text       start:0x000267E8 end:0x00026C28
@@ -54,3 +54,4 @@ REL/mgmodedll/minigame.c:
 	.text       start:0x00026C28 end:0x00027CF0
 	.rodata     start:0x00000728 end:0x00000790
 	.data       start:0x000009C0 end:0x00000A02
+	.bss        start:0x000020A8 end:0x00002C9A

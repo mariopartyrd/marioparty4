@@ -1720,7 +1720,8 @@ void fn_1_6AE8(ModelData *model, ParticleData *particle, Mtx matrix)
 	HsfanimStruct01 *temp_r31;
 	s32 temp_r29;
 	s16 temp_r28;
-	s32 temp_r27;
+	s32 temp_r27; // ! - uninitialized
+	
 	if(!particle->unk_00) {
 		particle->unk_00 = 1;
 		temp_r31 = particle->unk_48;

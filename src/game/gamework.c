@@ -275,7 +275,7 @@ s32 GWMGCustomGet(s32 id)
     }
 }
 
-s32 GWMGCustomSet(s32 id)
+void GWMGCustomSet(s32 id)
 {
     s32 word;
     s32 bit;
@@ -285,7 +285,7 @@ s32 GWMGCustomSet(s32 id)
     GWGameStat.mg_custom[word] |= (1 << bit);
 }
 
-s32 GWMGCustomReset(s32 id)
+void GWMGCustomReset(s32 id)
 {
     s32 word;
     s32 bit;

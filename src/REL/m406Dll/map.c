@@ -1160,10 +1160,6 @@ void fn_1_4964(ModelData *arg0)
     GXColor *var_r19;
 
     var_r30 = arg0->unk_120;
-    (void)var_f31;
-    (void)var_f31;
-    (void)var_f31;
-    (void)var_f31;
 
     if (var_r30->unk_28) {
         if (!omPauseChk()) {
@@ -1225,6 +1221,10 @@ void fn_1_4964(ModelData *arg0)
             if (var_r28->unk_01) {
                 var_r25->z = var_r28->unk_10.z - (50.0f * (0.003921569f * (var_r28->unk_08 * var_f31)));
             }
+            (void)var_f31;
+            (void)var_f31;
+            (void)var_f31;
+            (void)var_f31;
         }
         var_r25++;
         var_r21++;
@@ -1444,7 +1444,7 @@ void fn_1_6304(ModelData *arg0, Mtx arg1)
 
 void fn_1_64F8(UnkM406Struct2 *arg0)
 {
-    float var_f31;
+    float var_f31; // ! - uninitialized
 
     UnkM406Struct2 *var_r31;
     s32 var_r30;

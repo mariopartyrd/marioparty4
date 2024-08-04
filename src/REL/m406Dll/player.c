@@ -2018,7 +2018,7 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
     Vec sp1C;
     Vec sp10;
     HsfBuffer *spC;
-    float sp8;
+    float sp8; // ! - uninitialized
 
     float var_f31;
     float var_f30;
