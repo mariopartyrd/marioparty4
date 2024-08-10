@@ -17,14 +17,14 @@ s16 lbl_1_data_6 = 0xFFFF;
 s16 lbl_1_data_8 = 0xFFFF;
 s16 lbl_1_data_A = 0xFFFF;
 s32 lbl_1_data_C[] = {
-	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00),
-	DATA_MAKE_NUM(DATADIR_LUIGIMOT, 0x00),
-	DATA_MAKE_NUM(DATADIR_PEACHMOT, 0x00),
-	DATA_MAKE_NUM(DATADIR_YOSHIMOT, 0x00),
-	DATA_MAKE_NUM(DATADIR_WARIOMOT, 0x00),
-	DATA_MAKE_NUM(DATADIR_DONKEYMOT, 0x00),
-	DATA_MAKE_NUM(DATADIR_DAISYMOT, 0x00),
-	DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 0x00),
+	0x005F0000,
+	0x001A0000,
+	0x006D0000,
+	0x008A0000,
+	0x00850000,
+	0x00110000,
+	0x000D0000,
+	0x00810000,
 };
 
 s32 unkMotTbl[] = { DATA_MAKE_NUM(DATADIR_BGUEST, 42), -1 };
@@ -50,12 +50,12 @@ void BoardCreate(void)
     lbl_1_bss_0->unk_04 = 0;
     lbl_1_bss_0->unk_06 = 0;
     BoardSpaceInit(DATA_MAKE_NUM(DATADIR_W20, 0));
-    lbl_1_data_0 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W20, 0x01), NULL, 0);
+    lbl_1_data_0 = BoardModelCreate(0x7C0001, NULL, 0);
     fn_8006DDE8(lbl_1_data_0, -1.0f);
     BoardModelPosSet(lbl_1_data_0, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_0, 0, 0x40000001);
     BoardModelMotionSpeedSet(lbl_1_data_0, 1.0f);
-    lbl_1_data_2 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W20, 0x02), NULL, 0);
+    lbl_1_data_2 = BoardModelCreate(0x7C0002, NULL, 0);
     fn_8006DDE8(lbl_1_data_2, -1.0f);
     BoardModelPosSet(lbl_1_data_2, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_2, 0, 0x40000001);

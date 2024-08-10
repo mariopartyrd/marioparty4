@@ -1,9 +1,8 @@
+#include "src/REL/m407dll/m407dll.h"
 #include "game/process.h"
 #include "game/object.h"
 #include "game/hsfmotion.h"
 #include "game/hsfdraw.h"
-
-#include "REL/m407dll.h"
 
 typedef struct unkDominationData4 {
 /* 0x00 */ u32 unk_00;
@@ -29,11 +28,11 @@ omObjData* lbl_1_bss_37E0[100];
 
 //data
 s32 lbl_1_data_288[] = {
-    DATA_MAKE_NUM(DATADIR_M407, 0x15),
-    DATA_MAKE_NUM(DATADIR_M407, 0x16),
-    DATA_MAKE_NUM(DATADIR_M407, 0x17),
-    DATA_MAKE_NUM(DATADIR_M407, 0x18),
-    DATA_MAKE_NUM(DATADIR_M407, 0x19)
+    0x00260015,
+    0x00260016,
+    0x00260017,
+    0x00260018,
+    0x00260019
 };
 
 ObjFuncs lbl_1_data_29C[] = {
@@ -144,7 +143,7 @@ void fn_1_46EC(omObjData* arg0) {
     temp_r30->unk_00 = arg0->work[0];
     temp_r30->unk_08 = arg0->work[1];
     temp_r30->unk_1C = 0;
-    arg0->model[0] = Hu3DModelCreateFile(lbl_1_data_288[temp_r30->unk_08]);
+    arg0->model[0] = Hu3DModelCreate(HuDataSelHeapReadNum(lbl_1_data_288[temp_r30->unk_08], MEMORY_DEFAULT_NUM, HEAP_DATA));
     Hu3DModelAttrSet(arg0->model[0], 0x4000);
     Hu3DModelAttrSet(arg0->model[0], 0x40000002);
     Hu3DModelAttrSet(arg0->model[0], 1);

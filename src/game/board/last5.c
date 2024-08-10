@@ -113,12 +113,12 @@ static s32 hostMotTbl[][8] = {
 };
 
 static s32 messBaseTbl[] = {
-	MAKE_MESSID(14, 0),
-	MAKE_MESSID(14, 24),
-	MAKE_MESSID(14, 48),
-	MAKE_MESSID(14, 72),
-	MAKE_MESSID(14, 96),
-	MAKE_MESSID(14, 120),
+	0xE0000,
+	0xE0018,
+	0xE0030,
+	0xE0048,
+	0xE0060,
+	0xE0078,
 	0,
 	0,
 	0,
@@ -566,7 +566,7 @@ static void Last5Main(void)
 			HuPrcVSleep();
 		}
 		BoardStatusItemSet(0);
-		temp_r24 = MAKE_MESSID(14, 144) + GWBoardGet();
+		temp_r24 = 0xE0090+GWBoardGet();
 		BoardWinCreate(2, temp_r24, BoardWinPortraitGetStar());
 		BoardWinWait();
 		for(temp_r31=0; temp_r31<2; temp_r31++) {
@@ -1578,7 +1578,7 @@ static s32 CheckHostMove(void)
 
 static void CreateStopWin(void)
 {
-	s32 mess = MAKE_MESSID(0x12, 0x11);
+	s32 mess = 0x120011;
 	float size[2];
 	float pos_x, pos_y;
 	HuWinMesMaxSizeGet(1, size, mess);

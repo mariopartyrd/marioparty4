@@ -8,179 +8,169 @@
 
 #include "REL/present.h"
 
-typedef struct FaderWork {
-    /* 0x00 */ s16 id;
-    /* 0x04 */ float tplvl;
-    /* 0x08 */ float speed;
-} FaderWork; /* size 0x0C */ // same as in option/scene.c
-
-typedef struct FaderWork2 {
-    /* 0x00 */ s16 id;
-    /* 0x04 */ float tpMultiplier;
-    /* 0x08 */ float tplvl;
-    /* 0x0C */ float speed;
-} FaderWork2; /* size = 0x10 */
-
-omObjData *presentState;
+omObjData *lbl_1_bss_18;
 omObjData *lbl_1_bss_14;
-omObjData *present;
+omObjData *lbl_1_bss_10;
 omObjData *lbl_1_bss_C;
-omObjData *presentCamera;
-Process *presentObjMan;
-static omObjData *scene;
+omObjData *lbl_1_bss_8;
+Process *lbl_1_bss_4;
+omObjData *lbl_1_bss_0;
 
-static void FadeSprite(void);
-static void FadeModel(void);
-static void SceneMain(omObjData *object);
+void fn_1_254(void);
+void fn_1_45C(void);
+void fn_1_5EC(omObjData *object);
 
 void ObjectSetup(void)
 {
-    presentObjMan = omInitObjMan(150, 8192);
-    omGameSysInit(presentObjMan);
+    lbl_1_bss_4 = omInitObjMan(150, 8192);
+    omGameSysInit(lbl_1_bss_4);
     HuWinInit(1);
-    scene = omAddObjEx(presentObjMan, 1000, 0, 0, 0, SceneMain);
-    scene->unk10 = 0;
-    presentState = PresentStateCreate();
+    lbl_1_bss_0 = omAddObjEx(lbl_1_bss_4, 1000, 0, 0, 0, fn_1_5EC);
+    lbl_1_bss_0->unk10 = 0;
+    lbl_1_bss_18 = fn_1_39A8();
 }
 
-void PresentFadeSprite(s16 sprite, BOOL inF, s32 duration)
+void fn_1_144(s16 arg0, s32 arg1, s32 arg2)
 {
-    Process *process;
+    Process *var_r30;
+    UnkPresentStruct6 *var_r31;
 
-    FaderWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
-    work->id = sprite;
-    work->speed = 1.0f / duration;
-    if (inF) {
-        work->speed = work->speed;
-        work->tplvl = 0.0f;
+    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkPresentStruct6), MEMORY_DEFAULT_NUM);
+    var_r31->unk_00 = arg0;
+    var_r31->unk_08 = 1.0f / arg2;
+    if (arg1) {
+        var_r31->unk_08 = var_r31->unk_08;
+        var_r31->unk_04 = 0.0f;
+    } else {
+        var_r31->unk_08 = -var_r31->unk_08;
+        var_r31->unk_04 = 1.0f;
     }
-    else {
-        work->speed = -work->speed;
-        work->tplvl = 1.0f;
-    }
-    espDispOn(work->id);
-    espTPLvlSet(work->id, work->tplvl);
-    process = HuPrcChildCreate(FadeSprite, 100, 5376, 0, HuPrcCurrentGet());
-    process->user_data = work;
+    espDispOn(var_r31->unk_00);
+    espTPLvlSet(var_r31->unk_00, var_r31->unk_04);
+    var_r30 = HuPrcChildCreate(fn_1_254, 100, 5376, 0, HuPrcCurrentGet());
+    var_r30->user_data = var_r31;
 }
 
-static void FadeSprite(void)
+void fn_1_254(void)
 {
-    FaderWork *work = HuPrcCurrentGet()->user_data;
+    UnkPresentStruct6 *var_r31;
 
+    var_r31 = HuPrcCurrentGet()->user_data;
     while (TRUE) {
-        work->tplvl = work->tplvl + work->speed;
-        if (work->tplvl > 1.0f) {
-            work->tplvl = 1.0f;
+        var_r31->unk_04 = var_r31->unk_04 + var_r31->unk_08;
+        if (var_r31->unk_04 > 1.0f) {
+            var_r31->unk_04 = 1.0f;
             break;
-        }
-        else if (work->tplvl < 0.0f) {
-            work->tplvl = 0.0f;
+        } else if (var_r31->unk_04 < 0.0f) {
+            var_r31->unk_04 = 0.0f;
             break;
-        }
-        else {
-            espTPLvlSet(work->id, work->tplvl);
+        } else {
+            espTPLvlSet(var_r31->unk_00, var_r31->unk_04);
             HuPrcVSleep();
         }
     }
-    espTPLvlSet(work->id, work->tplvl);
-    if (work->speed < 0.0f) {
-        espDispOff(work->id);
-    }
-    HuMemDirectFree(work);
-    HuPrcEnd();
-}
-
-void FadeSpriteWithMultiplier(s16 model, BOOL inF, float tpMultiplier, s32 duration)
-{
-    Process *process;
-    //  bug: wrong struct in sizeof
-    FaderWork2 *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
-    work->id = model;
-    work->speed = 1.0f / duration;
-    work->tpMultiplier = tpMultiplier;
-
-    if (inF) {
-        work->speed = work->speed;
-        work->tplvl = 0.0f;
-    }
-    else {
-        work->speed = -work->speed;
-        work->tplvl = 1.0f;
-    }
-    Hu3DModelTPLvlSet(work->id, work->tplvl * work->tpMultiplier);
-    Hu3DModelAttrReset(work->id, 1);
-    process = HuPrcChildCreate(FadeModel, 100, 5376, 0, HuPrcCurrentGet());
-    process->user_data = work;
-}
-
-static void FadeModel(void)
-{
-    FaderWork2 *var_r31 = HuPrcCurrentGet()->user_data;
-
-    while (TRUE) {
-        var_r31->tplvl += var_r31->speed;
-        if (var_r31->tplvl > 1.0f) {
-            var_r31->tplvl = 1.0f;
-            break;
-        }
-        else if (var_r31->tplvl < 0.0f) {
-            var_r31->tplvl = 0.0f;
-            break;
-        }
-        else {
-            Hu3DModelTPLvlSet(var_r31->id, var_r31->tplvl * var_r31->tpMultiplier);
-            HuPrcVSleep();
-        }
-    }
-    Hu3DModelTPLvlSet(var_r31->id, var_r31->tplvl * var_r31->tpMultiplier);
-    if (var_r31->speed < 0.0f) {
-        Hu3DModelAttrSet(var_r31->id, 1);
+    espTPLvlSet(var_r31->unk_00, var_r31->unk_04);
+    if (var_r31->unk_08 < 0.0f) {
+        espDispOff(var_r31->unk_00);
     }
     HuMemDirectFree(var_r31);
     HuPrcEnd();
 }
 
-BOOL PresentPadCheck(u16 btn)
+void fn_1_334(s16 arg0, s32 arg1, float arg8, s32 arg2)
 {
-    u32 var_r31 = HuPadBtnDown[0] & btn;
+    Process *var_r30;
+    UnkPresentStruct6Weird *var_r31; // TODO correct type? why are only 12 bytes allocated?
+    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 12, MEMORY_DEFAULT_NUM);
+    var_r31->unk_00 = arg0;
+    var_r31->unk_0C = 1.0f / arg2;
+    var_r31->unk_04 = arg8;
+
+    if (arg1) {
+        var_r31->unk_0C = var_r31->unk_0C;
+        var_r31->unk_08 = 0.0f;
+    } else {
+        var_r31->unk_0C = -var_r31->unk_0C;
+        var_r31->unk_08 = 1.0f;
+    }
+    Hu3DModelTPLvlSet(var_r31->unk_00, var_r31->unk_08 * var_r31->unk_04);
+    Hu3DModelAttrReset(var_r31->unk_00, 1);
+    var_r30 = HuPrcChildCreate(fn_1_45C, 100, 5376, 0, HuPrcCurrentGet());
+    var_r30->user_data = var_r31;
+}
+
+void fn_1_45C(void)
+{
+    UnkPresentStruct6Weird *var_r31; // TODO correct type? how is 0C possible?
+
+    var_r31 = HuPrcCurrentGet()->user_data;
+    while (TRUE) {
+        var_r31->unk_08 = var_r31->unk_08 + var_r31->unk_0C;
+        if (var_r31->unk_08 > 1.0f) {
+            var_r31->unk_08 = 1.0f;
+            break;
+        } else if (var_r31->unk_08 < 0.0f) {
+            var_r31->unk_08 = 0.0f;
+            break;
+        } else {
+            Hu3DModelTPLvlSet(var_r31->unk_00, var_r31->unk_08 * var_r31->unk_04);
+            HuPrcVSleep();
+        }
+    }
+    Hu3DModelTPLvlSet(var_r31->unk_00, var_r31->unk_08 * var_r31->unk_04);
+    if (var_r31->unk_0C < 0.0f) {
+        Hu3DModelAttrSet(var_r31->unk_00, 1);
+    }
+    HuMemDirectFree(var_r31);
+    HuPrcEnd();
+}
+
+u32 fn_1_550(u16 arg0)
+{
+    u32 var_r31;
+
+    var_r31 = HuPadBtnDown[0] & arg0;
     return var_r31 != 0;
 }
 
-BOOL PresentPadDStkRepCheck(u16 dir)
+u32 fn_1_584(u16 arg0)
 {
-    u32 var_r31 = HuPadDStkRep[0] & dir;
+    u32 var_r31;
+
+    var_r31 = HuPadDStkRep[0] & arg0;
     return var_r31 != 0;
 }
 
-BOOL PresentPadDStkCheck(u16 dir)
+u32 fn_1_5B8(u16 arg0)
 {
-    u32 var_r31 = HuPadDStk[0] & dir;
+    u32 var_r31;
+
+    var_r31 = HuPadDStk[0] & arg0;
     return var_r31 != 0;
 }
 
-static void SceneMain(omObjData *object)
+void fn_1_5EC(omObjData *object)
 {
     switch (object->unk10) {
-        case 0:
-            object->unk10 = 1;
-        case 1:
-            if (!omSysExitReq) {
-                break;
-            }
-            object->unk10 = 2;
-        case 2:
-            WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
-            HuAudFadeOut(1000);
-            object->unk10 = 3;
+    case 0:
+        object->unk10 = 1;
+    case 1:
+        if (!omSysExitReq) {
             break;
-        case 3:
-            if (!WipeStatGet()) {
-                PresentStateKill(presentState);
-                omOvlReturnEx(1, 1);
-            }
-            break;
-        default:
-            break;
+        }
+        object->unk10 = 2;
+    case 2:
+        WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
+        HuAudFadeOut(1000);
+        object->unk10 = 3;
+        break;
+    case 3:
+        if (!WipeStatGet()) {
+            fn_1_3B18(lbl_1_bss_18);
+            omOvlReturnEx(1, 1);
+        }
+        break;
+    default:
+        break;
     }
 }

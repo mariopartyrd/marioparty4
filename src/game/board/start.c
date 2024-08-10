@@ -90,21 +90,21 @@ static s32 hitFX[4] = {
 };
 
 static s32 startMesTbl[9][5] = {
-    { MAKE_MESSID(0x15, 0x01), MAKE_MESSID(0x15, 0x07), MAKE_MESSID(0x15, 0x0D), MAKE_MESSID(0x15, 0x16), MAKE_MESSID(0x15, 0x1C) },
-    { MAKE_MESSID(0x15, 0x02), MAKE_MESSID(0x15, 0x08), MAKE_MESSID(0x15, 0x0E), MAKE_MESSID(0x15, 0x17), MAKE_MESSID(0x15, 0x1D) },
-    { MAKE_MESSID(0x15, 0x03), MAKE_MESSID(0x15, 0x09), MAKE_MESSID(0x15, 0x0F), MAKE_MESSID(0x15, 0x18), MAKE_MESSID(0x15, 0x1E) },
-    { MAKE_MESSID(0x15, 0x04), MAKE_MESSID(0x15, 0x0A), MAKE_MESSID(0x15, 0x10), MAKE_MESSID(0x15, 0x19), MAKE_MESSID(0x15, 0x1F) },
-    { MAKE_MESSID(0x15, 0x05), MAKE_MESSID(0x15, 0x0B), MAKE_MESSID(0x15, 0x11), MAKE_MESSID(0x15, 0x1A), MAKE_MESSID(0x15, 0x20) },
-    { MAKE_MESSID(0x15, 0x06), MAKE_MESSID(0x15, 0x0C), MAKE_MESSID(0x15, 0x12), MAKE_MESSID(0x15, 0x1B), MAKE_MESSID(0x15, 0x21) },
-    { MAKE_MESSID(0x15, 0x01), MAKE_MESSID(0x15, 0x07), MAKE_MESSID(0x15, 0x0D), MAKE_MESSID(0x15, 0x16), MAKE_MESSID(0x15, 0x1C) },
-    { MAKE_MESSID(0x15, 0x33), MAKE_MESSID(0x15, 0x34), MAKE_MESSID(0x15, 0x35), MAKE_MESSID(0x15, 0x36), MAKE_MESSID(0x15, 0x37) },
-    { MAKE_MESSID(0x15, 0x3B), MAKE_MESSID(0x15, 0x3C), MAKE_MESSID(0x15, 0x3D), MAKE_MESSID(0x15, 0x3E), MAKE_MESSID(0x15, 0x3F) }
+    { 0x00150001, 0x00150007, 0x0015000D, 0x00150016, 0x0015001C },
+    { 0x00150002, 0x00150008, 0x0015000E, 0x00150017, 0x0015001D },
+    { 0x00150003, 0x00150009, 0x0015000F, 0x00150018, 0x0015001E },
+    { 0x00150004, 0x0015000A, 0x00150010, 0x00150019, 0x0015001F },
+    { 0x00150005, 0x0015000B, 0x00150011, 0x0015001A, 0x00150020 },
+    { 0x00150006, 0x0015000C, 0x00150012, 0x0015001B, 0x00150021 },
+    { 0x00150001, 0x00150007, 0x0015000D, 0x00150016, 0x0015001C },
+    { 0x00150033, 0x00150034, 0x00150035, 0x00150036, 0x00150037 },
+    { 0x0015003B, 0x0015003C, 0x0015003D, 0x0015003E, 0x0015003F }
 };
 
 static s32 logoSprTbl[] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x57), DATA_MAKE_NUM(DATADIR_BOARD, 0x58), DATA_MAKE_NUM(DATADIR_BOARD, 0x59),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x5A), DATA_MAKE_NUM(DATADIR_BOARD, 0x5B), DATA_MAKE_NUM(DATADIR_BOARD, 0x5C),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x57), DATA_MAKE_NUM(DATADIR_BOARD, 0x5D), DATA_MAKE_NUM(DATADIR_BOARD, 0x5E)
+    0x00070057, 0x00070058, 0x00070059,
+    0x0007005A, 0x0007005B, 0x0007005C,
+    0x00070057, 0x0007005D, 0x0007005E
 };
 
 void BoardStartExec(void) {
@@ -321,7 +321,7 @@ static void CreatePlayerStart(void) {
         var_r30->unk06 = 2;
         var_r30->unk04 = 1;
         var_r30->unk0E = 0x3C;
-        var_r30->unk08 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x18), NULL, 0);
+        var_r30->unk08 = BoardModelCreate(0x70018, NULL, 0);
         BoardModelVisibilitySet(var_r30->unk08, 0);
         BoardModelMotionSpeedSet(var_r30->unk08, 0.0f);
         OSs8tof32(&i, &temp_f30);
@@ -460,15 +460,15 @@ static void PlayerDiceFall(omObjData *arg0, PlayerStartWork *arg1) {
 }
 
 static s32 digitMdlTbl[9] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x0D), DATA_MAKE_NUM(DATADIR_BOARD, 0x0E), DATA_MAKE_NUM(DATADIR_BOARD, 0x0F),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x10), DATA_MAKE_NUM(DATADIR_BOARD, 0x11), DATA_MAKE_NUM(DATADIR_BOARD, 0x12),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x13), DATA_MAKE_NUM(DATADIR_BOARD, 0x14), DATA_MAKE_NUM(DATADIR_BOARD, 0x15)
+    0x0007000D, 0x0007000E, 0x0007000F,
+    0x00070010, 0x00070011, 0x00070012,
+    0x00070013, 0x00070014, 0x00070015
 };
 
 static s32 playerOrderMesTbl[3] = {
-    MAKE_MESSID(0x15, 0x13),
-    MAKE_MESSID(0x15, 0x14),
-    MAKE_MESSID(0x15, 0x15)
+    0x00150013,
+    0x00150014,
+    0x00150015
 };
 
 static void PlayerDiceRoll(omObjData *arg0, PlayerStartWork *arg1) {
@@ -787,7 +787,7 @@ static void InitCamera(void) {
             camStartFocusPos.x -= 150.0f;
             break;
     }
-    camFocus = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x0A), NULL, 0);
+    camFocus = BoardModelCreate(0x7000A, NULL, 0);
     BoardModelVisibilitySet(camFocus, 0);
     BoardModelPosSetV(camFocus, &camStartFocusPos);
     if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
@@ -838,7 +838,7 @@ static void CreateTapWin(void) {
     s32 var_r31;
 
     if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
-        var_r31 = MAKE_MESSID(0x12, 0x14);
+        var_r31 = 0x120014;
         HuWinMesMaxSizeGet(1, sp8, var_r31);
         var_f31 = -10000.0f;
         var_f30 = 368.0f;

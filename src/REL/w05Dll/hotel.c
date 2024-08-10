@@ -12,8 +12,7 @@
 
 // data
 s32 lbl_1_data_150[5] = {
-    DATA_MAKE_NUM(DATADIR_W05, 0x21), DATA_MAKE_NUM(DATADIR_W05, 0x22), DATA_MAKE_NUM(DATADIR_W05, 0x23),
-    DATA_MAKE_NUM(DATADIR_W05, 0x24), DATA_MAKE_NUM(DATADIR_W05, 0x25),
+    0x790021, 0x790022, 0x790023, 0x790024, 0x790025,
 };
 s16 lbl_1_data_164 = 0xFFFF;
 
@@ -37,7 +36,7 @@ void fn_1_14D0(void) {
 }
 
 u32 lbl_1_data_170[4] = { 0, 10, 25, 40 };
-s32 lbl_1_data_180 = DATA_MAKE_NUM(DATADIR_W05, 0x0C);
+s32 lbl_1_data_180 = 0x79000C;
 
 s16 fn_1_14FC(void) {
     s16 var_r31;
@@ -113,10 +112,10 @@ void fn_1_155C(void) {
     sprintf(sp18, "%d", lbl_1_bss_0->unk_00);
     if (var_r30 > 0) {
         if (var_r30 >= 5) {
-            var_r27 = MAKE_MESSID(0x27, 0x01);
+            var_r27 = 0x270001;
             var_r30 = 5;
         } else {
-            var_r27 = MAKE_MESSID(0x27, 0x02);
+            var_r27 = 0x270002;
         }
         sprintf(sp8, "%d", var_r30);
         BoardWinCreate(2, var_r27, 7);
@@ -199,10 +198,7 @@ void fn_1_155C(void) {
     BoardRollDispSet(1);
 }
 
-s32 lbl_1_data_188[4] = {
-    DATA_MAKE_NUM(DATADIR_W05, 0x0C), DATA_MAKE_NUM(DATADIR_W05, 0x0E),
-    DATA_MAKE_NUM(DATADIR_W05, 0x0F),DATA_MAKE_NUM(DATADIR_W05, 0x10)
-};
+s32 lbl_1_data_188[4] = { 0x79000C, 0x79000E, 0x79000F, 0x790010 };
 s32 lbl_1_data_198[2] = { 28, 25 };
 
 void fn_1_1E44(void) {
@@ -283,7 +279,7 @@ void fn_1_1E44(void) {
         BoardWinWait();
         BoardWinKill();
     } else {
-        temp_r3 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W05, 0x04), NULL, 0);
+        temp_r3 = BoardModelCreate(0x790004, NULL, 0);
         BoardModelVisibilitySet(temp_r3, 0);
         BoardModelLayerSet(temp_r3, 2U);
         if (lbl_1_bss_0->unk_00 > BoardPlayerCoinsGet(lbl_1_bss_28)) {

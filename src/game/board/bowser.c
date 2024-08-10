@@ -406,9 +406,9 @@ static void ExecBowserGame(void)
 		437
 	};
 	s32 messLoss[3] = {
-		MAKE_MESSID(3, 9),
-		MAKE_MESSID(3, 12),
-		MAKE_MESSID(3, 14)
+		0x30009,
+		0x3000C,
+		0x3000E
 	};
 	s32 mg;
 	s32 mess;
@@ -459,9 +459,9 @@ static void ExecBowserGame(void)
 static void DoMGReturnEffect(void)
 {
 	s32 messTbl[3] = {
-		MAKE_MESSID(3, 10),
-		MAKE_MESSID(3, 13),
-		MAKE_MESSID(3, 15)
+		0x3000A,
+		0x3000D,
+		0x3000F
 	};
 	s32 player;
 	s32 coin;
@@ -1512,10 +1512,10 @@ static void MiniBowserTake(void)
 		delay = 6;
 	}
 	if(BoardPlayerCoinsGet(eventPlayer) != 0) {
-		mess = MAKE_MESSID(3, 1);
+		mess = 0x30001;
 		coin_inc = -1;
 	} else {
-		mess = MAKE_MESSID(3, 3);
+		mess = 0x30003;
 		steal = 10;
 		coin_inc = 1;
 	}
@@ -1584,10 +1584,10 @@ static void MiniBowserTakeAll(void)
 		coin_total += BoardPlayerCoinsGet(j);
 	}
 	if(coin_total != 0) {
-		mess = MAKE_MESSID(3, 4);
+		mess = 0x30004;
 		coin_inc = -1;
 	} else {
-		mess = MAKE_MESSID(3, 5);
+		mess = 0x30005;
 		steal = 10;
 		coin_inc = 1;
 	}

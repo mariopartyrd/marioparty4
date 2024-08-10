@@ -100,52 +100,122 @@ static u8 lbl_801D3608[8] = { 0x0D, 0x00, 0x17, 0x69, 0x0D, 0x1E, 0x1D, 0x14 };
 static u8 lbl_801D3610[8] = { 0x15, 0x1E, 0x16, 0x54, 0x0F, 0x62, 0x39, 0x0A };
 
 static EffectData effectDataTbl[8] = {
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x06), 0x000A, 0x0000, 0x00000002 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x05), 0x000A, 0x0000, 0x00000002 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x02), 0x0096, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x03), 0x0046, 0x0000, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x00), 0x012C, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x01), 0x012C, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x04), 0x00C8, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x07), 0x000C, 0x0000, 0x00000002 },
+    { 0x00120006, 0x000A, 0x0000, 0x00000002 },
+    { 0x00120005, 0x000A, 0x0000, 0x00000002 },
+    { 0x00120002, 0x0096, 0x0001, 0x00000000 },
+    { 0x00120003, 0x0046, 0x0000, 0x00000000 },
+    { 0x00120000, 0x012C, 0x0001, 0x00000000 },
+    { 0x00120001, 0x012C, 0x0001, 0x00000000 },
+    { 0x00120004, 0x00C8, 0x0001, 0x00000000 },
+    { 0x00120007, 0x000C, 0x0000, 0x00000002 }
 };
 
 static s32 charDirTbl[8][3] = {
-    { DATADIR_MARIOMDL0, DATADIR_MARIOMDL1, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00) },
-    { DATADIR_LUIGIMDL0, DATADIR_LUIGIMDL1, DATA_MAKE_NUM(DATADIR_LUIGIMOT, 0x00) },
-    { DATADIR_PEACHMDL0, DATADIR_PEACHMDL1, DATA_MAKE_NUM(DATADIR_PEACHMOT, 0x00) },
-    { DATADIR_YOSHIMDL0, DATADIR_YOSHIMDL1, DATA_MAKE_NUM(DATADIR_YOSHIMOT, 0x00) },
-    { DATADIR_WARIOMDL0, DATADIR_WARIOMDL1, DATA_MAKE_NUM(DATADIR_WARIOMOT, 0x00) },
-    { DATADIR_DONKEYMDL0, DATADIR_DONKEYMDL1, DATA_MAKE_NUM(DATADIR_DONKEYMOT, 0x00) },
-    { DATADIR_DAISYMDL0, DATADIR_DAISYMDL1, DATA_MAKE_NUM(DATADIR_DAISYMOT, 0x00) },
-    { DATADIR_WALUIGIMDL0, DATADIR_WALUIGIMDL1, DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 0x00) },
+    { 0x005D0000, 0x005E0000, 0x005F0000 },
+    { 0x00180000, 0x00190000, 0x001A0000 },
+    { 0x006B0000, 0x006C0000, 0x006D0000 },
+    { 0x00880000, 0x00890000, 0x008A0000 },
+    { 0x00830000, 0x00840000, 0x00850000 },
+    { 0x000F0000, 0x00100000, 0x00110000 },
+    { 0x000B0000, 0x000C0000, 0x000D0000 },
+    { 0x007F0000, 0x00800000, 0x00810000 }
 };
 
-static EffectParamData effectDustParam
-    = { 0, 0x80, 0x80, 0x80, 0xFF, 0x40, 0x20, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, 1.0f, -5.0f, 0.02f };
+static EffectParamData effectDustParam = {
+    0,
+    0x80, 0x80, 0x80, 0xFF,
+    0x40, 0x20, 0x00, 0xFF,
+    { 0.0f, 2.0f, 1.0f },
+    0.95f, 0.95f, 0.95f,
+    0.0f,
+    0x00000000,
+    1.0f,
+    -5.0f,
+    0.02f
+};
 
-static EffectParamData effectDotParam
-    = { 0, 0xFF, 0x40, 0x40, 0x80, 0xFF, 0x40, 0x40, 0x80, { 0.0f, 0.0f, 0.0f }, 0.0f, 0.0f, 0.0f, 0.0f, 0x00000000, -5.0f, 0.0f, 0.0f };
+static EffectParamData effectDotParam = {
+    0,
+    0xFF, 0x40, 0x40, 0x80,
+    0xFF, 0x40, 0x40, 0x80,
+    { 0.0f, 0.0f, 0.0f },
+    0.0f, 0.0f, 0.0f,
+    0.0f,
+    0x00000000,
+    -5.0f,
+    0.0f,
+    0.0f
+};
 
-static EffectParamData effectStarParam
-    = { 0, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0xFF, { 0.0f, 0.0f, 0.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, -0.5f, -10.0f, 0.0f };
+static EffectParamData effectStarParam = {
+    0,
+    0xFF, 0xFF, 0x00, 0xFF,
+    0xFF, 0xFF, 0x00, 0xFF,
+    { 0.0f, 0.0f, 0.0f },
+    0.95f, 0.95f, 0.95f,
+    0.0f,
+    0x00000000,
+    -0.5f,
+    -10.0f,
+    0.0f
+};
 
-static EffectParamData effectWarnParam
-    = { 0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, { 0.0f, 20.0f, 0.0f }, 0.95f, 0.85f, 0.95f, 0.0f, 0x00000000, 1.0f, -5.0f, 0.0f };
+static EffectParamData effectWarnParam = {
+    0,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    { 0.0f, 20.0f, 0.0f },
+    0.95f, 0.85f, 0.95f,
+    0.0f,
+    0x00000000,
+    1.0f,
+    -5.0f,
+    0.0f
+};
 
-static EffectParamData effectSmokeParam
-    = { 0, 0x80, 0x20, 0x20, 0xFF, 0x00, 0x00, 0x00, 0xFF, { 0.0f, 10.0f, 0.0f }, 1.0f, 0.95f, 1.0f, 0.0f, 0x00000000, 5.0f, -13.0f, 0.1f };
+static EffectParamData effectSmokeParam = {
+    0,
+    0x80, 0x20, 0x20, 0xFF,
+    0x00, 0x00, 0x00, 0xFF,
+    { 0.0f, 10.0f, 0.0f },
+    1.0f, 0.95f, 1.0f,
+    0.0f,
+    0x00000000,
+    5.0f,
+    -13.0f,
+    0.1f
+};
 
-static s8 lbl_801309A0[32]
-    = { 10, 32, -1, -1, 20, 40, -1, -1, 12, 37, -1, -1, 4, 25, -1, -1, 5, 30, -1, -1, 16, 1, 24, 39, 23, 50, -1, -1, 19, 39, -1, -1 };
+static s8 lbl_801309A0[32] = {
+    10, 32, -1, -1,
+    20, 40, -1, -1,
+    12, 37, -1, -1,
+     4, 25, -1, -1,
+     5, 30, -1, -1,
+    16,  1, 24, 39,
+    23, 50, -1, -1,
+    19, 39, -1, -1
+};
 
-static s8 lbl_801309C0[32]
-    = { 15, 29, -1, -1, 5, 19, -1, -1, 5, 22, -1, -1, 12, 28, -1, -1, 18, 35, -1, -1, 1, 8, 12, -1, 0, 16, -1, -1, 12, 28, -1, -1 };
+static s8 lbl_801309C0[32] = {
+    15, 29, -1, -1,
+     5, 19, -1, -1,
+     5, 22, -1, -1,
+    12, 28, -1, -1,
+    18, 35, -1, -1,
+     1,  8, 12, -1,
+     0, 16, -1, -1,
+    12, 28, -1, -1
+};
 
-static s8 lbl_801309E0[16] = { 5, 7, 6, 9, 10, 11, 9, -1, 9, 11, 9, -1, 8, -1, 10, -1 };
+static s8 lbl_801309E0[16] = {
+     5,  7,  6,  9,
+    10, 11,  9, -1,
+     9, 11,  9, -1,
+     8, -1, 10, -1
+};
 
-void CharManInit(void)
-{
+void CharManInit(void) {
     UnkCharInstanceStruct *temp_r29;
     s16 i;
     s16 j;
@@ -160,7 +230,7 @@ void CharManInit(void)
         temp_r29->unkC4 = NULL;
     }
     if (!effectAMemP) {
-        effectAMemP = (void *)HuAR_DVDtoARAM(0x120000);
+        effectAMemP = (void*) HuAR_DVDtoARAM(0x120000);
     }
     for (i = 0; i < 8; i++) {
         effectMdl[i] = -1;
@@ -171,13 +241,11 @@ void CharManInit(void)
     }
 }
 
-void *CharAMemPtrGet(s16 character)
-{
+void *CharAMemPtrGet(s16 character) {
     return charInstance[character].unkC0;
 }
 
-void CharARAMOpen(s16 character)
-{
+void CharARAMOpen(s16 character) {
     UnkCharInstanceStruct *temp_r31;
 
     if (character >= 8 || character < 0 || character == 0xFF) {
@@ -185,31 +253,28 @@ void CharARAMOpen(s16 character)
     }
     temp_r31 = &charInstance[character];
     if (!temp_r31->unkC0) {
-        temp_r31->unkC0 = (void *)HuAR_DVDtoARAM(charDirTbl[character][2]);
+        temp_r31->unkC0 = (void*) HuAR_DVDtoARAM(charDirTbl[character][2]);
     }
 }
 
-void CharARAMClose(s16 character)
-{
+void CharARAMClose(s16 character) {
     UnkCharInstanceStruct *temp_r31;
 
     temp_r31 = &charInstance[character];
     if (temp_r31->unkC0) {
-        HuARFree((u32)temp_r31->unkC0);
+        HuARFree((u32) temp_r31->unkC0);
         temp_r31->unkC0 = NULL;
     }
 }
 
-void CharKill(s16 character)
-{
+void CharKill(s16 character) {
     s16 i;
 
     if (character == -1) {
         for (i = 0; i < 8; i++) {
             CharKill(i);
         }
-    }
-    else {
+    } else {
         HuDataDirClose(charDirTbl[character][0]);
         HuDataDirClose(charDirTbl[character][1]);
         HuDataDirClose(charDirTbl[character][2]);
@@ -217,16 +282,14 @@ void CharKill(s16 character)
     }
 }
 
-void CharKillAll(void)
-{
+void CharKillAll(void) {
     CharModelKill(-1);
     CharKill(-1);
-    HuARFree((u32)effectAMemP);
+    HuARFree((u32) effectAMemP);
     effectAMemP = NULL;
 }
 
-s16 CharModelCreate(s16 character, s16 lod)
-{
+s16 CharModelCreate(s16 character, s16 lod) {
     s16 sp8 = 0;
     UnkCharInstanceStruct *temp_r31;
     void *var_r26;
@@ -240,14 +303,11 @@ s16 CharModelCreate(s16 character, s16 lod)
     }
     if (lod & 1) {
         var_r29 = charDirTbl[character][0];
-    }
-    else if (lod & 2) {
+    } else if (lod & 2) {
         var_r29 = charDirTbl[character][1];
-    }
-    else if (lod & 4) {
+    } else if (lod & 4) {
         var_r29 = charDirTbl[character][1] | 1;
-    }
-    else {
+    } else {
         var_r29 = charDirTbl[character][1] | 2;
     }
     var_r26 = HuDataSelHeapReadNum(var_r29, MEMORY_DEFAULT_NUM, HEAP_DATA);
@@ -262,8 +322,7 @@ s16 CharModelCreate(s16 character, s16 lod)
     return var_r25;
 }
 
-static void UpdateChar(void)
-{
+static void UpdateChar(void) {
     Vec sp8;
     s16 *temp_r28;
     UnkCharInstanceStruct *temp_r31;
@@ -286,8 +345,7 @@ static void UpdateChar(void)
             temp_r31->unk04 = temp_r31->unk4C[i];
             UpdateCharAnim(*temp_r28, temp_r31->unk00, temp_r31->unk4C[i], temp_r31->unk8C[i], temp_r29->unk_64, &sp8);
             temp_r31->unk08 = temp_r31->unk4C[i];
-        }
-        else {
+        } else {
             temp_r31->unk04 = -1;
         }
         if (temp_r29->unk_0C != -1) {
@@ -302,12 +360,10 @@ static void UpdateChar(void)
                 temp_r31->unk06 = temp_r31->unk4C[i];
                 UpdateCharAnim(*temp_r28, temp_r31->unk00, temp_r31->unk4C[i], temp_r31->unk8C[i], temp_r29->unk_84, &sp8);
                 temp_r31->unk0A = temp_r31->unk4C[i];
-            }
-            else {
+            } else {
                 temp_r31->unk06 = -1;
             }
-        }
-        else if (var_r27 != 0) {
+        } else if (var_r27 != 0) {
             CharModelTexAnimSet(*temp_r28);
             var_r27 = 0;
         }
@@ -316,8 +372,7 @@ static void UpdateChar(void)
     }
 }
 
-static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4, Vec *arg5)
-{
+static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4, Vec *arg5) {
     Vec sp1C;
     Vec sp10;
     ModelData *temp_r30;
@@ -426,8 +481,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
             if (arg2 == 7) {
                 Hu3DModelObjMtxGet(arg1, CharModelHookNameGet(character, temp_r29->unk02, 0), sp28);
                 var_r20 = 10;
-            }
-            else {
+            } else {
                 Hu3DModelObjMtxGet(arg1, CharModelHookNameGet(character, temp_r29->unk02, 1), sp28);
                 var_r20 = 13;
             }
@@ -449,13 +503,12 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                         var_r20 = 1;
                     }
                     for (i = 1; i <= var_r20; i++) {
-                        sp10.x = arg5->x + (sp1C.x - arg5->x) * ((float)i / var_r20);
-                        sp10.y = arg5->y + (sp1C.y - arg5->y) * ((float)i / var_r20);
-                        sp10.z = arg5->z + (sp1C.z - arg5->z) * ((float)i / var_r20);
+                        sp10.x = arg5->x + (sp1C.x - arg5->x) * ((float) i / var_r20);
+                        sp10.y = arg5->y + (sp1C.y - arg5->y) * ((float) i / var_r20);
+                        sp10.z = arg5->z + (sp1C.z - arg5->z) * ((float) i / var_r20);
                         CreateEffectDot(arg1, sp10.x, sp10.y, sp10.z, 50.0f, &effectDotParam);
                     }
-                }
-                else {
+                } else {
                     CreateEffectDot(arg1, sp1C.x, sp1C.y, sp1C.z, 40.0f, &effectDotParam);
                 }
                 *arg5 = sp1C;
@@ -468,15 +521,13 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                         effectStarParam.unk0C.x = 10.0 * sind(45.0f * i) * temp_r30->scale.x;
                         effectStarParam.unk0C.y = 0.0f;
                         effectStarParam.unk0C.z = 10.0 * cosd(45.0f * i) * temp_r30->scale.x;
-                        CreateEffectStar(
-                            arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 40.0f, &effectStarParam);
+                        CreateEffectStar(arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 40.0f, &effectStarParam);
                     }
                     for (i = 0; i < 8; i++) {
                         effectDustParam.unk0C.x = 4.0 * sind(45.0f * i + 22.5) * temp_r30->scale.x;
                         effectDustParam.unk0C.y = 0.0f;
                         effectDustParam.unk0C.z = 4.0 * cosd(45.0f * i + 22.5) * temp_r30->scale.x;
-                        CreateEffectDust(
-                            arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                        CreateEffectDust(arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
                     }
                 }
                 PlayCharVoice(character, 0x119, arg3);
@@ -499,11 +550,9 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                     var_r27->unk08.x = arg1;
                     if (character == 7) {
                         var_r27->unk08.y = 190.0f;
-                    }
-                    else if (character == 2 || character == 5 || character == 6) {
+                    } else if (character == 2 || character == 5 || character == 6) {
                         var_r27->unk08.y = 140.0f;
-                    }
-                    else {
+                    } else {
                         var_r27->unk08.y = 120.0f;
                     }
                     var_r27->unk14.x = var_r27->unk14.z = 0.0f;
@@ -514,8 +563,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                         effectDustParam.unk0C.x = 4.0 * sind(45.0f * i + 22.5) * temp_r30->scale.x;
                         effectDustParam.unk0C.y = 0.0f;
                         effectDustParam.unk0C.z = 4.0 * cosd(45.0f * i + 22.5) * temp_r30->scale.x;
-                        CreateEffectDust(
-                            arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                        CreateEffectDust(arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
                     }
                 }
             }
@@ -536,11 +584,9 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                 var_r27->unk08.x = arg1;
                 if (character == 7) {
                     var_r27->unk08.y = 150.0f;
-                }
-                else if (character == 2 || character == 5 || character == 6) {
+                } else if (character == 2 || character == 5 || character == 6) {
                     var_r27->unk08.y = 120.0f;
-                }
-                else {
+                } else {
                     var_r27->unk08.y = 100.0f;
                 }
                 var_r27->unk14.x = var_r27->unk14.z = 0.0f;
@@ -553,8 +599,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
             if (!(temp_r29->unkAC & 1) && !(temp_r29->unkAC & 0x10)) {
                 PlayCharVoice(character, 0x11A, arg3);
                 for (i = 0; i < 3; i++) {
-                    var_r19 = CreateEffectBird(
-                        arg1, temp_r30->pos.x, temp_r30->pos.y + 100.0f * temp_r30->scale.x, temp_r30->pos.z, 1.0f, &effectWarnParam);
+                    var_r19 = CreateEffectBird(arg1, temp_r30->pos.x, temp_r30->pos.y + 100.0f * temp_r30->scale.x, temp_r30->pos.z, 1.0f, &effectWarnParam);
                     if (var_r19 == -1) {
                         break;
                     }
@@ -582,11 +627,9 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
             if (arg4 == 0) {
                 if (temp_r29->unkB0 == 4) {
                     PlayCharVoice(character, 0x10A, arg3);
-                }
-                else if (temp_r29->unkB0 == 5) {
+                } else if (temp_r29->unkB0 == 5) {
                     PlayCharVoice(character, 0x10C, arg3);
-                }
-                else {
+                } else {
                     PlayCharVoice(character, 0x115, arg3);
                 }
             }
@@ -637,8 +680,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                     PlayCharVoice(character, 0x124, arg3);
                     temp_r29->unkAC |= 2;
                     var_r22 |= 2;
-                }
-                else if (omcurovl >= OVL_W01 && arg4 == lbl_801D35F8[character]) {
+                } else if (omcurovl >= OVL_W01 && arg4 == lbl_801D35F8[character]) {
                     PlayCharVoice(character, 0x122, arg3);
                     temp_r29->unkAC |= 2;
                     var_r22 |= 2;
@@ -679,8 +721,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
     }
 }
 
-static s32 PlayCharVoice(s16 character, s16 arg1, u8 arg2)
-{
+static s32 PlayCharVoice(s16 character, s16 arg1, u8 arg2) {
     UnkCharInstanceStruct *temp_r31;
     ModelData *temp_r29;
 
@@ -691,14 +732,12 @@ static s32 PlayCharVoice(s16 character, s16 arg1, u8 arg2)
     }
     if (temp_r31->unkAC & 8) {
         return HuAudCharVoicePlayPos(character, arg1, &temp_r29->pos);
-    }
-    else {
+    } else {
         return HuAudCharVoicePlay(character, arg1);
     }
 }
 
-static void InitEffect(void)
-{
+static void InitEffect(void) {
     HsfanimStruct01 *var_r29;
     ParticleData *temp_r30;
     void *temp_r26;
@@ -733,12 +772,11 @@ static void InitEffect(void)
         }
     }
     if (var_r27 != 0) {
-        HuDataDirClose(DATADIR_EFFECT);
+        HuDataDirClose(0x120000);
     }
 }
 
-static s16 CreateEffectDust(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
-{
+static s16 CreateEffectDust(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5) {
     ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
@@ -749,8 +787,7 @@ static s16 CreateEffectDust(s16 arg0, float arg1, float arg2, float arg3, float 
     return CreateEffect(effectMdl[2], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
 }
 
-static s16 CreateEffectSmoke(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
-{
+static s16 CreateEffectSmoke(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5) {
     ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
@@ -761,8 +798,7 @@ static s16 CreateEffectSmoke(s16 arg0, float arg1, float arg2, float arg3, float
     return CreateEffect(effectMdl[3], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
 }
 
-static s16 CreateEffectDot(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
-{
+static s16 CreateEffectDot(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5) {
     ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
@@ -773,8 +809,7 @@ static s16 CreateEffectDot(s16 arg0, float arg1, float arg2, float arg3, float a
     return CreateEffect(effectMdl[6], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
 }
 
-static s16 CreateEffectStar(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
-{
+static s16 CreateEffectStar(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5) {
     ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
@@ -785,8 +820,7 @@ static s16 CreateEffectStar(s16 arg0, float arg1, float arg2, float arg3, float 
     return CreateEffect(effectMdl[4], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
 }
 
-static s16 CreateEffectWarn(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
-{
+static s16 CreateEffectWarn(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5) {
     ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
@@ -797,8 +831,7 @@ static s16 CreateEffectWarn(s16 arg0, float arg1, float arg2, float arg3, float 
     return CreateEffect(effectMdl[0], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
 }
 
-static s16 CreateEffectBird(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
-{
+static s16 CreateEffectBird(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5) {
     ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
@@ -809,8 +842,7 @@ static s16 CreateEffectBird(s16 arg0, float arg1, float arg2, float arg3, float 
     return CreateEffect(effectMdl[7], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
 }
 
-static s16 CreateEffect(s16 arg0, s16 arg1, float arg2, float arg3, float arg4, float arg5, EffectParamData *arg6)
-{
+static s16 CreateEffect(s16 arg0, s16 arg1, float arg2, float arg3, float arg4, float arg5, EffectParamData *arg6) {
     ModelData *var_r28;
     ParticleData *temp_r30;
     EffectParamData *var_r27;
@@ -850,15 +882,13 @@ static s16 CreateEffect(s16 arg0, s16 arg1, float arg2, float arg3, float arg4, 
         var_r31->unk00 = 0;
         var_r31->unk02 = -1;
         temp_r30->unk_02 = i;
-    }
-    else {
+    } else {
         return -1;
     }
     return i;
 }
 
-static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
-{
+static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix) {
     EffectParamData *temp_r30;
     HsfanimStruct01 *var_r31;
     s16 var_r28;
@@ -883,24 +913,21 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
                 var_r28 = var_r31->unk40.r + temp_r30[i].unk34 * (temp_r30[i].unk08 - temp_r30[i].unk04);
                 if (var_r28 < 0) {
                     var_r28 = 0;
-                }
-                else if (var_r28 > 0xFF) {
+                } else if (var_r28 > 0xFF) {
                     var_r28 = 0xFF;
                 }
                 var_r31->unk40.r = var_r28;
                 var_r28 = var_r31->unk40.g + temp_r30[i].unk34 * (temp_r30[i].unk09 - temp_r30[i].unk05);
                 if (var_r28 < 0) {
                     var_r28 = 0;
-                }
-                else if (var_r28 > 0xFF) {
+                } else if (var_r28 > 0xFF) {
                     var_r28 = 0xFF;
                 }
                 var_r31->unk40.g = var_r28;
                 var_r28 = var_r31->unk40.b + temp_r30[i].unk34 * (temp_r30[i].unk0A - temp_r30[i].unk06);
                 if (var_r28 < 0) {
                     var_r28 = 0;
-                }
-                else if (var_r28 > 0xFF) {
+                } else if (var_r28 > 0xFF) {
                     var_r28 = 0xFF;
                 }
                 var_r31->unk40.b = var_r28;
@@ -912,8 +939,7 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
                 if (var_r31->unk2C) {
                     if (temp_r30[i].unk00 & 1) {
                         var_r31->unk2C = var_r31->unk28 * (((var_r31->unk00_s16 + i) & 1) ? 1.0 : 0.5);
-                    }
-                    else {
+                    } else {
                         var_r31->unk2C = var_r31->unk28;
                     }
                     var_r31->unk28 += temp_r30[i].unk2C;
@@ -922,8 +948,7 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
                     }
                 }
                 var_r31->unk00_s16++;
-            }
-            else {
+            } else {
                 switch (var_r31->unk02) {
                     case 0:
                         RotateEffect(var_r31);
@@ -941,19 +966,17 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
     DCStoreRangeNoSync(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
 }
 
-static void RotateEffect(HsfanimStruct01 *arg0)
-{
+static void RotateEffect(HsfanimStruct01 *arg0) {
     ModelData *temp_r30;
     float var_f31;
 
-    temp_r30 = &Hu3DData[(s32)arg0->unk08.x];
+    temp_r30 = &Hu3DData[(s32) arg0->unk08.x];
     if (arg0->unk00_s16 < 8) {
         var_f31 = 0.3 + sind(40.0f + 10.0f * (arg0->unk00_s16 + 1));
         arg0->unk2C = 50.0f * var_f31 * temp_r30->scale.x;
         arg0->unk40.a = 0xFF;
         var_f31 = 0.3 + sind(15.0f * (arg0->unk00_s16 + 1));
-    }
-    else {
+    } else {
         var_f31 = 0.3 + sind(135);
     }
     var_f31 *= temp_r30->scale.x;
@@ -970,11 +993,14 @@ static void RotateEffect(HsfanimStruct01 *arg0)
     arg0->unk00_s16++;
 }
 
-static float voiceParam[16]
-    = { 110.0f, 160.0f, 110.0f, 160.0f, 150.0f, 180.0f, 130.0f, 160.0f, 130.0f, 160.0f, 150.0f, 160.0f, 150.0f, 180.0f, 120.0f, 210.0f };
+static float voiceParam[16] = {
+    110.0f, 160.0f, 110.0f, 160.0f,
+    150.0f, 180.0f, 130.0f, 160.0f,
+    130.0f, 160.0f, 150.0f, 160.0f,
+    150.0f, 180.0f, 120.0f, 210.0f
+};
 
-static void PlayEffectSound(HsfanimStruct01 *arg0)
-{
+static void PlayEffectSound(HsfanimStruct01 *arg0) {
     ModelData *temp_r30;
     UnkCharInstanceStruct *temp_r29;
     s16 temp_r26;
@@ -990,8 +1016,7 @@ static void PlayEffectSound(HsfanimStruct01 *arg0)
     arg0->unk40.a = 0xFF;
     if (temp_r29->unk04 == 0x16 || temp_r29->unk06 == 0x16) {
         var_r25 = voiceParam[temp_r28 * 2];
-    }
-    else {
+    } else {
         var_r25 = voiceParam[temp_r28 * 2 + 1];
     }
     temp_r26 = (arg0->unk00_s16 * 5) % 360;
@@ -1014,8 +1039,7 @@ static void PlayEffectSound(HsfanimStruct01 *arg0)
     }
 }
 
-s16 CharModelMotionCreate(s16 character, s32 data_num)
-{
+s16 CharModelMotionCreate(s16 character, s32 data_num) {
     UnkCharInstanceStruct *temp_r31;
     s16 var_r28;
     s16 var_r30;
@@ -1047,8 +1071,7 @@ s16 CharModelMotionCreate(s16 character, s32 data_num)
             var_r27 = HuDataSelHeapReadNum(data_num | charDirTbl[character][2], MEMORY_DEFAULT_NUM, HEAP_DATA);
         }
         temp_r31->unk4C[var_r30] = data_num;
-    }
-    else {
+    } else {
         var_r27 = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
         temp_r31->unk4C[var_r30] = -1;
     }
@@ -1057,8 +1080,7 @@ s16 CharModelMotionCreate(s16 character, s32 data_num)
     return temp_r31->unk0C[var_r30];
 }
 
-void CharModelMotionIndexSet(s16 character, s16 arg1, s32 arg2)
-{
+void CharModelMotionIndexSet(s16 character, s16 arg1, s32 arg2) {
     UnkCharInstanceStruct *temp_r30;
     s16 i;
 
@@ -1073,8 +1095,7 @@ void CharModelMotionIndexSet(s16 character, s16 arg1, s32 arg2)
     }
 }
 
-void CharModelMotionKill(s16 character, u32 motion)
-{
+void CharModelMotionKill(s16 character, u32 motion) {
     UnkCharInstanceStruct *temp_r30;
     s16 i;
 
@@ -1088,41 +1109,36 @@ void CharModelMotionKill(s16 character, u32 motion)
     Hu3DMotionKill(motion);
 }
 
-void CharModelMotionDataClose(s16 character)
-{
+void CharModelMotionDataClose(s16 character) {
     s16 i;
 
     if (character == -1) {
         for (i = 0; i < 8; i++) {
             CharModelMotionDataClose(i);
         }
-    }
-    else {
+    } else {
         HuDataDirClose(charDirTbl[character][2]);
     }
 }
 
-void CharModelDataClose(s16 arg0)
-{
+void CharModelDataClose(s16 arg0) {
     s16 i;
 
     if (arg0 == -1) {
         for (i = 0; i < 8; i++) {
             CharModelDataClose(i);
             // Required to match.
-            (void)i;
-            (void)arg0;
+            (void) i;
+            (void) arg0;
         }
-    }
-    else {
+    } else {
         HuDataDirClose(charDirTbl[arg0][0]);
         HuDataDirClose(charDirTbl[arg0][1]);
         HuDataDirClose(charDirTbl[arg0][2]);
     }
 }
 
-void CharModelKill(s16 character)
-{
+void CharModelKill(s16 character) {
     UnkCharInstanceStruct *temp_r29;
     s16 i;
 
@@ -1173,8 +1189,7 @@ void CharModelKill(s16 character)
     }
 }
 
-void CharModelMotionSet(s16 character, s16 motion)
-{
+void CharModelMotionSet(s16 character, s16 motion) {
     UnkCharInstanceStruct *temp_r31;
     MotionData *sp8;
 
@@ -1184,8 +1199,7 @@ void CharModelMotionSet(s16 character, s16 motion)
     Hu3DMotionSet(temp_r31->unk00, motion);
 }
 
-void CharModelTexAnimSet(s16 character)
-{
+void CharModelTexAnimSet(s16 character) {
     HsfAttribute *var_r31;
     HsfdrawStruct01 *temp_r30;
     ModelData *temp_r26;
@@ -1217,16 +1231,26 @@ void CharModelTexAnimSet(s16 character)
     }
 }
 
-char *charTexNameTbl[64] = { "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m2_eyes", "s3c000m2_eyes", "s3c000m3_eyes",
-    "s3c000m3_eyes", "S3c001m0_eye", "S3c001m0_eye", "S3c001m1_eye", "S3c001m1_eye", "c001m3_eye", "c001m3_eye", "c001m3_eye", "c001m3_eye",
-    "s3c002m0_r_eye", "s3c002m0_l_eye", "s3c002m1_r_eye", "s3c002m1_l_eye", "s3c002m2_r_eye", "s3c002m2_l_eye", "", "", "eye1", "eye2", "S3c003m1",
-    "S3c003m1", "eye1", "eye2", "eye1", "eye2", "GC-eyes", "GC-eyes", "s3c004m1_eye", "s3c004m1_eye", "Clswario_eye_l1_AUTO12",
-    "Clswario_eye_l1_AUTO13", "", "", "m_donkey_eye4", "m_donkey_eye5", "S3donkey_eye", "S3donkey_eye", "m_donkey_eye1", "m_donkey_eye2", "", "",
-    "GC-eyes", "GC-eyes", "s3c007m1_Eye_L", "s3c007m1_Eye_R", "mat87", "mat89", "", "", "clswaluigi_eye_l1_AUTO1", "clswaluigi_eye_l1_AUTO2",
-    "s3c007_m1_eye", "s3c007_m1_eye", "clswaluigi_eye_l1_AUTO9", "clswaluigi_eye_l1_AUTO10", "", "" };
+char *charTexNameTbl[64] = {
+              "s3c000m1_eyes",            "s3c000m1_eyes",  "s3c000m1_eyes",  "s3c000m1_eyes",
+              "s3c000m2_eyes",            "s3c000m2_eyes",  "s3c000m3_eyes",  "s3c000m3_eyes",
+               "S3c001m0_eye",             "S3c001m0_eye",   "S3c001m1_eye",   "S3c001m1_eye",
+                 "c001m3_eye",               "c001m3_eye",     "c001m3_eye",     "c001m3_eye",
+             "s3c002m0_r_eye",           "s3c002m0_l_eye", "s3c002m1_r_eye", "s3c002m1_l_eye",
+             "s3c002m2_r_eye",           "s3c002m2_l_eye",               "",               "",
+                       "eye1",                     "eye2",       "S3c003m1",       "S3c003m1",
+                       "eye1",                     "eye2",           "eye1",           "eye2",
+                    "GC-eyes",                  "GC-eyes",   "s3c004m1_eye",   "s3c004m1_eye",
+     "Clswario_eye_l1_AUTO12",   "Clswario_eye_l1_AUTO13",               "",               "",
+              "m_donkey_eye4",            "m_donkey_eye5",   "S3donkey_eye",   "S3donkey_eye",
+              "m_donkey_eye1",            "m_donkey_eye2",               "",               "",
+                    "GC-eyes",                  "GC-eyes", "s3c007m1_Eye_L", "s3c007m1_Eye_R",
+                      "mat87",                    "mat89",               "",               "",
+    "clswaluigi_eye_l1_AUTO1",  "clswaluigi_eye_l1_AUTO2",  "s3c007_m1_eye",  "s3c007_m1_eye",
+    "clswaluigi_eye_l1_AUTO9", "clswaluigi_eye_l1_AUTO10",               "",               ""
+};
 
-char **CharModelTexNameGet(s16 arg0, s16 arg1)
-{
+char **CharModelTexNameGet(s16 arg0, s16 arg1) {
     s16 var_r30;
     s16 i;
 
@@ -1238,15 +1262,18 @@ char **CharModelTexNameGet(s16 arg0, s16 arg1)
     return &charTexNameTbl[arg0 * 8 + i * 2];
 }
 
-static char *hookNameTbl[40]
-    = { "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr",
-          "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r",
-          "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl",
-          "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l",
-          "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body" };
+static char *hookNameTbl[40] = {
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body",
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body",
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body",
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body",
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body",
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body",
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body",
+    "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body"
+};
 
-char *CharModelHookNameGet(s16 arg0, s16 arg1, s16 arg2)
-{
+char *CharModelHookNameGet(s16 arg0, s16 arg1, s16 arg2) {
     s16 i;
     s16 var_r30;
 
@@ -1258,65 +1285,56 @@ char *CharModelHookNameGet(s16 arg0, s16 arg1, s16 arg2)
     return hookNameTbl[arg0 * 5 + arg2];
 }
 
-void CharModelMotionTimeSet(s16 character, float time)
-{
+void CharModelMotionTimeSet(s16 character, float time) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     Hu3DMotionTimeSet(temp_r31->unk00, time);
 }
 
-float CharModelMotionTimeGet(s16 character)
-{
+float CharModelMotionTimeGet(s16 character) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     return Hu3DMotionTimeGet(temp_r31->unk00);
 }
 
-float CharModelMotionMaxTimeGet(s16 character)
-{
+float CharModelMotionMaxTimeGet(s16 character) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     return Hu3DMotionMaxTimeGet(temp_r31->unk00);
 }
 
-s32 CharModelMotionEndCheck(s16 character)
-{
+s32 CharModelMotionEndCheck(s16 character) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     return Hu3DMotionEndCheck(temp_r31->unk00);
 }
 
-s16 CharModelMotionShiftIDGet(s16 character)
-{
+s16 CharModelMotionShiftIDGet(s16 character) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     return Hu3DMotionShiftIDGet(temp_r31->unk00);
 }
 
-void CharModelMotionShiftSet(s16 character, s16 motion, float time, float shift_time, u32 attr)
-{
+void CharModelMotionShiftSet(s16 character, s16 motion, float time, float shift_time, u32 attr) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
     MotionData *sp18 = &Hu3DMotion[motion];
 
     Hu3DMotionShiftSet(temp_r31->unk00, motion, time, shift_time, attr);
 }
 
-float CharModelMotionShiftTimeGet(s16 character)
-{
+float CharModelMotionShiftTimeGet(s16 character) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     return Hu3DMotionShiftTimeGet(temp_r31->unk00);
 }
 
-void CharModelMotionSpeedSet(s16 character, float speed)
-{
+void CharModelMotionSpeedSet(s16 character, float speed) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     Hu3DMotionSpeedSet(temp_r31->unk00, speed);
 }
 
-void CharModelLayerSetAll(s16 arg0)
-{
+void CharModelLayerSetAll(s16 arg0) {
     s16 i;
 
     for (i = 0; i < 8; i++) {
@@ -1326,8 +1344,7 @@ void CharModelLayerSetAll(s16 arg0)
     }
 }
 
-static inline Process *CharModelItemHookCreateInlineFunc(void)
-{
+static inline Process *CharModelItemHookCreateInlineFunc(void) {
     s16 i;
 
     for (i = 0; i < 32; i++) {
@@ -1337,15 +1354,13 @@ static inline Process *CharModelItemHookCreateInlineFunc(void)
     }
     if (i == 32) {
         return NULL;
-    }
-    else {
+    } else {
         itemHookProcess[i] = HuPrcCreate(UpdateItemHook, 0x64, 0x2000, 0);
         return itemHookProcess[i];
     }
 }
 
-void CharModelItemHookCreate(s16 character, char *arg1)
-{
+void CharModelItemHookCreate(s16 character, char *arg1) {
     Mtx sp18;
     Vec spC;
     UnkCharInstanceStruct *temp_r31;
@@ -1382,8 +1397,7 @@ void CharModelItemHookCreate(s16 character, char *arg1)
     }
 }
 
-static void UpdateItemHook(void)
-{
+static void UpdateItemHook(void) {
     Mtx sp14;
     Vec sp8;
     ModelData *temp_r30;
@@ -1434,11 +1448,20 @@ static void UpdateItemHook(void)
     }
 }
 
-static EffectParamData modelParticleParam
-    = { 0, 0xFF, 0xFF, 0xFF, 0xFF, 0x40, 0x20, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, 1.0f, -5.0f, 0.02f };
+static EffectParamData modelParticleParam = {
+    0,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0x40, 0x20, 0x00, 0xFF,
+    { 0.0f, 2.0f, 1.0f },
+    0.95f, 0.95f, 0.95f,
+    0.0f,
+    0x00000000,
+    1.0f,
+    -5.0f,
+    0.02f
+};
 
-void CharModelEffectCreate(s16 arg0, Vec *arg1)
-{
+void CharModelEffectCreate(s16 arg0, Vec *arg1) {
     s16 temp_r28;
     s16 i;
     HsfanimStruct01 *var_r31;
@@ -1495,8 +1518,7 @@ void CharModelEffectCreate(s16 arg0, Vec *arg1)
     }
 }
 
-static void OrbitEffect(HsfanimStruct01 *arg0)
-{
+static void OrbitEffect(HsfanimStruct01 *arg0) {
     float temp_f31;
     float var_f30;
     s16 temp_r30;
@@ -1520,19 +1542,27 @@ static void OrbitEffect(HsfanimStruct01 *arg0)
         if (temp_r30 < 0) {
             arg0->unk40.a = 0;
             arg0->unk2C = 0.0f;
-        }
-        else {
+        } else {
             arg0->unk40.a = temp_r30;
         }
     }
     arg0->unk00_s16++;
 }
 
-static EffectParamData coinParticleParam
-    = { 1, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 1.0f, 0.95f, -0.1f, 0x00000000, -0.2f, -8.0f, 0.0f };
+static EffectParamData coinParticleParam = {
+    1,
+    0xFF, 0xFF, 0x00, 0xFF,
+    0xFF, 0xFF, 0x00, 0xFF,
+    { 0.0f, 2.0f, 1.0f },
+    0.95f, 1.0f, 0.95f,
+    -0.1f,
+    0x00000000,
+    -0.2f,
+    -8.0f,
+    0.0f
+};
 
-void CharModelCoinEffectCreate(s16 arg0, Vec *arg1)
-{
+void CharModelCoinEffectCreate(s16 arg0, Vec *arg1) {
     s16 temp_r29;
     s16 var_r28;
     s16 i;
@@ -1549,14 +1579,33 @@ void CharModelCoinEffectCreate(s16 arg0, Vec *arg1)
     }
 }
 
-static EffectParamData lbl_80131030
-    = { 0, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0x80, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, -0.2f, -16.0f, 0.05f };
+static EffectParamData lbl_80131030 = {
+    0,
+    0xFF, 0xFF, 0x00, 0xFF,
+    0xFF, 0x80, 0x00, 0xFF,
+    { 0.0f, 2.0f, 1.0f },
+    0.95f, 0.95f, 0.95f,
+    0.0f,
+    0x00000000,
+    -0.2f,
+    -16.0f,
+    0.05f
+};
 
-static EffectParamData lbl_80131068
-    = { 0, 0xE0, 0x20, 0x20, 0xFF, 0xE0, 0x20, 0x20, 0xFF, { 0.0f, 2.0f, 1.0f }, 1.0f, 1.0f, 1.0f, 0.0f, 0x00000000, -0.2f, -12.0f, 0.05f };
+static EffectParamData lbl_80131068 = {
+    0,
+    0xE0, 0x20, 0x20, 0xFF,
+    0xE0, 0x20, 0x20, 0xFF,
+    { 0.0f, 2.0f, 1.0f },
+    1.0f, 1.0f, 1.0f,
+    0.0f,
+    0x00000000,
+    -0.2f,
+    -12.0f,
+    0.05f
+};
 
-void fn_8004EC74(s16 character)
-{
+void fn_8004EC74(s16 character) {
     Mtx sp24;
     Vec sp18;
     Vec spC;
@@ -1586,8 +1635,7 @@ void fn_8004EC74(s16 character)
     }
 }
 
-void fn_8004EDA4(s16 arg0, Vec *arg1, Vec *arg2)
-{
+void fn_8004EDA4(s16 arg0, Vec *arg1, Vec *arg2) {
     Mtx sp2C;
     Vec sp20;
     Vec sp14;
@@ -1621,19 +1669,38 @@ void fn_8004EDA4(s16 arg0, Vec *arg1, Vec *arg2)
     }
 }
 
-static EffectParamData lbl_801310BC
-    = { 0, 0x20, 0x20, 0xFF, 0xFF, 0x80, 0xFF, 0x20, 0xFF, 0.0f, 2.0f, 1.0f, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, -0.2f, -16.0f, 0.06f };
+static EffectParamData lbl_801310BC = {
+    0,
+    0x20, 0x20, 0xFF, 0xFF,
+    0x80, 0xFF, 0x20, 0xFF,
+    0.0f, 2.0f, 1.0f,
+    0.95f, 0.95f, 0.95f,
+    0.0f,
+    0x00000000,
+    -0.2f,
+    -16.0f,
+    0.06f
+};
 
-static EffectParamData lbl_801310F4
-    = { 0, 0x20, 0xE0, 0x20, 0xFF, 0x20, 0xE0, 0x20, 0xFF, 0.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0x00000000, -0.2f, -12.0f, 0.05f };
+static EffectParamData lbl_801310F4 = {
+    0,
+    0x20, 0xE0, 0x20, 0xFF,
+    0x20, 0xE0, 0x20, 0xFF,
+    0.0f, 2.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    0.0f,
+    0x00000000,
+    -0.2f,
+    -12.0f,
+    0.05f
+};
 
-void fn_8004F058(s16 character)
-{
+void fn_8004F058(s16 character) {
     Mtx sp24;
     Vec sp18;
     Vec spC;
-    ModelData *temp_r31;
-    UnkCharInstanceStruct *temp_r30;
+    ModelData* temp_r31;
+    UnkCharInstanceStruct* temp_r30;
 
     temp_r30 = &charInstance[character];
     temp_r31 = &Hu3DData[temp_r30->unk00];
@@ -1650,8 +1717,7 @@ void fn_8004F058(s16 character)
     fn_8004F13C(temp_r31->camera, &sp18, &temp_r31->rot);
 }
 
-void fn_8004F13C(s16 arg0, Vec *arg1, Vec *arg2)
-{
+void fn_8004F13C(s16 arg0, Vec *arg1, Vec *arg2) {
     Mtx sp2C;
     Vec sp20;
     Vec sp14;
@@ -1685,14 +1751,12 @@ void fn_8004F13C(s16 arg0, Vec *arg1, Vec *arg2)
     }
 }
 
-void CharModelLayerSetAll2(s16 arg0)
-{
+void CharModelLayerSetAll2(s16 arg0) {
     CharModelLayerSetAll(arg0);
 }
 
-void CharModelVoiceEnableSet(s16 character, s16 motion, s32 flag)
-{
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+void CharModelVoiceEnableSet(s16 character, s16 motion, s32 flag) {
+    UnkCharInstanceStruct* temp_r31 = &charInstance[character];
     s16 i;
 
     if (temp_r31->unk00 == -1) {
@@ -1706,49 +1770,42 @@ void CharModelVoiceEnableSet(s16 character, s16 motion, s32 flag)
     if (i != 32) {
         if (flag == 0) {
             temp_r31->unk8C[i] |= 1;
-        }
-        else {
+        } else {
             temp_r31->unk8C[i] &= ~1;
         }
     }
 }
 
-void fn_8004F52C(s16 character, s32 arg1)
-{
+void fn_8004F52C(s16 character, s32 arg1) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     if (arg1 != 0) {
         temp_r31->unkAC |= 8;
         return;
-    }
-    else {
+    } else {
         temp_r31->unkAC &= ~8;
     }
 }
 
-void CharModelEffectEnableSet(s16 character, s32 arg1)
-{
+void CharModelEffectEnableSet(s16 character, s32 arg1) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     if (character >= 8) {
         if (arg1 == 0) {
             lbl_801975B0[character] |= 0x10;
-        }
-        else {
+        } else {
             lbl_801975B0[character] &= ~0x10;
         }
         return;
     }
     if (arg1 == 0) {
         temp_r31->unkAC |= 0x10;
-    }
-    else {
+    } else {
         temp_r31->unkAC &= ~0x10;
     }
 }
 
-s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
-{
+s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     Process *var_r24;
     Process *var_r27;
     s16 *var_r29;
@@ -1766,47 +1823,89 @@ s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
     }
 }
 
-s32 CharModelEffectNpcInitSilent(s16 arg0, s16 arg1, s16 arg2)
-{
+s32 CharModelEffectNpcInitSilent(s16 arg0, s16 arg1, s16 arg2) {
     s32 sp10; // ! - uninitialized
 
     CharModelEffectNpcInit(arg0, arg1, arg2, -1);
     return sp10;
 }
 
-static s8 lbl_80131146[] = { 0x07, 0x20, 0x10, 0x28, 0x01, 0x1E, 0xE7, 0xE7, 0x01, 0x1E, 0x01, 0x1A, 0x01, 0x14, 0x13, 0x20, 0x02, 0x13 };
+static s8 lbl_80131146[] = {
+    0x07, 0x20, 0x10, 0x28,
+    0x01, 0x1E, 0xE7, 0xE7,
+    0x01, 0x1E, 0x01, 0x1A,
+    0x01, 0x14, 0x13, 0x20,
+    0x02, 0x13
+};
 
 static u16 lbl_80131158[] = {
-    0x0051,
-    0x0053,
-    0x0057,
-    0x0101,
-    0x0059,
-    0x005B,
-    0x0055,
-    0x0069,
+    0x0051, 0x0053,
+    0x0057, 0x0101,
+    0x0059, 0x005B,
+    0x0055, 0x0069,
     0x006A,
 };
 
 // Unused?
-static s8 lbl_8013116A[] = { 0x01, 0x20, 0x01, 0x15, 0x0A, 0x1E, 0xE7, 0xE7, 0x01, 0x1E, 0x01, 0x10, 0x01, 0x11, 0xE7, 0xE7, 0xE7, 0xE7 };
+static s8 lbl_8013116A[] = {
+    0x01, 0x20, 0x01, 0x15,
+    0x0A, 0x1E, 0xE7, 0xE7,
+    0x01, 0x1E, 0x01, 0x10,
+    0x01, 0x11, 0xE7, 0xE7,
+    0xE7, 0xE7
+};
 
-static u16 lbl_8013117C[] = { 0x0052, 0x0054, 0x0058, 0x0101, 0x005A, 0x005C, 0x0056, 0x0069, 0x006A };
+static u16 lbl_8013117C[] = {
+    0x0052, 0x0054,
+    0x0058, 0x0101,
+    0x005A, 0x005C,
+    0x0056, 0x0069,
+    0x006A
+};
 
-static s8 lbl_8013118E[] = { 0x03, 0x37, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0x01, 0x1A, 0xE7, 0xE7 };
+static s8 lbl_8013118E[] = {
+    0x03, 0x37, 0xE7, 0xE7,
+    0xE7, 0xE7, 0xE7, 0xE7,
+    0xE7, 0xE7, 0x01, 0x1A,
+    0xE7, 0xE7
+};
 
-static u16 lbl_8013119C[] = { 0x0051, 0x0053, 0x0057, 0x0101, 0x0059, 0x0068, 0x0055 };
+static u16 lbl_8013119C[] = {
+    0x0051, 0x0053,
+    0x0057, 0x0101,
+    0x0059, 0x0068,
+    0x0055
+};
 
-static s8 lbl_801311AA[] = { 0x04, 0x11, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0x01, 0x10, 0xE7, 0xE7 };
+static s8 lbl_801311AA[] = {
+    0x04, 0x11, 0xE7, 0xE7,
+    0xE7, 0xE7, 0xE7, 0xE7,
+    0xE7, 0xE7, 0x01, 0x10,
+    0xE7, 0xE7
+};
 
-static u16 lbl_801311B8[] = { 0x0052, 0x0054, 0x0058, 0x0101, 0x005A, 0x0067, 0x0056 };
+static u16 lbl_801311B8[] = {
+    0x0052, 0x0054,
+    0x0058, 0x0101,
+    0x005A, 0x0067,
+    0x0056
+};
 
-static s8 lbl_801311C6[] = { 0x01, 0x17, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7 };
+static s8 lbl_801311C6[] = {
+    0x01, 0x17, 0xE7, 0xE7,
+    0xE7, 0xE7, 0xE7, 0xE7,
+    0xE7, 0xE7, 0xE7, 0xE7,
+    0xE7, 0xE7
+};
 
-static u16 lbl_801311D4[] = { 0x0051, 0x0053, 0x0057, 0x0101, 0x0059, 0x005B, 0x0055 };
+static u16 lbl_801311D4[] = {
+    0x0051, 0x0053,
+    0x0057, 0x0101,
+    0x0059, 0x005B,
+    0x0055
+};
 
-static void UpdateNpcEffect(void)
-{
+static void UpdateNpcEffect(void) {
     Vec sp2C;
     ModelData *temp_r30;
     s16 *temp_r27;
@@ -1936,15 +2035,13 @@ static void UpdateNpcEffect(void)
                     effectStarParam.unk0C.x = 10.0 * sind(45.0f * i) * temp_r30->scale.x;
                     effectStarParam.unk0C.y = 0.0f;
                     effectStarParam.unk0C.z = 10.0 * cosd(45.0f * i) * temp_r30->scale.x;
-                    CreateEffectStar(
-                        temp_r25, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 40.0f, &effectStarParam);
+                    CreateEffectStar(temp_r25, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 40.0f, &effectStarParam);
                 }
                 for (i = 0; i < 8; i++) {
                     effectDustParam.unk0C.x = 4.0 * sind(45.0f * i + 22.5) * temp_r30->scale.x;
                     effectDustParam.unk0C.y = 0.0f;
                     effectDustParam.unk0C.z = 4.0 * cosd(45.0f * i + 22.5) * temp_r30->scale.x;
-                    CreateEffectDust(
-                        temp_r25, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                    CreateEffectDust(temp_r25, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
                 }
                 if (temp_r28 != -1) {
                     HuAudFXPlay(0x61);
@@ -1954,15 +2051,13 @@ static void UpdateNpcEffect(void)
     }
 }
 
-void CharModelStepTypeSet(s16 character, s32 arg1)
-{
+void CharModelStepTypeSet(s16 character, s32 arg1) {
     UnkCharInstanceStruct *temp_r31 = &charInstance[character];
 
     temp_r31->unkB0 = arg1;
 }
 
-static s32 PlayStepFX(s16 character, s16 arg1, u8 arg2)
-{
+static s32 PlayStepFX(s16 character, s16 arg1, u8 arg2) {
     UnkCharInstanceStruct *temp_r31;
     ModelData *var_r28;
 
@@ -1973,17 +2068,14 @@ static s32 PlayStepFX(s16 character, s16 arg1, u8 arg2)
     }
     if (temp_r31->unkB0 == 4) {
         arg1 = 0x109;
-    }
-    else if (temp_r31->unkB0 == 5) {
+    } else if (temp_r31->unkB0 == 5) {
         arg1 = 0x10B;
-    }
-    else {
+    } else {
         arg1 += temp_r31->unkB0;
     }
     if (temp_r31->unkAC & 8) {
         return HuAudCharVoicePlayPos(character, arg1, &var_r28->pos);
-    }
-    else {
+    } else {
         return HuAudCharVoicePlay(character, arg1);
     }
 }

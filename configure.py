@@ -919,7 +919,7 @@ config.libs = [
         "m412Dll",  # Mr. Blizzard's Brigade
         objects={
             Object(Matching, "REL/executor.c"),
-            Object(Matching, "REL/m412Dll/main.c"),
+            Object(NonMatching, "REL/m412Dll/main.c"),
         },
     ),
     Rel(
@@ -1203,12 +1203,12 @@ config.libs = [
         "m447dll",  # Archaeologuess
         objects={
             Object(Matching, "REL/executor.c"),
-            Object(Matching, "REL/m447dll/main.c"),
-            Object(Matching, "REL/m447dll/stage.c"),
-            Object(Matching, "REL/m447dll/camera.c"),
-            Object(Matching, "REL/m447dll/player.c"),
-            Object(Matching, "REL/m447dll/player_col.c"),
-            Object(Matching, "REL/m447dll/block.c"),
+            Object(NonMatching, "REL/m447dll/main.c"),
+            Object(NonMatching, "REL/m447dll/stage.c"),
+            Object(NonMatching, "REL/m447dll/camera.c"),
+            Object(NonMatching, "REL/m447dll/player.c"),
+            Object(NonMatching, "REL/m447dll/player_col.c"),
+            Object(NonMatching, "REL/m447dll/block.c"),
         },
     ),
     Rel(
@@ -1569,9 +1569,9 @@ config.libs = [
         "ztardll",
         objects={
             Object(Matching, "REL/executor.c"),
-            Object(Matching, "REL/ztardll/main.c"),
-            Object(Matching, "REL/ztardll/font.c"),
-            Object(Matching, "REL/ztardll/select.c"),
+            Object(NonMatching, "REL/ztardll/main.c"),
+            Object(NonMatching, "REL/ztardll/font.c"),
+            Object(NonMatching, "REL/ztardll/select.c"),
         },
     ),
 ]

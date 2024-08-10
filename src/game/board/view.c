@@ -356,7 +356,7 @@ static void SetTargetView(void) {
     Vec sp8;
 
     BoardCameraBackup();
-    focusMdl = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x0A), 0, 0);
+    focusMdl = BoardModelCreate(0x7000A, 0, 0);
     BoardModelVisibilitySet(focusMdl, 0);
     BoardModelPosSetV(focusMdl, &focusPos);
     BoardCameraNearFarSet(10.0f, 30000.0f);
@@ -399,10 +399,10 @@ static void CreateButtonWin(void) {
     s32 var_r31;
 
     if (viewControls != 2) {
-        var_r31 = MAKE_MESSID(0x09, 0x05);
+        var_r31 = 0x90005;
         var_f31 = 286.0f;
     } else {
-        var_r31 = MAKE_MESSID(0x10, 0x4D);
+        var_r31 = 0x10004D;
         var_f31 = 328.0f;
     }
     HuWinMesMaxSizeGet(1, sp8, var_r31);
@@ -429,14 +429,14 @@ static void InitOverheadView(void) {
     float *temp_r30;
     s32 i;
     s32 sp1C[8] = {
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x2E),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x2F),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x30),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x31),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x32),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x33),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x34),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x35)
+        0x0007002E,
+        0x0007002F,
+        0x00070030,
+        0x00070031,
+        0x00070032,
+        0x00070033,
+        0x00070034,
+        0x00070035
     };
 
     temp_r26 = omAddObjEx(boardObjMan, 0x1000, 0, 0, -1, UpdateOverheadView);
@@ -459,13 +459,13 @@ static void InitOverheadView(void) {
         } else {
             GWCharColorGet(GWPlayer[i].character, &spA);
         }
-        BoardSpriteCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x6C), 0x1770, 0, &sp8);
+        BoardSpriteCreate(0x7006C, 0x1770, 0, &sp8);
         HuSprGrpMemberSet(temp_r31->unk02, i + 4, sp8);
         HuSprPosSet(temp_r31->unk02, i + 4, temp_r30[0], temp_r30[1]);
         HuSprColorSet(temp_r31->unk02, i + 4, spA.r, spA.g, spA.b);
     }
     temp_r30 = overhead2DPos[4];
-    temp_r31->unk04 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x08), NULL, 0);
+    temp_r31->unk04 = BoardModelCreate(0x70008, NULL, 0);
     BoardModelMotionSpeedSet(temp_r31->unk04, 0.0f);
     BoardModelLayerSet(temp_r31->unk04, 6);
     BoardModelScaleSet(temp_r31->unk04, 0.4f, 0.4f, 0.4f);
@@ -476,7 +476,7 @@ static void InitOverheadView(void) {
     spA.r = 0xF8;
     spA.g = 0xF0;
     spA.b = 0x80;
-    BoardSpriteCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x6C), 0x1770, 0, &sp8);
+    BoardSpriteCreate(0x7006C, 0x1770, 0, &sp8);
     HuSprGrpMemberSet(temp_r31->unk02, 8, sp8);
     HuSprPosSet(temp_r31->unk02, 8, temp_r30[0], temp_r30[1]);
     HuSprColorSet(temp_r31->unk02, 8, spA.r, spA.g, spA.b);

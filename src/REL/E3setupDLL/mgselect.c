@@ -94,19 +94,19 @@ static s16 mgOvlTbl[] = {
 static s16 mgIdTbl[] = { 403, 404, 407, 410, 412, 415, 418, 419, 425, 426, 431, 436, 438, 0 };
 
 static s32 mgNameTbl[] = {
-    MAKE_MESSID(0x17, 0x03),
-    MAKE_MESSID(0x17, 0x04),
-    MAKE_MESSID(0x17, 0x07),
-    MAKE_MESSID(0x17, 0x0A),
-    MAKE_MESSID(0x17, 0x0C),
-    MAKE_MESSID(0x17, 0x0F),
-    MAKE_MESSID(0x17, 0x12),
-    MAKE_MESSID(0x17, 0x13),
-    MAKE_MESSID(0x17, 0x19),
-    MAKE_MESSID(0x17, 0x1A),
-    MAKE_MESSID(0x17, 0x1F),
-    MAKE_MESSID(0x17, 0x24),
-    MAKE_MESSID(0x17, 0x26),
+    0x00170003,
+    0x00170004,
+    0x00170007,
+    0x0017000A,
+    0x0017000C,
+    0x0017000F,
+    0x00170012,
+    0x00170013,
+    0x00170019,
+    0x0017001A,
+    0x0017001F,
+    0x00170024,
+    0x00170026,
 };
 
 char lbl_2_data_A8[] = "\013TEST MINIGAME NAME01\n      test";
@@ -332,12 +332,12 @@ static void CreateMGSelect(omObjData *object)
     temp_r30 = HuSprGrpCreate(3);
     temp_r31->unk_1C = temp_r30;
     HuSprGrpPosSet(temp_r30, 174.0f, 271.0f);
-    temp_r25 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_E3SETUP, 0x21), MEMORY_DEFAULT_NUM));
+    temp_r25 = HuSprAnimRead(HuDataReadNum(0x21, MEMORY_DEFAULT_NUM));
     temp_r31->unk_00[index2] = temp_r25;
     temp_r29 = HuSprCreate(temp_r25, 0x7540, 0);
     HuSprGrpMemberSet(temp_r30, index2, temp_r29);
     index2++;
-    temp_r25 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_E3SETUP, 0x27), MEMORY_DEFAULT_NUM));
+    temp_r25 = HuSprAnimRead(HuDataReadNum(0x27, MEMORY_DEFAULT_NUM));
     temp_r31->unk_00[index2] = temp_r25;
     temp_r29 = HuSprCreate(temp_r25, 0x64, 0);
     HuSprGrpMemberSet(temp_r30, index2, temp_r29);
@@ -346,9 +346,9 @@ static void CreateMGSelect(omObjData *object)
     temp_r31->unk_42 = 0;
     HuSprPosSet(temp_r30, index2, 0.0f, cursorYOfsTbl[temp_r31->unk_42]);
     index2++;
-    temp_r25 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_E3SETUP, 0x35), MEMORY_DEFAULT_NUM));
+    temp_r25 = HuSprAnimRead(HuDataReadNum(0x35, MEMORY_DEFAULT_NUM));
     temp_r31->unk_00[index2++] = temp_r25;
-    temp_r23 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_E3SETUP, 0x36), MEMORY_DEFAULT_NUM));
+    temp_r23 = HuSprAnimRead(HuDataReadNum(0x36, MEMORY_DEFAULT_NUM));
     temp_r31->unk_00[index2++] = temp_r23;
     temp_r30 = HuSprGrpCreate(2);
     temp_r31->unk_1E = temp_r30;
@@ -449,7 +449,7 @@ static void CreateMGPic(omObjData *object)
         HuSprAttrSet(temp_r3, var_r30, 4);
     }
     index2 = var_r30;
-    temp_r3_2 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_E3SETUP, 0x22), MEMORY_DEFAULT_NUM));
+    temp_r3_2 = HuSprAnimRead(HuDataReadNum(0x22, MEMORY_DEFAULT_NUM));
     temp_r28->unk_00[index2] = temp_r3_2;
     group = HuSprCreate(temp_r3_2, 0x7540, 0);
     HuSprGrpMemberSet(temp_r3, index2, group);
@@ -478,7 +478,7 @@ static void CreateMGInterface(omObjData *object)
     group = HuSprGrpCreate(1);
     unkStruct->group = group;
     HuSprGrpPosSet(group, 288.0f, 64.0f);
-    temp_r3_2 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_E3SETUP, 0x24), MEMORY_DEFAULT_NUM));
+    temp_r3_2 = HuSprAnimRead(HuDataReadNum(0x24, MEMORY_DEFAULT_NUM));
     unkStruct->unk_00[index2] = temp_r3_2;
     index = HuSprCreate(temp_r3_2, 0x2710, 0);
     HuSprGrpMemberSet(group, 0, index);
@@ -486,7 +486,7 @@ static void CreateMGInterface(omObjData *object)
     group = HuSprGrpCreate(1);
     unkStruct->group2 = group;
     HuSprGrpPosSet(group, 444.0f, 384.0f);
-    temp_r3_2 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_E3SETUP, 0x23), MEMORY_DEFAULT_NUM));
+    temp_r3_2 = HuSprAnimRead(HuDataReadNum(0x23, MEMORY_DEFAULT_NUM));
     unkStruct->unk_00[index2] = temp_r3_2;
     index = HuSprCreate(temp_r3_2, 0x271A, 0);
     HuSprGrpMemberSet(group, 0, index);

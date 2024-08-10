@@ -9,7 +9,7 @@ typedef struct {
     /* 0x00 */ Process *process;
     /* 0x04 */ s16 window;
     /* 0x08 */ s32 id;
-    /* 0x0C */ BOOL visible;
+    /* 0x0C */ s32 visible;
     /* 0x10 */ BOOL messWaitSignal;
     /* 0x14 */ BOOL choiceSignal;
     /* 0x18 */ u32 messToBeSet;

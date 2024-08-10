@@ -164,17 +164,17 @@ static s16 yourTurnSprGrp = -1;
 static UnkUiStatusStruct uiStatus[4] = { 0 };
 
 static s32 statusSprTbl[11] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x27),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x26),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x29),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x28),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x28),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x28),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2D),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x28),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x28),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x28),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2C)
+    0x00070027,
+    0x00070026,
+    0x00070029,
+    0x00070028,
+    0x00070028,
+    0x00070028,
+    0x0007002D,
+    0x00070028,
+    0x00070028,
+    0x00070028,
+    0x0007002C
 };
 
 static s16 statusSprPrioTbl[12] = {
@@ -231,20 +231,20 @@ static float statusItemPosTbl[6][2] = {
 };
 
 static s32 itemMdlTbl[14] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x83),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x84),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x85),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x86),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x87),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x88),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x89),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x8A),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x8B),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x8C),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x8D),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x8E),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x8F),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x90)
+    0x00070083,
+    0x00070084,
+    0x00070085,
+    0x00070086,
+    0x00070087,
+    0x00070088,
+    0x00070089,
+    0x0007008A,
+    0x0007008B,
+    0x0007008C,
+    0x0007008D,
+    0x0007008E,
+    0x0007008F,
+    0x00070090
 };
 
 static Vec teamItemStatusPosTbl[2] = {
@@ -254,20 +254,20 @@ static Vec teamItemStatusPosTbl[2] = {
 
 s32 BoardItemModelGet(s32 arg0) {
     s32 sp8[14] = {
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x6D),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x6E),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x6F),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x70),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x71),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x72),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x73),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x74),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x76),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x77),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x78),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x79),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x7A),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x7B)
+        0x0007006D,
+        0x0007006E,
+        0x0007006F,
+        0x00070070,
+        0x00070071,
+        0x00070072,
+        0x00070073,
+        0x00070074,
+        0x00070076,
+        0x00070077,
+        0x00070078,
+        0x00070079,
+        0x0007007A,
+        0x0007007B
     };
 
     return sp8[arg0];
@@ -275,21 +275,21 @@ s32 BoardItemModelGet(s32 arg0) {
 
 s32 BoardItemNameGet(s32 arg0) {
     s32 sp8[15] = {
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x00),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x01),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x02),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x03),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x04),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x05),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x06),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x07),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x08),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x09),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x0A),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x0B),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x0C),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x0D),
-        DATA_MAKE_NUM(DATADIR_EFFECT, 0x0E)
+        0x00120000,
+        0x00120001,
+        0x00120002,
+        0x00120003,
+        0x00120004,
+        0x00120005,
+        0x00120006,
+        0x00120007,
+        0x00120008,
+        0x00120009,
+        0x0012000A,
+        0x0012000B,
+        0x0012000C,
+        0x0012000D,
+        0x0012000E
     };
 
     return sp8[arg0];
@@ -427,10 +427,10 @@ void BoardStatusHammerCreate(s32 arg0) {
         case 0:
             return;
         case 2:
-            var_r30 = DATA_MAKE_NUM(DATADIR_BOARD, 0x93);
+            var_r30 = 0x70093;
             break;
         case 1:
-            var_r30 = DATA_MAKE_NUM(DATADIR_BOARD, 0x92);
+            var_r30 = 0x70092;
             break;
     }
     if (!temp_r31->unk00_bit6) {
@@ -524,14 +524,14 @@ static void CreateBoardStatusSprite(s32 arg0, UnkUiStatusStruct *arg1) {
     s32 temp_r27;
     s16 temp_r26;
     s32 spC[] = {
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x2E),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x2F),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x30),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x31),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x32),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x33),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x34),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x35)
+        0x0007002E,
+        0x0007002F,
+        0x00070030,
+        0x00070031,
+        0x00070032,
+        0x00070033,
+        0x00070034,
+        0x00070035
     };
     s32 i;
 
@@ -559,14 +559,14 @@ static void CreateBoardStatusSprite(s32 arg0, UnkUiStatusStruct *arg1) {
     var_f31 = statusSprPosTbl[11][0];
     var_f30 = statusSprPosTbl[11][1];
     HuSprPosSet(arg1->unk02, 11, var_f31, var_f30);
-    BoardSpriteCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x2A), 0x5DC, NULL, &sp8);
+    BoardSpriteCreate(0x7002A, 0x5DC, NULL, &sp8);
     HuSprGrpMemberSet(arg1->unk02, 0xC, sp8);
     var_f31 = statusSprPosTbl[12][0];
     var_f30 = statusSprPosTbl[12][1];
     HuSprPosSet(arg1->unk02, 12, var_f31, var_f30);
     HuSprAttrSet(arg1->unk02, 0xC, 8);
     for (i = 0; i < 3; i++) {
-        BoardSpriteCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x91), 0x5DC, NULL, &sp8);
+        BoardSpriteCreate(0x70091, 0x5DC, NULL, &sp8);
         HuSprGrpMemberSet(arg1->unk02, i + 0xD, sp8);
         HuSprAttrSet(arg1->unk02, i + 0xD, 1);
         HuSprAttrSet(arg1->unk02, i + 0xD, 8);
@@ -704,14 +704,14 @@ void BoardPickerCreate(s32 arg0, s8 arg1, void *arg2, s8 arg3) {
     s32 temp_r28;
     s16 sp12;
     s32 sp14[] = {
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x1E),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x1F),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x20),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x21),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x22),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x23),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x24),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x25)
+        0x0007001E,
+        0x0007001F,
+        0x00070020,
+        0x00070021,
+        0x00070022,
+        0x00070023,
+        0x00070024,
+        0x00070025
     };
 
     temp_r28 = GWPlayer[arg0].character;
@@ -899,14 +899,14 @@ void BoardYourTurnExec(s32 arg0) {
     s32 temp_r29;
     UnkUiWork02 *temp_r31;
     s32 sp8[] = {
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x43),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x44),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x45),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x46),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x47),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x48),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x49),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x4A)
+        0x00070043,
+        0x00070044,
+        0x00070045,
+        0x00070046,
+        0x00070047,
+        0x00070048,
+        0x00070049,
+        0x0007004A
     };
 
     temp_r29 = GWPlayer[arg0].character;
@@ -1086,10 +1086,10 @@ static void ItemUseProc(void) {
     itemTeamF = 0;
     BoardFilterFadeOut(0x1E);
     if (itemUsed == 0xA) {
-        var_r27 = DATADIR_BKOOPASUIT;
+        var_r27 = 0x40000;
     }
     if (itemUsed == 0xB) {
-        var_r27 = DATADIR_BYOKODORI;
+        var_r27 = 0x90000;
     }
     if (var_r27 != -1) {
         var_r24 = BoardDataDirReadAsync(var_r27);
@@ -1177,8 +1177,8 @@ static void DestroyItemUse(void) {
     for (i = 0; i < 4; i++) {
         GWPlayer[i].show_next = 1;
     }
-    HuDataDirClose(DATADIR_BKOOPASUIT);
-    HuDataDirClose(DATADIR_BYOKODORI);
+    HuDataDirClose(0x40000);
+    HuDataDirClose(0x90000);
     itemUseProc = NULL;
 }
 
@@ -1824,11 +1824,11 @@ static void CreateItemWindow(s32 arg0, s32 arg1) {
             HuWinCenterPosSet(temp_r31->unk12[i], 0.0f, 48.0f);
             HuWinMesSpeedSet(temp_r31->unk12[i], 0);
             HuWinMesSet(temp_r31->unk12[i], BoardItemNameGet(temp_r28));
-            HuWinMesMaxSizeGet(1, sp8, temp_r28 + MAKE_MESSID(0x08, 0x0E));
+            HuWinMesMaxSizeGet(1, sp8, temp_r28 + 0x8000E);
             temp_r31->unk1E[i] = HuWinCreate(temp_r31->unk2C[i].x, temp_r31->unk2C[i].y - (-94.0f), sp8[0], sp8[1], 0);
             HuWinDrawNoSet(temp_r31->unk1E[i], 0x40);
             HuWinMesSpeedSet(temp_r31->unk1E[i], 0);
-            HuWinMesSet(temp_r31->unk1E[i], temp_r28 + MAKE_MESSID(0x08, 0x0E));
+            HuWinMesSet(temp_r31->unk1E[i], temp_r28 + 0x8000E);
             sp10.x = temp_r31->unk2C[i].x + 48.0f;
             sp10.y = temp_r31->unk2C[i].y;
             sp10.z = 400.0f;
@@ -1964,9 +1964,9 @@ static void CreatePickerWindow(UnkUiWork01 *arg0, s32 arg1) {
             break;
     }
     if (arg1 != 0) {
-        var_r30 = MAKE_MESSID(0x10, 0x1A);
+        var_r30 = 0x10001A;
     } else {
-        var_r30 = MAKE_MESSID(0x10, 0x1B);
+        var_r30 = 0x10001B;
     }
     HuWinMesMaxSizeGet(1, spC, var_r30);
     var_f30 = -10000.0f;

@@ -422,12 +422,12 @@ static void fn_1_9E5C(s32 arg0) {
     HuAudFXPlay(0x51);
     var_r30 = BoardPlayerCoinsGet(arg0);
     if (var_r30 != 0) {
-        var_r29 = MAKE_MESSID(48, 3);
+        var_r29 = 0x300003;
         var_r28 = -1;
         var_r30 = BoardPlayerCoinsGet(arg0) - (var_r30 >> 1);
         var_r25 = 8;
     } else {
-        var_r29 = MAKE_MESSID(48, 5);
+        var_r29 = 0x300005;
         var_r28 = 1;
         var_r30 = 50;
         var_r25 = 7;
@@ -466,9 +466,9 @@ static void fn_1_9E5C(s32 arg0) {
         HuPrcVSleep();
     }
     if (var_r28 == -1) {
-        var_r29 = MAKE_MESSID(48, 4);
+        var_r29 = 0x300004;
     } else {
-        var_r29 = MAKE_MESSID(48, 6);
+        var_r29 = 0x300006;
     }
     BoardModelMotionShiftSet(lbl_1_data_498, 3, 0.0f, 8.0f, 0);
     HuAudFXPlay(0x3A);
@@ -801,7 +801,7 @@ static void fn_1_B27C(s32 arg0) {
     BoardMusStart(1, 6, 0x7F, 0);
     BoardModelMotionShiftSet(lbl_1_data_498, 7, 0.0f, 8.0f, 0);
     HuPrcSleep(8);
-    var_r29 = MAKE_MESSID(48, 38);
+    var_r29 = 0x300026;
     var_r27 = 50;
     BoardWinCreate(2, var_r29, 5);
     BoardWinWait();
@@ -820,7 +820,7 @@ static void fn_1_B27C(s32 arg0) {
     while (!BoardModelMotionEndCheck(lbl_1_data_498)) {
         HuPrcVSleep();
     }
-    var_r29 = MAKE_MESSID(48, 39);
+    var_r29 = 0x300027;
     BoardModelMotionShiftSet(lbl_1_data_498, 3, 0.0f, 8.0f, 0);
     HuAudFXPlay(0x3A);
     BoardWinCreate(2, var_r29, 5);
@@ -1222,7 +1222,7 @@ void fn_1_CD0C(void) {
     while (!BoardViewMoveCheck()) {
         HuPrcVSleep();
     }
-    BoardWinCreate(3, MAKE_MESSID(48, 1), -1);
+    BoardWinCreate(3, 0x300001, -1);
     BoardWinWait();
     BoardWinKill();
 }

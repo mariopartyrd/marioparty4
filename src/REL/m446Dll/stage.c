@@ -108,7 +108,7 @@ unkStruct9* m446StageCreate(void) {
     unkStruct3* temp_ret;
     unkStruct9* var_r31;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x30, MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x30, 0x10000000);
     if (!var_r31) {
         return NULL;
     }

@@ -251,7 +251,7 @@ s32 GWMGAvailGet(s32 id)
     }
 }
 
-void GWMGAvailSet(s32 id)
+s32 GWMGAvailSet(s32 id)
 {
     s32 word;
     s32 bit;

@@ -18,7 +18,7 @@ unkStruct5* fn_1_3064(void) {
     s32 var_r30;
     unkStruct5* temp_r3;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10, MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10, 0x10000000);
     if (!temp_r3) {
         return NULL;
     }

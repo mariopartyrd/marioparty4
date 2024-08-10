@@ -53,10 +53,10 @@ static s16 mgPlay4P[8];
 
 // data
 static s32 mgSetupSprTbl[13] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x4B), DATA_MAKE_NUM(DATADIR_BOARD, 0x4C), DATA_MAKE_NUM(DATADIR_BOARD, 0x4D), DATA_MAKE_NUM(DATADIR_BOARD, 0x4E),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x4F), DATA_MAKE_NUM(DATADIR_BOARD, 0x52), DATA_MAKE_NUM(DATADIR_BOARD, 0x50), DATA_MAKE_NUM(DATADIR_BOARD, 0x51),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x53), DATA_MAKE_NUM(DATADIR_BOARD, 0x54), DATA_MAKE_NUM(DATADIR_BOARD, 0x55), DATA_MAKE_NUM(DATADIR_BOARD, 0x68),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x56)
+    0x0007004B, 0x0007004C, 0x0007004D, 0x0007004E,
+    0x0007004F, 0x00070052, 0x00070050, 0x00070051,
+    0x00070053, 0x00070054, 0x00070055, 0x00070068,
+    0x00070056
 };
 static Vec statusLayout4P[4] = {
     { 170.0f, 244.0f, 0.0f }, 
@@ -77,9 +77,9 @@ static Vec statusLayout2Vs2[4] = {
     { 406.0f, 348.0f, 0.0f },
 };
 static s32 luckyMessTbl[9] = {
-    MAKE_MESSID(0x14, 0x00), MAKE_MESSID(0x14, 0x05), MAKE_MESSID(0x14, 0x0A), MAKE_MESSID(0x14, 0x0F),
-    MAKE_MESSID(0x14, 0x14), MAKE_MESSID(0x14, 0x19), MAKE_MESSID(0x14, 0x00), MAKE_MESSID(0x14, 0x00),
-    MAKE_MESSID(0x14, 0x00)
+    0x00140000, 0x00140005, 0x0014000A, 0x0014000F,
+    0x00140014, 0x00140019, 0x00140000, 0x00140000,
+    0x00140000
 };
 
 // sbss
@@ -145,9 +145,9 @@ static inline s32 setupObjGet(void) {
 
 static void ExecMGSetup(void) {
     s32 sp60[9] = {
-        DATADIR_W01, DATADIR_W02, DATADIR_W03,
-        DATADIR_W04, DATADIR_W05, DATADIR_W06,
-        DATADIR_W10, DATADIR_W20, DATADIR_W21
+        0x750000, 0x760000, 0x770000,
+        0x780000, 0x790000, 0x7A0000,
+        0x7B0000, 0x7C0000, 0x7D0000
     };
     Vec sp54;
     u16 var_r24;
@@ -255,8 +255,8 @@ static void ExecMGSetup(void) {
     while (setupObjGet() != 7) {
         HuPrcVSleep();
     }
-    HuDataDirClose(DATADIR_BOARD);
-    HuDataDirClose(DATADIR_BGUEST);
+    HuDataDirClose(0x70000);
+    HuDataDirClose(0x20000);
     HuDataDirClose(sp60[GWBoardGet()]);
     HuPrcSleep(2);
     if (_CheckFlag(FLAG_ID_MAKE(0, 11)) != 0) {
@@ -319,8 +319,8 @@ static void DetermineMGList(bitcopy* arg0) {
         }
     }
     mgListAll[var_r24] = -1;
-    temp_r26 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r27 * 4, MEMORY_DEFAULT_NUM);
-    temp_r25 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r27 * 2, MEMORY_DEFAULT_NUM);
+    temp_r26 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r27 * 4, 0x10000000U);
+    temp_r25 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r27 * 2, 0x10000000U);
     var_r31 = mgInfoTbl;
     
     for (var_r29 = var_r30 = 0; var_r30 < var_r27; var_r30++, var_r31++) {
@@ -630,7 +630,7 @@ static void CreateMGSetup(void) {
     temp_r29->unk_02 = 0;
     temp_r29->unk_03 = 0;
     temp_r29->unk_04 = 0;
-    temp_r28->unk_0C = HuMemDirectMallocNum(HEAP_SYSTEM, 0x154, MEMORY_DEFAULT_NUM);
+    temp_r28->unk_0C = HuMemDirectMallocNum(HEAP_SYSTEM, 0x154, 0x10000000U);
     temp_r31 = temp_r28->unk_0C;
     temp_r31->unk_00[0] = HuSprGrpCreate(0xD);
     
@@ -1066,7 +1066,7 @@ static void UpdateMGList(bitcopy* arg0, omObjData* arg1) {
                 if (activeMG[var_r23].unk_03 != 0) {
                     sp14 = activeMG[var_r23].unk_04;
                 } else {
-                    sp14 = MAKE_MESSID(9, 1);
+                    sp14 = 0x90001;
                 }
                 HuWinMesSet(temp_r3, sp14);
                 activeMG[var_r23].unk_00 = temp_r3;

@@ -10,19 +10,13 @@ typedef struct {
     /* 0x00 */ OptionWindow *window;
     /* 0x04 */ s32 quitTimer;
     /* 0x08 */ s16 light;
-} StateWork; /* size = 0x0C */
+} StateWork; // Size 0xC
 
 typedef struct {
-    /* 0x00 */ Vec src;
-    /* 0x0C */ Vec dest;
-    /* 0x18 */ GXColor color;
-} UnkLightDataStruct; /* size = 0x1C */ // TODO same as m446Dll::unkStruct10 and present::UnkPresentStruct3
-
-typedef struct UnkShadowDataStruct {
-    /* 0x00 */ Vec pos;
-    /* 0x0C */ Vec up;
-    /* 0x18 */ Vec target;
-} UnkShadowDataStruct; /* size = 0x24 */
+    Vec src;
+    Vec dest;
+    GXColor color;
+} UnkLightDataStruct; // Size 0x1C TODO same as m446Dll::unkStruct10 and present::UnkPresentStruct3
 
 static void ExecState(omObjData *object);
 
@@ -34,7 +28,7 @@ static UnkLightDataStruct lightTbl = {
     { 0xFF, 0xFF, 0xFF, 0xFF },
 };
 
-static UnkShadowDataStruct shadowPosTbl = {
+static Vec shadowPosTbl[3] = {
     { 0.0f, 3000.0f, 1.0f },
     { 0.0f, 1.0f, 0.0f },
     { 0.0f, 0.0f, 0.0f },
@@ -42,10 +36,12 @@ static UnkShadowDataStruct shadowPosTbl = {
 
 omObjData *OptionStateCreate(void)
 {
+    omObjData *object;
+    StateWork *work;
     LightData *lightData;
 
-    omObjData *object = omAddObjEx(optionObjMan, 1000, 0, 0, 4, ExecState);
-    StateWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StateWork), MEMORY_DEFAULT_NUM);
+    object = omAddObjEx(optionObjMan, 1000, 0, 0, 4, ExecState);
+    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StateWork), MEMORY_DEFAULT_NUM);
     object->data = work;
     optionCamera = OptionCameraCreate();
     optionRoom = OptionRoomCreate();
@@ -56,7 +52,7 @@ omObjData *OptionStateCreate(void)
     lightData = &Hu3DGlobalLight[work->light];
     Hu3DShadowCreate(30.0f, 20.0f, 5000.0f);
     Hu3DShadowTPLvlSet(0.45f);
-    Hu3DShadowPosSet(&shadowPosTbl.pos, &shadowPosTbl.up, &shadowPosTbl.target);
+    Hu3DShadowPosSet(&shadowPosTbl[0], &shadowPosTbl[1], &shadowPosTbl[2]);
     return object;
 }
 

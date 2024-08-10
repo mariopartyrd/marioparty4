@@ -23,7 +23,7 @@ s32 GWBoardWinCountInc(s32 character, s32 board);
 s32 GWBoardWinCountGet(s32 character, s32 board);
 void GWBoardWinCountSet(s32 character, s32 board, s32 value);
 s32 GWMGAvailGet(s32 id);
-void GWMGAvailSet(s32 id);
+s32 GWMGAvailSet(s32 id);
 s32 GWMGCustomGet(s32 id);
 void GWMGCustomSet(s32 id);
 void GWMGCustomReset(s32 id);

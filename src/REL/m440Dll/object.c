@@ -23,14 +23,14 @@ s16 lbl_1_bss_70;
 s16 lbl_1_data_1D8 = 2;
 s16 lbl_1_data_1DA = -1;
 u32 lbl_1_data_1DC[8][2] = {
-    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00), 0 },
-    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02), 0 },
-    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03), 0 },
-    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x38), 0 },
-    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48), 0 },
-    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17), 0 },
+    { 0x5F0000, 0 },
+    { 0x5F0002, 0 },
+    { 0x5F0003, 0 },
+    { 0x5F0038, 0 },
+    { 0x5F0048, 0 },
+    { 0x5F0017, 0 },
     { 0x47000C, 1 },
-    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x36), 0 }
+    { 0x5F0036, 0 }
 };
 f32 lbl_1_data_21C[4] = {
     210.0f, 190.0f, 170.0f, 0.0f
@@ -58,7 +58,7 @@ void fn_1_AEE4(omObjData* arg0) {
     s16 var_r29;
     unkObjStruct* temp_r31;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x78, MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x78, 0x10000000);
     temp_r31 = (unkObjStruct*)arg0->data;
     memset(temp_r31, 0, 0x78);
     arg0->stat |= 0x100;

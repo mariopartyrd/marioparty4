@@ -161,9 +161,9 @@ static void MushroomMain(void) {
             WaitItemGive();
             
             if (itemResult != 0) {
-                var_r27 = MAKE_MESSID(5, 1);
+                var_r27 = 0x50001;
             } else {
-                var_r27 = MAKE_MESSID(5, 2);
+                var_r27 = 0x50002;
             }
             
             BoardPlayerMotionShiftSet(curPlayer, 0xC, 0.0f, 4.0f, 0);
@@ -341,7 +341,7 @@ static void CenterBox(ItemGiveWork2* arg0, omObjData* arg1) {
 
 static void InitBox(s32 arg0) {
     Vec sp10;
-    s32 sp8[2] = {DATA_MAKE_NUM(DATADIR_BOARD, 0x6D), DATA_MAKE_NUM(DATADIR_BOARD, 0x6E)};
+    s32 sp8[2] = {0x0007006D, 0x0007006E};
     s32 var_r29;
     s32 var_r28;
     s32 var_r27;
@@ -367,7 +367,7 @@ static void InitBox(s32 arg0) {
         boxObj[i]->rot.x = 0.0f;
         boxObj[i]->rot.y = 180.0f;
         boxObj[i]->rot.z = 0.0f;
-        temp_r31->unk_02 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 5), NULL, 0);
+        temp_r31->unk_02 = BoardModelCreate(0x70005, NULL, 0);
         BoardModelPosSet(temp_r31->unk_02, boxObj[i]->trans.x, boxObj[i]->trans.y, boxObj[i]->trans.z);
         BoardModelMotionSpeedSet(temp_r31->unk_02, 0.0f);
         BoardModelLayerSet(temp_r31->unk_02, 2U);        

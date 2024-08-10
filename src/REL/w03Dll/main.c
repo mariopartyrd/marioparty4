@@ -125,24 +125,24 @@ void BoardCreate(void) {
 
     lbl_1_bss_0 = (w03State*)&GWSystem.board_data;
     lbl_1_bss_0->unk3 = 0;
-    BoardSpaceInit(DATA_MAKE_NUM(DATADIR_W03, 0x00));
+    BoardSpaceInit(0x770000);
 
-    lbl_1_data_1E0 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x01), NULL, 0);
+    lbl_1_data_1E0 = BoardModelCreate(0x770001, NULL, 0);
     fn_8006DDE8(lbl_1_data_1E0, -1.0f);
     BoardModelPosSet(lbl_1_data_1E0, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_1E0, 0, 0x40000001);
 
-    lbl_1_data_1E8 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x03), NULL, 0);
+    lbl_1_data_1E8 = BoardModelCreate(0x770003, NULL, 0);
     fn_8006DDE8(lbl_1_data_1E8, -1.0f);
     BoardModelPosSet(lbl_1_data_1E8, 0.0f, 0.0f, 0.0f);
     BoardModelLayerSet(lbl_1_data_1E8, 2);
 
-    lbl_1_data_1E2 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x02), NULL, 0);
+    lbl_1_data_1E2 = BoardModelCreate(0x770002, NULL, 0);
     fn_8006DDE8(lbl_1_data_1E2, -1.0f);
     BoardModelPosSet(lbl_1_data_1E2, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_1E2, 0, 0x40000001);
 
-    lbl_1_data_1E4 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x1B), lbl_1_data_20C, 0);
+    lbl_1_data_1E4 = BoardModelCreate(0x77001B, lbl_1_data_20C, 0);
     BoardModelPosSet(lbl_1_data_1E4, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_1E4, 1, 0x40000001);
 

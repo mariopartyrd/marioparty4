@@ -89,17 +89,17 @@ void BoardCreate(void) {
 
     boardData = get_current_board();
     lbl_1_bss_0 = GWSystem.board_data;
-    BoardSpaceInit(DATA_MAKE_NUM(DATADIR_W02, 0x00));
-    lbl_1_data_280 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W02, 0x01), NULL, 0);
+    BoardSpaceInit(0x760000);
+    lbl_1_data_280 = BoardModelCreate(0x760001, NULL, 0);
     fn_8006DDE8(lbl_1_data_280, -1.0f);
     BoardModelPosSet(lbl_1_data_280, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_280, 0, 0x40000001);
     BoardModelMotionSpeedSet(lbl_1_data_280, 0.1f);
-    lbl_1_data_282 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W02, 0x02), NULL, 0);
+    lbl_1_data_282 = BoardModelCreate(0x760002, NULL, 0);
     fn_8006DDE8(lbl_1_data_282, -1.0f);
     BoardModelPosSet(lbl_1_data_282, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_282, 0, 0x40000001);
-    lbl_1_data_284 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W02, 0x03), lbl_1_data_288, 0);
+    lbl_1_data_284 = BoardModelCreate(0x760003, lbl_1_data_288, 0);
     BoardModelPosSet(lbl_1_data_284, 0.0f, 0.0f, 0.0f);
     BoardModelMotionStart(lbl_1_data_284, 1, 0x40000001);
     lbl_1_data_286 = BoardModelCreate(0x20005, lbl_1_data_290, 0);
@@ -132,8 +132,8 @@ void BoardCreate(void) {
     fn_1_92C();
     BoardModelPosGet(lbl_1_bss_30[13], &lbl_1_bss_20);
     BoardModelPosGet(lbl_1_bss_30[14], &lbl_1_bss_14);
-    lbl_1_bss_2E = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W02, 0x10), NULL, 1);
-    lbl_1_bss_2C = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W02, 0x10), NULL, 1);
+    lbl_1_bss_2E = BoardModelCreate(0x760010, NULL, 1);
+    lbl_1_bss_2C = BoardModelCreate(0x760010, NULL, 1);
     fn_1_9250();
     BoardSpaceWalkEventFuncSet(fn_1_800);
     BoardSpaceWalkMiniEventFuncSet(fn_1_1128);

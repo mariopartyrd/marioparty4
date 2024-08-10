@@ -110,16 +110,16 @@ static HsfanimStruct00 diceEffParam = {
 };
 
 static s32 diceDigitMdlTbl[10] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x0C),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x0D),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x0E),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x0F),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x10),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x11),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x12),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x13),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x14),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x15)
+    0x0007000C,
+    0x0007000D,
+    0x0007000E,
+    0x0007000F,
+    0x00070010,
+    0x00070011,
+    0x00070012,
+    0x00070013,
+    0x00070014,
+    0x00070015
 };
 
 s32 BoardRollExec(s32 arg0) {
@@ -226,12 +226,12 @@ static void RollMain(void) {
                 var_r27 += BoardPlayerItemCount(temp_r25);
             }
             if (BoardItemPrevGet() != -1 || var_r27 == 0 || _CheckFlag(FLAG_ID_MAKE(1, 9)) || BoardMegaDoubleDiceCheck()) {
-                var_r29 = MAKE_MESSID(0x09, 0x04);
+                var_r29 = 0x90004;
             } else {
-                var_r29 = MAKE_MESSID(0x09, 0x02);
+                var_r29 = 0x90002;
             }
             if (inputTimer != 0) {
-                var_r29 = MAKE_MESSID(0x30, 0x25);
+                var_r29 = 0x300025;
             }
             HuWinMesMaxSizeGet(1, sp8, var_r29);
             switch (GWGameStat.language) {
@@ -313,10 +313,10 @@ static void DiceCreate(s32 arg0) {
     DiceWork *temp_r30;
     s32 sp8;
     s32 spC[4] = {
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x18),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x19),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x1A),
-        DATA_MAKE_NUM(DATADIR_BOARD, 0x1B)
+        0x00070018,
+        0x00070019,
+        0x0007001A,
+        0x0007001B
     };
 
     sp8 = 0;
@@ -575,7 +575,7 @@ s16 BoardDiceEffectCreate(void) {
     AnimData *temp_r29;
     void *temp_r28;
 
-    temp_r28 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 0x6B), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    temp_r28 = HuDataSelHeapReadNum(0x7006B, MEMORY_DEFAULT_NUM, HEAP_DATA);
     temp_r29 = HuSprAnimRead(temp_r28);
     temp_r31 = Hu3DParManCreate(temp_r29, 0x64, &diceEffParam);
     Hu3DParManAttrSet(temp_r31, 0x108);

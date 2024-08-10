@@ -13,10 +13,10 @@ void fn_1_BF88(s16 arg0, s16 arg1) {
     lbl_1_bss_F0.unk4 = Hu3DHookFuncCreate(fn_1_CB98);
     Hu3DModelLayerSet(lbl_1_bss_F0.unk4, 6);
     lbl_1_bss_F0.unk0 = arg0;
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * sizeof(unkStruct8), MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * sizeof(unkStruct8), 0x10000000);
     lbl_1_bss_F0.unk10 = var_r29;
     lbl_1_bss_F0.unk2 = arg1;
-    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(unkStruct9Sub), MEMORY_DEFAULT_NUM);
+    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(unkStruct9Sub), 0x10000000);
     lbl_1_bss_F0.unkC = var_r30;
     
     for (var_r31 = 0; var_r31 < arg0; var_r31++, var_r29++) {
@@ -264,7 +264,7 @@ void fn_1_CCF8(unkStruct11** arg0, s16 arg1, f32 arg8, f32 arg9) {
     s32 var_r30;
     unkStruct11* var_r31;
     
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(unkStruct11), MEMORY_DEFAULT_NUM);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(unkStruct11), 0x10000000);
     
     for (var_r30 = 0; var_r30 < arg1; var_r31++, var_r30++) {
         var_r31->unk0.x = (-0.5f * arg8);
@@ -287,7 +287,7 @@ void fn_1_CE7C(Vec** arg0, s16 arg1, Vec* arg2) {
     s32 var_r28;
     Vec* var_r31;
 
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(Vec[4]), MEMORY_DEFAULT_NUM);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(Vec[4]), 0x10000000);
     
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
@@ -303,7 +303,7 @@ void fn_1_CF1C(GXColor** arg0, s16 arg1, GXColor* arg2) {
     s32 var_r28;
     GXColor* var_r31;
 
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(GXColor[4]), MEMORY_DEFAULT_NUM);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(GXColor[4]), 0x10000000U);
     
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
@@ -319,7 +319,7 @@ void fn_1_CFC4(Vec** arg0, s16 arg1, Vec* arg2) {
     s32 var_r29;
     Vec* var_r31;
 
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(Vec), MEMORY_DEFAULT_NUM);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(Vec), 0x10000000U);
     
     for (var_r29 = 0; var_r29 < arg1; var_r31++, arg2++, var_r29++) {
         var_r31->x = arg2->x;
@@ -333,7 +333,7 @@ void fn_1_D050(HsfVector2f** arg0, s16 arg1, HsfVector2f* arg2) {
     s32 var_r29;
     HsfVector2f* var_r31;
 
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(HsfVector2f[4]), MEMORY_DEFAULT_NUM);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(HsfVector2f[4]), 0x10000000U);
 
     for (var_r28 = 0; var_r28 < arg1; var_r28++) {
         for (var_r29 = 0; var_r29 < 4; var_r31++, arg2++, var_r29++) {
@@ -371,14 +371,14 @@ void fn_1_D0E8(unkStruct8Sub* arg0) {
     if (arg0->unk48 != NULL) {
         HuMemDirectFree(arg0->unk48);
     }
-    arg0->unk48 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Vec), MEMORY_DEFAULT_NUM);
+    arg0->unk48 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Vec), 0x10000000);
     arg0->unk48->x = 0.0f;
     arg0->unk48->y = 0.0f;
     arg0->unk48->z = 1.0f;
     if (arg0->unk3C != NULL) {
         HuMemDirectFree(arg0->unk3C);
     }
-    temp_r3_3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1000, MEMORY_DEFAULT_NUM);
+    temp_r3_3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1000, 0x10000000);
     arg0->unk3C = temp_r3_3;
     DCFlushRange(arg0->unk3C, 0x1000);
     GXBeginDisplayList(temp_r3_3, 0x1000);
@@ -526,9 +526,9 @@ s16 fn_1_DA48(u8 arg0, u8 arg1) {
     var_r30->unk30 = NULL;
     var_r30->unk2 = arg0;
     var_r30->unk4 = arg1;
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * sizeof(unkStruct8Sub), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * sizeof(unkStruct8Sub), 0x10000000);
     var_r30->unk3C = var_r31;
-    var_r30->unk34 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(s16), MEMORY_DEFAULT_NUM);
+    var_r30->unk34 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(s16), 0x10000000);
     var_r30->unkC.x = var_r30->unkC.y = var_r30->unkC.z = 0.0f;
     var_r30->unk18.x = var_r30->unk18.y = var_r30->unk18.z = 0.0f;
     var_r30->unk24.x = var_r30->unk24.y = var_r30->unk24.z = 1.0f;
@@ -551,7 +551,7 @@ s16 fn_1_DA48(u8 arg0, u8 arg1) {
         var_r31->unk4C.a = 0xFF;
         var_r31->unk50.r = var_r31->unk50.g = var_r31->unk50.b = 0xFF;
         var_r31->unk50.a = 0xFF;
-        var_r31->unk54 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(unkStruct12), MEMORY_DEFAULT_NUM);
+        var_r31->unk54 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(unkStruct12), 0x10000000);
         
         for (var_r28 = 0; var_r28 < arg1; var_r28++) {
             var_r31->unk54[var_r28].unk0 = var_r31->unk54[var_r28].unk1 = 0;
@@ -644,7 +644,7 @@ s16 fn_1_DF20(u32 arg0, s16 arg1, s16 arg2) {
     }
     var_r31->unk8 = arg0;
     var_r31->unk6 = 1;
-    temp_r30 = HuSprAnimRead(HuDataReadNum(arg0, MEMORY_DEFAULT_NUM));
+    temp_r30 = HuSprAnimRead(HuDataReadNum(arg0, 0x10000000));
     if ((arg1 == 0) || (arg2 == 0)) {
         arg1 = temp_r30->bmp->sizeX;
         arg2 = temp_r30->bmp->sizeY;
@@ -716,7 +716,7 @@ s32 fn_1_E2A8(s16 arg0, u8 arg1, u32 arg2, s16 arg3, s16 arg4) {
             }
             temp_f30 = temp_r30->unk50;
             temp_f31 = temp_r30->unk4E;
-            var_r29 = var_r28->unk40 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x30, MEMORY_DEFAULT_NUM);
+            var_r29 = var_r28->unk40 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x30, 0x10000000);
             
             for (var_r25 = 0; var_r25 < 1; var_r29++, var_r25++) {
                 var_r29->unk0.x = (-0.5f * temp_f31);
@@ -739,7 +739,7 @@ s32 fn_1_E2A8(s16 arg0, u8 arg1, u32 arg2, s16 arg3, s16 arg4) {
         temp_r31->unkC = 1.0f;
         temp_r31->unk10 = 0.0f;
         if (temp_r31->unk4 == NULL) {
-            temp_r31->unk4 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x20, MEMORY_DEFAULT_NUM);
+            temp_r31->unk4 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x20, 0x10000000U);
         }
         temp_r31->unk4[0].x = temp_r31->unk0 * temp_r30->unk54;
         temp_r31->unk4[0].y = temp_r31->unk0 * temp_r30->unk58;

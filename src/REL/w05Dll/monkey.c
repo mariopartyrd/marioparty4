@@ -7,7 +7,7 @@
 #include "game/board/player.h"
 
 // data
-s32 lbl_1_data_1A8[3] = { DATA_MAKE_NUM(DATADIR_W05, 0x1F), DATA_MAKE_NUM(DATADIR_W05, 0x20), DATA_NUM_LISTEND };
+s32 lbl_1_data_1A8[3] = { 0x0079001F, 0x00790020, 0xFFFFFFFF };
 char *lbl_1_data_1C4[2] = { "monkyA", "monkyB"};
 s32 lbl_1_data_1CC[3] = { 0x78, 0x6F, 0x70 };
 
@@ -29,7 +29,7 @@ void fn_1_2B40(void) {
     BoardModelMotionTimeSet(lbl_1_bss_14[3], 0.0f);
     
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
-        lbl_1_bss_4E[var_r31] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W05, 0x1E), lbl_1_data_1A8, 0);
+        lbl_1_bss_4E[var_r31] = BoardModelCreate(0x79001E, lbl_1_data_1A8, 0);
         BoardModelAttrSet(lbl_1_bss_4E[var_r31], 0x40000001);
     }
     BoardModelHookSet(lbl_1_bss_14[2], lbl_1_data_1C4[0], lbl_1_bss_4E[0]);
@@ -53,8 +53,8 @@ void fn_1_2C7C(s32 arg0) {
         BoardModelPosGet(lbl_1_bss_4A, &lbl_1_bss_38);
         lbl_1_bss_38.x -= 140.0f;
     }
-    lbl_1_bss_44[0] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W05, 0x1C), NULL, 0);
-    lbl_1_bss_44[1] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W05, 0x1D), NULL, 0);
+    lbl_1_bss_44[0] = BoardModelCreate(0x79001C, NULL, 0);
+    lbl_1_bss_44[1] = BoardModelCreate(0x79001D, NULL, 0);
     BoardModelVisibilitySet(lbl_1_bss_44[0], 0);
     BoardModelVisibilitySet(lbl_1_bss_44[1], 0);
     BoardModelAttrSet(lbl_1_bss_44[0], 0x40000001);

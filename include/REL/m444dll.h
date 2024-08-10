@@ -41,7 +41,6 @@ void fn_1_C214(void);
 
 void fn_1_D1E0(s16 model);
 void fn_1_D558(DataListModel *model_list);
-void fn_1_D588(DataListModel *model_list);
 void fn_1_D818(DataListSprite *sprite_list);
 void fn_1_D950(void);
 void fn_1_D9C8(void);

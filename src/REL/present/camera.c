@@ -5,235 +5,231 @@
 
 #include "REL/present.h"
 
-typedef struct CameraWork {
-    /* 0x00 */ Vec pos;
-    /* 0x0C */ Vec target;
-    /* 0x18 */ Vec up;
-    /* 0x24 */ float zoom;
-    /* 0x28 */ float rot;
-    /* 0x2C */ Vec posPrev;
-    /* 0x38 */ Vec targetPrev;
-    /* 0x44 */ char unk44[0xC];
-    /* 0x50 */ float zoomPrev;
-    /* 0x54 */ float rotPrev;
-    /* 0x58 */ Vec posTarget;
-    /* 0x64 */ Vec posFocus;
-    /* 0x70 */ char unk70[0xC];
-    /* 0x7C */ float zoomTarget;
-    /* 0x80 */ float rotTarget;
-    /* 0x84 */ float timeEye;
-    /* 0x88 */ float eyeSpeed;
-    /* 0x8C */ float timeTarget;
-    /* 0x90 */ float targetSpeed;
-    /* 0x94 */ float timeRot;
-    /* 0x98 */ float rotSpeed;
-} CameraWork; /* size = 0x9C */ // same as in option/camera.c
+void fn_1_C20(omObjData *object);
 
-static void ExecCameraObj(omObjData *object);
-static void ExecCamera(omObjData *object);
-
-omObjData *PresentCameraCreate(void)
+omObjData *fn_1_6B4(void)
 {
-    omObjData *object = omAddObjEx(presentObjMan, 1001, 0, 0, 3, ExecCameraObj);
-    CameraWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, 156, MEMORY_DEFAULT_NUM);
-    object->data = work;
+    omObjData *var_r30;
+    UnkPresentCameraStruct *var_r31;
 
-    work->pos.x = 0.0f;
-    work->pos.y = 0.0f;
-    work->pos.z = 0.0f;
+    var_r30 = omAddObjEx(lbl_1_bss_4, 1001, 0, 0, 3, fn_1_BF8);
+    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 156, MEMORY_DEFAULT_NUM);
+    var_r30->data = var_r31;
 
-    work->target.x = 0.0f;
-    work->target.y = 0.0f;
-    work->target.z = 0.0f;
+    var_r31->pos.x = 0.0f;
+    var_r31->pos.y = 0.0f;
+    var_r31->pos.z = 0.0f;
 
-    work->up.x = 0.0f;
-    work->up.y = 1.0f;
-    work->up.z = 0.0f;
+    var_r31->target.x = 0.0f;
+    var_r31->target.y = 0.0f;
+    var_r31->target.z = 0.0f;
 
-    work->zoom = 0.0f;
-    work->rot = 0.0f;
-    work->timeTarget = 1.0f;
-    work->timeEye = 1.0f;
-    work->timeRot = 1.0f;
+    var_r31->up.x = 0.0f;
+    var_r31->up.y = 1.0f;
+    var_r31->up.z = 0.0f;
+
+    var_r31->unk_24 = 0.0f;
+    var_r31->unk_28 = 0.0f;
+    var_r31->unk_8C = 1.0f;
+    var_r31->unk_84 = 1.0f;
+    var_r31->unk_94 = 1.0f;
     Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 42.0f, 10.0f, 8000.0f, 1.2f);
-    PresentCameraFocusSet(object, 0.0f, 0.0f, -600.0f, 1);
-    PresentCameraTargetSet(object, 0.0f, 220.0f, 250.0f, 1);
+    fn_1_9A4(var_r30, 0.0f, 0.0f, -600.0f, 1);
+    fn_1_920(var_r30, 0.0f, 220.0f, 250.0f, 1);
 
-    return object;
+    return var_r30;
 }
 
-void PresentCameraKill(omObjData *object)
+void fn_1_8F0(omObjData *object)
 {
     HuMemDirectFree(object->data);
 }
 
-void PresentCameraTargetSet(omObjData *object, float x, float y, float z, s32 duration)
+void fn_1_920(omObjData *object, float arg8, float arg9, float argA, s32 arg1)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
 
-    work->posTarget.x = x;
-    work->posTarget.y = y;
-    work->posTarget.z = z;
+    var_r31 = object->data;
+    var_r31->unk_58.x = arg8;
+    var_r31->unk_58.y = arg9;
+    var_r31->unk_58.z = argA;
 
-    work->posPrev = work->pos;
-    work->timeEye = 0.0f;
-    work->eyeSpeed = 1.0f / duration;
+    var_r31->unk_2C = var_r31->pos;
+    var_r31->unk_84 = 0.0f;
+    var_r31->unk_88 = 1.0f / arg1;
 }
 
-void PresentCameraFocusSet(omObjData *object, float x, float y, float z, s32 duration)
+void fn_1_9A4(omObjData *object, float arg8, float arg9, float argA, s32 arg1)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
 
-    work->posFocus.x = x;
-    work->posFocus.y = y;
-    work->posFocus.z = z;
+    var_r31 = object->data;
+    var_r31->unk_64.x = arg8;
+    var_r31->unk_64.y = arg9;
+    var_r31->unk_64.z = argA;
 
-    work->targetPrev = work->target;
-    work->timeTarget = 0.0f;
-    work->targetSpeed = 1.0f / duration;
+    var_r31->unk_38 = var_r31->target;
+    var_r31->unk_8C = 0.0f;
+    var_r31->unk_90 = 1.0f / arg1;
 }
 
-void PresentCameraViewSet(omObjData *object, float zoom, float rot, float y, s32 duration)
+void fn_1_A28(omObjData *object, s32 arg1, float arg8, float arg9, float argA)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
 
-    work->posFocus.y = y;
-    work->zoomTarget = zoom;
-    work->rotTarget = rot;
+    var_r31 = object->data;
+    var_r31->unk_64.y = argA;
+    var_r31->unk_7C = arg8;
+    var_r31->unk_80 = arg9;
 
-    work->targetPrev.y = work->target.y;
-    work->zoomPrev = work->zoom;
-    work->rotPrev = work->rot;
-    work->timeRot = 0.0f;
-    work->rotSpeed = 1.0f / duration;
+    var_r31->unk_38.y = var_r31->target.y;
+    var_r31->unk_50 = var_r31->unk_24;
+    var_r31->unk_54 = var_r31->unk_28;
+    var_r31->unk_94 = 0.0f;
+    var_r31->unk_98 = 1.0f / arg1;
 }
 
-float PresentCameraZoomGet(omObjData *object)
+float fn_1_AAC(omObjData *object)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
+    float var_f31;
 
-    float var_f31 = work->zoom;
+    var_r31 = object->data;
+    var_f31 = var_r31->unk_24;
     return var_f31;
 }
 
-float PresentCameraRotGet(omObjData *object)
+float fn_1_ADC(omObjData *object)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
+    float var_f31;
 
-    float var_f31 = work->rot;
+    var_r31 = object->data;
+    var_f31 = var_r31->unk_28;
     return var_f31;
 }
 
-void PresentCameraPosGet(omObjData *object, float *x, float *y, float *z)
+void fn_1_B0C(omObjData *object, float *arg1, float *arg2, float *arg3)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
 
-    *x = work->pos.x;
-    *y = work->pos.y;
-    *z = work->pos.z;
+    var_r31 = object->data;
+    *arg1 = var_r31->pos.x;
+    *arg2 = var_r31->pos.y;
+    *arg3 = var_r31->pos.z;
 }
 
-void PresentCameraTargetGet(omObjData *object, float *x, float *y, float *z)
+void fn_1_B3C(omObjData *object, float *arg1, float *arg2, float *arg3)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
 
-    *x = work->target.x;
-    *y = work->target.y;
-    *z = work->target.z;
+    var_r31 = object->data;
+    *arg1 = var_r31->target.x;
+    *arg2 = var_r31->target.y;
+    *arg3 = var_r31->target.z;
 }
 
-s32 PresentCameraDoneCheck(omObjData *object)
+s32 fn_1_B6C(omObjData *object)
 {
-    CameraWork *work = object->data;
+    UnkPresentCameraStruct *var_r31;
+    s32 var_r30;
+    s32 var_r29;
 
-    s32 var_r30 = 1;
-    s32 var_r29 = 1;
-
-    if (!(work->timeTarget < 1.0f) && !(work->timeRot < 1.0f)) {
+    var_r31 = object->data;
+    var_r30 = 1;
+    var_r29 = 1;
+    if (!(var_r31->unk_8C < 1.0f) && !(var_r31->unk_94 < 1.0f)) {
         var_r29 = 0;
     }
-    if (!var_r29 && !(work->timeEye < 1.0f)) {
+    if (!var_r29 && !(var_r31->unk_84 < 1.0f)) {
         var_r30 = 0;
     }
     return var_r30;
 }
 
-static void ExecCameraObj(omObjData *object)
+void fn_1_BF8(omObjData *object)
 {
-    ExecCamera(object);
+    fn_1_C20(object);
 }
 
-static void ExecCamera(omObjData *object)
+void fn_1_C20(omObjData *object)
 {
-    CameraWork *work = object->data;
-    float weight;
-    float dx;
-    float dz;
+    UnkPresentCameraStruct *var_r31;
+    float var_f31;
+    float var_f30;
+    float var_f29;
+    float var_f28;
+    float var_f27;
 
-    if (work->timeEye < 1.0f) {
-        weight = sind(90.0f * work->timeEye);
-        work->pos.x = work->posPrev.x + weight * (work->posTarget.x - work->posPrev.x);
-        work->pos.y = work->posPrev.y + weight * (work->posTarget.y - work->posPrev.y);
-        work->pos.z = work->posPrev.z + weight * (work->posTarget.z - work->posPrev.z);
+    var_r31 = object->data;
+    if (var_r31->unk_84 < 1.0f) {
+        var_f28 = sind(90.0f * var_r31->unk_84);
+        var_r31->pos.x = var_r31->unk_2C.x + var_f28 * (var_r31->unk_58.x - var_r31->unk_2C.x);
+        var_r31->pos.y = var_r31->unk_2C.y + var_f28 * (var_r31->unk_58.y - var_r31->unk_2C.y);
+        var_r31->pos.z = var_r31->unk_2C.z + var_f28 * (var_r31->unk_58.z - var_r31->unk_2C.z);
 
-        if ((work->timeEye += work->eyeSpeed) >= 1.0f) {
-            work->pos = work->posTarget;
+        if ((var_r31->unk_84 += var_r31->unk_88) >= 1.0f) {
+            var_r31->pos = var_r31->unk_58;
         }
     }
-    if (work->timeTarget < 1.0f) {
-        weight = sind(90.0f * work->timeTarget);
-        work->target.x = work->targetPrev.x + weight * (work->posFocus.x - work->targetPrev.x);
-        work->target.y = work->targetPrev.y + weight * (work->posFocus.y - work->targetPrev.y);
-        work->target.z = work->targetPrev.z + weight * (work->posFocus.z - work->targetPrev.z);
+    if (var_r31->unk_8C < 1.0f) {
+        var_f28 = sind(90.0f * var_r31->unk_8C);
+        var_r31->target.x = var_r31->unk_38.x + var_f28 * (var_r31->unk_64.x - var_r31->unk_38.x);
+        var_r31->target.y = var_r31->unk_38.y + var_f28 * (var_r31->unk_64.y - var_r31->unk_38.y);
+        var_r31->target.z = var_r31->unk_38.z + var_f28 * (var_r31->unk_64.z - var_r31->unk_38.z);
 
-        if ((work->timeTarget += work->targetSpeed) >= 1.0f) {
-            work->target = work->posFocus;
+        if ((var_r31->unk_8C += var_r31->unk_90) >= 1.0f) {
+            var_r31->target = var_r31->unk_64;
         }
     }
-    if (work->timeRot < 1.0f) {
-        weight = sind(90.0f * work->timeRot);
-        work->target.y = work->targetPrev.y + (weight * (work->posFocus.y - work->targetPrev.y));
-        work->zoom = work->zoomPrev + (weight * (work->zoomTarget - work->zoomPrev));
-        work->rot = work->rotPrev + (weight * (work->rotTarget - work->rotPrev));
+    if (var_r31->unk_94 < 1.0f) {
+        var_f28 = sind(90.0f * var_r31->unk_94);
+        var_r31->target.y = var_r31->unk_38.y + (var_f28 * (var_r31->unk_64.y - var_r31->unk_38.y));
+        var_r31->unk_24 = var_r31->unk_50 + (var_f28 * (var_r31->unk_7C - var_r31->unk_50));
+        var_r31->unk_28 = var_r31->unk_54 + (var_f28 * (var_r31->unk_80 - var_r31->unk_54));
 
-        if ((work->timeRot += work->rotSpeed) >= 1.0f) {
-            work->target.y = work->posFocus.y;
-            work->zoom = work->zoomTarget;
-            work->rot = work->rotTarget;
+        if ((var_r31->unk_94 += var_r31->unk_98) >= 1.0f) {
+            var_r31->target.y = var_r31->unk_64.y;
+            var_r31->unk_24 = var_r31->unk_7C;
+            var_r31->unk_28 = var_r31->unk_80;
         }
-        work->target.x = work->zoom * -sind(work->rot);
-        work->target.z = work->zoom * cosd(work->rot);
+        var_r31->target.x = var_r31->unk_24 * -sind(var_r31->unk_28);
+        var_r31->target.z = var_r31->unk_24 * cosd(var_r31->unk_28);
     }
-    dx = work->target.x - work->pos.x;
-    dz = work->target.z - work->pos.z;
+    var_f31 = var_r31->target.x - var_r31->pos.x;
+    var_f30 = var_r31->target.z - var_r31->pos.z;
 
-    work->zoom = sqrtf(dx * dx + dz * dz);
-    work->rot = fmod(-atan2d(dx, dz), 360.0);
-    if (work->rot < 0.0f) {
-        work->rot += 360.0f;
+    var_r31->unk_24 = sqrtf(var_f31 * var_f31 + var_f30 * var_f30);
+    var_r31->unk_28 = fmod(-atan2d(var_f31, var_f30), 360.0);
+    if (var_r31->unk_28 < 0.0f) {
+        var_r31->unk_28 += 360.0f;
     }
-    Hu3DCameraPosSet(1, work->pos.x, work->pos.y, work->pos.z, work->up.x, work->up.y, work->up.z, work->target.x, work->target.y, work->target.z);
+    Hu3DCameraPosSet(1, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z, var_r31->up.x, var_r31->up.y, var_r31->up.z, var_r31->target.x,
+        var_r31->target.y, var_r31->target.z);
 }
 
-static void CameraExecDebug(omObjData *object)
+void fn_1_1198(omObjData *object)
 {
+    UnkPresentCameraStruct *var_r31;
+
     if (HuPadBtn[0] & PAD_BUTTON_B) {
-        CameraWork *work = object->data;
-
-        work->target.x += (0.5f * HuPadStkX[0]);
-        work->target.y += (0.5f * HuPadStkY[0]);
-        work->pos.z += (0.5f * HuPadTrigL[0]);
-        work->pos.z -= (0.5f * HuPadTrigR[0]);
-        work->pos.x += (0.5f * HuPadSubStkY[0]);
-        work->pos.y += (0.5f * HuPadSubStkX[0]);
+        var_r31 = object->data;
+        var_r31->target.x = var_r31->target.x + (0.5f * HuPadStkX[0]);
+        var_r31->target.y = var_r31->target.y + (0.5f * HuPadStkY[0]);
+        var_r31->pos.z = var_r31->pos.z + (0.5f * HuPadTrigL[0]);
+        var_r31->pos.z = var_r31->pos.z - (0.5f * HuPadTrigR[0]);
+        var_r31->pos.x = var_r31->pos.x + (0.5f * HuPadSubStkY[0]);
+        var_r31->pos.y = var_r31->pos.y + (0.5f * HuPadSubStkX[0]);
     }
 }
 
-static void CameraPrintDebug(omObjData *object)
+void fn_1_1398(omObjData *object)
 {
-    CameraWork *work = object->data;
-    print8(32, 64, 1.5f, "AT  : x=%.2f y=%.2f z=%.2f", work->target.x, work->target.y, work->target.z);
-    print8(32, 80, 1.5f, "EYE : x=%.2f y=%.2f z=%.2f", work->pos.x, work->pos.y, work->pos.z);
-    print8(32, 96, 1.5f, "R : %.2f    DEG: %.2f", work->zoom, work->rot);
+    UnkPresentCameraStruct *var_r31;
+
+    var_r31 = object->data;
+    print8(32, 64, 1.5f, "AT  : x=%.2f y=%.2f z=%.2f", var_r31->target.x, var_r31->target.y, var_r31->target.z);
+    print8(32, 80, 1.5f, "EYE : x=%.2f y=%.2f z=%.2f", var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
+    print8(32, 96, 1.5f, "R : %.2f    DEG: %.2f", var_r31->unk_24, var_r31->unk_28);
 }

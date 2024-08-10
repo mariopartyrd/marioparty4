@@ -1,16 +1,16 @@
 #include "REL/w05Dll.h"
 
-#include "game/audio.h"
-#include "game/chrman.h"
-#include "game/frand.h"
 #include "game/hsfdraw.h"
-#include "game/minigame_seq.h"
+#include "game/audio.h"
 #include "game/objsub.h"
+#include "game/frand.h"
+#include "game/chrman.h"
 #include "game/pad.h"
+#include "game/minigame_seq.h"
 
-#include "game/board/audio.h"
 #include "game/board/model.h"
 #include "game/board/window.h"
+#include "game/board/audio.h"
 
 // data
 s32 lbl_1_data_310[2] = { 0x79, 0x7A };
@@ -24,23 +24,22 @@ s16 lbl_1_bss_A4[3];
 s16 lbl_1_bss_A2;
 s16 lbl_1_bss_9E[2];
 s16 lbl_1_bss_9C;
-Process *lbl_1_bss_98;
-omObjData *lbl_1_bss_94;
-omObjData *lbl_1_bss_90;
-omObjData *lbl_1_bss_8C;
+Process* lbl_1_bss_98;
+omObjData* lbl_1_bss_94;
+omObjData* lbl_1_bss_90;
+omObjData* lbl_1_bss_8C;
 s32 lbl_1_bss_88;
 s32 lbl_1_bss_7C[3];
-AnimData *lbl_1_bss_78;
+AnimData* lbl_1_bss_78;
 
-void fn_1_6B28(void)
-{
+
+void fn_1_6B28(void) {
     BoardModelAttrSet(*lbl_1_bss_14, 0x40000002U);
     lbl_1_bss_98 = NULL;
     lbl_1_bss_78 = NULL;
 }
 
-void fn_1_6B7C(void)
-{
+void fn_1_6B7C(void) {
     Vec sp1C;
     Vec sp10;
     s32 spC;
@@ -52,7 +51,7 @@ void fn_1_6B7C(void)
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
         lbl_1_bss_9E[var_r31] = BoardPlayerMotionCreate(lbl_1_bss_B6, lbl_1_data_310[var_r31] | lbl_1_data_124[GWPlayer[lbl_1_bss_B6].character]);
     }
-    lbl_1_bss_A2 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W05, 0x13), NULL, 0);
+    lbl_1_bss_A2 = BoardModelCreate(0x790013, NULL, 0);
     BoardModelVisibilitySet(lbl_1_bss_A2, 0);
     sp1C.x = sp1C.y = sp1C.z = 3.33333f;
     BoardModelScaleSetV(lbl_1_bss_A2, &sp1C);
@@ -64,11 +63,11 @@ void fn_1_6B7C(void)
         HuPrcVSleep();
     }
     BoardPlayerMotBlendSet(lbl_1_bss_B6, 0, 0xF);
-
+    
     while (BoardPlayerMotBlendCheck(lbl_1_bss_B6) == 0) {
         HuPrcVSleep();
     }
-
+    
     HuPrcSleep(0x3C);
     BoardAudSeqPause(0, 1, 0x3E8);
     HuAudFXPlay(0x30D);
@@ -95,14 +94,14 @@ void fn_1_6B7C(void)
     BoardModelAttrReset(lbl_1_bss_14[0], 0x40000002);
     omVibrate(lbl_1_bss_B6, 0x7FFF, 6, 6);
     HuAudFXPlay(0x492);
-
+    
     while (BoardModelMotionTimeGet(lbl_1_bss_14[0]) < 90.0f) {
         HuPrcVSleep();
     }
     BoardModelMotionTimeSet(lbl_1_bss_14[0], 90.0f);
     HuPadRumbleStop(GWPlayer[lbl_1_bss_B6].port);
     BoardModelHookReset(lbl_1_bss_14[0]);
-
+    
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         BoardModelHookSet(lbl_1_bss_14[0], lbl_1_data_330[var_r31], lbl_1_bss_AA[var_r31]);
     }
@@ -112,16 +111,15 @@ void fn_1_6B7C(void)
     lbl_1_bss_94 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_7284);
     lbl_1_bss_8C = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_78A0);
     lbl_1_bss_90 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, NULL);
-    lbl_1_bss_90->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x14, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_90->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x14, 0x10000000U);
     if (lbl_1_bss_78 == NULL) {
-        lbl_1_bss_78 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_EFFECT, 0x00));
+        lbl_1_bss_78 = HuSprAnimRead(HuDataSelHeapReadNum(0x120000, 0x10000000, HEAP_DATA));
         HuSprAnimLock(lbl_1_bss_78);
     }
     lbl_1_bss_9C = 0;
 }
 
-void fn_1_7284(omObjData *arg0)
-{
+void fn_1_7284(omObjData* arg0) {
     if ((lbl_1_bss_9C != 0) && (BoardMGDoneFlagGet() == 1)) {
         fn_1_77B0();
         fn_1_7314();
@@ -130,14 +128,12 @@ void fn_1_7284(omObjData *arg0)
     }
 }
 
-void fn_1_72E4(void)
-{
+void fn_1_72E4(void) {
     lbl_1_bss_9C = 1;
     BoardMGExit();
 }
 
-void fn_1_7314(void)
-{
+void fn_1_7314(void) {
     s32 var_r31;
 
     BoardModelHookReset(lbl_1_bss_14[0]);
@@ -152,14 +148,12 @@ void fn_1_7314(void)
     }
 }
 
-void fn_1_73C0(void)
-{
+void fn_1_73C0(void) {
     omDelObjEx(boardObjMan, lbl_1_bss_90);
     BoardMGDoneFlagSet(0);
 }
 
-void fn_1_7400(void)
-{
+void fn_1_7400(void) {
 
     while (BoardModelMotionTimeGet(lbl_1_bss_14[0]) < 30.0f) {
         HuPrcVSleep();
@@ -168,42 +162,42 @@ void fn_1_7400(void)
     BoardModelMotionTimeSet(lbl_1_bss_14[0], 30.0f);
     lbl_1_bss_98 = HuPrcCreate(fn_1_896C, 0x2004, 0x1000, 0);
     HuPrcDestructorSet2(lbl_1_bss_98, fn_1_91DC);
-    lbl_1_bss_98->user_data = (void *)7;
+    lbl_1_bss_98->user_data = (void* )7;
     HuPrcEnd();
 }
 
 s32 lbl_1_data_350[14] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x6D),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x6E),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x6F),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x70),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x71),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x72),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x73),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x74),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x76),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x77),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x78),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x79),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x7A),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x7B),
+    0x0007006D, 0x0007006E, 0x0007006F, 0x00070070,
+    0x00070071, 0x00070072, 0x00070073, 0x00070074,
+    0x00070076, 0x00070077, 0x00070078, 0x00070079,
+    0x0007007A, 0x0007007B
 };
 
-s16 lbl_1_data_388[92] = { 0, 1, -1, 2, 0, -1, 1, 2, 0, -1, 2, 1, 0, 2, -1, 1, 0, 2, 1, -1, 1, 2, -1, 0, 1, 2, 0, -1, 1, -1, 0, 2, 1, -1, 2, 0, 1, 0,
-    2, -1, 1, 0, -1, 2, 2, -1, 0, 1, 2, -1, 1, 0, 2, 0, 1, -1, 2, 0, -1, 1, 2, 1, -1, 0, 2, 1, 0, -1, -1, 0, 1, 2, -1, 0, 2, 1, -1, 1, 2, 0, -1, 1, 0,
-    2, -1, 2, 0, 1, -1, 2, 1, 0 };
+s16 lbl_1_data_388[92] = {
+    0, 1, -1, 2, 0, -1, 1, 2,
+    0, -1, 2, 1, 0, 2, -1, 1,
+    0, 2, 1, -1, 1, 2, -1, 0,
+    1, 2, 0, -1, 1, -1, 0, 2,
+    1, -1, 2, 0, 1, 0, 2, -1,
+    1, 0, -1, 2, 2, -1, 0, 1,
+    2, -1, 1, 0, 2, 0, 1, -1,
+    2, 0, -1, 1, 2, 1, -1, 0,
+    2, 1, 0, -1, -1, 0, 1, 2,
+    -1, 0, 2, 1, -1, 1, 2, 0,
+    -1, 1, 0, 2, -1, 2, 0, 1,
+    -1, 2, 1, 0
+};
 
-f32 lbl_1_data_440[3] = { -90.0f, 0.0f, 90.0f };
+f32 lbl_1_data_440[3] = {-90.0f, 0.0f, 90.0f};
 
-void fn_1_74D0(s16 arg0[3])
-{
+void fn_1_74D0(s16 arg0[3]) {
     f32 temp_f31;
     s32 var_r31;
 
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         lbl_1_bss_B0[var_r31] = arg0[var_r31];
     }
-
+    
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         lbl_1_bss_A4[var_r31] = BoardModelCreate(lbl_1_data_350[lbl_1_bss_B0[var_r31]], NULL, 0);
         if (lbl_1_bss_B0[var_r31] == 0xB) {
@@ -220,12 +214,12 @@ void fn_1_74D0(s16 arg0[3])
     }
 
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
-        lbl_1_bss_AA[var_r31] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W05, 0x12), NULL, 1);
+        lbl_1_bss_AA[var_r31] = BoardModelCreate(0x790012, NULL, 1);
         BoardModelHookSet(lbl_1_bss_14[0], lbl_1_data_330[var_r31], lbl_1_bss_AA[var_r31]);
         BoardModelAttrSet(lbl_1_bss_AA[var_r31], 0x40000002);
         BoardModelMotionTimeSet(lbl_1_bss_AA[var_r31], 10.0f);
     }
-
+    
     HuAudFXPlay(0x488);
     BoardModelMotionTimeSet(lbl_1_bss_14[0], 0.0f);
     BoardModelMotionStartEndSet(lbl_1_bss_14[0], 0, 0x1E);
@@ -233,8 +227,7 @@ void fn_1_74D0(s16 arg0[3])
     HuPrcCreate(fn_1_7400, 0x2004, 0x1000, 0);
 }
 
-void fn_1_77B0(void)
-{
+void fn_1_77B0(void) {
     HuAudFXPlay(0x489);
     BoardModelMotionStartEndSet(lbl_1_bss_14[0], 0x5A, 0x78);
     BoardModelMotionTimeSet(lbl_1_bss_14[0], 90.0f);
@@ -250,8 +243,7 @@ void fn_1_77B0(void)
     }
 }
 
-void fn_1_78A0(omObjData *arg0)
-{
+void fn_1_78A0(omObjData* arg0) {
     if (arg0->work[0] == 0) {
         arg0->work[0] = MGSeqCreate(3, 0);
         return;
@@ -262,8 +254,7 @@ void fn_1_78A0(omObjData *arg0)
     }
 }
 
-void fn_1_7928(omObjData *arg0)
-{
+void fn_1_7928(omObjData* arg0) {
     Process *temp;
     if (((u32)lbl_1_bss_98->user_data & 0x10) != 0) {
         temp = HuPrcCreate(fn_1_799C, 0x2004, 0x1800, 0);
@@ -272,8 +263,7 @@ void fn_1_7928(omObjData *arg0)
     }
 }
 
-void fn_1_799C(void)
-{
+void fn_1_799C(void) {
     Vec sp2C;
     Vec sp20;
     Vec sp14;
@@ -285,7 +275,7 @@ void fn_1_799C(void)
     s32 temp_r31;
     s32 var_r28;
     s32 var_r29;
-    omObjData *temp_r30;
+    omObjData* temp_r30;
 
     temp_r30 = HuPrcCurrentGet()->user_data;
     BoardPlayerPosGet(lbl_1_bss_B6, &sp2C);
@@ -295,6 +285,7 @@ void fn_1_799C(void)
     VECSubtract(&sp2C, &sp20, &sp14);
     temp_f30 = VECMag(&sp14);
     VECScale(&sp14, &sp14, 0.016666668);
+    
     for (var_r29 = 0; var_r29 < 0x3C; var_r29++) {
         BoardModelPosGet(lbl_1_bss_A4[temp_r31], &sp20);
         VECAdd(&sp20, &sp14, &sp20);
@@ -353,7 +344,7 @@ void fn_1_799C(void)
         HuPrcVSleep();
     }
     HuPrcSleep(0x1E);
-
+    
     while (HuAudSStreamStatGet(temp_r27) != 0) {
         HuPrcVSleep();
     }
@@ -365,15 +356,13 @@ void fn_1_799C(void)
     HuPrcEnd();
 }
 
-void fn_1_7E4C(omObjData *arg0)
-{
+void fn_1_7E4C(omObjData* arg0) {
     lbl_1_bss_9C = 1;
     BoardMGExit();
     omDelObjEx(boardObjMan, arg0);
 }
 
-void fn_1_7E94(dataCopy *arg0)
-{
+void fn_1_7E94(dataCopy* arg0) {
     if (--arg0->unk_02 == 0) {
         arg0->unk_02 = 0x3C;
         if (--arg0->unk_00 >= 0) {
@@ -382,20 +371,19 @@ void fn_1_7E94(dataCopy *arg0)
     }
 }
 
-void fn_1_7F04(omObjData *arg0)
-{
+void fn_1_7F04(omObjData* arg0) {
     f32 sp8[2];
     s32 var_r30;
     s32 var_r28;
-    dataCopy *temp_r31;
+    dataCopy* temp_r31;
 
     temp_r31 = arg0->data;
     temp_r31->unk_00 = 5;
     temp_r31->unk_02 = 0x3C;
     temp_r31->unk_04 = MGSeqCreate(1, temp_r31->unk_00, 0x120, 0x40);
-    HuWinMesMaxSizeGet(1, sp8, MAKE_MESSID(0x27, 0x0E));
+    HuWinMesMaxSizeGet(1, sp8, 0x27000E);
     temp_r31->unk_06 = HuWinCreate(-10000.0f, 344.0f, sp8[0], sp8[1], 0);
-    HuWinMesSet(temp_r31->unk_06, MAKE_MESSID(0x27, 0x0E));
+    HuWinMesSet(temp_r31->unk_06, 0x27000E);
     HuWinBGTPLvlSet(temp_r31->unk_06, 0.0f);
     HuWinMesSpeedSet(temp_r31->unk_06, 0);
     temp_r31->unk_08 = 1;
@@ -421,28 +409,26 @@ void fn_1_7F04(omObjData *arg0)
     arg0->func = fn_1_80D8;
 }
 
-void fn_1_80D8(omObjData *arg0)
-{
+void fn_1_80D8(omObjData* arg0) {
     s32 sp10;
     s32 spC;
     s32 sp8;
     f32 var_f31;
     s32 temp_r30;
     s32 var_r29;
-    dataCopy *temp_r31;
+    dataCopy* temp_r31;
 
     temp_r31 = arg0->data;
     fn_1_7E94(temp_r31);
     temp_r30 = GWPlayer[lbl_1_bss_B6].port;
     if (GWPlayer[lbl_1_bss_B6].com != 0) {
         fn_1_8798(temp_r31, &sp10, &spC, &sp8);
-    }
-    else {
+    } else {
         sp10 = HuPadStkX[temp_r30];
         spC = HuPadStkY[temp_r30];
         sp8 = HuPadBtnDown[temp_r30];
     }
-
+    
     if (((sp8 & 0x100) != 0) || (temp_r31->unk_00 < 0)) {
         MGSeqParamSet(temp_r31->unk_04, 2, -1);
         HuWinKill(temp_r31->unk_06);
@@ -456,14 +442,12 @@ void fn_1_80D8(omObjData *arg0)
         if (var_f31 < 0.0f) {
             var_f31 += 360.0f;
         }
-
+        
         if ((var_f31 > 170.0f) && (var_f31 < 190.0f)) {
             var_r29 = 0;
-        }
-        else if ((var_f31 > 260.0f) && (var_f31 < 280.0f)) {
+        } else if ((var_f31 > 260.0f) && (var_f31 < 280.0f)) {
             var_r29 = 1;
-        }
-        else if ((var_f31 < 10.0f) || (var_f31 > 350.0f)) {
+        } else if ((var_f31 < 10.0f) || (var_f31 > 350.0f)) {
             var_r29 = 2;
         }
         if (var_r29 != -1) {
@@ -473,10 +457,9 @@ void fn_1_80D8(omObjData *arg0)
     }
 }
 
-void fn_1_8410(omObjData *arg0)
-{
+void fn_1_8410(omObjData* arg0) {
     s32 temp_r30;
-    dataCopy *temp_r31;
+    dataCopy* temp_r31;
 
     temp_r31 = arg0->data;
     if (BoardPlayerMotionTimeGet(lbl_1_bss_B6) >= 30.0f) {
@@ -487,14 +470,13 @@ void fn_1_8410(omObjData *arg0)
         temp_r30 |= 0x1C0;
         lbl_1_bss_98 = HuPrcCreate(fn_1_896C, 0x2004, 0x4000, 0);
         HuPrcDestructorSet2(lbl_1_bss_98, fn_1_91DC);
-        lbl_1_bss_98->user_data = (void *)temp_r30;
+        lbl_1_bss_98->user_data = (void*)temp_r30;
         lbl_1_bss_8C->work[0] = temp_r31->unk_08;
         arg0->func = fn_1_850C;
     }
 }
 
-void fn_1_850C(omObjData *arg0)
-{
+void fn_1_850C(omObjData* arg0) {
     Vec sp14;
     Vec sp8;
     f32 temp_f31;
@@ -513,8 +495,7 @@ void fn_1_850C(omObjData *arg0)
     }
 }
 
-void fn_1_8668(omObjData *arg0)
-{
+void fn_1_8668(omObjData* arg0) {
     s32 var_r30;
 
     if (arg0->work[0] == 0) {
@@ -523,7 +504,7 @@ void fn_1_8668(omObjData *arg0)
         arg0->func = NULL;
         lbl_1_bss_8C->func = fn_1_7928;
         BoardModelKill(lbl_1_bss_A2);
-
+        
         for (var_r30 = 0; var_r30 < 2; var_r30++) {
             BoardPlayerMotionKill(lbl_1_bss_B6, lbl_1_bss_9E[var_r30]);
         }
@@ -532,8 +513,7 @@ void fn_1_8668(omObjData *arg0)
     arg0->work[0] -= 1;
 }
 
-void fn_1_8798(dataCopy *arg0, s32 *arg1, s32 *arg2, s32 *arg3)
-{
+void fn_1_8798(dataCopy* arg0, s32* arg1, s32* arg2, s32* arg3) {
     *arg1 = *arg2 = *arg3 = 0;
     if (arg0->unk_10 != 0) {
         arg0->unk_10 -= 1;
@@ -552,19 +532,17 @@ void fn_1_8798(dataCopy *arg0, s32 *arg1, s32 *arg2, s32 *arg3)
     *arg2 = (frandBool() * 0x8C) - 0x46;
 }
 
-void *fn_1_8884(void)
-{
+void* fn_1_8884(void) {
     if (lbl_1_bss_98 == NULL) {
         return NULL;
     }
     return lbl_1_bss_98->user_data;
 }
 
-void fn_1_88B8(void)
-{
+void fn_1_88B8(void) {
     s32 userData = (s32)lbl_1_bss_98->user_data;
     userData |= 8;
-    lbl_1_bss_98->user_data = (void *)(userData);
+    lbl_1_bss_98->user_data = (void* ) (userData);
 
     while (((u32)fn_1_8884() & 0x20) == 0) {
         HuPrcVSleep();
@@ -573,8 +551,7 @@ void fn_1_88B8(void)
     lbl_1_bss_98 = NULL;
 }
 
-void fn_1_896C(void)
-{
+void fn_1_896C(void) {
     Vec sp18;
     Vec spC;
     f32 sp8;
@@ -588,7 +565,7 @@ void fn_1_896C(void)
     ParticleData *var_r27;
 
     temp_r30 = (u32)HuPrcCurrentGet()->user_data;
-
+    
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         var_r29 = (1 << var_r31);
         if ((temp_r30 & var_r29) != 0) {
@@ -596,8 +573,7 @@ void fn_1_896C(void)
             if ((temp_r30 & 0x80) != 0) {
                 BoardModelMotionStartEndSet(lbl_1_bss_AA[var_r31], 0, 0x28);
                 BoardModelMotionTimeSet(lbl_1_bss_AA[var_r31], 0.0f);
-            }
-            else {
+            } else {
                 BoardModelMotionStartEndSet(lbl_1_bss_AA[var_r31], 0xA, 0x28);
                 BoardModelMotionTimeSet(lbl_1_bss_AA[var_r31], 10.0f);
             }
@@ -605,12 +581,11 @@ void fn_1_896C(void)
     }
     if ((temp_r30 & 0x80) != 0) {
         HuPrcSleep(0x19);
-    }
-    else {
+    } else {
         HuPrcSleep(0xF);
     }
     spC.x = spC.y = spC.z = 0.0f;
-
+    
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         var_r29 = (1 << var_r31);
         if ((temp_r30 & var_r29) != 0) {
@@ -631,8 +606,7 @@ void fn_1_896C(void)
             if ((temp_r30 & 0x100) != 0) {
                 lbl_1_bss_88 = HuAudFXPlay(0x35F);
                 HuAudFXPlay(0x310);
-            }
-            else {
+            } else {
                 HuAudFXPlay(0x362);
             }
         }
@@ -640,7 +614,7 @@ void fn_1_896C(void)
     temp_f29 = 150.0f + sp18.y;
     sp8 = 0.0f;
     var_f31 = 12.0f;
-
+    
     while (1) {
         for (var_r28 = 0, var_r31 = 0; var_r31 < 3; var_r31++) {
             var_r29 = (1 << var_r31);
@@ -652,7 +626,7 @@ void fn_1_896C(void)
                 }
 
                 spC.x = spC.y = spC.z = sp8;
-                BoardModelScaleSetV(lbl_1_bss_A4[var_r31], (Vec *)&sp8); //!
+                BoardModelScaleSetV(lbl_1_bss_A4[var_r31], (Vec* ) &sp8); //!
                 BoardModelPosGet(lbl_1_bss_A4[var_r31], &sp18);
                 sp18.y += var_f31;
                 if (sp18.y >= temp_f29) {
@@ -665,8 +639,7 @@ void fn_1_896C(void)
         var_f31 *= 0.95f;
         if (var_r28 > 0) {
             HuPrcVSleep();
-        }
-        else {
+        } else {
             break;
         }
     }
@@ -677,12 +650,12 @@ void fn_1_896C(void)
             BoardModelScaleSetV(lbl_1_bss_A4[var_r31], &spC);
         }
     }
-    temp_r30 = (u32)HuPrcCurrentGet()->user_data | 0x10;
-    HuPrcCurrentGet()->user_data = (void *)temp_r30;
+    temp_r30 = (u32) HuPrcCurrentGet()->user_data | 0x10;
+    HuPrcCurrentGet()->user_data = (void*)temp_r30;
     var_f30 = 0.0f;
 
     while (1) {
-        temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+        temp_r30 = (u32) HuPrcCurrentGet()->user_data;
         if ((temp_r30 & 8) == 0) {
             for (var_r31 = 0; var_r31 < 3; var_r31++) {
                 var_r29 = (1 << var_r31);
@@ -697,8 +670,7 @@ void fn_1_896C(void)
                 var_f30 -= 360.0f;
             }
             HuPrcVSleep();
-        }
-        else {
+        } else {
             break;
         }
     }
@@ -717,7 +689,7 @@ void fn_1_896C(void)
                     sp8 = 0.0f;
                 }
                 spC.x = spC.y = spC.z = sp8;
-                BoardModelScaleSetV(lbl_1_bss_A4[var_r31], (Vec *)&sp8); //!
+                BoardModelScaleSetV(lbl_1_bss_A4[var_r31], (Vec* ) &sp8); //!
                 BoardModelPosGet(lbl_1_bss_A4[var_r31], &sp18);
                 sp18.y += var_f31;
                 if (sp18.y <= (temp_f29 - 150.0f)) {
@@ -732,12 +704,11 @@ void fn_1_896C(void)
         var_f31 *= 0.98f;
         if (var_r28 > 0) {
             HuPrcVSleep();
-        }
-        else {
+        } else {
             break;
         }
     }
-
+    
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         var_r29 = (1 << var_r31);
         if ((temp_r30 & var_r29) != 0) {
@@ -748,14 +719,13 @@ void fn_1_896C(void)
     }
     temp_r30 = (u32)HuPrcCurrentGet()->user_data;
     temp_r30 |= 0x20;
-    HuPrcCurrentGet()->user_data = (void *)temp_r30;
+    HuPrcCurrentGet()->user_data = (void*)temp_r30;
     while (1) {
         HuPrcVSleep();
     }
 }
 
-void fn_1_91DC(void)
-{
+void fn_1_91DC(void) {
     u32 temp_r30;
     s32 var_r29;
     s32 var_r31;
@@ -771,10 +741,9 @@ void fn_1_91DC(void)
     }
 }
 
-void fn_1_9268(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
-{
+void fn_1_9268(ModelData* model, ParticleData* particle, f32 (*matrix)[4]) {
     Vec sp8;
-    HsfanimStruct01 *var_r31;
+    HsfanimStruct01* var_r31;
     f32 temp_f30;
     f32 temp_f29;
     f32 temp_f31;
@@ -792,13 +761,12 @@ void fn_1_9268(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
     BoardModelScaleGet(particle->unk_02, &sp8);
     temp_f31 = sp8.x;
     BoardModelPosGet(particle->unk_02, &sp8);
-
+    
     for (var_r29 = 0; var_r29 < 0x16; var_r29++) {
         var_r31 = particle->unk_48;
 
         for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-            if (var_r31->unk2C == 0.0f)
-                break;
+            if (var_r31->unk2C == 0.0f) break;
         }
         if (var_r28 != particle->unk_30) {
             temp_f30 = 360.0f * (0.003921569f * (s32)(frand() & 0xFF));

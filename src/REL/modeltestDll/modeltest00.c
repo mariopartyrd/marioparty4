@@ -197,7 +197,7 @@ void fn_1_46F0(void)
         var_r30 = var_r31;
         lbl_1_bss_9EC[var_r31] = CharModelCreate(var_r30, 8);
         Hu3DModelShadowSet(lbl_1_bss_9EC[var_r31]);
-        lbl_1_bss_9AC[var_r31][0] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+        lbl_1_bss_9AC[var_r31][0] = CharModelMotionCreate(var_r30, 0x5F0002);
         CharModelMotionSet(var_r30, lbl_1_bss_9AC[var_r31][0]);
         Hu3DModelAttrSet(lbl_1_bss_9EC[var_r31], 0x40000001U);
         Hu3DModelCameraSet(lbl_1_bss_9EC[var_r31], lbl_1_data_358[var_r31]);
@@ -206,7 +206,7 @@ void fn_1_46F0(void)
         CharModelMotionDataClose(var_r30);
     }
 
-    var_r31 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_SAF, 0x24));
+    var_r31 = Hu3DModelCreateFile(0x700024);
     Hu3DModelScaleSet(var_r31, 5.0f, 5.0f, 5.0f);
     Hu3DModelShadowMapSet(var_r31);
 

@@ -31,7 +31,7 @@ void fn_1_785C(void) {
     lbl_1_bss_138[0] = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, fn_1_79E0);
     temp_r31 = (w03UnkWorkStruct*)&lbl_1_bss_138[0]->work[0];
     for (i = 0; i < ARRAY_COUNT(temp_r31->unk_00); i++) {
-        temp_r31->unk_00[i] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x08), NULL, 0);
+        temp_r31->unk_00[i] = BoardModelCreate(0x770008, NULL, 0);
         temp_r29 = kemuri_strings[i];
 
         if (0.0f == temp_r31->unk_0C) {

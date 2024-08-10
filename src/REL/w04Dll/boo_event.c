@@ -163,7 +163,7 @@ static void fn_1_20EC(void) {
         }
     }
     for (i = 0; i < 3; i++) {
-        lbl_1_bss_F4[i] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x00), NULL, 1);
+        lbl_1_bss_F4[i] = BoardModelCreate(0x70000, NULL, 1);
         BoardModelLayerSet(lbl_1_bss_F4[i], 2);
         BoardModelVisibilitySet(lbl_1_bss_F4[i], 0);
     }
