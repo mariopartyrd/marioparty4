@@ -668,9 +668,9 @@ void fn_1_1204(omObjData *object)
             var_r31->unk_01 = var_r28 + 1;
 
             var_r31->unk_18 = lbl_1_data_68[var_r30][var_r29];
-            VECSubtract(&lbl_1_data_68[var_r30][var_r29 + 1], &lbl_1_data_68[var_r30][var_r29], &var_r31->unk_24);
-            var_r31->unk_14 = VECMag(&var_r31->unk_24);
-            VECNormalize(&var_r31->unk_24, &var_r31->unk_24);
+            PSVECSubtract(&lbl_1_data_68[var_r30][var_r29 + 1], &lbl_1_data_68[var_r30][var_r29], &var_r31->unk_24);
+            var_r31->unk_14 = PSVECMag(&var_r31->unk_24);
+            PSVECNormalize(&var_r31->unk_24, &var_r31->unk_24);
             var_r31->unk_08 = var_r31->unk_0A = 0;
             var_r31->unk_06 = 0;
             var_r31->unk_0C = 0.0f;
@@ -871,7 +871,7 @@ u8 fn_1_1D60(omObjData *object)
     s32 var_r29;
 
     var_r30 = object->data;
-    sp8 = VECMag(&var_r30->unk_84);
+    sp8 = PSVECMag(&var_r30->unk_84);
     for (var_r31 = lbl_1_bss_298, var_r29 = 0; var_r29 < 0x30; var_r29++, var_r31++) {
         if (var_r31->unk_00 > 2 && var_r31->unk_00 < 5) {
             spC.x = var_r31->unk_24.x * var_r31->unk_14;
@@ -1223,7 +1223,7 @@ void fn_1_2E4C(omObjData *object)
         if (var_r31->unk_20 != 7) {
             sp30 = var_r31->unk_6C;
             sp30.y = 0.0f;
-            var_f30 = VECMag(&sp30);
+            var_f30 = PSVECMag(&sp30);
             if (var_f30 > 700.0f) {
                 var_f29 = -100.0f;
             }
@@ -1259,7 +1259,7 @@ void fn_1_2E4C(omObjData *object)
             if (sp30.z < 0.0f) {
                 sp30.z *= 0.25f;
             }
-            var_f30 = VECMag(&sp30);
+            var_f30 = PSVECMag(&sp30);
             Hu3D3Dto2D(&var_r31->unk_6C, 1, &sp24);
             sp24.x = sp24.x - 288.0f;
             sp24.y -= 240.0f;
@@ -1344,7 +1344,7 @@ void fn_1_35C0(omObjData *object)
                 if (lbl_1_bss_DBA == 7) {
                     var_r31->unk_38++;
                     if (var_r31->unk_38 > var_r31->unk_34) {
-                        VECSubtract(&var_r23->unk_34, &var_r31->unk_6C, &sp10);
+                        PSVECSubtract(&var_r23->unk_34, &var_r31->unk_6C, &sp10);
                         var_f29 = atan2d(sp10.x, sp10.z);
                         if (fabs(fn_1_E5A4(var_r31->unk_7C, var_f29)) > 10.0) {
                             var_r28 = 1;
@@ -1511,10 +1511,10 @@ void fn_1_4374(omObjData *object)
         var_r31->unk_44 -= 0xB4;
     }
     if (var_r31->unk_64) {
-        VECSubtract(&var_r31->unk_58, &var_r31->unk_4C, &sp1C);
-        VECSubtract(&sp1C, &var_r31->unk_6C, &sp10);
+        PSVECSubtract(&var_r31->unk_58, &var_r31->unk_4C, &sp1C);
+        PSVECSubtract(&sp1C, &var_r31->unk_6C, &sp10);
         sp10.y = 0.0f;
-        var_f30 = VECMag(&sp10);
+        var_f30 = PSVECMag(&sp10);
         if (var_f30 > 10.0f) {
             if (var_f30 > 20.0f) {
                 var_f30 = 20.0f;
@@ -1729,7 +1729,7 @@ void fn_1_4724(omObjData *object)
 //                     if (var_r28 < 4) {
 //                         var_r29 = lbl_1_bss_DC4[var_r28]->data;
 //                         if ((var_r29->unk_07 != 0) && ((var_r29->unk_07 & 2) == 0)) {
-//                             VECSubtract(var_r29 + 0x6C, var_r31 + 0x10, &sp18);
+//                             PSVECSubtract(var_r29 + 0x6C, var_r31 + 0x10, &sp18);
 //                             temp_r3_2 = var_r26;
 //                             var_r26++;
 //                             (&sp8[0])[temp_r3_2] = atan2d(sp18, sp18.z);
@@ -1815,7 +1815,7 @@ void fn_1_4724(omObjData *object)
 //                     sp18.y = var_r31->unk_14;
 //                     sp18.z = var_r31->unk_18;
 //                     sp18.y = 0.0f;
-//                     var_f30 = VECMag(&sp18);
+//                     var_f30 = PSVECMag(&sp18);
 //                     if (!(var_f30 <= 700.0f)) {
 //                         var_r31->unk_02 = 1;
 //                         if (fn_1_DA64(atan2d(sp18, sp18.z)) != 0) {
@@ -1899,8 +1899,8 @@ void fn_1_4724(omObjData *object)
 //     loop_72:
 //         if (var_r28 < 4) {
 //             var_r29 = lbl_1_bss_DC4[var_r28]->data;
-//             VECSubtract(var_r29 + 0x6C, var_r31 + 0x10, &sp18);
-//             var_f30 = VECMag(&sp18);
+//             PSVECSubtract(var_r29 + 0x6C, var_r31 + 0x10, &sp18);
+//             var_f30 = PSVECMag(&sp18);
 //             if (!(var_f30 >= 200.0f) && (var_r29->unk_20 != 7)) {
 //                 omVibrate(var_r29->unk_00, 0xC, 4, 2);
 //                 var_r29->unk_07 = var_r29->unk_07 | 2;
@@ -2441,8 +2441,8 @@ void fn_1_7858(omObjData *object)
     if (var_r31->unk_07 == 0 || (var_r31->unk_07 & 2) != 0) {
         return;
     }
-    VECSubtract(&var_r31->unk_6C, &var_r31->unk_90, &sp2C);
-    var_f29 = VECMag(&sp2C);
+    PSVECSubtract(&var_r31->unk_6C, &var_r31->unk_90, &sp2C);
+    var_f29 = PSVECMag(&sp2C);
     if (var_f29 == 0.0f) {
         return;
     }
@@ -2463,15 +2463,15 @@ void fn_1_7858(omObjData *object)
         sp8.y = var_r30->unk_6C.y;
         sp8.z = var_r30->unk_6C.z;
         sp8.y = 0.0f;
-        VECSubtract(&sp14, &sp8, &sp2C);
-        var_f31 = VECMag(&sp2C);
+        PSVECSubtract(&sp14, &sp8, &sp2C);
+        var_f31 = PSVECMag(&sp2C);
         if (var_f31 >= 119.40001f) {
             continue;
         }
-        VECSubtract(&var_r30->unk_6C, &var_r30->unk_90, &sp2C);
-        var_f28 = VECMag(&sp2C);
-        VECSubtract(&sp14, &sp8, &sp20);
-        VECNormalize(&sp20, &sp20);
+        PSVECSubtract(&var_r30->unk_6C, &var_r30->unk_90, &sp2C);
+        var_f28 = PSVECMag(&sp2C);
+        PSVECSubtract(&sp14, &sp8, &sp20);
+        PSVECNormalize(&sp20, &sp20);
         var_f31 = 120.00001f - var_f31;
         var_f30 = ((0.6f * var_f28) + (0.4f * var_f29)) / (var_f29 + var_f28);
         var_r31->unk_6C.x = var_r31->unk_6C.x + (var_f30 * (var_f31 * sp20.x));
@@ -2928,8 +2928,8 @@ void fn_1_9040(float *arg0, Vec *arg1, float arg2[3][3], s32 arg3)
 
     arg0[0] = 0.0f;
     for (var_r30 = 1; var_r30 < arg3; var_r30++) {
-        VECSubtract(&arg1[var_r30], &arg1[var_r30 - 1], &sp8);
-        arg0[var_r30] = arg0[var_r30 - 1] + VECMag(&sp8);
+        PSVECSubtract(&arg1[var_r30], &arg1[var_r30 - 1], &sp8);
+        arg0[var_r30] = arg0[var_r30 - 1] + PSVECMag(&sp8);
     }
     for (var_r27 = 0; var_r27 < 3; var_r27++) {
         for (var_r30 = 0; var_r30 < arg3; var_r30++) {
@@ -3371,9 +3371,9 @@ void fn_1_A688(omObjData *object) { }
 //                 if ((var_r30->unk_00 > 1) && (var_r30->unk_00 < 5)) {
 //                     var_f31 = 0.0f;
 //                     for (var_f31 = 0.0f; var_f31 < (35.416668f + var_r30->unk_14); var_f31 += 35.416668f) {
-//                         VECScale(var_r30 + 0x24, &sp8, var_f31);
-//                         VECAdd(var_r30 + 0x18, &sp8, &sp14);
-//                         VECSubtract(&sp14, &lbl_1_data_514, &sp14);
+//                         PSVECScale(var_r30 + 0x24, &sp8, var_f31);
+//                         PSVECAdd(var_r30 + 0x18, &sp8, &sp14);
+//                         PSVECSubtract(&sp14, &lbl_1_data_514, &sp14);
 //                         var_r24 = (0.028235294f * sp14.z) * 0x30;
 //                         var_r25 = (0.028235294f * sp14) + var_r24;
 //                         var_r25 += lbl_1_bss_DBC->data;
@@ -3392,7 +3392,7 @@ void fn_1_A688(omObjData *object) { }
 //                     var_r31 = var_r27->data;
 //                     if ((var_r31 != NULL) && (var_r31->unk_68 != 0)) {
 //                         var_r31->unk_68 = 0;
-//                         VECAdd(var_r31 + 0x6C, var_r31 + 0x4C, &sp14);
+//                         PSVECAdd(var_r31 + 0x6C, var_r31 + 0x4C, &sp14);
 //                         var_r31->unk_64 = fn_1_AE18(var_r27->work[0], &sp14, var_r31 + 0x58);
 //                     }
 //                 }
@@ -3429,11 +3429,11 @@ void fn_1_A688(omObjData *object) { }
 //     var_r30 = 0;
 //     var_r28 = 0;
 //     var_f28 = 100.0f * (4.5f - (2.0f * var_f25));
-//     var_f31 = VECMag(var_r29);
+//     var_f31 = PSVECMag(var_r29);
 //     if (var_f31 > 280.0f) {
 //         if (var_f31 > 560.0f) {
 //             var_r28 = 1;
-//             VECNormalize(var_r29, &sp14);
+//             PSVECNormalize(var_r29, &sp14);
 //         }
 //         var_f31 -= 280.0f;
 //         var_f31 *= 0.12987013f;
@@ -3456,17 +3456,17 @@ void fn_1_A688(omObjData *object) { }
 //             sp8 = sind(var_r31->unk_08);
 //             spC = 0.0f;
 //             sp10 = cosd(var_r31->unk_08);
-//             VECScale(&sp8, &sp20, 600.0f + (100.0f * (8.0f * var_f25)));
+//             PSVECScale(&sp8, &sp20, 600.0f + (100.0f * (8.0f * var_f25)));
 //             var_f30 = fn_1_B440(var_r29, &sp2C, &sp20);
 //             if ((var_f30 > -0.2f) && (var_f30 < 1.0f)) {
-//                 VECScale(&sp20, &sp20, var_f30);
-//                 VECAdd(&sp2C, &sp20, &sp2C);
-//                 VECSubtract(&sp2C, var_r29, &sp20);
-//                 var_f31 = VECMag(&sp20);
+//                 PSVECScale(&sp20, &sp20, var_f30);
+//                 PSVECAdd(&sp2C, &sp20, &sp2C);
+//                 PSVECSubtract(&sp2C, var_r29, &sp20);
+//                 var_f31 = PSVECMag(&sp20);
 //                 if (var_f31 < var_f28) {
 //                     var_f29 = 0.0f;
 //                     if (var_r28 != 0) {
-//                         var_f29 = VECDotProduct(&sp14, &sp8);
+//                         var_f29 = PSVECDotProduct(&sp14, &sp8);
 //                         var_f27 = fabs(var_f29);
 //                         var_f29 = 1.0 - var_f27;
 //                         var_f29 = var_f29;
@@ -3488,8 +3488,8 @@ void fn_1_A688(omObjData *object) { }
 //         }
 //         else {
 //         block_18:
-//             VECSubtract(var_r29, &sp2C, &sp20);
-//             var_f31 = VECMag(&sp20);
+//             PSVECSubtract(var_r29, &sp2C, &sp20);
+//             var_f31 = PSVECMag(&sp20);
 //             if (var_f31 < 600.0f) {
 //                 var_f31 = 800.0f - var_f31;
 //                 var_f31 = 20.0f + (0.1f * var_f31);
@@ -3571,7 +3571,7 @@ void fn_1_A688(omObjData *object) { }
 //     var_r19 = 0x2710;
 //     var_r18 = 0;
 //     for (var_r30 = 0; var_r30 < 9; var_r30++) {
-//         VECAdd(&sp40, &lbl_1_data_60C[var_r30], &sp34);
+//         PSVECAdd(&sp40, &lbl_1_data_60C[var_r30], &sp34);
 //         sp18 = var_r17 + lbl_1_data_5E8[var_r30];
 //         var_r21 = &lbl_1_bss_C[lbl_1_data_708[var_r30]] + 0x156;
 //         var_f31 = 0.0f;
@@ -3583,7 +3583,7 @@ void fn_1_A688(omObjData *object) { }
 //         for (var_r23 = 0; var_r23 < 3; var_r23++) {
 //             for (var_r28 = 0; var_r28 < 9; var_r28++) {
 //                 var_r24 = var_r22 + lbl_1_data_5E8[var_r28];
-//                 VECAdd(&sp28, &lbl_1_data_60C[var_r28], &sp4C);
+//                 PSVECAdd(&sp28, &lbl_1_data_60C[var_r28], &sp4C);
 //                 if ((lbl_1_bss_DBC->data <= var_r24) && ((lbl_1_bss_DBC->data + 0x900) > var_r24)) {
 //                     var_f27 = sp4C;
 //                     var_f25 = fabs(var_f27);
@@ -3606,9 +3606,9 @@ void fn_1_A688(omObjData *object) { }
 //                                 for (var_r26 = 0; var_r26 < 4; var_r26++) {
 //                                     if (var_r26 != sp8) {
 //                                         var_r25 = lbl_1_bss_DC4[var_r26]->data;
-//                                         VECSubtract(&sp4C, var_r25 + 0x6C, &sp1C);
+//                                         PSVECSubtract(&sp4C, var_r25 + 0x6C, &sp1C);
 //                                         sp1C.y = 0.0f;
-//                                         var_f30 = VECMag(&sp1C);
+//                                         var_f30 = PSVECMag(&sp1C);
 //                                         if (var_f30 < var_f29) {
 //                                             var_f30 = var_f29 - var_f30;
 //                                             var_f30 *= 40.0f / var_f29;
@@ -3631,7 +3631,7 @@ void fn_1_A688(omObjData *object) { }
 //                     }
 //                 }
 //             }
-//             VECAdd(&sp28, &lbl_1_data_69C[var_r30], &sp28);
+//             PSVECAdd(&sp28, &lbl_1_data_69C[var_r30], &sp28);
 //             var_r22 += lbl_1_data_678[var_r30];
 //             var_r21 = &var_r21[lbl_1_data_72C[var_r30]];
 //             var_f31 *= 2.0f;
@@ -3667,9 +3667,9 @@ void fn_1_A688(omObjData *object) { }
 //     sp8 = arg0;
 //     spC = arg1;
 //     var_r31 = arg2;
-//     VECSubtract(spC, sp8, &sp10);
-//     var_f31 = VECDotProduct(&sp10, var_r31);
-//     var_f30 = -VECSquareMag(var_r31);
+//     PSVECSubtract(spC, sp8, &sp10);
+//     var_f31 = PSVECDotProduct(&sp10, var_r31);
+//     var_f30 = -PSVECSquareMag(var_r31);
 //     if (var_f30 != 0.0f) {
 //         var_f31 /= var_f30;
 //     }

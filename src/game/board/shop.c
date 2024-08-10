@@ -260,8 +260,8 @@ static void ExecShop(void) {
     temp_r25 = BoardSpaceLinkFlagSearch(0, temp_r28, 0x02000000);
     BoardSpacePosGet(0, temp_r28, &sp38);
     BoardSpacePosGet(0, temp_r25, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     temp_f31 = atan2d(-sp20.x, -sp20.z);
     sp14.x = -10.0f;
     sp14.y = temp_f31;
@@ -1135,8 +1135,8 @@ void BoardShopTutorialExec(s32 arg0) {
     temp_r27 = BoardSpaceLinkFlagSearch(0, arg0, 0x02000000);
     BoardSpacePosGet(0, arg0, &sp48);
     BoardSpacePosGet(0, temp_r27, &sp3C);
-    VECSubtract(&sp3C, &sp48, &sp30);
-    VECNormalize(&sp30, &sp30);
+    PSVECSubtract(&sp3C, &sp48, &sp30);
+    PSVECNormalize(&sp30, &sp30);
     temp_f31 = atan2d(-sp30.x, -sp30.z);
     sp24.x = -10.0f;
     sp24.y = temp_f31;

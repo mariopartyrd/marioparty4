@@ -154,7 +154,7 @@ s32 fn_1_1650(s32 arg0) {
     temp2 = BoardSpaceLinkFlagSearch(0, GWPlayer[arg0].space_curr, 0x02000000);
     BoardSpacePosGet(0, temp2, &sp38);
     BoardPlayerPosGet(arg0, &sp2C);
-    VECSubtract(&sp38, &sp2C, &sp20);
+    PSVECSubtract(&sp38, &sp2C, &sp20);
     temp = (atan2(-sp20.x, -sp20.z) / M_PI) * 180.0f;
     BoardPlayerRotYSet(arg0, temp);
     sp14.x = 0.0f;
@@ -537,8 +537,8 @@ void fn_1_26E0(s32 arg0) {
 
     BoardSpacePosGet(0, GWPlayer[arg0].space_curr, &sp20);
     BoardPlayerPosGet(arg0, &sp14);
-    VECSubtract(&sp20, &sp14, &sp8);
-    VECNormalize(&sp8, &sp8);
+    PSVECSubtract(&sp20, &sp14, &sp8);
+    PSVECNormalize(&sp8, &sp8);
     temp = (180.0f * (atan2(-sp8.x, -sp8.z) / M_PI));
     BoardPlayerRotYSet(arg0, temp);
     BoardCameraViewSet(1);

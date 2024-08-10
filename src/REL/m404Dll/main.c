@@ -250,7 +250,7 @@ void ObjectSetup(void)
     lbl_1_bss_10.x = lbl_1_data_77C.x - lbl_1_data_770.x;
     lbl_1_bss_10.y = lbl_1_data_77C.y - lbl_1_data_770.y;
     lbl_1_bss_10.z = lbl_1_data_77C.z - lbl_1_data_770.z;
-    VECNormalize(&lbl_1_bss_10, &lbl_1_bss_10);
+    PSVECNormalize(&lbl_1_bss_10, &lbl_1_bss_10);
     var_r29 = Hu3DGLightCreateV(&lbl_1_data_770, &lbl_1_bss_10, &lbl_1_data_788);
     Hu3DGLightInfinitytSet(var_r29);
     Hu3DGLightStaticSet(var_r29, 1);

@@ -292,19 +292,19 @@ static void fn_1_E44C(omObjData *arg0) {
         BoardAudSeqPause(0, 1, 1000);
         BoardPlayerPosGet(lbl_1_bss_7E4, &sp18);
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_6C4[17]), lbl_1_data_F9C[0], &spC);
-        var_f26 = VECSquareDistance(&sp18, &spC);
+        var_f26 = PSVECSquareDistance(&sp18, &spC);
         arg0->work[2] = 0;
         for (i = 1; i < 4; i++) {
             Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_6C4[17]), lbl_1_data_F9C[i], &spC);
-            temp_f27 = VECSquareDistance(&sp18, &spC);
+            temp_f27 = PSVECSquareDistance(&sp18, &spC);
             if (temp_f27 < var_f26) {
                 var_f26 = temp_f27;
                 arg0->work[2] = i;
             }
         }
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_6C4[17]), lbl_1_data_F9C[arg0->work[2]], &lbl_1_bss_7D8);
-        VECSubtract(&lbl_1_bss_7D8, &sp18, &spC);
-        VECNormalize(&spC, &spC);
+        PSVECSubtract(&lbl_1_bss_7D8, &sp18, &spC);
+        PSVECNormalize(&spC, &spC);
         arg0->trans.x = spC.x;
         arg0->trans.y = spC.y;
         arg0->trans.z = spC.z;
@@ -455,8 +455,8 @@ static void fn_1_F3F8(omObjData *arg0) {
         return;
     }
     BoardPlayerPosGet(lbl_1_bss_7E4, &sp18);
-    VECSubtract(&lbl_1_bss_7C4, &sp18, &spC);
-    VECNormalize(&spC, &spC);
+    PSVECSubtract(&lbl_1_bss_7C4, &sp18, &spC);
+    PSVECNormalize(&spC, &spC);
     arg0->trans.x = spC.x;
     arg0->trans.y = spC.y;
     arg0->trans.z = spC.z;
@@ -466,8 +466,8 @@ static void fn_1_F3F8(omObjData *arg0) {
     arg0->rot.z = sp18.y;
     arg0->scale.x = 0.0f;
     BoardPlayerMotionShiftSet(lbl_1_bss_7E4, 4, 0.0f, 5.0f, 0);
-    VECSubtract(&lbl_1_bss_7C4, &sp18, &spC);
-    VECNormalize(&spC, &spC);
+    PSVECSubtract(&lbl_1_bss_7C4, &sp18, &spC);
+    PSVECNormalize(&spC, &spC);
     BoardPlayerRotSet(lbl_1_bss_7E4, 0.0f, fn_1_10EB8(&spC), 0.0f);
     arg0->func = fn_1_F6E8;
 }
@@ -737,8 +737,8 @@ static void fn_1_10820(omObjData *arg0) {
         sp18.y = 0.0f;
         sp18.z = arg0->trans.z;
         sp24.y = 0.0f;
-        VECSubtract(&sp24, &sp18, &spC);
-        VECNormalize(&spC, &spC);
+        PSVECSubtract(&sp24, &sp18, &spC);
+        PSVECNormalize(&spC, &spC);
         var_f28 = VECDistanceXZ(&sp24, &sp18);
         if (var_f28 < 8.0f) {
             arg0->trans.x = sp24.x;

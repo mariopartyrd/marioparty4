@@ -203,8 +203,8 @@ static s32 fn_1_4BF8(s32 arg0) {
     BoardModelPosGet(lbl_1_bss_C[0], &sp38);
     sp38.x += 115.0 * sin(M_PI);
     sp38.z += 115.0 * cos(M_PI);
-    VECSubtract(&sp38, &sp2C, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp38, &sp2C, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     BoardPlayerRotYSet(arg0, atan2d(-sp20.x, -sp20.z));
     BoardPlayerPosLerpStart(arg0, &sp2C, &sp38, 40);
     BoardModelPosGet(lbl_1_bss_C[5], &sp2C);
@@ -212,7 +212,7 @@ static s32 fn_1_4BF8(s32 arg0) {
     BoardModelMotionSpeedSet(lbl_1_bss_C[5], 2.0f);
     while (GWPlayer[arg0].moving) {
         BoardPlayerPosGet(arg0, &sp38);
-        VECSubtract(&sp38, &sp2C, &sp20);
+        PSVECSubtract(&sp38, &sp2C, &sp20);
         BoardModelRotYSet(lbl_1_bss_C[5], atan2d(sp20.x, sp20.z));
         HuPrcVSleep();
     }
@@ -285,7 +285,7 @@ static void fn_1_519C(s32 arg0) {
         BoardModelMotionSpeedSet(lbl_1_bss_C[5], 2.0f);
         while (GWPlayer[arg0].moving) {
             BoardPlayerPosGet(arg0, &sp14);
-            VECSubtract(&sp14, &sp20, &sp8);
+            PSVECSubtract(&sp14, &sp20, &sp8);
             BoardModelRotYSet(lbl_1_bss_C[5], atan2d(sp8.x, sp8.z));
             HuPrcVSleep();
         }
@@ -336,8 +336,8 @@ static void fn_1_5490(s32 arg0) {
     sp3C.x += 50.0f;
     BoardPlayerPosGet(arg0, &sp30);
     sp30.x -= 10.0f;
-    VECSubtract(&sp30, &sp3C, &sp24);
-    VECNormalize(&sp24, &sp18);
+    PSVECSubtract(&sp30, &sp3C, &sp24);
+    PSVECNormalize(&sp24, &sp18);
     temp_r3->trans.x = sp24.x / 60.0f;
     temp_r3->trans.y = sp24.y / 60.0f;
     temp_r3->trans.z = sp24.z / 60.0f;

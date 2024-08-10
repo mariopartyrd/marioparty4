@@ -93,11 +93,11 @@ void fn_1_155C(void) {
         BoardModelRotYSet(lbl_1_bss_14[4], -90.0f);
     }
     BoardModelMotionStart(lbl_1_bss_14[4], temp_r28, 0x40000001);
-    VECSubtract(&sp28, &sp40, &sp34);
-    VECScale(&sp34, &sp34, 0.018518519f);
+    PSVECSubtract(&sp28, &sp40, &sp34);
+    PSVECScale(&sp34, &sp34, 0.018518519f);
     
     for (var_r31 = 0; var_r31 < 0x36; var_r31++) {
-        VECAdd(&sp40, &sp34, &sp40);
+        PSVECAdd(&sp40, &sp34, &sp40);
         BoardModelPosSetV(lbl_1_bss_14[4], &sp40);
         HuPrcVSleep();
     }
@@ -174,11 +174,11 @@ void fn_1_155C(void) {
         BoardModelRotYSet(lbl_1_bss_14[4], 90.0f);
     }
     BoardModelMotionStart(lbl_1_bss_14[4], temp_r28, 0x40000001);
-    VECSubtract(&sp28, &sp40, &sp34);
-    VECScale(&sp34, &sp34, 0.033333335f);
+    PSVECSubtract(&sp28, &sp40, &sp34);
+    PSVECScale(&sp34, &sp34, 0.033333335f);
     
     for (var_r31 = 0; var_r31 < 0x1E; var_r31++) {
-        VECAdd(&sp40, &sp34, &sp40);
+        PSVECAdd(&sp40, &sp34, &sp40);
         BoardModelPosSetV(lbl_1_bss_14[4], &sp40);
         HuPrcVSleep();
     }
@@ -253,11 +253,11 @@ void fn_1_1E44(void) {
         BoardModelRotYSet(lbl_1_bss_14[4], -90.0f);
     }
     BoardModelMotionStart(lbl_1_bss_14[4], sp8[0], 0x40000001);
-    VECSubtract(&sp2C, &sp5C, &sp44);
-    VECScale(&sp44, &sp44, 0.018518519f);
+    PSVECSubtract(&sp2C, &sp5C, &sp44);
+    PSVECScale(&sp44, &sp44, 0.018518519f);
 
     for (var_r31 = 0; var_r31 < 0x36U; var_r31++) {
-        VECAdd(&sp5C, &sp44, &sp5C);
+        PSVECAdd(&sp5C, &sp44, &sp5C);
         BoardModelPosSetV(lbl_1_bss_14[4], &sp5C);
         HuPrcVSleep();
     }
@@ -396,11 +396,11 @@ void fn_1_1E44(void) {
         BoardModelRotYSet(lbl_1_bss_14[4], 90.0f);
     }
     BoardModelMotionStart(lbl_1_bss_14[4], sp8[0], 0x40000001U);
-    VECSubtract(&sp38, &sp5C, &sp44);
-    VECScale(&sp44, &sp44, 0.055555556);
+    PSVECSubtract(&sp38, &sp5C, &sp44);
+    PSVECScale(&sp44, &sp44, 0.055555556);
 
     for (var_r31 = 0; var_r31 < 0x12U; var_r31++) {
-        VECAdd(&sp5C, &sp44, &sp5C);
+        PSVECAdd(&sp5C, &sp44, &sp5C);
         BoardModelPosSetV(lbl_1_bss_14[4], &sp5C);
         HuPrcVSleep();
     }

@@ -3004,26 +3004,26 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
                 if (!var_r29->unk_2C) {
                     var_r28 = sp98;
                     var_r27 = sp38;
-                    VECScale(var_r27++, var_r28, var_r29->unk_28);
-                    VECAdd(var_r28++, &var_r29->unk_30, var_r30++);
-                    VECScale(var_r27++, var_r28, var_r29->unk_28);
-                    VECAdd(var_r28++, &var_r29->unk_30, var_r30++);
-                    VECScale(var_r27++, var_r28, var_r29->unk_28);
-                    VECAdd(var_r28++, &var_r29->unk_30, var_r30++);
-                    VECScale(var_r27++, var_r28, var_r29->unk_28);
-                    VECAdd(var_r28++, &var_r29->unk_30, var_r30++);
+                    PSVECScale(var_r27++, var_r28, var_r29->unk_28);
+                    PSVECAdd(var_r28++, &var_r29->unk_30, var_r30++);
+                    PSVECScale(var_r27++, var_r28, var_r29->unk_28);
+                    PSVECAdd(var_r28++, &var_r29->unk_30, var_r30++);
+                    PSVECScale(var_r27++, var_r28, var_r29->unk_28);
+                    PSVECAdd(var_r28++, &var_r29->unk_30, var_r30++);
+                    PSVECScale(var_r27++, var_r28, var_r29->unk_28);
+                    PSVECAdd(var_r28++, &var_r29->unk_30, var_r30++);
                 } else {
-                    VECScale(&lbl_1_data_22C[0], &sp98[0], var_r29->unk_28);
-                    VECScale(&lbl_1_data_22C[1], &sp98[1], var_r29->unk_28);
-                    VECScale(&lbl_1_data_22C[2], &sp98[2], var_r29->unk_28);
-                    VECScale(&lbl_1_data_22C[3], &sp98[3], var_r29->unk_28);
+                    PSVECScale(&lbl_1_data_22C[0], &sp98[0], var_r29->unk_28);
+                    PSVECScale(&lbl_1_data_22C[1], &sp98[1], var_r29->unk_28);
+                    PSVECScale(&lbl_1_data_22C[2], &sp98[2], var_r29->unk_28);
+                    PSVECScale(&lbl_1_data_22C[3], &sp98[3], var_r29->unk_28);
                     PSMTXRotRad(spC8, 90, var_r29->unk_2C);
                     PSMTXConcat(sp128, spC8, &spF8[0]);
                     PSMTXMultVecArray(spF8, &sp98[0], &sp68[0], 4);
-                    VECAdd(&sp68[0], &var_r29->unk_30, var_r30++);
-                    VECAdd(&sp68[1], &var_r29->unk_30, var_r30++);
-                    VECAdd(&sp68[2], &var_r29->unk_30, var_r30++);
-                    VECAdd(&sp68[3], &var_r29->unk_30, var_r30++);
+                    PSVECAdd(&sp68[0], &var_r29->unk_30, var_r30++);
+                    PSVECAdd(&sp68[1], &var_r29->unk_30, var_r30++);
+                    PSVECAdd(&sp68[2], &var_r29->unk_30, var_r30++);
+                    PSVECAdd(&sp68[3], &var_r29->unk_30, var_r30++);
                 }
                 var_r20 = var_r29->unk_40 & 3;
                 var_r19 = (var_r29->unk_40 >> 2) & 3;

@@ -1292,7 +1292,7 @@ static void TakeBallCoin(void) {
         var_r31->unk1C.x = 3.0f * (BoardRandFloat() - 0.5f);
         var_r31->unk1C.y = 3.0 * sin(BoardRandFloat());
         var_r31->unk1C.z = 3.0f * (BoardRandFloat() - 0.5f);
-        VECScale(&var_r31->unk1C, &var_r31->unk1C, 4.0f);
+        PSVECScale(&var_r31->unk1C, &var_r31->unk1C, 4.0f);
         BoardModelPosSetV(var_r31->unk00, &var_r31->unk04);
         var_r31->unk10 = var_r31->unk1C;
     }
@@ -1329,8 +1329,8 @@ static void TakeBallCoinPosSet(BallTakeCoinData *arg0, Vec *arg1) {
         arg0->unk00 = -1;
         return;
     }
-    VECAdd(&arg0->unk04, &arg0->unk10, &arg0->unk04);
-    VECAdd(&arg0->unk04, &arg0->unk1C, &arg0->unk04);
+    PSVECAdd(&arg0->unk04, &arg0->unk10, &arg0->unk04);
+    PSVECAdd(&arg0->unk04, &arg0->unk1C, &arg0->unk04);
     arg0->unk10.y += -0.98f;
     BoardModelPosSetV(arg0->unk00, &arg0->unk04);
 }

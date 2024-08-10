@@ -1017,8 +1017,8 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8) {
                     if (((((temp_r25->flag & 0x20000000) == 0) != 0) || (spE == 1)) && ((temp_r25->flag & 0x02000000) == 0) && ((temp_r25->flag & 0x04000000) == 0)) {
                         if ((temp_r25->flag & BoardJunctionMaskGet()) == 0) {
                             BoardSpacePosGet(0, temp_r26->link[var_r22], &sp50);
-                            VECSubtract(&sp50, &sp68, &sp44);
-                            VECNormalize(&sp44, &sp44);
+                            PSVECSubtract(&sp50, &sp68, &sp44);
+                            PSVECNormalize(&sp44, &sp44);
                             
                             angle = (180.0 * (atan2(sp44.x, sp44.z) / M_PI));
                             if (angle < 0.0f) {
@@ -1212,7 +1212,7 @@ static s32 DoDebugMove(s32 arg0, s16* arg1) {
             if (sp5C == 0) {
                 spAC[var_r29] = 0;
             } else {
-                VECSubtract(&sp5C->pos, &sp88, &sp94);
+                PSVECSubtract(&sp5C->pos, &sp88, &sp94);
                 var_f30 = 90.0 - (180.0 * (atan2(sp94.z, sp94.x) / M_PI));
                 OSf32tos16(&var_f30, &var_r26);
                 if (var_r26 < 0) {
@@ -1259,7 +1259,7 @@ static s32 DoDebugMove(s32 arg0, s16* arg1) {
                     }
                     RestoreJunction(var_f30, 1);
                     sp50 = &boardCamera;
-                    VECSubtract(&sp50->target, &sp50->pos, &sp7C);
+                    PSVECSubtract(&sp50->target, &sp50->pos, &sp7C);
                     var_f30 = (var_f30 + (90.0 - (180.0 * (atan2(-sp7C.z, -sp7C.x) / M_PI))));
                     if (var_f30 < 0.0f) {
                         var_f30 += 360.0f;
@@ -1382,7 +1382,7 @@ static s32 ExecJunction(s32 arg0, s16* arg1) {
         if (!sp88) {
             spD0[var_r28] = 0;
         } else {
-            VECSubtract(&sp88->pos, &spAC, &spB8);
+            PSVECSubtract(&sp88->pos, &spAC, &spB8);
             var_f29 = (90.0 - (180.0 * (atan2(spB8.z, spB8.x) / M_PI)));
             if (var_f29 < 0.0f) {
                 var_f29 += 360.0f;
@@ -1560,8 +1560,8 @@ void BoardPlayerPosLerpStart(s32 arg0, Vec* arg1, Vec* arg2, s16 arg3) {
             BoardBowserSuitMotionSetWalk();
             BoardModelMotionSpeedSet(suitMdl, 1.5f);
         }
-        VECSubtract(arg2, arg1, &sp18);
-        VECNormalize(&sp18, &sp18);
+        PSVECSubtract(arg2, arg1, &sp18);
+        PSVECNormalize(&sp18, &sp18);
         var_f26 = 90.0 - (180.0 * (atan2(sp18.z, sp18.x) / M_PI));
         var_f30 = var_f26;
         if (var_f30 < 0.0f) {

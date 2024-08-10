@@ -273,8 +273,8 @@ static s32 fn_1_12A0(s32 arg0) {
     lbl_1_bss_34 = BoardSpaceLinkFlagSearch(0, var_r30, 0x02000000);
     BoardPlayerPosGet(arg0, &sp2C);
     BoardSpacePosGet(0, lbl_1_bss_34, &sp38);
-    VECSubtract(&sp38, &sp2C, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp38, &sp2C, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     BoardPlayerRotYSet(arg0, atan2d(-sp20.x, -sp20.z));
     BoardPlayerPosLerpStart(arg0, &sp2C, &sp38, 20);
     while (GWPlayer[arg0].moving) {
@@ -979,7 +979,7 @@ static void fn_1_3698(s8 arg0) {
     } else {
         var_f30 = 20.0f;
     }
-    VECSubtract(&sp18, &sp24, &spC);
+    PSVECSubtract(&sp18, &sp24, &spC);
     lbl_1_bss_28->trans.y = temp_f31 / var_f30;
     BoardModelRotYSet(lbl_1_bss_C[4], atan2d(spC.x, spC.z));
     BoardModelMotionShiftSet(lbl_1_bss_C[4], temp_r31->unk08, 0.0f, 8.0f, 0x40000001);

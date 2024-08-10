@@ -1006,7 +1006,7 @@ void fn_1_34B0(ModelData* model, ParticleData* particle, Mtx matrix, s32 arg3) {
         if (var_r31->unk14.x == 0.0f) {
             continue;
         }
-        VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+        PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
         var_r31->unk08.x *= 0.95f;
         var_r31->unk08.y *= 0.95f;
         var_r31->unk14.y += 20.0f;

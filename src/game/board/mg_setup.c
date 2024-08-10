@@ -837,8 +837,8 @@ static void FallMGType(bitcopy* arg0, omObjData* arg1) {
         temp_r31->unk_1C[1][temp_r30].y = -128.0f;
         arg0->unk_02 = 1;
     }
-    VECSubtract(&temp_r31->unk_1C[1][temp_r30], &temp_r31->unk_1C[0][temp_r30], &sp10);
-    if (VECMag(&sp10) <= 1.0f) {
+    PSVECSubtract(&temp_r31->unk_1C[1][temp_r30], &temp_r31->unk_1C[0][temp_r30], &sp10);
+    if (PSVECMag(&sp10) <= 1.0f) {
         temp_r31->unk_1C[0][temp_r30] = temp_r31->unk_1C[1][temp_r30];
         temp_r29 = (bitcopy*) mgSetupObj->work;
         temp_r29->field00_bit1 = 7;
@@ -846,8 +846,8 @@ static void FallMGType(bitcopy* arg0, omObjData* arg1) {
         temp_r29->unk_03 = 0;
         temp_r29->unk_04 = 0;
     } else {
-        VECScale(&sp10, &sp10, 0.1f);
-        VECAdd(&sp10, &temp_r31->unk_1C[0][temp_r30], &temp_r31->unk_1C[0][temp_r30]);
+        PSVECScale(&sp10, &sp10, 0.1f);
+        PSVECAdd(&sp10, &temp_r31->unk_1C[0][temp_r30], &temp_r31->unk_1C[0][temp_r30]);
     }
     HuSprPosSet(temp_r31->unk_00[0], temp_r30, temp_r31->unk_1C[0][temp_r30].x, temp_r31->unk_1C[0][temp_r30].y);
 }

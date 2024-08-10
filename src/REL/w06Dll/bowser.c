@@ -250,8 +250,8 @@ static void fn_1_95AC(s32 arg0) {
     lbl_1_data_49C = BoardPlayerMotionCreate(arg0, lbl_1_data_510[GWPlayer[arg0].character]);
     BoardPlayerPosGet(arg0, &sp38);
     BoardModelPosGet(lbl_1_data_49A, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     BoardModelMotionShiftSet(lbl_1_data_498, 4, 0.0f, 8.0f, 0);
     HuPrcSleep(8);
     HuAudFXPlay(0x3C);
@@ -300,8 +300,8 @@ static void fn_1_95AC(s32 arg0) {
     omVibrate(arg0, 12, 4, 2);
     BoardPlayerMotionStart(arg0, lbl_1_data_49C, 0x40000001);
     temp_r30 = BoardSpaceFlagPosGet(0, 0x8000, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     sp20.x = 500.0f * sp20.x / 90.0f;
     sp20.z = 500.0f * sp20.z / 90.0f;
     sp38.y += 150.0f;
@@ -384,8 +384,8 @@ static void fn_1_9E5C(s32 arg0) {
 
     BoardPlayerPosGet(arg0, &sp38);
     BoardModelPosGet(lbl_1_data_49A, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     BoardModelMotionShiftSet(lbl_1_data_498, 4, 0.0f, 8.0f, 0);
     HuPrcSleep(8);
     HuAudFXPlay(0x3C);
@@ -500,8 +500,8 @@ static void fn_1_A408(s32 arg0) {
 
     BoardPlayerPosGet(arg0, &sp38);
     BoardModelPosGet(lbl_1_data_49A, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     BoardModelMotionShiftSet(lbl_1_data_498, 4, 0.0f, 8.0f, 0);
     HuPrcSleep(8);
     HuAudFXPlay(0x3C);
@@ -656,8 +656,8 @@ static void fn_1_AB4C(s32 arg0, s32 arg1) {
     BoardSpacePosGet(0, arg1, &sp3C);
     BoardPlayerPosSetV(arg0, &sp3C);
     BoardModelPosGet(lbl_1_data_49A, &sp30);
-    VECSubtract(&sp30, &sp3C, &sp24);
-    VECNormalize(&sp24, &sp24);
+    PSVECSubtract(&sp30, &sp3C, &sp24);
+    PSVECNormalize(&sp24, &sp24);
     BoardPlayerRotYSet(arg0, atan2d(sp24.x, sp24.z));
     BoardPlayerSizeSet(arg0, 2);
     sp18.x = 0.0f;
@@ -774,8 +774,8 @@ static void fn_1_B27C(s32 arg0) {
 
     BoardPlayerPosGet(arg0, &sp38);
     BoardModelPosGet(lbl_1_data_49A, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     BoardModelMotionShiftSet(lbl_1_data_498, 4, 0.0f, 8.0f, 0);
     HuPrcSleep(8);
     HuAudFXPlay(0x3C);
@@ -960,7 +960,7 @@ static void fn_1_BD8C(s32 arg0) {
     OSs8tof32(&lbl_1_data_4A4[lbl_1_bss_0->unk04 - 1], &var_f25);
     BoardPlayerPosGet(arg0, &sp18);
     BoardModelPosGet(lbl_1_data_49A, &sp24);
-    VECSubtract(&sp18, &sp24, &spC);
+    PSVECSubtract(&sp18, &sp24, &spC);
     var_f26 = atan2d(spC.x, spC.z);
     BoardPlayerMotBlendSet(arg0, var_f26 + 180.0f, 0x14);
     fn_1_B6A0(var_f25, 20);
@@ -1205,9 +1205,9 @@ void fn_1_CD0C(void) {
     BoardModelVisibilitySet(lbl_1_data_49A, 1);
     BoardModelPosGet(lbl_1_data_498, &sp20);
     BoardViewFocusGetPos(&sp2C);
-    VECSubtract(&sp2C, &sp20, &sp14);
+    PSVECSubtract(&sp2C, &sp20, &sp14);
     sp14.y = 0.0f;
-    temp_f30 = VECMag(&sp14);
+    temp_f30 = PSVECMag(&sp14);
     if (temp_f30 > 3000.0f) {
         var_r30 = 180;
     } else if (temp_f30 > 1500.0f) {

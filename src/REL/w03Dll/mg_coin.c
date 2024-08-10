@@ -167,8 +167,8 @@ s32 fn_1_7D18(s32 arg0) {
     temp_r28 = BoardSpaceLinkFlagSearch(0, space, 0x02000000);
     BoardPlayerPosGet(arg0, &sp2C);
     BoardSpacePosGet(0, temp_r28, &sp38);
-    VECSubtract(&sp38, &sp2C, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp38, &sp2C, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     BoardPlayerRotYSet(arg0, 180.0 * (atan2(-sp20.x, -sp20.z) / M_PI));
     HuPrcSleep(0x1E);
     model = BoardModelIDGet(lbl_1_bss_C[7]);
@@ -189,7 +189,7 @@ s32 fn_1_7D18(s32 arg0) {
     while (GWPlayer[arg0].moving != 0) {
         BoardModelPosGet(lbl_1_bss_C[10], &sp2C);
         BoardPlayerPosGet(arg0, &sp38);
-        VECSubtract(&sp38, &sp2C, &sp20);
+        PSVECSubtract(&sp38, &sp2C, &sp20);
         arctan = atan2(sp20.x, sp20.z) / M_PI * 180.0;
         BoardModelRotYSet(lbl_1_bss_C[10], arctan);
         HuPrcVSleep();
@@ -610,7 +610,7 @@ void fn_1_9230(s32 arg0) {
     while (GWPlayer[arg0].moving != 0) {
         BoardModelPosGet(lbl_1_bss_C[10], &sp20);
         BoardPlayerPosGet(arg0, &sp14);
-        VECSubtract(&sp14, &sp20, &sp8);
+        PSVECSubtract(&sp14, &sp20, &sp8);
         rotY = atan2(sp8.x, sp8.z) / M_PI * 180.0;
         BoardModelRotYSet(lbl_1_bss_C[10], rotY);
         HuPrcVSleep();

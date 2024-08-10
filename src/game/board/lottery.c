@@ -503,10 +503,10 @@ static void ExecLottery(void) {
     lotterySpace = BoardSpaceLinkFlagSearch(0, temp_r28, 0x02000000);
     BoardSpacePosGet(0, temp_r28, &sp38);
     BoardSpacePosGet(0, lotterySpace, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
     if (GWBoardGet() == BOARD_ID_MAIN3 || GWBoardGet() == BOARD_ID_MAIN4) {
-        VECScale(&sp20, &sp20, 0.95f);
-        VECAdd(&sp20, &sp38, &sp2C);
+        PSVECScale(&sp20, &sp20, 0.95f);
+        PSVECAdd(&sp20, &sp38, &sp2C);
     }
     temp_r26 = atan2d(-sp20.x, -sp20.z);
     if (BoardPlayerSizeGet(temp_r31) == 1) {
@@ -546,8 +546,8 @@ static void ExecLottery(void) {
     for (i = 0; i < 4; i++) {
         if (i != temp_r31) {
             BoardPlayerPosGet(i, &sp38);
-            VECSubtract(&sp2C, &sp38, &sp20);
-            VECNormalize(&sp20, &sp20);
+            PSVECSubtract(&sp2C, &sp38, &sp20);
+            PSVECNormalize(&sp20, &sp20);
             BoardPlayerMotBlendSet(i, atan2d(sp20.x, sp20.z), 7);
         }
     }
@@ -620,7 +620,7 @@ static void DoMiniJumpUp(s32 arg0) {
     temp_f29 = BoardPlayerMotionMaxTimeGet(arg0);
     BoardPlayerPosGet(arg0, &sp1C);
     sp28.y += 52.5308f;
-    VECSubtract(&sp28, &sp1C, &sp10);
+    PSVECSubtract(&sp28, &sp1C, &sp10);
     sp10.x /= temp_f29;
     sp10.z /= temp_f29;
     sp10.y /= temp_f29;
@@ -653,7 +653,7 @@ static void DoMiniJumpDown(s32 arg0) {
 
     BoardPlayerPosGet(arg0, &sp18);
     BoardSpacePosGet(0, lotterySpace, &sp24);
-    VECSubtract(&sp24, &sp18, &spC);
+    PSVECSubtract(&sp24, &sp18, &spC);
     BoardPlayerMotionStart(arg0, 4, 0);
     spC.x /= 30.0f;
     spC.z /= 30.0f;
@@ -1049,7 +1049,7 @@ static void ExecBallPrize(void) {
     PSMTXTrans(sp3C, temp_r3->data.curr.pos.x, temp_r3->data.curr.pos.y + 210.0f, temp_r3->data.curr.pos.z + -40.0f);
     PSMTXConcat(sp6C, sp3C, sp3C);
     Hu3DMtxTransGet(sp3C, &spC);
-    VECAdd(&spC, &sp30, &sp30);
+    PSVECAdd(&spC, &sp30, &sp30);
     BoardModelVisibilitySet(temp_r29, 1);
     sp24.x = 10.5f;
     sp24.y = -3.0f;
@@ -1065,7 +1065,7 @@ static void ExecBallPrize(void) {
         sp24.y -= temp_f26;
         sp24.x *= 0.92f;
         sp24.z *= 0.92f;
-        VECAdd(&sp24, &sp30, &sp30);
+        PSVECAdd(&sp24, &sp30, &sp30);
         var_f29 += sp24.z;
         if (sp30.y - 25.0f < temp_f28) {
             if (var_r28 == 0) {
@@ -1294,13 +1294,13 @@ static void ExecScratchSpr(omObjData *arg0) {
     sp14.y = arg0->trans.y;
     sp20.x = arg0->rot.x;
     sp20.y = arg0->rot.y;
-    VECSubtract(&sp14, &sp20, &sp8);
+    PSVECSubtract(&sp14, &sp20, &sp8);
     if (ABS(sp8.x) < 1.0f && ABS(sp8.y) < 1.0f) {
         sp8 = sp14;
         temp_r30->unk00_field1 = 1;
     } else {
-        VECScale(&sp8, &sp8, 0.2f);
-        VECAdd(&sp20, &sp8, &sp8);
+        PSVECScale(&sp8, &sp8, 0.2f);
+        PSVECAdd(&sp20, &sp8, &sp8);
         temp_r30->unk00_field1 = 0;
     }
     HuSprPosSet(ticketSprGrp, temp_r30->unk00_field2, sp8.x, sp8.y);
@@ -1589,16 +1589,16 @@ static s32 TicketUpdate(AnimBmpData *arg0, Vec *arg1, s32 arg2) {
     if (handUpdateF == 0) {
         handUpdateF = 1;
     }
-    VECNormalize(&sp48, &sp48);
+    PSVECNormalize(&sp48, &sp48);
     temp_f20 = atan2f(sp48.x, -sp48.y);
     sp48.x = sin(temp_f20);
     sp48.y = cos(temp_f20);
-    temp_f25 = 127.0f * VECMag(&sp48);
+    temp_f25 = 127.0f * PSVECMag(&sp48);
     OSf32tos8(&temp_f25, &spD);
     HuAudFXVolSet(arg2, spD);
     sp48.x *= 8.0f;
     sp48.y *= 8.0f;
-    VECAdd(&sp48, arg1, &sp3C);
+    PSVECAdd(&sp48, arg1, &sp3C);
     var_r18 = 0;
     if (sp3C.x < 192.0f) {
         sp3C.x = 192.0f;
@@ -2027,8 +2027,8 @@ void BoardLotteryTutorialExec(void) {
     temp_r29 = BoardSpaceLinkFlagSearch(0, temp_r31, 0x02000000);
     BoardSpacePosGet(0, temp_r31, &sp38);
     BoardSpacePosGet(0, temp_r29, &sp2C);
-    VECSubtract(&sp2C, &sp38, &sp20);
-    VECNormalize(&sp20, &sp20);
+    PSVECSubtract(&sp2C, &sp38, &sp20);
+    PSVECNormalize(&sp20, &sp20);
     temp_r28 = atan2d(-sp20.x, -sp20.z);
     sp14.x = -3.0f;
     sp14.y = temp_r28;

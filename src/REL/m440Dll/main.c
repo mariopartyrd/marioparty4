@@ -1621,7 +1621,7 @@ void fn_1_71FC(unkStruct6* arg0, Vec* arg1, s16 arg2, Vec arg3) {
     sp1C.x = temp_r30->unk68[0];
     sp1C.y = temp_r30->unk68[1];
     sp1C.z = temp_r30->unk68[2];
-    VECNormalize(&sp1C, &sp1C);
+    PSVECNormalize(&sp1C, &sp1C);
     var_f31 = var_f30 = var_f29 = 0.0f;
     
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
@@ -1970,7 +1970,7 @@ void fn_1_8AC4(Mtx arg0) {
     if ((var_r29->unk_00 & 0x8000) != 0) {
         PSMTXMultVecSR(Hu3DCameraMtx,  &sp34,  &sp34);
     }
-    var_f30 = VECDotProduct(&sp34, &sp10);
+    var_f30 = PSVECDotProduct(&sp34, &sp10);
     var_f30 *= 10000.0f;
     OSf32tos16(&var_f30, &temp_r31);
     if (temp_r31 == -0x2710) {
@@ -1985,8 +1985,8 @@ void fn_1_8AC4(Mtx arg0) {
     if (temp_r31 == 0x2710) {
         PSMTXIdentity(sp40);
     } else {
-        VECCrossProduct(&sp28,  &sp10, &sp1C);
-        var_f29 = acosf(VECDotProduct(&sp10, &sp28));
+        PSVECCrossProduct(&sp28,  &sp10, &sp1C);
+        var_f29 = acosf(PSVECDotProduct(&sp10, &sp28));
         PSMTXRotAxisRad(sp40, &sp1C, var_f29);
     }
     PSMTXConcat(sp40, sp70, spA0);
@@ -2380,19 +2380,19 @@ void fn_1_9C04(ModelData* arg0, Mtx arg1) {
         } else {
             if (0.0f == var_r29->unk44) {
                 fn_1_A328((Vec*)&sp68[0], &sp38, &var_r29->unk48, 4);
-                VECAdd(&sp38, &var_r29->unk54, var_r31++);
-                VECAdd(&sp44, &var_r29->unk54, var_r31++);
-                VECAdd(&sp50, &var_r29->unk54, var_r31++);
-                VECAdd(&sp5C, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp38, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp44, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp50, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp5C, &var_r29->unk54, var_r31++);
             } else {
                 fn_1_A328(&temp_r30->unk2C, &sp38, &var_r29->unk48, 4);
                 MTXRotDeg(spC8, 0x5A, var_r29->unk44);
                 PSMTXConcat(sp128, spC8, sp98);
                 PSMTXMultVecArray(sp98, &sp38, &sp8, 4);
-                VECAdd(&sp8, &var_r29->unk54, var_r31++);
-                VECAdd(&sp14, &var_r29->unk54, var_r31++);
-                VECAdd(&sp20, &var_r29->unk54, var_r31++);
-                VECAdd(&sp2C, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp8, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp14, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp20, &var_r29->unk54, var_r31++);
+                PSVECAdd(&sp2C, &var_r29->unk54, var_r31++);
             }
             if (var_r29->unk60 != -1) {
                 fn_1_A284(var_r27, temp_r30->unk5C, var_r29->unk60, temp_r30->unk60, temp_r30->unk64);

@@ -154,7 +154,7 @@ static void fn_1_72CC(s32 arg0) {
     }
     BoardPlayerPosGet(arg0, &sp18);
     BoardModelPosGet(lbl_1_bss_C0, &sp24);
-    VECSubtract(&sp24, &sp18, &spC);
+    PSVECSubtract(&sp24, &sp18, &spC);
     for (i = 0; i < 4; i++) {
         if (var_r30 & BoardSpaceFlagGet(0, GWPlayer[i].space_curr)) {
             lbl_1_bss_C2[i] = 1;
@@ -265,11 +265,11 @@ static void fn_1_7760(s32 arg0) {
     }
     BoardModelPosGet(lbl_1_bss_C0, &sp20);
     BoardSpacePosGet(0, var_r29, &sp2C);
-    VECSubtract(&sp2C, &sp20, &sp8);
+    PSVECSubtract(&sp2C, &sp20, &sp8);
     sp8.x *= 0.4f;
     sp8.y *= 0.4f;
     sp8.z *= 0.4f;
-    VECAdd(&sp20, &sp8, &sp2C);
+    PSVECAdd(&sp20, &sp8, &sp2C);
     lbl_1_data_22A = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 10), NULL, 0);
     BoardModelVisibilitySet(lbl_1_data_22A, 0);
     BoardModelPosSetV(lbl_1_data_22A, &sp2C);

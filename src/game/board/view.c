@@ -249,7 +249,7 @@ static void ExecMapView(void) {
             spC.x = var_f29 * sin(temp_f28 * M_PI / 180.0);
             spC.z = var_f29 * cos(temp_f28 * M_PI / 180.0);
         }
-        VECAdd(&spC, &focusPos, &focusPos);
+        PSVECAdd(&spC, &focusPos, &focusPos);
         if (focusPos.x < temp_f26) {
             focusPos.x = temp_f26;
         }
@@ -277,7 +277,7 @@ static void ExecStarView(void) {
     SetTargetView();
     do {
         OSu16tof32(&focusTimer, &temp_f30);
-        VECSubtract(&focusPosTarget, &focusPos, &sp8);
+        PSVECSubtract(&focusPosTarget, &focusPos, &sp8);
         sp8.x /= temp_f30;
         sp8.y /= temp_f30;
         sp8.z /= temp_f30;
@@ -287,7 +287,7 @@ static void ExecStarView(void) {
         }
         focusDestroyF = 0;
         while (focusTimer != 0) {
-            VECAdd(&sp8, &focusPos, &focusPos);
+            PSVECAdd(&sp8, &focusPos, &focusPos);
             BoardModelPosSetV(focusMdl, &focusPos);
             HuPrcVSleep();
             focusTimer--;
@@ -547,10 +547,10 @@ static void UpdateOverheadView(omObjData *arg0) {
         Hu3D3Dto2D(&sp14, 1, &sp14);
         sp14.x -= 288.0f;
         sp14.y -= 240.0f;
-        VECSubtract(&sp20, &sp14, &sp8);
+        PSVECSubtract(&sp20, &sp14, &sp8);
         sp8.z = 0.0f;
         temp_f30 = BoardDAngleCalc(180.0 * (atan2(sp8.y, sp8.x) / M_PI) - 90.0);
-        temp_f31 = VECMag(&sp8) / 32;
+        temp_f31 = PSVECMag(&sp8) / 32;
         if (i != 4) {
             var_r28 = i + 4;
         } else {

@@ -1096,12 +1096,12 @@ void SetObjCameraMotion(s16 arg0, HsfTrack *arg1, float arg2) {
             case 14:
                 for (i = 0, var_r30 = 1; i < 16; i++, var_r30 <<= 1) {
                     if (var_r30 & temp_r28) {
-                        VECSubtract(&Hu3DCamera[i].pos, &Hu3DCamera[i].target, &spC);
-                        VECNormalize(&spC, &spC);
+                        PSVECSubtract(&Hu3DCamera[i].pos, &Hu3DCamera[i].target, &spC);
+                        PSVECNormalize(&spC, &spC);
                         sp18.x = spC.x * spC.y * (1.0 - cosd(arg2)) - spC.z * sind(arg2);
                         sp18.y = spC.y * spC.y + (1.0f - spC.y * spC.y) * cosd(arg2);
                         sp18.z = spC.y * spC.z * (1.0 - cosd(arg2)) + spC.x * sind(arg2);
-                        VECNormalize(&sp18, &Hu3DCamera[i].up);
+                        PSVECNormalize(&sp18, &Hu3DCamera[i].up);
                         Hu3DCamera[i].aspect_dupe = arg2;
                     }
                 }
