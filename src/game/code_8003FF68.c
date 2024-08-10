@@ -169,7 +169,7 @@ void fn_80040374(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     unkCode_8003FF68* temp_r3;
 
     process = HuPrcChildCreate(fn_8004040C, 1, 0x1000, 0, HuPrcCurrentGet());
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkCode_8003FF68), 0x10000000);
+    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkCode_8003FF68), MEMORY_DEFAULT_NUM);
     process->user_data = temp_r3;
     temp_r3->unk0 = arg0;
     temp_r3->unk2 = arg1;

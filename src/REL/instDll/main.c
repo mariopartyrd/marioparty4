@@ -23,6 +23,8 @@
 
 #include "rel_sqrt_consts.h"
 
+#include "REL/instDll.h"
+
 static s16 lbl_1_data_0 = 1;
 
 static omObjData *lbl_1_bss_60;
@@ -757,8 +759,6 @@ static float lbl_1_data_124[] = {
 	292
 };
 
-s32 fn_1_5EA4(SeqWork *work, char *mess, s16 jp_flag);
-
 static void fn_1_2FA0(void)
 {
 	float temp_f31;
@@ -840,7 +840,7 @@ static void fn_1_2FA0(void)
 	HuSprGrpPosSet(temp_r24, 1000, 186);
 	HuSprPriSet(temp_r24, 0, 1000);
 	sp10[0] = HuWinCreate(1000, 186, 456, 42, 0);
-	HuWinMesSet(sp10[0], 0x240000+lbl_1_bss_10);
+	HuWinMesSet(sp10[0], MAKE_MESSID(0x24, lbl_1_bss_10));
 	HuWinBGTPLvlSet(sp10[0], 0.0f);
 	temp_r28 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_INST, 17));
 	temp_r23 = HuSprGrpCreate(1);
@@ -849,11 +849,11 @@ static void fn_1_2FA0(void)
 	HuSprGrpPosSet(temp_r23, 1000, 242);
 	HuSprPriSet(temp_r23, 0, 1000);
 	sp10[1] = HuWinCreate(1000, 242, 456, 42, 0);
-	HuWinMesSet(sp10[1], lbl_1_bss_10+0x240001);
+	HuWinMesSet(sp10[1], lbl_1_bss_10+MAKE_MESSID(0x24, 0x01));
 	HuWinBGTPLvlSet(sp10[1], 0.0f);
 	temp_r28 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_INST, 18));
 	sp10[2] = HuWinCreate(1000, 292, 456, 42, 0);
-	HuWinMesSet(sp10[2], lbl_1_bss_10+0x240002);
+	HuWinMesSet(sp10[2], lbl_1_bss_10+MAKE_MESSID(0x24, 0x02));
 	HuWinBGTPLvlSet(sp10[2], 0.0f);
 	HuWinMesSpeedSet(sp10[2], 0);
 	temp_r31 = HuWinAnimSet(sp10[2], temp_r28, 0, 201, 18);
@@ -861,7 +861,7 @@ static void fn_1_2FA0(void)
 	temp_r27 = HuWinCreate(1000, 292, 456, 42, 0);
 	HuWinBGTPLvlSet(temp_r27, 0.0f);
 	HuWinMesSpeedSet(temp_r27, 0);
-	HuWinMesSet(temp_r27, lbl_1_bss_10+0x240002);
+	HuWinMesSet(temp_r27, lbl_1_bss_10+MAKE_MESSID(0x24, 0x02));
 	temp_r31 = HuWinAnimSet(temp_r27, temp_r28, 0, 201, 18);
 	HuWinPriSet(temp_r27, 10);
 	HuWinSprPriSet(temp_r27, temp_r31, 11);
@@ -908,16 +908,16 @@ static void fn_1_2FA0(void)
 	while(lbl_1_data_0 != 3) {
 		if(temp_r21 != lbl_1_bss_6) {
 			temp_f31 = 16.0f+(lbl_1_data_124[6]-217.0f);
-			HuWinMesSet(temp_r27, 0x240002+lbl_1_bss_10+temp_r21);
+			HuWinMesSet(temp_r27, MAKE_MESSID(0x24, 0x02)+lbl_1_bss_10+temp_r21);
 			temp_r21 = lbl_1_bss_6;
 			if(lbl_1_bss_6 == 1) {
 				if(mgInfoTbl[lbl_1_bss_14].inst_mess[2]) {
-					HuWinMesSet(sp10[2], 0x240002+lbl_1_bss_10+lbl_1_bss_6);
+					HuWinMesSet(sp10[2], MAKE_MESSID(0x24, 0x02)+lbl_1_bss_10+lbl_1_bss_6);
 				} else {
-					HuWinMesSet(sp10[2], 0x240006+lbl_1_bss_10);
+					HuWinMesSet(sp10[2], MAKE_MESSID(0x24, 0x06)+lbl_1_bss_10);
 				}
 			} else {
-				HuWinMesSet(sp10[2], 0x240002+lbl_1_bss_10+lbl_1_bss_6);
+				HuWinMesSet(sp10[2], MAKE_MESSID(0x24, 0x02)+lbl_1_bss_10+lbl_1_bss_6);
 			}
 			for(temp_r31=0; temp_r31<=10; temp_r31++) {
 				HuWinPosSet(temp_r27, 30.0*sind(temp_r31*9.0f)+temp_f31, 200.0*(1.0-cosd(temp_r31*9.0f))+274.0);

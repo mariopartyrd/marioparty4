@@ -243,9 +243,9 @@ void fn_1_7C8C(omObjData *object)
         if (lbl_1_data_90[var_r29][var_r27 + 1]) {
             if (lbl_1_data_90[var_r29][0] < 65536) {
                 object->motion[var_r29] = CharModelMotionCreate(var_r28, lbl_1_data_90[var_r29][0]);
-            } else {
-                object->motion[var_r29]
-                    = Hu3DJointMotion(object->model[0], HuDataSelHeapReadNum(var_r28 + lbl_1_data_90[var_r29][0], MEMORY_DEFAULT_NUM, HEAP_DATA));
+            }
+            else {
+                object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], var_r28 + lbl_1_data_90[var_r29][0]);
             }
         }
     }
@@ -322,7 +322,8 @@ void fn_1_82FC(omObjData *object)
     if (fn_1_26F8() == 2) {
         if (var_r31->unk_44) {
             fn_1_ADC4(object);
-        } else {
+        }
+        else {
             var_r31->unk_14 = HuPadBtn[GWPlayerCfg[object->work[0]].pad_idx];
             var_r31->unk_10 = HuPadBtnDown[GWPlayerCfg[object->work[0]].pad_idx];
             var_f31 = HuPadStkX[GWPlayerCfg[object->work[0]].pad_idx];
@@ -336,7 +337,8 @@ void fn_1_82FC(omObjData *object)
     }
     if ((s32)var_r31->unk_50 != 0) {
         (void)var_r29;
-    } else {
+    }
+    else {
         var_r29 = 1;
     }
     fn_1_9FF0(object);
@@ -348,7 +350,8 @@ void fn_1_82FC(omObjData *object)
             var_r31->unk_50 = 0;
             object->func = fn_1_8B0C;
         }
-    } else if (var_r31->unk_3C) {
+    }
+    else if (var_r31->unk_3C) {
         var_r31->unk_40 = 1;
         fn_1_2728(2);
         var_r31->unk_50 = 0;
@@ -377,7 +380,8 @@ void fn_1_86E8(omObjData *object)
         if (var_r31->unk_44 != 0) {
             var_r31->unk_1C = 0;
             fn_1_B2C0(object);
-        } else {
+        }
+        else {
             var_r31->unk_14 = HuPadBtn[GWPlayerCfg[object->work[0]].pad_idx];
             var_r31->unk_10 = HuPadBtnDown[GWPlayerCfg[object->work[0]].pad_idx];
             var_f31 = HuPadStkX[GWPlayerCfg[object->work[0]].pad_idx];
@@ -398,7 +402,8 @@ void fn_1_86E8(omObjData *object)
     fn_1_9298(object);
     if ((s32)var_r31->unk_50 != 0) {
         (void)var_r29;
-    } else if (var_r31->unk_2C) {
+    }
+    else if (var_r31->unk_2C) {
         var_r29 = 1;
     }
     fn_1_91E0(object);
@@ -435,7 +440,8 @@ void fn_1_8B0C(omObjData *object)
                 if (var_r31->unk_24 > 1.0f) {
                     var_r31->unk_24 = 1.0f;
                 }
-            } else {
+            }
+            else {
                 var_r31->unk_20 = 0.0f;
                 var_r31->unk_24 = 0.01f;
                 fn_1_2770(object->work[0]);
@@ -447,7 +453,8 @@ void fn_1_8B0C(omObjData *object)
                 var_r31->unk_28 = 0;
                 if (fn_1_2740(object->work[0]) >= 0) {
                     fn_1_B8A0(object, 1);
-                } else {
+                }
+                else {
                     fn_1_B8A0(object, 2);
                 }
                 var_r31->unk_50++;
@@ -481,7 +488,8 @@ void fn_1_8D30(omObjData *object)
                 if (fn_1_2740(object->work[0]) >= 0) {
                     var_r31->unk_68 = 0.0f;
                     fn_1_B8A0(object, 1);
-                } else {
+                }
+                else {
                     fn_1_B8A0(object, 2);
                 }
                 var_r31->unk_50++;
@@ -619,7 +627,8 @@ void fn_1_9298(omObjData *object)
         var_r31->unk_B4.x += var_r31->unk_B4.y;
         if (var_r31->unk_B4.x >= 360.0f) {
             var_r31->unk_B4.x -= 360.0f;
-        } else if (var_r31->unk_B4.x < 0.0f) {
+        }
+        else if (var_r31->unk_B4.x < 0.0f) {
             var_r31->unk_B4.x += 360.0f;
         }
         MTXRotAxisDeg(var_r31->unk_1C4, &sp8, var_r31->unk_B4.x);
@@ -661,7 +670,8 @@ void fn_1_9298(omObjData *object)
         case 2:
             if (var_r31->unk_E0.y >= 0.0f) {
                 var_r31->unk_AC += (1.0f / 60.0f);
-            } else {
+            }
+            else {
                 var_r31->unk_AC -= (1.0f / 60.0f);
             }
             var_r31->unk_34 = 0;
@@ -681,7 +691,8 @@ void fn_1_9298(omObjData *object)
                 var_r31->unk_E0.y = 0.0f;
                 fn_1_B8A0(object, 9);
                 var_r31->unk_A0++;
-            } else {
+            }
+            else {
                 var_r31->unk_E0.y += (0.016666668f * (0.016666668f * var_r31->unk_11C.w));
                 var_r31->unk_D4.y += var_r31->unk_E0.y;
                 if (var_r31->unk_D4.y <= var_r31->unk_F8.y) {
@@ -762,7 +773,8 @@ void fn_1_9A1C(omObjData *object)
             }
             if (var_f31 == 0.0f) {
                 var_f30 = 11.5f;
-            } else {
+            }
+            else {
                 var_f30 = 23.0 - fabs(var_f31);
                 var_f30 = (0.5f * var_f30) * (var_f31 / fabs(var_f31));
             }
@@ -803,13 +815,15 @@ void fn_1_9C14(omObjData *object)
             if (var_r31->unk_24 > var_f30) {
                 fn_1_B8A0(object, 4);
                 var_f29 = var_r31->unk_24;
-            } else {
+            }
+            else {
                 fn_1_B8A0(object, 3);
                 var_f29 = var_r31->unk_24 / var_f30;
             }
             CharModelMotionSpeedSet(var_r31->unk_00, var_f29);
         }
-    } else {
+    }
+    else {
         var_r31->unk_E0.x = var_r31->unk_E0.y = var_r31->unk_E0.z = 0.0f;
         if (var_r31->unk_28 && CharModelMotionShiftIDGet(var_r31->unk_00) < 0) {
             fn_1_B8A0(object, 0);
@@ -890,7 +904,8 @@ void fn_1_9FF0(omObjData *object)
             var_r31->unk_98 = var_r31->unk_F8.y - var_r31->unk_104.y;
             var_r31->unk_98 += -0.27222225f;
             var_r31->unk_30 = 0;
-        } else {
+        }
+        else {
             var_r31->unk_98 = var_r31->unk_F8.y - var_r31->unk_104.y;
             var_r31->unk_98 += -0.8166667f;
             var_r31->unk_30 = 1;
@@ -923,7 +938,8 @@ void fn_1_9FF0(omObjData *object)
                 var_f31 = 0.0f;
                 sp8.x = 1.0f;
                 sp8.y = sp8.z = 0.0f;
-            } else {
+            }
+            else {
                 if (var_f31 > 1.0f) {
                     var_f31 = 1.0f;
                 }
@@ -1020,12 +1036,14 @@ void fn_1_9FF0(omObjData *object)
                 sp8.x = var_r31->unk_14C.z;
                 sp8.y = 0.0f;
                 sp8.z = -var_r31->unk_14C.x;
-            } else {
+            }
+            else {
                 sp8.x = 1.0f;
                 sp8.y = sp8.z = 0.0f;
             }
             C_QUATRotAxisRad(&var_r31->unk_184, &sp8, 0.9424779f * var_f31);
-        } else {
+        }
+        else {
             sp8.x = var_r31->unk_14C.z;
             sp8.y = 0.0f;
             sp8.z = -var_r31->unk_14C.x;
@@ -1090,7 +1108,8 @@ void fn_1_ADC4(omObjData *object)
                 var_r31->unk_110 = sp28;
             }
             var_r31->unk_84 = 60.0f * ((0.23f - (0.04f * var_r31->unk_74)) + (0.001f * ((0.4f - (0.15f * var_r31->unk_74)) * frandmod(1000))));
-        } else {
+        }
+        else {
             var_r31->unk_84--;
         }
         sp28 = var_r31->unk_110;
@@ -1101,7 +1120,8 @@ void fn_1_ADC4(omObjData *object)
         var_f31 = VECMag(&sp10);
         if (var_r31->unk_48) {
             var_r30 = 1;
-        } else {
+        }
+        else {
             var_r30 = 0;
         }
         var_r29 = var_r30;
@@ -1129,7 +1149,8 @@ void fn_1_B2C0(omObjData *object)
     var_r29 = 0;
     if (var_r31->unk_90) {
         var_r31->unk_90--;
-    } else {
+    }
+    else {
         var_r31->unk_88 = 1.0f;
         if (frandmod(1000) < 500) {
             var_r31->unk_88 = -1.0f;
@@ -1142,7 +1163,8 @@ void fn_1_B2C0(omObjData *object)
     if (lbl_1_bss_884 >= object->work[0]) {
         if (lbl_1_bss_880) {
             lbl_1_bss_880--;
-        } else {
+        }
+        else {
             lbl_1_bss_880 = 60.0f * (8.0f + (0.004f * frandmod(1000)));
         }
     }
@@ -1160,11 +1182,13 @@ void fn_1_B2C0(omObjData *object)
                 if (var_r31->unk_80 > 240.0f) {
                     var_r31->unk_80 = 1;
                 }
-            } else {
+            }
+            else {
                 var_r31->unk_80 = 60.0f * (0.00080000004f * ((1.05f - var_r31->unk_74) * frandmod(1000)));
                 var_r31->unk_80 += (var_r31->unk_8C * (30.0f + (0.03f * frandmod(1000))));
             }
-        } else {
+        }
+        else {
             var_r31->unk_80--;
             if (!var_r31->unk_80) {
                 var_r31->unk_10 |= 256;

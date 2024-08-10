@@ -39,25 +39,25 @@ s32 fn_1_91AC(Process *arg0, s16 arg1)
     var_r31 = lbl_1_bss_11F48->data;
     var_r31->unk_08 = arg1;
     var_r31->unk_0A = 0;
-    var_r31->unk_18 = espEntry(0x610023, 2, 0);
+    var_r31->unk_18 = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x23), 2, 0);
     espTPLvlSet(var_r31->unk_18, 0.5f);
     espPosSet(var_r31->unk_18, 508.0f, 64.0f);
     espColorSet(var_r31->unk_18, 0, 0, 0);
-    var_r31->unk_1A = espEntry(0x610037, 1, 0);
+    var_r31->unk_1A = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x37), 1, 0);
     espPosSet(var_r31->unk_1A, 480.0f, 56.0f);
     for (var_r30 = 0; var_r30 < 3; var_r30++) {
-        var_r31->unk_0C[var_r30] = espEntry(0x610030, 0, 0);
+        var_r31->unk_0C[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x30), 0, 0);
         espPosSet(var_r31->unk_0C[var_r30], (var_r30 * 0x10) + 0x1F4, 56.0f);
         espDispOff(var_r31->unk_0C[var_r30]);
     }
     for (var_r30 = 0; var_r30 < 3; var_r30++) {
-        var_r31->unk_0C[var_r30 + 3] = espEntry(0x610031, 1, 0);
+        var_r31->unk_0C[var_r30 + 3] = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x31), 1, 0);
         espPosSet(var_r31->unk_0C[var_r30 + 3], (var_r30 * 0x10) + 0x1F4, 74.0f);
     }
     for (var_r30 = 0; var_r30 < 8; var_r30++) {
         espDispOff(var_r31->unk_0C[var_r30]);
     }
-    HuDataDirClose(0x610000);
+    HuDataDirClose(DATADIR_MGCONST);
     return fn_1_9520(0);
 }
 

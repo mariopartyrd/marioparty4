@@ -22,8 +22,8 @@ typedef struct {
     /* 0x48 */ char unk48[0xC];
     /* 0x54 */ float time;
     /* 0x58 */ float speed;
-    /* 0x5C */ s32 unk5C;
-    /* 0x60 */ s32 unk60;
+    /* 0x5C */ s32 unk_5C;
+    /* 0x60 */ s32 unk_60;
 } GuideWork; // Size 0x64
 
 #define MODE_DISABLED 0
@@ -68,10 +68,10 @@ omObjData *OptionGuideCreate(void)
     object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_OPTION, 12));
     Hu3DModelLayerSet(object->model[0], 1);
     for (i = 0; i < 3; i++) {
-        object->motion[i] = Hu3DJointMotion(object->model[0], HuDataSelHeapReadNum(guideMotTbl[i], MEMORY_DEFAULT_NUM, HEAP_DATA));
+        object->motion[i] = Hu3DJointMotionFile(object->model[0], guideMotTbl[i]);
     }
-    work->unk5C = CharModelEffectNpcInit(object->model[0], object->motion[2], 1, 0xC);
-    work->unk60 = CharModelEffectNpcInit(object->model[0], object->motion[1], 0, 0xC);
+    work->unk_5C = CharModelEffectNpcInit(object->model[0], object->motion[2], 1, 0xC);
+    work->unk_60 = CharModelEffectNpcInit(object->model[0], object->motion[1], 0, 0xC);
     CharModelLayerSetAll(1);
     Hu3DModelShadowSet(object->model[0]);
     Hu3DMotionShiftSet(object->model[0], object->motion[0], 0.0f, 8.0f, 0x40000001);
@@ -186,9 +186,7 @@ static void ExecGuide(omObjData *object)
 static void UpdateGuide(omObjData *object)
 {
     GuideWork *work = object->data;
-    s16 motion;
-
-    motion = 0;
+    s16 motion = 0;
     work->distRemain = sqrtf(work->posDelta.x * work->posDelta.x + work->posDelta.z * work->posDelta.z);
     if (0.001f <= work->distRemain) {
         if (14.0f <= work->distRemain) {
@@ -219,9 +217,8 @@ static void UpdateGuide(omObjData *object)
 static float LerpAngle(float start, float end, float time)
 {
     float angle;
-    float delta;
 
-    delta = fmod(end - start, 360.0);
+    float delta = fmod(end - start, 360.0);
     if (0.0f > delta) {
         delta += 360.0f;
     }

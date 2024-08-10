@@ -115,15 +115,15 @@ static s8 defaultItemTbl[5] = {
 };
 
 static s32 hostMessTbl[] = {
-    0x000F0004,
-    0x000F0007,
-    0x000F000A,
-    0x000F000D,
-    0x000F0010,
-    0x000F0013,
-    0x000F0004,
-    0x000F0024,
-    0x000F0024
+    MAKE_MESSID(0x0F, 0x04),
+    MAKE_MESSID(0x0F, 0x07),
+    MAKE_MESSID(0x0F, 0x0A),
+    MAKE_MESSID(0x0F, 0x0D),
+    MAKE_MESSID(0x0F, 0x10),
+    MAKE_MESSID(0x0F, 0x13),
+    MAKE_MESSID(0x0F, 0x04),
+    MAKE_MESSID(0x0F, 0x24),
+    MAKE_MESSID(0x0F, 0x24)
 };
 
 static s8 itemPriceTbl[] = {
@@ -134,15 +134,15 @@ static s8 itemPriceTbl[] = {
 };
 
 static s32 shopMotTbl[9][3] = {
-    { 0x00020001, 0x00020003, 0x00020004 },
-    { 0x00020009, 0x0002000B, 0x0002000C },
-    { 0x0002000E, 0x00020010, 0x00020011 },
-    { 0x00020018, 0x0002001A, 0x0002001B },
-    { 0x0002001D, 0x0002001F, 0x00020020 },
-    { 0x00020022, 0x00020024, 0x00020025 },
-    { 0x00020009, 0x0002000B, 0x0002000C },
-    { 0x0002002A, 0x0002002C, 0x0002002D },
-    { 0x0002002A, 0x0002002C, 0x0002002D }
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x01), DATA_MAKE_NUM(DATADIR_BGUEST, 0x03), DATA_MAKE_NUM(DATADIR_BGUEST, 0x04) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x09), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0B), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0C) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x0E), DATA_MAKE_NUM(DATADIR_BGUEST, 0x10), DATA_MAKE_NUM(DATADIR_BGUEST, 0x11) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x18), DATA_MAKE_NUM(DATADIR_BGUEST, 0x1A), DATA_MAKE_NUM(DATADIR_BGUEST, 0x1B) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x1D), DATA_MAKE_NUM(DATADIR_BGUEST, 0x1F), DATA_MAKE_NUM(DATADIR_BGUEST, 0x20) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x22), DATA_MAKE_NUM(DATADIR_BGUEST, 0x24), DATA_MAKE_NUM(DATADIR_BGUEST, 0x25) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x09), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0B), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0C) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x2A), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2C), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2D) },
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x2A), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2C), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2D) }
 };
 
 void BoardShopHostSet(s16 arg0) {
@@ -234,13 +234,13 @@ static void ExecShop(void) {
     BoardPlayerIdleSet(shopPlayer);
     var_r30 = 0;
     if (BoardPlayerCoinsGet(shopPlayer) < 5) {
-        var_r30 = 0xF0003;
+        var_r30 = MAKE_MESSID(15, 3);
     }
     if (BoardPlayerItemCount(shopPlayer) == 3) {
-        var_r30 = 0xF0002;
+        var_r30 = MAKE_MESSID(15, 2);
     }
     if (GWSystem.turn == GWSystem.max_turn) {
-        var_r30 = 0xF0001;
+        var_r30 = MAKE_MESSID(15, 1);
     }
     if (var_r30 != 0) {
         BoardWinCreate(0, var_r30, -1);
@@ -307,7 +307,7 @@ static void ExecShop(void) {
         BoardWinCreate(1, hostMessTbl[temp_r27] + 2, temp_r26);
         BoardWinPriSet(1000);
         for (i = 0; i < 5; i++) {
-            var_r30 = activeItemTbl[i] + 0xF0000;
+            var_r30 = MAKE_MESSID(15, activeItemTbl[i]);
             var_r30 += 0x16;
             BoardWinInsertMesSet(var_r30, i);
             var_r29 = itemPriceTbl[activeItemTbl[i]];
@@ -1003,7 +1003,7 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1) {
     if (GWPlayer[arg0].com) {
         var_r31->unk01 = GWMessDelayGet();
     }
-    BoardSpriteCreate(0x70055, 0x3DE, NULL, &spC);
+    BoardSpriteCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x55), 0x3DE, NULL, &spC);
     HuSprGrpMemberSet(var_r31->unk06, 0, spC);
     HuSprAttrSet(var_r31->unk06, 0, 8);
     HuSprPosSet(var_r31->unk06, 0, temp_r30->trans.x, temp_r30->trans.y);

@@ -134,9 +134,9 @@ void BoardCreate(void)
     BoardBooHouseHostSet(boardBooHouseHostMdl);
     BoardShopHostSet(boardShopHostMdl);
     BoardLotteryHostSet(boardLotteryHostMdl);
-    HuWinMesMaxSizeGet(1, size, 0x2E003A);
+    HuWinMesMaxSizeGet(1, size, MAKE_MESSID(0x2E, 0x3A));
     tutorialExitWin = HuWinCreate(-10000.0f, 390.0f, size[0], size[1], 1);
-    HuWinMesSet(tutorialExitWin, 0x2E003A);
+    HuWinMesSet(tutorialExitWin, MAKE_MESSID(0x2E, 0x3A));
     HuWinMesSpeedSet(tutorialExitWin, 0);
     HuWinPriSet(tutorialExitWin, 1);
     HuWinMesPalSet(tutorialExitWin, 7, 0, 0, 0);

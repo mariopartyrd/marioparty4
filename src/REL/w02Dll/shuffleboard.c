@@ -25,25 +25,25 @@ s16 lbl_1_bss_1AC;
 Vec lbl_1_bss_1A0;
 
 s32 lbl_1_data_490[8] = {
-	0x0076002E,
-	0x0076002F,
-	0x00760030,
-	0x00760031,
-	0x00760032,
-	0x00760033,
-	0x00760034,
-	0x00760035
+	DATA_MAKE_NUM(DATADIR_W02, 0x2E),
+	DATA_MAKE_NUM(DATADIR_W02, 0x2F),
+	DATA_MAKE_NUM(DATADIR_W02, 0x30),
+	DATA_MAKE_NUM(DATADIR_W02, 0x31),
+	DATA_MAKE_NUM(DATADIR_W02, 0x32),
+	DATA_MAKE_NUM(DATADIR_W02, 0x33),
+	DATA_MAKE_NUM(DATADIR_W02, 0x34),
+	DATA_MAKE_NUM(DATADIR_W02, 0x35)
 };
 
 s32 lbl_1_data_4B0[8] = {
-	0x00760026,
-	0x00760027,
-	0x00760028,
-	0x00760029,
-	0x0076002A,
-	0x0076002B,
-	0x0076002C,
-	0x0076002D
+	DATA_MAKE_NUM(DATADIR_W02, 0x26),
+	DATA_MAKE_NUM(DATADIR_W02, 0x27),
+	DATA_MAKE_NUM(DATADIR_W02, 0x28),
+	DATA_MAKE_NUM(DATADIR_W02, 0x29),
+	DATA_MAKE_NUM(DATADIR_W02, 0x2A),
+	DATA_MAKE_NUM(DATADIR_W02, 0x2B),
+	DATA_MAKE_NUM(DATADIR_W02, 0x2C),
+	DATA_MAKE_NUM(DATADIR_W02, 0x2D)
 };
 
 s32 fn_1_9250(void)
@@ -135,9 +135,9 @@ void fn_1_94C0(void)
 	BoardCameraRotSet(-10, -sp10.y);
 	BoardCameraZoomSet(900);
 	BoardStatusShowSetAll(0);
-	HuWinMesMaxSizeGet(1, sp8, 0x13001C);
+	HuWinMesMaxSizeGet(1, sp8, MAKE_MESSID(0x13, 0x1C));
 	lbl_1_bss_1AC = HuWinCreate(-10000, 400, sp8[0], sp8[1], 0);
-	HuWinMesSet(lbl_1_bss_1AC, 0x13001C);
+	HuWinMesSet(lbl_1_bss_1AC, MAKE_MESSID(0x13, 0x1C));
 	HuWinBGTPLvlSet(lbl_1_bss_1AC, 0);
 	HuWinMesSpeedSet(lbl_1_bss_1AC, 0);
 	fn_1_9EC4();
@@ -238,7 +238,7 @@ void fn_1_9EC4(void)
 	s32 temp_r31;
 	s32 temp_r30;
 	for(temp_r31=0; temp_r31<15; temp_r31++) {
-		lbl_1_bss_34C[temp_r31] = BoardModelCreate(0x7000A, NULL, 1);
+		lbl_1_bss_34C[temp_r31] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x0A), NULL, 1);
 		BoardModelVisibilitySet(lbl_1_bss_34C[temp_r31], 0);
 		lbl_1_bss_1C4[temp_r31] = 1;
 	}

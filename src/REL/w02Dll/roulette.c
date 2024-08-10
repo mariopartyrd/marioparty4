@@ -69,11 +69,11 @@ void fn_1_BCFC(void) {
         HuPrcVSleep();
     }
     BoardModelRotYSet(lbl_1_bss_30[15], -90.0f);
-    fn_1_121C(0x130000);
+    fn_1_121C(MAKE_MESSID(0x13, 0x00));
     HuAudFXPlay(0x44);
     temp_r29 = fn_1_BE88();
     BoardStatusShowSetAll(0);
-    fn_1_121C(0x130001);
+    fn_1_121C(MAKE_MESSID(0x13, 0x01));
     temp_r30 = fn_1_C108(temp_r29);
     fn_1_CD04(temp_r30);
     BoardCameraViewSet(1);
@@ -104,7 +104,7 @@ s32 fn_1_BE88(void) {
     if (coinAmount < 5) {
         return var_r30;
     }
-    fn_1_121C(0x130002);
+    fn_1_121C(MAKE_MESSID(0x13, 0x02));
 
     do {
         BoardWinCreateChoice(2, MAKE_MESSID(19, 29), 4, 0);
@@ -153,17 +153,17 @@ s32 fn_1_BE88(void) {
             // Coin amount is now the bribe amount in coins
             switch (bribeChoice) {
             case 0:
-                mesg = 0x130004;
+                mesg = MAKE_MESSID(0x13, 0x04);
                 coinAmount = 0x14;
                 var_r30 = 0x5A; // 90%
                 break;
             case 1:
-                mesg = 0x130005;
+                mesg = MAKE_MESSID(0x13, 0x05);
                 coinAmount = 0xA;
                 var_r30 = 0x3C; // 60%
                 break;
             case 2:
-                mesg = 0x130006;
+                mesg = MAKE_MESSID(0x13, 0x06);
                 coinAmount = 5;
                 var_r30 = 0x1E; // 30%
                 break;
@@ -183,7 +183,7 @@ s32 fn_1_BE88(void) {
         }
     } while (rouletteChoice == 2); // While viewing map
     if (var_r30 == -1) {
-        fn_1_121C(0x130007);
+        fn_1_121C(MAKE_MESSID(0x13, 0x07));
     }
     return var_r30;
 }
@@ -516,12 +516,12 @@ void fn_1_D3AC(void)
 	Vec sp20;
 	Vec sp14;
 	float sp8[3] = { 1.0f, 0.3f, 2.5f };
-	fn_1_121C(0x130008);
+	fn_1_121C(MAKE_MESSID(0x13, 0x08));
 	BoardStatusShowSetAll(1);
 	BoardPlayerMotBlendSet(lbl_1_bss_388, 0, 15);
 	BoardPlayerPosGet(lbl_1_bss_388, &sp14);
 	for(temp_r31=0; temp_r31<20; temp_r31++) {
-		sp38[temp_r31] = BoardModelCreate(0x7000A, NULL, 1);
+		sp38[temp_r31] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x0A), NULL, 1);
 		sp2C.x = (sp14.x-25.0f)+((1.0f/255.0f)*(frand8()*50.0f));
 		sp2C.y = (sp14.y+1200.0f)+(temp_r31*130.0f)+((1.0f/255.0f)*(frand8()*60.0f));
 		sp2C.z = (sp14.z-25.0f)+((1.0f/255.0f)*(frand8()*50.0f));
@@ -603,11 +603,11 @@ s32 fn_1_D8C4(void)
 	s16 temp_r22;
 	
 	u32 temp_r21;
-	fn_1_121C(0x130009);
+	fn_1_121C(MAKE_MESSID(0x13, 0x09));
 	temp_r29 = BoardSpaceGet(0, BoardSpaceFlagSearch(0, 0x800));
 	BoardModelPosGet(lbl_1_bss_30[3], &sp40);
 	for(temp_r31=0; temp_r31<4; temp_r31++) {
-		sp14[temp_r31] = BoardModelCreate(0x70000, NULL, 1);
+		sp14[temp_r31] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x00), NULL, 1);
 		BoardModelLayerSet(sp14[temp_r31], 2);
 		for(temp_r28=0; temp_r28<temp_r29->link_cnt; temp_r28++) {
 			temp_r21 = (BoardSpaceFlagGet(0, temp_r29->link[temp_r28]) & 0xE) >> 1;
@@ -627,9 +627,9 @@ s32 fn_1_D8C4(void)
 		BoardModelScaleSetV(sp14[temp_r31], &sp1C);
 	}
 	temp_r25 = fn_1_E2AC();
-	HuWinMesMaxSizeGet(1, spC, 0x13001E);
+	HuWinMesMaxSizeGet(1, spC, MAKE_MESSID(0x13, 0x1E));
 	temp_r30 = HuWinCreate(-10000, 356, spC[0], spC[1], 0);
-	HuWinMesSet(temp_r30, 0x13001E);
+	HuWinMesSet(temp_r30, MAKE_MESSID(0x13, 0x1E));
 	HuWinBGTPLvlSet(temp_r30, 0);
 	HuWinMesSpeedSet(temp_r30, 0);
 	temp_r23 = GWPlayer[lbl_1_bss_388].port;

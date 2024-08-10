@@ -1321,7 +1321,7 @@ void fn_1_6C18(void)
 	HuSprInit();
 	espInit();
 	HuPrcVSleep();
-	sprite = espEntry(0x860020, 5000, 0);
+	sprite = espEntry(DATA_MAKE_NUM(DATADIR_WIN, 0x20), 5000, 0);
 	espPosSet(sprite, 288.0, 240.0);
 	espAttrReset(sprite, 4);
 	Hu3DBGColorSet(0, 0, 0);

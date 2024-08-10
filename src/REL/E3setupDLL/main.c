@@ -453,10 +453,10 @@ static s16 lbl_2_data_31E[] = {
 };
 
 static u32 playerCntMessTbl[] = {
-	0x00220002,
-	0x00220003,
-	0x00220004,
-	0x00220001
+	MAKE_MESSID(0x22, 0x02),
+	MAKE_MESSID(0x22, 0x03),
+	MAKE_MESSID(0x22, 0x04),
+	MAKE_MESSID(0x22, 0x01)
 };
 
 static void UpdatePlayerCnt(omObjData *object)
@@ -602,16 +602,16 @@ static void InitPlayerCnt(omObjData *object)
 		HuSprAttrSet(group, index, HUSPR_ATTR_DISPOFF);
 		HuSprAttrSet(index2, index, HUSPR_ATTR_DISPOFF);
 	}
-	HuWinMesMaxSizeGet(1, sizeMax, 0x220000);
+	HuWinMesMaxSizeGet(1, sizeMax, MAKE_MESSID(0x22, 0x00));
 	index2 = HuWinCreate(-10000, 26, sizeMax[0], sizeMax[1], 0);
 	work->winHeader = index2;
 	HuWinMesColSet(index2, 4);
 	HuWinBGTPLvlSet(index2, 0);
 	HuWinMesSpeedSet(index2, 0);
-	HuWinMesSet(index2, 0x220000);
+	HuWinMesSet(index2, MAKE_MESSID(0x22, 0x00));
 	work->playerCntOld = work->playerCnt = configE3.playerCnt;
 	mess = playerCntMessTbl[work->playerCnt];
-	HuWinMesMaxSizeGet(4, sizeMax, 0x220001, 0x220002, 0x220003, 0x220004);
+	HuWinMesMaxSizeGet(4, sizeMax, MAKE_MESSID(0x22, 0x01), MAKE_MESSID(0x22, 0x02), MAKE_MESSID(0x22, 0x03), MAKE_MESSID(0x22, 0x04));
 	index2 = HuWinCreate(-10000, 58, sizeMax[0], sizeMax[1], 0);
 	work->winPlayer = index2;
 	work->winSize = *(Vec2f *)(sizeMax); //FIXME: Remove Cast
@@ -1143,8 +1143,8 @@ typedef struct e3_rumble_cfg_work {
 } E3RumbleCfgWork;
 
 static u32 rumbleMess[] = {
-	0x220008,
-	0x220007
+	MAKE_MESSID(0x22, 0x08),
+	MAKE_MESSID(0x22, 0x07)
 };
 
 static void UpdateRumbleCfg(omObjData *object)
@@ -1283,16 +1283,16 @@ static void InitRumbleCfg(omObjData *object)
 		HuSprAttrSet(group, index, HUSPR_ATTR_DISPOFF);
 		HuSprAttrSet(index2, index, HUSPR_ATTR_DISPOFF);
 	}
-	HuWinMesMaxSizeGet(1, sizeMax, 0x220006);
+	HuWinMesMaxSizeGet(1, sizeMax, MAKE_MESSID(0x22, 0x06));
 	index2 = HuWinCreate(-10000, 267, sizeMax[0], sizeMax[1], 0);
 	work->winHeader = index2;
 	HuWinMesColSet(index2, 4);
 	HuWinBGTPLvlSet(index2, 0);
 	HuWinMesSpeedSet(index2, 0);
-	HuWinMesSet(index2, 0x220006);
+	HuWinMesSet(index2, MAKE_MESSID(0x22, 0x06));
 	work->rumbleValOld = work->rumbleVal = configE3.rumble;
 	mess = rumbleMess[work->rumbleVal];
-	HuWinMesMaxSizeGet(2, sizeMax, 0x220007, 0x220008);
+	HuWinMesMaxSizeGet(2, sizeMax, MAKE_MESSID(0x22, 0x07), MAKE_MESSID(0x22, 0x08));
 	index2 = HuWinCreate(-10000, 299, sizeMax[0], sizeMax[1], 0);
 	work->winValue = index2;
 	work->winSize = *(Vec2f *)(sizeMax); //FIXME: Remove Cast
@@ -1366,12 +1366,12 @@ static void UpdateModeSel(omObjData *object)
 					object->work[2] = 2;
 					work->boardOld = -1;
 					HuWinMesColSet(work->winMode, 4);
-					HuWinMesMaxSizeGet(1, winSize, 0x22000F);
+					HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(0x22, 0x0F));
 					HuWinCenterPosSet(work->winMode, (work->winSizeMode.x-winSize[0])/-2.0f, (work->winSizeMode.y-winSize[1])/-2.0f);
-					HuWinMesSet(work->winMode, 0x22000F);
-					HuWinMesMaxSizeGet(1, winSize, 0x220010);
+					HuWinMesSet(work->winMode, MAKE_MESSID(0x22, 0x0F));
+					HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(0x22, 0x10));
 					HuWinCenterPosSet(work->winBoard, (work->winSizeBoard.x-winSize[0])/-2.0f, (work->winSizeBoard.y-winSize[1])/-2.0f);
-					HuWinMesSet(work->winBoard, 0x220010);
+					HuWinMesSet(work->winBoard, MAKE_MESSID(0x22, 0x10));
 				}
 			} else if(btnDown & PAD_BUTTON_B) {
 				HuAudFXPlay(3);
@@ -1405,12 +1405,12 @@ static void UpdateModeSel(omObjData *object)
 				work->modeOld = -1;
 				object->work[2] = 1;
 				HuWinMesColSet(work->winMode, 4);
-				HuWinMesMaxSizeGet(1, winSize, 0x220009);
+				HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(0x22, 0x09));
 				HuWinCenterPosSet(work->winMode, (work->winSizeMode.x-winSize[0])/-2.0f, (work->winSizeMode.y-winSize[1])/-2.0f);
-				HuWinMesSet(work->winMode, 0x220009);
-				HuWinMesMaxSizeGet(1, winSize, 0x22000A);
+				HuWinMesSet(work->winMode, MAKE_MESSID(0x22, 0x09));
+				HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(0x22, 0x0A));
 				HuWinCenterPosSet(work->winBoard, (work->winSizeBoard.x-winSize[0])/-2.0f, (work->winSizeBoard.y-winSize[1])/-2.0f);
-				HuWinMesSet(work->winBoard, 0x22000A);
+				HuWinMesSet(work->winBoard, MAKE_MESSID(0x22, 0x0A));
 			} else if(btnDown & PAD_BUTTON_LEFT) {
 				HuAudFXPlay(0);
 				work->board--;
@@ -1504,23 +1504,23 @@ static void InitModeSel(omObjData *object)
 	index++;
 	HuSprAttrSet(group, 0, HUSPR_ATTR_DISPOFF);
 	HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
-	HuWinMesMaxSizeGet(2, &work->winSizeMode.x, 0x220009, 0x22000F);
+	HuWinMesMaxSizeGet(2, &work->winSizeMode.x, MAKE_MESSID(0x22, 0x09), MAKE_MESSID(0x22, 0x0F));
 	index2 = HuWinCreate(-10000, 350, work->winSizeMode.x, work->winSizeMode.y, 0);
 	work->winMode = index2;
 	HuWinMesColSet(index2, 4);
 	HuWinBGTPLvlSet(index2, 0);
 	HuWinMesSpeedSet(index2, 0);
-	HuWinMesMaxSizeGet(1, size, 0x220009);
+	HuWinMesMaxSizeGet(1, size, MAKE_MESSID(0x22, 0x09));
 	HuWinCenterPosSet(index2, (work->winSizeMode.x-size[0])/-2.0f, (work->winSizeMode.y-size[1])/-2.0f);
-	HuWinMesSet(index2, 0x220009);
-	HuWinMesMaxSizeGet(2, &work->winSizeBoard.x, 0x22000A, 0x220010);
+	HuWinMesSet(index2, MAKE_MESSID(0x22, 0x09));
+	HuWinMesMaxSizeGet(2, &work->winSizeBoard.x, MAKE_MESSID(0x22, 0x0A), MAKE_MESSID(0x22, 0x10));
 	index2 = HuWinCreate(-10000, 390, work->winSizeBoard.x, work->winSizeBoard.y, 0);
 	work->winBoard = index2;
 	HuWinBGTPLvlSet(index2, 0);
 	HuWinMesSpeedSet(index2, 0);
-	HuWinMesMaxSizeGet(1, size, 0x22000A);
+	HuWinMesMaxSizeGet(1, size, MAKE_MESSID(0x22, 0x0A));
 	HuWinCenterPosSet(index2, (work->winSizeBoard.x-size[0])/-2.0f, (work->winSizeBoard.y-size[1])/-2.0f);
-	HuWinMesSet(index2, 0x22000A);
+	HuWinMesSet(index2, MAKE_MESSID(0x22, 0x0A));
 	object->work[0] = 0;
 	object->work[1] = 0;
 	object->work[2] = 0;

@@ -422,7 +422,7 @@ void fn_1_A90(Process *arg0)
     for (var_r31 = 0; var_r31 < 1; var_r31++) {
         omAddObjEx(arg0, 5, 0xA, 0x32, 0, fn_1_E88);
     }
-    lbl_1_bss_11F00 = HuSprAnimRead(HuDataReadNum(0x49000A, MEMORY_DEFAULT_NUM));
+    lbl_1_bss_11F00 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 0x0A), MEMORY_DEFAULT_NUM));
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
         lbl_1_bss_11EEC[var_r31] = HuSprAnimRead(HuDataReadNum(sp8[var_r31], MEMORY_DEFAULT_NUM));
     }
@@ -466,13 +466,13 @@ s32 fn_1_E04(void)
 }
 
 s32 lbl_1_data_FC[7] = {
-    0x5F0000,
-    0x5F0002,
-    0x5F0003,
-    0x5F0005,
-    0x5F002B,
-    0x5F0048,
-    0x5F0018,
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x05),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x2B),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18),
 };
 
 s32 lbl_1_data_118[2] = { 0x490010, 0x490018 };
@@ -505,7 +505,7 @@ void fn_1_E88(omObjData *object)
     object->model[0] = CharModelCreate(var_r26, 8);
     Hu3DModelLayerSet(object->model[0], 1);
     Hu3DModelShadowSet(object->model[0]);
-    object->model[1] = Hu3DModelCreateFile(0x490001);
+    object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M442, 0x01));
     Hu3DModelHookSet(object->model[0], "test11_tex_we-itemhook-r", object->model[1]);
     var_r30->unk_30 = 0;
     for (var_r29 = 0; var_r29 < 7; var_r29++) {
@@ -1386,7 +1386,7 @@ void fn_1_3EC0(omObjData *object)
         fn_1_4444(var_r31);
     }
     object->model[3] = Hu3DHookFuncCreate(fn_1_485C);
-    lbl_1_bss_11F10 = HuSprAnimRead(HuDataSelHeapReadNum(0x49000B, MEMORY_DEFAULT_NUM, HEAP_DATA));
+    lbl_1_bss_11F10 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M442, 0x0B));
     object->model[4] = Hu3DHookFuncCreate(fn_1_54C8);
     Hu3DModelLayerSet(object->model[4], 6);
     for (var_r31 = 0; var_r31 < 15; var_r31++) {
@@ -1394,7 +1394,7 @@ void fn_1_3EC0(omObjData *object)
     }
     memset(lbl_1_bss_119FC, 0, 0x271);
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
-        lbl_1_bss_11F04[var_r31] = HuSprAnimRead(HuDataSelHeapReadNum(lbl_1_data_1A0[var_r31], MEMORY_DEFAULT_NUM, HEAP_DATA));
+        lbl_1_bss_11F04[var_r31] = HuSprAnimReadFile(lbl_1_data_1A0[var_r31]);
     }
     object->model[5] = Hu3DHookFuncCreate(fn_1_5A48);
     Hu3DModelLayerSet(object->model[5], 2);
@@ -1913,7 +1913,7 @@ void fn_1_6D24(omObjData *object)
     memset(var_r29, 0, sizeof(M442MainWork2));
     var_r29->unk_16 = lbl_1_bss_11EE0++;
     var_r29->unk_18 = 1.0f;
-    object->model[0] = Hu3DModelCreateFile(0x490002);
+    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M442, 0x02));
     Hu3DModelLayerSet(object->model[0], 7);
     Hu3DModelAttrSet(object->model[0], 0x40000001);
     Hu3DModelAttrSet(object->model[0], 1);

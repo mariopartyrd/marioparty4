@@ -3205,7 +3205,7 @@ static void PauseProc(void)
 			HuWinDispOn(window[2]);
 			HuWinMesSpeedSet(window[2], 0);
 			HuWinAttrSet(window[2], 0x800);
-			HuWinMesSet(window[2], 0x3300A1);
+			HuWinMesSet(window[2], MAKE_MESSID(0x33, 0xA1));
 		}
 		if(mgInfoTbl[mg].inst_mess[2]) {
 			s16 insert_idx;

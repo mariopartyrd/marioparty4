@@ -21,12 +21,12 @@ typedef struct platform_work {
 } PlatformWork;
 
 static u32 comPrizeMessTbl[] = {
-	0x1C0009,
-	0x1C000A,
-	0x1C000B,
-	0x1C000D,
-	0x1C000C,
-	0x1C000E
+	MAKE_MESSID(0x1C, 0x09),
+	MAKE_MESSID(0x1C, 0x0A),
+	MAKE_MESSID(0x1C, 0x0B),
+	MAKE_MESSID(0x1C, 0x0D),
+	MAKE_MESSID(0x1C, 0x0C),
+	MAKE_MESSID(0x1C, 0x0E)
 };
 
 static s8 currPlayer;
@@ -280,20 +280,20 @@ static void ExecComFortuneWin(void)
 	mess_player2 = BoardPlayerGetCharMess(comPlayer2);
 	mess_prize = comPrizeMessTbl[comPrize];
 	if(comPrize == 0 || comPrize == 5 || comPrize == 3) {
-		mess_main = 0x1C0012;
+		mess_main = MAKE_MESSID(0x1C, 0x12);
 	} else {
 		if(comPrize == 2) {
 			if(comCoin == 0) {
-				mess_main = 0x1C0013;
+				mess_main = MAKE_MESSID(0x1C, 0x13);
 			} else {
-				mess_main = 0x1C0011;
+				mess_main = MAKE_MESSID(0x1C, 0x11);
 			}
 		} else {
 			if(comPrize == 1 || comPrize == 4) {
 				if(comStar == 0) {
-					mess_main = 0x1C0014;
+					mess_main = MAKE_MESSID(0x1C, 0x14);
 				} else {
-					mess_main = 0x1C0011;
+					mess_main = MAKE_MESSID(0x1C, 0x11);
 				}
 			}
 		}

@@ -2324,7 +2324,7 @@ void fn_1_62BC(void *arg0)
 //             var_r30->unk_2C = 0.01f;
 //             var_r30->unk_28 = 0.01f;
 //             var_r30->unk_24 = 0.01f;
-//             var_r30->unk_7C = Hu3DModelCreateFile(0x45000B);
+//             var_r30->unk_7C = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M438, 0x0B));
 //             var_r30->unk_7E = (30.0f * (0.000015258789f * fn_1_7DB4())) + 0x1E;
 //             var_r29 = 0;
 //         loop_6:

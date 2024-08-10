@@ -43,10 +43,10 @@ s16 lbl_1_data_388 = -1;
 s16 lbl_1_data_38A = -1;
 s16 lbl_1_data_38C = -1;
 s32 lbl_1_data_390[] = {
-    0x00770026,
-    0x00770027,
-    0x00770028,
-    -1
+    DATA_MAKE_NUM(DATADIR_W03, 0x26),
+    DATA_MAKE_NUM(DATADIR_W03, 0x27),
+    DATA_MAKE_NUM(DATADIR_W03, 0x28),
+    DATA_NUM_LISTEND
 };
 
 void fn_1_63F4(s32 arg0) {
@@ -70,8 +70,8 @@ void fn_1_6494(void) {
     Vec sp8;
     unkWorkStruct* temp_r31;
 
-    lbl_1_data_388 = BoardModelCreate(0x77000E, NULL, 0);
-    lbl_1_data_38C = BoardModelCreate(0x77000F, NULL, 0);
+    lbl_1_data_388 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x0E), NULL, 0);
+    lbl_1_data_38C = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x0F), NULL, 0);
     lbl_1_data_38A = BoardModelCreate(0x2000D, &lbl_1_data_390[0], 0);
     BoardModelMotionStart(lbl_1_data_38A, 1, 0x40000001);
     BoardModelHookSet(lbl_1_data_38A, "itemhook_R", lbl_1_data_38C);

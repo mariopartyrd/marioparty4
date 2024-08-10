@@ -39,14 +39,14 @@ float lbl_1_data_1D4[8] = {
 };
 
 u32 lbl_1_data_1F4[8] = {
-	0x5F0000,
-	0x5F0002,
-	0x5F0003,
+	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00),
+	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02),
+	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03),
 	-1,
-	0x5F0048,
-	0x5F0049,
-	0x5F0017,
-	0x5F0072
+	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48),
+	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x49),
+	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17),
+	DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x72)
 };
 
 char *lbl_1_data_230[8] = {
@@ -621,7 +621,7 @@ void fn_1_9440(omObjData *object)
 		if(lbl_1_data_1F4[temp_r28] != -1) {
 			object->motion[temp_r28] = CharModelMotionCreate(temp_r31->unk8, lbl_1_data_1F4[temp_r28]);
 		} else {
-			object->motion[temp_r28] = Hu3DJointMotionFile(object->model[0], 0x3E0021+temp_r31->unk8);
+			object->motion[temp_r28] = Hu3DJointMotionFile(object->model[0], DATA_MAKE_NUM(DATADIR_M431, 0x21)+temp_r31->unk8);
 		}
 		if(temp_r28 == 4 || temp_r28 == 5) {
 			CharModelVoiceEnableSet(temp_r31->unk8, object->motion[temp_r28], 0);

@@ -17,16 +17,16 @@ void fn_1_2D04(void)
 	m02GenDice spEC;
 	m02GenDice sp4C;
 	s32 sp24[10] = {
-		0x0076001C,
-		0x0076001D,
-		0x0076001E,
-		0x0076001F,
-		0x00760020,
-		0x00760021,
-		0x00760022,
-		0x00760023,
-		0x00760024,
-		0x00760025
+		DATA_MAKE_NUM(DATADIR_W02, 0x1C),
+		DATA_MAKE_NUM(DATADIR_W02, 0x1D),
+		DATA_MAKE_NUM(DATADIR_W02, 0x1E),
+		DATA_MAKE_NUM(DATADIR_W02, 0x1F),
+		DATA_MAKE_NUM(DATADIR_W02, 0x20),
+		DATA_MAKE_NUM(DATADIR_W02, 0x21),
+		DATA_MAKE_NUM(DATADIR_W02, 0x22),
+		DATA_MAKE_NUM(DATADIR_W02, 0x23),
+		DATA_MAKE_NUM(DATADIR_W02, 0x24),
+		DATA_MAKE_NUM(DATADIR_W02, 0x25)
 	};
 	Vec sp18;
 	Vec spC;
@@ -43,7 +43,7 @@ void fn_1_2D04(void)
 	OSReport("gamble start %d\n", temp_r31);
 	sp8 = BoardSpaceGet(0, GWPlayer[temp_r31].space_curr);
 	BoardRollDispSet(0);
-	temp_r28 = BoardModelCreate(0x76000F, NULL, 0);
+	temp_r28 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W02, 0x0F), NULL, 0);
 	BoardModelVisibilitySet(temp_r28, 0);
 	switch(lbl_1_bss_54) {
 		case 0:
@@ -78,9 +78,9 @@ void fn_1_2D04(void)
 	BoardModelHookReset(temp_r30);
 	BoardModelPosGet(temp_r30, &sp18);
 	BoardModelPosSetV(lbl_1_data_286, &sp18);
-	fn_1_121C(0x13000A);
+	fn_1_121C(MAKE_MESSID(0x13, 0x0A));
 	spEC.unk00 = 1;
-	spEC.unk04 = 0x76001B;
+	spEC.unk04 = DATA_MAKE_NUM(DATADIR_W02, 0x1B);
 	spEC.unk08 = sp24;
 	spEC.unk0C = sp18;
 	spEC.unk18 = 1;
@@ -140,9 +140,9 @@ void fn_1_2D04(void)
 	temp_r27 = spEC.unk94;
 	if(temp_r27 == 10) {
 		HuAudPlayerVoicePlay(temp_r31, 302);
-		fn_1_121C(0x130010);
+		fn_1_121C(MAKE_MESSID(0x13, 0x10));
 	} else {
-		fn_1_121C(0x13000C);
+		fn_1_121C(MAKE_MESSID(0x13, 0x0C));
 	}
 	BoardPlayerMotBlendSet(temp_r31, 0, 15);
 	while(!BoardPlayerMotBlendCheck(temp_r31)) {
@@ -189,10 +189,10 @@ void fn_1_2D04(void)
 			HuPrcVSleep();
 		}
 		if(sp4C.unk94 > temp_r27) {
-			fn_1_121C(0x13000D);
+			fn_1_121C(MAKE_MESSID(0x13, 0x0D));
 		} else {
 			HuAudPlayerVoicePlay(temp_r31, 302);
-			fn_1_121C(0x13000F);
+			fn_1_121C(MAKE_MESSID(0x13, 0x0F));
 		}
 	} else {
 		sp4C.unk94 = 0;
@@ -214,7 +214,7 @@ void fn_1_2D04(void)
 			HuAudFXPlay(7);
 			HuPrcSleep(6);
 		}
-		fn_1_121C(0x13000E);
+		fn_1_121C(MAKE_MESSID(0x13, 0x0E));
 	} else {
 		temp_r26 = GWPlayer[temp_r31].space_curr;
 		BoardCameraTargetSpaceSet(temp_r26);

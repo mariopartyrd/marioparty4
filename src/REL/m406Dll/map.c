@@ -2446,10 +2446,10 @@ void fn_1_9F78(void)
 
     var_r30 = lbl_1_bss_9C = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM406Struct8), MEMORY_DEFAULT_NUM);
     memset(var_r30, 0, sizeof(UnkM406Struct8));
-    var_r30->unk_00 = HuSprAnimRead(HuDataReadNum(0x250040, MEMORY_DEFAULT_NUM));
-    var_r30->unk_04 = HuSprAnimRead(HuDataReadNum(0x250041, MEMORY_DEFAULT_NUM));
-    var_r30->unk_08 = HuSprAnimRead(HuDataReadNum(0x250042, MEMORY_DEFAULT_NUM));
-    var_r30->unk_0C = HuSprAnimRead(HuDataReadNum(0x250043, MEMORY_DEFAULT_NUM));
+    var_r30->unk_00 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M406, 0x40), MEMORY_DEFAULT_NUM));
+    var_r30->unk_04 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M406, 0x41), MEMORY_DEFAULT_NUM));
+    var_r30->unk_08 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M406, 0x42), MEMORY_DEFAULT_NUM));
+    var_r30->unk_0C = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M406, 0x43), MEMORY_DEFAULT_NUM));
     var_r30->unk_24 = 0.0f;
     var_r30->unk_28 = 0.0f;
     var_r27 = fn_1_B474(var_r30->unk_00, 1);

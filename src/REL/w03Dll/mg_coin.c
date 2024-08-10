@@ -1,17 +1,17 @@
-#include "dolphin.h"
-#include "game/chrman.h"
-#include "game/object.h"
 #include "REL/w03Dll.h"
+#include "dolphin.h"
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/player.h"
 #include "game/board/space.h"
-#include "game/minigame_seq.h"
+#include "game/chrman.h"
 #include "game/hsfdraw.h"
+#include "game/minigame_seq.h"
+#include "game/object.h"
 #include "game/pad.h"
 
-//structs
-typedef struct someBits3 { //make sure this is defined correctly
+// structs
+typedef struct someBits3 { // make sure this is defined correctly
     /* 0x00 */ struct {
         u8 unk00_bit0 : 1;
         u8 unk00_bit1 : 4;
@@ -42,58 +42,61 @@ typedef struct unkTemp2 {
     s8 unk4;
     char unk_05[3];
     f32 unk8;
-    unkTemp* unk_0C;
+    unkTemp *unk_0C;
 } unkTemp2;
 
-//function signatures
+// function signatures
 void fn_1_7C98(void);
 void fn_1_7C38(void);
 s32 fn_1_7D18(s32 arg0);
 void fn_1_8140(s32 arg0);
 void fn_1_81E0(s32 arg0);
-void fn_1_8530(omObjData* arg0);
+void fn_1_8530(omObjData *arg0);
 void fn_1_84A8(s32 arg0);
-void fn_1_8698(omObjData* arg0, someBits3* arg1);
-void fn_1_8C08(omObjData* arg0, someBits3* arg1);
-void fn_1_8E44(omObjData* arg0, someBits3* arg1);
-void fn_1_9044(omObjData* arg0, someBits3* arg1);
+void fn_1_8698(omObjData *arg0, someBits3 *arg1);
+void fn_1_8C08(omObjData *arg0, someBits3 *arg1);
+void fn_1_8E44(omObjData *arg0, someBits3 *arg1);
+void fn_1_9044(omObjData *arg0, someBits3 *arg1);
 void fn_1_91B8(void);
 void fn_1_9230(s32 arg0);
 void fn_1_9384(void);
 void fn_1_9474(s32 arg0);
 void fn_1_97F8(s32 arg0);
-void fn_1_9A1C(unkTemp2* arg0);
+void fn_1_9A1C(unkTemp2 *arg0);
 
-//data
+// data
 s32 lbl_1_data_450 = -1;
 s16 lbl_1_data_454 = -1;
 s16 lbl_1_data_456 = -1;
 s16 lbl_1_data_458 = -1;
-s32 lbl_1_data_45C[] = {0x00770021, 0x00770022, -1};
+s32 lbl_1_data_45C[] = { DATA_MAKE_NUM(DATADIR_W03, 0x21), DATA_MAKE_NUM(DATADIR_W03, 0x22), DATA_NUM_LISTEND };
 
-//BSS
+// BSS
 char lbl_1_bss_150[0x30];
 s16 lbl_1_bss_14E;
 s8 lbl_1_bss_14C;
-omObjData* lbl_1_bss_148;
-omObjData* lbl_1_bss_144;
-Process* lbl_1_bss_140;
+omObjData *lbl_1_bss_148;
+omObjData *lbl_1_bss_144;
+Process *lbl_1_bss_140;
 
-void fn_1_7ABC(void) {
-    lbl_1_data_456 = BoardModelCreate(0x770020, lbl_1_data_45C, 0);
+void fn_1_7ABC(void)
+{
+    lbl_1_data_456 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x20), lbl_1_data_45C, 0);
     BoardModelHookSet(lbl_1_bss_C[7], "phei", lbl_1_data_456);
     BoardModelMotionStart(lbl_1_data_456, 2, 0x40000002);
     BoardModelRotYSet(lbl_1_data_456, -45.0f);
 }
 
-void fn_1_7B58(void) {
+void fn_1_7B58(void)
+{
     if (lbl_1_data_456 != -1) {
         BoardModelKill(lbl_1_data_456);
         lbl_1_data_456 = -1;
     }
 }
 
-void fn_1_7BA8(void) {
+void fn_1_7BA8(void)
+{
     BoardRollDispSet(0);
     lbl_1_bss_140 = HuPrcChildCreate(&fn_1_7C98, 0x2003, 0x2000, 0, boardMainProc);
     HuPrcDestructorSet2(lbl_1_bss_140, &fn_1_7C38);
@@ -103,7 +106,8 @@ void fn_1_7BA8(void) {
     BoardRollDispSet(1);
 }
 
-void fn_1_7C38(void) {
+void fn_1_7C38(void)
+{
     if (lbl_1_data_454 != -1) {
         HuWinKill(lbl_1_data_454);
         lbl_1_data_454 = -1;
@@ -111,7 +115,8 @@ void fn_1_7C38(void) {
     lbl_1_bss_140 = 0;
 }
 
-void fn_1_7C98(void) {
+void fn_1_7C98(void)
+{
     s32 temp_r31;
 
     temp_r31 = GWSystem.player_curr;
@@ -125,7 +130,8 @@ void fn_1_7C98(void) {
     HuPrcEnd();
 }
 
-s32 fn_1_7D18(s32 arg0) {
+s32 fn_1_7D18(s32 arg0)
+{
     Point3d sp38;
     Point3d sp2C;
     Point3d sp20;
@@ -136,7 +142,7 @@ s32 fn_1_7D18(s32 arg0) {
     s16 space;
     s16 temp_r28;
     f32 arctan;
-    
+
     BoardWinCreateChoice(2, MAKE_MESSID(22, 21), 2, 0);
 
     if (GWPlayer[arg0].com != 0) {
@@ -176,7 +182,8 @@ s32 fn_1_7D18(s32 arg0) {
 
     if (GWPlayer[arg0].character == 5) {
         var_f31 = 54.000004f;
-    } else {
+    }
+    else {
         var_f31 = 39.0f;
     }
 
@@ -204,9 +211,10 @@ s32 fn_1_7D18(s32 arg0) {
     return 1;
 }
 
-void fn_1_8140(s32 arg0) {
+void fn_1_8140(s32 arg0)
+{
     s16 temp_r31;
-    
+
     fn_1_81E0(arg0);
     BoardMusStart(1, 0x16, 0x7F, 0);
     temp_r31 = MGSeqStartCreate();
@@ -226,35 +234,36 @@ void fn_1_8140(s32 arg0) {
 }
 
 s32 lbl_1_data_470[] = {
-    0x005F0066,
-	0x001A0066,
-	0x006D0066,
-	0x008A0066,
-	0x00850066,
-	0x00110066,
-	0x000D0066,
-	0x00810066
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x66),
+    DATA_MAKE_NUM(DATADIR_LUIGIMOT, 0x66),
+    DATA_MAKE_NUM(DATADIR_PEACHMOT, 0x66),
+    DATA_MAKE_NUM(DATADIR_YOSHIMOT, 0x66),
+    DATA_MAKE_NUM(DATADIR_WARIOMOT, 0x66),
+    DATA_MAKE_NUM(DATADIR_DONKEYMOT, 0x66),
+    DATA_MAKE_NUM(DATADIR_DAISYMOT, 0x66),
+    DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 0x66),
 };
 
 s32 lbl_1_data_490[] = {
-	0x005F0067,
-	0x001A0067,
-	0x006D0067,
-	0x008A0067,
-	0x00850067,
-	0x00110067,
-	0x000D0067,
-	0x00810067    
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x67),
+    DATA_MAKE_NUM(DATADIR_LUIGIMOT, 0x67),
+    DATA_MAKE_NUM(DATADIR_PEACHMOT, 0x67),
+    DATA_MAKE_NUM(DATADIR_YOSHIMOT, 0x67),
+    DATA_MAKE_NUM(DATADIR_WARIOMOT, 0x67),
+    DATA_MAKE_NUM(DATADIR_DONKEYMOT, 0x67),
+    DATA_MAKE_NUM(DATADIR_DAISYMOT, 0x67),
+    DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 0x67),
 };
 
-void fn_1_81E0(s32 arg0) {
+void fn_1_81E0(s32 arg0)
+{
     Point3d sp8;
-    omObjData* temp_r3;
+    omObjData *temp_r3;
     f32 temp_f31;
     s32 temp_r28;
     s32 temp_r5;
     s32 temp_r5_2;
-    someBits3* temp_r31;
+    someBits3 *temp_r31;
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, fn_1_8530);
     lbl_1_bss_144 = temp_r3;
@@ -273,7 +282,7 @@ void fn_1_81E0(s32 arg0) {
     temp_r31->unk_06[1] = BoardPlayerMotionCreate(arg0, lbl_1_data_470[temp_r28]);
     temp_r31->unk_06[2] = BoardPlayerMotionCreate(arg0, lbl_1_data_490[temp_r28]);
     temp_f31 = 0.3f;
-    temp_r31->unk_06[0] = BoardModelCreate(0x770009, NULL, 0);
+    temp_r31->unk_06[0] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x09), NULL, 0);
     BoardModelVisibilitySet(temp_r31->unk_06[0], 0);
     BoardPlayerPosGet(arg0, &sp8);
     BoardModelPosSetV(temp_r31->unk_06[0], &sp8);
@@ -283,10 +292,11 @@ void fn_1_81E0(s32 arg0) {
     BoardModelMotionSpeedSet(lbl_1_data_456, temp_r3->trans.x);
     BoardPlayerMotionStart(arg0, temp_r31->unk_06[1], 0x40000001);
     BoardPlayerMotionSpeedSet(arg0, temp_r3->trans.x);
-    lbl_1_data_458 = BoardModelMotionCreate(lbl_1_bss_C[10], 0x770025);
+    lbl_1_data_458 = BoardModelMotionCreate(lbl_1_bss_C[10], DATA_MAKE_NUM(DATADIR_W03, 0x25));
 }
 
-void fn_1_8434(someBits3* arg0) {
+void fn_1_8434(someBits3 *arg0)
+{
     if (arg0->unk_06[1] != -1) {
         BoardPlayerMotionKill(arg0->unk00_bit5, arg0->unk_06[1]);
     }
@@ -298,9 +308,10 @@ void fn_1_8434(someBits3* arg0) {
     }
 }
 
-void fn_1_84A8(s32 arg0) {
-    someBits3* temp_r31;
-    
+void fn_1_84A8(s32 arg0)
+{
+    someBits3 *temp_r31;
+
     if (lbl_1_bss_144) {
         temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_144, someBits3);
         temp_r31->unk00_bit1 = arg0;
@@ -310,12 +321,13 @@ void fn_1_84A8(s32 arg0) {
     }
 }
 
-void fn_1_8530(omObjData* arg0) {
+void fn_1_8530(omObjData *arg0)
+{
     s32 temp_r0;
-    someBits3* temp_r31;
+    someBits3 *temp_r31;
 
     temp_r31 = OM_GET_WORK_PTR(arg0, someBits3);
-    
+
     if ((temp_r31->unk00_bit0 != 0) || (BoardIsKill() != 0)) {
         if (temp_r31->unk_04 != -1) {
             MGSeqParamSet(temp_r31->unk_04, 2, -1);
@@ -330,7 +342,7 @@ void fn_1_8530(omObjData* arg0) {
             BoardModelKill(temp_r31->unk_06[0]);
         }
         lbl_1_bss_144 = NULL;
-        
+
         omDelObjEx(HuPrcCurrentGet(), arg0);
         return;
     }
@@ -341,24 +353,25 @@ void fn_1_8530(omObjData* arg0) {
     }
 
     switch (temp_r31->unk00_bit1) {
-    case 0:
-        fn_1_8698(arg0, temp_r31);
-        return;
-    case 1:
-        fn_1_8C08(arg0, temp_r31);
-        return;
-    case 2:
-        fn_1_8E44(arg0, temp_r31);
-        return;
-    case 3:
-        fn_1_9044(arg0, temp_r31);
-        /* fallthrough */
-    case 4:
-        break;
+        case 0:
+            fn_1_8698(arg0, temp_r31);
+            return;
+        case 1:
+            fn_1_8C08(arg0, temp_r31);
+            return;
+        case 2:
+            fn_1_8E44(arg0, temp_r31);
+            return;
+        case 3:
+            fn_1_9044(arg0, temp_r31);
+            /* fallthrough */
+        case 4:
+            break;
     }
 }
 
-void fn_1_8698(omObjData* arg0, someBits3* arg1) {
+void fn_1_8698(omObjData *arg0, someBits3 *arg1)
+{
     s32 temp_r27;
     u32 var_r28;
     u32 var_r26;
@@ -367,10 +380,12 @@ void fn_1_8698(omObjData* arg0, someBits3* arg1) {
 
     if (arg1->unk3 != 0) {
         arg1->unk3--;
-    } else {
+    }
+    else {
         if (arg1->unk2 != 0) {
             arg1->unk2--;
-        } else {
+        }
+        else {
             MGSeqParamSet(arg1->unk_04, 2, -1);
             arg1->unk_04 = -1;
             arg1->unk00_bit1 = 1;
@@ -384,7 +399,7 @@ void fn_1_8698(omObjData* arg0, someBits3* arg1) {
                 lbl_1_bss_14E = 30;
             }
 
-            OSu16tof32((u16*)&lbl_1_bss_14E, &arg0->rot.x); //??
+            OSu16tof32((u16 *)&lbl_1_bss_14E, &arg0->rot.x); //??
             BoardModelAttrReset(lbl_1_data_456, 0x40000002);
             BoardModelAttrReset(lbl_1_bss_C[7], 0x40000002);
             BoardModelAttrReset(lbl_1_bss_C[10], 0x40000002);
@@ -407,35 +422,35 @@ void fn_1_8698(omObjData* arg0, someBits3* arg1) {
         MGSeqParamSet(arg1->unk_04, 1, arg1->unk2);
         arg1->unk3 = 60;
     }
-    
-    
+
     var_r26 = GWPlayer[arg1->unk00_bit5].port;
     var_r28 = 0;
-    
+
     if ((GWPlayer[arg1->unk00_bit5].com) != 0) {
         temp_r27 = BoardRandMod(100);
 
         switch (GWPlayer[arg1->unk00_bit5].diff) {
-        case 0:
-            if (temp_r27 < 12) {
+            case 0:
+                if (temp_r27 < 12) {
+                    var_r28 = 0x100;
+                }
+                break;
+            case 1:
+                if (temp_r27 < 22) {
+                    var_r28 = 0x100;
+                }
+                break;
+            case 2:
+                if (temp_r27 < 50) {
+                    var_r28 = 0x100;
+                }
+                break;
+            case 3:
                 var_r28 = 0x100;
-            }
-            break;
-        case 1:
-            if (temp_r27 < 22) {
-                var_r28 = 0x100;
-            }
-            break;
-        case 2:
-            if (temp_r27 < 50) {
-                var_r28 = 0x100;
-            }
-            break;
-        case 3:
-            var_r28 = 0x100;
-            break;
+                break;
         }
-    } else {
+    }
+    else {
         var_r28 = HuPadBtnDown[var_r26] & 0x100;
     }
 
@@ -450,7 +465,8 @@ void fn_1_8698(omObjData* arg0, someBits3* arg1) {
         lbl_1_bss_14E += 1;
         BoardModelVisibilitySet(arg1->unk_06[0], 1);
         BoardModelRotYSet(arg1->unk_06[0], BoardPlayerRotYGet(arg1->unk00_bit5));
-    } else {
+    }
+    else {
         arg0->trans.x *= 0.98f;
         arg0->trans.y = 0.0f;
         if (arg0->trans.x <= 1.0f) {
@@ -477,15 +493,10 @@ void fn_1_8698(omObjData* arg0, someBits3* arg1) {
 }
 
 s8 lbl_1_data_4B0 = -1;
-s32 lbl_1_data_4B4[] = {
-    0x00000440,
-    0x00000441,
-    0x00000442,
-    0x00000443,
-    0x00000444
-};
+s32 lbl_1_data_4B4[] = { 0x00000440, 0x00000441, 0x00000442, 0x00000443, 0x00000444 };
 
-void fn_1_8C08(omObjData* arg0, someBits3* arg1) {
+void fn_1_8C08(omObjData *arg0, someBits3 *arg1)
+{
     Point3d spC;
     f32 temp_f31;
     f32 temp_f30;
@@ -520,7 +531,8 @@ void fn_1_8C08(omObjData* arg0, someBits3* arg1) {
     BoardPlayerMotionTimeSet(arg1->unk00_bit5, 2.0f * temp_f30);
 }
 
-void fn_1_8E44(omObjData* arg0, someBits3* arg1) {
+void fn_1_8E44(omObjData *arg0, someBits3 *arg1)
+{
     Point3d sp8;
     f32 temp_f1;
     f32 temp_f31;
@@ -558,7 +570,8 @@ void fn_1_8E44(omObjData* arg0, someBits3* arg1) {
     BoardModelPosSetV(lbl_1_data_456, &sp8);
 }
 
-void fn_1_9044(omObjData* arg0, someBits3* arg1) {
+void fn_1_9044(omObjData *arg0, someBits3 *arg1)
+{
     Vec sp8;
 
     BoardModelRotGet(lbl_1_data_456, &sp8);
@@ -580,9 +593,10 @@ void fn_1_9044(omObjData* arg0, someBits3* arg1) {
     BoardModelRotSetV(lbl_1_data_456, &sp8);
 }
 
-s8 lbl_1_data_4C8[] = {1, 5, 10, 15, 20, 20};
+s8 lbl_1_data_4C8[] = { 1, 5, 10, 15, 20, 20 };
 
-void fn_1_91B8(void) {
+void fn_1_91B8(void)
+{
     s8 temp_r3;
 
     if (lbl_1_bss_14E == 0) {
@@ -593,7 +607,8 @@ void fn_1_91B8(void) {
     lbl_1_bss_14C = lbl_1_data_4C8[temp_r3];
 }
 
-void fn_1_9230(s32 arg0) {
+void fn_1_9230(s32 arg0)
+{
     Point3d sp20;
     Point3d sp14;
     Point3d sp8;
@@ -620,20 +635,22 @@ void fn_1_9230(s32 arg0) {
     BoardCameraMotionWait();
 }
 
-void fn_1_9384(void) {
+void fn_1_9384(void)
+{
     f32 widthHeight[2];
     f32 x, y;
 
-    HuWinMesMaxSizeGet(1, widthHeight, 0x160019);
+    HuWinMesMaxSizeGet(1, widthHeight, MAKE_MESSID(0x16, 0x19));
     x = -10000.0f;
     y = 288.0f;
     lbl_1_data_454 = HuWinCreate(x, y, widthHeight[0], widthHeight[1], 0);
     HuWinBGTPLvlSet(lbl_1_data_454, 0.0f);
     HuWinMesSpeedSet(lbl_1_data_454, 0);
-    HuWinMesSet(lbl_1_data_454, 0x160019U);
+    HuWinMesSet(lbl_1_data_454, MAKE_MESSID(0x16, 0x19));
 }
 
-void fn_1_9474(s32 arg0) {
+void fn_1_9474(s32 arg0)
+{
     sprintf(lbl_1_bss_150, "%d", lbl_1_bss_14C);
     BoardWinCreate(2, MAKE_MESSID(22, 23), 2);
     BoardWinInsertMesSet((u32)lbl_1_bss_150, 4);
@@ -664,14 +681,15 @@ void fn_1_9474(s32 arg0) {
     BoardModelMotionStart(lbl_1_bss_C[7], 0, 0x40000002);
 }
 
-void fn_1_95B8(omObjData* arg0) {
+void fn_1_95B8(omObjData *arg0)
+{
     f32 temp_f31;
     s32 var_r25;
     s32 var_r26;
     s32 var_r27;
     s32 var_r28;
-    unkTemp* var_r30;
-    unkTemp2* temp_r29;
+    unkTemp *var_r30;
+    unkTemp2 *temp_r29;
     s32 i;
     s32 temp;
 
@@ -679,14 +697,14 @@ void fn_1_95B8(omObjData* arg0) {
 
     if ((temp_r29->unk00_bit0 != 0) || (BoardIsKill() != 0)) {
         fn_1_9A1C(temp_r29);
-        HuMemDirectFree((void*)temp_r29->unk_0C);
+        HuMemDirectFree((void *)temp_r29->unk_0C);
         lbl_1_bss_148 = 0;
         omDelObjEx(HuPrcCurrentGet(), arg0);
         return;
     }
 
     var_r30 = temp_r29->unk_0C;
-    
+
     for (var_r27 = i = 0; i < 20; i++, var_r30++) {
         if (var_r30->unk0 == 0) {
             var_r27++;
@@ -697,7 +715,7 @@ void fn_1_95B8(omObjData* arg0) {
         temp_r29->unk00_bit0 = 1;
         return;
     }
-    
+
     var_r25 = 0;
     for (i = 0; i < 20; i++) {
         var_r30 = &temp_r29->unk_0C[i];
@@ -725,23 +743,23 @@ void fn_1_95B8(omObjData* arg0) {
     }
 }
 
-
-void fn_1_97F8(s32 arg0) {
+void fn_1_97F8(s32 arg0)
+{
     Point3d sp8;
     f32 temp_f2;
     f32 var_f31;
     f64 temp_f1;
-    omObjData* temp_r3;
+    omObjData *temp_r3;
     s32 i;
-    unkTemp2* temp_r30;
-    unkTemp* temp_r31;
+    unkTemp2 *temp_r30;
+    unkTemp *temp_r31;
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, fn_1_95B8);
     lbl_1_bss_148 = temp_r3;
     temp_r30 = OM_GET_WORK_PTR(temp_r3, unkTemp2);
     temp_r30->unk00_bit0 = 0;
     temp_r30->unk4 = arg0;
-    temp_r30->unk_0C = HuMemDirectMallocNum(0, 0x190, 0x10000000);
+    temp_r30->unk_0C = HuMemDirectMallocNum(0, 0x190, MEMORY_DEFAULT_NUM);
     BoardPlayerPosGet(arg0, &sp8);
     temp_r30->unk8 = (80.0f + sp8.y);
     memset(temp_r30->unk_0C, 0, 0x190);
@@ -749,7 +767,8 @@ void fn_1_97F8(s32 arg0) {
     for (i = 0; i < lbl_1_bss_14C; i++) {
         if (i == 0) {
             var_f31 = 0.0f;
-        } else {
+        }
+        else {
             var_f31 = BoardRandFloat();
         }
         temp_r31 = &temp_r30->unk_0C[i];
@@ -759,13 +778,14 @@ void fn_1_97F8(s32 arg0) {
         temp_r31->unk8.y = 600.0f + sp8.y + (500.0f * BoardRandFloat());
         temp_r31->unk1 = 0;
         temp_r31->unk4 = BoardRandFloat() * 360.0f;
-        temp_r31->unk_02 = BoardModelCreate(0x7000A, NULL, 1);
+        temp_r31->unk_02 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x0A), NULL, 1);
     }
 }
 
-void fn_1_9A1C(unkTemp2* arg0) {
+void fn_1_9A1C(unkTemp2 *arg0)
+{
     s32 i;
-    unkTemp* temp;
+    unkTemp *temp;
 
     for (i = 0; i < 20; i++) {
         temp = &arg0->unk_0C[i];

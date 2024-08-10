@@ -20,21 +20,53 @@ char *lbl_1_data_140[] = { "dmy-itemhook-r", "dmy-itemhook-r", "dmy-itemhook-r",
 
 char *lbl_1_data_16C[] = { "itemhook-r", "itemhook-r", "itemhook-r", "itemhook-r", "itemhook-r", "itemhook-r", "itemhook-r", "itemhook-r" };
 
-s32 lbl_1_data_18C[]
-    = { DATA_MAKE_NUM(DATADIR_M410, 0), DATA_MAKE_NUM(DATADIR_M410, 1), DATA_MAKE_NUM(DATADIR_M410, 2), DATA_MAKE_NUM(DATADIR_M410, 3),
-          DATA_MAKE_NUM(DATADIR_M410, 4), DATA_MAKE_NUM(DATADIR_M410, 5), DATA_MAKE_NUM(DATADIR_M410, 6), DATA_MAKE_NUM(DATADIR_M410, 7) };
+s32 lbl_1_data_18C[] = {
+    DATA_MAKE_NUM(DATADIR_M410, 0),
+    DATA_MAKE_NUM(DATADIR_M410, 1),
+    DATA_MAKE_NUM(DATADIR_M410, 2),
+    DATA_MAKE_NUM(DATADIR_M410, 3),
+    DATA_MAKE_NUM(DATADIR_M410, 4),
+    DATA_MAKE_NUM(DATADIR_M410, 5),
+    DATA_MAKE_NUM(DATADIR_M410, 6),
+    DATA_MAKE_NUM(DATADIR_M410, 7),
+};
 
-u32 lbl_1_data_1AC[] = { 0, DATA_MAKE_NUM(DATADIR_M410, 70), DATA_MAKE_NUM(DATADIR_M410, 22), DATA_MAKE_NUM(DATADIR_M410, 30),
-    DATA_MAKE_NUM(DATADIR_M410, 38), DATA_MAKE_NUM(DATADIR_M410, 46), DATA_MAKE_NUM(DATADIR_M410, 62), DATA_MAKE_NUM(DATADIR_M410, 54),
-    DATA_MAKE_NUM(DATADIR_E3SETUP, 23), DATA_MAKE_NUM(DATADIR_E3SETUP, 24) };
+u32 lbl_1_data_1AC[] = {
+    0,
+    DATA_MAKE_NUM(DATADIR_M410, 70),
+    DATA_MAKE_NUM(DATADIR_M410, 22),
+    DATA_MAKE_NUM(DATADIR_M410, 30),
+    DATA_MAKE_NUM(DATADIR_M410, 38),
+    DATA_MAKE_NUM(DATADIR_M410, 46),
+    DATA_MAKE_NUM(DATADIR_M410, 62),
+    DATA_MAKE_NUM(DATADIR_M410, 54),
+    DATA_MAKE_NUM(DATADIR_E3SETUP, 23),
+    DATA_MAKE_NUM(DATADIR_E3SETUP, 24),
+};
 
-UnkM410Struct10 lbl_1_data_1D4[] = { { 0.0f, 0.0f, 12.0f, 0x40000001 }, { 0.0f, 0.0f, 1.1999999, 0 }, { 0.0f, 0.0f, 12.0f, 0x40000001 },
-    { 0.0f, 0.0f, 6.0f, 0 }, { 6.0f, 0.0f, 4.7999997f, 0 }, { 0.0f, 0.0f, 1.1999999f, 0 }, { 0.0f, 0.0f, 1.1999999f, 0 }, { 0.0f, 0.0f, 1.1999999f, 0 },
-    { 0.0f, 0.0f, 12.0f, 0 }, { 0.0f, 0.0f, 12.0f, 0 } };
+UnkM410Struct10 lbl_1_data_1D4[] = {
+    { 0.0f, 0.0f, 12.0f, 0x40000001 },
+    { 0.0f, 0.0f, 1.1999999, 0 },
+    { 0.0f, 0.0f, 12.0f, 0x40000001 },
+    { 0.0f, 0.0f, 6.0f, 0 },
+    { 6.0f, 0.0f, 4.7999997f, 0 },
+    { 0.0f, 0.0f, 1.1999999f, 0 },
+    { 0.0f, 0.0f, 1.1999999f, 0 },
+    { 0.0f, 0.0f, 1.1999999f, 0 },
+    { 0.0f, 0.0f, 12.0f, 0 },
+    { 0.0f, 0.0f, 12.0f, 0 },
+};
 
-s32 lbl_1_data_274[] = { DATA_MAKE_NUM(DATADIR_MGCONST, 0), DATA_MAKE_NUM(DATADIR_MGCONST, 1), DATA_MAKE_NUM(DATADIR_MGCONST, 2),
-    DATA_MAKE_NUM(DATADIR_MGCONST, 3), DATA_MAKE_NUM(DATADIR_MGCONST, 4), DATA_MAKE_NUM(DATADIR_MGCONST, 5), DATA_MAKE_NUM(DATADIR_MGCONST, 6),
-    DATA_MAKE_NUM(DATADIR_MGCONST, 7) };
+s32 lbl_1_data_274[] = {
+    DATA_MAKE_NUM(DATADIR_MGCONST, 0),
+    DATA_MAKE_NUM(DATADIR_MGCONST, 1),
+    DATA_MAKE_NUM(DATADIR_MGCONST, 2),
+    DATA_MAKE_NUM(DATADIR_MGCONST, 3),
+    DATA_MAKE_NUM(DATADIR_MGCONST, 4),
+    DATA_MAKE_NUM(DATADIR_MGCONST, 5),
+    DATA_MAKE_NUM(DATADIR_MGCONST, 6),
+    DATA_MAKE_NUM(DATADIR_MGCONST, 7),
+};
 
 GXColor lbl_1_data_294[] = {
     { 102, 0, 0, 255 },
@@ -144,9 +176,9 @@ void fn_1_80A0(omObjData *object)
     for (var_r29 = 0; var_r29 < 10; var_r29++) {
         if (lbl_1_data_1AC[var_r29] < 0x10000) {
             object->motion[var_r29] = CharModelMotionCreate(var_r28, lbl_1_data_1AC[var_r29]);
-        } else {
-            object->motion[var_r29]
-                = Hu3DJointMotion(object->model[0], HuDataSelHeapReadNum(var_r28 + lbl_1_data_1AC[var_r29], MEMORY_DEFAULT_NUM, HEAP_DATA));
+        }
+        else {
+            object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], var_r28 + lbl_1_data_1AC[var_r29]);
         }
     }
     CharModelMotionDataClose(var_r28);
@@ -178,40 +210,40 @@ void fn_1_8414(omObjData *object)
         UnkM410Struct7 sp8 = { { 42, 78, 108, 125 } };
 
         switch (var_r31->unk_34) {
-        case 0:
-            fn_1_9F70(object, 0);
-            if (fn_1_2804()) {
-                var_r31->unk_38 = 0;
-                var_r31->unk_34++;
-            }
-            break;
-        case 1:
-            if (var_r31->unk_38 >= sp8.unk_00[var_r31->unk_04]) {
-                var_r31->unk_28 = 1;
-                var_r31->unk_34++;
-            }
-            break;
-        case 2:
-            fn_1_96F4(object);
-            if (var_r31->unk_38 >= (2.8f + 0.00040000002f * frandmod(1000)) * 60.0f) {
-                var_r31->unk_2C = 1;
-                var_r31->unk_38 = 0;
-                var_r31->unk_34++;
-            }
-            break;
-        case 3:
-            if (var_r31->unk_24) {
-                if (var_r31->unk_38 >= 27.0f) {
-                    var_r31->unk_30 = 1;
+            case 0:
+                fn_1_9F70(object, 0);
+                if (fn_1_2804()) {
+                    var_r31->unk_38 = 0;
+                    var_r31->unk_34++;
                 }
-            }
-            if (fn_1_9A90(object)) {
-                var_r31->unk_34++;
-            }
-            break;
-        case 4:
-            fn_1_9F70(object, 0);
-            break;
+                break;
+            case 1:
+                if (var_r31->unk_38 >= sp8.unk_00[var_r31->unk_04]) {
+                    var_r31->unk_28 = 1;
+                    var_r31->unk_34++;
+                }
+                break;
+            case 2:
+                fn_1_96F4(object);
+                if (var_r31->unk_38 >= (2.8f + 0.00040000002f * frandmod(1000)) * 60.0f) {
+                    var_r31->unk_2C = 1;
+                    var_r31->unk_38 = 0;
+                    var_r31->unk_34++;
+                }
+                break;
+            case 3:
+                if (var_r31->unk_24) {
+                    if (var_r31->unk_38 >= 27.0f) {
+                        var_r31->unk_30 = 1;
+                    }
+                }
+                if (fn_1_9A90(object)) {
+                    var_r31->unk_34++;
+                }
+                break;
+            case 4:
+                fn_1_9F70(object, 0);
+                break;
         }
     }
     fn_1_8A10(object);
@@ -241,35 +273,37 @@ void fn_1_8678(omObjData *object)
         }
     }
     switch (var_r31->unk_34) {
-    case 0:
-        if (fn_1_9F70(object, 0)) {
-            var_r31->unk_28 = 1;
-        }
-        fn_1_96F4(object);
-        if (var_r31->unk_18) {
-            var_r31->unk_34++;
-        }
-        break;
-    case 1:
-        if (!var_r31->unk_1C && !var_r31->unk_20) {
-            if (var_r31->unk_10 & 0x100) {
-                if (fn_1_281C() == 2) {
-                    var_r31->unk_2C = 1;
-                }
-            } else if (var_r31->unk_10 & 0x200 && fn_1_281C() == 2) {
-                if (fabs(fn_1_30F0(var_r31->unk_3C, var_r31->unk_40)) < 45.0) {
-                    var_r31->unk_30 = 1;
-                }
+        case 0:
+            if (fn_1_9F70(object, 0)) {
+                var_r31->unk_28 = 1;
             }
-            var_r29 = 1;
-        } else if (var_r31->unk_24 && var_r31->unk_10 & 0x200) {
-            var_r31->unk_30 = 1;
-        }
-        if (fn_1_9A90(object) || fn_1_9C84(object)) {
-            var_r31->unk_36 = 0;
-            var_r31->unk_34--;
-        }
-        break;
+            fn_1_96F4(object);
+            if (var_r31->unk_18) {
+                var_r31->unk_34++;
+            }
+            break;
+        case 1:
+            if (!var_r31->unk_1C && !var_r31->unk_20) {
+                if (var_r31->unk_10 & 0x100) {
+                    if (fn_1_281C() == 2) {
+                        var_r31->unk_2C = 1;
+                    }
+                }
+                else if (var_r31->unk_10 & 0x200 && fn_1_281C() == 2) {
+                    if (fabs(fn_1_30F0(var_r31->unk_3C, var_r31->unk_40)) < 45.0) {
+                        var_r31->unk_30 = 1;
+                    }
+                }
+                var_r29 = 1;
+            }
+            else if (var_r31->unk_24 && var_r31->unk_10 & 0x200) {
+                var_r31->unk_30 = 1;
+            }
+            if (fn_1_9A90(object) || fn_1_9C84(object)) {
+                var_r31->unk_36 = 0;
+                var_r31->unk_34--;
+            }
+            break;
     }
     fn_1_8A10(object);
     if (fn_1_281C() == 3 && var_r29) {
@@ -286,32 +320,33 @@ void fn_1_88D8(omObjData *object)
     var_r31 = object->data;
     fn_1_8A10(object);
     switch (var_r31->unk_34) {
-    case 0:
-        var_r31->unk_34++;
-        return;
-    case 1:
-        if (fn_1_2834() == 1) {
-            Hu3DModelHookReset(object->model[0]);
-            Hu3DModelAttrSet(object->model[1], 1);
-            if ((1 << object->work[0]) & fn_1_2864()) {
-                fn_1_9E0C(object, 8);
-            } else {
-                fn_1_9E0C(object, 9);
+        case 0:
+            var_r31->unk_34++;
+            return;
+        case 1:
+            if (fn_1_2834() == 1) {
+                Hu3DModelHookReset(object->model[0]);
+                Hu3DModelAttrSet(object->model[1], 1);
+                if ((1 << object->work[0]) & fn_1_2864()) {
+                    fn_1_9E0C(object, 8);
+                }
+                else {
+                    fn_1_9E0C(object, 9);
+                }
+                var_r31->unk_40 = 0.0f;
+                var_r31->unk_44 = 0.0f;
+                var_r31->unk_48 = 0.005f;
+                var_r31->unk_34++;
             }
-            var_r31->unk_40 = 0.0f;
-            var_r31->unk_44 = 0.0f;
-            var_r31->unk_48 = 0.005f;
-            var_r31->unk_34++;
-        }
-        break;
-    case 2:
-        if (fn_1_9EFC(object)) {
-            fn_1_28AC(object->work[0]);
-            var_r31->unk_34++;
-        }
-        break;
-    default:
-        break;
+            break;
+        case 2:
+            if (fn_1_9EFC(object)) {
+                fn_1_28AC(object->work[0]);
+                var_r31->unk_34++;
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -351,72 +386,75 @@ void fn_1_8ABC(omObjData *object)
     var_r31 = object->data;
     var_r31->unk_10 = 0;
     switch (var_r31->unk_50) {
-    case 0:
-        if (!var_r31->unk_18) {
-            return;
-        }
-        if (frandmod(1000) <= 1000.0f * var_r31->unk_4C) {
-            var_f28 = 42.0f;
-            if (frandmod(1000) <= 1000.0f * var_r31->unk_4C) {
-                var_f29 = 280.0f;
-                var_r31->unk_54 = 31.8f + frandmod(6);
-            } else {
-                var_f29 = 419.99997f;
-                var_r31->unk_54 = 9.0f + frandmod(15);
+        case 0:
+            if (!var_r31->unk_18) {
+                return;
             }
-            var_f27 = var_f28 + var_r31->unk_54;
-            var_r29 = -1;
-            var_f31 = 10000.0f;
-            for (var_r30 = 0; var_r30 < 18; var_r30++) {
-                fn_1_7888(var_r30, (s32)var_f27, &sp28);
-                if (fabs(sp28.y - var_f29) > 10.0) {
-                    continue;
+            if (frandmod(1000) <= 1000.0f * var_r31->unk_4C) {
+                var_f28 = 42.0f;
+                if (frandmod(1000) <= 1000.0f * var_r31->unk_4C) {
+                    var_f29 = 280.0f;
+                    var_r31->unk_54 = 31.8f + frandmod(6);
                 }
-                fn_1_7840(var_r30, &sp34);
-                if (fabs(sp34.x) < 1.9166667461395264) {
-                    continue;
+                else {
+                    var_f29 = 419.99997f;
+                    var_r31->unk_54 = 9.0f + frandmod(15);
                 }
-                var_f30 = sp28.x - var_r31->unk_88.x;
-                if (sp34.x >= 0.0f) {
-                    if (var_f30 < 0.0f) {
+                var_f27 = var_f28 + var_r31->unk_54;
+                var_r29 = -1;
+                var_f31 = 10000.0f;
+                for (var_r30 = 0; var_r30 < 18; var_r30++) {
+                    fn_1_7888(var_r30, (s32)var_f27, &sp28);
+                    if (fabs(sp28.y - var_f29) > 10.0) {
+                        continue;
+                    }
+                    fn_1_7840(var_r30, &sp34);
+                    if (fabs(sp34.x) < 1.9166667461395264) {
+                        continue;
+                    }
+                    var_f30 = sp28.x - var_r31->unk_88.x;
+                    if (sp34.x >= 0.0f) {
+                        if (var_f30 < 0.0f) {
+                            if (fabs(var_f30) < var_f31) {
+                                var_r29 = var_r30;
+                                var_f31 = fabs(var_f30);
+                            }
+                        }
+                    }
+                    else if (var_f30 > 0.0f) {
                         if (fabs(var_f30) < var_f31) {
                             var_r29 = var_r30;
                             var_f31 = fabs(var_f30);
                         }
                     }
-                } else if (var_f30 > 0.0f) {
-                    if (fabs(var_f30) < var_f31) {
-                        var_r29 = var_r30;
-                        var_f31 = fabs(var_f30);
-                    }
                 }
+                if (var_r29 < 0) {
+                    return;
+                }
+                fn_1_7840(var_r29, &sp34);
+                var_f31 /= fabs(sp34.x);
+                var_r31->unk_52 = var_f27 + var_f31 - var_f28 - var_r31->unk_54;
             }
-            if (var_r29 < 0) {
-                return;
+            else {
+                var_r31->unk_52 = 24.0f + frandmod(36);
+                var_r31->unk_54 = 12.0f + frandmod(18);
             }
-            fn_1_7840(var_r29, &sp34);
-            var_f31 /= fabs(sp34.x);
-            var_r31->unk_52 = var_f27 + var_f31 - var_f28 - var_r31->unk_54;
-        } else {
-            var_r31->unk_52 = 24.0f + frandmod(36);
-            var_r31->unk_54 = 12.0f + frandmod(18);
-        }
-        var_r31->unk_50++;
-        return;
-    case 1:
-        if (!var_r31->unk_52) {
-            var_r31->unk_10 |= 256;
             var_r31->unk_50++;
-        }
-        var_r31->unk_52--;
-        return;
-    case 2:
-        if (!var_r31->unk_54) {
-            var_r31->unk_10 |= 512;
-            var_r31->unk_50 = 0;
-        }
-        var_r31->unk_54--;
-        break;
+            return;
+        case 1:
+            if (!var_r31->unk_52) {
+                var_r31->unk_10 |= 256;
+                var_r31->unk_50++;
+            }
+            var_r31->unk_52--;
+            return;
+        case 2:
+            if (!var_r31->unk_54) {
+                var_r31->unk_10 |= 512;
+                var_r31->unk_50 = 0;
+            }
+            var_r31->unk_54--;
+            break;
     }
 }
 
@@ -480,7 +518,8 @@ void fn_1_9040(omObjData *object)
         sp2C.x = (0.016666668f * (sp20.x - var_r31->unk_70.x)) / var_f31;
         sp2C.y = 0.016666668f * var_f27;
         sp2C.z = (0.016666668f * (sp20.z - var_r31->unk_70.z)) / var_f31;
-    } else {
+    }
+    else {
         if (var_r31->unk_20 != 0) {
             var_f30 = -450.0f + (0.05f * frandmod(1000));
             var_f29 = -100.0f;
@@ -488,7 +527,8 @@ void fn_1_9040(omObjData *object)
             sp20.x = var_r31->unk_70.x + (0.05f * (frandmod(2000) - 1000));
             sp20.y = var_f29;
             sp20.z = var_f30;
-        } else {
+        }
+        else {
             var_f30 = -700.0f;
             var_f29 = 420.0f;
             if (var_r31->unk_68 < -600.0f) {
@@ -516,7 +556,8 @@ void fn_1_9040(omObjData *object)
             }
             if (var_r28 >= 0 && var_f30 <= var_f25) {
                 fn_1_7888(var_r28, var_r27, &sp20);
-            } else {
+            }
+            else {
                 sp20.x = var_r31->unk_88.x;
                 sp20.y = var_f29;
                 sp20.z = -700.0f;
@@ -585,7 +626,8 @@ void fn_1_96F4(omObjData *object)
         }
         if (var_r31->unk_18 != 0) {
             Hu3DModelPosSet(object->model[1], 0.0f, 0.0f, 0.0f);
-        } else {
+        }
+        else {
             Hu3DModelPosSet(object->model[1], var_r31->unk_70.x, var_r31->unk_70.y, var_r31->unk_70.z);
         }
         if (var_r31->unk_36 >= (60.0f * (var_f31 - 0.17f))) {
@@ -621,7 +663,8 @@ s32 fn_1_9A90(omObjData *object)
             var_r31->unk_1C = 0;
             if (var_r31->unk_18) {
                 fn_1_9E0C(object, 7);
-            } else {
+            }
+            else {
                 var_r29 = 1;
                 fn_1_9E0C(object, 6);
             }
@@ -636,7 +679,8 @@ s32 fn_1_9A90(omObjData *object)
                 var_r31->unk_30 = 0;
             }
         }
-    } else if (var_r31->unk_18) {
+    }
+    else if (var_r31->unk_18) {
         fn_1_9F70(object, 2);
     }
     return var_r29;
@@ -658,12 +702,14 @@ s32 fn_1_9C84(omObjData *object)
         var_r31->unk_30 = 0;
         var_r31->unk_20 = 1;
         var_r31->unk_36 = 0;
-    } else if (var_r31->unk_20) {
+    }
+    else if (var_r31->unk_20) {
         if (var_r31->unk_18) {
             if (var_r31->unk_36 >= 18.0f) {
                 fn_1_9040(object);
             }
-        } else if (var_r31->unk_36 >= 30.0f && fn_1_9EFC(object)) {
+        }
+        else if (var_r31->unk_36 >= 30.0f && fn_1_9EFC(object)) {
             var_r31->unk_30 = 0;
             var_r31->unk_2C = 0;
             var_r31->unk_20 = 0;
@@ -786,49 +832,50 @@ void fn_1_A3C0(omObjData *object)
 
     for (var_r29 = 0; var_r29 < 4; var_r29++, var_r31++) {
         switch (var_r31->unk_14) {
-        case 0:
-            if (fn_1_281C() == 2) {
-                var_r31->unk_14 = 1;
-            }
-            break;
-        case 1:
-            var_r31->unk_18 = 0;
-            var_r31->unk_20 = var_r31->unk_08 % 10;
-            var_r31->unk_1C = (var_r31->unk_08 / 10) % 10;
-            espDispOn(var_r31->unk_3C[0]);
-            espDispOn(var_r31->unk_3C[1]);
-            espDispOn(var_r31->unk_40);
-            espDispOn(var_r31->unk_42);
-            espDispOn(var_r31->unk_44);
-            espBankSet(var_r31->unk_3C[0], var_r31->unk_1C);
-            espBankSet(var_r31->unk_3C[1], var_r31->unk_20);
-            espBankSet(var_r31->unk_40, var_r31->unk_24);
-            if (var_r31->unk_00) {
-                var_r31->unk_2C[0] = var_r31->unk_2C[1] = 0.5f;
-                var_r31->unk_14++;
-            } else {
-                var_r31->unk_00 = 1;
-                var_r31->unk_2C[0] = var_r31->unk_2C[1] = 1.0f;
-                var_r31->unk_14 += 3;
+            case 0:
+                if (fn_1_281C() == 2) {
+                    var_r31->unk_14 = 1;
+                }
                 break;
-            }
-        case 2:
-            var_f31 = var_r31->unk_2C[0];
-            var_f31 += 0.10000001f;
-            if (var_f31 >= 1.5f) {
-                var_r31->unk_14++;
-            }
-            var_r31->unk_2C[0] = var_r31->unk_2C[1] = var_f31;
-            break;
-        case 3:
-            var_f31 = var_r31->unk_2C[0];
-            var_f31 -= 0.10000001f;
-            if (var_f31 <= 1.0f) {
-                var_f31 = 1.0f;
-                var_r31->unk_14 = var_r31->unk_14 + 1;
-            }
-            var_r31->unk_2C[0] = var_r31->unk_2C[1] = var_f31;
-            break;
+            case 1:
+                var_r31->unk_18 = 0;
+                var_r31->unk_20 = var_r31->unk_08 % 10;
+                var_r31->unk_1C = (var_r31->unk_08 / 10) % 10;
+                espDispOn(var_r31->unk_3C[0]);
+                espDispOn(var_r31->unk_3C[1]);
+                espDispOn(var_r31->unk_40);
+                espDispOn(var_r31->unk_42);
+                espDispOn(var_r31->unk_44);
+                espBankSet(var_r31->unk_3C[0], var_r31->unk_1C);
+                espBankSet(var_r31->unk_3C[1], var_r31->unk_20);
+                espBankSet(var_r31->unk_40, var_r31->unk_24);
+                if (var_r31->unk_00) {
+                    var_r31->unk_2C[0] = var_r31->unk_2C[1] = 0.5f;
+                    var_r31->unk_14++;
+                }
+                else {
+                    var_r31->unk_00 = 1;
+                    var_r31->unk_2C[0] = var_r31->unk_2C[1] = 1.0f;
+                    var_r31->unk_14 += 3;
+                    break;
+                }
+            case 2:
+                var_f31 = var_r31->unk_2C[0];
+                var_f31 += 0.10000001f;
+                if (var_f31 >= 1.5f) {
+                    var_r31->unk_14++;
+                }
+                var_r31->unk_2C[0] = var_r31->unk_2C[1] = var_f31;
+                break;
+            case 3:
+                var_f31 = var_r31->unk_2C[0];
+                var_f31 -= 0.10000001f;
+                if (var_f31 <= 1.0f) {
+                    var_f31 = 1.0f;
+                    var_r31->unk_14 = var_r31->unk_14 + 1;
+                }
+                var_r31->unk_2C[0] = var_r31->unk_2C[1] = var_f31;
+                break;
         }
         var_r31->unk_18++;
 
@@ -845,7 +892,8 @@ void fn_1_A3C0(omObjData *object)
             var_r30->unk_00++;
             if (var_r30->unk_00 < 12.0f) {
                 var_r30->unk_04 += 0.058333337f;
-            } else {
+            }
+            else {
                 var_r30->unk_04 += 0.025000002f;
                 var_r30->unk_0C -= 0.050000004f;
             }

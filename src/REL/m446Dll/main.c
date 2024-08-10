@@ -96,7 +96,7 @@ unkStruct* m446FlowCreate(void) {
     s32 var_r30;
     unkStruct* temp_r3;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x9C, 0x10000000);
+    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x9C, MEMORY_DEFAULT_NUM);
     if (temp_r3 == 0) {
         OSReport("[!] m446FlowCreate() ERROR...\n");
         return NULL;
@@ -635,9 +635,9 @@ s32 fn_1_1970(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
 static const s32 lbl_1_rodata_18[12] = {
-    0x180003, 0x180004, 0x180005, 0x180006,
-    0x180007, 0x180008, 0x180009, 0x18000A,
-    0x18000B, 0x18000C, 0x18000D, 0
+    MAKE_MESSID(0x18, 0x03), MAKE_MESSID(0x18, 0x04), MAKE_MESSID(0x18, 0x05), MAKE_MESSID(0x18, 0x06),
+    MAKE_MESSID(0x18, 0x07), MAKE_MESSID(0x18, 0x08), MAKE_MESSID(0x18, 0x09), MAKE_MESSID(0x18, 0x0A),
+    MAKE_MESSID(0x18, 0x0B), MAKE_MESSID(0x18, 0x0C), MAKE_MESSID(0x18, 0x0D), 0
 };
 
 void fn_1_19D4(void) {
@@ -652,11 +652,11 @@ void fn_1_19D4(void) {
     HuWinBGTPLvlSet(temp_r3, 0.8f);
     HuWinMesSpeedSet(temp_r3, 1);
     HuWinMesColSet(temp_r3, 0);
-    HuWinMesSet(temp_r3, 0x180001);
+    HuWinMesSet(temp_r3, MAKE_MESSID(0x18, 0x01));
     fn_1_18EC(temp_r3, 0x3C);
     if (lbl_1_bss_10 < 2) {
         HuWinMesColSet(temp_r3, 0);
-        HuWinMesSet(temp_r3, 0x180002);
+        HuWinMesSet(temp_r3, MAKE_MESSID(0x18, 0x02));
         var_r30 = fn_1_1970(temp_r3, 0, 1, 0x3C);
     } else {
         var_r30 = 1;
@@ -670,7 +670,7 @@ void fn_1_19D4(void) {
         }
     } else {
         HuWinMesColSet(temp_r3, 0);
-        HuWinMesSet(temp_r3, 0x18000D);
+        HuWinMesSet(temp_r3, MAKE_MESSID(0x18, 0x0D));
         fn_1_18EC(temp_r3, 0x3C);
     }
     HuWinExAnimOut(temp_r3);
