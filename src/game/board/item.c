@@ -326,7 +326,7 @@ static void ItemRotProc(void) {
             if (temp_r31->unk0C >= 360.0f) {
                 temp_r31->unk0C -= 360.0f;
             }
-            PSVECAdd(&sp8, &temp_r31->unk10, &sp8);
+            VECAdd(&sp8, &temp_r31->unk10, &sp8);
             if (sp8.x < 0.0f) {
                 sp8.x += 360.0f;
             }
@@ -384,7 +384,7 @@ static inline void BoardUiInlineFunc01(Vec *arg0) {
         }
         sp3C.y -= var_f31;
         BoardModelPosSetV(suitMdl, &sp3C);
-        PSVECAdd(&sp48, arg0, &sp48);
+        VECAdd(&sp48, arg0, &sp48);
         for (i = 0; i < 3; i++) {
             if (((float*) &sp48)[i] < 0.0f) {
                 ((float*) &sp48)[i] += 360.0f;
@@ -896,8 +896,8 @@ static void ExecItemPipe(void) {
         temp_f28 = 19.0f;
         var_f29 = 0.0f;
         for (var_r31 = 0; var_r31 < 2; var_r31++) {
-            PSVECSubtract(&spE4[var_r31], &spCC[var_r31], &spB4[var_r31]);
-            PSVECScale(&spB4[var_r31], &spB4[var_r31], 0.03f);
+            VECSubtract(&spE4[var_r31], &spCC[var_r31], &spB4[var_r31]);
+            VECScale(&spB4[var_r31], &spB4[var_r31], 0.03f);
             BoardModelVisibilitySet(BoardPlayerModelGet(sp2C[var_r31]), 1);
         }
         HuAudPlayerVoicePlay(currItemRestore, 0x122);
@@ -1035,7 +1035,7 @@ static void ExecItemSwap(void) {
     }
     BoardModelRotGet(suitMdl, &spA8);
     while (1) {
-        PSVECAdd(&spA8, &sp9C, &spA8);
+        VECAdd(&spA8, &sp9C, &spA8);
         for (var_r26 = 0; var_r26 < 3; var_r26++) {
             if (((float*) &spA8)[var_r26] < 0.0f) {
                 ((float*) &spA8)[var_r26] += 360.0f;
@@ -1092,8 +1092,8 @@ static void ExecItemSwap(void) {
     BoardItemGetDestPos(currItemRestore, &sp15C[0]);
     BoardItemGetDestPos(temp_r24, &sp138[0]);
     BoardModelPosGet(suitMdl, &sp90);
-    PSVECSubtract(&sp90, &Hu3DCamera->pos, &sp90);
-    temp_f29 = PSVECMag(&sp90);
+    VECSubtract(&sp90, &Hu3DCamera->pos, &sp90);
+    temp_f29 = VECMag(&sp90);
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         sp15C[var_r31].z = temp_f29;
         sp138[var_r31].z = temp_f29;
@@ -1105,15 +1105,15 @@ static void ExecItemSwap(void) {
         sp1A4[var_r31] = sp180[var_r31] = spB4;
         Hu3D2Dto3D(&sp15C[var_r31], 1, &sp84);
         Hu3D2Dto3D(&sp138[var_r31], 1, &sp78);
-        PSVECSubtract(&sp84, &sp1A4[var_r31], &sp6C);
-        PSVECScale(&sp6C, &sp6C, 0.033333335f);
-        PSVECSubtract(&sp78, &sp180[var_r31], &sp60);
-        PSVECScale(&sp60, &sp60, 0.033333335f);
+        VECSubtract(&sp84, &sp1A4[var_r31], &sp6C);
+        VECScale(&sp6C, &sp6C, 0.033333335f);
+        VECSubtract(&sp78, &sp180[var_r31], &sp60);
+        VECScale(&sp60, &sp60, 0.033333335f);
         for (var_r30 = 0; var_r30 < 30; var_r30++) {
             BoardModelPosSetV(sp54[var_r31], &sp1A4[var_r31]);
             BoardModelPosSetV(sp54[var_r31 + 3], &sp180[var_r31]);
-            PSVECAdd(&sp1A4[var_r31], &sp6C, &sp1A4[var_r31]);
-            PSVECAdd(&sp180[var_r31], &sp60, &sp180[var_r31]);
+            VECAdd(&sp1A4[var_r31], &sp6C, &sp1A4[var_r31]);
+            VECAdd(&sp180[var_r31], &sp60, &sp180[var_r31]);
             HuPrcVSleep();
         }
         sp1A4[var_r31] = sp84;
@@ -1154,15 +1154,15 @@ static void ExecItemSwap(void) {
     }
     for (var_r31 = (var_r28 / 2) - 1; var_r31 >= 0; var_r31--) {
         HuAudFXPlay(0x32C);
-        PSVECSubtract(&spB4, &sp1A4[var_r31], &sp6C);
-        PSVECScale(&sp6C, &sp6C, 0.033333335f);
-        PSVECSubtract(&spB4, &sp180[var_r31], &sp60);
-        PSVECScale(&sp60, &sp60, 0.033333335f);
+        VECSubtract(&spB4, &sp1A4[var_r31], &sp6C);
+        VECScale(&sp6C, &sp6C, 0.033333335f);
+        VECSubtract(&spB4, &sp180[var_r31], &sp60);
+        VECScale(&sp60, &sp60, 0.033333335f);
         for (var_r30 = 0; var_r30 < 30; var_r30++) {
             BoardModelPosSetV(sp54[var_r31], &sp1A4[var_r31]);
             BoardModelPosSetV(sp54[var_r31 + 3], &sp180[var_r31]);
-            PSVECAdd(&sp1A4[var_r31], &sp6C, &sp1A4[var_r31]);
-            PSVECAdd(&sp180[var_r31], &sp60, &sp180[var_r31]);
+            VECAdd(&sp1A4[var_r31], &sp6C, &sp1A4[var_r31]);
+            VECAdd(&sp180[var_r31], &sp60, &sp180[var_r31]);
             HuPrcVSleep();
         }
         BoardModelVisibilitySet(sp54[var_r31], 0);
@@ -1174,7 +1174,7 @@ static void ExecItemSwap(void) {
     while (1) {
         BoardModelRotSetV(suitMdl, &spA8);
         BoardModelAlphaSet(suitMdl, var_f30);
-        PSVECAdd(&spA8, &sp9C, &spA8);
+        VECAdd(&spA8, &sp9C, &spA8);
         sp9C.y *= 1.02f;
         if (sp9C.y >= 35.0f) {
             if (var_r21 == 0) {
@@ -1397,8 +1397,8 @@ static void ExecItemWhistle(void) {
     BoardPlayerPosGet(currItemRestore, &sp84);
     sp84.y += 200.0f;
     sp84.z += 100.0f;
-    PSVECSubtract(&sp84, &sp90, &sp78);
-    PSVECScale(&sp78, &sp78, 0.03448276f);
+    VECSubtract(&sp84, &sp90, &sp78);
+    VECScale(&sp78, &sp78, 0.03448276f);
     BoardPlayerMotionStart(currItemRestore, temp_r23, 0);
     BoardPlayerMotionTimeSet(currItemRestore, 1.0f);
     for (var_r31 = 0; var_r31 < 29; var_r31++) {
@@ -1978,8 +1978,8 @@ static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx mat
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
         if (var_r31->unk2C != 0.0f) {
             if (var_r31->unk00_s16 == 0) {
-                PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-                PSVECScale(&var_r31->unk08, &var_r31->unk08, 0.95f);
+                VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+                VECScale(&var_r31->unk08, &var_r31->unk08, 0.95f);
                 var_r31->unk2C += 8.0f;
                 var_r31->unk14.y -= 2.8333333f;
                 if (var_r31->unk14.y <= 120.0f) {
@@ -1992,7 +1992,7 @@ static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx mat
                 }
                 var_r31->unk40.a = var_r31->unk14.y;
             } else {
-                PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+                VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
                 var_r31->unk2C += 0.2f;
                 var_r31->unk14.y -= 1.8214285f;
                 if (var_r31->unk14.y <= 55.0f) {
@@ -2034,8 +2034,8 @@ static void GenieParticleUpdate(ModelData *model, ParticleData *particle, Mtx ma
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
         if (var_r31->unk2C != 0.0f) {
             var_r28++;
-            PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-            PSVECScale(&var_r31->unk08, &var_r31->unk08, 0.995f);
+            VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+            VECScale(&var_r31->unk08, &var_r31->unk08, 0.995f);
             var_r31->unk2C -= 0.2f;
             var_r31->unk14.y -= 1.59375f;
             if (var_r31->unk14.y <= 20.0f) {
@@ -2216,8 +2216,8 @@ static void GenieSceneExec(void) {
     BoardPlayerCameraSet(currItemRestore, 2);
     BoardPlayerPosSetV(currItemRestore, &sp38);
     BoardModelVisibilitySet(BoardPlayerModelGet(currItemRestore), 1);
-    PSVECSubtract(&shadowUp, &shadowPos, &sp2C);
-    PSVECNormalize(&sp2C, &sp2C);
+    VECSubtract(&shadowUp, &shadowPos, &sp2C);
+    VECNormalize(&sp2C, &sp2C);
     temp_r20 = Hu3DGLightCreateV(&shadowPos, &sp2C, &sp1C);
     Hu3DShadowCreate(60.0f, 10.0f, 20000.0f);
     Hu3DModelShadowSet(BoardModelIDGet(BoardPlayerModelGet(currItemRestore)));

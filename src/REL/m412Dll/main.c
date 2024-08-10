@@ -185,7 +185,7 @@ void fn_1_7BC(void) {
     
     for (var_r31 = 0; var_r31 < 0x168; var_r31++) {
         HuAudFXEmiterUpDate(temp_r30, &sp14);
-        PSVECAdd(&sp8, &sp14, &sp14);
+        VECAdd(&sp8, &sp14, &sp14);
         HuPrcVSleep();
     }
     HuPrcKill(HuPrcCurrentGet());
@@ -1902,7 +1902,7 @@ void fn_1_A01C(ModelData* model, ParticleData* particle, f32 (*matrix)[4]) {
     var_r31 = particle->unk_48;
     for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
         if (var_r31->unk14.x != 0.0f) {
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+            VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk08.x *= 0.95f;
             var_r31->unk08.z *= 0.95f;
             var_r31->unk08.y -= 0.2f;
@@ -1979,7 +1979,7 @@ void fn_1_A618(ModelData* model, ParticleData* particle, f32 (*matrix)[4]) {
     var_r31 = particle->unk_48;
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
         if (0.0f != var_r31->unk14.x) {
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+            VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk08.x *= 0.95f;
             var_r31->unk08.z *= 0.95f;
             var_r31->unk08.y -= 0.2f;

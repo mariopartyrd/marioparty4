@@ -811,7 +811,7 @@ static void CreatePadConfig(omObjData *arg0, ConfigWork *arg1) {
     sp14.x = 96.0f;
     sp14.y = 176.0f;
     sp14.z = padBoxPos.z;
-    PSVECSubtract(&sp14, &padBoxPos, &sp8);
+    VECSubtract(&sp14, &padBoxPos, &sp8);
     arg0->scale.x = sp8.x / 20.0f;
     arg0->scale.y = sp8.y / 20.0f;
     arg1->unk01 = 1;
@@ -996,7 +996,7 @@ static void ScrollOutPadConfig(omObjData *arg0, ConfigWork *arg1) {
     sp14.x = boxPosTbl[0][0];
     sp14.y = boxPosTbl[0][1];
     sp14.z = 700.0f;
-    PSVECSubtract(&sp14, &padBoxPos, &sp8);
+    VECSubtract(&sp14, &padBoxPos, &sp8);
     arg0->scale.x = sp8.x / 20.0f;
     arg0->scale.y = sp8.y / 20.0f;
     arg1->unk01 = 1;

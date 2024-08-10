@@ -934,8 +934,8 @@ static void fn_1_2598(omObjData *arg0) {
         case 4:
             temp_r24 = fn_1_82D0(&sp38[0]);
             for (i = 0; i < temp_r24; i++) {
-                PSVECSubtract(&sp38[i], &temp_r31->unk2C, &sp8);
-                sp20[i] = PSVECMag(&sp8);
+                VECSubtract(&sp38[i], &temp_r31->unk2C, &sp8);
+                sp20[i] = VECMag(&sp8);
             }
             for (i = 0; i < temp_r24 - 1; i++) {
                 for (var_r29 = i + 1; var_r29 < temp_r24; var_r29++) {
@@ -1127,14 +1127,14 @@ static s32 fn_1_3894(void) {
             for (j = i + 1; j < 4; j++) {
                 temp_r27 = lbl_1_bss_34[j]->data;
                 if (temp_r27->unk07 != 0) {
-                    PSVECSubtract(&temp_r28->unk2C, &temp_r27->unk2C, &sp8);
-                    var_f31 = PSVECMag(&sp8);
+                    VECSubtract(&temp_r28->unk2C, &temp_r27->unk2C, &sp8);
+                    var_f31 = VECMag(&sp8);
                     if (var_f31 < 80.0f) {
-                        PSVECNormalize(&sp8, &sp8);
+                        VECNormalize(&sp8, &sp8);
                         var_f30 = 0.0001f + 0.5f * (80.0f - var_f31);
-                        PSVECScale(&sp8, &sp8, var_f30);
-                        PSVECAdd(&sp14[i], &sp8, &sp14[i]);
-                        PSVECSubtract(&sp14[j], &sp8, &sp14[j]);
+                        VECScale(&sp8, &sp8, var_f30);
+                        VECAdd(&sp14[i], &sp8, &sp14[i]);
+                        VECSubtract(&sp14[j], &sp8, &sp14[j]);
                         temp_r28->unk0E++;
                         temp_r27->unk0E++;
                         var_r26++;
@@ -1147,7 +1147,7 @@ static s32 fn_1_3894(void) {
         temp_r25 = lbl_1_bss_34[i];
         temp_r31 = temp_r25->data;
         if (temp_r31->unk07 != 0) {
-            PSVECAdd(&temp_r31->unk2C, &sp14[i], &temp_r31->unk2C);
+            VECAdd(&temp_r31->unk2C, &sp14[i], &temp_r31->unk2C);
             if (temp_r31->unk2C.x > 660.0f) {
                 temp_r31->unk2C.x = 660.0f;
             }
@@ -1204,8 +1204,8 @@ static void fn_1_3D6C(Vec *arg0, Vec *arg1) {
     temp_r30 = fn_1_8470(sp18);
     var_f31 = 2000.0f;
     for (i = 0; i < temp_r30; i++) {
-        PSVECSubtract(&sp18[i], arg0, &spC);
-        var_f30 = PSVECMag(&spC);
+        VECSubtract(&sp18[i], arg0, &spC);
+        var_f30 = VECMag(&spC);
         if (var_f30 >= var_f31) {
             continue;
         }
@@ -1489,8 +1489,8 @@ static void fn_1_5400(float *arg0, Vec *arg1, float arg2[][3], s32 arg3) {
 
     arg0[0] = 0.0f;
     for (i = 1; i < arg3; i++) {
-        PSVECSubtract(&arg1[i], &arg1[i - 1], &sp8);
-        arg0[i] = arg0[i - 1] + PSVECMag(&sp8);
+        VECSubtract(&arg1[i], &arg1[i - 1], &sp8);
+        arg0[i] = arg0[i - 1] + VECMag(&sp8);
     }
     for (j = 0; j < 3; j++) {
         for (i = 0; i < arg3; i++) {

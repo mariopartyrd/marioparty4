@@ -746,7 +746,7 @@ s32 BoardComJunctionInputGet(s32 item, Vec *input, s32 num_dirs, float *dirs) {
         } else {
             BoardSpacePosGet(0, space, &pos_junction);
             BoardSpacePosGet(0, space_next, &pos_next);
-            PSVECSubtract(&pos_next, &pos_junction, &dir);
+            VECSubtract(&pos_next, &pos_junction, &dir);
             angle = BoardDAngleCalc(90.0 - atan2d(dir.z, dir.x));
             if (angle < 0.0f) {
                 angle += 360.0f;

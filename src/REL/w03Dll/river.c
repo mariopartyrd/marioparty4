@@ -166,7 +166,7 @@ s32 fn_1_6898(s32 arg0) {
     
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_388), "hei01", &sp20);
     BoardPlayerPosGet(arg0, &sp14);
-    PSVECSubtract(&sp20, &sp14, &sp8);
+    VECSubtract(&sp20, &sp14, &sp8);
     temp_f31 = 180.0 * (atan2(sp8.x, sp8.z) / M_PI);
     BoardCameraTargetModelSet(lbl_1_data_388);
     BoardPlayerMotBlendSet(arg0, temp_f31, 15);
@@ -272,7 +272,7 @@ void fn_1_6B98(s32 arg0) {
     sp18.x = sp30.x + (400.0 * sin(M_PI / 2));
     sp18.z = sp30.z + (400.0 * cos(M_PI / 2));
     sp18.y = sp24.y;
-    PSVECSubtract(&sp18, &sp24, &spC);
+    VECSubtract(&sp18, &sp24, &spC);
     spC.x = spC.x / 120.0f;
     spC.y /= 120.0f;
     spC.z = spC.z / 120.0f;
@@ -282,7 +282,7 @@ void fn_1_6B98(s32 arg0) {
 
     var_r31 = 0;
     for (i = 0; i < 0x78U; i++) {
-        PSVECAdd(&spC, &sp24, &sp24);
+        VECAdd(&spC, &sp24, &sp24);
         temp_f1 = BoardModelMotionTimeGet(lbl_1_data_38A);
 
         if ((temp_f1 >= 5.0f) && (temp_f1 < 15.0f) && ((s16) var_r31 == 0)) {
@@ -332,7 +332,7 @@ void fn_1_6F9C(s32 arg0) {
 
     BoardPlayerPosGet(arg0, &sp14);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_388), "chara01", &sp20);
-    PSVECSubtract(&sp20, &sp14, &sp8);
+    VECSubtract(&sp20, &sp14, &sp8);
 
     sp8.x /= 60.0f;
     sp8.z /= 60.0f;
@@ -352,7 +352,7 @@ void fn_1_6F9C(s32 arg0) {
     BoardPlayerMotionShiftSet(arg0, 4, 0.0f, 10.0f, 0);
 
     for (var_r30 = 0, var_f31 = 0.0f; var_f31 < 60.0f; var_f31 += 1.0f) {
-        PSVECAdd(&sp14, &sp8, &sp14);
+        VECAdd(&sp14, &sp8, &sp14);
         sp14.y += 10.0f + var_f30 + (var_f29 * (-0.08166667f * var_f31 * var_f31));
         if (sp14.y <= sp20.y) {
             sp14.y = sp20.y;
@@ -394,7 +394,7 @@ void fn_1_735C(s32 arg0) {
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_388), "chara01", &sp14);
     BoardPlayerPosSetV(arg0, &sp14);
     BoardModelHookObjReset(lbl_1_data_388, "chara01");
-    PSVECSubtract(&sp20, &sp14, &sp8);
+    VECSubtract(&sp20, &sp14, &sp8);
     
     sp8.x = sp8.x / 60.0f;
     sp8.z = sp8.z / 60.0f;
@@ -409,7 +409,7 @@ void fn_1_735C(s32 arg0) {
     }
     
     for (var_r30 = 0, var_f31 = 0.0f; var_f31 < 60.0f; var_f31 += 1.0f) {
-        PSVECAdd(&sp14, &sp8, &sp14);
+        VECAdd(&sp14, &sp8, &sp14);
         sp14.y += 20.0f + (var_f30 * (-0.08166667f * var_f31 * var_f31));
         if (sp14.y <= sp20.y && var_f31 > 48.0f) {
             sp14.y = sp20.y;

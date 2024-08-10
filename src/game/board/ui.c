@@ -650,15 +650,15 @@ static void MoveBoardStatus(s32 arg0) {
     float var_f30;
     Vec spC;
 
-    PSVECSubtract(&temp_r30->unk10, &temp_r30->unk04, &spC);
+    VECSubtract(&temp_r30->unk10, &temp_r30->unk04, &spC);
     if (ABS(spC.x) < 1.0f && ABS(spC.y) < 1.0f) {
         spC = temp_r30->unk10;
         temp_r30->unk00_bit2 = 0;
     } else {
         OSs8tof32(&temp_r30->unk01, &var_f30);
         var_f30 /= 32;
-        PSVECScale(&spC, &spC, var_f30);
-        PSVECAdd(&temp_r30->unk04, &spC, &spC);
+        VECScale(&spC, &spC, var_f30);
+        VECAdd(&temp_r30->unk04, &spC, &spC);
         temp_r30->unk00_bit2 = 1;
     }
     temp_r30->unk04.x = spC.x;
@@ -833,15 +833,15 @@ static void MovePicker(UnkUiWork01 *arg0, omObjData *arg1) {
     sp14.x = arg1->trans.x;
     sp14.y = arg1->trans.y;
     sp14.z = arg1->trans.z;
-    PSVECSubtract(&sp8, &sp14, &sp8);
-    if (PSVECMag(&sp8) < 1.0f) {
+    VECSubtract(&sp8, &sp14, &sp8);
+    if (VECMag(&sp8) < 1.0f) {
         arg1->trans.x = arg1->rot.x;
         arg1->trans.y = arg1->rot.y;
         arg1->trans.z = arg1->rot.z;
         arg0->unk00_bit6 = 0;
     } else {
-        PSVECScale(&sp8, &sp8, temp_f31);
-        PSVECAdd(&sp14, &sp8, &sp8);
+        VECScale(&sp8, &sp8, temp_f31);
+        VECAdd(&sp14, &sp8, &sp8);
         arg1->trans.x = sp8.x;
         arg1->trans.y = sp8.y;
         arg1->trans.z = sp8.z;
@@ -1444,7 +1444,7 @@ static void MakeItemPickSpace(UnkUiWork03 *arg0) {
     }
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 6; j++) {
-            PSVECSubtract(&(temp_r28 + 4)[i][j], &temp_r28[i][j], &sp8);
+            VECSubtract(&(temp_r28 + 4)[i][j], &temp_r28[i][j], &sp8);
             if (ABS(sp8.x) < 1.0f && ABS(sp8.y) < 1.0f) {
                 sp8 = (temp_r28 + 4)[i][j];
                 if (arg0->unk00_bit1 && arg0->unk03 == 0) {
@@ -1452,8 +1452,8 @@ static void MakeItemPickSpace(UnkUiWork03 *arg0) {
                 }
             } else {
                 var_f29 = 0.3f;
-                PSVECScale(&sp8, &sp8, var_f29);
-                PSVECAdd(&temp_r28[i][j], &sp8, &sp8);
+                VECScale(&sp8, &sp8, var_f29);
+                VECAdd(&temp_r28[i][j], &sp8, &sp8);
             }
             temp_r28[i][j].x = sp8.x;
             temp_r28[i][j].y = sp8.y;
@@ -1513,7 +1513,7 @@ void BoardItemGetDestPos(s32 arg0, Vec *arg1) {
     spC.y = statusPosTbl[arg0][1];
     spC.z = 0.0f;
     for (i = 0; i < 3; i++) {
-        PSVECAdd((Vec*) &statusItemPosTbl[i + 2], &spC, &arg1[i]);
+        VECAdd((Vec*) &statusItemPosTbl[i + 2], &spC, &arg1[i]);
     }
 }
 
@@ -1536,7 +1536,7 @@ static void ItemGetPos(s32 arg0, Vec *arg1) {
     }
     spC.z = 0.0f;
     for (i = 0; i < 3; i++) {
-        PSVECAdd((Vec*) statusItemPosTbl[i + 2], &spC, &arg1[i]);
+        VECAdd((Vec*) statusItemPosTbl[i + 2], &spC, &arg1[i]);
     }
 }
 
@@ -1565,7 +1565,7 @@ void BoardItemStatusKill(s32 arg0) {
         }
         sp8.z = 0.0f;
         for (i = 0; i < 3; i++) {
-            PSVECAdd((Vec*) statusItemPosTbl[i + 2], &sp8, &sp68[i]);
+            VECAdd((Vec*) statusItemPosTbl[i + 2], &sp8, &sp68[i]);
             if (itemMdlId[arg0][i] != -1) {
                 BoardModelRotGet(itemMdlId[arg0][i], &sp44[i]);
                 BoardModelScaleGet(itemMdlId[arg0][i], &sp20[i]);
@@ -1731,13 +1731,13 @@ static void UpdateItemPickup(omObjData *arg0) {
                 Hu3D3Dto2D(&sp2C, 1, &sp2C);
                 sp20.x = arg0->trans.x;
                 sp20.y = arg0->trans.y;
-                PSVECSubtract(&sp2C, &sp20, &sp14);
+                VECSubtract(&sp2C, &sp20, &sp14);
                 if (ABS(sp14.x) < 1.0f && ABS(sp14.y) < 1.0f) {
                     HuSprAttrSet(temp_r31->unk04, 0, 4);
                     temp_r31->unk00_bit3 = 6;
                 } else {
-                    PSVECScale(&sp14, &sp14, 0.1f);
-                    PSVECAdd(&sp20, &sp14, &sp50);
+                    VECScale(&sp14, &sp14, 0.1f);
+                    VECAdd(&sp20, &sp14, &sp50);
                     sp50.z = 3200.0f;
                     arg0->trans.x = sp50.x;
                     arg0->trans.y = sp50.y;
@@ -1917,12 +1917,12 @@ static void UpdateItemWindow(omObjData *arg0) {
         var_r27 = 0;
         for (i = 0; i < temp_r29->unk02; i++) {
             if ((temp_r31->unk06[i] != -1) && (temp_r31->unk12[i] != -1)) {
-                PSVECSubtract(&temp_r31->unk74[i], &temp_r31->unk2C[i], &sp20);
-                if (PSVECMag(&sp20) <= 1.0f) {
+                VECSubtract(&temp_r31->unk74[i], &temp_r31->unk2C[i], &sp20);
+                if (VECMag(&sp20) <= 1.0f) {
                     temp_r31->unk2C[i] = temp_r31->unk74[i];
                 } else {
-                    PSVECScale(&sp20, &sp20, 0.3f);
-                    PSVECAdd(&sp20, &temp_r31->unk2C[i], &temp_r31->unk2C[i]);
+                    VECScale(&sp20, &sp20, 0.3f);
+                    VECAdd(&sp20, &temp_r31->unk2C[i], &temp_r31->unk2C[i]);
                     var_r27 = 1;
                 }
                 HuWinPosSet(temp_r31->unk12[i], temp_r31->unk2C[i].x, temp_r31->unk2C[i].y);

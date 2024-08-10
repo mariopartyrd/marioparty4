@@ -237,7 +237,7 @@ void ObjectSetup(void)
     lbl_1_bss_14.x = lbl_1_data_60.x - lbl_1_data_54.x;
     lbl_1_bss_14.y = lbl_1_data_60.y - lbl_1_data_54.y;
     lbl_1_bss_14.z = lbl_1_data_60.z - lbl_1_data_54.z;
-    PSVECNormalize(&lbl_1_bss_14, &lbl_1_bss_14);
+    VECNormalize(&lbl_1_bss_14, &lbl_1_bss_14);
     var_r29 = Hu3DGLightCreateV(&lbl_1_data_54, &lbl_1_bss_14, &lbl_1_data_6C);
     Hu3DGLightInfinitytSet(var_r29);
     Hu3DGLightStaticSet(var_r29, 1);
@@ -597,8 +597,8 @@ void fn_1_1230(omObjData *object)
 
     var_r30 = object->data;
     var_f28 = 1.0f;
-    PSVECSubtract(&var_r30->unk_70, &object->trans, &sp18);
-    var_f30 = PSVECMag(&sp18);
+    VECSubtract(&var_r30->unk_70, &object->trans, &sp18);
+    var_f30 = VECMag(&sp18);
     if (var_f30 < 300.0f) {
         if (var_f30 < 140.0f) {
             if ((frand() & 1) == 0) {
@@ -610,7 +610,7 @@ void fn_1_1230(omObjData *object)
         }
         else {
             var_f29 = 32.0f;
-            PSVECNormalize(&sp18, &sp18);
+            VECNormalize(&sp18, &sp18);
             var_r30->unk_06 = sp18.x * var_f29;
             var_r30->unk_07 = -sp18.z * var_f29;
         }
@@ -627,8 +627,8 @@ void fn_1_1230(omObjData *object)
             var_r27 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
             for (var_r28 = 0; var_r28 < 1; var_r28++) {
                 if (var_r27[var_r28] != object) {
-                    PSVECSubtract(&lbl_1_bss_C084[var_r31 + 1][var_r29 + 1].unk_00, &var_r27[var_r28]->trans, &sp18);
-                    var_f30 = PSVECMag(&sp18);
+                    VECSubtract(&lbl_1_bss_C084[var_r31 + 1][var_r29 + 1].unk_00, &var_r27[var_r28]->trans, &sp18);
+                    var_f30 = VECMag(&sp18);
                     if (var_f30 < 800.0f) {
                         var_f31 = cosd(((90.0f * var_f30) / 800.0f));
                         var_f31 *= var_f31;
@@ -642,8 +642,8 @@ void fn_1_1230(omObjData *object)
             for (var_r28 = 0; var_r28 < 15; var_r28++) {
                 var_r19 = var_r27[var_r28]->data;
                 if (var_r19->unk_00_field0) {
-                    PSVECSubtract(&lbl_1_bss_C084[var_r31 + 1][var_r29 + 1].unk_00, &var_r27[var_r28]->trans, &sp18);
-                    var_f30 = PSVECMag(&sp18);
+                    VECSubtract(&lbl_1_bss_C084[var_r31 + 1][var_r29 + 1].unk_00, &var_r27[var_r28]->trans, &sp18);
+                    var_f30 = VECMag(&sp18);
                     if (var_f30 < 800.0f) {
                         var_f31 = cosd(((90.0f * var_f30) / 800.0f));
                         var_f31 *= var_f31;
@@ -735,8 +735,8 @@ void fn_1_1230(omObjData *object)
             }
         }
     } while (var_r22 != 0);
-    PSVECSubtract(&lbl_1_bss_C084[sp24[3] + 1][sp24[2] + 1].unk_00, &object->trans, &sp18);
-    var_f30 = PSVECMag(&sp18);
+    VECSubtract(&lbl_1_bss_C084[sp24[3] + 1][sp24[2] + 1].unk_00, &object->trans, &sp18);
+    var_f30 = VECMag(&sp18);
     var_f29 = 64.0f + (0.2f * (32.0f * var_r30->unk_12));
     var_r30->unk_18 = fn_1_85E8(var_r30->unk_18, atan2d(sp18.x, sp18.z), 0.1f);
     var_r30->unk_06 = var_f29 * sind(var_r30->unk_18);
@@ -1061,11 +1061,11 @@ s16 fn_1_31FC(omObjData *object)
     sp20.z = object->trans.z + (140.0f * sp8.z);
     if (sp20.x >= -800.0f && sp20.x < 800.0f && sp20.z >= -800.0f && sp20.z < 800.0f) {
         for (var_r27 = lbl_1_bss_C9F8, var_r28 = 0; var_r28 < lbl_1_bss_119F8; var_r28++, var_r27++) {
-            PSVECSubtract(&var_r27->unk_00, &sp20, &sp14);
-            var_f31 = PSVECMag(&sp14);
-            PSVECSubtract(&var_r27->unk_00, &object->trans, &sp14);
-            PSVECNormalize(&sp14, &sp14);
-            var_f29 = PSVECDotProduct(&sp14, &sp8);
+            VECSubtract(&var_r27->unk_00, &sp20, &sp14);
+            var_f31 = VECMag(&sp14);
+            VECSubtract(&var_r27->unk_00, &object->trans, &sp14);
+            VECNormalize(&sp14, &sp14);
+            var_f29 = VECDotProduct(&sp14, &sp8);
             if (var_f31 < var_f30 && var_f29 >= 0.0f) {
                 var_f30 = var_f31;
                 var_r29 = var_r28;
@@ -1076,8 +1076,8 @@ s16 fn_1_31FC(omObjData *object)
         var_r26 = 1;
     }
     if (var_r29 >= 0 && lbl_1_bss_C9F8[var_r29].unk_0C < 3) {
-        PSVECSubtract(&object->trans, &lbl_1_bss_C9F8[var_r29].unk_00, &sp14);
-        PSVECNormalize(&sp14, &sp14);
+        VECSubtract(&object->trans, &lbl_1_bss_C9F8[var_r29].unk_00, &sp14);
+        VECNormalize(&sp14, &sp14);
         var_r31->unk_4C = (140.0f * sp14.x) + lbl_1_bss_C9F8[var_r29].unk_00.x;
         var_r31->unk_50 = 0.0f;
         var_r31->unk_54 = (140.0f * sp14.z) + lbl_1_bss_C9F8[var_r29].unk_00.z;
@@ -1132,12 +1132,12 @@ void fn_1_3658(omObjData *object)
     for (var_r30 = 0; var_r30 < 15; var_r30++) {
         var_r28 = var_r29[var_r30]->data;
         if (var_r28->unk_00_field0) {
-            PSVECSubtract(&object->trans, &var_r29[var_r30]->trans, &spC);
-            var_f31 = PSVECMag(&spC);
+            VECSubtract(&object->trans, &var_r29[var_r30]->trans, &spC);
+            var_f31 = VECMag(&spC);
             if (var_f31 < 70.0f) {
                 var_f30 = 70.0f - var_f31;
                 if (var_f31 != 0.0f) {
-                    PSVECNormalize(&spC, &spC);
+                    VECNormalize(&spC, &spC);
                 }
                 else {
                     spC.x = 0.0f;
@@ -1169,12 +1169,12 @@ void fn_1_37B8(omObjData *object)
         var_r29 = var_r28[var_r30];
         if (object != var_r29) {
             sp8 = var_r29->data;
-            PSVECSubtract(&object->trans, &var_r29->trans, &sp10);
-            var_f31 = PSVECMag(&sp10);
+            VECSubtract(&object->trans, &var_r29->trans, &sp10);
+            var_f31 = VECMag(&sp10);
             if (var_f31 < 100.0f) {
                 var_f30 = 100.0f - var_f31;
                 if (var_f31 != 0.0f) {
-                    PSVECNormalize(&sp10, &sp10);
+                    VECNormalize(&sp10, &sp10);
                 }
                 else {
                     sp10.x = 0.0f;
@@ -1210,12 +1210,12 @@ void fn_1_3908(omObjData *object)
         var_r31 = var_r28[var_r29];
         if (object != var_r31) {
             var_r26 = var_r31->data;
-            PSVECSubtract(&object->trans, &var_r31->trans, &sp8);
-            var_f27 = PSVECMag(&sp8);
+            VECSubtract(&object->trans, &var_r31->trans, &sp8);
+            var_f27 = VECMag(&sp8);
             if (var_f27 < 100.0f) {
                 var_f31 = 100.0f - var_f27;
-                var_f29 = PSVECMag(&var_r27->unk_24);
-                var_f26 = PSVECMag(&var_r26->unk_24);
+                var_f29 = VECMag(&var_r27->unk_24);
+                var_f26 = VECMag(&var_r26->unk_24);
                 if (var_f29 + var_f26 == 0.0f) {
                     var_f30 = var_f28 = 0.5f;
                 }
@@ -1223,7 +1223,7 @@ void fn_1_3908(omObjData *object)
                     var_f30 = var_f29 / (var_f29 + var_f26);
                     var_f28 = 1.0f - var_f30;
                 }
-                PSVECNormalize(&sp8, &sp8);
+                VECNormalize(&sp8, &sp8);
                 object->trans.x += var_f28 * (sp8.x * var_f31);
                 object->trans.z += var_f28 * (sp8.z * var_f31);
                 var_r31->trans.x += var_f30 * (-sp8.x * var_f31);
@@ -1247,17 +1247,17 @@ s32 fn_1_3AE4(omObjData *object, Vec *arg1)
     s32 var_r28;
 
     sp8 = object->data;
-    PSVECSubtract(arg1, &object->trans, &spC);
-    PSVECNormalize(&spC, &spC);
+    VECSubtract(arg1, &object->trans, &spC);
+    VECNormalize(&spC, &spC);
     var_r30 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
     var_r28 = 1;
     for (var_r31 = 0; var_r31 < 1; var_r31++) {
         if (object != var_r30[var_r31]) {
-            PSVECSubtract(&var_r30[var_r31]->trans, arg1, &sp18);
-            var_f30 = PSVECMag(&sp18);
-            PSVECSubtract(&var_r30[var_r31]->trans, &object->trans, &sp18);
-            PSVECNormalize(&sp18, &sp18);
-            var_f31 = PSVECDotProduct(&sp18, &spC);
+            VECSubtract(&var_r30[var_r31]->trans, arg1, &sp18);
+            var_f30 = VECMag(&sp18);
+            VECSubtract(&var_r30[var_r31]->trans, &object->trans, &sp18);
+            VECNormalize(&sp18, &sp18);
+            var_f31 = VECDotProduct(&sp18, &spC);
             if (var_f31 >= 0.0f && var_f30 < 80.0f) {
                 var_r28 = 0;
             }
@@ -1639,8 +1639,8 @@ s32 fn_1_59C0(Vec *arg0)
     s32 var_r31;
 
     for (var_r31 = 0; var_r31 < lbl_1_bss_119F8; var_r31++) {
-        PSVECSubtract(&lbl_1_bss_C9F8[var_r31].unk_00, arg0, &spC);
-        if (PSVECMag(&spC) < 50.0f) {
+        VECSubtract(&lbl_1_bss_C9F8[var_r31].unk_00, arg0, &spC);
+        if (VECMag(&spC) < 50.0f) {
             return var_r31;
         }
     }
@@ -1804,7 +1804,7 @@ void fn_1_64B4(ModelData *model, ParticleData *particle, Mtx matrix)
             var_r31->unk08.x = 20.0f;
             var_r31->unk08.y = 100.0f;
             var_r31->unk08.z = 0.0f;
-            PSVECNormalize(&var_r31->unk08, &var_r31->unk08);
+            VECNormalize(&var_r31->unk08, &var_r31->unk08);
             var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = var_r31->unk40.a = 0xFF;
         }
         var_r31 = var_r29->unk_48;
@@ -1840,7 +1840,7 @@ void fn_1_64B4(ModelData *model, ParticleData *particle, Mtx matrix)
     sp20.x = sp38.x + (2500.0f * sp8.x);
     sp20.y = sp38.y + (2500.0f * sp8.y);
     sp20.z = sp38.z + (2500.0f * sp8.z);
-    var_f31 = -PSVECDotProduct(&var_r31->unk08, &sp14);
+    var_f31 = -VECDotProduct(&var_r31->unk08, &sp14);
     if (var_f31 >= 0.0f) {
         espTPLvlSet(particle->unk_02, 0.5f * var_f31 * var_f31);
     }
@@ -2016,8 +2016,8 @@ s32 fn_1_75DC(Vec *arg0)
     for (var_r30 = 0; var_r30 < 15; var_r30++) {
         var_r28 = var_r29[var_r30]->data;
         if (var_r28->unk_00_field0 == 0) {
-            PSVECSubtract(&var_r29[var_r30]->trans, arg0, &spC);
-            var_f31 = PSVECMag(&spC);
+            VECSubtract(&var_r29[var_r30]->trans, arg0, &spC);
+            var_f31 = VECMag(&spC);
             if (var_f31 < 100.0f) {
                 return var_r30;
             }

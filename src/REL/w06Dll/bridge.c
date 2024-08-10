@@ -226,7 +226,7 @@ static s32 fn_1_8490(s32 arg0, s8 arg1) {
 
     BoardPlayerPosGet(arg0, &sp18);
     BoardSpacePosGet(0, lbl_1_bss_E2, &sp24);
-    PSVECSubtract(&sp24, &sp18, &spC);
+    VECSubtract(&sp24, &sp18, &spC);
     temp_f30 = atan2d(spC.x, spC.z);
     BoardPlayerMotBlendSet(arg0, temp_f30, 0xF);
     while (!BoardPlayerMotBlendCheck(arg0)) {

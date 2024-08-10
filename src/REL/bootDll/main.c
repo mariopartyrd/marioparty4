@@ -432,15 +432,15 @@ void fn_1_152C(void) {
                       + (dir.x * (offset.x * offset.z * (1.0 - cosd(z_rot)) - offset.y * sind(z_rot))
                       + dir.y * (offset.y * offset.z * (1.0 - cosd(z_rot)) + offset.x * sind(z_rot)));
 
-        PSVECCrossProduct(&dir, &offset, &offset);
-        PSVECNormalize(&offset, &offset);
+        VECCrossProduct(&dir, &offset, &offset);
+        VECNormalize(&offset, &offset);
         stick_pos = (HuPadSubStkX[0] & 0xF8);
         if (stick_pos != 0) {
             lbl_1_bss_24[0].x += 0.05f * (offset.x * stick_pos);
             lbl_1_bss_24[0].y += 0.05f * (offset.y * stick_pos);
             lbl_1_bss_24[0].z += 0.05f * (offset.z * stick_pos);
         }
-        PSVECNormalize(&y_offset, &offset);
+        VECNormalize(&y_offset, &offset);
         stick_pos = -(HuPadSubStkY[0] & 0xF8);
         if (stick_pos != 0) {
             lbl_1_bss_24[0].x += 0.05f * (offset.x * stick_pos);

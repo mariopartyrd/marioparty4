@@ -211,10 +211,10 @@ static void fn_1_20EC(void) {
     while (fn_1_1130(lbl_1_bss_FA, atan2d(sp14.x - sp20.x, sp14.z - sp20.z), 2.0f) == 0) {
         HuPrcVSleep();
     }
-    PSVECSubtract(&sp14, &sp20, &sp8);
-    PSVECScale(&sp8, &sp8, 0.022222223f);
+    VECSubtract(&sp14, &sp20, &sp8);
+    VECScale(&sp8, &sp8, 0.022222223f);
     for (i = 0; i < 45; i++) {
-        PSVECAdd(&sp20, &sp8, &sp20);
+        VECAdd(&sp20, &sp8, &sp20);
         BoardModelPosSetV(lbl_1_bss_FA, &sp20);
         HuPrcVSleep();
     }
@@ -293,12 +293,12 @@ static void fn_1_28BC(void) {
             BoardModelPosGet(lbl_1_bss_FA, &sp14);
             temp_f30 = atan2d(sp20.x - sp14.x, sp20.z - sp14.z);
             BoardModelRotYSet(lbl_1_bss_FA, temp_f30);
-            PSVECSubtract(&sp20, &sp14, &sp8);
-            PSVECScale(&sp8, &sp8, 0.022222223f);
+            VECSubtract(&sp20, &sp14, &sp8);
+            VECScale(&sp8, &sp8, 0.022222223f);
             *var_r26 = temp_f30 - 180.0f;
             fn_1_2EE8(3);
             for (i = 0; i < 45; i++) {
-                PSVECAdd(&sp8, &sp14, &sp14);
+                VECAdd(&sp8, &sp14, &sp14);
                 BoardModelPosSetV(lbl_1_bss_FA, &sp14);
                 fn_1_5018();
                 if (var_r29 != 0) {
@@ -473,10 +473,10 @@ static void fn_1_30A4(void) {
                 while (fn_1_1130(temp_r31->unk04, temp_f31, 5.0f) == 0) {
                     HuPrcVSleep();
                 }
-                PSVECSubtract(&temp_r31->unk20, &sp20, &sp14);
-                PSVECScale(&sp14, &sp14, 0.016666668f);
+                VECSubtract(&temp_r31->unk20, &sp20, &sp14);
+                VECScale(&sp14, &sp14, 0.016666668f);
                 for (i = 0; i < 60; i++) {
-                    PSVECAdd(&sp14, &sp20, &sp20);
+                    VECAdd(&sp14, &sp20, &sp20);
                     BoardModelPosSetV(temp_r31->unk04, &sp20);
                     HuPrcVSleep();
                 }
@@ -533,8 +533,8 @@ static void fn_1_30A4(void) {
                 if (temp_r31->unk08 != -1) {
                     BoardPlayerRotYSet(temp_r31->unk08, temp_f31);
                 }
-                PSVECSubtract(&temp_r31->unk20, &sp20, &sp14);
-                PSVECScale(&sp14, &sp14, 0.022222223f);
+                VECSubtract(&temp_r31->unk20, &sp20, &sp14);
+                VECScale(&sp14, &sp14, 0.022222223f);
                 if (temp_r31->unk0C > 0) {
                     var_r28 = BoardSpaceGet(0, temp_r31->unk0C);
                     if (var_r28->flag & 1) {
@@ -547,7 +547,7 @@ static void fn_1_30A4(void) {
                     }
                 }
                 for (i = 0; i < 45; i++) {
-                    PSVECAdd(&sp20, &sp14, &sp20);
+                    VECAdd(&sp20, &sp14, &sp20);
                     BoardModelPosSetV(temp_r31->unk04, &sp20);
                     if (temp_r31->unk08 != -1) {
                         BoardPlayerPosSetV(temp_r31->unk08, &sp20);
@@ -610,14 +610,14 @@ static void fn_1_38D8(void) {
     BoardPlayerPosGet(temp_r31, &sp24);
     var_f28 = atan2d(sp18.x - sp24.x, sp18.z - sp24.z);
     BoardPlayerRotYSet(temp_r31, var_f28);
-    PSVECSubtract(&sp18, &sp24, &spC);
-    PSVECScale(&spC, &spC, 0.025f);
+    VECSubtract(&sp18, &sp24, &spC);
+    VECScale(&spC, &spC, 0.025f);
     temp_f26 = 12.0f;
     var_f29 = 0.0f;
     while (TRUE) {
         spC.y = temp_f26 - var_f29 * var_f29 * 0.25f * 0.075f;
         var_f29 += 1.0f;
-        PSVECAdd(&spC, &sp24, &sp24);
+        VECAdd(&spC, &sp24, &sp24);
         if (sp24.y <= sp18.y) {
             sp24.y = sp18.y;
             break;
@@ -696,16 +696,16 @@ static s32 fn_1_3C9C(void) {
         for (i = 0; i < var_r29; i++) {
             BoardSpacePosGet(0, sp20[i], &sp44);
             sp50.y = sp44.y;
-            PSVECSubtract(&sp44, &sp50, &sp38);
+            VECSubtract(&sp44, &sp50, &sp38);
             var_f31 = atan2d(sp38.x, sp38.z);
             if (var_f31 < 0.0f) {
                 var_f31 += 360.0f;
             }
             sp28[i] = var_f31;
-            PSVECNormalize(&sp38, &sp44);
-            PSVECScale(&sp44, &sp44, 110.0f);
+            VECNormalize(&sp38, &sp44);
+            VECScale(&sp44, &sp44, 110.0f);
             sp44.y += 200.0f;
-            PSVECAdd(&sp50, &sp44, &sp44);
+            VECAdd(&sp50, &sp44, &sp44);
             BoardModelPosSetV(lbl_1_bss_F4[i], &sp44);
             BoardModelRotYSet(lbl_1_bss_F4[i], var_f31);
             BoardModelVisibilitySet(lbl_1_bss_F4[i], 1);

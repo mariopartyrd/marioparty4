@@ -465,8 +465,8 @@ void fn_1_9040(omObjData *object)
             if (sp20.y < 350.0f) {
                 continue;
             }
-            PSVECSubtract(&sp20, &var_r31->unk_58, &sp2C);
-            var_f28 = PSVECMag(&sp2C);
+            VECSubtract(&sp20, &var_r31->unk_58, &sp2C);
+            var_f28 = VECMag(&sp2C);
             if (var_f28 < var_f30) {
                 var_r28 = var_r29;
                 var_f30 = var_f28;
@@ -570,7 +570,7 @@ void fn_1_96F4(omObjData *object)
             var_r31->unk_44 = 0.0f;
             var_r31->unk_48 = 0.04f;
         }
-        PSVECAdd(&var_r31->unk_70, &var_r31->unk_7C, &var_r31->unk_70);
+        VECAdd(&var_r31->unk_70, &var_r31->unk_7C, &var_r31->unk_70);
         var_r31->unk_7C.y = var_r31->unk_7C.y + (0.0002777778f * var_f29);
         if ((var_r31->unk_7C.y < 0.0f) && (var_r31->unk_70.y <= var_f30)) {
             var_r31->unk_18 = 1;

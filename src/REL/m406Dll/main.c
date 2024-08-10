@@ -124,8 +124,8 @@ void ObjectSetup(void)
     sp14.x = Center.x + (CZoom * (sind(CRot.y) * cosd(CRot.x)));
     sp14.y = Center.y + (CZoom * -sind(CRot.x));
     sp14.z = Center.z + (CZoom * (cosd(CRot.y) * cosd(CRot.x)));
-    PSVECSubtract(&Center, &sp14, &sp8);
-    PSVECNormalize(&sp8, &sp8);
+    VECSubtract(&Center, &sp14, &sp8);
+    VECNormalize(&sp8, &sp8);
     HuAudFXListnerSetEX(&sp14, &sp8, 100000.0f, 4166.6665f, 0.0f, 300.0f, 300.0f);
     Hu3DLightAllKill();
     Hu3DLighInit();
@@ -287,8 +287,8 @@ void fn_1_40C(omObjData *object)
                 sp14.x = Center.x + (CZoom * (sind(CRot.y) * cosd(CRot.x)));
                 sp14.y = Center.y + (CZoom * -sind(CRot.x));
                 sp14.z = Center.z + (CZoom * (cosd(CRot.y) * cosd(CRot.x)));
-                PSVECSubtract(&Center, &sp14, &sp8);
-                PSVECNormalize(&sp8, &sp8);
+                VECSubtract(&Center, &sp14, &sp8);
+                VECNormalize(&sp8, &sp8);
                 HuAudFXListnerUpdate(&sp14, &sp8);
                 fn_1_6B5C();
                 fn_1_3064(1);
@@ -462,8 +462,8 @@ void fn_1_15D0(float arg8)
     sp14.x = Center.x + (CZoom * (sind(CRot.y) * cosd(CRot.x)));
     sp14.y = Center.y + (CZoom * -sind(CRot.x));
     sp14.z = Center.z + (CZoom * (cosd(CRot.y) * cosd(CRot.x)));
-    PSVECSubtract(&Center, &sp14, &sp8);
-    PSVECNormalize(&sp8, &sp8);
+    VECSubtract(&Center, &sp14, &sp8);
+    VECNormalize(&sp8, &sp8);
     HuAudFXListnerUpdate(&sp14, &sp8);
 }
 
@@ -482,8 +482,8 @@ void fn_1_183C(float arg8)
     sp14.x = Center.x + (CZoom * (sind(CRot.y) * cosd(CRot.x)));
     sp14.y = Center.y + (CZoom * -sind(CRot.x));
     sp14.z = Center.z + (CZoom * (cosd(CRot.y) * cosd(CRot.x)));
-    PSVECSubtract(&Center, &sp14, &sp8);
-    PSVECNormalize(&sp8, &sp8);
+    VECSubtract(&Center, &sp14, &sp8);
+    VECNormalize(&sp8, &sp8);
     HuAudFXListnerUpdate(&sp14, &sp8);
 }
 

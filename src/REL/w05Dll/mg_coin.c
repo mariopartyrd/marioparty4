@@ -301,11 +301,11 @@ void fn_1_A5B0(omObjData* arg0) {
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_14[1]), "fish", &sp14);
         BoardModelPosGet(lbl_1_bss_FE, &sp8);
         sp14.y = sp8.y;
-        PSVECSubtract(&sp14, &sp8, temp_r31);
-        var_f31 = PSVECMag(temp_r31);
-        PSVECNormalize(temp_r31, temp_r31);
+        VECSubtract(&sp14, &sp8, temp_r31);
+        var_f31 = VECMag(temp_r31);
+        VECNormalize(temp_r31, temp_r31);
         var_f31 /= 38.0f;
-        PSVECScale(temp_r31, temp_r31, var_f31);
+        VECScale(temp_r31, temp_r31, var_f31);
         temp_r31->y = 25.0f;
         temp_r29->trans.x = var_f31;
         BoardPlayerMotionStart(lbl_1_bss_C0, lbl_1_bss_102[2], 0);
@@ -510,10 +510,10 @@ void fn_1_B3C4(omObjData* arg0) {
         sp8.y = 180.0f;
         sp8.z = 0.0f;
         BoardModelRotSetV(lbl_1_bss_FE, &sp8);
-        PSVECAdd(&sp20, &sp2C, &sp20);
+        VECAdd(&sp20, &sp2C, &sp20);
         sp14.y = sp20.y;
-        PSVECSubtract(&sp14, &sp20, &sp14);
-        temp_f29 = PSVECMag(&sp14);
+        VECSubtract(&sp14, &sp20, &sp14);
+        temp_f29 = VECMag(&sp14);
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_14[1]), "fish", &sp14);
         if (temp_f29 <= arg0->trans.x) {
             sp20.x = sp14.x;

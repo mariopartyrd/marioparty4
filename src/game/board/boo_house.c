@@ -187,8 +187,8 @@ static void ExecBooHouse(void) {
     temp_r29 = BoardSpaceLinkFlagSearch(0, var_r30, 0x02000000);
     BoardSpacePosGet(0, var_r30, &sp38);
     BoardSpacePosGet(0, temp_r29, &sp2C);
-    PSVECSubtract(&sp2C, &sp38, &sp20);
-    PSVECNormalize(&sp20, &sp20);
+    VECSubtract(&sp2C, &sp38, &sp20);
+    VECNormalize(&sp20, &sp20);
     temp_f31 = atan2d(-sp20.x, -sp20.z);
     sp14.x = -15.0f;
     sp14.y = temp_f31;
@@ -765,8 +765,8 @@ void BoardBooHouseTutorialExec(void) {
     temp_r28 = BoardSpaceLinkFlagSearch(0, temp_r29, 0x02000000);
     BoardSpacePosGet(0, temp_r29, &sp38);
     BoardSpacePosGet(0, temp_r28, &sp2C);
-    PSVECSubtract(&sp2C, &sp38, &sp20);
-    PSVECNormalize(&sp20, &sp20);
+    VECSubtract(&sp2C, &sp38, &sp20);
+    VECNormalize(&sp20, &sp20);
     temp_f31 = atan2d(-sp20.x, -sp20.z);
     sp14.x = -15.0f;
     sp14.y = temp_f31;

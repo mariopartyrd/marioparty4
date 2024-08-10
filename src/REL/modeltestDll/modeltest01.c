@@ -139,7 +139,7 @@ void fn_1_4DF8(omObjData *object)
 		Center.y += 0.05f * (offset.y * temp_r31);
 		Center.z += 0.05f * (offset.z * temp_r31);
 	}
-	PSVECNormalize(&y_offset, &offset);
+	VECNormalize(&y_offset, &offset);
 	temp_r31 = -(HuPadSubStkY[0] & 0xF8);
 	if (temp_r31 != 0) {
 		Center.x += 0.05f * (offset.x * temp_r31);

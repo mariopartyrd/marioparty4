@@ -120,7 +120,7 @@ void fn_1_4034(s32 arg0) {
     HuPrcSleep(8);
     lbl_1_bss_64 = BoardModelCreate(0x790026, lbl_1_data_244, 0);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_118), lbl_1_data_22C[arg0], &sp40);
-    PSVECAdd(&sp40, &lbl_1_data_2A4[arg0], &sp40);
+    VECAdd(&sp40, &lbl_1_data_2A4[arg0], &sp40);
     BoardModelMotionStart(lbl_1_bss_64, 4, 0);
     sp40.y = -50.0f;
     BoardModelPosSetV(lbl_1_bss_64, &sp40);
@@ -170,9 +170,9 @@ void fn_1_4034(s32 arg0) {
     
     BoardPlayerPosGet(lbl_1_bss_68, &sp28);
     var_f27 = sqrtf(((sp40.x - sp28.x) * (sp40.x - sp28.x)) + ((sp40.z - sp28.z) * (sp40.z - sp28.z)));
-    PSVECSubtract(&sp40, &sp28, &sp1C);
-    PSVECNormalize(&sp1C, &sp1C);
-    PSVECScale(&sp1C, &sp1C, var_f27 / 50.0f);
+    VECSubtract(&sp40, &sp28, &sp1C);
+    VECNormalize(&sp1C, &sp1C);
+    VECScale(&sp1C, &sp1C, var_f27 / 50.0f);
     BoardPlayerMotionStart(lbl_1_bss_68, 4, 0);
     var_f26 = 0.0f;
     temp_f22 = 15.0f;
@@ -180,7 +180,7 @@ void fn_1_4034(s32 arg0) {
 loop_37:
     sp1C.y = temp_f22 - (0.075f * (0.25f * (var_f26 * var_f26)));
     var_f26++;
-    PSVECAdd(&sp28, &sp1C, &sp28);
+    VECAdd(&sp28, &sp1C, &sp28);
     var_f27 = sqrtf(((sp40.x - sp28.x) * (sp40.x - sp28.x)) + ((sp40.z - sp28.z) * (sp40.z - sp28.z)));
     if (var_f27 < 5.0f) {
         sp1C.x = sp1C.z = 0.0f;
@@ -298,9 +298,9 @@ void fn_1_4EB4(s32 arg1, s32 arg2, Vec* arg3) {
     temp_f23 = 10.0f;
     BoardModelPosGet(lbl_1_bss_64, &sp3C);
     arg3->y = sp3C.y;
-    PSVECSubtract(arg3, &sp3C, &sp24);
-    PSVECNormalize(&sp24, &sp24);
-    PSVECScale(&sp24, &sp24, temp_f23);
+    VECSubtract(arg3, &sp3C, &sp24);
+    VECNormalize(&sp24, &sp24);
+    VECScale(&sp24, &sp24, temp_f23);
     temp_r28 = HuAudFXPlay(0x47F);
     BoardModelPosGet(lbl_1_bss_64, &sp18);
     temp_r30 = fn_1_66C0(4, &sp18);
@@ -316,7 +316,7 @@ void fn_1_4EB4(s32 arg1, s32 arg2, Vec* arg3) {
             BoardPlayerPosSetV(lbl_1_bss_68, &sp30);
             break;
         } else {
-            PSVECAdd(&sp3C, &sp24, &sp3C);
+            VECAdd(&sp3C, &sp24, &sp3C);
             BoardModelPosSetV(lbl_1_bss_64, &sp3C);
             sp30 = sp3C;
             sp30.y += 20.0f;
@@ -339,9 +339,9 @@ void fn_1_4EB4(s32 arg1, s32 arg2, Vec* arg3) {
     
     BoardPlayerPosGet(lbl_1_bss_68, &sp30);
     var_f28 = sqrtf(((sp3C.x - sp30.x) * (sp3C.x - sp30.x)) + ((sp3C.z - sp30.z) * (sp3C.z - sp30.z)));
-    PSVECSubtract(&sp3C, &sp30, &sp24);
-    PSVECNormalize(&sp24, &sp24);
-    PSVECScale(&sp24, &sp24, var_f28 / 45.0f);
+    VECSubtract(&sp3C, &sp30, &sp24);
+    VECNormalize(&sp24, &sp24);
+    VECScale(&sp24, &sp24, var_f28 / 45.0f);
     BoardPlayerMotionStart(lbl_1_bss_68, 4, 0);
     
     var_f24 = 0.0f;
@@ -350,7 +350,7 @@ void fn_1_4EB4(s32 arg1, s32 arg2, Vec* arg3) {
     while (1) {
         sp24.y = temp_f19 - (0.075f * (0.25f * (var_f24 * var_f24)));
         var_f24++;
-        PSVECAdd(&sp30, &sp24, &sp30);
+        VECAdd(&sp30, &sp24, &sp30);
         var_f28 = sqrtf(((sp3C.x - sp30.x) * (sp3C.x - sp30.x)) + ((sp3C.z - sp30.z) * (sp3C.z - sp30.z)));
         if (var_f28 < 5.0f) {
             sp24.x = sp24.z = 0.0f;
@@ -424,9 +424,9 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec* arg2) {
     fn_1_62AC(arg0, arg2);
     temp_f22 = 10.0f;
     arg2->y = sp58.y;
-    PSVECSubtract(arg2, &sp58, &sp40);
-    PSVECNormalize(&sp40, &sp40);
-    PSVECScale(&sp40, &sp40, temp_f22);
+    VECSubtract(arg2, &sp58, &sp40);
+    VECNormalize(&sp40, &sp40);
+    VECScale(&sp40, &sp40, temp_f22);
     if (arg0 == 5) {
         var_r29 = 0x96;
     } else {
@@ -456,7 +456,7 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec* arg2) {
             BoardPlayerPosSetV(lbl_1_bss_68, &sp4C);
             break;
         } else {
-            PSVECAdd(&sp58, &sp40, &sp58);
+            VECAdd(&sp58, &sp40, &sp58);
             sp64 = sp58;
             if (var_r29 == 0) {
                 sp58.y += 250.0 * sin((M_PI * var_f28) / 180.0);
@@ -517,16 +517,16 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec* arg2) {
     }
     BoardPlayerPosGet(lbl_1_bss_68, &sp4C);
     var_f27 = sqrtf(((sp58.x - sp4C.x) * (sp58.x - sp4C.x)) + ((sp58.z - sp4C.z) * (sp58.z - sp4C.z)));
-    PSVECSubtract(&sp58, &sp4C, &sp40);
-    PSVECNormalize(&sp40, &sp40);
-    PSVECScale(&sp40, &sp40, var_f27 / 45.0f);
+    VECSubtract(&sp58, &sp4C, &sp40);
+    VECNormalize(&sp40, &sp40);
+    VECScale(&sp40, &sp40, var_f27 / 45.0f);
     BoardPlayerMotionStart(lbl_1_bss_68, 4, 0);
     var_f23 = 0.0f;
     temp_f18 = 15.0f;
     while (1) {
         sp40.y = temp_f18 - (0.075f * (0.25f * (var_f23 * var_f23)));
         var_f23++;
-        PSVECAdd(&sp4C, &sp40, &sp4C);
+        VECAdd(&sp4C, &sp40, &sp4C);
         var_f27 = sqrtf(((sp58.x - sp4C.x) * (sp58.x - sp4C.x)) + ((sp58.z - sp4C.z) * (sp58.z - sp4C.z)));
         if (var_f27 < 5.0f) {
             sp40.x = sp40.z = 0.0f;
@@ -558,19 +558,19 @@ void fn_1_62AC(s32 arg0, Vec* arg1) {
     BoardModelPosGet(lbl_1_bss_64, &sp34);
     arg0 -= 4;
     arg1->y = sp34.y;
-    PSVECSubtract(arg1, &sp34, &sp28);
-    PSVECNormalize(&sp28, &sp28);
+    VECSubtract(arg1, &sp34, &sp28);
+    VECNormalize(&sp28, &sp28);
     var_f31 = 45.0f;
     var_r31 = 0;
     while (var_r31 < 3) {
         sp1C = sp28;
         sp10 = sp28;
-        PSVECScale(&sp1C, &sp1C, sp8[arg0]);
+        VECScale(&sp1C, &sp1C, sp8[arg0]);
         sp1C.y += (250.0 * sin((M_PI * var_f31) / 180.0));
         var_f30 = (250.0 * -cos((M_PI * var_f31) / 180.0));
-        PSVECScale(&sp10, &sp10, var_f30);
-        PSVECAdd(&sp10, &sp1C, &sp1C);
-        PSVECAdd(&sp1C, &sp34, &sp1C);
+        VECScale(&sp10, &sp10, var_f30);
+        VECAdd(&sp10, &sp1C, &sp1C);
+        VECAdd(&sp1C, &sp34, &sp1C);
         BoardModelPosSetV(lbl_1_bss_6C[var_r31], &sp1C);
         BoardModelVisibilitySet(lbl_1_bss_6C[var_r31], 1);
         var_f31 += 45.0f;
@@ -589,8 +589,8 @@ void fn_1_64BC(void) {
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         if (BoardModelVisibilityGet(lbl_1_bss_6C[var_r31]) != 0) {
             BoardModelPosGet(lbl_1_bss_6C[var_r31], &sp14);
-            PSVECSubtract(&sp14, &sp20, &sp8);
-            var_f31 = PSVECMag(&sp8);
+            VECSubtract(&sp14, &sp20, &sp8);
+            var_f31 = VECMag(&sp8);
             if (var_f31 < 60.0f) {
                 CharModelCoinEffectCreate(1, &sp14);
                 BoardModelVisibilitySet(lbl_1_bss_6C[var_r31], 0);

@@ -494,7 +494,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                 sp1C.y = sp28[1][3];
                 sp1C.z = sp28[2][3];
                 if (arg4 != 0) {
-                    PSVECSubtract(&sp1C, arg5, &sp10);
+                    VECSubtract(&sp1C, arg5, &sp10);
                     var_r20 = 0.2 * sqrtf(sp10.x * sp10.x + sp10.y * sp10.y + sp10.z * sp10.z);
                     if (var_r20 > 5) {
                         var_r20 = 5;
@@ -908,7 +908,7 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix) {
                 var_r31->unk08.x *= temp_r30[i].unk18;
                 var_r31->unk08.y *= temp_r30[i].unk1C;
                 var_r31->unk08.z *= temp_r30[i].unk20;
-                PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+                VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
                 var_r31->unk08.y += temp_r30[i].unk24;
                 var_r28 = var_r31->unk40.r + temp_r30[i].unk34 * (temp_r30[i].unk08 - temp_r30[i].unk04);
                 if (var_r28 < 0) {
@@ -1629,8 +1629,8 @@ void fn_8004EC74(s16 character) {
         spC.x = sp24[0][2];
         spC.y = sp24[1][2];
         spC.z = sp24[2][2];
-        PSVECScale(&spC, &spC, 20.0f);
-        PSVECAdd(&sp18, &spC, &sp18);
+        VECScale(&spC, &spC, 20.0f);
+        VECAdd(&sp18, &spC, &sp18);
         fn_8004EDA4(temp_r31->camera, &sp18, &temp_r31->rot);
     }
 }
@@ -1653,15 +1653,15 @@ void fn_8004EDA4(s16 arg0, Vec *arg1, Vec *arg2) {
         sp14.x = sp20.x * sp20.y * (1.0 - cosd(temp_f31)) - sp20.z * sind(temp_f31);
         sp14.y = sp20.y * sp20.y + (1.0f - sp20.y * sp20.y) * cosd(temp_f31);
         sp14.z = sp20.y * sp20.z * (1.0 - cosd(temp_f31)) + sp20.x * sind(temp_f31);
-        PSVECNormalize(&sp14, &sp14);
-        PSVECScale(&sp14, &lbl_80131030.unk0C, 10.0f);
+        VECNormalize(&sp14, &sp14);
+        VECScale(&sp14, &lbl_80131030.unk0C, 10.0f);
         var_r28 = CreateEffect(effectMdl[4], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_80131030);
         if (var_r28 == -1) {
             break;
         }
-        PSVECScale(&sp20, &sp8, -2.0 - 0.1 * frandmod(20));
-        PSVECScale(&sp14, &sp14, 2.0f);
-        PSVECAdd(&sp14, &sp8, &lbl_80131068.unk0C);
+        VECScale(&sp20, &sp8, -2.0 - 0.1 * frandmod(20));
+        VECScale(&sp14, &sp14, 2.0f);
+        VECAdd(&sp14, &sp8, &lbl_80131068.unk0C);
         var_r28 = CreateEffect(effectMdl[6], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_80131068);
         if (var_r28 == -1) {
             break;
@@ -1712,8 +1712,8 @@ void fn_8004F058(s16 character) {
     spC.x = sp24[0][2];
     spC.y = sp24[1][2];
     spC.z = sp24[2][2];
-    PSVECScale(&spC, &spC, 30.0f);
-    PSVECAdd(&sp18, &spC, &sp18);
+    VECScale(&spC, &spC, 30.0f);
+    VECAdd(&sp18, &spC, &sp18);
     fn_8004F13C(temp_r31->camera, &sp18, &temp_r31->rot);
 }
 
@@ -1735,15 +1735,15 @@ void fn_8004F13C(s16 arg0, Vec *arg1, Vec *arg2) {
         sp14.x = sp20.x * sp20.y * (1.0 - cosd(temp_f31)) - sp20.z * sind(temp_f31);
         sp14.y = sp20.y * sp20.y + (1.0f - sp20.y * sp20.y) * cosd(temp_f31);
         sp14.z = sp20.y * sp20.z * (1.0 - cosd(temp_f31)) + sp20.x * sind(temp_f31);
-        PSVECNormalize(&sp14, &sp14);
-        PSVECScale(&sp14, &lbl_801310BC.unk0C, 10.0f);
+        VECNormalize(&sp14, &sp14);
+        VECScale(&sp14, &lbl_801310BC.unk0C, 10.0f);
         var_r28 = CreateEffect(effectMdl[4], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_801310BC);
         if (var_r28 == -1) {
             break;
         }
-        PSVECScale(&sp20, &sp8, -2.0 - 0.1 * frandmod(20));
-        PSVECScale(&sp14, &sp14, 2.0f);
-        PSVECAdd(&sp14, &sp8, &lbl_801310F4.unk0C);
+        VECScale(&sp20, &sp8, -2.0 - 0.1 * frandmod(20));
+        VECScale(&sp14, &sp14, 2.0f);
+        VECAdd(&sp14, &sp8, &lbl_801310F4.unk0C);
         var_r28 = CreateEffect(effectMdl[6], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_801310F4);
         if (var_r28 == -1) {
             break;

@@ -369,7 +369,7 @@ void fn_1_3BE0(s16 arg0) // what happens with the argument?
                 sp1B0[var_r29].unk_0C_unk->unk_40 = sp1B0[var_r29].unk_08;
                 sp1B0[var_r29].unk_08->unk_3C++;
                 sp1B0[var_r29].unk_08->unk_44 = 2;
-                if (PSVECMag(&sp1B0[var_r29].unk_08->unk_1C) > 10.0f) {
+                if (VECMag(&sp1B0[var_r29].unk_08->unk_1C) > 10.0f) {
                     HuAudFXPlay(1377);
                 }
                 break;
@@ -395,11 +395,11 @@ void fn_1_3BE0(s16 arg0) // what happens with the argument?
     }
     for (var_r29 = 0; var_r29 < var_r25; var_r29++) {
         var_r30 = spC0[var_r29];
-        PSVECSubtract(&var_r30->unk_04, &var_r30->unk_10, &spB4);
+        VECSubtract(&var_r30->unk_04, &var_r30->unk_10, &spB4);
         var_r28 = lbl_1_bss_54->data;
 
         for (var_r26 = 0; var_r26 < 18; var_r26++, var_r28++) {
-            PSVECSubtract(&var_r28->unk_04, &var_r28->unk_10, &spA8);
+            VECSubtract(&var_r28->unk_04, &var_r28->unk_10, &spA8);
             if (fn_1_598C(&var_r30->unk_10, &spB4, var_r30->unk_28, &var_r28->unk_10, &spA8, var_r28->unk_28, var_r28->unk_2C)
                 && !var_r30->unk_00_field1 && var_r28->unk_38 == NULL) {
                 var_r30->unk_00_field1 = 1;
@@ -490,9 +490,9 @@ float fn_1_4C04(Vec arg0, Vec arg1, float arg8, Vec arg2, Vec arg3, float arg9)
     float var_f22;
     float var_f21;
 
-    PSVECSubtract(&arg2, &arg0, &arg2);
-    PSVECSubtract(&arg3, &arg1, &arg3);
-    if (PSVECMag(&arg2) > arg9 + (arg8 + PSVECMag(&arg3))) {
+    VECSubtract(&arg2, &arg0, &arg2);
+    VECSubtract(&arg3, &arg1, &arg3);
+    if (VECMag(&arg2) > arg9 + (arg8 + VECMag(&arg3))) {
         return -1.0f;
     }
     var_f22 = (arg8 + arg9) * (arg8 + arg9);
@@ -533,10 +533,10 @@ float fn_1_4FEC(Vec arg0, Vec arg1, float arg8, Vec arg2, Vec arg3, float arg9, 
     float var_f21;
     float var_f18;
 
-    PSVECSubtract(&arg0, &arg2, &arg0);
-    PSVECSubtract(&arg1, &arg3, &arg1);
+    VECSubtract(&arg0, &arg2, &arg0);
+    VECSubtract(&arg1, &arg3, &arg1);
 
-    if (PSVECMag(&arg0) > (arg8) + PSVECMag(&arg1) + arg9 + argA) {
+    if (VECMag(&arg0) > (arg8) + VECMag(&arg1) + arg9 + argA) {
         return -1.0f;
     }
     arg8 += arg9;
@@ -580,10 +580,10 @@ float fn_1_55C8(Vec arg0, Vec arg1, float arg8, Vec arg2, float arg9)
     float var_f22;
     float var_f21;
 
-    PSVECSubtract(&arg0, &arg2, &arg0);
+    VECSubtract(&arg0, &arg2, &arg0);
     arg0.y = 0.0f;
     arg1.y = 0.0f;
-    if (PSVECMag(&arg0) > arg8 + PSVECMag(&arg1) + arg9) {
+    if (VECMag(&arg0) > arg8 + VECMag(&arg1) + arg9) {
         return -1.0f;
     }
     var_f22 = (arg8 + arg9) * (arg8 + arg9);
@@ -618,9 +618,9 @@ s32 fn_1_598C(Vec *arg0, Vec *arg1, float arg8, Vec *arg2, Vec *arg3, float arg9
     Vec sp20;
     float var_f31;
 
-    PSVECSubtract(arg0, arg2, &sp38);
-    PSVECSubtract(arg1, arg3, &sp2C);
-    if (PSVECMag(&sp38) > arg8 + PSVECMag(&sp2C) + arg9 + argA) {
+    VECSubtract(arg0, arg2, &sp38);
+    VECSubtract(arg1, arg3, &sp2C);
+    if (VECMag(&sp38) > arg8 + VECMag(&sp2C) + arg9 + argA) {
         return 0;
     }
     if (sp2C.y < 0.0f) {
@@ -629,7 +629,7 @@ s32 fn_1_598C(Vec *arg0, Vec *arg1, float arg8, Vec *arg2, Vec *arg3, float arg9
             sp20.x = var_f31 * sp2C.x + sp38.x;
             sp20.y = var_f31 * sp2C.y + sp38.y;
             sp20.z = var_f31 * sp2C.z + sp38.z;
-            if (PSVECMag(&sp20) < argA) {
+            if (VECMag(&sp20) < argA) {
                 return 1;
             }
         }
@@ -675,17 +675,17 @@ void fn_1_5CA0(Vec arg0, Vec arg1, Vec arg2, Vec *arg3, Vec *arg4)
     float var_f28;
 
     sp34 = arg1;
-    var_f31 = PSVECMag(&sp34);
+    var_f31 = VECMag(&sp34);
     if (var_f31 < 0.001f) {
         arg3->x = arg3->y = arg3->z = 0.0f;
         arg4->x = arg4->y = arg4->z = 0.0f;
         return;
     }
-    PSVECNormalize(&sp34, &sp34);
+    VECNormalize(&sp34, &sp34);
     var_f31 *= 0.9f;
-    PSVECSubtract(&arg2, &arg0, &sp28);
-    PSVECNormalize(&sp28, &sp28);
-    var_f28 = PSVECDotProduct(&sp34, &sp28);
+    VECSubtract(&arg2, &arg0, &sp28);
+    VECNormalize(&sp28, &sp28);
+    var_f28 = VECDotProduct(&sp34, &sp28);
     if (var_f28 < 0.0f) {
         arg3->x = arg1.x;
         arg3->y = arg1.y;
@@ -698,10 +698,10 @@ void fn_1_5CA0(Vec arg0, Vec arg1, Vec arg2, Vec *arg3, Vec *arg4)
     if (var_f30 < 0.001f) {
         arg3->x = arg3->y = arg3->z = 0.0f;
     } else {
-        PSVECCrossProduct(&sp34, &sp28, &sp10);
-        PSVECNormalize(&sp10, &sp10);
-        PSVECCrossProduct(&sp28, &sp10, &sp1C);
-        PSVECNormalize(&sp1C, &sp1C);
+        VECCrossProduct(&sp34, &sp28, &sp10);
+        VECNormalize(&sp10, &sp10);
+        VECCrossProduct(&sp28, &sp10, &sp1C);
+        VECNormalize(&sp1C, &sp1C);
         arg3->x = sp1C.x * var_f30;
         arg3->y = sp1C.y * var_f30;
         arg3->z = sp1C.z * var_f30;
@@ -722,17 +722,17 @@ void fn_1_5EDC(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1)
     arg0->unk_1C.x *= 0.9f;
     arg0->unk_1C.y *= 0.9f;
     arg0->unk_1C.z *= 0.9f;
-    PSVECSubtract(&arg0->unk_04, &arg1->unk_04, &sp14);
-    PSVECNormalize(&sp14, &sp8);
-    var_f30 = (arg0->unk_28 + arg1->unk_28) - PSVECMag(&sp14);
+    VECSubtract(&arg0->unk_04, &arg1->unk_04, &sp14);
+    VECNormalize(&sp14, &sp8);
+    var_f30 = (arg0->unk_28 + arg1->unk_28) - VECMag(&sp14);
     if (var_f30 > 0.001f) {
-        PSVECSubtract(&arg0->unk_1C, &arg1->unk_1C, &sp14);
-        if (PSVECMag(&sp14) < 0.001f) {
+        VECSubtract(&arg0->unk_1C, &arg1->unk_1C, &sp14);
+        if (VECMag(&sp14) < 0.001f) {
             arg0->unk_04.x += sp8.x * var_f30;
             arg0->unk_04.y += sp8.y * var_f30;
             arg0->unk_04.z += sp8.z * var_f30;
         } else {
-            PSVECNormalize(&sp14, &sp14);
+            VECNormalize(&sp14, &sp14);
             arg0->unk_04.x -= sp14.x * var_f30;
             arg0->unk_04.y -= sp14.y * var_f30;
             arg0->unk_04.z -= sp14.z * var_f30;
@@ -744,13 +744,13 @@ void fn_1_5EDC(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1)
         arg0->unk_1C.y += 2.0f * sp8.y * var_f31;
         arg0->unk_1C.z += 2.0f * sp8.z * var_f31;
     }
-    PSVECSubtract(&arg1->unk_1C, &arg0->unk_1C, &sp14);
-    var_f29 = PSVECMag(&sp14);
+    VECSubtract(&arg1->unk_1C, &arg0->unk_1C, &sp14);
+    var_f29 = VECMag(&sp14);
     if (var_f29 < 0.001f) {
         return;
     }
-    PSVECNormalize(&sp14, &sp14);
-    var_f31 = PSVECDotProduct(&sp8, &sp14);
+    VECNormalize(&sp14, &sp14);
+    var_f31 = VECDotProduct(&sp8, &sp14);
     if (var_f31 > 0.0f) {
         arg0->unk_1C.x += sp8.x * var_f31 * var_f29;
         arg0->unk_1C.y += sp8.y * var_f31 * var_f29;
@@ -788,8 +788,8 @@ void fn_1_61DC(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1)
     }
     fn_1_5CA0(arg0->unk_04, arg0->unk_1C, arg1->unk_04, &sp68, &sp74);
     fn_1_5CA0(arg1->unk_04, arg1->unk_1C, arg0->unk_04, &sp50, &sp5C);
-    PSVECAdd(&sp68, &sp5C, &arg0->unk_1C);
-    PSVECAdd(&sp74, &sp50, &arg1->unk_1C);
+    VECAdd(&sp68, &sp5C, &arg0->unk_1C);
+    VECAdd(&sp74, &sp50, &arg1->unk_1C);
 }
 
 void fn_1_6364(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1)
@@ -804,27 +804,27 @@ void fn_1_6364(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1)
     arg0->unk_1C.x *= 0.7f;
     arg0->unk_1C.y *= 0.7f;
     arg0->unk_1C.z *= 0.7f;
-    PSVECSubtract(&arg0->unk_04, &arg1->unk_04, &sp14);
+    VECSubtract(&arg0->unk_04, &arg1->unk_04, &sp14);
 
     sp14.y = 0.0f;
-    PSVECNormalize(&sp14, &sp14);
+    VECNormalize(&sp14, &sp14);
 
     sp20.x = sp14.x * arg1->unk_2C + arg1->unk_04.x;
     sp20.y = arg1->unk_04.y;
     sp20.z = sp14.z * arg1->unk_2C + arg1->unk_04.z;
 
-    PSVECSubtract(&arg0->unk_04, &sp20, &sp14);
-    PSVECNormalize(&sp14, &sp8);
-    var_f31 = (arg0->unk_28 + arg1->unk_28) - PSVECMag(&sp14);
+    VECSubtract(&arg0->unk_04, &sp20, &sp14);
+    VECNormalize(&sp14, &sp8);
+    var_f31 = (arg0->unk_28 + arg1->unk_28) - VECMag(&sp14);
 
     if (var_f31 > 0.001f) {
-        PSVECSubtract(&arg0->unk_1C, &arg1->unk_1C, &sp14);
-        if (PSVECMag(&sp14) < 0.001f) {
+        VECSubtract(&arg0->unk_1C, &arg1->unk_1C, &sp14);
+        if (VECMag(&sp14) < 0.001f) {
             arg0->unk_04.x += sp8.x * var_f31;
             arg0->unk_04.y += sp8.y * var_f31;
             arg0->unk_04.z += sp8.z * var_f31;
         } else {
-            PSVECNormalize(&sp14, &sp14);
+            VECNormalize(&sp14, &sp14);
             arg0->unk_04.x -= sp14.x * var_f31;
             arg0->unk_04.y -= sp14.y * var_f31;
             arg0->unk_04.z -= sp14.z * var_f31;
@@ -836,11 +836,11 @@ void fn_1_6364(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1)
         arg0->unk_1C.y += 2.0f * sp8.y * var_f30;
         arg0->unk_1C.z += 2.0f * sp8.z * var_f30;
     }
-    PSVECSubtract(&arg1->unk_1C, &arg0->unk_1C, &sp14);
-    var_f31 = PSVECMag(&sp14);
+    VECSubtract(&arg1->unk_1C, &arg0->unk_1C, &sp14);
+    var_f31 = VECMag(&sp14);
     if (!(var_f31 < 0.001f)) {
-        PSVECNormalize(&sp14, &sp14);
-        var_f30 = PSVECDotProduct(&sp8, &sp14);
+        VECNormalize(&sp14, &sp14);
+        var_f30 = VECDotProduct(&sp8, &sp14);
         if (var_f30 > 0.0f) {
             arg0->unk_1C.x += sp8.x * var_f30 * var_f31;
             arg0->unk_1C.y += sp8.y * var_f30 * var_f31;
@@ -854,9 +854,9 @@ void fn_1_66B8(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1) // TODO maybe UnkM410
     Vec spC;
     float var_f31;
 
-    PSVECSubtract(&arg0->unk_04, (Vec *)&arg1->unk_10.z, &spC);
+    VECSubtract(&arg0->unk_04, (Vec *)&arg1->unk_10.z, &spC);
     spC.y = 0.0f;
-    PSVECNormalize(&spC, &spC);
+    VECNormalize(&spC, &spC);
     var_f31 = -arg0->unk_1C.x * spC.x - arg0->unk_1C.z * spC.z;
     arg0->unk_1C.x += 2.0f * spC.x * var_f31;
     arg0->unk_1C.z += 2.0f * spC.z * var_f31;
@@ -911,7 +911,7 @@ void fn_1_6968(omObjData *object)
         }
         if (var_r31->unk_00_field1) {
             Hu3DModelObjPosGet(var_r31->unk_38->unk_30, "i_hook", &sp8);
-            PSVECSubtract(&sp8, &var_r31->unk_04, &sp8);
+            VECSubtract(&sp8, &var_r31->unk_04, &sp8);
             if (var_r31->unk_36 != 0) {
                 var_f31 = cosd(90.0f * var_r31->unk_36 / 10.0f);
                 var_r31->unk_1C.x = var_f31 * sp8.x;
@@ -936,7 +936,7 @@ void fn_1_6968(omObjData *object)
                     sp8.x = var_r31->unk_1C.z;
                     sp8.y = 0.0f;
                     sp8.z = -var_r31->unk_1C.x;
-                    var_f30 = PSVECMag(&sp8) / 30.000002f;
+                    var_f30 = VECMag(&sp8) / 30.000002f;
                     if (var_f30 >= 0.001f) {
                         PSMTXRotAxisRad(sp14, &sp8, var_f30);
                         var_r28 = &Hu3DData[object->model[var_r30]];

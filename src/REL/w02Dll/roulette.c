@@ -291,15 +291,15 @@ s32 fn_1_C108(s32 arg0) {
         sp1C.y = var_f27 - (0.55833334f * (0.25f * (var_f31 * var_f31)));
         var_f31 += 1.0f;
         BoardModelPosGet(lbl_1_bss_30[6], &sp28);
-        PSVECAdd(&sp28, &sp1C, &sp28);
+        VECAdd(&sp28, &sp1C, &sp28);
         var_f25 = VECDistanceXZ(&sp28, &sp10);
         if (var_f25 >= 430.0f) {
             if (sp28.y <= (55.0f + sp10.y)) {
-                PSVECSubtract(&sp28, &sp10, (Vec* ) &sp1C);
-                PSVECNormalize((Vec* ) &sp1C, (Vec* ) &sp1C);
+                VECSubtract(&sp28, &sp10, (Vec* ) &sp1C);
+                VECNormalize((Vec* ) &sp1C, (Vec* ) &sp1C);
                 sp1C.y = 0.0f;
-                PSVECScale((Vec* ) &sp1C, (Vec* ) &sp1C, 429.0f);
-                PSVECAdd((Vec* ) &sp1C, &sp10, (Vec* ) &sp1C);
+                VECScale((Vec* ) &sp1C, (Vec* ) &sp1C, 429.0f);
+                VECAdd((Vec* ) &sp1C, &sp10, (Vec* ) &sp1C);
                 sp28.x = sp1C.x;
                 sp28.z = sp1C.z;
                 sp1C.x = -5.0f;
@@ -328,8 +328,8 @@ s32 fn_1_C108(s32 arg0) {
     }
 
     HuAudFXPlay(0x41E);
-    PSVECSubtract(&sp28, &sp10, (Vec* ) &sp1C);
-    PSVECNormalize((Vec* ) &sp1C, (Vec* ) &sp1C);
+    VECSubtract(&sp28, &sp10, (Vec* ) &sp1C);
+    VECNormalize((Vec* ) &sp1C, (Vec* ) &sp1C);
     var_f31 = atan2d(-sp1C.z, sp1C.x);
     BoardModelRotGet(lbl_1_bss_30[4], &sp34);
     var_f31 = var_f31 - sp34.y;
@@ -351,8 +351,8 @@ s32 fn_1_C108(s32 arg0) {
         var_f31 = (22.5f * var_r30) + sp34.y; // TODO: Update rodata for asm change
         sp1C.x = cosd(var_f31);
         sp1C.z = -sind(var_f31);
-        PSVECScale(&sp1C, &sp1C, 429.0f);
-        PSVECAdd(&sp1C, &sp10, &sp1C);
+        VECScale(&sp1C, &sp1C, 429.0f);
+        VECAdd(&sp1C, &sp10, &sp1C);
         sp28.x = sp1C.x;
         sp28.z = sp1C.z;
         BoardModelPosSetV(lbl_1_bss_30[6], &sp28);
@@ -370,8 +370,8 @@ s32 fn_1_C108(s32 arg0) {
         var_f31 = (22.5f * (f32) var_r30) + sp34.y;
         sp1C.x = cosd(var_f31);
         sp1C.z = -sind(var_f31);
-        PSVECScale(&sp1C, &sp1C, 429.0f);
-        PSVECAdd((Vec* ) &sp1C, &sp10, (Vec* ) &sp1C);
+        VECScale(&sp1C, &sp1C, 429.0f);
+        VECAdd((Vec* ) &sp1C, &sp10, (Vec* ) &sp1C);
         sp28.x = sp1C.x;
         sp28.z = sp1C.z;
         BoardModelPosSetV(lbl_1_bss_30[6], (Vec* ) &sp28);

@@ -87,15 +87,15 @@ static void fn_1_300(omObjData *arg0) {
     sp8.z = sp14.x * (sp20.x * sp20.z * (1.0 - cosd(temp_f31)) - sp20.y * sind(temp_f31))
           + sp14.y * (sp20.y * sp20.z * (1.0 - cosd(temp_f31)) + sp20.x * sind(temp_f31))
           + sp14.z * (sp20.z * sp20.z + (1.0f - sp20.z * sp20.z) * cosd(temp_f31));
-    PSVECCrossProduct(&sp14, &sp20, &sp20);
-    PSVECNormalize(&sp20, &sp20);
+    VECCrossProduct(&sp14, &sp20, &sp20);
+    VECNormalize(&sp20, &sp20);
     temp_r31 = HuPadSubStkX[0] & 0xF8;
     if (temp_r31 != 0) {
         Center.x += sp20.x * temp_r31 * 0.05f;
         Center.y += sp20.y * temp_r31 * 0.05f;
         Center.z += sp20.z * temp_r31 * 0.05f;
     }
-    PSVECNormalize(&sp8, &sp20);
+    VECNormalize(&sp8, &sp20);
     temp_r31 = -(HuPadSubStkY[0] & 0xF8);
     if (temp_r31 != 0) {
         Center.x += sp20.x * temp_r31 * 0.05f;
