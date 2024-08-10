@@ -319,7 +319,7 @@ void Hu3DAnimExec(void) {
                 mtxTransCat(var_r31->unk3C, var_r31->unk04.x, var_r31->unk04.y, var_r31->unk04.z);
             } else {
                 if (var_r31->unk00 & 1) {
-                    PSVECAdd(&var_r31->unk04, &var_r31->unk1C, &var_r31->unk04);
+                    VECAdd(&var_r31->unk04, &var_r31->unk1C, &var_r31->unk04);
                     if (var_r31->unk04.x > 1.0f) {
                         var_r31->unk04.x -= 1.0f;
                     }
@@ -717,17 +717,17 @@ static void _Hu3DParticleAttrReset(ModelData *arg0, Mtx arg1) {
                 var_r30->z = sp38[3].z * temp_f31 + var_r29->unk34.z;
                 var_r30++;
             } else {
-                PSVECScale(&basePos[0], &sp98[0], var_r29->unk2C);
-                PSVECScale(&basePos[1], &sp98[1], var_r29->unk2C);
-                PSVECScale(&basePos[2], &sp98[2], var_r29->unk2C);
-                PSVECScale(&basePos[3], &sp98[3], var_r29->unk2C);
+                VECScale(&basePos[0], &sp98[0], var_r29->unk2C);
+                VECScale(&basePos[1], &sp98[1], var_r29->unk2C);
+                VECScale(&basePos[2], &sp98[2], var_r29->unk2C);
+                VECScale(&basePos[3], &sp98[3], var_r29->unk2C);
                 PSMTXRotRad(spC8, 'Z', var_r29->unk30);
                 PSMTXConcat(sp128, spC8, spF8);
                 PSMTXMultVecArray(spF8, sp98, sp68, 4);
-                PSVECAdd(&sp68[0], &var_r29->unk34, var_r30++);
-                PSVECAdd(&sp68[1], &var_r29->unk34, var_r30++);
-                PSVECAdd(&sp68[2], &var_r29->unk34, var_r30++);
-                PSVECAdd(&sp68[3], &var_r29->unk34, var_r30++);
+                VECAdd(&sp68[0], &var_r29->unk34, var_r30++);
+                VECAdd(&sp68[1], &var_r29->unk34, var_r30++);
+                VECAdd(&sp68[2], &var_r29->unk34, var_r30++);
+                VECAdd(&sp68[3], &var_r29->unk34, var_r30++);
             }
             var_r19 = 1;
         } else {
@@ -1117,10 +1117,10 @@ static void ParManFunc(void) {
                         sp20.x = (s32) frandmod((u32) (temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
                         sp20.y = (s32) frandmod((u32) (temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
                         sp20.z = (s32) frandmod((u32) (temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
-                        PSVECNormalize(&sp20, &sp20);
-                        PSVECScale(&sp20, &sp20, temp_r30->unk08);
-                        PSVECAdd(&sp20, &var_r29->unk34, &var_r29->unk34);
-                        PSVECNormalize(&temp_r31->unk18, &sp2C);
+                        VECNormalize(&sp20, &sp20);
+                        VECScale(&sp20, &sp20, temp_r30->unk08);
+                        VECAdd(&sp20, &var_r29->unk34, &var_r29->unk34);
+                        VECNormalize(&temp_r31->unk18, &sp2C);
                         if (temp_r31->unk02 & 0x100) {
                             var_f28 = var_f26 + (360.0f / temp_r30->unk04) * var_r26;
                             var_f29 = temp_r30->unk0C;
@@ -1145,9 +1145,9 @@ static void ParManFunc(void) {
                                 sp14.y = 1.0f;
                                 sp14.z = sp2C.z;
                             }
-                            PSVECCrossProduct(&sp14, &sp2C, &sp8);
+                            VECCrossProduct(&sp14, &sp2C, &sp8);
                         }
-                        PSVECNormalize(&sp8, &sp8);
+                        VECNormalize(&sp8, &sp8);
                         temp_f31 = sind(var_f28);
                         temp_f30 = cosd(var_f28);
                         sp14.x = sp8.x * (sp2C.x * sp2C.x + temp_f30 * (1.0f - sp2C.x * sp2C.x))
@@ -1159,7 +1159,7 @@ static void ParManFunc(void) {
                         sp14.z = sp8.x * (sp2C.x * sp2C.z * (1.0f - temp_f30) - sp2C.y * temp_f31)
                             + sp8.y * (sp2C.y * sp2C.z * (1.0f - temp_f30) + sp2C.x * temp_f31)
                             + sp8.z * (sp2C.z * sp2C.z + temp_f30 * (1.0f - sp2C.z * sp2C.z));
-                        PSVECCrossProduct(&sp14, &sp2C, &sp8);
+                        VECCrossProduct(&sp14, &sp2C, &sp8);
                         temp_f31 = sind(var_f29);
                         temp_f30 = cosd(var_f29);
                         sp14.x = sp2C.x * (sp8.x * sp8.x + temp_f30 * (1.0f - sp8.x * sp8.x))
@@ -1171,7 +1171,7 @@ static void ParManFunc(void) {
                         sp14.z = sp2C.x * (sp8.x * sp8.z * (1.0f - temp_f30) - sp8.y * temp_f31)
                             + sp2C.y * (sp8.y * sp8.z * (1.0f - temp_f30) + sp8.x * temp_f31)
                             + sp2C.z * (sp8.z * sp8.z + temp_f30 * (1.0f - sp8.z * sp8.z));
-                        PSVECNormalize(&sp14, &sp14);
+                        VECNormalize(&sp14, &sp14);
                         temp_f31 = temp_r30->unk1C;
                         if (temp_r31->unk02 & 2) {
                             temp_f31 = temp_f31 * 0.9 + (s32) frandmod((u32) (temp_f31 * 0.1 * 1000.0)) / 1000.0f;
@@ -1180,7 +1180,7 @@ static void ParManFunc(void) {
                         } else if (temp_r31->unk02 & 8) {
                             temp_f31 = (s32) frandmod((u32) (temp_f31 * 1000.0f)) / 1000.0f;
                         }
-                        PSVECScale(&sp14, &var_r29->unk08, temp_f31);
+                        VECScale(&sp14, &var_r29->unk08, temp_f31);
                         var_r29->unk14 = temp_r30->unk10;
                         var_r29->unk20 = temp_r30->unk20;
                         if (temp_r31->unk02 & 0x1000) {
@@ -1245,17 +1245,17 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                     var_r29->unk34.x += var_r29->unk08.x + var_r29->unk14.x;
                     var_r29->unk34.y += var_r29->unk08.y + var_r29->unk14.y;
                     var_r29->unk34.z += var_r29->unk08.z + var_r29->unk14.z;
-                    PSVECScale(&var_r29->unk08, &var_r29->unk08, var_r29->unk20);
-                    PSVECAdd(&temp_r26->unk10, &var_r29->unk14, &var_r29->unk14);
+                    VECScale(&var_r29->unk08, &var_r29->unk08, var_r29->unk20);
+                    VECAdd(&temp_r26->unk10, &var_r29->unk14, &var_r29->unk14);
                     if (temp_r28->unk02 & 0x200) {
-                        PSVECSubtract(&temp_r28->unk24, &var_r29->unk34, &sp1C);
-                        PSVECNormalize(&sp1C, &sp1C);
-                        PSVECScale(&sp1C, &sp1C, temp_r28->unk30);
-                        PSVECAdd(&sp1C, &var_r29->unk14, &var_r29->unk14);
-                        PSVECAdd(&var_r29->unk08, &var_r29->unk14, &sp1C);
-                        PSVECSubtract(&temp_r28->unk24, &var_r29->unk34, &sp10);
-                        temp_f29 = PSVECSquareMag(&sp1C);
-                        if (PSVECSquareMag(&sp10) <= temp_f29) {
+                        VECSubtract(&temp_r28->unk24, &var_r29->unk34, &sp1C);
+                        VECNormalize(&sp1C, &sp1C);
+                        VECScale(&sp1C, &sp1C, temp_r28->unk30);
+                        VECAdd(&sp1C, &var_r29->unk14, &var_r29->unk14);
+                        VECAdd(&var_r29->unk08, &var_r29->unk14, &sp1C);
+                        VECSubtract(&temp_r28->unk24, &var_r29->unk34, &sp10);
+                        temp_f29 = VECSquareMag(&sp1C);
+                        if (VECSquareMag(&sp10) <= temp_f29) {
                             var_r29->unk2C = 0.0f;
                             continue;
                         }

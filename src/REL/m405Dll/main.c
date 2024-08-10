@@ -668,7 +668,7 @@ void fn_1_1FC4(Vec *arg0, float *arg1, s32 arg2, s32 arg3) {
             var_r30 = 1;
         }
     }
-    PSVECAdd((Vec*) &arg0, &sp18, (Vec*) &arg0);
+    VECAdd((Vec*) &arg0, &sp18, (Vec*) &arg0);
 }
 
 s32 fn_1_23B4(Vec *arg0) {
@@ -715,7 +715,7 @@ void fn_1_2508(UnkFn2480Struct *arg0) {
     var_r30 = arg0->unk30;
     for (i = 0; i < arg0->unk28; i++, var_r28++, var_r30++) {
         temp_r29 = &lbl_1_bss_5AC.unk00[*var_r28];
-        PSVECSubtract(temp_r29, &arg0->unk0C, &spC);
+        VECSubtract(temp_r29, &arg0->unk0C, &spC);
         *var_r30 = VECMagXZ(&spC);
         if (arg0->unk2D == 0 && arg0->unk0C.z > temp_r29->z) {
             *var_r30 *= -1.0f;
@@ -756,7 +756,7 @@ void fn_1_280C(omObjData *arg0) {
     var_r26 = lbl_1_bss_5AC.unk04;
     var_r25 = lbl_1_bss_5AC.unk14;
     for (i = 0; i < 900; i++) {
-        PSVECAdd(var_r27, var_r26, var_r25);
+        VECAdd(var_r27, var_r26, var_r25);
         var_r27++;
         var_r26++;
         var_r25++;
@@ -766,23 +766,23 @@ void fn_1_280C(omObjData *arg0) {
     var_r30 = lbl_1_bss_5AC.unk18;
     memset(lbl_1_bss_5AC.unk18, 0, 900 * sizeof(*lbl_1_bss_5AC.unk18));
     for (i = 0; i < 841; i++) {
-        PSVECSubtract(&temp_r28[(*var_r31)[1]], &temp_r28[(*var_r31)[0]], &sp2C);
-        PSVECSubtract(&temp_r28[(*var_r31)[3]], &temp_r28[(*var_r31)[0]], &sp20);
-        PSVECSubtract(&temp_r28[(*var_r31)[2]], &temp_r28[(*var_r31)[0]], &sp14);
-        PSVECCrossProduct(&sp2C, &sp20, &sp8);
-        PSVECNormalize(&sp8, &sp8);
-        PSVECAdd(&sp8, &var_r30[(*var_r31)[0]], &var_r30[(*var_r31)[0]]);
-        PSVECAdd(&sp8, &var_r30[(*var_r31)[1]], &var_r30[(*var_r31)[1]]);
-        PSVECAdd(&sp8, &var_r30[(*var_r31)[3]], &var_r30[(*var_r31)[3]]);
-        PSVECCrossProduct(&sp20, &sp14, &sp8);
-        PSVECNormalize(&sp8, &sp8);
-        PSVECAdd(&sp8, &var_r30[(*var_r31)[0]], &var_r30[(*var_r31)[0]]);
-        PSVECAdd(&sp8, &var_r30[(*var_r31)[3]], &var_r30[(*var_r31)[3]]);
-        PSVECAdd(&sp8, &var_r30[(*var_r31)[2]], &var_r30[(*var_r31)[2]]);
+        VECSubtract(&temp_r28[(*var_r31)[1]], &temp_r28[(*var_r31)[0]], &sp2C);
+        VECSubtract(&temp_r28[(*var_r31)[3]], &temp_r28[(*var_r31)[0]], &sp20);
+        VECSubtract(&temp_r28[(*var_r31)[2]], &temp_r28[(*var_r31)[0]], &sp14);
+        VECCrossProduct(&sp2C, &sp20, &sp8);
+        VECNormalize(&sp8, &sp8);
+        VECAdd(&sp8, &var_r30[(*var_r31)[0]], &var_r30[(*var_r31)[0]]);
+        VECAdd(&sp8, &var_r30[(*var_r31)[1]], &var_r30[(*var_r31)[1]]);
+        VECAdd(&sp8, &var_r30[(*var_r31)[3]], &var_r30[(*var_r31)[3]]);
+        VECCrossProduct(&sp20, &sp14, &sp8);
+        VECNormalize(&sp8, &sp8);
+        VECAdd(&sp8, &var_r30[(*var_r31)[0]], &var_r30[(*var_r31)[0]]);
+        VECAdd(&sp8, &var_r30[(*var_r31)[3]], &var_r30[(*var_r31)[3]]);
+        VECAdd(&sp8, &var_r30[(*var_r31)[2]], &var_r30[(*var_r31)[2]]);
         var_r31++;
     }
     for (i = 0; i < 900; i++, var_r30++) {
-        PSVECNormalize(var_r30, var_r30);
+        VECNormalize(var_r30, var_r30);
     }
     DCStoreRangeNoSync(lbl_1_bss_5AC.unk14, 900 * sizeof(*lbl_1_bss_5AC.unk14));
     DCStoreRangeNoSync(lbl_1_bss_5AC.unk18, 900 * sizeof(*lbl_1_bss_5AC.unk18));
@@ -2410,7 +2410,7 @@ void ObjectSetup(void) {
     Hu3DGLightInfinitytSet(temp_r29);
     Hu3DShadowCreate(30.0f, 20.0f, 20000.0f);
     Hu3DShadowTPLvlSet(0.8f);
-    PSVECNormalize(&lbl_1_data_170, &sp8);
+    VECNormalize(&lbl_1_data_170, &sp8);
     Hu3DShadowPosSet(&lbl_1_data_170, &sp8, &lbl_1_data_17C);
     lbl_1_bss_90 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M405, 57));
     HuSprAnimLock(lbl_1_bss_90);

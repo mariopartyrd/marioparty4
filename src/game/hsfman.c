@@ -1276,12 +1276,12 @@ BOOL Hu3DModelCameraInfoSet(s16 arg0, u16 arg1) {
             temp_f31 = obj_copy->data.base.rot.x;
             cam->aspect_dupe = temp_f31;
             
-            PSVECSubtract((Point3d* ) &obj_copy->camera.target, (Point3d* ) &obj_copy->camera.pos, &sp8);
+            VECSubtract((Point3d* ) &obj_copy->camera.target, (Point3d* ) &obj_copy->camera.pos, &sp8);
             
             sp14.x = ((sp8.x * sp8.y * (1.0 - cosd(temp_f31))) - (sp8.z * sind(temp_f31)));
             sp14.y = ((sp8.y * sp8.y) + (1.0f - (sp8.y * sp8.y)) * cosd(temp_f31));
             sp14.z = (((sp8.y * sp8.z) * (1.0 - cosd(temp_f31))) + (sp8.x * sind(temp_f31)));
-            PSVECNormalize(&sp14, &sp8);
+            VECNormalize(&sp14, &sp8);
 
             Hu3DCameraPosSet(arg1, obj_copy->camera.target.x, obj_copy->camera.target.y, obj_copy->camera.target.z,
                              sp8.x, sp8.y, sp8.z, 
@@ -1386,7 +1386,7 @@ inline s16 Hu3DLightCreateV(LightData *light, Vec *arg0, Vec *arg1, GXColor *arg
     light->unk_34.x = light->unk_34.y = light->unk_34.z = 0.0f;
     light->unk_04 = 30.0f;
     light->unk_02 = 2;
-    PSVECNormalize(&light->unk_28, &light->unk_28);
+    VECNormalize(&light->unk_28, &light->unk_28);
     light->color = *arg2;
 }
 
@@ -1584,7 +1584,7 @@ void Hu3DLLightColorSet(s16 dataIndex, s16 lightIndex, u8 r, u8 g, u8 b, u8 a) {
 
 inline void Hu3DLightPosSetV(LightData *light, Vec* pos, Vec* aim) {
     light->unk_1C = *pos;
-    PSVECNormalize(aim, &light->unk_28);
+    VECNormalize(aim, &light->unk_28);
 }
 
 void Hu3DGLightPosSetV(s16 index, Vec* pos, Vec* aim) {
@@ -1609,7 +1609,7 @@ inline void Hu3DLightPosSet(LightData *light, f32 arg8, f32 arg9, f32 argA, f32 
     light->unk_28.x = argB;
     light->unk_28.y = argC;
     light->unk_28.z = argD;
-    PSVECNormalize(&light->unk_28, &light->unk_28);
+    VECNormalize(&light->unk_28, &light->unk_28);
 }
 
 void Hu3DGLightPosSet(s16 arg0, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD) {
@@ -1630,8 +1630,8 @@ void Hu3DLLightPosSet(s16 arg0, s16 arg1, f32 arg8, f32 arg9, f32 argA, f32 argB
 
 inline void Hu3DLightPosAimSetV(LightData *light, Vec* pos, Vec* aim) {
     light->unk_1C = *pos;
-    PSVECSubtract(aim, pos, &light->unk_28);
-    PSVECNormalize(&light->unk_28, &light->unk_28);
+    VECSubtract(aim, pos, &light->unk_28);
+    VECNormalize(&light->unk_28, &light->unk_28);
 }
 
 void Hu3DGLightPosAimSetV(s16 index, Vec* pos, Vec* aim) {
@@ -1816,7 +1816,7 @@ void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
         GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
         GXInitLightSpot(&sp30, 20.0f, GX_SP_COS);
         GXInitLightAttnK(&sp30, 1.0f, 0.0f, 0.0f);
-        PSVECScale(&arg0->unk_28, &arg0->unk_1C, -1000000.0f);
+        VECScale(&arg0->unk_28, &arg0->unk_1C, -1000000.0f);
         break;
     case 2:
         GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
@@ -1885,7 +1885,7 @@ void Hu3DShadowCreate(f32 arg8, f32 arg9, f32 argA) {
     Hu3DShadowData.unk_2C.y = 1.0f;
     Hu3DShadowData.unk_2C.z = 0.0f;
     C_MTXLightPerspective(Hu3DShadowData.unk_68, arg8, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSVECNormalize(&Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_2C);
+    VECNormalize(&Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_2C);
     Hu3DShadowData.unk_00 = 0x80;
     Hu3DShadowF = 1;
 }
@@ -2053,7 +2053,7 @@ s16 Hu3DProjectionCreate(void *arg0, f32 arg8, f32 arg9, f32 argA) {
     var_r31->unk_2C.y = 1.0f;
     var_r31->unk_2C.z = 0.0f;
     C_MTXLightPerspective(var_r31->unk_68, arg8, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSVECNormalize(&var_r31->unk_2C, &var_r31->unk_2C);
+    VECNormalize(&var_r31->unk_2C, &var_r31->unk_2C);
     var_r31->unk_00 = 0x80;
     Hu3DProjectionNum++;
     return var_r30;

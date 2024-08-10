@@ -246,8 +246,8 @@ s32 fn_1_9CF4(s32 arg0) {
     temp_r29 = BoardSpaceLinkFlagSearch(0, spaceCur, 0x02000000);
     BoardPlayerPosGet(arg0, &sp2C);
     BoardSpacePosGet(0, temp_r29, &sp38);
-    PSVECSubtract(&sp38, &sp2C, &sp20);
-    PSVECNormalize(&sp20, &sp20);
+    VECSubtract(&sp38, &sp2C, &sp20);
+    VECNormalize(&sp20, &sp20);
     BoardPlayerRotYSet(arg0, (f32) (180.0 * (atan2(-sp20.x, -sp20.z) / M_PI)));
     BoardPlayerPosLerpStart(arg0, &sp2C, &sp38, 0x14);
 
@@ -282,7 +282,7 @@ void fn_1_9FE4(void) {
     sp18.x = (-3179.800048828125 + (200.0 * sin(0.0)));
     sp18.z = (-907.7000122070313 + 200.0 * cos(0.0));
     sp18.y = sp24.y;
-    PSVECSubtract(&sp18, &sp24, &spC);
+    VECSubtract(&sp18, &sp24, &spC);
     temp_f30 = (atan2(spC.z, spC.x) / M_PI * 180.0);
     sp8 = BoardModelRotYGet(lbl_1_bss_C[11]);
     BoardModelMotionShiftSet(lbl_1_bss_C[11], lbl_1_data_4DA, 0.0f, 10.0, 0x40000001);
@@ -302,7 +302,7 @@ void fn_1_9FE4(void) {
     var_f31 = 0.0f;
 
     while (var_f31 < 20.0f) {
-        PSVECAdd(&sp30, &spC, &sp30);
+        VECAdd(&sp30, &spC, &sp30);
         BoardModelPosSetV(lbl_1_bss_C[11], &sp30);
         HuPrcVSleep();
         var_f31 += 1.0f;
@@ -314,7 +314,7 @@ void fn_1_9FE4(void) {
     BoardCameraQuakeSet(3, 100.0f);
     fn_1_B8E8(1);
     BoardModelMotionShiftSet(lbl_1_bss_C[11], lbl_1_data_4DC, 0.0f, 10.0, 0x40000005);
-    PSVECSubtract(&sp24, &sp30, &spC);
+    VECSubtract(&sp24, &sp30, &spC);
 
     spC.x /= 60.0f;
     spC.z /= 60.0f;
@@ -322,7 +322,7 @@ void fn_1_9FE4(void) {
     var_f31 = 0.0f;
 
     while (var_f31 < 60.0f) {
-        PSVECAdd(&sp30, &spC, &sp30);
+        VECAdd(&sp30, &spC, &sp30);
         BoardModelPosSetV(lbl_1_bss_C[11], &sp30);
         HuPrcVSleep();
         var_f31 += 1.0f;

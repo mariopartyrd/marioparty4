@@ -1356,19 +1356,19 @@ void fn_1_602C(ModelData* arg0, f32 (*arg1)[4]) {
         } else {
             if (var_r29->unk30 == 0.0f) {
                 fn_1_6778(&sp68[0], &sp38, &var_r29->unk34, 4);
-                PSVECAdd(&sp38, &var_r29->unk40, var_r31++);
-                PSVECAdd(&sp44, &var_r29->unk40, var_r31++);
-                PSVECAdd(&sp50, &var_r29->unk40, var_r31++);
-                PSVECAdd(&sp5C, &var_r29->unk40, var_r31++);
+                VECAdd(&sp38, &var_r29->unk40, var_r31++);
+                VECAdd(&sp44, &var_r29->unk40, var_r31++);
+                VECAdd(&sp50, &var_r29->unk40, var_r31++);
+                VECAdd(&sp5C, &var_r29->unk40, var_r31++);
             } else {
                 fn_1_6778(&temp_r30->unk2C, &sp38, &var_r29->unk34, 4);
                 MTXRotDeg(spC8, 0x5A, var_r29->unk30);
                 PSMTXConcat(sp128, spC8, sp98);
                 PSMTXMultVecArray(sp98, &sp38, &sp8, 4);
-                PSVECAdd(&sp8, &var_r29->unk40, var_r31++);
-                PSVECAdd(&sp14, &var_r29->unk40, var_r31++);
-                PSVECAdd(&sp20, &var_r29->unk40, var_r31++);
-                PSVECAdd(&sp2C, &var_r29->unk40, var_r31++);
+                VECAdd(&sp8, &var_r29->unk40, var_r31++);
+                VECAdd(&sp14, &var_r29->unk40, var_r31++);
+                VECAdd(&sp20, &var_r29->unk40, var_r31++);
+                VECAdd(&sp2C, &var_r29->unk40, var_r31++);
             }
             if (var_r29->unk4C != -1) {
                 fn_1_66D4(var_r26, temp_r30->unk5C, var_r29->unk4C, temp_r30->unk60, temp_r30->unk64);

@@ -325,9 +325,9 @@ static void CenterBox(ItemGiveWork2* arg0, omObjData* arg1) {
     sp14.y = arg1->trans.y;
     sp14.z = arg1->trans.z;
     BoardPlayerPosGet(arg0->unk00_field5, &sp20);
-    PSVECSubtract(&sp20, &sp14, &sp8);
-    PSVECScale(&sp8, &sp8, 0.2f);
-    PSVECAdd(&sp8, &sp14, &sp14);
+    VECSubtract(&sp20, &sp14, &sp8);
+    VECScale(&sp8, &sp8, 0.2f);
+    VECAdd(&sp8, &sp14, &sp14);
 
     if (BoardVecMaxDistXZCheck(&sp20, &sp14, 3.0f) != 0) {
         arg1->trans.x = sp20.x;

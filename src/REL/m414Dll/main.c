@@ -374,7 +374,7 @@ void fn_1_D54(ModelData *arg0, ParticleData *arg1, Mtx arg2, s32 arg3)
     var_r31 = arg1->unk_48;
     for (var_r28 = 0; var_r28 < arg1->unk_30; var_r28++, var_r31++) {
         if (0.0f != var_r31->unk14.x) {
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+            VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             if (var_r31->unk14.x > 10.0f) {
                 var_r31->unk14.x = var_r31->unk14.x - 1.0f;
             }

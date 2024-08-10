@@ -932,7 +932,7 @@ s32 fn_1_86A0(Vec *arg0, Vec *arg1) {
     if (temp_r28->rot.x > 0.0f || temp_r28->rot.x <= -90.0f) {
         return 0;
     }
-    PSVECSubtract(arg0, &temp_r28->trans, &sp3C);
+    VECSubtract(arg0, &temp_r28->trans, &sp3C);
     sp3C.z /= cosd(temp_r28->rot.x);
     temp_r17 = fn_1_7B20(arg0->x, arg0->z);
     temp_r24 = fn_1_7C20(temp_r18, temp_r17);
@@ -941,50 +941,50 @@ s32 fn_1_86A0(Vec *arg0, Vec *arg1) {
     }
     temp_r24 -= 6;
     sp48 = lbl_1_data_A88[temp_r17];
-    PSVECSubtract(&sp3C, &sp48, &sp3C);
+    VECSubtract(&sp3C, &sp48, &sp3C);
     temp_r30 = lbl_1_data_B74[temp_r24][0];
     temp_r29 = lbl_1_data_B74[temp_r24][1];
     temp_r21 = lbl_1_data_BA4[temp_r24];
     for (i = 0; i < temp_r21; i++) {
         temp_r27 = (i + 1) % temp_r21;
-        PSVECSubtract(&temp_r30[temp_r27], &temp_r30[i], &sp24);
-        PSVECSubtract(&sp3C, &temp_r30[temp_r27], &sp18);
-        PSVECCrossProduct(&sp24, &sp18, &spC);
+        VECSubtract(&temp_r30[temp_r27], &temp_r30[i], &sp24);
+        VECSubtract(&sp3C, &temp_r30[temp_r27], &sp18);
+        VECCrossProduct(&sp24, &sp18, &spC);
         if (spC.y < 0.0f) {
             continue;
         }
-        PSVECSubtract(&temp_r29[temp_r27], &temp_r30[temp_r27], &sp24);
-        PSVECSubtract(&sp3C, &temp_r29[temp_r27], &sp18);
-        PSVECCrossProduct(&sp24, &sp18, &spC);
+        VECSubtract(&temp_r29[temp_r27], &temp_r30[temp_r27], &sp24);
+        VECSubtract(&sp3C, &temp_r29[temp_r27], &sp18);
+        VECCrossProduct(&sp24, &sp18, &spC);
         if (spC.y < 0.0f) {
             continue;
         }
-        PSVECSubtract(&temp_r29[i], &temp_r29[temp_r27], &sp24);
-        PSVECSubtract(&sp3C, &temp_r29[i], &sp18);
-        PSVECCrossProduct(&sp24, &sp18, &spC);
+        VECSubtract(&temp_r29[i], &temp_r29[temp_r27], &sp24);
+        VECSubtract(&sp3C, &temp_r29[i], &sp18);
+        VECCrossProduct(&sp24, &sp18, &spC);
         if (spC.y < 0.0f) {
             continue;
         }
-        PSVECSubtract(&temp_r30[i], &temp_r29[i], &sp24);
-        PSVECSubtract(&sp3C, &temp_r30[i], &sp18);
-        PSVECCrossProduct(&sp24, &sp18, &spC);
+        VECSubtract(&temp_r30[i], &temp_r29[i], &sp24);
+        VECSubtract(&sp3C, &temp_r30[i], &sp18);
+        VECCrossProduct(&sp24, &sp18, &spC);
         if (spC.y < 0.0f) {
             continue;
         }
-        PSVECSubtract(&temp_r30[temp_r27], &temp_r30[i], &sp24);
+        VECSubtract(&temp_r30[temp_r27], &temp_r30[i], &sp24);
         temp_f30 = (sp3C.x * sp24.x - sp24.x * temp_r30[i].x + sp3C.y * sp24.y - sp24.y * temp_r30[i].y + sp3C.z * sp24.z - sp24.z * temp_r30[i].z) / (sp24.x * sp24.x + sp24.y * sp24.y + sp24.z * sp24.z);
         sp30.x = temp_r30[i].x + temp_f30 * sp24.x;
         sp30.y = temp_r30[i].y + temp_f30 * sp24.y;
         sp30.z = temp_r30[i].z + temp_f30 * sp24.z;
-        PSVECSubtract(&sp30, &sp3C, &spC);
-        temp_f28 = PSVECMag(&spC);
-        PSVECSubtract(&temp_r29[temp_r27], &temp_r29[i], &sp18);
+        VECSubtract(&sp30, &sp3C, &spC);
+        temp_f28 = VECMag(&spC);
+        VECSubtract(&temp_r29[temp_r27], &temp_r29[i], &sp18);
         temp_f29 = (sp3C.x * sp18.x - sp18.x * temp_r29[i].x + sp3C.y * sp18.y - sp18.y * temp_r29[i].y + sp3C.z * sp18.z - sp18.z * temp_r29[i].z) / (sp18.x * sp18.x + sp18.y * sp18.y + sp18.z * sp18.z);
         sp30.x = temp_r29[i].x + temp_f29 * sp18.x;
         sp30.y = temp_r29[i].y + temp_f29 * sp18.y;
         sp30.z = temp_r29[i].z + temp_f29 * sp18.z;
-        PSVECSubtract(&sp30, &sp3C, &spC);
-        temp_f27 = PSVECMag(&spC);
+        VECSubtract(&sp30, &sp3C, &spC);
+        temp_f27 = VECMag(&spC);
         if (temp_f28 == 0.0f) {
             var_f31 = temp_f30;
         } else if (temp_f27 == 0.0f) {

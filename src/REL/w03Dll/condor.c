@@ -211,7 +211,7 @@ s32 fn_1_3478(s32 arg0) {
     BoardPlayerPosGet(arg0, &sp2C);
     temp = BoardSpaceLinkFlagSearch(0, temp_r28, 0x02000000);
     BoardSpacePosGet(0, temp, &sp38);
-    PSVECSubtract(&sp38, &sp2C, &sp20);
+    VECSubtract(&sp38, &sp2C, &sp20);
     float_temp = atan2(sp20.x, sp20.z) / M_PI * 180.0f;
     BoardPlayerMotBlendSet(arg0, (float_temp), 0xF);
     
@@ -336,9 +336,9 @@ void fn_1_3968(s32 arg0) {
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_310), "itemhook_oya", &sp3C);
     BoardPlayerPosGet(arg0, &sp30);
     temp_f30 = BoardVecDistXZCalc(&sp3C, &sp30);
-    PSVECSubtract(&sp3C, &sp30, &sp24);
-    PSVECNormalize(&sp24, &sp24);
-    PSVECScale(&sp24, &sp24, temp_f30 / 45.0f);
+    VECSubtract(&sp3C, &sp30, &sp24);
+    VECNormalize(&sp24, &sp24);
+    VECScale(&sp24, &sp24, temp_f30 / 45.0f);
     BoardPlayerMotionShiftSet(arg0, 4, 0.0f, 5.0f, 0);
     HuPrcSleep(5);
     
@@ -351,7 +351,7 @@ void fn_1_3968(s32 arg0) {
     while (1) {
         temp_f31 = __OSs16tof32(&sp8);
         sp24.y = temp_f28 + (-0.08166667f * (0.75f * (temp_f31 * temp_f31)));
-        PSVECAdd(&sp30, &sp24, &sp30);
+        VECAdd(&sp30, &sp24, &sp30);
         temp_f30 = BoardVecDistXZCalc(&sp3C, &sp30);
 
         if (temp_f30 < 5.0f) {
@@ -575,9 +575,9 @@ void fn_1_4424(w03StructUnk2* arg0) {
     BoardSpaceFlagPosGet(0, 0x8000U, &sp60);
 
     if (lbl_1_bss_0->unk1 != 0) {
-        PSVECSubtract(&sp6C, &sp60, &sp3C);
+        VECSubtract(&sp6C, &sp60, &sp3C);
     } else {
-        PSVECSubtract(&sp60, &sp6C, &sp3C);
+        VECSubtract(&sp60, &sp6C, &sp3C);
     }
 
     sp10_2 = 180.0f * (atan2(-sp3C.x, -sp3C.z) / M_PI);
@@ -705,7 +705,7 @@ void fn_1_4ABC(w03StructUnk2* arg0) {
         if (temp_r31->unk_00 == 1) {
             temp_r31->unk_04 += 1.0f;
             temp_f31 = 0.8f * (temp_r31->unk_04 * temp_r31->unk_04);
-            PSVECAdd(&temp_r31->unk_14, &temp_r31->unk_08, &temp_r31->unk_08);
+            VECAdd(&temp_r31->unk_14, &temp_r31->unk_08, &temp_r31->unk_08);
             temp_r31->unk_08.y += -0.0375f * temp_f31;
             if (temp_r31->unk_08.y < -300.0f) {
                 temp_r31->unk_00 = -1;
@@ -892,8 +892,8 @@ void fn_1_50D4(omObjData* arg0) {
             if (i != GWSystem.player_curr) {
                 BoardPlayerPosGet(i, &sp50);
                 BoardModelPosGet(lbl_1_data_310, &sp44);
-                PSVECSubtract(&sp50, &sp44, &sp38);
-                if (PSVECMag(&sp38) >= 2000.0f) {
+                VECSubtract(&sp50, &sp44, &sp38);
+                if (VECMag(&sp38) >= 2000.0f) {
                     BoardModelVisibilitySet(BoardPlayerModelGet(i), 0);
                 } else {
                     BoardModelVisibilitySet(BoardPlayerModelGet(i), 1);
@@ -1036,7 +1036,7 @@ void fn_1_5C5C(omObjData* arg0, w03UnkStruct5* arg1) {
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_314), temp_r27, &sp44);
 
     if (0.0f != temp_r30->unk_64) {
-        PSVECSubtract(&sp38, &sp44, &sp2C);
+        VECSubtract(&sp38, &sp44, &sp2C);
     } else {
         sp2C.x = sp2C.y = sp2C.z = 0.0f;
     }

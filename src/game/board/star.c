@@ -206,7 +206,7 @@ static void ExecStar(void) {
     starDoneF = 0;
     var_r22 = BoardSpaceLinkFlagSearch(0, temp_r24, 0x04000000);
     BoardSpacePosGet(0, var_r22, &sp18);
-    PSVECSubtract(&sp18, &sp24, &spC);
+    VECSubtract(&sp18, &sp24, &spC);
     temp_f30 = 90.0 - atan2d(spC.z, spC.x);
     temp_f30 = 90.0f * ((temp_f30 + 3.0f) / 90.0f);
     temp_f29 = BoardPlayerRotYGet(temp_r31);
@@ -696,9 +696,9 @@ void BoardStarShowNext(s32 arg0) {
     showNextObj->scale.z = sp50.z;
     BoardPlayerPosGet(arg0, &sp38);
     sp50.y = sp38.y;
-    PSVECSubtract(&sp50, &sp38, &sp20);
+    VECSubtract(&sp50, &sp38, &sp20);
     sp20.y = 0.0f;
-    temp_f31 = PSVECMag(&sp20);
+    temp_f31 = VECMag(&sp20);
     if (temp_f31 > 3000.0f) {
         var_r27 = 0xF0;
     } else if (temp_f31 > 1500.0f) {

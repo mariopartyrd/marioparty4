@@ -105,8 +105,8 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
     var_r31->unk04 = 0.0f;
     var_f26 = 0.0f;
     for (var_f31 = var_f26; var_f31 < var_r29 - 1; var_f31 += 1.0f, var_r31++) {
-        PSVECSubtract(&var_r31[1].unk08, &var_r31[0].unk08, &sp3C);
-        var_r31[1].unk04 = PSVECMag(&sp3C);
+        VECSubtract(&var_r31[1].unk08, &var_r31[0].unk08, &sp3C);
+        var_r31[1].unk04 = VECMag(&sp3C);
         var_f26 += var_r31[1].unk04;
     }
     var_r31 = temp_r21;
@@ -340,12 +340,12 @@ static void SetObjCamMotion(s16 arg0, HsfTrack *arg1, float arg2, HsfexStruct02 
             arg3->unk20.z = temp_r31->scale.z * (arg2 + temp_r31->pos.z);
             break;
         case 14:
-            PSVECSubtract(&arg3->unk08, &arg3->unk20, &spC);
-            PSVECNormalize(&spC, &spC);
+            VECSubtract(&arg3->unk08, &arg3->unk20, &spC);
+            VECNormalize(&spC, &spC);
             sp18.x = spC.x * spC.y * (1.0 - cos(M_PI * arg2 / 180.0)) - spC.z * sin(M_PI * arg2 / 180.0);
             sp18.y = spC.y * spC.y + (1.0f - spC.y * spC.y) * cos(M_PI * arg2 / 180.0);
             sp18.z = spC.y * spC.z * (1.0 - cos(M_PI * arg2 / 180.0)) + spC.x * sin(M_PI * arg2 / 180.0);
-            PSVECNormalize(&sp18, &arg3->unk14);
+            VECNormalize(&sp18, &arg3->unk14);
             break;
     }
 }
@@ -541,30 +541,30 @@ void Hu3DMtxScaleGet(Mtx arg0, Vec *arg1) {
     sp2C.x = arg0[0][0];
     sp2C.y = arg0[1][0];
     sp2C.z = arg0[2][0];
-    arg1->x = PSVECMag(&sp2C);
-    PSVECNormalize(&sp2C, &sp2C);
+    arg1->x = VECMag(&sp2C);
+    VECNormalize(&sp2C, &sp2C);
     sp20.x = arg0[0][1];
     sp20.y = arg0[1][1];
     sp20.z = arg0[2][1];
-    sp38.x = PSVECDotProduct(&sp2C, &sp20);
-    PSVECScale(&sp2C, &sp8, sp38.x);
-    PSVECSubtract(&sp20, &sp8, &sp20);
-    arg1->y = PSVECMag(&sp20);
-    PSVECNormalize(&sp20, &sp20);
+    sp38.x = VECDotProduct(&sp2C, &sp20);
+    VECScale(&sp2C, &sp8, sp38.x);
+    VECSubtract(&sp20, &sp8, &sp20);
+    arg1->y = VECMag(&sp20);
+    VECNormalize(&sp20, &sp20);
     sp38.x /= arg1->y;
     sp14.x = arg0[0][2];
     sp14.y = arg0[1][2];
     sp14.z = arg0[2][2];
-    sp38.z = PSVECDotProduct(&sp20, &sp14);
-    PSVECScale(&sp20, &sp8, sp38.z);
-    PSVECSubtract(&sp14, &sp8, &sp14);
-    sp38.y = PSVECDotProduct(&sp2C, &sp14);
-    PSVECScale(&sp2C, &sp8, sp38.y);
-    PSVECSubtract(&sp14, &sp8, &sp14);
-    arg1->z = PSVECMag(&sp14);
-    PSVECNormalize(&sp14, &sp14);
-    PSVECCrossProduct(&sp20, &sp14, &sp8);
-    if (PSVECDotProduct(&sp2C, &sp8) < 0.0) {
+    sp38.z = VECDotProduct(&sp20, &sp14);
+    VECScale(&sp20, &sp8, sp38.z);
+    VECSubtract(&sp14, &sp8, &sp14);
+    sp38.y = VECDotProduct(&sp2C, &sp14);
+    VECScale(&sp2C, &sp8, sp38.y);
+    VECSubtract(&sp14, &sp8, &sp14);
+    arg1->z = VECMag(&sp14);
+    VECNormalize(&sp14, &sp14);
+    VECCrossProduct(&sp20, &sp14, &sp8);
+    if (VECDotProduct(&sp2C, &sp8) < 0.0) {
         arg1->x *= -1.0;
         arg1->y *= -1.0;
         arg1->z *= -1.0;

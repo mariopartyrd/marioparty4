@@ -135,7 +135,7 @@ void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2) {
         sp8.x = temp_r31->matrix[0][3];
         sp8.y = temp_r31->matrix[1][3];
         sp8.z = temp_r31->matrix[2][3];
-        temp_f31 = PSVECMag(&sp8);
+        temp_f31 = VECMag(&sp8);
         temp_r31->z = temp_f31;
         temp_r31->model = arg0;
         DrawObjIdx++;
@@ -308,7 +308,7 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
                     sp10.x = temp_r29->matrix[0][3];
                     sp10.y = temp_r29->matrix[1][3];
                     sp10.z = temp_r29->matrix[2][3];
-                    temp_f31 = PSVECMag(&sp10);
+                    temp_f31 = VECMag(&sp10);
                     if (temp_r25->flags & 0x10000) {
                         temp_r29->z = -(900000.0f - temp_f31);
                     } else {
@@ -2152,7 +2152,7 @@ void Hu3DDrawPost(void) {
                     if (temp_r22->unk_00 & 0x8000) {
                         PSMTXMultVecSR(Hu3DCameraMtx, &sp30, &sp30);
                     }
-                    temp_f30 = PSVECDotProduct(&sp30, &sp54);
+                    temp_f30 = VECDotProduct(&sp30, &sp54);
                     temp_f30 *= 10000.0f;
                     OSf32tos16(&temp_f30, &sp8);
                     if (sp8 == -10000) {
@@ -2169,8 +2169,8 @@ void Hu3DDrawPost(void) {
                         if (sp8 == 10000) {
                             PSMTXIdentity(spC0);
                         } else {
-                            PSVECCrossProduct(&sp3C, &sp54, &sp48);
-                            temp_f28 = acosf(PSVECDotProduct(&sp54, &sp3C));
+                            VECCrossProduct(&sp3C, &sp54, &sp48);
+                            temp_f28 = acosf(VECDotProduct(&sp54, &sp3C));
                             PSMTXRotAxisRad(spC0, &sp48, temp_f28);
                         }
                         PSMTXConcat(spC0, sp90, sp60);
@@ -2291,7 +2291,7 @@ static void ObjDraw(HsfDrawObject *arg0) {
         if (temp_r24->unk_00 & 0x8000) {
             PSMTXMultVecSR(Hu3DCameraMtx, &sp20, &sp20);
         }
-        temp_f30 = PSVECDotProduct(&sp20, &sp44);
+        temp_f30 = VECDotProduct(&sp20, &sp44);
         temp_f30 *= 10000.0f;
         OSf32tos16(&temp_f30, &var_r21);
         if (var_r21 == -10000) {
@@ -2308,8 +2308,8 @@ static void ObjDraw(HsfDrawObject *arg0) {
             if (var_r21 == 10000) {
                 PSMTXIdentity(spB0);
             } else {
-                PSVECCrossProduct(&sp2C, &sp44, &sp38);
-                temp_f29 = acosf(PSVECDotProduct(&sp44, &sp2C));
+                VECCrossProduct(&sp2C, &sp44, &sp38);
+                temp_f29 = acosf(VECDotProduct(&sp44, &sp2C));
                 PSMTXRotAxisRad(spB0, &sp38, temp_f29);
             }
             PSMTXConcat(spB0, sp80, sp50);
@@ -2756,13 +2756,13 @@ static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
         sp10.x = temp_r28[temp_r27][0];
         sp10.y = temp_r28[temp_r27][1];
         sp10.z = temp_r28[temp_r27][2];
-        PSVECNormalize(&sp10, &sp10);
+        VECNormalize(&sp10, &sp10);
     }
     NBTB.x = temp_r31[temp_r25].x - temp_r31[temp_r24].x;
     NBTB.y = temp_r31[temp_r25].y - temp_r31[temp_r24].y;
     NBTB.z = temp_r31[temp_r25].z - temp_r31[temp_r24].z;
-    PSVECNormalize(&NBTB, &NBTB);
-    PSVECCrossProduct(&NBTB, &sp10, &NBTT);
+    VECNormalize(&NBTB, &NBTB);
+    VECCrossProduct(&NBTB, &sp10, &NBTT);
     GXPosition3s16(sp10.x * 256.0f, sp10.y * 256.0f, sp10.z * 256.0f);
     GXPosition3s16(NBTB.x * 256.0f, NBTB.y * 256.0f, NBTB.z * 256.0f);
     GXPosition3s16(NBTT.x * 256.0f, NBTT.y * 256.0f, NBTT.z * 256.0f);
@@ -2787,7 +2787,7 @@ static s32 MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
         sp10.x = temp_r29[temp_r28][0];
         sp10.y = temp_r29[temp_r28][1];
         sp10.z = temp_r29[temp_r28][2];
-        PSVECNormalize(&sp10, &sp10);
+        VECNormalize(&sp10, &sp10);
     }
     GXPosition3s16(sp10.x * 256.0f, sp10.y * 256.0f, sp10.z * 256.0f);
     GXPosition3s16(NBTB.x * 256.0f, NBTB.y * 256.0f, NBTB.z * 256.0f);

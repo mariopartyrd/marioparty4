@@ -347,17 +347,17 @@ void fn_1_1A7C(omObjData *object)
     }
     var_f31 = (float)object->work[0] / lbl_1_data_C4[object->work[1]];
 
-    PSVECSubtract(&lbl_1_data_4C[object->work[1] + 1], &lbl_1_data_4C[object->work[1]], &sp8);
-    PSVECScale(&sp8, &sp8, var_f31);
-    PSVECAdd(&lbl_1_data_4C[object->work[1]], &sp8, &sp8);
+    VECSubtract(&lbl_1_data_4C[object->work[1] + 1], &lbl_1_data_4C[object->work[1]], &sp8);
+    VECScale(&sp8, &sp8, var_f31);
+    VECAdd(&lbl_1_data_4C[object->work[1]], &sp8, &sp8);
 
     Center.x = sp8.x;
     Center.y = sp8.y;
     Center.z = sp8.z;
 
-    PSVECSubtract(&lbl_1_data_88[object->work[1] + 1], &lbl_1_data_88[object->work[1]], &sp8);
-    PSVECScale(&sp8, &sp8, var_f31);
-    PSVECAdd(&lbl_1_data_88[object->work[1]], &sp8, &sp8);
+    VECSubtract(&lbl_1_data_88[object->work[1] + 1], &lbl_1_data_88[object->work[1]], &sp8);
+    VECScale(&sp8, &sp8, var_f31);
+    VECAdd(&lbl_1_data_88[object->work[1]], &sp8, &sp8);
 
     CRot.x = sp8.x;
     CRot.y = sp8.y;

@@ -367,11 +367,11 @@ static void SetEnvelop(HsfCenv *arg0) {
             sp44.x = var_r25->value * (sp44.x - temp_r31->x);
             sp44.y = var_r25->value * (sp44.y - temp_r31->y);
             sp44.z = var_r25->value * (sp44.z - temp_r31->z);
-            PSVECAdd(&sp38, &sp44, &sp38);
+            VECAdd(&sp38, &sp44, &sp38);
             sp2C.x = var_r25->value * (sp2C.x - temp_r26->x);
             sp2C.y = var_r25->value * (sp2C.y - temp_r26->y);
             sp2C.z = var_r25->value * (sp2C.z - temp_r26->z);
-            PSVECAdd(&sp20, &sp2C, &sp20);
+            VECAdd(&sp20, &sp2C, &sp20);
         }
         temp_r28->x = temp_r31->x + sp38.x;
         temp_r28->y = temp_r31->y + sp38.y;

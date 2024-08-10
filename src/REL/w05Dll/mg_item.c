@@ -84,7 +84,7 @@ void fn_1_6B7C(void) {
     BoardModelHookSet(BoardPlayerModelGet(lbl_1_bss_B6), "a-itemhook-r", lbl_1_bss_A2);
     Hu3DModelObjPosGet(BoardModelIDGet(*lbl_1_bss_14), "chara1", &sp10);
     Hu3DModelObjPosGet(BoardModelIDGet(BoardPlayerModelGet(lbl_1_bss_B6)), "a-itemhook-r", &sp1C);
-    PSVECAdd(&sp1C, &sp10, &sp1C);
+    VECAdd(&sp1C, &sp10, &sp1C);
     sp1C.y += 25.0f;
     CharModelLayerSetAll(7);
     CharModelEffectCreate(-1, &sp1C);
@@ -282,13 +282,13 @@ void fn_1_799C(void) {
     temp_r31 = temp_r30->work[0];
     BoardModelPosGet(lbl_1_bss_A4[temp_r31], &sp20);
     sp2C.y = sp20.y = 0.0f;
-    PSVECSubtract(&sp2C, &sp20, &sp14);
-    temp_f30 = PSVECMag(&sp14);
-    PSVECScale(&sp14, &sp14, 0.016666668);
+    VECSubtract(&sp2C, &sp20, &sp14);
+    temp_f30 = VECMag(&sp14);
+    VECScale(&sp14, &sp14, 0.016666668);
     
     for (var_r29 = 0; var_r29 < 0x3C; var_r29++) {
         BoardModelPosGet(lbl_1_bss_A4[temp_r31], &sp20);
-        PSVECAdd(&sp20, &sp14, &sp20);
+        VECAdd(&sp20, &sp14, &sp20);
         BoardModelPosSetV(lbl_1_bss_A4[temp_r31], &sp20);
         HuPrcVSleep();
     }
@@ -486,7 +486,7 @@ void fn_1_850C(omObjData* arg0) {
         BoardPlayerMotionStart(lbl_1_bss_B6, lbl_1_bss_9E[0], 0x40000001);
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_14[0]), "chara1", &sp8);
         Hu3DModelObjPosGet(BoardModelIDGet(BoardPlayerModelGet(lbl_1_bss_B6)), "a-itemhook-r", &sp14);
-        PSVECAdd(&sp14, &sp8, &sp14);
+        VECAdd(&sp14, &sp8, &sp14);
         sp14.y += 25.0f;
         CharModelLayerSetAll(7);
         CharModelEffectCreate(-1, &sp14);

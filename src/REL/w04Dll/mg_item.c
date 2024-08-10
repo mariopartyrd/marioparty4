@@ -304,13 +304,13 @@ static void fn_1_A7E8(void) {
     var_f29 = 12.0f;
     sp3C = sp54[var_r30];
     BoardPlayerPosGet(lbl_1_bss_2AC, &sp30);
-    PSVECSubtract(&sp3C, &sp30, &sp3C);
-    PSVECScale(&sp3C, &sp3C, 0.05f);
+    VECSubtract(&sp3C, &sp30, &sp3C);
+    VECScale(&sp3C, &sp3C, 0.05f);
     while (TRUE) {
         BoardPlayerPosGet(lbl_1_bss_2AC, &sp30);
         sp3C.y = var_f29 - var_f30 * var_f30 * 0.25f * 0.075f;
         var_f30 += 1.0f;
-        PSVECAdd(&sp3C, &sp30, &sp30);
+        VECAdd(&sp3C, &sp30, &sp30);
         if (sp30.y <= sp54[var_r30].y - 40.0f && sp3C.y < 0.0f) {
             sp30.y = sp54[var_r30].y - 40.0f;
             break;
@@ -318,8 +318,8 @@ static void fn_1_A7E8(void) {
         BoardPlayerPosSetV(lbl_1_bss_2AC, &sp30);
         sp48 = sp54[var_r30];
         sp48.y = sp30.y = 0.0f;
-        PSVECSubtract(&sp48, &sp30, &sp30);
-        var_f31 = PSVECMag(&sp30);
+        VECSubtract(&sp48, &sp30, &sp30);
+        var_f31 = VECMag(&sp30);
         if (var_f31 <= 1.0f) {
             sp3C.x = sp3C.z = 0.0f;
         }
@@ -379,13 +379,13 @@ static void fn_1_A7E8(void) {
     var_f30 = 0.0f;
     var_f29 = 12.0f;
     BoardPlayerPosGet(lbl_1_bss_2AC, &sp30);
-    PSVECSubtract(&sp18, &sp30, &sp3C);
-    PSVECScale(&sp3C, &sp3C, 0.05f);
+    VECSubtract(&sp18, &sp30, &sp3C);
+    VECScale(&sp3C, &sp3C, 0.05f);
     while (TRUE) {
         BoardPlayerPosGet(lbl_1_bss_2AC, &sp30);
         sp3C.y = var_f29 - var_f30 * var_f30 * 0.25f * 0.075f;
         var_f30 += 1.0f;
-        PSVECAdd(&sp3C, &sp30, &sp30);
+        VECAdd(&sp3C, &sp30, &sp30);
         if (sp30.y < sp18.y) {
             sp30.y = sp18.y;
             break;
@@ -393,8 +393,8 @@ static void fn_1_A7E8(void) {
         BoardPlayerPosSetV(lbl_1_bss_2AC, &sp30);
         sp48 = sp18;
         sp48.y = sp30.y = 0.0f;
-        PSVECSubtract(&sp48, &sp30, &sp30);
-        var_f31 = PSVECMag(&sp30);
+        VECSubtract(&sp48, &sp30, &sp30);
+        var_f31 = VECMag(&sp30);
         if (var_f31 <= 1.0f) {
             sp3C.x = sp3C.z = 0.0f;
         }
@@ -406,11 +406,11 @@ static void fn_1_A7E8(void) {
     BoardModelPosGet(lbl_1_bss_298[temp_r29], &sp24);
     sp3C = sp24;
     sp3C.z += 100.0f;
-    PSVECSubtract(&sp3C, &sp24, &sp3C);
-    PSVECScale(&sp3C, &sp3C, 0.033333335f);
+    VECSubtract(&sp3C, &sp24, &sp3C);
+    VECScale(&sp3C, &sp3C, 0.033333335f);
     for (i = 0; i < 30; i++) {
         BoardModelPosGet(lbl_1_bss_298[temp_r29], &sp24);
-        PSVECAdd(&sp24, &sp3C, &sp24);
+        VECAdd(&sp24, &sp3C, &sp24);
         BoardModelPosSetV(lbl_1_bss_298[temp_r29], &sp24);
         HuPrcVSleep();
     }
@@ -538,8 +538,8 @@ void fn_1_BB00(s16 *arg0) {
         BoardModelPosGet(lbl_1_bss_14[10], &sp24);
         BoardModelPosSetV(lbl_1_bss_298[i], &sp24);
         BoardModelScaleSetV(lbl_1_bss_298[i], &sp18);
-        PSVECSubtract(&sp54[i], &sp24, &sp30[i]);
-        PSVECNormalize(&sp30[i], &sp30[i]);
+        VECSubtract(&sp54[i], &sp24, &sp30[i]);
+        VECNormalize(&sp30[i], &sp30[i]);
         spC[i] = 0.0f;
     }
     sp30[0].y = 16.0f;
