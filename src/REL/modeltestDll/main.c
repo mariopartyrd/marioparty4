@@ -349,7 +349,7 @@ static inline void HuControlCamCenter(Point3d *sp18, Point3d *sp30) {
         Center.y += 0.05f * (sp30->y * temp_r28);
         Center.z += 0.05f * (sp30->z * temp_r28);
     }
-    VECNormalize(sp18, sp30);
+    PSVECNormalize(sp18, sp30);
     temp_r28 = -(HuPadSubStkY[0] & 0xF8);
     if (temp_r28 != 0) {
         Center.x += 0.05f * (sp30->x * temp_r28);
@@ -489,8 +489,8 @@ void fn_1_F9C(struct om_obj_data * omData)
             + (sp24.x * (sp30.x * sp30.z * (1.0 - cos((M_PI * temp_f31) / 180.0)) - sp30.y * sin((M_PI * temp_f31) / 180.0))
             + sp24.y * (sp30.y * sp30.z * (1.0 - cos((M_PI * temp_f31) / 180.0)) + sp30.x * sin((M_PI * temp_f31) / 180.0)));
 
-    VECCrossProduct(&sp24, &sp30, &sp30);
-    VECNormalize(&sp30, &sp30);
+    PSVECCrossProduct(&sp24, &sp30, &sp30);
+    PSVECNormalize(&sp30, &sp30);
 
     if (lbl_1_bss_C == 0) {
         HuControlCamCenter(&sp18, &sp30);

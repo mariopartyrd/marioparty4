@@ -762,39 +762,39 @@ static s32 PrecalcPntToTriangle(Vec *arg0, Vec *arg1, Vec *arg2, Vec* arg3, Vec 
     temp_f30 = temp_f28 * (arg2->z * (arg3->y * sp14.x - arg3->x * sp14.y) + arg2->y * (arg3->x * sp14.z - arg3->z * sp14.x) + arg2->x * (arg3->z * sp14.y - arg3->y * sp14.z));
     temp_f29 = temp_f28 * (arg1->z * (arg3->x * sp14.y - arg3->y * sp14.x) + arg1->y * (arg3->z * sp14.x - arg3->x * sp14.z) + arg1->x * (arg3->y * sp14.z - arg3->z * sp14.y));
     if (temp_f30 > 0.0f && temp_f29 > 0.0f && temp_f30 + temp_f29 > 1.0f) {
-        VECSubtract(arg2, arg1, &sp14);
-        VECSubtract(arg4, arg1, &sp8);
-        temp_f31 = VECDotProduct(&sp14, &sp8) / VECDotProduct(&sp14, &sp14);
+        PSVECSubtract(arg2, arg1, &sp14);
+        PSVECSubtract(arg4, arg1, &sp8);
+        temp_f31 = PSVECDotProduct(&sp14, &sp8) / PSVECDotProduct(&sp14, &sp14);
         if (temp_f31 <= 0.0f) {
             arg5 = arg1;
         } else {
             if (temp_f31 >= 1.0f) {
                 arg5 = arg2;
             } else {
-                VECScale(&sp14, &sp8, temp_f31);
-                VECAdd(arg1, &sp8, arg5);
+                PSVECScale(&sp14, &sp8, temp_f31);
+                PSVECAdd(arg1, &sp8, arg5);
             }
         }
     } else if (temp_f29 < 0.0f) {
-        temp_f31 = VECDotProduct(arg1, arg4) / VECDotProduct(arg1, arg1);
+        temp_f31 = PSVECDotProduct(arg1, arg4) / PSVECDotProduct(arg1, arg1);
         if (temp_f31 <= 0.0f) {
             HuSetVecF(arg5, 0.0, 0.0, 0.0);
         } else {
             if (temp_f31 >= 1.0f) {
                 arg5 = arg1;
             } else {
-                VECScale(arg1, arg5, temp_f31);
+                PSVECScale(arg1, arg5, temp_f31);
             }
         }
     } else if (temp_f30 < 0.0f) {
-        temp_f31 = VECDotProduct(arg2, arg4) / VECDotProduct(arg2, arg2);
+        temp_f31 = PSVECDotProduct(arg2, arg4) / PSVECDotProduct(arg2, arg2);
         if (temp_f31 <= 0.0f) {
             HuSetVecF(arg5, 0.0, 0.0, 0.0);
         } else {
             if (temp_f31 >= 1.0f) {
                 arg5 = arg2;
             } else {
-                VECScale(arg2, arg5, temp_f31);
+                PSVECScale(arg2, arg5, temp_f31);
             }
         }
     } else {
@@ -815,13 +815,13 @@ BOOL Hitcheck_Triangle_with_Sphere(Vec *arg0, Vec *arg1, float arg2, Vec *arg3) 
     sp48.x = arg0[0].x;
     sp48.y = arg0[0].y;
     sp48.z = arg0[0].z;
-    VECSubtract(&arg0[1], &arg0[0], &sp3C);
-    VECSubtract(&arg0[2], &arg0[0], &sp30);
-    VECCrossProduct(&sp3C, &sp30, &sp24);
-    VECSubtract(arg1, &arg0[0], &sp18);
+    PSVECSubtract(&arg0[1], &arg0[0], &sp3C);
+    PSVECSubtract(&arg0[2], &arg0[0], &sp30);
+    PSVECCrossProduct(&sp3C, &sp30, &sp24);
+    PSVECSubtract(arg1, &arg0[0], &sp18);
     PrecalcPntToTriangle(&sp48, &sp3C, &sp30, &sp24, &sp18, &spC);
-    VECAdd(&spC, &sp48, arg3);
-    var_f31 = VECDistance(arg3, arg1);
+    PSVECAdd(&spC, &sp48, arg3);
+    var_f31 = PSVECDistance(arg3, arg1);
     if (var_f31 > arg2) {
         return FALSE;
     } else {
@@ -845,17 +845,17 @@ BOOL Hitcheck_Quadrangle_with_Sphere(Vec *arg0, Vec *arg1, float arg2, Vec *arg3
     sp6C.x = arg0->x;
     sp6C.y = arg0->y;
     sp6C.z = arg0->z;
-    VECSubtract(&arg0[2], &arg0[0], &sp60);
-    VECSubtract(&arg0[3], &arg0[0], &sp54);
-    VECSubtract(&arg0[1], &arg0[0], &sp48);
-    VECCrossProduct(&sp60, &sp54, &sp3C);
-    VECSubtract(arg1, &arg0[0], &sp30);
+    PSVECSubtract(&arg0[2], &arg0[0], &sp60);
+    PSVECSubtract(&arg0[3], &arg0[0], &sp54);
+    PSVECSubtract(&arg0[1], &arg0[0], &sp48);
+    PSVECCrossProduct(&sp60, &sp54, &sp3C);
+    PSVECSubtract(arg1, &arg0[0], &sp30);
     PrecalcPntToTriangle(&sp6C, &sp60, &sp54, &sp3C, &sp30, &sp24);
-    VECAdd(&sp24, &sp6C, &sp18);
+    PSVECAdd(&sp24, &sp6C, &sp18);
     PrecalcPntToTriangle(&sp6C, &sp54, &sp48, &sp3C, &sp30, &sp24);
-    VECAdd(&sp24, &sp6C, &spC);
-    var_f31 = VECDistance(&sp18, arg1);
-    temp_f30 = VECDistance(&spC, arg1);
+    PSVECAdd(&sp24, &sp6C, &spC);
+    var_f31 = PSVECDistance(&sp18, arg1);
+    temp_f30 = PSVECDistance(&spC, arg1);
     if (temp_f30 > var_f31) {
         arg3->x = sp18.x;
         arg3->y = sp18.y;

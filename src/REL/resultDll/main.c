@@ -1281,15 +1281,15 @@ void fn_1_5880(omObjData *object)
 				  + (dir.x * (offset.x * offset.z * (1.0 - cos((M_PI * z_rot) / 180.0)) - offset.y * sin((M_PI * z_rot) / 180.0))
 				  + dir.y * (offset.y * offset.z * (1.0 - cos((M_PI * z_rot) / 180.0)) + offset.x * sin((M_PI * z_rot) / 180.0)));
 
-	VECCrossProduct(&dir, &offset, &offset);
-	VECNormalize(&offset, &offset);
+	PSVECCrossProduct(&dir, &offset, &offset);
+	PSVECNormalize(&offset, &offset);
 	stick_pos = (HuPadSubStkX[0] & 0xF8);
 	if (stick_pos != 0) {
 		Center.x += 0.05f * (offset.x * stick_pos);
 		Center.y += 0.05f * (offset.y * stick_pos);
 		Center.z += 0.05f * (offset.z * stick_pos);
 	}
-	VECNormalize(&y_offset, &offset);
+	PSVECNormalize(&y_offset, &offset);
 	stick_pos = -(HuPadSubStkY[0] & 0xF8);
 	if (stick_pos != 0) {
 		Center.x += 0.05f * (offset.x * stick_pos);

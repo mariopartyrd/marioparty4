@@ -595,17 +595,17 @@ void fn_1_E214(omObjData *object)
                     if (var_r31->unk_58 == 5) {
                         HuAudFXPlay(0x540);
                         fn_1_117BC(var_r31->unk_14.x, 10.0f, &var_r31->unk_44, &sp1C);
-                        VECAdd(&var_r31->unk_2C, &sp1C, &var_r31->unk_2C);
+                        PSVECAdd(&var_r31->unk_2C, &sp1C, &var_r31->unk_2C);
                     }
                 }
                 if (var_r31->unk_00_field2 == 0) {
                     if (var_r31->unk_44.unk_08 == 1) {
                         var_r31->unk_00_field2 = 1;
                         var_r31->unk_60 = 0x14;
-                        VECScale(&var_r31->unk_2C, &var_r31->unk_2C, 1.5f);
-                        if (VECMag(&var_r31->unk_2C) > 50.0f) {
-                            VECNormalize(&var_r31->unk_2C, &var_r31->unk_2C);
-                            VECScale(&var_r31->unk_2C, &var_r31->unk_2C, 50.0f);
+                        PSVECScale(&var_r31->unk_2C, &var_r31->unk_2C, 1.5f);
+                        if (PSVECMag(&var_r31->unk_2C) > 50.0f) {
+                            PSVECNormalize(&var_r31->unk_2C, &var_r31->unk_2C);
+                            PSVECScale(&var_r31->unk_2C, &var_r31->unk_2C, 50.0f);
                         }
                         HuAudFXPlay(0x53E);
                         HuAudFXVolSet(var_r31->unk_7C[0], 0);
@@ -665,7 +665,7 @@ void fn_1_E214(omObjData *object)
                     var_f30 = 1.0f;
                 }
                 Hu3DModelScaleSet(object->model[5], var_f30, var_f30, var_f30);
-                var_r31->unk_50 += VECMag(&var_r31->unk_2C) / 3.125f;
+                var_r31->unk_50 += PSVECMag(&var_r31->unk_2C) / 3.125f;
                 PSMTXTrans(sp94, -var_r31->unk_68, -var_r31->unk_6C, -var_r31->unk_70);
                 MTXRotDeg(sp64, 0x78, var_r31->unk_50);
                 PSMTXConcat(sp64, sp94, sp34);
@@ -775,26 +775,26 @@ void fn_1_F194(omObjData *object)
         sp44.y = -0.27222222f;
         sp44.z = 0.0f;
         var_f28 = 0.27222222f * var_r31->unk_44.unk_00[3].y;
-        VECScale(&var_r31->unk_44.unk_00[3], &sp38, var_f28);
-        VECAdd(&sp44, &sp38, &sp2C);
-        VECAdd(&var_r31->unk_2C, &sp2C, &var_r31->unk_2C);
+        PSVECScale(&var_r31->unk_44.unk_00[3], &sp38, var_f28);
+        PSVECAdd(&sp44, &sp38, &sp2C);
+        PSVECAdd(&var_r31->unk_2C, &sp2C, &var_r31->unk_2C);
         sp20.x = sp20.y = sp20.z = 0.0f;
         sp14.x = sp14.y = sp14.z = 0.0f;
-        var_f29 = VECMag(&var_r31->unk_2C);
+        var_f29 = PSVECMag(&var_r31->unk_2C);
         if (var_f29 > 0.0f && fn_1_122C() == 4) {
-            VECNormalize(&var_r31->unk_2C, &sp8);
+            PSVECNormalize(&var_r31->unk_2C, &sp8);
             sp20.x = -sp8.x;
             sp20.y = -sp8.y;
             sp20.z = -sp8.z;
             if (var_r31->unk_62 < 120.0f) {
-                VECScale(&sp20, &sp20, var_f28 * var_f27);
+                PSVECScale(&sp20, &sp20, var_f28 * var_f27);
             }
             else {
-                VECScale(&sp20, &sp20, (0.15f * (var_r31->unk_62 / 240.0f)) + (var_f28 * var_f27));
+                PSVECScale(&sp20, &sp20, (0.15f * (var_r31->unk_62 / 240.0f)) + (var_f28 * var_f27));
             }
             if (!var_r31->unk_00_field3) {
                 fn_1_117BC(var_r31->unk_14.x, 1.0f, &var_r31->unk_44, &sp44);
-                var_f30 = VECDotProduct(&sp44, &sp8);
+                var_f30 = PSVECDotProduct(&sp44, &sp8);
                 var_f31 = 0.02f * var_f29;
                 sp14.x = (-sp8.x * var_f31) - (var_f30 * (-sp44.x * var_f31));
                 sp14.y = (-sp8.y * var_f31) - (var_f30 * (-sp44.y * var_f31));
@@ -802,7 +802,7 @@ void fn_1_F194(omObjData *object)
                 if ((var_f30 < 0.9f) && (var_f29 >= 20.0f)) {
                     mtxRot(sp80, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
                     mtxTransCat(sp80, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
-                    VECCrossProduct(&sp44, &sp8, &sp44);
+                    PSVECCrossProduct(&sp44, &sp8, &sp44);
                     if (sp44.y >= 0.0f) {
                         PSMTXTrans(sp50, -10.0f, 0.0f, 0.0f);
                         PSMTXConcat(sp50, sp80, sp80);
@@ -816,12 +816,12 @@ void fn_1_F194(omObjData *object)
                 }
             }
         }
-        VECAdd(&sp20, &sp14, &sp2C);
-        if (VECMag(&sp2C) > var_f29) {
+        PSVECAdd(&sp20, &sp14, &sp2C);
+        if (PSVECMag(&sp2C) > var_f29) {
             var_r31->unk_2C.x = var_r31->unk_2C.y = var_r31->unk_2C.z = 0.0f;
             return;
         }
-        VECAdd(&var_r31->unk_2C, &sp2C, &var_r31->unk_2C);
+        PSVECAdd(&var_r31->unk_2C, &sp2C, &var_r31->unk_2C);
         return;
     }
     var_r31->unk_2C.y += -0.27222222f;
@@ -859,14 +859,14 @@ void fn_1_F694(omObjData *object)
         sp2C.z += var_f30 * var_r31->unk_44.unk_00[3].z;
         if (!var_r31->unk_00_field3) {
             fn_1_117BC(var_r31->unk_14.x, 1.0f, &var_r31->unk_44, &sp20);
-            VECNormalize(&sp2C, &sp14);
-            var_f29 = VECDotProduct(&sp20, &sp14);
+            PSVECNormalize(&sp2C, &sp14);
+            var_f29 = PSVECDotProduct(&sp20, &sp14);
             var_f31 = var_f29 * var_f29;
             var_f31 *= var_f31;
-            if (var_f31 < 0.999f && VECMag(&var_r31->unk_2C) >= 10.0f) {
+            if (var_f31 < 0.999f && PSVECMag(&var_r31->unk_2C) >= 10.0f) {
                 mtxRot(sp68, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
                 mtxTransCat(sp68, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
-                VECCrossProduct(&sp20, &sp14, &sp8);
+                PSVECCrossProduct(&sp20, &sp14, &sp8);
                 if (sp8.y >= 0.0f) {
                     PSMTXTrans(sp38, -10.0f, 0.0f, 0.0f);
                     PSMTXConcat(sp38, sp68, sp68);
@@ -878,8 +878,8 @@ void fn_1_F694(omObjData *object)
                     fn_1_94C0(sp68, 10, 1);
                 }
             }
-            var_f28 = VECMag(&sp2C);
-            VECScale(&sp20, &sp20, var_f28);
+            var_f28 = PSVECMag(&sp2C);
+            PSVECScale(&sp20, &sp20, var_f28);
             var_r31->unk_2C.x = sp2C.x + (0.9f * (sp20.x - sp2C.x));
             var_r31->unk_2C.y = sp2C.y + (0.9f * (sp20.y - sp2C.y));
             var_r31->unk_2C.z = sp2C.z + (0.9f * (sp20.z - sp2C.z));
@@ -888,9 +888,9 @@ void fn_1_F694(omObjData *object)
             var_r31->unk_2C.x = sp2C.x;
             var_r31->unk_2C.y = sp2C.y;
             var_r31->unk_2C.z = sp2C.z;
-            VECScale(&var_r31->unk_2C, &var_r31->unk_2C, var_r31->unk_54);
+            PSVECScale(&var_r31->unk_2C, &var_r31->unk_2C, var_r31->unk_54);
         }
-        VECScale(&var_r31->unk_2C, &var_r31->unk_2C, 0.98f);
+        PSVECScale(&var_r31->unk_2C, &var_r31->unk_2C, 0.98f);
     }
 }
 
@@ -980,14 +980,14 @@ void fn_1_FA50(ModelData *model, Mtx mtx)
                     var_r30 = var_r28[var_r29];
                     var_r31 = var_r28[var_r29]->data;
                     if (!var_r31->unk_00_field0) {
-                        var_r31->unk_14.y = VECMag(&var_r31->unk_2C);
+                        var_r31->unk_14.y = PSVECMag(&var_r31->unk_2C);
                         if (!var_r31->unk_00_field3 && !var_r31->unk_00_field2 && (var_r31->unk_14.y > var_r31->unk_14.z)) {
                             var_r31->unk_14.y = var_r31->unk_14.z;
-                            VECNormalize(&var_r31->unk_2C, &var_r31->unk_2C);
-                            VECScale(&var_r31->unk_2C, &var_r31->unk_2C, var_r31->unk_14.y);
+                            PSVECNormalize(&var_r31->unk_2C, &var_r31->unk_2C);
+                            PSVECScale(&var_r31->unk_2C, &var_r31->unk_2C, var_r31->unk_14.y);
                         }
                         var_f31 = var_r31->unk_14.y;
-                        VECNormalize(&var_r31->unk_2C, &sp14);
+                        PSVECNormalize(&var_r31->unk_2C, &sp14);
 
                         while (var_f31 > 0.0f) {
                             if (var_f31 < 50.0f) {
@@ -1007,8 +1007,8 @@ void fn_1_FA50(ModelData *model, Mtx mtx)
                                 var_r30->trans.x = sp8.x;
                                 var_r30->trans.z = sp8.z;
                                 if (var_r31->unk_00_field2 == 0) {
-                                    VECNormalize(&var_r31->unk_2C, &sp14);
-                                    var_f26 = VECDotProduct(&sp14, &sp20);
+                                    PSVECNormalize(&var_r31->unk_2C, &sp14);
+                                    var_f26 = PSVECDotProduct(&sp14, &sp20);
                                     if (var_f26 < -0.2f && var_r31->unk_14.y >= 10.0f) {
                                         omVibrate(var_r31->unk_02, 12, 6, 6);
                                     }
@@ -1079,8 +1079,8 @@ void fn_1_FA50(ModelData *model, Mtx mtx)
                     sp20.x = sp2C[var_r27 - 1]->trans.x - lbl_1_bss_E0[1].x;
                     sp20.y = sp2C[var_r27 - 1]->trans.y - lbl_1_bss_E0[1].y;
                     sp20.z = sp2C[var_r27 - 1]->trans.z - lbl_1_bss_E0[1].z;
-                    var_f29 = VECMag(&sp20);
-                    VECNormalize(&sp20, &sp20);
+                    var_f29 = PSVECMag(&sp20);
+                    PSVECNormalize(&sp20, &sp20);
                     if (var_f29 < 100.0f) {
                         lbl_1_bss_E0[1].x = sp2C[var_r27 - 1]->trans.x;
                         lbl_1_bss_E0[1].y = sp2C[var_r27 - 1]->trans.y;
@@ -1373,7 +1373,7 @@ void fn_1_117BC(float arg8, float arg9, UnkM406PlayerStruct2 *arg0, Vec *arg1)
     sp10.z = var_r31->y * cosd((180.0f + arg8));
     var_f30 = 1.0f - (var_r31->y * var_r31->y);
     sp10.y = -sqrtf(var_f30);
-    VECScale(&sp10, arg1, arg9);
+    PSVECScale(&sp10, arg1, arg9);
 }
 s32 fn_1_119E4(Vec *arg0, UnkM406PlayerStruct *arg1)
 {
@@ -1566,9 +1566,9 @@ void fn_1_12270(omObjData *object)
         sp1C.z = -61000.0f;
 
     block_12270:
-        VECSubtract(&sp1C, &object->trans, &sp10);
-        if (VECMag(&sp10) > 0.0f) {
-            VECNormalize(&sp10, &sp10);
+        PSVECSubtract(&sp1C, &object->trans, &sp10);
+        if (PSVECMag(&sp10) > 0.0f) {
+            PSVECNormalize(&sp10, &sp10);
             var_r31->unk_06 = 72.0 * ((sp10.x * cosd(CRot.y)) - sp10.z * sind(CRot.y));
             var_r31->unk_07 = 72.0 * -((sp10.x * sind(CRot.y)) + sp10.z * cosd(CRot.y));
         }
@@ -1623,14 +1623,14 @@ s32 fn_1_127B8(void)
                 var_r25 = var_r29[var_r30];
                 var_r22 = var_r25->data;
                 if (!var_r22->unk_00_field0) {
-                    VECSubtract(&var_r26->trans, &var_r25->trans, &sp8);
-                    var_f31 = VECMag(&sp8);
+                    PSVECSubtract(&var_r26->trans, &var_r25->trans, &sp8);
+                    var_f31 = PSVECMag(&sp8);
                     if (var_f31 < 100.0f) {
-                        VECNormalize(&sp8, &sp8);
+                        PSVECNormalize(&sp8, &sp8);
                         var_f30 = 0.01f + (0.5f * (100.0f - var_f31));
-                        VECScale(&sp8, &sp8, var_f30);
-                        VECAdd(&sp14[var_r31], &sp8, &sp14[var_r31]);
-                        VECSubtract(&sp14[var_r30], &sp8, &sp14[var_r30]);
+                        PSVECScale(&sp8, &sp8, var_f30);
+                        PSVECAdd(&sp14[var_r31], &sp8, &sp14[var_r31]);
+                        PSVECSubtract(&sp14[var_r30], &sp8, &sp14[var_r30]);
                         var_r27++;
                     }
                 }
@@ -1641,7 +1641,7 @@ s32 fn_1_127B8(void)
         var_r28 = var_r29[var_r31];
         var_r24 = var_r28->data;
         if (!var_r24->unk_00_field0) {
-            VECAdd(&var_r28->trans, &sp14[var_r31], &var_r28->trans);
+            PSVECAdd(&var_r28->trans, &sp14[var_r31], &var_r28->trans);
         }
     }
     return var_r27;
@@ -1660,8 +1660,8 @@ s32 fn_1_129E4(omObjData *object)
     var_r30 = omGetGroupMemberListEx(HuPrcCurrentGet(), 3);
     for (var_r31 = 0; var_r31 < var_r30[0]->mdlcnt; var_r31++) {
         var_r29 = &Hu3DData[(*var_r30)->model[var_r31]];
-        VECSubtract(&var_r29->pos, &object->trans, &spC);
-        var_f31 = VECMag(&spC);
+        PSVECSubtract(&var_r29->pos, &object->trans, &spC);
+        var_f31 = PSVECMag(&spC);
         if (var_f31 < 100.0f) {
             return 1;
         }
@@ -1792,8 +1792,8 @@ void fn_1_12BC4(omObjData *object)
             sp84.x = Center.x + (CZoom * (sind(CRot.y) * cosd(CRot.x)));
             sp84.y = Center.y + (CZoom * -sind(CRot.x));
             sp84.z = Center.z + (CZoom * (cosd(CRot.y) * cosd(CRot.x)));
-            VECSubtract(&Center, &sp84, &sp78);
-            VECNormalize(&sp78, &sp78);
+            PSVECSubtract(&Center, &sp84, &sp78);
+            PSVECNormalize(&sp78, &sp78);
             HuAudFXListnerUpdate(&sp84, &sp78);
         }
     }
@@ -1916,7 +1916,7 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
             sp24.x = -var_r31->nbt.x;
             sp24.y = 0.0f;
             sp24.z = -var_r31->nbt.z;
-            VECNormalize(&sp24, &sp24);
+            PSVECNormalize(&sp24, &sp24);
             var_f31 = (var_f28 + (((-var_r31->nbt.x * arg0->x) - (var_r31->nbt.y * arg0->y)) - (var_r31->nbt.z * arg0->z)))
                 / ((var_r31->nbt.x * sp24.x) + (var_r31->nbt.z * sp24.z));
             if (var_f31 <= 0.0) {
@@ -1925,18 +1925,18 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
             spC.x = arg0->x + (sp24.x * var_f31);
             spC.y = arg0->y;
             spC.z = arg0->z + (sp24.z * var_f31);
-            VECSubtract(sp48[1], sp48[0], &sp3C);
-            VECSubtract(&spC, sp48[1], &sp30);
-            VECCrossProduct(&sp3C, &sp30, &sp24);
-            if (!(VECDotProduct(&var_r31->nbt, &sp24) < 0.0f)) {
-                VECSubtract(sp48[2], sp48[1], &sp3C);
-                VECSubtract(&spC, sp48[2], &sp30);
-                VECCrossProduct(&sp3C, &sp30, &sp24);
-                if (!(VECDotProduct(&var_r31->nbt, &sp24) < 0.0f)) {
-                    VECSubtract(sp48[0], sp48[2], &sp3C);
-                    VECSubtract(&spC, sp48[0], &sp30);
-                    VECCrossProduct(&sp3C, &sp30, &sp24);
-                    if (!(VECDotProduct(&var_r31->nbt, &sp24) < 0.0f) && (var_f31 < var_f29)) {
+            PSVECSubtract(sp48[1], sp48[0], &sp3C);
+            PSVECSubtract(&spC, sp48[1], &sp30);
+            PSVECCrossProduct(&sp3C, &sp30, &sp24);
+            if (!(PSVECDotProduct(&var_r31->nbt, &sp24) < 0.0f)) {
+                PSVECSubtract(sp48[2], sp48[1], &sp3C);
+                PSVECSubtract(&spC, sp48[2], &sp30);
+                PSVECCrossProduct(&sp3C, &sp30, &sp24);
+                if (!(PSVECDotProduct(&var_r31->nbt, &sp24) < 0.0f)) {
+                    PSVECSubtract(sp48[0], sp48[2], &sp3C);
+                    PSVECSubtract(&spC, sp48[0], &sp30);
+                    PSVECCrossProduct(&sp3C, &sp30, &sp24);
+                    if (!(PSVECDotProduct(&var_r31->nbt, &sp24) < 0.0f) && (var_f31 < var_f29)) {
                         var_f29 = var_f31;
                         sp18 = spC;
                         var_r28 = var_r31;
@@ -1948,15 +1948,15 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
                 if (var_r22 > 2) {
                     var_r22 = 0;
                 }
-                VECSubtract(sp48[var_r22], sp48[var_r29], &sp3C);
+                PSVECSubtract(sp48[var_r22], sp48[var_r29], &sp3C);
                 if (sp3C.y != 0.0f) {
                     var_f30 = (arg0->y - sp48[var_r29]->y) / sp3C.y;
                     if ((var_f30 >= 0.0f) && (var_f30 < 1.0f)) {
                         spC.x = sp48[var_r29]->x + (var_f30 * sp3C.x);
                         spC.z = sp48[var_r29]->z + (var_f30 * sp3C.z);
-                        VECSubtract(&spC, arg0, &sp3C);
+                        PSVECSubtract(&spC, arg0, &sp3C);
                         sp3C.y = 0.0f;
-                        var_f31 = VECMag(&sp3C);
+                        var_f31 = PSVECMag(&sp3C);
                         if (var_f31 < var_f29) {
                             var_f29 = var_f31;
                             sp18 = spC;
@@ -1972,9 +1972,9 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
                         if ((sp30.y >= arg0->y) && (sp30.y < (150.0f + arg0->y))) {
                             sp30.x = sp48[var_r29]->x + (var_f30 * sp3C.x);
                             sp30.z = sp48[var_r29]->z + (var_f30 * sp3C.z);
-                            VECSubtract(&sp30, arg0, &sp3C);
+                            PSVECSubtract(&sp30, arg0, &sp3C);
                             sp3C.y = 0.0f;
-                            var_f31 = VECMag(&sp3C);
+                            var_f31 = PSVECMag(&sp3C);
                             if (var_f31 < var_f29) {
                                 var_f29 = var_f31;
                                 sp18 = sp30;
@@ -1984,9 +1984,9 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
                     }
                 }
                 if ((sp48[var_r29]->y >= arg0->y) && (sp48[var_r29]->y < (150.0f + arg0->y))) {
-                    VECSubtract(arg0, sp48[var_r29], &sp3C);
+                    PSVECSubtract(arg0, sp48[var_r29], &sp3C);
                     sp3C.y = 0.0f;
-                    var_f31 = VECMag(&sp3C);
+                    var_f31 = PSVECMag(&sp3C);
                     if (var_f31 < var_f29) {
                         var_f29 = var_f31;
                         sp18.x = sp48[var_r29]->x;
@@ -1998,9 +1998,9 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
         }
     }
     if (var_f29 < 100.0f) {
-        VECSubtract(arg0, &sp18, &sp3C);
+        PSVECSubtract(arg0, &sp18, &sp3C);
         sp3C.y = 0.0f;
-        VECNormalize(&sp3C, &sp3C);
+        PSVECNormalize(&sp3C, &sp3C);
         arg0->x = sp18.x + (100.001f * sp3C.x);
         arg0->z = sp18.z + (100.001f * sp3C.z);
         arg1->x = var_r28->nbt.x;
@@ -2052,21 +2052,21 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
             sp34[0] = &((Vec *)var_r28->data)[var_r31->indices[0][0]];
             sp34[1] = &((Vec *)var_r28->data)[var_r31->indices[1][0]];
             sp34[2] = &((Vec *)var_r28->data)[var_r31->indices[2][0]];
-            VECSubtract(sp34[1], sp34[0], &sp28);
-            VECSubtract(arg0, sp34[1], &sp1C);
-            VECCrossProduct(&sp28, &sp1C, &sp10);
+            PSVECSubtract(sp34[1], sp34[0], &sp28);
+            PSVECSubtract(arg0, sp34[1], &sp1C);
+            PSVECCrossProduct(&sp28, &sp1C, &sp10);
             if (sp10.y < 0.0f) {
                 continue;
             }
-            VECSubtract(sp34[2], sp34[1], &sp28);
-            VECSubtract(arg0, sp34[2], &sp1C);
-            VECCrossProduct(&sp28, &sp1C, &sp10);
+            PSVECSubtract(sp34[2], sp34[1], &sp28);
+            PSVECSubtract(arg0, sp34[2], &sp1C);
+            PSVECCrossProduct(&sp28, &sp1C, &sp10);
             if (sp10.y < 0.0f) {
                 continue;
             }
-            VECSubtract(sp34[0], sp34[2], &sp28);
-            VECSubtract(arg0, sp34[0], &sp1C);
-            VECCrossProduct(&sp28, &sp1C, &sp10);
+            PSVECSubtract(sp34[0], sp34[2], &sp28);
+            PSVECSubtract(arg0, sp34[0], &sp1C);
+            PSVECCrossProduct(&sp28, &sp1C, &sp10);
             if (sp10.y < 0.0f) {
                 continue;
             }

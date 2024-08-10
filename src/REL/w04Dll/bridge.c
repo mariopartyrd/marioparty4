@@ -262,8 +262,8 @@ static void fn_1_1E60(void) {
     while (TRUE) {
         BoardSpacePosGet(0, var_r29, &sp14);
         BoardSpacePosGet(0, var_r28, &sp8);
-        VECSubtract(&sp8, &sp14, &sp20);
-        VECScale(&sp20, &sp20, 0.008333334f);
+        PSVECSubtract(&sp8, &sp14, &sp20);
+        PSVECScale(&sp20, &sp20, 0.008333334f);
         temp_f31 = atan2d(sp8.x - sp14.x, sp8.z - sp14.z);
         BoardModelPosGet(temp_r31[1], &sp14);
         while (fn_1_1130(temp_r31[1], temp_f31, 2.5f) == 0) {
@@ -280,7 +280,7 @@ static void fn_1_1E60(void) {
             } else {
                 BoardModelAlphaSet(temp_r31[1], 0);
             }
-            VECAdd(&sp14, &sp20, &sp14);
+            PSVECAdd(&sp14, &sp20, &sp14);
             BoardModelPosSetV(temp_r31[1], &sp14);
             HuPrcVSleep();
         }

@@ -434,7 +434,7 @@ static void fn_1_A6E0(omObjData *arg0) {
             if (temp_r31->unk1C > 1.0f) {
                 temp_r31->unk1C = 1.0f;
             }
-            VECAdd(&temp_r31->unk20, &temp_r31->unk2C, &temp_r31->unk20);
+            PSVECAdd(&temp_r31->unk20, &temp_r31->unk2C, &temp_r31->unk20);
             if (temp_r31->unk20.y >= 4.0f) {
                 temp_r31->unk20.y = 4.0f;
                 temp_r31->unk2C.y = -0.1f;
@@ -870,8 +870,8 @@ static void fn_1_C894(omObjData *arg0) {
 }
 
 static void fn_1_C94C(Vec *arg0, Vec *arg1, Vec *arg2) {
-    VECSubtract(arg1, arg0, arg2);
-    VECNormalize(arg2, arg2);
+    PSVECSubtract(arg1, arg0, arg2);
+    PSVECNormalize(arg2, arg2);
 }
 
 static float fn_1_C998(Vec *arg0) {
@@ -915,8 +915,8 @@ static u32 fn_1_CB44(Vec *arg0, float arg1) {
     float var_f31;
 
     BoardPlayerPosGet(lbl_1_bss_798, &sp18);
-    VECSubtract(arg0, &sp18, &sp24);
-    VECNormalize(&sp24, &sp24);
+    PSVECSubtract(arg0, &sp18, &sp24);
+    PSVECNormalize(&sp24, &sp24);
     var_f28 = fn_1_C998(&sp24);
     BoardPlayerRotGet(lbl_1_bss_798, &spC);
     var_f31 = spC.y;

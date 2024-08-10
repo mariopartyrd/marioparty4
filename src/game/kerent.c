@@ -1,19 +1,19 @@
 //fake function signatures
 void OSDumpStopwatch(void);
-void VECDotProduct(void);
-void VECDistance(void);
-void VECSquareDistance(void);
+void PSVECDotProduct(void);
+void PSVECDistance(void);
+void PSVECSquareDistance(void);
 void VIGetDTVStatus(void);
 void OSGetProgressiveMode(void);
 void OSSetProgressiveMode(void);
-void VECSubtract(void);
+void PSVECSubtract(void);
 void PSMTXTranspose(void);
 void C_VECReflect(void);
 void PSMTXInvXpose(void);
 void PSMTXRotRad(void);
 void PSMTXRotAxisRad(void);
-void VECMag(void);
-void VECScale(void);
+void PSVECMag(void);
+void PSVECScale(void);
 void PSMTXMultVecSR(void);
 void C_QUATRotAxisRad(void);
 void C_QUATMtx(void);
@@ -1017,20 +1017,20 @@ void BoardShopTutorialExec(void);
 void BoardLotteryTutorialExec(void);
 void BoardBooHouseTutorialExec(void);
 extern void _kerjmp_OSDumpStopwatch(void);
-extern void _kerjmp_VECDotProduct(void);
-extern void _kerjmp_VECDistance(void);
-extern void _kerjmp_VECSquareDistance(void);
+extern void _kerjmp_PSVECDotProduct(void);
+extern void _kerjmp_PSVECDistance(void);
+extern void _kerjmp_PSVECSquareDistance(void);
 extern void _kerjmp_VIGetDTVStatus(void);
 extern void _kerjmp_OSGetProgressiveMode(void);
 extern void _kerjmp_OSSetProgressiveMode(void);
-extern void _kerjmp_VECSubtract(void);
+extern void _kerjmp_PSVECSubtract(void);
 extern void _kerjmp_PSMTXTranspose(void);
 extern void _kerjmp_C_VECReflect(void);
 extern void _kerjmp_PSMTXInvXpose(void);
 extern void _kerjmp_PSMTXRotRad(void);
 extern void _kerjmp_PSMTXRotAxisRad(void);
-extern void _kerjmp_VECMag(void);
-extern void _kerjmp_VECScale(void);
+extern void _kerjmp_PSVECMag(void);
+extern void _kerjmp_PSVECScale(void);
 extern void _kerjmp_PSMTXMultVecSR(void);
 extern void _kerjmp_C_QUATRotAxisRad(void);
 extern void _kerjmp_C_QUATMtx(void);
@@ -2039,20 +2039,20 @@ asm void _kerent(void) {
     nofralloc
     entry _kerjmp_OSDumpStopwatch
     b OSDumpStopwatch
-    entry _kerjmp_VECDotProduct
-    b VECDotProduct
-    entry _kerjmp_VECDistance
-    b VECDistance
-    entry _kerjmp_VECSquareDistance
-    b VECSquareDistance
+    entry _kerjmp_PSVECDotProduct
+    b PSVECDotProduct
+    entry _kerjmp_PSVECDistance
+    b PSVECDistance
+    entry _kerjmp_PSVECSquareDistance
+    b PSVECSquareDistance
     entry _kerjmp_VIGetDTVStatus
     b VIGetDTVStatus
     entry _kerjmp_OSGetProgressiveMode
     b OSGetProgressiveMode
     entry _kerjmp_OSSetProgressiveMode
     b OSSetProgressiveMode
-    entry _kerjmp_VECSubtract
-    b VECSubtract
+    entry _kerjmp_PSVECSubtract
+    b PSVECSubtract
     entry _kerjmp_PSMTXTranspose
     b PSMTXTranspose
     entry _kerjmp_C_VECReflect
@@ -2063,10 +2063,10 @@ asm void _kerent(void) {
     b PSMTXRotRad
     entry _kerjmp_PSMTXRotAxisRad
     b PSMTXRotAxisRad
-    entry _kerjmp_VECMag
-    b VECMag
-    entry _kerjmp_VECScale
-    b VECScale
+    entry _kerjmp_PSVECMag
+    b PSVECMag
+    entry _kerjmp_PSVECScale
+    b PSVECScale
     entry _kerjmp_PSMTXMultVecSR
     b PSMTXMultVecSR
     entry _kerjmp_C_QUATRotAxisRad

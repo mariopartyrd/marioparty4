@@ -783,8 +783,8 @@ static void DiceDigitMove(DiceDigitWork *arg0, s32 arg1) {
     for (i = 0; i < 2; i++) {
         BoardModelPosGet(arg0->unk04[i], &sp30);
         Hu3D2Dto3D(&sp54[i], 1, &sp54[i]);
-        VECSubtract(&sp54[i], &sp30, &sp24);
-        if (VECMag(&sp24) < 0.01f) {
+        PSVECSubtract(&sp54[i], &sp30, &sp24);
+        if (PSVECMag(&sp24) < 0.01f) {
             arg0->unk00_field2 = 0;
             if (arg1 != 0 && arg0->unk00_field3 != 0) {
                 BoardModelVisibilitySet(arg0->unk04[i], 0);
@@ -792,8 +792,8 @@ static void DiceDigitMove(DiceDigitWork *arg0, s32 arg1) {
         } else {
             arg0->unk00_field2 = 1;
         }
-        VECScale(&sp24, &sp24, arg0->unk08);
-        VECAdd(&sp30, &sp24, &sp30);
+        PSVECScale(&sp24, &sp24, arg0->unk08);
+        PSVECAdd(&sp30, &sp24, &sp30);
         BoardModelPosSetV(arg0->unk04[i], &sp30);
     }
 }

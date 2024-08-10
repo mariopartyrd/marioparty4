@@ -110,25 +110,25 @@ void fn_1_3044(void) {
     HuPrcSleep(0x88);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_4A), lbl_1_data_1C4[lbl_1_bss_48], &sp20);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_4E[lbl_1_bss_48]), "bakawa1", &sp14);
-    VECAdd(&sp20, &sp14, &sp14);
+    PSVECAdd(&sp20, &sp14, &sp14);
     BoardModelPosSetV(lbl_1_bss_44[0], &sp14);
     BoardModelVisibilitySet(lbl_1_bss_44[0], 1);
     BoardModelMotionTimeSet(lbl_1_bss_44[0], 0.0f);
     HuAudFXPlay(0x48C);
-    VECSubtract(&lbl_1_bss_38, &sp14, &sp8);
+    PSVECSubtract(&lbl_1_bss_38, &sp14, &sp8);
     sp8.y = 0.0f;
-    VECNormalize(&sp8, &sp8);
-    VECScale(&sp8, &sp8, 8.0f);
+    PSVECNormalize(&sp8, &sp8);
+    PSVECScale(&sp8, &sp8, 8.0f);
     temp_f30 = 11.0f;
     var_f31 = 0.0f;
     
     while (1) {
         sp8.y = (temp_f30 - (0.075 * (0.25f * (var_f31 * var_f31))));
         var_f31 += 1.0f;
-        VECAdd(&sp14, &sp8, &sp14);
-        VECSubtract(&lbl_1_bss_38, &sp14, &sp20);
+        PSVECAdd(&sp14, &sp8, &sp14);
+        PSVECSubtract(&lbl_1_bss_38, &sp14, &sp20);
         sp20.y = 0.0f;
-        var_f29 = VECMag(&sp20);
+        var_f29 = PSVECMag(&sp20);
         if (var_f29 <= 8.0f) {
             sp14.x = lbl_1_bss_38.x;
             sp14.z = lbl_1_bss_38.z;
@@ -179,19 +179,19 @@ void fn_1_3514(void) {
 
     BoardPlayerPosGet(lbl_1_bss_4C, &sp2C);
     BoardPlayerMotionShiftSet(lbl_1_bss_4C, 4, 0.0f, 5.0f, 0);
-    VECSubtract(&lbl_1_bss_38, &sp2C, &sp20);
+    PSVECSubtract(&lbl_1_bss_38, &sp2C, &sp20);
     sp20.y = 0.0f;
-    VECNormalize(&sp20, &sp20);
-    VECScale(&sp20, &sp20, 7.2f);
+    PSVECNormalize(&sp20, &sp20);
+    PSVECScale(&sp20, &sp20, 7.2f);
     var_f30 = 10.0f;
     var_f31 = 0.0f;
     while (1) {
         sp20.y = (var_f30 - (0.075f * (0.25f * (var_f31 * var_f31))));
         var_f31 += 1.0f;
-        VECAdd(&sp2C, &sp20, &sp2C);
-        VECSubtract(&lbl_1_bss_38, &sp2C, &sp14);
+        PSVECAdd(&sp2C, &sp20, &sp2C);
+        PSVECSubtract(&lbl_1_bss_38, &sp2C, &sp14);
         sp14.y = 0.0f;
-        var_f29 = VECMag(&sp14);
+        var_f29 = PSVECMag(&sp14);
         if (var_f29 <= 7.2f) {
             sp2C.x = lbl_1_bss_38.x;
             sp2C.z = lbl_1_bss_38.z;
@@ -218,19 +218,19 @@ void fn_1_3514(void) {
         var_r31 = BoardSpaceLinkFlagSearch(0, var_r31, 0x400);
     }
     BoardSpacePosGet(0, var_r31, &sp8);
-    VECSubtract(&sp8, &sp2C, &sp20);
+    PSVECSubtract(&sp8, &sp2C, &sp20);
     sp20.y = 0.0f;
-    VECNormalize(&sp20, &sp20);
-    VECScale(&sp20, &sp20, 10.0f);
+    PSVECNormalize(&sp20, &sp20);
+    PSVECScale(&sp20, &sp20, 10.0f);
     var_f30 = 9.0f;
     var_f31 = 0.0f;
     while (1) {
         sp20.y = var_f30 - (0.075f * (0.25f * (var_f31 * var_f31)));
         var_f31 += 1.0f;
-        VECAdd(&sp2C, &sp20, &sp2C);
-        VECSubtract(&sp8, &sp2C, &sp14);
+        PSVECAdd(&sp2C, &sp20, &sp2C);
+        PSVECSubtract(&sp8, &sp2C, &sp14);
         sp14.y = 0.0f;
-        var_f29 = VECMag(&sp14);
+        var_f29 = PSVECMag(&sp14);
         if (var_f29 <= 10.0f) {
             sp2C.x = sp8.x;
             sp2C.z = sp8.z;
@@ -327,7 +327,7 @@ void fn_1_3E8C(void) {
         sp8.x = 25.0f;
     }
     for (i = 0; i < 60; i++) {
-        VECAdd(&sp14, &sp8, &sp14);
+        PSVECAdd(&sp14, &sp8, &sp14);
         sp8.y -= 0.625f;
         BoardModelPosSetV(lbl_1_bss_44[1], &sp14);
         HuPrcVSleep();        

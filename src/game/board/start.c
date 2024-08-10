@@ -279,13 +279,13 @@ static void FocusStart(void) {
     sp20.x = spacePos.x + 150.0f;
     sp20.y = spacePos.y + 100.0f;
     sp20.z = spacePos.z + 150.0f;
-    VECSubtract(&sp20, &sp2C, &sp14);
+    PSVECSubtract(&sp20, &sp2C, &sp14);
     sp14.x /= 120.0f;
     sp14.y /= 120.0f;
     sp14.z /= 120.0f;
     HuAudSStreamFadeOut(streamStatus, 0x1388);
     for (var_r31 = 0; var_r31 < 120; var_r31++) {
-        VECAdd(&sp14, &sp2C, &sp2C);
+        PSVECAdd(&sp14, &sp2C, &sp2C);
         BoardModelPosSetV(camFocus, &sp2C);
         HuPrcVSleep();
     }

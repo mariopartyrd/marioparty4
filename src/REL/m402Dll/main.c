@@ -778,7 +778,7 @@ static void fn_1_1FC4(Vec *arg0, float *arg1, s32 arg2, s32 arg3) {
             var_r30 = 1;
         }
     }
-    VECAdd((Vec*) &arg0, &sp18, (Vec*) &arg0);
+    PSVECAdd((Vec*) &arg0, &sp18, (Vec*) &arg0);
 }
 
 #include "src/REL/executor.c"
@@ -1501,7 +1501,7 @@ static void fn_1_70E4(omObjData *arg0) {
             PSMTXIdentity(sp18);
             mtxRot(sp18, temp_r31->unk24.x, temp_r31->unk24.y, 0.0f);
             PSMTXMultVec(sp18, &spC, &spC);
-            VECAdd(&spC, &temp_r31->unk00, &temp_r31->unk00);
+            PSVECAdd(&spC, &temp_r31->unk00, &temp_r31->unk00);
             omSetTra(arg0, temp_r31->unk00.x, temp_r31->unk00.y, temp_r31->unk00.z);
             Hu3DModelTPLvlSet(arg0->model[0], temp_r31->unk30);
             temp_r31->unk30 -= 0.02f;
@@ -1883,7 +1883,7 @@ void ObjectSetup(void) {
     fn_1_8048();
     Hu3DShadowCreate(30.0f, 20.0f, 20000.0f);
     Hu3DShadowTPLvlSet(0.5f);
-    VECNormalize(&lbl_1_data_60, &sp20);
+    PSVECNormalize(&lbl_1_data_60, &sp20);
     Hu3DShadowPosSet(&lbl_1_data_60, &sp20, &lbl_1_data_6C);
     omMakeGroupEx(lbl_1_bss_1E8, 0, 4);
     lbl_1_bss_54 = omGetGroupMemberListEx(lbl_1_bss_1E8, 0);

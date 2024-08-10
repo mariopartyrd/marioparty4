@@ -60,15 +60,15 @@ void fn_1_BD9C(omObjData *object)
         } else {
             var_f31 = 0.0055555557f * (var_r31->unk_10 - var_r29);
         }
-        VECSubtract(&sp2C[1], &sp2C[0], &sp8);
-        VECScale(&sp8, &sp8, var_f31);
-        VECAdd(&sp2C[0], &sp8, &sp8);
+        PSVECSubtract(&sp2C[1], &sp2C[0], &sp8);
+        PSVECScale(&sp8, &sp8, var_f31);
+        PSVECAdd(&sp2C[0], &sp8, &sp8);
         Center.x = sp8.x;
         Center.y = sp8.y;
         Center.z = sp8.z;
-        VECSubtract(&sp14[1], &sp14[0], &sp8);
-        VECScale(&sp8, &sp8, var_f31);
-        VECAdd(&sp14[0], &sp8, &sp8);
+        PSVECSubtract(&sp14[1], &sp14[0], &sp8);
+        PSVECScale(&sp8, &sp8, var_f31);
+        PSVECAdd(&sp14[0], &sp8, &sp8);
         CRot.x = sp8.x;
         CRot.y = sp8.y;
         CRot.z = 0.0f;
