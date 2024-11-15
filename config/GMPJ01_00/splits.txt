@@ -12,3 +12,29 @@ Sections:
 	.sbss       type:bss align:32
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:4
+
+game/main.c:
+	.text       start:0x800057C0 end:0x80005A5C
+	.data       start:0x8011E9C0 end:0x8011E9D0
+	.sdata      start:0x801D30C0 end:0x801D30D0
+	.sbss       start:0x801D36C0 end:0x801D3718
+	.sdata2     start:0x801D4620 end:0x801D4628
+
+game/pad.c:
+	.text       start:0x80005A5C end:0x80006478
+	.data       start:0x8011E9D0 end:0x8011E9E0
+	.bss        start:0x801424A0 end:0x801424E0
+	.sbss       start:0x801D3718 end:0x801D37A0
+
+game/dvd.c:
+	.text       start:0x80006478 end:0x80006E38
+	.data       start:0x8011E9E0 end:0x8011EB38
+	.sdata      start:0x801D30D0 end:0x801D30D8
+	.sbss       start:0x801D37A0 end:0x801D37A8
+
+game/data.c:
+	.text       start:0x80006E38 end:0x80009400
+	.data       start:0x8011EB38 end:0x8011F9C0
+	.bss        start:0x801424E0 end:0x801452E0
+	.sdata      start:0x801D30D8 end:0x801D30E8
+	.sbss       start:0x801D37A8 end:0x801D37B8
