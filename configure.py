@@ -1391,7 +1391,7 @@ config.libs = [
     Rel(
         "nisDll",
         objects={
-            Object(Matching, "REL/nisDll/main.c")
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/nisDll/main.c")
         },
     ),
     Rel(
