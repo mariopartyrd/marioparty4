@@ -506,3 +506,8 @@ modules:
   symbols: config/GMPP01_00/rels/m401Dll/symbols.txt
   splits: config/GMPP01_00/rels/m401Dll/splits.txt
   links: [_minigameDll]
+  
+extract:
+- symbol: ank8x8_4b
+  binary: ank8x8_4b.bin
+  header: ank8x8_4b.inc

@@ -6,7 +6,7 @@
 #define PTR_OFFSET(ptr, offset) (void *)(((u8 *)(ptr)+(u32)(offset)))
 #define DATA_EFF_SIZE(size) (((size)+1) & ~0x1)
 
-static void **HuDataReadMultiSub(s32 *data_ids, BOOL use_num, s32 num);
+void **HuDataReadMultiSub(s32 *data_ids, BOOL use_num, s32 num);
 
 #define DATA_MAX_READSTAT 128
 
@@ -406,7 +406,7 @@ void **HuDataReadMulti(s32 *data_ids)
     return HuDataReadMultiSub(data_ids, FALSE, 0);
 }
 
-static void **HuDataReadMultiSub(s32 *data_ids, BOOL use_num, s32 num)
+void **HuDataReadMultiSub(s32 *data_ids, BOOL use_num, s32 num)
 {
     s32 *dir_ids;
     char **paths;
