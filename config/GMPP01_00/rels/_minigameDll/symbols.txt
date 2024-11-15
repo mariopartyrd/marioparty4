@@ -1,5 +1,7 @@
-_prolog = .text:0x00000000; // type:function scope:global
-_epilog = .text:0x00000054; // type:function scope:global
-lbl_1_section2_0 = .section2:0x00000000; // type:object size:0x4
-lbl_1_section3_0 = .section3:0x00000000; // type:object size:0x4
-lbl_1_section5_0 = .section5:0x00000000; // type:object size:0x14 data:string
+_prolog = .text:0x00000000; // type:function size:0x54 scope:global
+_epilog = .text:0x00000054; // type:function size:0x4C scope:global
+fn_1_A0 = .text:0x000000A0; // type:function size:0x2C
+fn_1_CC = .text:0x000000CC; // type:function size:0x24
+_ctors = .ctors:0x00000000; // type:label scope:global data:4byte
+_dtors = .dtors:0x00000000; // type:label scope:global data:4byte
+lbl_1_data_0 = .data:0x00000000; // type:object size:0x14 data:string

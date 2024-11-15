@@ -3,569 +3,507 @@ object: sys/main.dol
 hash: 65ef91650e9201047f50a3c39c7693a21fff2b29
 symbols: config/GMPP01_00/symbols.txt
 splits: config/GMPP01_00/splits.txt
-quick_analysis: true # Faster re-runs after initial analysis
+quick_analysis: false # Faster re-runs after initial analysis
 mw_comment_version: 10 # GC 2.6 linker
-force_active: [__register_global_object, lbl_801D40D0, _kerent]
+force_active: [__register_global_object]
 
 detect_objects: true
 detect_strings: true
 fill_gaps: true
-# TODO add hashes
 modules:
 - object: files/dll/_minigameDll.rel
-  
+  hash: 7101a759bcd45edee5bbc00a36d347c1f787c2a1
   symbols: config/GMPP01_00/rels/_minigameDll/symbols.txt
   splits: config/GMPP01_00/rels/_minigameDll/splits.txt
   links: []
 - object: files/dll/bootDll.rel
-  
+  hash: b60fe8dd6faa20663224d64651b80c25b9b202ef
   symbols: config/GMPP01_00/rels/bootDll/symbols.txt
   splits: config/GMPP01_00/rels/bootDll/splits.txt
   links: []
 - object: files/dll/instDll.rel
-
+  hash: eef3ac50923ab2f20d588ef10ae15f3bc739f2b8  
   symbols: config/GMPP01_00/rels/instDll/symbols.txt
   splits: config/GMPP01_00/rels/instDll/splits.txt
   links: []
 - object: files/dll/m302Dll.rel
-  
+  hash: f1ad7b5a5198a14d34141b28c654bc1704c9dcd9
   symbols: config/GMPP01_00/rels/m302Dll/symbols.txt
   splits: config/GMPP01_00/rels/m302Dll/splits.txt
   links: []
 - object: files/dll/m303Dll.rel
-  
+  hash: f1ad7b5a5198a14d34141b28c654bc1704c9dcd9
   symbols: config/GMPP01_00/rels/m303Dll/symbols.txt
   splits: config/GMPP01_00/rels/m303Dll/splits.txt
   links: []
 - object: files/dll/m330Dll.rel
-  
+  hash: f1ad7b5a5198a14d34141b28c654bc1704c9dcd9
   symbols: config/GMPP01_00/rels/m330Dll/symbols.txt
   splits: config/GMPP01_00/rels/m330Dll/splits.txt
   links: []
 - object: files/dll/m333Dll.rel
-  
+  hash: f1ad7b5a5198a14d34141b28c654bc1704c9dcd9
   symbols: config/GMPP01_00/rels/m333Dll/symbols.txt
   splits: config/GMPP01_00/rels/m333Dll/splits.txt
   links: []
 - object: files/dll/m402Dll.rel
-  
+  hash: cd3532af828e8217924296c4cadbd31ddd915a05
   symbols: config/GMPP01_00/rels/m402Dll/symbols.txt
   splits: config/GMPP01_00/rels/m402Dll/splits.txt
   links: []
 - object: files/dll/m403Dll.rel
-  
+  hash: b2e3cdd9167c579e02c6ecc5643b6aadcc5b6a99
   symbols: config/GMPP01_00/rels/m403Dll/symbols.txt
   splits: config/GMPP01_00/rels/m403Dll/splits.txt
   links: []
 - object: files/dll/m404Dll.rel
-  
+  hash: 56c825a1e0bbe33e3a0e1e70396c21af9b575243
   symbols: config/GMPP01_00/rels/m404Dll/symbols.txt
   splits: config/GMPP01_00/rels/m404Dll/splits.txt
   links: []
 - object: files/dll/m405Dll.rel
-  
+  hash: cc76ded0a41aea632fd9b3c5e37fe6d847107d91
   symbols: config/GMPP01_00/rels/m405Dll/symbols.txt
   splits: config/GMPP01_00/rels/m405Dll/splits.txt
   links: []
 - object: files/dll/m406Dll.rel
-  
+  hash: 5c2aee9c8f10dc763c9ff763874f3a4b58880f02
   symbols: config/GMPP01_00/rels/m406Dll/symbols.txt
   splits: config/GMPP01_00/rels/m406Dll/splits.txt
   links: []
 - object: files/dll/m407dll.rel
-  
+  hash: 7133701b7c28a66f9d24ab64081e472d458dad51
   symbols: config/GMPP01_00/rels/m407dll/symbols.txt
   splits: config/GMPP01_00/rels/m407dll/splits.txt
   links: []
 - object: files/dll/m408Dll.rel
-  
+  hash: 6f2552516b8e151ccbed99ee6730ca2cb2e0fd49
   symbols: config/GMPP01_00/rels/m408Dll/symbols.txt
   splits: config/GMPP01_00/rels/m408Dll/splits.txt
   links: []
 - object: files/dll/m409Dll.rel
-  
+  hash: 71a91946651b40cc217b08d293f23fbf01c7407a
   symbols: config/GMPP01_00/rels/m409Dll/symbols.txt
   splits: config/GMPP01_00/rels/m409Dll/splits.txt
   links: []
 - object: files/dll/m410Dll.rel
-  
+  hash: e938c2f354224a6a5a7b015f9abae596298788ee
   symbols: config/GMPP01_00/rels/m410Dll/symbols.txt
   splits: config/GMPP01_00/rels/m410Dll/splits.txt
   links: []
 - object: files/dll/m411Dll.rel
-  
+  hash: e29bae44753c7ce8e5213881b10d6b27c02c4f7a
   symbols: config/GMPP01_00/rels/m411Dll/symbols.txt
   splits: config/GMPP01_00/rels/m411Dll/splits.txt
   links: []
 - object: files/dll/m412Dll.rel
-  
+  hash: 23da1cff677f992bb76dcbf4a9f9061542b4be7f
   symbols: config/GMPP01_00/rels/m412Dll/symbols.txt
   splits: config/GMPP01_00/rels/m412Dll/splits.txt
   links: []
 - object: files/dll/m413Dll.rel
-  
+  hash: 6ed381e5b4d75eeab2c3ded39473a482f61ee32d
   symbols: config/GMPP01_00/rels/m413Dll/symbols.txt
   splits: config/GMPP01_00/rels/m413Dll/splits.txt
   links: []
 - object: files/dll/m414Dll.rel
-  
+  hash: 902f32cc75ac0030c7c531dbeefda055bc8d7f27
   symbols: config/GMPP01_00/rels/m414Dll/symbols.txt
   splits: config/GMPP01_00/rels/m414Dll/splits.txt
   links: []
 - object: files/dll/m415Dll.rel
-  
+  hash: 7063ae505540bafebf802128d8d2f394b7f6f921
   symbols: config/GMPP01_00/rels/m415Dll/symbols.txt
   splits: config/GMPP01_00/rels/m415Dll/splits.txt
   links: []
 - object: files/dll/m416Dll.rel
-  
+  hash: 2979d5f934b9099116fbd943a91d6a3bb56e6ec0
   symbols: config/GMPP01_00/rels/m416Dll/symbols.txt
   splits: config/GMPP01_00/rels/m416Dll/splits.txt
   links: []
 - object: files/dll/m417Dll.rel
-  
+  hash: b20482a2af7c839456fe7580dcbd92ca9984ec71
   symbols: config/GMPP01_00/rels/m417Dll/symbols.txt
   splits: config/GMPP01_00/rels/m417Dll/splits.txt
   links: []
 - object: files/dll/m418Dll.rel
-  
+  hash: 762f56820668c74cdcde436a08419bdb59a35a89
   symbols: config/GMPP01_00/rels/m418Dll/symbols.txt
   splits: config/GMPP01_00/rels/m418Dll/splits.txt
   links: []
 - object: files/dll/m419Dll.rel
-  
+  hash: 5fba3dfcfca6ef78eb46833f665019bca641063e
   symbols: config/GMPP01_00/rels/m419Dll/symbols.txt
   splits: config/GMPP01_00/rels/m419Dll/splits.txt
   links: []
 - object: files/dll/m420dll.rel
-  
+  hash: bb514277a33821093fd2acfae2cb86531b317d17
   symbols: config/GMPP01_00/rels/m420dll/symbols.txt
   splits: config/GMPP01_00/rels/m420dll/splits.txt
   links: []
 - object: files/dll/m421Dll.rel
-  
+  hash: 216ba8bbc8905f33370ae651d478f6bd56c17b27
   symbols: config/GMPP01_00/rels/m421Dll/symbols.txt
   splits: config/GMPP01_00/rels/m421Dll/splits.txt
   links: []
 - object: files/dll/m422Dll.rel
-  
+  hash: 6c152ddb5f518c9c6444030dfc30ab53ef931b40
   symbols: config/GMPP01_00/rels/m422Dll/symbols.txt
   splits: config/GMPP01_00/rels/m422Dll/splits.txt
   links: []
 - object: files/dll/m423Dll.rel
-  
+  hash: db80fcb993ce09d808de29d2488f2b1ab2afc8cd
   symbols: config/GMPP01_00/rels/m423Dll/symbols.txt
   splits: config/GMPP01_00/rels/m423Dll/splits.txt
   links: []
 - object: files/dll/m424Dll.rel
-  
+  hash: 827da0897edcc2706a3623722430d4e70512c653
   symbols: config/GMPP01_00/rels/m424Dll/symbols.txt
   splits: config/GMPP01_00/rels/m424Dll/splits.txt
   links: []
 - object: files/dll/m425Dll.rel
-  
+  hash: 26eb36bfc9106af2462a0d7e013f5321dbaecdd1
   symbols: config/GMPP01_00/rels/m425Dll/symbols.txt
   splits: config/GMPP01_00/rels/m425Dll/splits.txt
   links: []
 - object: files/dll/m426Dll.rel
-  
+  hash: 04b649fb6eb248e506cf15fdcfbed3e915a80682
   symbols: config/GMPP01_00/rels/m426Dll/symbols.txt
   splits: config/GMPP01_00/rels/m426Dll/splits.txt
   links: []
 - object: files/dll/m427Dll.rel
-  
+  hash: 810a1c91f794897862ac9b6a4e076a70c6b0238a
   symbols: config/GMPP01_00/rels/m427Dll/symbols.txt
   splits: config/GMPP01_00/rels/m427Dll/splits.txt
   links: []
 - object: files/dll/m428Dll.rel
-  
+  hash: 888af662a228e349ea6a0c60e19de74f8fa47914
   symbols: config/GMPP01_00/rels/m428Dll/symbols.txt
   splits: config/GMPP01_00/rels/m428Dll/splits.txt
   links: []
 - object: files/dll/m429Dll.rel
-  
+  hash: 88b2330f175d1346a71f67491dcf9eff62d2d2d1
   symbols: config/GMPP01_00/rels/m429Dll/symbols.txt
   splits: config/GMPP01_00/rels/m429Dll/splits.txt
   links: []
 - object: files/dll/m430Dll.rel
-  
+  hash: e611007dd71ab515de65e9a6879f0508193fd58a
   symbols: config/GMPP01_00/rels/m430Dll/symbols.txt
   splits: config/GMPP01_00/rels/m430Dll/splits.txt
   links: []
 - object: files/dll/m431Dll.rel
-  
+  hash: 6a2b097a6d57c36bff5aaeb8c9ea2f01df7407ad
   symbols: config/GMPP01_00/rels/m431Dll/symbols.txt
   splits: config/GMPP01_00/rels/m431Dll/splits.txt
   links: []
 - object: files/dll/m432Dll.rel
-  
+  hash: 17b6a0c65c7cb759fc460fe7b8eed3dd7dc7184d
   symbols: config/GMPP01_00/rels/m432Dll/symbols.txt
   splits: config/GMPP01_00/rels/m432Dll/splits.txt
   links: []
 - object: files/dll/m433Dll.rel
-  
+  hash: ce90f494ced6f2611603c247bdc733a458b5a523
   symbols: config/GMPP01_00/rels/m433Dll/symbols.txt
   splits: config/GMPP01_00/rels/m433Dll/splits.txt
   links: []
 - object: files/dll/m434Dll.rel
-  
+  hash: 100fe402942821dc8e5753f3cada5e2bf5ab6214
   symbols: config/GMPP01_00/rels/m434Dll/symbols.txt
   splits: config/GMPP01_00/rels/m434Dll/splits.txt
   links: []
 - object: files/dll/m435Dll.rel
-  
+  hash: 4936db381fa068395cff28c0d635c5ec7cc7218f
   symbols: config/GMPP01_00/rels/m435Dll/symbols.txt
   splits: config/GMPP01_00/rels/m435Dll/splits.txt
   links: []
 - object: files/dll/m436Dll.rel
-  
+  hash: ba1c3bdc5f250996a5c873791347ce4c20b38692
   symbols: config/GMPP01_00/rels/m436Dll/symbols.txt
   splits: config/GMPP01_00/rels/m436Dll/splits.txt
   links: []
 - object: files/dll/m437Dll.rel
-  
+  hash: 7273786a2995182baf9a85148c5974097999fe8e
   symbols: config/GMPP01_00/rels/m437Dll/symbols.txt
   splits: config/GMPP01_00/rels/m437Dll/splits.txt
   links: []
 - object: files/dll/m438Dll.rel
-  
+  hash: d7c4bdf1729695a7348f8a36de2911db7aa24abb
   symbols: config/GMPP01_00/rels/m438Dll/symbols.txt
   splits: config/GMPP01_00/rels/m438Dll/splits.txt
   links: []
 - object: files/dll/m439Dll.rel
-  
+  hash: 4d5a719b49edb55e0b0b52c0d81b31c14d197d20
   symbols: config/GMPP01_00/rels/m439Dll/symbols.txt
   splits: config/GMPP01_00/rels/m439Dll/splits.txt
   links: []
 - object: files/dll/m440Dll.rel
-  
+  hash: 469b18886221ae8a5b90f3e85b01ce6a01befb0b
   symbols: config/GMPP01_00/rels/m440Dll/symbols.txt
   splits: config/GMPP01_00/rels/m440Dll/splits.txt
   links: []
 - object: files/dll/m441Dll.rel
-  
+  hash: 7d6e99b67d2dde25d3fc75ac314c2a69be34137e
   symbols: config/GMPP01_00/rels/m441Dll/symbols.txt
   splits: config/GMPP01_00/rels/m441Dll/splits.txt
   links: []
 - object: files/dll/m442Dll.rel
-  
+  hash: 63af3c4f33fd362f17aa1be9f764d0549f92598d
   symbols: config/GMPP01_00/rels/m442Dll/symbols.txt
   splits: config/GMPP01_00/rels/m442Dll/splits.txt
   links: []
 - object: files/dll/m443Dll.rel
-  
+  hash: 5118a0bab1877455eae9002c3cc561d3360fd792
   symbols: config/GMPP01_00/rels/m443Dll/symbols.txt
   splits: config/GMPP01_00/rels/m443Dll/splits.txt
   links: []
 - object: files/dll/m444dll.rel
-  
+  hash: a344672428b1e3a1d4bc3ce935472af529a6dd18
   symbols: config/GMPP01_02/rels/m444dll/symbols.txt
   splits: config/GMPP01_02/rels/m444dll/splits.txt
   links: []
 - object: files/dll/m445Dll.rel
-  
+  hash: 02f7c52aa6fd4b21a5700615aeaee9ef59e6b9f3
   symbols: config/GMPP01_00/rels/m445Dll/symbols.txt
   splits: config/GMPP01_00/rels/m445Dll/splits.txt
   links: []
 - object: files/dll/m446dll.rel
-  
+  hash: 2ab71adae47a3d9632dcf45cf18ca0b1fc33d157
   symbols: config/GMPP01_00/rels/m446dll/symbols.txt
   splits: config/GMPP01_00/rels/m446dll/splits.txt
   links: []
 - object: files/dll/m447dll.rel
-  
+  hash: 0640357fe4d0148dac4bc382c8231410e24fe951
   symbols: config/GMPP01_00/rels/m447dll/symbols.txt
   splits: config/GMPP01_00/rels/m447dll/splits.txt
   links: []
 - object: files/dll/m448Dll.rel
-  
+  hash: 78bcdd8d1fdb810784fca4d5bbec92c63e2e6b54
   symbols: config/GMPP01_00/rels/m448Dll/symbols.txt
   splits: config/GMPP01_00/rels/m448Dll/splits.txt
   links: []
 - object: files/dll/m449Dll.rel
-  
+  hash: fcf6e4b0089e19ffddf01a119c8c515a4acc943a
   symbols: config/GMPP01_00/rels/m449Dll/symbols.txt
   splits: config/GMPP01_00/rels/m449Dll/splits.txt
   links: []
 - object: files/dll/m450Dll.rel
-  
+  hash: ebcf95781e8078813ed041dd0a869ae2e413679b
   symbols: config/GMPP01_00/rels/m450Dll/symbols.txt
   splits: config/GMPP01_00/rels/m450Dll/splits.txt
   links: []
 - object: files/dll/m451Dll.rel
-  
+  hash: aa16b743f7b64f22abfd8bb93646883cc73bd7e0
   symbols: config/GMPP01_00/rels/m451Dll/symbols.txt
   splits: config/GMPP01_00/rels/m451Dll/splits.txt
   links: []
 - object: files/dll/m453Dll.rel
-  
+  hash: f6fd7a6537e56c535d02ac4a48c9008605f93ea1
   symbols: config/GMPP01_00/rels/m453Dll/symbols.txt
   splits: config/GMPP01_00/rels/m453Dll/splits.txt
   links: []
 - object: files/dll/m455Dll.rel
-  
+  hash: cc3431f55b523d474a952f3a0e927fac6b5402ab
   symbols: config/GMPP01_00/rels/m455Dll/symbols.txt
   splits: config/GMPP01_00/rels/m455Dll/splits.txt
   links: []
 - object: files/dll/m456Dll.rel
-  
+  hash: 09797251306bbd0f6fd712d6f832128ca8c58690
   symbols: config/GMPP01_00/rels/m456Dll/symbols.txt
   splits: config/GMPP01_00/rels/m456Dll/splits.txt
   links: []
 - object: files/dll/m457Dll.rel
-  
+  hash: 8a992a09077fd5e1f6ca3e717547792938a519c1
   symbols: config/GMPP01_00/rels/m457Dll/symbols.txt
   splits: config/GMPP01_00/rels/m457Dll/splits.txt
   links: []
 - object: files/dll/m458Dll.rel
-  
+  hash: 5dea2127d51d621b30d78b22cfa32327797e6e0b
   symbols: config/GMPP01_00/rels/m458Dll/symbols.txt
   splits: config/GMPP01_00/rels/m458Dll/splits.txt
   links: []
 - object: files/dll/m459dll.rel
-  
+  hash: e96dafe5949909cb7cc839174aa38e8e6661a63b
   symbols: config/GMPP01_00/rels/m459dll/symbols.txt
   splits: config/GMPP01_00/rels/m459dll/splits.txt
   links: []
 - object: files/dll/m460Dll.rel
-  
+  hash: ea1e0bda22675840d39c74117e2a11ffe45f8dd4
   symbols: config/GMPP01_00/rels/m460Dll/symbols.txt
   splits: config/GMPP01_00/rels/m460Dll/splits.txt
   links: []
 - object: files/dll/m461Dll.rel
-  
+  hash: 8d515f3b92a786df53bb88291b5cfc4bc59a3c8d
   symbols: config/GMPP01_00/rels/m461Dll/symbols.txt
   splits: config/GMPP01_00/rels/m461Dll/splits.txt
   links: []
 - object: files/dll/m462Dll.rel
-  
+  hash: f02ba47e4459d9b0de174c5619a4efe61942962d
   symbols: config/GMPP01_00/rels/m462Dll/symbols.txt
   splits: config/GMPP01_00/rels/m462Dll/splits.txt
   links: []
 - object: files/dll/m463Dll.rel
-  
+  hash: 352ad6d84ded6cf28b9ff2f9e5da8812ac9164db
   symbols: config/GMPP01_00/rels/m463Dll/symbols.txt
   splits: config/GMPP01_00/rels/m463Dll/splits.txt
   links: []
 - object: files/dll/mentDll.rel
-  
+  hash: 4705ada9d259a81ab2815fee3516f6217d848dd9
   symbols: config/GMPP01_00/rels/mentDll/symbols.txt
   splits: config/GMPP01_00/rels/mentDll/splits.txt
   links: []
 - object: files/dll/messDll.rel
-  
+  hash: b966ce340e98dbda624ff80f96c78d51ff1ed687
   symbols: config/GMPP01_00/rels/messDll/symbols.txt
   splits: config/GMPP01_00/rels/messDll/splits.txt
   links: []
 - object: files/dll/mgmodedll.rel
-  
+  hash: 7a3fed787df2d1bc942efd56a160eaf59605b94f
   symbols: config/GMPP01_00/rels/mgmodedll/symbols.txt
   splits: config/GMPP01_00/rels/mgmodedll/splits.txt
   links: []
 - object: files/dll/modeltestDll.rel
-  
+  hash: 1e5bf1777b1470fcead2174c25b291b8f0513284
   symbols: config/GMPP01_00/rels/modeltestDll/symbols.txt
   splits: config/GMPP01_00/rels/modeltestDll/splits.txt
   links: []
 - object: files/dll/modeseldll.rel
-  
+  hash: d958038528a774801a4f5a0aee9e7aaae4bd94ce
   symbols: config/GMPP01_00/rels/modeseldll/symbols.txt
   splits: config/GMPP01_00/rels/modeseldll/splits.txt
   links: []
 - object: files/dll/mpexDll.rel
-  
+  hash: a3e1e06937703f98191f4080e092bf06c4f449b3
   symbols: config/GMPP01_00/rels/mpexDll/symbols.txt
   splits: config/GMPP01_00/rels/mpexDll/splits.txt
   links: []
 - object: files/dll/msetupDll.rel
-  
+  hash: 86ff8288bb92472376d02cade1d3c9603b613c57
   symbols: config/GMPP01_00/rels/msetupDll/symbols.txt
   splits: config/GMPP01_00/rels/msetupDll/splits.txt
   links: []
 - object: files/dll/mstory2Dll.rel
-  
+  hash: 24b3e03e35f5bd395ef80a14babae724b7414190
   symbols: config/GMPP01_02/rels/mstory2Dll/symbols.txt
   splits: config/GMPP01_02/rels/mstory2Dll/splits.txt
   links: []
 - object: files/dll/mstory3Dll.rel
-  
+  hash: ccac71c67e5171a02b4a086df4d2daad81455466
   symbols: config/GMPP01_02/rels/mstory3Dll/symbols.txt
   splits: config/GMPP01_02/rels/mstory3Dll/splits.txt
   links: []
 - object: files/dll/mstory4Dll.rel
-  
+  hash: a8eee3981f4965412490cb9eef76aaa798957db1
   symbols: config/GMPP01_00/rels/mstory4Dll/symbols.txt
   splits: config/GMPP01_00/rels/mstory4Dll/splits.txt
   links: []
 - object: files/dll/mstoryDll.rel
-  
+  hash: 4ef3463c5dc60771468c6ab033dda1391c39d689
   symbols: config/GMPP01_02/rels/mstoryDll/symbols.txt
   splits: config/GMPP01_02/rels/mstoryDll/splits.txt
   links: []
 - object: files/dll/nisDll.rel
-  
+  hash: 45619d95e61d9296f25d94d7c6756f397fb89bee
   symbols: config/GMPP01_00/rels/nisDll/symbols.txt
   splits: config/GMPP01_00/rels/nisDll/splits.txt
   links: []
 - object: files/dll/option.rel
-  
+  hash: 1304967e3aa58a46492d4c736a7c86cf8a3b2e11
   symbols: config/GMPP01_00/rels/option/symbols.txt
   splits: config/GMPP01_00/rels/option/splits.txt
   links: []
 - object: files/dll/present.rel
-  
+  hash: 7845814c6be2546930cfd8e0b9dec263fc1a959f
   symbols: config/GMPP01_00/rels/present/symbols.txt
   splits: config/GMPP01_00/rels/present/splits.txt
   links: []
 - object: files/dll/resultDll.rel
-  
+  hash: d9bd10433d1e2a6c0c4d9f942b766d743f99deec
   symbols: config/GMPP01_00/rels/resultDll/symbols.txt
   splits: config/GMPP01_00/rels/resultDll/splits.txt
   links: []
 - object: files/dll/safDll.rel
-  
+  hash: c13262cf14f00e1d70bd65d20bbf988479816ca7
   symbols: config/GMPP01_00/rels/safDll/symbols.txt
   splits: config/GMPP01_00/rels/safDll/splits.txt
   links: []
 - object: files/dll/selmenuDll.rel
-  
+  hash: 51f53e1398c86c5a22251a457e3af86339b4b11f
   symbols: config/GMPP01_00/rels/selmenuDll/symbols.txt
   splits: config/GMPP01_00/rels/selmenuDll/splits.txt
   links: []
 - object: files/dll/staffDll.rel
-  
+  hash: af869e37d004f687fab2ff6897d75d6c15e31a00
   symbols: config/GMPP01_00/rels/staffDll/symbols.txt
   splits: config/GMPP01_00/rels/staffDll/splits.txt
   links: []
 - object: files/dll/subchrselDll.rel
-  
+  hash: 21de7aff7d39f8e130b4ef7602b8de85e51cf3e5
   symbols: config/GMPP01_00/rels/subchrselDll/symbols.txt
   splits: config/GMPP01_00/rels/subchrselDll/splits.txt
   links: []
 - object: files/dll/w01Dll.rel
-  
+  hash: 70ee81af67a4f55de2fef65823583d22312f09be
   symbols: config/GMPP01_00/rels/w01Dll/symbols.txt
   splits: config/GMPP01_00/rels/w01Dll/splits.txt
   links: []
 - object: files/dll/w02Dll.rel
-  
+  hash: 33b5663ece821df4dbc50870e00de0e22e099efd
   symbols: config/GMPP01_00/rels/w02Dll/symbols.txt
   splits: config/GMPP01_00/rels/w02Dll/splits.txt
   links: []
 - object: files/dll/w03Dll.rel
-  
+  hash: 97aa16f847cdf2d6fd014f06df14c55f5f02024d
   symbols: config/GMPP01_00/rels/w03Dll/symbols.txt
   splits: config/GMPP01_00/rels/w03Dll/splits.txt
   links: []
 - object: files/dll/w04Dll.rel
-  
+  hash: 135cf03d803b9d8d39721b2a96769909aa719ee6
   symbols: config/GMPP01_00/rels/w04Dll/symbols.txt
   splits: config/GMPP01_00/rels/w04Dll/splits.txt
   links: []
 - object: files/dll/w05Dll.rel
-  
+  hash: e6d07092b69cc3b0514d9c12e3f5949edeb25f5f
   symbols: config/GMPP01_00/rels/w05Dll/symbols.txt
   splits: config/GMPP01_00/rels/w05Dll/splits.txt
   links: []
 - object: files/dll/w06Dll.rel
-  
+  hash: 0d5445461f58fac4c043c75bed7237b7f4045188
   symbols: config/GMPP01_00/rels/w06Dll/symbols.txt
   splits: config/GMPP01_00/rels/w06Dll/splits.txt
   links: []
 - object: files/dll/w10Dll.rel
-  
+  hash: 5678fedd4a0490aeb9703328e959fdedea7da117
   symbols: config/GMPP01_00/rels/w10Dll/symbols.txt
   splits: config/GMPP01_00/rels/w10Dll/splits.txt
   links: []
 - object: files/dll/w20Dll.rel
-  
+  hash: 58ae9e311cc8bd0291921480f423e2ad4774e1a2
   symbols: config/GMPP01_00/rels/w20Dll/symbols.txt
   splits: config/GMPP01_00/rels/w20Dll/splits.txt
   links: []
 - object: files/dll/w21Dll.rel
-  
+  hash: 8ea052be8c7585a1ab152682a0698b631c5b566f
   symbols: config/GMPP01_00/rels/w21Dll/symbols.txt
   splits: config/GMPP01_00/rels/w21Dll/splits.txt
   links: []
 - object: files/dll/ztardll.rel
-  
+  hash: 8987f11fafd11f69161ca275967afe9c8b4e7b20
   symbols: config/GMPP01_00/rels/ztardll/symbols.txt
   splits: config/GMPP01_00/rels/ztardll/splits.txt
   links: []
 - object: files/dll/E3setupDLL.rel
-  
+  hash: d59c60b0149a85782fa98d1a4da6cc768a09b473
   symbols: config/GMPP01_00/rels/E3setupDLL/symbols.txt
   splits: config/GMPP01_00/rels/E3setupDLL/splits.txt
   links: [_minigameDll]
 - object: files/dll/m300Dll.rel
-  
+  hash: eba8a17e8b263bc9cd601b1aea7e698a8785416a
   symbols: config/GMPP01_00/rels/m300Dll/symbols.txt
   splits: config/GMPP01_00/rels/m300Dll/splits.txt
   links: [_minigameDll]
 - object: files/dll/m401Dll.rel
-  
+  hash: c457a4a45ebae776331484ba94f5798041a77a57
   symbols: config/GMPP01_00/rels/m401Dll/symbols.txt
   splits: config/GMPP01_00/rels/m401Dll/splits.txt
   links: [_minigameDll]
-
-extract:
-- symbol: ank8x8_4b
-  binary: ank8x8_4b.bin
-  header: ank8x8_4b.inc
-- symbol: refMapData0
-  binary: refMapData0.anm
-  header: refMapData0.inc
-- symbol: refMapData1
-  binary: refMapData1.anm
-  header: refMapData1.inc
-- symbol: refMapData2
-  binary: refMapData2.anm
-  header: refMapData2.inc
-- symbol: refMapData3
-  binary: refMapData3.anm
-  header: refMapData3.inc
-- symbol: refMapData4
-  binary: refMapData4.anm
-  header: refMapData4.inc
-- symbol: toonMapData
-  binary: toonMapData.anm
-  header: toonMapData.inc
-- symbol: toonMapData2
-  binary: toonMapData2.anm
-  header: toonMapData2.inc
-- symbol: hiliteData
-  binary: hiliteData.anm
-  header: hiliteData.inc
-- symbol: hiliteData2
-  binary: hiliteData2.anm
-  header: hiliteData2.inc
-- symbol: hiliteData3
-  binary: hiliteData3.anm
-  header: hiliteData3.inc
-- symbol: hiliteData4
-  binary: hiliteData4.anm
-  header: hiliteData4.inc
-- symbol: Ascii8x8_1bpp
-  binary: Ascii8x8_1bpp.bin
-  header: Ascii8x8_1bpp.inc
-- symbol: coveropen_en
-  binary: coveropen_en.bin
-  header: coveropen_en.inc
-- symbol: fatalerror_en
-  binary: fatalerror_en.bin
-  header: fatalerror_en.inc
-- symbol: loading_en
-  binary: loading_en.bin
-  header: loading_en.inc
-- symbol: nodisc_en
-  binary: nodisc_en.bin
-  header: nodisc_en.inc
-- symbol: retryerror_en
-  binary: retryerror_en.bin
-  header: retryerror_en.inc
-- symbol: wrongdisc_en
-  binary: wrongdisc_en.bin
-  header: wrongdisc_en.inc
-- symbol: DEMOFontBitmap
-  binary: DEMOFontBitmap.bin
-  header: DEMOFontBitmap.inc
+  
