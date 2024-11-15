@@ -226,3 +226,22 @@ game/ClusterExec.c:
 game/ShapeExec.c:
 	.text       start:0x80040B88 end:0x80040F98
 	.sdata2     start:0x801F2290 end:0x801F22A0
+
+game/wipe.c:
+	.text       start:0x80040F98 end:0x80041ED4
+	.data       start:0x8012FF40 end:0x8012FF60
+	.bss        start:0x801AF700 end:0x801AF760
+	.sdata      start:0x801F0988 end:0x801F0990
+	.sbss       start:0x801F1168 end:0x801F1170
+	.sdata2     start:0x801F22A0 end:0x801F22C8
+
+game/window.c:
+	.text       start:0x80041ED4 end:0x80048110
+	.data       start:0x8012FF60 end:0x80130550
+	.bss        start:0x801AF760 end:0x801B3B80
+	.sdata      start:0x801F0990 end:0x801F0998
+	.sbss       start:0x801F1170 end:0x801F11B0
+	.sdata2     start:0x801F22C8 end:0x801F2358
+
+game/messdata.c:
+	.text       start:0x80048110 end:0x800481F8

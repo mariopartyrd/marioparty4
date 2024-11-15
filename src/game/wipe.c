@@ -3,6 +3,7 @@
 #include "game/memory.h"
 #include "game/flag.h"
 #include "game/board/tutorial.h"
+#include "version.h"
 
 s16 HuSysVWaitGet(s16 old);
 
@@ -141,6 +142,11 @@ void WipeCreate(s16 mode, s16 type, s16 duration)
 
 void WipeColorSet(u8 r, u8 g, u8 b)
 {
+	#if VERSION_PAL
+	if(r > 160 && g > 160 && b > 160) {
+		r = g = b = 160;
+	}
+	#endif
 	wipeData.color.r = r;
 	wipeData.color.g = g;
 	wipeData.color.b = b;
