@@ -1,0 +1,5 @@
+_prolog = .text:0x00000000; // type:function scope:global
+_epilog = .text:0x00000054; // type:function scope:global
+lbl_1_section2_0 = .section2:0x00000000; // type:object size:0x4
+lbl_1_section3_0 = .section3:0x00000000; // type:object size:0x4
+lbl_1_section5_0 = .section5:0x00000000; // type:object size:0x14 data:string

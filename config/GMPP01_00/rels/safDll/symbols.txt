@@ -1,0 +1,8 @@
+lbl_1_section5_10 = .section5:0x00000010; // type:object size:0x4
+lbl_1_section5_14 = .section5:0x00000014; // type:object size:0x4
+lbl_1_section5_18 = .section5:0x00000018; // type:object size:0x8
+lbl_1_section5_20 = .section5:0x00000020; // type:object size:0x4
+lbl_1_section6_4 = .section6:0x00000004; // type:object size:0xE data:string
+lbl_1_section6_12 = .section6:0x00000012; // type:object size:0xB data:string
+lbl_1_section6_1D = .section6:0x0000001D; // type:object size:0xE data:string
+lbl_1_section6_2B = .section6:0x0000002B; // type:object size:0xE data:string
