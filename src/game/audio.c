@@ -9,7 +9,7 @@ static int HuSePlay(int seId, MSM_SEPARAM *param);
 
 extern s16 omSysExitReq;
 
-static s32 charVoiceGroupStat[8];
+s32 charVoiceGroupStat[8];
 static s32 sndFXBuf[64][2];
 
 static s16 Hu3DAudVol;

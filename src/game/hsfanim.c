@@ -24,7 +24,7 @@ typedef struct {
     /* 0x3C */ HsfanimStruct00 *unk3C;
 } ParManProcUserData; // Size 0x40
 
-static void _Hu3DParticleAttrReset(ModelData *arg0, Mtx arg1);
+static void particleFunc(ModelData *arg0, Mtx arg1);
 static void ParManFunc(void);
 static void ParManHook(ModelData *arg0, ParticleData *arg1, Mtx matrix);
 
@@ -493,7 +493,7 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     s16 i;
     void *temp_r24;
 
-    temp_r25 = Hu3DHookFuncCreate((void*) &_Hu3DParticleAttrReset);
+    temp_r25 = Hu3DHookFuncCreate((void*) &particleFunc);
     temp_r28 = &Hu3DData[temp_r25];
     Hu3DModelAttrSet(temp_r25, HU3D_ATTR_PARTICLE_KILL);
     temp_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(ParticleData), temp_r28->unk_48);
@@ -658,7 +658,7 @@ static float baseST[] = {
     1.0f, 1.0f, 0.0f, 1.0f
 };
 
-static void _Hu3DParticleAttrReset(ModelData *arg0, Mtx arg1) {
+static void particleFunc(ModelData *arg0, Mtx arg1) {
     Vec *var_r30;
     float temp_f31;
     float temp_f29;

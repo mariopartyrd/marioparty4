@@ -96,3 +96,133 @@ game/sprput.c:
 	.bss        start:0x80179A30 end:0x80179A60
 	.sbss       start:0x801F0F10 end:0x801F0F18
 	.sdata2     start:0x801F1DB0 end:0x801F1DE8
+
+game/hsfload.c:
+	.text       start:0x80010B38 end:0x80014020
+	.data       start:0x80122140 end:0x801221B0
+	.bss        start:0x80179A60 end:0x8017A020
+	.sbss       start:0x801F0F18 end:0x801F0F50
+
+game/hsfdraw.c:
+	.text       start:0x80014020 end:0x8001F9B4
+	.rodata     start:0x8011DB40 end:0x8011DB50
+	.data       start:0x801221B0 end:0x801223C0
+	.bss        start:0x8017A020 end:0x80184B60
+	.sdata      start:0x801F0810 end:0x801F0828
+	.sbss       start:0x801F0F50 end:0x801F0FF0
+	.sdata2     start:0x801F1DE8 end:0x801F1E70
+
+game/hsfman.c:
+	.text       start:0x8001F9B4 end:0x800250F0
+	.data       start:0x801223C0 end:0x8012D478
+	.bss        start:0x80184B60 end:0x801AA770
+	.sbss       start:0x801F0FF0 end:0x801F1020
+	.sdata2     start:0x801F1E70 end:0x801F1ED0
+	.sbss2      start:0x801F3FC0 end:0x801F3FC8
+
+game/hsfmotion.c:
+	.text       start:0x800250F0 end:0x80028B0C
+	.data       start:0x8012D478 end:0x8012D658
+	.bss        start:0x801AA770 end:0x801AAF70
+	.sbss       start:0x801F1020 end:0x801F1028
+	.sdata2     start:0x801F1ED0 end:0x801F1F20
+
+game/hsfanim.c:
+	.text       start:0x80028B0C end:0x8002CB7C
+	.data       start:0x8012D658 end:0x8012D718
+	.bss        start:0x801AAF70 end:0x801ACB30
+	.sdata2     start:0x801F1F20 end:0x801F1FA8
+
+game/hsfex.c:
+	.text       start:0x8002CB7C end:0x8002E754
+	.data       start:0x8012D718 end:0x8012D738
+	.sdata2     start:0x801F1FA8 end:0x801F2038
+
+game/perf.c:
+	.text       start:0x8002E754 end:0x8002EBE0
+	.bss        start:0x801ACB30 end:0x801ACED8
+	.sdata      start:0x801F0828 end:0x801F0838
+	.sbss       start:0x801F1028 end:0x801F1080
+
+game/objmain.c:
+	.text       start:0x8002EBE0 end:0x8002FF54
+	.data       start:0x8012D738 end:0x8012DAE8
+	.bss        start:0x801ACED8 end:0x801ACF98
+	.sdata      start:0x801F0838 end:0x801F0840
+	.sbss       start:0x801F1080 end:0x801F10B0
+	.sdata2     start:0x801F2038 end:0x801F2060
+
+game/fault.c:
+	.text       start:0x8002FF54 end:0x800308C0
+	.data       start:0x8012DAE8 end:0x8012E310
+	.bss        start:0x801ACF98 end:0x801ACFB0
+	.sdata      start:0x801F0840 end:0x801F0850
+	.sbss       start:0x801F10B0 end:0x801F10C0
+
+game/gamework.c:
+	.text       start:0x800308C0 end:0x800315D4
+	.rodata     start:0x8011DB50 end:0x8011DB70
+	.bss        start:0x801ACFB0 end:0x801AD3A8
+	.sdata      start:0x801F0850 end:0x801F0858
+
+game/objsysobj.c:
+	.text       start:0x800315D4 end:0x80031DCC
+	.bss        start:0x801AD3A8 end:0x801AD580
+	.sbss       start:0x801F10C0 end:0x801F10C8
+	.sdata2     start:0x801F2060 end:0x801F2070
+
+game/objdll.c:
+	.text       start:0x80031DCC end:0x8003260C
+	.data       start:0x8012E310 end:0x8012E7A8
+	.bss        start:0x801AD580 end:0x801AD5D0
+	.sbss       start:0x801F10C8 end:0x801F10D0
+
+game/frand.c:
+	.text       start:0x8003260C end:0x80032848
+	.sbss       start:0x801F10D0 end:0x801F10D8
+	.sdata2     start:0x801F2070 end:0x801F2080
+
+game/audio.c:
+	.text       start:0x80032848 end:0x80033F08
+	.data       start:0x8012E7A8 end:0x8012EF50
+	.bss        start:0x801AD5D0 end:0x801AD7F0
+	.sdata      start:0x801F0858 end:0x801F0860
+	.sbss       start:0x801F10D8 end:0x801F1108
+	.sdata2     start:0x801F2080 end:0x801F2090
+
+game/EnvelopeExec.c:
+	.text       start:0x80033F08 end:0x800353C8
+	.sbss       start:0x801F1108 end:0x801F1138
+	.sdata2     start:0x801F2090 end:0x801F20A8
+
+game/minigame_seq.c:
+	.text       start:0x800353C8 end:0x8003F6E0
+	.data       start:0x8012EF50 end:0x8012F5B0
+	.bss        start:0x801AD7F0 end:0x801ADC00
+	.sdata      start:0x801F0860 end:0x801F0968
+	.sbss       start:0x801F1138 end:0x801F1158
+	.sdata2     start:0x801F20A8 end:0x801F2268
+
+game/ovllist.c:
+	.data       start:0x8012F5B0 end:0x8012FF20
+
+game/esprite.c:
+	.text       start:0x8003F6E0 end:0x8003FD90
+	.bss        start:0x801ADC00 end:0x801AF400
+	.sbss       start:0x801F1158 end:0x801F1160
+
+game/code_8003FF68.c:
+	.text       start:0x8003FD90 end:0x80040328
+	.data       start:0x8012FF20 end:0x8012FF40
+	.bss        start:0x801AF400 end:0x801AF700
+	.sdata      start:0x801F0968 end:0x801F0988
+	.sbss       start:0x801F1160 end:0x801F1168
+	.sdata2     start:0x801F2268 end:0x801F2280
+
+game/ClusterExec.c:
+	.text       start:0x80040328 end:0x80040B88
+	.sdata2     start:0x801F2280 end:0x801F2290
+
+game/ShapeExec.c:
+	.text       start:0x80040B88 end:0x80040F98
+	.sdata2     start:0x801F2290 end:0x801F22A0
