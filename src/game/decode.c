@@ -8,7 +8,7 @@ struct decode_data
     u32 size;
 };
 
-static u8 TextBuffer[1024];
+static u8 textBuffer[1024];
 
 static void HuDecodeNone(struct decode_data *decode)
 {
@@ -27,7 +27,7 @@ static void HuDecodeLz(struct decode_data *decode)
     
     
     for(i=0; i<1024; i++) {
-        TextBuffer[i] = 0;
+        textBuffer[i] = 0;
     }
     while(decode->size) {
         flag >>= 1;
@@ -35,7 +35,7 @@ static void HuDecodeLz(struct decode_data *decode)
             flag = (*decode->src++)|0xFF00;
         }
         if(flag & 0x1) {
-            TextBuffer[pos++] = *decode->dst++ = *decode->src++;
+            textBuffer[pos++] = *decode->dst++ = *decode->src++;
             pos = pos & 0x3FF;
             decode->size--;
         } else {
@@ -44,7 +44,7 @@ static void HuDecodeLz(struct decode_data *decode)
             i |= ((copy_len & ~0x3F) << 2);
             copy_len = (copy_len & 0x3F)+3;
             for(j=0; j<copy_len; j++) {
-                TextBuffer[pos++] = *decode->dst++ = TextBuffer[(i+j) & 0x3FF];
+                textBuffer[pos++] = *decode->dst++ = textBuffer[(i+j) & 0x3FF];
                 pos &= 0x3FF;
             }
             decode->size -= j;
