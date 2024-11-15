@@ -1,0 +1,571 @@
+object_base: orig/GMPP01_00
+object: sys/main.dol
+hash: 65ef91650e9201047f50a3c39c7693a21fff2b29
+symbols: config/GMPP01_00/symbols.txt
+splits: config/GMPP01_00/splits.txt
+quick_analysis: true # Faster re-runs after initial analysis
+mw_comment_version: 10 # GC 2.6 linker
+force_active: [__register_global_object, lbl_801D40D0, _kerent]
+
+detect_objects: true
+detect_strings: true
+fill_gaps: true
+# TODO add hashes
+modules:
+- object: files/dll/_minigameDll.rel
+  
+  symbols: config/GMPP01_00/rels/_minigameDll/symbols.txt
+  splits: config/GMPP01_00/rels/_minigameDll/splits.txt
+  links: []
+- object: files/dll/bootDll.rel
+  
+  symbols: config/GMPP01_00/rels/bootDll/symbols.txt
+  splits: config/GMPP01_00/rels/bootDll/splits.txt
+  links: []
+- object: files/dll/instDll.rel
+  
+  symbols: config/GMPP01_00/rels/instDll/symbols.txt
+  splits: config/GMPP01_00/rels/instDll/splits.txt
+  links: []
+- object: files/dll/m302Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m302Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m302Dll/splits.txt
+  links: []
+- object: files/dll/m303Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m303Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m303Dll/splits.txt
+  links: []
+- object: files/dll/m330Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m330Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m330Dll/splits.txt
+  links: []
+- object: files/dll/m333Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m333Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m333Dll/splits.txt
+  links: []
+- object: files/dll/m402Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m402Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m402Dll/splits.txt
+  links: []
+- object: files/dll/m403Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m403Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m403Dll/splits.txt
+  links: []
+- object: files/dll/m404Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m404Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m404Dll/splits.txt
+  links: []
+- object: files/dll/m405Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m405Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m405Dll/splits.txt
+  links: []
+- object: files/dll/m406Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m406Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m406Dll/splits.txt
+  links: []
+- object: files/dll/m407dll.rel
+  
+  symbols: config/GMPP01_00/rels/m407dll/symbols.txt
+  splits: config/GMPP01_00/rels/m407dll/splits.txt
+  links: []
+- object: files/dll/m408Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m408Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m408Dll/splits.txt
+  links: []
+- object: files/dll/m409Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m409Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m409Dll/splits.txt
+  links: []
+- object: files/dll/m410Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m410Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m410Dll/splits.txt
+  links: []
+- object: files/dll/m411Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m411Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m411Dll/splits.txt
+  links: []
+- object: files/dll/m412Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m412Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m412Dll/splits.txt
+  links: []
+- object: files/dll/m413Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m413Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m413Dll/splits.txt
+  links: []
+- object: files/dll/m414Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m414Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m414Dll/splits.txt
+  links: []
+- object: files/dll/m415Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m415Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m415Dll/splits.txt
+  links: []
+- object: files/dll/m416Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m416Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m416Dll/splits.txt
+  links: []
+- object: files/dll/m417Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m417Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m417Dll/splits.txt
+  links: []
+- object: files/dll/m418Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m418Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m418Dll/splits.txt
+  links: []
+- object: files/dll/m419Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m419Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m419Dll/splits.txt
+  links: []
+- object: files/dll/m420dll.rel
+  
+  symbols: config/GMPP01_00/rels/m420dll/symbols.txt
+  splits: config/GMPP01_00/rels/m420dll/splits.txt
+  links: []
+- object: files/dll/m421Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m421Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m421Dll/splits.txt
+  links: []
+- object: files/dll/m422Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m422Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m422Dll/splits.txt
+  links: []
+- object: files/dll/m423Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m423Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m423Dll/splits.txt
+  links: []
+- object: files/dll/m424Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m424Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m424Dll/splits.txt
+  links: []
+- object: files/dll/m425Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m425Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m425Dll/splits.txt
+  links: []
+- object: files/dll/m426Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m426Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m426Dll/splits.txt
+  links: []
+- object: files/dll/m427Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m427Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m427Dll/splits.txt
+  links: []
+- object: files/dll/m428Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m428Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m428Dll/splits.txt
+  links: []
+- object: files/dll/m429Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m429Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m429Dll/splits.txt
+  links: []
+- object: files/dll/m430Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m430Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m430Dll/splits.txt
+  links: []
+- object: files/dll/m431Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m431Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m431Dll/splits.txt
+  links: []
+- object: files/dll/m432Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m432Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m432Dll/splits.txt
+  links: []
+- object: files/dll/m433Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m433Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m433Dll/splits.txt
+  links: []
+- object: files/dll/m434Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m434Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m434Dll/splits.txt
+  links: []
+- object: files/dll/m435Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m435Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m435Dll/splits.txt
+  links: []
+- object: files/dll/m436Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m436Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m436Dll/splits.txt
+  links: []
+- object: files/dll/m437Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m437Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m437Dll/splits.txt
+  links: []
+- object: files/dll/m438Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m438Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m438Dll/splits.txt
+  links: []
+- object: files/dll/m439Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m439Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m439Dll/splits.txt
+  links: []
+- object: files/dll/m440Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m440Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m440Dll/splits.txt
+  links: []
+- object: files/dll/m441Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m441Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m441Dll/splits.txt
+  links: []
+- object: files/dll/m442Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m442Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m442Dll/splits.txt
+  links: []
+- object: files/dll/m443Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m443Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m443Dll/splits.txt
+  links: []
+- object: files/dll/m444dll.rel
+  
+  symbols: config/GMPP01_00/rels/m444dll/symbols.txt
+  splits: config/GMPP01_00/rels/m444dll/splits.txt
+  links: []
+- object: files/dll/m445Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m445Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m445Dll/splits.txt
+  links: []
+- object: files/dll/m446dll.rel
+  
+  symbols: config/GMPP01_00/rels/m446dll/symbols.txt
+  splits: config/GMPP01_00/rels/m446dll/splits.txt
+  links: []
+- object: files/dll/m447dll.rel
+  
+  symbols: config/GMPP01_00/rels/m447dll/symbols.txt
+  splits: config/GMPP01_00/rels/m447dll/splits.txt
+  links: []
+- object: files/dll/m448Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m448Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m448Dll/splits.txt
+  links: []
+- object: files/dll/m449Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m449Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m449Dll/splits.txt
+  links: []
+- object: files/dll/m450Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m450Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m450Dll/splits.txt
+  links: []
+- object: files/dll/m451Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m451Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m451Dll/splits.txt
+  links: []
+- object: files/dll/m453Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m453Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m453Dll/splits.txt
+  links: []
+- object: files/dll/m455Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m455Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m455Dll/splits.txt
+  links: []
+- object: files/dll/m456Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m456Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m456Dll/splits.txt
+  links: []
+- object: files/dll/m457Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m457Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m457Dll/splits.txt
+  links: []
+- object: files/dll/m458Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m458Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m458Dll/splits.txt
+  links: []
+- object: files/dll/m459dll.rel
+  
+  symbols: config/GMPP01_00/rels/m459dll/symbols.txt
+  splits: config/GMPP01_00/rels/m459dll/splits.txt
+  links: []
+- object: files/dll/m460Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m460Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m460Dll/splits.txt
+  links: []
+- object: files/dll/m461Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m461Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m461Dll/splits.txt
+  links: []
+- object: files/dll/m462Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m462Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m462Dll/splits.txt
+  links: []
+- object: files/dll/m463Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m463Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m463Dll/splits.txt
+  links: []
+- object: files/dll/mentDll.rel
+  
+  symbols: config/GMPP01_00/rels/mentDll/symbols.txt
+  splits: config/GMPP01_00/rels/mentDll/splits.txt
+  links: []
+- object: files/dll/messDll.rel
+  
+  symbols: config/GMPP01_00/rels/messDll/symbols.txt
+  splits: config/GMPP01_00/rels/messDll/splits.txt
+  links: []
+- object: files/dll/mgmodedll.rel
+  
+  symbols: config/GMPP01_00/rels/mgmodedll/symbols.txt
+  splits: config/GMPP01_00/rels/mgmodedll/splits.txt
+  links: []
+- object: files/dll/modeltestDll.rel
+  
+  symbols: config/GMPP01_00/rels/modeltestDll/symbols.txt
+  splits: config/GMPP01_00/rels/modeltestDll/splits.txt
+  links: []
+- object: files/dll/modeseldll.rel
+  
+  symbols: config/GMPP01_00/rels/modeseldll/symbols.txt
+  splits: config/GMPP01_00/rels/modeseldll/splits.txt
+  links: []
+- object: files/dll/mpexDll.rel
+  
+  symbols: config/GMPP01_00/rels/mpexDll/symbols.txt
+  splits: config/GMPP01_00/rels/mpexDll/splits.txt
+  links: []
+- object: files/dll/msetupDll.rel
+  
+  symbols: config/GMPP01_00/rels/msetupDll/symbols.txt
+  splits: config/GMPP01_00/rels/msetupDll/splits.txt
+  links: []
+- object: files/dll/mstory2Dll.rel
+  
+  symbols: config/GMPP01_00/rels/mstory2Dll/symbols.txt
+  splits: config/GMPP01_00/rels/mstory2Dll/splits.txt
+  links: []
+- object: files/dll/mstory3Dll.rel
+  
+  symbols: config/GMPP01_00/rels/mstory3Dll/symbols.txt
+  splits: config/GMPP01_00/rels/mstory3Dll/splits.txt
+  links: []
+- object: files/dll/mstory4Dll.rel
+  
+  symbols: config/GMPP01_00/rels/mstory4Dll/symbols.txt
+  splits: config/GMPP01_00/rels/mstory4Dll/splits.txt
+  links: []
+- object: files/dll/mstoryDll.rel
+  
+  symbols: config/GMPP01_00/rels/mstoryDll/symbols.txt
+  splits: config/GMPP01_00/rels/mstoryDll/splits.txt
+  links: []
+- object: files/dll/nisDll.rel
+  
+  symbols: config/GMPP01_00/rels/nisDll/symbols.txt
+  splits: config/GMPP01_00/rels/nisDll/splits.txt
+  links: []
+- object: files/dll/option.rel
+  
+  symbols: config/GMPP01_00/rels/option/symbols.txt
+  splits: config/GMPP01_00/rels/option/splits.txt
+  links: []
+- object: files/dll/present.rel
+  
+  symbols: config/GMPP01_00/rels/present/symbols.txt
+  splits: config/GMPP01_00/rels/present/splits.txt
+  links: []
+- object: files/dll/resultDll.rel
+  
+  symbols: config/GMPP01_00/rels/resultDll/symbols.txt
+  splits: config/GMPP01_00/rels/resultDll/splits.txt
+  links: []
+- object: files/dll/safDll.rel
+  
+  symbols: config/GMPP01_00/rels/safDll/symbols.txt
+  splits: config/GMPP01_00/rels/safDll/splits.txt
+  links: []
+- object: files/dll/selmenuDll.rel
+  
+  symbols: config/GMPP01_00/rels/selmenuDll/symbols.txt
+  splits: config/GMPP01_00/rels/selmenuDll/splits.txt
+  links: []
+- object: files/dll/staffDll.rel
+  
+  symbols: config/GMPP01_00/rels/staffDll/symbols.txt
+  splits: config/GMPP01_00/rels/staffDll/splits.txt
+  links: []
+- object: files/dll/subchrselDll.rel
+  
+  symbols: config/GMPP01_00/rels/subchrselDll/symbols.txt
+  splits: config/GMPP01_00/rels/subchrselDll/splits.txt
+  links: []
+- object: files/dll/w01Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w01Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w01Dll/splits.txt
+  links: []
+- object: files/dll/w02Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w02Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w02Dll/splits.txt
+  links: []
+- object: files/dll/w03Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w03Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w03Dll/splits.txt
+  links: []
+- object: files/dll/w04Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w04Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w04Dll/splits.txt
+  links: []
+- object: files/dll/w05Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w05Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w05Dll/splits.txt
+  links: []
+- object: files/dll/w06Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w06Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w06Dll/splits.txt
+  links: []
+- object: files/dll/w10Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w10Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w10Dll/splits.txt
+  links: []
+- object: files/dll/w20Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w20Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w20Dll/splits.txt
+  links: []
+- object: files/dll/w21Dll.rel
+  
+  symbols: config/GMPP01_00/rels/w21Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w21Dll/splits.txt
+  links: []
+- object: files/dll/ztardll.rel
+  
+  symbols: config/GMPP01_00/rels/ztardll/symbols.txt
+  splits: config/GMPP01_00/rels/ztardll/splits.txt
+  links: []
+- object: files/dll/E3setupDLL.rel
+  
+  symbols: config/GMPP01_00/rels/E3setupDLL/symbols.txt
+  splits: config/GMPP01_00/rels/E3setupDLL/splits.txt
+  links: [_minigameDll]
+- object: files/dll/m300Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m300Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m300Dll/splits.txt
+  links: [_minigameDll]
+- object: files/dll/m401Dll.rel
+  
+  symbols: config/GMPP01_00/rels/m401Dll/symbols.txt
+  splits: config/GMPP01_00/rels/m401Dll/splits.txt
+  links: [_minigameDll]
+
+extract:
+- symbol: ank8x8_4b
+  binary: ank8x8_4b.bin
+  header: ank8x8_4b.inc
+- symbol: refMapData0
+  binary: refMapData0.anm
+  header: refMapData0.inc
+- symbol: refMapData1
+  binary: refMapData1.anm
+  header: refMapData1.inc
+- symbol: refMapData2
+  binary: refMapData2.anm
+  header: refMapData2.inc
+- symbol: refMapData3
+  binary: refMapData3.anm
+  header: refMapData3.inc
+- symbol: refMapData4
+  binary: refMapData4.anm
+  header: refMapData4.inc
+- symbol: toonMapData
+  binary: toonMapData.anm
+  header: toonMapData.inc
+- symbol: toonMapData2
+  binary: toonMapData2.anm
+  header: toonMapData2.inc
+- symbol: hiliteData
+  binary: hiliteData.anm
+  header: hiliteData.inc
+- symbol: hiliteData2
+  binary: hiliteData2.anm
+  header: hiliteData2.inc
+- symbol: hiliteData3
+  binary: hiliteData3.anm
+  header: hiliteData3.inc
+- symbol: hiliteData4
+  binary: hiliteData4.anm
+  header: hiliteData4.inc
+- symbol: Ascii8x8_1bpp
+  binary: Ascii8x8_1bpp.bin
+  header: Ascii8x8_1bpp.inc
+- symbol: coveropen_en
+  binary: coveropen_en.bin
+  header: coveropen_en.inc
+- symbol: fatalerror_en
+  binary: fatalerror_en.bin
+  header: fatalerror_en.inc
+- symbol: loading_en
+  binary: loading_en.bin
+  header: loading_en.inc
+- symbol: nodisc_en
+  binary: nodisc_en.bin
+  header: nodisc_en.inc
+- symbol: retryerror_en
+  binary: retryerror_en.bin
+  header: retryerror_en.inc
+- symbol: wrongdisc_en
+  binary: wrongdisc_en.bin
+  header: wrongdisc_en.inc
+- symbol: DEMOFontBitmap
+  binary: DEMOFontBitmap.bin
+  header: DEMOFontBitmap.inc
