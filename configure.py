@@ -822,7 +822,7 @@ config.libs = [
         "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/executor.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/empty.c"),  # Must be marked as matching
+            Object(Matching, "REL/empty.c"),  # Must be marked as matching
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/board_executor.c"),
         ],
     },
