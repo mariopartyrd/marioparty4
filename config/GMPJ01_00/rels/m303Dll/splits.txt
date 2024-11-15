@@ -1,0 +1,3 @@
+Sections:
+	.ctors      type:rodata align:4
+	.dtors      type:rodata align:4
