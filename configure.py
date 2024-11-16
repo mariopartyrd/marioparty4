@@ -1063,7 +1063,7 @@ config.libs = [
     Rel(
         "m429Dll",  # Team Treasure Trek
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m429Dll/main.c"),
+            Object(Matching, "REL/m429Dll/main.c"),
         },
     ),
     Rel(

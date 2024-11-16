@@ -222,20 +222,20 @@ void fn_1_580(s32 *arg0, s32 arg1, s32 arg2)
 
     espBankSet(arg0[arg1 + 1], 10);
     espBankSet(arg0[arg1 + 4], 11);
-    if (36000 <= arg2) {
-        arg2 = 35999;
+    if (600 * REFRESH_RATE <= arg2) {
+        arg2 = 600 * REFRESH_RATE - 1;
     }
-    var_r30 = arg2 / 3600;
-    arg2 -= var_r30 * 3600;
+    var_r30 = arg2 / (60 * REFRESH_RATE);
+    arg2 -= var_r30 * (60 * REFRESH_RATE);
     if (var_r30 > 9) {
         var_r30 = 9;
     }
     espBankSet(arg0[arg1], var_r30);
-    var_r30 = arg2 / 60;
-    arg2 -= var_r30 * 60;
+    var_r30 = arg2 / REFRESH_RATE;
+    arg2 -= var_r30 * REFRESH_RATE;
     espBankSet(arg0[arg1 + 2], var_r30 / 10);
     espBankSet(arg0[arg1 + 3], var_r30 % 10);
-    var_r30 = 101.5f * arg2 / 60.0f;
+    var_r30 = 101.5f * arg2 / REFRESH_RATE;
     espBankSet(arg0[arg1 + 5], var_r30 / 10);
     espBankSet(arg0[arg1 + 6], var_r30 % 10);
 }

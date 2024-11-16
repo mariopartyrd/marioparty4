@@ -21,6 +21,7 @@
 #include "game/sprite.h"
 
 #include "ext_math.h"
+#include "version.h"
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -222,20 +223,20 @@ void fn_1_580(s32 *arg0, s32 arg1, s32 arg2)
 
     espBankSet(arg0[arg1 + 1], 10);
     espBankSet(arg0[arg1 + 4], 11);
-    if (36000 <= arg2) {
-        arg2 = 35999;
+    if (600 * REFRESH_RATE <= arg2) {
+        arg2 = 600 * REFRESH_RATE - 1;
     }
-    var_r30 = arg2 / 3600;
-    arg2 -= var_r30 * 3600;
+    var_r30 = arg2 / (60 * REFRESH_RATE);
+    arg2 -= var_r30 * (60 * REFRESH_RATE);
     if (var_r30 > 9) {
         var_r30 = 9;
     }
     espBankSet(arg0[arg1], var_r30);
-    var_r30 = arg2 / 60;
-    arg2 -= var_r30 * 60;
+    var_r30 = arg2 / REFRESH_RATE;
+    arg2 -= var_r30 * REFRESH_RATE;
     espBankSet(arg0[arg1 + 2], var_r30 / 10);
     espBankSet(arg0[arg1 + 3], var_r30 % 10);
-    var_r30 = 101.5f * arg2 / 60.0f;
+    var_r30 = 101.5f * arg2 / REFRESH_RATE;
     espBankSet(arg0[arg1 + 5], var_r30 / 10);
     espBankSet(arg0[arg1 + 6], var_r30 % 10);
 }
@@ -2343,7 +2344,7 @@ void fn_1_AD74(float *arg0)
     float temp_f30;
 
     temp_r31 = &lbl_1_data_103C[0][0];
-    temp_f30 = lbl_1_bss_12C / 60;
+    temp_f30 = lbl_1_bss_12C / REFRESH_RATE;
     temp_f31 = sind(90 * temp_f30) * sind(90 * temp_f30);
     for (temp_r28 = 0; temp_r28 < 4; temp_r28++, temp_r31 += 4, arg0 += 4) {
         sp8[0] = temp_r31[0] + (temp_f31 * (arg0[0] - temp_r31[0]));
@@ -2395,8 +2396,8 @@ void fn_1_B01C(void)
     temp_f31 = lbl_1_bss_98[lbl_1_bss_28].x - temp_r30->unk4.x;
     temp_f30 = lbl_1_bss_98[lbl_1_bss_28].z - temp_r30->unk4.z;
     temp_r30->unk64 = atan2d(temp_f31, temp_f30);
-    omVibrate(temp_r31->unk114, 120, 6, 6);
-    omVibrate(temp_r30->unk114, 120, 6, 6);
+    omVibrate(temp_r31->unk114, 2 * REFRESH_RATE, 6, 6);
+    omVibrate(temp_r30->unk114, 2 * REFRESH_RATE, 6, 6);
 }
 
 void fn_1_B754(float *arg0, float arg1, float arg2, s32 arg3)
@@ -2438,7 +2439,7 @@ void fn_1_B8E0(omObjData *object)
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
         object->func = fn_1_E96C;
     }
-    lbl_1_bss_114 += 1.0f / 60.0f;
+    lbl_1_bss_114 += 1.0f / REFRESH_RATE;
     if (360.0f <= lbl_1_bss_114) {
         lbl_1_bss_114 -= 360.0f;
     }
@@ -2464,12 +2465,12 @@ void fn_1_B8E0(omObjData *object)
 
         case 1002:
             lbl_1_bss_12C++;
-            temp_f30 = lbl_1_bss_12C / 60;
+            temp_f30 = lbl_1_bss_12C / REFRESH_RATE;
             temp_f31 = 1 - (sind(temp_f30 * 90.0f) * sind(temp_f30 * 90.0f));
             for (temp_r29 = 0; temp_r29 < 5; temp_r29++) {
                 espTPLvlSet(lbl_1_bss_10[temp_r29], temp_f31);
             }
-            if (60.0f <= lbl_1_bss_12C) {
+            if (REFRESH_RATE <= lbl_1_bss_12C) {
                 object->work[0]++;
                 lbl_1_bss_12C = 0;
                 for (temp_r29 = 0; temp_r29 < 5; temp_r29++) {
@@ -2480,12 +2481,12 @@ void fn_1_B8E0(omObjData *object)
 
         case 1003:
             lbl_1_bss_12C++;
-            temp_f30 = lbl_1_bss_12C / 60;
+            temp_f30 = lbl_1_bss_12C / REFRESH_RATE;
             temp_f31 = sind(temp_f30 * 90.0f) * sind(temp_f30 * 90.0f);
             for (temp_r29 = 0; temp_r29 < 4; temp_r29++) {
                 lbl_1_bss_130[temp_r29].unk4 = temp_f31;
             }
-            if (60.0f <= lbl_1_bss_12C) {
+            if (REFRESH_RATE <= lbl_1_bss_12C) {
                 object->work[0]++;
                 lbl_1_bss_12C = 0;
                 lbl_1_bss_4 = HuAudFXPlay(1645);
@@ -2511,19 +2512,19 @@ void fn_1_B8E0(omObjData *object)
                 }
                 if (!MGSeqStatGet(lbl_1_bss_2FE)) {
                     object->work[0]++;
-                    lbl_1_bss_304 = 3600;
-                    lbl_1_bss_2FC = MGSeqTimerCreate(lbl_1_bss_304 / 60);
+                    lbl_1_bss_304 = 60 * REFRESH_RATE;
+                    lbl_1_bss_2FC = MGSeqTimerCreate(lbl_1_bss_304 / REFRESH_RATE);
                     lbl_1_bss_2FE = -1;
                 }
             }
             break;
 
         case 1006:
-            MGSeqParamSet(lbl_1_bss_2FC, 1, (lbl_1_bss_304 + 59) / 60);
+            MGSeqParamSet(lbl_1_bss_2FC, 1, (lbl_1_bss_304 + REFRESH_RATE - 1) / REFRESH_RATE);
             lbl_1_bss_304--;
             if (lbl_1_bss_304 < 0 || lbl_1_bss_28 >= 0) {
                 object->work[0] = 1007;
-                lbl_1_bss_304 = 3600;
+                lbl_1_bss_304 = 60 * REFRESH_RATE;
                 lbl_1_bss_12C = 0;
             }
             break;
@@ -2575,7 +2576,7 @@ void fn_1_B8E0(omObjData *object)
 
         case 1008:
             lbl_1_bss_12C++;
-            if (60.0f < lbl_1_bss_12C) {
+            if (REFRESH_RATE < lbl_1_bss_12C) {
                 object->work[0]++;
                 lbl_1_bss_12C = 0;
                 HuAudFXPlay(1650);
@@ -2587,7 +2588,7 @@ void fn_1_B8E0(omObjData *object)
             }
             else {
                 fn_1_AD74(((lbl_1_bss_28 & 0x2) == 0) ? &lbl_1_data_107C[0][0] : &lbl_1_data_10BC[0][0]);
-                temp_f30 = lbl_1_bss_12C / 60.0f;
+                temp_f30 = lbl_1_bss_12C / REFRESH_RATE;
                 temp_f31 = sind(temp_f30 * 90.0f) * sind(temp_f30 * 90.0f);
                 fn_1_A588(lbl_1_bss_28, &lbl_1_data_FE0, temp_f31);
             }
@@ -2595,13 +2596,13 @@ void fn_1_B8E0(omObjData *object)
 
         case 1009:
             lbl_1_bss_12C++;
-            if (120.0f < lbl_1_bss_12C) {
+            if (2 * REFRESH_RATE < lbl_1_bss_12C) {
                 object->work[0]++;
                 lbl_1_bss_12C = 0;
                 HuAudFXPlay(1651);
             }
             else {
-                temp_f30 = lbl_1_bss_12C / 120.0f;
+                temp_f30 = lbl_1_bss_12C / (2 * REFRESH_RATE);
                 temp_f31 = sind(temp_f30 * 90.0f) * sind(temp_f30 * 90.0f);
                 temp_f20 = (6.0f * frandf()) - 3.0f;
                 temp_f19 = (6.0f * frandf()) - 3.0f;
