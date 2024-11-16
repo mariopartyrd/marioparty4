@@ -396,20 +396,32 @@ static void DestroyFocus(void) {
 
 static void CreateButtonWin(void) {
     float sp8[2];
-    float var_f31;
-    float var_f30;
+    float posX;
+    float posY;
     s32 var_r31;
 
     if (viewControls != 2) {
         var_r31 = MAKE_MESSID(0x09, 0x05);
-        var_f31 = 286.0f;
+        #if VERSION_PAL
+        HuWinMesMaxSizeGet(1, sp8, var_r31);
+        posX = 288-((sp8[0]/2)-32);
+        #endif
+        posY = 286.0f;
     } else {
         var_r31 = MAKE_MESSID(0x10, 0x4D);
-        var_f31 = 328.0f;
+        #if VERSION_PAL
+        posX = -10000.0f;
+        posY = 324.0f;
+        #else
+        posY = 328.0f;
+        #endif
+        
     }
     HuWinMesMaxSizeGet(1, sp8, var_r31);
-    var_f30 = -10000.0f;
-    buttonWin = HuWinCreate(var_f30, var_f31, sp8[0], sp8[1], 0);
+    #if VERSION_NTSC
+    posX = -10000.0f;
+    #endif
+    buttonWin = HuWinCreate(posX, posY, sp8[0], sp8[1], 0);
     HuWinBGTPLvlSet(buttonWin, 0.0f);
     HuWinMesSpeedSet(buttonWin, 0);
     HuWinMesSet(buttonWin, var_r31);

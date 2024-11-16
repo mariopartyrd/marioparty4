@@ -315,3 +315,64 @@ game/sreset.c:
 	.bss        start:0x801B97E0 end:0x801BAB80
 	.sdata      start:0x801F0A00 end:0x801F0A18
 	.sbss       start:0x801F1270 end:0x801F1288
+
+game/board/main.c:
+	.text       start:0x8005AEF0 end:0x80061D78
+	.rodata     start:0x8011DB80 end:0x8011DBB0
+	.data       start:0x80156B20 end:0x80156C20
+	.bss        start:0x801BAB80 end:0x801BAD08
+	.sdata      start:0x801F0A18 end:0x801F0A28
+	.sbss       start:0x801F1288 end:0x801F12D8
+	.sdata2     start:0x801F2508 end:0x801F25B8
+
+game/board/player.c:
+	.text       start:0x80061D78 end:0x8006D0BC
+	.rodata     start:0x8011DBB0 end:0x8011DC80
+	.data       start:0x80156C20 end:0x80156E28
+	.bss        start:0x801BAD08 end:0x801BAD38
+	.sdata      start:0x801F0A28 end:0x801F0A88
+	.sbss       start:0x801F12D8 end:0x801F1310
+	.sdata2     start:0x801F25B8 end:0x801F26C0
+
+game/board/model.c:
+	.text       start:0x8006D0BC end:0x8006FB30
+	.sbss       start:0x801F1310 end:0x801F1320
+	.sdata2     start:0x801F26C0 end:0x801F26D8
+
+game/board/window.c:
+	.text       start:0x8006FB30 end:0x80070B30
+	.rodata     start:0x8011DC80 end:0x8011DCF0
+	.data       start:0x80156E28 end:0x80156E70
+	.bss        start:0x801BAD38 end:0x801BAD98
+	.sdata      start:0x801F0A88 end:0x801F0A90
+	.sbss       start:0x801F1320 end:0x801F1348
+	.sdata2     start:0x801F26D8 end:0x801F26E8
+
+game/board/audio.c:
+	.text       start:0x80070B30 end:0x8007103C
+	.data       start:0x80156E70 end:0x80156E88
+	.sdata      start:0x801F0A90 end:0x801F0A98
+	.sbss       start:0x801F1348 end:0x801F1350
+
+game/board/com.c:
+	.text       start:0x8007103C end:0x80072750
+	.data       start:0x80156E88 end:0x80156F50
+	.sdata      start:0x801F0A98 end:0x801F0AA0
+	.sdata2     start:0x801F26E8 end:0x801F2710
+
+game/board/view.c:
+	.text       start:0x80072750 end:0x80073DD0
+	.rodata     start:0x8011DCF0 end:0x8011DD10
+	.data       start:0x80156F50 end:0x80157050
+	.bss        start:0x801BAD98 end:0x801BADB0
+	.sdata      start:0x801F0AA0 end:0x801F0AA8
+	.sbss       start:0x801F1350 end:0x801F1368
+	.sdata2     start:0x801F2710 end:0x801F2780
+
+game/board/space.c:
+	.text       start:0x80073DD0 end:0x80077888
+	.data       start:0x80157050 end:0x80157090
+	.bss        start:0x801BADB0 end:0x801C1E00
+	.sdata      start:0x801F0AA8 end:0x801F0AB0
+	.sbss       start:0x801F1368 end:0x801F13A0
+	.sdata2     start:0x801F2780 end:0x801F2800

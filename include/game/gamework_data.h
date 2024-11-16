@@ -3,6 +3,7 @@
 
 #include "dolphin.h"
 #include "game/flag.h"
+#include "version.h"
 
 //HACK: to prevent prototype errors
 extern void HuPadRumbleAllStop(void);
@@ -235,6 +236,7 @@ static inline s32 GWMessSpeedGet(void)
 
 static inline void GWMessSpeedSet(s32 value)
 {
+    #if VERSION_NTSC
 	GWSystem.mess_speed = value;
 	switch(value) {
 		case 0:
@@ -249,6 +251,26 @@ static inline void GWMessSpeedSet(s32 value)
 			GWSystem.mess_delay = 32;
 			break;
 	}
+    #else
+    GWSystem.mess_speed = value;
+	switch(value) {
+		case 0:
+			GWSystem.mess_delay = 32;
+			break;
+			
+        case 2:
+			GWSystem.mess_delay = 64;
+			break;
+            
+		case 1:
+			GWSystem.mess_delay = 48;
+			break;
+			
+		default:
+			GWSystem.mess_delay = 120;
+			break;
+	}
+    #endif
 }
 
 static inline void GWSaveModeSet(s32 value)
