@@ -1951,28 +1951,32 @@ static void UpdateItemWindow(omObjData *arg0) {
 
 static void CreatePickerWindow(UnkUiWork01 *arg0, s32 arg1) {
     float spC[2];
-    float var_f31;
-    float var_f30;
-    float var_f29;
+    
+    float posX;
+    float posY;
+    float yOfs;
     s32 var_r30;
-
+    #if VERSION_NTSC
     switch (GWGameStat.language) {
         case 1:
-            var_f31 = 0.0f;
+            yOfs = 0.0f;
             break;
         case 0:
-            var_f31 = 0.0f;
+            yOfs = 0.0f;
             break;
     }
+    #else
+    yOfs = 0;
+    #endif
     if (arg1 != 0) {
         var_r30 = MAKE_MESSID(0x10, 0x1A);
     } else {
         var_r30 = MAKE_MESSID(0x10, 0x1B);
     }
     HuWinMesMaxSizeGet(1, spC, var_r30);
-    var_f30 = -10000.0f;
-    var_f29 = var_f31 + (HU_DISP_HEIGHT-128);
-    arg0->unk06 = HuWinCreate(var_f30, var_f29, spC[0], spC[1], 0);
+    posX = -10000.0f;
+    posY = yOfs + (HU_DISP_HEIGHT-128);
+    arg0->unk06 = HuWinCreate(posX, posY, spC[0], spC[1], 0);
     HuWinBGTPLvlSet(arg0->unk06, 0.0f);
     HuWinMesSpeedSet(arg0->unk06, 0);
     HuWinMesSet(arg0->unk06, var_r30);

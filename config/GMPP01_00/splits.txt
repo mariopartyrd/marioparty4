@@ -376,3 +376,119 @@ game/board/space.c:
 	.sdata      start:0x801F0AA8 end:0x801F0AB0
 	.sbss       start:0x801F1368 end:0x801F13A0
 	.sdata2     start:0x801F2780 end:0x801F2800
+
+game/board/shop.c:
+	.text       start:0x80077888 end:0x8007A6B4
+	.data       start:0x80157090 end:0x80157210
+	.bss        start:0x801C1E00 end:0x801C1E30
+	.sdata      start:0x801F0AB0 end:0x801F0AD0
+	.sbss       start:0x801F13A0 end:0x801F13C0
+	.sdata2     start:0x801F2800 end:0x801F28D8
+
+game/board/lottery.c:
+	.text       start:0x8007A6B4 end:0x8007F9C8
+	.rodata     start:0x8011DD10 end:0x8011DE40
+	.data       start:0x80157210 end:0x80157578
+	.bss        start:0x801C1E30 end:0x801C1E60
+	.sdata      start:0x801F0AD0 end:0x801F0AF0
+	.sbss       start:0x801F13C0 end:0x801F13E0
+	.sdata2     start:0x801F28D8 end:0x801F2A68
+
+game/board/basic_space.c:
+	.text       start:0x8007F9C8 end:0x80080BCC
+	.data       start:0x80157578 end:0x801575B0
+	.sdata2     start:0x801F2A68 end:0x801F2AF8
+
+game/board/warp.c:
+	.text       start:0x80080BCC end:0x80081544
+	.rodata     start:0x8011DE40 end:0x8011DE60
+	.data       start:0x801575B0 end:0x801575D0
+	.bss        start:0x801C1E60 end:0x801C1E70
+	.sdata      start:0x801F0AF0 end:0x801F0B00
+	.sbss       start:0x801F13E0 end:0x801F13F8
+	.sdata2     start:0x801F2AF8 end:0x801F2B48
+
+game/board/char_wheel.c:
+	.text       start:0x80081544 end:0x80082B3C
+	.data       start:0x801575D0 end:0x80157638
+	.sdata      start:0x801F0B00 end:0x801F0B08
+	.sbss       start:0x801F13F8 end:0x801F1418
+	.sdata2     start:0x801F2B48 end:0x801F2BD8
+
+game/board/mushroom.c:
+	.text       start:0x80082B3C end:0x80083D88
+	.sdata      start:0x801F0B08 end:0x801F0B18
+	.sbss       start:0x801F1418 end:0x801F1428
+	.sdata2     start:0x801F2BD8 end:0x801F2C60
+
+game/board/star.c:
+	.text       start:0x80083D88 end:0x80085B74
+	.rodata     start:0x8011DE60 end:0x8011DED0
+	.data       start:0x80157638 end:0x801576F0
+	.bss        start:0x801C1E70 end:0x801C1E80
+	.sdata      start:0x801F0B18 end:0x801F0B20
+	.sbss       start:0x801F1428 end:0x801F1440
+	.sdata2     start:0x801F2C60 end:0x801F2D00
+
+game/board/roll.c:
+	.text       start:0x80085B74 end:0x800882B4
+	.rodata     start:0x8011DED0 end:0x8011DF38
+	.data       start:0x801576F0 end:0x80157790
+	.bss        start:0x801C1E80 end:0x801C1E90
+	.sdata      start:0x801F0B20 end:0x801F0B38
+	.sbss       start:0x801F1440 end:0x801F1460
+	.sdata2     start:0x801F2D00 end:0x801F2DB0
+
+game/board/ui.c:
+	.text       start:0x800882B4 end:0x8008DE88
+	.rodata     start:0x8011DF38 end:0x8011E020
+	.data       start:0x80157790 end:0x80157990
+	.bss        start:0x801C1E90 end:0x801C1F20
+	.sdata      start:0x801F0B38 end:0x801F0B40
+	.sbss       start:0x801F1460 end:0x801F1498
+	.sdata2     start:0x801F2DB0 end:0x801F2E70
+
+game/board/block.c:
+	.text       start:0x8008DE88 end:0x8008ED48
+	.rodata     start:0x8011E020 end:0x8011E040
+	.data       start:0x80157990 end:0x801579A8
+	.bss        start:0x801C1F20 end:0x801C1F48
+	.sdata      start:0x801F0B40 end:0x801F0B48
+	.sbss       start:0x801F1498 end:0x801F14B0
+	.sdata2     start:0x801F2E70 end:0x801F2EC8
+
+game/board/item.c:
+	.text       start:0x8008ED48 end:0x800974CC
+	.rodata     start:0x8011E040 end:0x8011E058
+	.data       start:0x801579A8 end:0x80157D98
+	.bss        start:0x801C1F48 end:0x801C1F88
+	.sdata      start:0x801F0B48 end:0x801F0B58
+	.sbss       start:0x801F14B0 end:0x801F14F0
+	.sdata2     start:0x801F2EC8 end:0x801F3100
+
+game/board/bowser.c:
+	.text       start:0x800974CC end:0x8009B3F4
+	.rodata     start:0x8011E058 end:0x8011E120
+	.data       start:0x80157D98 end:0x80157DE8
+	.bss        start:0x801C1F88 end:0x801C1FD0
+	.sdata      start:0x801F0B58 end:0x801F0B70
+	.sbss       start:0x801F14F0 end:0x801F1530
+	.sdata2     start:0x801F3100 end:0x801F31B0
+
+game/board/battle.c:
+	.text       start:0x8009B3F4 end:0x8009D068
+	.rodata     start:0x8011E120 end:0x8011E1A0
+	.data       start:0x80157DE8 end:0x80157E98
+	.bss        start:0x801C1FD0 end:0x801C1FE0
+	.sdata      start:0x801F0B70 end:0x801F0B78
+	.sbss       start:0x801F1530 end:0x801F1558
+	.sdata2     start:0x801F31B0 end:0x801F3258
+
+game/board/fortune.c:
+	.text       start:0x8009D068 end:0x8009DEF0
+	.rodata     start:0x8011E1A0 end:0x8011E1C8
+	.data       start:0x80157E98 end:0x80157EB0
+	.bss        start:0x801C1FE0 end:0x801C1FF8
+	.sdata      start:0x801F0B78 end:0x801F0B80
+	.sbss       start:0x801F1558 end:0x801F1568
+	.sdata2     start:0x801F3258 end:0x801F3268

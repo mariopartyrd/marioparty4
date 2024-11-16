@@ -139,6 +139,71 @@ s32 BoardRollExec(s32 arg0)
     return destMode;
 }
 
+static void RollWinCreate(s32 playerNo)
+{
+    float sp8[2];
+    float posX;
+    float posY;
+    s32 var_r29;
+    s32 var_r27;
+    s32 temp_r25;
+    
+    if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
+        var_r27 = BoardPlayerItemCount(playerNo);
+        if (GWTeamGet()) {
+            temp_r25 = BoardPlayerSameTeamFind(playerNo);
+            var_r27 += BoardPlayerItemCount(temp_r25);
+        }
+        if (BoardItemPrevGet() != -1 || var_r27 == 0 || _CheckFlag(FLAG_ID_MAKE(1, 9)) || BoardMegaDoubleDiceCheck()) {
+            var_r29 = MAKE_MESSID(0x09, 0x04);
+        }
+        else {
+            var_r29 = MAKE_MESSID(0x09, 0x02);
+        }
+        if (inputTimer != 0) {
+            var_r29 = MAKE_MESSID(0x30, 0x25);
+        }
+        HuWinMesMaxSizeGet(1, sp8, var_r29);
+        #if VERSION_PAL
+        posY = HU_DISP_HEIGHT - 176; 
+        switch (GWGameStat.language) {
+            case 0:
+            case 4:
+                posX = -10000.0f;
+                break;
+            
+            case 3:
+                posX = HU_DISP_CENTERX - (sp8[0] / 2 - 32.0f);
+                break;
+            
+            case 5:
+                posX = HU_DISP_CENTERX - (sp8[0] / 2 - 16.0f);
+                posY = 258; 
+                break;
+            
+            default:
+                posX = HU_DISP_CENTERX - (sp8[0] / 2 - 16.0f);
+                break;
+        }
+        #else
+        switch (GWGameStat.language) {
+            case 0:
+                posX = -10000.0f;
+                break;
+            case 1:
+                posX = HU_DISP_CENTERX - (sp8[0] / 2 - 16.0f);
+                break;
+        }
+        posY = HU_DISP_HEIGHT - 176; 
+        #endif
+        
+        rollWin = HuWinCreate(posX, posY, sp8[0], sp8[1], 0);
+        HuWinBGTPLvlSet(rollWin, 0.0f);
+        HuWinMesSpeedSet(rollWin, 0);
+        HuWinMesSet(rollWin, var_r29);
+    }
+}
+
 void BoardRollKill(void)
 {
     if (rollProc) {
@@ -177,15 +242,11 @@ void BoardRollWinDispSet(s32 arg0)
 
 static void RollMain(void)
 {
-    float sp8[2];
-    float var_f31;
-    float var_f30;
+    
     s32 var_r28;
-    s32 var_r27;
-    s32 temp_r26;
-    s32 temp_r25;
+    
     s32 var_r30;
-    s32 var_r29;
+    
     s32 i;
 
     diceValue[0] = diceValue[1] = diceValue[2] = 0;
@@ -195,37 +256,7 @@ static void RollMain(void)
     BoardCameraMotionWait();
     BoardCameraTargetModelSet(-1);
     for (i = 0; i < numDice; i++) {
-        temp_r26 = rollPlayer;
-        if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
-            var_r27 = BoardPlayerItemCount(temp_r26);
-            if (GWTeamGet()) {
-                temp_r25 = BoardPlayerSameTeamFind(temp_r26);
-                var_r27 += BoardPlayerItemCount(temp_r25);
-            }
-            if (BoardItemPrevGet() != -1 || var_r27 == 0 || _CheckFlag(FLAG_ID_MAKE(1, 9)) || BoardMegaDoubleDiceCheck()) {
-                var_r29 = MAKE_MESSID(0x09, 0x04);
-            }
-            else {
-                var_r29 = MAKE_MESSID(0x09, 0x02);
-            }
-            if (inputTimer != 0) {
-                var_r29 = MAKE_MESSID(0x30, 0x25);
-            }
-            HuWinMesMaxSizeGet(1, sp8, var_r29);
-            switch (GWGameStat.language) {
-                case 0:
-                    var_f31 = -10000.0f;
-                    break;
-                case 1:
-                    var_f31 = HU_DISP_CENTERX - (sp8[0] / 2 - 16.0f);
-                    break;
-            }
-            var_f30 = HU_DISP_HEIGHT - 176;
-            rollWin = HuWinCreate(var_f31, var_f30, sp8[0], sp8[1], 0);
-            HuWinBGTPLvlSet(rollWin, 0.0f);
-            HuWinMesSpeedSet(rollWin, 0);
-            HuWinMesSet(rollWin, var_r29);
-        }
+        RollWinCreate(rollPlayer);
         DiceCreate(i);
         DiceWaitFull(i);
         DoInput(i);

@@ -74,7 +74,7 @@ static Process *starProc;
 static s16 starParman = -1;
 static s16 hostMdl = -1;
 
-const s32 lbl_8011E040[9] = {
+static const s32 starMesTbl1[9] = {
     MAKE_MESSID(12, 0),
     MAKE_MESSID(12, 9),
     MAKE_MESSID(12, 18),
@@ -86,7 +86,7 @@ const s32 lbl_8011E040[9] = {
     MAKE_MESSID(12, 0)
 };
 
-const s32 lbl_8011E064[9][2] = {
+static const s32 starMesTbl2[9][2] = {
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
     { MAKE_MESSID(21, 35), MAKE_MESSID(21, 41) },
     { MAKE_MESSID(21, 36), MAKE_MESSID(21, 42) },
@@ -249,12 +249,12 @@ static void ExecStar(void) {
     BoardCameraViewSet(3);
     BoardCameraMotionWait();
     if (GWStarsGet(temp_r31) >= 999) {
-        temp_r29 = lbl_8011E040[temp_r27] + 5;
+        temp_r29 = starMesTbl1[temp_r27] + 5;
         BoardWinCreate(0, temp_r29, BoardWinPortraitGetStar());
         BoardWinWait();
         BoardWinKill();
     } else if (BoardPlayerCoinsGet(temp_r31) < 20 && GWSystem.last5_effect != 4) {
-        temp_r29 = lbl_8011E040[temp_r27] + 2;
+        temp_r29 = starMesTbl1[temp_r27] + 2;
         BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
         BoardWinWait();
         BoardWinKill();
@@ -263,7 +263,7 @@ static void ExecStar(void) {
         while (!BoardStatusStopCheck(0) || !BoardStatusStopCheck(1) || !BoardStatusStopCheck(2) || !BoardStatusStopCheck(3)) {
             HuPrcVSleep();
         }
-        temp_r29 = lbl_8011E040[temp_r27];
+        temp_r29 = starMesTbl1[temp_r27];
         BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
         BoardWinInsertMesSet(BoardPlayerGetCharMess(temp_r31), 0);
         BoardWinWait();
@@ -275,12 +275,12 @@ static void ExecStar(void) {
                 HuPrcVSleep();
             }
             if (GWSystem.last5_effect == 4) {
-                temp_r29 = lbl_8011E040[temp_r27] + 8;
+                temp_r29 = starMesTbl1[temp_r27] + 8;
                 BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
                 BoardWinWait();
                 break;
             }
-            temp_r29 = lbl_8011E040[temp_r27] + 1;
+            temp_r29 = starMesTbl1[temp_r27] + 1;
             BoardWinCreateChoice(1, temp_r29, BoardWinPortraitGetStar(), 0);
             BoardWinAttrSet(0x10);
             if (GWPlayer[temp_r31].com) {
@@ -294,7 +294,7 @@ static void ExecStar(void) {
             switch (BoardWinChoiceGet()) {
                 case 0:
                     if (BoardPlayerCoinsGet(temp_r31) < 20) {
-                        temp_r29 = lbl_8011E040[temp_r27] + 2;
+                        temp_r29 = starMesTbl1[temp_r27] + 2;
                         BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
                         BoardWinWait();
                         BoardStatusShowSet(temp_r31, 0);
@@ -306,7 +306,7 @@ static void ExecStar(void) {
                     }
                     goto block_A;
                 case 1:
-                    temp_r29 = lbl_8011E040[temp_r27] + 4;
+                    temp_r29 = starMesTbl1[temp_r27] + 4;
                     BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
                     BoardWinWait();
                     BoardStatusShowSet(temp_r31, 0);
@@ -326,7 +326,7 @@ static void ExecStar(void) {
             }
         }
 block_A:
-        temp_r29 = lbl_8011E040[temp_r27] + 3;
+        temp_r29 = starMesTbl1[temp_r27] + 3;
         BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
         BoardWinWait();
         BoardWinKill();
@@ -734,9 +734,9 @@ void BoardStarShowNext(s32 arg0) {
         HuPrcVSleep();
     }
     if (var_r28 == 0) {
-        var_r30 = lbl_8011E040[GWBoardGet()] + 6;
+        var_r30 = starMesTbl1[GWBoardGet()] + 6;
     } else {
-        var_r30 = lbl_8011E064[GWBoardGet()][0];
+        var_r30 = starMesTbl2[GWBoardGet()][0];
     }
     BoardWinCreate(3, var_r30, -1);
     BoardWinPause();
@@ -748,9 +748,9 @@ void BoardStarShowNext(s32 arg0) {
     BoardWinKill();
     HuPrcSleep(3);
     if (var_r28 == 0) {
-        var_r30 = lbl_8011E040[GWBoardGet()] + 7;
+        var_r30 = starMesTbl1[GWBoardGet()] + 7;
     } else {
-        var_r30 = lbl_8011E064[GWBoardGet()][1];
+        var_r30 = starMesTbl2[GWBoardGet()][1];
     }
     BoardWinCreate(3, var_r30, -1);
     BoardWinWait();

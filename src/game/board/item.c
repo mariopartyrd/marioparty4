@@ -112,7 +112,7 @@ static AnimData *genieParticleAnim;
 static s16 geniePlayerMot[3];
 static Process *itemProc;
 
-s32 lbl_801D37A0[2] = { DATA_MAKE_NUM(DATADIR_BOARD, 117), -1 };
+static s32 itemMotTbl[2] = { DATA_MAKE_NUM(DATADIR_BOARD, 117), -1 };
 
 static void (*itemFuncTbl[])(void) = { ExecItemMini, ExecItemMega, ExecItemMiniSuper, ExecItemMegaSuper, ExecItemHammer, ExecItemPipe, ExecItemSwap,
     ExecItemSpark, ExecItemLight, ExecItemWhistle, ExecItemBowser, ExecItemBooBall, ExecItemGenie, ExecItemBag };
@@ -1183,7 +1183,7 @@ static void ExecItemSpark(void)
     BoardModelLayerSet(temp_r30, 3);
     BoardModelVisibilitySet(temp_r30, 0);
     HuAudFXPlay(0x350);
-    suitMdl = BoardModelCreate(itemMdlTbl[currItem], lbl_801D37A0, 0);
+    suitMdl = BoardModelCreate(itemMdlTbl[currItem], itemMotTbl, 0);
     BoardModelLayerSet(suitMdl, 2);
     ItemShowProc(NULL, NULL);
     temp_r28 = GWPlayer[currItemRestore].space_curr;

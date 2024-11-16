@@ -984,7 +984,12 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1) {
     omObjData *temp_r30;
     ItemChoiceWork *var_r31;
     s16 spC;
-
+    s16 i;
+    #if VERSION_PAL
+    for(i=0; i<6; i++) {
+        cursorPosTbl[i][0] = 190;
+    }
+    #endif
     temp_r30 = omAddObjEx(boardObjMan, 0x7E01, 0, 0, -1, UpdateShopItemChoice);
     itemChoiceObj = temp_r30;
     itemChoice = -1;
@@ -996,11 +1001,29 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1) {
     var_r31->unk02 = 0;
     var_r31->unk03 = arg1;
     var_r31->unk06 = HuSprGrpCreate(1);
+    #if VERSION_PAL
+    if (GWLanguageGet() != 0) {
+        s16 winId = BoardWinIDGet();
+        if(winId != -1) {
+            WindowData *winP = &winData[winId];
+            for(i=0; i<6; i++) {
+                cursorPosTbl[i][0] = winP->pos_x+96;
+            }
+        } else {
+            for(i=0; i<6; i++) {
+                cursorPosTbl[i][0] = 166;
+            }
+        }
+    }
+    temp_r30->trans.x = cursorPosTbl[0][0];
+    temp_r30->trans.y = cursorPosTbl[0][1];
+    #else
     temp_r30->trans.x = cursorPosTbl[0][0];
     temp_r30->trans.y = cursorPosTbl[0][1];
     if (GWLanguageGet() != 0) {
         temp_r30->trans.x -= 24.0f;
     }
+    #endif
     if (GWPlayer[arg0].com) {
         var_r31->unk01 = GWMessDelayGet();
     }
@@ -1032,9 +1055,11 @@ static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1) {
     temp_r28 = arg1->unk02;
     arg0->trans.x = cursorPosTbl[arg1->unk02][0];
     arg0->trans.y = cursorPosTbl[arg1->unk02][1];
+    #if VERSION_NTSC
     if (GWLanguageGet() != 0) {
         arg0->trans.x -= 24.0f;
     }
+    #endif
     if (GWPlayer[arg1->unk00_field1].com) {
         GetShopItemChoiceInput(arg1, arg0, &sp8);
     } else {
