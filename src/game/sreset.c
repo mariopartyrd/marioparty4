@@ -4,6 +4,9 @@
 #include "game/pad.h"
 #include "game/audio.h"
 #include "game/thpmain.h"
+#include "game/gamework_data.h"
+
+#include "version.h"
 
 #define SR_DVD_LOADING 0
 #define SR_DVD_COVER_OPEN 1
@@ -19,12 +22,53 @@ extern s32 HuDvdErrWait;
 
 static s32 SR_PreRstChk[4] = {};
 
+#if VERSION_NTSC
+
 #include "coveropen_en.inc"
 #include "fatalerror_en.inc"
 #include "loading_en.inc"
 #include "nodisc_en.inc"
 #include "retryerror_en.inc"
 #include "wrongdisc_en.inc"
+
+#else
+
+#include "coveropen_en.inc"
+#include "fatalerror_en.inc"
+#include "loading_en.inc"
+#include "nodisc_en.inc"
+#include "retryerror_en.inc"
+#include "wrongdisc_en.inc"
+
+#include "coveropen_fr.inc"
+#include "fatalerror_fr.inc"
+#include "loading_fr.inc"
+#include "nodisc_fr.inc"
+#include "retryerror_fr.inc"
+#include "wrongdisc_fr.inc"
+
+#include "coveropen_ge.inc"
+#include "fatalerror_ge.inc"
+#include "loading_ge.inc"
+#include "nodisc_ge.inc"
+#include "retryerror_ge.inc"
+#include "wrongdisc_ge.inc"
+
+#include "coveropen_it.inc"
+#include "fatalerror_it.inc"
+#include "loading_it.inc"
+#include "nodisc_it.inc"
+#include "retryerror_it.inc"
+#include "wrongdisc_it.inc"
+
+#include "coveropen_sp.inc"
+#include "fatalerror_sp.inc"
+#include "loading_sp.inc"
+#include "nodisc_sp.inc"
+#include "retryerror_sp.inc"
+#include "wrongdisc_sp.inc"
+
+#endif
 
 static s16 SR_PushTime[4] = {};
 static s8 SR_ResetPad = -1;
@@ -103,9 +147,17 @@ void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2)
 		XfbW = (u16)(((u16)rmode->fbWidth+15) & ~0xF);
 		XfbH = rmode->xfbHeight;
 	} else {
+		#if VERSION_NTSC
 		XfbW = 640;
 		XfbH = 480;
+		#else
+		XfbW = 640;
+		XfbH = 528;
+		#endif
 	}
+	#if VERSION_PAL
+	(void)(VIGetTvFormat() == VI_PAL);
+	#endif
 	if((u16)rmode->xFBmode == VI_XFBMODE_SF) {
 		XfbProg = 0;
 	} else {
@@ -223,20 +275,39 @@ static void ToeDispCheck(void)
 	_HuDvdErrDispXFB(status);
 }
 
+#if VERSION_NTSC
+
+#define XFB_SIZE 0x96000
+
+#else
+
+#define XFB_SIZE (XfbW*XfbH*2)
+
+#endif
+
 static void _HuDvdErrDispXFB(s32 error)
 {
+	#if VERSION_NTSC
 	static void *bmpMes[][6] = {
 		loading_en, coveropen_en, nodisc_en, wrongdisc_en, retryerror_en, fatalerror_en
 	};
-	volatile s32 status;
-	u8 color[2];
-	s8 language;
+	#else
+	static void *bmpMes[][6] = {
+		loading_en, coveropen_en, nodisc_en, wrongdisc_en, retryerror_en, fatalerror_en,
+		loading_fr, coveropen_fr, nodisc_fr, wrongdisc_fr, retryerror_fr, fatalerror_fr,
+		loading_ge, coveropen_ge, nodisc_ge, wrongdisc_ge, retryerror_ge, fatalerror_ge,
+		loading_it, coveropen_it, nodisc_it, wrongdisc_it, retryerror_it, fatalerror_it,
+		loading_sp, coveropen_sp, nodisc_sp, wrongdisc_sp, retryerror_sp, fatalerror_sp
+	};
+	#endif
+	
 	s16 *bmpData;
 	u8 *xfb1_ptr;
 	u8 *xfb2_ptr;
 	u32 i;
 	u32 data;
 	u32 row;
+	s8 language;
 	u32 *xfb1;
 	u32 *xfb2;
 	u32 j;
@@ -246,25 +317,59 @@ static void _HuDvdErrDispXFB(s32 error)
 	u32 *data_ptr;
 	u32 row_offset;
 	u32 row_pitch;
+	void *tempfb1;
+	void *tempfb2;
+	s32 status;
+	u8 color[2];
+	
+	
+	#if VERSION_PAL
+	switch(GWGameStat.language) {
+		case 2:
+			language = 2;
+			break;
+		
+		case 3:
+			language = 1;
+			break;
+		
+		case 4:
+			language = 3;
+			break;
+		
+		case 5:
+			language = 4;
+			break;
+			
+		default:
+			language = 0;
+			break;
+	}
+	#else
 	language = 0;
+	#endif
 	xfb1 = Xfb[0];
 	xfb2 = Xfb[1];
-	for(i=0; i<0x25800; i++, xfb1++, xfb2++) {
+	for(i=0; i<XFB_SIZE/4; i++, xfb1++, xfb2++) {
+		#if VERSION_NTSC
 		*xfb1 = *xfb2 = 0x800080;
+		#else
+		*xfb1 = *xfb2 = 0x10801080;
+		#endif
 	}
-	DCStoreRangeNoSync(Xfb[0], 0x96000);
-	DCStoreRangeNoSync(Xfb[1], 0x96000);
+	DCStoreRangeNoSync(Xfb[0], XFB_SIZE);
+	DCStoreRangeNoSync(Xfb[1], XFB_SIZE);
 	bmpData = bmpMes[language][error];
 	data_ptr = (u32 *)(bmpData+2);
 	row_offset = ((XfbW/2)-(bmpData[0]/2))*2;
 	row_pitch = XfbW*2;
 	color[1] = color[0] = 128;
 	for(row=0; row<bmpData[1]; row++) {
-		void *sp14[2];
+		
 		xfb1_ptr = ((u8 *)(Xfb[0])+((row+200)*row_pitch)+row_offset);
-		sp14[1] = xfb1_ptr;
+		tempfb1 = xfb1_ptr;
 		xfb2_ptr = ((u8 *)(Xfb[1])+((row+200)*row_pitch)+row_offset);
-		sp14[0] = xfb2_ptr;
+		tempfb2 = xfb2_ptr;
 		for(i=0; i<bmpData[0]; i += 32) {
 			data = *data_ptr++;
 			for(j=0; j<32; j += 2, data >>= 2, xfb1_ptr += 4, xfb2_ptr += 4) {
@@ -290,8 +395,8 @@ static void _HuDvdErrDispXFB(s32 error)
 				}
 			}
 		}
-		DCStoreRangeNoSync(sp14[1], bmpData[0]*2);
-		DCStoreRangeNoSync(sp14[0], bmpData[0]*2);
+		DCStoreRangeNoSync(tempfb1, bmpData[0]*2);
+		DCStoreRangeNoSync(tempfb2, bmpData[0]*2);
 	}
 	status = DVDGetDriveStatus();
 	while(status) {
