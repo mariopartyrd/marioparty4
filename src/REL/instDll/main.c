@@ -689,7 +689,11 @@ static void fn_1_2804(void)
             HuWinMesPalSet(window, 7, 0, 0, 192);
             HuWinPosSet(window_other, 142.0f, 320.0f);
             for (i = 0; i <= 10; i++) {
+                #if VERSION_NTSC
                 HuWinPosSet(window_other, 30.0 * sind(i * 9.0f) + 142.0, 160.0 * (1.0 - cosd(i * 9.0f)) + 320.0);
+                #else
+                HuWinPosSet(window_other, 30.0 * sind(i * 9.0f) + 142.0, 180.0 * (1.0 - cosd(i * 9.0f)) + 320.0);
+                #endif
                 HuPrcVSleep();
             }
             HuPrcSleep(5);
@@ -710,6 +714,12 @@ static void fn_1_2804(void)
 }
 
 static float lbl_1_data_124[] = { 420, 70, 488, 186, 476, 242, 400, 292 };
+
+#if VERSION_NTSC
+#define WIN_ANIM_OFS 201
+#else
+#define WIN_ANIM_OFS 219
+#endif
 
 static void fn_1_2FA0(void)
 {
@@ -763,20 +773,39 @@ static void fn_1_2FA0(void)
 
         temp_r29++;
     }
+    #if VERSION_NTSC
     if (temp_r26 == 1) {
         temp_r22 = spC[0];
         temp_r28 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_INST, 18));
-        temp_f29 = ((576.0f - temp_r22) - 24.0f) - 16.0f + 227.0f;
+        temp_f29 = ((576.0f - temp_r22) - 24.0f) - 16.0f + 227;
         temp_f28 = 78;
         temp_f27 = 0.5f;
     }
     else {
         temp_r22 = (spC[0] > spC[1]) ? spC[0] : spC[1];
         temp_r28 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_INST, 15));
+        
         temp_f29 = ((576.0f - temp_r22) - 24.0f) - 16.0f + 172.0f;
         temp_f28 = 84;
         temp_f27 = 1.0f;
     }
+    #else
+    if (temp_r26 == 1) {
+        temp_r22 = spC[0];
+        temp_r28 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_INST, 18));
+        temp_f29 = ((576.0f - temp_r22) - 24.0f) - 16.0f + 235;
+        temp_f28 = 78;
+        temp_f27 = 0.5f;
+    }
+    else {
+        temp_r22 = (spC[0] > spC[1]) ? spC[0] : spC[1];
+        temp_r28 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_INST, 15));
+        
+        temp_f29 = ((576.0f - temp_r22) - 24.0f) - 16.0f + 235;
+        temp_f28 = 84;
+        temp_f27 = 1.0f;
+    }
+    #endif
     temp_r25 = HuSprGrpCreate(1);
     temp_r17 = HuSprCreate(temp_r28, 0, 0);
     HuSprGrpMemberSet(temp_r25, 0, temp_r17);
@@ -809,13 +838,13 @@ static void fn_1_2FA0(void)
     HuWinMesSet(sp10[2], lbl_1_bss_10 + MAKE_MESSID(0x24, 0x02));
     HuWinBGTPLvlSet(sp10[2], 0.0f);
     HuWinMesSpeedSet(sp10[2], 0);
-    temp_r31 = HuWinAnimSet(sp10[2], temp_r28, 0, 201, 18);
+    temp_r31 = HuWinAnimSet(sp10[2], temp_r28, 0, WIN_ANIM_OFS, 18);
     HuWinSprPriSet(sp10[2], temp_r31, 1000);
     temp_r27 = HuWinCreate(1000, 292, 456, 42, 0);
     HuWinBGTPLvlSet(temp_r27, 0.0f);
     HuWinMesSpeedSet(temp_r27, 0);
     HuWinMesSet(temp_r27, lbl_1_bss_10 + MAKE_MESSID(0x24, 0x02));
-    temp_r31 = HuWinAnimSet(temp_r27, temp_r28, 0, 201, 18);
+    temp_r31 = HuWinAnimSet(temp_r27, temp_r28, 0, WIN_ANIM_OFS, 18);
     HuWinPriSet(temp_r27, 10);
     HuWinSprPriSet(temp_r27, temp_r31, 11);
     while (lbl_1_data_0 != 0) {
@@ -824,12 +853,21 @@ static void fn_1_2FA0(void)
     for (temp_r31 = 0; temp_r31 < 36; temp_r31++) {
         temp_f30 = temp_r31;
         if (temp_f30 <= 20.0f) {
+            #if VERSION_NTSC
             temp_f31 = 300.0 * cosd(4.5f * temp_f30) + temp_f29;
             HuSprGrpPosSet(temp_r25, temp_f31, temp_f28);
             temp_f31 = 300.0 * cosd(4.5f * temp_f30) + (576.0f - (temp_r22 / 2) - 24.0f);
             for (temp_r30 = 0; temp_r30 < temp_r26; temp_r30++) {
                 HuSprGrpPosSet(work.spr_grp[temp_r30], temp_f31, (temp_r30 * 28) + 70);
             }
+            #else
+            temp_f31 = 500.0 * cosd(4.5f * temp_f30) + temp_f29;
+            HuSprGrpPosSet(temp_r25, temp_f31, temp_f28);
+            temp_f31 = 500.0 * cosd(4.5f * temp_f30) + (576.0f - (temp_r22 / 2) - 24.0f);
+            for (temp_r30 = 0; temp_r30 < temp_r26; temp_r30++) {
+                HuSprGrpPosSet(work.spr_grp[temp_r30], temp_f31, (temp_r30 * 28) + 70);
+            }
+            #endif
         }
         temp_f30 = temp_r31 - 3;
         if (temp_f30 > 0.0f) {
@@ -837,7 +875,11 @@ static void fn_1_2FA0(void)
                 temp_f31 = 300.0 * cosd(4.5f * temp_f30) + lbl_1_data_124[2];
                 HuSprGrpPosSet(temp_r24, temp_f31, 186.0f);
                 temp_f31 = 300.0 * cosd(4.5f * temp_f30) + (lbl_1_data_124[2] - 88.0f);
+                #if VERSION_NTSC
                 HuWinPosSet(sp10[0], 16.0f + temp_f31, 168.0f);
+                #else
+                HuWinPosSet(sp10[0], 8.0f + temp_f31, 168.0f);
+                #endif
             }
         }
         temp_f30 = temp_r31 - 6;
@@ -846,13 +888,17 @@ static void fn_1_2FA0(void)
                 temp_f31 = 300.0 * cosd(4.5f * temp_f30) + lbl_1_data_124[4];
                 HuSprGrpPosSet(temp_r23, temp_f31, 242.0f);
                 temp_f31 = 300.0 * cosd(4.5f * temp_f30) + (lbl_1_data_124[4] - 100.0f);
+                #if VERSION_NTSC
                 HuWinPosSet(sp10[1], 16.0f + temp_f31, 224.0f);
+                #else
+                HuWinPosSet(sp10[1], 8.0f + temp_f31, 224.0f);
+                #endif
             }
         }
         temp_f30 = temp_r31 - 9;
         if (temp_f30 > 0.0f) {
             if (temp_f30 <= 20.0f) {
-                temp_f31 = 300.0 * cosd(4.5f * temp_f30) + (lbl_1_data_124[6] - 217.0f);
+                temp_f31 = 300.0 * cosd(4.5f * temp_f30) + (lbl_1_data_124[6] - (WIN_ANIM_OFS+16));
                 HuWinPosSet(sp10[2], 16.0f + temp_f31, 274.0f);
             }
         }
@@ -860,7 +906,7 @@ static void fn_1_2FA0(void)
     }
     while (lbl_1_data_0 != 3) {
         if (temp_r21 != lbl_1_bss_6) {
-            temp_f31 = 16.0f + (lbl_1_data_124[6] - 217.0f);
+            temp_f31 = 16.0f + (lbl_1_data_124[6] - (WIN_ANIM_OFS+16));
             HuWinMesSet(temp_r27, MAKE_MESSID(0x24, 0x02) + lbl_1_bss_10 + temp_r21);
             temp_r21 = lbl_1_bss_6;
             if (lbl_1_bss_6 == 1) {
@@ -875,7 +921,11 @@ static void fn_1_2FA0(void)
                 HuWinMesSet(sp10[2], MAKE_MESSID(0x24, 0x02) + lbl_1_bss_10 + lbl_1_bss_6);
             }
             for (temp_r31 = 0; temp_r31 <= 10; temp_r31++) {
+                #if VERSION_NTSC
                 HuWinPosSet(temp_r27, 30.0 * sind(temp_r31 * 9.0f) + temp_f31, 200.0 * (1.0 - cosd(temp_r31 * 9.0f)) + 274.0);
+                #else
+                HuWinPosSet(temp_r27, 30.0 * sind(temp_r31 * 9.0f) + temp_f31, 220.0 * (1.0 - cosd(temp_r31 * 9.0f)) + 274.0);
+                #endif
                 HuPrcVSleep();
             }
         }
@@ -897,7 +947,11 @@ static void fn_1_2FA0(void)
         HuSprGrpPosSet(temp_r23, temp_f31, 242.0f);
         temp_f31 = (lbl_1_data_124[4] - 100.0f) + (300.0f * temp_f30);
         HuWinPosSet(sp10[1], 16.0f + temp_f31, 224);
+        #if VERSION_NTSC
         temp_f31 = (lbl_1_data_124[6] - 184.0f) + (400.0f * temp_f30);
+        #else
+        temp_f31 = (lbl_1_data_124[6] - 235.0f) + (400.0f * temp_f30);
+        #endif
         HuWinPosSet(sp10[2], 16.0f + temp_f31, 274);
         HuPrcVSleep();
     }

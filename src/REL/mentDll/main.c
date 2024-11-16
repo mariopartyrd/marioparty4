@@ -3768,6 +3768,8 @@ s32 lbl_1_data_5BC[4][2] = {
     { 0x77, 0x18 },
     { 0xA5, 0x18 },
 };
+
+#if VERSION_NTSC
 float lbl_1_data_5DC[5][5] = {
     { 262.0f, 119.0f, 1.3f, 227.0f, 455.0f },
     { 314.0f, 168.0f, 0.75f, 265.0f, 416.0f },
@@ -3775,6 +3777,16 @@ float lbl_1_data_5DC[5][5] = {
     { 418.0f, 240.0f, 0.75f, 300.0f, 381.0f },
     { -1.0f, 289.0f, 1.3f, 220.0f, 460.0f },
 };
+#else
+float lbl_1_data_5DC[5][5] = {
+    { 262.0f, 119.0f, 1.3f, 227.0f, 455.0f },
+    { 314.0f, 168.0f, 0.75f, 300.0f, 381.0f },
+    { 366.0f, 204.0f, 0.75f, 240.0f, 440.0f },
+    { 418.0f, 240.0f, 0.75f, 300.0f, 381.0f },
+    { -1.0f, 289.0f, 1.3f, 220.0f, 460.0f },
+};
+#endif
+
 s32 lbl_1_data_640[4][5] = {
     { 0xB4, 0x60, 0x87, 0, 0 },
     { 0xFC, 0xB8, 0xF6, 0xD4, 0x1D4 },
@@ -4633,6 +4645,18 @@ void fn_1_18F74(omObjData *arg0, MentDllUnkBss35BCStruct *arg1)
     }
 }
 
+#if VERSION_PAL
+
+#define POSX1 353
+#define POSX2 325
+
+#else
+
+#define POSX1 321
+#define POSX2 295
+
+#endif
+
 void fn_1_190E8(void)
 {
     s32 var_r31;
@@ -4690,16 +4714,18 @@ void fn_1_190E8(void)
     HuSprPosSet(var_r30, 0x47, 340.0f, lbl_1_data_5DC[0][1]);
     HuSprScaleSet(var_r30, 0x47, 0.0f, 0.0f);
     HuSprAttrReset(var_r30, 0x47, 4);
+    #if VERSION_NTSC
     HuSprAttrReset(var_r30, 0x48, 4);
     HuSprPosSet(var_r30, 0x48, 366.0f, lbl_1_data_5DC[1][1]);
     HuSprAttrReset(var_r30, 0x49, 4);
     HuSprPosSet(var_r30, 0x49, 367.0f, 2.0f + lbl_1_data_5DC[1][1]);
+    #endif
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
         HuSprAttrReset(var_r30, var_r31 + 0x4A, 4);
-        HuSprPosSet(var_r30, var_r31 + 0x4A, 0x141 - (var_r31 * 0x1A), lbl_1_data_5DC[1][1]);
+        HuSprPosSet(var_r30, var_r31 + 0x4A, POSX1 - (var_r31 * (POSX1-POSX2)), lbl_1_data_5DC[1][1]);
         HuSprBankSet(var_r30, var_r31 + 0x4A, var_r31);
         HuSprAttrReset(var_r30, var_r31 + 0x4C, 4);
-        HuSprPosSet(var_r30, var_r31 + 0x4C, 0x142 - (var_r31 * 0x1A), 2.0f + lbl_1_data_5DC[1][1]);
+        HuSprPosSet(var_r30, var_r31 + 0x4C, POSX1+1 - (var_r31 * (POSX1-POSX2)), 2.0f + lbl_1_data_5DC[1][1]);
         HuSprBankSet(var_r30, var_r31 + 0x4C, var_r31);
     }
     HuSprAttrReset(var_r30, 0x4E, 4);
@@ -4964,23 +4990,29 @@ void fn_1_19C98(omObjData *arg0, MentDllUnkBss35BCStruct *arg1)
                         break;
                     case 1:
                         if (var_r26 == 1) {
+                            #if VERSION_NTSC
                             HuSprPosSet(var_r30, 0x48, 366.0f + var_f31, lbl_1_data_5DC[1][1]);
                             HuSprPosSet(var_r30, 0x49, 367.0f + var_f31, 2.0f + lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4A, 321.0f + var_f31, lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4C, 322.0f + var_f31, 2.0f + lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4B, 295.0f + var_f31, lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4D, 296.0f + var_f31, 2.0f + lbl_1_data_5DC[1][1]);
+                            #endif
+                            HuSprPosSet(var_r30, 0x4A, POSX1 + var_f31, lbl_1_data_5DC[1][1]);
+                            HuSprPosSet(var_r30, 0x4C, POSX1+1 + var_f31, 2.0f + lbl_1_data_5DC[1][1]);
+                            HuSprPosSet(var_r30, 0x4B, POSX2 + var_f31, lbl_1_data_5DC[1][1]);
+                            HuSprPosSet(var_r30, 0x4D, POSX2+1 + var_f31, 2.0f + lbl_1_data_5DC[1][1]);
                         }
                         else {
+                            #if VERSION_NTSC
                             HuSprPosSet(var_r30, 0x48, 366.0f - var_f31, lbl_1_data_5DC[1][1]);
                             HuSprPosSet(var_r30, 0x49, 367.0f - var_f31, 2.0f + lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4A, 321.0f - var_f31, lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4C, 322.0f - var_f31, 2.0f + lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4B, 295.0f - var_f31, lbl_1_data_5DC[1][1]);
-                            HuSprPosSet(var_r30, 0x4D, 296.0f - var_f31, 2.0f + lbl_1_data_5DC[1][1]);
+                            #endif
+                            HuSprPosSet(var_r30, 0x4A, POSX1 - var_f31, lbl_1_data_5DC[1][1]);
+                            HuSprPosSet(var_r30, 0x4C, POSX1+1 - var_f31, 2.0f + lbl_1_data_5DC[1][1]);
+                            HuSprPosSet(var_r30, 0x4B, POSX2 - var_f31, lbl_1_data_5DC[1][1]);
+                            HuSprPosSet(var_r30, 0x4D, POSX2+1 - var_f31, 2.0f + lbl_1_data_5DC[1][1]);
                         }
+                        #if VERSION_NTSC
                         HuSprScaleSet(var_r30, 0x48, 1.0f, var_f30);
                         HuSprScaleSet(var_r30, 0x49, 1.0f, var_f30);
+                        #endif
                         HuSprScaleSet(var_r30, 0x4A, 1.0f, var_f30);
                         HuSprScaleSet(var_r30, 0x4C, 1.0f, var_f30);
                         HuSprScaleSet(var_r30, 0x4B, 1.0f, var_f30);
@@ -5102,6 +5134,9 @@ void fn_1_19C98(omObjData *arg0, MentDllUnkBss35BCStruct *arg1)
         lbl_1_bss_35BC[0].unk_08[3] = 0;
     }
 }
+
+#undef POSX2
+#undef POSX1
 
 void fn_1_1BB2C(MentDllUnkBss35BCStruct *arg0, s32 arg1, s32 arg2, s32 arg3)
 {

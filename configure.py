@@ -829,7 +829,7 @@ config.libs = [
     Rel(
         "_minigameDLL",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/_minigameDLL/_minigameDLL.c"),
+            Object(Matching, "REL/_minigameDLL/_minigameDLL.c"),
         },
     ),
     Rel(
@@ -842,14 +842,14 @@ config.libs = [
     Rel(
         "E3setupDLL",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/E3setupDLL/mgselect.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/E3setupDLL/main.c"),
+            Object(Matching, "REL/E3setupDLL/mgselect.c"),
+            Object(Matching, "REL/E3setupDLL/main.c"),
         },
     ),
     Rel(
         "instDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/instDll/main.c"),
+            Object(Matching, "REL/instDll/main.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/instDll/font.c"),
         },
     ),
@@ -1300,8 +1300,8 @@ config.libs = [
     Rel(
         "mentDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/mentDll/common.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/mentDll/main.c"),
+            Object(Matching, "REL/mentDll/common.c"),
+            Object(Matching, "REL/mentDll/main.c"),
         },
     ),
     Rel(
