@@ -49,6 +49,24 @@ static s16 lbl_1_data_22A = -1;
 static s16 lbl_1_data_22C = -1;
 static s16 lbl_1_data_22E = -1;
 
+#if VERSION_PAL
+static s32 lbl_1_data_230[] = {
+    MAKE_MESSID(8, 0),
+    MAKE_MESSID(8, 1),
+    MAKE_MESSID(8, 2),
+    MAKE_MESSID(8, 3),
+    MAKE_MESSID(8, 4),
+    MAKE_MESSID(8, 5),
+    MAKE_MESSID(8, 6),
+    MAKE_MESSID(8, 7),
+    MAKE_MESSID(8, 8),
+    MAKE_MESSID(8, 9),
+    MAKE_MESSID(8, 10),
+    MAKE_MESSID(8, 11),
+    MAKE_MESSID(8, 12),
+    MAKE_MESSID(8, 13)
+};
+#else
 static s32 lbl_1_data_230[] = {
     MAKE_MESSID(8, 14),
     MAKE_MESSID(8, 15),
@@ -65,7 +83,7 @@ static s32 lbl_1_data_230[] = {
     MAKE_MESSID(8, 26),
     MAKE_MESSID(8, 27)
 };
-
+#endif
 void fn_1_6EF0(void) {
     BoardRollDispSet(0);
     lbl_1_bss_90 = HuPrcChildCreate(fn_1_6F80, 0x2003, 0x3800, 0, boardMainProc);
@@ -203,9 +221,12 @@ static void fn_1_74BC(s32 arg0) {
 static void fn_1_7574(void) {
     s32 temp_r3;
     s32 temp_r29;
+    #if VERSION_PAL
+    s32 playerNo = GWSystem.player_curr;
+    #endif
     s32 temp_r28;
     s32 i;
-
+    
     for (i = 0; i < 4; i++) {
         if (lbl_1_bss_C2[i] == 0) {
             continue;
@@ -218,11 +239,17 @@ static void fn_1_7574(void) {
             BoardWinCreate(0, MAKE_MESSID(48, 16), -1);
             BoardWinInsertMesSet(temp_r28, 0);
             BoardWinInsertMesSet(lbl_1_data_230[temp_r29], 1);
+            #if VERSION_PAL
+            GWSystem.player_curr = i;
+            #endif
             BoardWinPlayerSet(i);
             BoardWinWait();
             BoardWinKill();
         }
     }
+    #if VERSION_PAL
+    GWSystem.player_curr = playerNo;
+    #endif
 }
 
 static void fn_1_7674(s32 arg0) {

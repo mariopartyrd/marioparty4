@@ -1510,7 +1510,7 @@ config.libs = [
             Object(Matching, "REL/w06Dll/main.c"),
             Object(Matching, "REL/w06Dll/mg_item.c"),
             Object(Matching, "REL/w06Dll/mg_coin.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/w06Dll/fire.c"),
+            Object(Matching, "REL/w06Dll/fire.c"),
             Object(Matching, "REL/w06Dll/bridge.c"),
             Object(Matching, "REL/w06Dll/bowser.c"),
         },
