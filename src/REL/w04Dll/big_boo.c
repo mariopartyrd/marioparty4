@@ -913,9 +913,13 @@ static void fn_1_8A60(void) {
         HuPrcVSleep();
     }
     fn_1_7300();
+    #if VERSION_NTSC
     sprintf(sp10, "%d", var_r29);
     BoardWinCreate(2, MAKE_MESSID(32, 11), 9);
     BoardWinInsertMesSet(MAKE_MESSID_PTR(sp10), 0);
+    #else
+    BoardWinCreate(2, MAKE_MESSID(32, 11), 9);
+    #endif
     BoardWinWait();
     BoardWinKill();
     BoardAudSeqFadeOut(1, 1000);

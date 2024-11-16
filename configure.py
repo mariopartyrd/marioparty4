@@ -1488,7 +1488,7 @@ config.libs = [
             Object(Matching, "REL/w04Dll/main.c"),
             Object(Matching, "REL/w04Dll/bridge.c"),
             Object(Matching, "REL/w04Dll/boo_event.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/w04Dll/big_boo.c"),
+            Object(Matching, "REL/w04Dll/big_boo.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/w04Dll/mg_item.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/w04Dll/mg_coin.c"),
         },
