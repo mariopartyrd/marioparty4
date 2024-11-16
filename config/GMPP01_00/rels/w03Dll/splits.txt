@@ -5,3 +5,49 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/board_executor.c:
+	.text       start:0x00000000 end:0x000000E0
+	.rodata     start:0x00000000 end:0x00000010
+
+REL/w03Dll/main.c:
+	.text       start:0x000000E0 end:0x000012C8
+	.rodata     start:0x00000010 end:0x00000038
+	.data       start:0x00000000 end:0x00000280
+	.bss        start:0x00000000 end:0x00000028
+
+REL/w03Dll/statue.c:
+	.text       start:0x000012C8 end:0x00003058
+	.rodata     start:0x00000038 end:0x000000D8
+	.data       start:0x00000280 end:0x00000310
+	.bss        start:0x00000028 end:0x00000070
+
+REL/w03Dll/condor.c:
+	.text       start:0x00003058 end:0x000063F4
+	.rodata     start:0x000000D8 end:0x00000218
+	.data       start:0x00000310 end:0x00000368
+	.bss        start:0x00000070 end:0x00000120
+
+REL/w03Dll/river.c:
+	.text       start:0x000063F4 end:0x0000785C
+	.rodata     start:0x00000218 end:0x000002A8
+	.data       start:0x00000368 end:0x00000410
+	.bss        start:0x00000120 end:0x00000138
+
+REL/w03Dll/smoke.c:
+	.text       start:0x0000785C end:0x00007ABC
+	.rodata     start:0x000002A8 end:0x000002B0
+	.data       start:0x00000410 end:0x00000450
+	.bss        start:0x00000138 end:0x00000140
+
+REL/w03Dll/mg_coin.c:
+	.text       start:0x00007ABC end:0x00009A7C
+	.rodata     start:0x000002B0 end:0x00000360
+	.data       start:0x00000450 end:0x000004D8
+	.bss        start:0x00000140 end:0x00000180
+
+REL/w03Dll/mg_item.c:
+	.text       start:0x00009A7C end:0x0000C248
+	.rodata     start:0x00000360 end:0x00000418
+	.data       start:0x000004D8 end:0x0000054C
+	.bss        start:0x00000180 end:0x00000197

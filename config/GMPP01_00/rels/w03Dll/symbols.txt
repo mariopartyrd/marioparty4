@@ -1,8 +1,8 @@
-fn_1_0 = .text:0x00000000; // type:function size:0x30
+ObjectSetup = .text:0x00000000; // type:function size:0x30 scope:local
 _prolog = .text:0x00000030; // type:function size:0x64 scope:global
 _epilog = .text:0x00000094; // type:function size:0x4C scope:global
-fn_1_E0 = .text:0x000000E0; // type:function size:0x660
-fn_1_740 = .text:0x00000740; // type:function size:0x144
+BoardCreate = .text:0x000000E0; // type:function size:0x660
+BoardDestroy = .text:0x00000740; // type:function size:0x144
 fn_1_884 = .text:0x00000884; // type:function size:0x6C
 fn_1_8F0 = .text:0x000008F0; // type:function size:0x20
 fn_1_910 = .text:0x00000910; // type:function size:0x164

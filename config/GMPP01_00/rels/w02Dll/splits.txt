@@ -5,3 +5,48 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/board_executor.c:
+	.text       start:0x00000000 end:0x000000E0
+	.rodata     start:0x00000000 end:0x00000010
+
+REL/w02Dll/main.c:
+	.text       start:0x000000E0 end:0x00001254
+	.rodata     start:0x00000010 end:0x00000038
+	.data       start:0x00000000 end:0x000002A8
+	.bss        start:0x00000000 end:0x00000050
+
+REL/w02Dll/gendice.c:
+	.text       start:0x00001254 end:0x00002D04
+	.rodata     start:0x00000038 end:0x00000108
+	.data       start:0x000002A8 end:0x00000360
+
+REL/w02Dll/gamble.c:
+	.text       start:0x00002D04 end:0x000039F4
+	.rodata     start:0x00000108 end:0x00000178
+	.data       start:0x00000360 end:0x00000378
+	.bss        start:0x00000050 end:0x00000058
+
+REL/w02Dll/mg_coin.c:
+	.text       start:0x000039F4 end:0x00005CF8
+	.rodata     start:0x00000178 end:0x00000218
+	.data       start:0x00000378 end:0x00000428
+	.bss        start:0x00000058 end:0x000000C8
+
+REL/w02Dll/mg_item.c:
+	.text       start:0x00005CF8 end:0x00009250
+	.rodata     start:0x00000218 end:0x000002F8
+	.data       start:0x00000428 end:0x00000490
+	.bss        start:0x000000C8 end:0x000001A0
+
+REL/w02Dll/shuffleboard.c:
+	.text       start:0x00009250 end:0x0000BC1C
+	.rodata     start:0x000002F8 end:0x00000410
+	.data       start:0x00000490 end:0x000004D0
+	.bss        start:0x000001A0 end:0x00000380
+
+REL/w02Dll/roulette.c:
+	.text       start:0x0000BC1C end:0x0000E4D4
+	.rodata     start:0x00000410 end:0x00000538
+	.data       start:0x000004D0 end:0x00000524
+	.bss        start:0x00000380 end:0x00000390
