@@ -487,7 +487,9 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSThread.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSTime.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/__start.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/__ppc_eabi_init.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/__ppc_eabi_init.c"
+            ),
         ],
     ),
     DolphinLib(
@@ -612,7 +614,9 @@ config.libs = [
         "si",
         [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/si/SIBios.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/si/SISamplingRate.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/si/SISamplingRate.c"
+            ),
         ],
     ),
     {
@@ -632,13 +636,19 @@ config.libs = [
         "host": False,
         "objects": [
             Object(NonMatching, "Runtime.PPCEABI.H/__va_arg.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/global_destructor_chain.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"),
+                "Runtime.PPCEABI.H/global_destructor_chain.c",
+            ),
             Object(NonMatching, "Runtime.PPCEABI.H/__mem.c"),
             Object(NonMatching, "Runtime.PPCEABI.H/New.cp"),
             Object(NonMatching, "Runtime.PPCEABI.H/NewMore.cp"),
             Object(NonMatching, "Runtime.PPCEABI.H/NMWException.cp"),
             Object(NonMatching, "Runtime.PPCEABI.H/runtime.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"),
+                "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp",
+            ),
             Object(NonMatching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cp"),
             Object(NonMatching, "Runtime.PPCEABI.H/GCN_mem_alloc.c"),
         ],
@@ -734,13 +744,17 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/seq.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/seq_api.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_synthapi.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_synthapi.c"
+            ),
             Object(NonMatching, "musyx/runtime/stream.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synthdata.c"),
             Object(NonMatching, "musyx/runtime/synthmacros.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synthvoice.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_ac.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_dbtab.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_dbtab.c"
+            ),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_adsr.c"),
             Object(NonMatching, "musyx/runtime/synth_vsamples.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/s_data.c"),
@@ -750,18 +764,37 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_init.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_math.c"),
             Object(NonMatching, "musyx/runtime/snd_midictrl.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_service.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_service.c"
+            ),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hardware.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/dsp_import.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_aramdma.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_dolphin.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_memory.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/CheapReverb/creverb_fx.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/CheapReverb/creverb.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/StdReverb/reverb_fx.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/StdReverb/reverb.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/Delay/delay_fx.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/Chorus/chorus_fx.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"),
+                "musyx/runtime/CheapReverb/creverb_fx.c",
+            ),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"),
+                "musyx/runtime/CheapReverb/creverb.c",
+            ),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"),
+                "musyx/runtime/StdReverb/reverb_fx.c",
+            ),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"),
+                "musyx/runtime/StdReverb/reverb.c",
+            ),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/Delay/delay_fx.c"
+            ),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"),
+                "musyx/runtime/Chorus/chorus_fx.c",
+            ),
         }
     ),
     {
@@ -821,7 +854,7 @@ config.libs = [
         "cflags": cflags_rel,
         "host": False,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/executor.c"),
+            Object(Matching, "REL/executor.c"),
             Object(Matching, "REL/empty.c"),  # Must be marked as matching
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/board_executor.c"),
         ],
@@ -829,14 +862,18 @@ config.libs = [
     Rel(
         "_minigameDLL",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/_minigameDLL/_minigameDLL.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "REL/_minigameDLL/_minigameDLL.c"
+            ),
         },
     ),
     Rel(
         "bootDll",
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/bootDll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/bootDll/nintendo_data.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "REL/bootDll/nintendo_data.c"
+            ),
         },
     ),
     Rel(
@@ -1221,7 +1258,7 @@ config.libs = [
     Rel(
         "m450Dll",  # The Final Battle!
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m450Dll/main.c"),
+            Object(Matching, "REL/m450Dll/main.c"),
         },
     ),
     Rel(
@@ -1327,8 +1364,12 @@ config.libs = [
         "modeltestDll",
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeltestDll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeltestDll/modeltest00.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeltestDll/modeltest01.c"),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeltestDll/modeltest00.c"
+            ),
+            Object(
+                MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeltestDll/modeltest01.c"
+            ),
         },
     ),
     Rel(
@@ -1390,22 +1431,20 @@ config.libs = [
     ),
     Rel(
         "nisDll",
-        objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/nisDll/main.c")
-        },
+        objects={Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/nisDll/main.c")},
     ),
     Rel(
         "option",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/scene.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/room.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/guide.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/state.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/rumble.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/sound.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/record.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/window.c"),
+            Object(Matching, "REL/option/scene.c"),
+            Object(Matching, "REL/option/camera.c"),
+            Object(Matching, "REL/option/room.c"),
+            Object(Matching, "REL/option/guide.c"),
+            Object(Matching, "REL/option/state.c"),
+            Object(Matching, "REL/option/rumble.c"),
+            Object(Matching, "REL/option/sound.c"),
+            Object(Matching, "REL/option/record.c"),
+            Object(Matching, "REL/option/window.c"),
         },
     ),
     Rel(

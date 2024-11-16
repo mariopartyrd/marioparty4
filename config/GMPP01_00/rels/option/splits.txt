@@ -5,3 +5,57 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/option/scene.c:
+	.text       start:0x000000A0 end:0x000007F8
+	.rodata     start:0x00000000 end:0x00000028
+	.bss        start:0x00000000 end:0x00000010
+
+REL/option/camera.c:
+	.text       start:0x000007F8 end:0x000015A4
+	.rodata     start:0x00000028 end:0x000000A8
+	.data       start:0x00000000 end:0x00000068
+	.bss        start:0x00000010 end:0x00000018
+
+REL/option/room.c:
+	.text       start:0x000015A4 end:0x000021F8
+	.rodata     start:0x000000A8 end:0x000000E0
+	.data       start:0x00000068 end:0x00000098
+	.bss        start:0x00000018 end:0x00000020
+
+REL/option/guide.c:
+	.text       start:0x000021F8 end:0x00002E04
+	.rodata     start:0x000000E0 end:0x00000160
+	.data       start:0x00000098 end:0x000000A0
+	.bss        start:0x00000020 end:0x00000028
+
+REL/option/state.c:
+	.text       start:0x00002E04 end:0x00003158
+	.rodata     start:0x00000160 end:0x00000170
+	.data       start:0x000000A0 end:0x00000108
+	.bss        start:0x00000028 end:0x00000030
+
+REL/option/rumble.c:
+	.text       start:0x00003158 end:0x00004028
+	.rodata     start:0x00000170 end:0x000001A8
+	.data       start:0x00000108 end:0x00000118
+	.bss        start:0x00000030 end:0x00000038
+
+REL/option/sound.c:
+	.text       start:0x00004028 end:0x000080E4
+	.rodata     start:0x000001A8 end:0x000013C0
+	.data       start:0x00000118 end:0x00000210
+	.bss        start:0x00000038 end:0x00000040
+
+REL/option/record.c:
+	.text       start:0x000080E4 end:0x0000A3E8
+	.rodata     start:0x000013C0 end:0x000019C8
+	.data       start:0x00000210 end:0x00000254
+	.bss        start:0x00000040 end:0x00000044
+
+REL/option/window.c:
+	.text       start:0x0000A3E8 end:0x0000A948
+	.rodata     start:0x000019C8 end:0x000019E8
