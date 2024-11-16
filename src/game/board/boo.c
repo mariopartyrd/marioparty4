@@ -1335,7 +1335,7 @@ static void TakeBallCoinPosSet(BallTakeCoinData *arg0, Vec *arg1) {
     BoardModelPosSetV(arg0->unk00, &arg0->unk04);
 }
 
-BOOL CheckBallCoinDone(void) {
+static BOOL CheckBallCoinDone(void) {
     BallTakeCoinData *var_r31;
     s32 i;
 
@@ -1351,7 +1351,7 @@ BOOL CheckBallCoinDone(void) {
     return TRUE;
 }
 
-void TakeBallStar(void) {
+static void TakeBallStar(void) {
     BallTakeCoinWork *temp_r31;
     Vec sp8;
 
@@ -1376,7 +1376,7 @@ void TakeBallStar(void) {
     HuAudFXPlay(0x361);
 }
 
-void ExecTakeBallStar(omObjData *arg0) {
+static void ExecTakeBallStar(omObjData *arg0) {
     BallTakeCoinWork *temp_r29 = OM_GET_WORK_PTR(arg0, BallTakeCoinWork);
     Vec sp8;
     float var_f30;
@@ -1405,7 +1405,7 @@ void ExecTakeBallStar(omObjData *arg0) {
     BoardModelRotYSet(temp_r29->unk02, arg0->rot.y);
 }
 
-BOOL CheckTakeBallStarDone(void) {
+static BOOL CheckTakeBallStarDone(void) {
     if (ballTakeCoinObj) {
         return FALSE;
     } else {
