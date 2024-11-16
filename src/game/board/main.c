@@ -403,8 +403,11 @@ static void MainFunc(void)
 	if(_CheckFlag(FLAG_ID_MAKE(1, 11))) {
 		BoardTutorialWorkSave();
 		BoardTutorialPlayerInit();
-		GWSystem.mess_speed = 1;
-		GWSystem.mess_delay = 32;
+		#if VERSION_PAL
+		GWMessSpeedSet(3);
+		#else
+		GWMessSpeedSet(1);
+		#endif
 	}
 	CreateBoard();
 	if(!_CheckFlag(FLAG_ID_MAKE(1, 1))) {

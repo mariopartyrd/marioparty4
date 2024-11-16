@@ -132,6 +132,12 @@ static void ExecCharWheel(omObjData *arg0) {
     temp_r31 = OM_GET_WORK_PTR(arg0, CharWheelWork);;
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         KillCharWheelSpr();
+        #if VERSION_PAL
+        if (wheelFXStat != -1) {
+            HuAudFXStop(wheelFXStat);
+            wheelFXStat = -1;
+        }
+        #endif
         charWheelObj = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);
         return;
@@ -322,7 +328,13 @@ static void UpdateCharWheel(CharWheelWork *arg0) {
     }
     var_f23 = 8191.0f - 8191.0f * (var_f25 / wheelSpeed);
     OSf32tos16(&var_f23, &var_r17);
+    #if VERSION_PAL
+    if(wheelFXStat != -1) {
+        HuAudFXPitchSet(wheelFXStat, -var_r17);
+    }
+    #else
     HuAudFXPitchSet(wheelFXStat, -var_r17);
+    #endif
     if (var_f25 > -0.0000001f && var_f25 < 0.0000001f) {
         arg0->unk00_field3 = 3;
         if (wheelFXStat != -1) {
@@ -379,7 +391,14 @@ static void GrowCharWheel(CharWheelWork *arg0) {
         }
         arg0->unk02 = 90;
         arg0->unk00_field3 = 2;
+        #if VERSION_PAL
+        if(!BoardIsKill()) {
+            wheelFXStat = HuAudFXPlay(0x30A);
+        }
+        #else
         wheelFXStat = HuAudFXPlay(0x30A);
+        #endif
+        
     }
     OSs8tof32(&arg0->unk02, &temp_f30);
     HuSprGrpScaleSet(wheelSprGrp, sind(temp_f30), sind(temp_f30));

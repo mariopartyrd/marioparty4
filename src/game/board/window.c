@@ -97,6 +97,11 @@ static void ExecBoardWindow(void) {
         if (size[0] <= size_win[0]) {
             size[0] = size_win[0];
             pos[0] = pos_win[0];
+            #if VERSION_PAL
+            if(winPosIdx == 1) {
+                size[0] += 4;
+            }
+            #endif
         } else {
             pos[0] = -10000.0f;
         }
@@ -338,7 +343,7 @@ s32 BoardWinPortraitGetStar(void) {
 
 void BoardWinPlayerSet(s32 player) {
     s32 i;
-
+    #if VERSION_NTSC
     if (player == -1) {
         if (GWPartyGet() != 1) {
             for (i = 0, disablePlayer = i; i < 4; i++) {
@@ -354,6 +359,21 @@ void BoardWinPlayerSet(s32 player) {
     } else {
         disablePlayer = ~(1 << GWPlayer[player].port);
     }
+    #else
+    if (player == -1) {
+        if (GWPartyGet() != 1) {
+            for (i = 0, disablePlayer = i; i < 4; i++) {
+                if (GWPlayer[i].com != 0) {
+                    disablePlayer |= 1 << GWPlayer[i].port;
+                }
+            }
+        } else {
+            disablePlayer = 0;
+        }
+    } else {
+        disablePlayer = ~(1 << GWPlayer[player].port);
+    }
+    #endif
     if (_CheckFlag(FLAG_ID_MAKE(1, 11)) != 0) {
         disablePlayer = 0;
     }
@@ -405,4 +425,9 @@ void BoardWinStartComKeySet(void) {
 
 void BoardWinComKeyFuncSet(BoardWinComKeyFunc func) {
     comKeyFunc = func;
+}
+
+s16 BoardWinIDGet(void)
+{
+    return windowID;
 }

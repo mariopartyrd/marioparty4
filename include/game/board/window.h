@@ -31,5 +31,6 @@ s32 BoardWinPortraitGetStar(void);
 void BoardWinPlayerSet(s32 player);
 void BoardWinStartComKeySet(void);
 void BoardWinComKeyFuncSet(BoardWinComKeyFunc func);
+s16 BoardWinIDGet(void);
 
 #endif
