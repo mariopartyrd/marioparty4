@@ -1,4 +1,4 @@
-fn_1_0 = .text:0x00000000; // type:function size:0x68
+ObjectSetup = .text:0x00000000; // type:function size:0x68
 fn_1_68 = .text:0x00000068; // type:function size:0x2C
 _prolog = .text:0x00000094; // type:function size:0x9C scope:global
 _epilog = .text:0x00000130; // type:function size:0x4C scope:global
