@@ -1,5 +1,4 @@
 #include "ext_math.h"
-#include "game/audio.h"
 #include "game/flag.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
@@ -9,6 +8,11 @@
 #include "game/wipe.h"
 
 #include "REL/m420dll.h"
+#include "version.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 s32 fn_1_198(void);
 void fn_1_3D4(void);
@@ -142,8 +146,8 @@ void fn_1_43C(void)
         HuPrcVSleep();
     }
     MGSeqKill(lbl_1_bss_10);
-    lbl_1_bss_12 = 0xE10;
-    lbl_1_bss_14 = MGSeqCreate(1, lbl_1_bss_12 / 60, -1, -1);
+    lbl_1_bss_12 = 60 * REFRESH_RATE;
+    lbl_1_bss_14 = MGSeqCreate(1, lbl_1_bss_12 / REFRESH_RATE, -1, -1);
     var_r30 = 1;
     while (TRUE) {
         if (lbl_1_bss_18[0]->unk_48 == 0) {
@@ -163,8 +167,8 @@ void fn_1_43C(void)
             }
         }
         if (lbl_1_bss_12 >= 0) {
-            if (((--lbl_1_bss_12) % 60) == 0) {
-                MGSeqParamSet(lbl_1_bss_14, 1, lbl_1_bss_12 / 60);
+            if (((--lbl_1_bss_12) % REFRESH_RATE) == 0) {
+                MGSeqParamSet(lbl_1_bss_14, 1, lbl_1_bss_12 / REFRESH_RATE);
             }
         }
         if ((fn_1_67E8(0) == 0) && (fn_1_67E8(1) == 0) && (lbl_1_bss_12 > 0)) {

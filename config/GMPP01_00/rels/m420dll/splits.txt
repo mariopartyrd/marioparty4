@@ -5,3 +5,32 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m420dll/main.c:
+	.text       start:0x000000A0 end:0x00000D80
+	.rodata     start:0x00000000 end:0x00000098
+	.bss        start:0x00000000 end:0x00000030
+
+REL/m420dll/camera.c:
+	.text       start:0x00000D80 end:0x00001B74
+	.rodata     start:0x00000098 end:0x000000F8
+	.data       start:0x00000000 end:0x00000050
+	.bss        start:0x00000030 end:0x000000B0
+
+REL/m420dll/player.c:
+	.text       start:0x00001B74 end:0x0000494C
+	.rodata     start:0x000000F8 end:0x00000360
+	.data       start:0x00000050 end:0x00000138
+
+REL/m420dll/map.c:
+	.text       start:0x0000494C end:0x0000891C
+	.rodata     start:0x00000360 end:0x00000570
+	.data       start:0x00000138 end:0x00000171
+	.bss        start:0x000000B0 end:0x00000A48
+
+REL/m420dll/rand.c:
+	.text       start:0x0000891C end:0x00008960
+	.bss        start:0x00000A48 end:0x00000A4C

@@ -995,11 +995,11 @@ config.libs = [
     Rel(
         "m420dll",  # Fish n' Drips
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m420dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m420dll/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m420dll/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m420dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m420dll/rand.c"),
+            Object(Matching, "REL/m420dll/main.c"),
+            Object(Matching, "REL/m420dll/camera.c"),
+            Object(Matching, "REL/m420dll/player.c"),
+            Object(Matching, "REL/m420dll/map.c"),
+            Object(Matching, "REL/m420dll/rand.c"),
         },
     ),
     Rel(
