@@ -144,6 +144,9 @@ typedef struct game_stat {
 /* 0x110 */ PauseBackupConfig party_pause; 
 } GameStat;
 
+extern s16 GwLanguage;
+extern s16 GwLanguageSave;
+
 extern PlayerConfig GWPlayerCfg[4];
 extern PlayerState GWPlayer[4];
 extern SystemState GWSystem;
@@ -167,6 +170,11 @@ static inline void GWMGTypeSet(s32 type)
 static inline s32 GWPartyGet(void)
 {
     return GWSystem.party;
+}
+
+static inline void GWLanguageSet(s16 language)
+{
+    GWGameStat.language = language;
 }
 
 static inline s32 GWLanguageGet(void)

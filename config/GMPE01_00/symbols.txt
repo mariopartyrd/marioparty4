@@ -4293,7 +4293,6 @@ luckyMessTbl = .data:0x8013ADC4; // type:object size:0x24 scope:local
 jumptable_8013ADE8 = .data:0x8013ADE8; // type:object size:0x20 scope:local
 cursorYTbl = .data:0x8013AE08; // type:object size:0x10 scope:local
 hiliteYTbl = .data:0x8013AE18; // type:object size:0x10 scope:local
-
 hiliteColTbl = .data:0x8013AE28; // type:object size:0xC scope:local
 hostMesTbl = .data:0x8013AE38; // type:object size:0x90 scope:local
 houseMdlTbl = .data:0x8013AEC8; // type:object size:0x30 scope:local

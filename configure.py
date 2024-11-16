@@ -396,7 +396,7 @@ config.libs = [
             Object(Matching, "game/perf.c"),
             Object(Matching, "game/objmain.c"),
             Object(Matching, "game/fault.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "game/gamework.c"),
+            Object(Matching, "game/gamework.c"),
             Object(Matching, "game/objsysobj.c"),
             Object(Matching, "game/objdll.c"),
             Object(Matching, "game/frand.c"),
