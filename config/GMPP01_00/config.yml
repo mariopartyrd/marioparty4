@@ -3,10 +3,9 @@ object: sys/main.dol
 hash: 65ef91650e9201047f50a3c39c7693a21fff2b29
 symbols: config/GMPP01_00/symbols.txt
 splits: config/GMPP01_00/splits.txt
-quick_analysis: false # Faster re-runs after initial analysis
+quick_analysis: true # Faster re-runs after initial analysis
 mw_comment_version: 10 # GC 2.6 linker
 force_active: [__register_global_object, lbl_801D40D0]
-
 detect_objects: true
 detect_strings: true
 fill_gaps: true
@@ -473,18 +472,18 @@ modules:
   links: []
 - object: files/dll/w10Dll.rel
   hash: 5678fedd4a0490aeb9703328e959fdedea7da117
-  symbols: config/GMPP01_00/rels/w10Dll/symbols.txt
-  splits: config/GMPP01_00/rels/w10Dll/splits.txt
+  symbols: config/GMPE01_00/rels/w10Dll/symbols.txt
+  splits: config/GMPE01_00/rels/w10Dll/splits.txt
   links: []
 - object: files/dll/w20Dll.rel
   hash: 58ae9e311cc8bd0291921480f423e2ad4774e1a2
-  symbols: config/GMPP01_00/rels/w20Dll/symbols.txt
-  splits: config/GMPP01_00/rels/w20Dll/splits.txt
+  symbols: config/GMPE01_00/rels/w20Dll/symbols.txt
+  splits: config/GMPE01_00/rels/w20Dll/splits.txt
   links: []
 - object: files/dll/w21Dll.rel
   hash: 8ea052be8c7585a1ab152682a0698b631c5b566f
-  symbols: config/GMPP01_00/rels/w21Dll/symbols.txt
-  splits: config/GMPP01_00/rels/w21Dll/splits.txt
+  symbols: config/GMPE01_00/rels/w21Dll/symbols.txt
+  splits: config/GMPE01_00/rels/w21Dll/splits.txt
   links: []
 - object: files/dll/ztardll.rel
   hash: 8987f11fafd11f69161ca275967afe9c8b4e7b20

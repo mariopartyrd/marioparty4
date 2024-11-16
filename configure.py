@@ -1498,7 +1498,7 @@ config.libs = [
         objects={
             Object(Matching, "REL/w05Dll/main.c"),
             Object(Matching, "REL/w05Dll/hotel.c"),
-            Object(Matching,"REL/w05Dll/monkey.c"),
+            Object(Matching, "REL/w05Dll/monkey.c"),
             Object(Matching, "REL/w05Dll/dolphin.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/w05Dll/mg_item.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/w05Dll/mg_coin.c"),
