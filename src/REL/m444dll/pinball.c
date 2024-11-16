@@ -20,7 +20,9 @@
 
 #include "REL/m444dll.h"
 #include "ext_math.h"
+#include "version.h"
 #include "math.h"
+
 
 s16 lbl_1_bss_198F0[5][2];
 Vec lbl_1_bss_D8F0[4096];
@@ -844,7 +846,7 @@ s16 fn_1_B1E8(Vec *arg0, Vec *arg1, s16 arg2)
                 if (temp_f31 < 0.0f) {
                     temp_f28 -= temp_f31;
                     temp_f31 = ABS(temp_f31);
-#if VERSION > 0
+#if VERSION_REV1
                     if (temp_f31 == 0.0) {
                         sp1C.x = sp1C.y = sp1C.z = 0.0f;
                         break;
@@ -886,7 +888,7 @@ s16 fn_1_B1E8(Vec *arg0, Vec *arg1, s16 arg2)
         }
     }
     temp_f31 = VECMag(arg1);
-#if VERSION > 0
+#if VERSION_REV1
     if (VECMag(&sp1C) == 0.0) {
         sp1C.x = 0.0f;
         sp1C.y = 1.0f;
@@ -912,7 +914,7 @@ s16 fn_1_B1E8(Vec *arg0, Vec *arg1, s16 arg2)
             break;
         }
         if (temp_f30 < 20.0f
-#if VERSION > 0
+#if VERSION_REV1
             && !(temp_f30 < 0.000001)
 #endif
         ) {
@@ -925,7 +927,7 @@ s16 fn_1_B1E8(Vec *arg0, Vec *arg1, s16 arg2)
     }
     if (temp_r30 == lbl_1_data_3A4[arg2]) {
         arg1->y += 0.3;
-#if VERSION > 0
+#if VERSION_REV1
         if (VECMag((Vec *)&arg1) < 0.000001) {
             arg1->y += 0.3;
         }

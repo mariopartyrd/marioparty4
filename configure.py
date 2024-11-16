@@ -821,7 +821,7 @@ config.libs = [
         "cflags": cflags_rel,
         "host": False,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/executor.c"),
+            Object(Matching, "REL/executor.c"),
             Object(Matching, "REL/empty.c"),  # Must be marked as matching
             Object(Matching, "REL/board_executor.c"),
         ],
@@ -1221,7 +1221,7 @@ config.libs = [
     Rel(
         "m450Dll",  # The Final Battle!
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m450Dll/main.c"),
+            Object(Matching, "REL/m450Dll/main.c"),
         },
     ),
     Rel(
@@ -1397,15 +1397,15 @@ config.libs = [
     Rel(
         "option",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/scene.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/room.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/guide.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/state.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/rumble.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/sound.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/record.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/option/window.c"),
+            Object(Matching, "REL/option/scene.c"),
+            Object(Matching, "REL/option/camera.c"),
+            Object(Matching, "REL/option/room.c"),
+            Object(Matching, "REL/option/guide.c"),
+            Object(Matching, "REL/option/state.c"),
+            Object(Matching, "REL/option/rumble.c"),
+            Object(Matching, "REL/option/sound.c"),
+            Object(Matching, "REL/option/record.c"),
+            Object(Matching, "REL/option/window.c"),
         },
     ),
     Rel(

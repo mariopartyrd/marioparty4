@@ -5,6 +5,8 @@
 #include "game/process.h"
 #include "game/sprite.h"
 
+#include "version.h"
+
 static void ExecWindow(void);
 
 OptionWindow *OptionWinCreate(s32 id)
@@ -33,13 +35,13 @@ OptionWindow *OptionWinCreate(s32 id)
             HuWinMesSpeedSet(work->window, 0);
             break;
         case 2:
-            work->window = HuWinExCreateStyled(-10000.0f, 88.0f, 224, 34, -1, 0);
+            work->window = HuWinExCreateStyled(-10000.0f, 88.0f, VERSION_NTSC ? 224 : 320, 34, -1, 0);
             HuWinAttrSet(work->window, 0x800);
             HuWinBGTPLvlSet(work->window, 0.0f);
             HuWinMesSpeedSet(work->window, 0);
             break;
         case 3:
-            work->window = HuWinExCreateStyled(175.0f, 100.0f, 300, 34, -1, 0);
+            work->window = HuWinExCreateStyled(175.0f, 100.0f, VERSION_NTSC ? 300 : 320, 34, -1, 0);
             HuWinBGTPLvlSet(work->window, 0.0f);
             HuWinMesSpeedSet(work->window, 0);
             break;
