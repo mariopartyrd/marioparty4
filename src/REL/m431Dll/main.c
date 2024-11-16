@@ -15,6 +15,7 @@
 #include "ext_math.h"
 
 #include "REL/m431Dll.h"
+#include "version.h"
 
 typedef struct bss_5C_struct {
     s16 unk0[6];
@@ -167,8 +168,8 @@ u8 fn_1_57C(void)
     temp_r31 = &lbl_1_data_4C[0];
     temp_r30 = 0;
     lbl_1_bss_8++;
-    temp_f30 = lbl_1_bss_8 / 90.0f;
-    if (lbl_1_bss_8 > 90) {
+    temp_f30 = lbl_1_bss_8 / (1.5f * REFRESH_RATE);
+    if (lbl_1_bss_8 > (s32)(1.5f * REFRESH_RATE)) {
         lbl_1_bss_8 = 0;
         temp_f30 = 1;
         temp_r30 = 1;
@@ -210,9 +211,9 @@ s32 fn_1_7B0(void)
     temp_r31 = &lbl_1_data_4C[0];
     temp_r29 = 0;
     lbl_1_bss_8++;
-    temp_f30 = lbl_1_bss_8 / 120.0f;
-    if (lbl_1_bss_8 > 120) {
-        lbl_1_bss_8 = 120;
+    temp_f30 = lbl_1_bss_8 / (2.0f * REFRESH_RATE);
+    if (lbl_1_bss_8 > (2 * REFRESH_RATE)) {
+        lbl_1_bss_8 = 2 * REFRESH_RATE;
         temp_f30 = 1;
         temp_r29 = 1;
     }
@@ -258,7 +259,7 @@ void fn_1_A44(omObjData *object)
     temp_r26 = object->data;
     temp_r26->unk0 = 4;
     temp_r26->unk6[0] = 0;
-    temp_r26->unkA = 900;
+    temp_r26->unkA = 15 * REFRESH_RATE;
     temp_r26->unk10 = -1;
     temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M431, 0x1A), MEMORY_DEFAULT_NUM));
     object->model[0] = fn_1_6C74(temp_r27, 1024, 25, 64, 64);
@@ -365,7 +366,7 @@ void fn_1_10A4(omObjData *object)
 
         case 12:
             if (temp_r31->unk10 != -1) {
-                temp_r28 = (temp_r31->unkA + 59) / 60;
+                temp_r28 = (temp_r31->unkA + REFRESH_RATE - 1) / REFRESH_RATE;
                 if (temp_r28 < 0) {
                     temp_r28 = 0;
                 }
@@ -426,7 +427,7 @@ void fn_1_10A4(omObjData *object)
             break;
 
         case 20:
-            if (++lbl_1_bss_C > 210.0f) {
+            if (++lbl_1_bss_C > (3.5f * REFRESH_RATE)) {
                 lbl_1_bss_0 = 1;
             }
             break;
@@ -442,11 +443,11 @@ void fn_1_140C(omObjData *object)
         return;
     }
     temp_r31->unk12++;
-    temp_f31 = temp_r31->unk12 / 18.0f;
-    if (temp_r31->unk12 > 18.0f) {
+    temp_f31 = temp_r31->unk12 / (3.0f / 10 * REFRESH_RATE);
+    if (temp_r31->unk12 > (3.0f / 10 * REFRESH_RATE)) {
         temp_r31->unk12 = 0;
         temp_f31 = 1.0f;
-        temp_r31->unk12 = 18;
+        temp_r31->unk12 = 0.3f * REFRESH_RATE;
         temp_r31->unk0 &= ~0x300;
     }
     temp_f30 = 1.0 - cosd(90.0f * temp_f31);
@@ -848,9 +849,9 @@ void fn_1_2C94(Work2110 *arg0)
                 HuAudFXPlay(1670);
             }
             lbl_1_bss_10++;
-            temp_f31 = lbl_1_bss_10 / 60.0f;
+            temp_f31 = lbl_1_bss_10 / (1.0f * REFRESH_RATE);
             if (temp_f31 >= 1.0f) {
-                temp_r26->unkA = 900;
+                temp_r26->unkA = 15 * REFRESH_RATE;
                 lbl_1_bss_10 = 0;
                 temp_f31 = 1;
                 lbl_1_data_162++;
@@ -870,7 +871,7 @@ void fn_1_2C94(Work2110 *arg0)
                 HuAudFXPlay(1663);
             }
             lbl_1_bss_10++;
-            temp_f31 = lbl_1_bss_10 / 60.0f;
+            temp_f31 = lbl_1_bss_10 / (1.0f * REFRESH_RATE);
             if (temp_f31 >= 1.0f) {
                 lbl_1_bss_10 = 0;
                 temp_f31 = 1.0f;
@@ -912,7 +913,7 @@ void fn_1_30E0(Work2110 *arg0)
     switch (lbl_1_data_162) {
         case 0:
             lbl_1_bss_10++;
-            if (lbl_1_bss_10 > 60) {
+            if (lbl_1_bss_10 > REFRESH_RATE) {
                 lbl_1_bss_10 = 0;
                 lbl_1_data_162++;
             }
@@ -945,7 +946,7 @@ void fn_1_30E0(Work2110 *arg0)
             temp_r31 = &arg0[0].unk4[temp_r28];
             switch (temp_r22 = temp_r31->unk0 & 0x1C) {
                 case 4:
-                    if (sp8[temp_r27] > 15) {
+                    if (sp8[temp_r27] > (VERSION_NTSC ? 15 : 12)) {
                         sp8[temp_r27] = 0;
                         temp_r25 = 1;
                         if (temp_r29 - 1 > -6) {
@@ -969,7 +970,7 @@ void fn_1_30E0(Work2110 *arg0)
                         temp_f31 = 50.0f;
                         temp_r31->unk0 &= ~0x1C;
                         if (temp_r22 == 8) {
-                            temp_r31->unk20 = 6;
+                            temp_r31->unk20 = 6.0f;
                             temp_r31->unk0 |= 12;
                             HuAudFXPlay(1664);
                         }
@@ -1020,7 +1021,7 @@ void fn_1_3540(Work2110 *arg0)
             temp_f31 += temp_r29 * 36.0f;
             lbl_1_bss_18[0] = lbl_1_bss_20[0] + temp_f31;
             lbl_1_bss_18[1] = lbl_1_bss_20[1] - temp_f31;
-            lbl_1_bss_14 = (0.01f * temp_f31) * 60;
+            lbl_1_bss_14 = (0.01f * temp_f31) * REFRESH_RATE;
             lbl_1_data_162++;
             lbl_1_data_164 = HuAudFXPlay(1665);
             break;
@@ -1119,7 +1120,7 @@ void fn_1_3D7C(Work2110 *arg0)
     s16 temp_r27;
     switch (lbl_1_data_162) {
         case 0:
-            if (++lbl_1_bss_10 > 60) {
+            if (++lbl_1_bss_10 > REFRESH_RATE) {
                 lbl_1_bss_10 = 0;
                 lbl_1_data_162++;
             }
@@ -1151,7 +1152,7 @@ void fn_1_3D7C(Work2110 *arg0)
             break;
 
         case 2:
-            if (++lbl_1_bss_10 > 60) {
+            if (++lbl_1_bss_10 > REFRESH_RATE) {
                 lbl_1_bss_10 = lbl_1_data_162 = 0;
                 fn_1_2050(224, 32);
             }
@@ -1235,7 +1236,7 @@ void fn_1_4028(Work2110 *arg0)
             break;
 
         case 2:
-            if (++lbl_1_bss_10 > 90.0f) {
+            if (++lbl_1_bss_10 > (1.5f * REFRESH_RATE)) {
                 lbl_1_bss_10 = 0;
                 lbl_1_data_162 = 1;
                 fn_1_2050(224, 128);
@@ -1250,7 +1251,7 @@ void fn_1_4028(Work2110 *arg0)
             }
             if (temp_r31->unk0 & 0x2) {
                 temp_r31->unk18++;
-                temp_f31 = temp_r31->unk18 / 30.0f;
+                temp_f31 = temp_r31->unk18 / (0.5f * REFRESH_RATE);
                 if (temp_f31 >= 1.0f) {
                     temp_r31->unk20 -= 1.0f;
                     if (temp_r31->unk20 < 0.4f) {
@@ -1264,16 +1265,16 @@ void fn_1_4028(Work2110 *arg0)
             }
             else {
                 if (!temp_r31->unk20) {
-                    if (++temp_r31->unk18 > 30.0f) {
+                    if (++temp_r31->unk18 > (0.5f * REFRESH_RATE)) {
                         temp_r31->unk20 = 1;
                         temp_r31->unk18 = 0;
                     }
                 }
                 else {
                     temp_r31->unk18++;
-                    temp_f31 = temp_r31->unk18 / 54.0f;
+                    temp_f31 = temp_r31->unk18 / (VERSION_NTSC ? 54.0f : 45.0f);
                     if (temp_f31 >= 1.0f) {
-                        temp_r31->unk18 = 54;
+                        temp_r31->unk18 = VERSION_NTSC ? 54 : 45; 
                         temp_f31 = 1.0f;
                     }
                     temp_f31 = cosd(temp_f31 * 90.0f);
@@ -1594,7 +1595,7 @@ void fn_1_5708(void)
                 Hu3DMotionShiftSet(lbl_1_bss_2C->model[5], lbl_1_bss_2C->motion[5], 0, 8, HU3D_MOTATTR_LOOP);
             }
             else {
-                if (temp_r29->unkA < 180) {
+                if (temp_r29->unkA < (3 * REFRESH_RATE)) {
                     temp_r31->unk12 = 0;
                     temp_r31->unk10 = 5;
                 }

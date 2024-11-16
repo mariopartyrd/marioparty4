@@ -1077,8 +1077,8 @@ config.libs = [
     Rel(
         "m431Dll",  # Order Up
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m431Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m431Dll/object.c"),
+            Object(Matching, "REL/m431Dll/main.c"),
+            Object(Matching, "REL/m431Dll/object.c"),
         },
     ),
     Rel(

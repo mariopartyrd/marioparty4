@@ -13,6 +13,7 @@
 
 #include "REL/m431Dll.h"
 #include "ext_math.h"
+#include "version.h"
 
 typedef struct bss_struct_62C {
     u8 unk0;
@@ -319,7 +320,7 @@ void fn_1_8790(omObjData *object)
         }
     }
     if (temp_r31->unk7C && temp_r28 == temp_r31->unk6E - 1) {
-        if (++temp_r31->unk7C > 120) {
+        if (++temp_r31->unk7C > 2 * REFRESH_RATE) {
             temp_r31->unk7C = 0;
         }
         if ((temp_r31->unk14->unk0 & 0xC0) == 0x40) {
@@ -704,6 +705,12 @@ void fn_1_98D4(omObjData *object)
     Hu3DModelRotSet(object->model[0], 0, temp_r31->unk30, 0);
 }
 
+#if VERSION_NTSC
+#define fn_1_9A04_CHECK (temp_r29->unk_0C == -1 && temp_r29->unk_64 == 14.0f)
+#else
+#define fn_1_9A04_CHECK (temp_r29->unk_0C == -1 && temp_r29->unk_64 >= 14.0f && temp_r31->unk3C_pal == 0)
+#endif
+
 void fn_1_9A04(omObjData *object)
 {
     Bss61CWork *temp_r31;
@@ -725,12 +732,18 @@ void fn_1_9A04(omObjData *object)
             if (fn_1_4CDC(temp_r31->unkA, temp_r31->unk40)) {
                 fn_1_B0E8(object, 3, 4);
                 fn_1_B130(object, 0, 8);
+#if VERSION_PAL
+                temp_r31->unk3C_pal = 0;
+#endif
             }
         }
     }
     else {
         if (temp_r31->unk38 == 3) {
-            if (temp_r29->unk_0C == -1 && temp_r29->unk_64 == 14.0f) {
+            if (fn_1_9A04_CHECK) {
+#if VERSION_PAL
+                temp_r31->unk3C_pal = 1;
+#endif
                 temp_r31->unk5C = fn_1_4B14(temp_r31->unkA, temp_r31->unk40, &temp_r31->unk7E);
                 if (temp_r31->unk5C != -1) {
                     if (temp_r31->unkA == 0) {
@@ -742,18 +755,18 @@ void fn_1_9A04(omObjData *object)
                     if (temp_r31->unk7E != 0) {
                         omVibrate(temp_r31->unk4, 12, 6, 6);
                         if (temp_r31->unkA == 0) {
-                            fn_1_B494(1666, 30);
+                            fn_1_B494(1666, 0.5f * REFRESH_RATE);
                         }
                         else {
-                            fn_1_B494(1671, 30);
+                            fn_1_B494(1671, 0.5f * REFRESH_RATE);
                         }
                     }
                     else {
                         if (temp_r31->unkA == 0) {
-                            fn_1_B494(1667, 30);
+                            fn_1_B494(1667, 0.5f * REFRESH_RATE);
                         }
                         else {
-                            fn_1_B494(1672, 30);
+                            fn_1_B494(1672, 0.5f * REFRESH_RATE);
                         }
                     }
                     temp_r31->unk70++;
@@ -891,6 +904,9 @@ void fn_1_A0F8(omObjData *object)
                 if (fn_1_4CDC(temp_r31->unkA, temp_r31->unk40) && fn_1_2090(28) == 12 && fn_1_2090(224) == 0 && fn_1_4724() < 2) {
                     fn_1_B0E8(object, 3, 4);
                     fn_1_B130(object, 0, 8);
+#if VERSION_PAL
+                    temp_r31->unk3C_pal = 0;
+#endif
                     temp_r27 = 1;
                 }
                 if (temp_r27 == 0) {
