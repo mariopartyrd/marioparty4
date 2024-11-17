@@ -477,8 +477,8 @@ modules:
   links: []
 - object: files/dll/w20Dll.rel
   hash: 58ae9e311cc8bd0291921480f423e2ad4774e1a2
-  symbols: config/GMPE01_00/rels/w20Dll/symbols.txt
-  splits: config/GMPE01_00/rels/w20Dll/splits.txt
+  symbols: config/GMPP01_00/rels/w20Dll/symbols.txt
+  splits: config/GMPP01_00/rels/w20Dll/splits.txt
   links: []
 - object: files/dll/w21Dll.rel
   hash: 8ea052be8c7585a1ab152682a0698b631c5b566f
