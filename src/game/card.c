@@ -1,6 +1,7 @@
 #include "dolphin.h"
 #include "game/memory.h"
 #include "game/card.h"
+#include "version.h"
 
 static void *cardWork;
 u8 UnMountCnt;
