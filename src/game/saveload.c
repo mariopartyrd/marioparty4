@@ -11,6 +11,14 @@
 #include "string.h"
 #include "stddef.h"
 
+#if VERSION_ENG
+#define SAVE_WRITE_BEGIN _SetFlag(FLAG_ID_MAKE(3, 0));
+#define SAVE_WRITE_END _ClearFlag(FLAG_ID_MAKE(3, 0));
+#else
+#define SAVE_WRITE_BEGIN
+#define SAVE_WRITE_END
+#endif
+
 #define SAVE_GET_PLAYER(player_idx) &saveBuf.buf[((player_idx)*sizeof(PlayerState))+offsetof(SaveBufData, player)]
 #define SAVE_GET_PLAYER_STORY(player_idx) &saveBuf.buf[((player_idx)*sizeof(PlayerState))+offsetof(SaveBufData, playerStory)]
 
@@ -135,9 +143,9 @@ s32 SLFileCreate(char *fileName, u32 size, void *addr) {
     HuWinExAnimIn(window);
     HuWinMesSet(window, MAKE_MESSID(16, 11));
     HuWinMesWait(window);
-    _SetFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_BEGIN
     result = HuCardCreate(curSlotNo, fileName, size, &curFileInfo);
-    _ClearFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_END
     if (result < 0) {
         HuWinExAnimOut(window);
         HuWinExCleanup(window);
@@ -150,9 +158,9 @@ s32 SLFileCreate(char *fileName, u32 size, void *addr) {
         SLMessOut(1);
         return CARD_RESULT_FATAL_ERROR;
     }
-    _SetFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_BEGIN
     result = HuCardWrite(&curFileInfo, addr, size, 0);
-    _ClearFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_END
     if (result < 0) {
         HuWinExAnimOut(window);
         HuWinExCleanup(window);
@@ -165,9 +173,9 @@ s32 SLFileCreate(char *fileName, u32 size, void *addr) {
         SLMessOut(1);
         return CARD_RESULT_FATAL_ERROR;
     }
-    _SetFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_BEGIN
     result = SLStatSet(1);
-    _ClearFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_END
     HuWinExAnimOut(window);
     HuWinExCleanup(window);
     if (result < 0) {
@@ -191,12 +199,12 @@ s32 SLFileWrite(s32 length, void *addr) {
     HuWinMesSet(window, MAKE_MESSID(16, 11));
     HuWinMesWait(window);
     HuPrcSleep(60);
-    _SetFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_BEGIN
     result = HuCardWrite(&curFileInfo, addr, length, 0);
     if (result == 0) {
         result = SLStatSet(1);
     }
-    _ClearFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_END
     HuWinExAnimOut(window);
     HuWinExCleanup(window);
     return result;
@@ -277,7 +285,8 @@ void SLSaveDataInfoSet(OSTime *time) {
     s16 year;
     s16 digit;
     OSCalendarTime sp8;
-
+    
+    #if VERSION_ENG
     OSTicksToCalendarTime(*time, &sp8);
     saveBuf.data.comment[37] = curBoxNo + '1';
     digit = (sp8.mon + 1) / 10;
@@ -299,6 +308,52 @@ void SLSaveDataInfoSet(OSTime *time) {
     saveBuf.data.comment[48] = digit + '0';
     year -= digit * 10;
     saveBuf.data.comment[49] = year + '0';
+    #elif VERSION_PAL
+    OSTicksToCalendarTime(*time, &sp8);
+    saveBuf.data.comment[37] = curBoxNo + '1';
+    digit = sp8.mday / 10;
+    saveBuf.data.comment[40] = digit + '0';
+    digit = sp8.mday % 10;
+    saveBuf.data.comment[41] = digit + '0';
+    digit = (sp8.mon + 1) / 10;
+    saveBuf.data.comment[43] = digit + '0';
+    digit = (sp8.mon + 1) % 10;
+    saveBuf.data.comment[44] = digit + '0';
+    year = sp8.year;
+    digit = year / 1000;
+    saveBuf.data.comment[46] = digit + '0';
+    year -= digit * 1000;
+    digit = year / 100;
+    saveBuf.data.comment[47] = digit + '0';
+    year -= digit * 100;
+    digit = year / 10;
+    saveBuf.data.comment[48] = digit + '0';
+    year -= digit * 10;
+    saveBuf.data.comment[49] = year + '0';
+    #else
+    //TODO: Japanese Version
+    OSTicksToCalendarTime(*time, &sp8);
+    saveBuf.data.comment[37] = curBoxNo + '1';
+    digit = sp8.mday / 10;
+    saveBuf.data.comment[40] = digit + '0';
+    digit = sp8.mday % 10;
+    saveBuf.data.comment[41] = digit + '0';
+    digit = (sp8.mon + 1) / 10;
+    saveBuf.data.comment[43] = digit + '0';
+    digit = (sp8.mon + 1) % 10;
+    saveBuf.data.comment[44] = digit + '0';
+    year = sp8.year;
+    digit = year / 1000;
+    saveBuf.data.comment[46] = digit + '0';
+    year -= digit * 1000;
+    digit = year / 100;
+    saveBuf.data.comment[47] = digit + '0';
+    year -= digit * 100;
+    digit = year / 10;
+    saveBuf.data.comment[48] = digit + '0';
+    year -= digit * 10;
+    saveBuf.data.comment[49] = year + '0';
+    #endif
 }
 
 void SLCommonSet(void) {
@@ -409,6 +464,12 @@ block_36:
     return 0;
 }
 
+#if VERSION_NTSC
+#define SAVEWIN_POS 150
+#else
+#define SAVEWIN_POS 120
+#endif
+
 static s16 SLCreateSaveWin(void) {
     float size[2];
     s16 window;
@@ -416,7 +477,7 @@ static s16 SLCreateSaveWin(void) {
     HuWinInit(1);
     HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
     HuWinMesMaxSizeGet(1, size, MAKE_MESSID(16, 68));
-    window = HuWinExCreateStyled(-10000.0f, 150.0f, size[0], size[1], -1, 2);
+    window = HuWinExCreateStyled(-10000.0f, SAVEWIN_POS, size[0], size[1], -1, 2);
     saveMessWin = window;
     HuWinExAnimIn(window);
     HuWinInsertMesSet(window, MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
@@ -641,7 +702,7 @@ s32 SLFormat(s16 slotNo) {
     HuWinInit(1);
     HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
     HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(16, 56));
-    window1 = HuWinExCreateStyled(-10000.0f, 150.0f, winSize[0], winSize[1], -1, 2);
+    window1 = HuWinExCreateStyled(-10000.0f, SAVEWIN_POS, winSize[0], winSize[1], -1, 2);
     HuWinExAnimIn(window1);
     HuWinInsertMesSet(window1, MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
     HuWinMesSet(window1, MAKE_MESSID(16, 56));
@@ -659,9 +720,9 @@ s32 SLFormat(s16 slotNo) {
         SLMessOut(12);
         return 0;
     }
-    _SetFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_BEGIN
     result = HuCardFormat(curSlotNo);
-    _ClearFlag(FLAG_ID_MAKE(3, 0));
+    SAVE_WRITE_END
     if (result < 0) {
         HuWinExAnimOut(window1);
         HuWinExCleanup(window1);
@@ -721,11 +782,19 @@ s16 SLMessOut(s16 mess) {
         case 2:
             HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
+            #if VERSION_NTSC
             save_mess = MAKE_MESSID(16, 74);
+            #else
+            save_mess = MAKE_MESSID(16, 72);
+            #endif
             break;
 
         case 3:
+            #if VERSION_NTSC
             save_mess = MAKE_MESSID(16, 74);
+            #else
+            save_mess = MAKE_MESSID(16, 72);
+            #endif
             HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             break;
@@ -772,7 +841,11 @@ s16 SLMessOut(s16 mess) {
         case 11:
             HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
+            #if VERSION_NTSC
             save_mess = MAKE_MESSID(16, 72);
+            #else
+            save_mess = MAKE_MESSID(16, 76);
+            #endif
             break;
 
         case 12:

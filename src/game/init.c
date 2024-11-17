@@ -39,6 +39,8 @@ static void InitVI();
 static void SwapBuffers();
 static void LoadMemInfo();
 
+#define ASSERT_LINE(ntsc, pal) ((VERSION_NTSC) ? (ntsc) : (pal))
+
 void HuSysInit(GXRenderModeObj *mode)
 {
     u32 rnd_temp;
@@ -46,13 +48,19 @@ void HuSysInit(GXRenderModeObj *mode)
     DVDInit();
     VIInit();
     PADInit();
+    #if VERSION_NTSC
     if(OSGetProgressiveMode() == 1 && VIGetDTVStatus() == 1) {
         mode = &GXNtsc480Prog;
     }
+    #else
+    mode->efbHeight = 480;
+    #endif
     InitRenderMode(mode);
     InitMem();
     VIConfigure(RenderMode);
+    #if VERSION_NTSC
     VIConfigurePan(0, 0, 640, 480);
+    #endif
     DefaultFifo = OSAlloc(0x100000);
     DefaultFifoObj = GXInit(DefaultFifo, 0x100000);
     InitGX();
@@ -91,7 +99,7 @@ static void InitRenderMode(GXRenderModeObj *mode)
             break;
             
         default:
-            OSPanic("init.c", 169, "DEMOInit: invalid TV format\n");
+            OSPanic("init.c", ASSERT_LINE(169, 167), "DEMOInit: invalid TV format\n");
             break;
     }
     GXAdjustForOverscan(RenderMode, &rmodeobj, 0, 16);
@@ -104,7 +112,12 @@ static void InitGX()
     GXSetScissor(0, 0, RenderMode->fbWidth, RenderMode->efbHeight);
     GXSetDispCopySrc(0, 0, RenderMode->fbWidth, RenderMode->efbHeight);
     GXSetDispCopyDst(RenderMode->fbWidth, RenderMode->xfbHeight);
+    #if VERSION_NTSC
     GXSetDispCopyYScale((float)RenderMode->xfbHeight/(float)RenderMode->efbHeight);
+    #else
+    OSReport("%D\n", RenderMode->xfbHeight);
+    GXSetDispCopyYScale(GXGetYScaleFactor(RenderMode->efbHeight, RenderMode->xfbHeight));
+    #endif
     GXSetCopyFilter(RenderMode->aa, RenderMode->sample_pattern, GX_TRUE, RenderMode->vfilter);
     if(RenderMode->aa) {
         GXSetPixelFmt(GX_PF_RGB565_Z16, GX_ZC_LINEAR);
@@ -120,9 +133,21 @@ static void InitMem()
     void *arena_lo = OSGetArenaLo();
     void *arena_hi = OSGetArenaHi();
     u32 fb_size = (u16)(((u16)RenderMode->fbWidth+15) & ~15)*RenderMode->xfbHeight*2;
+    u32 *fb1;
+    u32 *fb2;
+    u32 i;
     DemoFrameBuffer1 = (void *)OSRoundUp32B((u32)arena_lo);
     DemoFrameBuffer2 = (void *)OSRoundUp32B((u32)DemoFrameBuffer1+fb_size);
     DemoCurrentBuffer = DemoFrameBuffer2;
+    #if VERSION_PAL
+    fb1 = DemoFrameBuffer1;
+    fb2 = DemoFrameBuffer2;
+    for(i=0; i<fb_size/4; i++, fb1++, fb2++) {
+        *fb1 = *fb2 = 0x800080;
+    }
+    DCStoreRangeNoSync(DemoFrameBuffer1, fb_size);
+    DCStoreRangeNoSync(DemoFrameBuffer2, fb_size);
+    #endif
     arena_lo = (void *)OSRoundUp32B((u32)DemoFrameBuffer2+fb_size);
     OSSetArenaLo(arena_lo);
     if(OSGetConsoleType() == OS_CONSOLE_DEVHW1 && OSGetPhysicalMemSize() != 0x400000 && OSGetConsoleSimulatedMemSize() < 0x1800000) {
@@ -256,7 +281,7 @@ static void LoadMemInfo()
             OSReport("loop\n");
             copy_size = (size < 32) ? size : 32;
             if(DVDRead(&file, buf_ptr, OSRoundUp32B(copy_size), offset) < 0) {
-                OSPanic("init.c", 576, "An error occurred when issuing read to /meminfo.bin\n");
+                OSPanic("init.c", ASSERT_LINE(576, 586), "An error occurred when issuing read to /meminfo.bin\n");
             }
             entries = copy_size/sizeof(struct memory_info);
             for(i=0; i<entries; i++) {

@@ -43,10 +43,17 @@ void main(void)
     u32 met1;
     s16 i;
     s32 retrace;
-
+    #if VERSION_PAL
+    s16 temp = 0;
+    #endif
+    
     HuDvdErrWait = 0;
     SystemInitF = 0;
+    #if VERSION_NTSC
     HuSysInit(&GXNtsc480IntDf);
+    #else
+    HuSysInit(&GXPal528IntDf);
+    #endif
     HuPrcInit();
     HuPadInit();
     GWInit();

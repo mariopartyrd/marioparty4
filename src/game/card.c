@@ -98,7 +98,11 @@ s32 HuCardFormat(s16 slot)
 
 static void MountCallBack(s32 chan, s32 result)
 {
+	#if VERSION_ENG
 	UnMountCnt = (1 << chan);
+	#else
+	UnMountCnt |= (1 << chan);
+	#endif
 }
 
 s32 HuCardOpen(s16 slot, const char *fileName, CARDFileInfo *fileInfo)

@@ -555,10 +555,11 @@ void HuAudAUXVolSet(s8 arg0, s8 arg1) {
 void HuAudVoiceInit(s16 ovl) {
     SNDGRPTBL *var_r29;
     OSTick temp_r23;
+    s16 var_r27;
     s16 temp_r26;
     s16 temp_r25;
     s16 temp_r30;
-    s16 var_r27;
+    
     void *temp_r3;
     s16 i;
 
@@ -602,7 +603,11 @@ void HuAudVoiceInit(s16 ovl) {
                 charVoiceGroupStat[temp_r30] = 1;
                 temp_r26 = temp_r30 + 0xA;
                 temp_r3 = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(temp_r26));
+                #if VERSION_NTSC
                 msmSysLoadGroupBase(temp_r26, temp_r3);
+                #else
+                temp_r25 = msmSysLoadGroupBase(temp_r26, temp_r3);
+                #endif
                 HuMemDirectFree(temp_r3);
             }
         }
