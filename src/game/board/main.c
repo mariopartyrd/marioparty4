@@ -1988,7 +1988,7 @@ void BoardLast5GfxInit(void)
 			} else {
 				prio = 1400;
 			}
-#if !VERSION_JPN
+#if !VERSION_JP
 			spr_file = last5GfxSprTbl[i];
 			if(i == 2 && work->is_last && GWLanguageGet() != 0) {
 				spr_file = DATA_MAKE_NUM(DATADIR_BOARD, 98);

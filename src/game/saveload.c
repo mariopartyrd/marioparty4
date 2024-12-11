@@ -35,7 +35,7 @@ s32 saveExecF;
 u8 curBoxNo;
 s16 curSlotNo;
 
-#if VERSION_JPN
+#if VERSION_JP
 static u8 commentTbl[2][32] = { "マリオパーティ４", "？？月？？日　データ？です。" };
 static u8 sjisNumTbl[20] = "０１２３４５６７８９";
 #else
@@ -48,7 +48,7 @@ s32 SaveEnableF = 1;
 
 static char *SlotNameTbl[] = { "A", "B" };
 
-#if VERSION_JPN
+#if VERSION_JP
 static char *slotIconMesTbl[] = { "\x0E\x16", "\x0E\x17" };
 static u8 sjisSpace[] = "　";
 #endif
@@ -498,7 +498,7 @@ s32 SLSave(void)
 #define SAVEWIN_POS 120
 #endif
 
-#if VERSION_JPN
+#if VERSION_JP
 #define SAVEWIN_MESS slotIconMesTbl
 #else
 #define SAVEWIN_MESS SlotNameTbl

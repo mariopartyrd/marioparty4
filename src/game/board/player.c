@@ -137,7 +137,7 @@ static s32 bowserSuitCharMdlTbl[] = {
 static s32 bowserSuitMotTbl[] = { DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 0x19), DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 0x1A),
     DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 0x1B), DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 0x1E), DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 0x1F) };
 
-#if VERSION_JPN
+#if VERSION_JP
 static s32 sparkMotTbl[] = {
     DATA_MAKE_NUM(DATADIR_BOARD, 0x94),
     DATA_MAKE_NUM(DATADIR_BOARD, 0x95),
@@ -2512,7 +2512,7 @@ static s32 DoSparkSpace(s32 player, s32 pause_cam)
     BoardCameraMotionWait();
     BoardCameraTargetPlayerSet(player);
     BoardPlayerIdleSet(player);
-    temp_r28 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, VERSION_JPN ? 0x73 : 0x74), NULL, 0);
+    temp_r28 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, VERSION_JP ? 0x73 : 0x74), NULL, 0);
     BoardModelMotionStart(temp_r28, 0, 0x40000002);
     BoardModelMotionTimeSet(temp_r28, 30.0f);
     BoardModelAttrSet(temp_r28, 0x40000002);
@@ -2520,7 +2520,7 @@ static s32 DoSparkSpace(s32 player, s32 pause_cam)
     BoardModelScaleSet(temp_r28, 2.0f, 2.0f, 2.0f);
     BoardModelVisibilitySet(temp_r28, 0);
     BoardModelLayerSet(temp_r28, 1);
-    sp2E = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, VERSION_JPN ? 0x66 : 0x67), NULL, 0);
+    sp2E = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, VERSION_JP ? 0x66 : 0x67), NULL, 0);
     BoardModelLayerSet(sp2E, 1);
     BoardModelMotionStart(sp2E, 0, 0);
     HuAudFXPlay(796);

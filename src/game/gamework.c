@@ -54,7 +54,7 @@ void GWInit(void)
     _InitFlag();
     GWErase();
     InitPlayerConfig();
-#if VERSION_JPN
+#if VERSION_JP
     GWGameStat.language = 0;
 #elif VERSION_ENG
     GWGameStat.language = 1;
@@ -131,7 +131,7 @@ void GWGameStatReset(void)
     GameStat *game_stat = &GWGameStatDefault;
     memset(game_stat, 0, sizeof(GameStat));
     game_stat->unk_00 = 0;
-#if VERSION_JPN
+#if VERSION_JP
     game_stat->language = 0;
 #elif VERSION_ENG
     game_stat->language = 1;

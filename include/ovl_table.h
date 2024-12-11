@@ -71,7 +71,7 @@ OVL_DEFINE(OVL_M461, "dll/m461dll.rel")
 OVL_DEFINE(OVL_M462, "dll/m462dll.rel")
 OVL_DEFINE(OVL_M463, "dll/m463dll.rel")
 OVL_DEFINE(OVL_MENT, "dll/mentdll.rel")
-#if VERSION_JPN
+#if VERSION_JP
 OVL_DEFINE(OVL_MGMODE, "dll/mgmodedll.rel")
 OVL_DEFINE(OVL_MODELTEST, "dll/modeltestdll.rel")
 OVL_DEFINE(OVL_MODESEL, "dll/modeseldll.rel")

@@ -808,7 +808,7 @@ static s32 SeqMakeWord(SeqWork *work, char *str, s16 flags)
     s16 x;
     s16 i;
     s16 grp_idx;
-#if VERSION_JPN
+#if VERSION_JP
     char *str_ptr;
     AnimData **char_anim;
     s16 *char_pos;
@@ -832,7 +832,7 @@ static s32 SeqMakeWord(SeqWork *work, char *str, s16 flags)
     x = 0;
     len = 0;
     while (*str_ptr != '\0') {
-#if VERSION_JPN
+#if VERSION_JP
         if (*str_ptr == ' ') {
             x += 56;
         }
@@ -876,26 +876,26 @@ static AnimData *SeqLoadFontChar(char *str, s16 flags)
     if (c == 222 || c == 223) {
         return NULL;
     }
-#if !VERSION_JPN
+#if !VERSION_JP
     if (c == 32) {
         return HuSprAnimRead(SeqReadFile(DATA_MAKE_NUM(DATADIR_GAMEMES, 10)));
     }
 #endif
     for (id = 0, list = seqFontAlphaTbl; *list != 0; id++, list++) {
         if (*list == c) {
-            data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JPN ? 20 : 21));
+            data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JP ? 20 : 21));
             return HuSprAnimRead(SeqReadFile(data_num));
         }
     }
     for (id = 0, list = seqFontNumTbl; *list != 0; id++, list++) {
         if (*list == c) {
-            data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JPN ? 10 : 11));
+            data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JP ? 10 : 11));
             return HuSprAnimRead(SeqReadFile(data_num));
         }
     }
     for (id = 0, list = seqPunctTbl; *list != 0; id++, list++) {
         if (*list == c) {
-            data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JPN ? 153 : 154));
+            data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JP ? 153 : 154));
             return HuSprAnimRead(SeqReadFile(data_num));
         }
     }
@@ -916,10 +916,10 @@ static AnimData *SeqLoadFontChar(char *str, s16 flags)
     while (*list != 0) {
         if (*list == c) {
             if (flags & 0x1) {
-                data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JPN ? 155 : 156));
+                data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JP ? 155 : 156));
             }
             else {
-                data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JPN ? 72 : 73));
+                data_num = DATA_MAKE_NUM(DATADIR_GAMEMES, id + (VERSION_JP ? 72 : 73));
             }
             return HuSprAnimRead(SeqReadFile(data_num));
         }
@@ -2685,7 +2685,7 @@ static char *winCharNameTbl[] = {
     "ﾜﾘｵ",
     "WARIO",
     "ﾄﾞﾝｷｰ",
-    VERSION_JPN ? "DK" : " DK ",
+    VERSION_JP ? "DK" : " DK ",
     "ﾃﾞｲｼﾞｰ",
     "DAISY",
     "ﾜﾙｲｰｼﾞ",
@@ -2695,21 +2695,21 @@ static char *winCharNameTbl[] = {
     "ｷﾉﾋﾟｵ",
     "TOAD",
     "ﾍｲﾎｰ",
-    VERSION_JPN ? "HEHOH" : "SHY GUY",
+    VERSION_JP ? "HEHOH" : "SHY GUY",
     "ﾃﾚｻ",
-    VERSION_JPN ? "TERETHA" : "BOO",
+    VERSION_JP ? "TERETHA" : "BOO",
     "ﾉｺﾉｺ",
-    VERSION_JPN ? "NOKONOKO" : "KOOPA",
+    VERSION_JP ? "NOKONOKO" : "KOOPA",
     "ﾐﾆｸｯﾊﾟ",
     VERSION_NTSC ? (VERSION_ENG ? "KOOPA KID" : "BABYBOWSER") : "MINI BOWSER",
     "ｸﾘﾎﾞｰ",
-    VERSION_JPN ? "KURIBO" : "GOOMBA",
+    VERSION_JP ? "KURIBO" : "GOOMBA",
 };
 
 static char *winWordTbl[] = { "ｶﾁ", "WON!", "ﾊｲﾎﾞｸ", "LOSE", "ﾕｳｼｮｳ!", "CHAMPION!" };
 
 static s16 winPosOfs[][5][2] = {
-    { { VERSION_JPN ? 144 : 114, 0 }, { -144, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
+    { { VERSION_JP ? 144 : 114, 0 }, { -144, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
     { { 0, 35 }, { -144, -35 }, { 144, -35 }, { 0, 0 }, { 0, 0 } },
     { { 0, 105 }, { 0, -105 }, { -144, 0 }, { 144, 0 }, { 0, 0 } },
     { { 0, 105 }, { -144, -105 }, { 144, -105 }, { -144, 0 }, { 144, 0 } },
@@ -2745,15 +2745,15 @@ s32 MGSeqInitWin(SeqWork *work, va_list params)
         }
     }
     word_grp = SeqMakeWord(work, winWordTbl[word_idx], GET_WIN_KANAF());
-    winnerNameW[0] = work->word_len * (VERSION_JPN ? 56 : 50);
-#if !VERSION_JPN
+    winnerNameW[0] = work->word_len * (VERSION_JP ? 56 : 50);
+#if !VERSION_JP
     for (i = 0; i < work->word_len; i++) {
         HuSprPosSet(work->spr_grp[word_grp], i, 25.0f + ((i * 50) - (0.5f * (work->word_len * 50))), 0.0f);
         HuSprAttrSet(work->spr_grp[word_grp], i, HUSPR_ATTR_LINEAR);
     }
 #endif
     num_winners = 0;
-#if !VERSION_JPN
+#if !VERSION_JP
     work->win_scale = 1.0f;
 #endif
     for (j = 0; j < 4; j++) {
@@ -2855,7 +2855,7 @@ s32 MGSeqInitWin(SeqWork *work, va_list params)
     work->type = 0;
     for (j = 0; j < num_winners + 1; j++) {
         if (num_winners == 1) {
-#if VERSION_JPN
+#if VERSION_JP
             word_x = 32 + (winnerNameW[1] + winnerNameW[0]);
 #else
             word_x = 32.0f + ((float)winnerNameW[0] + (winnerNameW[1] * work->win_scale));

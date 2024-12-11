@@ -91,7 +91,7 @@ u8 charWETbl[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0
     17, 13, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
     20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 16, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
     20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
-#elif VERSION_JPN
+#elif VERSION_JP
 u8 charWETbl[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 13, 8, 11, 12, 13, 12, 11, 11, 12, 11, 18, 20, 12, 12, 11, 14, 8, 13, 12, 12, 12, 12, 12, 12, 12, 9, 11, 12, 11, 15, 12, 13, 12,
     13, 12, 12, 11, 12, 11, 15, 12, 13, 11, 12, 6, 8, 8, 12, 20, 12, 11, 12, 11, 11, 9, 12, 11, 4, 8, 11, 4, 14, 11, 12, 11, 12, 9, 11, 9, 11, 11, 15,
@@ -257,7 +257,7 @@ s16 HuWinCreate(float x, float y, s16 w, s16 h, s16 frame)
     sprite_ptr->work[0] = window_id;
     HuSprGrpMemberSet(group, 1, sprite);
     window->num_chars = 0;
-#if VERSION_JPN
+#if VERSION_JP
     window->max_chars = (w / 20) * (h / 24) * 3;
 #else
     window->max_chars = (w / 8) * (h / 24) * 4;
@@ -290,7 +290,7 @@ s16 HuWinCreate(float x, float y, s16 w, s16 h, s16 frame)
     window->scissor_h = 0x1E0;
     window->tab_w = 24;
     window->push_key = 0x300;
-#if !VERSION_JPN
+#if !VERSION_JP
     window->key_auto = 0;
 #endif
     if (frame == 0 || frame == 2) {
@@ -425,12 +425,12 @@ static void MesDispFunc(HuSprite *sprite)
         MTXConcat(*sprite->group_mtx, modelview, modelview);
         GXLoadPosMtxImm(modelview, 0);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
-        HuSprTexLoad(fontAnim, 0, 0, GX_CLAMP, GX_CLAMP, VERSION_JPN ? GX_NEAR : GX_LINEAR);
+        HuSprTexLoad(fontAnim, 0, 0, GX_CLAMP, GX_CLAMP, VERSION_JP ? GX_NEAR : GX_LINEAR);
         GXBegin(GX_QUADS, GX_VTXFMT0, window->num_chars * 4);
         char_uv_h = (LanguageNo == 0) ? (24.0f / 408.0f) : (24.0f / 312.0f);
         for (i = 0; i < window->num_chars; i++) {
             char_w = fontWidthP[window->char_data[i].character + 48];
-#if VERSION_JPN
+#if VERSION_JP
             uv_minx = 0.003125 + (20.0f / 320.0f) * (window->char_data[i].character % 16);
 #else
             uv_minx = (20.0f / 320.0f) * (window->char_data[i].character % 16);
@@ -605,9 +605,9 @@ static void HuWinDrawMes(s16 window)
     s16 color;
     s16 mess_w;
 
-    window_ptr->mess_time += VERSION_JPN ? 1 : 3;
+    window_ptr->mess_time += VERSION_JP ? 1 : 3;
     while (window_ptr->mess_time >= window_ptr->speed || (window_ptr->attr & 0x2000)) {
-#if VERSION_JPN
+#if VERSION_JP
         window_ptr->mess_time = 0;
 #else
         window_ptr->mess_time -= window_ptr->speed;
@@ -634,7 +634,7 @@ static void HuWinDrawMes(s16 window)
                     }
                     window_ptr->mess_stackptr--;
                     window_ptr->mess = window_ptr->mess_stack[window_ptr->mess_stackptr];
-#if !VERSION_JPN
+#if !VERSION_JP
                     window_ptr->mess_time = 0;
 #endif
                     break;
@@ -1108,14 +1108,14 @@ static void HuWinChoice(WindowData *window)
         window->choice = choice_next;
         HuAudFXPlay(0);
     }
-    else if (key & (VERSION_JPN ? PAD_BUTTON_A : (window->key_auto | PAD_BUTTON_A))) {
+    else if (key & (VERSION_JP ? PAD_BUTTON_A : (window->key_auto | PAD_BUTTON_A))) {
         HuAudFXPlay(2);
         window->key_down = key;
         window->stat = 0;
     }
     else if ((key & PAD_BUTTON_B) && !(window->attr & 0x10)) {
         HuAudFXPlay(3);
-#if !VERSION_JPN
+#if !VERSION_JP
         window->key_down = key;
 #else
         (void)key; // hack to match Japanese version
@@ -1324,7 +1324,7 @@ void HuWinMesSet(s16 window, u32 mess)
         window_ptr->mess = MessData_MesPtrGet(messDataPtr, mess);
         if (window_ptr->mess == 0) {
             OSReport("Error: No Message data\n");
-#if !VERSION_JPN
+#if !VERSION_JP
             HuWinMesSet(window, 0);
             return;
 #endif
@@ -1335,7 +1335,7 @@ void HuWinMesSet(s16 window, u32 mess)
     }
     if (!(window_ptr->attr & 0x80)) {
         window_ptr->mess_color = 7;
-#if !VERSION_JPN
+#if !VERSION_JP
         window_ptr->mess_time = 0;
 #endif
     }

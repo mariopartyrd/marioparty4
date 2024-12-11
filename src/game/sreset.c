@@ -22,7 +22,7 @@ extern s32 HuDvdErrWait;
 
 static s32 SR_PreRstChk[4] = {};
 
-#if VERSION_JPN
+#if VERSION_JP
 static s32 padding[4] = {};
 #endif
 
