@@ -34,7 +34,9 @@
     "corecrt_math.h": "c",
     "corecrt.h": "c",
     "vcruntime.h": "c",
-    "hsfmotion.h": "c"
+    "hsfmotion.h": "c",
+    "m424dll.h": "c",
+    "chrman.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {
