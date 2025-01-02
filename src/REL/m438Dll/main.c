@@ -2772,28 +2772,7 @@ f32 fn_1_9960(Vec* arg0, Vec* arg1, Vec* arg2) {
 }
 
 f32 fn_1_9C9C(Vec* arg0, Vec* arg1, Vec* arg2, Vec* arg3, Vec* arg4) {
-    f32 sp44;
-    f32 sp40;
-    f32 sp3C;
-    f32 sp38;
-    f32 sp34;
-    f32 sp30;
-    f32 sp2C;
-    f32 sp28;
-    f32 sp24;
-    Vec sp18;
-    f32 sp14;
-    f32 sp10;
-    f32 spC;
-    f32 sp8;
-    f32 temp_f25;
-    f32 temp_f26;
-    f32 temp_f28;
-    f32 var_f24;
     f32 var_f27;
-    f64 temp_f31;
-    f64 temp_f31_2;
-    f64 temp_f31_3;
 
     if (0.0f == ((arg2->z * arg2->z) + ((arg2->x * arg2->x) + (arg2->y * arg2->y)))) {
         return ((arg0->z - arg1->z) * (arg0->z - arg1->z)) + (((arg0->x - arg1->x) * (arg0->x - arg1->x)) + ((arg0->y - arg1->y) * (arg0->y - arg1->y)));
