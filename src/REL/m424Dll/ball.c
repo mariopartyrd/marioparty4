@@ -171,7 +171,6 @@ u32 lbl_1_data_150[11] = {
     9, 20, 22, 23, 24,
     0x370021
 };
-
 Vec lbl_1_data_17C[4] = {
     { -100.0f, 200.0f, -100.0f },
     {  300.0f, 200.0f, -100.0f },
@@ -798,13 +797,8 @@ void fn_1_4A90(s16 arg0) {
                         PSMTXCopy(sp20, sp50);
                     }
                     PSMTXConcat(sp50, var_r31->unkC, var_r31->unkC);
-<<<<<<< HEAD
                     fn_1_6230(var_r31->unk8, var_r31->unkC);
                     fn_1_6230(var_r31->unkA, var_r31->unkC);
-=======
-                    fn_1_6230(var_r31->unk8, var_r31->unkC[0]);
-                    fn_1_6230(var_r31->unkA, var_r31->unkC[0]);
->>>>>>> b61bac75d85236b00f2e8086742748460146baaa
                 }
                 if (var_r31->unk3C.y < 250.0f) {
                     var_r31->unk3C.y = 250.0f;
@@ -1050,7 +1044,6 @@ void fn_1_5018(void) {
         var_r31->unk3C.z = var_r31->unk60.z + (var_r31->unk6C.z * var_f29);
     }
 }
-<<<<<<< HEAD
 
 void fn_1_6038(void) {
     s32 var_r31;
@@ -1739,5 +1732,3 @@ s32 fn_1_907C(Vec* arg0, Vec* arg1) {
     }
     return (s32)arg0;
 }
-=======
->>>>>>> b61bac75d85236b00f2e8086742748460146baaa
