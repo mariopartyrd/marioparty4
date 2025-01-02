@@ -54,25 +54,6 @@ typedef struct _M424DllBallStruct {
     s32 unkEC;
 } M424DllBallStruct; // sizeof 0xF0
 
-typedef struct _M424DllBallStruct2 {
-    omObjData* unk0;
-    u8 unk4;
-    u8 unk5;
-    u8 unk6;
-    u16 unk8;
-    u16 unkA;
-    Mtx unkC;
-    Vec unk3C;
-    Vec unk48;
-    Vec unk54;
-    Vec unk60;
-    Vec unk6C;
-    Vec unk78;
-    Vec unk84;
-    u8 unk90;
-    u8 unk91;
-} M424DllBallStruct2; // sizeof 0x94
-
 typedef struct _M424DllBallStruct3 {
     u8 unk0;
     M424DllBallStruct2* unk4;

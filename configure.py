@@ -1045,8 +1045,8 @@ config.libs = [
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/main.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/map.c"),
-            Object(NonMatching, "REL/m424Dll/ball.c"),
-            Object(NonMatching, "REL/m424Dll/claw.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/ball.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/claw.c"),
         },
     ),
     Rel(
