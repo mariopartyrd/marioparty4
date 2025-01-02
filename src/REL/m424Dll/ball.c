@@ -79,11 +79,24 @@ typedef struct _M424DllBallStruct3 {
     M424DllBallStruct2* unk8;
 } M424DllBallStruct3;
 
+typedef struct _M424BallStruct4 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    char unkC[0x8];
+    f32 unk14;
+    f32 unk18;
+    char unk1C[0x8];
+    f32 unk24;
+    f32 unk28;
+} M424BallStruct4;
+
 // BSS
+void* lbl_1_bss_5BC[0x20];
 omObjData* lbl_1_bss_5AC[4];
 omObjData* lbl_1_bss_594[6];
 M424DllBallStruct2 lbl_1_bss_60[9];
-s32 lbl_1_data_5C;
+s32 lbl_1_bss_5C;
 u8 lbl_1_bss_58;
 
 // PROTO
@@ -100,7 +113,7 @@ void fn_1_6038(void);
 void* fn_1_6078(s32);
 void fn_1_61AC(void);
 s32 fn_1_627C(void);
-void fn_1_6230(s16, f32*);
+void fn_1_6230(s16, Mtx);
 void fn_1_62D0(s32, u32*);
 f32 fn_1_640C(f32, f32, f32);
 f32 fn_1_6D10(Vec, Vec, f32, Vec, Vec, f32);
@@ -109,8 +122,10 @@ f32 fn_1_7420(Vec, Vec, f32, f32);
 void fn_1_77C4(Vec, Vec, Vec, f32, Vec*, Vec*);
 void fn_1_79FC(Vec*, Vec*, f32, Vec*, Vec*, f32, f32);
 void fn_1_7CA0(Vec, Vec, f32, Vec*);
-void fn_1_8924(u8, s32);
+void fn_1_8924(u8, u8);
 void fn_1_8AA8(s32, s32);
+s32 fn_1_8C78(s32, s32);
+s32 fn_1_907C(Vec*, Vec*);
 
 
 void fn_1_2720(Process* arg0) {
@@ -155,6 +170,12 @@ u32 lbl_1_data_150[11] = {
     0, 2,  3,  8,  10,
     9, 20, 22, 23, 24,
     0x370021
+};
+Vec lbl_1_data_17C[4] = {
+    { -100.0f, 200.0f, -100.0f },
+    {  300.0f, 200.0f, -100.0f },
+    { -300.0f, 200.0f,  300.0f },
+    {  300.0f, 200.0f,    0.0f }
 };
 
 void fn_1_28A0(omObjData* object) {
@@ -776,8 +797,8 @@ void fn_1_4A90(s16 arg0) {
                         PSMTXCopy(sp20, sp50);
                     }
                     PSMTXConcat(sp50, var_r31->unkC, var_r31->unkC);
-                    fn_1_6230(var_r31->unk8, var_r31->unkC[0]);
-                    fn_1_6230(var_r31->unkA, var_r31->unkC[0]);
+                    fn_1_6230(var_r31->unk8, var_r31->unkC);
+                    fn_1_6230(var_r31->unkA, var_r31->unkC);
                 }
                 if (var_r31->unk3C.y < 250.0f) {
                     var_r31->unk3C.y = 250.0f;
@@ -1022,4 +1043,692 @@ void fn_1_5018(void) {
         var_r31->unk3C.y = var_r31->unk60.y + (var_r31->unk6C.y * var_f29);
         var_r31->unk3C.z = var_r31->unk60.z + (var_r31->unk6C.z * var_f29);
     }
+}
+
+void fn_1_6038(void) {
+    s32 var_r31;
+    
+    for (var_r31 = 0; var_r31 < 0x20; var_r31++) {
+        lbl_1_bss_5BC[var_r31] = 0;
+    }
+}
+
+void* fn_1_6078(s32 arg0) {
+    s32 var_r31;
+    
+    for (var_r31 = 0; var_r31 < 0x20; var_r31++) {
+        if (lbl_1_bss_5BC[var_r31] == 0) break;
+    }
+    if (var_r31 == 0x20) {
+        return NULL;
+    }
+    lbl_1_bss_5BC[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, arg0, 0x10000000);
+    return lbl_1_bss_5BC[var_r31];
+}
+
+void fn_1_6118(void* arg0) {
+    s32 var_r31;
+    
+    for (var_r31 = 0; var_r31 < 0x20; var_r31++) {
+        if (lbl_1_bss_5BC[var_r31] == arg0) break;
+    }
+    if (var_r31 != 0x20) {
+        HuMemDirectFree(lbl_1_bss_5BC[var_r31]);
+        lbl_1_bss_5BC[var_r31] = NULL;
+    }
+}
+
+void fn_1_61AC(void) {
+    s32 var_r31;
+    
+    for (var_r31 = 0; var_r31 < 0x20; var_r31++) {
+        if (lbl_1_bss_5BC[var_r31]) {
+            HuMemDirectFree(lbl_1_bss_5BC[var_r31]);
+            lbl_1_bss_5BC[var_r31] = NULL;
+        }
+    }
+}
+
+void fn_1_6230(s16 arg0, Mtx arg1) {
+    ModelData* var_r31;
+
+    var_r31 = &Hu3DData[arg0];
+    PSMTXCopy(arg1, var_r31->unk_F0);
+}
+
+u32 lbl_1_data_1D8 = 0x41C64E6D;
+
+s32 fn_1_627C(void) {
+    lbl_1_data_1D8 *= 0x41C64E6D;
+    lbl_1_data_1D8 += 0x3039;
+    return lbl_1_data_1D8 >> 0x10;
+}
+
+void fn_1_62D0(s32 arg0, u32* arg1) {
+    s32 var_r31;
+    s32 temp_r30;
+    u32 temp_r29;
+
+    for (var_r31 = 0; var_r31 < arg0; var_r31++) {
+        arg1[var_r31] = var_r31;
+    }
+    
+    for (var_r31 = 0; var_r31 < arg0 - 1; var_r31++) {
+        temp_r30 = (arg0 * (fn_1_627C() / 65536.0f));
+        temp_r29 = arg1[var_r31];
+        arg1[var_r31] = arg1[temp_r30];
+        arg1[temp_r30] = temp_r29;
+    }
+}
+
+f32 fn_1_640C(f32 arg0, f32 arg1, f32 arg2) {
+    f32 var_f31;
+
+    if (arg0 > 180.0f) {
+        arg0 -= 360.0f;
+    } else {
+        if (arg0 <= -180.0f) {
+            arg0 += 360.0f;
+        }
+    }
+    if (arg1 > 180.0f) {
+        arg1 -= 360.0f;
+    } else {
+        if (arg1 <= -180.0f) {
+            arg1 += 360.0f;
+        }
+    }
+    var_f31 = arg0 - arg1;
+    if (var_f31 > 180.0f) {
+        var_f31 -= 360.0f;
+    } else {
+        if (var_f31 <= -180.0f) {
+            var_f31 += 360.0f;
+        }
+    }
+    arg0 = arg1 + (var_f31 * arg2);
+    if (arg0 > 180.0f) {
+        return arg0 - 360.0f;
+    }
+    if (arg0 <= -180.0f) {
+        arg0 += 360.0f;
+    }
+    return arg0;
+}
+
+void fn_1_6574(Mtx arg0, f32 arg8, f32 arg9, f32 argA) {
+    Mtx sp38;
+    Mtx sp8;
+    
+    if (argA != 0.0f) {
+        PSMTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
+    } else {
+        PSMTXIdentity(arg0);
+    }
+    if (arg8 != 0.0f) {
+        PSMTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
+        PSMTXConcat(sp38, arg0, arg0);
+    }
+    if (arg9 != 0.0f) {
+        PSMTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
+        PSMTXConcat(sp8, arg0, arg0);
+    }
+}
+
+void fn_1_6694(M424BallStruct4* arg0, Vec* arg1) {
+    f32 temp_f29;
+    f32 var_f28;
+
+    arg1->x = atan2d(arg0->unk18, arg0->unk28);
+    if (arg1->x < 0.0f) {
+        arg1->x += 360.0f;
+    }
+    arg1->z = atan2d(arg0->unk4, arg0->unk0);
+    if (arg1->z < 0.0f) {
+        arg1->z += 360.0f;
+    }
+    temp_f29 = -arg0->unk8;
+    var_f28 = sqrtf(ABS(1.0 - (temp_f29 * temp_f29)));
+    if ((arg1->x > 90.0f) && (arg1->x < 270.0f) && (arg1->z > 90.0f) && (arg1->z < 270.0f)) {
+        arg1->x = fmod((180.0f + arg1->x), 360.0);
+        arg1->z = fmod((180.0f + arg1->z), 360.0);
+        var_f28 = -var_f28;
+    }
+    arg1->y = atan2d(temp_f29, var_f28);
+    if (arg1->y < 0.0f) {
+        arg1->y += 360.0f;
+    }
+}
+
+void fn_1_6A30(M424BallStruct4* arg0, Vec* arg1) {
+    f32 temp_f29;
+    f32 var_f27;
+
+    arg1->z = atan2d(arg0->unk4, arg0->unk14);
+    if (arg1->z < 0.0f) {
+        arg1->z += 360.0f;
+    }
+    arg1->y = atan2d(arg0->unk8, arg0->unk28);
+    if (arg1->y < 0.0f) {
+        arg1->y += 360.0f;
+    }
+    temp_f29 = -arg0->unk24;
+    var_f27 = sqrtf(ABS(1.0 - (temp_f29 * temp_f29)));
+    arg1->x = atan2d(temp_f29, var_f27);
+    if (arg1->x < 0.0f) {
+        arg1->x += 360.0f;
+    }
+}
+
+f32 fn_1_6D10(Vec arg0, Vec arg1, f32 arg2, Vec arg3, Vec arg4, f32 arg5) {
+    f32 temp_f30;
+    f32 temp_f29;
+    f32 temp_f28;
+    f32 temp_f27;
+    f32 temp_f26;
+    f32 temp_f25;
+    f32 var_f23;
+
+    PSVECSubtract(&arg3, &arg0, &arg3);
+    PSVECSubtract(&arg4, &arg1, &arg4);
+    temp_f29 = arg2 + arg5;
+    if (PSVECMag(&arg3) > temp_f29 + PSVECMag(&arg4)) {
+        return -1.0f;
+    }
+    temp_f29 *= temp_f29;
+    temp_f27 = (arg4.z * arg4.z) + ((arg4.x * arg4.x) + (arg4.y * arg4.y));
+    temp_f26 = 2.0f * ((arg4.z * arg3.z) + ((arg4.x * arg3.x) + (arg4.y * arg3.y)));
+    var_f23 = ((arg3.z * arg3.z) + ((arg3.x * arg3.x) + (arg3.y * arg3.y))) - temp_f29;
+    if (temp_f27 == 0.0f) {
+        return -1.0f;
+    }
+    temp_f30 = (temp_f26 * temp_f26) - (4.0f * temp_f27 * var_f23);
+    if (temp_f30 <= 0.0f) {
+        return -1.0f;
+    }
+    temp_f30 = sqrtf(temp_f30);
+    temp_f25 = (-temp_f26 + temp_f30) / (2.0f * temp_f27);
+    temp_f28 = (-temp_f26 - temp_f30) / (2.0f * temp_f27);
+    if (((temp_f25 * temp_f28) < 0.0f) && (temp_f28 < 0.0f) && (temp_f25 > fabs(temp_f28))) {
+        return 0.0f;
+    }
+    return temp_f28;
+}
+
+f32 fn_1_709C(Vec arg0, Vec arg1, f32 arg2, f32 arg3) {
+    Vec sp20;
+    Vec sp14;
+    f32 temp_f30;
+    f32 temp_f29;
+    f32 temp_f28;
+    f32 temp_f27;
+    f32 temp_f26;
+    f32 temp_f25;
+    f32 var_f23;
+
+    sp20 = arg0;
+    sp20.y = 0.0f;
+    sp14 = arg1;
+    sp14.y = 0.0f;
+    temp_f29 = arg3 + arg2;
+    if (PSVECMag(&sp20) > temp_f29 + PSVECMag(&sp14)) {
+        return -1.0f;
+    }
+    temp_f29 *= temp_f29;
+    temp_f27 = (arg1.x * arg1.x) + (arg1.z * arg1.z);
+    temp_f26 = 2.0f * ((arg1.x * arg0.x) + (arg1.z * arg0.z));
+    var_f23 = (((arg0.x * arg0.x) + (arg0.z * arg0.z)) - temp_f29);
+    if (0.0f == temp_f27) {
+        return -1.0f;
+    }
+    temp_f30 = (temp_f26 * temp_f26) - (4.0f * temp_f27 * var_f23);
+    if (temp_f30 <= 0.0f) {
+        return -1.0f;
+    }
+    temp_f30 = sqrtf(temp_f30);
+    temp_f25 = (-temp_f26 + temp_f30) / (2.0f * temp_f27);
+    temp_f28 = (-temp_f26 - temp_f30) / (2.0f * temp_f27);
+    if (((temp_f25 * temp_f28) < 0.0f) && (temp_f28 < 0.0f) && (temp_f25 > fabs(temp_f28))) {
+        return 0.0f;
+    }
+    return temp_f28;
+}
+
+f32 fn_1_7420(Vec arg0, Vec arg1, f32 arg2, f32 arg3) {
+    Vec sp20;
+    Vec sp14;
+    f32 temp_f30;
+    f32 temp_f29;
+    f32 temp_f28;
+    f32 temp_f27;
+    f32 temp_f26;
+    f32 temp_f25;
+    f32 var_f23;
+    
+    sp20 = arg0;
+    sp20.y = 0.0f;
+    sp14 = arg1;
+    sp14.y = 0.0f;
+    temp_f29 = arg3 - arg2;
+    if (PSVECMag(&sp20) > temp_f29) {
+        return 0.0f;
+    }
+    if (PSVECMag(&sp20) > temp_f29 + PSVECMag(&sp14)) {
+        return -1.0f;
+    }
+    temp_f29 *= temp_f29;
+    temp_f27 = (arg1.x * arg1.x) + (arg1.z * arg1.z);
+    temp_f26 = 2.0f * ((arg1.x * arg0.x) + (arg1.z * arg0.z));
+    var_f23 = (arg0.x * arg0.x) + (arg0.z * arg0.z) - temp_f29;
+    if (0.0f == temp_f27) {
+        return -1.0f;
+    }
+    temp_f30 = (temp_f26 * temp_f26) - (4.0f * temp_f27 * var_f23);
+    if (temp_f30 <= 0.0f) {
+        return -1.0f;
+    }
+    temp_f30 = sqrtf(temp_f30);
+    temp_f25 = (-temp_f26 - temp_f30) / (2.0f * temp_f27);
+    temp_f28 = (-temp_f26 + temp_f30) / (2.0f * temp_f27);
+    if (((temp_f25 * temp_f28) < 0.0f) && (temp_f28 < 0.0f) && (temp_f25 > fabs(temp_f28))) {
+        return 0.0f;
+    }
+    return temp_f28;
+}
+
+void fn_1_77C4(Vec arg0, Vec arg1, Vec arg2, f32 arg3, Vec* arg4, Vec* arg5) {
+    Vec sp38;
+    Vec sp2C;
+    Vec sp20;
+    Vec sp14;
+    f32 var_f31;
+    f32 temp_f30;
+    f32 temp_f29;
+    f32 var_f28;
+
+    sp38 = arg1;
+    var_f31 = PSVECMag(&sp38);
+    if (var_f31 < 0.01f) {
+        arg4->x = arg4->y = arg4->z = 0.0f;
+        arg5->x = arg5->y = arg5->z = 0.0f;
+        return;
+    }
+    PSVECNormalize(&sp38, &sp38);
+    var_f31 = var_f31 * arg3;
+    PSVECSubtract(&arg2, &arg0, &sp2C);
+    PSVECNormalize(&sp2C, &sp2C);
+    var_f28 = PSVECDotProduct(&sp38, &sp2C);
+    if (var_f28 < 0.0f) {
+        arg4->x = arg1.x;
+        arg4->y = arg1.y;
+        arg4->z = arg1.z;
+        arg5->x = arg5->y = arg5->z = 0.0f;
+        return;
+    }
+    temp_f29 = var_f31 * var_f28;
+    temp_f30 = var_f31 - temp_f29;
+    if (temp_f30 < 0.01f) {
+        arg4->x = arg4->y = arg4->z = 0.0f;
+    } else {
+        PSVECCrossProduct(&sp38, &sp2C, &sp14);
+        PSVECNormalize(&sp14, &sp14);
+        PSVECCrossProduct(&sp2C, &sp14, &sp20);
+        PSVECNormalize(&sp20, &sp20);
+        arg4->x = sp20.x * temp_f30;
+        arg4->y = sp20.y * temp_f30;
+        arg4->z = sp20.z * temp_f30;
+    }
+    arg5->x = sp2C.x * temp_f29;
+    arg5->y = sp2C.y * temp_f29;
+    arg5->z = sp2C.z * temp_f29;
+}
+
+void fn_1_79FC(Vec* arg0, Vec* arg1, f32 arg2, Vec* arg3, Vec* arg4, f32 arg5, f32 arg6) {
+    Vec sp38;
+    Vec sp2C;
+    f32 temp_f31;
+    f32 var_f30;
+    f32 var_f29;
+
+    arg1->x *= arg6;
+    arg1->y *= arg6;
+    arg1->z *= arg6;
+    PSVECSubtract(arg0, arg3, &sp38);
+    PSVECNormalize(&sp38, &sp2C);
+    temp_f31 = (arg2 + arg5) - PSVECMag(&sp38);
+    if (temp_f31 > 0.01f) {
+        PSVECSubtract(arg1, arg4, &sp38);
+        if (PSVECMag(&sp38) < 0.01f) {
+            arg0->x += sp2C.x * temp_f31;
+            arg0->y += sp2C.y * temp_f31;
+            arg0->z += sp2C.z * temp_f31;
+        } else {
+            PSVECNormalize(&sp38, &sp38);
+            arg0->x -= sp38.x * temp_f31;
+            arg0->y -= sp38.y * temp_f31;
+            arg0->z -= sp38.z * temp_f31;
+        }
+    }
+    fn_1_7CA0(*arg1, sp2C, 1.0f, arg1);
+    PSVECSubtract(arg4, arg1, &sp38);
+    var_f30 = PSVECMag(&sp38);
+    if (var_f30 < 0.01f) return;
+    PSVECNormalize(&sp38, &sp38);
+    var_f29 = PSVECDotProduct(&sp2C, &sp38);
+    if (var_f29 > 0.0f) {
+        arg1->x += var_f30 * (sp2C.x * var_f29);
+        arg1->y += var_f30 * (sp2C.y * var_f29);
+        arg1->z += var_f30 * (sp2C.z * var_f29);
+    }
+}
+
+void fn_1_7CA0(Vec arg0, Vec arg1, f32 arg2, Point3d* arg3) {
+    f32 var_f31;
+
+    *arg3 = arg0;
+    arg3->x *= arg2;
+    arg3->y *= arg2;
+    arg3->z *= arg2;
+    var_f31 = PSVECDotProduct(&arg1, arg3);
+    if (var_f31 < 0.0f) {
+        arg3->x -= 2.0f * arg1.x * var_f31;
+        arg3->y -= 2.0f * arg1.y * var_f31;
+        arg3->z -= 2.0f * arg1.z * var_f31;
+    }
+}
+
+f32 fn_1_7DD0(Vec* arg0) {
+    f32 temp_f30;
+    f32 temp_f29;
+
+    temp_f30 = (arg0->x * arg0->x) + (arg0->y * arg0->y) + (arg0->z * arg0->z);
+    temp_f30 = sqrtf(temp_f30);
+    if (temp_f30 != 0.0f) {
+        temp_f29 = 1.0f / temp_f30;
+        arg0->x *= temp_f29;
+        arg0->y *= temp_f29;
+        arg0->z *= temp_f29;
+    } else {
+        arg0->x = arg0->y = arg0->z = 0.0f;
+    }
+    return temp_f30;
+}
+
+f32 fn_1_7F68(Vec arg0, Vec arg1, Vec* arg2, f32 arg8) {
+    if (arg8 <= 0.0f) {
+        arg2->x = arg0.x;
+        arg2->y = arg0.y;
+        arg2->z = arg0.z;
+        arg8 = 0.0f;
+    } else  if (arg8 >= 1.0f) {
+        arg2->x = (arg0.x + arg1.x);
+        arg2->y = (arg0.y + arg1.y);
+        arg2->z = (arg0.z + arg1.z);
+        arg8 = 1.0f;
+    } else {
+        arg2->x = (arg0.x + (arg8 * arg1.x));
+        arg2->y = (arg0.y + (arg8 * arg1.y));
+        arg2->z = (arg0.z + (arg8 * arg1.z));
+    }
+    return arg8;
+}
+
+f32 fn_1_8040(Vec arg0, Vec arg1, Vec arg2) {
+    f32 temp_f30;
+    f32 var_f31;
+
+    var_f31 = (arg2.z * (arg1.z - arg0.z)) + ((arg2.x * (arg1.x - arg0.x)) + (arg2.y * (arg1.y - arg0.y)));
+    temp_f30 = -((arg2.z * arg2.z) + ((arg2.x * arg2.x) + (arg2.y * arg2.y)));
+    if (temp_f30 != 0.0f) {
+        var_f31 /= temp_f30;
+    }
+    return var_f31;
+}
+
+f32 fn_1_80FC(Vec* arg0, Vec* arg1, Vec* arg2) {
+    Vec sp44;
+    f32 var_f30;
+
+    if (0.0f == (arg2->x * arg2->x) + (arg2->y * arg2->y) + (arg2->z * arg2->z)) {
+        return ((arg0->x - arg1->x) * (arg0->x - arg1->x)) + ((arg0->y - arg1->y) * (arg0->y - arg1->y)) + ((arg0->z - arg1->z) * (arg0->z - arg1->z));
+    }
+    var_f30 = fn_1_8040(*arg0, *arg1, *arg2);
+    fn_1_7F68(*arg1, *arg2, &sp44, var_f30);
+    return ((arg0->x - sp44.x) * (arg0->x - sp44.x)) + ((arg0->y - sp44.y) * (arg0->y - sp44.y)) + ((arg0->z - sp44.z) * (arg0->z - sp44.z));
+}
+
+f32 fn_1_8438(Vec* arg0, Vec* arg1, Vec* arg2, Vec* arg3, Vec* arg4) {
+    f32 var_f27;
+
+    if (0.0f == ((arg2->z * arg2->z) + ((arg2->x * arg2->x) + (arg2->y * arg2->y)))) {
+        return ((arg0->z - arg1->z) * (arg0->z - arg1->z)) + (((arg0->x - arg1->x) * (arg0->x - arg1->x)) + ((arg0->y - arg1->y) * (arg0->y - arg1->y)));
+    }
+    var_f27 = fn_1_8040(*arg0, *arg1, *arg2);
+    fn_1_7F68(*arg1, *arg2, arg3, var_f27);
+    arg4->x = arg0->x - arg3->x;
+    arg4->y = arg0->y - arg3->y;
+    arg4->z = arg0->z - arg3->z;
+    return fn_1_7DD0(arg4);
+}
+
+void fn_1_88E8(u8 arg0, f32 arg8, f32 arg9, f32 argA) {
+    M424DllBallStruct2* temp_r31;
+
+    temp_r31 = &lbl_1_bss_60[arg0];
+    temp_r31->unk4 = 3;
+    temp_r31->unk3C.x = arg8;
+    temp_r31->unk3C.y = arg9;
+    temp_r31->unk3C.z = argA;
+}
+
+void fn_1_8924(u8 arg0, u8 arg1) {
+    M424DllBallStruct2* temp_r31;
+
+    temp_r31 = &lbl_1_bss_60[arg0];
+    temp_r31->unk4 = arg1;
+}
+
+u8 fn_1_8950(u8 arg0) {
+    M424DllBallStruct2* temp_r31;
+
+    temp_r31 = &lbl_1_bss_60[arg0];
+    return temp_r31->unk4;
+}
+
+u8 fn_1_897C(u8 arg0) {
+    M424DllBallStruct2* temp_r31;
+
+    temp_r31 = &lbl_1_bss_60[arg0];
+    return temp_r31->unk5;
+}
+
+u8 fn_1_89A8(u8 arg0) {
+    M424DllBallStruct2* temp_r31;
+
+    temp_r31 = &lbl_1_bss_60[arg0];
+    return temp_r31->unk91;
+}
+
+Vec* fn_1_89D4(u8 arg0) {
+    M424DllBallStruct2* temp_r31;
+
+    temp_r31 = &lbl_1_bss_60[arg0];
+    return &temp_r31->unk3C;
+}
+
+Vec* fn_1_8A00(u8 arg0) {
+    M424DllBallStruct2* temp_r31;
+
+    temp_r31 = &lbl_1_bss_60[arg0];
+    return &temp_r31->unk6C;
+}
+
+s32 fn_1_8A2C(void) {
+    M424DllBallStruct2* var_r31;
+    M424DllBallStruct* temp_r30;
+    s32 var_r29;
+
+    var_r31 = lbl_1_bss_60;
+    for (var_r29 = 0; var_r29 < lbl_1_bss_58; var_r29++, var_r31++) {
+        temp_r30 = var_r31->unk0->data;
+        if ((temp_r30->unk8 == 3) || (temp_r30->unk8 == 2)) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void fn_1_8AA8(s32 arg0, s32 arg1) {
+    Vec spC;
+    M424DllBallStruct2* temp_r31;
+    s32 var_r27;
+    s32 var_r29;
+    s32 var_r30;
+
+    if (arg1 != 0) {
+        for (var_r30 = 0; var_r30 < lbl_1_bss_58; var_r30++) {
+            temp_r31 = &lbl_1_bss_60[var_r30];
+            if (temp_r31->unk4 != 6) {
+                PSVECAdd(&temp_r31->unk60, &temp_r31->unk6C, &temp_r31->unk3C);
+                if ((temp_r31->unk4 < 3) && (fn_1_907C(&temp_r31->unk3C, &spC) != 0)) {
+                    temp_r31->unk3C = spC;
+                }
+                if ((temp_r31->unk6C.y < 0.0f) && (temp_r31->unk4 != 4) && (temp_r31->unk4 != 6) && (temp_r31->unk3C.y < 300.0f)) {
+                    temp_r31->unk3C.y = 300.0f;
+                    if (temp_r31->unk4 == 2) {
+                        temp_r31->unk4 = 1;
+                    }
+                }
+            }
+        }
+    }
+    
+    for (var_r30 = 0, var_r29 = arg0; var_r30 < lbl_1_bss_58; var_r30++) {
+        temp_r31 = &lbl_1_bss_60[var_r30];
+        var_r27 = 0;
+        if (fn_1_8950(var_r30) < 4) {
+            if (fn_1_8C78(var_r30, arg0) < arg0) {
+                var_r27 = 1;
+            }
+            if ((var_r27 != 0) && (var_r29 > 0)) {
+                var_r29 -= 1;
+                var_r30 -= 1;
+            } else {
+                var_r29 = arg0;
+            }
+        }
+    }
+    fn_1_C2E0(0);
+}
+
+s32 fn_1_8C78(s32 arg0, s32 arg1) {
+    Vec sp38;
+    Vec sp2C;
+    Vec sp20;
+    Vec sp14;
+    Vec* sp10;
+    f32 temp_f31;
+    f32 var_f30;
+    s32 var_r31;
+    M424DllBallStruct2* temp_r30;
+    M424DllBallStruct2* temp_r29;
+    Vec* var_r28;
+    Vec* var_r27;
+    M424DllBallStruct* temp_r26;
+    M424DllBallStruct* temp_r25;
+
+    temp_r30 = &lbl_1_bss_60[arg0];
+    temp_r26 = temp_r30->unk0->data;
+    var_r28 = fn_1_89D4(arg0);
+    sp38 = *var_r28;
+    
+    for (var_r31 = 0; var_r31 < lbl_1_bss_58; var_r31++) {
+        if (var_r31 != arg0) {
+            if (fn_1_8950(var_r31) < 3) {
+                temp_r29 = &lbl_1_bss_60[var_r31];
+                temp_r25 = temp_r29->unk0->data;
+                var_r27 = fn_1_89D4(var_r31);
+                sp2C = *var_r27;
+                PSVECSubtract(&sp2C, &sp38, &sp20);
+                var_f30 = PSVECMag(&sp20);
+                if (var_f30 < 200.0f) {
+                    if (var_f30 > 0.0f) {
+                        temp_f31 = 1.0f / var_f30;
+                        sp20.x *= temp_f31;
+                        sp20.y *= temp_f31;
+                        sp20.z *= temp_f31;
+                    } else {
+                        sp20.x = 0.0f;
+                        sp20.y = 0.0f;
+                        sp20.z = 1.0f;
+                    }
+                    temp_f31 = 1.0f + (0.5f * (200.0f - var_f30));
+                    if (temp_f31 > 0.0f) {
+                        PSVECScale(&sp20, &sp20, temp_f31);
+                        PSVECAdd(&sp2C, &sp20, &sp2C);
+                        *var_r27 = sp2C;
+                        if ((temp_r29->unk4 < 3) && (fn_1_907C(&sp2C, &sp14) != 0)) {
+                            sp2C = sp14;
+                            *var_r27 = sp14;
+                        }
+                        if ((temp_r29->unk4 == 2) && (temp_r25->unk4C.y < 0.0f)) {
+                            temp_r25->unk4C.y += 0.1f * temp_f31;
+                        }
+                    }
+                    if (temp_f31 > 0.0f) {
+                        PSVECScale(&sp20, &sp20, -1.0f);
+                        PSVECAdd(&sp38, &sp20, &sp38);
+                        *var_r28 = sp38;
+                        if ((temp_r30->unk4 < 3) && (fn_1_907C(&sp38, &sp14) != 0)) {
+                            sp38 = sp14;
+                            *var_r28 = sp14;
+                        }
+                        if ((temp_r30->unk4 == 2) && (temp_r26->unk4C.y < 0.0f)) {
+                            temp_r26->unk4C.y += 0.1f * temp_f31;
+                        }
+                    }
+                    if (arg1 > 0) {
+                        arg1--;
+                        fn_1_8C78(var_r31, arg1);
+                    }
+                }
+            }
+        }
+    }
+    return arg1;
+}
+
+s32 fn_1_907C(Vec* arg0, Vec* arg1) {
+    Vec sp10;
+    f32 temp_f29;
+    f32 temp_f28;
+    f32 var_f27;
+    f32 temp_f26;
+
+    sp10 = *arg0;
+    *arg1 = *arg0;
+    temp_f29 = (sp10.x * sp10.x) + (sp10.z * sp10.z);
+    var_f27 = sqrtf(temp_f29);
+    if (var_f27 < 350.0f) {
+        if (var_f27 > 0.0f) {
+            temp_f26 = 1.0f / var_f27;
+            sp10.x *= temp_f26;
+            sp10.z *= temp_f26;
+        } else {
+            sp10.x = 1.0f;
+            sp10.z = 0.0f;
+        }
+        arg1->x = 350.0f * sp10.x;
+        arg1->z = 350.0f * sp10.z;
+    }
+    temp_f28 = (sp10.x * sp10.x) + (sp10.z * sp10.z);
+    var_f27 = sqrtf(temp_f28);
+    if (var_f27 > 600.0f) {
+        temp_f26 = 1.0f / var_f27;
+        sp10.x *= temp_f26;
+        sp10.z *= temp_f26;
+        arg1->x = 600.0f * sp10.x;
+        arg1->z = 600.0f * sp10.z;
+    }
+    return (s32)arg0;
 }
