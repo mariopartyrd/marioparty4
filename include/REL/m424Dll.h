@@ -48,4 +48,3 @@ s32 fn_1_B804(void);
 s32 fn_1_B888(void);
 s32 fn_1_B8AC(void);
 s32 fn_1_B924(void);
-void fn_1_C2E0(s32);
