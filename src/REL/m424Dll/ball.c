@@ -79,7 +79,6 @@ typedef struct _M424DllBallStruct3 {
     M424DllBallStruct2* unk8;
 } M424DllBallStruct3;
 
-<<<<<<< HEAD
 typedef struct _M424BallStruct4 {
     f32 unk0;
     f32 unk4;
@@ -98,13 +97,6 @@ omObjData* lbl_1_bss_5AC[4];
 omObjData* lbl_1_bss_594[6];
 M424DllBallStruct2 lbl_1_bss_60[9];
 s32 lbl_1_bss_5C;
-=======
-// BSS
-omObjData* lbl_1_bss_5AC[4];
-omObjData* lbl_1_bss_594[6];
-M424DllBallStruct2 lbl_1_bss_60[9];
-s32 lbl_1_data_5C;
->>>>>>> b61bac75d85236b00f2e8086742748460146baaa
 u8 lbl_1_bss_58;
 
 // PROTO
@@ -121,11 +113,7 @@ void fn_1_6038(void);
 void* fn_1_6078(s32);
 void fn_1_61AC(void);
 s32 fn_1_627C(void);
-<<<<<<< HEAD
 void fn_1_6230(s16, Mtx);
-=======
-void fn_1_6230(s16, f32*);
->>>>>>> b61bac75d85236b00f2e8086742748460146baaa
 void fn_1_62D0(s32, u32*);
 f32 fn_1_640C(f32, f32, f32);
 f32 fn_1_6D10(Vec, Vec, f32, Vec, Vec, f32);
@@ -134,15 +122,10 @@ f32 fn_1_7420(Vec, Vec, f32, f32);
 void fn_1_77C4(Vec, Vec, Vec, f32, Vec*, Vec*);
 void fn_1_79FC(Vec*, Vec*, f32, Vec*, Vec*, f32, f32);
 void fn_1_7CA0(Vec, Vec, f32, Vec*);
-<<<<<<< HEAD
 void fn_1_8924(u8, u8);
 void fn_1_8AA8(s32, s32);
 s32 fn_1_8C78(s32, s32);
 s32 fn_1_907C(Vec*, Vec*);
-=======
-void fn_1_8924(u8, s32);
-void fn_1_8AA8(s32, s32);
->>>>>>> b61bac75d85236b00f2e8086742748460146baaa
 
 
 void fn_1_2720(Process* arg0) {
