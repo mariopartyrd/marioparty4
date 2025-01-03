@@ -12,6 +12,11 @@
 #include "REL/modeseldll.h"
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#include "game/thpmain.h"
+#endif
+
 s16 lbl_1_data_80[] = { 16, 17, 18, 19, 20, 21 };
 
 s32 lbl_1_data_8C[] = { DATA_MAKE_NUM(DATADIR_MODESEL, 0x30), DATA_MAKE_NUM(DATADIR_MODESEL, 0x32), DATA_MAKE_NUM(DATADIR_MODESEL, 0x34),

@@ -667,20 +667,11 @@ void fn_1_758(omObjData *var_r29)
                             sp1F0 = var_r31->unk_60[var_r26] + var_r31->unk_90[var_r26];
                             sp1EC = var_r31->unk_80[var_r26] + var_r31->unk_B0[var_r26];
                             if (var_r31->unk_F0[var_r26] == 0) {
-                                if (var_r31->unk_28 != 0.0f) {
-                                    if (var_r31->unk_28 < 0.0f ? (sp1F0 < var_r31->unk_20) : (sp1F0 > var_r31->unk_20)) {
-                                        goto block_169;
-                                    }
-                                }
+                                if (var_r31->unk_28 != 0.0f && !(var_r31->unk_28 < 0.0f ? (sp1F0 < var_r31->unk_20) : (sp1F0 > var_r31->unk_20))) { }
                                 else {
-                                block_169:
-                                    if (var_r31->unk_2C != 0.0f) {
-                                        if (var_r31->unk_2C < 0.0f ? (sp1EC < var_r31->unk_24) : (sp1EC > var_r31->unk_24)) {
-                                            goto block_174;
-                                        }
-                                    }
+                                    if (var_r31->unk_2C != 0.0f
+                                        && !(var_r31->unk_2C < 0.0f ? (sp1EC < var_r31->unk_24) : (sp1EC > var_r31->unk_24))) { }
                                     else {
-                                    block_174:
                                         var_r31->unk_1C = 0;
                                         var_r31->unk_14 = var_r26;
                                         var_r25 = var_r26;
@@ -935,28 +926,16 @@ void fn_1_758(omObjData *var_r29)
                         }
                     }
                     else if (var_r31->unk_1C != 0) {
-                        if (var_r31->unk_28 != 0.0f) {
-                            if (!(var_r31->unk_28 < 0.0f ? (var_f30 < var_r31->unk_20) : (var_f30 > var_r31->unk_20))) {
-                                var_f29 = var_r31->unk_28 < 0.0f ? (var_f30 > var_r31->unk_20 ? -1 : 0) : (var_f30 < var_r31->unk_20 ? 1 : 0);
-                            }
-                            else {
-                                goto block_368;
-                            }
+                        if (var_r31->unk_28 != 0.0f && !(var_r31->unk_28 < 0.0f ? (var_f30 < var_r31->unk_20) : (var_f30 > var_r31->unk_20))) {
+                            var_f29 = var_r31->unk_28 < 0.0f ? (var_f30 > var_r31->unk_20 ? -1 : 0) : (var_f30 < var_r31->unk_20 ? 1 : 0);
                         }
                         else {
-                        block_368:
                             var_f29 = var_r31->unk_58 < -0.1 ? 1.0f : (var_r31->unk_58 > 0.1 ? -1.0f : (-10.0f * var_r31->unk_58));
                         }
-                        if (var_r31->unk_2C != 0.0f) {
-                            if ((var_r31->unk_2C < 0.0f ? (var_f31 < var_r31->unk_24) : (var_f31 > var_r31->unk_24)) == 0) {
-                                var_f28 = var_r31->unk_2C < 0.0f ? (var_f31 > var_r31->unk_24 ? -1 : 0) : (var_f31 < var_r31->unk_24 ? 1 : 0);
-                            }
-                            else {
-                                goto block_390;
-                            }
+                        if (var_r31->unk_2C != 0.0f && (var_r31->unk_2C < 0.0f ? (var_f31 < var_r31->unk_24) : (var_f31 > var_r31->unk_24)) == 0) {
+                            var_f28 = var_r31->unk_2C < 0.0f ? (var_f31 > var_r31->unk_24 ? -1 : 0) : (var_f31 < var_r31->unk_24 ? 1 : 0);
                         }
                         else {
-                        block_390:
                             var_f28 = var_r31->unk_5C < -0.1 ? 1.0f : (var_r31->unk_5C > 0.1 ? -1.0f : (-10.0f * var_r31->unk_5C));
                         }
                     }

@@ -1,6 +1,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/sprite.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
@@ -14,8 +15,11 @@
 #include "game/process.h"
 #include "game/window.h"
 #include "game/wipe.h"
+#include "string.h"
 
 #include "ext_math.h"
+
+s32 rand8(void);
 
 typedef struct {
     /* 0x00 */ s32 unk00;

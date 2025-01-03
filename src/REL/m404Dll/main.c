@@ -12,6 +12,7 @@
 #include "game/wipe.h"
 
 #include "string.h"
+#include "version.h"
 
 typedef struct UnkM404Struct {
     s16 unk_00;
@@ -281,7 +282,7 @@ s32 fn_1_38C(void)
 void fn_1_39C(omObjData *object)
 {
     fn_1_37C(0);
-    lbl_1_bss_24 = 60;
+    lbl_1_bss_24 = REFRESH_RATE;
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
     object->func = fn_1_400;
 }
@@ -294,7 +295,7 @@ void fn_1_400(omObjData *object)
                 break;
             }
             fn_1_37C(1);
-            lbl_1_bss_24 = 180;
+            lbl_1_bss_24 = 3 * REFRESH_RATE;
             break;
         case 1:
             if (--lbl_1_bss_24) {
@@ -327,22 +328,22 @@ void fn_1_400(omObjData *object)
             if (!MGSeqStatGet(lbl_1_bss_C)) {
                 fn_1_37C(5);
                 WipeColorSet(255, 255, 255);
-                WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 30);
-                lbl_1_bss_24 = 60;
+                WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, REFRESH_RATE / 2);
+                lbl_1_bss_24 = REFRESH_RATE;
             }
         case 5:
             if (--lbl_1_bss_24) {
                 break;
             }
             fn_1_37C(6);
-            WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
+            WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, REFRESH_RATE);
             break;
         case 6:
             if (WipeStatGet()) {
                 break;
             }
             fn_1_37C(7);
-            lbl_1_bss_24 = 180;
+            lbl_1_bss_24 = 3 * REFRESH_RATE;
             break;
         case 7:
             if (--lbl_1_bss_24) {
@@ -356,7 +357,7 @@ void fn_1_400(omObjData *object)
             else {
                 HuAudSStreamPlay(4);
             }
-            lbl_1_bss_24 = 210;
+            lbl_1_bss_24 = 3.5 * REFRESH_RATE;
             break;
         case 8:
             break;
@@ -740,7 +741,7 @@ void fn_1_1344(omObjData *object)
     DCFlushRangeNoSync(var_r31->unk_50->bmp->data, (var_r31->unk_50->bmp->pixSize * (var_r31->unk_50->bmp->sizeX * var_r31->unk_50->bmp->sizeY)) / 8);
     Hu3DMotionOverlaySet(object->model[0], object->motion[2]);
     object->trans.y = 1500.0f;
-    var_r31->unk_38 = var_r31->unk_02 * 60 / 2;
+    var_r31->unk_38 = var_r31->unk_02 * REFRESH_RATE / 2;
     CharModelDataClose(var_r31->unk_0C);
     if (GWPlayerCfg[var_r31->unk_02].iscom == 1) {
         var_r28 = lbl_1_data_8E8[lbl_1_bss_1C];
@@ -782,7 +783,7 @@ void fn_1_1AFC(omObjData *object)
                 }
             }
             if (object->trans.y > 0.0f) {
-                var_r31->unk_24 = var_r31->unk_24 - 1.0000001f;
+                var_r31->unk_24 = var_r31->unk_24 - (VERSION_NTSC ? 1.0000001f : 1.2f);
                 object->trans.y += var_r31->unk_24;
                 if (object->trans.y < 0.0f) {
                     object->trans.y = 0.0f;
@@ -799,7 +800,7 @@ void fn_1_1AFC(omObjData *object)
         }
         if (var_r31->unk_38 == 0) {
             var_r31->unk_00_field2 = 1;
-            var_r31->unk_38 = 30;
+            var_r31->unk_38 = REFRESH_RATE / 2;
             return;
         }
         var_r31->unk_38--;
@@ -950,13 +951,13 @@ void fn_1_3F30(omObjData *object)
 
     var_r31 = object->data;
     if (var_r31->unk_5E < (var_r31->unk_6C - 1)) {
-        if ((3.0f + var_r31->unk_64) >= var_r31->unk_68) {
-            var_r31->unk_64 = 3.0f - (var_r31->unk_68 - var_r31->unk_64);
+        if ((180.0f / REFRESH_RATE + var_r31->unk_64) >= var_r31->unk_68) {
+            var_r31->unk_64 = 180.0f / REFRESH_RATE - (var_r31->unk_68 - var_r31->unk_64);
             var_r31->unk_5E += 3;
             var_r31->unk_68 = fn_1_2EBC(var_r31->unk_70[var_r31->unk_5E], 1.0f);
         }
         else {
-            var_r31->unk_64 += 3.0f;
+            var_r31->unk_64 += 180.0f / REFRESH_RATE;
         }
         var_r31->unk_60 = fn_1_3A38(var_r31->unk_70[var_r31->unk_5E], var_r31->unk_60, var_r31->unk_64);
         var_r30 = var_r31->unk_70[var_r31->unk_5E];
@@ -1012,8 +1013,8 @@ void fn_1_44A0(omObjData *object)
                 }
                 if (((var_r31->unk_06 * var_r31->unk_06) + (var_r31->unk_07 * var_r31->unk_07)) > 16.0f) {
                     var_f31 = atan2d(var_r31->unk_06, -var_r31->unk_07);
-                    var_r31->unk_20 = 3.0f * sind(var_f31);
-                    var_r31->unk_28 = 3.0f * cosd(var_f31);
+                    var_r31->unk_20 = (VERSION_NTSC ? 3.0 : 3.5999999046325684) * sind(var_f31);
+                    var_r31->unk_28 = (VERSION_NTSC ? 3.0 : 3.5999999046325684) * cosd(var_f31);
                     var_r28 = 1;
                     if (var_r31->unk_20 > 0.0f) {
                         CharModelMotionSpeedSet(var_r31->unk_0C, 0.5f);
@@ -1090,7 +1091,7 @@ void fn_1_44A0(omObjData *object)
                 break;
             case 1:
                 var_r28 = 1;
-                object->trans.x += 4.0000005f;
+                object->trans.x += VERSION_NTSC ? 4.0000005f : 4.8f;
                 if (object->trans.x >= 3200.0f) {
                     var_r31->unk_12++;
                     var_r31->unk_38 = 0x3C;
@@ -1468,14 +1469,14 @@ void fn_1_66DC(omObjData *object)
         case 1:
             fn_1_648C(0, 1, 1.0 - cosd(90.0f * lbl_1_bss_4));
             if (lbl_1_bss_4 < 1.0f) {
-                lbl_1_bss_4 += 0.007999999f;
+                lbl_1_bss_4 += VERSION_NTSC ? 0.007999999f : 0.0095999995f;
                 if (lbl_1_bss_4 > 1.0f) {
                     lbl_1_bss_4 = 1.0f;
                 }
             }
             break;
         case 3:
-            Center.x += 2.0000002f;
+            Center.x += VERSION_NTSC ? 2.0000002f : 2.4f;
             Hu3DShadowData.unk_14.x = 1000.0f + var_r31->pos.x;
             Hu3DShadowData.unk_20.x = Hu3DShadowData.unk_14.x - 1500.0f;
             break;
@@ -1484,7 +1485,7 @@ void fn_1_66DC(omObjData *object)
             break;
         case 7:
             if (Center.x < 3000.0f) {
-                Center.x += 25.0f;
+                Center.x += VERSION_NTSC ? 25.0f : 30.0f;
             }
         default:
             break;

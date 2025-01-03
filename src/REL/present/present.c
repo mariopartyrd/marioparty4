@@ -9,7 +9,7 @@
 
 #include "REL/present.h"
 
-#define NUM_CHARACTERS 8
+#define CHARACTERS_MAX 8
 
 #define PRESENT_MDL_MAX 134
 #define PRESENT_MAX 60
@@ -445,7 +445,7 @@ s32 PresentExecModeGet(omObjData *object)
     return work->execMode;
 }
 
-static const s32 roomIdxTbl[NUM_CHARACTERS] = {
+static const s32 roomIdxTbl[CHARACTERS_MAX] = {
     ROOM_MARIO,
     ROOM_LUIGI,
     ROOM_PEACH,
@@ -869,7 +869,7 @@ static BOOL CameraRotationDoneCheck(omObjData *object)
     return work->timeRot < 1.0f;
 }
 
-s32 roomIdxTbl2[NUM_CHARACTERS] = {
+s32 roomIdxTbl2[CHARACTERS_MAX] = {
     ROOM_MARIO,
     ROOM_LUIGI,
     ROOM_PEACH,
@@ -888,7 +888,7 @@ static void ShowHidePresents(omObjData *object)
 
     Hu3DModelAttrReset(work->object[0]->model[0], HU3D_ATTR_DISPOFF);
 
-    for (character = 0; character < NUM_CHARACTERS; character++) {
+    for (character = 0; character < CHARACTERS_MAX; character++) {
         s32 j;
         if (UnlockedPresents(object, roomIdxTbl2[character]) > 0) {
             Hu3DModelAttrReset(work->object[character + 109]->model[0], HU3D_ATTR_DISPOFF);
@@ -916,7 +916,7 @@ static void ShowHidePresents(omObjData *object)
     if (PresentUnlocked(object, ROOM_TROPHY, 0)) {
         Hu3DModelAttrReset(work->object[1]->model[0], HU3D_ATTR_DISPOFF);
     }
-    for (i = 0; i < NUM_CHARACTERS; i++) {
+    for (i = 0; i < CHARACTERS_MAX; i++) {
         if (PresentUnlocked(object, roomIdxTbl2[i], PRESENT_CONSTELLATION)) {
             Hu3DModelAttrReset(work->object[i + 126]->model[0], HU3D_ATTR_DISPOFF);
         }

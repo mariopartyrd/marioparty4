@@ -894,7 +894,7 @@ config.libs = [
     Rel(
         "m404Dll",  # Trace Race
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m404Dll/main.c"),
+            Object(Matching, "REL/m404Dll/main.c"),
         },
     ),
     Rel(

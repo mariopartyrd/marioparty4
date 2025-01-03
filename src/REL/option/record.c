@@ -6,17 +6,22 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
+#include "game/sprite.h"
 #include "game/window.h"
 
 #include "dolphin.h"
 #include "math.h"
 #include "version.h"
 
+#ifndef __MWERKS__
+#include "game/gamework.h"
+#endif
+
 #define RECORD_TYPE_BOARD 0
 #define RECORD_TYPE_MG 1
 
-#define NUM_CHARACTERS 8
-#define NUM_BOARDS 6
+#define CHARACTERS_MAX 8
+#define BOARDS_MAX 6
 
 #define PLAY_COUNT_NUM_DIGITS 4
 #define WIN_COUNT_NUM_DIGITS 3
@@ -92,15 +97,15 @@ omObjData *OptionRecordCreate(void)
     object = omAddObjEx(optionObjMan, 1003, 0, 0, 1, NULL);
     work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(RecordWork), MEMORY_DEFAULT_NUM);
     object->data = work;
-    for (i = 0; i < NUM_BOARDS; i++) {
+    for (i = 0; i < BOARDS_MAX; i++) {
         work->boardRecord[i].playCount = GWBoardPlayCountGet(i);
         work->boardRecord[i].maxStars = GWBoardMaxStarsGet(i);
         work->boardRecord[i].maxCoins = GWBoardMaxCoinsGet(i);
-        for (character = 0; character < NUM_CHARACTERS; character++) {
+        for (character = 0; character < CHARACTERS_MAX; character++) {
             work->boardRecord[i].winCount[character] = GWBoardWinCountGet(character, i);
         }
     }
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < BOARDS_MAX; i++) {
         work->mgRecord[i] = GWMGRecordGet(mgRecordIdxTbl[i]);
     }
     work->board = 0;
@@ -608,7 +613,7 @@ static void ShowBoard(omObjData *object, s32 board)
 #if VERSION_NTSC
     espPosSet(work->sprList[10], 456.0f, 312.0f);
 #endif
-    for (i = 0; i < NUM_CHARACTERS; i++) {
+    for (i = 0; i < CHARACTERS_MAX; i++) {
         espPosSet(work->sprList[i + 49], 92.0f + 50.0f * i, 200.0f);
         for (j = 0; j < WIN_COUNT_NUM_DIGITS; j++) {
             espPosSet(work->sprList[i * 3 + 23 + j], 80.0f + 50.0f * i + 12.0f * j, 230.0f);
@@ -634,7 +639,7 @@ static void ShowBoard(omObjData *object, s32 board)
         espDispOn(work->sprList[i + 19]);
     }
     espDispOn(work->sprList[10]);
-    for (i = 0; i < NUM_CHARACTERS; i++) {
+    for (i = 0; i < CHARACTERS_MAX; i++) {
         espDispOn(work->sprList[i + 49]);
         for (j = 0; j < WIN_COUNT_NUM_DIGITS; j++) {
             espDispOn(work->sprList[i * 3 + 23 + j]);
@@ -679,9 +684,9 @@ static void ShowTotal(omObjData *object)
     s32 j;
 
     espPosSet(work->sprList[6], 275.0f, 72.0f);
-    for (i = 0; i < NUM_CHARACTERS; i++) {
+    for (i = 0; i < CHARACTERS_MAX; i++) {
         espPosSet(work->sprList[i + 57], 148.0f + 80.0f * (i % 4), 172.0f + 104.0f * (i / 4));
-        for (j = 0, winCount = 0; j < NUM_BOARDS; j++) {
+        for (j = 0, winCount = 0; j < BOARDS_MAX; j++) {
             winCount += work->boardRecord[j].winCount[i];
         }
         for (j = 0; j < WIN_COUNT_NUM_DIGITS; j++) {
@@ -690,7 +695,7 @@ static void ShowTotal(omObjData *object)
         }
     }
     espDispOn(work->sprList[6]);
-    for (i = 0; i < NUM_CHARACTERS; i++) {
+    for (i = 0; i < CHARACTERS_MAX; i++) {
         espDispOn(work->sprList[i + 57]);
         for (j = 0; j < 3; j++) {
             espDispOn(work->sprList[i * 3 + 65 + j]);
