@@ -2127,15 +2127,15 @@ void BoardRollDispSet(s32 arg0)
             if (arg0 != 0) {
                 temp_r31->field00_bit1 = 1;
                 if ((var_r30 == 1) && (GWPlayer[temp_r31->unk_02].roll / 10 == 0)) {
-                    HuSprAttrSet(temp_r31->unk_04, var_r30, 4);
+                    HuSprAttrSet(temp_r31->unk_04, var_r30, HUSPR_ATTR_DISPOFF);
                 }
                 else {
-                    HuSprAttrReset(temp_r31->unk_04, var_r30, 4);
+                    HuSprAttrReset(temp_r31->unk_04, var_r30, HUSPR_ATTR_DISPOFF);
                 }
             }
             else {
                 temp_r31->field00_bit1 = 0;
-                HuSprAttrSet(temp_r31->unk_04, var_r30, 4);
+                HuSprAttrSet(temp_r31->unk_04, var_r30, HUSPR_ATTR_DISPOFF);
             }
         }
         UpdateRollSprite(rollObj);
@@ -2163,7 +2163,7 @@ static void UpdateRollSprite(omObjData *arg0)
 
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
         if (((var_r30 == 1) && (sp14[1] == 0)) || (temp_r31->field00_bit1 == 0)) {
-            HuSprAttrSet(temp_r31->unk_04, var_r30, 4);
+            HuSprAttrSet(temp_r31->unk_04, var_r30, HUSPR_ATTR_DISPOFF);
         }
         else {
             if ((sp14[1] == 0) && (var_r30 == 0)) {
@@ -2173,7 +2173,7 @@ static void UpdateRollSprite(omObjData *arg0)
                 sp1C.x = spC[var_r30];
             }
             sp1C.y = (HU_DISP_HEIGHTF * 176) / 480;
-            HuSprAttrReset(temp_r31->unk_04, var_r30, 4);
+            HuSprAttrReset(temp_r31->unk_04, var_r30, HUSPR_ATTR_DISPOFF);
             HuSprBankSet(temp_r31->unk_04, var_r30, sp14[var_r30]);
             HuSprPosSet(temp_r31->unk_04, var_r30, sp1C.x, sp1C.y);
         }

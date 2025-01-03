@@ -453,10 +453,10 @@ void BoardStatusHammerShowSet(s32 arg0, s32 arg1) {
 
     if (temp_r31->unk00_bit6) {
         if (arg1 != 0) {
-            HuSprAttrSet(temp_r31->unk02, 0x10, 2);
+            HuSprAttrSet(temp_r31->unk02, 0x10, HUSPR_ATTR_LOOP);
         } else {
-            HuSprAttrReset(temp_r31->unk02, 0x10, 2);
-            HuSprAttrSet(temp_r31->unk02, 0x10, 1);
+            HuSprAttrReset(temp_r31->unk02, 0x10, HUSPR_ATTR_LOOP);
+            HuSprAttrSet(temp_r31->unk02, 0x10, HUSPR_ATTR_NOANIM);
         }
     }
 }
@@ -618,15 +618,15 @@ static s32 UpdateBoardStatus(void) {
             temp_r27 = GWPlayer[i].items[j];
             if (temp_r27 != -1 && temp_r31->unk00_bit5) {
                 UpdateStatusItem(temp_r31, j, temp_r27);
-                HuSprAttrReset(temp_r31->unk02, j + 0xD, 4);
+                HuSprAttrReset(temp_r31->unk02, j + 0xD, HUSPR_ATTR_DISPOFF);
             } else {
-                HuSprAttrSet(temp_r31->unk02, j + 0xD, 4);
+                HuSprAttrSet(temp_r31->unk02, j + 0xD, HUSPR_ATTR_DISPOFF);
             }
         }
         if (GWPlayer[i].com) {
-            HuSprAttrReset(temp_r31->unk02, 0xC, 4);
+            HuSprAttrReset(temp_r31->unk02, 0xC, HUSPR_ATTR_DISPOFF);
         } else {
-            HuSprAttrSet(temp_r31->unk02, 0xC, 4);
+            HuSprAttrSet(temp_r31->unk02, 0xC, HUSPR_ATTR_DISPOFF);
         }
         temp_r28 = statusColTbl[GWPlayer[i].color];
         HuSprColorSet(temp_r31->unk02, 0, temp_r28[0], temp_r28[1], temp_r28[2]);
@@ -685,7 +685,7 @@ void BoardSpriteDigitUpdate(s16 arg0, s16 arg1, s32 arg2) {
     } else {
         HuSprBankSet(arg0, arg1 + 1, temp_r28);
         HuSprBankSet(arg0, arg1, temp_r27);
-        HuSprAttrReset(arg0, arg1, 4);
+        HuSprAttrReset(arg0, arg1, HUSPR_ATTR_DISPOFF);
     }
 }
 
@@ -1616,8 +1616,8 @@ static void UpdateItemPickGfx(omObjData *arg0) {
             if (!temp_r30->unk00_bit7) {
                 temp_r30->unk00_bit3 = 1;
                 HuSprBankSet(temp_r30->unk04, 0, 1);
-                HuSprAttrSet(temp_r30->unk04, 0, 2);
-                HuSprAttrReset(temp_r30->unk04, 0, 1);
+                HuSprAttrSet(temp_r30->unk04, 0, HUSPR_ATTR_LOOP);
+                HuSprAttrReset(temp_r30->unk04, 0, HUSPR_ATTR_NOANIM);
                 arg0->func = UpdateItemPickup;
                 HuWinDispOff(temp_r30->unk06);
             } else {

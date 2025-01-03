@@ -413,8 +413,8 @@ static void UpdateMGPic(omObjData *object)
 
     if (object->work[1] != object->work[0]) {
         temp_r29 = temp_r30->unk_40;
-        HuSprAttrSet(temp_r29, object->work[1], 4);
-        HuSprAttrReset(temp_r29, object->work[0], 4);
+        HuSprAttrSet(temp_r29, object->work[1], HUSPR_ATTR_DISPOFF);
+        HuSprAttrReset(temp_r29, object->work[0], HUSPR_ATTR_DISPOFF);
         object->work[1] = object->work[0];
     }
 }
@@ -453,7 +453,7 @@ static void CreateMGPic(omObjData *object)
     HuSprTPLvlSet(temp_r3, index2, 0.7f);
     index2++;
     object->work[1] = object->work[0];
-    HuSprAttrReset(temp_r3, object->work[1], 4);
+    HuSprAttrReset(temp_r3, object->work[1], HUSPR_ATTR_DISPOFF);
     object->func = UpdateMGPic;
 }
 

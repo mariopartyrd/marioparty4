@@ -368,14 +368,14 @@ static void StopCharWheel(CharWheelWork *arg0) {
     }
     var_r30 = arg0->unk03 % 6;
     if (var_r30 < 3) {
-        HuSprAttrSet(wheelSprGrp, wheelPos + 10, 4);
+        HuSprAttrSet(wheelSprGrp, wheelPos + 10, HUSPR_ATTR_DISPOFF);
     } else {
-        HuSprAttrReset(wheelSprGrp, wheelPos + 10, 4);
+        HuSprAttrReset(wheelSprGrp, wheelPos + 10, HUSPR_ATTR_DISPOFF);
     }
     if (arg0->unk03 < 90) {
         arg0->unk03++;
     } else {
-        HuSprAttrReset(wheelSprGrp, wheelPos + 10, 4);
+        HuSprAttrReset(wheelSprGrp, wheelPos + 10, HUSPR_ATTR_DISPOFF);
         arg0->unk00_field3 = 4;
     }
 }

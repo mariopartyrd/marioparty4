@@ -2255,7 +2255,7 @@ void fn_1_7738(void)
             temp_r28->unk00 = 20.0f + temp_r30->unk00;
             temp_r28->unk04 = -20.0f + temp_r30->unk04;
             m411InlineFunc(temp_r31, temp_r30);
-            HuSprAttrReset(temp_r31->unk0C, 0, 4);
+            HuSprAttrReset(temp_r31->unk0C, 0, HUSPR_ATTR_DISPOFF);
         }
         temp_r30->unk08 = 50.0f;
         temp_r28->unk08 = temp_r30->unk08 - 5.0f;

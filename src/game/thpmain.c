@@ -161,7 +161,7 @@ static void THPTestProc(void)
         Hu3DModelAttrReset(SimpleControl.unk19E, HU3D_ATTR_DISPOFF);
     }
     else {
-        HuSprAttrReset(SimpleControl.unk19E, 0, 4);
+        HuSprAttrReset(SimpleControl.unk19E, 0, HUSPR_ATTR_DISPOFF);
     }
     while (1) {
         if (THPStat == 2) {

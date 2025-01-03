@@ -1005,12 +1005,12 @@ void fn_1_3D48(s32 arg0, s32 arg1)
                 var_r29->user_data = var_r31;
                 var_r31->unk_5C = var_r30;
             }
-            HuSprAttrSet(var_r31->unk_2E, (var_r30 * 2) + 2, 4);
-            HuSprAttrReset(var_r31->unk_2E, (var_r30 * 2) + 3, 4);
+            HuSprAttrSet(var_r31->unk_2E, (var_r30 * 2) + 2, HUSPR_ATTR_DISPOFF);
+            HuSprAttrReset(var_r31->unk_2E, (var_r30 * 2) + 3, HUSPR_ATTR_DISPOFF);
         }
         else {
-            HuSprAttrReset(var_r31->unk_2E, (var_r30 * 2) + 2, 4);
-            HuSprAttrSet(var_r31->unk_2E, (var_r30 * 2) + 3, 4);
+            HuSprAttrReset(var_r31->unk_2E, (var_r30 * 2) + 2, HUSPR_ATTR_DISPOFF);
+            HuSprAttrSet(var_r31->unk_2E, (var_r30 * 2) + 3, HUSPR_ATTR_DISPOFF);
         }
     }
 }
@@ -2047,7 +2047,7 @@ void fn_1_79A8(void)
         var_r28 = &lbl_1_bss_F0[var_r30];
         var_r27 = HuPrcChildCreate(fn_1_76F4, 8192, 8192, 0, HuPrcCurrentGet());
         var_r27->user_data = var_r28;
-        HuSprAttrReset(var_r28->unk_2C, 0, 4);
+        HuSprAttrReset(var_r28->unk_2C, 0, HUSPR_ATTR_DISPOFF);
     }
     for (var_r29 = 0, var_f27 = 0.0f; var_r29 < 15; var_r29++) {
         var_f27 += 0.06666667f;

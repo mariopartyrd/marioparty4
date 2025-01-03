@@ -1306,7 +1306,7 @@ config.libs = [
     Rel(
         "m462Dll",  # Goomba Stomp
         objects={
-            Object(NonMatching, "REL/m462Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m462Dll/main.c"),
         },
     ),
     Rel(

@@ -1977,15 +1977,15 @@ void fn_1_AAB8(void)
                 HuSprGrpScaleSet(lbl_1_bss_116[temp_r30], temp_f31, temp_f31);
                 if (lbl_1_bss_EE[temp_r30] > 9999) {
                     for (temp_r28 = 0; temp_r28 < 4; temp_r28++) {
-                        HuSprAttrSet(lbl_1_bss_116[temp_r30], temp_r28 + 1, 4);
+                        HuSprAttrSet(lbl_1_bss_116[temp_r30], temp_r28 + 1, HUSPR_ATTR_DISPOFF);
                     }
-                    HuSprAttrReset(lbl_1_bss_116[temp_r30], 5, 4);
+                    HuSprAttrReset(lbl_1_bss_116[temp_r30], 5, HUSPR_ATTR_DISPOFF);
                 }
                 else {
                     for (temp_r28 = 0; temp_r28 < 4; temp_r28++) {
-                        HuSprAttrReset(lbl_1_bss_116[temp_r30], temp_r28 + 1, 4);
+                        HuSprAttrReset(lbl_1_bss_116[temp_r30], temp_r28 + 1, HUSPR_ATTR_DISPOFF);
                     }
-                    HuSprAttrSet(lbl_1_bss_116[temp_r30], 5, 4);
+                    HuSprAttrSet(lbl_1_bss_116[temp_r30], 5, HUSPR_ATTR_DISPOFF);
                     temp_r29 = lbl_1_bss_EE[temp_r30];
                     HuSprBankSet(lbl_1_bss_116[temp_r30], 1, temp_r29 / 1000);
                     temp_r29 -= (temp_r29 / 1000) * 1000;

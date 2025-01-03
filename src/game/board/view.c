@@ -577,15 +577,15 @@ static void UpdateOverheadView(omObjData *arg0) {
             BoardModelVisibilitySet(temp_r31->unk04, 0);
         } else if (temp_r31->unk01 != 0) {
             if (i != 4) {
-                HuSprAttrReset(temp_r31->unk02, i, 4);
+                HuSprAttrReset(temp_r31->unk02, i, HUSPR_ATTR_DISPOFF);
             }
-            HuSprAttrReset(temp_r31->unk02, var_r28, 4);
+            HuSprAttrReset(temp_r31->unk02, var_r28, HUSPR_ATTR_DISPOFF);
             BoardModelVisibilitySet(temp_r31->unk04, 1);
         } else {
             if (i != 4) {
-                HuSprAttrSet(temp_r31->unk02, i, 4);
+                HuSprAttrSet(temp_r31->unk02, i, HUSPR_ATTR_DISPOFF);
             }
-            HuSprAttrSet(temp_r31->unk02, var_r28, 4);
+            HuSprAttrSet(temp_r31->unk02, var_r28, HUSPR_ATTR_DISPOFF);
             BoardModelVisibilitySet(temp_r31->unk04, 0);
         }
     }

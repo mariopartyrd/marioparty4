@@ -1408,7 +1408,7 @@ void fn_1_557C(void)
 
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 5; j++) {
-            HuSprAttrReset(lbl_1_bss_588[i].unk04, j, 4);
+            HuSprAttrReset(lbl_1_bss_588[i].unk04, j, HUSPR_ATTR_DISPOFF);
         }
     }
 }
@@ -1420,7 +1420,7 @@ void fn_1_55F0(void)
 
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 5; j++) {
-            HuSprAttrSet(lbl_1_bss_588[i].unk04, j, 4);
+            HuSprAttrSet(lbl_1_bss_588[i].unk04, j, HUSPR_ATTR_DISPOFF);
         }
     }
 }
@@ -1429,7 +1429,7 @@ void fn_1_5664(UnkM445Struct_02 *arg0, s32 arg1)
 {
     HuSprBankSet(arg0->unk04, 3, arg1 % 10);
     HuSprBankSet(arg0->unk04, 4, arg1 / 10);
-    HuSprAttrReset(arg0->unk04, 4, 4);
+    HuSprAttrReset(arg0->unk04, 4, HUSPR_ATTR_DISPOFF);
 }
 
 void fn_1_5700(UnkM445Struct_02 *arg0)

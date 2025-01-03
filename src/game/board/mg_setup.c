@@ -787,7 +787,7 @@ static void PopupVS(bitcopy* arg0, omObjData* arg1) {
 
     temp_r29 = arg0->unk_0C;
     if (arg0->unk_02 == 0) {
-        HuSprAttrReset(temp_r29->unk_00[0], 0, 4);
+        HuSprAttrReset(temp_r29->unk_00[0], 0, HUSPR_ATTR_DISPOFF);
         HuSprAttrSet(temp_r29->unk_00[0], 0, 8);
         HuSprScaleSet(temp_r29->unk_00[0], 0, 0.001f, 0.001f);
         HuSprPosSet(temp_r29->unk_00[0], 0, 0.0f, 64.0f);
@@ -832,7 +832,7 @@ static void FallMGType(bitcopy* arg0, omObjData* arg1) {
     temp_r31 = arg0->unk_0C;
     temp_r30 = sp8[mgType];
     if (arg0->unk_02 == 0) {
-        HuSprAttrReset(temp_r31->unk_00[0], temp_r30, 4);
+        HuSprAttrReset(temp_r31->unk_00[0], temp_r30, HUSPR_ATTR_DISPOFF);
         temp_r31->unk_1C[0][temp_r30].y = -284.0f;
         temp_r31->unk_1C[1][temp_r30].y = -128.0f;
         arg0->unk_02 = 1;
@@ -872,7 +872,7 @@ static void LuckyMGFall(bitcopy* arg0, omObjData* arg1) {
     temp_r27 = &temp_r29->unk_1C[0][temp_r24];
     switch (arg0->unk_02) {
         case 0:
-            HuSprAttrReset(temp_r29->unk_00[0], 4, 4);
+            HuSprAttrReset(temp_r29->unk_00[0], 4, HUSPR_ATTR_DISPOFF);
             temp_r28->y = -284.0f;
             temp_r25->y = -128.0f;
             arg0->unk_02 = 1;
@@ -889,7 +889,7 @@ static void LuckyMGFall(bitcopy* arg0, omObjData* arg1) {
         case 2:
             temp_r27->y += 10.0f;
             if (328.0f < temp_r27->y) {
-                HuSprAttrReset(temp_r29->unk_00[0], temp_r24, 4);
+                HuSprAttrReset(temp_r29->unk_00[0], temp_r24, HUSPR_ATTR_DISPOFF);
                 temp_r26 = (bitcopy*) mgSetupObj->work;
                 temp_r26->field00_bit1 = 7;
                 temp_r26->unk_02 = 0;
@@ -935,8 +935,8 @@ static void UpdateLuckyValue(bitcopy* arg0, omObjData* arg1) {
     temp_r27 = arg0->unk_0C;
     switch (arg0->unk_02) {
         case 0:
-            HuSprAttrReset(temp_r27->unk_00[0], 8, 4);
-            HuSprAttrReset(temp_r27->unk_00[0], 9, 4);
+            HuSprAttrReset(temp_r27->unk_00[0], 8, HUSPR_ATTR_DISPOFF);
+            HuSprAttrReset(temp_r27->unk_00[0], 9, HUSPR_ATTR_DISPOFF);
             HuSprAttrSet(temp_r27->unk_00[0], 8, 8);
             HuSprAttrSet(temp_r27->unk_00[0], 9, 8);
             HuSprPosSet(temp_r27->unk_00[0], 8, 0.0f, 0.0f);
@@ -1042,10 +1042,10 @@ static void UpdateMGList(bitcopy* arg0, omObjData* arg1) {
     
     temp_r24 = arg0->unk_0C;
     temp_r22 = mgType + 5;
-    switch (arg0->unk_02) {                        /* irregular */
+    switch (arg0->unk_02) {
         case 0:
             HuSprAttrSet(temp_r24->unk_00[0], temp_r22, 8);
-            HuSprAttrReset(temp_r24->unk_00[0], temp_r22, 4);
+            HuSprAttrReset(temp_r24->unk_00[0], temp_r22, HUSPR_ATTR_DISPOFF);
             HuSprPosSet(temp_r24->unk_00[0], temp_r22, 0.0f, 32.0f);
             HuSprScaleSet(temp_r24->unk_00[0], temp_r22, 0.001f, 0.001f);
             arg0->unk_04 = 0;
@@ -1084,11 +1084,11 @@ static void UpdateMGList(bitcopy* arg0, omObjData* arg1) {
             for (var_r23 = 0; var_r23 < arg0->field01_bit0; var_r23++) {
                 HuWinDispOn(activeMG[var_r23].unk_00);
             }
-            HuSprAttrReset(temp_r24->unk_00[0], 0xA, 4);
+            HuSprAttrReset(temp_r24->unk_00[0], 0xA, HUSPR_ATTR_DISPOFF);
             HuSprAttrSet(temp_r24->unk_00[0], 0xA, 8);
             HuSprPosSet(temp_r24->unk_00[0], 0xA, -148.0f, cursorYTbl[0]);
             temp_r18 = &hiliteColTbl[mgType];
-            HuSprAttrReset(temp_r24->unk_00[0], 0xC, 4);
+            HuSprAttrReset(temp_r24->unk_00[0], 0xC, HUSPR_ATTR_DISPOFF);
             HuSprPosSet(temp_r24->unk_00[0], 0xC, 0.0f, hiliteYTbl[0]);
             HuSprTPLvlSet(temp_r24->unk_00[0], 0xC, 0.7f);
             HuSprScaleSet(temp_r24->unk_00[0], 0xC, 32.0f, 3.5f);
@@ -1158,10 +1158,10 @@ static void UpdateMGList(bitcopy* arg0, omObjData* arg1) {
                 hiliteTimer = 0;
             }
             if (hiliteShowF != 0) {
-                HuSprAttrReset(temp_r24->unk_00[0], 0xC, 4);
+                HuSprAttrReset(temp_r24->unk_00[0], 0xC, HUSPR_ATTR_DISPOFF);
                 return;
             }
-            HuSprAttrSet(temp_r24->unk_00[0], 0xC, 4);
+            HuSprAttrSet(temp_r24->unk_00[0], 0xC, HUSPR_ATTR_DISPOFF);
             return;
         case 5:
             if (arg0->unk_03 < 0x5A) {

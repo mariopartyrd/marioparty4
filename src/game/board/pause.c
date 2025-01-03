@@ -717,9 +717,9 @@ static void InitPauseQuit(omObjData *arg0, ConfigWork *arg1) {
             SetBoxVisible(1);
             var_f31 = 0.5f;
             BoardModelScaleSet(boxModelID[7], var_f31, var_f31, var_f31);
-            HuSprAttrReset(pauseCursorPos, 0, 4);
+            HuSprAttrReset(pauseCursorPos, 0, HUSPR_ATTR_DISPOFF);
             if (GWPartyGet() == 0) {
-                HuSprAttrReset(pauseCursorPos, 1, 4);
+                HuSprAttrReset(pauseCursorPos, 1, HUSPR_ATTR_DISPOFF);
             }
             break;
     }
@@ -822,7 +822,7 @@ static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1) {
     s32 i;
 
     if (arg1->unk07 == 0) {
-        HuSprAttrReset(pauseCursorPos, 0, 4);
+        HuSprAttrReset(pauseCursorPos, 0, HUSPR_ATTR_DISPOFF);
         if (arg1->unk00_field2 != 0) {
             for (i = 0; i < 8; i++) {
                 if (i != 0) {
@@ -1332,8 +1332,8 @@ static s32 WaitPauseInput(void) {
     }
     HuWinDispOn(controlWin);
     SetBoxVisible(0);
-    HuSprAttrReset(pauseSprGrp, 0, 4);
-    HuSprAttrSet(pauseCursorPos, 0, 4);
+    HuSprAttrReset(pauseSprGrp, 0, HUSPR_ATTR_DISPOFF);
+    HuSprAttrSet(pauseCursorPos, 0, HUSPR_ATTR_DISPOFF);
     PauseCreateNumber(0, GWSystem.turn);
     PauseCreateNumber(1, GWSystem.max_turn);
     HuPrcSleep(4);
@@ -1376,15 +1376,15 @@ static void ShowPauseConfig(void) {
     HuWinDispOn(settingsControlWin);
     HuWinDispOn(settingsWin);
     SetBoxVisible(1);
-    HuSprAttrReset(pauseCursorPos, 0, 4);
+    HuSprAttrReset(pauseCursorPos, 0, HUSPR_ATTR_DISPOFF);
     BoardModelVisibilitySet(hostMdl, 1);
     if (GWPartyGet() == 0) {
         var_f31 = boxPosTbl[0][0];
         var_f30 = boxPosTbl[0][1];
         HuSprPosSet(pauseCursorPos, 1, var_f31, var_f30);
-        HuSprAttrReset(pauseCursorPos, 1, 4);
+        HuSprAttrReset(pauseCursorPos, 1, HUSPR_ATTR_DISPOFF);
     } else {
-        HuSprAttrSet(pauseCursorPos, 1, 4);
+        HuSprAttrSet(pauseCursorPos, 1, HUSPR_ATTR_DISPOFF);
     }
     while (configObj) {
         HuPrcVSleep();
@@ -1434,19 +1434,19 @@ static void ShowPadConfigSprite(s32 arg0) {
     for (i = 0; i < 4; i++) {
         temp_r31 = GWPlayer[i].port;
         if (arg0 != 0) {
-            HuSprAttrReset(padConfigSprGrp, temp_r31, 4);
-            HuSprAttrReset(padConfigSprGrp, temp_r31 + 4, 4);
-            HuSprAttrReset(padConfigSprGrp, temp_r31 + 8, 4);
+            HuSprAttrReset(padConfigSprGrp, temp_r31, HUSPR_ATTR_DISPOFF);
+            HuSprAttrReset(padConfigSprGrp, temp_r31 + 4, HUSPR_ATTR_DISPOFF);
+            HuSprAttrReset(padConfigSprGrp, temp_r31 + 8, HUSPR_ATTR_DISPOFF);
         } else {
-            HuSprAttrSet(padConfigSprGrp, temp_r31, 4);
-            HuSprAttrSet(padConfigSprGrp, temp_r31 + 4, 4);
-            HuSprAttrSet(padConfigSprGrp, temp_r31 + 8, 4);
+            HuSprAttrSet(padConfigSprGrp, temp_r31, HUSPR_ATTR_DISPOFF);
+            HuSprAttrSet(padConfigSprGrp, temp_r31 + 4, HUSPR_ATTR_DISPOFF);
+            HuSprAttrSet(padConfigSprGrp, temp_r31 + 8, HUSPR_ATTR_DISPOFF);
         }
     }
     if (arg0 != 0) {
-        HuSprAttrReset(padConfigSprGrp, 12, 4);
+        HuSprAttrReset(padConfigSprGrp, 12, HUSPR_ATTR_DISPOFF);
     } else {
-        HuSprAttrSet(padConfigSprGrp, 12, 4);
+        HuSprAttrSet(padConfigSprGrp, 12, HUSPR_ATTR_DISPOFF);
     }
 }
 

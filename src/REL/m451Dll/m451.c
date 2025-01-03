@@ -872,11 +872,11 @@ void fn_1_2A34(Bss348Data *arg0, s32 arg1, s32 arg2)
     temp_r30->scale.y = temp_r31->scale.y;
     temp_r30->scale.z = 0.8f * temp_r31->scale.z;
     if (arg2 == 0) {
-        HuSprAttrReset(arg0->unkA, 0, 1);
+        HuSprAttrReset(arg0->unkA, 0, HUSPR_ATTR_NOANIM);
         HuSprGrpScaleSet(arg0->unkA, 1, 1);
     }
     else {
-        HuSprAttrReset(arg0->unkA, 0, 64);
+        HuSprAttrReset(arg0->unkA, 0, HUSPR_ATTR_REVERSE);
     }
 }
 

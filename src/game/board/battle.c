@@ -619,7 +619,7 @@ static void ShowBattleGame(BattleWork *arg0, omObjData *arg1) {
             arg0->unk01 = 1;
             arg1->trans.z = 0.01f;
             arg1->trans.y = 0.0f;
-            HuSprAttrReset(arg0->unk08, 0, 4);
+            HuSprAttrReset(arg0->unk08, 0, HUSPR_ATTR_DISPOFF);
             HuSprPosSet(arg0->unk08, 0, 0.0f, 0.0f);
         } else {
             return;
@@ -682,8 +682,8 @@ static void UpdateBattleCoin(BattleWork *arg0, omObjData *arg1) {
         HuSprBankSet(arg0->unk08, 1, temp_r28);
         return;
     }
-    HuSprAttrReset(arg0->unk08, 2, 4);
-    HuSprAttrReset(arg0->unk08, 1, 5);
+    HuSprAttrReset(arg0->unk08, 2, HUSPR_ATTR_DISPOFF);
+    HuSprAttrReset(arg0->unk08, 1, HUSPR_ATTR_NOANIM | HUSPR_ATTR_DISPOFF);
     HuSprPosSet(arg0->unk08, 2, 0.0f, 40.0f);
     HuSprPosSet(arg0->unk08, 1, 34.0f, 40.0f);
     HuSprScaleSet(arg0->unk08, 1, 0.9f, 0.9f);
@@ -726,10 +726,10 @@ static void InitBattleGameSpr(BattleWork *arg0, omObjData *arg1) {
 
     temp_r30 = battleMGIdx[0];
     temp_r29 = battleMGIdx[1];
-    HuSprAttrReset(arg0->unk08, 3, 4);
-    HuSprAttrReset(arg0->unk08, 4, 4);
-    HuSprAttrReset(arg0->unk08, temp_r30 + 5, 4);
-    HuSprAttrReset(arg0->unk08, temp_r29 + 5, 4);
+    HuSprAttrReset(arg0->unk08, 3, HUSPR_ATTR_DISPOFF);
+    HuSprAttrReset(arg0->unk08, 4, HUSPR_ATTR_DISPOFF);
+    HuSprAttrReset(arg0->unk08, temp_r30 + 5, HUSPR_ATTR_DISPOFF);
+    HuSprAttrReset(arg0->unk08, temp_r29 + 5, HUSPR_ATTR_DISPOFF);
     HuSprPosSet(arg0->unk08, 3, sp8[0][0], sp8[0][1]);
     HuSprPosSet(arg0->unk08, 4, sp8[1][0], sp8[1][1]);
     HuSprPosSet(arg0->unk08, temp_r30 + 5, sp8[0][0], sp8[0][1]);
