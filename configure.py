@@ -881,7 +881,7 @@ config.libs = [
     Rel(
         "m402Dll",  # Slime Time
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m402Dll/main.c"),
+            Object(Matching, "REL/m402Dll/main.c"),
         },
     ),
     Rel(

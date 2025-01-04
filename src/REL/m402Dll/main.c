@@ -778,7 +778,7 @@ static void fn_1_2970(UnkFn27A8Struct *arg0, omObjData *arg1, u8 arg2)
 static void fn_1_2B30(UnkFn27A8Struct *arg0, omObjData *arg1, omObjData *arg2)
 {
     arg0->unk50 = 0;
-    arg0->unk20 = (770.0f - arg0->unk1C) / 18.0f;
+    arg0->unk20 = (770.0f - arg0->unk1C) / (REFRESH_RATE * 0.3f);
     arg0->unk0C = Hu3DMotionTimeGet(arg2->model[0]);
     Hu3DMotionTimeSet(lbl_1_bss_54[arg0->unk54]->model[0], 0.0f);
     Hu3DMotionSpeedSet(arg1->model[0], 1.0f);
@@ -795,13 +795,13 @@ static u8 fn_1_2DBC(UnkFn27A8Struct *arg0, omObjData *arg1)
     float var_f29;
 
     arg0->unk50++;
-    var_f30 = 90.0f * (arg0->unk50 / 18.0f);
+    var_f30 = 90.0f * (arg0->unk50 / (VERSION_NTSC ? 18.0f : 15.000001f));
     var_f29 = arg0->unk0C * (1.0 - sind(var_f30));
     Hu3DMotionTimeSet(arg1->model[0], var_f29);
     fn_1_1D18(arg1->model[0], "motionC-stretch", &sp20);
     arg0->unk28 = sp20.y - arg0->unk14 + 388.0f;
     arg0->unk1C += arg0->unk20;
-    if (18.0f < arg0->unk50) {
+    if ((REFRESH_RATE * 0.3f) < arg0->unk50) {
         arg0->unk20 = (670.0f - arg0->unk1C) / 20.0f;
         Hu3DModelAttrReset(arg1->model[0], HU3D_MOTATTR_LOOP | HU3D_MOTATTR_PAUSE);
         Hu3DMotionSet(arg1->model[0], arg1->motion[2]);
@@ -927,7 +927,7 @@ static void fn_1_3204(omObjData *arg0)
                             }
                         }
                     }
-                    if (60.0f <= temp_r31->unk30) {
+                    if (1.0f * REFRESH_RATE <= temp_r31->unk30) {
                         temp_r31->unk4C = 2017;
                         fn_1_2B30(temp_r31, arg0, temp_r29);
                     }
@@ -950,7 +950,7 @@ static void fn_1_3204(omObjData *arg0)
                 case 2017:
                     if (fn_1_2DBC(temp_r31, temp_r29) != 0) {
                         temp_r31->unk4C = 2018;
-                        temp_r31->unk50 = 120;
+                        temp_r31->unk50 = 2 * REFRESH_RATE;
                     }
                     break;
                 case 2018:
@@ -1125,7 +1125,7 @@ static void fn_1_43D8(omObjData *arg0)
         case 2008:
             if (fn_1_2DBC(temp_r31, temp_r30) != 0) {
                 temp_r31->unk4C++;
-                temp_r31->unk50 = 120;
+                temp_r31->unk50 = 2 * REFRESH_RATE;
             }
             break;
         case 2009:
@@ -1195,7 +1195,7 @@ static void fn_1_43D8(omObjData *arg0)
         case 2014:
             if (fn_1_2DBC(temp_r31, temp_r30) != 0) {
                 temp_r31->unk4C++;
-                temp_r31->unk50 = 120;
+                temp_r31->unk50 = 2 * REFRESH_RATE;
             }
             break;
         case 2015:
@@ -1665,8 +1665,8 @@ static void fn_1_8218(omObjData *arg0)
                 }
                 if (MGSeqStatGet(lbl_1_bss_1AA) == 0) {
                     arg0->work[0]++;
-                    lbl_1_bss_1B0 = 1800;
-                    lbl_1_bss_1A8 = MGSeqCreate(1, lbl_1_bss_1B0 / 60, -1, -1);
+                    lbl_1_bss_1B0 = 30 * REFRESH_RATE;
+                    lbl_1_bss_1A8 = MGSeqCreate(1, lbl_1_bss_1B0 / REFRESH_RATE, -1, -1);
                     lbl_1_bss_1AA = -1;
                 }
             }
@@ -1675,7 +1675,7 @@ static void fn_1_8218(omObjData *arg0)
             MGSeqParamSet(lbl_1_bss_1A8, 1, (lbl_1_bss_1B0 + REFRESH_RATE - 1) / REFRESH_RATE);
             lbl_1_bss_1B0--;
             if (lbl_1_bss_1B0 < 0 || lbl_1_bss_26 >= 0) {
-                lbl_1_bss_1B0 = 1800;
+                lbl_1_bss_1B0 = 30 * REFRESH_RATE;
                 lbl_1_bss_2C = 0.0f;
                 arg0->work[0] = 1007;
             }
@@ -1698,8 +1698,8 @@ static void fn_1_8218(omObjData *arg0)
             }
             else {
                 lbl_1_bss_2C += 1.0f;
-                if (90.0f >= lbl_1_bss_2C) {
-                    fn_1_13DC(lbl_1_bss_2C / 90.0f, &lbl_1_data_1C);
+                if (1.5f * REFRESH_RATE >= lbl_1_bss_2C) {
+                    fn_1_13DC(lbl_1_bss_2C / (1.5f * REFRESH_RATE), &lbl_1_data_1C);
                 }
                 if (MGSeqStatGet(lbl_1_bss_1AA) == 0) {
                     arg0->work[0]++;
