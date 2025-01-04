@@ -958,8 +958,7 @@ void fn_1_350C(omObjData *var_r27)
         var_f25 *= lbl_1_data_114.unk_04 * 2;
         var_f26 *= lbl_1_data_114.unk_04 * 2;
         lbl_1_data_114.unk_00 = !lbl_1_data_114.unk_00;
-        lbl_1_data_114.unk_04 = (lbl_1_data_114.unk_04 > 24)    ? 23
-                              : (lbl_1_data_114.unk_04 - 1 > 0) ? (lbl_1_data_114.unk_04 - 1) : 0;
+        lbl_1_data_114.unk_04 = (lbl_1_data_114.unk_04 > 24) ? 23 : (lbl_1_data_114.unk_04 - 1 > 0) ? (lbl_1_data_114.unk_04 - 1) : 0;
         Center.x = 0.0f;
         Center.y = 100.0f + var_f26;
     }
@@ -1383,122 +1382,61 @@ void fn_1_6314(omObjData *object)
 {
     s32 sp10;
     void *spC;
-    s32 sp8;
-    M458DllWork *var_r31;
+    M458DllWork *work;
     s32 var_r29;
-    s32 var_r28;
-    s32 var_r27;
-    s32 var_r26;
-    s32 var_r25;
-    s32 var_r24;
-    s32 var_r23;
-    s32 var_r22;
-    s32 var_r21;
-    s32 var_r20;
-    s32 var_r19;
-    s32 var_r18;
-    s32 var_r17;
 
-    var_r31 = object->data;
+    work = object->data;
     spC = (&lbl_1_bss_BC)[1 - object->work[0]]->data;
-    memset(var_r31, 0, 0x44);
-    var_r31->unk_00 = object->work[0];
-    // probably ternary, but it causes regswaps
-    if (GWPlayerCfg->group == var_r31->unk_00) {
-        var_r28 = 0;
-    }
-    else {
-        if (GWPlayerCfg[1].group == var_r31->unk_00) {
-            var_r27 = 1;
-        }
-        else {
-            if (GWPlayerCfg[2].group == var_r31->unk_00) {
-                var_r26 = 2;
-            }
-            else {
-                if (GWPlayerCfg[3].group == var_r31->unk_00) {
-                    var_r25 = 3;
-                }
-                else {
-                    var_r25 = 4;
-                }
-                var_r26 = var_r25;
-            }
-            var_r27 = var_r26;
-        }
-        var_r28 = var_r27;
-    }
-    var_r31->unk_04 = var_r28;
-    if (GWPlayerCfg->group == (1 - var_r31->unk_00)) {
-        var_r24 = 0;
-    }
-    else {
-        if (GWPlayerCfg[1].group == (1 - var_r31->unk_00)) {
-            var_r23 = 1;
-        }
-        else {
-            if (GWPlayerCfg[2].group == (1 - var_r31->unk_00)) {
-                var_r22 = 2;
-            }
-            else {
-                if (GWPlayerCfg[3].group == (1 - var_r31->unk_00)) {
-                    var_r21 = 3;
-                }
-                else {
-                    var_r21 = 4;
-                }
-                var_r22 = var_r21;
-            }
-            var_r23 = var_r22;
-        }
-        var_r24 = var_r23;
-    }
-    sp10 = var_r24;
-    if (var_r31->unk_04 == 4) {
+    memset(work, 0, sizeof(M458DllWork));
+    work->unk_00 = object->work[0];
+    work->unk_04 = GWPlayerCfg->group == work->unk_00
+        ? 0
+        : (GWPlayerCfg[1].group == work->unk_00 ? 1 : (GWPlayerCfg[2].group == work->unk_00 ? 2 : (GWPlayerCfg[3].group == work->unk_00 ? 3 : 4)));
+    sp10 = GWPlayerCfg->group == (1 - work->unk_00)
+        ? 0
+        : (GWPlayerCfg[1].group == (1 - work->unk_00)
+                ? 1
+                : (GWPlayerCfg[2].group == (1 - work->unk_00) ? 2 : (GWPlayerCfg[3].group == (1 - work->unk_00) ? 3 : 4)));
+    if (work->unk_04 == 4) {
         OSReport("m458:wrong player group\n");
-        var_r31->unk_04 = var_r31->unk_00;
+        work->unk_04 = work->unk_00;
     }
-    if ((var_r31->unk_00 == 1) && (lbl_1_bss_14 != 0)) {
-        var_r31->unk_08 = -1;
-        var_r31->unk_0C = -1;
-        var_r31->unk_04 = -1;
-        var_r31->unk_10 = 0;
+    if ((work->unk_00 == 1) && (lbl_1_bss_14 != 0)) {
+        work->unk_08 = -1;
+        work->unk_0C = -1;
+        work->unk_04 = -1;
+        work->unk_10 = 0;
     }
     else {
-        var_r31->unk_08 = GWPlayerCfg[var_r31->unk_04].character;
-        var_r20 = 1;
-        if ((var_r31->unk_08 != -1) && (GWPlayerCfg[var_r31->unk_04].iscom == 0)) {
-            var_r20 = 0;
-        }
-        var_r31->unk_0C = var_r20 != 0 ? -1 : GWPlayerCfg[var_r31->unk_04].pad_idx;
-        var_r31->unk_10 = var_r31->unk_0C != -1 ? 0 : GWPlayerCfg[var_r31->unk_04].diff;
+        work->unk_08 = GWPlayerCfg[work->unk_04].character;
+        work->unk_0C = ((work->unk_08 == -1) || (GWPlayerCfg[work->unk_04].iscom != 0)) ? -1 : GWPlayerCfg[work->unk_04].pad_idx;
+        work->unk_10 = work->unk_0C != -1 ? 0 : GWPlayerCfg[work->unk_04].diff;
     }
-    var_r31->unk_18 = 0;
-    var_r31->unk_20 = 3;
-    var_r31->unk_24 = -1;
-    if (var_r31->unk_08 != -1) {
-        object->model[0] = CharModelCreate(var_r31->unk_08, 1);
+    work->unk_18 = 0;
+    work->unk_20 = 3;
+    work->unk_24 = -1;
+    if (work->unk_08 != -1) {
+        object->model[0] = CharModelCreate(work->unk_08, 1);
     }
     else {
         object->model[0] = Hu3DModelCreateFile(0x30007);
     }
-    omSetTra(object, 0.0f, var_r31->unk_00 == 0 ? 0 : 0x12C, 0.0f);
-    if (var_r31->unk_08 != -1) {
+    omSetTra(object, 0.0f, work->unk_00 == 0 ? 0 : 0x12C, 0.0f);
+    if (work->unk_08 != -1) {
         omSetSca(object, 2.5f, 2.5f, 2.5f);
     }
     else {
         omSetSca(object, 2.0f, 2.0f, 2.0f);
     }
     for (var_r29 = 0; var_r29 < 0xA; var_r29++) {
-        if (var_r31->unk_08 != -1) {
-            object->motion[var_r29]
-                = CharModelMotionCreate(var_r31->unk_08, lbl_1_data_10[var_r29] + (lbl_1_data_38[var_r29] != 0 ? var_r31->unk_08 : 0));
+        if (work->unk_08 != -1) {
+            object->motion[var_r29] = CharModelMotionCreate(work->unk_08, lbl_1_data_10[var_r29] + (lbl_1_data_38[var_r29] != 0 ? work->unk_08 : 0));
         }
         else if (lbl_1_data_60[var_r29] != 0) {
             object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], lbl_1_data_60[var_r29]);
         }
     }
-    Hu3DMotionSet(object->model[0], object->motion[var_r31->unk_20]);
+    Hu3DMotionSet(object->model[0], object->motion[work->unk_20]);
     Hu3DMotionTimeSet(object->model[0], 10.0f);
     Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_LOOP);
     Hu3DModelShadowSet(object->model[0]);
