@@ -1059,7 +1059,7 @@ config.libs = [
     Rel(
         "m426Dll",  # Revers-a-Bomb
         objects={
-            Object(NonMatching, "REL/m426Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m426Dll/main.c"),
         },
     ),
     Rel(
