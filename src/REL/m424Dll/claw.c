@@ -475,7 +475,7 @@ void fn_1_9A64(omObjData* arg0) {
                 temp_r31->unkE = 5;
                 CharModelMotionSet(temp_r31->unk2, arg0->motion[temp_r31->unkE]);
                 temp_r31->unkE = 3;
-                CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
+                CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
                 temp_r31->unk16 = 0;
                 temp_r31->unk14 = 0;
                 temp_r31->unk1C = lbl_1_data_210[0];
@@ -513,7 +513,7 @@ void fn_1_9A64(omObjData* arg0) {
                     arg0->trans.y = sp8.y;
                     arg0->trans.z = sp8.z;
                     temp_r31->unkE = 4;
-                    CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
+                    CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
                     temp_r31->unk12 = 0;
                     temp_r31->unk16 ^= 1;
                     if (++temp_r31->unk14 >= 3) {
@@ -1065,7 +1065,7 @@ void fn_1_C2E0(s32 arg0) {
     s32 var_r26;
     omObjData* var_r25;
 
-    if ((u8)omPauseChk() != 0U) return;
+    if ((u8)omPauseChk() != 0) return;
     
     var_r25 = lbl_1_bss_6D8;
     if (lbl_1_bss_6D8) {

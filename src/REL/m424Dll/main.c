@@ -273,7 +273,7 @@ void fn_1_41C(omObjData* object) {
 
 void fn_1_EE0(omObjData* object) {
     if (WipeStatGet() == 0) {
-        Hu3DBGColorSet(0U, 0U, 0U);
+        Hu3DBGColorSet(0, 0, 0);
         fn_1_1B8C();
         fn_1_2880();
         fn_1_94A4();
