@@ -781,7 +781,7 @@ void fn_1_19C8(omObjData *object)
             temp_r26 = (temp_r26 >= 4) ? (temp_r26 - 4) : ((temp_r26 < 0) ? (temp_r26 + 4) : temp_r26);
             temp_r31->unk74++;
             if (temp_r31->unk1C == -1) {
-                s32 sp20C[4] = { 120, 50, 25, 2 };
+                s32 sp20C[4] = { 120, 60, 25, 2 };
                 s32 sp200[3] = { 60, 45, 25 };
                 temp_r31->unk90 = (temp_r31->unk8C == temp_r31->unk48[0]->unk18 && temp_r31->unk8C != temp_r31->unk7C) ? (temp_r31->unk90 + 1) : 0;
                 temp_r31->unk8C = temp_r31->unk48[0]->unk18;
@@ -1466,7 +1466,6 @@ void fn_1_8AC8(StructBss2A6C *arg0, StructSp14C8 *arg1)
     }
 }
 
-// decomp.me link is https://decomp.me/scratch/PbkiW
 void fn_1_8C10(omObjData *object)
 {
     s32 temp_r31;
@@ -1672,7 +1671,7 @@ void fn_1_8C10(omObjData *object)
             temp_f26 = lbl_1_bss_B8.unkC.x;
             temp_f27 *= lbl_1_bss_B8.unk4 * 2;
             temp_f26 *= lbl_1_bss_B8.unk4 * 2;
-            lbl_1_bss_B8.unk0 = lbl_1_bss_B8.unk0 == 0;
+            lbl_1_bss_B8.unk0 = !lbl_1_bss_B8.unk0;
             lbl_1_bss_B8.unk4 = (lbl_1_bss_B8.unk4 > 24) ? 23 : ((lbl_1_bss_B8.unk4 - 1 > 0) ? lbl_1_bss_B8.unk4 - 1 : 0);
             Hu3DCameraPosSet(1, temp_f27, 37.139069 + temp_f26, 2599.7346f, 0, 1, 0, temp_f27, 50.0f + temp_f26, 0);
         }

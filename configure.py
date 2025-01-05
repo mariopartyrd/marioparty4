@@ -965,7 +965,7 @@ config.libs = [
     Rel(
         "m413Dll",  # Bob-omb Breakers
         objects={
-            Object(NonMatching, "REL/m413Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m413Dll/main.c"),
         },
     ),
     Rel(
