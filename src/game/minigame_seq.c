@@ -12,7 +12,7 @@
 
 #include "game/minigame_seq.h"
 
-#include "math.h"
+#include "ext_math.h"
 
 #include "stdarg.h"
 #include "version.h"
@@ -484,7 +484,7 @@ s32 MGSeqUpdateTimer(SeqWork *work)
         switch (work->state) {
             case 2: {
                 float scale_x, scale_y;
-                scale = fabs(((sin((work->angle * M_PI) / 180) * 5.0f) + 1.0f) - (sin((130 * M_PI) / 180) * 5.0f));
+                scale = fabs(((sind(work->angle) * 5.0f) + 1.0f) - (sind(130) * 5.0f));
                 scale_x = work->scale_x * scale;
                 scale_y = work->scale_y * scale;
                 work->angle += seqSpeed * 5.0f;
@@ -496,8 +496,8 @@ s32 MGSeqUpdateTimer(SeqWork *work)
             } break;
 
             case 3: {
-                scale = sin((work->angle * M_PI) / 180) + 1.0;
-                tp_lvl = 1.0 - (sin((work->angle * M_PI) / 180) * 0.5);
+                scale = sind(work->angle) + 1.0;
+                tp_lvl = 1.0 - (sind(work->angle) * 0.5);
                 work->angle += seqSpeed * 18.0f;
                 if (work->angle > 180.0f) {
                     work->state = 0;
@@ -1045,7 +1045,7 @@ s32 MGSeqUpdateMGBasic(SeqWork *work)
                                 HuSprZRotSet(work->spr_grp[0], i, 0.0f);
                             }
                             else {
-                                HuSprPosSet(work->spr_grp[0], i, pos_x - (((1.0 - sin(((time * 4.5f) * M_PI) / 180.0)) * (work->word_len * 56 * 2))),
+                                HuSprPosSet(work->spr_grp[0], i, pos_x - (((1.0 - sind(time * 4.5f)) * (work->word_len * 56 * 2))),
                                     work->y);
                                 HuSprZRotSet(work->spr_grp[0], i, (time / 20.0f) * 390.0f);
                             }
@@ -1053,11 +1053,11 @@ s32 MGSeqUpdateMGBasic(SeqWork *work)
                     }
                     else {
                         time = work->time - 40;
-                        scale = work->scale_x + (0.5 * sin(((time * 9.0f) * M_PI) / 180.0));
+                        scale = work->scale_x + (0.5 * sind(time * 9.0f));
                         for (i = 0; i < work->word_len; i++) {
                             pos_x = ((28.0f * scale) + (work->x - (0.5f * (scale * (work->word_len * 56))))) + (scale * (i * 56));
                             HuSprPosSet(work->spr_grp[0], i, pos_x, work->y);
-                            HuSprScaleSet(work->spr_grp[0], i, scale, work->scale_y + sin(((time * 9.0f) * M_PI) / 180.0));
+                            HuSprScaleSet(work->spr_grp[0], i, scale, work->scale_y + sind(time * 9.0f));
                         }
                     }
                     if (work->time == 40) {
@@ -1085,13 +1085,13 @@ s32 MGSeqUpdateMGBasic(SeqWork *work)
                     }
                     if (work->time <= 20) {
                         time = work->time;
-                        scale = work->scale_x + (0.5 * sin(((time * 9.0f) * M_PI) / 180.0));
+                        scale = work->scale_x + (0.5 * sind(time * 9.0f));
                         for (i = 0; i < work->word_len; i++) {
                             HuSprAttrReset(work->spr_grp[0], i, HUSPR_ATTR_DISPOFF);
                             pos_x = ((28.0f * scale) + (work->x - (0.5f * (scale * (work->word_len * 56))))) + (scale * (i * 56));
                             HuSprPosSet(work->spr_grp[0], i, pos_x, work->y);
-                            HuSprScaleSet(work->spr_grp[0], i, work->scale_x + sin(((time * 9.0f) * M_PI) / 180.0),
-                                work->scale_y + sin(((time * 9.0f) * M_PI) / 180.0));
+                            HuSprScaleSet(work->spr_grp[0], i, work->scale_x + sind(time * 9.0f),
+                                work->scale_y + sind(time * 9.0f));
                         }
                         if (time == 20.0f) {
                             for (i = 0; i < work->word_len; i++) {
@@ -1112,7 +1112,7 @@ s32 MGSeqUpdateMGBasic(SeqWork *work)
                                 }
                                 else {
                                     HuSprPosSet(work->spr_grp[0], i,
-                                        pos_x + ((1.0 - cos(((time * 4.5f) * M_PI) / 180.0f)) * (work->word_len * 56 * 2)), work->y);
+                                        pos_x + ((1.0 - cosd(time * 4.5f)) * (work->word_len * 56 * 2)), work->y);
                                     HuSprZRotSet(work->spr_grp[0], i, (time / 20.0f) * 390.0f);
                                 }
                             }
@@ -1337,7 +1337,7 @@ s32 MGSeqUpdateMGBattle(SeqWork *work)
                                         y += ofs_y;
                                     }
                                     HuSprPosSet(work->spr_grp[i], j, x, y);
-                                    HuSprScaleSet(work->spr_grp[i], j, work->scale_x * cos((M_PI * scale_ang) / 180.0), work->scale_y);
+                                    HuSprScaleSet(work->spr_grp[i], j, work->scale_x * cosd(scale_ang), work->scale_y);
                                     HuSprZRotSet(work->spr_grp[i], j, zrot);
                                 }
                             }
@@ -1346,7 +1346,7 @@ s32 MGSeqUpdateMGBattle(SeqWork *work)
                     else {
                         if (work->time > 60) {
                             time = work->time - 60;
-                            scale = 0.5 * sin((M_PI * (time * 9.0f)) / 180.0);
+                            scale = 0.5 * sind(time * 9.0f);
                             for (j = 0; j < work->word_len; j++) {
                                 pos_x = (28.0f * (scale + work->scale_x)) + (work->x - (0.5f * ((work->word_len * 56) * (scale + work->scale_x))))
                                     + ((j * 56) * (scale + work->scale_x));
@@ -1385,13 +1385,13 @@ s32 MGSeqUpdateMGBattle(SeqWork *work)
                             }
                         }
                         time = work->time;
-                        scale = work->scale_x + (0.5 * sin((M_PI * (time * 9.0f)) / 180.0));
+                        scale = work->scale_x + (0.5 * sind(time * 9.0f));
                         for (j = 0; j < work->word_len; j++) {
                             HuSprAttrReset(work->spr_grp[0], j, HUSPR_ATTR_DISPOFF);
                             pos_x = ((28.0f * scale) + (work->x - (0.5f * (scale * (work->word_len * 56))))) + (scale * (j * 56));
                             HuSprPosSet(work->spr_grp[0], j, pos_x, work->y);
-                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sin((M_PI * (time * 9.0f)) / 180.0)),
-                                work->scale_y + (sin((M_PI * (time * 9.0f)) / 180.0)));
+                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sind(time * 9.0f)),
+                                work->scale_y + (sind(time * 9.0f)));
                         }
                         if (time == 20.0f) {
                             for (j = 0; j < work->word_len; j++) {
@@ -1405,7 +1405,7 @@ s32 MGSeqUpdateMGBattle(SeqWork *work)
                             for (j = 0; j < work->word_len; j++) {
                                 pos_x = (28.0f + (work->x - (0.5f * (work->word_len * 56)))) + (j * 56);
                                 HuSprPosSet(
-                                    work->spr_grp[0], j, pos_x + ((HU_DISP_CENTERX - pos_x) * (1.0 - cos((M_PI * (time * 6.0)) / 180.0))), work->y);
+                                    work->spr_grp[0], j, pos_x + ((HU_DISP_CENTERX - pos_x) * (1.0 - cosd(time * 6.0))), work->y);
                             }
                             if (time == 15.0f) {
                                 for (j = 0; j < work->word_len; j++) {
@@ -1530,9 +1530,9 @@ s32 MGSeqUpdateMG1vs3(SeqWork *work)
                             scale_x = 0.3 * work->scale_x;
                             scale_y = 0.3 * work->scale_y;
                             pos_x = ((28.0f * scale_x) + (work->x - (0.5f * (scale_x * (work->word_len * 56))))) + (scale_x * (idx * 56));
-                            pos_y = work->y - (150.0 * sin((M_PI * (((16.0f / 3.0f) * time) + 20.0f)) / 180.0));
+                            pos_y = work->y - 150.0 * sind((16.0f / 3.0f) * time + 20.0f);
                             HuSprPosSet(work->spr_grp[0], idx, pos_x, pos_y);
-                            HuSprScaleSet(work->spr_grp[0], idx, scale_x, scale_y * cos(M_PI * (12.0f * time) / 180.0));
+                            HuSprScaleSet(work->spr_grp[0], idx, scale_x, scale_y * cosd(12.0f * time));
                             HuSprTPLvlSet(work->spr_grp[0], idx, scale);
                         }
                     }
@@ -1549,13 +1549,13 @@ s32 MGSeqUpdateMG1vs3(SeqWork *work)
                                             continue;
                                         }
                                     }
-                                    scale = 0.3 + (0.7 * (1.0 - cos((M_PI * (time * 3.0f)) / 180.0)));
+                                    scale = 0.3 + 0.7 * (1.0 - cosd(time * 3.0f));
                                     scale_x = work->scale_x * scale;
                                     scale_y = work->scale_y * scale;
                                     pos_x = ((28.0f * scale_x) + (work->x - (0.5f * (scale_x * (work->word_len * 56))))) + (scale_x * (idx * 56));
-                                    pos_y = work->y - (150.0 * sin((M_PI * (((16.0f / 3.0f) * time) + 20.0f)) / 180.0));
+                                    pos_y = work->y - 150.0 * sind((16.0f / 3.0f) * time + 20.0f);
                                     HuSprPosSet(work->spr_grp[i], idx, pos_x, pos_y);
-                                    HuSprScaleSet(work->spr_grp[i], idx, scale_x, scale_y * cos(M_PI * (12.0f * time) / 180.0));
+                                    HuSprScaleSet(work->spr_grp[i], idx, scale_x, scale_y * cosd(12.0f * time));
                                 }
                             }
                             if (work->time == 60) {
@@ -1569,7 +1569,7 @@ s32 MGSeqUpdateMG1vs3(SeqWork *work)
                         else {
                             if (work->time > 70) {
                                 time = work->time - 70;
-                                scale = 0.5 * sin((M_PI * (time * 9.0f)) / 180.0);
+                                scale = 0.5 * sind(time * 9.0f);
                                 for (j = 0; j < work->word_len; j++) {
                                     pos_x = (28.0f * (scale + work->scale_x)) + (work->x - (0.5f * ((work->word_len * 56) * (scale + work->scale_x))))
                                         + ((j * 56) * (scale + work->scale_x));
@@ -1609,13 +1609,13 @@ s32 MGSeqUpdateMG1vs3(SeqWork *work)
                             }
                         }
                         time = work->time;
-                        scale = work->scale_x + (0.5 * sin((M_PI * (time * 9.0f)) / 180.0));
+                        scale = work->scale_x + (0.5 * sind(time * 9.0f));
                         for (j = 0; j < work->word_len; j++) {
                             HuSprAttrReset(work->spr_grp[0], j, HUSPR_ATTR_DISPOFF);
                             pos_x = ((28.0f * scale) + (work->x - (0.5f * (scale * (work->word_len * 56))))) + (scale * (j * 56));
                             HuSprPosSet(work->spr_grp[0], j, pos_x, work->y);
-                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sin((M_PI * (time * 9.0f)) / 180.0)),
-                                work->scale_y + (sin((M_PI * (time * 9.0f)) / 180.0)));
+                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sind(time * 9.0f)),
+                                work->scale_y + (sind(time * 9.0f)));
                         }
                         if (time == 20.0f) {
                             for (i = 1; i < 4; i++) {
@@ -1767,7 +1767,7 @@ s32 MGSeqUpdateMGStory(SeqWork *work)
                         else {
                             if (work->time > 55) {
                                 time = work->time - 55;
-                                scale = 0.5 * sin(M_PI * (9.0f * time) / 180.0);
+                                scale = 0.5 * sind(9.0f * time);
                                 for (j = 0; j < work->word_len; j++) {
                                     pos_x = (28.0f * (scale + work->scale_x)) + (work->x - (0.5f * ((work->word_len * 56) * (scale + work->scale_x))))
                                         + ((j * 56) * (scale + work->scale_x));
@@ -1807,13 +1807,13 @@ s32 MGSeqUpdateMGStory(SeqWork *work)
                             }
                         }
                         time = work->time;
-                        scale = work->scale_x + (0.5 * sin((M_PI * (time * 9.0f)) / 180.0));
+                        scale = work->scale_x + (0.5 * sind(time * 9.0f));
                         for (j = 0; j < work->word_len; j++) {
                             HuSprAttrReset(work->spr_grp[0], j, HUSPR_ATTR_DISPOFF);
                             pos_x = ((28.0f * scale) + (work->x - (0.5f * (scale * (work->word_len * 56))))) + (scale * (j * 56));
                             HuSprPosSet(work->spr_grp[0], j, pos_x, work->y);
-                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sin((M_PI * (time * 9.0f)) / 180.0)),
-                                work->scale_y + (sin((M_PI * (time * 9.0f)) / 180.0)));
+                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sind(time * 9.0f)),
+                                work->scale_y + (sind(time * 9.0f)));
                         }
                         if (time == 20.0f) {
                             for (i = 1; i < 4; i++) {
@@ -1960,7 +1960,7 @@ s32 MGSeqUpdateMG2vs2(SeqWork *work)
                     else {
                         if (work->time > 40 && work->time <= 60) {
                             time = work->time - 40;
-                            scale = 0.5 * sin(((time * 9.0f) * M_PI) / 180.0);
+                            scale = 0.5 * sind(time * 9.0f);
                             for (j = 0; j < work->word_len; j++) {
                                 pos_x = (28.0f * (scale + work->scale_x)) + (work->x - (0.5f * ((work->word_len * 56) * (scale + work->scale_x))))
                                     + ((j * 56) * (scale + work->scale_x));
@@ -1999,13 +1999,13 @@ s32 MGSeqUpdateMG2vs2(SeqWork *work)
                             }
                         }
                         time = work->time;
-                        scale = work->scale_x + (0.5 * sin((M_PI * (time * 9.0f)) / 180.0));
+                        scale = work->scale_x + (0.5 * sind(time * 9.0f));
                         for (j = 0; j < work->word_len; j++) {
                             HuSprAttrReset(work->spr_grp[0], j, HUSPR_ATTR_DISPOFF);
                             pos_x = ((28.0f * scale) + (work->x - (0.5f * (scale * (work->word_len * 56))))) + (scale * (j * 56));
                             HuSprPosSet(work->spr_grp[0], j, pos_x, work->y);
-                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sin((M_PI * (time * 9.0f)) / 180.0)),
-                                work->scale_y + (sin((M_PI * (time * 9.0f)) / 180.0)));
+                            HuSprScaleSet(work->spr_grp[0], j, work->scale_x + (sind(time * 9.0f)),
+                                work->scale_y + (sind(time * 9.0f)));
                         }
                         if (time == 20.0f) {
                             for (i = 1; i < 4; i++) {
@@ -2023,8 +2023,8 @@ s32 MGSeqUpdateMG2vs2(SeqWork *work)
                                 float angle = (1.0f + (1.0f - (ABS(radius) / 320.0f))) * 720.0f;
                                 float new_scale;
                                 radius *= 1.0 - (time / 60.0f);
-                                HuSprPosSet(work->spr_grp[0], idx, (radius * sin(M_PI * (((time / 60.0f) * angle) + 90.0f) / 180.0)) + work->x,
-                                    (radius * cos(M_PI * (((time / 60.0f) * angle) + 90.0f) / 180.0)) + work->y);
+                                HuSprPosSet(work->spr_grp[0], idx, (radius * sind((time / 60.0f) * angle + 90.0f)) + work->x,
+                                    (radius * cosd((time / 60.0f) * angle + 90.0f)) + work->y);
                                 HuSprZRotSet(work->spr_grp[0], idx, -(time / 60.0f) * 720.0f);
                                 new_scale = 0.5 + (0.5 * (1.0f - (time / 60.0f)));
                                 HuSprScaleSet(work->spr_grp[0], idx, new_scale, new_scale);
@@ -2214,21 +2214,21 @@ s32 MGSeqUpdateFlip(SeqWork *work)
                             time = work->time - 10;
                             if (time <= 10) {
                                 for (idx = 0; idx < work->alt_word_len; idx++) {
-                                    HuSprScaleSet(work->spr_grp[0], idx, cos(M_PI * ((time / 10.0f) * 90.0f) / 180.0), 1.0f);
+                                    HuSprScaleSet(work->spr_grp[0], idx, cosd((time / 10.0f) * 90.0f), 1.0f);
                                 }
                             }
                             else {
                                 time -= 10.0f;
                                 for (idx = 0; idx < work->word_len; idx++) {
                                     HuSprTPLvlSet(work->spr_grp[1], idx, 1.0f);
-                                    HuSprScaleSet(work->spr_grp[1], idx, sin(M_PI * ((time / 10.0f) * 90.0f) / 180.0), 1.0f);
+                                    HuSprScaleSet(work->spr_grp[1], idx, sind((time / 10.0f) * 90.0f), 1.0f);
                                 }
                             }
                         }
                         else {
                             if (work->time > 35 && work->time <= 55) {
                                 time = work->time - 35;
-                                scale = 0.5 * sin(((time * 9.0f) * M_PI) / 180.0);
+                                scale = 0.5 * sind(time * 9.0f);
                                 for (i = 0; i < work->word_len; i++) {
                                     pos_x = (28.0f * (scale + work->scale_x)) + (work->x - (0.5f * ((work->word_len * 56) * (scale + work->scale_x))))
                                         + ((i * 56) * (scale + work->scale_x));
@@ -2263,7 +2263,7 @@ s32 MGSeqUpdateFlip(SeqWork *work)
                     }
                     if (work->time <= 20) {
                         time = work->time;
-                        scale = 0.5 * sin(M_PI * (9.0f * time) / 180.0);
+                        scale = 0.5 * sind(9.0f * time);
                         for (i = 0; i < work->word_len; i++) {
                             HuSprTPLvlSet(work->spr_grp[1], i, 1.0f);
                             pos_x = (28.0f * (scale + work->scale_x)) + (work->x - (0.5f * ((work->word_len * 56) * (scale + work->scale_x))))
@@ -2280,7 +2280,7 @@ s32 MGSeqUpdateFlip(SeqWork *work)
                                 if (scale < 0 || scale > 15.0f) {
                                     continue;
                                 }
-                                HuSprScaleSet(work->spr_grp[1], idx, cos(M_PI * ((scale / 15.0f) * 90.0f) / 180.0), 1.0f);
+                                HuSprScaleSet(work->spr_grp[1], idx, cosd((scale / 15.0f) * 90.0f), 1.0f);
                             }
                             for (idx = 0; idx < work->alt_word_len; idx++) {
                                 scale = (time - 15.0f) - (idx * 2);
@@ -2288,7 +2288,7 @@ s32 MGSeqUpdateFlip(SeqWork *work)
                                     continue;
                                 }
                                 HuSprTPLvlSet(work->spr_grp[0], idx, 1.0f);
-                                HuSprScaleSet(work->spr_grp[0], idx, sin(M_PI * ((scale / 30.0f) * 180.0f) / 180.0), 1.0f);
+                                HuSprScaleSet(work->spr_grp[0], idx, sind((scale / 30.0f) * 180.0f), 1.0f);
                             }
                         }
                     }
@@ -2400,13 +2400,13 @@ s32 MGSeqUpdateMGBowser(SeqWork *work)
                                 }
                                 time_angle = 540.0 * (1.0f - (time / 50.0f));
                                 pos_x = (28.0f + (0.5f * -(work->word_len * 56))) + (idx * 56);
-                                angle = 180.0 * (atan2(pos_x, center_x) / M_PI);
-                                pos_x = work->x + (center_x * sin(M_PI * (angle + time_angle) / 180.0));
+                                angle = atan2d(pos_x, center_x);
+                                pos_x = work->x + (center_x * sind(angle + time_angle));
                                 pos_y = work->y - (HU_DISP_CENTERY * (1.0 - (time / 50.0f)));
                                 HuSprPosSet(work->spr_grp[0], idx, pos_x, pos_y);
-                                temp_f25 = 0.9 + (0.1 * cos(M_PI * (angle + time_angle) / 180.0));
-                                HuSprScaleSet(work->spr_grp[0], idx, temp_f25 * cos(M_PI * (angle + time_angle) / 180.0), temp_f25);
-                                scale_arr[idx] = cos(M_PI * (angle + time_angle) / 180.0);
+                                temp_f25 = 0.9 + (0.1 * cosd(angle + time_angle));
+                                HuSprScaleSet(work->spr_grp[0], idx, temp_f25 * cosd(angle + time_angle), temp_f25);
+                                scale_arr[idx] = cosd(angle + time_angle);
                                 spr_idx[idx] = idx;
                             }
                         }
@@ -2429,7 +2429,7 @@ s32 MGSeqUpdateMGBowser(SeqWork *work)
                     else {
                         if (work->time > 60 && work->time <= 80) {
                             time = work->time - 60;
-                            scale = 0.5 * sin(((time * 9.0f) * M_PI) / 180.0);
+                            scale = 0.5 * sind(time * 9.0f);
                             for (i = 0; i < work->word_len; i++) {
                                 pos_x = (28.0f * (scale + work->scale_x)) + (work->x - (0.5f * ((work->word_len * 56) * (scale + work->scale_x))))
                                     + ((i * 56) * (scale + work->scale_x));
@@ -2468,13 +2468,13 @@ s32 MGSeqUpdateMGBowser(SeqWork *work)
                             }
                         }
                         time = work->time;
-                        scale = work->scale_x + (0.5 * sin(((time * 9.0f) * M_PI) / 180.0));
+                        scale = work->scale_x + (0.5 * sind(time * 9.0f));
                         for (i = 0; i < work->word_len; i++) {
                             HuSprAttrReset(work->spr_grp[0], i, HUSPR_ATTR_DISPOFF);
                             pos_x = ((28.0f * scale) + (work->x - (0.5f * (scale * (work->word_len * 56))))) + (scale * (i * 56));
                             HuSprPosSet(work->spr_grp[0], i, pos_x, work->y);
-                            HuSprScaleSet(work->spr_grp[0], i, work->scale_x + (sin((M_PI * (time * 9.0f)) / 180.0)),
-                                work->scale_y + (sin((M_PI * (time * 9.0f)) / 180.0)));
+                            HuSprScaleSet(work->spr_grp[0], i, work->scale_x + (sind(time * 9.0f)),
+                                work->scale_y + sind(time * 9.0f));
                         }
                         if (time == 20.0f) {
                             for (j = 1; j < 4; j++) {
@@ -2632,14 +2632,14 @@ s32 MGSeqUpdateDraw(SeqWork *work)
                 if (work->time <= 20) {
                     time = work->time;
                     zrot = 365.0f * (time / 20.0f);
-                    scale = 1.3f * sin(M_PI * (90.0f * (time / 20.0f)) / 180.0);
+                    scale = 1.3f * sind(90.0f * (time / 20.0f));
                     HuSprGrpScaleSet(group, scale, scale);
                     HuSprGrpZRotSet(group, zrot);
                 }
                 if (work->time > 20 && work->time <= 25) {
                     HuSprGrpZRotSet(group, 0.0f);
                     time = work->time - 20;
-                    scale = 1.0 + (0.3 * cos(M_PI * (90.0f * (time / 5.0f)) / 180.0));
+                    scale = 1.0 + (0.3 * cosd(90.0f * (time / 5.0f)));
                     HuSprGrpScaleSet(group, scale, scale);
                 }
                 if (work->time == 5) {
@@ -2971,10 +2971,10 @@ s32 MGSeqUpdateWin(SeqWork *work)
                 if (work->time <= 20) {
                     time = work->time;
                     zrot = 365.0f * (time / 20.0f);
-                    scale = sin(M_PI * (90.0f * (time / 20.0f)) / 180.0);
+                    scale = sind(90.0f * (time / 20.0f));
                     HuSprGrpScaleSet(work->spr_grp[0], scale, scale);
                     HuSprGrpZRotSet(work->spr_grp[0], zrot);
-                    scale = 1.0 + (5.0 * cos(M_PI * (90.0f * (time / 20.0f)) / 180.0));
+                    scale = 1.0 + (5.0 * cosd(90.0f * (time / 20.0f)));
                     tp_lvl = time / 20.0f;
                     for (idx = 1; idx < work->word_len; idx++) {
                         HuSprGrpTPLvlSet(work->spr_grp[idx], tp_lvl);
@@ -3300,7 +3300,7 @@ static void PauseProc(void)
     mg = omMgIndexGet(omcurovl);
     if (mgInfoTbl[mg].inst_mess[1] == 0 && mgInfoTbl[mg].inst_mess[2] == 0) {
         for (i = 1; i <= 20; i++) {
-            ratio = sin(M_PI * (i * 4.5f) / 180.0);
+            ratio = sind(i * 4.5f);
             HuSprGrpPosSet(work.spr_grp[0], HU_DISP_CENTERX, (ratio * 290) - 50.0f);
             HuPrcVSleep();
         }
@@ -3334,7 +3334,7 @@ static void PauseProc(void)
                 }
             }
             for (i = 1; i <= 20; i++) {
-                ratio = sin(M_PI * (i * 4.5f) / 180.0);
+                ratio = sind(i * 4.5f);
                 HuSprGrpPosSet(work.spr_grp[0], HU_DISP_CENTERX, (ratio * 150) - 50.0f);
                 HuWinPosSet(window[0], (PAUSE_WIN_DIST + PAUSE_WIN_X) * ratio - PAUSE_WIN_DIST, HU_DISP_CENTERY - 100);
                 HuWinPosSet(window[1], -(PAUSE_WIN_DIST - PAUSE_WIN_X) * ratio + PAUSE_WIN_DIST, HU_DISP_CENTERY + 32);
@@ -3351,7 +3351,7 @@ static void PauseProc(void)
             HuWinMesSpeedSet(window[0], 0);
             HuWinMesSet(window[0], mgInfoTbl[mg].inst_mess[1]);
             for (i = 1; i <= 20; i++) {
-                ratio = sin(M_PI * (i * 4.5f) / 180.0);
+                ratio = sind(i * 4.5f);
                 HuSprGrpPosSet(work.spr_grp[0], HU_DISP_CENTERX, (ratio * 150) - 50.0f);
                 HuWinPosSet(window[0], (PAUSE_WIN_DIST + PAUSE_WIN_X) * ratio - PAUSE_WIN_DIST, HU_DISP_CENTERY - 70);
                 if (window[2] != -1) {
@@ -3369,7 +3369,7 @@ static void PauseProc(void)
     pauseWaitF = 0;
     if (window[0] == -1 && window[1] == -1) {
         for (i = 1; i <= 10; i++) {
-            ratio = cos(M_PI * (i * 9.0f) / 180.0);
+            ratio = cosd(i * 9.0f);
             HuSprGrpPosSet(work.spr_grp[0], HU_DISP_CENTERX, (ratio * 290) - 50.0f);
             HuPrcVSleep();
         }
@@ -3377,7 +3377,7 @@ static void PauseProc(void)
     else {
         if (window[1] != -1) {
             for (i = 1; i <= 10; i++) {
-                ratio = cos(M_PI * (i * 9.0f) / 180.0);
+                ratio = cosd(i * 9.0f);
                 HuSprGrpPosSet(work.spr_grp[0], HU_DISP_CENTERX, (ratio * 150) - 50.0f);
                 HuWinPosSet(window[0], (PAUSE_WIN_DIST + PAUSE_WIN_X) * ratio - PAUSE_WIN_DIST, HU_DISP_CENTERY - 100);
                 HuWinPosSet(window[1], -(PAUSE_WIN_DIST - PAUSE_WIN_X) * ratio + PAUSE_WIN_DIST, HU_DISP_CENTERY + 32);
@@ -3389,7 +3389,7 @@ static void PauseProc(void)
         }
         else {
             for (i = 1; i <= 10; i++) {
-                ratio = cos(M_PI * (i * 9.0f) / 180.0);
+                ratio = cosd(i * 9.0f);
                 HuSprGrpPosSet(work.spr_grp[0], HU_DISP_CENTERX, (ratio * 150) - 50.0f);
                 HuWinPosSet(window[0], (PAUSE_WIN_DIST + PAUSE_WIN_X) * ratio - PAUSE_WIN_DIST, HU_DISP_CENTERY - 70);
                 if (window[2] != -1) {
@@ -3582,7 +3582,7 @@ static void PracticeProc(void)
         if (i != 4) {
             break;
         }
-        HuSprTPLvlSet(group, 0, fabs(sin(M_PI * time / 180.0)));
+        HuSprTPLvlSet(group, 0, fabs(sind(time)));
         time += 2.0f;
         HuPrcVSleep();
     } while (1);

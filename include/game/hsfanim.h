@@ -69,7 +69,7 @@ typedef struct {
     /* 0x2C */ s16 unk2C;
     /* 0x2E */ GXColor unk2E[4];
     /* 0x3E */ GXColor unk3E[4];
-} HsfanimStruct00; // Size unknown
+} HsfanimStruct00; // Size (min:0x4E, max:0x50)
 
 typedef struct {
     /* 0x00 */ u16 unk00;

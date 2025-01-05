@@ -1312,7 +1312,7 @@ config.libs = [
     Rel(
         "m463Dll",  # Panel Panic 9 Player
         objects={
-            Object(NonMatching, "REL/m463Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m463Dll/main.c"),
         },
     ),
     Rel(

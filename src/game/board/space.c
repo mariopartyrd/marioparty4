@@ -14,7 +14,7 @@
 #include "game/objsub.h"
 #include "game/sprite.h"
 
-#include "math.h"
+#include "ext_math.h"
 #include "string.h"
 
 static BoardSpace spaceData[2][256];
@@ -156,10 +156,10 @@ void BoardSpaceCornerPosGet(s32 index, s32 corner, Vec *pos)
     corner_ofs.x = corner_pos[corner][0] * 80.0f;
     corner_ofs.y = 0;
     corner_ofs.z = corner_pos[corner][1] * 80.0f;
-    corner_ofs.x = (cos((M_PI * rot.z) / 180) * corner_ofs.x) + (sin((M_PI * rot.z) / 180) * corner_ofs.y);
-    corner_ofs.y = (cos((M_PI * rot.x) / 180) * cos((M_PI * rot.z) / 180) * corner_ofs.y) + (sin((M_PI * rot.z) / 180) * corner_ofs.x)
-        + (sin((M_PI * -rot.x) / 180) * corner_ofs.z);
-    corner_ofs.z = (sin((M_PI * rot.x) / 180) * corner_ofs.y) + (cos((M_PI * rot.x) / 180) * corner_ofs.z);
+    corner_ofs.x = (cosd(rot.z) * corner_ofs.x) + (sind(rot.z) * corner_ofs.y);
+    corner_ofs.y = (cosd(rot.x) * cosd(rot.z) * corner_ofs.y) + (sind(rot.z) * corner_ofs.x)
+        + (sind(-rot.x) * corner_ofs.z);
+    corner_ofs.z = (sind(rot.x) * corner_ofs.y) + (cosd(rot.x) * corner_ofs.z);
     pos->x += corner_ofs.x;
     pos->y += corner_ofs.y;
     pos->z += corner_ofs.z;
@@ -724,7 +724,7 @@ static s32 ExecPipeSpace(s32 player, s32 space)
     BoardSpacePosGet(0, space_ptr->link[0], &pos_link);
     VECSubtract(&pos_link, &pos, &dir);
     VECNormalize(&dir, &dir);
-    BoardPlayerRotYSet(player, 90 - ((atan2(dir.z, dir.x) / M_PI) * 180));
+    BoardPlayerRotYSet(player, 90 - atan2d(dir.z, dir.x));
     radius = 0.75f * BoardVecDistXZCalc(&pos_link, &pos);
     BoardPlayerMotionStart(player, 4, 0);
     y_vel = 0;

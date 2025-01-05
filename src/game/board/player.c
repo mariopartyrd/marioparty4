@@ -18,7 +18,7 @@
 #include "game/objsub.h"
 #include "game/pad.h"
 
-#include "math.h"
+#include "ext_math.h"
 #include "stdlib.h"
 
 static void InitJunction(s32, s32, f32);
@@ -1152,7 +1152,7 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8)
                             VECSubtract(&sp50, &sp68, &sp44);
                             VECNormalize(&sp44, &sp44);
 
-                            angle = (180.0 * (atan2(sp44.x, sp44.z) / M_PI));
+                            angle = atan2d(sp44.x, sp44.z);
                             if (angle < 0.0f) {
                                 angle += 360.0f;
                             }
@@ -1174,7 +1174,7 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8)
                             temp_r29->unk_06[var_r27] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0), NULL, 1);
                             BoardModelRotSet(temp_r29->unk_06[var_r27], 0.0f, angle, 0.0f);
                             BoardModelLayerSet(temp_r29->unk_06[var_r27], 6);
-                            sp5C.x = sp68.x + (100.0 * sin((M_PI * angle) / 180.0));
+                            sp5C.x = sp68.x + 100.0 * sind(angle);
                             sp5C.y = 300.0f + sp68.y;
                             sp5C.z = (var_f29 + (sp68.z + (100.0 * cosd(angle))));
                             BoardModelPosSetV(temp_r29->unk_06[var_r27], &sp5C);
@@ -1219,7 +1219,7 @@ static void UpdateJunctionGfx(omObjData *arg0)
         temp_r30->unk_02 -= 0xB4;
     }
     OSs16tof32(&temp_r30->unk_02, &arg0->scale.x);
-    arg0->scale.x = 3.0 + sin((M_PI * arg0->scale.x) / 180.0);
+    arg0->scale.x = 3.0 + sind(arg0->scale.x);
     arg0->scale.y = arg0->scale.x;
     arg0->scale.z = arg0->scale.x;
     BoardModelScaleSet(temp_r30->unk_06[temp_r30->field00_bit5], arg0->scale.x, arg0->scale.y, arg0->scale.z);
@@ -1355,7 +1355,7 @@ static s32 DoDebugMove(s32 arg0, s16 *arg1)
             }
             else {
                 VECSubtract(&sp5C->pos, &sp88, &sp94);
-                var_f30 = 90.0 - (180.0 * (atan2(sp94.z, sp94.x) / M_PI));
+                var_f30 = 90.0 - atan2d(sp94.z, sp94.x);
                 OSf32tos16(&var_f30, &var_r26);
                 if (var_r26 < 0) {
                     var_r26 += 0x168;
@@ -1394,7 +1394,7 @@ static s32 DoDebugMove(s32 arg0, s16 *arg1)
                     goto loop_21;
                 }
                 if ((0.0f != spA0.x) || (0.0f != spA0.z)) {
-                    var_f30 = (90.0 + (180.0 * (atan2(spA0.z, spA0.x) / M_PI)));
+                    var_f30 = 90.0 + atan2d(spA0.z, spA0.x);
                     if (var_f30 < 0.0f) {
                         var_f30 += 360.0f;
                     }
@@ -1404,7 +1404,7 @@ static s32 DoDebugMove(s32 arg0, s16 *arg1)
                     RestoreJunction(var_f30, 1);
                     sp50 = &boardCamera;
                     VECSubtract(&sp50->target, &sp50->pos, &sp7C);
-                    var_f30 = (var_f30 + (90.0 - (180.0 * (atan2(-sp7C.z, -sp7C.x) / M_PI))));
+                    var_f30 += 90.0 - atan2d(-sp7C.z, -sp7C.x);
                     if (var_f30 < 0.0f) {
                         var_f30 += 360.0f;
                     }
@@ -1535,7 +1535,7 @@ static s32 ExecJunction(s32 arg0, s16 *arg1)
         }
         else {
             VECSubtract(&sp88->pos, &spAC, &spB8);
-            var_f29 = (90.0 - (180.0 * (atan2(spB8.z, spB8.x) / M_PI)));
+            var_f29 = 90.0 - atan2d(spB8.z, spB8.x);
             if (var_f29 < 0.0f) {
                 var_f29 += 360.0f;
             }
@@ -1611,7 +1611,7 @@ static s32 ExecJunction(s32 arg0, s16 *arg1)
         }
         else {
             if ((0.0f != spC4.x) || (0.0f != spC4.z)) {
-                var_f29 = (90.0 + (180.0 * (atan2(spC4.z, spC4.x) / M_PI)));
+                var_f29 = 90.0 + atan2d(spC4.z, spC4.x);
                 if (var_f29 < 0.0f) {
                     var_f29 += 360.0f;
                 }
@@ -1729,7 +1729,7 @@ void BoardPlayerPosLerpStart(s32 arg0, Vec *arg1, Vec *arg2, s16 arg3)
         }
         VECSubtract(arg2, arg1, &sp18);
         VECNormalize(&sp18, &sp18);
-        var_f26 = 90.0 - (180.0 * (atan2(sp18.z, sp18.x) / M_PI));
+        var_f26 = 90.0 - atan2d(sp18.z, sp18.x);
         var_f30 = var_f26;
         if (var_f30 < 0.0f) {
             var_f30 += 360.0f;
@@ -2896,7 +2896,7 @@ static s32 MegaPlayerPassFunc(s32 player, s32 space)
     VECSubtract(&spC4, &spB8, &spAC);
     spAC.x /= 60.0f;
     spAC.z /= 60.0f;
-    BoardPlayerRotYSet(player, 90.0 - (180.0 * (atan2(spAC.z, spAC.x) / M_PI)));
+    BoardPlayerRotYSet(player, 90.0 - atan2d(spAC.z, spAC.x));
     sp98[1] = BoardVecDistXZCalc(&spC4, &spB8);
     BoardPlayerMotionShiftSet(player, 4, 0, 8, HU3D_MOTATTR_NONE);
     HuPrcSleep(8);
@@ -2998,7 +2998,7 @@ static s32 MegaExecJump(s32 player, s32 space)
     VECSubtract(&spC4, &spB8, &spAC);
     spAC.x /= 60.0f;
     spAC.z /= 60.0f;
-    BoardPlayerRotYSet(player, 90.0 - (180.0 * (atan2(spAC.z, spAC.x) / M_PI)));
+    BoardPlayerRotYSet(player, 90.0 - atan2d(spAC.z, spAC.x));
     BoardPlayerIdleSet(player);
     HuPrcSleep(10);
     sp90[1] = BoardVecDistXZCalc(&spC4, &spB8);

@@ -7,7 +7,7 @@
 #include "game/hsfmotion.h"
 #include "game/pad.h"
 #include "game/sprite.h"
-#include "math.h"
+#include "ext_math.h"
 
 // bss
 omObjData *lbl_1_bss_3A0[4];
@@ -254,8 +254,8 @@ void fn_1_7344(omObjData *arg0)
                 lbl_1_bss_104 = temp_r31->unk0 + 1;
             }
             if (temp_r31->unk60 == 0) {
-                temp_f29 = (180.0 * (atan2((temp_r30->unk0.x - temp_r31->unk24.x), (temp_r30->unk0.z - temp_r31->unk24.z)) / M_PI));
-                temp_f30 = (180.0 * (atan2((temp_r31->unk24.y - temp_r30->unk0.y), (temp_r31->unk24.z - temp_r30->unk0.z)) / M_PI));
+                temp_f29 = atan2d(temp_r30->unk0.x - temp_r31->unk24.x, temp_r30->unk0.z - temp_r31->unk24.z);
+                temp_f30 = atan2d(temp_r31->unk24.y - temp_r30->unk0.y, temp_r31->unk24.z - temp_r30->unk0.z);
                 temp_f30 *= (1.0f - (0.015f * ABS(temp_f30)));
                 temp_r31->unk3C.x = fn_1_AD40(temp_r31->unk3C.x, temp_f30, 0.5f);
                 temp_r31->unk3C.y = fn_1_AD40(temp_r31->unk3C.y, temp_f29, 0.5f);
@@ -524,7 +524,7 @@ void fn_1_8838(unkStruct8 *arg0)
             if (temp_r31->unk74 > 90.0f) {
                 temp_r31->unk74 = 90.0f;
             }
-            temp_f31 = sin((M_PI * temp_r31->unk74) / 180.0);
+            temp_f31 = sind(temp_r31->unk74);
             temp_f30 = cosd(temp_r31->unk74);
             sp18.x = temp_r30->unk0.x - temp_r31->unk58.x;
             sp18.y = temp_r30->unk0.y - temp_r31->unk58.y;
@@ -558,7 +558,7 @@ void fn_1_8838(unkStruct8 *arg0)
         if (temp_r31->unk74 > 90.0f) {
             temp_r31->unk74 = 90.0f;
         }
-        temp_f31 = sin((M_PI * temp_r31->unk74) / 180.0);
+        temp_f31 = sind(temp_r31->unk74);
         sp18.x = temp_r29->unkC.x - temp_r31->unk58.x;
         sp18.y = temp_r29->unkC.y - temp_r31->unk58.y;
         sp18.z = temp_r29->unkC.z - temp_r31->unk58.z;
@@ -925,10 +925,10 @@ void fn_1_962C(omObjData *arg0)
 
         fn_1_A584(var_r31);
         Hu3DModelPosSet(var_r31->unk0, var_r31->unkC.x, var_r31->unkC.y, var_r31->unkC.z);
-        var_f31 = sin((var_r31->unk4C * M_PI) / 180.0);
+        var_f31 = sind(var_r31->unk4C);
         var_r31->unk4C += 3.0f;
         Hu3DModelRotSet(
-            var_r31->unk0, 8.0 * sin((var_r31->unk4C * 0.3 * M_PI) / 180.0), var_r31->unk4C * 0.05f, (-var_r31->unk18.z * 0.25f) + (var_f31 * 8.0f));
+            var_r31->unk0, 8.0 * sind(var_r31->unk4C * 0.3), var_r31->unk4C * 0.05f, (-var_r31->unk18.z * 0.25f) + (var_f31 * 8.0f));
     }
 
     if (lbl_1_bss_108 == 2 && var_r27 >= arg0->work[0]) {
@@ -977,7 +977,7 @@ s32 fn_1_A584(unkStruct10 *arg0)
     arg0->unkC.x += sp14.x;
     arg0->unkC.y += sp14.y;
     arg0->unkC.z += sp14.z;
-    var_f31 = (180.0 * (atan2(sp14.x, sp14.y) / M_PI));
+    var_f31 = atan2d(sp14.x, sp14.y);
     if (var_f31 > 180.0f) {
         var_f31 -= 360.0f;
     }
@@ -1000,7 +1000,7 @@ s32 fn_1_A584(unkStruct10 *arg0)
                 var_r31->unkC.x += sp8.x * (temp_f29 - temp_f30);
                 var_r31->unkC.y += sp8.y * (temp_f29 - temp_f30);
                 var_r31->unkC.z += sp8.z * (temp_f29 - temp_f30);
-                var_f31 = (180.0 * (atan2(sp8.x, sp8.y) / M_PI));
+                var_f31 = atan2d(sp8.x, sp8.y);
                 if (var_f31 > 180.0f) {
                     var_f31 -= 360.0f;
                 }

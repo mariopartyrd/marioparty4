@@ -15,6 +15,8 @@
 #include "game/board/space.h"
 #include "game/board/ui.h"
 
+#include "ext_math.h"
+
 typedef struct {
     struct {
         u8 unk00_field0 : 1;
@@ -247,9 +249,9 @@ static void ExecMapView(void) {
         if (sp9 != 0 || sp8 != 0) {
             OSs8tof32(&sp9, &spC.x);
             OSs8tof32(&sp8, &spC.z);
-            temp_f28 = 180.0 * (atan2(spC.x, -spC.z) / M_PI);
-            spC.x = var_f29 * sin(temp_f28 * M_PI / 180.0);
-            spC.z = var_f29 * cos(temp_f28 * M_PI / 180.0);
+            temp_f28 = atan2d(spC.x, -spC.z);
+            spC.x = var_f29 * sind(temp_f28);
+            spC.z = var_f29 * cosd(temp_f28);
         }
         VECAdd(&spC, &focusPos, &focusPos);
         if (focusPos.x < temp_f26) {
@@ -563,7 +565,7 @@ static void UpdateOverheadView(omObjData *arg0) {
         sp14.y -= 240.0f;
         VECSubtract(&sp20, &sp14, &sp8);
         sp8.z = 0.0f;
-        temp_f30 = BoardDAngleCalc(180.0 * (atan2(sp8.y, sp8.x) / M_PI) - 90.0);
+        temp_f30 = BoardDAngleCalc(atan2d(sp8.y, sp8.x) - 90.0);
         temp_f31 = VECMag(&sp8) / 32;
         if (i != 4) {
             var_r28 = i + 4;

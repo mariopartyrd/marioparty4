@@ -13,6 +13,8 @@
 #include "game/data.h"
 #include "game/wipe.h"
 
+#include "ext_math.h"
+
 static s16 stopWin = -1;
 static s16 wheelMdl = -1;
 s16 lbl_801D3854 = -1;
@@ -1330,7 +1332,7 @@ static void UpdateLotteryTicket(omObjData *object)
 	switch(work->state) {
 		case 2:
 			if(work->angle < 540) {
-				float scale = 0.4f+(0.1f*sin(M_PI*(float)(work->angle%180)/180.0));
+				float scale = 0.4f+(0.1f*sind((float)(work->angle%180)));
 				HuSprGrpScaleSet(work->group, scale, scale);
 				work->angle += 9;
 			} else {
@@ -1511,7 +1513,7 @@ static void StartHostMove(Vec *from, Vec *to, s16 time)
 	omSetTra(object, from->x, from->y, from->z);
 	omSetRot(object, (to->x-from->x)/duration, 0.0f, (to->z-from->z)/duration);
 	omSetSca(object, to->x, to->y, to->z);
-	angle = 180.0*(atan2(object->rot.x, object->rot.z)/M_PI);
+	angle = atan2d(object->rot.x, object->rot.z);
 	work->angle = 0;
 	OSf32tos16(&angle, &work->angle_end);
 	BoardModelMotionShiftSet(hostMdl, hostMot[0], 0, 8, HU3D_MOTATTR_LOOP);
