@@ -177,24 +177,8 @@ void fn_1_A0(void)
 
 s32 lbl_1_data_16C = -1;
 
-// https://decomp.me/scratch/QQLCN r17 issues
 void fn_1_4C8(omObjData *object)
 {
-    Mtx sp1E0;
-    float sp1A8[2];
-    float sp1A0[2];
-    s32 spD0;
-    s32 spCC;
-    s32 spC8;
-    s32 spC4;
-    s32 spC0;
-    float spBC;
-    s32 spB8;
-    ModelData *spB4;
-    float spB0;
-    float spAC;
-    s32 spA8;
-    s32 spA4;
     float var_f31;
     float var_f30;
     float var_f28;
@@ -221,6 +205,22 @@ void fn_1_4C8(omObjData *object)
     s32 var_r19;
     s32 var_r18;
     s32 var_r17;
+
+    Mtx sp1E0;
+    float sp1A8[2];
+    float sp1A0[2];
+    s32 spD0;
+    s32 spCC;
+    s32 spC8;
+    s32 spC4;
+    s32 spC0;
+    float spBC;
+    s32 spB8;
+    ModelData *spB4;
+    float spB0;
+    float spAC;
+    s32 spA8;
+    s32 spA4;
 
     var_r31 = object->data;
     var_r27 = (&lbl_1_bss_BC)[1 - object->work[0]]->data;
@@ -277,8 +277,7 @@ void fn_1_4C8(omObjData *object)
             spC4 = 0;
             spC0 = 0;
             if (fabs((500.0 * var_r31->unk_3C) - object->trans.x) < 10.0) {
-                var_r17 = object->trans.x < -250.0 ? -1 : (object->trans.x > 250.0 ? 1 : 0);
-                spD0 = var_r17;
+                var_r17 = spD0 = object->trans.x < -250.0 ? -1 : (object->trans.x > 250.0 ? 1 : 0);
             }
             else {
                 var_r17 = (object->trans.x < 0.0f ? -1 : 0);
@@ -519,7 +518,6 @@ void fn_1_4C8(omObjData *object)
                     espAttrSet(lbl_1_data_8[1], HUSPR_ATTR_DISPOFF);
                 }
                 if (lbl_1_bss_B4 == 0x122) {
-                    // TODO remove temporary?
                     spB8 = HuAudFXPlay((var_r31->unk_08 != -1 ? var_r31->unk_08 : 8) + 0x800);
                     HuAudFXFadeOut(spB8, 0x9C4);
                 }
@@ -584,7 +582,7 @@ void fn_1_4C8(omObjData *object)
                 }
                 else {
                     var_f20 = 1.0f;
-                    var_f21 = 1.0f;
+                    var_f21 = 0.5f;
                 }
                 var_r23->scale.x = var_f20 + (var_f21 * sind((float)(var_r31->unk_1C % 180)));
                 var_r23->scale.y = var_r23->scale.z = var_r23->scale.x;
@@ -724,16 +722,9 @@ void fn_1_4C8(omObjData *object)
         if (lbl_1_data_15C >= 6) {
             spA4 = lbl_1_bss_18;
             for (spA8 = 0; spA8 < 0x32; spA8++) {
-            loop_344:
-                lbl_1_bss_18 = rand8() % 11;
-                if (lbl_1_bss_18 >= 9) {
-                    if (lbl_1_bss_18 == (var_r31->unk_00 + 9)) {
-                        goto loop_344;
-                    }
-                }
-                if ((lbl_1_bss_18 < 9) && (lbl_1_bss_28C[lbl_1_bss_18].unk_0C == 0)) {
-                    goto loop_344;
-                }
+                do {
+                    lbl_1_bss_18 = rand8() % 11;
+                } while ((lbl_1_bss_18 >= 9 && lbl_1_bss_18 == var_r31->unk_00 + 9) || (lbl_1_bss_18 < 9 && lbl_1_bss_28C[lbl_1_bss_18].unk_0C == 0));
                 if (spA4 != lbl_1_bss_18) {
                     break;
                 }

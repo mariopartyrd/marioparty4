@@ -1279,7 +1279,7 @@ config.libs = [
     Rel(
         "m458Dll",  # Panels of Doom
         objects={
-            Object(NonMatching, "REL/m458Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m458Dll/main.c"),
         },
     ),
     Rel(
