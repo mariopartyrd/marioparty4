@@ -780,7 +780,6 @@ void fn_1_125C(omObjData *object)
     object->func = NULL;
 }
 
-// TODO https://decomp.me/scratch/1aZdv
 void fn_1_16F8(omObjData *object)
 {
     s32 spA8[3];
@@ -813,7 +812,7 @@ void fn_1_16F8(omObjData *object)
     s32 var_r24;
     s32 var_r23;
     s32 var_r22;
-    s32 var_r21; // this is weird, used as a temporary
+    s32 var_r21;
 
     sp18 = 0;
     sp14 = 0;
@@ -827,7 +826,7 @@ void fn_1_16F8(omObjData *object)
     }
     if (var_r31->unk_14) {
         sp20 = sp1C = 0.0f;
-        sp10 = 0;
+        var_r21 = sp10 = 0;
         fn_1_2F5C(object, &sp20, &sp1C, &sp10);
     }
     else {
@@ -850,8 +849,7 @@ void fn_1_16F8(omObjData *object)
                 else {
                     if (!lbl_1_bss_40) {
                         sp20 = sp1C = 0.0f;
-
-                        sp10 = 0;
+                        var_r21 = sp10 = 0;
                     }
                     if (fabs(sp20) > 8.0) {
                         var_f30 = 0.25f * sp20;
