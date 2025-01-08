@@ -565,17 +565,17 @@ void fn_1_14CC(Mtx arg0, float arg8, float arg9, float argA)
     Mtx sp38;
     Mtx sp8;
     if (argA != 0.0f) {
-        PSMTXRotRad(arg0, 0x5A, 0.017453292f * argA);
+        PSMTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
     }
     else {
         PSMTXIdentity(arg0);
     }
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 0x58, 0.017453292f * arg8);
+        PSMTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
         PSMTXConcat(sp38, arg0, arg0);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 0x59, 0.017453292f * arg9);
+        PSMTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
         PSMTXConcat(sp8, arg0, arg0);
     }
 }
@@ -613,23 +613,6 @@ void fn_1_16B0(Mtx var_r30, Vec *var_r31)
     var_r31->y = fn_1_15EC(var_f25, var_f29);
 }
 
-static inline float fn_1_1B40_inline(omObjData *object, s32 arg1, s32 arg2, float arg8, float arg9)
-{
-    float var_f31;
-    float var_f30;
-
-    var_f30 = sqrtf(arg8);
-    var_f31 = arg9 + arg8;
-    if (var_f31 < 0.0f) {
-        var_f31 += var_f30 + arg2 + arg1;
-    }
-    else if (var_f31 >= var_f30) {
-        var_f31 -= var_f30 + object->group;
-    }
-    return var_f31;
-}
-
-// TODO get a working stripped out inline https://decomp.me/scratch/2IbZG
 void fn_1_1B40(omObjData *object)
 {
     Mtx spCC;
@@ -698,8 +681,10 @@ void fn_1_1B40(omObjData *object)
                 break;
         }
         if (0) {
-            fn_1_1B40_inline(object, 1, 2, 0.0f, 0.0f);
-            fn_1_1B40_inline(object, 1, 2, 0.0f, 0.0f);
+            int x = 12;
+            int y = 24;
+            char *str = "%f";
+            print8(x, y, 1.5f, str, sqrtf(fn_1_15EC(object->trans.x, object->trans.y)));
         }
         var_r31->unk_38 = var_r31->unk_04 * sind(var_r31->unk_18);
         var_r31->unk_40 = var_r31->unk_04 * cosd(var_r31->unk_18);
