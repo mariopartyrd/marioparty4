@@ -1398,12 +1398,12 @@ config.libs = [
     Rel(
         "mstoryDll",
         objects={
-            Object(NonMatching, "REL/mstoryDll/main.c"),
-            Object(NonMatching, "REL/mstoryDll/board_clear.c"),
-            Object(NonMatching, "REL/mstoryDll/board_miss.c"),
-            Object(NonMatching, "REL/mstoryDll/mg_clear.c"),
-            Object(NonMatching, "REL/mstoryDll/mg_miss.c"),
-            Object(NonMatching, "REL/mstoryDll/save.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstoryDll/main.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstoryDll/board_clear.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstoryDll/board_miss.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstoryDll/mg_clear.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstoryDll/mg_miss.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstoryDll/save.c"),
         },
     ),
     Rel(
