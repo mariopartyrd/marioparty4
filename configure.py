@@ -1087,8 +1087,8 @@ config.libs = [
     Rel(
         "m430Dll",  # Pair-a-sailing
         objects={
-            Object(Matching, "REL/m430Dll/main.c"),
-            Object(NonMatching, "REL/m430Dll/water.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/water.c"),
             Object(NonMatching, "REL/m430Dll/player.c"),
         },
     ),
