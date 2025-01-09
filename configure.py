@@ -1087,7 +1087,7 @@ config.libs = [
     Rel(
         "m430Dll",  # Pair-a-sailing
         objects={
-            Object(NonMatching, "REL/m430Dll/main.c"),
+            Object(Matching, "REL/m430Dll/main.c"),
             Object(NonMatching, "REL/m430Dll/water.c"),
             Object(NonMatching, "REL/m430Dll/player.c"),
         },
