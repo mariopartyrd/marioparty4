@@ -39,10 +39,11 @@ typedef struct {
     /* 0x08 */ s32 unk08;
     /* 0x0C */ s32 unk0C;
     /* 0x10 */ char unk10[0x18];
-} StructBss19C; // Size 0x28
+} StructBss16C; // Size 0x28
 
 // main.c
 float fn_1_864(float arg0, float arg1, float arg2, float arg3);
+float fn_1_88C(float arg0, float arg1, float arg2);
 float fn_1_8AC(float arg0, float arg1, float arg2, float arg3);
 float fn_1_984(float arg0, float arg1, float arg2, float arg3);
 float fn_1_B08(float arg0, float arg1, float arg2, float arg3);
@@ -63,6 +64,7 @@ void fn_1_2828(Process* arg0, void (*arg1)(void));
 void fn_1_2948(omObjData* arg0, s32 arg1, Vec arg2, float arg3, float arg4, float arg5);
 void fn_1_2D00(omObjData* arg0, s32 arg1, Vec arg2, float arg3, float arg4, float arg5);
 void fn_1_357C(StructFn357C* arg0, s32 arg1);
+void fn_1_42A0(StructBss24* arg0, StructBss24* arg1, float arg2, float arg3, float arg4);
 s32 fn_1_3668(s32 arg0);
 void fn_1_3754(void);
 void fn_1_3854(StructBss24* arg0);
@@ -72,6 +74,7 @@ void fn_1_6004(StructBss24* arg0, StructBss24* arg1, float arg2, float arg3, flo
 int fn_1_66CC(int modelId);
 
 void fn_1_6704(omObjData* arg0);
+void fn_1_67D8(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void fn_1_6A90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void fn_1_6D78(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 fn_1_7064(s32 arg0, s32 arg1);
@@ -100,6 +103,8 @@ void fn_1_188F0(Process* arg0, s32 arg1);
 // ending.c
 void fn_1_1B90C(Process* arg0);
 
+extern s32 lbl_1_bss_88[16];
+extern s32 lbl_1_bss_78[4];
 extern s32 lbl_1_bss_68[];
 extern StructBss24 lbl_1_bss_24;
 extern s32 lbl_1_data_0[][4];
