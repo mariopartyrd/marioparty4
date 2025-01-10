@@ -20,6 +20,7 @@
 #include "game/board/window.h"
 
 #include "dolphin.h"
+#include "ext_math.h"
 #include "string.h"
 
 typedef struct {
@@ -238,7 +239,7 @@ static void ShowLogo(void) {
     HuSprGrpPosSet(logoSprGrp, 288.0f, 240.0f);
     for (spA = 0; spA < 90; spA += 4) {
         OSs16tof32(&spA, &var_f27);
-        temp_f28 = sin(var_f27 * M_PI / 180.0);
+        temp_f28 = sind(var_f27);
         HuSprScaleSet(logoSprGrp, 0, temp_f28, temp_f28);
         HuPrcVSleep();
     }
@@ -246,7 +247,7 @@ static void ShowLogo(void) {
     for (spA = 0; spA < 540; spA += 4) {
         sp8 = spA % 180;
         OSs16tof32(&sp8, &var_f27);
-        temp_f28 = 1.0 + 0.699999988079071 * sin(var_f27 * M_PI / 180.0);
+        temp_f28 = 1.0 + 0.7f * sind(var_f27);
         HuSprScaleSet(logoSprGrp, 0, temp_f28, temp_f28);
         HuPrcVSleep();
     }
@@ -254,7 +255,7 @@ static void ShowLogo(void) {
     HuPrcSleep(0x78);
     for (spA = 0; spA < 90; spA += 4) {
         OSs16tof32(&spA, &var_f27);
-        temp_f28 = cos(var_f27 * M_PI / 180.0);
+        temp_f28 = cosd(var_f27);
         HuSprScaleSet(logoSprGrp, 0, temp_f28, temp_f28);
         HuPrcVSleep();
     }
@@ -586,7 +587,7 @@ static void PlayerDiceNumHide(omObjData *arg0, PlayerStartWork *arg1) {
                 arg1->unk02 = 2;
             }
             OSs16tof32(&arg1->unk06, &var_f28);
-            arg0->rot.x = 1.0 + 1.2999999523162842 * sin(var_f28 * M_PI / 180.0);
+            arg0->rot.x = 1.0 + 1.3f * sind(var_f28);
             break;
         case 2:
             arg1->unk06 += 9;
@@ -595,8 +596,8 @@ static void PlayerDiceNumHide(omObjData *arg0, PlayerStartWork *arg1) {
                 arg1->unk02 = 3;
             }
             OSs16tof32(&arg1->unk06, &var_f28);
-            arg0->rot.x = cos(0.5f * var_f28 * M_PI / 180.0);
-            arg0->rot.y = 1.0 + 1.2999999523162842 * sin(var_f28 * M_PI / 180.0);
+            arg0->rot.x = cosd(0.5f * var_f28);
+            arg0->rot.y = 1.0 + 1.3f * sind(var_f28);
             break;
         case 3:
             BoardModelVisibilitySet(arg1->unk0A, 0);

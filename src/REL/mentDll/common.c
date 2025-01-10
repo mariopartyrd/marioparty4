@@ -109,7 +109,7 @@ f32 fn_1_254(f32 arg8, f32 arg9, f32 argA, f32 argB)
     if (argA >= argB) {
         return arg9;
     }
-    return (arg8 + ((arg9 - arg8) * (1.0 - cos((M_PI * ((90.0f / argB) * argA)) / 180.0))));
+    return (arg8 + ((arg9 - arg8) * (1.0 - cosd((90.0f / argB) * argA))));
 }
 
 // fn_1_32C
@@ -118,7 +118,7 @@ f32 fn_1_32C(f32 arg8, f32 arg9, f32 argA, f32 argB)
     if (argA >= argB) {
         return arg9;
     }
-    return (arg8 + ((arg9 - arg8) * sin((M_PI * ((90.0f / argB) * argA)) / 180.0)));
+    return arg8 + (arg9 - arg8) * sind((90.0f / argB) * argA);
 }
 
 f32 fn_1_3F4(f32 arg8, f32 arg9, f32 argA, f32 argB)
@@ -126,7 +126,7 @@ f32 fn_1_3F4(f32 arg8, f32 arg9, f32 argA, f32 argB)
     if (argA >= argB) {
         return arg8;
     }
-    return (arg8 + ((arg9 - arg8) * sin((M_PI * ((360.0f / argB) * argA)) / 180.0)));
+    return (arg8 + ((arg9 - arg8) * sind((360.0f / argB) * argA)));
 }
 
 void fn_1_4B0(s32 arg0)

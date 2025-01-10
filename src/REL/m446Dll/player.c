@@ -6,7 +6,7 @@
 #include "game/hsfmotion.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "math.h"
+#include "ext_math.h"
 
 // cursor.c
 extern unkStruct7 *m446CursorCreate(s32);
@@ -122,7 +122,7 @@ void fn_1_487C(void)
                 lbl_1_data_2DC[temp_r31->unk18](temp_r31);
             }
             if (temp_r31->unkB4 != 0) {
-                temp_f31 = sin((M_PI * (90.0f * temp_r31->unkC0)) / 180.0);
+                temp_f31 = sind(90.0f * temp_r31->unkC0);
                 temp_f31 *= temp_f31;
                 temp_r31->unk48.x = (temp_r31->unk9C.x + (temp_f31 * (temp_r31->unkA8.x - temp_r31->unk9C.x)));
                 temp_r31->unk48.y = (temp_r31->unk9C.y + (temp_f31 * (temp_r31->unkA8.y - temp_r31->unk9C.y)));
@@ -136,7 +136,7 @@ void fn_1_487C(void)
                 }
             }
             if (temp_r31->unk98 != 0) {
-                temp_f31 = sin((M_PI * (90.0f * temp_r31->unkB8)) / 180.0);
+                temp_f31 = sind(90.0f * temp_r31->unkB8);
                 temp_f31 *= temp_f31;
                 temp_r31->unk54.x = (temp_r31->unk80.x + (temp_f31 * (temp_r31->unk8C.x - temp_r31->unk80.x)));
                 temp_r31->unk54.y = (temp_r31->unk80.y + (temp_f31 * (temp_r31->unk8C.y - temp_r31->unk80.y)));

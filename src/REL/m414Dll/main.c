@@ -1156,9 +1156,9 @@ void fn_1_42AC(void)
         var_f23 = -200.0 * (cos(0.0) * cosd(lbl_1_bss_920[var_r27]));
     }
     else {
-        var_f24 = -200.0 * (sind(lbl_1_bss_920[var_r27]) * cos(0.3490658503988659));
-        var_f26 = 150.0 + (-200.0 * sin(-0.3490658503988659));
-        var_f23 = -200.0 * (cos(-0.3490658503988659) * cosd(lbl_1_bss_920[var_r27]));
+        var_f24 = -200.0 * (sind(lbl_1_bss_920[var_r27]) * cosd(20));
+        var_f26 = 150.0 + -200.0 * sind(-20);
+        var_f23 = -200.0 * (cosd(-20) * cosd(lbl_1_bss_920[var_r27]));
     }
     if (!lbl_1_bss_938[var_r30->unk_04]) {
         var_f26 += 70.0f;

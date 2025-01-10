@@ -11,10 +11,8 @@
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
-#include "math.h"
 
 #include "REL/modeltestDll.h"
-#include "math.h"
 
 // -------------------------------------------------------------------------- //
 
@@ -311,7 +309,7 @@ void fn_1_29C(omObjData *arg0)
         Hu3DParManAttrSet(lbl_1_bss_864[var_r31], 0x864);
         Hu3DParticleBlendModeSet(Hu3DParManModelIDGet(lbl_1_bss_864[var_r31]), 1U);
         Hu3DParManPosSet(
-            lbl_1_bss_864[var_r31], (100.0 * sin((M_PI * (36.0f * var_r31)) / 180.0)), 0.0f, 100.0 * cos((M_PI * (36.0f * var_r31)) / 180.0));
+            lbl_1_bss_864[var_r31], (100.0 * sind(36.0f * var_r31)), 0.0f, 100.0 * cosd(36.0f * var_r31));
         Hu3DParManRotSet(lbl_1_bss_864[var_r31], -90.0f, 0.0f, 0.0f);
     }
 
@@ -465,28 +463,28 @@ void fn_1_F9C(struct om_obj_data *omData)
         }
     }
 
-    sp3C.x = Center.x + (CZoom * (sin((M_PI * CRot.y) / 180.0) * cos((M_PI * CRot.x) / 180.0)));
-    sp3C.y = (Center.y + (CZoom * -sin((M_PI * CRot.x) / 180.0)));
-    sp3C.z = (Center.z + (CZoom * (cos((M_PI * CRot.y) / 180.0) * cos((M_PI * CRot.x) / 180.0))));
+    sp3C.x = Center.x + CZoom * (sind(CRot.y) * cosd(CRot.x));
+    sp3C.y = Center.y + CZoom * -sind(CRot.x);
+    sp3C.z = Center.z + CZoom * (cosd(CRot.y) * cosd(CRot.x));
     sp30.x = Center.x - sp3C.x;
     sp30.y = Center.y - sp3C.y;
     sp30.z = Center.z - sp3C.z;
-    sp24.x = (sin((M_PI * CRot.y) / 180.0) * sin((M_PI * CRot.x) / 180.0));
-    sp24.y = cos((M_PI * CRot.x) / 180.0);
-    sp24.z = (cos((M_PI * CRot.y) / 180.0) * sin((M_PI * CRot.x) / 180.0));
+    sp24.x = sind(CRot.y) * sind(CRot.x);
+    sp24.y = cosd(CRot.x);
+    sp24.z = cosd(CRot.y) * sind(CRot.x);
     temp_f31 = CRot.z;
 
-    sp18.x = sp24.x * (sp30.x * sp30.x + (1.0f - sp30.x * sp30.x) * cos((M_PI * temp_f31) / 180.0))
-        + sp24.y * (sp30.x * sp30.y * (1.0f - cos((M_PI * temp_f31) / 180.0)) - sp30.z * sin((M_PI * temp_f31) / 180.0))
-        + sp24.z * (sp30.x * sp30.z * (1.0f - cos((M_PI * temp_f31) / 180.0)) + sp30.y * sin((M_PI * temp_f31) / 180.0));
+    sp18.x = sp24.x * (sp30.x * sp30.x + (1.0f - sp30.x * sp30.x) * cosd(temp_f31))
+        + sp24.y * (sp30.x * sp30.y * (1.0f - cosd(temp_f31)) - sp30.z * sind(temp_f31))
+        + sp24.z * (sp30.x * sp30.z * (1.0f - cosd(temp_f31)) + sp30.y * sind(temp_f31));
 
-    sp18.y = sp24.y * (sp30.y * sp30.y + (1.0f - sp30.y * sp30.y) * cos((M_PI * temp_f31) / 180.0))
-        + sp24.x * (sp30.x * sp30.y * (1.0f - cos((M_PI * temp_f31) / 180.0)) + sp30.z * sin((M_PI * temp_f31) / 180.0))
-        + sp24.z * (sp30.y * sp30.z * (1.0f - cos((M_PI * temp_f31) / 180.0)) - sp30.x * sin((M_PI * temp_f31) / 180.0));
+    sp18.y = sp24.y * (sp30.y * sp30.y + (1.0f - sp30.y * sp30.y) * cosd(temp_f31))
+        + sp24.x * (sp30.x * sp30.y * (1.0f - cosd(temp_f31)) + sp30.z * sind(temp_f31))
+        + sp24.z * (sp30.y * sp30.z * (1.0f - cosd(temp_f31)) - sp30.x * sind(temp_f31));
 
-    sp18.z = sp24.z * (sp30.z * sp30.z + (1.0f - sp30.z * sp30.z) * cos((M_PI * temp_f31) / 180.0))
-        + (sp24.x * (sp30.x * sp30.z * (1.0 - cos((M_PI * temp_f31) / 180.0)) - sp30.y * sin((M_PI * temp_f31) / 180.0))
-            + sp24.y * (sp30.y * sp30.z * (1.0 - cos((M_PI * temp_f31) / 180.0)) + sp30.x * sin((M_PI * temp_f31) / 180.0)));
+    sp18.z = sp24.z * (sp30.z * sp30.z + (1.0f - sp30.z * sp30.z) * cosd(temp_f31))
+        + (sp24.x * (sp30.x * sp30.z * (1.0 - cosd(temp_f31)) - sp30.y * sind(temp_f31))
+            + sp24.y * (sp30.y * sp30.z * (1.0 - cosd(temp_f31)) + sp30.x * sind(temp_f31)));
 
     VECCrossProduct(&sp24, &sp30, &sp30);
     VECNormalize(&sp30, &sp30);
@@ -603,11 +601,11 @@ void fn_1_20F4(void)
             Hu3DMtxTransGet(spC0, &sp18);
             PSMTXMultVec(sp60, &sp18, &sp18);
 
-            temp_f27 = 180.0 * (atan2(sp18.z, sp18.x) / M_PI);
+            temp_f27 = atan2d(sp18.z, sp18.x);
             temp_r31 = &lbl_1_bss_40[var_r29 * 2];
-            temp_r31->obj->data.curr.rot.x = temp_r31->rot.x + (var_f29 * (2.0 * (sin((M_PI * temp_f27) / 180.0) * sin((M_PI * var_r27) / 180.0))));
+            temp_r31->obj->data.curr.rot.x = temp_r31->rot.x + (var_f29 * (2.0 * (sind(temp_f27) * sind(var_r27))));
             temp_r31->obj->data.curr.rot.y = temp_r31->rot.y;
-            temp_r31->obj->data.curr.rot.z = temp_r31->rot.z + (var_f29 * cos((M_PI * var_r27) / 180.0));
+            temp_r31->obj->data.curr.rot.z = temp_r31->rot.z + (var_f29 * cosd(var_r27));
 
             Hu3DModelObjMtxGet(temp_r3, lbl_1_data_D8[(var_r29 * 2) + 1], spC0);
             Hu3DMtxTransGet(spC0, &sp24);
@@ -632,7 +630,7 @@ void fn_1_20F4(void)
             var_f29 = 0.0f;
         }
         else {
-            var_r27 = 180.0 * (atan2(HuPadSubStkX[1], HuPadSubStkY[1]) / M_PI);
+            var_r27 = atan2d(HuPadSubStkX[1], HuPadSubStkY[1]);
             temp_f30 = (HuPadSubStkX[1] * HuPadSubStkX[1]) + (HuPadSubStkY[1] * HuPadSubStkY[1]);
             var_f29 = sqrtf(temp_f30);
             if (var_f29 > 80.0f) {
@@ -658,8 +656,8 @@ void fn_1_28F8(Point3d *arg0, Point3d *arg1)
     C_MTXLookAt(sp18, &cam->pos, &cam->up, &cam->target);
     PSMTXMultVec(sp18, arg0, &spC);
 
-    temp_f31 = (1.2f * (spC.z * (sin((M_PI * (cam->fov / 2)) / 180.0) / (cos((M_PI * (cam->fov / 2)) / 180.0)))));
-    temp_f30 = (spC.z * (sin((M_PI * (cam->fov / 2)) / 180.0) / (cos((M_PI * (cam->fov / 2)) / 180.0))));
+    temp_f31 = (1.2f * (spC.z * (sind(cam->fov / 2) / (cosd(cam->fov / 2)))));
+    temp_f30 = (spC.z * (sind(cam->fov / 2) / (cosd(cam->fov / 2))));
     arg1->x = 288.0f + (spC.x * (288.0f / -temp_f31));
     arg1->y = 240.0f + (spC.y * (240.0f / temp_f30));
 }

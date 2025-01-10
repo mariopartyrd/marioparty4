@@ -8,7 +8,7 @@
 #include "game/process.h"
 #include "game/window.h"
 #include "game/wipe.h"
-#include "math.h"
+#include "ext_math.h"
 
 typedef struct camera_view_params {
     Vec rot;
@@ -233,15 +233,15 @@ void fn_1_B8C(omObjData *object)
         y = lbl_1_bss_24[i].y;
         z = lbl_1_bss_24[i].z;
 
-        pos.x = (((sin((M_PI * y) / 180.0) * cos((M_PI * x) / 180.0)) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].x);
-        pos.y = (-sin((M_PI * x) / 180.0) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].y;
-        pos.z = ((cos((M_PI * y) / 180.0) * cos((M_PI * x) / 180.0)) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].z;
+        pos.x = (((sind(y) * cosd(x)) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].x);
+        pos.y = (-sind(x) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].y;
+        pos.z = ((cosd(y) * cosd(x)) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].z;
         target.x = lbl_1_bss_C[i].x;
         target.y = lbl_1_bss_C[i].y;
         target.z = lbl_1_bss_C[i].z;
-        up.x = sin((M_PI * y) / 180.0) * sin((M_PI * x) / 180.0);
-        up.y = cos((M_PI * x) / 180.0);
-        up.z = cos((M_PI * y) / 180.0) * sin((M_PI * x) / 180.0);
+        up.x = sind(y) * sind(x);
+        up.y = cosd(x);
+        up.z = cosd(y) * sind(x);
         Hu3DCameraPosSet(lbl_1_data_6E[i], pos.x, pos.y, pos.z, up.x, up.y, up.z, target.x, target.y, target.z);
     }
 }
@@ -272,27 +272,27 @@ void fn_1_F40(omObjData *object)
     if (lbl_1_bss_4[0] < 100.0f) {
         lbl_1_bss_4[0] = 100.0f;
     }
-    pos.x = lbl_1_bss_C[0].x + (lbl_1_bss_4[0] * (sin((M_PI * lbl_1_bss_24[0].y) / 180.0) * cos((M_PI * lbl_1_bss_24[0].x) / 180.0)));
-    pos.y = (lbl_1_bss_C[0].y + (lbl_1_bss_4[0] * -sin((M_PI * lbl_1_bss_24[0].x) / 180.0)));
-    pos.z = (lbl_1_bss_C[0].z + (lbl_1_bss_4[0] * (cos((M_PI * lbl_1_bss_24[0].y) / 180.0) * cos((M_PI * lbl_1_bss_24[0].x) / 180.0))));
+    pos.x = lbl_1_bss_C[0].x + (lbl_1_bss_4[0] * (sind(lbl_1_bss_24[0].y) * cosd(lbl_1_bss_24[0].x)));
+    pos.y = (lbl_1_bss_C[0].y + (lbl_1_bss_4[0] * -sind(lbl_1_bss_24[0].x)));
+    pos.z = (lbl_1_bss_C[0].z + (lbl_1_bss_4[0] * (cosd(lbl_1_bss_24[0].y) * cosd(lbl_1_bss_24[0].x))));
     offset.x = lbl_1_bss_C[0].x - pos.x;
     offset.y = lbl_1_bss_C[0].y - pos.y;
     offset.z = lbl_1_bss_C[0].z - pos.z;
-    dir.x = (sin((M_PI * lbl_1_bss_24[0].y) / 180.0) * sin((M_PI * lbl_1_bss_24[0].x) / 180.0));
-    dir.y = cos((M_PI * lbl_1_bss_24[0].x) / 180.0);
-    dir.z = (cos((M_PI * lbl_1_bss_24[0].y) / 180.0) * sin((M_PI * lbl_1_bss_24[0].x) / 180.0));
+    dir.x = (sind(lbl_1_bss_24[0].y) * sind(lbl_1_bss_24[0].x));
+    dir.y = cosd(lbl_1_bss_24[0].x);
+    dir.z = (cosd(lbl_1_bss_24[0].y) * sind(lbl_1_bss_24[0].x));
     z_rot = lbl_1_bss_24[0].z;
-    y_offset.x = dir.x * (offset.x * offset.x + (1.0f - offset.x * offset.x) * cos((M_PI * z_rot) / 180.0))
-        + dir.y * (offset.x * offset.y * (1.0f - cos((M_PI * z_rot) / 180.0)) - offset.z * sin((M_PI * z_rot) / 180.0))
-        + dir.z * (offset.x * offset.z * (1.0f - cos((M_PI * z_rot) / 180.0)) + offset.y * sin((M_PI * z_rot) / 180.0));
+    y_offset.x = dir.x * (offset.x * offset.x + (1.0f - offset.x * offset.x) * cosd(z_rot))
+        + dir.y * (offset.x * offset.y * (1.0f - cosd(z_rot)) - offset.z * sind(z_rot))
+        + dir.z * (offset.x * offset.z * (1.0f - cosd(z_rot)) + offset.y * sind(z_rot));
 
-    y_offset.y = dir.y * (offset.y * offset.y + (1.0f - offset.y * offset.y) * cos((M_PI * z_rot) / 180.0))
-        + dir.x * (offset.x * offset.y * (1.0f - cos((M_PI * z_rot) / 180.0)) + offset.z * sin((M_PI * z_rot) / 180.0))
-        + dir.z * (offset.y * offset.z * (1.0f - cos((M_PI * z_rot) / 180.0)) - offset.x * sin((M_PI * z_rot) / 180.0));
+    y_offset.y = dir.y * (offset.y * offset.y + (1.0f - offset.y * offset.y) * cosd(z_rot))
+        + dir.x * (offset.x * offset.y * (1.0f - cosd(z_rot)) + offset.z * sind(z_rot))
+        + dir.z * (offset.y * offset.z * (1.0f - cosd(z_rot)) - offset.x * sind(z_rot));
 
-    y_offset.z = dir.z * (offset.z * offset.z + (1.0f - offset.z * offset.z) * cos((M_PI * z_rot) / 180.0))
-        + (dir.x * (offset.x * offset.z * (1.0 - cos((M_PI * z_rot) / 180.0)) - offset.y * sin((M_PI * z_rot) / 180.0))
-            + dir.y * (offset.y * offset.z * (1.0 - cos((M_PI * z_rot) / 180.0)) + offset.x * sin((M_PI * z_rot) / 180.0)));
+    y_offset.z = dir.z * (offset.z * offset.z + (1.0f - offset.z * offset.z) * cosd(z_rot))
+        + (dir.x * (offset.x * offset.z * (1.0 - cosd(z_rot)) - offset.y * sind(z_rot))
+            + dir.y * (offset.y * offset.z * (1.0 - cosd(z_rot)) + offset.x * sind(z_rot)));
 
     VECCrossProduct(&dir, &offset, &offset);
     VECNormalize(&offset, &offset);

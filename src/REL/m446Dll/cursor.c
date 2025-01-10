@@ -2,7 +2,7 @@
 
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-#include "math.h"
+#include "ext_math.h"
 
 // bss
 unkStruct3 *lbl_1_bss_98;
@@ -42,7 +42,7 @@ void fn_1_7350(void)
         do {
             temp_r31 = var_r30->unk0;
             if (temp_r31->field00_bit1 != 0) {
-                temp_f31 = sin((M_PI * (90.0f * temp_r31->unk4C)) / 180.0);
+                temp_f31 = sind(90.0f * temp_r31->unk4C);
                 temp_f31 *= temp_f31;
                 temp_r31->unk20.x = (temp_r31->unk2C.x + (temp_f31 * (temp_r31->unk38.x - temp_r31->unk2C.x)));
                 temp_r31->unk20.y = (temp_r31->unk2C.y + (temp_f31 * (temp_r31->unk38.y - temp_r31->unk2C.y)));

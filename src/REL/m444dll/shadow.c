@@ -49,8 +49,8 @@ void fn_1_D9F4(s16 arg0)
     sp10.y = 1.0f;
     C_MTXLookAt(sp34, &sp28, &sp10, &sp1C);
     GXLoadPosMtxImm(sp34, 0);
-    sp28.x = 1.2000000476837158 * (10000.0 * -sin(var_r31->fov / 2));
-    sp28.y = 0.8333333134651184 * (10000.0 * -sin(var_r31->fov / 2));
+    sp28.x = 1.2f * (10000.0 * -sin(var_r31->fov / 2));
+    sp28.y = (2.5f / 3) * (10000.0 * -sin(var_r31->fov / 2));
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
     GXPosition3f32(-sp28.x, -sp28.y, -10000.0f);
     GXPosition3f32(sp28.x, -sp28.y, -10000.0f);

@@ -10,6 +10,8 @@
 #include "game/board/player.h"
 #include "game/board/window.h"
 
+#include "ext_math.h"
+
 // data
 s32 lbl_1_data_150[5] = {
     DATA_MAKE_NUM(DATADIR_W05, 0x21), DATA_MAKE_NUM(DATADIR_W05, 0x22), DATA_MAKE_NUM(DATADIR_W05, 0x23),
@@ -75,7 +77,7 @@ void fn_1_155C(void) {
     temp_f30 = BoardPlayerRotYGet(lbl_1_bss_28);
     BoardPlayerPosGet(lbl_1_bss_28, &sp58);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_118), "hotel1", &sp64);
-    temp_f31 = 180.0 * (atan2((sp64.x - sp58.x), (sp64.z - sp58.z)) / M_PI);
+    temp_f31 = atan2d(sp64.x - sp58.x, sp64.z - sp58.z);
     BoardPlayerMotBlendSet(lbl_1_bss_28, temp_f31, 0xF);
     BoardCameraViewSet(2);
 
@@ -103,7 +105,7 @@ void fn_1_155C(void) {
         HuPrcVSleep();
     }
     BoardModelPosSetV(lbl_1_bss_14[4], &sp28);
-    temp_f31 = (180.0 * (atan2((sp58.x - sp28.x), (sp58.z - sp28.z)) / M_PI));
+    temp_f31 = atan2d(sp58.x - sp28.x, sp58.z - sp28.z);
 
     while (fn_1_1208(lbl_1_bss_14[4], temp_f31, 10.0f) == 0) {
         HuPrcVSleep();
@@ -266,13 +268,13 @@ void fn_1_1E44(void) {
         HuPrcVSleep();
     }
     BoardModelPosSetV(lbl_1_bss_14[4], &sp2C);
-    temp_f31 = (180.0 * (atan2((sp50.x - sp2C.x), (sp50.z - sp2C.z)) / M_PI));
+    temp_f31 = atan2d(sp50.x - sp2C.x, sp50.z - sp2C.z);
 
     while (fn_1_1208(lbl_1_bss_14[4], temp_f31, 10.0f) == 0) {
         HuPrcVSleep();
     }
     BoardModelMotionShiftSet(lbl_1_bss_14[4], 0, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
-    temp_f31 = 180.0 * (atan2((sp2C.x - sp50.x), (sp2C.z - sp50.z)) / M_PI);
+    temp_f31 = atan2d(sp2C.x - sp50.x, sp2C.z - sp50.z);
     BoardPlayerMotBlendSet(lbl_1_bss_28, temp_f31, 0xF);
 
     while (BoardPlayerMotBlendCheck(lbl_1_bss_28) == 0) {

@@ -14,7 +14,7 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "math.h"
+#include "ext_math.h"
 
 #include "REL/resultdll.h"
 
@@ -498,7 +498,7 @@ void fn_1_1F4C(void)
     }
     temp_r29 = (lbl_1_bss_174) ? 3 : 10;
     for (temp_r30 = 0; temp_r30 <= temp_r29; temp_r30++) {
-        temp_f31 = sin(M_PI * ((90.0 / temp_r29) * temp_r30) / 180.0);
+        temp_f31 = sind((90.0 / temp_r29) * temp_r30);
         for (i = 0; i < 4; i++) {
             HuSprGrpScaleSet(lbl_1_bss_3A[i], temp_f31, temp_f31);
         }
@@ -512,8 +512,8 @@ void fn_1_1F4C(void)
             if (GWPlayerCoinWinGet(lbl_1_bss_4A[i]) >= 10) {
                 HuSprAttrReset(lbl_1_bss_9C, i, 4);
             }
-            HuSprScaleSet(lbl_1_bss_9C, i, sin(M_PI * ((120.0f / 14.0f) * temp_r28) / 180.0) * (0.8 * (1.0 / sin((M_PI * 2) / 3))),
-                0.8 * (sin(M_PI * ((120.0f / 14.0f) * temp_r28) / 180.0) * (1.0 / sin((M_PI * 2) / 3))));
+            HuSprScaleSet(lbl_1_bss_9C, i, sind((120.0f / 14.0f) * temp_r28) * (0.8 * (1.0 / sin((M_PI * 2) / 3))),
+                0.8 * (sind((120.0f / 14.0f) * temp_r28) * (1.0 / sin((M_PI * 2) / 3))));
         }
         temp_r28 += (lbl_1_bss_174) ? 2 : 1;
         HuPrcVSleep();
@@ -603,7 +603,7 @@ void fn_1_1F4C(void)
     }
     temp_r29 = (lbl_1_bss_174) ? 3 : 10;
     for (temp_r30 = 0; temp_r30 <= temp_r29; temp_r30++) {
-        temp_f31 = cos(M_PI * ((90.0 / temp_r29) * temp_r30) / 180.0);
+        temp_f31 = cosd((90.0 / temp_r29) * temp_r30);
         for (i = 0; i < 4; i++) {
             HuSprGrpScaleSet(lbl_1_bss_3A[i], temp_f31, temp_f31);
         }
@@ -686,12 +686,12 @@ void fn_1_2ADC(void)
                     temp_r27 = temp_r28 - (i * 20);
                     if (temp_r27 <= 20) {
                         if (temp_r27 <= 10) {
-                            HuSprScaleSet(lbl_1_bss_52, i, 1.0f, cos(M_PI * (9.0f * temp_r27) / 180.0));
+                            HuSprScaleSet(lbl_1_bss_52, i, 1.0f, cosd(9.0f * temp_r27));
                         }
                         else {
                             HuSprAttrSet(lbl_1_bss_52, i, 4);
                             HuSprAttrReset(lbl_1_data_380, i, 4);
-                            HuSprScaleSet(lbl_1_data_380, i, 1.0f, sin(M_PI * (9.0f * (temp_r27 - 10)) / 180.0));
+                            HuSprScaleSet(lbl_1_data_380, i, 1.0f, sind(9.0f * (temp_r27 - 10)));
                         }
                         temp_f31 = temp_r27 / 20.0f;
                         temp_r29 = GWStarsGet(sp28[i]) + (temp_f31 * (GWStarsGet(lbl_1_bss_4A[i]) - GWStarsGet(sp28[i])));
@@ -741,7 +741,7 @@ void fn_1_2ADC(void)
         }
         if (temp_r28 <= 10) {
             for (i = 0; i < 4; i++) {
-                HuSprScaleSet(lbl_1_bss_9C, i, cos(M_PI * (9.0f * temp_r28) / 180.0), cos(M_PI * (9.0f * temp_r28) / 180.0));
+                HuSprScaleSet(lbl_1_bss_9C, i, cosd(9.0f * temp_r28), cosd(9.0f * temp_r28));
             }
         }
         else {
@@ -1264,27 +1264,27 @@ void fn_1_5880(omObjData *object)
     CZoom += HuPadTrigL[0] / 2;
     CZoom -= HuPadTrigR[0] / 2;
 
-    pos.x = Center.x + (CZoom * (sin((M_PI * CRot.y) / 180.0) * cos((M_PI * CRot.x) / 180.0)));
-    pos.y = (Center.y + (CZoom * -sin((M_PI * CRot.x) / 180.0)));
-    pos.z = (Center.z + (CZoom * (cos((M_PI * CRot.y) / 180.0) * cos((M_PI * CRot.x) / 180.0))));
+    pos.x = Center.x + CZoom * (sind(CRot.y) * cosd(CRot.x));
+    pos.y = Center.y + CZoom * -sind(CRot.x);
+    pos.z = Center.z + CZoom * (cosd(CRot.y) * cosd(CRot.x));
     offset.x = Center.x - pos.x;
     offset.y = Center.y - pos.y;
     offset.z = Center.z - pos.z;
-    dir.x = (sin((M_PI * CRot.y) / 180.0) * sin((M_PI * CRot.x) / 180.0));
-    dir.y = cos((M_PI * CRot.x) / 180.0);
-    dir.z = (cos((M_PI * CRot.y) / 180.0) * sin((M_PI * CRot.x) / 180.0));
+    dir.x = (sind(CRot.y) * sind(CRot.x));
+    dir.y = cosd(CRot.x);
+    dir.z = (cosd(CRot.y) * sind(CRot.x));
     z_rot = CRot.z;
-    y_offset.x = dir.x * (offset.x * offset.x + (1.0f - offset.x * offset.x) * cos((M_PI * z_rot) / 180.0))
-        + dir.y * (offset.x * offset.y * (1.0f - cos((M_PI * z_rot) / 180.0)) - offset.z * sin((M_PI * z_rot) / 180.0))
-        + dir.z * (offset.x * offset.z * (1.0f - cos((M_PI * z_rot) / 180.0)) + offset.y * sin((M_PI * z_rot) / 180.0));
+    y_offset.x = dir.x * (offset.x * offset.x + (1.0f - offset.x * offset.x) * cosd(z_rot))
+        + dir.y * (offset.x * offset.y * (1.0f - cosd(z_rot)) - offset.z * sind(z_rot))
+        + dir.z * (offset.x * offset.z * (1.0f - cosd(z_rot)) + offset.y * sind(z_rot));
 
-    y_offset.y = dir.y * (offset.y * offset.y + (1.0f - offset.y * offset.y) * cos((M_PI * z_rot) / 180.0))
-        + dir.x * (offset.x * offset.y * (1.0f - cos((M_PI * z_rot) / 180.0)) + offset.z * sin((M_PI * z_rot) / 180.0))
-        + dir.z * (offset.y * offset.z * (1.0f - cos((M_PI * z_rot) / 180.0)) - offset.x * sin((M_PI * z_rot) / 180.0));
+    y_offset.y = dir.y * (offset.y * offset.y + (1.0f - offset.y * offset.y) * cosd(z_rot))
+        + dir.x * (offset.x * offset.y * (1.0f - cosd(z_rot)) + offset.z * sind(z_rot))
+        + dir.z * (offset.y * offset.z * (1.0f - cosd(z_rot)) - offset.x * sind(z_rot));
 
-    y_offset.z = dir.z * (offset.z * offset.z + (1.0f - offset.z * offset.z) * cos((M_PI * z_rot) / 180.0))
-        + (dir.x * (offset.x * offset.z * (1.0 - cos((M_PI * z_rot) / 180.0)) - offset.y * sin((M_PI * z_rot) / 180.0))
-            + dir.y * (offset.y * offset.z * (1.0 - cos((M_PI * z_rot) / 180.0)) + offset.x * sin((M_PI * z_rot) / 180.0)));
+    y_offset.z = dir.z * (offset.z * offset.z + (1.0f - offset.z * offset.z) * cosd(z_rot))
+        + (dir.x * (offset.x * offset.z * (1.0 - cosd(z_rot)) - offset.y * sind(z_rot))
+            + dir.y * (offset.y * offset.z * (1.0 - cosd(z_rot)) + offset.x * sind(z_rot)));
 
     VECCrossProduct(&dir, &offset, &offset);
     VECNormalize(&offset, &offset);

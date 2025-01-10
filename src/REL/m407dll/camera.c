@@ -1,7 +1,7 @@
 #include "game/process.h"
 #include "game/object.h"
 #include "game/hsfdraw.h"
-#include "math.h"
+#include "ext_math.h"
 
 typedef struct unkDominationData2 {
 /* 0x00 */ s32 unk_00;
@@ -128,16 +128,16 @@ void fn_1_2024(omObjData* arg0) {
             }
             break;
         case 2:
-            var_f31 = sin((M_PI * (90.0f * temp_r31->unk_44)) / 180.0);
+            var_f31 = sind(90.0f * temp_r31->unk_44);
             break;
         case 3:
-            var_f31 = sin((M_PI * (90.0f * temp_r31->unk_44)) / 180.0);
+            var_f31 = sind(90.0f * temp_r31->unk_44);
             if (temp_r31->unk_48 > 0.5) {
                 temp_r31->unk_00 = 4;
             }
             break;
         case 4:
-            var_f31 = sin((M_PI * (90.0f * temp_r31->unk_44)) / 180.0);
+            var_f31 = sind(90.0f * temp_r31->unk_44);
             var_f31 *= var_f31;
             break;
         }

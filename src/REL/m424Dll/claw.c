@@ -164,7 +164,7 @@ void fn_1_94D0(omObjData* arg0) {
     var_r31->unk170 = -1;
     var_r31->unk174 = lbl_1_data_30C;
     // @todo how did this happen
-    var_r31->unk180 = (180.0 * (atan2(-102.864990234375, 424.559997558593750) / M_PI));
+    var_r31->unk180 = atan2d(-102.864990234375, 424.559997558593750);
     if (var_r31->unk180 < 0.0f) {
         var_r31->unk180 += 360.0f;
     }

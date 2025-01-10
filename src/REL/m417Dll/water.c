@@ -326,7 +326,7 @@ void fn_1_3D58(omObjData *object)
             var_r28->y = 0.0f;
             var_r28->z = var_f29;
         }
-        var_f29 += (var_f28 * sin(1.0471975511965976));
+        var_f29 += var_f28 * sind(60);
     }
     var_r28 = lbl_1_bss_178.unk_2C;
     var_r30 = 0;

@@ -355,8 +355,8 @@ void fn_1_5BD4(omObjData *object)
                 var_f30 = 0.0f;
             }
             var_f30 = var_f30 * var_f30;
-            sp8.x = 320.0 + (160.0 * (var_f31 * cos(M_PI * ((450.0f * var_f31) + (90.0f * object->work[0])) / 180.0)));
-            sp8.y = 240.0 + (120.0 * (var_f31 * sin(M_PI * ((450.0f * var_f31) + (90.0f * object->work[0])) / 180.0)));
+            sp8.x = 320.0 + 160.0 * (var_f31 * cosd(450.0f * var_f31 + 90.0f * object->work[0]));
+            sp8.y = 240.0 + 120.0 * (var_f31 * sind(450.0f * var_f31 + 90.0f * object->work[0]));
             temp_r31->unk100->unk_44 = sp8.x + (var_f30 * (temp_r31->unk100->unk_78 - sp8.x));
             temp_r31->unk100->unk_48 = sp8.y + (var_f30 * (temp_r31->unk100->unk_7C - sp8.y));
             temp_r31->unk100->unk_40 = 0.01f + ((temp_r31->unk100->unk_80 - 0.01f) * var_f31);

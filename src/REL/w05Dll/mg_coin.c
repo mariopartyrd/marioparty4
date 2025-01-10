@@ -14,6 +14,9 @@
 #include "game/board/window.h"
 
 
+#include "ext_math.h"
+
+
 s16 lbl_1_bss_102[3];
 s16 lbl_1_bss_100;
 s16 lbl_1_bss_FE;
@@ -226,7 +229,7 @@ void fn_1_9F24(omObjData *arg0)
         temp_r31->unk_08++;
     }
     sp18 = temp_r31->unk_0C[temp_r31->unk_08];
-    var_f31 = (180.0 * (atan2((sp18.x - sp24.x), (sp18.z - sp24.z)) / M_PI));
+    var_f31 = atan2d(sp18.x - sp24.x, sp18.z - sp24.z);
     BoardPlayerRotYSet(lbl_1_bss_C0, var_f31);
     spC = temp_r31->unk_0C[temp_r31->unk_08];
     spC.y += 50.0f;
@@ -387,7 +390,7 @@ void fn_1_AB24(void)
     spC = temp_r30->data;
     BoardPlayerPosGet(lbl_1_bss_C0, &sp28);
     BoardModelPosGet(lbl_1_bss_14[5], &sp1C);
-    var_f30 = (180.0 * (atan2((sp1C.z - sp28.z), (sp1C.x - sp28.x)) / M_PI));
+    var_f30 = atan2d(sp1C.z - sp28.z, sp1C.x - sp28.x);
     BoardPlayerMotBlendSet(lbl_1_bss_C0, var_f30, 0xF);
 
     while (BoardPlayerMotBlendCheck(lbl_1_bss_C0) == 0) {
