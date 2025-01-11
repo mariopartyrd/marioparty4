@@ -1373,7 +1373,7 @@ config.libs = [
             Object(MatchingFor("GMPE01_00"), "REL/mstory2Dll/main.c"),
             Object(MatchingFor("GMPE01_00"), "REL/mstory2Dll/board_entrance.c"),
             Object(MatchingFor("GMPE01_00"), "REL/mstory2Dll/board_clear.c"),
-            Object(NonMatching, "REL/mstory2Dll/board_miss.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstory2Dll/board_miss.c"),
             Object(NonMatching, "REL/mstory2Dll/mg_clear.c"),
             Object(NonMatching, "REL/mstory2Dll/mg_miss.c"),
             Object(NonMatching, "REL/mstory2Dll/ending.c"),
