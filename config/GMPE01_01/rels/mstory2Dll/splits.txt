@@ -38,13 +38,13 @@ REL/mstory2Dll/mg_clear.c:
 
 REL/mstory2Dll/mg_miss.c:
 	.text       start:0x00016060 end:0x000186D0
-	.rodata     start:0x000003D0 end:0x00000440
+	.rodata     start:0x000003D0 end:0x00000438
 	.data       start:0x00000DB8 end:0x00000EF8
 	.bss        start:0x00000968 end:0x00000B38
 
 REL/mstory2Dll/ending.c:
 	.text       start:0x000186D0 end:0x0001B560
-	.rodata     start:0x00000440 end:0x000004B8
+	.rodata     start:0x00000438 end:0x000004B8
 	.data       start:0x00000EF8 end:0x00001113
 	.bss        start:0x00000B38 end:0x00000D10
 

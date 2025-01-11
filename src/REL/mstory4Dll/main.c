@@ -583,7 +583,7 @@ void fn_1_13A0(void)
 			}				
 		}
 		character = GWPlayerCfg[0].character;
-		GWSystem.unk0B[1] = character;
+		GWSystem.unk0C = character;
 		GWPlayer[0].character = GWPlayerCfg[0].character;
 		GWPlayer[1].character = GWPlayerCfg[1].character;
 		GWPlayer[2].character = GWPlayerCfg[2].character;

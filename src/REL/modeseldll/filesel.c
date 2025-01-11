@@ -1859,7 +1859,7 @@ void fn_1_A8C0(s16 boxno)
     SLLoadBoardStory();
     lbl_1_bss_EE[boxno] = GWGameStat.total_stars;
     lbl_1_bss_D0[boxno] = GWGameStat.create_time;
-    lbl_1_bss_E8[boxno] = GWSystem.unk0B[1];
+    lbl_1_bss_E8[boxno] = GWSystem.unk0C;
     lbl_1_bss_C4[boxno] = GWGameStat.story_continue;
     lbl_1_bss_B8[boxno] = GWGameStat.party_continue;
     if (GWGameStat.story_continue) {
