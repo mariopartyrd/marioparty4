@@ -436,16 +436,16 @@ s32 fn_1_F4C(void)
 }
 
 M456DllDataE4Struct lbl_1_data_E4[0xA] = {
-    { 0x5F0000, 0 },
-    { 0x55001C, 1 },
-    { 0x550024, 1 },
-    { 0x55002C, 1 },
-    { 0x550034, 1 },
-    { 0x5F002A, 0 },
-    { 0x5F0005, 0 },
-    { 0x5F0017, 0 },
-    { 0x5F0018, 0 },
-    { 0x55003C, 1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00), 0 },
+    { DATA_MAKE_NUM(DATADIR_M456, 0x1C), 1 },
+    { DATA_MAKE_NUM(DATADIR_M456, 0x24), 1 },
+    { DATA_MAKE_NUM(DATADIR_M456, 0x2C), 1 },
+    { DATA_MAKE_NUM(DATADIR_M456, 0x34), 1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x2A), 0 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x05), 0 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17), 0 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18), 0 },
+    { DATA_MAKE_NUM(DATADIR_M456, 0x3C), 1 },
 };
 Vec lbl_1_data_134[4] = {
     { -300.0f, 0.0f, 0.0f },
@@ -826,7 +826,7 @@ void fn_1_2448(omObjData *object)
 }
 
 M456DllData1B0Struct lbl_1_data_1B0[0x10] = {
-    { 0x550044, 0x10E },
+    { DATA_MAKE_NUM(DATADIR_M456, 0x44), 0x10E },
     { 0x610037, 0xFA },
     { 0x610030, 0xFA },
     { 0x610030, 0xFA },

@@ -165,11 +165,11 @@ void fn_1_4A80(Process *process)
 {
     omObjData *object;
 
-    lbl_1_bss_150 = HuSprAnimRead(HuDataReadNum(0x3D0019, 0x10000000));
-    lbl_1_bss_14C = HuSprAnimRead(HuDataReadNum(0x3D001A, 0x10000000));
-    lbl_1_bss_148 = HuSprAnimRead(HuDataReadNum(0x3D0014, 0x10000000));
-    lbl_1_bss_144 = HuSprAnimRead(HuDataReadNum(0x3D0017, 0x10000000));
-    lbl_1_bss_140 = HuSprAnimRead(HuDataReadNum(0x3D0018, 0x10000000));
+    lbl_1_bss_150 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x19), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_14C = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x1A), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_148 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x14), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_144 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x17), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_140 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x18), MEMORY_DEFAULT_NUM));
     object = lbl_1_bss_58 = omAddObjEx(process, 0x1E, 0x68, 0, -1, fn_1_4CB4);
     object->work[0] = 0;
     object = lbl_1_bss_54 = omAddObjEx(process, 0x1E, 7, 0, -1, fn_1_803C);
@@ -200,12 +200,12 @@ void fn_1_4CB4(omObjData *object)
     s32 var_r25;
     M430DllWork *work;
 
-    u32 spC[1] = { 0x3D0001 };
+    u32 spC[1] = { DATA_MAKE_NUM(DATADIR_M430, 0x01) };
     s32 sp8[1];
-    u32 sp90[4] = { 0x003D000B, 0x003D000C, 0x003D000D, 0x003D000E };
-    u32 sp80[4] = { 0x003D0002, 0x003D0002, 0x003D0003, 0x003D0003 };
-    u32 sp70[4] = { 0x003D0004, 0x003D0004, 0x00000000, 0x00000000 };
-    u32 sp60[4] = { 0x003D0006, 0x003D0007, 0x003D0008, 0x003D0009 };
+    u32 sp90[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x0B), DATA_MAKE_NUM(DATADIR_M430, 0x0C), DATA_MAKE_NUM(DATADIR_M430, 0x0D), DATA_MAKE_NUM(DATADIR_M430, 0x0E) };
+    u32 sp80[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x02), DATA_MAKE_NUM(DATADIR_M430, 0x02), DATA_MAKE_NUM(DATADIR_M430, 0x03), DATA_MAKE_NUM(DATADIR_M430, 0x03) };
+    u32 sp70[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x04), DATA_MAKE_NUM(DATADIR_M430, 0x04), 0, 0 };
+    u32 sp60[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x06), DATA_MAKE_NUM(DATADIR_M430, 0x07), DATA_MAKE_NUM(DATADIR_M430, 0x08), DATA_MAKE_NUM(DATADIR_M430, 0x09) };
     s32 sp50[4];
     s32 sp40[4];
     s32 sp30[4];
@@ -227,11 +227,11 @@ void fn_1_4CB4(omObjData *object)
     }
     var_r30 = work;
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
-        object->model[var_r31] = Hu3DModelCreateFile(0x3D0000);
+        object->model[var_r31] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x00));
         var_r30[var_r31].unk_18 = object->model[var_r31];
         Hu3DModelLayerSet(var_r30[var_r31].unk_18, 0);
         Hu3DModelScaleSet(var_r30[var_r31].unk_18, 1.15f, 1.15f, 1.15f);
-        var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x3D000A), 1);
+        var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M430, 0x0A)), 1);
         var_r30[var_r31].unk_1A = var_r27;
         Hu3DModelLayerSet(var_r27, 1);
         *((s16 *)Hu3DData[var_r27].unk_120) = 1;
@@ -247,14 +247,14 @@ void fn_1_4CB4(omObjData *object)
             var_r26->material[var_r28].invAlpha = 0.001f;
         }
     }
-    object->model[2] = Hu3DModelCreateFile(0x3D000F);
+    object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x0F));
     Hu3DModelLayerSet(object->model[2], 1);
     Hu3DModelScaleSet(object->model[2], 1.5f, 1.5f, 1.5f);
-    object->model[3] = Hu3DModelCreateFile(0x3D0010);
+    object->model[3] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x10));
     Hu3DModelLayerSet(object->model[3], 2);
     Hu3DModelScaleSet(object->model[3], 1.5f, 1.5f, 1.5f);
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
-        var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x3D0015), 0x64);
+        var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M430, 0x15)), 0x64);
         object->model[var_r31 + 4] = var_r27;
         var_r30[var_r31].unk_10 = var_r27;
         Hu3DModelLayerSet(var_r27, 2);
@@ -264,7 +264,7 @@ void fn_1_4CB4(omObjData *object)
         *((s16 *)Hu3DData[var_r27].unk_120) = 0;
     }
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
-        var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x3D0015), 0x64);
+        var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M430, 0x15)), 0x64);
         object->model[var_r31 + 6] = var_r27;
         var_r30[var_r31].unk_14 = var_r27;
         Hu3DModelLayerSet(var_r27, 1);
@@ -701,7 +701,7 @@ M430DllUnkStruct2 *fn_1_70AC(omObjData *arg0, s32 var_r27, s16 var_r28)
     s32 var_r30;
     M430DllUnkStruct2 *var_r29;
 
-    u32 sp10[2] = { 0x003D0011, 0x003D0012 };
+    u32 sp10[2] = { DATA_MAKE_NUM(DATADIR_M430, 0x11), DATA_MAKE_NUM(DATADIR_M430, 0x12) };
     s32 sp8[2] = { 1, 2 };
     var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r28 * sizeof(M430DllUnkStruct2), MEMORY_DEFAULT_NUM);
     memset(var_r29, 0, var_r28 * 0x3C);
@@ -807,7 +807,7 @@ void fn_1_7848(omObjData *object)
     work = HuMemDirectMallocNum(HEAP_SYSTEM, var_r30 * sizeof(M430DllWork2), MEMORY_DEFAULT_NUM);
     object->data = work;
     memset(work, 0, var_r30 * sizeof(M430DllWork2));
-    var_r26 = Hu3DModelCreateFile(0x3D0013);
+    var_r26 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x13));
     var_f29 = 1000.0f;
     for (var_r31 = work, var_r29 = 0; var_r29 < var_r30; var_r29++, var_r31++) {
         var_r31->unk_00 = Hu3DModelLink(var_r26);

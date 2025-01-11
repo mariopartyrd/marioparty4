@@ -219,21 +219,22 @@ void fn_1_F6A0(omObjData *object);
 void fn_1_FC9C(omObjData *object);
 
 M430PlayerData170Struct lbl_1_data_170[7] = {
-    { 0x5F0042, -1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x42), -1 },
     { 0, 1 },
     { 0, 2 },
     { 0, 3 },
     { 0, -1 },
-    { 0x5F0017, -1 },
-    { 0x5F0018, -1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17), -1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18), -1 },
 };
 M430PlayerData170Struct lbl_1_data_1A8[4] = {
     { 0, 4 },
-    { 0x5F0000, -1 },
-    { 0x5F0017, -1 },
-    { 0x5F0018, -1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00), -1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17), -1 },
+    { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18), -1 },
 };
-s32 lbl_1_data_1C8[5] = { 0, 0x3D0031, 0x3D0039, 0x3D0041, 0x3D0049 };
+s32 lbl_1_data_1C8[5] = { 0, DATA_MAKE_NUM(DATADIR_M430, 0x31), DATA_MAKE_NUM(DATADIR_M430, 0x39), DATA_MAKE_NUM(DATADIR_M430, 0x41),
+    DATA_MAKE_NUM(DATADIR_M430, 0x49) };
 float lbl_1_data_1DC[7] = { -262.5f, -173.25f, -86.625f, 0.0f, 86.625f, 173.25f, 262.5f };
 Vec lbl_1_data_1F8[8] = {
     { 0.0f, 0.0f, 0.0f },
@@ -246,9 +247,9 @@ Vec lbl_1_data_1F8[8] = {
     { -60.000004f, 0.0f, -120.00001f },
 };
 float lbl_1_data_258[8] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 25.0f, 0.0f, 25.0f };
-s32 lbl_1_data_278[2] = { 0x3D001C, 0x3D001D };
-s32 lbl_1_data_280[2] = { 0x3D001E, 0x3D001F };
-s32 lbl_1_data_288[2] = { 0x3D0020, 0x3D0021 };
+s32 lbl_1_data_278[2] = { DATA_MAKE_NUM(DATADIR_M430, 0x1C), DATA_MAKE_NUM(DATADIR_M430, 0x1D) };
+s32 lbl_1_data_280[2] = { DATA_MAKE_NUM(DATADIR_M430, 0x1E), DATA_MAKE_NUM(DATADIR_M430, 0x1F) };
+s32 lbl_1_data_288[2] = { DATA_MAKE_NUM(DATADIR_M430, 0x20), DATA_MAKE_NUM(DATADIR_M430, 0x21) };
 
 s32 lbl_1_bss_17C;
 Process *lbl_1_bss_178;
@@ -427,7 +428,7 @@ void fn_1_C1E4(omObjData *object)
         Hu3DModelLayerSet(object->model[1], 2);
         Hu3DModelCameraSet(object->model[1], 3);
         Hu3DModelScaleSet(object->model[1], 1.2f, 1.2f, 1.2f);
-        object->model[2] = Hu3DModelCreateFile(0x3D0025);
+        object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x25));
         Hu3DModelLayerSet(object->model[2], 1);
         Hu3DModelCameraSet(object->model[2], 3);
         work->unk_60 = HuAudFXPlay(0x67A);
@@ -1659,14 +1660,14 @@ void fn_1_10B88(void)
     for (var_r30 = 0; var_r30 < 0x10; var_r30++, var_r31++) {
         var_r31->unk_00 = var_r30;
         if (var_r30 == 0) {
-            var_r31->unk_04 = Hu3DModelCreateFile(0x3D0023);
+            var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x23));
         }
         else {
             var_r31->unk_04 = Hu3DModelLink(lbl_1_bss_16C[0].unk_04);
         }
         Hu3DModelLayerSet(var_r31->unk_04, 2);
         Hu3DModelAttrSet(var_r31->unk_04, HU3D_ATTR_DISPOFF);
-        var_r31->unk_08 = Hu3DModelCreateFile(0x3D0024);
+        var_r31->unk_08 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x24));
         Hu3DModelLayerSet(var_r31->unk_08, 2);
         Hu3DModelAttrSet(var_r31->unk_08, HU3D_ATTR_DISPOFF);
         var_r31->unk_0C = 0;
@@ -1836,7 +1837,7 @@ void fn_1_113AC(void)
     for (var_r30 = 0; var_r30 < 0x20; var_r31++) {
         var_r31->unk_00 = var_r30;
         if (var_r30 == 0) {
-            var_r31->unk_04 = Hu3DModelCreateFile(0x3D0022);
+            var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x22));
         }
         else {
             var_r31->unk_04 = Hu3DModelLink(lbl_1_bss_168[0].unk_04);
@@ -2006,7 +2007,7 @@ void fn_1_11C1C(void)
     memset(var_r31, 0, 8 * sizeof(M430PlayerBss164Struct));
     for (var_r30 = 0; var_r30 < 8; var_r30++, var_r31++) {
         if (var_r30 == 0) {
-            var_r31->unk_14 = HuSprAnimRead(HuDataReadNum(0x3D0026, MEMORY_DEFAULT_NUM));
+            var_r31->unk_14 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x26), MEMORY_DEFAULT_NUM));
         }
         else {
             var_r31->unk_14 = lbl_1_bss_164[0].unk_14;
@@ -2182,7 +2183,7 @@ void fn_1_125C4(void)
             switch (var_r30) {
                 case 0:
                 case 1:
-                    var_r31->unk_10[var_r30] = espEntry(0x610033, 1, 0);
+                    var_r31->unk_10[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x33), 1, 0);
                     espPriSet(var_r31->unk_10[var_r30], 0x40);
                     var_r31->unk_28[var_r30][0] = (var_r30 * 0x14) + 0xB;
                     var_r31->unk_28[var_r30][1] = 0;
@@ -2191,17 +2192,17 @@ void fn_1_125C4(void)
                     break;
                 case 2:
                     if (var_r29 == 0) {
-                        var_r31->unk_10[var_r30] = espEntry(0x61001B, 1, 0);
+                        var_r31->unk_10[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1B), 1, 0);
                     }
                     else {
-                        var_r31->unk_10[var_r30] = espEntry(0x61001C, 1, 0);
+                        var_r31->unk_10[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1C), 1, 0);
                     }
                     espPriSet(var_r31->unk_10[var_r30], 0xFF);
                     var_r31->unk_28[var_r30][0] = 0;
                     var_r31->unk_28[var_r30][1] = 0;
                     break;
                 case 3:
-                    var_r31->unk_10[var_r30] = espEntry(0x61001D, 1, 0);
+                    var_r31->unk_10[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1D), 1, 0);
                     espPriSet(var_r31->unk_10[var_r30], 0x100);
                     espTPLvlSet(var_r31->unk_10[var_r30], 0.6000000238418579);
                     espColorSet(var_r31->unk_10[var_r30], 0, 0, 0);
@@ -2209,13 +2210,13 @@ void fn_1_125C4(void)
                     var_r31->unk_28[var_r30][1] = 0;
                     break;
                 case 4:
-                    var_r31->unk_10[var_r30] = espEntry(0x610008, 1, 0);
+                    var_r31->unk_10[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_MGCONST, 0x08), 1, 0);
                     espPriSet(var_r31->unk_10[var_r30], 0x80);
                     var_r31->unk_28[var_r30][0] = -0x21;
                     var_r31->unk_28[var_r30][1] = 0;
                     break;
                 case 5:
-                    var_r31->unk_10[var_r30] = espEntry(0x3D0028, 1, 0);
+                    var_r31->unk_10[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_M430, 0x28), 1, 0);
                     espPriSet(var_r31->unk_10[var_r30], 0x80);
                     espZRotSet(var_r31->unk_10[var_r30], 45.0);
                     var_r31->unk_28[var_r30][0] = -0xA;

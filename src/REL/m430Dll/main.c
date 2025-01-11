@@ -139,7 +139,7 @@ void ObjectSetup(void)
     lbl_1_bss_34 = omAddObjEx(var_r31, 0xA, 0, 0, -1, fn_1_65C);
     fn_1_4A80(var_r31);
     fn_1_BBC4(var_r31);
-    lbl_1_bss_10 = espEntry(0x3D001B, 0x64, 0);
+    lbl_1_bss_10 = espEntry(DATA_MAKE_NUM(DATADIR_M430, 0x1B), 0x64, 0);
     espPosSet(lbl_1_bss_10, 288.0, 240.0);
     espScaleSet(lbl_1_bss_10, 0.22499999403953552, 60.0);
     espDispOff(lbl_1_bss_10);

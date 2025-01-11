@@ -3,7 +3,6 @@
 #include "game/object.h"
 #include "game/objsub.h"
 
-
 #include "game/hsfmotion.h"
 #include "game/pad.h"
 
@@ -14,7 +13,6 @@
 #include "game/gamework_data.h"
 #include "game/minigame_seq.h"
 #include "game/wipe.h"
-
 
 #include "ext_math.h"
 #include "math.h"
@@ -329,15 +327,15 @@ s32 fn_1_C90(void)
 s32 fn_1_3214(void);
 
 u32 lbl_1_data_E0[5][2] = {
-    0x5F0000,
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00),
     0,
     0x540024,
     1,
     0x54001C,
     1,
-    0x5F0017,
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17),
     0,
-    0x5F0018,
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18),
     0,
 };
 
