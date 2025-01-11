@@ -74,7 +74,10 @@ void fn_1_1B64C(void)
         HuWinExAnimOut(var_r31);
         HuWinExCleanup(var_r31);
         if (SLSaveFlagGet() == 1 && temp_r30 == 0) {
-            if(omovlstat) {
+#if VERSION_REV1
+            GWGameStat.story_continue = 1;
+#endif
+            if (omovlstat) {
                 GWGameStat.story_continue = 0;
             }
             SLCommonSet();
@@ -100,9 +103,10 @@ void fn_1_1B870(void)
     do {
         fn_1_BC8();
     } while (lbl_1_bss_D14 != 1);
-    if(omovlstat == 0) {
+    if (omovlstat == 0) {
         omOvlGotoEx(OVL_MSTORY2, 1, 4, 0);
-    } else {
+    }
+    else {
         omOvlReturnEx(omovlhisidx, 1);
     }
     HuPrcEnd();

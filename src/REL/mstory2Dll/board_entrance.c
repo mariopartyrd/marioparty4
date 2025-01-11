@@ -16,7 +16,6 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-
 typedef struct {
     /* 0x000 */ s32 unk00;
     /* 0x004 */ s32 unk04;
@@ -382,15 +381,15 @@ void fn_1_9768(void)
 
 void fn_1_981C(omObjData *object)
 {
-    object->model[1] = Hu3DModelCreateFile(0x660050);
+    object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_MSTORY2, 0x50));
     object->motion[0] = Hu3DMotionIDGet(object->model[1]);
     fn_1_1DFC(object, 1, 0, 0, 2);
     Hu3DModelShadowMapObjSet(object->model[1], "base_fix9-base");
-    object->model[2] = Hu3DModelCreateFile(0x660053);
-    object->motion[2] = Hu3DJointMotionFile(object->model[2], 0x660054);
-    object->motion[3] = Hu3DJointMotionFile(object->model[2], 0x660055);
+    object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_MSTORY2, 0x53));
+    object->motion[2] = Hu3DJointMotionFile(object->model[2], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x54));
+    object->motion[3] = Hu3DJointMotionFile(object->model[2], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x55));
     fn_1_1DFC(object, 2, 3, 0, 2);
-    object->model[4] = Hu3DModelCreateFile(0x660051);
+    object->model[4] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_MSTORY2, 0x51));
 }
 
 void fn_1_9954(omObjData *arg0, StructBss16C *arg1)
@@ -441,10 +440,10 @@ void fn_1_9CB8(omObjData *object)
     object->model[1] = CharModelCreate(charNo, 1);
     object->motion[1] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
     object->motion[2] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x35));
-    object->motion[3] = Hu3DJointMotionFile(object->model[1], 0x660018 + charNo);
-    object->motion[7] = Hu3DJointMotionFile(object->model[1], 0x660048 + charNo);
-    object->motion[8] = Hu3DJointMotionFile(object->model[1], 0x660040 + charNo);
-    object->motion[9] = Hu3DJointMotionFile(object->model[1], 0x660020 + charNo);
+    object->motion[3] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x18) + charNo);
+    object->motion[7] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x48) + charNo);
+    object->motion[8] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x40) + charNo);
+    object->motion[9] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x20) + charNo);
     object->motion[10] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x12));
     CharModelMotionDataClose(charNo);
     Hu3DModelPosSet(object->model[1], 120, 0, 800);
@@ -488,13 +487,13 @@ void fn_1_9FDC(void)
 
 void fn_1_A288(omObjData *object)
 {
-    object->model[1] = Hu3DModelCreateFile(0x660072);
-    object->motion[1] = Hu3DJointMotionFile(object->model[1], 0x660073);
-    object->motion[2] = Hu3DJointMotionFile(object->model[1], 0x660075);
-    object->motion[3] = Hu3DJointMotionFile(object->model[1], 0x660076);
-    object->motion[4] = Hu3DJointMotionFile(object->model[1], 0x66007A);
-    object->motion[5] = Hu3DJointMotionFile(object->model[1], 0x66007B);
-    object->motion[6] = Hu3DJointMotionFile(object->model[1], 0x660079);
+    object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x72 : 0x73));
+    object->motion[1] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x73 : 0x74));
+    object->motion[2] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x75));
+    object->motion[3] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x76));
+    object->motion[4] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x7A : 0x78));
+    object->motion[5] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x7B : 0x79));
+    object->motion[6] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x79 : 0x77));
     Hu3DModelPosSet(object->model[1], 0, 0, 460);
     Hu3DModelRotSet(object->model[1], 0, 0, 0);
     Hu3DModelScaleSet(object->model[1], 1, 1, 1);
@@ -532,15 +531,15 @@ void fn_1_A58C(void)
 
 void fn_1_A848(omObjData *object)
 {
-    object->model[1] = Hu3DModelCreateFile(0x660062);
-    object->motion[1] = Hu3DJointMotionFile(object->model[1], 0x660063);
-    object->motion[2] = Hu3DJointMotionFile(object->model[1], 0x660065);
-    object->motion[3] = Hu3DJointMotionFile(object->model[1], 0x660066);
-    object->motion[4] = Hu3DJointMotionFile(object->model[1], 0x660069);
-    object->motion[5] = Hu3DJointMotionFile(object->model[1], 0x660068);
-    object->motion[6] = Hu3DJointMotionFile(object->model[1], 0x66006C);
-    object->motion[7] = Hu3DJointMotionFile(object->model[1], 0x66006D);
-    object->motion[8] = Hu3DJointMotionFile(object->model[1], 0x660064);
+    object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x62 : 0x66));
+    object->motion[1] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x63 : 0x67));
+    object->motion[2] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x65 : 0x69));
+    object->motion[3] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x66 : 0x6A));
+    object->motion[4] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x69 : 0x6C));
+    object->motion[5] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x68 : 0x6B));
+    object->motion[6] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x6C : 0x6D));
+    object->motion[7] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x6D : 0x6E));
+    object->motion[8] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x64 : 0x68));
     Hu3DModelPosSet(object->model[1], -120, 0, 800);
     Hu3DModelRotSet(object->model[1], 0, 90, 0);
     Hu3DModelScaleSet(object->model[1], 1, 1, 1);
