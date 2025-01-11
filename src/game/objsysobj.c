@@ -6,7 +6,7 @@
 #include "game/sprite.h"
 #include "game/hsfman.h"
 #include "game/audio.h"
-#include "math.h"
+#include "ext_math.h"
 
 Vec CRot;
 Vec Center;
@@ -23,15 +23,15 @@ void omOutView(omObjData *object)
 	float rot_x = CRot.x;
 	float rot_y = CRot.y;
 	float rot_z = CRot.z;
-	pos.x = (sin(M_PI*rot_y/180.0)*cos(M_PI*rot_x/180.0)*CZoom)+Center.x;
-	pos.y = (-sin(M_PI*rot_x/180.0)*CZoom)+Center.y;
-	pos.z = (cos(M_PI*rot_y/180.0)*cos(M_PI*rot_x/180.0)*CZoom)+Center.z;
+	pos.x = (sind(rot_y)*cosd(rot_x)*CZoom)+Center.x;
+	pos.y = (-sind(rot_x)*CZoom)+Center.y;
+	pos.z = (cosd(rot_y)*cosd(rot_x)*CZoom)+Center.z;
 	target.x = Center.x;
 	target.y = Center.y;
 	target.z = Center.z;
-	up.x = sin(M_PI*rot_y/180.0)*sin(M_PI*rot_x/180.0);
-	up.y = cos(M_PI*rot_x/180.0);
-	up.z = cos(M_PI*rot_y/180.0)*sin(M_PI*rot_x/180.0);
+	up.x = sind(rot_y)*sind(rot_x);
+	up.y = cosd(rot_x);
+	up.z = cosd(rot_y)*sind(rot_x);
 	Hu3DCameraPosSet(1, pos.x, pos.y, pos.z, up.x, up.y, up.z, target.x, target.y, target.z);
 }
 
@@ -43,15 +43,15 @@ void omOutViewMulti(omObjData *object)
 		float rot_x = CRotM[i].x;
 		float rot_y = CRotM[i].y;
 		float rot_z = CRotM[i].z;
-		pos.x = (sin(M_PI*rot_y/180.0)*cos(M_PI*rot_x/180.0)*CZoomM[i])+CenterM[i].x;
-		pos.y = (-sin(M_PI*rot_x/180.0)*CZoomM[i])+CenterM[i].y;
-		pos.z = (cos(M_PI*rot_y/180.0)*cos(M_PI*rot_x/180.0)*CZoomM[i])+CenterM[i].z;
+		pos.x = (sind(rot_y)*cosd(rot_x)*CZoomM[i])+CenterM[i].x;
+		pos.y = (-sind(rot_x)*CZoomM[i])+CenterM[i].y;
+		pos.z = (cosd(rot_y)*cosd(rot_x)*CZoomM[i])+CenterM[i].z;
 		target.x = CenterM[i].x;
 		target.y = CenterM[i].y;
 		target.z = CenterM[i].z;
-		up.x = sin(M_PI*rot_y/180.0)*sin(M_PI*rot_x/180.0);
-		up.y = cos(M_PI*rot_x/180.0);
-		up.z = cos(M_PI*rot_y/180.0)*sin(M_PI*rot_x/180.0);
+		up.x = sind(rot_y)*sind(rot_x);
+		up.y = cosd(rot_x);
+		up.z = cosd(rot_y)*sind(rot_x);
 		Hu3DCameraPosSetV((1 << i), &pos, &up, &target);
 	}
 }

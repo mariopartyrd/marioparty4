@@ -81,8 +81,8 @@ void ObjectSetup(void)
     temp_f29 = lbl_1_bss_268.y;
     temp_f31 = lbl_1_bss_268.z;
     lbl_1_bss_774 = sqrtf((temp_f31 * temp_f31) + ((temp_f30 * temp_f30) + (temp_f29 * temp_f29)));
-    lbl_1_bss_778 = fn_1_1D08((180.0 * (atan2(temp_f30, temp_f31) / M_PI)));
-    lbl_1_bss_77C = fn_1_1D08((180.0 * (atan2(temp_f29, temp_f31) / M_PI)));
+    lbl_1_bss_778 = fn_1_1D08(atan2d(temp_f30, temp_f31));
+    lbl_1_bss_77C = fn_1_1D08(atan2d(temp_f29, temp_f31));
     lbl_1_bss_77C = 50.0f;
     Hu3DLighInit();
     lbl_1_bss_7A0 = Hu3DGLightCreate(10000.0f, 0.0f, 10000.0f, -1.0f, 0.0f, -1.0f, 0xFFU, 0xFFU, 0xFFU);

@@ -51,7 +51,7 @@ void fn_1_68DC(void) {
     f32 temp_f31;
 
     if (lbl_1_bss_38 != 0) {
-        temp_f31 = sin((M_PI * (90.0f * lbl_1_bss_40)) / 180.0);
+        temp_f31 = sind(90.0f * lbl_1_bss_40);
         temp_f31 *= temp_f31;
         lbl_1_bss_8C.x = lbl_1_bss_54.x + (temp_f31 * (lbl_1_bss_70.x - lbl_1_bss_54.x));
         lbl_1_bss_8C.y = lbl_1_bss_54.y + (temp_f31 * (lbl_1_bss_70.y - lbl_1_bss_54.y));

@@ -255,7 +255,7 @@ s32 fn_1_9CF4(s32 arg0)
     BoardSpacePosGet(0, temp_r29, &sp38);
     VECSubtract(&sp38, &sp2C, &sp20);
     VECNormalize(&sp20, &sp20);
-    BoardPlayerRotYSet(arg0, (f32)(180.0 * (atan2(-sp20.x, -sp20.z) / M_PI)));
+    BoardPlayerRotYSet(arg0, atan2d(-sp20.x, -sp20.z));
     BoardPlayerPosLerpStart(arg0, &sp2C, &sp38, 0x14);
 
     while (GWPlayer[arg0].moving != 0) {
@@ -288,11 +288,11 @@ void fn_1_9FE4(void)
     f32 var_f31;
 
     BoardModelPosGet(lbl_1_bss_C[11], &sp24);
-    sp18.x = (-3179.800048828125 + (200.0 * sin(0.0)));
-    sp18.z = (-907.7000122070313 + 200.0 * cos(0.0));
+    sp18.x = -3179.8f + 200.0 * sin(0.0);
+    sp18.z = -907.7f + 200.0 * cos(0.0);
     sp18.y = sp24.y;
     VECSubtract(&sp18, &sp24, &spC);
-    temp_f30 = (atan2(spC.z, spC.x) / M_PI * 180.0);
+    temp_f30 = atan2d(spC.z, spC.x);
     sp8 = BoardModelRotYGet(lbl_1_bss_C[11]);
     BoardModelMotionShiftSet(lbl_1_bss_C[11], lbl_1_data_4DA, 0.0f, 10.0, HU3D_MOTATTR_LOOP);
 
@@ -861,7 +861,7 @@ void fn_1_B748(omObjData *arg0, someBits2 *arg1)
         BoardModelPosSetV(temp_r29, &sp8);
         BoardModelRotYSet(temp_r29, 8.0f + BoardModelRotYGet(temp_r29));
         BoardModelScaleGet(temp_r29, &sp14);
-        sp14.x = sp14.y = sp14.z = cos(M_PI * temp_f0 / 180.0);
+        sp14.x = sp14.y = sp14.z = cosd(temp_f0);
         BoardModelScaleSetV(temp_r29, &sp14);
         arg1->unk1 += 4;
         return;

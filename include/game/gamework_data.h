@@ -362,6 +362,6 @@ static inline void GWPlayerCoinWinSet(s32 player, s16 value)
 }
 
 #define GWPlayerCoinWinAdd(player, value) GWPlayerCoinWinSet((player), GWPlayerCoinWinGet((player))+(value))
-#define GWPlayerCoinCollectAdd(player, value) GWPlayerCoinCollectSet((player), GWPlayerCoinCollectGet((player))+(value))
+#define GWPlayerCoinCollectAdd(player, value) GWPlayerCoinCollectSet((player), (s32)GWPlayerCoinCollectGet((player))+(value))
 
 #endif

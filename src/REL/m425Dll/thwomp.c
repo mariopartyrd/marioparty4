@@ -1477,7 +1477,7 @@ s32 fn_1_6EC4(float var_f24, float sp8, s16 var_r22, s16 var_r24)
             var_r31->unk_18C[var_r30].x = -(sp24 * var_r31->unk_17C[var_r30].x);
             var_r31->unk_18C[var_r30].z = -(sp24 * var_r31->unk_17C[var_r30].z);
             var_r31->unk_18C[var_r30].y = 0.0;
-            var_f27 = 180.0 + (180.0 * (atan2(var_r31->unk_17C[var_r30].x, var_r31->unk_17C[var_r30].z) / 3.141592653589793));
+            var_f27 = 180.0 + atan2d(var_r31->unk_17C[var_r30].x, var_r31->unk_17C[var_r30].z);
             if (var_f27 > 360.0f) {
                 var_f27 = fmod(var_f27, 360.0);
             }

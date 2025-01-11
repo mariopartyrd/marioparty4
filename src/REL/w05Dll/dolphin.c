@@ -11,6 +11,8 @@
 #include "game/board/player.h"
 #include "game/board/window.h"
 
+#include "ext_math.h"
+
 // bss
 s16 lbl_1_bss_72[2];
 s16 lbl_1_bss_6C[3];
@@ -179,7 +181,7 @@ void fn_1_4034(s32 arg0)
         var_r27 = arg0 + 1;
     }
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_118), lbl_1_data_22C[var_r27], &sp34);
-    temp_f25 = (180.0 * (atan2((sp34.x - sp40.x), (sp34.z - sp40.z)) / M_PI));
+    temp_f25 = atan2d(sp34.x - sp40.x, sp34.z - sp40.z);
     BoardModelMotionShiftSet(lbl_1_bss_64, 2, 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
 
     while (fn_1_1208(lbl_1_bss_64, temp_f25, 10.0f) == 0) {
@@ -236,7 +238,7 @@ loop_37:
     }
     BoardModelPosGet(lbl_1_bss_64, &sp40);
     BoardPlayerPosGet(lbl_1_bss_68, &sp28);
-    var_f27 = 180.0 * (atan2((sp40.x - sp28.x), (sp40.z - sp28.z)) / M_PI);
+    var_f27 = atan2d(sp40.x - sp28.x, sp40.z - sp28.z);
     BoardPlayerMotBlendSet(lbl_1_bss_68, var_f27, 0xF);
 
     while (BoardPlayerMotBlendCheck(lbl_1_bss_68) == 0) {
@@ -352,7 +354,7 @@ void fn_1_4EB4(s32 arg1, s32 arg2, Vec *arg3)
     BoardPlayerIdleSet(lbl_1_bss_68);
     HuPrcSleep(8);
     BoardSpacePosGet(0, arg2, &sp3C);
-    var_f28 = 180.0 * (atan2((sp3C.x - sp30.x), (sp3C.z - sp30.z)) / M_PI);
+    var_f28 = atan2d(sp3C.x - sp30.x, sp3C.z - sp30.z);
     BoardPlayerMotBlendSet(lbl_1_bss_68, var_f28, 0xF);
 
     while (BoardPlayerMotBlendCheck(lbl_1_bss_68) == 0) {
@@ -486,7 +488,7 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec *arg2)
             VECAdd(&sp58, &sp40, &sp58);
             sp64 = sp58;
             if (var_r29 == 0) {
-                sp58.y += 250.0 * sin((M_PI * var_f28) / 180.0);
+                sp58.y += 250.0 * sind(var_f28);
                 var_f28 -= 2.5f;
                 if (var_f28 < -540.0f) {
                     var_f28 = -540.0f;
@@ -521,7 +523,7 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec *arg2)
                 var_r29--;
             }
             BoardModelPosSetV(lbl_1_bss_64, &sp58);
-            sp28.x = sp34.x = (45.0 * -sin((M_PI * var_f28) / 180.0));
+            sp28.x = sp34.x = 45.0 * -sind(var_f28);
             BoardModelRotSetV(lbl_1_bss_64, &sp34);
             BoardPlayerRotSetV(lbl_1_bss_68, &sp28);
             sp4C = sp58;
@@ -540,7 +542,7 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec *arg2)
     BoardPlayerIdleSet(lbl_1_bss_68);
     HuPrcSleep(8);
     BoardSpacePosGet(0, arg1, &sp58);
-    var_f27 = (180.0 * (atan2((sp58.x - sp4C.x), (sp58.z - sp4C.z)) / M_PI));
+    var_f27 = atan2d(sp58.x - sp4C.x, sp58.z - sp4C.z);
     BoardPlayerMotBlendSet(lbl_1_bss_68, var_f27, 0xF);
 
     while (BoardPlayerMotBlendCheck(lbl_1_bss_68) == 0) {
@@ -599,8 +601,8 @@ void fn_1_62AC(s32 arg0, Vec *arg1)
         sp1C = sp28;
         sp10 = sp28;
         VECScale(&sp1C, &sp1C, sp8[arg0]);
-        sp1C.y += (250.0 * sin((M_PI * var_f31) / 180.0));
-        var_f30 = (250.0 * -cos((M_PI * var_f31) / 180.0));
+        sp1C.y += 250.0 * sind(var_f31);
+        var_f30 = 250.0 * -cosd(var_f31);
         VECScale(&sp10, &sp10, var_f30);
         VECAdd(&sp10, &sp1C, &sp1C);
         VECAdd(&sp1C, &sp34, &sp1C);

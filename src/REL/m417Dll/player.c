@@ -856,7 +856,7 @@ void fn_1_9C14(omObjData *object)
         return;
     }
     PSQUATNormalize(&var_r31->unk_194, &sp28);
-    if (sp28.w < cos(0.4363323129985824)) {
+    if (sp28.w < cosd(25)) {
         var_r31->unk_3C = 1;
     }
 }

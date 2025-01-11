@@ -6,6 +6,8 @@
 #include "game/board/player.h"
 #include "game/hsfdraw.h"
 
+#include "ext_math.h"
+
 //BSS
 char lbl_1_bss_130[8];
 omObjData* lbl_1_bss_12C;
@@ -167,7 +169,7 @@ s32 fn_1_6898(s32 arg0) {
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_388), "hei01", &sp20);
     BoardPlayerPosGet(arg0, &sp14);
     VECSubtract(&sp20, &sp14, &sp8);
-    temp_f31 = 180.0 * (atan2(sp8.x, sp8.z) / M_PI);
+    temp_f31 = atan2d(sp8.x, sp8.z);
     BoardCameraTargetModelSet(lbl_1_data_388);
     BoardPlayerMotBlendSet(arg0, temp_f31, 15);
 
@@ -456,10 +458,10 @@ void fn_1_767C(omObjData* arg0) {
     if ((lbl_1_data_388 != -1) && (lbl_1_bss_124 == 0)) {
         temp_r31->unk_04 += 3.0f;
         if (temp_r31->unk_04 >= 360.0f) {
-            temp_r31->unk_04 = (f32) (temp_r31->unk_04 - 360.0f);
+            temp_r31->unk_04 -= 360.0f;
         }
         BoardModelPosGet(lbl_1_data_388, &sp8);
-        sp8.y = (f32) ((f64) sp8.y + (0.25 * (2.0 * sin((M_PI * (f64) temp_r31->unk_04) / 180.0))));
+        sp8.y += 0.25 * (2.0 * sind(temp_r31->unk_04));
         BoardModelPosSetV(lbl_1_data_388, &sp8);
     }
 }

@@ -302,7 +302,7 @@ static void CoinChgAppear(omObjData *object, coinChg *coin_chg) {
     f32 angle;
 
     OSu16tof32(&coin_chg->angle, &angle);
-    angle = sin(M_PI * angle / 180.0);
+    angle = sind(angle);
     scale = angle;
     object->rot.x = 405.0f * angle;
     BoardModelScaleSet(coin_chg->coin_model, scale, scale, scale);
@@ -342,8 +342,8 @@ static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
     } else {
         spacing = 105.0f;
     }
-    y_offset = (200.0 * sin((M_PI * (2.0f * x_scale)) / 180.0));
-    x_scale = sin((M_PI * x_scale) / 180.0);
+    y_offset = 200.0 * sind(2.0f * x_scale);
+    x_scale = sind(x_scale);
     object->rot.x = 45.0f + (315.0f * x_scale);
     if (coin_chg->tens != 0) {
         coin_x = object->trans.x + (x_scale * -spacing);
@@ -379,7 +379,7 @@ static void CoinChgShow(omObjData* object, coinChg* coin_chg) {
     f32 y_pos;
 
     OSu16tof32(&coin_chg->angle, &angle);
-    angle = (f32) sin((M_PI * angle) / 180.0);
+    angle = sind(angle);
     if (coin_chg->minus != 0) {
         y_pos = (-50.0f * angle) + object->trans.y;
     } else {

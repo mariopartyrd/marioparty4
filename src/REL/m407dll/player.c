@@ -467,8 +467,8 @@ void fn_1_DB4(omObjData *arg0)
         temp_r31->unk_20++;
     }
 
-    temp_f31 = (32.0f * sin(1.0471975511965976)) - (9.8f * temp_r31->unk_24);
-    temp_f30 = 22.0f * cos(1.0471975511965976);
+    temp_f31 = 32.0f * sin(M_PI / 3) - 9.8f * temp_r31->unk_24;
+    temp_f30 = 22.0f * cos(M_PI / 3);
     temp_r31->unk_18 = temp_r31->unk_18 + temp_f30;
     temp_r31->unk_14 = temp_r31->unk_14 + temp_f31;
     temp_r31->unk_24 += 0.3f;
@@ -514,7 +514,7 @@ void fn_1_1074(omObjData *arg0)
         temp_r31->unk_20 = 1;
     }
 
-    temp_r31->unk_14 = (temp_r31->unk_14 + ((80.0 * sin(1.5707963267948966)) - (9.8 * temp_r31->unk_24)));
+    temp_r31->unk_14 += 80.0 * sin(M_PI / 2) - 9.8 * temp_r31->unk_24;
     temp_r31->unk_24 += 0.3f;
 
     if (!(temp_r31->unk_14 < 1000.0f)) {

@@ -1,5 +1,5 @@
 #include "dolphin.h"
-#include "math.h"
+#include "ext_math.h"
 
 #include "game/armem.h"
 #include "game/audio.h"
@@ -503,7 +503,7 @@ void fn_1_7F98(void)
     }
     delay = (lbl_1_bss_174) ? 3 : 10;
     for (time = 0; time <= delay; time++) {
-        float scale = sin(M_PI * ((90.0 / delay) * time) / 180.0);
+        float scale = sind((90.0 / delay) * time);
         for (i = 0; i < 4; i++) {
             HuSprGrpScaleSet(lbl_1_bss_19E0[i], scale, scale);
         }

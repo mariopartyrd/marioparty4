@@ -300,7 +300,7 @@ static void ExitBox(ItemGiveWork2* arg0, omObjData* arg1) {
     }
 
     arg1->trans.y = spC.y + (700.0f * cosd(arg0->unk_08));
-    arg1->rot.y = sin((M_PI * temp) / 180.0);
+    arg1->rot.y = sind(temp);
     arg0->unk_08 -= 1.5f;
     arg0->unk_06 -= 30;
 }

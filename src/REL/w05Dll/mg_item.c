@@ -12,6 +12,8 @@
 #include "game/board/model.h"
 #include "game/board/window.h"
 
+#include "ext_math.h"
+
 // data
 s32 lbl_1_data_310[2] = { 0x79, 0x7A };
 char *lbl_1_data_330[3] = { "suika1", "suika2", "suika3" };
@@ -459,7 +461,7 @@ void fn_1_80D8(omObjData *arg0)
     }
     if ((spC != 0) || (sp10 != 0)) {
         var_r29 = -1;
-        var_f31 = (180.0 * (atan2(spC, sp10) / M_PI));
+        var_f31 = atan2d(spC, sp10);
         if (var_f31 < 0.0f) {
             var_f31 += 360.0f;
         }
@@ -695,7 +697,7 @@ void fn_1_896C(void)
                 var_r29 = (1 << var_r31);
                 if ((temp_r30 & var_r29) != 0) {
                     BoardModelPosGet(lbl_1_bss_A4[var_r31], &sp18);
-                    sp18.y = (sp18.y + (0.25 * sin((M_PI * var_f30) / 180.0)));
+                    sp18.y += 0.25 * sind(var_f30);
                     BoardModelPosSetV(lbl_1_bss_A4[var_r31], &sp18);
                 }
             }
@@ -810,8 +812,8 @@ void fn_1_9268(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
         if (var_r28 != particle->unk_30) {
             temp_f30 = 360.0f * (0.003921569f * (s32)(frand() & 0xFF));
             temp_f29 = temp_f31 * (20.0f + (60.0f * (0.003921569f * (s32)(frand() & 0xFF))));
-            var_r31->unk34.x = sp8.x + (temp_f29 * sin((M_PI * temp_f30) / 180.0));
-            var_r31->unk34.z = sp8.z + (temp_f29 * cos((M_PI * temp_f30) / 180.0));
+            var_r31->unk34.x = sp8.x + temp_f29 * sind(temp_f30);
+            var_r31->unk34.z = sp8.z + temp_f29 * cosd(temp_f30);
             var_r31->unk34.y = sp8.y + (temp_f31 * (-30.0f + (40.0f * (0.003921569f * (s32)(frand() & 0xFF)))));
             var_r31->unk08.x = 0.5f + (3.0f * (0.003921569f * (s32)(frand() & 0xFF)));
             var_r31->unk08.y = 0.3f + (2.0f * (0.003921569f * (s32)(frand() & 0xFF)));

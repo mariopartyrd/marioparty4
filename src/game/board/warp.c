@@ -12,7 +12,7 @@
 #include "game/objsub.h"
 #include "game/disp.h"
 
-#include "math.h"
+#include "ext_math.h"
 
 static void WarpInit(s32);
 static void WarpLaunch(s32);
@@ -234,7 +234,7 @@ static void WarpImpact(s32 player) {
     speed = 4.0f;
     
     for (angle = 0.0f, temp = angle; angle < 180.0f; angle += speed) {
-        temp_f30 = sin((M_PI * angle) / 180.0);
+        temp_f30 = sind(angle);
         BoardModelScaleSet(warpImpactMdl, 0.5f + temp_f30, 0.5f + temp_f30, 0.5f + temp_f30);
         HuPrcVSleep();
     }

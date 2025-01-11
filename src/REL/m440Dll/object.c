@@ -255,7 +255,7 @@ void fn_1_B884(omObjData *arg0, unkObjStruct *arg1)
             arg1->unk18.z = (700.0 * sind(lbl_1_data_250));
             var_f29 = (arg1->unk18.x - arg1->unk24.x);
             var_f28 = (arg1->unk18.z - arg1->unk24.z);
-            var_f30 = (180.0 * (atan2(var_f29, var_f28) / M_PI));
+            var_f30 = atan2d(var_f29, var_f28);
             if (var_f30 < 0.0f) {
                 var_f30 += 360.0f;
             }
@@ -310,7 +310,7 @@ void fn_1_B884(omObjData *arg0, unkObjStruct *arg1)
             arg1->unk18.z = (arg1->unk5C * sind(lbl_1_data_250));
             var_f29 = (arg1->unk18.x - arg1->unk24.x);
             var_f28 = (arg1->unk18.z - arg1->unk24.z);
-            var_f30 = (180.0 * (atan2(var_f29, var_f28) / M_PI));
+            var_f30 = atan2d(var_f29, var_f28);
             if (var_f30 < 0.0f) {
                 var_f30 += 360.0f;
             }
@@ -551,7 +551,7 @@ void fn_1_C944(omObjData *arg0, unkObjStruct *arg1)
             arg1->unk48 = arg1->unk48 & ~4;
             var_f26 = (arg1->unk18.x - arg1->unk24.x);
             var_f25 = (arg1->unk18.z - arg1->unk24.z);
-            var_f29 = (180.0 * (atan2(var_f26, var_f25) / M_PI));
+            var_f29 = atan2d(var_f26, var_f25);
             if (var_f29 < 0.0f) {
                 var_f29 += 360.0f;
             }
@@ -920,7 +920,7 @@ void fn_1_E034(omObjData *arg0, unkObjStruct *arg1)
             arg1->unk18.z = (arg1->unk5C * sind(lbl_1_bss_84));
             var_f29 = (arg1->unk18.x - arg1->unk24.x);
             var_f28 = (arg1->unk18.z - arg1->unk24.z);
-            var_f30 = (180.0 * (atan2(var_f29, var_f28) / M_PI));
+            var_f30 = atan2d(var_f29, var_f28);
             if (var_f30 < 0.0f) {
                 var_f30 += 360.0f;
             }
@@ -949,8 +949,8 @@ void fn_1_E034(omObjData *arg0, unkObjStruct *arg1)
                 arg1->unk60++;
             }
             var_f29 = arg1->unk5C + ((700.0f - arg1->unk5C) * var_f31);
-            arg1->unk18.x = (var_f29 * cos(2.356194490192345)); // atan2(1.0, -1.0)
-            arg1->unk18.z = (var_f29 * sin(2.356194490192345));
+            arg1->unk18.x = var_f29 * cosd(135);
+            arg1->unk18.z = var_f29 * sind(135);
             var_f29 = 0.3f;
             var_f28 = 0.6f;
             if (var_f31 >= var_f29) {
@@ -978,7 +978,7 @@ void fn_1_E034(omObjData *arg0, unkObjStruct *arg1)
             arg1->unk18.z = (700.0 * sind(lbl_1_bss_84));
             var_f29 = (arg1->unk18.x - arg1->unk24.x);
             var_f28 = (arg1->unk18.z - arg1->unk24.z);
-            var_f30 = (180.0 * (atan2(var_f29, var_f28) / M_PI));
+            var_f30 = atan2d(var_f29, var_f28);
             if (var_f30 < 0.0f) {
                 var_f30 += 360.0f;
             }

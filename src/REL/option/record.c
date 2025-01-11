@@ -10,7 +10,7 @@
 #include "game/window.h"
 
 #include "dolphin.h"
-#include "math.h"
+#include "ext_math.h"
 #include "version.h"
 
 #ifndef __MWERKS__
@@ -208,8 +208,8 @@ static void ExecRecord(omObjData *object)
                 Hu3DModelAttrReset(work->hand->model[0], HU3D_ATTR_DISPOFF);
                 work->cameraDoneF = TRUE;
             }
-            pos.x = 505.0 * -sin(305 * M_PI / 180.0);
-            pos.z = 505.0 * cos(305 * M_PI / 180.0);
+            pos.x = 505.0 * -sind(305);
+            pos.z = 505.0 * cosd(305);
             pos.y = 144.0f - 14.0f * work->recordType;
             omSetTra(work->hand, pos.x, pos.y, pos.z);
             object->unk10 = 3;
