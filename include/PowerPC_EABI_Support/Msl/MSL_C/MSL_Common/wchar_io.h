@@ -1,7 +1,7 @@
 #ifndef _MSL_COMMON_WCHAR_IO_H
 #define _MSL_COMMON_WCHAR_IO_H
 
-#include "ansi_files.h"
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/ansi_files.h"
 
 #ifndef __cplusplus
 typedef unsigned short wchar_t;

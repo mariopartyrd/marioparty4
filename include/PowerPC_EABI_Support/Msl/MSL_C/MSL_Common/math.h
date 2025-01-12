@@ -1,7 +1,7 @@
 #ifndef MSL_MATH_H_
 #define MSL_MATH_H_
 
-#include "float.h"
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/float.h"
 
 #define NAN       (*(float*)__float_nan)
 #define HUGE_VALF (*(float*)__float_huge)

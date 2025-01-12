@@ -1,7 +1,7 @@
 #ifndef _MSL_COMMON_ANSI_FILES_H
 #define _MSL_COMMON_ANSI_FILES_H
 
-#include "stddef.h"
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/stddef.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,8 +1,8 @@
 #ifndef _MSL_COMMON_PRINTF_H
 #define _MSL_COMMON_PRINTF_H
 
-#include "ansi_files.h"
-#include "stdarg.h"
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/ansi_files.h"
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/stdarg.h"
 
 #ifdef __cplusplus
 extern "C" {
