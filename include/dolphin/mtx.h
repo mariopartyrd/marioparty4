@@ -118,7 +118,7 @@ void PSMTXScaleApply(const Mtx src, Mtx dst, f32 xS, f32 yS, f32 zS);
 
 void PSMTXRotRad(Mtx m, char axis, f32 rad);
 void PSMTXRotTrig(Mtx m, char axis, f32 sinA, f32 cosA);
-void PSMTXRotAxisRad(Mtx m, const Vec* axis, f32 rad);
+void PSMTXRotAxisRad(register Mtx m, const Vec* axis, register f32 rad);
 #endif
 
 #ifdef MTX_USE_PS

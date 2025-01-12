@@ -3,6 +3,8 @@
 static f32 Unit01[] = { 0.0f, 1.0f };
 
 extern f32 sinf(f32);
+extern f32 cosf(f32);
+extern f32 tanf(f32);
 
 void C_MTXIdentity(Mtx mtx)
 {
@@ -648,12 +650,12 @@ void C_MTXRotRad(Mtx m, char axis, f32 rad)
 #ifdef GEKKO
 void PSMTXRotRad(Mtx m, char axis, f32 rad)
 {
-    // f32 sinA, cosA;
+    f32 sinA, cosA;
 
-    // sinA = sinf(rad);
-    // cosA = cosf(rad);
+    sinA = sinf(rad);
+    cosA = cosf(rad);
 
-    // PSMTXRotTrig(m, axis, sinA, cosA);
+    PSMTXRotTrig(m, axis, sinA, cosA);
 }
 #endif
 
@@ -717,68 +719,63 @@ void C_MTXRotTrig(Mtx m, char axis, f32 sinA, f32 cosA)
 #ifdef GEKKO
 void PSMTXRotTrig(register Mtx m, register char axis, register f32 sinA, register f32 cosA)
 {
-//     register f32 fc0, fc1, nsinA;
-//     register f32 fw0, fw1, fw2, fw3;
-//     // clang-format off
-//     asm
-//     {
-//         frsp        sinA, sinA
-//         frsp        cosA, cosA
-//     }
+    register f32 fc0, fc1, nsinA;
+    register f32 fw0, fw1, fw2, fw3;
+    // clang-format off
 
-//   fc0 = 0.0F;
-//   fc1 = 1.0F;
-//   asm
-//   {
-//     ori         axis, axis, 0x20
-//     ps_neg      nsinA, sinA
-//     cmplwi      axis, 'x'
-//     beq         _case_x
-//     cmplwi      axis, 'y'
-//     beq         _case_y
-//     cmplwi      axis, 'z'
-//     beq         _case_z
-//     b           _end
+  fc0 = 0.0F;
+  fc1 = 1.0F;
+  asm
+  {
+    ori         axis, axis, 0x20
+    ps_neg      nsinA, sinA
+    cmplwi      axis, 'x'
+    beq         _case_x
+    cmplwi      axis, 'y'
+    beq         _case_y
+    cmplwi      axis, 'z'
+    beq         _case_z
+    b           _end
 
-// _case_x:
-//     psq_st      fc1,  0(m), 1, 0
-//     psq_st      fc0,  4(m), 0, 0
-//     ps_merge00  fw0, sinA, cosA
-//     psq_st      fc0, 12(m), 0, 0
-//     ps_merge00  fw1, cosA, nsinA
-//     psq_st      fc0, 28(m), 0, 0
-//     psq_st      fc0, 44(m), 1, 0
-//     psq_st      fw0, 36(m), 0, 0
-//     psq_st      fw1, 20(m), 0, 0
-//     b           _end;
+_case_x:
+    psq_st      fc1,  0(m), 1, 0
+    psq_st      fc0,  4(m), 0, 0
+    ps_merge00  fw0, sinA, cosA
+    psq_st      fc0, 12(m), 0, 0
+    ps_merge00  fw1, cosA, nsinA
+    psq_st      fc0, 28(m), 0, 0
+    psq_st      fc0, 44(m), 1, 0
+    psq_st      fw0, 36(m), 0, 0
+    psq_st      fw1, 20(m), 0, 0
+    b           _end;
 
-// _case_y:
-//     ps_merge00  fw0, cosA, fc0
-//     ps_merge00  fw1, fc0, fc1
-//     psq_st      fc0, 24(m), 0, 0
-//     psq_st      fw0,  0(m), 0, 0
-//     ps_merge00  fw2, nsinA, fc0
-//     ps_merge00  fw3, sinA, fc0
-//     psq_st      fw0, 40(m), 0, 0;
-//     psq_st      fw1, 16(m), 0, 0;
-//     psq_st      fw3,  8(m), 0, 0;
-//     psq_st      fw2, 32(m), 0, 0;
-//     b           _end;
+_case_y:
+    ps_merge00  fw0, cosA, fc0
+    ps_merge00  fw1, fc0, fc1
+    psq_st      fc0, 24(m), 0, 0
+    psq_st      fw0,  0(m), 0, 0
+    ps_merge00  fw2, nsinA, fc0
+    ps_merge00  fw3, sinA, fc0
+    psq_st      fw0, 40(m), 0, 0;
+    psq_st      fw1, 16(m), 0, 0;
+    psq_st      fw3,  8(m), 0, 0;
+    psq_st      fw2, 32(m), 0, 0;
+    b           _end;
 
-// _case_z:
-//     psq_st      fc0,  8(m), 0, 0
-//     ps_merge00  fw0, sinA, cosA
-//     ps_merge00  fw2, cosA, nsinA
-//     psq_st      fc0, 24(m), 0, 0
-//     psq_st      fc0, 32(m), 0, 0
-//     ps_merge00  fw1, fc1, fc0
-//     psq_st      fw0, 16(m), 0, 0
-//     psq_st      fw2,  0(m), 0, 0
-//     psq_st      fw1, 40(m), 0, 0
+_case_z:
+    psq_st      fc0,  8(m), 0, 0
+    ps_merge00  fw0, sinA, cosA
+    ps_merge00  fw2, cosA, nsinA
+    psq_st      fc0, 24(m), 0, 0
+    psq_st      fc0, 32(m), 0, 0
+    ps_merge00  fw1, fc1, fc0
+    psq_st      fw0, 16(m), 0, 0
+    psq_st      fw2,  0(m), 0, 0
+    psq_st      fw1, 40(m), 0, 0
 
-// _end:
-//   }
-//     // clang-format on
+_end:
+  }
+    // clang-format on
 }
 
 #endif
@@ -822,70 +819,58 @@ void C_MTXRotAxisRad(Mtx m, const Vec *axis, f32 rad)
 }
 
 #ifdef GEKKO
-static void __PSMTXRotAxisRadInternal(register Mtx m, const register Vec *axis, register f32 sT, register f32 cT)
+#define qr0 0
+
+void PSMTXRotAxisRad(register Mtx m, const Vec *axis, register f32 rad)
 {
-    register f32 tT, fc0;
     register f32 tmp0, tmp1, tmp2, tmp3, tmp4;
     register f32 tmp5, tmp6, tmp7, tmp8, tmp9;
 
-    tmp9 = 0.5F;
-    tmp8 = 3.0F;
-    // clang-format off
-  asm
-  {
-    frsp        cT, cT
-    psq_l       tmp0, 0(axis), 0, 0
-    frsp        sT, sT
-    lfs         tmp1, 8(axis)
-    ps_mul      tmp2, tmp0, tmp0
-    fadds       tmp7, tmp9, tmp9
-    ps_madd     tmp3, tmp1, tmp1, tmp2
-    fsubs       fc0, tmp9, tmp9
-    ps_sum0     tmp4, tmp3, tmp1, tmp2
-    fsubs       tT, tmp7, cT
-    frsqrte     tmp5, tmp4
-    fmuls       tmp2, tmp5, tmp5
-    fmuls       tmp3, tmp5, tmp9
-    fnmsubs     tmp2, tmp2, tmp4, tmp8
-    fmuls       tmp5, tmp2, tmp3
-    ps_merge00  cT, cT, cT
-    ps_muls0    tmp0, tmp0, tmp5
-    ps_muls0    tmp1, tmp1, tmp5
-    ps_muls0    tmp4, tmp0, tT
-    ps_muls0    tmp9, tmp0, sT
-    ps_muls0    tmp5, tmp1, tT
-    ps_muls1    tmp3, tmp4, tmp0
-    ps_muls0    tmp2, tmp4, tmp0
-    ps_muls0    tmp4, tmp4, tmp1
-    fnmsubs     tmp6, tmp1, sT, tmp3
-    fmadds      tmp7, tmp1, sT, tmp3
-    ps_neg      tmp0, tmp9
-    ps_sum0     tmp8, tmp4, fc0, tmp9
-    ps_sum0     tmp2, tmp2, tmp6, cT
-    ps_sum1     tmp3, cT, tmp7, tmp3
-    ps_sum0     tmp6, tmp0, fc0 ,tmp4
-    psq_st      tmp8, 8(m), 0, 0
-    ps_sum0     tmp0, tmp4, tmp4, tmp0
-    psq_st      tmp2, 0(m), 0, 0
-    ps_muls0    tmp5, tmp5, tmp1
-    psq_st      tmp3, 16(m), 0, 0
-    ps_sum1     tmp4, tmp9, tmp0, tmp4
-    psq_st      tmp6, 24(m), 0, 0
-    ps_sum0     tmp5, tmp5, fc0, cT
-    psq_st      tmp4, 32(m), 0, 0
-    psq_st      tmp5, 40(m), 0, 0
+    register f32 sT;
+    register f32 cT;
+    register f32 oneMinusCosT;
+    register f32 zero;
+    Vec axisNormalized;
+    register Vec *axisNormalizedPtr;
+
+    zero = 0.0f;
+    axisNormalizedPtr = &axisNormalized;
+    sT = sinf(rad);
+    cT = cosf(rad);
+    oneMinusCosT = 1.0f - cT;
+
+    PSVECNormalize(axis, axisNormalizedPtr);
+
+#ifdef __MWERKS__ // clang-format off
+  asm {
+		psq_l rad, 0x0(axisNormalizedPtr), 0, qr0
+		lfs tmp1, 0x8(axisNormalizedPtr)
+		ps_merge00 tmp0, cT, cT
+		ps_muls0   tmp4, rad, oneMinusCosT
+		ps_muls0   tmp5, tmp1, oneMinusCosT
+		ps_muls1   tmp3, tmp4, rad
+		ps_muls0   tmp2, tmp4, rad
+		ps_muls0   rad, rad, sT
+		ps_muls0   tmp4, tmp4, tmp1
+		fnmsubs    tmp6, tmp1, sT, tmp3
+		fmadds     tmp7, tmp1, sT, tmp3
+		ps_neg     tmp9, rad
+		ps_sum0    tmp8, tmp4, zero, rad
+		ps_sum0    tmp2, tmp2, tmp6, tmp0
+		ps_sum1    tmp3, tmp0, tmp7, tmp3
+		ps_sum0    tmp6, tmp9, zero, tmp4
+		ps_sum0    tmp9, tmp4, tmp4, tmp9
+		psq_st     tmp8, 0x8(m), 0, qr0
+		ps_muls0   tmp5, tmp5, tmp1
+		psq_st     tmp2, 0x0(m), 0, qr0
+		ps_sum1    tmp4, rad, tmp9, tmp4
+		psq_st     tmp3, 0x10(m), 0, qr0
+		ps_sum0    tmp5, tmp5, zero, tmp0
+		psq_st     tmp6, 0x18(m), 0, qr0
+		psq_st     tmp4, 0x20(m), 0, qr0
+		psq_st     tmp5, 0x28(m), 0, qr0
   }
-    // clang-format on
-}
-
-void PSMTXRotAxisRad(Mtx m, const Vec *axis, f32 rad)
-{
-    // f32 sinT, cosT;
-
-    // sinT = sinf(rad);
-    // cosT = cosf(rad);
-
-    // __PSMTXRotAxisRadInternal(m, axis, sinT, cosT);
+#endif // clang-format on
 }
 
 #endif
@@ -1219,30 +1204,30 @@ void PSMTXReflect(register Mtx m, const register Vec *p, const register Vec *n)
 
 void C_MTXLookAt(Mtx m, const Point3d *camPos, const Vec *camUp, const Point3d *target)
 {
-    // Vec vLook, vRight, vUp;
+    Vec vLook, vRight, vUp;
 
-    // vLook.x = camPos->x - target->x;
-    // vLook.y = camPos->y - target->y;
-    // vLook.z = camPos->z - target->z;
-    // VECNormalize(&vLook, &vLook);
-    // VECCrossProduct(camUp, &vLook, &vRight);
-    // VECNormalize(&vRight, &vRight);
-    // VECCrossProduct(&vLook, &vRight, &vUp);
+    vLook.x = camPos->x - target->x;
+    vLook.y = camPos->y - target->y;
+    vLook.z = camPos->z - target->z;
+    VECNormalize(&vLook, &vLook);
+    VECCrossProduct(camUp, &vLook, &vRight);
+    VECNormalize(&vRight, &vRight);
+    VECCrossProduct(&vLook, &vRight, &vUp);
 
-    // m[0][0] = vRight.x;
-    // m[0][1] = vRight.y;
-    // m[0][2] = vRight.z;
-    // m[0][3] = -(camPos->x * vRight.x + camPos->y * vRight.y + camPos->z * vRight.z);
+    m[0][0] = vRight.x;
+    m[0][1] = vRight.y;
+    m[0][2] = vRight.z;
+    m[0][3] = -(camPos->x * vRight.x + camPos->y * vRight.y + camPos->z * vRight.z);
 
-    // m[1][0] = vUp.x;
-    // m[1][1] = vUp.y;
-    // m[1][2] = vUp.z;
-    // m[1][3] = -(camPos->x * vUp.x + camPos->y * vUp.y + camPos->z * vUp.z);
+    m[1][0] = vUp.x;
+    m[1][1] = vUp.y;
+    m[1][2] = vUp.z;
+    m[1][3] = -(camPos->x * vUp.x + camPos->y * vUp.y + camPos->z * vUp.z);
 
-    // m[2][0] = vLook.x;
-    // m[2][1] = vLook.y;
-    // m[2][2] = vLook.z;
-    // m[2][3] = -(camPos->x * vLook.x + camPos->y * vLook.y + camPos->z * vLook.z);
+    m[2][0] = vLook.x;
+    m[2][1] = vLook.y;
+    m[2][2] = vLook.z;
+    m[2][3] = -(camPos->x * vLook.x + camPos->y * vLook.y + camPos->z * vLook.z);
 }
 
 void C_MTXLightFrustum(Mtx m, float t, float b, float l, float r, float n, float scaleS, float scaleT, float transS, float transT)
@@ -1269,28 +1254,28 @@ void C_MTXLightFrustum(Mtx m, float t, float b, float l, float r, float n, float
 
 void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, float scaleS, float scaleT, float transS, float transT)
 {
-    // f32 angle;
-    // f32 cot;
+    f32 angle;
+    f32 cot;
 
-    // angle = fovY * 0.5f;
-    // angle = MTXDegToRad(angle);
+    angle = fovY * 0.5f;
+    angle = MTXDegToRad(angle);
 
-    // cot = 1.0f / tanf(angle);
+    cot = 1.0f / tanf(angle);
 
-    // m[0][0] = (cot / aspect) * scaleS;
-    // m[0][1] = 0.0f;
-    // m[0][2] = -transS;
-    // m[0][3] = 0.0f;
+    m[0][0] = (cot / aspect) * scaleS;
+    m[0][1] = 0.0f;
+    m[0][2] = -transS;
+    m[0][3] = 0.0f;
 
-    // m[1][0] = 0.0f;
-    // m[1][1] = cot * scaleT;
-    // m[1][2] = -transT;
-    // m[1][3] = 0.0f;
+    m[1][0] = 0.0f;
+    m[1][1] = cot * scaleT;
+    m[1][2] = -transT;
+    m[1][3] = 0.0f;
 
-    // m[2][0] = 0.0f;
-    // m[2][1] = 0.0f;
-    // m[2][2] = -1.0f;
-    // m[2][3] = 0.0f;
+    m[2][0] = 0.0f;
+    m[2][1] = 0.0f;
+    m[2][2] = -1.0f;
+    m[2][3] = 0.0f;
 }
 
 void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, float scaleS, float scaleT, float transS, float transT)

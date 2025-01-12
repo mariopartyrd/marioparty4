@@ -344,6 +344,16 @@ def DolphinLib(lib_name, objects):
     }
 
 
+def DolphinLibUnpatched(lib_name, objects):
+    return {
+        "lib": lib_name,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_dolphin,
+        "host": False,
+        "objects": objects,
+    }
+
+
 def MusyX(objects, mw_version="GC/1.3.2", debug=False, major=1, minor=5, patch=4):
     cflags = cflags_musyx if not debug else cflags_musyx_debug
     return {
@@ -514,14 +524,14 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/db.c"),
         ],
     ),
-    DolphinLib(
+    DolphinLibUnpatched(
         "mtx",
         [
-            Object(NonMatching, "dolphin/mtx/mtx.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtx.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtxvec.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtx44.c"),
-            Object(NonMatching, "dolphin/mtx/vec.c"),
-            Object(NonMatching, "dolphin/mtx/quat.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/vec.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/quat.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/psmtx.c"),
         ],
     ),
@@ -554,7 +564,7 @@ config.libs = [
     DolphinLib(
         "pad",
         [
-            Object(NonMatching, "dolphin/pad/Padclamp.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/pad/Padclamp.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/pad/Pad.c"),
         ],
     ),
