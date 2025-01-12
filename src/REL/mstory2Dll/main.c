@@ -1236,7 +1236,3 @@ void fn_1_7384(int modelId, int charNo, float ofs, s32 maxTime, BOOL flag)
         }
     }
 }
-
-#if VERSION_PAL
-// lbl_1_data_399
-#endif
