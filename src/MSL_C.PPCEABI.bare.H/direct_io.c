@@ -1,7 +1,7 @@
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/direct_io.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/buffer_io.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/misc_io.h"
-#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/string.h"
+#include "string.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/wchar_io.h"
 
 size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream)

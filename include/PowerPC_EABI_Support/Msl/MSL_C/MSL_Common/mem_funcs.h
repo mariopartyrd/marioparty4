@@ -1,7 +1,7 @@
 #ifndef _MSL_COMMON_MEM_FUNCS_H
 #define _MSL_COMMON_MEM_FUNCS_H
 
-#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/stddef.h"
+#include "stddef.h"
 
 #ifdef __cplusplus
 extern "C" {

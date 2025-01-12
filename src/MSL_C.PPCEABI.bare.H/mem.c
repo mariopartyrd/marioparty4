@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/string.h"
+#include "string.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/mem_funcs.h"
 
 void* memmove(void* dst, const void* src, size_t n)

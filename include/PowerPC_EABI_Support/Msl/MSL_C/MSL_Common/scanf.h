@@ -1,7 +1,7 @@
 #ifndef _MSL_COMMON_SCANF_H
 #define _MSL_COMMON_SCANF_H
 
-#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/stddef.h"
+#include "stddef.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/ansi_files.h"
 
 #ifdef __cplusplus

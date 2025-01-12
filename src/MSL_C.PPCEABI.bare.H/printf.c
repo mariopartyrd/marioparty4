@@ -5,9 +5,9 @@
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/scanf.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/stdio.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/stdlib.h"
-#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/string.h"
+#include "string.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/wchar_io.h"
-#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/stdarg.h"
+#include "stdarg.h"
 
 extern void __num2dec(const decform*, double, decimal*);
 
