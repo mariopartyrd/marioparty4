@@ -592,12 +592,12 @@ config.libs = [
     DolphinLib(
         "gx",
         [
-            Object(NonMatching, "dolphin/gx/GXInit.c"),
-            Object(NonMatching, "dolphin/gx/GXFifo.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXInit.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXFifo.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXAttr.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXMisc.c"),
-            Object(NonMatching, "dolphin/gx/GXGeometry.c"),
-            Object(NonMatching, "dolphin/gx/GXFrameBuf.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXGeometry.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXFrameBuf.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXLight.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXTexture.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXBump.c"),
