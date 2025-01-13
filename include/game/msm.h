@@ -42,9 +42,11 @@
 #define MSM_ERR_INITFAIL -20
 #define MSM_ERR_INVALID_AUXPARAM -31
 #define MSM_ERR_PLAYFAIL -33
+#define MSM_ERR_22 -34
 #define MSM_ERR_STREAMALLOC_FAIL -35
 #define MSM_ERR_INSTALLED -36
 #define MSM_ERR_GRP_NOTLOADED -103
+#define MSM_ERR_6F -111
 #define MSM_ERR_INVALIDID -120
 #define MSM_ERR_INVALIDFILE -121
 #define MSM_ERR_REMOVEDID -122
@@ -173,7 +175,7 @@ s32 msmSysDelGroupBase(s32 grpNum);
 s32 msmSeSetParam(int seNo, MSM_SEPARAM *param);
 int msmSePlay(int seId, MSM_SEPARAM *param);
 s32 msmSeStop(int seNo, s32 speed);
-s32 msmSePauseAll(BOOL pause, s32 speed);
+void msmSePauseAll(BOOL pause, s32 speed);
 s32 msmSePause(int seNo, BOOL pause, s32 speed);
 void msmSeStopAll(BOOL checkGrp, s32 speed);
 s32 msmSeSetListener(Vec *pos, Vec *heading, float sndDist, float sndSpeed, MSM_SELISTENER *listener);
@@ -181,7 +183,7 @@ s32 msmSeUpdataListener(Vec *pos, Vec *heading);
 void msmSeDelListener(void);
 s32 msmSeGetStatus(int seNo);
 s32 msmSeGetNumPlay(BOOL baseGrp);
-s32 msmSeGetEntryID(s16 seId, int *seNo);
+s32 msmSeGetEntryID(s32 seId, int *seNo);
 
 int msmMusPlay(int musId, MSM_MUSPARAM *musParam);
 s32 msmMusStop(int musNo, s32 speed);

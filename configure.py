@@ -834,7 +834,7 @@ config.libs = [
     },
     {
         "lib": "msm",
-        "mw_version": "GC/1.2.5n",
+        "mw_version": "GC/1.2.5",
         "cflags": cflags_msm,
         "host": False,
         "objects": [
