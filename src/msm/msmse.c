@@ -486,7 +486,6 @@ s32 msmSeStop(int seNo, s32 speed) {
 // msmSePlay
 
 s32 msmSeInit(sysData* arg0, DVDFileInfo* arg1) {
-    unkSubStruct3* temp_r6;
     s32 temp_r29;
 
     se.unk04 = 0;
@@ -500,8 +499,7 @@ s32 msmSeInit(sysData* arg0, DVDFileInfo* arg1) {
     if ((se.unk0C = msmMemAlloc(arg0->unkC->unk34)) == NULL) {
         return MSM_ERR_OUTOFMEM;
     }
-    temp_r6 = arg0->unkC;
-    if (msmFioRead(arg1, se.unk0C, temp_r6->unk34, temp_r6->unk30) < 0) {
+    if (msmFioRead(arg1, se.unk0C, arg0->unkC->unk34, arg0->unkC->unk30) < 0) {
         return MSM_ERR_READFAIL;
     }
     temp_r29 = arg0->unk10->unk2 * sizeof(*se.unk10);

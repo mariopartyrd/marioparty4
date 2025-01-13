@@ -267,7 +267,7 @@ s32 msmSysInit(MSM_INIT *init, MSM_ARAM *aram)
         msmFioClose(&sp10);
         return var_r26;
     }
-    var_r26 = msmMusInit(&sys.unk0, &sp10);
+    var_r26 = msmMusInit(&sys, &sp10);
     if (var_r26 != 0) {
         msmFioClose(&sp10);
         return var_r26;

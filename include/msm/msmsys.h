@@ -51,13 +51,17 @@ typedef struct _unkSubStruct3 {
     u32 unk14; // length
     s32 unk18; // offset
     u32 unk1C; // length
-    char unk20[0x10];
+    char unk20[8];
+    s32 unk28;
+    s32 unk2C;
     s32 unk30;
     s32 unk34;
     s32 unk38;
     char unk3C[4];
     s32 unk40;
-    char unk44[0x1C];
+    char unk44[4];
+    s32 unk48;
+    char unk4C[0x14];
 } unkSubStruct3; // sizeof 0x60
 
 typedef struct _unkStruct3 {
@@ -70,14 +74,18 @@ typedef struct _sndInitData {
     s8 unk0;
     s8 unk1;
     s8 unk2;
-    char unk3[3];
+    char unk3[1];
+    s16 unk4;
     s16 unk6;
-    char unk8[6];
+    s8 unk8;
+    char unk9[5];
     s8 unkE;
     s8 unkF;
     u32 unk10;
     s32 unk14;
-    char unk18[0x11];
+    char unk18[8];
+    s32 unk20;
+    char unk24[5];
     s8 unk29[10]; // size unknown
 } sndInitData;
 
