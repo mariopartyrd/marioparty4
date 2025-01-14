@@ -326,15 +326,14 @@ void msmSeSetMasterVolume(s32 arg0) {
 
 s32 msmSeSetParam(int seNo, MSM_SEPARAM* param) {
     msmSeStruct00* var_r31;
-    s32 temp_r3;
-    s32 var_r0;
+    int temp_r3;
     s32 var_r4;
 
     var_r31 = msmSeGetStatus_inline(seNo);
     if (var_r31 == NULL) {
         return MSM_ERR_6F;
     }
-    if (param->flag & 1) {
+    if (param->flag & MSM_SEPARAM_VOL) {
         var_r31->unk0B = 1;
         var_r31->unk0C = param->vol;
         if (!(var_r31->unk13 & 1) || var_r31->unkB4 != 1) {
@@ -343,19 +342,18 @@ s32 msmSeSetParam(int seNo, MSM_SEPARAM* param) {
         var_r31->unk0B = 0;
     }
     if (!(var_r31->unk13 & 1)) {
-        if (param->flag & 2) {
+        if (param->flag & MSM_SEPARAM_PAN) {
             var_r31->unk0D = param->pan;
-            temp_r3 = var_r31->unk0D + var_r31->unk31 - 0x40; // TODO: inline?
-            var_r0 = temp_r3;
+            temp_r3 = var_r31->unk0D + var_r31->unk31 - 0x40;
             if (temp_r3 < 0) {
-                var_r0 = 0;
+                temp_r3 = 0;
             }
-            if (var_r0 > 0x7F) {
-                var_r0 = 0x7F;
+            if (temp_r3 > 0x7F) {
+                temp_r3 = 0x7F;
             }
-            sndFXPanning(var_r31->unk00, var_r0);
+            sndFXPanning(var_r31->unk00, temp_r3);
         }
-        if (param->flag & 4) {
+        if (param->flag & MSM_SEPARAM_PITCH) {
             var_r31->unk0E = param->pitch;
             var_r4 = var_r31->unk0E + var_r31->unk32 + 0x2000;
             if (var_r4 < 0) {
@@ -366,13 +364,13 @@ s32 msmSeSetParam(int seNo, MSM_SEPARAM* param) {
             }
             sndFXPitchBend(var_r31->unk00, var_r4);
         }
-        if (param->flag & 8) {
+        if (param->flag & MSM_SEPARAM_SPAN) {
             var_r31->unk10 = param->span;
             sndFXSurroundPanning(var_r31->unk00, var_r31->unk10);
         }
     } else if (var_r31->unkB4 == 1) {
         var_r31->unk00 = sndEmitterVoiceID(&var_r31->unk4C);
-        if (param->flag & 0x40) {
+        if (param->flag & MSM_SEPARAM_POS) {
             var_r31->unk0B = 1;
             var_r31->unkA8.x = param->pos.x - var_r31->unk9C.x;
             var_r31->unkA8.y = param->pos.y - var_r31->unk9C.y;
@@ -384,15 +382,15 @@ s32 msmSeSetParam(int seNo, MSM_SEPARAM* param) {
             var_r31->unk0B = 0;
         }
     }
-    if (param->flag & 0x10) {
+    if (param->flag & MSM_SEPARAM_AUXVOLA) {
         var_r31->unk11 = param->auxAVol;
         sndFXReverb(var_r31->unk00, var_r31->unk11);
     }
-    if (param->flag & 0x20) {
+    if (param->flag & MSM_SEPARAM_AUXVOLB) {
         var_r31->unk12 = param->auxBVol;
         sndFXChorus(var_r31->unk00, var_r31->unk12);
     }
-    if (param->flag & 0x80) {
+    if (param->flag & MSM_SEPARAM_PAD) {
         sndSendMessage(var_r31->unk00, param->pad);
     }
     return 0;
@@ -465,7 +463,6 @@ s32 msmSeStop(int seNo, s32 speed) {
         return MSM_ERR_6F;
     }
     var_r31->unk0B = 1;
-    // TODO: this pattern could be an inline.
     var_r31->unk34 = speed / 15;
     if (var_r31->unk34 != 0) {
         var_r31->unk38 = var_r31->unk34;
@@ -482,8 +479,144 @@ s32 msmSeStop(int seNo, s32 speed) {
     return 0;
 }
 
-// TODO: https://decomp.me/scratch/uhYSL
-// msmSePlay
+static inline BOOL msmSeInline00(msmSeStruct02* arg0, msmSeStruct00* arg1, MSM_SEPARAM* param) {
+    BOOL var_r0 = FALSE;
+
+    if (param != NULL) {
+        if (param->flag & MSM_SEPARAM_VOL) {
+            arg1->unk0C = param->vol;
+        }
+        if (param->flag & MSM_SEPARAM_PAN) {
+            arg1->unk0D = param->pan;
+        }
+        if (param->flag & MSM_SEPARAM_PITCH) {
+            arg1->unk0E = param->pitch;
+        }
+        if (param->flag & MSM_SEPARAM_SPAN) {
+            arg1->unk10 = param->span;
+        }
+        if (param->flag & MSM_SEPARAM_AUXVOLA) {
+            arg1->unk11 = param->auxAVol;
+        }
+        if (param->flag & MSM_SEPARAM_AUXVOLB) {
+            arg1->unk12 = param->auxBVol;
+        }
+        if ((param->flag & MSM_SEPARAM_POS) && arg0->unkDA != 0) {
+            var_r0 = TRUE;
+        }
+    }
+    arg1->unk14.paraArray = arg1->unk1C;
+    return var_r0;
+}
+
+int msmSePlay(int seId, MSM_SEPARAM* param) {
+    msmSeStruct00* var_r30;
+    SND_EMITTER* var_r29;
+    msmSeStruct02* se_ptr = &se;
+    MSMSE* temp_r9;
+    int var_r3_2;
+    s32 var_r4;
+    s32 var_r6;
+    s32 var_r6_2;
+
+    if (seId < 0 || seId >= se.unk00) {
+        return MSM_ERR_INVALIDID;
+    }
+    temp_r9 = &se.unk0C[seId];
+    if (temp_r9->groupId == 0xFFFF) {
+        return MSM_ERR_REMOVEDID;
+    }
+    for (var_r6 = 0; var_r6 < se.unk04; var_r6++) {
+        var_r30 = &se.unk10[var_r6];
+        if (var_r30->unk0A == 0) {
+            break;
+        }
+    }
+    if (var_r6 == se.unk04) {
+        return MSM_ERR_6E;
+    }
+    var_r30->unk30 = temp_r9->vol;
+    var_r30->unk31 = temp_r9->pan;
+    var_r30->unk32 = temp_r9->pitchBend;
+    var_r30->unk0C = 0x7F;
+    var_r30->unk0D = 0x40;
+    var_r30->unk10 = temp_r9->span;
+    var_r30->unk0E = 0;
+    var_r30->unk11 = temp_r9->reverb;
+    var_r30->unk12 = temp_r9->chorus;
+    var_r30->unk40 = 0;
+    var_r30->unk34 = 0;
+    var_r30->unk48 = 0x7F;
+    var_r30->unk3C = 0x7F;
+    var_r30->unkB4 = 0;
+    if (msmSeInline00(se_ptr, var_r30, param)) {
+        var_r30->unk9C.x = param->pos.x;
+        var_r30->unk9C.y = param->pos.y;
+        var_r30->unk9C.z = param->pos.z;
+        var_r30->unk1C[0].ctrl = SND_MIDICTRL_REVERB;
+        var_r30->unk1C[0].paraData.value7 = var_r30->unk11;
+        var_r30->unk1C[1].ctrl = SND_MIDICTRL_CHORUS;
+        var_r30->unk1C[1].paraData.value7 = var_r30->unk12;
+        var_r30->unk14.numPara = 2;
+        var_r30->unkA8.x = var_r30->unkA8.y = var_r30->unkA8.z = 0.0f;
+        if (temp_r9->doppler == 1) {
+            var_r29 = &var_r30->unk4C;
+            var_r6_2 = 9;
+        } else {
+            var_r29 = NULL;
+            var_r6_2 = 8;
+        }
+        var_r30->unkB4 = temp_r9->doppler;
+        var_r30->unk00 = sndAddEmitterParaEx(var_r29, &var_r30->unk9C, &var_r30->unkA8, se_ptr->unkD4, temp_r9->comp / 127.0f, var_r6_2, temp_r9->fxId, se_ptr->unkD8++, var_r30->unk0C * var_r30->unk30 / 127, 0, NULL, &var_r30->unk14);
+        if (var_r29 != NULL) {
+            if (!sndCheckEmitter(var_r29)) {
+                return MSM_ERR_PLAYFAIL;
+            }
+        } else {
+            if (var_r30->unk00 == -1) {
+                return MSM_ERR_PLAYFAIL;
+            }
+        }
+        var_r30->unk13 |= 1;
+    } else {
+        var_r30->unk1C[0].ctrl = SND_MIDICTRL_VOLUME;
+        var_r30->unk1C[0].paraData.value14 = (var_r30->unk0C * var_r30->unk30 / 127) * 0x81;
+        var_r4 = var_r30->unk0D + var_r30->unk31 - 0x40;
+        if (var_r4 < 0) {
+            var_r4 = 0;
+        }
+        if (var_r4 > 0x7F) {
+            var_r4 = 0x7F;
+        }
+        var_r30->unk1C[1].ctrl = SND_MIDICTRL_PANNING;
+        var_r30->unk1C[1].paraData.value14 = var_r4 * 0x81;
+        var_r30->unk1C[2].ctrl = SND_MIDICTRL_REVERB;
+        var_r30->unk1C[2].paraData.value7 = var_r30->unk11;
+        var_r30->unk1C[3].ctrl = SND_MIDICTRL_CHORUS;
+        var_r30->unk1C[3].paraData.value7 = var_r30->unk12;
+        var_r3_2 = var_r30->unk0E + var_r30->unk32 + 0x2000;
+        if (var_r3_2 > 0x3FFF) {
+            var_r3_2 = 0x3FFF;
+        } else if (var_r3_2 < 0) {
+            var_r3_2 = 0;
+        }
+        var_r30->unk1C[4].ctrl = SND_MIDICTRL_PITCHBEND;
+        var_r30->unk1C[4].paraData.value14 = var_r3_2;
+        var_r30->unk14.numPara = 5;
+        var_r30->unk00 = sndFXStartParaInfo(temp_r9->fxId, 0xFF, 0xFF, 0, &var_r30->unk14);
+        if (var_r30->unk00 == -1) {
+            return MSM_ERR_PLAYFAIL;
+        }
+        sndFXSurroundPanning(var_r30->unk00, var_r30->unk10);
+        var_r30->unk13 &= ~1;
+    }
+    var_r30->unk0B = 1;
+    var_r30->unk08 = seId;
+    var_r30->unk04 = se_ptr->unk08++;
+    var_r30->unk0A = 2;
+    var_r30->unk0B = 0;
+    return var_r30->unk04;
+}
 
 s32 msmSeInit(sysData* arg0, DVDFileInfo* arg1) {
     s32 temp_r29;

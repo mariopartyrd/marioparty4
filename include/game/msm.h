@@ -12,6 +12,7 @@
 #define MSM_SEPARAM_AUXVOLA (1 << 4)
 #define MSM_SEPARAM_AUXVOLB (1 << 5)
 #define MSM_SEPARAM_POS (1 << 6)
+#define MSM_SEPARAM_PAD (1 << 7)
 
 #define MSM_LISTENER_NONE 0
 #define MSM_LISTENER_STARTDIS (1 << 0)
@@ -50,6 +51,7 @@
 #define MSM_ERR_64 -100
 #define MSM_ERR_65 -101
 #define MSM_ERR_GRP_NOTLOADED -103
+#define MSM_ERR_6E -110
 #define MSM_ERR_6F -111
 #define MSM_ERR_INVALIDID -120
 #define MSM_ERR_INVALIDFILE -121
@@ -138,7 +140,7 @@ typedef struct msmSe_s {
 	u8 span;
 	u8 reverb;
 	u8 chorus;
-	u8 doppler;
+	s8 doppler;
 	s8 comp;
 	u8 pad[3];
 } MSMSE;

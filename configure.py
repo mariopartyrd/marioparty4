@@ -842,7 +842,7 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmmem.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmfio.c"),
             Object(NonMatching, "msm/msmmus.c"),
-            Object(NonMatching, "msm/msmse.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmse.c"),
             Object(NonMatching, "msm/msmstream.c"),
         ],
     },
