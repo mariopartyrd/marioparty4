@@ -212,8 +212,6 @@ void fn_1_64C0(omObjData *object);
 
 float fn_1_67AC(float arg0, float arg1);
 
-// Issues with assignment of temp_f30
-// Scratch is at https://decomp.me/scratch/EqCuG
 void fn_1_4E50(omObjData *object)
 {
     float temp_f31;
