@@ -3,6 +3,19 @@
 
 #include "game/object.h"
 
+typedef struct M438MainWork4 {
+    u8 unk_00;
+    char unk01[0x3];
+    s32 unk_04;
+    float unk_08;
+    float unk_0C;
+    Vec unk_10;
+    Vec unk_1C;
+    Vec unk_28;
+    Vec unk_34;
+    char unk40[0xC];
+} M438MainWork4; /* size = 0x4C */
+
 void fn_1_B4D8(Process *arg0);
 void fn_1_B548();
 s32 fn_1_DA64(float arg8);

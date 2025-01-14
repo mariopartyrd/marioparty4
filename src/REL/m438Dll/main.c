@@ -121,24 +121,6 @@ typedef struct M438MainWork3 {
     u16 unk_188[3];
 } M438MainWork3; /* size =  */
 
-typedef struct M438MainWork4 {
-    u8 unk_00;
-    char unk01[0x7];
-    float unk_08;
-    float unk_0C;
-    float unk_10;
-    float unk_14;
-    float unk_18;
-    float unk_1C;
-    float unk_20;
-    float unk_24;
-    char unk28[4];
-    float unk_2C;
-    char unk30[4];
-    Vec unk_34;
-    char unk40[0xC];
-} M438MainWork4; /* size = 0x4C */
-
 typedef struct M438StructBss298 {
     /* 0x00 */ u8 unk_00;
     u8 unk_01;
@@ -1595,15 +1577,15 @@ void fn_1_4724(omObjData *object)
     var_r31 = fn_1_7BFC(sizeof(M438MainWork4));
     object->data = var_r31;
     memset(var_r31, 0, sizeof(M438MainWork4));
-    var_r31->unk_10 = 0.0f;
-    var_r31->unk_14 = -450.0f;
-    var_r31->unk_18 = -1550.0f;
-    var_r31->unk_1C = var_r31->unk_20 = var_r31->unk_24 = 0.0f;
-    var_r31->unk_2C = 35.0f;
+    var_r31->unk_10.x = 0.0f;
+    var_r31->unk_10.y = -450.0f;
+    var_r31->unk_10.z = -1550.0f;
+    var_r31->unk_1C.x = var_r31->unk_1C.y = var_r31->unk_1C.z = 0.0f;
+    var_r31->unk_28.y = 35.0f;
     var_r31->unk_0C = 0.0f;
     var_r31->unk_00 = 0;
-    omSetTra(object, var_r31->unk_10, var_r31->unk_14, var_r31->unk_18);
-    omSetRot(object, var_r31->unk_1C, var_r31->unk_20, var_r31->unk_24);
+    omSetTra(object, var_r31->unk_10.x, var_r31->unk_10.y, var_r31->unk_10.z);
+    omSetRot(object, var_r31->unk_1C.x, var_r31->unk_1C.y, var_r31->unk_1C.z);
     omSetSca(object, 1.25f, 1.25f, 1.25f);
     object->func = fn_1_4984;
 }
