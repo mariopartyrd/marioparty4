@@ -23,8 +23,8 @@ typedef struct M433DllWork {
 
 void fn_1_584(omObjData *object);
 void fn_1_618(omObjData *object);
-s32 fn_1_216C(void);
-s32 fn_1_2184(void);
+u32 fn_1_216C(void);
+u32 fn_1_2184(void);
 void fn_1_219C(s32 arg0, s32 arg1, s32 arg2);
 void fn_1_21E4(s32 arg0);
 void fn_1_2214(s32 arg0);

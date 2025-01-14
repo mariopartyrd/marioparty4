@@ -353,12 +353,12 @@ s32 fn_1_2154(void)
     return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_0C;
 }
 
-s32 fn_1_216C(void)
+u32 fn_1_216C(void)
 {
     return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_14;
 }
 
-s32 fn_1_2184(void)
+u32 fn_1_2184(void)
 {
     return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_24;
 }
