@@ -1,6 +1,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/hsfman.h"
+#include "game/hsfdraw.h"
 #include "game/hsfmotion.h"
 #include "game/object.h"
 #include "game/objsub.h"
