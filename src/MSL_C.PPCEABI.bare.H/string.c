@@ -1,4 +1,5 @@
 #include "string.h"
+#include "stddef.h"
 
 static int K1 = 0x80808080;
 static int K2 = 0xFEFEFEFF;
