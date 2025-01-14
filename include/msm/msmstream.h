@@ -4,7 +4,7 @@
 #include "dolphin/types.h"
 
 void msmStreamPeriodicProc(void);
-void msmStreamSetOutputMode(s8);
+void msmStreamSetOutputMode(s32);
 void msmStreamAmemFree(void);
 s32 msmStreamAmemAlloc(void);
 s32 msmStreamInit(char *);

@@ -40,7 +40,9 @@
 #define MSM_ERR_OUTOFMEM -10
 #define MSM_ERR_OUTOFAMEM -20
 #define MSM_ERR_INITFAIL -20
+#define MSM_ERR_1E -30
 #define MSM_ERR_INVALID_AUXPARAM -31
+#define MSM_ERR_20 -32
 #define MSM_ERR_PLAYFAIL -33
 #define MSM_ERR_22 -34
 #define MSM_ERR_STREAMALLOC_FAIL -35
@@ -166,7 +168,7 @@ typedef struct msmStreamParam_s {
 } MSM_STREAMPARAM;
 
 s32 msmSysInit(MSM_INIT *init, MSM_ARAM *aram);
-void msmSysSetOutputMode(SND_OUTPUTMODE mode);
+s32 msmSysSetOutputMode(SND_OUTPUTMODE mode);
 s32 msmSysDelGroupAll(void);
 s32 msmSysLoadGroup(s32 grp, void *buf, BOOL flag);
 s32 msmSysGetSampSize(BOOL baseGrp);
