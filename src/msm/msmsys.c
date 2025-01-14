@@ -99,7 +99,7 @@ static s32 msmSysSetAuxParam(s32 arg0, s32 arg1)
     return 0;
 }
 
-static s8 msmSysLoadBaseGroup(void *arg0)
+static s32 msmSysLoadBaseGroup(void *buf)
 {
     DVDFileInfo spC;
     s32 var_r28;
@@ -116,11 +116,11 @@ static s8 msmSysLoadBaseGroup(void *arg0)
             msmFioClose(&spC);
             return MSM_ERR_READFAIL;
         }
-        if (msmFioRead(&spC, arg0, temp_r25->unk10, temp_r25->unkC + sys.unkC->unk40) < 0) {
+        if (msmFioRead(&spC, buf, temp_r25->unk10, temp_r25->unkC + sys.unkC->unk40) < 0) {
             msmFioClose(&spC);
             return MSM_ERR_READFAIL;
         }
-        if (!sndPushGroup((void*) (temp_r27->unk4 + (u32) temp_r27), temp_r25->unk0, arg0,
+        if (!sndPushGroup((void*) (temp_r27->unk4 + (u32) temp_r27), temp_r25->unk0, buf,
             (void*) (temp_r27->unk8 + (u32) temp_r27), (void*) (temp_r27->unk0 + (u32) temp_r27)))
         {
             msmFioClose(&spC);
@@ -132,8 +132,40 @@ static s8 msmSysLoadBaseGroup(void *arg0)
     return 0;
 }
 
-// TODO: https://decomp.me/scratch/NWiuL
-// msmSysSearchGroupStack
+s32 msmSysSearchGroupStack(s32 arg0, s32 arg1)
+{
+    UnkStructSys43C *var_r3;
+    u32 var_r5;
+    s32 var_r6;
+    s32 var_r7;
+    s32 var_r8;
+    s32 var_r9;
+    s32 var_r0;
+
+    var_r8 = -1;
+    var_r9 = 0;
+    if (sys.unk3EC[arg0].unk2 == 0) {
+        var_r3 = sys.unk43C;
+        var_r0 = sys.unk434;
+    } else {
+        var_r3 = sys.unk474;
+        var_r0 = sys.unk46C;
+    }
+    for (var_r6 = 0; var_r6 < var_r0; var_r3++, var_r6++) {
+        if (var_r6 == arg1) {
+            continue;
+        }
+        if ((var_r5 = var_r3->unk04) != 0) {
+            if (var_r3->unk01 == 0 && var_r5 > var_r9) {
+                var_r9 = var_r5;
+                var_r7 = -(var_r6 + 1);
+            }
+        } else {
+            var_r8 = var_r6;
+        }
+    }
+    return (var_r8 < 0) ? var_r7 : var_r8;
+}
 
 s32 msmSysGroupInit(DVDFileInfo *arg0)
 {
@@ -221,6 +253,18 @@ void msmSysIrqEnable(void)
             OSRestoreInterrupts(sys.unk4F0);
         }
     }
+}
+
+static inline BOOL msmSysInline00(s32 arg0)
+{
+    s32 var_r6;
+
+    for (var_r6 = 0; var_r6 < sys.unk3F4 + sys.unk436 + sys.unk46E; var_r6++) {
+        if (sys.unk10->unk29[var_r6] == arg0) {
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 BOOL msmSysCheckBaseGroup(s32 arg0)
@@ -465,15 +509,265 @@ s32 msmSysDelGroupBase(s32 grpNum)
     return 0;
 }
 
-// TODO: https://decomp.me/scratch/zexTY
-// msmSysLoadGroupBase
+static inline s32 msmSysPushGroup(DVDFileInfo *arg0, void *buf, UnkStructSys43C *arg2, s32 arg3)
+{
+    unkStruct4 *temp_r30;
+    unkStruct3 *temp_r7;
 
-// msmSysLoadGroupSet
+    temp_r30 = &sys.unk3EC[arg3];
+    if (msmFioRead(arg0, arg2->unk08, temp_r30->unk8, temp_r30->unk4 + sys.unkC->unk38) < 0) {
+        return MSM_ERR_READFAIL;
+    }
+    if (msmFioRead(arg0, buf, temp_r30->unk10, temp_r30->unkC + sys.unkC->unk40) < 0) {
+        return MSM_ERR_READFAIL;
+    }
+    temp_r7 = arg2->unk08;
+    if (!sndPushGroup((void*) (temp_r7->unk4 + (u32) temp_r7), temp_r30->unk0, buf,
+        (void*) (temp_r7->unk8 + (u32) temp_r7), (void*) (temp_r7->unk0 + (u32) temp_r7)))
+    {
+        return MSM_ERR_20;
+    }
+    sys.unk8 += temp_r30->unk10;
+    arg2->unk00 = arg3;
+    arg2->unk04 = sys.unk3E0++;
+    return 0;
+}
 
-// msmSysLoadGroupSub
+s32 msmSysLoadGroupBase(s32 arg0, void *arg1)
+{
+    s32 temp_r29;
+    s32 temp_r28;
+    s32 var_r23;
+    s32 temp_r3_2;
+    UnkStructSys43C *var_r24;
+    DVDFileInfo sp10;
 
-// TODO: https://decomp.me/scratch/AhvXa
-// msmSysLoadGroup
+    if (arg0 < 1 || arg0 >= sys.unk3DC) {
+        return MSM_ERR_64;
+    }
+    var_r23 = msmSysDelGroupAll();
+    if (var_r23 != 0) {
+        return var_r23;
+    }
+    temp_r29 = sys.unk3F4 + sys.unk436 + sys.unk46E;
+    if (msmSysInline00(arg0)) {
+        return 0;
+    }
+    if (temp_r29 >= 0xF) {
+        return MSM_ERR_65;
+    }
+    temp_r3_2 = msmSysSearchGroupStack(arg0, -1);
+    if (temp_r3_2 < 0) {
+        return MSM_ERR_65;
+    }
+    temp_r28 = sys.unk3EC[arg0].unk2;
+    if (!temp_r28) {
+        var_r24 = &sys.unk43C[temp_r3_2];
+    } else {
+        var_r24 = &sys.unk474[temp_r3_2];
+    }
+    if (msmFioOpen(sys.unk0, &sp10) != 1) {
+        return MSM_ERR_OPENFAIL;
+    }
+    var_r23 = msmSysPushGroup(&sp10, arg1, var_r24, arg0);
+    if (var_r23 != 0) {
+        msmFioClose(&sp10);
+        return var_r23;
+    }
+    msmFioClose(&sp10);
+    sys.unk10->unk29[temp_r29] = arg0;
+    var_r24->unk01 = 1;
+    if (temp_r28 == 0) {
+        sys.unk436++;
+        sys.unk435++;
+    } else {
+        sys.unk46E++;
+        sys.unk46D++;
+    }
+    return 0;
+}
+
+static inline s32 msmSysInline01(void)
+{
+    if (sys.unk3F0 != NULL) {
+        return sys.unk3F0->unk00;
+    }
+    return 0;
+}
+
+s32 msmSysLoadGroupSet(s32 arg0, void *arg1)
+{
+    s8 sp4C[12]; // unknown length (5..12 works)
+    DVDFileInfo sp10;
+    s32 temp_r3;
+    s32 temp_r3_2;
+    s32 var_r19;
+    s32 var_r24;
+    s32 var_r31;
+    s8 *var_r19_2;
+
+    if (msmSysInline01() == 0) {
+        return 0;
+    }
+    temp_r3 = msmSysDelGroupAll();
+    if (temp_r3 != 0) {
+        return temp_r3;
+    }
+    var_r19_2 = &sys.unk3F0->unk02[sys.unk3F0->unk01 * arg0];
+    if (msmFioOpen(sys.unk0, &sp10) != TRUE) {
+        return MSM_ERR_OPENFAIL;
+    }
+    sys.unk435 = sys.unk436;
+    var_r31 = 0;
+    for (; *var_r19_2 != 0; var_r19_2++) {
+        if (msmSysInline00(*var_r19_2)) {
+            continue;
+        }
+        if (sys.unk3EC[(s8) *var_r19_2].unk2 == 1) {
+            sp4C[var_r31++] = *var_r19_2;
+        } else {
+            temp_r3_2 = msmSysSearchGroupStack(*var_r19_2, -1);
+            if (temp_r3_2 < 0) {
+                msmFioClose(&sp10);
+                return MSM_ERR_65;
+            }
+            var_r19 = msmSysPushGroup(&sp10, arg1, &sys.unk43C[temp_r3_2], *var_r19_2);
+            if (var_r19 != 0) {
+                msmFioClose(&sp10);
+                return var_r19;
+            }
+            sys.unk435++;
+        }
+    }
+    sys.unk46D = sys.unk46E;
+    for (var_r24 = 0; var_r24 < var_r31; var_r24++) {
+        temp_r3_2 = msmSysSearchGroupStack(sp4C[var_r24], -1);
+        if (temp_r3_2 < 0) {
+            msmFioClose(&sp10);
+            return MSM_ERR_65;
+        }
+        var_r19 = msmSysPushGroup(&sp10, arg1, &sys.unk474[temp_r3_2], sp4C[var_r24]);
+        if (var_r19 != 0) {
+            msmFioClose(&sp10);
+            return var_r19;
+        }
+        sys.unk46D++;
+    }
+    msmFioClose(&sp10);
+    return 0;
+}
+
+static s32 msmSysLoadGroupSub(DVDFileInfo *arg0, s32 arg1, void *arg2)
+{
+    s32 var_r30;
+    s32 var_r18;
+    s32 var_r19;
+    s32 var_r3;
+    u8 *var_r29;
+    UnkStructSys43C *var_r28;
+    unkStruct4 *temp_r23;
+
+    var_r30 = 0;
+    temp_r23 = &sys.unk3EC[arg1];
+    if (temp_r23->unk2 == 0) {
+        var_r28 = sys.unk43C;
+        var_r29 = &sys.unk435;
+    } else {
+        var_r28 = sys.unk474;
+        var_r29 = &sys.unk46D;
+    }
+    if (temp_r23->unk3 != 0) {
+        if (!msmSysCheckBaseGroup(sys.unk3EC[temp_r23->unk3].unk0)) {
+            var_r19 = -1;
+            for (var_r18 = 0; var_r18 < 2; var_r18++) {
+                var_r19 = msmSysSearchGroupStack(temp_r23->unk3, var_r19);
+                if (var_r19 < 0) {
+                    var_r19 = -(var_r19 + 1);
+                    (*var_r29)--;
+                    sndPopGroup();
+                    sys.unk8 -= sys.unk3EC[var_r28[var_r19].unk00].unk10;
+                    var_r30 = var_r28[var_r19].unk00;
+                    var_r28[var_r19].unk04 = 0;
+                }
+            }
+            var_r3 = msmSysPushGroup(arg0, arg2, &var_r28[var_r19], temp_r23->unk3);
+            if (var_r3 != 0) {
+                return var_r3;
+            }
+            (*var_r29)++;
+        }
+    }
+    var_r19 = msmSysSearchGroupStack(arg1, -1);
+    if (var_r19 < 0) {
+        var_r19 = -(var_r19 + 1);
+        (*var_r29)--;
+        sndPopGroup();
+        sys.unk8 -= sys.unk3EC[var_r28[var_r19].unk00].unk10;
+        var_r30 = var_r28[var_r19].unk00;
+    }
+    var_r3 = msmSysPushGroup(arg0, arg2, &var_r28[var_r19], arg1);
+    if (var_r3 == 0) {
+        var_r3 = var_r30;
+    }
+    (*var_r29)++;
+    return var_r3;
+}
+
+static inline void msmSysPopGroup(s32 arg0)
+{
+    UnkStructSys43C *temp_r23;
+
+    temp_r23 = &sys.unk474[arg0];
+    if (temp_r23->unk04 != 0 && temp_r23->unk01 == 0) {
+        sndPopGroup();
+        sys.unk8 -= sys.unk3EC[temp_r23->unk00].unk10;
+    }
+}
+
+s32 msmSysLoadGroup(s32 grp, void *buf)
+{
+    UnkStructSys43C *temp_r23;
+    unkStruct4 *temp_r22;
+    s32 var_r31;
+    s32 var_r22;
+    s32 var_r21;
+    DVDFileInfo sp14;
+    s32 unused;
+
+    if (buf == NULL) {
+        return 0;
+    }
+    if (grp == 0) {
+        return msmSysLoadBaseGroup(buf);
+    }
+    temp_r22 = &sys.unk3EC[grp];
+    if (msmSysCheckLoadGroupID(temp_r22->unk0)) {
+        return 0;
+    }
+    if (msmFioOpen(sys.unk0, &sp14) != 1) {
+        return MSM_ERR_OPENFAIL;
+    }
+    if (temp_r22->unk2 == 0) {
+        for (var_r22 = 0; var_r22 < sys.unk46C; var_r22++) {
+            msmSysPopGroup(var_r22);
+        }
+        var_r21 = msmSysLoadGroupSub(&sp14, grp, buf);
+        for (var_r22 = 0; var_r22 < sys.unk46C; var_r22++) {
+            temp_r23 = &sys.unk474[var_r22];
+            if (temp_r23->unk04 != 0 && temp_r23->unk01 == 0) {
+                var_r31 = msmSysPushGroup(&sp14, buf, temp_r23, temp_r23->unk00);
+                if (var_r31 != 0) {
+                    msmFioClose(&sp14);
+                    return var_r31;
+                }
+            }
+        }
+    } else {
+        var_r21 = msmSysLoadGroupSub(&sp14, grp, buf);
+    }
+    msmFioClose(&sp14);
+    return var_r21;
+}
 
 void msmSysCheckInit(void)
 {

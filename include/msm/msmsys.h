@@ -109,12 +109,19 @@ typedef struct {
 typedef struct _unkStruct4 {
     SND_GROUPID unk0;
     s8 unk2;
+    s8 unk3;
     s32 unk4;
     s32 unk8;
     s32 unkC;
     s32 unk10;
     char unk14[0xC];
 } unkStruct4; // Size 0x20
+
+typedef struct {
+    /* 0x00 */ s8 unk00;
+    /* 0x01 */ s8 unk01;
+    /* 0x02 */ s8 unk02[1]; // unknown array length
+} UnkSys3F0Struct; // Size unknown
 
 typedef struct _sysData {
     s32 unk0;
@@ -136,19 +143,19 @@ typedef struct _sysData {
     u32 unk3E4;
     u32 unk3E8;
     unkStruct4 *unk3EC;
-    void *unk3F0;
+    UnkSys3F0Struct *unk3F0;
     s8 unk3F4;
     unkStruct3 *unk3F8[1]; // unknown array length
     char unk3FC[0x38];
     s8 unk434;
-    s8 unk435;
+    u8 unk435;
     s8 unk436;
     char unk437[1];
     void *unk438;
     UnkStructSys43C unk43C[1]; // unknown array length
     char unk448[0x24];
     s8 unk46C;
-    s8 unk46D;
+    u8 unk46D;
     s8 unk46E;
     char unk46F[1];
     void *unk470;

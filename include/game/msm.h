@@ -47,6 +47,8 @@
 #define MSM_ERR_22 -34
 #define MSM_ERR_STREAMALLOC_FAIL -35
 #define MSM_ERR_INSTALLED -36
+#define MSM_ERR_64 -100
+#define MSM_ERR_65 -101
 #define MSM_ERR_GRP_NOTLOADED -103
 #define MSM_ERR_6F -111
 #define MSM_ERR_INVALIDID -120
@@ -170,7 +172,6 @@ typedef struct msmStreamParam_s {
 s32 msmSysInit(MSM_INIT *init, MSM_ARAM *aram);
 s32 msmSysSetOutputMode(SND_OUTPUTMODE mode);
 s32 msmSysDelGroupAll(void);
-s32 msmSysLoadGroup(s32 grp, void *buf, BOOL flag);
 s32 msmSysGetSampSize(BOOL baseGrp);
 s32 msmSysDelGroupBase(s32 grpNum);
 
