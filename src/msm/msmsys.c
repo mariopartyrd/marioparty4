@@ -5,8 +5,6 @@
 #include "msm/msmse.h"
 #include "msm/msmstream.h"
 
-#include "game/msm.h" // TODO remove, only for decomp
-
 static sysData sys;
 
 static void msmSysServer(void)

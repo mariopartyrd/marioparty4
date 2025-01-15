@@ -4,8 +4,6 @@
 #include "game/msm.h"
 #include "msm/msmsys.h"
 
-#include "dolphin.h"
-
 void msmMusFdoutEnd(void);
 void msmMusPeriodicProc(void);
 s32 msmMusGetMidiCtrl(int musNo, s32 channel, s32 ctrl);

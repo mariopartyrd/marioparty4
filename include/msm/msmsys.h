@@ -1,7 +1,7 @@
 #ifndef MSMSYS_H
 #define MSMSYS_H
 
-#include "musyx/musyx.h"
+#include "game/msm.h" // TODO remove, only for decomp
 
 #include "dolphin.h"
 
@@ -166,5 +166,24 @@ typedef struct _sysData {
     AIDCallback unk4F4;
     s32 unk4F8;
 } sysData;
+
+s32 msmSysSearchGroupStack(s32 arg0, s32 arg1);
+s32 msmSysGroupInit(DVDFileInfo *arg0);
+void msmSysIrqDisable(void);
+void msmSysIrqEnable(void);
+BOOL msmSysCheckBaseGroup(s32 arg0);
+void *msmSysGetGroupDataPtr(s32 arg0);
+BOOL msmSysCheckLoadGroupID(s32 arg0);
+void msmSysRegularProc(void);
+s32 msmSysGetOutputMode(void);
+s32 msmSysSetOutputMode(SND_OUTPUTMODE mode);
+s32 msmSysSetAux(s32 arg0, s32 arg1);
+s32 msmSysGetSampSize(BOOL baseGrp);
+s32 msmSysDelGroupAll(void);
+s32 msmSysDelGroupBase(s32 grpNum);
+s32 msmSysLoadGroupBase(s32 arg0, void *arg1);
+s32 msmSysLoadGroupSet(s32 arg0, void *arg1);
+void msmSysCheckInit(void);
+s32 msmSysInit(MSM_INIT *init, MSM_ARAM *aram);
 
 #endif

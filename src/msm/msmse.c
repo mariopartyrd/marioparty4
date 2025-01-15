@@ -231,7 +231,6 @@ s32 msmSeUpdataListener(Vec* pos, Vec* heading) {
 }
 
 s32 msmSeSetListener(Vec* pos, Vec* heading, float sndDist, float sndSpeed, MSM_SELISTENER* listener) {
-    msmSeStruct02* se_ptr = &se;
     SND_FVECTOR* temp_b0;
     SND_FVECTOR* temp_a4;
     SND_FVECTOR* temp_c8;
@@ -241,10 +240,10 @@ s32 msmSeSetListener(Vec* pos, Vec* heading, float sndDist, float sndSpeed, MSM_
     float var_f0;
     float var_f0_2;
 
-    temp_a4 = &se_ptr->unkA4;
-    temp_c8 = &se_ptr->unkC8;
-    temp_bc = &se_ptr->unkBC;
-    temp_b0 = &se_ptr->unkB0;
+    temp_a4 = &se.unkA4;
+    temp_c8 = &se.unkC8;
+    temp_bc = &se.unkBC;
+    temp_b0 = &se.unkB0;
     temp_a4->x = pos->x;
     temp_a4->y = pos->y;
     temp_a4->z = pos->z;
@@ -254,18 +253,18 @@ s32 msmSeSetListener(Vec* pos, Vec* heading, float sndDist, float sndSpeed, MSM_
     temp_bc->y = heading->y;
     temp_bc->z = heading->z;
     temp_b0->x = temp_b0->y = temp_b0->z = 0.0f;
-    se_ptr->unkD4 = sndDist;
+    se.unkD4 = sndDist;
     var_r3 = (listener != NULL) ? listener->flag : 0;
     var_f4 = (var_r3 & 1) ? listener->startDis : 0.0f;
     var_f0 = (var_r3 & 2) ? listener->frontSurDis : (var_f4 + sndDist * 0.25f);
     var_f0_2 = (var_r3 & 4) ? listener->backSurDis : (var_f4 + sndDist * 0.25f);
-    if ((s32) sndAddListenerEx(&se_ptr->unk14, temp_a4, temp_b0, temp_bc, temp_c8,
+    if ((s32) sndAddListenerEx(&se.unk14, temp_a4, temp_b0, temp_bc, temp_c8,
         var_f0, var_f0_2, sndSpeed, -var_f4, 1, 0x7F, NULL) == FALSE)
     {
-        se_ptr->unkDA = 0;
+        se.unkDA = 0;
         return MSM_ERR_22;
     }
-    se_ptr->unkDA = 1;
+    se.unkDA = 1;
     return 0;
 }
 
@@ -287,13 +286,11 @@ s32 msmSeGetEntryID(s32 seId, int* seNo) {
 }
 
 s32 msmSeGetNumPlay(BOOL baseGrp) {
-    msmSeStruct02* se_ptr = &se;
-
     switch (baseGrp) {
         case FALSE:
-            return se_ptr->unk06 + se_ptr->unk05;
+            return se.unk06 + se.unk05;
         default:
-            return se_ptr->unk06;
+            return se.unk06;
     }
 }
 
@@ -409,12 +406,11 @@ void msmSePauseAll(BOOL pause, s32 speed) {
 }
 
 void msmSeStopAll(BOOL checkGrp, s32 speed) {
-    msmSeStruct02* se_ptr = &se;
     msmSeStruct00* temp_r28;
     s32 var_r27;
 
-    for (var_r27 = 0; var_r27 < se_ptr->unk04; var_r27++) {
-        temp_r28 = &se_ptr->unk10[var_r27];
+    for (var_r27 = 0; var_r27 < se.unk04; var_r27++) {
+        temp_r28 = &se.unk10[var_r27];
         if (temp_r28->unk0A == 0) {
             continue;
         }
@@ -435,7 +431,7 @@ void msmSeStopAll(BOOL checkGrp, s32 speed) {
                 }
                 break;
             default:
-                if (msmSysCheckBaseGroup(se_ptr->unk0C[temp_r28->unk08].groupId) == 0) {
+                if (msmSysCheckBaseGroup(se.unk0C[temp_r28->unk08].groupId) == 0) {
                     temp_r28->unk34 = speed / 15;
                     if (temp_r28->unk34 != 0) {
                         temp_r28->unk38 = temp_r28->unk34;
@@ -479,40 +475,39 @@ s32 msmSeStop(int seNo, s32 speed) {
     return 0;
 }
 
-static inline BOOL msmSeInline00(msmSeStruct02* arg0, msmSeStruct00* arg1, MSM_SEPARAM* param) {
+static inline BOOL msmSeInline00(msmSeStruct00* arg0, MSM_SEPARAM* param) {
     BOOL var_r0 = FALSE;
 
     if (param != NULL) {
         if (param->flag & MSM_SEPARAM_VOL) {
-            arg1->unk0C = param->vol;
+            arg0->unk0C = param->vol;
         }
         if (param->flag & MSM_SEPARAM_PAN) {
-            arg1->unk0D = param->pan;
+            arg0->unk0D = param->pan;
         }
         if (param->flag & MSM_SEPARAM_PITCH) {
-            arg1->unk0E = param->pitch;
+            arg0->unk0E = param->pitch;
         }
         if (param->flag & MSM_SEPARAM_SPAN) {
-            arg1->unk10 = param->span;
+            arg0->unk10 = param->span;
         }
         if (param->flag & MSM_SEPARAM_AUXVOLA) {
-            arg1->unk11 = param->auxAVol;
+            arg0->unk11 = param->auxAVol;
         }
         if (param->flag & MSM_SEPARAM_AUXVOLB) {
-            arg1->unk12 = param->auxBVol;
+            arg0->unk12 = param->auxBVol;
         }
-        if ((param->flag & MSM_SEPARAM_POS) && arg0->unkDA != 0) {
+        if ((param->flag & MSM_SEPARAM_POS) && se.unkDA != 0) {
             var_r0 = TRUE;
         }
     }
-    arg1->unk14.paraArray = arg1->unk1C;
+    arg0->unk14.paraArray = arg0->unk1C;
     return var_r0;
 }
 
 int msmSePlay(int seId, MSM_SEPARAM* param) {
     msmSeStruct00* var_r30;
     SND_EMITTER* var_r29;
-    msmSeStruct02* se_ptr = &se;
     MSMSE* temp_r9;
     int var_r3_2;
     s32 var_r4;
@@ -549,7 +544,7 @@ int msmSePlay(int seId, MSM_SEPARAM* param) {
     var_r30->unk48 = 0x7F;
     var_r30->unk3C = 0x7F;
     var_r30->unkB4 = 0;
-    if (msmSeInline00(se_ptr, var_r30, param)) {
+    if (msmSeInline00(var_r30, param)) {
         var_r30->unk9C.x = param->pos.x;
         var_r30->unk9C.y = param->pos.y;
         var_r30->unk9C.z = param->pos.z;
@@ -567,7 +562,7 @@ int msmSePlay(int seId, MSM_SEPARAM* param) {
             var_r6_2 = 8;
         }
         var_r30->unkB4 = temp_r9->doppler;
-        var_r30->unk00 = sndAddEmitterParaEx(var_r29, &var_r30->unk9C, &var_r30->unkA8, se_ptr->unkD4, temp_r9->comp / 127.0f, var_r6_2, temp_r9->fxId, se_ptr->unkD8++, var_r30->unk0C * var_r30->unk30 / 127, 0, NULL, &var_r30->unk14);
+        var_r30->unk00 = sndAddEmitterParaEx(var_r29, &var_r30->unk9C, &var_r30->unkA8, se.unkD4, temp_r9->comp / 127.0f, var_r6_2, temp_r9->fxId, se.unkD8++, var_r30->unk0C * var_r30->unk30 / 127, 0, NULL, &var_r30->unk14);
         if (var_r29 != NULL) {
             if (!sndCheckEmitter(var_r29)) {
                 return MSM_ERR_PLAYFAIL;
@@ -612,7 +607,7 @@ int msmSePlay(int seId, MSM_SEPARAM* param) {
     }
     var_r30->unk0B = 1;
     var_r30->unk08 = seId;
-    var_r30->unk04 = se_ptr->unk08++;
+    var_r30->unk04 = se.unk08++;
     var_r30->unk0A = 2;
     var_r30->unk0B = 0;
     return var_r30->unk04;

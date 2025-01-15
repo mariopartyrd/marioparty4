@@ -4,8 +4,6 @@
 #include "game/msm.h"
 #include "msm/msmsys.h"
 
-#include "dolphin.h"
-
 void msmSePeriodicProc(void);
 MSMSE* msmSeGetIndexPtr(s32 arg0);
 void msmSeDelListener(void);
