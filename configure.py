@@ -1123,7 +1123,7 @@ config.libs = [
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/main.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/map.c"),
-            Object(NonMatching, "REL/m433Dll/player.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/player.c"),
         },
     ),
     Rel(
