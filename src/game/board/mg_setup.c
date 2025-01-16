@@ -12,6 +12,8 @@
 #include "game/board/tutorial.h"
 #include "game/board/window.h"
 
+#include "ext_math.h"
+
 // structs
 typedef struct structActiveMG {
     s16 unk_00;
@@ -767,7 +769,7 @@ static void SeparateStatus(bitcopy* arg0, omObjData* arg1) {
             return;
         }
         OSu8tof32((u8*)&arg0->unk_03, &temp_f29);
-        temp_f30 = sin((temp_f29 * M_PI) / 180.0) * 4.0 + 1.0;
+        temp_f30 = sind(temp_f29) * 4.0 + 1.0;
         arg0->unk_03 += 6;
         if (arg0->unk_03 > 0x5A) {
             arg0->unk_03 = 0x5A;
@@ -797,9 +799,9 @@ static void PopupVS(bitcopy* arg0, omObjData* arg1) {
     }
     OSs16tof32(&arg0->unk_04, &temp_f31);
     if (arg0->unk_04 < 0x5A) {
-        var_f30 = 2.0 * sin((M_PI * temp_f31) / 180.0);
+        var_f30 = 2.0 * sind(temp_f31);
     } else {
-        var_f30 = 1.0 + sin((M_PI * temp_f31) / 180.0);
+        var_f30 = 1.0 + sind(temp_f31);
         if (arg0->unk_04 >= 0xB4) {
             var_f30 = 1.0f;
             temp_r28 = (bitcopy*) mgSetupObj->work;
@@ -958,7 +960,7 @@ static void UpdateLuckyValue(bitcopy* arg0, omObjData* arg1) {
         case 1:
             if (arg0->unk_03 < 0x5A) {
                 OSu8tof32((u8*) &arg0->unk_03, &temp_f28);
-                temp_f29 = sin((M_PI * temp_f28) / 180.0);
+                temp_f29 = sind(temp_f28);
                 HuSprScaleSet(temp_r27->unk_00[0], 8, temp_f29, temp_f29);
                 HuSprScaleSet(temp_r27->unk_00[0], 9, temp_f29, temp_f29);
                 arg0->unk_03 += 2;
@@ -1006,7 +1008,7 @@ static void UpdateLuckyValue(bitcopy* arg0, omObjData* arg1) {
                 return;
             }
             temp_f28 = (arg0->unk_04 % 360);
-            temp_f29 = (1.0 + (0.5 * sin((M_PI * temp_f28) / 180.0)));
+            temp_f29 = (1.0 + (0.5 * sind(temp_f28)));
             HuSprScaleSet(temp_r27->unk_00[0], 8, temp_f29, temp_f29);
             HuSprScaleSet(temp_r27->unk_00[0], 9, temp_f29, temp_f29);
             break;
@@ -1075,7 +1077,7 @@ static void UpdateMGList(bitcopy* arg0, omObjData* arg1) {
         case 1:
             if (arg0->unk_03 < 0x5A) {
                 OSu8tof32((u8*) &arg0->unk_03, &var_f26);
-                temp_f27 = sin((M_PI * var_f26) / 180.0);
+                temp_f27 = sind(var_f26);
                 arg0->unk_03 += 3;
                 HuSprScaleSet(temp_r24->unk_00[0], temp_r22, temp_f27, temp_f27);
                 return;
@@ -1166,7 +1168,7 @@ static void UpdateMGList(bitcopy* arg0, omObjData* arg1) {
         case 5:
             if (arg0->unk_03 < 0x5A) {
                 OSu8tof32((u8*) &arg0->unk_03, &var_f26);
-                temp_f27 = (1.0 + (2.0 * sin((M_PI * var_f26) / 180.0)));
+                temp_f27 = (1.0 + (2.0 * sind(var_f26)));
                 arg0->unk_03 += 4;
                 if (arg0->unk_03 > 0x5A) {
                     arg0->unk_03 = 0x5A;

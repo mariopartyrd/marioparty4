@@ -77,25 +77,30 @@ M424DllClawStruct3 lbl_1_bss_640[0x10];
 
 // DATA
 Vec lbl_1_data_1E0[4] = {
-    { 950.0f, 275.0f,   0.0f },
+    { 950.0f, 275.0f, 0.0f },
     { 900.0f, 360.0f, 320.0f },
-{ 494.99996f, 220.0f, 494.99996f },
-    {   0.0f, 225.0f,   0.0f },
+    { 494.99996f, 220.0f, 494.99996f },
+    { 0.0f, 225.0f, 0.0f },
 };
 f32 lbl_1_data_210[3] = { 12.0f, 11.0f, 17.5f };
 char lbl_1_data_21C[12][0x10] = {
-    "tsume10", "tsume11", "tsume12",
-    "tsume20", "tsume21", "tsume22",
-    "tsume30", "tsume31", "tsume32",
-    "tsume40", "tsume41", "tsume42",
+    "tsume10",
+    "tsume11",
+    "tsume12",
+    "tsume20",
+    "tsume21",
+    "tsume22",
+    "tsume30",
+    "tsume31",
+    "tsume32",
+    "tsume40",
+    "tsume41",
+    "tsume42",
 };
-u8 lbl_1_data_2DC[12] = {
-    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0
-};
-s32 lbl_1_data_2E8[9] = {
-    0x5F0000, 0x5F0002, 0x5F0003, 0x5F0005, 0x5F0006,
-    0x5F0042, 0x5F0008, 0x5F0017, 0x5F0018
-};
+u8 lbl_1_data_2DC[12] = { 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0 };
+s32 lbl_1_data_2E8[9] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00), DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02), DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x05), DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x06), DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x42),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x08), DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17), DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18) };
 Vec lbl_1_data_30C = { 0.0f, 0.0f, 0.0f };
 
 // PROTO
@@ -104,22 +109,23 @@ void fn_1_8924(u8, s32);
 u8 fn_1_8950(u8);
 u8 fn_1_897C(u8);
 u8 fn_1_89A8(u8);
-Vec* fn_1_89D4(u8);
-void fn_1_94D0(omObjData*);
-void fn_1_9A64(omObjData*);
-void fn_1_AE58(omObjData*);
-void fn_1_AE64(omObjData*);
+Vec *fn_1_89D4(u8);
+void fn_1_94D0(omObjData *);
+void fn_1_9A64(omObjData *);
+void fn_1_AE58(omObjData *);
+void fn_1_AE64(omObjData *);
 u16 fn_1_B79C(f32, f32, f32);
-s32 fn_1_B9E0(Vec* arg0, Vec* arg1, f32 arg8, Vec* arg2, s32 arg3);
+s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3);
 void fn_1_C604(s32, s32);
-s32 fn_1_C878(s16, const char*, Mtx, s32);
-void fn_1_C99C(HsfObject*, Mtx, const char*, Mtx);
+s32 fn_1_C878(s16, const char *, Mtx, s32);
+void fn_1_C99C(HsfObject *, Mtx, const char *, Mtx);
 void fn_1_CE74(s32);
-void fn_1_CF00(Process*);
-void fn_1_CF80(omObjData*);
+void fn_1_CF00(Process *);
+void fn_1_CF80(omObjData *);
 s32 fn_1_D010(s32, s32);
 
-omObjData* fn_1_93F0(Process* arg0) {
+omObjData *fn_1_93F0(Process *arg0)
+{
     lbl_1_bss_6DC = arg0;
     lbl_1_bss_6D8 = omAddObjEx(arg0, 0x40, 5, 9, -1, fn_1_94D0);
     lbl_1_bss_6CC = 0;
@@ -130,13 +136,15 @@ omObjData* fn_1_93F0(Process* arg0) {
     return lbl_1_bss_6D8;
 }
 
-void fn_1_94A4(void) {
+void fn_1_94A4(void)
+{
     fn_1_AE58(lbl_1_bss_6D8);
 }
 
-void fn_1_94D0(omObjData* arg0) {
+void fn_1_94D0(omObjData *arg0)
+{
     s32 var_r29;
-    M424DllClawStruct* var_r31;
+    M424DllClawStruct *var_r31;
 
     var_r31 = arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1B0, 0x10000000);
     memset(var_r31, 0, 0x1B0);
@@ -164,13 +172,13 @@ void fn_1_94D0(omObjData* arg0) {
     var_r31->unk170 = -1;
     var_r31->unk174 = lbl_1_data_30C;
     // @todo how did this happen
-    var_r31->unk180 = (180.0 * (atan2(-102.864990234375, 424.559997558593750) / M_PI));
+    var_r31->unk180 = atan2d(-102.864990234375, 424.559997558593750);
     if (var_r31->unk180 < 0.0f) {
         var_r31->unk180 += 360.0f;
     }
     var_r31->unk184 = -1;
     var_r31->unk30 = lbl_1_data_30C;
-    
+  
     for (var_r29 = 0; var_r29 < 0xC; var_r29++) {
         var_r31->unk3C[var_r29] = lbl_1_data_30C;
         var_r31->unkCC[var_r29] = lbl_1_data_30C;
@@ -218,7 +226,8 @@ void fn_1_94D0(omObjData* arg0) {
     arg0->func = fn_1_9A64;
 }
 
-void fn_1_9A64(omObjData* arg0) {
+void fn_1_9A64(omObjData *arg0)
+{
     Mtx sp74;
     Mtx sp44;
     Vec sp38;
@@ -228,7 +237,7 @@ void fn_1_9A64(omObjData* arg0) {
     Vec sp8;
     f32 var_f31;
     f32 temp_f30;
-    M424DllClawStruct* temp_r31;
+    M424DllClawStruct *temp_r31;
     s32 var_r29;
     s32 temp_r28;
     s32 var_r27;
@@ -242,13 +251,15 @@ void fn_1_9A64(omObjData* arg0) {
         if (temp_r31->unk6 != 0) {
             fn_1_AE64(arg0);
         }
-    } else {
+    }
+    else {
         temp_r31->unkC = 0;
         temp_r31->unkA = 0;
     }
     if (fn_1_FE0() <= 1) {
         var_r25 = -1;
-    } else {
+    }
+    else {
         var_r25 = temp_r31->unk10;
     }
     switch (var_r25) {
@@ -262,7 +273,8 @@ void fn_1_9A64(omObjData* arg0) {
             if (fn_1_FE0() > 4) {
                 temp_r31->unk10 = 10;
                 temp_r31->unk12 = 0;
-            } else if ((temp_r31->unkA & 0x100) != 0) {
+            }
+            else if ((temp_r31->unkA & 0x100) != 0) {
                 HuAudFXPlay(0x62A);
                 temp_r31->unk184 = HuAudFXPlay(0x621);
                 temp_r31->unk10 = 2;
@@ -275,7 +287,8 @@ void fn_1_9A64(omObjData* arg0) {
             if (temp_r31->unk24 >= 1.0f) {
                 temp_r31->unk24 = 1.0f;
                 temp_r31->unk20 = -1.0f;
-            } else {
+            }
+            else {
                 if (temp_r31->unk24 <= 0.0f) {
                     temp_r31->unk24 = 0.0f;
                     temp_r31->unk20 = 1.0f;
@@ -289,7 +302,8 @@ void fn_1_9A64(omObjData* arg0) {
                 HuAudFXPlay(0x622);
                 temp_r31->unk10 = 10;
                 temp_r31->unk12 = 0;
-            } else if (((temp_r31->unkC & 0x100) == 0) || (temp_r31->unk12 >= 360.0f)) {
+            }
+            else if (((temp_r31->unkC & 0x100) == 0) || (temp_r31->unk12 >= 360.0f)) {
                 if (temp_r31->unk184 != -1) {
                     HuAudFXStop(temp_r31->unk184);
                     temp_r31->unk184 = -1;
@@ -363,23 +377,27 @@ void fn_1_9A64(omObjData* arg0) {
                 temp_r31->unk28 = 0.0f;
                 if (temp_r31->unk168 != -1) {
                     var_r27 = fn_1_897C(temp_r31->unk168);
-                } else {
+                }
+                else {
                     var_r27 = -1;
                 }
                 if (temp_r31->unk168 == -1) {
                     if (fn_1_FE0() > 4) {
                         temp_r31->unk10 = 10;
                         temp_r31->unk12 = 0;
-                    } else {
+                    }
+                    else {
                         temp_r31->unk10 = 8;
                         temp_r31->unk12 = 0;
                         HuAudFXPlay(0x625);
                     }
-                } else if (var_r27 == 0) {
+                }
+                else if (var_r27 == 0) {
                     temp_r31->unk10 = 8;
                     temp_r31->unk12 = 0;
                     HuAudFXPlay(0x625);
-                } else {
+                }
+                else {
                     if (temp_r31->unk168 != -1) {
                         fn_1_252C(-0.01f, 0x3C);
                         fn_1_2670(0x75, 0);
@@ -394,15 +412,18 @@ void fn_1_9A64(omObjData* arg0) {
         case 7:
             if (arg0->rot.y < temp_r31->unk180) {
                 arg0->rot.y += 1.25f;
-            } else if (arg0->rot.y > temp_r31->unk180) {
+            }
+            else if (arg0->rot.y > temp_r31->unk180) {
                 arg0->rot.y = temp_r31->unk180;
             }
             var_f31 = 0.35f - temp_r31->unk24;
             if (var_f31 > 0.0125f) {
                 temp_r31->unk24 += 0.0125f;
-            } else if (var_f31 < -0.0125f) {
+            }
+            else if (var_f31 < -0.0125f) {
                 temp_r31->unk24 -= 0.0125f;
-            } else {
+            }
+            else {
                 temp_r31->unk24 = 0.35f;
             }
             if ((arg0->rot.y == temp_r31->unk180) && (0.35f == temp_r31->unk24)) {
@@ -423,7 +444,8 @@ void fn_1_9A64(omObjData* arg0) {
                     var_r26 = fn_1_89A8(temp_r31->unk168);
                     HuAudCharVoicePlay(var_r26, 0x123);
                     fn_1_D010(0x628, 30);
-                } else {
+                }
+                else {
                     fn_1_8924(temp_r31->unk168, 2);
                 }
                 temp_r31->unk16C = temp_r31->unk168;
@@ -451,12 +473,14 @@ void fn_1_9A64(omObjData* arg0) {
             temp_r31->unk12++;
             if (arg0->rot.y > 270.0f) {
                 arg0->rot.y -= 1.25f;
-            } else if (arg0->rot.y < 270.0f) {
+            }
+            else if (arg0->rot.y < 270.0f) {
                 arg0->rot.y = 270.0f;
             }
             if (temp_r31->unk24 > 0.025f) {
                 temp_r31->unk24 -= 0.025f;
-            } else if (temp_r31->unk24 < 0.05f) {
+            }
+            else if (temp_r31->unk24 < 0.05f) {
                 temp_r31->unk24 = 0.0f;
             }
             if ((270.0f == arg0->rot.y) && (0.0f == temp_r31->unk24)) {
@@ -475,14 +499,15 @@ void fn_1_9A64(omObjData* arg0) {
                 temp_r31->unkE = 5;
                 CharModelMotionSet(temp_r31->unk2, arg0->motion[temp_r31->unkE]);
                 temp_r31->unkE = 3;
-                CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
+                CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
                 temp_r31->unk16 = 0;
                 temp_r31->unk14 = 0;
                 temp_r31->unk1C = lbl_1_data_210[0];
                 temp_r31->unk18 = fn_1_B79C(lbl_1_data_1E0[0].y, lbl_1_data_1E0[1].y, temp_r31->unk1C);
                 temp_r31->unk10 = 11;
                 temp_r31->unk12 = 0;
-            } else {
+            }
+            else {
                 temp_r31->unk10 = 13;
                 temp_r31->unk12 = 0;
             }
@@ -513,14 +538,15 @@ void fn_1_9A64(omObjData* arg0) {
                     arg0->trans.y = sp8.y;
                     arg0->trans.z = sp8.z;
                     temp_r31->unkE = 4;
-                    CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
+                    CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
                     temp_r31->unk12 = 0;
                     temp_r31->unk16 ^= 1;
                     if (++temp_r31->unk14 >= 3) {
                         temp_r31->unk10 = 0xC;
                     }
                 }
-            } else {
+            }
+            else {
                 sp14 = lbl_1_data_1E0[var_r29];
                 sp8 = lbl_1_data_1E0[var_r29 + 1];
                 var_f31 = atan2d((sp8.x - arg0->trans.x), (sp8.z - arg0->trans.z));
@@ -551,7 +577,8 @@ void fn_1_9A64(omObjData* arg0) {
                 if (fn_1_B888() != 0) {
                     temp_r31->unk10 = 14;
                     temp_r31->unk12 = 0;
-                } else {
+                }
+                else {
                     temp_r31->unk10 = 15;
                     temp_r31->unk12 = 0;
                 }
@@ -585,7 +612,7 @@ void fn_1_9A64(omObjData* arg0) {
     temp_r31->unk30.x = sp74[0][3];
     temp_r31->unk30.y = sp74[1][3];
     temp_r31->unk30.z = sp74[2][3];
-    
+
     for (var_r29 = 0; var_r29 < 0xC; var_r29++) {
         PSMTXCopy(sp44, sp74);
         fn_1_C878(arg0->model[4], lbl_1_data_21C[var_r29], sp74, 1);
@@ -611,25 +638,17 @@ void fn_1_9A64(omObjData* arg0) {
     temp_r31->unk164 = 1;
 }
 
-void fn_1_AE58(omObjData* arg0) {
+void fn_1_AE58(omObjData *arg0)
+{
     arg0->func = NULL;
 }
 
-f32 lbl_1_data_36C[4][2] = {
-    30.0f, 24.0f,
-    24.0f, 18.0f,
-    12.0f,  6.0f,
-     6.0f,  0.0f
-};
+f32 lbl_1_data_36C[4][2] = { 30.0f, 24.0f, 24.0f, 18.0f, 12.0f, 6.0f, 6.0f, 0.0f };
 
-f32 lbl_1_data_38C[4][2] = {
-     0.2f, 0.15f,
-    0.15f,  0.1f,
-     0.1f, 0.05f,
-    0.05f, 0.0f
-};
+f32 lbl_1_data_38C[4][2] = { 0.2f, 0.15f, 0.15f, 0.1f, 0.1f, 0.05f, 0.05f, 0.0f };
 
-void fn_1_AE64(omObjData* arg0) {
+void fn_1_AE64(omObjData *arg0)
+{
     M424DllClawStruct2 sp20[8];
     M424DllClawStruct2 sp10;
     s32 spC;
@@ -642,12 +661,12 @@ void fn_1_AE64(omObjData* arg0) {
     f32 var_f24;
     s32 temp_r24;
     s32 temp_r23;
-    M424DllClawStruct* temp_r31;
-    Vec* var_r30;
+    M424DllClawStruct *temp_r31;
+    Vec *var_r30;
     s32 var_r29;
     s32 var_r28;
     s32 var_r27;
-    M424DllBallStruct2* var_r26;
+    M424DllBallStruct2 *var_r26;
     s32 var_r25;
 
     spC = 0;
@@ -693,7 +712,7 @@ void fn_1_AE64(omObjData* arg0) {
                     if (var_r28 != 0) {
                         for (var_r29 = 0; var_r29 < (var_r28 - 1); var_r29++) {
                             var_r27 = var_r29 + 1;
-                            for (;var_r27 < var_r28; var_r27++) {
+                            for (; var_r27 < var_r28; var_r27++) {
                                 if (sp20[var_r29].unkC < sp20[var_r27].unkC) {
                                     sp10 = sp20[var_r29];
                                     sp20[var_r29] = sp20[var_r27];
@@ -729,7 +748,8 @@ void fn_1_AE64(omObjData* arg0) {
                             var_f29 = (var_f29 - 350.0f) / 250.0f + temp_r23;
                             if (var_f29 < 0.0f) {
                                 var_f29 = 0.0f;
-                            } else if (var_f29 > 1.0f) {
+                            }
+                            else if (var_f29 > 1.0f) {
                                 var_f29 = 1.0f;
                             }
                             temp_r31->unk194 = (60.0f * (1.0f - var_f29));
@@ -748,7 +768,8 @@ void fn_1_AE64(omObjData* arg0) {
                             temp_r31->unk1AC = 0;
                             return;
                         }
-                    } else {
+                    }
+                    else {
                         if (var_f31 >= (15.0f + temp_r31->unk1A8)) {
                             temp_r31->unk1A0++;
                             temp_r31->unk1A8 = var_f31;
@@ -766,7 +787,8 @@ void fn_1_AE64(omObjData* arg0) {
                     if (++temp_r31->unk1AC >= temp_r31->unk194) {
                         var_r25 = 0;
                     }
-                } else {
+                }
+                else {
                     var_r25 = 0;
                 }
                 if (var_r25 != 0) {
@@ -778,7 +800,8 @@ void fn_1_AE64(omObjData* arg0) {
     }
 }
 
-u16 fn_1_B79C(f32 arg0, f32 arg1, f32 arg2) {
+u16 fn_1_B79C(f32 arg0, f32 arg1, f32 arg2)
+{
     f32 var_f31;
     f32 var_f3;
     u16 var_r31;
@@ -791,8 +814,9 @@ u16 fn_1_B79C(f32 arg0, f32 arg1, f32 arg2) {
     return var_r31;
 }
 
-s32 fn_1_B804(void) {
-    M424DllClawStruct* temp_r31;
+s32 fn_1_B804(void)
+{
+    M424DllClawStruct *temp_r31;
 
     if (!lbl_1_bss_6D8) {
         return 0;
@@ -807,17 +831,20 @@ s32 fn_1_B804(void) {
     return 0;
 }
 
-s32 fn_1_B888(void) {
+s32 fn_1_B888(void)
+{
     if (lbl_1_bss_6CC >= 3) {
         return 1;
-    } else {
+    }
+    else {
         return 0;
     }
 }
 
-s32 fn_1_B8AC(void) {
-    M424DllClawStruct* temp_r31;
-    
+s32 fn_1_B8AC(void)
+{
+    M424DllClawStruct *temp_r31;
+
     if (!lbl_1_bss_6D8) {
         return 0;
     }
@@ -832,9 +859,10 @@ s32 fn_1_B8AC(void) {
     return 0;
 }
 
-s32 fn_1_B924(void) {
-    M424DllClawStruct* temp_r31;
-    
+s32 fn_1_B924(void)
+{
+    M424DllClawStruct *temp_r31;
+
     if (!lbl_1_bss_6D8) {
         return 0;
     }
@@ -849,11 +877,13 @@ s32 fn_1_B924(void) {
     return 0;
 }
 
-void fn_1_B99C(Vec* arg0, Vec* arg1, f32 arg8, Vec* arg2) {
+void fn_1_B99C(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2)
+{
     fn_1_B9E0(arg0, arg1, arg8, arg2, 0x10);
 }
 
-s32 fn_1_B9E0(Vec* arg0, Vec* arg1, f32 arg8, Vec* arg2, s32 arg3) {
+s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3)
+{
     Vec sp60;
     Vec sp54;
     Vec sp48;
@@ -870,11 +900,11 @@ s32 fn_1_B9E0(Vec* arg0, Vec* arg1, f32 arg8, Vec* arg2, s32 arg3) {
     f32 var_f25;
     f32 var_f24;
     f32 var_f23;
-    M424DllClawStruct* temp_r31;
+    M424DllClawStruct *temp_r31;
     s32 var_r29;
     s32 var_r28;
     s32 var_r26;
-    omObjData* var_r24;
+    omObjData *var_r24;
     s32 var_r23;
 
     var_r23 = 1;
@@ -907,7 +937,8 @@ s32 fn_1_B9E0(Vec* arg0, Vec* arg1, f32 arg8, Vec* arg2, s32 arg3) {
                     var_f23 = sqrtf((sp18.x * sp18.x) + (sp18.z * sp18.z));
                     if ((temp_r31->unk3C[var_r29].y > sp24.y) && (var_f23 < 17.599999999999998)) {
                         temp_r31->unk15C = 1;
-                    } else {
+                    }
+                    else {
                         PSVECNormalize(&sp18, &sp18);
                         PSVECScale(&sp18, &sp18, temp_f30);
                         PSVECAdd(&temp_r31->unk3C[var_r29], &sp18, arg2);
@@ -947,9 +978,10 @@ s32 fn_1_B9E0(Vec* arg0, Vec* arg1, f32 arg8, Vec* arg2, s32 arg3) {
                                 PSVECAdd(&sp60, &sp30, arg2);
                                 var_r28 = 1;
                                 var_r26 = 1;
-                            } else if (var_f29 < temp_f30) {
+                            }
+                            else if (var_f29 < temp_f30) {
                                 if (PSVECMag(&sp30) <= 0.0f) {
-                                    
+
                                     sp30.x = sp30.y = 0.0f;
                                     sp30.z = 1.0f;
                                 }
@@ -1025,12 +1057,13 @@ s32 fn_1_B9E0(Vec* arg0, Vec* arg1, f32 arg8, Vec* arg2, s32 arg3) {
     return var_r28;
 }
 
-s32 fn_1_C210(Vec* arg0) {
+s32 fn_1_C210(Vec *arg0)
+{
     Vec sp1C;
     Vec sp10;
     f32 spC;
-    M424DllClawStruct* temp_r31;
-    omObjData* var_r30;
+    M424DllClawStruct *temp_r31;
+    omObjData *var_r30;
     s32 var_r29;
 
     var_r29 = 0;
@@ -1052,21 +1085,23 @@ s32 fn_1_C210(Vec* arg0) {
     return var_r29;
 }
 
-void fn_1_C2E0(s32 arg0) {
+void fn_1_C2E0(s32 arg0)
+{
     Vec sp4C;
     Vec sp40;
     Vec sp34;
     Vec sp28;
-    Vec* spC;
-    M424DllBallStruct2* temp_r27;
-    Vec* temp_r28;
-    M424DllClawStruct* temp_r31;
+    Vec *spC;
+    M424DllBallStruct2 *temp_r27;
+    Vec *temp_r28;
+    M424DllClawStruct *temp_r31;
     s32 var_r30;
     s32 var_r26;
-    omObjData* var_r25;
+    omObjData *var_r25;
 
-    if ((u8)omPauseChk() != 0) return;
-    
+    if ((u8)omPauseChk() != 0U)
+        return;
+
     var_r25 = lbl_1_bss_6D8;
     if (lbl_1_bss_6D8) {
         temp_r31 = var_r25->data;
@@ -1074,10 +1109,11 @@ void fn_1_C2E0(s32 arg0) {
             temp_r27 = &lbl_1_bss_60[0];
             if (temp_r27) {
                 var_r26 = 0x10;
-                
+
                 for (var_r30 = 0; var_r30 < lbl_1_bss_58; var_r30++) {
                     temp_r27 = &lbl_1_bss_60[var_r30];
-                    if ((fn_1_8950(var_r30) == 3) || (fn_1_8950(var_r30) == 4)) continue;
+                    if ((fn_1_8950(var_r30) == 3) || (fn_1_8950(var_r30) == 4))
+                        continue;
                     temp_r28 = fn_1_89D4(var_r30);
                     spC = fn_1_8A00(var_r30);
                     sp28 = *temp_r28;
@@ -1116,18 +1152,19 @@ void fn_1_C2E0(s32 arg0) {
     }
 }
 
-void fn_1_C604(s32 arg0, s32 arg1) {
+void fn_1_C604(s32 arg0, s32 arg1)
+{
     Vec sp30;
     Vec sp24;
     Vec sp18;
     Vec spC;
-    M424DllBallStruct2* sp8;
-    Vec* var_r31;
+    M424DllBallStruct2 *sp8;
+    Vec *var_r31;
     f32 temp_f31;
     f32 var_f30;
     s32 var_r30;
-    M424DllBallStruct2* var_r28;
-    Vec* var_r27;
+    M424DllBallStruct2 *var_r28;
+    Vec *var_r27;
 
     sp8 = &lbl_1_bss_60[var_r30];
     var_r27 = fn_1_89D4(arg0);
@@ -1145,7 +1182,8 @@ void fn_1_C604(s32 arg0, s32 arg1) {
                     sp18.x *= temp_f31;
                     sp18.y *= temp_f31;
                     sp18.z *= temp_f31;
-                } else {
+                }
+                else {
                     sp18.x = 0.0f;
                     sp18.y = 0.0f;
                     sp18.z = 1.0f;
@@ -1168,22 +1206,25 @@ void fn_1_C604(s32 arg0, s32 arg1) {
     }
 }
 
-void fn_1_C854(void) {
+void fn_1_C854(void)
+{
     fn_1_C2E0(0);
 }
 
-s32 fn_1_C878(s16 arg0, const char* arg1, Mtx arg2, s32 arg3) {
+s32 fn_1_C878(s16 arg0, const char *arg1, Mtx arg2, s32 arg3)
+{
     Mtx sp44;
     Mtx sp14;
-    HsfData* temp_r30;
-    ModelData* temp_r31;
+    HsfData *temp_r30;
+    ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
     temp_r30 = temp_r31->hsfData;
     lbl_1_bss_6C8 = 0;
     if (temp_r31->unk_08 != -1) {
         lbl_1_bss_6C4 = 1;
-    } else {
+    }
+    else {
         lbl_1_bss_6C4 = 0;
     }
     mtxRot(sp14, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
@@ -1197,18 +1238,19 @@ s32 fn_1_C878(s16 arg0, const char* arg1, Mtx arg2, s32 arg3) {
     return lbl_1_bss_6C8;
 }
 
-void fn_1_C99C(HsfObject* arg0, Mtx arg1, const char* arg2, Mtx arg3) {
+void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
+{
     Mtx spF8;
     Mtx spC8;
     Mtx sp98;
     Mtx sp68;
     Mtx sp38;
     Mtx sp8;
-    HsfTransform* var_r31;
-    HsfTransform* var_r30;
-    HsfTransform* var_r29;
-    HsfObject* temp_r28;
-    HsfObject* temp_r27;
+    HsfTransform *var_r31;
+    HsfTransform *var_r30;
+    HsfTransform *var_r29;
+    HsfObject *temp_r28;
+    HsfObject *temp_r27;
     u32 var_r25;
     u32 var_r24;
     u32 var_r23;
@@ -1216,13 +1258,15 @@ void fn_1_C99C(HsfObject* arg0, Mtx arg1, const char* arg2, Mtx arg3) {
     if (lbl_1_bss_6C8 == 0) {
         if (lbl_1_bss_6C4 != 0) {
             var_r31 = &arg0->data.curr;
-        } else {
+        }
+        else {
             var_r31 = &arg0->data.base;
         }
         if ((var_r31->scale.x <= 0.0f) && (var_r31->scale.y <= 0.0f) && (var_r31->scale.z <= 0.0f)) {
             PSMTXCopy(arg1, spF8);
             OSReport("OBJ MTX CHECK ERROR %s \n", arg0->name);
-        } else {
+        }
+        else {
             mtxRot(spC8, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
             PSMTXScale(spF8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
             PSMTXConcat(spC8, spF8, spF8);
@@ -1241,13 +1285,15 @@ void fn_1_C99C(HsfObject* arg0, Mtx arg1, const char* arg2, Mtx arg3) {
             if (lbl_1_bss_6C8 == 0) {
                 if (lbl_1_bss_6C4 != 0) {
                     var_r30 = &temp_r28->data.curr;
-                } else {
+                }
+                else {
                     var_r30 = &temp_r28->data.base;
                 }
                 if ((var_r30->scale.x <= 0.0f) && (var_r30->scale.y <= 0.0f) && (var_r30->scale.z <= 0.0f)) {
                     PSMTXCopy(spF8, sp68);
                     OSReport("OBJ MTX CHECK ERROR %s \n", temp_r28->name);
-                } else {
+                }
+                else {
                     mtxRot(sp98, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
                     PSMTXScale(sp68, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
                     PSMTXConcat(sp98, sp68, sp68);
@@ -1266,13 +1312,15 @@ void fn_1_C99C(HsfObject* arg0, Mtx arg1, const char* arg2, Mtx arg3) {
                     if (lbl_1_bss_6C8 == 0) {
                         if (lbl_1_bss_6C4 != 0) {
                             var_r29 = &temp_r27->data.curr;
-                        } else {
+                        }
+                        else {
                             var_r29 = &temp_r27->data.base;
                         }
                         if ((var_r29->scale.x <= 0.0f) && (var_r29->scale.y <= 0.0f) && (var_r29->scale.z <= 0.0f)) {
                             PSMTXCopy(sp68, sp8);
-                            OSReport("OBJ MTX CHECK ERROR %s \n", temp_r27->name);
-                        } else {
+                            OSReport("OBJ MTX CHECK ERROR %s \n", temp_r27->name
+                        }
+                        else {
                             mtxRot(sp38, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
                             PSMTXScale(sp8, var_r29->scale.x, var_r29->scale.y, var_r29->scale.z);
                             PSMTXConcat(sp38, sp8, sp8);
@@ -1296,8 +1344,9 @@ void fn_1_C99C(HsfObject* arg0, Mtx arg1, const char* arg2, Mtx arg3) {
     }
 }
 
-void fn_1_CE74(s32 arg0) {
-    ModelData* temp_r31;
+void fn_1_CE74(s32 arg0)
+{
+    ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
     if (temp_r31->unk_08 != -1) {
@@ -1311,21 +1360,23 @@ void fn_1_CE74(s32 arg0) {
     }
 }
 
-void fn_1_CF00(Process* arg0) {
-    M424DllClawStruct3* var_r31;
+void fn_1_CF00(Process *arg0)
+{
+    M424DllClawStruct3 *var_r31;
     s32 var_r30;
 
     omAddObjEx(arg0, 0x40, 0, 0, -1, fn_1_CF80);
     var_r31 = &lbl_1_bss_640[0];
-    
+
     for (var_r30 = 0; var_r30 < 0x10; var_r30++, var_r31++) {
         var_r31->unk0 = -1;
         var_r31->unk4 = -1;
     }
 }
 
-void fn_1_CF80(omObjData* arg0) {
-    M424DllClawStruct3* var_r31;
+void fn_1_CF80(omObjData *arg0)
+{
+    M424DllClawStruct3 *var_r31;
     s32 var_r30;
 
     var_r31 = &lbl_1_bss_640[0];
@@ -1340,13 +1391,15 @@ void fn_1_CF80(omObjData* arg0) {
     }
 }
 
-s32 fn_1_D010(s32 arg0, s32 arg1) {
-    M424DllClawStruct3* var_r31;
+s32 fn_1_D010(s32 arg0, s32 arg1)
+{
+    M424DllClawStruct3 *var_r31;
     s32 var_r30;
 
     var_r31 = &lbl_1_bss_640[0];
     for (var_r30 = 0; var_r30 < 0x10; var_r30++, var_r31++) {
-        if (var_r31->unk0 == -1) break;
+        if (var_r31->unk0 == -1)
+            break;
     }
     if (var_r30 >= 0x10) {
         return -1;

@@ -54,15 +54,12 @@ void msmMemFree(void* arg0) {
 }
 
 void* msmMemAlloc(u32 arg0) {
-    unkMemStruct* memC;
     s32 temp_r0;
     u32 var_r5;
     u32 var_r7;
     unkStruct* temp_r5;
     unkStruct* var_r8;
     unkStruct* temp_r9;
-    unkStruct* temp_r6;
-    unkStruct* temp_r4;
 
     var_r7 = arg0 + 0x20;
     temp_r0 = var_r7 & 0x1F;

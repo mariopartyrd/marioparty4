@@ -10,6 +10,8 @@
 #include "game/object.h"
 #include "game/pad.h"
 
+#include "ext_math.h"
+
 // structs
 typedef struct someBits3 { // make sure this is defined correctly
     /* 0x00 */ struct {
@@ -175,7 +177,7 @@ s32 fn_1_7D18(s32 arg0)
     BoardSpacePosGet(0, temp_r28, &sp38);
     VECSubtract(&sp38, &sp2C, &sp20);
     VECNormalize(&sp20, &sp20);
-    BoardPlayerRotYSet(arg0, 180.0 * (atan2(-sp20.x, -sp20.z) / M_PI));
+    BoardPlayerRotYSet(arg0, atan2d(-sp20.x, -sp20.z));
     HuPrcSleep(0x1E);
     model = BoardModelIDGet(lbl_1_bss_C[7]);
     Hu3DModelObjPosGet(model, "phei", &sp38);
@@ -187,8 +189,8 @@ s32 fn_1_7D18(s32 arg0)
         var_f31 = 39.0f;
     }
 
-    sp38.x = sp38.x + (var_f31 * sin((M_PI * (180.0f + BoardModelRotYGet(lbl_1_data_456))) / 180.0));
-    sp38.z = sp38.z + (var_f31 * cos((M_PI * (180.0f + BoardModelRotYGet(lbl_1_data_456))) / 180.0));
+    sp38.x += var_f31 * sind(180.0f + BoardModelRotYGet(lbl_1_data_456));
+    sp38.z += var_f31 * cosd(180.0f + BoardModelRotYGet(lbl_1_data_456));
 
     BoardPlayerPosGet(arg0, &sp2C);
     BoardPlayerPosLerpStart(arg0, &sp2C, &sp38, 0x14);
@@ -197,7 +199,7 @@ s32 fn_1_7D18(s32 arg0)
         BoardModelPosGet(lbl_1_bss_C[10], &sp2C);
         BoardPlayerPosGet(arg0, &sp38);
         VECSubtract(&sp38, &sp2C, &sp20);
-        arctan = atan2(sp20.x, sp20.z) / M_PI * 180.0;
+        arctan = atan2d(sp20.x, sp20.z);
         BoardModelRotYSet(lbl_1_bss_C[10], arctan);
         HuPrcVSleep();
     }
@@ -589,7 +591,7 @@ void fn_1_9044(omObjData *arg0, someBits3 *arg1)
         }
     }
 
-    sp8.z = arg0->trans.x * sin((M_PI * arg0->trans.y) / 180.0);
+    sp8.z = arg0->trans.x * sind(arg0->trans.y);
     BoardModelRotSetV(lbl_1_data_456, &sp8);
 }
 
@@ -626,7 +628,7 @@ void fn_1_9230(s32 arg0)
         BoardModelPosGet(lbl_1_bss_C[10], &sp20);
         BoardPlayerPosGet(arg0, &sp14);
         VECSubtract(&sp14, &sp20, &sp8);
-        rotY = atan2(sp8.x, sp8.z) / M_PI * 180.0;
+        rotY = atan2d(sp8.x, sp8.z);
         BoardModelRotYSet(lbl_1_bss_C[10], rotY);
         HuPrcVSleep();
     }
@@ -773,8 +775,8 @@ void fn_1_97F8(s32 arg0)
         }
         temp_r31 = &temp_r30->unk_0C[i];
         temp_r31->unk0 = 1;
-        temp_r31->unk8.x = sp8.x + (50.0f * sin((M_PI * var_f31) / 180.0));
-        temp_r31->unk8.z = sp8.z + (50.0f * cos((M_PI * var_f31) / 180.0));
+        temp_r31->unk8.x = sp8.x + (50.0f * sind(var_f31));
+        temp_r31->unk8.z = sp8.z + (50.0f * cosd(var_f31));
         temp_r31->unk8.y = 600.0f + sp8.y + (500.0f * BoardRandFloat());
         temp_r31->unk1 = 0;
         temp_r31->unk4 = BoardRandFloat() * 360.0f;

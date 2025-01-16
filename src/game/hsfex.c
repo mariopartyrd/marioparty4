@@ -3,7 +3,7 @@
 #include "game/hsfmotion.h"
 #include "game/disp.h"
 
-#include "math.h"
+#include "ext_math.h"
 
 #define DISP_HALF_W (HU_DISP_WIDTH/2.0f)
 #define DISP_HALF_H (HU_DISP_HEIGHT/2.0f)
@@ -129,10 +129,10 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
                 var_f30 = var_f31;
                 break;
             case 1:
-                var_f30 = arg5 * sin(90.0f * (var_f31 / arg5) * M_PI / 180.0);
+                var_f30 = arg5 * sind(90.0f * (var_f31 / arg5));
                 break;
             case 2:
-                var_f30 = arg5 * (1.0 - cos(90.0f * (var_f31 / arg5) * M_PI / 180.0));
+                var_f30 = arg5 * (1.0 - cosd(90.0f * (var_f31 / arg5)));
                 break;
             }
         var_r31 = temp_r21;
@@ -346,9 +346,9 @@ static void SetObjCamMotion(s16 arg0, HsfTrack *arg1, float arg2, HsfexStruct02 
         case 14:
             VECSubtract(&arg3->unk08, &arg3->unk20, &spC);
             VECNormalize(&spC, &spC);
-            sp18.x = spC.x * spC.y * (1.0 - cos(M_PI * arg2 / 180.0)) - spC.z * sin(M_PI * arg2 / 180.0);
-            sp18.y = spC.y * spC.y + (1.0f - spC.y * spC.y) * cos(M_PI * arg2 / 180.0);
-            sp18.z = spC.y * spC.z * (1.0 - cos(M_PI * arg2 / 180.0)) + spC.x * sin(M_PI * arg2 / 180.0);
+            sp18.x = spC.x * spC.y * (1.0 - cosd(arg2)) - spC.z * sind(arg2);
+            sp18.y = spC.y * spC.y + (1.0f - spC.y * spC.y) * cosd(arg2);
+            sp18.z = spC.y * spC.z * (1.0 - cosd(arg2)) + spC.x * sind(arg2);
             VECNormalize(&sp18, &arg3->unk14);
             break;
     }
@@ -432,7 +432,7 @@ void Hu3D2Dto3D(Vec *arg0, s16 arg1, Vec *arg2) {
         }
     }
     temp_r31 = &Hu3DCamera[i];
-    temp_f30 = sin((temp_r31->fov / 2) * M_PI / 180.0) / cos((temp_r31->fov / 2) * M_PI / 180.0);
+    temp_f30 = sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2);
     temp_f31 = temp_f30 * arg0->z * 2.0f;
     temp_f29 = temp_f31 * HU_DISP_ASPECT;
     temp_f28 = arg0->x / HU_DISP_WIDTH;
@@ -461,8 +461,8 @@ void Hu3D3Dto2D(Vec *arg0, s16 arg1, Vec *arg2) {
     temp_r31 = &Hu3DCamera[i];
     C_MTXLookAt(sp1C, &temp_r31->pos, &temp_r31->up, &temp_r31->target);
     PSMTXMultVec(sp1C, arg0, &sp10);
-    temp_f31 = (sin((temp_r31->fov / 2) * M_PI / 180.0) / cos((temp_r31->fov / 2) * M_PI / 180.0)) * sp10.z * HU_DISP_ASPECT;
-    temp_f30 = (sin((temp_r31->fov / 2) * M_PI / 180.0) / cos((temp_r31->fov / 2) * M_PI / 180.0)) * sp10.z;
+    temp_f31 = (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * sp10.z * HU_DISP_ASPECT;
+    temp_f30 = (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * sp10.z;
     arg2->x = DISP_HALF_W + sp10.x * (DISP_HALF_W / -temp_f31);
     arg2->y = DISP_HALF_H + sp10.y * (DISP_HALF_H / temp_f30);
     arg2->z = 0.0f;

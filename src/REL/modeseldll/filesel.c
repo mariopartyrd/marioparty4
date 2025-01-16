@@ -10,7 +10,7 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "math.h"
+#include "ext_math.h"
 
 #include "REL/modeseldll.h"
 
@@ -203,7 +203,7 @@ repeat:
     fn_1_5C38();
     for (temp_r30 = 0; temp_r30 <= 20; temp_r30++) {
         temp_f31 = temp_r30 / 20.0;
-        temp_f31 = sin(M_PI * (90.0f * temp_f31) / 180.0);
+        temp_f31 = sind(90.0f * temp_f31);
         Hu3DModelScaleSet(lbl_1_bss_19A[0], temp_f31, temp_f31, temp_f31);
         Hu3DModelScaleSet(lbl_1_bss_19A[1], temp_f31, temp_f31, temp_f31);
         Hu3DModelScaleSet(lbl_1_bss_19A[2], temp_f31, temp_f31, temp_f31);
@@ -377,8 +377,8 @@ loop_exit:
             for (temp_r30 = 0; temp_r30 <= 40; temp_r30++) {
                 if (temp_r30 <= 30) {
                     temp_f31 = temp_r30 / 30.0f;
-                    sp28.x = 288.0 + (GET_ZEROSIGN(temp_r26) * (100.0 + (250.0 * sin(M_PI * (90.0f * temp_f31) / 180.0))));
-                    sp28.y = 250.0 - (100.0 * sin(M_PI * (180.0f * temp_f31) / 180.0));
+                    sp28.x = 288.0 + (GET_ZEROSIGN(temp_r26) * (100.0 + (250.0 * sind(90.0f * temp_f31))));
+                    sp28.y = 250.0 - (100.0 * sind(180.0f * temp_f31));
                     sp28.z = (temp_r30 * 100) + 600;
                     Hu3D2Dto3D(&sp28, 1, &sp1C);
                     Hu3DModelPosSetV(lbl_1_bss_19A[temp_r26 + 2], &sp1C);
@@ -390,11 +390,11 @@ loop_exit:
                     temp_f31 = (temp_r30 - 20) / 20.0f;
                     if (temp_r29) {
                         sp28.x = 288.0f + ((1.0 - temp_f31) * (100 * GET_ZEROSIGN(temp_r31)));
-                        sp28.y = 250.0 - (100.0 * sin(M_PI * (180.0f * temp_f31) / 180.0));
+                        sp28.y = 250.0 - (100.0 * sind(180.0f * temp_f31));
                         sp28.z = 600.0f;
                         Hu3D2Dto3D(&sp28, 1, &sp1C);
                         Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31], &sp1C);
-                        temp_f31 = (0.5 * sin(M_PI * (90.0f * temp_f31) / 180.0)) + 1.0;
+                        temp_f31 = (0.5 * sind(90.0f * temp_f31)) + 1.0;
                         Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31], temp_f31, temp_f31, temp_f31);
                     }
                     else {
@@ -407,14 +407,14 @@ loop_exit:
                         sp28.z = 600;
                         Hu3D2Dto3D(&sp28, 1, &sp10);
                         VECSubtract(&sp10, &sp1C, &sp28);
-                        sp28.x *= sin(M_PI * (90.0f * temp_f31) / 180.0);
-                        sp28.y *= 1.0 - cos(M_PI * (90.0f * temp_f31) / 180.0);
+                        sp28.x *= sind(90.0f * temp_f31);
+                        sp28.y *= 1.0 - cosd(90.0f * temp_f31);
                         sp28.z = 0;
                         VECAdd(&sp28, &sp1C, &sp1C);
                         Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31], &sp1C);
-                        lbl_1_bss_108[temp_r31] *= cos(M_PI * (90.0f * temp_f31) / 180.0);
+                        lbl_1_bss_108[temp_r31] *= cosd(90.0f * temp_f31);
                         lbl_1_bss_100[temp_r31] = 1.0 - temp_f31;
-                        temp_f31 = 1.0 + (0.3 * cos(M_PI * (90.0f * temp_f31) / 180.0));
+                        temp_f31 = 1.0 + (0.3 * cosd(90.0f * temp_f31));
                         Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31], temp_f31, temp_f31, temp_f31);
                     }
                 }
@@ -525,7 +525,7 @@ cleanup:
     for (temp_r30 = 0; temp_r30 <= 20; temp_r30++) {
         temp_f31 = temp_r30 / 20.0f;
         if (temp_r29) {
-            temp_f31 = 1.5 * cos(M_PI * (90.0f * temp_f31) / 180.0);
+            temp_f31 = 1.5 * cosd(90.0f * temp_f31);
             Hu3DModelScaleSet(lbl_1_bss_19A[0], temp_f31, temp_f31, temp_f31);
             Hu3DModelScaleSet(lbl_1_bss_19A[1], temp_f31, temp_f31, temp_f31);
             Hu3DModelScaleSet(lbl_1_bss_19A[2], 0.7 * temp_f31, 0.7 * temp_f31, 0.7 * temp_f31);
@@ -544,14 +544,14 @@ cleanup:
             sp28.z = 600;
             Hu3D2Dto3D(&sp28, 1, &sp10);
             VECSubtract(&sp10, &sp1C, &sp28);
-            sp28.x *= sin(M_PI * (90.0f * temp_f31) / 180.0);
-            sp28.y *= 1.0 - cos(M_PI * (90.0f * temp_f31) / 180.0);
+            sp28.x *= sind(90.0f * temp_f31);
+            sp28.y *= 1.0 - cosd(90.0f * temp_f31);
             sp28.z = 0.0f;
             VECAdd(&sp28, &sp1C, &sp1C);
             Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31], &sp1C);
-            lbl_1_bss_108[temp_r31] *= cos(M_PI * (90.0f * temp_f31) / 180.0);
+            lbl_1_bss_108[temp_r31] *= cosd(90.0f * temp_f31);
             lbl_1_bss_100[temp_r31] = 1.0 - temp_f31;
-            temp_f31 = 1.0 + (0.5 * cos(M_PI * (90.0f * temp_f31) / 180.0));
+            temp_f31 = 1.0 + (0.5 * cosd(90.0f * temp_f31));
             Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31], temp_f31, temp_f31, temp_f31);
         }
         HuPrcVSleep();
@@ -636,10 +636,10 @@ void fn_1_5850(void)
         float scale;
         float time = i / 10.0;
         if (param) {
-            scale = 1.0 + (0.3 * sin(M_PI * (90.0f * time) / 180.0));
+            scale = 1.0 + (0.3 * sind(90.0f * time));
         }
         else {
-            scale = 1.0 + (0.3 * cos(M_PI * (90.0f * time) / 180.0));
+            scale = 1.0 + (0.3 * cosd(90.0f * time));
         }
         Hu3DModelScaleSet(lbl_1_bss_19A[index + 2], scale, scale, scale);
         Hu3DModelScaleSet(lbl_1_bss_19A[index + 4], scale, scale, scale);
@@ -800,7 +800,7 @@ s32 fn_1_61B4(void)
     lbl_1_bss_120[0] = lbl_1_bss_120[1] = lbl_1_bss_120[2] = 1;
     UnMountCnt = 0;
     for (temp_r29 = 0; temp_r29 <= 20; temp_r29++) {
-        temp_f31 = sin(M_PI * (90.0f * (temp_r29 / 20.0f)) / 180.0);
+        temp_f31 = sind(90.0f * (temp_r29 / 20.0f));
         for (temp_r28 = 0; temp_r28 < 3; temp_r28++) {
             Hu3DModelScaleSet(lbl_1_bss_19A[temp_r28 + 8], temp_f31, temp_f31, temp_f31);
             Hu3DModelScaleSet(lbl_1_bss_19A[temp_r28 + 11], temp_f31, temp_f31, temp_f31);
@@ -1076,7 +1076,7 @@ s32 fn_1_61B4(void)
     }
     HuWinDispOff(lbl_1_bss_146);
     for (temp_r29 = 0; temp_r29 <= 20; temp_r29++) {
-        temp_f31 = cos(M_PI * (90.0 * (temp_r29 / 20.0)) / 180.0);
+        temp_f31 = cosd(90.0 * (temp_r29 / 20.0));
         Hu3DModelScaleSet(lbl_1_bss_19A[curSlotNo], temp_f31, temp_f31, temp_f31);
         for (temp_r28 = 0; temp_r28 < 3; temp_r28++) {
             Hu3DModelScaleSet(lbl_1_bss_19A[temp_r28 + 8], temp_f31, temp_f31, temp_f31);
@@ -1115,10 +1115,10 @@ void fn_1_72DC(void)
         Vec pos_2d;
         Vec pos_3d;
         if (param) {
-            scale = sin(M_PI * (90.0f * (i / 10.0f)) / 180.0);
+            scale = sind(90.0f * (i / 10.0f));
         }
         else {
-            scale = cos(M_PI * (90.0f * (i / 10.0f)) / 180.0);
+            scale = cosd(90.0f * (i / 10.0f));
         }
         pos_2d.x = 158.0f + (index * 130);
         pos_2d.y = 230;
@@ -1476,7 +1476,7 @@ s32 fn_1_8540(s16 boxno)
             return 0;
         }
         for (time = 0; time <= 10; time++) {
-            scale = cos(M_PI * (90.0 * (time / 10.0)) / 180.0);
+            scale = cosd(90.0 * (time / 10.0));
             Hu3DModelScaleSet(lbl_1_bss_19A[boxno + 8], scale, scale, scale);
             HuPrcVSleep();
         }
@@ -1490,7 +1490,7 @@ s32 fn_1_8540(s16 boxno)
         Hu3DModelTPLvlSet(lbl_1_bss_19A[boxno + 8], 0.6f);
         Hu3DModelTPLvlSet(lbl_1_bss_19A[boxno + 11], 0.3f);
         for (time = 0; time <= 20; time++) {
-            scale = sin(M_PI * (90.0 * (time / 20.0)) / 180.0);
+            scale = sind(90.0 * (time / 20.0));
             Hu3DModelScaleSet(lbl_1_bss_19A[boxno + 8], scale, scale, scale);
             HuPrcVSleep();
         }
@@ -1661,7 +1661,7 @@ s32 fn_1_8C30(s16 boxno)
                 else {
                     fn_1_9E14();
                     for (temp_r30 = 0; temp_r30 <= 10; temp_r30++) {
-                        temp_f31 = cos(M_PI * (90.0 * (temp_r30 / 10.0)) / 180.0);
+                        temp_f31 = cosd(90.0 * (temp_r30 / 10.0));
                         Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 8], temp_f31, temp_f31, temp_f31);
                         HuPrcVSleep();
                     }
@@ -1709,7 +1709,7 @@ s32 fn_1_8C30(s16 boxno)
                                 temp_f31 = temp_r30 / 30.0;
                                 sp60.x = sp3C.x * temp_f31;
                                 sp60.y = sp3C.y * temp_f31;
-                                sp60.z = (sp3C.z * temp_f31) + (-300 * sin(M_PI * (180.0f * temp_f31) / 180.0));
+                                sp60.z = (sp3C.z * temp_f31) + (-300 * sind(180.0f * temp_f31));
                                 VECAdd(&sp60, &sp54, &sp60);
                                 Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31 + 11], &sp60);
                                 HuPrcVSleep();
@@ -1730,7 +1730,7 @@ s32 fn_1_8C30(s16 boxno)
     Hu3DModelAttrSet(lbl_1_bss_19A[23], HU3D_ATTR_DISPOFF);
     Hu3DModelAttrReset(lbl_1_bss_19A[boxno + 8], HU3D_ATTR_DISPOFF);
     for (temp_r30 = 0; temp_r30 <= 10; temp_r30++) {
-        temp_f31 = sin(M_PI * (90.0 * (temp_r30 / 10.0)) / 180.0);
+        temp_f31 = sind(90.0 * (temp_r30 / 10.0));
         Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 8], temp_f31, temp_f31, temp_f31);
         HuPrcVSleep();
     }
@@ -1859,7 +1859,7 @@ void fn_1_A8C0(s16 boxno)
     SLLoadBoardStory();
     lbl_1_bss_EE[boxno] = GWGameStat.total_stars;
     lbl_1_bss_D0[boxno] = GWGameStat.create_time;
-    lbl_1_bss_E8[boxno] = GWSystem.unk0B[1];
+    lbl_1_bss_E8[boxno] = GWSystem.unk0C;
     lbl_1_bss_C4[boxno] = GWGameStat.story_continue;
     lbl_1_bss_B8[boxno] = GWGameStat.party_continue;
     if (GWGameStat.story_continue) {

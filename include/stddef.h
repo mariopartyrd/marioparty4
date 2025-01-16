@@ -10,8 +10,13 @@ extern "C" {
 /* These break 1.2.5 */
 //typedef __typeof__(sizeof(0)) size_t;
 //typedef __typeof__((char*)0 - (char*)0) ptrdiff_t;
+#ifdef __INTELLISENSE__
+typedef unsigned int size_t;
+typedef int ptrdiff_t;
+#else
 typedef unsigned long size_t;
 typedef long ptrdiff_t;
+#endif
 #ifndef NULL
 #define NULL 0L
 #endif

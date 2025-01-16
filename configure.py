@@ -242,6 +242,9 @@ cflags_trk = [
     "-sdata 0",
     "-sdata2 0",
     "-inline auto,deferred",
+    "-pool off",
+    "-enum min",
+    "-sdatathreshold 0"
 ]
 
 cflags_odemuexi = [
@@ -338,6 +341,16 @@ def DolphinLib(lib_name, objects):
     return {
         "lib": lib_name,
         "mw_version": "GC/1.2.5n",
+        "cflags": cflags_dolphin,
+        "host": False,
+        "objects": objects,
+    }
+
+
+def DolphinLibUnpatched(lib_name, objects):
+    return {
+        "lib": lib_name,
+        "mw_version": "GC/1.2.5",
         "cflags": cflags_dolphin,
         "host": False,
         "objects": objects,
@@ -514,14 +527,14 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/db.c"),
         ],
     ),
-    DolphinLib(
+    DolphinLibUnpatched(
         "mtx",
         [
-            Object(NonMatching, "dolphin/mtx/mtx.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtx.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtxvec.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtx44.c"),
-            Object(NonMatching, "dolphin/mtx/vec.c"),
-            Object(NonMatching, "dolphin/mtx/quat.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/vec.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/quat.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/psmtx.c"),
         ],
     ),
@@ -554,7 +567,7 @@ config.libs = [
     DolphinLib(
         "pad",
         [
-            Object(NonMatching, "dolphin/pad/Padclamp.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/pad/Padclamp.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/pad/Pad.c"),
         ],
     ),
@@ -582,12 +595,12 @@ config.libs = [
     DolphinLib(
         "gx",
         [
-            Object(NonMatching, "dolphin/gx/GXInit.c"),
-            Object(NonMatching, "dolphin/gx/GXFifo.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXInit.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXFifo.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXAttr.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXMisc.c"),
-            Object(NonMatching, "dolphin/gx/GXGeometry.c"),
-            Object(NonMatching, "dolphin/gx/GXFrameBuf.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXGeometry.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXFrameBuf.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXLight.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXTexture.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXBump.c"),
@@ -669,7 +682,7 @@ config.libs = [
         "objects": [
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/abort_exit.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/alloc.c"),
-            Object(NonMatching, "MSL_C.PPCEABI.bare.H/errno.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/errno.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/ansi_files.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/ansi_fp.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/arith.c"),
@@ -683,7 +696,7 @@ config.libs = [
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/mem_funcs.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/misc_io.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/printf.c"),
-            Object(NonMatching, "MSL_C.PPCEABI.bare.H/float.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/float.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/signal.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/string.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/uart_console_io.c"),
@@ -702,14 +715,14 @@ config.libs = [
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_copysign.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_cos.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_floor.c"),
-            Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_frexp.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_frexp.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_ldexp.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_modf.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_sin.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/s_tan.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/w_acos.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/w_asin.c"),
-            Object(NonMatching, "MSL_C.PPCEABI.bare.H/w_atan2.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/w_atan2.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/w_fmod.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/w_pow.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/math_ppc.c"),
@@ -721,28 +734,28 @@ config.libs = [
         "cflags": cflags_trk,
         "host": False,
         "objects": [
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mainloop.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/nubevent.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/nubinit.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mainloop.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/nubevent.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/nubinit.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/msg.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/msgbuf.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/serpoll.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/usrput.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/usr_put.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/dispatch.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/msghndlr.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/support.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/notify.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/flush_cache.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/flush_cache.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/targimpl.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/targsupp.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/__exception.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/__exception.s"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/main_TRK.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/main_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/targcont.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/targcont.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/target_options.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/mslsupp.c"),
         ],
@@ -821,16 +834,16 @@ config.libs = [
     },
     {
         "lib": "msm",
-        "mw_version": "GC/1.2.5n",
+        "mw_version": "GC/1.2.5",
         "cflags": cflags_msm,
         "host": False,
         "objects": [
-            Object(NonMatching, "msm/msmsys.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmsys.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmmem.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmfio.c"),
-            Object(NonMatching, "msm/msmmus.c"),
-            Object(NonMatching, "msm/msmse.c"),
-            Object(NonMatching, "msm/msmstream.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmmus.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmse.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmstream.c"),
         ],
     },
     {
@@ -1087,9 +1100,9 @@ config.libs = [
     Rel(
         "m430Dll",  # Pair-a-sailing
         objects={
-            Object(NonMatching, "REL/m430Dll/main.c"),
-            Object(NonMatching, "REL/m430Dll/water.c"),
-            Object(NonMatching, "REL/m430Dll/player.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/water.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/player.c"),
         },
     ),
     Rel(
@@ -1108,9 +1121,9 @@ config.libs = [
     Rel(
         "m433Dll",  # Beach Volley Folly
         objects={
-            Object(NonMatching, "REL/m433Dll/main.c"),
-            Object(NonMatching, "REL/m433Dll/map.c"),
-            Object(NonMatching, "REL/m433Dll/player.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/map.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/player.c"),
         },
     ),
     Rel(
@@ -1118,7 +1131,7 @@ config.libs = [
         objects={
             Object(Matching, "REL/m434Dll/main.c"),
             Object(Matching, "REL/m434Dll/map.c"),
-            Object(NonMatching, "REL/m434Dll/player.c"),
+            Object(Matching, "REL/m434Dll/player.c"),
             Object(Matching, "REL/m434Dll/fish.c"),
         },
     ),
@@ -1370,14 +1383,14 @@ config.libs = [
     Rel(
         "mstory2Dll",
         objects={
-            Object(NonMatching, "REL/mstory2Dll/main.c"),
-            Object(NonMatching, "REL/mstory2Dll/board_entrance.c"),
-            Object(NonMatching, "REL/mstory2Dll/board_clear.c"),
-            Object(NonMatching, "REL/mstory2Dll/board_miss.c"),
-            Object(NonMatching, "REL/mstory2Dll/mg_clear.c"),
-            Object(NonMatching, "REL/mstory2Dll/mg_miss.c"),
-            Object(NonMatching, "REL/mstory2Dll/ending.c"),
-            Object(NonMatching, "REL/mstory2Dll/save.c"),
+            Object(Matching, "REL/mstory2Dll/main.c"),
+            Object(Matching, "REL/mstory2Dll/board_entrance.c"),
+            Object(Matching, "REL/mstory2Dll/board_clear.c"),
+            Object(Matching, "REL/mstory2Dll/board_miss.c"),
+            Object(Matching, "REL/mstory2Dll/mg_clear.c"),
+            Object(Matching, "REL/mstory2Dll/mg_miss.c"),
+            Object(Matching, "REL/mstory2Dll/ending.c"),
+            Object(Matching, "REL/mstory2Dll/save.c"),
         },
     ),
     Rel(
@@ -1398,12 +1411,12 @@ config.libs = [
     Rel(
         "mstoryDll",
         objects={
-            Object(NonMatching, "REL/mstoryDll/main.c"),
-            Object(NonMatching, "REL/mstoryDll/board_clear.c"),
-            Object(NonMatching, "REL/mstoryDll/board_miss.c"),
-            Object(NonMatching, "REL/mstoryDll/mg_clear.c"),
-            Object(NonMatching, "REL/mstoryDll/mg_miss.c"),
-            Object(NonMatching, "REL/mstoryDll/save.c"),
+            Object(Matching, "REL/mstoryDll/main.c"),
+            Object(Matching, "REL/mstoryDll/board_clear.c"),
+            Object(Matching, "REL/mstoryDll/board_miss.c"),
+            Object(Matching, "REL/mstoryDll/mg_clear.c"),
+            Object(Matching, "REL/mstoryDll/mg_miss.c"),
+            Object(Matching, "REL/mstoryDll/save.c"),
         },
     ),
     Rel(

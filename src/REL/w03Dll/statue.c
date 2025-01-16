@@ -13,6 +13,8 @@
 #include "game/board/main.h"
 #include "game/objsub.h"
 
+#include "ext_math.h"
+
 void fn_1_1358(void);
 void fn_1_152C(void);
 s32 fn_1_15E8(void);
@@ -26,7 +28,6 @@ void fn_1_2AC0(void);
 void fn_1_2818(void);
 void fn_1_2A40(void);
 void fn_1_2B44(void);
-double atan2(double y, double x);
 
 //data
 s16 lbl_1_data_280 = -1;
@@ -155,7 +156,7 @@ s32 fn_1_1650(s32 arg0) {
     BoardSpacePosGet(0, temp2, &sp38);
     BoardPlayerPosGet(arg0, &sp2C);
     VECSubtract(&sp38, &sp2C, &sp20);
-    temp = (atan2(-sp20.x, -sp20.z) / M_PI) * 180.0f;
+    temp = atan2d(-sp20.x, -sp20.z);
     BoardPlayerRotYSet(arg0, temp);
     sp14.x = 0.0f;
     sp14.y = 100.0f;
@@ -539,7 +540,7 @@ void fn_1_26E0(s32 arg0) {
     BoardPlayerPosGet(arg0, &sp14);
     VECSubtract(&sp20, &sp14, &sp8);
     VECNormalize(&sp8, &sp8);
-    temp = (180.0f * (atan2(-sp8.x, -sp8.z) / M_PI));
+    temp = atan2d(-sp8.x, -sp8.z);
     BoardPlayerRotYSet(arg0, temp);
     BoardCameraViewSet(1);
     BoardCameraTargetPlayerSet(arg0);

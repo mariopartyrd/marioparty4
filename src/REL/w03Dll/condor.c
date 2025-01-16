@@ -12,6 +12,8 @@
 #include "game/pad.h"
 #include "game/wipe.h"
 
+#include "ext_math.h"
+
 // structs
 
 typedef struct w03UnkStruct5 {
@@ -172,8 +174,8 @@ void fn_1_3304(void)
     var_r31 = BoardSpaceLinkFlagSearch(0, var_r31, 0x02000000);
     BoardSpacePosGet(0, var_r31, &sp8);
     temp_f31 = 0.0f;
-    sp8.x = sp8.x + (-300.0 * sin((M_PI * temp_f31) / 180.0));
-    sp8.z = sp8.z + (-300.0 * cos((M_PI * temp_f31) / 180.0));
+    sp8.x += -300.0 * sind(temp_f31);
+    sp8.z += -300.0 * cosd(temp_f31);
     sp8.y = 45.0f + sp8.y;
     BoardModelPosSetV(lbl_1_data_310, &sp8);
     BoardModelMotionStart(lbl_1_data_310, 2, 0x40000001);
@@ -211,7 +213,7 @@ s32 fn_1_3478(s32 arg0)
     temp = BoardSpaceLinkFlagSearch(0, temp_r28, 0x02000000);
     BoardSpacePosGet(0, temp, &sp38);
     VECSubtract(&sp38, &sp2C, &sp20);
-    float_temp = atan2(sp20.x, sp20.z) / M_PI * 180.0f;
+    float_temp = atan2d(sp20.x, sp20.z);
     BoardPlayerMotBlendSet(arg0, (float_temp), 0xF);
 
     while (BoardPlayerMotBlendCheck(arg0) == 0) {
@@ -473,8 +475,8 @@ void fn_1_3F5C(s32 arg0)
     var_r31 = BoardSpaceLinkFlagSearch(0, var_r31, 0x02000000);
     BoardSpacePosGet(0, var_r31, &sp8);
     temp_f31 = 0.0f;
-    sp8.x = (sp8.x + (-300.0 * sin((M_PI * temp_f31) / 180.0f)));
-    sp8.z = (sp8.z + (-300.0 * cos((M_PI * temp_f31) / 180.0f)));
+    sp8.x += -300.0 * sind(temp_f31);
+    sp8.z += -300.0 * cosd(temp_f31);
     sp8.y = 45.0f + sp8.y;
     BoardModelPosSetV(lbl_1_data_310, &sp8);
     BoardModelMotionStart(lbl_1_data_310, 2, 0x40000001);
@@ -589,7 +591,7 @@ void fn_1_4424(w03StructUnk2 *arg0)
         VECSubtract(&sp60, &sp6C, &sp3C);
     }
 
-    sp10_2 = 180.0f * (atan2(-sp3C.x, -sp3C.z) / M_PI);
+    sp10_2 = atan2d(-sp3C.x, -sp3C.z);
     BoardModelMotionStart(lbl_1_data_314, 0, 0U);
     BoardModelMotionSpeedSet(lbl_1_data_314, 8.0f);
     HuPrcSleep(1);
@@ -604,7 +606,7 @@ void fn_1_4424(w03StructUnk2 *arg0)
     for (i = var_r25 = 0; i < 20;) {
         Hu3DMotionExec(temp_r23, temp_r28->unk_08, temp_r28->unk_64, 0);
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_314), temp_r22, &sp54);
-        temp_r28->unk_64 = (f32)(temp_r28->unk_64 + temp_r28->unk_68);
+        temp_r28->unk_64 += temp_r28->unk_68;
 
         if (temp_r28->unk_64 > 400.0f) {
             break;
@@ -770,9 +772,9 @@ void fn_1_4D60(w03StructUnk2 *arg0)
                     temp_r31->unk_00 = 1;
                     temp_f31 = 360.0f * BoardRandFloat();
                     temp_f30 = 5.0f * BoardRandFloat();
-                    temp_r31->unk_14.x = temp_f30 * sin((M_PI * temp_f31) / 180.0);
+                    temp_r31->unk_14.x = temp_f30 * sind(temp_f31);
                     temp_r31->unk_14.y = 50.0f + (20.0f * BoardRandFloat());
-                    temp_r31->unk_14.z = temp_f30 * cos((M_PI * temp_f31) / 180.0);
+                    temp_r31->unk_14.z = temp_f30 * cosd(temp_f31);
                     temp_r31->unk_08.x = sp8.x;
                     temp_r31->unk_08.y = sp8.y;
                     temp_r31->unk_08.z = sp8.z;
@@ -1084,11 +1086,11 @@ void fn_1_5C5C(omObjData *arg0, w03UnkStruct5 *arg1)
     PSMTXTrans(sp80, sp44.x, sp44.y, sp44.z);
     PSMTXConcat(sp80, sp50, sp80);
     Hu3DMtxTransGet(sp80, &sp44);
-    MTXRotDeg(spB0, 'y', (180.0 * (atan2(-sp2C.x, -sp2C.z) / M_PI)));
+    MTXRotDeg(spB0, 'y', atan2d(-sp2C.x, -sp2C.z));
     PSMTXConcat(spB0, spE0, sp110);
     BoardModelMtxSet(lbl_1_data_310, &sp110);
     BoardModelPosSetV(lbl_1_data_310, &sp44);
-    BoardCameraRotSet(-20.0f, (180.0 * (atan2(sp2C.x, sp2C.z) / M_PI)));
+    BoardCameraRotSet(-20.0f, atan2d(sp2C.x, sp2C.z));
 }
 
 void fn_1_602C(omObjData *arg0, w03UnkStruct5 *arg1)

@@ -103,17 +103,34 @@ static void ClampTrigger(u8 *trigger, u8 min, u8 max)
     }
 }
 
-void PADClamp(PADStatus *status)
+void PADClamp(PADStatus* status)
 {
-	// int i;
-	// for (i = 0; i < PAD_CHANMAX; i++, status++) {
-	// 	if (status->err != PAD_ERR_NONE) {
-	// 		continue;
-	// 	}
+    int i;
+    for (i = 0; i < PAD_CHANMAX; i++, status++) {
+        if (status->err != PAD_ERR_NONE) {
+            continue;
+        }
 
-	// 	ClampStick(&status->stickX, &status->stickY, ClampRegion.maxStick, ClampRegion.xyStick, ClampRegion.minStick);
-	// 	ClampStick(&status->substickX, &status->substickY, ClampRegion.maxSubstick, ClampRegion.xySubstick, ClampRegion.minSubstick);
-	// 	ClampTrigger(&status->triggerL, ClampRegion.minTrigger, ClampRegion.maxTrigger);
-	// 	ClampTrigger(&status->triggerR, ClampRegion.minTrigger, ClampRegion.maxTrigger);
-	// }
+        ClampStick(&status->stickX, &status->stickY, ClampRegion.maxStick,
+                   ClampRegion.xyStick, ClampRegion.minStick);
+        ClampStick(&status->substickX, &status->substickY,
+                   ClampRegion.maxSubstick, ClampRegion.xySubstick,
+                   ClampRegion.minSubstick);
+        if (status->triggerL <= ClampRegion.minTrigger) {
+            status->triggerL = 0;
+        } else {
+            if (ClampRegion.maxTrigger < status->triggerL) {
+                status->triggerL = ClampRegion.maxTrigger;
+            }
+            status->triggerL -= ClampRegion.minTrigger;
+        }
+        if (status->triggerR <= ClampRegion.minTrigger) {
+            status->triggerR = 0;
+        } else {
+            if (ClampRegion.maxTrigger < status->triggerR) {
+                status->triggerR = ClampRegion.maxTrigger;
+            }
+            status->triggerR -= ClampRegion.minTrigger;
+        }
+    }
 }

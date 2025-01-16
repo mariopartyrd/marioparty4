@@ -40,7 +40,8 @@ typedef struct system_state {
 };
 /* 0x09 */ s8 last5_effect;
 /* 0x0A */ s8 player_curr;
-/* 0x0B */ s8 unk0B[3];
+/* 0x0B */ u8 unk0B;
+/* 0x0C */ s8 unk0C;
 /* 0x0E */ s16 block_pos;
 /* 0x10 */ u8 ATTRIBUTE_ALIGN(4) board_data[32];
 /* 0x30 */ u8 mess_delay;
@@ -314,6 +315,11 @@ static inline s32 GWPlayerCurrGet(void)
     return GWSystem.player_curr;
 }
 
+static inline s32 GWUnkB1Get(void)
+{
+    return GWSystem.unk0C;
+}
+
 static inline s32 GWPlayerTeamGet(s32 player)
 {
     return GWPlayer[player].team;
@@ -357,6 +363,6 @@ static inline void GWPlayerCoinWinSet(s32 player, s16 value)
 }
 
 #define GWPlayerCoinWinAdd(player, value) GWPlayerCoinWinSet((player), GWPlayerCoinWinGet((player))+(value))
-#define GWPlayerCoinCollectAdd(player, value) GWPlayerCoinCollectSet((player), GWPlayerCoinCollectGet((player))+(value))
+#define GWPlayerCoinCollectAdd(player, value) GWPlayerCoinCollectSet((player), (s32)GWPlayerCoinCollectGet((player))+(value))
 
 #endif

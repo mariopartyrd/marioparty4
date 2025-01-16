@@ -125,7 +125,7 @@ s32 fn_1_4A4(void)
         var_r30 = 1;
     }
 
-    var_f31 = (sin((M_PI * (90.0f * var_f31)) / 180.0) * sin((M_PI * (90.0f * var_f31)) / 180.0));
+    var_f31 = sind(90.0f * var_f31) * sind(90.0f * var_f31);
     CZoom = fn_1_93C0(var_r31[0].zoom, var_r31[1].zoom, var_f31);
     Center.x = fn_1_93C0(var_r31[0].center.x, var_r31[1].center.x, var_f31);
     Center.y = fn_1_93C0(var_r31[0].center.y, var_r31[1].center.y, var_f31);
@@ -152,7 +152,7 @@ s32 fn_1_6C8(void)
         var_r30 = 1;
     }
 
-    var_f31 = (sin((M_PI * (90.0f * var_f31)) / 180.0) * sin((M_PI * (90.0f * var_f31)) / 180.0));
+    var_f31 = (sind(90.0f * var_f31) * sind(90.0f * var_f31));
     CZoom = fn_1_93C0(var_r31[0].zoom, var_r31[1].zoom, var_f31);
     Center.x = fn_1_93C0(var_r31[0].center.x, var_r31[1].center.x, var_f31);
     Center.y = fn_1_93C0(var_r31[0].center.y, var_r31[1].center.y, var_f31);
@@ -282,7 +282,7 @@ u8 fn_1_E14(omObjData *arg0)
                 var_f31 = 1.0f;
                 var_r30 = 1;
             }
-            var_f31 = (sin((M_PI * (90.0f * var_f31)) / 180.0) * sin((M_PI * (90.0f * var_f31)) / 180.0));
+            var_f31 = (sind(90.0f * var_f31) * sind(90.0f * var_f31));
             CZoom = fn_1_93C0(var_r31[0].zoom, var_r31[1].zoom, var_f31);
             Center.x = fn_1_93C0(var_r31[0].center.x, var_r31[1].center.x, var_f31);
             Center.y = fn_1_93C0(var_r31[0].center.y, var_r31[1].center.y, var_f31);
@@ -338,7 +338,7 @@ u8 fn_1_1138(omObjData *object)
                 var_f31 = 1.0f;
                 var_r28 = 1;
             }
-            var_f31 = (sin((M_PI * (90.0f * var_f31)) / 180.0) * sin((M_PI * (90.0f * var_f31)) / 180.0));
+            var_f31 = (sind(90.0f * var_f31) * sind(90.0f * var_f31));
             CZoom = fn_1_93C0(var_r31[0].zoom, var_r31[1].zoom, var_f31);
             Center.x = fn_1_93C0(var_r31[0].center.x, var_r31[1].center.x, var_f31);
             Center.y = fn_1_93C0(var_r31[0].center.y, var_r31[1].center.y, var_f31);
@@ -628,8 +628,8 @@ void fn_1_2470(omObjData *arg0)
     Hu3DModelShadowMapSet(arg0->model[0]);
 
     for (var_r30 = 0; var_r30 < 5; var_r30++) {
-        temp_f31 = (450.0 * cos(M_PI * lbl_1_data_0[var_r30] / 180.0));
-        var_f29 = (450.0 * sin(M_PI * lbl_1_data_0[var_r30] / 180.0));
+        temp_f31 = 450.0 * cosd(lbl_1_data_0[var_r30]);
+        var_f29 = 450.0 * sind(lbl_1_data_0[var_r30]);
         Hu3DModelPosSet(arg0->model[var_r30 + 4], temp_f31, 0.0f, var_f29);
         var_f30 = 90.0f - lbl_1_data_0[var_r30];
         Hu3DModelRotSet(arg0->model[var_r30 + 4], 0.0f, var_f30, 0.0f);
@@ -705,7 +705,7 @@ void fn_1_2B04(omObjData *object)
                 fn_1_4EEC(0x20, 0);
                 return;
             }
-            temp_f31 = sin((M_PI * (90.0f * temp_f31)) / 180.0);
+            temp_f31 = sind(90.0f * temp_f31);
             temp_r31->center.y = (250.0f + (1750.0f * temp_f31));
     }
     Hu3DModelPosSet(object->model[3], temp_r31->center.x, temp_r31->center.y, temp_r31->center.z);
@@ -764,7 +764,7 @@ void fn_1_2D28(omObjData *object)
             if ((11 * REFRESH_RATE_F / 6) == lbl_1_data_F0[0]) {
                 HuAudFXPlay(0x70A);
             }
-            var_f31 = sin((M_PI * (90.0f * var_f31)) / 180.0);
+            var_f31 = sind(90.0f * var_f31);
             temp_r31->center.y = (2000.0f + (-1750.0f * var_f31));
             break;
         case 0x2:
@@ -811,7 +811,7 @@ void fn_1_2D28(omObjData *object)
                 fn_1_4EEC(7, 2);
                 return;
             }
-            var_f31 = sin((M_PI * (90.0f * var_f31)) / 180.0);
+            var_f31 = sind(90.0f * var_f31);
             temp_r31->center.y = (250.0f + (1750.0f * var_f31));
             break;
         case 0x63:
@@ -1030,7 +1030,7 @@ void fn_1_46E0(omObjData *object)
                 fn_1_4EEC(0x18, 0x10);
                 HuAudFXPlay(0x70F);
             }
-            var_f31 = sin((M_PI * (90.0f * var_f31)) / 180.0);
+            var_f31 = sind(90.0f * var_f31);
             temp_r31->unk24 = (150.0f * var_f31);
             break;
         case 0x63:
@@ -1090,7 +1090,7 @@ void fn_1_4B44(omObjData *object)
                 lbl_1_data_108[0] = 0;
                 lbl_1_data_104[0]++;
             }
-            var_f31 = sin((M_PI * (90.0f * var_f31)) / 180.0);
+            var_f31 = sind(90.0f * var_f31);
             temp_r31->unk24 = (150.0f + (-150.0f * var_f31));
             break;
         case 1:

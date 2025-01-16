@@ -5,12 +5,13 @@
 #include "game/objsub.h"
 #include "game/object.h"
 
+#include "ext_math.h"
+
 // -------------------------------------------------------------------------- //
 
 #define US_PER_60TH_SEC (1000000.0f / 60.0f)
 #define US_TO_60TH_SEC(us) ((us) / US_PER_60TH_SEC)
 #define FB_SIZE(width, height) width * height * 2
-#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 // -------------------------------------------------------------------------- //
 

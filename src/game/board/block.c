@@ -6,7 +6,7 @@
 #include "game/flag.h"
 #include "game/objsub.h"
 #include "game/process.h"
-#include "math.h"
+#include "ext_math.h"
 
 #define BLOCK_SPAWN 0
 #define BLOCK_HIT 2
@@ -312,7 +312,7 @@ static void SpawnBlock(BlockWork *arg0, omObjData *arg1)
     }
 
     arg1->rot.y = rotY;
-    arg1->scale.x = arg1->scale.y = arg1->scale.z = sin(M_PI * scaleAngle / 180.0);
+    arg1->scale.x = arg1->scale.y = arg1->scale.z = sind(scaleAngle);
 }
 
 static void HitBlock(BlockWork *arg0, omObjData *arg1)
@@ -325,7 +325,7 @@ static void HitBlock(BlockWork *arg0, omObjData *arg1)
     }
 
     OSs16tof32(&arg0->hit_y_velocity, &var_f30);
-    arg1->trans.y += 0.2f * sin((M_PI * var_f30) / 180.0);
+    arg1->trans.y += 0.2f * sind(var_f30);
 }
 
 static void OpenBlock(BlockWork *arg0, omObjData *arg1)

@@ -6,15 +6,15 @@
 
 #include <dolphin/gx/GXPriv.h>
 
-static OSThread *__GXCurrentThread;
+static struct __GXFifoObj* CPUFifo;
+static struct __GXFifoObj* GPFifo;
+static OSThread* __GXCurrentThread;
 static GXBool CPGPLinked;
 static BOOL GXOverflowSuspendInProgress;
 static GXBreakPtCallback BreakPointCB;
 static u32 __GXOverflowCount;
 
-struct __GXFifoObj *CPUFifo;
-struct __GXFifoObj *GPFifo;
-void *__GXCurrentBP;
+void* __GXCurrentBP;
 
 static void __GXFifoReadEnable(void);
 static void __GXFifoReadDisable(void);
@@ -38,10 +38,10 @@ static void GXUnderflowHandler(s16 interrupt, OSContext *context)
 {
     ASSERTLINE(0x1A3, GXOverflowSuspendInProgress);
 
-    OSResumeThread(__GXCurrentThread);
-    GXOverflowSuspendInProgress = FALSE;
-    __GXWriteFifoIntReset(1U, 1U);
-    __GXWriteFifoIntEnable(1U, 0U);
+	OSResumeThread(__GXCurrentThread);
+	GXOverflowSuspendInProgress = FALSE;
+	__GXWriteFifoIntReset(1U, 1U);
+	__GXWriteFifoIntEnable(1U, 0U);
 }
 
 #define SOME_SET_REG_MACRO(reg, size, shift, val)                                                                                                    \
@@ -51,17 +51,17 @@ static void GXUnderflowHandler(s16 interrupt, OSContext *context)
 
 static void GXBreakPointHandler(s16 interrupt, OSContext *context)
 {
-    OSContext exceptionContext;
+	OSContext exceptionContext;
 
-    SOME_SET_REG_MACRO(gx->cpEnable, 1, 5, 0);
-    GX_SET_CP_REG(1, gx->cpEnable);
-    if (BreakPointCB != NULL) {
-        OSClearContext(&exceptionContext);
-        OSSetCurrentContext(&exceptionContext);
-        BreakPointCB();
-        OSClearContext(&exceptionContext);
-        OSSetCurrentContext(context);
-    }
+	gx->cpEnable = gx->cpEnable & 0xFFFFFFDF;
+	__cpReg[1]   = gx->cpEnable;
+	if (BreakPointCB != NULL) {
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(&exceptionContext);
+		BreakPointCB();
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(context);
+	}
 }
 
 static void GXCPInterruptHandler(s16 interrupt, OSContext *context)

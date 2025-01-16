@@ -132,7 +132,7 @@ s8 fn_1_524(void)
         var_r30 = 1;
     }
     var_f30 = lbl_1_bss_2 / 300.0f;
-    temp_f31 = (sin((M_PI * (90.0f * var_f30)) / 180.0) * sin((M_PI * (90.0f * var_f30)) / 180.0));
+    temp_f31 = sind(90.0f * var_f30) * sind(90.0f * var_f30);
     CZoom = fn_1_4120(var_r31[0].zoom, var_r31[1].zoom, var_r31[2].zoom, temp_f31);
     Center.x = fn_1_4120(var_r31[0].center.x, var_r31[1].center.x, var_r31[2].center.x, temp_f31);
     Center.y = fn_1_4120(var_r31[0].center.y, var_r31[1].center.y, var_r31[2].center.y, temp_f31);
@@ -157,8 +157,8 @@ s8 fn_1_524(void)
     Hu3DTexScrollPosMoveSet(lbl_1_bss_24.unkC, -0.0001f - (0.005f * temp_f31), 0.0f, 0.0f);
     Hu3DTexScrollPosMoveSet(lbl_1_bss_24.unkE, -0.0002f - (0.005f * temp_f31), 0.0f, 0.0f);
     Hu3DTexScrollPosMoveSet(lbl_1_bss_24.unk10, -0.0003f - (0.005f * temp_f31), 0.0f, 0.0f);
-    sp8.x = -(sin((M_PI * CRot.y) / 180.0) * cosd(CRot.x));
-    sp8.y = sin((M_PI * CRot.x) / 180.0);
+    sp8.x = -(sind(CRot.y) * cosd(CRot.x));
+    sp8.y = sind(CRot.x);
     sp8.z = -(cosd(CRot.y) * cosd(CRot.x));
     HuAudFXListnerUpdate(&Hu3DCamera->pos, &sp8);
     return var_r30;
@@ -178,7 +178,7 @@ s8 fn_1_B80(void)
         var_r30 = 1;
     }
     temp_f30 = lbl_1_bss_4 / 60.0f;
-    temp_f31 = (sin((M_PI * (90.0f * temp_f30)) / 180.0) * sin((M_PI * (90.0f * temp_f30)) / 180.0));
+    temp_f31 = sind(90.0f * temp_f30) * sind(90.0f * temp_f30);
     CZoom = var_r31[0].zoom + (temp_f31 * (var_r31[1].zoom - var_r31[0].zoom));
     Center.x = var_r31[0].center.x + (temp_f31 * (var_r31[1].center.x - var_r31[0].center.x));
     Center.y = var_r31[0].center.y + (temp_f31 * (var_r31[1].center.y - var_r31[0].center.y));
@@ -300,20 +300,20 @@ s8 fn_1_10E8(omObjData *object)
             else if (lbl_1_bss_C > 0.2f) {
                 lbl_1_bss_A = 1;
             }
-            var_f31 = sin((M_PI * (90.0f * lbl_1_bss_C)) / 180.0);
+            var_f31 = sind(90.0f * lbl_1_bss_C);
             var_f27 = 1520.0f;
             var_f26 = -1030.0f;
             temp_f30 = var_f27 + (var_f31 * (var_f26 - var_f27));
             Hu3DModelPosSet(lbl_1_bss_DC->model[4], temp_f30, 0.0f, -1200.0f);
             Hu3DModelPosSet(lbl_1_bss_DC->model[1], temp_f30, 0.0f, -1200.0f);
-            if ((lbl_1_data_BC + 0x10000) != 0xFFFF) {
+            if (lbl_1_data_BC != ~0) {
                 sp8.x = temp_f30;
                 sp8.y = 0.0f;
                 sp8.z = -1200.0f;
                 HuAudFXEmiterUpDate(lbl_1_data_BC, &sp8);
             }
             var_f31 = 1.2f * lbl_1_bss_C;
-            if ((var_f31 >= 1.0f) && ((lbl_1_data_BC + 0x10000) != 0xFFFF)) {
+            if ((var_f31 >= 1.0f) && lbl_1_data_BC != ~0) {
                 HuAudFXEmiterPlay(0x555, &sp8);
                 sp8.x += 200.0f;
                 HuAudFXEmiterPlay(0x55E, &sp8);
@@ -324,7 +324,7 @@ s8 fn_1_10E8(omObjData *object)
                 var_f31 = 0.0f;
             }
             else {
-                var_f31 = sin((M_PI * (90.0f + (90.0f * var_f31))) / 180.0);
+                var_f31 = sind(90.0f + 90.0f * var_f31);
             }
             Hu3DMotionSpeedSet(lbl_1_bss_DC->model[4], 2.0f * var_f31);
             if (lbl_1_bss_C > 0.5f) {
@@ -455,7 +455,7 @@ void fn_1_2098(omObjData *object)
             Hu3DModelAttrSet(lbl_1_bss_DC->model[4], HU3D_ATTR_DISPOFF);
             lbl_1_bss_18 = 1.0f;
         }
-        var_f31 = sin((M_PI * (90.0f * lbl_1_bss_18)) / 180.0);
+        var_f31 = sind(90.0f * lbl_1_bss_18);
         var_f29 = -1030.0f;
         var_f28 = -1880.0f;
         var_f30 = var_f29 + (var_f31 * (var_f28 - var_f29));
@@ -684,7 +684,7 @@ void fn_1_2DCC(omObjData *object)
                         Hu3DModelAttrReset(var_r31->unk6, HU3D_ATTR_DISPOFF);
                     }
                     var_r31->unk10 += var_f30;
-                    var_f31 = sin((M_PI * (90.0f * var_r31->unk10)) / 180.0);
+                    var_f31 = sind(90.0f * var_r31->unk10);
                     if (var_r31->unk10 >= 1.0f) {
                         var_f31 = 1.0f;
                         var_r31->unk10 = var_f31;
@@ -728,7 +728,7 @@ void fn_1_2DCC(omObjData *object)
                     }
                     Hu3DModelPosSet(var_r31->unk6, 70.0f + temp_r30->pos.x, 290.0f, -1200.0f);
                     Hu3DData[var_r31->unk4].pos.x = temp_r30->pos.x;
-                    var_f31 = (0.800000011920929 * sin((M_PI * (180.0f * var_r31->unk10)) / 180.0));
+                    var_f31 = 0.8f * sind(180.0f * var_r31->unk10);
                     Hu3DMotionSpeedSet(var_r31->unk2, var_f31);
                 }
             }
@@ -948,7 +948,7 @@ void fn_1_44F0(s16 arg0, f32 arg8, f32 arg9, f32 argA, s8 arg1, s16 arg2)
                     return;
 
                 temp_f31 = (((rand8() << 8) | rand8()) % 361);
-                var_r31->unk0.x = (2.0 + (3.0 * sin((M_PI * temp_f31) / 180.0)));
+                var_r31->unk0.x = 2.0 + (3.0 * sind(temp_f31));
                 var_r31->unk0.y = (0.1f * ((((rand8() << 8) | rand8()) % 31) + 40));
                 var_r31->unk0.z = (3.5 * cosd(temp_f31));
                 var_r31->unk28 = 0;
@@ -1012,7 +1012,7 @@ void fn_1_4FFC(s16 arg0, f32 arg1, f32 arg2, f32 arg3, s16 arg4)
         temp_f31 = ((((rand8() << 8) | rand8()) % 81) - 40);
         temp_r31->unk0.x = (13.0 * cosd(temp_f31));
         temp_r31->unk0.y = 0.1f * ((((rand8() << 8) | rand8()) % 21) + 20);
-        temp_r31->unk0.z = (9.0 * sin((M_PI * temp_f31) / 180.0));
+        temp_r31->unk0.z = (9.0 * sind(temp_f31));
         temp_r31->unkC.x = (0.05f * temp_r31->unk0.x);
         temp_r31->unkC.z = (0.05f * temp_r31->unk0.z);
         temp_r31->unk18 = 500.0f;

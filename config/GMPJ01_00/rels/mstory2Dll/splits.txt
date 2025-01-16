@@ -5,3 +5,50 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/mstory2Dll/main.c:
+	.text       start:0x00000000 end:0x00007DB0
+	.rodata     start:0x00000000 end:0x00000118
+	.data       start:0x00000000 end:0x000003A0
+	.bss        start:0x00000000 end:0x00000078
+
+REL/mstory2Dll/board_entrance.c:
+	.text       start:0x00007DB0 end:0x0000B37C
+	.rodata     start:0x00000118 end:0x000001A8
+	.data       start:0x000003A0 end:0x00000520
+	.bss        start:0x00000078 end:0x00000298
+
+REL/mstory2Dll/board_clear.c:
+	.text       start:0x0000B37C end:0x0000E570
+	.rodata     start:0x000001A8 end:0x00000248
+	.data       start:0x00000520 end:0x00000698
+	.bss        start:0x00000298 end:0x000004E0
+
+REL/mstory2Dll/board_miss.c:
+	.text       start:0x0000E570 end:0x000123C8
+	.rodata     start:0x00000248 end:0x00000310
+	.data       start:0x00000698 end:0x00000850
+	.bss        start:0x000004E0 end:0x00000790
+
+REL/mstory2Dll/mg_clear.c:
+	.text       start:0x000123C8 end:0x00016060
+	.rodata     start:0x00000310 end:0x000003D0
+	.data       start:0x00000850 end:0x00000DB8
+	.bss        start:0x00000790 end:0x00000968
+
+REL/mstory2Dll/mg_miss.c:
+	.text       start:0x00016060 end:0x000186D0
+	.rodata     start:0x000003D0 end:0x00000438
+	.data       start:0x00000DB8 end:0x00000EF8
+	.bss        start:0x00000968 end:0x00000B38
+
+REL/mstory2Dll/ending.c:
+	.text       start:0x000186D0 end:0x0001B560
+	.rodata     start:0x00000438 end:0x000004B8
+	.data       start:0x00000EF8 end:0x00001113
+	.bss        start:0x00000B38 end:0x00000D10
+
+REL/mstory2Dll/save.c:
+	.text       start:0x0001B560 end:0x0001B95C
+	.rodata     start:0x000004B8 end:0x000004C8
+	.bss        start:0x00000D10 end:0x00000D18

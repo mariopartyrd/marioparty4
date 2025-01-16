@@ -291,26 +291,25 @@ f32 GXGetYScaleFactor(u16 efbHeight, u16 xfbHeight)
 
 u32 GXSetDispCopyYScale(f32 vscale)
 {
-    u8 enable;
-    u32 iScale;
-    u32 ht;
-    u32 reg;
+	u32 scale;
+	GXBool check;
+	u32 height;
+	u32 reg;
 
-    CHECK_GXBEGIN(0x615, "GXSetDispCopyYScale");
+	scale = (u32)(256.0f / vscale) & 0x1FF;
+	check = (scale != 0x100);
 
-    ASSERTMSGLINE(0x617, vscale >= 1.0f, "GXSetDispCopyYScale: Vertical scale must be >= 1.0");
+	reg = 0;
+	SET_REG_FIELD(0, reg, 9, 0, scale);
+	SET_REG_FIELD(0, reg, 8, 24, 0x4E);
+	GX_WRITE_RAS_REG(reg);
+	gx->bpSentNot = GX_FALSE;
 
-    iScale = (u32)(256.0f / vscale) & 0x1FF;
-    enable = (iScale != 256);
+	SET_REG_FIELD(0, gx->cpDisp, 1, 10, check);
 
-    reg = 0;
-    SET_REG_FIELD(0x61E, reg, 9, 0, iScale);
-    SET_REG_FIELD(0x61E, reg, 8, 24, 0x4E);
-    GX_WRITE_RAS_REG(reg);
-    gx->bpSentNot = 0;
-    SET_REG_FIELD(0x623, gx->cpDisp, 1, 10, enable);
-    ht = GET_REG_FIELD(gx->cpDispSize, 10, 10) + 1;
-    return __GXGetNumXfbLines(ht, iScale);
+	height = (gx->cpDispSize >> 10 & 0x3FF) + 1;
+
+	return __GXGetNumXfbLines(height, scale);
 }
 
 void GXSetCopyClear(GXColor clear_clr, u32 clear_z)

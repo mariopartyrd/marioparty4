@@ -210,23 +210,23 @@ void C_VECHalfAngle(const Vec *a, const Vec *b, Vec *half)
 
 void C_VECReflect(const Vec *src, const Vec *normal, Vec *dst)
 {
-    // Vec a0;
-    // Vec b0;
-    // f32 dot;
+    Vec a0;
+    Vec b0;
+    f32 dot;
 
-    // a0.x = -src->x;
-    // a0.y = -src->y;
-    // a0.z = -src->z;
+    a0.x = -src->x;
+    a0.y = -src->y;
+    a0.z = -src->z;
 
-    // VECNormalize(&a0, &a0);
-    // VECNormalize(normal, &b0);
+    VECNormalize(&a0, &a0);
+    VECNormalize(normal, &b0);
 
-    // dot = VECDotProduct(&a0, &b0);
-    // dst->x = b0.x * 2.0f * dot - a0.x;
-    // dst->y = b0.y * 2.0f * dot - a0.y;
-    // dst->z = b0.z * 2.0f * dot - a0.z;
+    dot = VECDotProduct(&a0, &b0);
+    dst->x = b0.x * 2.0f * dot - a0.x;
+    dst->y = b0.y * 2.0f * dot - a0.y;
+    dst->z = b0.z * 2.0f * dot - a0.z;
 
-    // VECNormalize(dst, dst);
+    VECNormalize(dst, dst);
 }
 
 asm f32 PSVECSquareDistance(register const Vec *a, register const Vec *b) {

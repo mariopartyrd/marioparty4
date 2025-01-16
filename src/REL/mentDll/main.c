@@ -2696,7 +2696,7 @@ void fn_1_E71C(s32 arg0)
 inline void fn_1_E874_inline(void)
 {
     s32 sp18 = lbl_1_bss_3114[0].unk_68;
-    GWSystem.unk0B[1] = sp18;
+    GWSystem.unk0C = sp18;
 }
 
 void fn_1_E874(omObjData *arg0, MentDllUnkBss35BCStruct *arg1)

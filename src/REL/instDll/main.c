@@ -495,7 +495,7 @@ static void fn_1_17E4(void)
                 CharModelMotionShiftSet(char_tbl[j], mot_tbl[j][0], 0, 10, HU3D_MOTATTR_LOOP);
             }
             if (time <= 20) {
-                Hu3DModelPosSet(player_mdl[j], player_pos[j].x, player_pos[j].y + (1000.0 * cos(M_PI * (time * 4.5f) / 180.0)), player_pos[j].z);
+                Hu3DModelPosSet(player_mdl[j], player_pos[j].x, player_pos[j].y + 1000.0 * cosd(time * 4.5f), player_pos[j].z);
                 time -= 10;
                 if (time >= 0) {
                     tplvl = 0.1 * time;
@@ -1081,7 +1081,7 @@ static void fn_1_50B0(ModelData *model, Mtx mtx)
     target.y = 415.0f;
     pos.x = (sind(lbl_1_bss_40[0].y) * cosd(lbl_1_bss_40[0].x) * lbl_1_bss_20[0]) + lbl_1_bss_28[0].x;
     pos.y = (-sind(lbl_1_bss_40[0].x) * lbl_1_bss_20[0]) + lbl_1_bss_28[0].y;
-    pos.z = (cos(M_PI * lbl_1_bss_40[0].y / 180.0) * cosd(lbl_1_bss_40[0].x) * lbl_1_bss_20[0]) + lbl_1_bss_28[0].z;
+    pos.z = (cosd(lbl_1_bss_40[0].y) * cosd(lbl_1_bss_40[0].x) * lbl_1_bss_20[0]) + lbl_1_bss_28[0].z;
     up.x = -sind(lbl_1_bss_40[0].y);
     up.z = -cosd(lbl_1_bss_40[0].y);
     up.y = 0;

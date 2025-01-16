@@ -1,7 +1,7 @@
 #include "REL/m446Dll.h"
 
 #include "game/hsfman.h"
-#include "math.h"
+#include "ext_math.h"
 
 // data
 m446Func4 lbl_1_data_150[3] = { NULL, fn_1_2AA8, fn_1_2DA8 };
@@ -229,7 +229,7 @@ void fn_1_20D4(void)
                     temp_r31->unk7C--;
                 }
                 else {
-                    temp_f31 = sin((M_PI * (90.0f * temp_r31->unk80)) / 180.0);
+                    temp_f31 = sind(90.0f * temp_r31->unk80);
                     temp_r31->unk10.x = temp_r31->unk1C.x + (temp_f31 * (temp_r31->unk28.x - temp_r31->unk1C.x));
                     temp_r31->unk10.y = temp_r31->unk1C.y + (temp_f31 * (temp_r31->unk28.y - temp_r31->unk1C.y));
                     temp_r31->unk10.z = temp_r31->unk1C.z + (temp_f31 * (temp_r31->unk28.z - temp_r31->unk1C.z));
@@ -243,7 +243,7 @@ void fn_1_20D4(void)
                 }
             }
             if (temp_r31->unk74 != 0) {
-                temp_f31 = sin((M_PI * (90.0f * temp_r31->unk88)) / 180.0);
+                temp_f31 = sind(90.0f * temp_r31->unk88);
                 temp_r31->unk34.x = (temp_r31->unk40.x + (temp_f31 * (temp_r31->unk4C.x - temp_r31->unk40.x)));
                 temp_r31->unk34.y = (temp_r31->unk40.y + (temp_f31 * (temp_r31->unk4C.y - temp_r31->unk40.y)));
                 temp_r31->unk34.z = (temp_r31->unk40.z + (temp_f31 * (temp_r31->unk4C.z - temp_r31->unk40.z)));
@@ -256,7 +256,7 @@ void fn_1_20D4(void)
                 }
             }
             if (temp_r31->unk78 != 0) {
-                temp_f31 = sin((M_PI * (90.0f * temp_r31->unk90)) / 180.0);
+                temp_f31 = sind(90.0f * temp_r31->unk90);
                 temp_r31->unk58 = (temp_r31->unk5C + (temp_f31 * (temp_r31->unk60 - temp_r31->unk5C)));
                 temp_r31->unk90 = (temp_r31->unk90 + temp_r31->unk94);
                 if (temp_r31->unk90 >= 1.0f) {

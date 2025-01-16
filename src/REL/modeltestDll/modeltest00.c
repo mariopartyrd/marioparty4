@@ -103,28 +103,28 @@ void fn_1_37DC(omObjData *)
     CZoom += HuPadTrigL[0] / 2;
     CZoom -= HuPadTrigR[0] / 2;
 
-    sp3C.x = Center.x + (CZoom * (sin((M_PI * CRot.y) / 180.0) * cos((M_PI * CRot.x) / 180.0)));
-    sp3C.y = (Center.y + (CZoom * -sin((M_PI * CRot.x) / 180.0)));
-    sp3C.z = (Center.z + (CZoom * (cos((M_PI * CRot.y) / 180.0) * cos((M_PI * CRot.x) / 180.0))));
+    sp3C.x = Center.x + CZoom * (sind(CRot.y) * cosd(CRot.x));
+    sp3C.y = Center.y + CZoom * -sind(CRot.x);
+    sp3C.z = Center.z + CZoom * (cosd(CRot.y) * cosd(CRot.x));
     sp30.x = Center.x - sp3C.x;
     sp30.y = Center.y - sp3C.y;
     sp30.z = Center.z - sp3C.z;
-    sp24.x = (sin((M_PI * CRot.y) / 180.0) * sin((M_PI * CRot.x) / 180.0));
-    sp24.y = cos((M_PI * CRot.x) / 180.0);
-    sp24.z = (cos((M_PI * CRot.y) / 180.0) * sin((M_PI * CRot.x) / 180.0));
+    sp24.x = sind(CRot.y) * sind(CRot.x);
+    sp24.y = cosd(CRot.x);
+    sp24.z = cosd(CRot.y) * sind(CRot.x);
     temp_f31 = CRot.z;
     
-    sp18.x = sp24.x * (sp30.x * sp30.x + (1.0f - sp30.x * sp30.x) * cos((M_PI * temp_f31) / 180.0))
-            + sp24.y * (sp30.x * sp30.y * (1.0f - cos((M_PI * temp_f31) / 180.0)) - sp30.z * sin((M_PI * temp_f31) / 180.0))
-            + sp24.z * (sp30.x * sp30.z * (1.0f - cos((M_PI * temp_f31) / 180.0)) + sp30.y * sin((M_PI * temp_f31) / 180.0));
+    sp18.x = sp24.x * (sp30.x * sp30.x + (1.0f - sp30.x * sp30.x) * cosd(temp_f31))
+            + sp24.y * (sp30.x * sp30.y * (1.0f - cosd(temp_f31)) - sp30.z * sind(temp_f31))
+            + sp24.z * (sp30.x * sp30.z * (1.0f - cosd(temp_f31)) + sp30.y * sind(temp_f31));
 
-    sp18.y = sp24.y * (sp30.y * sp30.y + (1.0f - sp30.y * sp30.y) * cos((M_PI * temp_f31) / 180.0))
-            + sp24.x * (sp30.x * sp30.y * (1.0f - cos((M_PI * temp_f31) / 180.0)) + sp30.z * sin((M_PI * temp_f31) / 180.0))
-            + sp24.z * (sp30.y * sp30.z * (1.0f - cos((M_PI * temp_f31) / 180.0)) - sp30.x * sin((M_PI * temp_f31) / 180.0));
+    sp18.y = sp24.y * (sp30.y * sp30.y + (1.0f - sp30.y * sp30.y) * cosd(temp_f31))
+            + sp24.x * (sp30.x * sp30.y * (1.0f - cosd(temp_f31)) + sp30.z * sind(temp_f31))
+            + sp24.z * (sp30.y * sp30.z * (1.0f - cosd(temp_f31)) - sp30.x * sind(temp_f31));
         
-    sp18.z = sp24.z * (sp30.z * sp30.z + (1.0f - sp30.z * sp30.z) * cos((M_PI * temp_f31) / 180.0))
-            + (sp24.x * (sp30.x * sp30.z * (1.0 - cos((M_PI * temp_f31) / 180.0)) - sp30.y * sin((M_PI * temp_f31) / 180.0))
-            + sp24.y * (sp30.y * sp30.z * (1.0 - cos((M_PI * temp_f31) / 180.0)) + sp30.x * sin((M_PI * temp_f31) / 180.0)));
+    sp18.z = sp24.z * (sp30.z * sp30.z + (1.0f - sp30.z * sp30.z) * cosd(temp_f31))
+            + (sp24.x * (sp30.x * sp30.z * (1.0 - cosd(temp_f31)) - sp30.y * sind(temp_f31))
+            + sp24.y * (sp30.y * sp30.z * (1.0 - cosd(temp_f31)) + sp30.x * sind(temp_f31)));
 
     VECCrossProduct(&sp24, &sp30, &sp30);
     VECNormalize(&sp30, &sp30);
@@ -148,17 +148,17 @@ void fn_1_439C(omObjData * )
         temp_f31 = CRot.x;
         temp_f30 = CRot.y + (var_r31 * 90);
         sp10 = CRot.z;
-        sp2C.x = Center.x + (CZoom * (sin((M_PI * temp_f30) / 180.0) * (cos((M_PI * temp_f31) / 180.0))));
-        sp2C.y = Center.y + (CZoom * -sin((M_PI * temp_f31) / 180.0));
-        sp2C.z = Center.z + (CZoom * (cos((M_PI * temp_f30) / 180.0) * (cos((M_PI * temp_f31) / 180.0))));
+        sp2C.x = Center.x + CZoom * (sind(temp_f30) * (cosd(temp_f31)));
+        sp2C.y = Center.y + CZoom * -sind(temp_f31);
+        sp2C.z = Center.z + CZoom * (cosd(temp_f30) * (cosd(temp_f31)));
         
         sp20.x = Center.x;
         sp20.y = Center.y;
         sp20.z = Center.z;
 
-        sp14.x = sin((M_PI * temp_f30) / 180.0) * (sin((M_PI * temp_f31) / 180.0));
-        sp14.y = cos((M_PI * temp_f31) / 180.0);
-        sp14.z = cos((M_PI * temp_f30) / 180.0) * (sin((M_PI * temp_f31) / 180.0));
+        sp14.x = sind(temp_f30) * (sind(temp_f31));
+        sp14.y = cosd(temp_f31);
+        sp14.z = cosd(temp_f30) * (sind(temp_f31));
 
          Hu3DCameraPosSet(lbl_1_data_358[var_r31], sp2C.x, sp2C.y, sp2C.z, sp14.x, sp14.y, sp14.z, sp20.x, sp20.y, sp20.z);
     }
