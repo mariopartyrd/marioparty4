@@ -1318,7 +1318,7 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
                         }
                         if ((var_r29->scale.x <= 0.0f) && (var_r29->scale.y <= 0.0f) && (var_r29->scale.z <= 0.0f)) {
                             PSMTXCopy(sp68, sp8);
-                            OSReport("OBJ MTX CHECK ERROR %s \n", temp_r27->name
+                            OSReport("OBJ MTX CHECK ERROR %s \n", temp_r27->name);
                         }
                         else {
                             mtxRot(sp38, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
