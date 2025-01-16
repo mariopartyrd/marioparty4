@@ -36,7 +36,10 @@
     "vcruntime.h": "c",
     "hsfmotion.h": "c",
     "m424dll.h": "c",
-    "chrman.h": "c"
+    "chrman.h": "c",
+    "os.h": "c",
+    "type_traits": "cpp",
+    "xutility": "cpp"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {
