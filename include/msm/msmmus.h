@@ -16,6 +16,6 @@ s32 msmMusPause(int musNo, BOOL pause, s32 speed);
 void msmMusStopAll(BOOL checkGrp, s32 speed);
 s32 msmMusStop(int musNo, s32 speed);
 int msmMusPlay(int musId, MSM_MUSPARAM* musParam);
-s32 msmMusInit(sysData* arg0, DVDFileInfo* arg1);
+s32 msmMusInit(MSM_SYS* arg0, DVDFileInfo* arg1);
 
 #endif

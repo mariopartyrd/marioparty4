@@ -1,150 +1,127 @@
 #include "msm/msmmus.h"
 #include "msm/msmmem.h"
 
-typedef struct {
-    /* 0x00 */ s16 unk00;
-    /* 0x02 */ s8 unk02;
-    /* 0x03 */ s8 unk03;
-    /* 0x04 */ s8 unk04;
-    /* 0x05 */ s8 unk05;
-    /* 0x06 */ char unk06[2];
-    /* 0x08 */ SND_SEQID unk08;
-    /* 0x0C */ void* unk0C;
-    /* 0x10 */ void* unk10;
-    /* 0x14 */ volatile s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s8 unk1C;
-    /* 0x1D */ char unk1D[3];
-    /* 0x20 */ volatile s32 unk20;
-    /* 0x24 */ s32 unk24;
-    /* 0x28 */ s8 unk28;
-    /* 0x29 */ char unk29[3];
-    /* 0x2C */ volatile s32 unk2C;
-    /* 0x30 */ s32 unk30;
-    /* 0x34 */ char unk34[1];
-    /* 0x35 */ volatile s8 unk35;
-    /* 0x36 */ s8 unk36;
-    /* 0x37 */ char unk37[1];
-    /* 0x38 */ SND_PLAYPARA unk38;
-} msmMusStruct00; // Size 0x58
+typedef struct MusPlayer_s {
+    /* 0x00 */ s16 musId;
+    /* 0x02 */ s8 baseVol;
+    /* 0x03 */ s8 vol;
+    /* 0x04 */ s8 status;
+    /* 0x05 */ s8 busyF;
+    /* 0x08 */ SND_SEQID seqId;
+    /* 0x0C */ void* songBuf;
+    /* 0x10 */ void* arrfile;
+    /* 0x14 */ volatile s32 fadeMaxTime;
+    /* 0x18 */ s32 fadeTime;
+    /* 0x1C */ s8 fadeVol;
+    /* 0x20 */ volatile s32 pauseOnMaxTime;
+    /* 0x24 */ s32 pauseOnTime;
+    /* 0x28 */ s8 pauseOnVol;
+    /* 0x2C */ volatile s32 pauseOffMaxTime;
+    /* 0x30 */ s32 pauseOffTime;
+    /* 0x28 */ s8 pauseOffVol;
+    /* 0x35 */ volatile s8 startVol;
+    /* 0x36 */ s8 targetVol;
+    /* 0x38 */ SND_PLAYPARA playPara;
+} MUS_PLAYER; // Size 0x58
 
-typedef struct {
-    /* 0x00 */ u16 unk00;
-    /* 0x02 */ s16 unk02;
-    /* 0x04 */ s32 unk04;
-    /* 0x08 */ s32 unk08;
-    /* 0x0C */ s8 unk0C;
-    /* 0x0D */ s8 unk0D;
-    /* 0x0E */ char unk0E[2];
-} msmMusStruct01; // Size 0x10
+static struct {
+    /* 0x000 */ s16 musMax;
+    /* 0x002 */ s8 musChanMax;
+    /* 0x003 */ s8 baseGrpNumPlay;
+    /* 0x004 */ s8 numPlay;
+    /* 0x008 */ s32 msmEntryNum;
+    /* 0x00C */ MSM_MUS *musData;
+    /* 0x010 */ s32 dummyMusOfs;
+    /* 0x014 */ void* musBuf;
+    /* 0x018 */ MUS_PLAYER player[4];
+} mus;
 
-typedef struct {
-    /* 0x000 */ s16 unk00;
-    /* 0x002 */ s8 unk02;
-    /* 0x003 */ s8 unk03;
-    /* 0x004 */ s8 unk04;
-    /* 0x005 */ char unk05[3];
-    /* 0x008 */ s32 unk08;
-    /* 0x00C */ msmMusStruct01* unk0C;
-    /* 0x010 */ s32 unk10;
-    /* 0x014 */ void* unk14;
-    /* 0x018 */ msmMusStruct00 unk18[1]; // unknown length
-    /* 0x01C */ char unk70[0x108];
-} msmMusStruct02; // Size 0x178
+static void msmMusPauseSub(MUS_PLAYER* player, BOOL pause, s32 speed) {
+    s32 time;
 
-typedef struct {
-    /* 0x00 */ char unk00[0xC];
-    /* 0x0C */ s32 unk0C;
-} UnkGroupDataPtr; // Size unknown
-
-static msmMusStruct02 mus;
-
-static void msmMusPauseSub(msmMusStruct00* arg0, BOOL pause, s32 speed) {
-    s32 temp_r30;
-
-    temp_r30 = speed / 15;
+    time = speed / 15;
     if (pause) {
-        if (arg0->unk04 == 2) {
-            if (temp_r30 != 0) {
-                arg0->unk24 = temp_r30;
-                arg0->unk20 = temp_r30;
-                arg0->unk28 = 0x7F;
+        if (player->status == MSM_MUS_PLAY) {
+            if (time != 0) {
+                player->pauseOnTime = time;
+                player->pauseOnMaxTime = time;
+                player->pauseOnVol = 127;
             } else {
-                sndSeqPause(arg0->unk08);
-                arg0->unk28 = 0;
+                sndSeqPause(player->seqId);
+                player->pauseOnVol = 0;
             }
-            arg0->unk04 = 3;
+            player->status = MSM_MUS_PAUSE;
         }
     } else {
-        if (arg0->unk04 == 3) {
-            if (temp_r30 != 0) {
-                if (arg0->unk20 != 0) {
-                    arg0->unk20 = -temp_r30;
+        if (player->status == MSM_MUS_PAUSE) {
+            if (time != 0) {
+                if (player->pauseOnMaxTime != 0) {
+                    player->pauseOnMaxTime = -time;
                 } else {
-                    sndSeqContinue(arg0->unk08);
-                    arg0->unk20 = -temp_r30;
-                    arg0->unk24 = 0;
-                    arg0->unk28 = 0;
+                    sndSeqContinue(player->seqId);
+                    player->pauseOnMaxTime = -time;
+                    player->pauseOnTime = 0;
+                    player->pauseOnVol = 0;
                 }
             } else {
-                sndSeqContinue(arg0->unk08);
-                arg0->unk28 = 0x7F;
-                sndSeqVolume(arg0->unk02 * arg0->unk03 * arg0->unk1C * arg0->unk28 / 2048383, 0, arg0->unk08, 0);
+                sndSeqContinue(player->seqId);
+                player->pauseOnVol = 127;
+                sndSeqVolume(player->baseVol * player->vol * player->fadeVol * player->pauseOnVol / (127*127*127), 0, player->seqId, 0);
             }
-            arg0->unk04 = 2;
+            player->status = MSM_MUS_PLAY;
         }
     }
 }
 
-static void msmMusPauseFade(msmMusStruct00* arg0) {
-    if (arg0->unk20 > 0) {
-        if (--arg0->unk24 == 0) {
-            arg0->unk20 = 0;
-            arg0->unk28 = 0;
-            sndSeqPause(arg0->unk08);
+static void msmMusPauseFade(MUS_PLAYER *player) {
+    if (player->pauseOnMaxTime > 0) {
+        if (--player->pauseOnTime == 0) {
+            player->pauseOnMaxTime = 0;
+            player->pauseOnVol = 0;
+            sndSeqPause(player->seqId);
         } else {
-            arg0->unk28 = arg0->unk24 * 0x7F / arg0->unk20;
-            sndSeqVolume(arg0->unk02 * arg0->unk03 * arg0->unk1C * arg0->unk28 / 2048383, 0, arg0->unk08, 0);
+            player->pauseOnVol = player->pauseOnTime * 127 / player->pauseOnMaxTime;
+            sndSeqVolume(player->baseVol * player->vol * player->fadeVol * player->pauseOnVol / (127*127*127), 0, player->seqId, 0);
         }
-    } else if (arg0->unk20 < 0) {
-        if (++arg0->unk24 >= -arg0->unk20) {
-            arg0->unk20 = 0;
-            arg0->unk28 = 0x7F;
+    } else if (player->pauseOnMaxTime < 0) {
+        if (++player->pauseOnTime >= -player->pauseOnMaxTime) {
+            player->pauseOnMaxTime = 0;
+            player->pauseOnVol = 127;
         } else {
-            arg0->unk28 = arg0->unk24 * 0x7F / -arg0->unk20;
+            player->pauseOnVol = player->pauseOnTime * 127 / -player->pauseOnMaxTime;
         }
-        sndSeqVolume(arg0->unk02 * arg0->unk03 * arg0->unk1C * arg0->unk28 / 2048383, 0, arg0->unk08, 0);
+        sndSeqVolume(player->baseVol * player->vol * player->fadeVol * player->pauseOnVol / (127*127*127), 0, player->seqId, 0);
     }
 }
 
-static void msmMusFade(msmMusStruct00* arg0) {
-    if (arg0->unk04 != 2) {
+static void msmMusFade(MUS_PLAYER *player) {
+    if (player->status != MSM_MUS_PLAY) {
         return;
     }
-    if (arg0->unk14 > 0) {
-        if (--arg0->unk18 == 0) {
-            if (arg0->unk04 != 0) {
-                arg0->unk14 = 0;
-                if (arg0->unk14 != 0) {
-                    arg0->unk18 = arg0->unk14;
-                    arg0->unk1C = 0x7F;
+    if (player->fadeMaxTime > 0) {
+        if (--player->fadeTime == 0) {
+            if (player->status != 0) {
+                player->fadeMaxTime = 0;
+                if (player->fadeMaxTime != 0) {
+                    player->fadeTime = player->fadeMaxTime;
+                    player->fadeVol = 127;
                 } else {
-                    sndSeqStop(arg0->unk08);
-                    arg0->unk04 = 1;
+                    sndSeqStop(player->seqId);
+                    player->status = 1;
                 }
             }
         } else {
-            arg0->unk1C = arg0->unk18 * 0x7F / arg0->unk14;
-            sndSeqVolume(arg0->unk02 * arg0->unk03 * arg0->unk1C * arg0->unk28 / 2048383, 0, arg0->unk08, 0);
+            player->fadeVol = player->fadeTime * 127 / player->fadeMaxTime;
+            sndSeqVolume(player->baseVol * player->vol * player->fadeVol * player->pauseOnVol / (127*127*127), 0, player->seqId, 0);
         }
-    } else if (arg0->unk14 < 0) {
-        if (++arg0->unk18 >= -arg0->unk14) {
-            arg0->unk14 = 0;
-            arg0->unk1C = 0x7F;
+    } else if (player->fadeMaxTime < 0) {
+        if (++player->fadeTime >= -player->fadeMaxTime) {
+            player->fadeMaxTime = 0;
+            player->fadeVol = 127;
         } else {
-            arg0->unk1C = arg0->unk18 * 0x7F / -arg0->unk14;
+            player->fadeVol = player->fadeTime * 127 / -player->fadeMaxTime;
         }
-        sndSeqVolume(arg0->unk02 * arg0->unk03 * arg0->unk1C * arg0->unk28 / 2048383, 0, arg0->unk08, 0);
+        sndSeqVolume(player->baseVol * player->vol * player->fadeVol * player->pauseOnVol / (127*127*127), 0, player->seqId, 0);
     }
 }
 
@@ -152,54 +129,54 @@ void msmMusFdoutEnd(void) {
 }
 
 void msmMusPeriodicProc(void) {
-    s32 var_r26;
-    msmMusStruct00* temp_r25;
+    s32 i;
+    MUS_PLAYER* player;
 
-    mus.unk04 = mus.unk03 = 0;
-    for (var_r26 = 0; var_r26 < mus.unk02; var_r26++) {
-        temp_r25 = &mus.unk18[var_r26];
-        if (temp_r25->unk05 != 0) {
+    mus.numPlay = mus.baseGrpNumPlay = 0;
+    for (i = 0; i < mus.musChanMax; i++) {
+        player = &mus.player[i];
+        if (player->busyF != FALSE) {
             continue;
         }
-        switch (temp_r25->unk04) {
-            case 1:
-            case 2:
-                if (sndSeqGetValid(temp_r25->unk08) == FALSE) {
-                    temp_r25->unk04 = 0;
+        switch (player->status) {
+            case MSM_MUS_STOP:
+            case MSM_MUS_PLAY:
+                if (sndSeqGetValid(player->seqId) == FALSE) {
+                    player->status = 0;
                 }
                 break;
         }
-        if (temp_r25->unk04 == 0) {
+        if (player->status == MSM_MUS_DONE) {
             continue;
         }
-        if (msmSysCheckBaseGroup(mus.unk0C[temp_r25->unk00].unk00) != 0) {
-            mus.unk04++;
+        if (msmSysCheckBaseGroup(mus.musData[player->musId].sgid) != 0) {
+            mus.numPlay++;
         } else {
-            mus.unk03++;
+            mus.baseGrpNumPlay++;
         }
-        msmMusPauseFade(temp_r25);
-        if (temp_r25->unk04 == 2 && temp_r25->unk2C != 0) {
-            if (++temp_r25->unk30 >= temp_r25->unk2C) {
-                temp_r25->unk2C = 0;
-                temp_r25->unk02 = temp_r25->unk36;
+        msmMusPauseFade(player);
+        if (player->status == MSM_MUS_PLAY && player->pauseOffMaxTime != 0) {
+            if (++player->pauseOffTime >= player->pauseOffMaxTime) {
+                player->pauseOffMaxTime = 0;
+                player->baseVol = player->targetVol;
             } else {
-                temp_r25->unk02 = temp_r25->unk35 + temp_r25->unk30 * (temp_r25->unk36 - temp_r25->unk35) / temp_r25->unk2C;
+                player->baseVol = player->startVol + player->pauseOffTime * (player->targetVol - player->startVol) / player->pauseOffMaxTime;
             }
-            sndSeqVolume(temp_r25->unk02 * temp_r25->unk03 * temp_r25->unk1C * temp_r25->unk28 / 2048383, 0, temp_r25->unk08, 0);
+            sndSeqVolume(player->baseVol * player->vol * player->fadeVol * player->pauseOnVol / (127*127*127), 0, player->seqId, 0);
         }
-        msmMusFade(temp_r25);
+        msmMusFade(player);
     }
 }
 
 s32 msmMusGetMidiCtrl(int musNo, s32 channel, s32 ctrl) {
-    msmMusStruct00* temp_ptr;
+    MUS_PLAYER *player;
 
-    if (musNo < 0 || musNo >= mus.unk02) {
+    if (musNo < 0 || musNo >= mus.musChanMax) {
         return MSM_ERR_OUTOFMUS;
     }
-    temp_ptr = &mus.unk18[musNo];
-    if (sndSeqGetValid(temp_ptr->unk08) == TRUE) {
-        return sndSeqGetMidiCtrl(temp_ptr->unk08, channel & 0xF, ctrl);
+    player = &mus.player[musNo];
+    if (sndSeqGetValid(player->seqId) == TRUE) {
+        return sndSeqGetMidiCtrl(player->seqId, channel & 0xF, ctrl);
     }
     return 0;
 }
@@ -207,135 +184,135 @@ s32 msmMusGetMidiCtrl(int musNo, s32 channel, s32 ctrl) {
 s32 msmMusGetNumPlay(BOOL baseGrp) {
     switch (baseGrp) {
         case FALSE:
-            return mus.unk03 + mus.unk04;
+            return mus.baseGrpNumPlay + mus.numPlay;
         default:
-            return mus.unk03;
+            return mus.baseGrpNumPlay;
     }
 }
 
 s32 msmMusGetStatus(int musNo) {
-    if (musNo < 0 || musNo >= mus.unk02) {
+    if (musNo < 0 || musNo >= mus.musChanMax) {
         return MSM_ERR_OUTOFMUS;
     }
-    return mus.unk18[musNo].unk04;
+    return mus.player[musNo].status;
 }
 
-void msmMusSetMasterVolume(s32 arg0) {
-    sndMasterVolume(arg0 & 0x7F, 0, 1, 0);
+void msmMusSetMasterVolume(s32 vol) {
+    sndMasterVolume(vol & 127, 0, 1, 0);
 }
 
-s32 msmMusSetParam(s32 arg0, MSM_MUSPARAM* arg1) {
-    msmMusStruct00* temp_r31;
+s32 msmMusSetParam(s32 musNo, MSM_MUSPARAM *param) {
+    MUS_PLAYER* player;
 
-    if (arg0 < 0 || arg0 >= mus.unk02) {
+    if (musNo < 0 || musNo >= mus.musChanMax) {
         return MSM_ERR_OUTOFMUS;
     }
-    temp_r31 = &mus.unk18[arg0];
-    if (arg1->flag & MSM_MUSPARAM_VOL) {
-        temp_r31->unk2C = arg1->fadeSpeed / 15;
-        if (temp_r31->unk2C != 0) {
-            temp_r31->unk05 = 1;
-            temp_r31->unk30 = 0;
-            temp_r31->unk35 = temp_r31->unk02;
-            temp_r31->unk36 = arg1->vol & 0x7F;
-            temp_r31->unk05 = 0;
+    player = &mus.player[musNo];
+    if (param->flag & MSM_MUSPARAM_VOL) {
+        player->pauseOffMaxTime = param->fadeSpeed / 15;
+        if (player->pauseOffMaxTime != 0) {
+            player->busyF = 1;
+            player->pauseOffTime = 0;
+            player->startVol = player->baseVol;
+            player->targetVol = param->vol & 127;
+            player->busyF = 0;
         } else {
-            temp_r31->unk02 = arg1->vol & 0x7F;
-            sndSeqVolume(temp_r31->unk02 * temp_r31->unk03 * temp_r31->unk1C * temp_r31->unk28 / 2048383, 0, temp_r31->unk08, 0);
+            player->baseVol = param->vol & 127;
+            sndSeqVolume(player->baseVol * player->vol * player->fadeVol * player->pauseOnVol / (127*127*127), 0, player->seqId, 0);
         }
     }
-    if (arg1->flag & MSM_MUSPARAM_SPEED) {
-        sndSeqSpeed(temp_r31->unk08, (arg1->speed << 8) / 100);
+    if (param->flag & MSM_MUSPARAM_SPEED) {
+        sndSeqSpeed(player->seqId, (param->speed << 8) / 100);
     }
     return 0;
 }
 
 void msmMusPauseAll(BOOL pause, s32 speed) {
     s32 var_r27;
-    msmMusStruct00* temp_r26;
+    MUS_PLAYER* player;
 
-    for (var_r27 = 0; var_r27 < mus.unk02; var_r27++) {
-        temp_r26 = &mus.unk18[var_r27];
-        if (temp_r26->unk04 != 0) {
-            temp_r26->unk05 = 1;
-            msmMusPauseSub(temp_r26, pause, speed);
-            temp_r26->unk05 = 0;
+    for (var_r27 = 0; var_r27 < mus.musChanMax; var_r27++) {
+        player = &mus.player[var_r27];
+        if (player->status != MSM_MUS_DONE) {
+            player->busyF = TRUE;
+            msmMusPauseSub(player, pause, speed);
+            player->busyF =  FALSE;
         }
     }
 }
 
 s32 msmMusPause(int musNo, BOOL pause, s32 speed) {
-    msmMusStruct00* temp_r31;
+    MUS_PLAYER *player;
 
-    if (musNo < 0 || musNo >= mus.unk02) {
+    if (musNo < 0 || musNo >= mus.musChanMax) {
         return MSM_ERR_OUTOFMUS;
     }
-    temp_r31 = &mus.unk18[musNo];
-    temp_r31->unk05 = 1;
-    msmMusPauseSub(temp_r31, pause, speed);
-    temp_r31->unk05 = 0;
+    player = &mus.player[musNo];
+    player->busyF = TRUE;
+    msmMusPauseSub(player, pause, speed);
+    player->busyF = FALSE;
     return 0;
 }
 
 void msmMusStopAll(BOOL checkGrp, s32 speed) {
-    s32 var_r28;
-    msmMusStruct00* temp_r27;
+    s32 i;
+    MUS_PLAYER *player;
 
-    for (var_r28 = 0; var_r28 < mus.unk02; var_r28++) {
-        temp_r27 = &mus.unk18[var_r28];
-        if (temp_r27->unk04 == 0) {
+    for (i = 0; i < mus.musChanMax; i++) {
+        player = &mus.player[i];
+        if (player->status == 0) {
             continue;
         }
-        temp_r27->unk05 = 1;
+        player->busyF = TRUE;
         switch (checkGrp) {
             case FALSE:
-                if (temp_r27->unk04 != 0) {
-                    temp_r27->unk14 = speed / 15;
-                    if (temp_r27->unk14 != 0) {
-                        temp_r27->unk18 = temp_r27->unk14;
-                        temp_r27->unk1C = 0x7F;
+                if (player->status != 0) {
+                    player->fadeMaxTime = speed / 15;
+                    if (player->fadeMaxTime != 0) {
+                        player->fadeTime = player->fadeMaxTime;
+                        player->fadeVol = 127;
                     } else {
-                        sndSeqStop(temp_r27->unk08);
-                        temp_r27->unk04 = 1;
+                        sndSeqStop(player->seqId);
+                        player->status = 1;
                     }
                 }
                 break;
             default:
-                if (msmSysCheckBaseGroup(mus.unk0C[temp_r27->unk00].unk00) == 0 && temp_r27->unk04 != 0) {
-                    temp_r27->unk14 = speed / 15;
-                    if (temp_r27->unk14 != 0) {
-                        temp_r27->unk18 = temp_r27->unk14;
-                        temp_r27->unk1C = 0x7F;
+                if (msmSysCheckBaseGroup(mus.musData[player->musId].sgid) == 0 && player->status != 0) {
+                    player->fadeMaxTime = speed / 15;
+                    if (player->fadeMaxTime != 0) {
+                        player->fadeTime = player->fadeMaxTime;
+                        player->fadeVol = 127;
                     } else {
-                        sndSeqStop(temp_r27->unk08);
-                        temp_r27->unk04 = 1;
+                        sndSeqStop(player->seqId);
+                        player->status = 1;
                     }
                 }
                 break;
         }
-        temp_r27->unk05 = 0;
+        player->busyF = FALSE;
     }
 }
 
 s32 msmMusStop(int musNo, s32 speed) {
-    msmMusStruct00* temp_r30;
+    MUS_PLAYER* player;
 
-    if (musNo < 0 || musNo >= mus.unk02) {
+    if (musNo < 0 || musNo >= mus.musChanMax) {
         return MSM_ERR_OUTOFMUS;
     }
-    temp_r30 = &mus.unk18[musNo];
-    temp_r30->unk05 = 1;
-    if (temp_r30->unk04 != 0) {
-        temp_r30->unk14 = speed / 15;
-        if (temp_r30->unk14 != 0) {
-            temp_r30->unk18 = temp_r30->unk14;
-            temp_r30->unk1C = 0x7F;
+    player = &mus.player[musNo];
+    player->busyF = TRUE;
+    if (player->status != 0) {
+        player->fadeMaxTime = speed / 15;
+        if (player->fadeMaxTime != 0) {
+            player->fadeTime = player->fadeMaxTime;
+            player->fadeVol = 127;
         } else {
-            sndSeqStop(temp_r30->unk08);
-            temp_r30->unk04 = 1;
+            sndSeqStop(player->seqId);
+            player->status = MSM_MUS_STOP;
         }
     }
-    temp_r30->unk05 = 0;
+    player->busyF = FALSE;
     return 0;
 }
 
@@ -343,124 +320,124 @@ int msmMusPlay(int musId, MSM_MUSPARAM* musParam) {
     s32 var_r30;
     int var_r29;
     s32 temp_r3_3;
-    UnkGroupDataPtr* temp_r3_2;
-    msmMusStruct01* temp_r28;
-    msmMusStruct00* temp_r27;
+    MSM_GRP_HEAD* temp_r3_2;
+    MSM_MUS* temp_r28;
+    MUS_PLAYER* temp_r27;
     DVDFileInfo sp10;
 
-    if (musId < 0 || musId >= mus.unk00) {
+    if (musId < 0 || musId >= mus.musMax) {
         return MSM_ERR_INVALIDID;
     }
-    temp_r28 = &mus.unk0C[musId];
-    if (temp_r28->unk00 == 0xFFFF) {
+    temp_r28 = &mus.musData[musId];
+    if (temp_r28->sgid == 0xFFFF) {
         return MSM_ERR_REMOVEDID;
     }
-    if (msmSysCheckLoadGroupID(temp_r28->unk00) == 0) {
+    if (msmSysCheckLoadGroupID(temp_r28->sgid) == 0) {
         return MSM_ERR_GRP_NOTLOADED;
     }
     var_r30 = (musParam != NULL) ? musParam->flag : 0;
     var_r29 = (var_r30 & MSM_MUSPARAM_CHAN) ? musParam->chan : 0;
-    if (var_r29 < 0 || var_r29 >= mus.unk02) {
+    if (var_r29 < 0 || var_r29 >= mus.musChanMax) {
         return MSM_ERR_OUTOFMUS;
     }
-    temp_r27 = &mus.unk18[var_r29];
-    if (temp_r27->unk04 != 0) {
-        sndSeqStop(temp_r27->unk08);
+    temp_r27 = &mus.player[var_r29];
+    if (temp_r27->status != 0) {
+        sndSeqStop(temp_r27->seqId);
     }
-    if (temp_r28->unk0C < 0) {
-        if (temp_r27->unk00 != musId) {
-            if (msmFioOpen(mus.unk08, &sp10) != 1) {
+    if (temp_r28->songGrp < 0) {
+        if (temp_r27->musId != musId) {
+            if (msmFioOpen(mus.msmEntryNum, &sp10) != 1) {
                 return MSM_ERR_OPENFAIL;
             }
-            if (msmFioRead(&sp10, temp_r27->unk0C, temp_r28->unk08, temp_r28->unk04 + mus.unk10) < 0) {
+            if (msmFioRead(&sp10, temp_r27->songBuf, temp_r28->songSize, temp_r28->songOfs + mus.dummyMusOfs) < 0) {
                 msmFioClose(&sp10);
                 return MSM_ERR_READFAIL;
             }
             msmFioClose(&sp10);
-            temp_r27->unk10 = temp_r27->unk0C;
+            temp_r27->arrfile = temp_r27->songBuf;
         }
     } else {
-        temp_r3_2 = msmSysGetGroupDataPtr(temp_r28->unk0C);
+        temp_r3_2 = msmSysGetGroupDataPtr(temp_r28->songGrp);
         if (temp_r3_2 == NULL) {
             return MSM_ERR_MUSGRP_NOTLOADED;
         }
-        temp_r27->unk10 = (void*) ((u32) temp_r3_2 + temp_r3_2->unk0C + temp_r28->unk04);
+        temp_r27->arrfile = (void*) ((u32) temp_r3_2 + temp_r3_2->sngOfs + temp_r28->songOfs);
     }
-    temp_r27->unk05 = 1;
-    temp_r27->unk03 = temp_r28->unk0D;
-    temp_r27->unk2C = 0;
-    temp_r27->unk20 = 0;
-    temp_r27->unk14 = 0;
-    temp_r27->unk28 = 0x7F;
-    temp_r27->unk1C = 0x7F;
-    temp_r27->unk38.flags = 4;
-    temp_r27->unk38.volume.time = 0;
-    temp_r27->unk02 = (var_r30 & MSM_MUSPARAM_VOL) ? musParam->vol : 0x7F;
-    temp_r27->unk38.volume.target = temp_r27->unk03 * temp_r27->unk1C * temp_r27->unk02 / 16129;
+    temp_r27->busyF = 1;
+    temp_r27->vol = temp_r28->vol;
+    temp_r27->pauseOffMaxTime = 0;
+    temp_r27->pauseOnMaxTime = 0;
+    temp_r27->fadeMaxTime = 0;
+    temp_r27->pauseOnVol = 127;
+    temp_r27->fadeVol = 127;
+    temp_r27->playPara.flags = 4;
+    temp_r27->playPara.volume.time = 0;
+    temp_r27->baseVol = (var_r30 & MSM_MUSPARAM_VOL) ? musParam->vol : 127;
+    temp_r27->playPara.volume.target = temp_r27->vol * temp_r27->fadeVol * temp_r27->baseVol / 16129;
     if (var_r30 & MSM_MUSPARAM_PAUSE) {
-        temp_r27->unk38.flags |= 0x10;
+        temp_r27->playPara.flags |= 0x10;
     }
     if (var_r30 & MSM_MUSPARAM_SPEED) {
-        temp_r27->unk38.flags |= 2;
-        temp_r27->unk38.speed = musParam->speed * 256 / 100;
+        temp_r27->playPara.flags |= 2;
+        temp_r27->playPara.speed = musParam->speed * 256 / 100;
     }
     if (var_r30 & MSM_MUSPARAM_FADESPEED) {
-        temp_r27->unk14 = -(musParam->fadeSpeed / 15);
-        if (temp_r27->unk14 != 0) {
-            temp_r27->unk18 = 0;
-            temp_r27->unk1C = 0;
-            temp_r27->unk38.volume.target = 0;
+        temp_r27->fadeMaxTime = -(musParam->fadeSpeed / 15);
+        if (temp_r27->fadeMaxTime != 0) {
+            temp_r27->fadeTime = 0;
+            temp_r27->fadeVol = 0;
+            temp_r27->playPara.volume.target = 0;
         }
     }
-    temp_r3_3 = sndSeqPlayEx(temp_r28->unk00, temp_r28->unk02, temp_r27->unk10, &temp_r27->unk38, 0);
+    temp_r3_3 = sndSeqPlay(temp_r28->sgid, temp_r28->sid, temp_r27->arrfile, &temp_r27->playPara);
     if (temp_r3_3 == SND_ID_ERROR) {
-        temp_r27->unk05 = 0;
+        temp_r27->busyF = 0;
         return MSM_ERR_PLAYFAIL;
     }
-    temp_r27->unk08 = temp_r3_3;
-    temp_r27->unk00 = musId;
-    temp_r27->unk04 = (temp_r27->unk38.flags & 0x10) ? 3 : 2;
-    temp_r27->unk05 = 0;
+    temp_r27->seqId = temp_r3_3;
+    temp_r27->musId = musId;
+    temp_r27->status = (temp_r27->playPara.flags & 0x10) ? 3 : 2;
+    temp_r27->busyF = 0;
     return var_r29;
 }
 
-s32 msmMusInit(sysData* arg0, DVDFileInfo* arg1) {
+s32 msmMusInit(MSM_SYS* arg0, DVDFileInfo* arg1) {
     s32 temp_r4;
     s32 var_r8;
 
-    mus.unk00 = 0;
-    mus.unk02 = 0;
-    mus.unk04 = 0;
-    mus.unk03 = 0;
-    if (arg0->unk10->unk4 == 0) {
+    mus.musMax = 0;
+    mus.musChanMax = 0;
+    mus.numPlay = 0;
+    mus.baseGrpNumPlay = 0;
+    if (arg0->info->musMax == 0) {
         return 0;
     }
-    temp_r4 = arg0->unkC->unk2C;
+    temp_r4 = arg0->header->musSize;
     if (temp_r4 == 0) {
         return 0;
     }
-    if ((mus.unk0C = msmMemAlloc(temp_r4)) == NULL) {
+    if ((mus.musData = msmMemAlloc(temp_r4)) == NULL) {
         return MSM_ERR_OUTOFMEM;
     }
-    if (msmFioRead(arg1, mus.unk0C, arg0->unkC->unk2C, arg0->unkC->unk28) < 0) {
+    if (msmFioRead(arg1, mus.musData, arg0->header->musSize, arg0->header->musOfs) < 0) {
         return MSM_ERR_READFAIL;
     }
-    temp_r4 = arg0->unk10->unk20;
+    temp_r4 = arg0->info->dummyMusSize;
     if (temp_r4 != 0) {
-        if ((mus.unk14 = msmMemAlloc(temp_r4 * arg0->unk10->unk8)) == NULL) {
+        if ((mus.musBuf = msmMemAlloc(temp_r4 * arg0->info->musChanMax)) == NULL) {
             return MSM_ERR_OUTOFMEM;
         }
     } else {
-        mus.unk14 = NULL;
+        mus.musBuf = NULL;
     }
-    mus.unk00 = arg0->unk10->unk4;
-    mus.unk02 = arg0->unk10->unk8;
-    mus.unk10 = arg0->unkC->unk48;
-    mus.unk08 = arg0->unk0;
-    for (var_r8 = 0; var_r8 < mus.unk02; var_r8++) {
-        mus.unk18[var_r8].unk0C = (void*) ((u32) mus.unk14 + arg0->unk10->unk20 * var_r8);
-        mus.unk18[var_r8].unk00 = -1;
-        mus.unk18[var_r8].unk05 = 0;
+    mus.musMax = arg0->info->musMax;
+    mus.musChanMax = arg0->info->musChanMax;
+    mus.dummyMusOfs = arg0->header->dummyMusOfs;
+    mus.msmEntryNum = arg0->msmEntryNum;
+    for (var_r8 = 0; var_r8 < mus.musChanMax; var_r8++) {
+        mus.player[var_r8].songBuf = (void*) ((u32) mus.musBuf + arg0->info->dummyMusSize * var_r8);
+        mus.player[var_r8].musId = -1;
+        mus.player[var_r8].busyF = 0;
     }
     return 0;
 }

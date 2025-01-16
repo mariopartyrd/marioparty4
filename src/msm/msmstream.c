@@ -3,215 +3,187 @@
 #include "msm/msmsys.h"
 
 typedef struct {
-    /* 0x00 */ SND_STREAMID unk00;
-    /* 0x04 */ s16 unk04;
-    /* 0x06 */ u8 unk06;
-    /* 0x07 */ u8 unk07;
-    /* 0x08 */ u8 unk08;
-    /* 0x09 */ u8 unk09;
-    /* 0x0A */ u8 unk0A;
-    /* 0x0B */ u8 unk0B;
-    /* 0x0C */ u8 unk0C;
-    /* 0x0D */ u8 unk0D;
-    /* 0x0E */ s8 unk0E;
-    /* 0x0F */ s8 unk0F;
-    /* 0x10 */ u32 unk10;
-    /* 0x14 */ volatile s32 unk14;
-    /* 0x18 */ volatile s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ char unk20[4];
-    /* 0x24 */ volatile s32 unk24;
-    /* 0x28 */ s32 unk28;
-    /* 0x2C */ s8 unk2C;
-    /* 0x2D */ s8 unk2D;
-    /* 0x2E */ s8 unk2E;
-    /* 0x2F */ char unk2F[1];
-    /* 0x30 */ void* unk30;
-    /* 0x34 */ u32 unk34;
-    /* 0x38 */ u32 unk38;
+    /* 0x00 */ SND_STREAMID stid;
+    /* 0x04 */ s16 streamId;
+    /* 0x06 */ u8 status;
+    /* 0x07 */ u8 stereoF;
+    /* 0x08 */ u8 volBase;
+    /* 0x09 */ u8 vol;
+    /* 0x0A */ u8 volFade;
+    /* 0x0B */ u8 pauseVol;
+    /* 0x0C */ u8 panBase;
+    /* 0x0D */ u8 pan;
+    /* 0x0E */ s8 slotL;
+    /* 0x0F */ s8 slotR;
+    /* 0x10 */ u32 pauseLen;
+    /* 0x14 */ volatile s32 pauseTime;
+    /* 0x18 */ volatile s32 pauseTimeMax;
+    /* 0x1C */ s32 fadeVol;
+    /* 0x20 */ s32 unk20;
+    /* 0x24 */ volatile s32 fadeMaxTime;
+    /* 0x28 */ s32 fadeTime;
+    /* 0x2C */ s8 span;
+    /* 0x2D */ s8 auxA;
+    /* 0x2E */ s8 auxB;
+    /* 0x30 */ void* streamBuf;
+    /* 0x34 */ u32 streamBufSize;
+    /* 0x38 */ u32 streamFrq;
     /* 0x3C */ struct {
-        volatile u8 unk3C_0 : 1;
-        volatile u8 unk3C_1 : 1;
-        u8 unk3C_2 : 1;
-        u8 unk3C_3 : 1;
-        volatile u8 unk3C_4 : 1;
-        volatile u8 unk3C_5 : 1;
-        volatile u8 unk3C_6 : 1;
+        volatile u8 bufNo : 1;
+        volatile u8 firstF : 1;
+        u8 streamOffF : 1;
+        u8 readBusyF : 1;
+        volatile u8 shutdownF : 1;
+        volatile u8 pauseF : 1;
+        volatile u8 updateAramF : 1;
     };
-    /* 0x3D */ char unk3D[3];
-    /* 0x40 */ s32 unk40;
-    /* 0x44 */ SND_ADPCMSTREAM_INFO* unk44;
-    /* 0x48 */ s32 unk48;
-    /* 0x4C */ u32 unk4C;
-    /* 0x50 */ u32 unk50;
-    /* 0X54 */ s32 unk54;
-    /* 0x58 */ u32 unk58;
-    /* 0x5C */ void* unk5C;
-    /* 0X60 */ s32 unk60;
+    s32 frq;
+    /* 0x44 */ SND_ADPCMSTREAM_INFO* adpcmInfo;
+    /* 0x48 */ s32 streamBaseOfs;
+    /* 0x4C */ u32 streamPos;
+    /* 0x50 */ u32 loopLen;
+    /* 0X54 */ s32 loopEndOfs;
+    /* 0x58 */ u32 streamReadSize;
+    /* 0x5C */ void* streamReadBuf;
+    /* 0X60 */ s32 streamPosStart;
     /* 0x64 */ u32 unk64;
     /* 0x68 */ s32 unk68;
     /* 0x6C */ s32 unk6C;
-    /* 0x70 */ DVDFileInfo unk70;
-} msmStreamUnk20Struct; // Size 0xAC
+    /* 0x70 */ DVDFileInfo file;
+} MSM_STREAM_SLOT; // Size 0xAC
+
+static struct {
+    /* 0x00 */ s32 sampleFrq;
+    /* 0x04 */ u32 bufSize;
+    /* 0x08 */ s32 frq;
+    /* 0x0C */ s32 pdtEntryNum;
+    /* 0x10 */ s8 time;
+    /* 0x11 */ u8 masterVol;
+    /* 0x12 */ u8 outputMode;
+    /* 0x14 */ u32* streamPackList;
+    /* 0x18 */ s8* streamPackFlag;
+    /* 0x1C */ SND_ADPCMSTREAM_INFO* adpcmParam;
+    /* 0x20 */ MSM_STREAM_SLOT* slot;
+    MSM_STREAM_HEADER header ATTRIBUTE_ALIGN(32);
+} StreamInfo; // Size 0x60
 
 typedef struct {
-    /* 0x00 */ s32 unk00;
-    /* 0x04 */ u32 unk04;
-    /* 0x08 */ s32 unk08;
-    /* 0x0C */ s32 unk0C;
-    /* 0x10 */ s8 unk10;
-    /* 0x11 */ u8 unk11;
-    /* 0x12 */ u8 unk12;
-    /* 0x13 */ char unk13[1];
-    /* 0x14 */ u32* unk14;
-    /* 0x18 */ s8* unk18;
-    /* 0x1C */ SND_ADPCMSTREAM_INFO* unk1C;
-    /* 0x20 */ msmStreamUnk20Struct* unk20;
-    /* 0x24 */ char unk24[0x1C];
-    /* 0x40 */ s16 unk40;
-    /* 0x42 */ s16 unk42;
-    /* 0x44 */ s32 unk44;
-    /* 0x48 */ s32 unk48;
-    /* 0x4C */ s32 unk4C;
-    /* 0x50 */ s32 unk50;
-    /* 0x54 */ s32 unk54;
-    /* 0x58 */ s32 unk58;
-    /* 0x5C */ s32 unk5C;
-} msmStreamStruct; // Size 0x60
+    /* 0x00 */ u8 vol;
+    /* 0x01 */ u8 pan;
+    /* 0x02 */ u8 span;
+    /* 0x03 */ u8 auxA;
+    /* 0x04 */ u8 auxB;
+    /* 0x08 */ s32 sampleOfs;
+} STREAM_PARAM;
 
-typedef struct {
-    /* 0x00 */ s32 unk00;
-    /* 0x04 */ s16 unk04;
-    /* 0x06 */ char unk06[2];
-} StructSlotInitInnerArg1; // Size 8
-
-typedef struct {
-    /* 0x00 */ s8 unk00;
-    /* 0x01 */ s8 unk01;
-    /* 0x02 */ s8 unk02;
-    /* 0x03 */ s8 unk03;
-    /* 0x04 */ s8 unk04;
-    /* 0x05 */ s8 unk05;
-    /* 0x06 */ u16 unk06;
-    /* 0x08 */ u32 unk08;
-    /* 0x0C */ u32 unk0C;
-    /* 0x10 */ StructSlotInitInnerArg1 unk10[2];
-} StructSlotInitArg1; // Size unknown
-
-typedef struct {
-    /* 0x00 */ u8 unk00;
-    /* 0x01 */ u8 unk01;
-    /* 0x02 */ u8 unk02;
-    /* 0x03 */ u8 unk03;
-    /* 0x04 */ u8 unk04;
-    /* 0x05 */ char unk05[3];
-    /* 0x08 */ s32 unk08;
-} StructSlotInitArg2; // Size unknown
-
-static void msmStreamPauseFade(s32 arg0);
-static void msmStreamFade(s32 arg0);
+static void msmStreamPauseFade(s32 streamNo);
+static void msmStreamFade(s32 streamNo);
 static void msmStreamDvdCallback(s32 result, DVDFileInfo* fileInfo);
 static void msmStreamStopSub(s32 streamNo, s32 speed);
-static void msmStreamDvdCallback2(s32 arg0, DVDFileInfo* arg1);
+static void msmStreamDvdCallback2(s32 result, DVDFileInfo* fileInfo);
 static u32 msmStreamUpdateFunc(void* buffer1, u32 len1, void* buffer2, u32 len2, u32 user);
-static s32 msmStreamSlotInit(msmStreamUnk20Struct* arg0, StructSlotInitArg1* arg1, StructSlotInitArg2* arg2, s32 arg3);
+static s32 msmStreamSlotInit(MSM_STREAM_SLOT* arg0, MSM_STREAM_PACK* arg1, STREAM_PARAM* arg2, s32 arg3);
+static void msmStreamPauseOff(s32 streamNo);
+static void msmStreamPauseOn(s32 streamNo, s32 arg1);
+static s32 msmStreamPackStartStereo(s32 streamId, MSM_STREAMPARAM *param, s32 sampleOfs);
+static s32 msmStreamPackStartMono(s32 streamId, MSM_STREAMPARAM *param, s32 sampleOfs);
+static void msmStreamSlotOff(s32 streamNo);
 
-static msmStreamStruct StreamInfo ATTRIBUTE_ALIGN(32);
+static inline void msmStreamClose(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
 
-static inline void msmStreamInline00(s32 streamNo) {
-    msmStreamUnk20Struct* temp_ptr;
-
-    temp_ptr = &StreamInfo.unk20[streamNo];
-    DVDClose(&temp_ptr->unk70);
-    temp_ptr->unk06 = 0;
+    slot = &StreamInfo.slot[streamNo];
+    DVDClose(&slot->file);
+    slot->status = 0;
 }
 
 s32 msmStreamGetStatus(int streamNo) {
-    msmStreamUnk20Struct* temp_r3;
-    s32 var_r4;
+    MSM_STREAM_SLOT* slot;
+    s32 status;
 
-    if (streamNo < 0 || streamNo >= StreamInfo.unk44) {
+    if (streamNo < 0 || streamNo >= StreamInfo.header.chanMax) {
         return 0;
     }
-    temp_r3 = &StreamInfo.unk20[streamNo];
-    switch (temp_r3->unk06) {
+    slot = &StreamInfo.slot[streamNo];
+    switch (slot->status) {
         case 4:
-            var_r4 = 2;
+            status = MSM_STREAM_PLAY;
             break;
         case 2:
         case 3:
-            var_r4 = 4;
+            status = MSM_STREAM_PAUSEOUT;
             break;
         case 5:
-            var_r4 = 1;
+            status = MSM_STREAM_STOP;
             break;
         default:
-            var_r4 = 0;
+            status = MSM_STREAM_DONE;
             break;
     }
-    if (temp_r3->unk3C_5 == 1) {
-        var_r4 = 3;
+    if (slot->pauseF == TRUE) {
+        status = MSM_STREAM_PAUSEIN;
     }
-    if (var_r4 == 0 && temp_r3->unk0E != -1) {
-        var_r4 = msmStreamGetStatus(temp_r3->unk0E);
+    if (status == MSM_STREAM_DONE && slot->slotL != -1) {
+        status = msmStreamGetStatus(slot->slotL);
     }
-    return var_r4;
+    return status;
 }
 
-static inline void msmStreamInline04(msmStreamUnk20Struct* arg0) {
-    s32 var_r10;
-    s32 temp_var;
+static void msmStreamUpdateBaseParam(MSM_STREAM_SLOT* slot) {
+    s32 pan;
+    s32 vol;
 
-    if (StreamInfo.unk12 != 0) {
-        var_r10 = arg0->unk0C + arg0->unk0D - 0x40;
-        if (var_r10 < 0) {
-            var_r10 = 0;
+    if (StreamInfo.outputMode != 0) {
+        pan = slot->panBase + slot->pan - 64;
+        if (pan < 0) {
+            pan = 0;
         }
-        if (var_r10 > 0x7F) {
-            var_r10 = 0x7F;
+        if (pan > 127) {
+            pan = 127;
         }
     } else {
-        var_r10 = 0x40;
+        pan = 64;
     }
-    temp_var = arg0->unk08 * arg0->unk09 * arg0->unk0A * arg0->unk0B / 2048383;
-    sndStreamMixParameterEx(arg0->unk00, temp_var * StreamInfo.unk11 / 127, var_r10, arg0->unk2C, arg0->unk2D, arg0->unk2E);
+    vol = slot->volBase * slot->vol * slot->volFade * slot->pauseVol / (127*127*127);
+    sndStreamMixParameterEx(slot->stid, vol * StreamInfo.masterVol / 127, pan, slot->span, slot->auxA, slot->auxB);
 }
 
-void msmStreamSetMasterVolume(s32 arg0) {
-    s32 var_r27;
+void msmStreamSetMasterVolume(s32 vol) {
+    s32 i;
 
-    StreamInfo.unk11 = arg0 & 0x7F;
-    for (var_r27 = 0; var_r27 < StreamInfo.unk44; var_r27++) {
-        if (StreamInfo.unk20[var_r27].unk06 != 0) {
-            msmStreamInline04(&StreamInfo.unk20[var_r27]);
+    StreamInfo.masterVol = vol & 127;
+    for (i = 0; i < StreamInfo.header.chanMax; i++) {
+        if (StreamInfo.slot[i].status != 0) {
+            msmStreamUpdateBaseParam(&StreamInfo.slot[i]);
         }
     }
 }
 
-static inline BOOL msmStreamInline01(msmStreamUnk20Struct* arg0) {
-    if (arg0->unk06 != 0 || arg0->unk3C_5 != 0) {
+static inline BOOL msmStreamIsPlay(MSM_STREAM_SLOT* slot) {
+    if (slot->status != 0 || slot->pauseF != 0) {
         return TRUE;
     } else {
         return FALSE;
     }
 }
 
-void msmStreamStopAll(s32 speed) {
-    msmStreamUnk20Struct* temp_r29;
-    s32 var_r28;
+void msmStreamStopAll(s32 speed)
+{
+    MSM_STREAM_SLOT* slot;
+    s32 i;
 
     msmSysIrqDisable();
-    for (var_r28 = 0; var_r28 < StreamInfo.unk44; var_r28++) {
-        if (var_r28 >= 0 && var_r28 < StreamInfo.unk44) {
-            temp_r29 = &StreamInfo.unk20[var_r28];
-            if (msmStreamInline01(temp_r29)) {
+    for (i = 0; i < StreamInfo.header.chanMax; i++) {
+        if (i >= 0 && i < StreamInfo.header.chanMax) {
+            slot = &StreamInfo.slot[i];
+            if (msmStreamIsPlay(slot)) {
                 msmSysIrqDisable();
-                msmStreamStopSub(var_r28, speed);
-                if (temp_r29->unk0E != -1) {
-                    msmStreamStopSub(temp_r29->unk0E, speed);
+                msmStreamStopSub(i, speed);
+                if (slot->slotL != -1) {
+                    msmStreamStopSub(slot->slotL, speed);
                 }
-                if (temp_r29->unk0F != -1) {
-                    msmStreamStopSub(temp_r29->unk0F, speed);
+                if (slot->slotR != -1) {
+                    msmStreamStopSub(slot->slotR, speed);
                 }
                 msmSysIrqEnable();
             }
@@ -220,38 +192,38 @@ void msmStreamStopAll(s32 speed) {
     msmSysIrqEnable();
 }
 
-static inline void msmStreamInline03(int streamNo, s32 speed) {
-    msmStreamUnk20Struct* temp_ptr = &StreamInfo.unk20[streamNo];
+static inline void msmStreamSetFade(int streamNo, s32 speed) {
+    MSM_STREAM_SLOT* slot = &StreamInfo.slot[streamNo];
 
-    if (temp_ptr->unk3C_5 != 0) {
-        temp_ptr->unk3C_5 = 0;
+    if (slot->pauseF != 0) {
+        slot->pauseF = 0;
         speed = 0;
     }
-    temp_ptr->unk24 = speed / 15;
-    if (temp_ptr->unk24 != 0) {
-        temp_ptr->unk28 = temp_ptr->unk24;
-        temp_ptr->unk0A = 0x7F;
+    slot->fadeMaxTime = speed / 15;
+    if (slot->fadeMaxTime != 0) {
+        slot->fadeTime = slot->fadeMaxTime;
+        slot->volFade = 127;
     } else {
         msmStreamSlotOff(streamNo);
     }
 }
 
 s32 msmStreamStop(int streamNo, s32 speed) {
-    msmStreamUnk20Struct* temp_r31;
+    MSM_STREAM_SLOT* slot;
     s32 unused;
 
-    if (streamNo < 0 || streamNo >= StreamInfo.unk44) {
-        return MSM_ERR_8C;
+    if (streamNo < 0 || streamNo >= StreamInfo.header.chanMax) {
+        return MSM_ERR_RANGE_STREAM;
     }
-    temp_r31 = &StreamInfo.unk20[streamNo];
-    if (msmStreamInline01(temp_r31)) {
+    slot = &StreamInfo.slot[streamNo];
+    if (msmStreamIsPlay(slot)) {
         msmSysIrqDisable();
-        msmStreamInline03(streamNo, speed);
-        if (temp_r31->unk0E != -1) {
-            msmStreamInline03(temp_r31->unk0E, speed);
+        msmStreamSetFade(streamNo, speed);
+        if (slot->slotL != -1) {
+            msmStreamSetFade(slot->slotL, speed);
         }
-        if (temp_r31->unk0F != -1) {
-            msmStreamInline03(temp_r31->unk0F, speed);
+        if (slot->slotR != -1) {
+            msmStreamSetFade(slot->slotR, speed);
         }
         msmSysIrqEnable();
     }
@@ -259,13 +231,13 @@ s32 msmStreamStop(int streamNo, s32 speed) {
 }
 
 int msmStreamPlay(int streamId, MSM_STREAMPARAM* streamParam) {
-    if (streamId < 0 || streamId >= StreamInfo.unk42) {
+    if (streamId < 0 || streamId >= StreamInfo.header.streamMax) {
         return MSM_ERR_INVALIDID;
     }
-    if (StreamInfo.unk14[streamId] == 0) {
+    if (StreamInfo.streamPackList[streamId] == 0) {
         return MSM_ERR_REMOVEDID;
     }
-    if (StreamInfo.unk18[StreamInfo.unk14[streamId] - StreamInfo.unk58] & 1) {
+    if (StreamInfo.streamPackFlag[StreamInfo.streamPackList[streamId] - StreamInfo.header.streamPackOfs] & MSM_STREAM_FLAG_STEREO) {
         return msmStreamPackStartStereo(streamId, streamParam, 0);
     } else {
         return msmStreamPackStartMono(streamId, streamParam, 0);
@@ -273,785 +245,785 @@ int msmStreamPlay(int streamId, MSM_STREAMPARAM* streamParam) {
 }
 
 void msmStreamPeriodicProc(void) {
-    msmStreamUnk20Struct* temp_r28;
-    s32 var_r27;
+    MSM_STREAM_SLOT* slot;
+    s32 i;
 
-    StreamInfo.unk10 = 0;
-    for (var_r27 = 0; var_r27 < StreamInfo.unk44; var_r27++) {
-        temp_r28 = &StreamInfo.unk20[var_r27];
-        msmStreamFade(var_r27);
-        msmStreamPauseOff(var_r27);
-        msmStreamPauseFade(var_r27);
-        if (temp_r28->unk06 != 0) {
-            StreamInfo.unk10++;
+    StreamInfo.time = 0;
+    for (i = 0; i < StreamInfo.header.chanMax; i++) {
+        slot = &StreamInfo.slot[i];
+        msmStreamFade(i);
+        msmStreamPauseOff(i);
+        msmStreamPauseFade(i);
+        if (slot->status != 0) {
+            StreamInfo.time++;
         }
     }
 }
 
-void msmStreamSetOutputMode(s32 arg0) {
-    s32 var_r27;
+void msmStreamSetOutputMode(s32 outputMode) {
+    s32 i;
 
-    StreamInfo.unk12 = arg0;
-    for (var_r27 = 0; var_r27 < StreamInfo.unk44; var_r27++) {
-        if (StreamInfo.unk20[var_r27].unk06 != 0) {
-            msmStreamInline04(&StreamInfo.unk20[var_r27]);
+    StreamInfo.outputMode = outputMode;
+    for (i = 0; i < StreamInfo.header.chanMax; i++) {
+        if (StreamInfo.slot[i].status != 0) {
+            msmStreamUpdateBaseParam(&StreamInfo.slot[i]);
         }
     }
 }
 
 void msmStreamAmemFree(void) {
-    u32 var_r29;
+    u32 i;
 
-    for (var_r29 = 0; var_r29 < StreamInfo.unk44; var_r29++) {
-        sndStreamFree(StreamInfo.unk20[var_r29].unk00);
+    for (i = 0; i < StreamInfo.header.chanMax; i++) {
+        sndStreamFree(StreamInfo.slot[i].stid);
     }
 }
 
 s32 msmStreamAmemAlloc(void) {
-    u32 var_r25;
-    msmStreamUnk20Struct* temp_r24;
+    u32 i;
+    MSM_STREAM_SLOT* slot;
 
-    for (var_r25 = 0; var_r25 < StreamInfo.unk44; var_r25++) {
-        temp_r24 = &StreamInfo.unk20[var_r25];
-        temp_r24->unk06 = 0;
-        temp_r24->unk0F = -1;
-        temp_r24->unk0E = -1;
-        temp_r24->unk30 = msmMemAlloc(StreamInfo.unk04);
-        if (temp_r24->unk30 == NULL) {
+    for (i = 0; i < StreamInfo.header.chanMax; i++) {
+        slot = &StreamInfo.slot[i];
+        slot->status = 0;
+        slot->slotR = -1;
+        slot->slotL = -1;
+        slot->streamBuf = msmMemAlloc(StreamInfo.bufSize);
+        if (slot->streamBuf == NULL) {
             return MSM_ERR_OUTOFMEM;
         }
-        temp_r24->unk34 = StreamInfo.unk04;
-        temp_r24->unk38 = StreamInfo.unk08;
-        temp_r24->unk00 = sndStreamAllocEx(0xFF, temp_r24->unk30, temp_r24->unk38, StreamInfo.unk48, 0, 0x40, 0, 0, 0, 0, 0x30001, msmStreamUpdateFunc, var_r25, NULL);
-        if (temp_r24->unk00 == -1) {
+        slot->streamBufSize = StreamInfo.bufSize;
+        slot->streamFrq = StreamInfo.frq;
+        slot->stid = sndStreamAllocEx(0xFF, slot->streamBuf, slot->streamFrq, StreamInfo.header.sampleFrq, 0, 64, 0, 0, 0, 0, 0x30001, msmStreamUpdateFunc, i, NULL);
+        if (slot->stid == -1) {
             return MSM_ERR_STREAMALLOC_FAIL;
         }
     }
-    return StreamInfo.unk04 * StreamInfo.unk44;
+    return StreamInfo.bufSize * StreamInfo.header.chanMax;
 }
 
-s32 msmStreamInit(char* arg0) {
-    DVDFileInfo spC;
-    s32 temp_r27;
+s32 msmStreamInit(char *pdtPath) {
+    DVDFileInfo file;
+    s32 size;
 
-    StreamInfo.unk42 = 0;
-    StreamInfo.unk44 = 0;
-    StreamInfo.unk11 = 0x7F;
-    StreamInfo.unk10 = 0;
-    if (arg0 == NULL) {
+    StreamInfo.header.streamMax = 0;
+    StreamInfo.header.chanMax = 0;
+    StreamInfo.masterVol = 127;
+    StreamInfo.time = 0;
+    if (pdtPath == NULL) {
         return 0;
     }
-    StreamInfo.unk0C = DVDConvertPathToEntrynum(arg0);
-    if (StreamInfo.unk0C == -1) {
+    StreamInfo.pdtEntryNum = DVDConvertPathToEntrynum(pdtPath);
+    if (StreamInfo.pdtEntryNum == -1) {
         return MSM_ERR_OPENFAIL;
     }
-    if (!msmFioOpen(StreamInfo.unk0C, &spC)) {
+    if (!msmFioOpen(StreamInfo.pdtEntryNum, &file)) {
         return MSM_ERR_OPENFAIL;
     }
-    if (msmFioRead(&spC, &StreamInfo.unk40, 0x20, 0) < 0) {
-        msmFioClose(&spC);
+    if (msmFioRead(&file, &StreamInfo.header, 0x20, 0) < 0) {
+        msmFioClose(&file);
         return MSM_ERR_READFAIL;
     }
-    if (StreamInfo.unk40 != 1) {
-        msmFioClose(&spC);
+    if (StreamInfo.header.version != MSM_PDT_FILE_VERSION) {
+        msmFioClose(&file);
         return MSM_ERR_INVALIDFILE;
     }
-    if (StreamInfo.unk42 != 0) {
-        temp_r27 = (StreamInfo.unk54 - StreamInfo.unk50 + 0x1F) & ~0x1F;
-        StreamInfo.unk14 = msmMemAlloc(temp_r27);
-        if (StreamInfo.unk14 == NULL) {
-            msmFioClose(&spC);
+    if (StreamInfo.header.streamMax != 0) {
+        size = (StreamInfo.header.adpcmParamOfs - StreamInfo.header.streamPackListOfs + 0x1F) & ~0x1F;
+        StreamInfo.streamPackList = msmMemAlloc(size);
+        if (StreamInfo.streamPackList == NULL) {
+            msmFioClose(&file);
             return MSM_ERR_OUTOFMEM;
         }
-        if (msmFioRead(&spC, StreamInfo.unk14, temp_r27, StreamInfo.unk50) < 0) {
-            msmFioClose(&spC);
+        if (msmFioRead(&file, StreamInfo.streamPackList, size, StreamInfo.header.streamPackListOfs) < 0) {
+            msmFioClose(&file);
             return MSM_ERR_READFAIL;
         }
-        temp_r27 = (StreamInfo.unk5C - StreamInfo.unk58 + 0x1F) & ~0x1F;
-        StreamInfo.unk18 = msmMemAlloc(temp_r27);
-        if (StreamInfo.unk18 == NULL) {
-            msmFioClose(&spC);
+        size = (StreamInfo.header.sampleOfs - StreamInfo.header.streamPackOfs + 0x1F) & ~0x1F;
+        StreamInfo.streamPackFlag = msmMemAlloc(size);
+        if (StreamInfo.streamPackFlag == NULL) {
+            msmFioClose(&file);
             return MSM_ERR_OUTOFMEM;
         }
-        if (msmFioRead(&spC, StreamInfo.unk18, temp_r27, StreamInfo.unk58) < 0) {
-            msmFioClose(&spC);
+        if (msmFioRead(&file, StreamInfo.streamPackFlag, size, StreamInfo.header.streamPackOfs) < 0) {
+            msmFioClose(&file);
             return MSM_ERR_READFAIL;
         }
-        temp_r27 = StreamInfo.unk58 - StreamInfo.unk54;
-        StreamInfo.unk1C = msmMemAlloc(temp_r27);
-        if (StreamInfo.unk1C == NULL) {
-            msmFioClose(&spC);
+        size = StreamInfo.header.streamPackOfs - StreamInfo.header.adpcmParamOfs;
+        StreamInfo.adpcmParam = msmMemAlloc(size);
+        if (StreamInfo.adpcmParam == NULL) {
+            msmFioClose(&file);
             return MSM_ERR_OUTOFMEM;
         }
-        if (msmFioRead(&spC, StreamInfo.unk1C, temp_r27, StreamInfo.unk54) < 0) {
-            msmFioClose(&spC);
+        if (msmFioRead(&file, StreamInfo.adpcmParam, size, StreamInfo.header.adpcmParamOfs) < 0) {
+            msmFioClose(&file);
             return MSM_ERR_READFAIL;
         }
     }
-    msmFioClose(&spC);
-    StreamInfo.unk00 = (StreamInfo.unk48 + 13) / 14;
-    StreamInfo.unk04 = (8 * StreamInfo.unk00 * StreamInfo.unk4C + 0x3F) & ~0x3F;
-    StreamInfo.unk08 = (StreamInfo.unk04 / 8) * 14;
-    StreamInfo.unk20 = msmMemAlloc(StreamInfo.unk44 * sizeof(*StreamInfo.unk20));
-    memset(StreamInfo.unk20, 0, StreamInfo.unk44 * sizeof(*StreamInfo.unk20));
+    msmFioClose(&file);
+    StreamInfo.sampleFrq = (StreamInfo.header.sampleFrq + (SND_STREAM_ADPCM_BLKSIZE-1)) / SND_STREAM_ADPCM_BLKSIZE ;
+    StreamInfo.bufSize = (8 * StreamInfo.sampleFrq * StreamInfo.header.maxBufs + 0x3F) & ~0x3F;
+    StreamInfo.frq = (StreamInfo.bufSize / SND_STREAM_ADPCM_BLKBYTES ) * SND_STREAM_ADPCM_BLKSIZE;
+    StreamInfo.slot = msmMemAlloc(StreamInfo.header.chanMax * sizeof(*StreamInfo.slot));
+    memset(StreamInfo.slot, 0, StreamInfo.header.chanMax * sizeof(*StreamInfo.slot));
     return 0;
 }
 
-void msmStreamPauseOff(s32 arg0) {
-    msmStreamUnk20Struct* temp_r31;
-    u32 temp_r3;
-    u32 var_r30;
+static void msmStreamPauseOff(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
+    u32 ofs;
+    u32 readSize;
 
-    temp_r31 = &StreamInfo.unk20[arg0];
-    if (temp_r31->unk14 == 0) {
+    slot = &StreamInfo.slot[streamNo];
+    if (slot->pauseTime == 0) {
         return;
     }
-    if (temp_r31->unk3C_5 == 0) {
-        temp_r31->unk14 = 0;
+    if (slot->pauseF == 0) {
+        slot->pauseTime = 0;
         return;
     }
-    if (temp_r31->unk18 != 0) {
-        temp_r31->unk18 = -(temp_r31->unk14 + 1);
-        if (temp_r31->unk18 == 0) {
-            temp_r31->unk0B = 0x7F;
-            msmStreamInline04(temp_r31);
+    if (slot->pauseTimeMax != 0) {
+        slot->pauseTimeMax = -(slot->pauseTime + 1);
+        if (slot->pauseTimeMax == 0) {
+            slot->pauseVol = 127;
+            msmStreamUpdateBaseParam(slot);
         }
-        temp_r31->unk14 = 0;
-        temp_r31->unk3C_5 = 0;
-    } else if (temp_r31->unk06 == 0 && DVDFastOpen(StreamInfo.unk0C, &temp_r31->unk70) == TRUE) {
-        if (--temp_r31->unk14 != 0) {
-            temp_r31->unk18 = -temp_r31->unk14;
-            temp_r31->unk1C = 0;
-            temp_r31->unk0B = 0;
+        slot->pauseTime = 0;
+        slot->pauseF = 0;
+    } else if (slot->status == 0 && DVDFastOpen(StreamInfo.pdtEntryNum, &slot->file) == TRUE) {
+        if (--slot->pauseTime != 0) {
+            slot->pauseTimeMax = -slot->pauseTime;
+            slot->fadeVol = 0;
+            slot->pauseVol = 0;
         } else {
-            temp_r31->unk0B = 0x7F;
+            slot->pauseVol = 127;
         }
-        temp_r31->unk14 = 0;
-        temp_r31->unk3C_1 = 1;
-        temp_r31->unk3C_2 = 0;
-        temp_r31->unk3C_4 = 0;
-        temp_r31->unk3C_5 = 0;
-        temp_r31->unk3C_6 = 0;
-        temp_r31->unk3C_0 = 1;
-        temp_r31->unk64 = temp_r31->unk68 = (temp_r31->unk10 / 8) * 14;
-        temp_r31->unk6C = 0;
-        temp_r31->unk4C = temp_r31->unk10;
-        var_r30 = temp_r31->unk34 / 2;
-        if ((temp_r3 = temp_r31->unk50 - temp_r31->unk4C) < temp_r31->unk34 / 2) {
-            var_r30 = temp_r3;
-            temp_r31->unk58 = temp_r31->unk34 / 2 - temp_r3;
-            temp_r31->unk5C = (void*) ((u32) temp_r31->unk30 + temp_r3);
-            memset(temp_r31->unk5C, 0, temp_r31->unk58);
+        slot->pauseTime = 0;
+        slot->firstF = TRUE;
+        slot->streamOffF = 0;
+        slot->shutdownF = 0;
+        slot->pauseF = 0;
+        slot->updateAramF = 0;
+        slot->bufNo = 1;
+        slot->unk64 = slot->unk68 = (slot->pauseLen / SND_STREAM_ADPCM_BLKBYTES) * SND_STREAM_ADPCM_BLKSIZE;
+        slot->unk6C = 0;
+        slot->streamPos = slot->pauseLen;
+        readSize = slot->streamBufSize / 2;
+        if ((ofs = slot->loopLen - slot->streamPos) < slot->streamBufSize / 2) {
+            readSize = ofs;
+            slot->streamReadSize = slot->streamBufSize / 2 - ofs;
+            slot->streamReadBuf = (void*) ((u32) slot->streamBuf + ofs);
+            memset(slot->streamReadBuf, 0, slot->streamReadSize);
         }
-        temp_r31->unk06 = 2;
-        temp_r31->unk4C += var_r30;
-        temp_r31->unk3C_3 = 1;
-        DVDReadAsync(&temp_r31->unk70, temp_r31->unk30, var_r30, temp_r31->unk48 + (temp_r31->unk4C - var_r30), msmStreamDvdCallback);
+        slot->status = 2;
+        slot->streamPos += readSize;
+        slot->readBusyF = TRUE;
+        DVDReadAsync(&slot->file, slot->streamBuf, readSize, slot->streamBaseOfs + (slot->streamPos - readSize), msmStreamDvdCallback);
     }
 }
 
-static inline void msmStreamInline05(s32 streamNo) {
-    msmStreamUnk20Struct* temp_r31;
+static inline void msmStreamOff(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
 
-    temp_r31 = &StreamInfo.unk20[streamNo];
-    switch (temp_r31->unk06) {
+    slot = &StreamInfo.slot[streamNo];
+    switch (slot->status) {
         case 2:
-            temp_r31->unk3C_4 = 1;
-            temp_r31->unk06 = 5;
+            slot->shutdownF = TRUE;
+            slot->status = 5;
             break;
         case 3:
-            msmStreamInline00(streamNo);
+            msmStreamClose(streamNo);
             break;
         case 4:
-            if (temp_r31->unk3C_2 == 0) {
-                sndStreamMixParameterEx(temp_r31->unk00, 0, 0x40, 0, 0, 0);
-                temp_r31->unk3C_2 = 1;
-                temp_r31->unk06 = 5;
+            if (slot->streamOffF == FALSE) {
+                sndStreamMixParameterEx(slot->stid, 0, 64, 0, 0, 0);
+                slot->streamOffF = TRUE;
+                slot->status = 5;
             }
             break;
     }
 }
 
-void msmStreamPauseOn(s32 streamNo, s32 arg1) {
-    msmStreamUnk20Struct* temp_r31;
+static void msmStreamPauseOn(s32 streamNo, s32 speed) {
+    MSM_STREAM_SLOT* slot;
 
-    temp_r31 = &StreamInfo.unk20[streamNo];
-    temp_r31->unk14 = 0;
-    if (temp_r31->unk3C_5 != 0) {
+    slot = &StreamInfo.slot[streamNo];
+    slot->pauseTime = 0;
+    if (slot->pauseF != 0) {
         return;
     }
-    temp_r31->unk3C_5 = 1;
-    temp_r31->unk18 = arg1 / 15;
-    if (temp_r31->unk18 != 0) {
-        temp_r31->unk1C = temp_r31->unk18;
-        temp_r31->unk0B = 0x7F;
+    slot->pauseF = TRUE;
+    slot->pauseTimeMax = speed / 15;
+    if (slot->pauseTimeMax != 0) {
+        slot->fadeVol = slot->pauseTimeMax;
+        slot->pauseVol = 127;
         return;
     }
-    temp_r31->unk10 = ((temp_r31->unk64 / 7) * 4) & ~7;
-    if (temp_r31->unk07 != 0) {
-        if (temp_r31->unk10 >= temp_r31->unk50 - temp_r31->unk34 / 4) {
-            temp_r31->unk10 = 0;
+    slot->pauseLen = ((slot->unk64 / 7) * 4) & ~7;
+    if (slot->stereoF != 0) {
+        if (slot->pauseLen >= slot->loopLen - slot->streamBufSize / 4) {
+            slot->pauseLen = 0;
         }
-    } else if (temp_r31->unk10 >= temp_r31->unk50) {
-        temp_r31->unk3C_5 = 0;
+    } else if (slot->pauseLen >= slot->loopLen) {
+        slot->pauseF = 0;
     }
-    msmStreamInline05(streamNo);
+    msmStreamOff(streamNo);
 }
 
-static void msmStreamPauseFade(s32 arg0) {
-    msmStreamUnk20Struct* temp_r5;
+static void msmStreamPauseFade(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
 
-    temp_r5 = &StreamInfo.unk20[arg0];
-    if (temp_r5->unk06 != 4) {
+    slot = &StreamInfo.slot[streamNo];
+    if (slot->status != 4) {
         return;
     }
-    if (temp_r5->unk18 > 0) {
-        if (--temp_r5->unk1C == 0) {
-            temp_r5->unk18 = 0;
-            temp_r5->unk3C_5 = 0;
-            msmStreamPauseOn(arg0, 0);
+    if (slot->pauseTimeMax > 0) {
+        if (--slot->fadeVol == 0) {
+            slot->pauseTimeMax = 0;
+            slot->pauseF = 0;
+            msmStreamPauseOn(streamNo, 0);
         } else {
-            temp_r5->unk0B = temp_r5->unk1C * 0x7F / temp_r5->unk18;
-            msmStreamInline04(temp_r5);
+            slot->pauseVol = slot->fadeVol * 127 / slot->pauseTimeMax;
+            msmStreamUpdateBaseParam(slot);
         }
-    } else if (temp_r5->unk18 < 0) {
-        if (++temp_r5->unk1C >= -temp_r5->unk18) {
-            temp_r5->unk18 = 0;
-            temp_r5->unk0B = 0x7F;
-            msmStreamInline04(temp_r5);
+    } else if (slot->pauseTimeMax < 0) {
+        if (++slot->fadeVol >= -slot->pauseTimeMax) {
+            slot->pauseTimeMax = 0;
+            slot->pauseVol = 127;
+            msmStreamUpdateBaseParam(slot);
         } else {
-            temp_r5->unk0B = temp_r5->unk1C * 0x7F / -temp_r5->unk18;
-            msmStreamInline04(temp_r5);
+            slot->pauseVol = slot->fadeVol * 127 / -slot->pauseTimeMax;
+            msmStreamUpdateBaseParam(slot);
         }
     }
 }
 
-static void msmStreamFade(s32 arg0) {
-    msmStreamUnk20Struct* temp_r5;
+static void msmStreamFade(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
 
-    temp_r5 = &StreamInfo.unk20[arg0];
-    if (temp_r5->unk06 != 4) {
+    slot = &StreamInfo.slot[streamNo];
+    if (slot->status != 4) {
         return;
     }
-    if (temp_r5->unk24 > 0) {
-        if (--temp_r5->unk28 == 0) {
-            temp_r5->unk24 = 0;
-            msmStreamInline03(arg0, 0);
+    if (slot->fadeMaxTime > 0) {
+        if (--slot->fadeTime == 0) {
+            slot->fadeMaxTime = 0;
+            msmStreamSetFade(streamNo, 0);
         } else {
-            temp_r5->unk0A = temp_r5->unk28 * 0x7F / temp_r5->unk24;
-            msmStreamInline04(temp_r5);
+            slot->volFade = slot->fadeTime * 127 / slot->fadeMaxTime;
+            msmStreamUpdateBaseParam(slot);
         }
-    } else if (temp_r5->unk24 < 0) {
-        if (++temp_r5->unk28 >= -temp_r5->unk24) {
-            temp_r5->unk24 = 0;
-            temp_r5->unk0A = 0x7F;
-            msmStreamInline04(temp_r5);
+    } else if (slot->fadeMaxTime < 0) {
+        if (++slot->fadeTime >= -slot->fadeMaxTime) {
+            slot->fadeMaxTime = 0;
+            slot->volFade = 127;
+            msmStreamUpdateBaseParam(slot);
         } else {
-            temp_r5->unk0A = temp_r5->unk28 * 0x7F / -temp_r5->unk24;
-            msmStreamInline04(temp_r5);
+            slot->volFade = slot->fadeTime * 127 / -slot->fadeMaxTime;
+            msmStreamUpdateBaseParam(slot);
         }
     }
 }
 
 static void msmStreamStopSub(s32 streamNo, s32 speed) {
-    msmStreamUnk20Struct* temp_r31;
-    s32 var_r4;
+    MSM_STREAM_SLOT* slot;
+    s32 time;
 
-    var_r4 = speed;
-    temp_r31 = &StreamInfo.unk20[streamNo];
-    if (temp_r31->unk3C_5 != 0) {
-        temp_r31->unk3C_5 = 0;
-        var_r4 = 0;
+    time = speed;
+    slot = &StreamInfo.slot[streamNo];
+    if (slot->pauseF != 0) {
+        slot->pauseF = 0;
+        time = 0;
     }
-    temp_r31->unk24 = var_r4 / 15;
-    if (temp_r31->unk24 != 0) {
-        temp_r31->unk28 = temp_r31->unk24;
-        temp_r31->unk0A = 0x7F;
+    slot->fadeMaxTime = time / 15;
+    if (slot->fadeMaxTime != 0) {
+        slot->fadeTime = slot->fadeMaxTime;
+        slot->volFade = 127;
         return;
     }
-    msmStreamInline05(streamNo);
+    msmStreamOff(streamNo);
 }
 
-static void msmStreamSetParamSub(msmStreamUnk20Struct* arg0) {
-    int var_r10;
-    s32 temp_var;
+static void msmStreamSetParamSub(MSM_STREAM_SLOT* slot) {
+    int pan;
+    s32 vol;
 
-    if (StreamInfo.unk12 != 0) {
-        var_r10 = arg0->unk0C + arg0->unk0D - 0x40;
-        if (var_r10 < 0) {
-            var_r10 = 0;
+    if (StreamInfo.outputMode != 0) {
+        pan = slot->panBase + slot->pan - 64;
+        if (pan < 0) {
+            pan = 0;
         }
-        if (var_r10 > 0x7F) {
-            var_r10 = 0x7F;
+        if (pan > 127) {
+            pan = 127;
         }
     } else {
-        var_r10 = 0x40;
+        pan = 64;
     }
-    temp_var = arg0->unk08 * arg0->unk09 * arg0->unk0A * arg0->unk0B / 2048383;
-    sndStreamMixParameterEx(arg0->unk00, temp_var * StreamInfo.unk11 / 127, var_r10, arg0->unk2C, arg0->unk2D, arg0->unk2E);
+    vol = slot->volBase * slot->vol * slot->volFade * slot->pauseVol / (127*127*127);
+    sndStreamMixParameterEx(slot->stid, vol * StreamInfo.masterVol / 127, pan, slot->span, slot->auxA, slot->auxB);
 }
 
-s32 msmStreamPackStartStereo(s32 arg0, MSM_STREAMPARAM* arg1, s32 arg2) {
-    s32 var_r29;
-    s32 var_r28;
-    s32 var_r27;
-    u32 temp_r3_3;
-    u32 temp_r3_4;
-    StructSlotInitArg2 sp1C;
-    msmStreamUnk20Struct* temp_r25;
-    msmStreamUnk20Struct* temp_r24;
-    StructSlotInitArg1* temp_r23;
+static s32 msmStreamPackStartStereo(s32 streamId, MSM_STREAMPARAM *param, s32 sampleOfs) {
+    s32 flag;
+    s32 chanL;
+    s32 chanR;
+    u32 sizeL;
+    u32 sizeR;
+    STREAM_PARAM streamParam;
+    MSM_STREAM_SLOT* slotL;
+    MSM_STREAM_SLOT* slotR;
+    MSM_STREAM_PACK* pack;
 
-    var_r29 = (arg1 != NULL) ? arg1->flag : 0;
-    if (var_r29 & MSM_STREAMPARAM_CHAN) {
-        var_r28 = arg1->chan;
-        var_r27 = arg1->chan + 1;
-        if (var_r28 < 0 || var_r28 >= StreamInfo.unk44) {
-            return MSM_ERR_6E;
+    flag = (param != NULL) ? param->flag : 0;
+    if (flag & MSM_STREAMPARAM_CHAN) {
+        chanL = param->chan;
+        chanR = param->chan + 1;
+        if (chanL < 0 || chanL >= StreamInfo.header.chanMax) {
+            return MSM_ERR_CHANLIMIT;
         }
-        if (var_r27 < 0 || var_r27 >= StreamInfo.unk44) {
-            return MSM_ERR_6E;
+        if (chanR < 0 || chanR >= StreamInfo.header.chanMax) {
+            return MSM_ERR_CHANLIMIT;
         }
-        if (msmStreamInline01(&StreamInfo.unk20[var_r28])) {
-            return MSM_ERR_6E;
+        if (msmStreamIsPlay(&StreamInfo.slot[chanL])) {
+            return MSM_ERR_CHANLIMIT;
         }
-        if (msmStreamInline01(&StreamInfo.unk20[var_r27])) {
-            return MSM_ERR_6E;
+        if (msmStreamIsPlay(&StreamInfo.slot[chanR])) {
+            return MSM_ERR_CHANLIMIT;
         }
     } else {
-        for (var_r28 = 0; var_r28 < StreamInfo.unk44; var_r28++) {
-            if (!msmStreamInline01(&StreamInfo.unk20[var_r28])) {
+        for (chanL = 0; chanL < StreamInfo.header.chanMax; chanL++) {
+            if (!msmStreamIsPlay(&StreamInfo.slot[chanL])) {
                 break;
             }
         }
-        for (var_r27 = var_r28 + 1; var_r27 < StreamInfo.unk44; var_r27++) {
-            if (!msmStreamInline01(&StreamInfo.unk20[var_r27])) {
+        for (chanR = chanL + 1; chanR < StreamInfo.header.chanMax; chanR++) {
+            if (!msmStreamIsPlay(&StreamInfo.slot[chanR])) {
                 break;
             }
         }
-        if (var_r28 == StreamInfo.unk44 || var_r27 == StreamInfo.unk44) {
-            return MSM_ERR_6E;
+        if (chanL == StreamInfo.header.chanMax || chanR == StreamInfo.header.chanMax) {
+            return MSM_ERR_CHANLIMIT;
         }
     }
-    temp_r25 = &StreamInfo.unk20[var_r28];
-    temp_r24 = &StreamInfo.unk20[var_r27];
-    temp_r23 = (StructSlotInitArg1*) ((u32) StreamInfo.unk18 + (StreamInfo.unk14[arg0] - StreamInfo.unk58));
-    sp1C.unk00 = (var_r29 & MSM_STREAMPARAM_VOL) ? arg1->vol : 0x7F;
-    sp1C.unk02 = (var_r29 & MSM_STREAMPARAM_SPAN) ? arg1->span : (s32) temp_r23->unk03;
-    sp1C.unk03 = (var_r29 & MSM_STREAMPARAM_AUXA) ? arg1->auxA : (s32) temp_r23->unk04;
-    sp1C.unk04 = (var_r29 & MSM_STREAMPARAM_AUXB) ? arg1->auxB : (s32) temp_r23->unk05;
-    sp1C.unk08 = arg2;
+    slotL = &StreamInfo.slot[chanL];
+    slotR = &StreamInfo.slot[chanR];
+    pack = (MSM_STREAM_PACK*) ((u32) StreamInfo.streamPackFlag + (StreamInfo.streamPackList[streamId] - StreamInfo.header.streamPackOfs));
+    streamParam.vol = (flag & MSM_STREAMPARAM_VOL) ? param->vol : 127;
+    streamParam.span = (flag & MSM_STREAMPARAM_SPAN) ? param->span : (s32) pack->span;
+    streamParam.auxA = (flag & MSM_STREAMPARAM_AUXA) ? param->auxA : (s32) pack->auxA;
+    streamParam.auxB = (flag & MSM_STREAMPARAM_AUXB) ? param->auxB : (s32) pack->auxB;
+    streamParam.sampleOfs = sampleOfs;
     msmSysIrqDisable();
-    sp1C.unk01 = 0;
-    temp_r3_3 = msmStreamSlotInit(temp_r25, temp_r23, &sp1C, 0);
-    sp1C.unk01 = 0x7F;
-    temp_r3_4 = msmStreamSlotInit(temp_r24, temp_r23, &sp1C, 1);
-    temp_r25->unk04 = arg0;
-    temp_r24->unk04 = -1;
-    temp_r25->unk0E = var_r27;
-    temp_r24->unk0F = var_r28;
-    if ((var_r29 & MSM_STREAMPARAM_FADESPEED) && arg1->fadeSpeed != 0) {
-        temp_r25->unk24 = temp_r24->unk24 = -arg1->fadeSpeed / 15;
-        temp_r25->unk28 = temp_r24->unk28 = 0;
-        temp_r25->unk0A = temp_r24->unk0A = 0;
+    streamParam.pan = 0;
+    sizeL = msmStreamSlotInit(slotL, pack, &streamParam, 0);
+    streamParam.pan = 127;
+    sizeR = msmStreamSlotInit(slotR, pack, &streamParam, 1);
+    slotL->streamId = streamId;
+    slotR->streamId = -1;
+    slotL->slotL = chanR;
+    slotR->slotR = chanL;
+    if ((flag & MSM_STREAMPARAM_FADESPEED) && param->fadeSpeed != 0) {
+        slotL->fadeMaxTime = slotR->fadeMaxTime = -param->fadeSpeed / 15;
+        slotL->fadeTime = slotR->fadeTime = 0;
+        slotL->volFade = slotR->volFade = 0;
     }
     msmSysIrqEnable();
-    if (temp_r3_3 == 0) {
+    if (sizeL == 0) {
         return 0;
     }
-    if (var_r29 & MSM_STREAMPARAM_PAUSE) {
-        temp_r25->unk3C_5 = temp_r24->unk3C_5 = 1;
-        temp_r25->unk06 = temp_r24->unk06 = 0;
-        return var_r28;
+    if (flag & MSM_STREAMPARAM_PAUSE) {
+        slotL->pauseF = slotR->pauseF = 1;
+        slotL->status = slotR->status = 0;
+        return chanL;
     }
-    if (DVDFastOpen(StreamInfo.unk0C, &temp_r25->unk70) != 1) {
+    if (DVDFastOpen(StreamInfo.pdtEntryNum, &slotL->file) != 1) {
         return MSM_ERR_OPENFAIL;
     }
-    if (DVDFastOpen(StreamInfo.unk0C, &temp_r24->unk70) != 1) {
-        DVDClose(&temp_r25->unk70);
+    if (DVDFastOpen(StreamInfo.pdtEntryNum, &slotR->file) != 1) {
+        DVDClose(&slotL->file);
         return MSM_ERR_OPENFAIL;
     }
-    temp_r25->unk4C += temp_r3_3;
-    temp_r24->unk4C += temp_r3_4;
-    temp_r25->unk3C_3 = 1;
-    DVDReadAsync(&temp_r25->unk70, temp_r25->unk30, temp_r3_3, temp_r25->unk48 + (temp_r25->unk4C - temp_r3_3), msmStreamDvdCallback);
-    temp_r24->unk3C_3 = 1;
-    DVDReadAsync(&temp_r24->unk70, temp_r24->unk30, temp_r3_4, temp_r24->unk48 + (temp_r24->unk4C - temp_r3_4), msmStreamDvdCallback);
-    return var_r28;
+    slotL->streamPos += sizeL;
+    slotR->streamPos += sizeR;
+    slotL->readBusyF = 1;
+    DVDReadAsync(&slotL->file, slotL->streamBuf, sizeL, slotL->streamBaseOfs + (slotL->streamPos - sizeL), msmStreamDvdCallback);
+    slotR->readBusyF = 1;
+    DVDReadAsync(&slotR->file, slotR->streamBuf, sizeR, slotR->streamBaseOfs + (slotR->streamPos - sizeR), msmStreamDvdCallback);
+    return chanL;
 }
 
-s32 msmStreamPackStartMono(s32 arg0, MSM_STREAMPARAM* arg1, s32 arg2) {
-    s32 var_r30;
-    s32 var_r29;
-    u32 temp_r3_2;
-    StructSlotInitArg2 sp18;
-    msmStreamUnk20Struct* temp_r27;
-    StructSlotInitArg1* temp_r25;
+static s32 msmStreamPackStartMono(s32 streamId, MSM_STREAMPARAM *param, s32 sampleOfs) {
+    s32 flag;
+    s32 chan;
+    u32 size;
+    STREAM_PARAM streamParam;
+    MSM_STREAM_SLOT* slot;
+    MSM_STREAM_PACK* pack;
 
-    var_r30 = (arg1 != NULL) ? arg1->flag : 0;
-    if (var_r30 & MSM_STREAMPARAM_CHAN) {
-        var_r29 = arg1->chan;
-        if (var_r29 < 0 || var_r29 >= StreamInfo.unk44) {
-            return MSM_ERR_6E;
+    flag = (param != NULL) ? param->flag : 0;
+    if (flag & MSM_STREAMPARAM_CHAN) {
+        chan = param->chan;
+        if (chan < 0 || chan >= StreamInfo.header.chanMax) {
+            return MSM_ERR_CHANLIMIT;
         }
-        if (msmStreamInline01(&StreamInfo.unk20[var_r29])) {
-            return MSM_ERR_6E;
+        if (msmStreamIsPlay(&StreamInfo.slot[chan])) {
+            return MSM_ERR_CHANLIMIT;
         }
     } else {
-        for (var_r29 = 0; var_r29 < StreamInfo.unk44; var_r29++) {
-            if (!msmStreamInline01(&StreamInfo.unk20[var_r29])) {
+        for (chan = 0; chan < StreamInfo.header.chanMax; chan++) {
+            if (!msmStreamIsPlay(&StreamInfo.slot[chan])) {
                 break;
             }
         }
-        if (var_r29 == StreamInfo.unk44) {
-            return MSM_ERR_6E;
+        if (chan == StreamInfo.header.chanMax) {
+            return MSM_ERR_CHANLIMIT;
         }
     }
-    temp_r27 = &StreamInfo.unk20[var_r29];
-    temp_r25 = (StructSlotInitArg1*) ((u32) StreamInfo.unk18 + (StreamInfo.unk14[arg0] - StreamInfo.unk58));
-    sp18.unk00 = (var_r30 & MSM_STREAMPARAM_VOL) ? arg1->vol : 0x7F;
-    sp18.unk01 = (var_r30 & MSM_STREAMPARAM_PAN) ? arg1->pan : 0x40;
-    sp18.unk02 = (var_r30 & MSM_STREAMPARAM_SPAN) ? arg1->span : (s32) temp_r25->unk03;
-    sp18.unk03 = (var_r30 & MSM_STREAMPARAM_AUXA) ? arg1->auxA : (s32) temp_r25->unk04;
-    sp18.unk04 = (var_r30 & MSM_STREAMPARAM_AUXB) ? arg1->auxB : (s32) temp_r25->unk05;
-    sp18.unk08 = arg2;
+    slot = &StreamInfo.slot[chan];
+    pack = (MSM_STREAM_PACK*) ((u32) StreamInfo.streamPackFlag + (StreamInfo.streamPackList[streamId] - StreamInfo.header.streamPackOfs));
+    streamParam.vol = (flag & MSM_STREAMPARAM_VOL) ? param->vol : 127;
+    streamParam.pan = (flag & MSM_STREAMPARAM_PAN) ? param->pan : 64;
+    streamParam.span = (flag & MSM_STREAMPARAM_SPAN) ? param->span : (s32) pack->span;
+    streamParam.auxA = (flag & MSM_STREAMPARAM_AUXA) ? param->auxA : (s32) pack->auxA;
+    streamParam.auxB = (flag & MSM_STREAMPARAM_AUXB) ? param->auxB : (s32) pack->auxB;
+    streamParam.sampleOfs = sampleOfs;
     msmSysIrqDisable();
-    temp_r3_2 = msmStreamSlotInit(temp_r27, temp_r25, &sp18, 0);
-    temp_r27->unk04 = arg0;
-    if ((var_r30 & MSM_STREAMPARAM_FADESPEED) && arg1->fadeSpeed != 0) {
-        temp_r27->unk24 = -arg1->fadeSpeed / 15;
-        temp_r27->unk28 = 0;
-        temp_r27->unk0A = 0;
+    size = msmStreamSlotInit(slot, pack, &streamParam, 0);
+    slot->streamId = streamId;
+    if ((flag & MSM_STREAMPARAM_FADESPEED) && param->fadeSpeed != 0) {
+        slot->fadeMaxTime = -param->fadeSpeed / 15;
+        slot->fadeTime = 0;
+        slot->volFade = 0;
     }
     msmSysIrqEnable();
-    if (temp_r3_2 == 0) {
+    if (size == 0) {
         return 0;
     }
-    if (var_r30 & MSM_STREAMPARAM_PAUSE) {
-        temp_r27->unk3C_5 = 1;
-        temp_r27->unk06 = 0;
-        return var_r29;
+    if (flag & MSM_STREAMPARAM_PAUSE) {
+        slot->pauseF = TRUE;
+        slot->status = 0;
+        return chan;
     }
-    if (DVDFastOpen(StreamInfo.unk0C, &temp_r27->unk70) != 1) {
+    if (DVDFastOpen(StreamInfo.pdtEntryNum, &slot->file) != 1) {
         return MSM_ERR_OPENFAIL;
     }
-    temp_r27->unk4C += temp_r3_2;
-    temp_r27->unk3C_3 = 1;
-    DVDReadAsync(&temp_r27->unk70, temp_r27->unk30, temp_r3_2, temp_r27->unk48 + (temp_r27->unk4C - temp_r3_2), msmStreamDvdCallback);
-    return var_r29;
+    slot->streamPos += size;
+    slot->readBusyF = TRUE;
+    DVDReadAsync(&slot->file, slot->streamBuf, size, slot->streamBaseOfs + (slot->streamPos - size), msmStreamDvdCallback);
+    return chan;
 }
 
-// Note: identical to msmStreamInline05.
-void msmStreamSlotOff(s32 streamNo) {
-    msmStreamUnk20Struct* temp_r31;
+// Note: identical to msmStreamOff.
+static void msmStreamSlotOff(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
 
-    temp_r31 = &StreamInfo.unk20[streamNo];
-    switch (temp_r31->unk06) {
+    slot = &StreamInfo.slot[streamNo];
+    switch (slot->status) {
         case 2:
-            temp_r31->unk3C_4 = 1;
-            temp_r31->unk06 = 5;
+            slot->shutdownF = 1;
+            slot->status = 5;
             break;
         case 3:
-            msmStreamInline00(streamNo);
+            msmStreamClose(streamNo);
             break;
         case 4:
-            if (temp_r31->unk3C_2 == 0) {
-                sndStreamMixParameterEx(temp_r31->unk00, 0, 0x40, 0, 0, 0);
-                temp_r31->unk3C_2 = 1;
-                temp_r31->unk06 = 5;
+            if (slot->streamOffF == 0) {
+                sndStreamMixParameterEx(slot->stid, 0, 64, 0, 0, 0);
+                slot->streamOffF = TRUE;
+                slot->status = 5;
             }
             break;
     }
 }
 
-static inline void msmStreamInline06(s32 streamNo) {
-    msmStreamUnk20Struct* temp_r25;
+static void msmStreamShutdown(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
 
-    temp_r25 = &StreamInfo.unk20[streamNo];
+    slot = &StreamInfo.slot[streamNo];
     msmStreamSlotOff(streamNo);
-    sndStreamDeactivate(temp_r25->unk00);
-    if (temp_r25->unk3C_3 == 0) {
-        msmStreamInline00(streamNo);
+    sndStreamDeactivate(slot->stid);
+    if (slot->readBusyF == 0) {
+        msmStreamClose(streamNo);
     } else {
-        temp_r25->unk3C_4 = 1;
+        slot->shutdownF = 1;
     }
 }
 
-static void msmStreamData(s32 arg0) {
-    s32 temp_r5;
-    u32 var_r28;
-    void* var_r27;
-    msmStreamUnk20Struct* temp_r26;
-    s32 var_r24;
+static void msmStreamData(s32 streamNo) {
+    s32 dataSize;
+    u32 readSize;
+    void* dataPtr;
+    MSM_STREAM_SLOT* slot;
+    s32 off1;
 
-    temp_r26 = &StreamInfo.unk20[arg0];
-    var_r28 = temp_r5 = temp_r26->unk34 / 2;
-    var_r27 = (temp_r26->unk3C_0 != 0)
-        ? (void*) ((u32) temp_r26->unk30 + temp_r5)
-        :  temp_r26->unk30;
-    temp_r26->unk58 = var_r24 = 0;
-    if (temp_r26->unk4C + var_r28 > temp_r26->unk50) {
-        if (temp_r26->unk50 > temp_r26->unk4C) {
-            var_r28 = temp_r26->unk50 - temp_r26->unk4C;
-            temp_r26->unk58 = temp_r5 - var_r28;
-            temp_r26->unk5C = (void*) ((u32) var_r27 + var_r28);
-        } else if (temp_r26->unk07 != 0) {
-            temp_r26->unk4C = temp_r26->unk60;
+    slot = &StreamInfo.slot[streamNo];
+    readSize = dataSize = slot->streamBufSize / 2;
+    dataPtr = (slot->bufNo != 0)
+        ? (void*) ((u32) slot->streamBuf + dataSize)
+        :  slot->streamBuf;
+    slot->streamReadSize = off1 = 0;
+    if (slot->streamPos + readSize > slot->loopLen) {
+        if (slot->loopLen > slot->streamPos) {
+            readSize = slot->loopLen - slot->streamPos;
+            slot->streamReadSize = dataSize - readSize;
+            slot->streamReadBuf = (void*) ((u32) dataPtr + readSize);
+        } else if (slot->stereoF != 0) {
+            slot->streamPos = slot->streamPosStart;
         } else {
-            memset(var_r27, 0, temp_r5);
-            if (temp_r26->unk3C_0 != 0) {
-                var_r24 = temp_r26->unk38 / 2;
+            memset(dataPtr, 0, dataSize);
+            if (slot->bufNo != 0) {
+                off1 = slot->streamFrq / 2;
             }
-            sndStreamARAMUpdate(temp_r26->unk00, var_r24, temp_r26->unk38 / 2, 0, 0);
-            var_r28 = 0;
+            sndStreamARAMUpdate(slot->stid, off1, slot->streamFrq / 2, 0, 0);
+            readSize = 0;
         }
     }
-    if (var_r28 != 0) {
-        if (DVDGetCommandBlockStatus(&temp_r26->unk70.cb) != 0) {
-            if (temp_r26->unk3C_6 != 1) {
-                temp_r26->unk3C_6 = 1;
-                sndStreamMixParameterEx(temp_r26->unk00, 0, 0x40, 0x40, 0, 0);
-                memset(temp_r26->unk30, 0, temp_r26->unk34);
-                sndStreamARAMUpdate(temp_r26->unk00, 0, temp_r26->unk38, 0, 0);
+    if (readSize != 0) {
+        if (DVDGetCommandBlockStatus(&slot->file.cb) != 0) {
+            if (slot->updateAramF != TRUE) {
+                slot->updateAramF = TRUE;
+                sndStreamMixParameterEx(slot->stid, 0, 64, 64, 0, 0);
+                memset(slot->streamBuf, 0, slot->streamBufSize);
+                sndStreamARAMUpdate(slot->stid, 0, slot->streamFrq, 0, 0);
             }
         } else {
-            if (temp_r26->unk3C_6 == 1) {
-                temp_r26->unk3C_6 = 0;
-                msmStreamInline04(temp_r26);
+            if (slot->updateAramF == TRUE) {
+                slot->updateAramF = FALSE;
+                msmStreamUpdateBaseParam(slot);
             }
-            temp_r26->unk4C += var_r28;
-            temp_r26->unk3C_3 = 1;
-            DVDReadAsync(&temp_r26->unk70, var_r27, var_r28, temp_r26->unk48 + (temp_r26->unk4C - var_r28), msmStreamDvdCallback);
+            slot->streamPos += readSize;
+            slot->readBusyF = 1;
+            DVDReadAsync(&slot->file, dataPtr, readSize, slot->streamBaseOfs + (slot->streamPos - readSize), msmStreamDvdCallback);
         }
-    } else if (temp_r26->unk3C_1 != 0) {
-        temp_r26->unk3C_1= 0;
+    } else if (slot->firstF != 0) {
+        slot->firstF= 0;
     } else {
-        msmStreamInline06(arg0);
+        msmStreamShutdown(streamNo);
     }
-    temp_r26->unk3C_0 ^= 1;
+    slot->bufNo ^= 1;
 }
 
-static inline BOOL msmStreamInline02(s32 streamNo) {
-    msmStreamUnk20Struct* temp_ptr;
+static BOOL msmStreamActivateStream(s32 streamNo) {
+    MSM_STREAM_SLOT* slot;
 
-    temp_ptr = &StreamInfo.unk20[streamNo];
-    msmStreamSetParamSub(temp_ptr);
-    sndStreamFrq(temp_ptr->unk00, temp_ptr->unk40);
-    sndStreamADPCMParameter(temp_ptr->unk00, temp_ptr->unk44);
-    sndStreamARAMUpdate(temp_ptr->unk00, 0, temp_ptr->unk38 / 2, 0, 0);
-    if (sndStreamActivate(temp_ptr->unk00)) {
-        temp_ptr->unk06 = 4;
+    slot = &StreamInfo.slot[streamNo];
+    msmStreamSetParamSub(slot);
+    sndStreamFrq(slot->stid, slot->frq);
+    sndStreamADPCMParameter(slot->stid, slot->adpcmInfo);
+    sndStreamARAMUpdate(slot->stid, 0, slot->streamFrq / 2, 0, 0);
+    if (sndStreamActivate(slot->stid)) {
+        slot->status = 4;
         msmStreamData(streamNo);
         return TRUE;
     } else {
-        msmStreamInline00(streamNo);
+        msmStreamClose(streamNo);
         return FALSE;
     }
 }
 
-static void msmStreamDvdCallback(s32 arg0, DVDFileInfo* arg1) {
-    s32 var_r28;
-    msmStreamUnk20Struct* temp_r27;
+static void msmStreamDvdCallback(s32 result, DVDFileInfo* fileInfo) {
+    s32 readSize;
+    MSM_STREAM_SLOT* slot;
 
-    for (var_r28 = 0; var_r28 < StreamInfo.unk44; var_r28++) {
-        if (&StreamInfo.unk20[var_r28].unk70 == arg1) {
+    for (readSize = 0; readSize < StreamInfo.header.chanMax; readSize++) {
+        if (&StreamInfo.slot[readSize].file == fileInfo) {
             break;
         }
     }
-    if (var_r28 == StreamInfo.unk44) {
+    if (readSize == StreamInfo.header.chanMax) {
         return;
     }
-    temp_r27 = &StreamInfo.unk20[var_r28];
-    temp_r27->unk3C_3 = 0;
-    if (temp_r27->unk3C_4 != 0) {
-        temp_r27->unk3C_4 = 0;
-        msmStreamInline00(var_r28);
+    slot = &StreamInfo.slot[readSize];
+    slot->readBusyF = 0;
+    if (slot->shutdownF != 0) {
+        slot->shutdownF = 0;
+        msmStreamClose(readSize);
         return;
     }
-    if (DVDGetCommandBlockStatus(&arg1->cb) == 0) {
-        switch (temp_r27->unk06) {
+    if (DVDGetCommandBlockStatus(&fileInfo->cb) == 0) {
+        switch (slot->status) {
             case 2:
-                if (temp_r27->unk0E != -1) {
-                    if (StreamInfo.unk20[temp_r27->unk0E].unk06 != 3) {
-                        temp_r27->unk06 = 3;
+                if (slot->slotL != -1) {
+                    if (StreamInfo.slot[slot->slotL].status != 3) {
+                        slot->status = 3;
                         break;
                     }
-                    if (!msmStreamInline02(temp_r27->unk0E)) {
-                        temp_r27->unk0E = -1;
+                    if (!msmStreamActivateStream(slot->slotL)) {
+                        slot->slotL = -1;
                     }
                 }
-                if (temp_r27->unk0F != -1) {
-                    if (StreamInfo.unk20[temp_r27->unk0F].unk06 != 3) {
-                        temp_r27->unk06 = 3;
+                if (slot->slotR != -1) {
+                    if (StreamInfo.slot[slot->slotR].status != 3) {
+                        slot->status = 3;
                         break;
                     }
-                    if (!msmStreamInline02(temp_r27->unk0F)) {
-                        temp_r27->unk0F = -1;
+                    if (!msmStreamActivateStream(slot->slotR)) {
+                        slot->slotR = -1;
                     }
                 }
-                if (!msmStreamInline02(var_r28)) {
-                    if (temp_r27->unk0E != -1) {
-                        StreamInfo.unk20[temp_r27->unk0E].unk0F = -1;
+                if (!msmStreamActivateStream(readSize)) {
+                    if (slot->slotL != -1) {
+                        StreamInfo.slot[slot->slotL].slotR = -1;
                     }
-                    if (temp_r27->unk0F != -1) {
-                        StreamInfo.unk20[temp_r27->unk0F].unk0E = -1;
+                    if (slot->slotR != -1) {
+                        StreamInfo.slot[slot->slotR].slotL = -1;
                     }
                 }
                 break;
             case 4:
-                if (temp_r27->unk4C >= temp_r27->unk50) {
-                    if (temp_r27->unk07 != 0) {
-                        temp_r27->unk4C = temp_r27->unk60;
-                        if (temp_r27->unk58 != 0) {
-                            temp_r27->unk3C_3 = 1;
-                            DVDReadAsync(arg1, temp_r27->unk5C, temp_r27->unk58, temp_r27->unk48 + temp_r27->unk4C, msmStreamDvdCallback2);
-                            temp_r27->unk4C += temp_r27->unk58;
+                if (slot->streamPos >= slot->loopLen) {
+                    if (slot->stereoF != 0) {
+                        slot->streamPos = slot->streamPosStart;
+                        if (slot->streamReadSize != 0) {
+                            slot->readBusyF = 1;
+                            DVDReadAsync(fileInfo, slot->streamReadBuf, slot->streamReadSize, slot->streamBaseOfs + slot->streamPos, msmStreamDvdCallback2);
+                            slot->streamPos += slot->streamReadSize;
                             break;
                         }
-                    } else if (temp_r27->unk58 != 0) {
-                        memset(temp_r27->unk5C, 0, temp_r27->unk58);
+                    } else if (slot->streamReadSize != 0) {
+                        memset(slot->streamReadBuf, 0, slot->streamReadSize);
                     }
                 }
-                sndStreamARAMUpdate(temp_r27->unk00, (temp_r27->unk3C_0 != 0) ? 0 : temp_r27->unk38 / 2, temp_r27->unk38 / 2, 0, 0);
+                sndStreamARAMUpdate(slot->stid, (slot->bufNo != 0) ? 0 : slot->streamFrq / 2, slot->streamFrq / 2, 0, 0);
                 break;
             case 5:
-                temp_r27->unk3C_4 = 0;
-                msmStreamInline00(var_r28);
+                slot->shutdownF = 0;
+                msmStreamClose(readSize);
                 break;
         }
     } else {
-        if (temp_r27->unk06 == 4) {
-            sndStreamDeactivate(temp_r27->unk00);
+        if (slot->status == 4) {
+            sndStreamDeactivate(slot->stid);
         }
-        msmStreamInline00(var_r28);
-        if (temp_r27->unk0E != -1) {
-            StreamInfo.unk20[temp_r27->unk0E].unk0F = -1;
+        msmStreamClose(readSize);
+        if (slot->slotL != -1) {
+            StreamInfo.slot[slot->slotL].slotR = -1;
         }
-        if (temp_r27->unk0F != -1) {
-            StreamInfo.unk20[temp_r27->unk0F].unk0E = -1;
+        if (slot->slotR != -1) {
+            StreamInfo.slot[slot->slotR].slotL = -1;
         }
     }
 }
 
-static void msmStreamDvdCallback2(s32 arg0, DVDFileInfo* arg1) {
-    msmStreamUnk20Struct* var_r30;
-    s32 var_r28;
+static void msmStreamDvdCallback2(s32 result, DVDFileInfo* fileInfo) {
+    MSM_STREAM_SLOT* slot;
+    s32 readSize;
 
-    for (var_r28 = 0; var_r28 < StreamInfo.unk44; var_r28++) {
-        var_r30 = &StreamInfo.unk20[var_r28];
-        if (&var_r30->unk70 == arg1) {
+    for (readSize = 0; readSize < StreamInfo.header.chanMax; readSize++) {
+        slot = &StreamInfo.slot[readSize];
+        if (&slot->file == fileInfo) {
             break;
         }
     }
-    if (var_r28 == StreamInfo.unk44) {
+    if (readSize == StreamInfo.header.chanMax) {
         return;
     }
-    var_r30->unk3C_3 = 0;
-    if (var_r30->unk3C_4 != 0) {
-        var_r30->unk3C_4 = 0;
-        msmStreamInline00(var_r28);
-    } else if (DVDGetCommandBlockStatus(&arg1->cb) == 0) {
-        sndStreamARAMUpdate(var_r30->unk00, (var_r30->unk3C_0 != 0) ? 0 : var_r30->unk38 / 2, var_r30->unk38 / 2, 0, 0);
+    slot->readBusyF = FALSE;
+    if (slot->shutdownF != 0) {
+        slot->shutdownF = FALSE;
+        msmStreamClose(readSize);
+    } else if (DVDGetCommandBlockStatus(&fileInfo->cb) == 0) {
+        sndStreamARAMUpdate(slot->stid, (slot->bufNo != 0) ? 0 : slot->streamFrq / 2, slot->streamFrq / 2, 0, 0);
     } else {
-        if (var_r30->unk06 == 4) {
-            sndStreamDeactivate(var_r30->unk00);
+        if (slot->status == 4) {
+            sndStreamDeactivate(slot->stid);
         }
-        msmStreamInline00(var_r28);
-        if (var_r30->unk0E != -1) {
-            StreamInfo.unk20[var_r30->unk0E].unk0F = -1;
+        msmStreamClose(readSize);
+        if (slot->slotL != -1) {
+            StreamInfo.slot[slot->slotL].slotR = -1;
         }
-        if (var_r30->unk0F != -1) {
-            StreamInfo.unk20[var_r30->unk0F].unk0E = -1;
+        if (slot->slotR != -1) {
+            StreamInfo.slot[slot->slotR].slotL = -1;
         }
     }
 }
 
 static u32 msmStreamUpdateFunc(void* buffer1, u32 len1, void* buffer2, u32 len2, u32 user) {
-    msmStreamUnk20Struct* temp_r31;
-    s32 temp_r4;
-    s32 temp_r0;
-    s32 var_r3;
+    MSM_STREAM_SLOT* slot;
+    s32 len3;
+    s32 updateLen;
+    s32 len;
 
-    temp_r31 = &StreamInfo.unk20[user];
-    if (temp_r31->unk3C_2 != 0) {
-        msmStreamInline06(user);
+    slot = &StreamInfo.slot[user];
+    if (slot->streamOffF != 0) {
+        msmStreamShutdown(user);
         return 0;
     }
-    temp_r0 = temp_r31->unk38 / 2;
-    if (len1 < temp_r0) {
-        var_r3 = 0;
-        temp_r31->unk64 = temp_r31->unk68 + (len1 - temp_r31->unk6C);
+    updateLen = slot->streamFrq / 2;
+    if (len1 < updateLen) {
+        len = 0;
+        slot->unk64 = slot->unk68 + (len1 - slot->unk6C);
     } else {
         msmStreamData(user);
-        var_r3 = temp_r0;
-        temp_r4 = temp_r31->unk68 + (temp_r0 - temp_r31->unk6C);
-        temp_r31->unk68 = temp_r4;
-        temp_r31->unk64 = temp_r4;
-        temp_r31->unk6C = 0;
+        len = updateLen;
+        len3 = slot->unk68 + (updateLen - slot->unk6C);
+        slot->unk68 = len3;
+        slot->unk64 = len3;
+        slot->unk6C = 0;
     }
-    if (temp_r31->unk64 >= temp_r31->unk54) {
-        if (temp_r31->unk07 != 0) {
-            temp_r31->unk68 = 0;
-            temp_r31->unk64 -= temp_r31->unk54;
-            if (len1 < temp_r0) {
-                temp_r31->unk6C = len1 - temp_r31->unk64;
+    if (slot->unk64 >= slot->loopEndOfs) {
+        if (slot->stereoF != 0) {
+            slot->unk68 = 0;
+            slot->unk64 -= slot->loopEndOfs;
+            if (len1 < updateLen) {
+                slot->unk6C = len1 - slot->unk64;
             }
         } else {
-            temp_r31->unk3C_2 = 1;
-            temp_r31->unk3C_5 = 0;
+            slot->streamOffF = 1;
+            slot->pauseF = 0;
         }
     }
-    return var_r3;
+    return len;
 }
 
-static s32 msmStreamSlotInit(msmStreamUnk20Struct* arg0, StructSlotInitArg1* arg1, StructSlotInitArg2* arg2, s32 arg3) {
-    StructSlotInitInnerArg1* temp_r10;
+static s32 msmStreamSlotInit(MSM_STREAM_SLOT *slot, MSM_STREAM_PACK* pack, STREAM_PARAM* param, s32 no) {
+    MSM_STREAM *stream;
     s32 temp_r3;
-    s32 var_r30;
+    s32 ret;
 
-    temp_r10 = &arg1->unk10[arg3];
-    arg0->unk08 = arg1->unk01;
-    arg0->unk09 = arg2->unk00;
-    arg0->unk0A = arg0->unk0B = 0x7F;
-    arg0->unk0C = arg1->unk02;
-    arg0->unk0D = arg2->unk01;
-    arg0->unk2C = arg2->unk02;
-    arg0->unk2D = arg2->unk03;
-    arg0->unk2E = arg2->unk04;
-    arg0->unk07 = (arg1->unk00 >> 1) & 1;
-    arg0->unk48 = temp_r10->unk00;
-    arg0->unk60 = (arg1->unk0C >> 1) & ~7;
-    arg0->unk40 = arg1->unk06;
-    arg0->unk44 = &StreamInfo.unk1C[temp_r10->unk04];
-    arg0->unk24 = 0;
-    arg0->unk18 = 0;
-    arg0->unk14 = 0;
-    arg0->unk10 = 0;
-    arg0->unk3C_1 = 1;
-    arg0->unk3C_2 = 0;
-    arg0->unk3C_4 = 0;
-    arg0->unk3C_5 = 0;
-    arg0->unk3C_6 = 0;
-    arg0->unk3C_0 = 1;
-    arg0->unk34 = (StreamInfo.unk48 * StreamInfo.unk4C * 8 / 14 + 0x3F) & ~0x3F;
-    if (arg0->unk34 > StreamInfo.unk04) {
-        arg0->unk34 = StreamInfo.unk04;
+    stream = &pack->stream[no];
+    slot->volBase = pack->vol;
+    slot->vol = param->vol;
+    slot->volFade = slot->pauseVol = 127;
+    slot->panBase = pack->pan;
+    slot->pan = param->pan;
+    slot->span = param->span;
+    slot->auxA = param->auxA;
+    slot->auxB = param->auxB;
+    slot->stereoF = (pack->flag >> 1) & 1;
+    slot->streamBaseOfs = stream->sampleOfs;
+    slot->streamPosStart = (pack->loopOfsStart >> 1) & ~7;
+    slot->frq = pack->frq;
+    slot->adpcmInfo = &StreamInfo.adpcmParam[stream->adpcmParamIdx];
+    slot->fadeMaxTime = 0;
+    slot->pauseTimeMax = 0;
+    slot->pauseTime = 0;
+    slot->pauseLen = 0;
+    slot->firstF = 1;
+    slot->streamOffF = 0;
+    slot->shutdownF = 0;
+    slot->pauseF = 0;
+    slot->updateAramF = 0;
+    slot->bufNo = 1;
+    slot->streamBufSize = (StreamInfo.header.sampleFrq * StreamInfo.header.maxBufs * SND_STREAM_ADPCM_BLKBYTES / SND_STREAM_ADPCM_BLKSIZE + 0x3F) & ~0x3F;
+    if (slot->streamBufSize > StreamInfo.bufSize) {
+        slot->streamBufSize = StreamInfo.bufSize;
     }
-    arg0->unk38 = (arg0->unk34 / 8) * 14;
-    arg0->unk50 = (arg1->unk08 >> 1) & ~0x1F;
-    arg0->unk54 = (arg0->unk50 / 8) * 14;
-    arg0->unk64 = arg0->unk68 = 0;
-    arg0->unk6C = 0;
-    arg0->unk0E = -1;
-    arg0->unk0F = -1;
-    arg0->unk4C = arg2->unk08;
-    var_r30 = arg0->unk34 / 2;
-    if ((temp_r3 = arg0->unk50 - arg0->unk4C) < arg0->unk34 / 2) {
-        var_r30 = temp_r3;
-        arg0->unk58 = arg0->unk34 / 2 - temp_r3;
-        arg0->unk5C = (void*) ((u32) arg0->unk30 + temp_r3);
-        memset(arg0->unk5C, 0, arg0->unk58);
+    slot->streamFrq = (slot->streamBufSize / SND_STREAM_ADPCM_BLKBYTES) * SND_STREAM_ADPCM_BLKSIZE;
+    slot->loopLen = (pack->loopOfsEnd >> 1) & ~0x1F;
+    slot->loopEndOfs = (slot->loopLen / SND_STREAM_ADPCM_BLKBYTES) * SND_STREAM_ADPCM_BLKSIZE;
+    slot->unk64 = slot->unk68 = 0;
+    slot->unk6C = 0;
+    slot->slotL = -1;
+    slot->slotR = -1;
+    slot->streamPos = param->sampleOfs;
+    ret = slot->streamBufSize / 2;
+    if ((temp_r3 = slot->loopLen - slot->streamPos) < slot->streamBufSize / 2) {
+        ret = temp_r3;
+        slot->streamReadSize = slot->streamBufSize / 2 - temp_r3;
+        slot->streamReadBuf = (void*) ((u32) slot->streamBuf + temp_r3);
+        memset(slot->streamReadBuf, 0, slot->streamReadSize);
     }
-    arg0->unk06 = 2;
-    return var_r30;
+    slot->status = 2;
+    return ret;
 }
