@@ -1630,20 +1630,7 @@ void fn_1_5670(float arg8, float *arg0, float *arg1, float (*arg2)[3], float (*a
             sp48[var_r30] = arg2[var_r30][var_r29];
             sp8[var_r30] = arg3[var_r30][var_r29];
         }
-        var_f30 = arg8;
-        var_r31 = var_f30;
-        var_f30 -= var_r31;
-        var_f31 = arg1[var_r31 + 1] - arg1[var_r31];
-        var_f29 = var_f31 * var_f30;
-        var_f28 = sp48[var_r31]
-            + (var_f29
-                * ((var_f29 * ((3.0f * sp8[var_r31]) + ((var_f29 * (sp8[var_r31 + 1] - sp8[var_r31])) / var_f31)))
-                    + (((sp48[var_r31 + 1] - sp48[var_r31]) / var_f31) - (var_f31 * ((2.0f * sp8[var_r31]) + sp8[var_r31 + 1])))));
-        if (var_f31 == 0.0f) {
-            var_f28 = sp48[var_r31];
-        }
-        var_f27 = var_f28;
-        arg0[var_r29] = var_f27;
+        arg0[var_r29] = fn_1_513C(arg8, arg1, sp48, sp8, 3);
     }
 }
 

@@ -119,7 +119,7 @@ typedef struct M438MainWork3 {
     float unk_170[3];
     float unk_17C[3];
     u16 unk_188[3];
-} M438MainWork3; /* size =  */
+} M438MainWork3; /* size = 0x190 */
 
 typedef struct M438StructBss298 {
     /* 0x00 */ u8 unk_00;

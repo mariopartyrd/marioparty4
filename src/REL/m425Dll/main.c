@@ -462,9 +462,6 @@ void fn_1_F48(omObjData *object)
 void fn_1_FA8(omObjData *object)
 {
     M425DllUnkBss10Struct *var_r31;
-    s32 var_ctr;
-    void *var_r4;
-    s32 temp_r3;
     s32 var_r30;
     s16 *var_r28;
     s32 var_r27;
@@ -582,11 +579,8 @@ void fn_1_14CC(Mtx arg0, float arg8, float arg9, float argA)
 
 float fn_1_15EC(float arg8, float arg9)
 {
-    float var_f31;
-    float var_f30;
-
-    var_f30 = 360.0f;
-    var_f31 = 180.0 * (atan2f(arg9, arg8) / M_PI);
+    float var_f30 = 360.0f;
+    float var_f31 = 180.0 * (atan2f(arg9, arg8) / M_PI);
     if (var_f31 < 0.0f) {
         var_f31 += var_f30;
     }
@@ -684,6 +678,18 @@ void fn_1_1B40(omObjData *object)
             int x = 12;
             int y = 24;
             char *str = "%f";
+            (void)x;
+            (void)x;
+            (void)x;
+            (void)x;
+            (void)y;
+            (void)y;
+            (void)y;
+            (void)y;
+            (void)str;
+            (void)str;
+            (void)str;
+            (void)str;
             print8(x, y, 1.5f, str, sqrtf(fn_1_15EC(object->trans.x, object->trans.y)));
         }
         var_r31->unk_38 = var_r31->unk_04 * sind(var_r31->unk_18);
