@@ -1086,8 +1086,8 @@ config.libs = [
     Rel(
         "m428Dll",  # Cliffhangers
         objects={
-            Object(NonMatching, "REL/m428Dll/main.c"),
-            Object(NonMatching, "REL/m428Dll/map.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/map.c"),
             Object(NonMatching, "REL/m428Dll/player.c"),
         },
     ),
