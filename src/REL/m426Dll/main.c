@@ -394,18 +394,18 @@ void fn_1_330(omObjData *object)
                 if (!WipeStatGet()) {
                     lbl_1_bss_54 = 1;
                     lbl_1_bss_58 = 0;
-                    lbl_1_bss_30 = 120;
+                    lbl_1_bss_30 = 2 * REFRESH_RATE;
                 }
                 break;
             case 1:
-                if (++lbl_1_bss_58 >= 15.0f) {
+                if (++lbl_1_bss_58 >= REFRESH_RATE / 4.0f) {
                     lbl_1_bss_54 = 2;
                     lbl_1_bss_58 = 0;
                     lbl_1_bss_38 = 1;
                 }
                 break;
             case 2:
-                var_f31 = 0.007246377f * lbl_1_bss_58;
+                var_f31 = (VERSION_NTSC ? 0.007246377f : 0.008695652f) * lbl_1_bss_58;
                 var_f31 = sind(90.0f * var_f31);
                 var_f31 *= var_f31;
                 for (var_r31 = 0; var_r31 < 7; var_r31++) {
@@ -418,7 +418,7 @@ void fn_1_330(omObjData *object)
                 Center.y = sp10[4];
                 Center.z = sp10[5];
                 CZoom = sp10[6];
-                if (++lbl_1_bss_58 >= 138.0f) {
+                if (++lbl_1_bss_58 >= (VERSION_NTSC ? 138.0f : 115.0f)) {
                     CRot.x = lbl_1_data_4C[0][0];
                     CRot.y = lbl_1_data_4C[0][1];
                     CRot.z = lbl_1_data_4C[0][2];
@@ -431,7 +431,7 @@ void fn_1_330(omObjData *object)
                 }
                 break;
             case 3:
-                if (++lbl_1_bss_58 >= 30.0f) {
+                if (++lbl_1_bss_58 >= (REFRESH_RATE / 2.0f)) {
                     lbl_1_bss_50 = MGSeqCreate(3, 0);
                     lbl_1_bss_54 = 4;
                     lbl_1_bss_58 = 0;
@@ -452,9 +452,9 @@ void fn_1_330(omObjData *object)
                     lbl_1_bss_40 = 1;
                     lbl_1_bss_3C = 1;
                     lbl_1_bss_54 = 5;
-                    lbl_1_bss_58 = 1800;
+                    lbl_1_bss_58 = 30 * REFRESH_RATE;
                     fn_1_7328(1);
-                    lbl_1_bss_4C = MGSeqCreate(1, lbl_1_bss_58 / 60, -1, -1);
+                    lbl_1_bss_4C = MGSeqCreate(1, lbl_1_bss_58 / REFRESH_RATE, -1, -1);
                 }
                 break;
             case 5:
@@ -463,10 +463,10 @@ void fn_1_330(omObjData *object)
                     var_r25 = 0;
                 }
                 MGSeqParamSet(lbl_1_bss_4C, 1, var_r25);
-                if (lbl_1_bss_58 == 600) {
+                if (lbl_1_bss_58 == 10 * REFRESH_RATE) {
                     lbl_1_bss_34 = 3.0f;
                 }
-                else if (lbl_1_bss_58 == 1200) {
+                else if (lbl_1_bss_58 == 20 * REFRESH_RATE) {
                     lbl_1_bss_34 = 2.5f;
                 }
                 if (--lbl_1_bss_58 < -1 || lbl_1_bss_1C[0] <= 0 || lbl_1_bss_1C[1] <= 0) {
@@ -529,7 +529,7 @@ void fn_1_330(omObjData *object)
                 }
                 break;
             case 7:
-                if (++lbl_1_bss_58 > 210.0f) {
+                if (++lbl_1_bss_58 > 3.5f * REFRESH_RATE) {
                     lbl_1_bss_50 = -1;
                     lbl_1_bss_54 = 8;
                     lbl_1_bss_58 = 0;
@@ -946,8 +946,8 @@ void fn_1_16F8(omObjData *object)
                         }
                         else if (var_f27 != 0.0f) {
                             var_f27 = 1.0f / var_f27;
-                            object->trans.x += var_f28 * (var_f30 * var_f27);
-                            object->trans.z += var_f28 * (var_f31 * var_f27);
+                            object->trans.x += var_f28 * (var_f30 * var_f27) * (60.0f / REFRESH_RATE);
+                            object->trans.z += var_f28 * (var_f31 * var_f27) * (60.0f / REFRESH_RATE);
                         }
                     }
                     var_f30 = object->trans.x - var_f22;
@@ -1041,16 +1041,16 @@ void fn_1_16F8(omObjData *object)
                 break;
             case 6:
                 var_r31->unk_2C++;
-                if (var_r31->unk_2C < 60.0f) {
+                if (var_r31->unk_2C < 1.0f * REFRESH_RATE) {
                     if (lbl_1_bss_40 == 0) {
-                        var_r31->unk_2C = 59;
+                        var_r31->unk_2C = REFRESH_RATE - 1;
                     }
                 }
-                else if (var_r31->unk_2C == 60.0f) {
+                else if (var_r31->unk_2C == 1.0f * REFRESH_RATE) {
                     var_r31->unk_28 = 7;
                     CharModelMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_28], 0.0f, 8.0f, HU3D_MOTATTR_NONE);
                 }
-                else if (var_r31->unk_2C >= 90.0f) {
+                else if (var_r31->unk_2C >= (VERSION_NTSC ? 90.0f : 80.0f)) {
                     var_r31->unk_24 = 7;
                     var_r31->unk_28 = 8;
                     CharModelMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_28], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
@@ -1240,7 +1240,7 @@ void fn_1_2B74(Vec *arg0)
                         var_r31->unk_2C = 0;
                         var_r31->unk_24 = 3;
                         var_r31->unk_AC = 32;
-                        var_r31->unk_30 = 90;
+                        var_r31->unk_30 = 1.5f * REFRESH_RATE;
                         var_r31->unk_90 = var_r31->unk_94 = -1;
                         if (!var_r29->unk_00) {
                             var_r31->unk_9C.x = -1.0f;
@@ -1370,7 +1370,7 @@ void fn_1_2F5C(omObjData *object, float *arg1, float *arg2, s32 *arg3)
                 break;
             case 1:
                 if (var_r31->unk_B0 != -1) {
-                    if (++var_r31->unk_B4 < 120.0f) {
+                    if (++var_r31->unk_B4 < 2.0f * REFRESH_RATE) {
                         if (var_r31->unk_90 == var_r31->unk_B0) {
                             var_r31->unk_B0 = -1;
                             return;
@@ -1389,12 +1389,12 @@ void fn_1_2F5C(omObjData *object, float *arg1, float *arg2, s32 *arg3)
                 return;
             case 2:
                 if (var_r31->unk_B0 != -1) {
-                    if (++var_r31->unk_B4 < 120.0f && var_r31->unk_B0 != var_r28->unk_B0) {
+                    if (++var_r31->unk_B4 < 2.0f * REFRESH_RATE && var_r31->unk_B0 != var_r28->unk_B0) {
                         if (var_r31->unk_90 == var_r31->unk_B0) {
                             *arg3 |= 256;
                             var_r31->unk_B0 = -1;
                             var_r31->unk_B4 = 0;
-                            var_r31->unk_B8 = (50.0f + (frand() % 15)) - (var_r31->unk_18 * 10);
+                            var_r31->unk_B8 = ((VERSION_NTSC ? 50.0f : 45.0f) + (frand() % 15)) - (var_r31->unk_18 * 10);
                             var_r31->unk_BC = 0;
                             return;
                         }
@@ -1585,7 +1585,7 @@ void fn_1_3714(omObjData *object)
         sp8.x = 0.0f;
         sp8.y = 500.0f;
         sp8.z = var_r31->unk_38;
-        var_r25 = 0.3f * (var_r31->unk_00 * 60);
+        var_r25 = 0.3f * (var_r31->unk_00 * REFRESH_RATE);
         var_r31->unk_34 = fn_1_5C6C(var_r31->unk_00, var_r25, &sp8);
     }
     lbl_1_bss_24 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M426, 1), MEMORY_DEFAULT_NUM));
@@ -1975,7 +1975,7 @@ void fn_1_5134(omObjData *object)
                 }
                 break;
             case 1:
-                if ((var_r31->unk_40 -= 50.0f) <= 50.0f) {
+                if ((var_r31->unk_40 -= (VERSION_NTSC ? 50.0f : 60.000004f)) <= 50.0f) {
                     if (lbl_1_bss_54 <= 4) {
                         fn_1_3654(0);
                         fn_1_3654(1);
@@ -2005,8 +2005,8 @@ void fn_1_5134(omObjData *object)
                 }
                 if (fabs(fn_1_75F4(var_f31, var_r31->unk_48)) < 5.0) {
                     var_r31->unk_48 = var_f31;
-                    if ((var_r31->unk_34 += 0.1f) > lbl_1_bss_34) {
-                        var_r31->unk_34 = lbl_1_bss_34;
+                    if ((var_r31->unk_34 += 0.1f) > lbl_1_bss_34 * (60.0f / REFRESH_RATE)) {
+                        var_r31->unk_34 = lbl_1_bss_34 * (60.0f / REFRESH_RATE);
                     }
                 }
                 else {
@@ -2054,7 +2054,7 @@ void fn_1_5134(omObjData *object)
                     if (lbl_1_bss_1C[1] < 0) {
                         lbl_1_bss_1C[1] = 0;
                     }
-                    lbl_1_bss_30 = 60;
+                    lbl_1_bss_30 = REFRESH_RATE;
                     lbl_1_bss_28 = 1.0f;
                     var_r31->unk_30 = 0;
                     var_r31->unk_28 = 4;
@@ -2476,7 +2476,7 @@ void fn_1_6704(omObjData *object)
         if (var_r31->unk_04) {
             Hu3DModelPosSet(var_r31->unk_00, var_r31->unk_0C, var_r31->unk_10, var_r31->unk_14);
             Hu3DModelRotSet(var_r31->unk_00, CRot.x, CRot.y, CRot.z);
-            if (++var_r31->unk_08 >= 120.0f) {
+            if (++var_r31->unk_08 >= 2.0f * REFRESH_RATE) {
                 Hu3DModelAttrSet(var_r31->unk_00, HU3D_ATTR_DISPOFF);
                 var_r31->unk_04 = 0;
                 var_r31->unk_08 = 0;
@@ -3043,9 +3043,9 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSetArray(GX_VA_TEX0, var_r31->unk_44, 8);
         if (!HmfInverseMtxF3X3(arg1, sp128)) {
-            PSMTXIdentity(sp128);
+            MTXIdentity(sp128);
         }
-        PSMTXReorder(sp128, sp8);
+        MTXReorder(sp128, sp8);
         if (var_r31->unk_4C) {
             var_r18 = var_r31->unk_4C;
             var_r18(arg0, var_r31, arg1);
@@ -3053,7 +3053,7 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
         var_r29 = var_r31->unk_3C;
         var_r30 = var_r31->unk_40;
         var_r26 = var_r31->unk_44;
-        PSMTXROMultVecArray(sp8, lbl_1_data_22C, &sp38[0], 4);
+        MTXROMultVecArray(sp8, lbl_1_data_22C, &sp38[0], 4);
         for (var_r23 = 0; var_r23 < var_r31->unk_24; var_r23++, var_r29++) {
             if (!var_r29->unk_28) {
                 var_r30->x = var_r30->y = var_r30->z = 0.0f;
@@ -3083,9 +3083,9 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
                     VECScale(&lbl_1_data_22C[1], &sp98[1], var_r29->unk_28);
                     VECScale(&lbl_1_data_22C[2], &sp98[2], var_r29->unk_28);
                     VECScale(&lbl_1_data_22C[3], &sp98[3], var_r29->unk_28);
-                    PSMTXRotRad(spC8, 90, var_r29->unk_2C);
-                    PSMTXConcat(sp128, spC8, &spF8[0]);
-                    PSMTXMultVecArray(spF8, &sp98[0], &sp68[0], 4);
+                    MTXRotRad(spC8, 90, var_r29->unk_2C);
+                    MTXConcat(sp128, spC8, &spF8[0]);
+                    MTXMultVecArray(spF8, &sp98[0], &sp68[0], 4);
                     VECAdd(&sp68[0], &var_r29->unk_30, var_r30++);
                     VECAdd(&sp68[1], &var_r29->unk_30, var_r30++);
                     VECAdd(&sp68[2], &var_r29->unk_30, var_r30++);
@@ -3222,7 +3222,7 @@ void fn_1_8E48(ModelData *arg0, Mtx arg1)
     GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
     GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-    PSMTXIdentity(sp50);
+    MTXIdentity(sp50);
     GXLoadPosMtxImm(sp50, 0);
     GXSetZMode(GX_FALSE, GX_ALWAYS, GX_TRUE);
     GXSetNumChans(1);
