@@ -1065,8 +1065,8 @@ config.libs = [
     Rel(
         "m425Dll",  # The Great Deflate
         objects={
-            Object(NonMatching, "REL/m425Dll/main.c"),
-            Object(NonMatching, "REL/m425Dll/thwomp.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m425Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m425Dll/thwomp.c"),
         },
     ),
     Rel(
