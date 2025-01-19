@@ -325,6 +325,11 @@ static inline s32 GWPlayerTeamGet(s32 player)
     return GWPlayer[player].team;
 }
 
+static inline s32 GWPlayerHandicapGet(s32 player)
+{
+    return GWPlayer[player].handicap;
+}
+
 static inline s32 GWLuckyValueGet(void)
 {
     return GWSystem.lucky_value;
