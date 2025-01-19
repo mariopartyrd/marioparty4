@@ -308,8 +308,7 @@ void fn_1_29C(omObjData *arg0)
         lbl_1_bss_864[var_r31] = Hu3DParManCreate(temp_r28, 0x1F4, &lbl_1_data_168[0]);
         Hu3DParManAttrSet(lbl_1_bss_864[var_r31], 0x864);
         Hu3DParticleBlendModeSet(Hu3DParManModelIDGet(lbl_1_bss_864[var_r31]), 1U);
-        Hu3DParManPosSet(
-            lbl_1_bss_864[var_r31], (100.0 * sind(36.0f * var_r31)), 0.0f, 100.0 * cosd(36.0f * var_r31));
+        Hu3DParManPosSet(lbl_1_bss_864[var_r31], (100.0 * sind(36.0f * var_r31)), 0.0f, 100.0 * cosd(36.0f * var_r31));
         Hu3DParManRotSet(lbl_1_bss_864[var_r31], -90.0f, 0.0f, 0.0f);
     }
 
@@ -596,10 +595,10 @@ void fn_1_20F4(void)
 
             Hu3DModelObjMtxGet(temp_r3, lbl_1_data_D8[(var_r29 * 2) + 1], spC0);
             Hu3DMtxTransGet(spC0, &sp18);
-            PSMTXInverse(sp30, sp60);
+            MTXInverse(sp30, sp60);
             Hu3DModelObjMtxGet(temp_r3, lbl_1_data_D8[(var_r29 * 2) + 1], spC0);
             Hu3DMtxTransGet(spC0, &sp18);
-            PSMTXMultVec(sp60, &sp18, &sp18);
+            MTXMultVec(sp60, &sp18, &sp18);
 
             temp_f27 = atan2d(sp18.z, sp18.x);
             temp_r31 = &lbl_1_bss_40[var_r29 * 2];
@@ -654,7 +653,7 @@ void fn_1_28F8(Point3d *arg0, Point3d *arg1)
 
     cam = &Hu3DCamera[0];
     C_MTXLookAt(sp18, &cam->pos, &cam->up, &cam->target);
-    PSMTXMultVec(sp18, arg0, &spC);
+    MTXMultVec(sp18, arg0, &spC);
 
     temp_f31 = (1.2f * (spC.z * (sind(cam->fov / 2) / (cosd(cam->fov / 2)))));
     temp_f30 = (spC.z * (sind(cam->fov / 2) / (cosd(cam->fov / 2))));
@@ -795,10 +794,10 @@ void fn_1_2B68(ModelData *mdl, Mtx arg1)
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
     GXSetAlphaCompare(GX_GEQUAL, 1U, GX_AOP_AND, GX_GEQUAL, 1U);
     GXSetZCompLoc(0U);
-    PSMTXIdentity(arg1);
+    MTXIdentity(arg1);
     GXLoadPosMtxImm(arg1, 0U);
 
-    PSMTXInvXpose(arg1, sp90);
+    MTXInvXpose(arg1, sp90);
     GXLoadNrmMtxImm(sp90, 0);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
 
@@ -812,7 +811,7 @@ void fn_1_2B68(ModelData *mdl, Mtx arg1)
     GXLoadTexObj(&sp30, GX_TEXMAP0);
     GXSetNumIndStages(1U);
 
-    PSMTXScale(sp150, 0.1f, 0.1f, 0.0f);
+    MTXScale(sp150, 0.1f, 0.1f, 0.0f);
     sp18[0][0] = sp150[0][0];
     sp18[0][1] = sp150[0][1];
     sp18[0][2] = 0.0f;
@@ -820,12 +819,12 @@ void fn_1_2B68(ModelData *mdl, Mtx arg1)
     sp18[1][1] = sp150[1][1];
     sp18[1][2] = 0.0f;
 
-    PSMTXRotRad(spF0, 0x58, -1.5707964f);
+    MTXRotRad(spF0, 0x58, -1.5707964f);
     mtxRot(spF0, 0.0f, 0.0f, 0.0f);
     temp_f31 = 0.0015625f;
-    PSMTXScale(sp120, temp_f31, temp_f31, temp_f31);
-    PSMTXConcat(sp120, spF0, sp150);
-    PSMTXTrans(spC0, 0.5f, 0.0f, 0.5f);
+    MTXScale(sp120, temp_f31, temp_f31, temp_f31);
+    MTXConcat(sp120, spF0, sp150);
+    MTXTrans(spC0, 0.5f, 0.0f, 0.5f);
     GXLoadTexMtxImm(sp150, 0x1EU, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_POS, 0x1EU, 0U, 0x7DU);
     GXSetIndTexOrder(GX_INDTEXSTAGE0, GX_TEXCOORD0, GX_TEXMAP1);

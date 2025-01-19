@@ -666,11 +666,11 @@ void fn_1_E214(omObjData *object)
                 }
                 Hu3DModelScaleSet(object->model[5], var_f30, var_f30, var_f30);
                 var_r31->unk_50 += VECMag(&var_r31->unk_2C) / 3.125f;
-                PSMTXTrans(sp94, -var_r31->unk_68, -var_r31->unk_6C, -var_r31->unk_70);
-                PSMTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
-                PSMTXConcat(sp64, sp94, sp34);
-                PSMTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
-                PSMTXConcat(sp94, sp34, var_r26->unk_F0);
+                MTXTrans(sp94, -var_r31->unk_68, -var_r31->unk_6C, -var_r31->unk_70);
+                MTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
+                MTXConcat(sp64, sp94, sp34);
+                MTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
+                MTXConcat(sp94, sp34, var_r26->unk_F0);
                 var_r27 = 6;
                 var_f31 = 2.0f;
                 var_r25 = 0;
@@ -690,14 +690,14 @@ void fn_1_E214(omObjData *object)
                     var_r31->unk_2C.x = var_r31->unk_2C.y = var_r31->unk_2C.z = 0.0f;
                 }
                 var_r31->unk_50 = fn_1_13AF4(var_r31->unk_50, 0.0f, 0.5f);
-                PSMTXTrans(sp94, -var_r31->unk_68, -var_r31->unk_6C, -var_r31->unk_70);
-                PSMTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
-                PSMTXConcat(sp64, sp94, sp34);
-                PSMTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
-                PSMTXConcat(sp94, sp34, var_r26->unk_F0);
+                MTXTrans(sp94, -var_r31->unk_68, -var_r31->unk_6C, -var_r31->unk_70);
+                MTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
+                MTXConcat(sp64, sp94, sp34);
+                MTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
+                MTXConcat(sp94, sp34, var_r26->unk_F0);
                 if (var_r31->unk_5E != 0) {
-                    PSMTXTrans(sp94, 100.0f * (0.2f * (((var_r31->unk_5E & 1) * 2) - 1)), 0.0f, 0.0f);
-                    PSMTXConcat(sp94, var_r26->unk_F0, var_r26->unk_F0);
+                    MTXTrans(sp94, 100.0f * (0.2f * (((var_r31->unk_5E & 1) * 2) - 1)), 0.0f, 0.0f);
+                    MTXConcat(sp94, var_r26->unk_F0, var_r26->unk_F0);
                     if (--var_r31->unk_5E == 0) {
                         if (++var_r31->unk_5C >= 4) {
                             var_r31->unk_00_field3 = 0;
@@ -708,7 +708,7 @@ void fn_1_E214(omObjData *object)
                             Hu3DModelPosSet(object->model[6], object->trans.x + var_r31->unk_68, object->trans.y + var_r31->unk_6C,
                                 object->trans.z + var_r31->unk_70);
                             Hu3DModelAttrReset(object->model[6], HU3D_ATTR_DISPOFF);
-                            PSMTXIdentity(var_r26->unk_F0);
+                            MTXIdentity(var_r26->unk_F0);
                             fn_1_117BC(var_r31->unk_14.x, 25.0f, &var_r31->unk_44, &var_r31->unk_2C);
                         }
                     }
@@ -733,7 +733,7 @@ void fn_1_E214(omObjData *object)
         if (fn_1_6A44(sp28) == 1) {
             var_r31->unk_00_field0 = 1;
             var_r26 = &Hu3DData[object->model[0]];
-            PSMTXIdentity(var_r26->unk_F0);
+            MTXIdentity(var_r26->unk_F0);
             omVibrate(var_r31->unk_02, 0xC, 4, 2);
             HuAudCharVoicePlayPos(var_r31->unk_0C, 0x123, &object->trans);
             for (var_r24 = 0; var_r24 < 2; var_r24++) {
@@ -804,13 +804,13 @@ void fn_1_F194(omObjData *object)
                     mtxTransCat(sp80, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
                     VECCrossProduct(&sp44, &sp8, &sp44);
                     if (sp44.y >= 0.0f) {
-                        PSMTXTrans(sp50, -10.0f, 0.0f, 0.0f);
-                        PSMTXConcat(sp50, sp80, sp80);
+                        MTXTrans(sp50, -10.0f, 0.0f, 0.0f);
+                        MTXConcat(sp50, sp80, sp80);
                         fn_1_94C0(sp80, 10, 0);
                     }
                     else {
-                        PSMTXTrans(sp50, 10.0f, 0.0f, 0.0f);
-                        PSMTXConcat(sp50, sp80, sp80);
+                        MTXTrans(sp50, 10.0f, 0.0f, 0.0f);
+                        MTXConcat(sp50, sp80, sp80);
                         fn_1_94C0(sp80, 10, 1);
                     }
                 }
@@ -868,13 +868,13 @@ void fn_1_F694(omObjData *object)
                 mtxTransCat(sp68, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
                 VECCrossProduct(&sp20, &sp14, &sp8);
                 if (sp8.y >= 0.0f) {
-                    PSMTXTrans(sp38, -10.0f, 0.0f, 0.0f);
-                    PSMTXConcat(sp38, sp68, sp68);
+                    MTXTrans(sp38, -10.0f, 0.0f, 0.0f);
+                    MTXConcat(sp38, sp68, sp68);
                     fn_1_94C0(sp68, 10, 0);
                 }
                 else {
-                    PSMTXTrans(sp38, 10.0f, 0.0f, 0.0f);
-                    PSMTXConcat(sp38, sp68, sp68);
+                    MTXTrans(sp38, 10.0f, 0.0f, 0.0f);
+                    MTXConcat(sp38, sp68, sp68);
                     fn_1_94C0(sp68, 10, 1);
                 }
             }
@@ -1228,8 +1228,8 @@ void fn_1_10744(omObjData *object)
             if ((var_r31->unk_64 < 0x50) && (var_r31->unk_64 > 0x1E)) {
                 mtxRot(sp48, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
                 mtxTransCat(sp48, var_r29->pos.x, var_r29->pos.y, var_r29->pos.z);
-                PSMTXTrans(sp18, 10.0f, 0.0f, 0.0f);
-                PSMTXConcat(sp18, sp48, sp48);
+                MTXTrans(sp18, 10.0f, 0.0f, 0.0f);
+                MTXConcat(sp18, sp48, sp48);
                 fn_1_94C0(sp48, 10, 0);
             }
             var_r31->unk_2C.x = var_r31->unk_54 * (100.0 * (0.10000000149011612 * sind(180.0f + var_r31->unk_14.x)));
@@ -1345,15 +1345,15 @@ void fn_1_114A0(omObjData *object)
     }
     mtxRot(sp9C, object->rot.x, object->rot.y, object->trans.z);
     mtxScaleCat(sp9C, object->scale.x, object->scale.y, object->scale.z);
-    PSMTXTrans(sp9C, object->trans.x, object->trans.y, object->trans.z);
-    PSMTXRotRad(sp6C, 0x78, 0.017453292f * var_r31->unk_50);
-    PSMTXConcat(sp9C, sp6C, sp9C);
-    PSMTXCopy(sp9C, spC);
+    MTXTrans(sp9C, object->trans.x, object->trans.y, object->trans.z);
+    MTXRotRad(sp6C, 0x78, 0.017453292f * var_r31->unk_50);
+    MTXConcat(sp9C, sp6C, sp9C);
+    MTXCopy(sp9C, spC);
     mtxScaleCat(spC, 2.0f, 2.0f, 2.0f);
-    PSMTXCopy(spC, Hu3DData[object->model[5]].unk_F0);
-    PSMTXTrans(sp3C, 0.0f, 110.0f, 0.0f);
-    PSMTXConcat(sp9C, sp3C, spC);
-    PSMTXCopy(spC, Hu3DData[object->model[7]].unk_F0);
+    MTXCopy(spC, Hu3DData[object->model[5]].unk_F0);
+    MTXTrans(sp3C, 0.0f, 110.0f, 0.0f);
+    MTXConcat(sp9C, sp3C, spC);
+    MTXCopy(spC, Hu3DData[object->model[7]].unk_F0);
 }
 
 void fn_1_117BC(float arg8, float arg9, UnkM406PlayerStruct2 *arg0, Vec *arg1)
@@ -1753,7 +1753,7 @@ void fn_1_12BC4(omObjData *object)
         var_r30->target.z = Center.z;
         C_MTXLookAt(spA8, &var_r30->pos, &var_r30->up, &var_r30->target);
         for (var_r31 = 0; var_r31 < lbl_1_bss_1C4; var_r31++) {
-            PSMTXMultVec(spA8, &lbl_1_bss_104[var_r31], &sp198[var_r31]);
+            MTXMultVec(spA8, &lbl_1_bss_104[var_r31], &sp198[var_r31]);
             spD8[var_r31].x = sp198[var_r31].x / (sp198[var_r31].z * (sind((var_r30->fov / 2)) / cosd((var_r30->fov / 2))));
             spD8[var_r31].y = sp198[var_r31].y / (sp198[var_r31].z * (sind((var_r30->fov / 2)) / cosd((var_r30->fov / 2))));
         }
@@ -1811,13 +1811,13 @@ s32 fn_1_136AC(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
     HsfTransform *var_r31 = &arg0->data.curr;
 
     mtxRot(sp144, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-    PSMTXScale(sp174, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-    PSMTXConcat(sp144, sp174, sp174);
+    MTXScale(sp174, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+    MTXConcat(sp144, sp174, sp174);
     mtxTransCat(sp174, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-    PSMTXConcat(arg1, sp174, sp174);
+    MTXConcat(arg1, sp174, sp174);
     strcpy(sp4A4, MakeObjectName(arg2));
     if (strcmp(sp4A4, arg0->name) == 0) {
-        PSMTXCopy(sp174, arg3);
+        MTXCopy(sp174, arg3);
         return 1;
     }
     for (var_r23 = 0; var_r23 < arg0->data.childrenCount; var_r23++) {
@@ -1838,7 +1838,7 @@ void fn_1_13A88(s16 arg0, char *arg1, Mtx arg2)
 
     var_r31 = &Hu3DData[arg0];
     var_r30 = var_r31->hsfData;
-    PSMTXIdentity(sp14);
+    MTXIdentity(sp14);
     fn_1_136AC(var_r30->root, sp14, arg1, arg2);
 }
 

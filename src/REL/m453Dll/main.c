@@ -941,8 +941,8 @@ void fn_1_23E0(omObjData *object)
         case 4:
             var_r24 = fn_1_82AC(sp38);
             for (var_r30 = 0; var_r30 < var_r24; var_r30++) {
-                PSVECSubtract(&sp38[var_r30], &var_r31->unk_2C, &sp8);
-                sp20[var_r30] = PSVECMag(&sp8);
+                VECSubtract(&sp38[var_r30], &var_r31->unk_2C, &sp8);
+                sp20[var_r30] = VECMag(&sp8);
             }
             for (var_r30 = 0; var_r30 < (var_r24 - 1); var_r30++) {
                 for (var_r29 = var_r30 + 1; var_r29 < var_r24; var_r29++) {
@@ -1144,14 +1144,14 @@ s32 fn_1_36DC(void)
             for (var_r29 = var_r30 + 1; var_r29 < 4; var_r29++) {
                 var_r27 = lbl_1_bss_3C[var_r29]->data;
                 if (var_r27->unk_07 != 0) {
-                    PSVECSubtract(&var_r28->unk_2C, &var_r27->unk_2C, &sp8);
-                    var_f31 = PSVECMag(&sp8);
+                    VECSubtract(&var_r28->unk_2C, &var_r27->unk_2C, &sp8);
+                    var_f31 = VECMag(&sp8);
                     if (var_f31 < 80.0f) {
-                        PSVECNormalize(&sp8, &sp8);
+                        VECNormalize(&sp8, &sp8);
                         var_f30 = 0.0001f + (0.5f * (80.0f - var_f31));
-                        PSVECScale(&sp8, &sp8, var_f30);
-                        PSVECAdd(&sp14[var_r30], &sp8, &sp14[var_r30]);
-                        PSVECSubtract(&sp14[var_r29], &sp8, &sp14[var_r29]);
+                        VECScale(&sp8, &sp8, var_f30);
+                        VECAdd(&sp14[var_r30], &sp8, &sp14[var_r30]);
+                        VECSubtract(&sp14[var_r29], &sp8, &sp14[var_r29]);
                         var_r28->unk_0E++;
                         var_r27->unk_0E++;
                         var_r26++;
@@ -1164,7 +1164,7 @@ s32 fn_1_36DC(void)
         var_r25 = lbl_1_bss_3C[var_r30];
         var_r31 = var_r25->data;
         if (var_r31->unk_07 != 0) {
-            PSVECAdd(&var_r31->unk_2C, &sp14[var_r30], &var_r31->unk_2C);
+            VECAdd(&var_r31->unk_2C, &sp14[var_r30], &var_r31->unk_2C);
             if (var_r31->unk_2C.x > 660.0f) {
                 var_r31->unk_2C.x = 660.0f;
             }
@@ -1237,8 +1237,8 @@ void fn_1_3BB4(Vec *arg0, Vec *arg1)
     var_r30 = fn_1_844C(sp18);
     var_f31 = 2000.0f;
     for (var_r31 = 0; var_r31 < var_r30; var_r31++) {
-        PSVECSubtract(&sp18[var_r31], arg0, &spC);
-        var_f30 = PSVECMag(&spC);
+        VECSubtract(&sp18[var_r31], arg0, &spC);
+        var_f30 = VECMag(&spC);
         if (!(var_f30 >= var_f31)) {
             var_f31 = var_f30;
             *arg1 = sp18[var_r31];
@@ -1403,18 +1403,18 @@ void fn_1_4574(Mtx arg0, float arg8, float arg9, float argA)
     Mtx sp38;
     Mtx sp8;
     if (argA != 0.0f) {
-        PSMTXRotRad(arg0, 0x5A, 0.017453292f * argA);
+        MTXRotRad(arg0, 0x5A, 0.017453292f * argA);
     }
     else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 0x58, 0.017453292f * arg8);
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXRotRad(sp38, 0x58, 0.017453292f * arg8);
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 0x59, 0.017453292f * arg9);
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 0x59, 0.017453292f * arg9);
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 // TODO figue out type of arg0
@@ -1570,8 +1570,8 @@ void fn_1_5290(float *arg0, float (*arg1)[3], float (*arg2)[3], s32 arg3)
 
     arg0[0] = 0.0f;
     for (var_r30 = 1; var_r30 < arg3; var_r30++) {
-        PSVECSubtract((Vec *)&arg1[var_r30], (Vec *)&arg1[var_r30 - 1], &sp8);
-        arg0[var_r30] = arg0[var_r30 - 1] + PSVECMag(&sp8);
+        VECSubtract((Vec *)&arg1[var_r30], (Vec *)&arg1[var_r30 - 1], &sp8);
+        arg0[var_r30] = arg0[var_r30 - 1] + VECMag(&sp8);
     }
     for (var_r27 = 0; var_r27 < 3; var_r27++) {
         for (var_r30 = 0; var_r30 < arg3; var_r30++) {

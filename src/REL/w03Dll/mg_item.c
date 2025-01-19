@@ -742,12 +742,12 @@ void fn_1_B0A4(s32 arg0)
         }
 
         if (temp_r29 == 5) {
-            PSMTXTrans(sp18, 0.0f, -50.0f, 0.0f);
+            MTXTrans(sp18, 0.0f, -50.0f, 0.0f);
             BoardModelMtxSet(temp_r30->unk_06[i], &sp18);
         }
 
         if ((temp_r29 == 6) || (temp_r29 == 7)) {
-            PSMTXTrans(sp18, 0.0f, 0.0f, 8.0f);
+            MTXTrans(sp18, 0.0f, 0.0f, 8.0f);
             BoardModelMtxSet(temp_r30->unk_06[i], &sp18);
         }
     }

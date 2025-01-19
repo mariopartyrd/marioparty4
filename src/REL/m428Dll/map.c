@@ -402,8 +402,8 @@ u8 fn_1_5370(M433DllUnkStruct2 *arg0, Vec *arg1)
     for (var_r27 = 0; var_r27 < arg0->unk_08; var_r27++, var_r31++) {
         sp8 = *arg1;
         sp8.y = 0.0f;
-        PSVECSubtract(&sp8, &var_r31->unk_00, &sp20);
-        var_f30 = PSVECMag(&sp20);
+        VECSubtract(&sp8, &var_r31->unk_00, &sp20);
+        var_f30 = VECMag(&sp20);
         if (!(var_f30 > (400.0f + var_r31->unk_20)) && (var_r31->unk_2C != 0.0f)) {
             var_r24 = 0;
             for (var_r28 = 0; var_r28 < 3; var_r28++) {
@@ -413,8 +413,8 @@ u8 fn_1_5370(M433DllUnkStruct2 *arg0, Vec *arg1)
                 }
                 var_r23 = &arg0->unk_00[var_r31->unk_0C[var_r28]];
                 var_r25 = &arg0->unk_00[var_r31->unk_0C[var_r26]];
-                PSVECSubtract(var_r25, var_r23, &sp20);
-                PSVECSubtract(arg1, var_r25, &sp14);
+                VECSubtract(var_r25, var_r23, &sp20);
+                VECSubtract(arg1, var_r25, &sp14);
                 var_f31 = (sp20.x * sp14.y) - (sp20.y * sp14.x);
                 if ((var_f31 * var_r31->unk_2C) < 0.0) {
                     var_r24 = 1;
@@ -484,15 +484,15 @@ void fn_1_5684(HsfData *arg0, HsfObject *arg1)
                 var_r31->unk_00.z /= 3.0f;
                 var_r31->unk_20 = 0.0f;
                 for (var_r28 = 0; var_r28 < 3; var_r28++) {
-                    PSVECSubtract(&((Vec *)var_r29->data)[var_r30->indices[var_r28][0]], &var_r31->unk_00, &sp18);
-                    var_f31 = PSVECMag(&sp18);
+                    VECSubtract(&((Vec *)var_r29->data)[var_r30->indices[var_r28][0]], &var_r31->unk_00, &sp18);
+                    var_f31 = VECMag(&sp18);
                     if (var_f31 > var_r31->unk_20) {
                         var_r31->unk_20 = var_f31;
                     }
                 }
                 var_r31->unk_00.y = 0.0f;
-                PSVECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[1][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[0][0]], &sp18);
-                PSVECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[2][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[0][0]], &spC);
+                VECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[1][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[0][0]], &sp18);
+                VECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[2][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[0][0]], &spC);
                 var_r31->unk_24 = (sp18.y * spC.z) - (sp18.z * spC.y);
                 var_r31->unk_28 = (sp18.z * spC.x) - (sp18.x * spC.z);
                 var_r31->unk_2C = (sp18.x * spC.y) - (sp18.y * spC.x);
@@ -514,14 +514,14 @@ void fn_1_5684(HsfData *arg0, HsfObject *arg1)
                 var_r31->unk_00.z *= 0.25f;
                 var_r31->unk_20 = 0.0f;
                 for (var_r28 = 0; var_r28 < 4; var_r28++) {
-                    PSVECSubtract(&((Vec *)var_r29->data)[var_r30->indices[var_r28][0]], &var_r31->unk_00, &sp18);
-                    var_f31 = PSVECMag(&sp18);
+                    VECSubtract(&((Vec *)var_r29->data)[var_r30->indices[var_r28][0]], &var_r31->unk_00, &sp18);
+                    var_f31 = VECMag(&sp18);
                     if (var_f31 > var_r31->unk_20) {
                         var_r31->unk_20 = var_f31;
                     }
                 }
-                PSVECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[1][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[0][0]], &sp18);
-                PSVECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[2][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[1][0]], &spC);
+                VECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[1][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[0][0]], &sp18);
+                VECSubtract(&((Vec *)var_r29->data)[var_r30->strip.indices[2][0]], &((Vec *)var_r29->data)[var_r30->strip.indices[1][0]], &spC);
                 var_r31->unk_24 = (sp18.y * spC.z) - (sp18.z * spC.y);
                 var_r31->unk_28 = (sp18.z * spC.x) - (sp18.x * spC.z);
                 var_r31->unk_2C = (sp18.x * spC.y) - (sp18.y * spC.x);
@@ -719,12 +719,12 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
                 }
                 break;
         }
-        PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+        VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
         if (particle->unk_04.x != 0.0f) {
             sp8 = particle->unk_04;
             sp8.x *= var_r31->unk2C / 28.0f;
             sp8.y = (((u8)var_r31->unk2C & 1) != 0 ? 1.0f : -1.0f) * (sp8.x * (0.05f + (s32)(0.2f * (fn_1_7500() / 65536.0f))));
-            PSVECAdd(&var_r31->unk34, &sp8, &var_r31->unk34);
+            VECAdd(&var_r31->unk34, &sp8, &var_r31->unk34);
         }
     }
     DCFlushRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
@@ -810,7 +810,7 @@ void fn_1_7430(void)
 void fn_1_74B4(s16 arg0, Mtx arg1)
 {
     ModelData *var_r31 = &Hu3DData[arg0];
-    PSMTXCopy(arg1, var_r31->unk_F0);
+    MTXCopy(arg1, var_r31->unk_F0);
 }
 
 u32 lbl_1_data_14C = 0x41C64E6D;
@@ -884,18 +884,18 @@ void fn_1_77F8(Mtx arg0, float arg8, float arg9, float argA)
     Mtx sp8;
 
     if (argA != 0.0f) {
-        PSMTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
+        MTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
     }
     else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 
@@ -1137,8 +1137,8 @@ void fn_1_939C(float *arg0, float (*arg1)[3], float (*arg2)[3], s32 var_r28)
 
     arg0[0] = 0.0f;
     for (var_r30 = 1; var_r30 < var_r28; var_r30++) {
-        PSVECSubtract((Vec *)&arg1[var_r30], (Vec *)&arg1[var_r30 - 1], &sp8);
-        arg0[var_r30] = arg0[var_r30 - 1] + PSVECMag(&sp8);
+        VECSubtract((Vec *)&arg1[var_r30], (Vec *)&arg1[var_r30 - 1], &sp8);
+        arg0[var_r30] = arg0[var_r30 - 1] + VECMag(&sp8);
     }
     for (var_r27 = 0; var_r27 < 3; var_r27++) {
         for (var_r30 = 0; var_r30 < var_r28; var_r30++) {

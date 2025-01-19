@@ -1083,7 +1083,7 @@ void fn_1_45BC(ModelData *arg0, Mtx arg1)
     }
     if (!var_r31->unk_28) {
         GXLoadPosMtxImm(arg1, 0);
-        PSMTXInvXpose(arg1, sp10);
+        MTXInvXpose(arg1, sp10);
         GXLoadNrmMtxImm(sp10, 0);
         var_r26 = fn_1_D06C(arg0, Hu3DCameraMtx, Hu3DCameraMtxXPose, 2.0f);
         GXSetNumTevStages(1);
@@ -2149,7 +2149,7 @@ void fn_1_82C8(Mtx arg0, s32 arg1, float arg8)
     sp80.z = arg0[2][3];
     sp74.x = sp74.z = 0.0f;
     sp74.y = atan2d(arg0[0][0], arg0[2][0]);
-    PSMTXCopy(arg0, sp8C);
+    MTXCopy(arg0, sp8C);
     sp8C[0][3] = sp8C[1][3] = sp8C[2][3] = sp8C[3][3] = 0.0f;
     sp68.x = -25.0f;
     sp68.z = -50.0f;
@@ -2227,7 +2227,7 @@ void fn_1_8F98(void)
         var_r31->unk_10 = 0.0f;
         var_r31->unk_14 = 6.0f;
         var_r31->unk_18 = 1.0f;
-        PSMTXIdentity(var_r31->unk_1C);
+        MTXIdentity(var_r31->unk_1C);
         if (var_r30 == 0) {
             var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M406, 59));
         }
@@ -2246,7 +2246,7 @@ void fn_1_8F98(void)
         var_r31->unk_10 = 0.0f;
         var_r31->unk_14 = 6.0f;
         var_r31->unk_18 = 1.0f;
-        PSMTXIdentity(var_r31->unk_1C);
+        MTXIdentity(var_r31->unk_1C);
         if (var_r30 == 0) {
             var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M406, 60));
         }
@@ -2278,8 +2278,8 @@ void fn_1_91E0(void)
         var_f31 = var_r31->unk_18 * cosd((90.0f * var_f30));
         var_f31 = var_f31;
         var_r30 = &Hu3DData[var_r31->unk_04];
-        PSMTXScale(sp8, var_f31, var_f31, var_f31);
-        PSMTXConcat(var_r31->unk_1C, sp8, var_r30->unk_F0);
+        MTXScale(sp8, var_f31, var_f31, var_f31);
+        MTXConcat(var_r31->unk_1C, sp8, var_r30->unk_F0);
         var_r30->unk_F0[0][3] = var_r31->unk_1C[0][3];
         var_r30->unk_F0[1][3] = var_r31->unk_1C[1][3];
         var_r30->unk_F0[2][3] = var_r31->unk_1C[2][3];
@@ -2299,8 +2299,8 @@ void fn_1_91E0(void)
         var_f31 = var_r31->unk_18 * cosd((90.0f * var_f30));
         var_f31 = var_f31;
         var_r30 = &Hu3DData[var_r31->unk_04];
-        PSMTXScale(sp8, var_f31, var_f31, var_f31);
-        PSMTXConcat(var_r31->unk_1C, sp8, var_r30->unk_F0);
+        MTXScale(sp8, var_f31, var_f31, var_f31);
+        MTXConcat(var_r31->unk_1C, sp8, var_r30->unk_F0);
         var_r30->unk_F0[0][3] = var_r31->unk_1C[0][3];
         var_r30->unk_F0[1][3] = var_r31->unk_1C[1][3];
         var_r30->unk_F0[2][3] = var_r31->unk_1C[2][3];
@@ -2340,7 +2340,7 @@ s32 fn_1_94C0(Mtx arg0, s32 arg1, s32 arg2)
     sp64.z = arg0[2][3];
     sp58.x = sp58.z = 0.0f;
     sp58.y = atan2d(arg0[0][0], arg0[2][0]);
-    PSMTXCopy(arg0, spA0);
+    MTXCopy(arg0, spA0);
     spA0[0][3] = spA0[1][3] = spA0[2][3] = spA0[3][3] = 0.0f;
     if (!arg2) {
         sp4C.x = 25.0f;
@@ -2419,12 +2419,12 @@ s32 fn_1_94C0(Mtx arg0, s32 arg1, s32 arg2)
     var_r31->unk_10 = 1.0f;
     var_r31->unk_14 = 6.0f;
     var_r31->unk_18 = var_f31;
-    PSMTXCopy(arg0, var_r31->unk_1C);
+    MTXCopy(arg0, var_r31->unk_1C);
     Hu3DMotionTimeSet(var_r31->unk_04, 0.0f);
     Hu3DMotionSpeedSet(var_r31->unk_04, 0.0f);
     var_r27 = &Hu3DData[var_r31->unk_04];
-    PSMTXScale(sp70, var_f31, var_f31, var_f31);
-    PSMTXConcat(arg0, sp70, var_r27->unk_F0);
+    MTXScale(sp70, var_f31, var_f31, var_f31);
+    MTXConcat(arg0, sp70, var_r27->unk_F0);
     var_r27->unk_F0[0][3] = arg0[0][3];
     var_r27->unk_F0[1][3] = arg0[1][3];
     var_r27->unk_F0[2][3] = arg0[2][3];
@@ -2630,7 +2630,7 @@ void fn_1_ADB4(ModelData *arg0, float (*arg1)[4])
     GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_A0);
     GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-    PSMTXIdentity(sp50);
+    MTXIdentity(sp50);
     GXLoadPosMtxImm(sp50, 0);
     GXSetZMode(GX_FALSE, GX_ALWAYS, GX_TRUE);
     GXSetNumChans(1);
@@ -2954,7 +2954,7 @@ void fn_1_BC18(ModelData *arg0, float (*arg1)[4])
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSetArray(GX_VA_TEX0, var_r31->unk_44, 8);
         if (HmfInverseMtxF3X3(arg1, sp128) == 0) {
-            PSMTXIdentity(sp128);
+            MTXIdentity(sp128);
         }
         PSMTXReorder(sp128, sp8);
         if (var_r31->unk_4C) {
@@ -2993,9 +2993,9 @@ void fn_1_BC18(ModelData *arg0, float (*arg1)[4])
                 VECScale(&lbl_1_data_8E0[1], &sp98[1], var_r29->unk_28);
                 VECScale(&lbl_1_data_8E0[2], &sp98[2], var_r29->unk_28);
                 VECScale(&lbl_1_data_8E0[3], &sp98[3], var_r29->unk_28);
-                PSMTXRotRad(spC8, 90, var_r29->unk_2C);
-                PSMTXConcat(sp128, spC8, spF8);
-                PSMTXMultVecArray(spF8, &sp98[0], &sp68[0], 4);
+                MTXRotRad(spC8, 90, var_r29->unk_2C);
+                MTXConcat(sp128, spC8, spF8);
+                MTXMultVecArray(spF8, &sp98[0], &sp68[0], 4);
                 VECAdd(&sp68[0], &var_r29->unk_30, var_r30++);
                 VECAdd(&sp68[1], &var_r29->unk_30, var_r30++);
                 VECAdd(&sp68[2], &var_r29->unk_30, var_r30++);
@@ -3167,7 +3167,7 @@ void fn_1_C86C(ModelData *arg0, Mtx arg1)
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
         GXSetArray(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, 0x44);
         if (HmfInverseMtxF3X3(arg1, sp9C) == 0) {
-            PSMTXIdentity(sp9C);
+            MTXIdentity(sp9C);
         }
         PSMTXReorder(sp9C, spC);
         if (var_r31->unk_4C) {
@@ -3362,8 +3362,8 @@ void fn_1_D13C(LightData *arg0, s16 arg1, Mtx arg2, Mtx arg3, float arg8)
             break;
     }
     if (arg0->unk_00 & 0x8000) {
-        PSMTXMultVec(arg2, &arg0->unk_28, &sp24);
-        PSMTXMultVec(arg3, &arg0->unk_1C, &sp18);
+        MTXMultVec(arg2, &arg0->unk_28, &sp24);
+        MTXMultVec(arg3, &arg0->unk_1C, &sp18);
         GXInitLightPos(&sp30, sp18.x, sp18.y, sp18.z);
     }
     else {

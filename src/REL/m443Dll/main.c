@@ -495,15 +495,15 @@ void fn_1_1D8C(omObjData *object)
         lbl_1_bss_4 = HuAudSStreamPlay(0xB);
     }
     var_f31 = (float)object->work[0] / lbl_1_data_F0[object->work[1]];
-    PSVECSubtract(&lbl_1_data_60[object->work[1] + 1], &lbl_1_data_60[object->work[1]], &sp8);
-    PSVECScale(&sp8, &sp8, var_f31);
-    PSVECAdd(&lbl_1_data_60[object->work[1]], &sp8, &sp8);
+    VECSubtract(&lbl_1_data_60[object->work[1] + 1], &lbl_1_data_60[object->work[1]], &sp8);
+    VECScale(&sp8, &sp8, var_f31);
+    VECAdd(&lbl_1_data_60[object->work[1]], &sp8, &sp8);
     Center.x = sp8.x;
     Center.y = sp8.y;
     Center.z = sp8.z;
-    PSVECSubtract(&lbl_1_data_A8[object->work[1] + 1], &lbl_1_data_A8[object->work[1]], &sp8);
-    PSVECScale(&sp8, &sp8, var_f31);
-    PSVECAdd(&lbl_1_data_A8[object->work[1]], &sp8, &sp8);
+    VECSubtract(&lbl_1_data_A8[object->work[1] + 1], &lbl_1_data_A8[object->work[1]], &sp8);
+    VECScale(&sp8, &sp8, var_f31);
+    VECAdd(&lbl_1_data_A8[object->work[1]], &sp8, &sp8);
     CRot.x = sp8.x;
     CRot.y = sp8.y;
     CRot.z = 0.0f;
@@ -922,7 +922,7 @@ void fn_1_3D78(ModelData *arg0, Mtx arg1)
 {
     Mtx spC;
 
-    PSMTXIdentity(spC);
+    MTXIdentity(spC);
     GXLoadPosMtxImm(spC, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -1094,13 +1094,13 @@ void fn_1_4444(Vec *arg0, Vec *arg1)
     Vec sp10;
     float var_f30;
 
-    PSVECSubtract(arg1, arg0, &sp10);
+    VECSubtract(arg1, arg0, &sp10);
     Center = *arg1;
     var_f30 = (sp10.x * sp10.x) + (sp10.z * sp10.z);
     CRot.x = atan2d(sp10.y, sqrtf(var_f30));
     CRot.y = atan2d(-sp10.x, -sp10.z);
     CRot.z = 0.0f;
-    CZoom = PSVECMag(&sp10);
+    CZoom = VECMag(&sp10);
 }
 
 void fn_1_464C(float arg8, float arg9, float argA, float argB, float argC, float argD)
@@ -1116,13 +1116,13 @@ void fn_1_464C(float arg8, float arg9, float argA, float argB, float argC, float
     sp30.x = argB;
     sp30.y = argC;
     sp30.z = argD;
-    PSVECSubtract(&sp30, &sp3C, &sp24);
+    VECSubtract(&sp30, &sp3C, &sp24);
     Center = sp30;
     var_f30 = (sp24.x * sp24.x) + (sp24.z * sp24.z);
     CRot.x = atan2d(sp24.y, sqrtf(var_f30));
     CRot.y = atan2d(-sp24.x, -sp24.z);
     CRot.z = 0.0f;
-    CZoom = PSVECMag(&sp24);
+    CZoom = VECMag(&sp24);
 }
 
 float fn_1_488C(float arg8, float arg9, float argA)

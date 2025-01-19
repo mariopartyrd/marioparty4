@@ -617,7 +617,7 @@ void fn_1_261C(omObjData *object)
     }
 }
 
-u32 fn_1_26E0(void)
+s32 fn_1_26E0(void)
 {
     return lbl_1_bss_7C;
 }
@@ -786,7 +786,7 @@ void fn_1_2E2C(s32 var_r26)
         GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
         GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
         GXSetNumChans(0);
-        PSMTXIdentity(sp8C);
+        MTXIdentity(sp8C);
         GXLoadPosMtxImm(sp8C, 0);
         GXSetZMode(0, GX_ALWAYS, GX_TRUE);
         GXSetNumChans(1);
@@ -820,7 +820,7 @@ void fn_1_2E2C(s32 var_r26)
         var_r25 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
     }
     C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.unk_14, &Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_20);
-    PSMTXCopy(Hu3DCameraMtx, Hu3DShadowData.unk_38);
+    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.unk_38);
     shadowModelDrawF = 1;
     GXInvalidateTexAll();
     GXSetFog(GX_FOG_NONE, 0.0f, 0.0f, 0.0f, 0.0f, BGColor);
@@ -870,11 +870,11 @@ void fn_1_2E2C(s32 var_r26)
                 Hu3DModelShadowSet(var_r29->unk_00[var_r30]);
                 Hu3DShadowData.unk_00 = (s8)(var_r29->unk_20[var_r30] * var_r24);
                 mtxRot(sp5C, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-                PSMTXScale(spBC, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-                PSMTXConcat(sp5C, spBC, spBC);
+                MTXScale(spBC, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+                MTXConcat(sp5C, spBC, spBC);
                 mtxTransCat(spBC, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-                PSMTXConcat(Hu3DCameraMtx, spBC, sp8C);
-                PSMTXConcat(sp8C, var_r31->unk_F0, sp8C);
+                MTXConcat(Hu3DCameraMtx, spBC, sp8C);
+                MTXConcat(sp8C, var_r31->unk_F0, sp8C);
                 Hu3DDraw(var_r31, sp8C, &var_r31->scale);
                 Hu3DModelShadowReset(var_r29->unk_00[var_r30]);
             }
@@ -908,7 +908,7 @@ void fn_1_2E2C(s32 var_r26)
     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
     GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
     GXSetNumChans(0);
-    PSMTXIdentity(sp8C);
+    MTXIdentity(sp8C);
     GXLoadPosMtxImm(sp8C, 0);
     GXSetZMode(0, GX_ALWAYS, 1);
     GXSetNumChans(1);
@@ -966,7 +966,7 @@ void fn_1_3B64(void)
             GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
             GXSetNumTexGens(1);
             GXSetNumTevStages(1);
-            PSMTXIdentity(sp34);
+            MTXIdentity(sp34);
             GXLoadPosMtxImm(sp34, 0);
             GXSetZMode(0, GX_LEQUAL, GX_FALSE);
             GXBegin(GX_QUADS, GX_VTXFMT0, 4);

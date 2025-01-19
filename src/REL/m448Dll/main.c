@@ -201,7 +201,7 @@ void fn_1_4FC(ModelData *model, Mtx matrix)
     GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
     C_MTXOrtho(sp98, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f);
     GXSetProjection(sp98, GX_ORTHOGRAPHIC);
-    PSMTXIdentity(spC8);
+    MTXIdentity(spC8);
     GXLoadPosMtxImm(spC8, GX_PNMTX0);
     GXSetNumTevStages(1);
     GXSetNumTexGens(1);
@@ -454,8 +454,8 @@ void fn_1_1338(omObjData *arg0)
                     sp178 = lbl_1_rodata_100;
                     sp178.x = var_f20;
                     sp178.z = -sp118;
-                    PSMTXRotRad(sp184, 'y', MTXDegToRad(CRot.y));
-                    PSMTXMultVec(sp184, &sp178, &sp178);
+                    MTXRotRad(sp184, 'y', MTXDegToRad(CRot.y));
+                    MTXMultVec(sp184, &sp178, &sp178);
                     var_f20 = sp178.x;
                     sp118 = -sp178.z;
                 }

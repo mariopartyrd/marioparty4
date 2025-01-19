@@ -514,12 +514,12 @@ void fn_1_6EB4(omObjData *object)
     Mtx sp8;
     s32 var_r30;
 
-    PSMTXTrans(sp38, object->trans.x, object->trans.y, object->trans.z);
+    MTXTrans(sp38, object->trans.x, object->trans.y, object->trans.z);
     mtxRot(sp8, object->rot.x, object->rot.y, object->rot.z);
-    PSMTXConcat(sp38, sp8, sp38);
+    MTXConcat(sp38, sp8, sp38);
     for (var_r30 = 0; var_r30 < 6; var_r30++) {
-        PSMTXTrans(sp8, lbl_1_data_A88[var_r30].x, lbl_1_data_A88[var_r30].y, lbl_1_data_A88[var_r30].z);
-        PSMTXConcat(sp38, sp8, sp8);
+        MTXTrans(sp8, lbl_1_data_A88[var_r30].x, lbl_1_data_A88[var_r30].y, lbl_1_data_A88[var_r30].z);
+        MTXConcat(sp38, sp8, sp8);
         Hu3DModelPosSet(object->model[var_r30 + 1], sp8[0][3], sp8[1][3], sp8[2][3]);
         Hu3DModelRotSet(object->model[var_r30 + 1], object->rot.x, object->rot.y, object->rot.z);
     }
@@ -685,12 +685,12 @@ void fn_1_73C4(omObjData *object)
                 break;
         }
     }
-    PSMTXTrans(sp8, object->trans.x, object->trans.y, object->trans.z);
+    MTXTrans(sp8, object->trans.x, object->trans.y, object->trans.z);
     mtxRot(sp38, object->rot.x, object->rot.y, object->rot.z);
-    PSMTXConcat(sp8, sp38, sp8);
+    MTXConcat(sp8, sp38, sp8);
     for (var_r28 = 0; var_r28 < 6; var_r28++) {
-        PSMTXTrans(sp38, lbl_1_data_A88[var_r28].x, lbl_1_data_A88[var_r28].y, lbl_1_data_A88[var_r28].z);
-        PSMTXConcat(sp8, sp38, sp38);
+        MTXTrans(sp38, lbl_1_data_A88[var_r28].x, lbl_1_data_A88[var_r28].y, lbl_1_data_A88[var_r28].z);
+        MTXConcat(sp8, sp38, sp38);
         Hu3DModelPosSet(object->model[var_r28 + 1], sp38[0][3], sp38[1][3], sp38[2][3]);
         Hu3DModelRotSet(object->model[var_r28 + 1], object->rot.x, object->rot.y, object->rot.z);
     }
@@ -825,16 +825,16 @@ s32 fn_1_7CE0(float arg8, float arg9, Vec *arg0)
     var_r28 -= 6;
     fn_1_7BB0(var_r27, &sp10);
     sp10 = lbl_1_data_A88[var_r27];
-    PSMTXTrans(sp4C, var_r31->trans.x, var_r31->trans.y, var_r31->trans.z);
+    MTXTrans(sp4C, var_r31->trans.x, var_r31->trans.y, var_r31->trans.z);
     mtxRot(sp1C, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-    PSMTXConcat(sp4C, sp1C, sp4C);
-    PSMTXTrans(sp1C, sp10.x, sp10.y, sp10.z);
-    PSMTXConcat(sp4C, sp1C, sp4C);
+    MTXConcat(sp4C, sp1C, sp4C);
+    MTXTrans(sp1C, sp10.x, sp10.y, sp10.z);
+    MTXConcat(sp4C, sp1C, sp4C);
     var_r30 = lbl_1_data_AFC[var_r28];
     var_r23 = lbl_1_data_B14[var_r28];
     for (var_r24 = 0; var_r24 < var_r23; var_r24++) {
-        PSMTXTrans(sp1C, var_r30->x, var_r30->y, var_r30->z);
-        PSMTXConcat(sp4C, sp1C, sp1C);
+        MTXTrans(sp1C, var_r30->x, var_r30->y, var_r30->z);
+        MTXConcat(sp4C, sp1C, sp1C);
         arg0->x = sp1C[0][3];
         arg0->y = sp1C[1][3];
         arg0->z = sp1C[2][3];
@@ -930,17 +930,17 @@ s32 fn_1_844C(Vec *arg0)
     var_r30 = lbl_1_bss_A4[lbl_1_bss_9C];
     var_r27 = var_r30->data;
     var_r23 = fn_1_8250(var_r27, sp8);
-    PSMTXTrans(sp50, var_r30->trans.x, var_r30->trans.y, var_r30->trans.z);
+    MTXTrans(sp50, var_r30->trans.x, var_r30->trans.y, var_r30->trans.z);
     mtxRot(sp20, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
-    PSMTXConcat(sp50, sp20, sp50);
+    MTXConcat(sp50, sp20, sp50);
     for (var_r29 = 0; var_r29 < var_r23; var_r29++) {
         fn_1_7BB0(sp8[var_r29], arg0);
         var_r26 = fn_1_7BFC(var_r27, sp8[var_r29]) - 6;
         arg0->x += lbl_1_data_B2C[var_r26].x;
         arg0->y += lbl_1_data_B2C[var_r26].y;
         arg0->z += lbl_1_data_B2C[var_r26].z;
-        PSMTXTrans(sp20, arg0->x, arg0->y, arg0->z);
-        PSMTXConcat(sp50, sp20, sp20);
+        MTXTrans(sp20, arg0->x, arg0->y, arg0->z);
+        MTXConcat(sp50, sp20, sp20);
         arg0->x = sp20[0][3];
         arg0->y = sp20[1][3];
         arg0->z = sp20[2][3];
@@ -991,7 +991,7 @@ s32 fn_1_867C(Vec *arg0, Vec *arg1)
     if ((var_r28->rot.x > 0.0f) || (var_r28->rot.x <= -90.0f)) {
         return 0;
     }
-    PSVECSubtract(arg0, &var_r28->trans, &sp3C);
+    VECSubtract(arg0, &var_r28->trans, &sp3C);
     sp3C.z = sp3C.z / cosd(var_r28->rot.x);
     var_f24 = arg0->z;
     var_f25 = arg0->x;
@@ -1002,29 +1002,29 @@ s32 fn_1_867C(Vec *arg0, Vec *arg1)
     }
     var_r24 -= 6;
     sp48 = lbl_1_data_A88[var_r19];
-    PSVECSubtract(&sp3C, &sp48, &sp3C);
+    VECSubtract(&sp3C, &sp48, &sp3C);
     var_r30 = lbl_1_data_B74[var_r24][0];
     var_r29 = lbl_1_data_B74[var_r24][1];
     var_r21 = lbl_1_data_BA4[var_r24];
     for (var_r31 = 0; var_r31 < var_r21; var_r31++) {
         var_r27 = (var_r31 + 1) % var_r21;
-        PSVECSubtract(var_r30 + var_r27, var_r30 + var_r31, &sp24);
-        PSVECSubtract(&sp3C, var_r30 + var_r27, &sp18);
-        PSVECCrossProduct(&sp24, &sp18, &spC);
+        VECSubtract(var_r30 + var_r27, var_r30 + var_r31, &sp24);
+        VECSubtract(&sp3C, var_r30 + var_r27, &sp18);
+        VECCrossProduct(&sp24, &sp18, &spC);
         if (!(spC.y < 0.0f)) {
-            PSVECSubtract(var_r29 + var_r27, var_r30 + var_r27, &sp24);
-            PSVECSubtract(&sp3C, var_r29 + var_r27, &sp18);
-            PSVECCrossProduct(&sp24, &sp18, &spC);
+            VECSubtract(var_r29 + var_r27, var_r30 + var_r27, &sp24);
+            VECSubtract(&sp3C, var_r29 + var_r27, &sp18);
+            VECCrossProduct(&sp24, &sp18, &spC);
             if (!(spC.y < 0.0f)) {
-                PSVECSubtract(var_r29 + var_r31, var_r29 + var_r27, &sp24);
-                PSVECSubtract(&sp3C, var_r29 + var_r31, &sp18);
-                PSVECCrossProduct(&sp24, &sp18, &spC);
+                VECSubtract(var_r29 + var_r31, var_r29 + var_r27, &sp24);
+                VECSubtract(&sp3C, var_r29 + var_r31, &sp18);
+                VECCrossProduct(&sp24, &sp18, &spC);
                 if (!(spC.y < 0.0f)) {
-                    PSVECSubtract(var_r30 + var_r31, var_r29 + var_r31, &sp24);
-                    PSVECSubtract(&sp3C, var_r30 + var_r31, &sp18);
-                    PSVECCrossProduct(&sp24, &sp18, &spC);
+                    VECSubtract(var_r30 + var_r31, var_r29 + var_r31, &sp24);
+                    VECSubtract(&sp3C, var_r30 + var_r31, &sp18);
+                    VECCrossProduct(&sp24, &sp18, &spC);
                     if (!(spC.y < 0.0f)) {
-                        PSVECSubtract(var_r30 + var_r27, var_r30 + var_r31, &sp24);
+                        VECSubtract(var_r30 + var_r27, var_r30 + var_r31, &sp24);
                         var_f30 = (((sp3C.z * sp24.z)
                                        + (((sp3C.y * sp24.y) + ((sp3C.x * sp24.x) - (sp24.x * var_r30[var_r31].x))) - (sp24.y * var_r30[var_r31].y)))
                                       - (sp24.z * var_r30[var_r31].z))
@@ -1032,9 +1032,9 @@ s32 fn_1_867C(Vec *arg0, Vec *arg1)
                         sp30.x = var_r30[var_r31].x + (var_f30 * sp24.x);
                         sp30.y = var_r30[var_r31].y + (var_f30 * sp24.y);
                         sp30.z = var_r30[var_r31].z + (var_f30 * sp24.z);
-                        PSVECSubtract(&sp30, &sp3C, &spC);
-                        var_f28 = PSVECMag(&spC);
-                        PSVECSubtract(var_r29 + var_r27, var_r29 + var_r31, &sp18);
+                        VECSubtract(&sp30, &sp3C, &spC);
+                        var_f28 = VECMag(&spC);
+                        VECSubtract(var_r29 + var_r27, var_r29 + var_r31, &sp18);
                         var_f29 = (((sp3C.z * sp18.z)
                                        + (((sp3C.y * sp18.y) + ((sp3C.x * sp18.x) - (sp18.x * var_r29[var_r31].x))) - (sp18.y * var_r29[var_r31].y)))
                                       - (sp18.z * var_r29[var_r31].z))
@@ -1042,8 +1042,8 @@ s32 fn_1_867C(Vec *arg0, Vec *arg1)
                         sp30.x = var_r29[var_r31].x + (var_f29 * sp18.x);
                         sp30.y = var_r29[var_r31].y + (var_f29 * sp18.y);
                         sp30.z = var_r29[var_r31].z + (var_f29 * sp18.z);
-                        PSVECSubtract(&sp30, &sp3C, &spC);
-                        var_f27 = PSVECMag(&spC);
+                        VECSubtract(&sp30, &sp3C, &spC);
+                        var_f27 = VECMag(&spC);
                         if (var_f28 == 0.0f) {
                             var_f31 = var_f30;
                         }

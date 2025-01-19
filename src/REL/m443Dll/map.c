@@ -132,11 +132,11 @@ void fn_1_4D14(omObjData *object)
             var_r30 = fn_1_40AC(lbl_1_data_240[var_r29 + 1]);
             mtxRot(sp5C, var_r30->unk_28.x, var_r30->unk_28.y, 0.0f);
             sp8.z = var_r30->unk_34;
-            PSMTXMultVec(sp5C, &sp8, &sp14);
-            PSVECAdd(&var_r30->unk_1C, &sp14, &sp20);
+            MTXMultVec(sp5C, &sp8, &sp14);
+            VECAdd(&var_r30->unk_1C, &sp14, &sp20);
             sp2C[var_r29].y += var_f31;
-            PSMTXMultVec(sp5C, &sp2C[var_r29], &sp14);
-            PSVECAdd(&sp20, &sp14, &sp20);
+            MTXMultVec(sp5C, &sp2C[var_r29], &sp14);
+            VECAdd(&sp20, &sp14, &sp20);
             Hu3DModelPosSetV(object->model[var_r29 + 9], &sp20);
             Hu3DModelRotSet(object->model[var_r29 + 9], var_r30->unk_28.x, var_r30->unk_28.y, 0.0f);
             Hu3DModelScaleSet(object->model[var_r29 + 9], 0.15f, 0.15f, 0.15f);

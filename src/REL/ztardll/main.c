@@ -1515,10 +1515,10 @@ void fn_1_7414(ModelData *model, Mtx matrix)
     GXInitTexObj(&spC, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, 1, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&spC, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&spC, GX_TEXMAP0);
-    PSMTXInverse(Hu3DCameraMtx, sp5C);
-    PSMTXConcat(sp5C, matrix, sp8C);
-    PSMTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp2C);
-    PSMTXConcat(sp2C, sp8C, sp8C);
+    MTXInverse(Hu3DCameraMtx, sp5C);
+    MTXConcat(sp5C, matrix, sp8C);
+    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp2C);
+    MTXConcat(sp2C, sp8C, sp8C);
     GXLoadTexMtxImm(sp8C, 0x39, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, 0x39, GX_FALSE, 0x7D);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);

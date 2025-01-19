@@ -482,7 +482,7 @@ void fn_1_3F5C(s32 arg0)
     BoardModelMotionStart(lbl_1_data_310, 2, 0x40000001);
     BoardModelMotionStart(lbl_1_data_310, 1, 0x40000001);
     BoardModelRotYSet(lbl_1_data_310, 0.0f);
-    PSMTXIdentity(sp38);
+    MTXIdentity(sp38);
     BoardModelMtxSet(lbl_1_data_310, &sp38);
 
     sp20.x = 0.0f;
@@ -624,13 +624,13 @@ void fn_1_4424(w03StructUnk2 *arg0)
             sp30 = sp48;
             sp18 = sp54;
             BoardMTXCalcLookAt(spA8, &sp18, &sp24, &sp30);
-            PSMTXTranspose(spA8, spA8);
+            MTXTranspose(spA8, spA8);
             MTXRotDeg(spD8, 'z', temp_f30);
-            PSMTXTrans(sp108, 0.0f, -350.0f, 0.0f);
-            PSMTXConcat(spD8, sp108, sp108);
-            PSMTXConcat(spA8, sp108, sp108);
-            PSMTXTrans(sp78, sp54.x, sp54.y, sp54.z);
-            PSMTXConcat(sp78, sp108, sp78);
+            MTXTrans(sp108, 0.0f, -350.0f, 0.0f);
+            MTXConcat(spD8, sp108, sp108);
+            MTXConcat(spA8, sp108, sp108);
+            MTXTrans(sp78, sp54.x, sp54.y, sp54.z);
+            MTXConcat(sp78, sp108, sp78);
             Hu3DMtxTransGet(sp78, &temp_r27->unk_08);
             BoardModelPosSetV(temp_r27->model, &temp_r27->unk_08);
             BoardModelVisibilitySet(temp_r27->model, 1);
@@ -1078,16 +1078,16 @@ void fn_1_5C5C(omObjData *arg0, w03UnkStruct5 *arg1)
     sp20.y = 1.0f;
 
     BoardMTXCalcLookAt(sp110, &sp14, &sp20, &sp8);
-    PSMTXTranspose(sp110, sp110);
+    MTXTranspose(sp110, sp110);
     MTXRotDeg(spE0, 'z', -arg1->unk_04);
-    PSMTXTrans(sp50, 0.0f, -600.0f, 0.0f);
-    PSMTXConcat(spE0, sp50, sp50);
-    PSMTXConcat(sp110, sp50, sp50);
-    PSMTXTrans(sp80, sp44.x, sp44.y, sp44.z);
-    PSMTXConcat(sp80, sp50, sp80);
+    MTXTrans(sp50, 0.0f, -600.0f, 0.0f);
+    MTXConcat(spE0, sp50, sp50);
+    MTXConcat(sp110, sp50, sp50);
+    MTXTrans(sp80, sp44.x, sp44.y, sp44.z);
+    MTXConcat(sp80, sp50, sp80);
     Hu3DMtxTransGet(sp80, &sp44);
     MTXRotDeg(spB0, 'y', atan2d(-sp2C.x, -sp2C.z));
-    PSMTXConcat(spB0, spE0, sp110);
+    MTXConcat(spB0, spE0, sp110);
     BoardModelMtxSet(lbl_1_data_310, &sp110);
     BoardModelPosSetV(lbl_1_data_310, &sp44);
     BoardCameraRotSet(-20.0f, atan2d(sp2C.x, sp2C.z));

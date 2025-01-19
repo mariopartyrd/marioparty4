@@ -270,9 +270,9 @@ void fn_1_6C00(omObjData *object)
                 fn_1_7DA8(object, &sp14, 1);
             }
         }
-        PSVECSubtract(&var_r31->unk_48, &var_r31->unk_3C, &sp8);
-        PSVECScale(&sp8, &sp8, 0.4f);
-        PSVECAdd(&var_r31->unk_3C, &sp8, &sp14);
+        VECSubtract(&var_r31->unk_48, &var_r31->unk_3C, &sp8);
+        VECScale(&sp8, &sp8, 0.4f);
+        VECAdd(&var_r31->unk_3C, &sp8, &sp14);
         sp14.y += var_r31->unk_34;
         Hu3DModelPosSetV(var_r31->unk_2C, &sp14);
         var_r31->unk_30++;
@@ -366,7 +366,7 @@ void fn_1_7790(ModelData *model, Mtx mtx)
     DCStoreRange(&lbl_1_data_378, 4);
     C_MTXPerspective(sp2C, 41.5f, 1.2f, 100.0f, 5500.0f);
     GXSetProjection(sp2C, GX_PERSPECTIVE);
-    PSMTXIdentity(sp5C);
+    MTXIdentity(sp5C);
     GXLoadPosMtxImm(sp5C, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, 0, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -409,7 +409,7 @@ void fn_1_7B94(s32 arg0)
     var_r30 = Hu3DData[arg0].unk_120;
     for (var_r31 = var_r30->unk_48, var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
         if (var_r31->unk00_s16 != 0) {
-            PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+            VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             switch (var_r31->unk02) {
                 case 0:
                     var_r31->unk2C += 1.0f;
@@ -464,7 +464,7 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
             sp1C.x = 100.0f * ((0.0026f * frandmod(0x3E8)) - 1.3f);
             sp1C.y = 0.0f;
             sp1C.z = 100.0f * ((0.000100000005f * frandmod(0x3E8)) - 0.05f);
-            PSVECAdd(&sp1C, arg1, &var_r31->unk34);
+            VECAdd(&sp1C, arg1, &var_r31->unk34);
             var_r31->unk30 = 0.0031415902f * frandmod(0x3E8);
             switch (arg2) {
                 case 0:
@@ -485,7 +485,7 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
                     if (frandmod(0x3E8) < 0x1F4) {
                         sp1C.x *= -1.0f;
                     }
-                    PSVECAdd(&sp1C, arg1, &var_r31->unk34);
+                    VECAdd(&sp1C, arg1, &var_r31->unk34);
                     var_r31->unk00 = 60.0f * (0.2f + (0.0005f * frandmod(0x3E8)));
                     var_r31->unk08.x = 1.6666667f * ((0.000100000005f * frandmod(0x3E8)) - 0.05f);
                     var_r31->unk08.y = -1.6666667f * (0.2f + (0.0003f * frandmod(0x3E8)));

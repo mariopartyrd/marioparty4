@@ -779,18 +779,18 @@ void fn_1_541C(Mtx arg0, float arg8, float arg9, float argA)
     Mtx sp8;
 
     if (argA != 0.0f) {
-        PSMTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
+        MTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
     }
     else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 

@@ -571,7 +571,7 @@ void fn_1_1A60(Vec *arg0, s16 arg1, Vec *arg2)
     }
     temp_r31 = &Hu3DCamera[i];
     C_MTXLookAt(sp1C, &temp_r31->pos, &temp_r31->up, &temp_r31->target);
-    PSMTXMultVec(sp1C, arg0, &sp10);
+    MTXMultVec(sp1C, arg0, &sp10);
     temp_f30 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * temp_r31->aspect;
     temp_f29 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2));
     temp_f28 = 0.9f * temp_r31->viewport_x;
@@ -598,9 +598,9 @@ void fn_1_1D70(s16 arg0, char *arg1, Vec *arg2, Mtx arg3)
 
     var_r30 = &Hu3DData[arg0];
     Hu3DModelObjMtxGet(arg0, arg1, spC);
-    PSMTXConcat(var_r30->unk_F0, spC, spC);
+    MTXConcat(var_r30->unk_F0, spC, spC);
     if (NULL != arg3) {
-        PSMTXCopy(spC, arg3);
+        MTXCopy(spC, arg3);
     }
     arg2->x = spC[0][3];
     arg2->y = spC[1][3];
@@ -928,7 +928,7 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     UnkBss10Struct *temp_r31;
 
     GXLoadPosMtxImm(arg1, GX_PNMTX0);
-    PSMTXInvXpose(arg1, spEC);
+    MTXInvXpose(arg1, spEC);
     GXLoadNrmMtxImm(spEC, GX_PNMTX0);
     temp_r31 = &lbl_1_data_10[2];
     GXInitTexObj(&spC, temp_r31->unk00, temp_r31->unk08, temp_r31->unk0A, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
@@ -941,31 +941,31 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXLoadTexObj(&spC, GX_TEXMAP3);
     GXSetNumTexGens(4);
     C_MTXLightPerspective(sp2C, 30.0f, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSMTXInverse(Hu3DCameraMtx, spEC);
-    PSMTXConcat(spEC, arg1, spEC);
-    PSMTXConcat(sp2C, Hu3DCameraMtx, spBC);
-    PSMTXConcat(spBC, spEC, spBC);
+    MTXInverse(Hu3DCameraMtx, spEC);
+    MTXConcat(spEC, arg1, spEC);
+    MTXConcat(sp2C, Hu3DCameraMtx, spBC);
+    MTXConcat(spBC, spEC, spBC);
     GXLoadTexMtxImm(spBC, GX_TEXMTX0, GX_MTX3x4);
     C_MTXLightPerspective(sp2C, 30.0f, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSMTXInverse(Hu3DCameraMtx, spEC);
-    PSMTXConcat(spEC, arg1, spEC);
-    PSMTXConcat(sp2C, Hu3DCameraMtx, spBC);
-    PSMTXConcat(spBC, spEC, spBC);
+    MTXInverse(Hu3DCameraMtx, spEC);
+    MTXConcat(spEC, arg1, spEC);
+    MTXConcat(sp2C, Hu3DCameraMtx, spBC);
+    MTXConcat(spBC, spEC, spBC);
     GXLoadTexMtxImm(spBC, GX_TEXMTX1, GX_MTX3x4);
-    PSMTXRotRad(spEC, 'X', MTXDegToRad(-90));
+    MTXRotRad(spEC, 'X', MTXDegToRad(-90));
     var_f31 = 0.0004f;
-    PSMTXScale(sp8C, 0.00083333335f, var_f31, 0.0004f);
-    PSMTXConcat(sp8C, spEC, sp5C);
-    PSMTXTrans(spBC, 0.5f, 0.5f, 0.5f);
-    PSMTXConcat(spBC, sp5C, sp5C);
+    MTXScale(sp8C, 0.00083333335f, var_f31, 0.0004f);
+    MTXConcat(sp8C, spEC, sp5C);
+    MTXTrans(spBC, 0.5f, 0.5f, 0.5f);
+    MTXConcat(spBC, sp5C, sp5C);
     sp5C[0][1] = -0.01f;
     GXLoadTexMtxImm(sp5C, GX_TEXMTX2, GX_MTX2x4);
-    PSMTXRotRad(spEC, 'X', MTXDegToRad(-90));
+    MTXRotRad(spEC, 'X', MTXDegToRad(-90));
     var_f31 = 0.0004f;
-    PSMTXScale(sp8C, var_f31, var_f31, var_f31);
-    PSMTXConcat(sp8C, spEC, sp5C);
-    PSMTXTrans(spBC, 0.5f, 0.5f, 0.0f);
-    PSMTXConcat(spBC, sp5C, sp5C);
+    MTXScale(sp8C, var_f31, var_f31, var_f31);
+    MTXConcat(sp8C, spEC, sp5C);
+    MTXTrans(spBC, 0.5f, 0.5f, 0.0f);
+    MTXConcat(spBC, sp5C, sp5C);
     GXLoadTexMtxImm(sp5C, GX_TEXMTX3, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
     GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3x4, GX_TG_POS, GX_TEXMTX1, GX_FALSE, GX_PTIDENTITY);
@@ -974,12 +974,12 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXSetNumIndStages(2);
     GXSetIndTexOrder(GX_INDTEXSTAGE0, GX_TEXCOORD2, GX_TEXMAP2);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
-    PSMTXScale(spBC, -0.2f, -0.2f, 0.2f);
+    MTXScale(spBC, -0.2f, -0.2f, 0.2f);
     GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spBC, -2);
     GXSetTevIndWarp(GX_TEVSTAGE0, GX_INDTEXSTAGE0, GX_TRUE, GX_FALSE, GX_ITM_0);
     GXSetIndTexOrder(GX_INDTEXSTAGE1, GX_TEXCOORD3, GX_TEXMAP3);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE1, GX_ITS_1, GX_ITS_1);
-    PSMTXScale(spBC, 0.5f, 0.5f, 0.5f);
+    MTXScale(spBC, 0.5f, 0.5f, 0.5f);
     GXSetIndTexMtx(GX_ITM_1, (float(*)[3])spBC, 0);
     GXSetTevIndWarp(GX_TEVSTAGE1, GX_INDTEXSTAGE1, GX_TRUE, GX_FALSE, GX_ITM_1);
     GXSetNumTevStages(2);
@@ -1031,10 +1031,10 @@ void fn_1_4024(ModelData *arg0, Mtx arg1)
     fn_1_2714(1, GX_FALSE);
     GXLoadPosMtxImm(arg1, GX_PNMTX0);
     C_MTXLightPerspective(sp98, 30.0f, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSMTXInverse(Hu3DCameraMtx, sp68);
-    PSMTXConcat(sp68, arg1, sp68);
-    PSMTXConcat(sp98, Hu3DCameraMtx, sp38);
-    PSMTXConcat(sp38, sp68, sp68);
+    MTXInverse(Hu3DCameraMtx, sp68);
+    MTXConcat(sp68, arg1, sp68);
+    MTXConcat(sp98, Hu3DCameraMtx, sp38);
+    MTXConcat(sp38, sp68, sp68);
     GXLoadTexMtxImm(sp68, GX_TEXMTX0, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
     GXSetNumChans(1);
@@ -1096,7 +1096,7 @@ void fn_1_4700(ModelData *arg0, Mtx arg1)
 
     C_MTXOrtho(sp20, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f);
     GXSetProjection(sp20, GX_ORTHOGRAPHIC);
-    PSMTXIdentity(sp60);
+    MTXIdentity(sp60);
     GXLoadPosMtxImm(sp60, GX_PNMTX0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_NONE);

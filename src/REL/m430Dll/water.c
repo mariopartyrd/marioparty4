@@ -202,10 +202,13 @@ void fn_1_4CB4(omObjData *object)
 
     u32 spC[1] = { DATA_MAKE_NUM(DATADIR_M430, 0x01) };
     s32 sp8[1];
-    u32 sp90[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x0B), DATA_MAKE_NUM(DATADIR_M430, 0x0C), DATA_MAKE_NUM(DATADIR_M430, 0x0D), DATA_MAKE_NUM(DATADIR_M430, 0x0E) };
-    u32 sp80[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x02), DATA_MAKE_NUM(DATADIR_M430, 0x02), DATA_MAKE_NUM(DATADIR_M430, 0x03), DATA_MAKE_NUM(DATADIR_M430, 0x03) };
+    u32 sp90[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x0B), DATA_MAKE_NUM(DATADIR_M430, 0x0C), DATA_MAKE_NUM(DATADIR_M430, 0x0D),
+        DATA_MAKE_NUM(DATADIR_M430, 0x0E) };
+    u32 sp80[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x02), DATA_MAKE_NUM(DATADIR_M430, 0x02), DATA_MAKE_NUM(DATADIR_M430, 0x03),
+        DATA_MAKE_NUM(DATADIR_M430, 0x03) };
     u32 sp70[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x04), DATA_MAKE_NUM(DATADIR_M430, 0x04), 0, 0 };
-    u32 sp60[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x06), DATA_MAKE_NUM(DATADIR_M430, 0x07), DATA_MAKE_NUM(DATADIR_M430, 0x08), DATA_MAKE_NUM(DATADIR_M430, 0x09) };
+    u32 sp60[4] = { DATA_MAKE_NUM(DATADIR_M430, 0x06), DATA_MAKE_NUM(DATADIR_M430, 0x07), DATA_MAKE_NUM(DATADIR_M430, 0x08),
+        DATA_MAKE_NUM(DATADIR_M430, 0x09) };
     s32 sp50[4];
     s32 sp40[4];
     s32 sp30[4];
@@ -481,10 +484,10 @@ void fn_1_6180(M430DllWork *work)
     sp28.x = sp1C.x;
     sp28.y = 0.0f;
     sp28.z = sp1C.z - 450000.0f;
-    PSVECSubtract(&sp28, &sp1C, &sp10);
-    PSVECNormalize(&sp10, &sp10);
-    PSVECScale(&sp10, &sp10, 6000.0f);
-    PSVECAdd(&sp1C, &sp10, &sp28);
+    VECSubtract(&sp28, &sp1C, &sp10);
+    VECNormalize(&sp10, &sp10);
+    VECScale(&sp10, &sp10, 6000.0f);
+    VECAdd(&sp1C, &sp10, &sp28);
     Hu3DModelPosSetV(work->unk_18, &sp28);
     if ((fn_1_4070() >= 2) && (fn_1_4030() != 0)) {
         if ((lbl_1_bss_40 != 0) && (lbl_1_bss_48 >= work->unk_04.x)) {
@@ -494,10 +497,10 @@ void fn_1_6180(M430DllWork *work)
             sp28.x = 0.0f;
             sp28.y = 0.0f;
             sp28.z = work->unk_20 - fn_1_7FBC(work->unk_00);
-            PSVECSubtract(&sp28, &sp1C, &sp10);
-            PSVECNormalize(&sp10, &sp10);
-            PSVECScale(&sp10, &sp10, 5000.0f);
-            PSVECAdd(&sp1C, &sp10, &sp28);
+            VECSubtract(&sp28, &sp1C, &sp10);
+            VECNormalize(&sp10, &sp10);
+            VECScale(&sp10, &sp10, 5000.0f);
+            VECAdd(&sp1C, &sp10, &sp28);
             sp28.y += 237.5f;
             Hu3DModelPosSet(work->unk_1A, 0.0f, 593.75f, work->unk_20);
             var_r30 = ((ParticleData *)Hu3DData[work->unk_1A].unk_120)->unk_48;
@@ -742,8 +745,8 @@ void fn_1_732C(omObjData *object, M430DllUnkStruct2 *arg1)
             var_r29 = 1;
         }
         else {
-            PSVECSubtract(&arg1->unk_18, &arg1->unk_0C, &sp8);
-            var_f31 = PSVECMag(&sp8);
+            VECSubtract(&arg1->unk_18, &arg1->unk_0C, &sp8);
+            var_f31 = VECMag(&sp8);
             if (var_f31 < 50.0f) {
                 var_r29 = 1;
             }
@@ -758,7 +761,7 @@ void fn_1_732C(omObjData *object, M430DllUnkStruct2 *arg1)
             arg1->unk_38 = 200.0f + frandmod(0x258);
             arg1->unk_28 = 400.0f;
         }
-        PSVECSubtract(&arg1->unk_18, &arg1->unk_0C, &sp8);
+        VECSubtract(&arg1->unk_18, &arg1->unk_0C, &sp8);
         arg1->unk_30 = atan2d(sp8.x, sp8.z);
         arg1->unk_2C = fn_1_48B0(arg1->unk_2C, arg1->unk_30, 0.08f);
         arg1->unk_28 += 0.05f * (300.0f - arg1->unk_28);
@@ -822,7 +825,7 @@ void fn_1_7848(omObjData *object)
         var_r31->unk_08.x = var_f31 * sind(var_f30);
         var_r31->unk_08.y = 0.0f;
         var_r31->unk_08.z = var_f31 * cosd(var_f30);
-        PSVECAdd(&var_r31->unk_14, &var_r31->unk_08, &var_r31->unk_08);
+        VECAdd(&var_r31->unk_14, &var_r31->unk_08, &var_r31->unk_08);
         var_r31->unk_38 = 60.0f - (0.13483146f * var_f31);
         var_r31->unk_28 = frandmod(0x168);
         if (frandmod(0x3E8) < 0x1F4) {
@@ -857,7 +860,7 @@ void fn_1_7CAC(omObjData *object)
     if (fn_1_4070() >= 4) {
         for (var_r29 = 0; var_r29 < var_r28; var_r29++, work++) {
             sp8 = 0;
-            PSVECSubtract(&work->unk_14, &work->unk_08, &spC);
+            VECSubtract(&work->unk_14, &work->unk_08, &spC);
             work->unk_2C = atan2d(spC.x, spC.z);
             work->unk_28 = fn_1_48B0(work->unk_28, work->unk_2C + work->unk_3C, 0.08f);
             work->unk_24 += (0.05f * (600.0f - work->unk_24));
@@ -883,9 +886,9 @@ void fn_1_7EAC(omObjData *object, M430DllWork2 *var_r31)
     for (var_r30 = 0; var_r30 < var_r28; var_r30++, var_r31++) {
         Hu3DModelPosSet(var_r31->unk_00, var_r31->unk_08.x, var_r31->unk_08.y, var_r31->unk_08.z + var_f31);
         var_r29 = &Hu3DData[var_r31->unk_00].unk_F0;
-        PSMTXRotRad(*var_r29, 0x59, 0.017453292f * var_r31->unk_28);
-        PSMTXRotRad(sp8, 0x5A, 0.017453292f * var_r31->unk_38);
-        PSMTXConcat(*var_r29, sp8, *var_r29);
+        MTXRotRad(*var_r29, 0x59, 0.017453292f * var_r31->unk_28);
+        MTXRotRad(sp8, 0x5A, 0.017453292f * var_r31->unk_38);
+        MTXConcat(*var_r29, sp8, *var_r29);
         Hu3DModelAttrReset(var_r31->unk_00, HU3D_ATTR_DISPOFF);
     }
 }
@@ -1062,8 +1065,8 @@ void fn_1_86B4(omObjData *object, M430DllBss60Struct *arg1)
     sp14.z = 2000.0f + arg1->unk_24;
     if (lbl_1_bss_5C != 0) {
         for (var_r29 = 0; var_r29 < 0x1B8; var_r29++) {
-            PSVECSubtract(var_r28, &sp14, &sp8);
-            var_f31 = 0.00025f * PSVECMag(&sp8);
+            VECSubtract(var_r28, &sp14, &sp8);
+            var_f31 = 0.00025f * VECMag(&sp8);
             if (var_f31 < 0.3f) {
                 var_r30->a = -1;
             }
@@ -1080,8 +1083,8 @@ void fn_1_86B4(omObjData *object, M430DllBss60Struct *arg1)
     }
     else {
         for (var_r29 = 0; var_r29 < 0x1B8; var_r29++) {
-            PSVECSubtract(var_r28, &sp14, &sp8);
-            var_f31 = 0.00025f * PSVECMag(&sp8);
+            VECSubtract(var_r28, &sp14, &sp8);
+            var_f31 = 0.00025f * VECMag(&sp8);
             if (var_f31 < 0.25f) {
                 var_r30->a = -0x1A;
             }
@@ -1105,7 +1108,7 @@ void fn_1_86B4(omObjData *object, M430DllBss60Struct *arg1)
         var_r29 = (0x14 - var_r23) * 0x16;
         var_r27 = &arg1->unk_30[0x1B8 - var_r29];
         while (var_r29-- != 0) {
-            PSVECAdd(var_r28, var_r27, var_r26);
+            VECAdd(var_r28, var_r27, var_r26);
             var_r28++;
             var_r27++;
             var_r26++;
@@ -1113,7 +1116,7 @@ void fn_1_86B4(omObjData *object, M430DllBss60Struct *arg1)
         var_r29 = var_r23 * 0x16;
         var_r27 = arg1->unk_30;
         while (var_r29-- != 0) {
-            PSVECAdd(var_r28, var_r27, var_r26);
+            VECAdd(var_r28, var_r27, var_r26);
             var_r28++;
             var_r27++;
             var_r26++;
@@ -1186,7 +1189,7 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     }
     var_r31->unk_10 = 1;
     fn_1_963C(model, matrix, var_r31->unk_00);
-    PSMTXCopy(matrix, sp134);
+    MTXCopy(matrix, sp134);
     if (fn_1_4030() != 0) {
         var_f30 = 1.0f;
         var_f31 = fn_1_BB54(var_r31->unk_00);
@@ -1195,12 +1198,12 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
         var_f30 = 1.5f;
         var_f31 = 0.0f;
     }
-    PSMTXTrans(sp164, var_f31 - fn_1_BB54(var_r31->unk_00), 0.0f, 0.0f);
-    PSMTXConcat(sp134, sp164, sp134);
-    PSMTXScale(sp194, var_f30, 1.0f, 1.0f);
-    PSMTXConcat(sp134, sp194, sp134);
+    MTXTrans(sp164, var_f31 - fn_1_BB54(var_r31->unk_00), 0.0f, 0.0f);
+    MTXConcat(sp134, sp164, sp134);
+    MTXScale(sp194, var_f30, 1.0f, 1.0f);
+    MTXConcat(sp134, sp194, sp134);
     GXLoadPosMtxImm(sp134, 0);
-    PSMTXInvXpose(sp134, sp194);
+    MTXInvXpose(sp134, sp194);
     GXLoadNrmMtxImm(sp194, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, 0, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -1221,25 +1224,25 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     else {
         C_MTXLightPerspective(sp104, 41.5f, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
     }
-    PSMTXInverse(Hu3DCameraMtx, spD4);
-    PSMTXConcat(spD4, sp134, spD4);
-    PSMTXConcat(sp104, Hu3DCameraMtx, spA4);
-    PSMTXConcat(spA4, spD4, spD4);
+    MTXInverse(Hu3DCameraMtx, spD4);
+    MTXConcat(spD4, sp134, spD4);
+    MTXConcat(sp104, Hu3DCameraMtx, spA4);
+    MTXConcat(spA4, spD4, spD4);
     GXLoadTexMtxImm(spD4, 0x1E, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, 0x1E, GX_FALSE, 0x7D);
     C_MTXLightPerspective(sp104, 70.0f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSMTXInverse(Hu3DCameraMtx, sp74);
-    PSMTXConcat(sp74, sp134, sp74);
-    PSMTXConcat(sp104, Hu3DCameraMtx, sp44);
-    PSMTXConcat(sp44, sp74, sp74);
+    MTXInverse(Hu3DCameraMtx, sp74);
+    MTXConcat(sp74, sp134, sp74);
+    MTXConcat(sp104, Hu3DCameraMtx, sp44);
+    MTXConcat(sp44, sp74, sp74);
     GXLoadTexMtxImm(sp74, 0x24, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD2, GX_TG_MTX3x4, GX_TG_POS, 0x24, GX_FALSE, 0x7D);
-    PSMTXRotRad(sp164, 0x58, 1.5707964f);
+    MTXRotRad(sp164, 0x58, 1.5707964f);
     var_f31 = 0.00075f * var_f30;
-    PSMTXScale(sp194, var_f31, -0.003f, 0.00075f);
-    PSMTXConcat(sp164, sp194, sp164);
-    PSMTXTrans(sp194, (var_r31->unk_1C & 0x3FF) / (1024.0f * var_f31), 0.0f, (0.7f * var_r31->unk_28) - (0.3f * var_r31->unk_24));
-    PSMTXConcat(sp164, sp194, sp164);
+    MTXScale(sp194, var_f31, -0.003f, 0.00075f);
+    MTXConcat(sp164, sp194, sp164);
+    MTXTrans(sp194, (var_r31->unk_1C & 0x3FF) / (1024.0f * var_f31), 0.0f, (0.7f * var_r31->unk_28) - (0.3f * var_r31->unk_24));
+    MTXConcat(sp164, sp194, sp164);
     sp164[0][1] = -0.001f;
     GXLoadTexMtxImm(sp164, 0x21, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX2x4, GX_TG_POS, 0x21, GX_FALSE, 0x7D);
@@ -1247,12 +1250,12 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSetIndTexOrder(GX_INDTEXSTAGE0, GX_TEXCOORD1, GX_TEXMAP1);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(0, 0, GX_TRUE, GX_FALSE, 1);
-    PSMTXScale(sp164, -0.25f, -0.5f, 0.5f);
+    MTXScale(sp164, -0.25f, -0.5f, 0.5f);
     GXSetIndTexMtx(GX_ITM_0, (float(*)[3])sp164, -4);
     GXSetIndTexOrder(GX_INDTEXSTAGE1, GX_TEXCOORD1, GX_TEXMAP1);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE1, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(1, 1, GX_TRUE, GX_FALSE, 2);
-    PSMTXScale(sp164, 0.4f, 0.5f, 0.5f);
+    MTXScale(sp164, 0.4f, 0.5f, 0.5f);
     GXSetIndTexMtx(GX_ITM_1, (float(*)[3])sp164, -1);
     GXSetNumTevStages(2);
     GXSetTevColor(GX_TEVREG0, sp14);
@@ -1320,10 +1323,10 @@ void fn_1_963C(ModelData *model, Mtx matrix, u32 var_r31)
         var_f30 = 1.5f;
         var_f31 = 0.0f;
     }
-    PSMTXTrans(spD0, var_f31, 0.0f, ((lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24) - 2500.0f) - 2000.0f);
-    PSMTXScale(sp100, var_f30, 1.0f, 1.0f);
-    PSMTXConcat(spD0, sp100, spD0);
-    PSMTXConcat(Hu3DCameraMtx, spD0, spA0);
+    MTXTrans(spD0, var_f31, 0.0f, ((lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24) - 2500.0f) - 2000.0f);
+    MTXScale(sp100, var_f30, 1.0f, 1.0f);
+    MTXConcat(spD0, sp100, spD0);
+    MTXConcat(Hu3DCameraMtx, spD0, spA0);
     GXLoadPosMtxImm(spA0, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -1331,26 +1334,26 @@ void fn_1_963C(ModelData *model, Mtx matrix, u32 var_r31)
     HuSprTexLoad(lbl_1_bss_148, 0, 1, GX_CLAMP, GX_CLAMP, GX_LINEAR);
     GXSetNumTexGens(2);
     C_MTXLightPerspective(sp70, 70.0f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSMTXInverse(Hu3DCameraMtx, sp40);
-    PSMTXConcat(sp40, spA0, sp40);
-    PSMTXConcat(sp70, Hu3DCameraMtx, sp10);
-    PSMTXConcat(sp10, sp40, sp40);
+    MTXInverse(Hu3DCameraMtx, sp40);
+    MTXConcat(sp40, spA0, sp40);
+    MTXConcat(sp70, Hu3DCameraMtx, sp10);
+    MTXConcat(sp10, sp40, sp40);
     GXLoadTexMtxImm(sp40, 0x21, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3x4, GX_TG_POS, 0x21, GX_FALSE, 0x7D);
-    PSMTXRotRad(spD0, 0x58, 1.5707964f);
+    MTXRotRad(spD0, 0x58, 1.5707964f);
     var_f31 = 0.00075f * var_f30;
-    PSMTXScale(sp100, var_f31, -0.003f, 0.00075f);
-    PSMTXConcat(spD0, sp100, spD0);
-    PSMTXTrans(sp100, (lbl_1_bss_60[var_r31].unk_1C & 0x3FF) / (1024.0f * var_f31), 0.0f,
+    MTXScale(sp100, var_f31, -0.003f, 0.00075f);
+    MTXConcat(spD0, sp100, spD0);
+    MTXTrans(sp100, (lbl_1_bss_60[var_r31].unk_1C & 0x3FF) / (1024.0f * var_f31), 0.0f,
         0.3f * (lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24));
-    PSMTXConcat(spD0, sp100, spD0);
+    MTXConcat(spD0, sp100, spD0);
     GXLoadTexMtxImm(spD0, 0x1E, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_POS, 0x1E, GX_FALSE, 0x7D);
     GXSetNumIndStages(1);
     GXSetIndTexOrder(GX_INDTEXSTAGE0, GX_TEXCOORD0, GX_TEXMAP0);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(0, 0, GX_TRUE, GX_FALSE, 1);
-    PSMTXScale(spD0, 0.5f, 0.6f, 0.6f);
+    MTXScale(spD0, 0.5f, 0.6f, 0.6f);
     GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spD0, -1);
     GXSetNumTevStages(1);
     GXSetTevColor(GX_TEVREG0, spC);
@@ -1432,18 +1435,18 @@ void fn_1_9C90(ModelData *model, Mtx matrix)
     sp28.x = sp1C.x;
     sp28.y = 0.0f;
     sp28.z = sp1C.z - 450000.0f;
-    PSVECSubtract(&sp28, &sp1C, &sp10);
-    PSVECNormalize(&sp10, &sp10);
-    PSVECScale(&sp10, &sp10, 8000.0f);
-    PSVECAdd(&sp1C, &sp10, &sp28);
-    PSMTXTrans(spF4, sp28.x, sp28.y, sp28.z);
+    VECSubtract(&sp28, &sp1C, &sp10);
+    VECNormalize(&sp10, &sp10);
+    VECScale(&sp10, &sp10, 8000.0f);
+    VECAdd(&sp1C, &sp10, &sp28);
+    MTXTrans(spF4, sp28.x, sp28.y, sp28.z);
     var_f31 = 1.0f;
     if (fn_1_4030() == 0) {
         var_f31 = 1.5f;
-        PSMTXScale(sp124, var_f31, 1.0f, 1.0f);
-        PSMTXConcat(spF4, sp124, spF4);
+        MTXScale(sp124, var_f31, 1.0f, 1.0f);
+        MTXConcat(spF4, sp124, spF4);
     }
-    PSMTXConcat(Hu3DCameraMtx, spF4, spC4);
+    MTXConcat(Hu3DCameraMtx, spF4, spC4);
     GXLoadPosMtxImm(spC4, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, 0, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -1451,24 +1454,24 @@ void fn_1_9C90(ModelData *model, Mtx matrix)
     HuSprTexLoad(lbl_1_bss_148, 0, 1, GX_CLAMP, GX_CLAMP, GX_LINEAR);
     GXSetNumTexGens(2);
     C_MTXLightPerspective(sp94, 70.0f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f);
-    PSMTXInverse(Hu3DCameraMtx, sp64);
-    PSMTXConcat(sp64, spC4, sp64);
-    PSMTXConcat(sp94, Hu3DCameraMtx, sp34);
-    PSMTXConcat(sp34, sp64, sp64);
+    MTXInverse(Hu3DCameraMtx, sp64);
+    MTXConcat(sp64, spC4, sp64);
+    MTXConcat(sp94, Hu3DCameraMtx, sp34);
+    MTXConcat(sp34, sp64, sp64);
     GXLoadTexMtxImm(sp64, 0x21, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3x4, GX_TG_POS, 0x21, GX_FALSE, 0x7D);
     var_f30 = 0.00075f * var_f31;
-    PSMTXScale(spF4, var_f30, -0.005f, 0.00075f);
-    PSMTXTrans(sp124, (lbl_1_bss_60[var_r31].unk_1C & 0x3FF) / (1024.0f * var_f30),
+    MTXScale(spF4, var_f30, -0.005f, 0.00075f);
+    MTXTrans(sp124, (lbl_1_bss_60[var_r31].unk_1C & 0x3FF) / (1024.0f * var_f30),
         0.03f * -(lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24), 0.0f);
-    PSMTXConcat(spF4, sp124, spF4);
+    MTXConcat(spF4, sp124, spF4);
     GXLoadTexMtxImm(spF4, 0x1E, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_POS, 0x1E, GX_FALSE, 0x7D);
     GXSetNumIndStages(1);
     GXSetIndTexOrder(GX_INDTEXSTAGE0, GX_TEXCOORD0, GX_TEXMAP0);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(0, 0, GX_TRUE, GX_FALSE, 1);
-    PSMTXScale(spF4, 0.5f, 0.6f, 0.6f);
+    MTXScale(spF4, 0.5f, 0.6f, 0.6f);
     GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spF4, -1);
     GXSetNumTevStages(1);
     GXSetTevColor(GX_TEVREG0, spC);
@@ -1522,37 +1525,37 @@ void fn_1_A3A8(ModelData *model, Mtx matrix)
         var_f31 = 0.0f;
     }
     if (lbl_1_bss_5C != 0) {
-        PSMTXTrans(sp18, var_f31, 0.0f, 300.0f + (lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24));
+        MTXTrans(sp18, var_f31, 0.0f, 300.0f + (lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24));
         GXSetTevColor(GX_TEVREG0, sp10);
     }
     else {
-        PSMTXTrans(sp18, var_f31, -150.0f, lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24);
+        MTXTrans(sp18, var_f31, -150.0f, lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24);
         GXSetTevColor(GX_TEVREG0, sp14);
     }
-    PSMTXScale(sp48, var_f30, 1.0f, 1.0f);
-    PSMTXConcat(sp18, sp48, sp18);
-    PSMTXConcat(Hu3DCameraMtx, sp18, sp18);
+    MTXScale(sp48, var_f30, 1.0f, 1.0f);
+    MTXConcat(sp18, sp48, sp18);
+    MTXConcat(Hu3DCameraMtx, sp18, sp18);
     GXLoadPosMtxImm(sp18, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
     HuSprTexLoad(lbl_1_bss_144, 0, 0, GX_REPEAT, GX_REPEAT, GX_LINEAR);
     HuSprTexLoad(lbl_1_bss_140, 0, 1, GX_REPEAT, GX_REPEAT, GX_LINEAR);
     GXSetNumTexGens(2);
-    PSMTXRotRad(sp18, 0x58, 1.5707964f);
+    MTXRotRad(sp18, 0x58, 1.5707964f);
     var_f31 = 0.004f * var_f30;
-    PSMTXScale(sp48, var_f31, -0.004f, 0.004f);
-    PSMTXConcat(sp18, sp48, sp18);
-    PSMTXTrans(sp48, (lbl_1_bss_60[var_r31].unk_1C & 0x3FF) / (512.0f * var_f31), 0.0f,
+    MTXScale(sp48, var_f31, -0.004f, 0.004f);
+    MTXConcat(sp18, sp48, sp18);
+    MTXTrans(sp48, (lbl_1_bss_60[var_r31].unk_1C & 0x3FF) / (512.0f * var_f31), 0.0f,
         (1.2499999f * (lbl_1_bss_60[var_r31].unk_1C % 400)) + (lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24));
-    PSMTXConcat(sp18, sp48, sp18);
+    MTXConcat(sp18, sp48, sp18);
     GXLoadTexMtxImm(sp18, 0x1E, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_POS, 0x1E, GX_FALSE, 0x7D);
-    PSMTXRotRad(sp18, 0x58, 1.5707964f);
+    MTXRotRad(sp18, 0x58, 1.5707964f);
     var_f31 = 0.004f * var_f30;
-    PSMTXScale(sp48, var_f31, -0.004f, 0.004f);
-    PSMTXConcat(sp18, sp48, sp18);
-    PSMTXTrans(sp48, (lbl_1_bss_60[var_r31].unk_1C % 300) / (150.0f * var_f31), 0.0f, lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24);
-    PSMTXConcat(sp18, sp48, sp18);
+    MTXScale(sp48, var_f31, -0.004f, 0.004f);
+    MTXConcat(sp18, sp48, sp18);
+    MTXTrans(sp48, (lbl_1_bss_60[var_r31].unk_1C % 300) / (150.0f * var_f31), 0.0f, lbl_1_bss_60[var_r31].unk_28 + lbl_1_bss_60[var_r31].unk_24);
+    MTXConcat(sp18, sp48, sp18);
     GXLoadTexMtxImm(sp18, 0x21, GX_MTX2x4);
     GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX2x4, GX_TG_POS, 0x21, GX_FALSE, 0x7D);
     GXSetNumTevStages(2);
@@ -1635,8 +1638,8 @@ void fn_1_AD04(ModelData *model, ParticleData *particle, Mtx matrix)
     }
     for (var_r31 = particle->unk_48, var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
         if (var_r31->unk00_s16 != 0) {
-            PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-            PSVECScale(&var_r31->unk08, &var_r31->unk08, 0.97f);
+            VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+            VECScale(&var_r31->unk08, &var_r31->unk08, 0.97f);
             if (var_r31->unk00_s16 < 24.0f) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
@@ -1720,7 +1723,7 @@ void fn_1_B394(ModelData *model, ParticleData *var_r30, Mtx matrix)
     for (var_r31 = var_r30->unk_48, var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
         if (var_r31->unk00_s16 != 0) {
             var_r31->unk00_s16--;
-            PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+            VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk2C += 0.5f;
             if (var_r31->unk00_s16 < 30.0) {
                 var_r31->unk40.a = 0.98f * var_r31->unk40.a;
@@ -1760,7 +1763,7 @@ void fn_1_B570(s32 arg0, Vec *arg1, float arg8, float arg9, Vec *arg2)
             if (!(frandmod(0x3E8) > (1000.0f * arg9))) {
                 var_r27 = 2;
                 var_f28 = 40.0f;
-                PSVECScale(arg2, &sp1C, 0.2f);
+                VECScale(arg2, &sp1C, 0.2f);
                 sp1C.x = 0.0f;
                 for (var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
                     if (var_r31->unk00_s16 == 0) {
@@ -1778,7 +1781,7 @@ void fn_1_B570(s32 arg0, Vec *arg1, float arg8, float arg9, Vec *arg2)
                         var_r31->unk08.x = sp28.x * var_f31;
                         var_r31->unk08.z = sp28.z * var_f31;
                         var_r31->unk08.y = 0.0f;
-                        PSVECAdd(&var_r31->unk08, &sp1C, &var_r31->unk08);
+                        VECAdd(&var_r31->unk08, &sp1C, &var_r31->unk08);
                         var_f31 = 0.001f * frandmod(0x3E8);
                         var_f31 += (1.0f - var_f31) * (0.3f * arg9);
                         var_r31->unk30 = frandmod(0x168);

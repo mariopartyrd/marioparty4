@@ -146,7 +146,7 @@ void ObjectSetup(void)
     lbl_1_bss_8.x = lbl_1_data_44.x - lbl_1_data_38.x;
     lbl_1_bss_8.y = lbl_1_data_44.y - lbl_1_data_38.y;
     lbl_1_bss_8.z = lbl_1_data_44.z - lbl_1_data_38.z;
-    PSVECNormalize(&lbl_1_bss_8, &lbl_1_bss_8);
+    VECNormalize(&lbl_1_bss_8, &lbl_1_bss_8);
     var_r29 = Hu3DGLightCreateV(&lbl_1_data_38, &lbl_1_bss_8, &lbl_1_data_50);
     Hu3DGLightInfinitytSet(var_r29);
     Hu3DGLightStaticSet(var_r29, 1);
@@ -714,7 +714,7 @@ void fn_1_1304(omObjData *var_r30)
             var_r28 = 0x40000001;
             if ((fn_1_3B0() == 5) && (var_r31->unk_00_field3 == 0) && (lbl_1_bss_64 == 1)) {
                 var_r25 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
-                PSVECSubtract(&var_r25[*lbl_1_bss_70]->trans, &var_r30->trans, &sp8);
+                VECSubtract(&var_r25[*lbl_1_bss_70]->trans, &var_r30->trans, &sp8);
                 var_r30->rot.y = fn_1_2090(var_r30->rot.y, atan2d(sp8.x, sp8.z), 0.1f);
             }
             if (fn_1_3B0() == 0xB) {

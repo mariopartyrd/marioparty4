@@ -562,18 +562,18 @@ void fn_1_14CC(Mtx arg0, float arg8, float arg9, float argA)
     Mtx sp38;
     Mtx sp8;
     if (argA != 0.0f) {
-        PSMTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
+        MTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
     }
     else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 
@@ -1374,7 +1374,7 @@ void fn_1_5044(s16 sp8)
     var_r31->unk_2C[1].unk_04 = 0;
     var_r31->unk_2C[1].unk_48 = 0x80;
     for (var_r30 = 0; var_r30 < (var_r31->unk_28 * var_r31->unk_2A); var_r30++) {
-        PSMTXIdentity(var_r31->unk_2C[var_r30].unk_14);
+        MTXIdentity(var_r31->unk_2C[var_r30].unk_14);
         var_r31->unk_2C[var_r30].unk_08.x = var_r31->unk_2C[var_r30].unk_08.y = var_r31->unk_2C[var_r30].unk_08.z = 0.0f;
     }
     for (var_r30 = 0; var_r30 < var_r31->unk_28; var_r30++) {
@@ -1503,8 +1503,8 @@ void fn_1_5C20(ModelData *var_r27, Mtx sp8)
     GXSetChanAmbColor(GX_COLOR0A0, var_r31->unk_20);
     GXSetChanMatColor(GX_COLOR0A0, var_r31->unk_24);
     GXLoadPosMtxImm(sp8, 0);
-    PSMTXInverse(sp8, sp5C);
-    PSMTXTranspose(sp5C, sp2C);
+    MTXInverse(sp8, sp5C);
+    MTXTranspose(sp5C, sp2C);
     GXLoadNrmMtxImm(sp2C, 0);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
     GXSetZMode(1, GX_LEQUAL, 1);
@@ -1512,7 +1512,7 @@ void fn_1_5C20(ModelData *var_r27, Mtx sp8)
     var_r28 = 0;
     spC = 0;
     for (var_r29 = GX_TEXMAP0; var_r29 < var_r31->unk_28; var_r29++) {
-        PSMTXRotRad(var_r31->unk_2C[var_r29].unk_14, 0x5A, 0.0f);
+        MTXRotRad(var_r31->unk_2C[var_r29].unk_14, 0x5A, 0.0f);
         mtxTransCat(
             var_r31->unk_2C[var_r29].unk_14, var_r31->unk_2C[var_r29].unk_08.x, var_r31->unk_2C[var_r29].unk_08.y, var_r31->unk_2C[var_r29].unk_08.z);
         switch (var_r31->unk_2C[var_r29].unk_04) {

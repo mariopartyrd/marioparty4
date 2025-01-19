@@ -395,12 +395,12 @@ void fn_1_227C(Vec *arg0, Vec *arg1)
 {
     Vec sp10;
 
-    PSVECSubtract(arg1, arg0, &sp10);
+    VECSubtract(arg1, arg0, &sp10);
     Center = *arg1;
     CRot.x = atan2d(sp10.y, sqrtf((sp10.x * sp10.x) + (sp10.z * sp10.z)));
     CRot.y = atan2d(-sp10.x, -sp10.z);
     CRot.z = 0.0f;
-    CZoom = PSVECMag(&sp10);
+    CZoom = VECMag(&sp10);
 }
 
 void fn_1_2484(float arg8, float arg9, float argA, float argB, float argC, float argD)

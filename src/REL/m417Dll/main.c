@@ -79,7 +79,7 @@ void ObjectSetup(void)
     sp8.x = sp8.z = 0.0f;
     sp8.y = lbl_1_data_18.z;
     mtxRot(sp38, lbl_1_data_18.x, lbl_1_data_18.y, 0.0f);
-    PSMTXMultVec(sp38, &sp8, &sp8);
+    MTXMultVec(sp38, &sp8, &sp8);
     Hu3DGLightPosAimSetV(lbl_1_bss_8[0], &sp8, &sp14);
     lbl_1_data_28.x = 200.0f;
     lbl_1_data_28.y = 3000.0f;
@@ -481,18 +481,18 @@ void fn_1_310C(float arg8, float arg9, float argA, float *arg0, float *arg1, flo
     Mtx sp8;
 
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 88, 0.017453292f * arg8);
+        MTXRotRad(sp38, 88, 0.017453292f * arg8);
     }
     else {
-        PSMTXIdentity(sp38);
+        MTXIdentity(sp38);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 89, 0.017453292f * arg9);
-        PSMTXConcat(sp38, sp8, sp38);
+        MTXRotRad(sp8, 89, 0.017453292f * arg9);
+        MTXConcat(sp38, sp8, sp38);
     }
     if (argA != 0.0f) {
-        PSMTXRotRad(sp8, 90, 0.017453292f * argA);
-        PSMTXConcat(sp38, sp8, sp38);
+        MTXRotRad(sp8, 90, 0.017453292f * argA);
+        MTXConcat(sp38, sp8, sp38);
     }
     fn_1_30D8(NULL, arg0, arg1, arg2);
 }
