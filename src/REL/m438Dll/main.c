@@ -137,70 +137,6 @@ typedef struct M438StructBss298 {
     Vec unk_24;
 } M438StructBss298; /* size = 0x30 */
 
-typedef struct M438UnkSubStruct {
-    u8 unk_00;
-    char unk01[0x23];
-    u8 unk_24;
-    float unk_28;
-    float unk_2C;
-} M438UnkSubStruct;
-
-typedef struct M438UnkStruct {
-    Vec unk_00;
-    char unk0C[0xC];
-    Vec unk_18;
-    char unk24[0xF];
-    s8 unk_33;
-    char unk34[0x4];
-    s32 unk_38;
-    char unk_3C[0x18];
-    s8 unk_54;
-    s8 unk_55;
-    s8 unk_56;
-    u8 unk_57;
-    M438UnkSubStruct* unk_58;
-    u8 unk_5C;
-    char unk5D[0x3];
-    Vec unk_60;
-    Vec unk_6C;
-    s16 unk_78;
-    s16 unk_7A;
-    char unk7C[0x1C];
-} M438UnkStruct; /* size = 0x98 */
-
-typedef struct M438UnkStruct2 {
-    s16 unk_00;
-    s16 unk_02;
-    char unk04[0x8];
-    Vec unk_0C;
-    char unk18[0xC];
-    Vec unk_24;
-    void (*unk_30)(struct M438UnkStruct2*);
-    char unk34[8];
-    M438UnkStruct *unk_3C;
-    char unk40[0x20];
-    u8 unk_60;
-    char unk61[0x3];
-    char unk64[0x18];
-    s16 unk_7C;
-    s16 unk_7E;
-    float unk_80;
-    float unk_84;
-    float unk_88;
-    float unk_8C;
-    float unk_90;
-    char unk94[0x28];
-} M438UnkStruct2; /* size = 0xBC */
-
-typedef struct M438StructBssDE4 {
-    /* 0x00 */ char unk00[0x36];
-    s16 unk_36;
-    s16 unk_38;
-    s16 unk_3A;
-    char unk3C[4];
-    M438UnkStruct2 *unk_40;
-} M438StructBssDE4; /* size =  */
-
 typedef u8 M438UnkType[0x30];
 
 void fn_1_4DC(omObjData *object);
@@ -1899,9 +1835,9 @@ void fn_1_5D4C(M438UnkStruct2 *arg0) {
                 var_r31->unk_00.y = 6.0f;
                 var_r31->unk_00.z = (40.0f * var_r31->unk_6C.z);
                 temp_f29 = 0.01f * (100.0f * ((1.0f / 65536.0f) * fn_1_7DB4()));
-                var_r31->unk_54 = (80.0f + 60.0f * temp_f29);
-                var_r31->unk_55 = (64.0f + 60.0f * temp_f29);
-                var_r31->unk_56 = (56.0f + 60.0f * temp_f29);
+                var_r31->unk_54.r = (80.0f + 60.0f * temp_f29);
+                var_r31->unk_54.g = (64.0f + 60.0f * temp_f29);
+                var_r31->unk_54.b = (56.0f + 60.0f * temp_f29);
             }
             arg0->unk_7C = 0x30;
             arg0->unk_60++;
@@ -1918,7 +1854,7 @@ void fn_1_5D4C(M438UnkStruct2 *arg0) {
                 var_r31->unk_18.x = temp_f30;
                 var_r31->unk_18.y = temp_f30;
                 var_r31->unk_18.z = temp_f30;
-                var_r31->unk_57 = (96.0f * (1.0f - (temp_f31 * temp_f31)));
+                var_r31->unk_54.a = (96.0f * (1.0f - (temp_f31 * temp_f31)));
             }
             if (arg0->unk_7C == 0) {
                 arg0->unk_60++;
@@ -1993,19 +1929,19 @@ void fn_1_63B0(M438UnkStruct2* arg0) {
                 var_r31->unk_6C.z = 0.0f;
                 if ((fn_1_7DB4() & 7) != 0) {
                     var_r31->unk_33 = 1;
-                    var_r31->unk_54 = 0x40;
-                    var_r31->unk_55 = 0x10;
-                    var_r31->unk_56 = 4;
-                    var_r31->unk_57 = 0xFF;
+                    var_r31->unk_54.r = 0x40;
+                    var_r31->unk_54.g = 0x10;
+                    var_r31->unk_54.b = 4;
+                    var_r31->unk_54.a = 0xFF;
                     temp_f30 = 3.75f + (1.75f * ((1.0f / 65536.0f) * fn_1_7DB4()));
                     var_r31->unk_60.x = (temp_f30 * (0.1f + ((0.9f * var_f29) / 90.0f)));
                     var_r31->unk_60.y = var_r31->unk_60.z = temp_f30;
                 } else {
                     var_r31->unk_33 = 0;
-                    var_r31->unk_54 = 0;
-                    var_r31->unk_55 = 0;
-                    var_r31->unk_56 = 0;
-                    var_r31->unk_57 = 0xFF;
+                    var_r31->unk_54.r = 0;
+                    var_r31->unk_54.g = 0;
+                    var_r31->unk_54.b = 0;
+                    var_r31->unk_54.a = 0xFF;
                     temp_f30 = 0.25f + (0.25f * ((1.0f / 65536.0f) * fn_1_7DB4()));
                     var_r31->unk_60.y = (1.5f * temp_f30);
                     var_r31->unk_60.x = var_r31->unk_60.z = temp_f30;
@@ -2095,20 +2031,20 @@ void fn_1_6A3C(M438UnkStruct2* arg0) {
                 var_r31->unk_38 &= ~4;
                 if ((fn_1_7DB4() & 0xF) != 0) {
                     var_r31->unk_33 = 1;
-                    var_r31->unk_54 = 0x40;
-                    var_r31->unk_55 = 0x10;
-                    var_r31->unk_56 = 4;
-                    var_r31->unk_57 = 0xFF;
+                    var_r31->unk_54.r = 0x40;
+                    var_r31->unk_54.g = 0x10;
+                    var_r31->unk_54.b = 4;
+                    var_r31->unk_54.a = 0xFF;
                     temp_f31 = 1.8f + ((1.0f / 65536.0f) * fn_1_7DB4());
                     var_r31->unk_18.x = temp_f31;
                     var_r31->unk_18.y = temp_f31;
                     var_r31->unk_18.z = temp_f31;
                 } else if (arg0->unk_7C != 0) {
                     var_r31->unk_33 = 0;
-                    var_r31->unk_54 = 0;
-                    var_r31->unk_55 = 0;
-                    var_r31->unk_56 = 0;
-                    var_r31->unk_57 = 0xFF;
+                    var_r31->unk_54.r = 0;
+                    var_r31->unk_54.g = 0;
+                    var_r31->unk_54.b = 0;
+                    var_r31->unk_54.a = 0xFF;
                     temp_f31 = 0.25f + (0.25f * ((1.0f / 65536.0f) * fn_1_7DB4()));
                     var_r31->unk_18.x = temp_f31;
                     var_r31->unk_18.y = 1.5f * temp_f31;
@@ -2221,10 +2157,10 @@ void fn_1_7300(M438UnkStruct2* arg0) {
             case 1:
                 var_r31->unk_38 &= ~4;
                 var_r31->unk_33 = 1;
-                var_r31->unk_54 = 0x60;
-                var_r31->unk_55 = 0x20;
-                var_r31->unk_56 = 0x10;
-                var_r31->unk_57 = 0xFF;
+                var_r31->unk_54.r = 0x60;
+                var_r31->unk_54.g = 0x20;
+                var_r31->unk_54.b = 0x10;
+                var_r31->unk_54.a = 0xFF;
                 temp_f31 = 0.4f + (0.15f * ((1.0f / 65536.0f) * fn_1_7DB4()));
                 var_r31->unk_18.x = temp_f31;
                 var_r31->unk_18.y = temp_f31;
