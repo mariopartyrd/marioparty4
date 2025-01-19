@@ -78,9 +78,9 @@ void fn_1_44D8(void);
 void fn_1_4BC4(void);
 void fn_1_69C0(void);
 void fn_1_7D40(void);
-void fn_1_545C(ModelData* model, ParticleData* particle, Mtx matrix);
-void fn_1_594C(ModelData* model, ParticleData* particle, Mtx matrix);
-void fn_1_5DE4(ModelData* model, ParticleData* particle, Mtx matrix);
+void fn_1_545C(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_594C(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_5DE4(ModelData *model, ParticleData *particle, Mtx matrix);
 void fn_1_7DA0(void);
 s32 fn_1_1880(float arg0, float arg1, float arg2, s32 arg3, s32 arg4);
 
@@ -93,48 +93,28 @@ s32 lbl_1_bss_3D8;
 StructBss340 lbl_1_bss_340[1];
 StructBss70 lbl_1_bss_70[10];
 StructBss70 lbl_1_bss_28;
-omObjData* lbl_1_bss_24;
+omObjData *lbl_1_bss_24;
 Vec lbl_1_bss_18;
 Vec lbl_1_bss_C;
 Vec lbl_1_bss_0;
 
 s32 lbl_1_data_0[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 
-s32 lbl_1_data_20[] = {
-    DATA_MAKE_NUM(DATADIR_MARIOMOT, 79),
-    DATA_MAKE_NUM(DATADIR_MARIOMOT, 27),
-    DATA_MAKE_NUM(DATADIR_MARIOMOT, 75),
-    DATA_MAKE_NUM(DATADIR_MARIOMOT, 22)
-};
+s32 lbl_1_data_20[] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 79), DATA_MAKE_NUM(DATADIR_MARIOMOT, 27), DATA_MAKE_NUM(DATADIR_MARIOMOT, 75),
+    DATA_MAKE_NUM(DATADIR_MARIOMOT, 22) };
 
-Vec lbl_1_data_30[] = {
-    { 0.0f, 0.0f, 35.0f },
-    { 0.0f, 0.0f, 35.0f },
-    { 0.0f, 0.0f, 35.0f },
-    { 0.0f, 0.0f, 35.0f },
-    { 0.0f, 0.0f, 35.0f },
-    { 0.0f, 0.0f, 35.0f },
-    { 0.0f, 0.0f, 35.0f },
-    { 0.0f, 0.0f, 35.0f }
-};
+Vec lbl_1_data_30[] = { { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.0f, 35.0f },
+    { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.0f, 35.0f } };
 
-Vec lbl_1_data_90[] = {
-    { -900.0f, 143.0f, -1020.0f },
-    { -677.0f, 143.0f, -1020.0f },
-    {  900.0f,   0.0f, -1150.0f },
-    { -307.0f, 182.0f, -1575.0f }
-};
+Vec lbl_1_data_90[] = { { -900.0f, 143.0f, -1020.0f }, { -677.0f, 143.0f, -1020.0f }, { 900.0f, 0.0f, -1150.0f }, { -307.0f, 182.0f, -1575.0f } };
 
-s32 lbl_1_data_C0[][5] = {
-    { 50, 80, 90, 95, 100 },
-    {  5, 55, 85, 95, 100 },
-    {  0,  5, 55, 90, 100 }
-};
+s32 lbl_1_data_C0[][5] = { { 50, 80, 90, 95, 100 }, { 5, 55, 85, 95, 100 }, { 0, 5, 55, 90, 100 } };
 
 float lbl_1_data_FC[] = { 0.3f, 0.5f, 0.7f, 0.9f, 1.0f };
 
-void ObjectSetup(void) {
-    Process* temp_r3;
+void ObjectSetup(void)
+{
+    Process *temp_r3;
 
     temp_r3 = omInitObjMan(50, 0x2000);
     omGameSysInit(temp_r3);
@@ -172,15 +152,16 @@ void ObjectSetup(void) {
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
 }
 
-void fn_1_4A0(void) {
+void fn_1_4A0(void)
+{
     float temp_f31;
     float temp_f30;
-    void* var_r27;
-    StructBss340* temp_r31;
-    StructBss70* temp_r29;
-    Process* var_r25;
-    AnimData* var_r24;
-    AnimData* spC[4];
+    void *var_r27;
+    StructBss340 *temp_r31;
+    StructBss70 *temp_r29;
+    Process *var_r25;
+    AnimData *var_r24;
+    AnimData *spC[4];
     s16 var_r30;
     s16 var_r23;
     s16 sp8;
@@ -292,7 +273,8 @@ void fn_1_4A0(void) {
             var_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M462, 12), MEMORY_DEFAULT_NUM, HEAP_DATA);
             var_r30 = Hu3DModelCreate(var_r27);
             var_r23 = var_r30;
-        } else {
+        }
+        else {
             var_r30 = Hu3DModelLink(var_r23);
         }
         temp_r29->unk00 = var_r30;
@@ -389,7 +371,8 @@ void fn_1_4A0(void) {
     HuPrcChildCreate(fn_1_7D40, 0x1000, 0x1000, 0, HuPrcCurrentGet());
 }
 
-float fn_1_14B4(float arg0) {
+float fn_1_14B4(float arg0)
+{
     while (arg0 >= 360.0f || arg0 < 0.0f) {
         if (arg0 >= 360.0f) {
             arg0 -= 360.0f;
@@ -401,24 +384,29 @@ float fn_1_14B4(float arg0) {
     return arg0;
 }
 
-float fn_1_1534(float arg0, float arg1) {
+float fn_1_1534(float arg0, float arg1)
+{
     float var_f31;
 
     if (arg0 > 750.0f - arg1) {
         var_f31 = 750.0f;
-    } else if (arg0 < -(750.0f - arg1)) {
+    }
+    else if (arg0 < -(750.0f - arg1)) {
         var_f31 = 750.0f;
-    } else {
+    }
+    else {
         var_f31 = 750.0f;
     }
     return var_f31;
 }
 
-float fn_1_15B4(float arg0, float arg1) {
+float fn_1_15B4(float arg0, float arg1)
+{
     return fn_1_1534(arg0, arg1);
 }
 
-void fn_1_1634(void) {
+void fn_1_1634(void)
+{
     float var_f31;
     float temp_f30;
     s32 i;
@@ -434,7 +422,8 @@ void fn_1_1634(void) {
     }
 }
 
-void fn_1_16F8(void) {
+void fn_1_16F8(void)
+{
     s32 i;
 
     for (i = 0; i < 6; i++) {
@@ -442,7 +431,8 @@ void fn_1_16F8(void) {
     }
 }
 
-void fn_1_174C(void) {
+void fn_1_174C(void)
+{
     s32 i;
 
     for (i = 0; i < 6; i++) {
@@ -450,12 +440,14 @@ void fn_1_174C(void) {
     }
 }
 
-void fn_1_17A0(s32 arg0, s32 arg1) {
+void fn_1_17A0(s32 arg0, s32 arg1)
+{
     s32 var_r31;
 
     if (arg1 != 0) {
         var_r31 = 2;
-    } else {
+    }
+    else {
         var_r31 = 4;
     }
     HuSprBankSet(lbl_1_bss_3DC, var_r31, arg0 % 10);
@@ -463,13 +455,14 @@ void fn_1_17A0(s32 arg0, s32 arg1) {
     HuSprAttrReset(lbl_1_bss_3DC, var_r31 + 1, HUSPR_ATTR_DISPOFF);
 }
 
-s32 fn_1_1880(float arg0, float arg1, float arg2, s32 arg3, s32 arg4) {
+s32 fn_1_1880(float arg0, float arg1, float arg2, s32 arg3, s32 arg4)
+{
     Vec sp34;
     Vec sp28;
     Vec sp1C;
     s32 i;
-    StructBss70* temp_r30;
-    StructBss340* var_r29;
+    StructBss70 *temp_r30;
+    StructBss340 *var_r29;
 
     if (arg3 > 10) {
         arg3 = 10;
@@ -498,7 +491,8 @@ s32 fn_1_1880(float arg0, float arg1, float arg2, s32 arg3, s32 arg4) {
     return 0;
 }
 
-s32 fn_1_1BD4(StructBss70* arg0) {
+s32 fn_1_1BD4(StructBss70 *arg0)
+{
     float var_f31;
     float var_f30;
     s32 var_r31;
@@ -525,7 +519,8 @@ s32 fn_1_1BD4(StructBss70* arg0) {
     return var_r31;
 }
 
-void fn_1_1E10(StructBss70* arg0) {
+void fn_1_1E10(StructBss70 *arg0)
+{
     Vec sp104;
     Vec spF8;
     Vec spEC;
@@ -541,8 +536,8 @@ void fn_1_1E10(StructBss70* arg0) {
     float spB0;
     float spAC;
     float spA0;
-    StructBss70* var_r30;
-    StructBss70* temp_r28;
+    StructBss70 *var_r30;
+    StructBss70 *temp_r28;
     s32 temp_r19;
     s32 var_r21;
     s32 i;
@@ -583,7 +578,8 @@ void fn_1_1E10(StructBss70* arg0) {
     spC0 = var_f19 - var_f26;
     if (spC0 > 0.0f) {
         spBC = -0.5f;
-    } else {
+    }
+    else {
         spBC = 0.5f;
     }
     if (ABS_INV(var_f19 - var_f26) > 180.0f) {
@@ -626,13 +622,14 @@ block_end:
     arg0->unk14.z = spB4;
 }
 
-void fn_1_2FDC(StructBss70* arg0) {
+void fn_1_2FDC(StructBss70 *arg0)
+{
     Vec spF0;
     Vec spE4;
     Vec spD8;
     s32 i;
-    StructBss340* var_r30;
-    StructBss70* temp_r25;
+    StructBss340 *var_r30;
+    StructBss70 *temp_r25;
     float var_f31;
     s32 var_r23;
     s32 var_r20;
@@ -655,12 +652,14 @@ void fn_1_2FDC(StructBss70* arg0) {
                 var_f31 += 30.0f * frandf() - 60.0f;
                 var_f31 = fn_1_14B4(var_f31);
                 arg0->unk20 = var_f31;
-            } else if (ABS_INV(arg0->unk14.x) > 550.0f) {
+            }
+            else if (ABS_INV(arg0->unk14.x) > 550.0f) {
                 var_f31 = fn_1_14B4(180.0 + atan2d(arg0->unk14.x, 0.0));
                 var_f31 += 10.0f * frandf() - 20.0f;
                 var_f31 = fn_1_14B4(var_f31);
                 arg0->unk20 = var_f31;
-            } else if (frandmod(3) != 0) {
+            }
+            else if (frandmod(3) != 0) {
                 for (i = 0, var_r23 = 0; i < 10; i++) {
                     if (i == arg0->unk0C) {
                         continue;
@@ -679,13 +678,15 @@ void fn_1_2FDC(StructBss70* arg0) {
                 if (var_r23 == 1 && ABS_INV(var_r30->unk4C.x) < 650.0f) {
                     temp_r25 = &lbl_1_bss_70[spAC[0]];
                     var_f31 = fn_1_14B4(atan2d(arg0->unk40 - arg0->unk14.x, arg0->unk44 - arg0->unk14.z));
-                } else {
+                }
+                else {
                     var_f31 = fn_1_14B4(180.0 + atan2d(arg0->unk14.x, arg0->unk14.z));
                     var_f31 += 30.0f * frandf() - 60.0f;
                     var_f31 = fn_1_14B4(var_f31);
                     arg0->unk20 = var_f31;
                 }
-            } else {
+            }
+            else {
                 var_f31 = 360.0f * frandf();
                 arg0->unk20 = var_f31;
             }
@@ -713,15 +714,15 @@ void fn_1_2FDC(StructBss70* arg0) {
                 var_f31 = fn_1_14B4(atan2d(arg0->unk40 - arg0->unk14.x, arg0->unk44 - arg0->unk14.z));
                 arg0->unk14.x += arg0->unk34 * sind(var_f31);
                 arg0->unk14.z += arg0->unk34 * cosd(var_f31);
-                if (fn_1_1BD4(arg0)) {
-                }
+                if (fn_1_1BD4(arg0)) { }
                 if (fn_1_1880(arg0->unk14.x, arg0->unk14.z, 50.0f, 10, arg0->unk0C) != 0) {
                     arg0->unk14.x = arg0->unk24;
                     arg0->unk14.z = arg0->unk28;
                     arg0->unk38 = 100;
                     arg0->unk3C = 0;
                 }
-            } else {
+            }
+            else {
                 arg0->unk38 = 100;
                 arg0->unk3C = 0;
             }
@@ -735,8 +736,9 @@ void fn_1_2FDC(StructBss70* arg0) {
     }
 }
 
-void fn_1_44D8(void) {
-    StructBss70* temp_r31;
+void fn_1_44D8(void)
+{
+    StructBss70 *temp_r31;
     float temp_f30;
     float var_f31;
     s32 i;
@@ -763,7 +765,8 @@ void fn_1_44D8(void) {
     }
 }
 
-void fn_1_4644(StructBss70* arg0) {
+void fn_1_4644(StructBss70 *arg0)
+{
     float temp_f26;
     float temp_f25;
     float var_f27;
@@ -778,7 +781,8 @@ void fn_1_4644(StructBss70* arg0) {
             arg0->unk20 = 90.0f;
             var_f27 = -700.0f + temp_f26 - 500.0f;
             var_f24 = 8.333333f;
-        } else {
+        }
+        else {
             arg0->unk14.x = 700.0f - temp_f26;
             arg0->unk20 = 270.0f;
             var_f27 = 700.0f - temp_f26 + 500.0f;
@@ -808,7 +812,8 @@ void fn_1_4644(StructBss70* arg0) {
     Hu3DModelPosSet(arg0->unk00, arg0->unk14.x, 0.0f, arg0->unk14.z);
 }
 
-void fn_1_4BC4(void) {
+void fn_1_4BC4(void)
+{
     s32 spC;
     float sp8;
     float temp_f23;
@@ -816,9 +821,9 @@ void fn_1_4BC4(void) {
     float var_f28;
     float var_f30;
     float var_f29;
-    StructBss70* temp_r31;
-    StructBss340* var_r28;
-    StructBss340* var_r30;
+    StructBss70 *temp_r31;
+    StructBss340 *var_r28;
+    StructBss340 *var_r30;
     s32 temp_r27;
     s32 temp_r24;
     s32 var_r26;
@@ -843,7 +848,8 @@ loop_1:
         }
     }
     if (i > 4) {
-        while (TRUE);
+        while (TRUE)
+            ;
     }
     temp_r31->unk34 = 6.75f * lbl_1_data_FC[i];
     temp_r31->unk38 = 0;
@@ -854,8 +860,8 @@ loop_1:
                 fn_1_4644(temp_r31);
                 temp_r31->unk10 = 0;
                 if (FALSE) {
-            default:
-                    fn_1_2FDC(temp_r31);
+                    default:
+                        fn_1_2FDC(temp_r31);
                 }
                 Hu3DModelPosSet(temp_r31->unk00, temp_r31->unk14.x, temp_r31->unk14.y, temp_r31->unk14.z);
                 Hu3DModelRotSet(temp_r31->unk00, 0.0f, temp_r31->unk20, 0.0f);
@@ -869,19 +875,23 @@ loop_1:
                 if (ABS_INV(var_r28->unk4C.z - temp_r31->unk14.z) > 250.0f) {
                     if (temp_r31->unk14.x > 0.0f) {
                         var_f30 = 10.0f;
-                    } else {
+                    }
+                    else {
                         var_f30 = -10.0f;
                     }
-                } else {
+                }
+                else {
                     if (var_r28->unk4C.x > temp_r31->unk14.x) {
                         var_f30 = -10.0f;
-                    } else {
+                    }
+                    else {
                         var_f30 = 10.0f;
                     }
                 }
                 if (var_f30 > 0.0f) {
                     Hu3DModelRotSet(temp_r31->unk00, 0.0f, 90.0f, 0.0f);
-                } else {
+                }
+                else {
                     Hu3DModelRotSet(temp_r31->unk00, 0.0f, 270.0f, 0.0f);
                 }
                 Hu3DMotionSet(temp_r31->unk00, temp_r31->unk04[1]);
@@ -911,7 +921,8 @@ loop_1:
                 temp_r31->unk2C = fn_1_14B4(atan2d(temp_r31->unk14.x - var_r30->unk4C.x, temp_r31->unk14.z - var_r30->unk4C.z));
                 Hu3DMotionTimeSet(temp_r31->unk02, 0.0f);
                 Hu3DModelAttrReset(temp_r31->unk02, HU3D_ATTR_DISPOFF);
-                Hu3DModelPosSet(temp_r31->unk02, var_r30->unk4C.x + var_r30->unk84 * sind(temp_r31->unk2C), temp_r31->unk14.y + 50.0f, var_r30->unk4C.z + var_r30->unk84 * cosd(temp_r31->unk2C));
+                Hu3DModelPosSet(temp_r31->unk02, var_r30->unk4C.x + var_r30->unk84 * sind(temp_r31->unk2C), temp_r31->unk14.y + 50.0f,
+                    var_r30->unk4C.z + var_r30->unk84 * cosd(temp_r31->unk2C));
                 i = 0;
                 var_f29 = temp_r31->unk14.x;
                 var_f28 = temp_r31->unk14.z;
@@ -943,9 +954,10 @@ loop_1:
     }
 }
 
-void fn_1_545C(ModelData* model, ParticleData* particle, Mtx matrix) {
-    HsfanimStruct01* var_r31;
-    StructBss340* temp_r28;
+void fn_1_545C(ModelData *model, ParticleData *particle, Mtx matrix)
+{
+    HsfanimStruct01 *var_r31;
+    StructBss340 *temp_r28;
     float var_f30;
     float var_f31;
     float temp_f29;
@@ -996,7 +1008,7 @@ void fn_1_545C(ModelData* model, ParticleData* particle, Mtx matrix) {
         if (var_r31->unk14.x == 0.0f) {
             continue;
         }
-        PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+        VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
         var_r31->unk08.x *= 0.95f;
         var_r31->unk08.z *= 0.95f;
         if (var_r31->unk08.y > 0.1f) {
@@ -1025,9 +1037,10 @@ void fn_1_545C(ModelData* model, ParticleData* particle, Mtx matrix) {
     }
 }
 
-void fn_1_594C(ModelData* model, ParticleData* particle, Mtx matrix) {
-    HsfanimStruct01* var_r31;
-    StructBss340* temp_r28;
+void fn_1_594C(ModelData *model, ParticleData *particle, Mtx matrix)
+{
+    HsfanimStruct01 *var_r31;
+    StructBss340 *temp_r28;
     float temp_f31;
     float temp_f30;
     s32 var_r27;
@@ -1088,7 +1101,7 @@ void fn_1_594C(ModelData* model, ParticleData* particle, Mtx matrix) {
         if (var_r31->unk14.x == 0.0f || var_r31->unk24 == 0.0f) {
             continue;
         }
-        PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+        VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
         if (var_r31->unk08.y > 1.0f) {
             var_r31->unk08.y -= 0.3f;
         }
@@ -1112,9 +1125,10 @@ void fn_1_594C(ModelData* model, ParticleData* particle, Mtx matrix) {
     }
 }
 
-void fn_1_5DE4(ModelData* model, ParticleData* particle, Mtx matrix) {
-    HsfanimStruct01* var_r31;
-    StructBss340* temp_r28;
+void fn_1_5DE4(ModelData *model, ParticleData *particle, Mtx matrix)
+{
+    HsfanimStruct01 *var_r31;
+    StructBss340 *temp_r28;
     float temp_f31;
     float temp_f30;
     s32 var_r27;
@@ -1175,7 +1189,7 @@ void fn_1_5DE4(ModelData* model, ParticleData* particle, Mtx matrix) {
         if (var_r31->unk14.x == 0.0f || var_r31->unk24 == 0.0f) {
             continue;
         }
-        PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+        VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
         if (var_r31->unk08.y > 1.0f) {
             var_r31->unk08.y -= 0.3f;
         }
@@ -1199,8 +1213,9 @@ void fn_1_5DE4(ModelData* model, ParticleData* particle, Mtx matrix) {
     }
 }
 
-s8 fn_1_627C(s32 arg0, s32 arg1) {
-    StructBss340* temp_r31;
+s8 fn_1_627C(s32 arg0, s32 arg1)
+{
+    StructBss340 *temp_r31;
     s8 var_r30;
 
     temp_r31 = &lbl_1_bss_340[arg0];
@@ -1208,8 +1223,9 @@ s8 fn_1_627C(s32 arg0, s32 arg1) {
     return var_r30;
 }
 
-u8 fn_1_62F0(s32 arg0, s32 arg1) {
-    StructBss340* temp_r31;
+u8 fn_1_62F0(s32 arg0, s32 arg1)
+{
+    StructBss340 *temp_r31;
     s8 var_r30;
 
     temp_r31 = &lbl_1_bss_340[arg0];
@@ -1217,8 +1233,9 @@ u8 fn_1_62F0(s32 arg0, s32 arg1) {
     return var_r30;
 }
 
-u16 fn_1_636C(s32 arg0) {
-    StructBss340* temp_r31;
+u16 fn_1_636C(s32 arg0)
+{
+    StructBss340 *temp_r31;
     u16 var_r30;
 
     temp_r31 = &lbl_1_bss_340[arg0];
@@ -1226,8 +1243,9 @@ u16 fn_1_636C(s32 arg0) {
     return var_r30;
 }
 
-u16 fn_1_63B4(s32 arg0) {
-    StructBss340* temp_r31;
+u16 fn_1_63B4(s32 arg0)
+{
+    StructBss340 *temp_r31;
     u16 var_r30;
 
     temp_r31 = &lbl_1_bss_340[arg0];
@@ -1235,11 +1253,12 @@ u16 fn_1_63B4(s32 arg0) {
     return var_r30;
 }
 
-s32 fn_1_63FC(StructBss340* arg0) {
+s32 fn_1_63FC(StructBss340 *arg0)
+{
     Vec sp24;
     Vec sp18;
     Vec spC;
-    StructBss70* temp_r31;
+    StructBss70 *temp_r31;
     s32 var_r28;
     s32 i;
 
@@ -1257,7 +1276,8 @@ s32 fn_1_63FC(StructBss340* arg0) {
     return var_r28;
 }
 
-s32 fn_1_65D0(StructBss340* arg0) {
+s32 fn_1_65D0(StructBss340 *arg0)
+{
     float var_f31;
     float var_f30;
     s32 sp8;
@@ -1279,7 +1299,8 @@ s32 fn_1_65D0(StructBss340* arg0) {
     return sp8;
 }
 
-float fn_1_67F0(float arg0, float arg1, float arg2) {
+float fn_1_67F0(float arg0, float arg1, float arg2)
+{
     float var_f30;
     float var_f31;
 
@@ -1297,8 +1318,9 @@ float fn_1_67F0(float arg0, float arg1, float arg2) {
     return var_f30;
 }
 
-void fn_1_68F4(void) {
-    StructBss340* temp_r31;
+void fn_1_68F4(void)
+{
+    StructBss340 *temp_r31;
     s32 i;
 
     temp_r31 = HuPrcCurrentGet()->user_data;
@@ -1313,19 +1335,21 @@ void fn_1_68F4(void) {
     }
 }
 
-s32 fn_1_6964(StructBss340* arg0) {
+s32 fn_1_6964(StructBss340 *arg0)
+{
     return (arg0->unk2C == 4 || arg0->unk2C == 5 || arg0->unk2C == 6);
 }
 
-void fn_1_69C0(void) {
+void fn_1_69C0(void)
+{
     float var_f23;
     float var_f27;
     float var_f26;
-    StructBss340* temp_r31;
+    StructBss340 *temp_r31;
     s16 var_r29;
     s32 var_r24;
     s32 var_r23;
-    Process* var_r22;
+    Process *var_r22;
     s32 var_r26;
     s32 var_r25;
     s32 var_r28;
@@ -1353,7 +1377,8 @@ void fn_1_69C0(void) {
             case 8:
                 if (temp_r31->unk3C != 0) {
                     temp_r31->unk3C--;
-                } else {
+                }
+                else {
                     Hu3DMotionShiftSet(temp_r31->unk00, temp_r31->unk06[0], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
                     temp_r31->unk2C = 0;
                 }
@@ -1374,7 +1399,8 @@ void fn_1_69C0(void) {
                 }
                 if (temp_r31->unk3C != 0) {
                     temp_r31->unk3C--;
-                } else {
+                }
+                else {
                     Hu3DMotionSet(temp_r31->unk00, temp_r31->unk06[5]);
                     Hu3DModelAttrReset(temp_r31->unk00, HU3D_MOTATTR_LOOP);
                     temp_r31->unk2C = 6;
@@ -1416,7 +1442,8 @@ void fn_1_69C0(void) {
                             if (fn_1_63B4(temp_r31->unk20) & PAD_BUTTON_A) {
                                 Hu3DMotionShiftSet(temp_r31->unk00, temp_r31->unk06[1], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
                                 Hu3DMotionShiftSpeedSet(temp_r31->unk00, 2.0f);
-                            } else {
+                            }
+                            else {
                                 Hu3DMotionShiftSet(temp_r31->unk00, temp_r31->unk06[1], 0.0f, 8.0f, HU3D_MOTATTR_LOOP | HU3D_MOTATTR_REV);
                                 Hu3DMotionShiftSpeedSet(temp_r31->unk00, 2.0f);
                             }
@@ -1424,14 +1451,16 @@ void fn_1_69C0(void) {
                                 HuAudFXStop(var_r29);
                             }
                         }
-                    } else {
+                    }
+                    else {
                         if (temp_r31->unk2C != 3) {
                             temp_r31->unk2C = 3;
                             temp_r31->unk48 = 0;
                             if (fn_1_63B4(temp_r31->unk20) & PAD_BUTTON_A) {
                                 Hu3DMotionShiftSet(temp_r31->unk00, temp_r31->unk06[2], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
                                 Hu3DMotionShiftSpeedSet(temp_r31->unk00, 2.0f);
-                            } else {
+                            }
+                            else {
                                 Hu3DMotionShiftSet(temp_r31->unk00, temp_r31->unk06[2], 0.0f, 8.0f, HU3D_MOTATTR_LOOP | HU3D_MOTATTR_REV);
                                 Hu3DMotionShiftSpeedSet(temp_r31->unk00, 2.0f);
                             }
@@ -1443,7 +1472,8 @@ void fn_1_69C0(void) {
                     if (temp_r31->unk34 != 1) {
                         var_r24 = 8;
                         var_r23 = 32;
-                    } else {
+                    }
+                    else {
                         var_r24 = 7;
                         var_r23 = 22;
                     }
@@ -1458,12 +1488,14 @@ void fn_1_69C0(void) {
                         if (temp_r31->unk48 >= 50) {
                             temp_r31->unk48 -= 50;
                         }
-                    } else {
+                    }
+                    else {
                         if (temp_r31->unk48 >= 30) {
                             temp_r31->unk48 -= 30;
                         }
                     }
-                } else {
+                }
+                else {
                     if (ABS_INV(fn_1_627C(temp_r31->unk20, 0)) <= 20) {
                         if (temp_r31->unk2C != 0) {
                             temp_r31->unk2C = 0;
@@ -1472,7 +1504,8 @@ void fn_1_69C0(void) {
                                 HuAudFXStop(var_r29);
                             }
                         }
-                    } else {
+                    }
+                    else {
                         if (temp_r31->unk2C != 1) {
                             temp_r31->unk2C = 1;
                             Hu3DMotionShiftSet(temp_r31->unk00, temp_r31->unk06[3], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
@@ -1481,10 +1514,8 @@ void fn_1_69C0(void) {
                         }
                     }
                 }
-                if (fn_1_63FC(temp_r31) != -1) {
-                }
-                if ((spA4 = fn_1_65D0(temp_r31)) != -1) {
-                }
+                if (fn_1_63FC(temp_r31) != -1) { }
+                if ((spA4 = fn_1_65D0(temp_r31)) != -1) { }
                 break;
         }
         Hu3DModelPosSet(temp_r31->unk00, temp_r31->unk4C.x, temp_r31->unk4C.y, temp_r31->unk4C.z);
@@ -1522,7 +1553,8 @@ void fn_1_69C0(void) {
             if (var_r25 & 1) {
                 Hu3DModelAttrReset(temp_r31->unk00, HU3D_ATTR_DISPOFF);
                 Hu3DModelAttrReset(temp_r31->unk04, HU3D_ATTR_DISPOFF);
-            } else {
+            }
+            else {
                 Hu3DModelAttrSet(temp_r31->unk00, HU3D_ATTR_DISPOFF);
                 Hu3DModelAttrSet(temp_r31->unk04, HU3D_ATTR_DISPOFF);
             }
@@ -1542,7 +1574,8 @@ void fn_1_69C0(void) {
         Hu3DModelAttrSet(temp_r31->unk00, HU3D_ATTR_DISPOFF);
         HuAudSStreamPlay(4);
         HuPrcSleep(180);
-    } else {
+    }
+    else {
         var_f26 = temp_r31->unk90;
         Hu3DMotionShiftSet(temp_r31->unk00, temp_r31->unk06[3], 0.0f, 2.0f, HU3D_MOTATTR_LOOP);
         if (fn_1_14B4(temp_r31->unk60.y) != 0.0f) {
@@ -1576,10 +1609,10 @@ void fn_1_69C0(void) {
     }
 }
 
-void fn_1_7D3C(void) {
-}
+void fn_1_7D3C(void) { }
 
-void fn_1_7D40(void) {
+void fn_1_7D40(void)
+{
     while (TRUE) {
         if (omSysExitReq == 1) {
             WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
@@ -1595,7 +1628,8 @@ void fn_1_7D40(void) {
     }
 }
 
-void fn_1_7DA0(void) {
+void fn_1_7DA0(void)
+{
     s16 temp_r31;
     s16 var_r30;
     s16 temp_r26;
@@ -1644,7 +1678,8 @@ void fn_1_7DA0(void) {
             HuPrcVSleep();
         }
         lbl_1_bss_3E4 = 5;
-    } else {
+    }
+    else {
         lbl_1_bss_3E4 = 5;
     }
     while (lbl_1_bss_3E4 < 6) {

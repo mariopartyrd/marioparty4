@@ -153,7 +153,7 @@ void ObjectSetup(void)
     sp8.x = sp8.z = 0.0f;
     sp8.y = lbl_1_data_18.z;
     mtxRot(sp2C, lbl_1_data_18.x, lbl_1_data_18.y, 0.0f);
-    PSMTXMultVec(sp2C, &sp8, &lbl_1_data_28);
+    MTXMultVec(sp2C, &sp8, &lbl_1_data_28);
     Hu3DGLightPosAimSetV(lbl_1_bss_1A[0], &lbl_1_data_28, &lbl_1_data_40);
     Hu3DShadowPosSet(&lbl_1_data_28, &lbl_1_data_34, &lbl_1_data_40);
     lbl_1_bss_18 = lbl_1_bss_16 = lbl_1_bss_14 = lbl_1_bss_12 = lbl_1_bss_10 = -1;
@@ -474,15 +474,15 @@ void fn_1_2564(omObjData *object)
         var_f31 *= -1.0f;
     }
     var_f31 = object->work[0] / var_f31;
-    PSVECSubtract(&lbl_1_data_4C[object->work[1] + var_r24], &lbl_1_data_4C[object->work[1]], &sp20);
-    PSVECScale(&sp20, &sp20, var_f31);
-    PSVECAdd(&lbl_1_data_4C[object->work[1]], &sp20, &sp20);
+    VECSubtract(&lbl_1_data_4C[object->work[1] + var_r24], &lbl_1_data_4C[object->work[1]], &sp20);
+    VECScale(&sp20, &sp20, var_f31);
+    VECAdd(&lbl_1_data_4C[object->work[1]], &sp20, &sp20);
     Center.x = sp20.x;
     Center.y = sp20.y;
     Center.z = sp20.z;
-    PSVECSubtract(&lbl_1_data_70[object->work[1] + var_r24], &lbl_1_data_70[object->work[1]], &sp20);
-    PSVECScale(&sp20, &sp20, var_f31);
-    PSVECAdd(&lbl_1_data_70[object->work[1]], &sp20, &sp20);
+    VECSubtract(&lbl_1_data_70[object->work[1] + var_r24], &lbl_1_data_70[object->work[1]], &sp20);
+    VECScale(&sp20, &sp20, var_f31);
+    VECAdd(&lbl_1_data_70[object->work[1]], &sp20, &sp20);
     CRot.x = sp20.x;
     CRot.y = sp20.y;
     CRot.z = 0.0f;
@@ -683,8 +683,8 @@ void fn_1_3618(omObjData *var_r28)
                 sp10[2] = var_r31->unk_44.unk_08 * var_r31->unk_40;
                 sp10[3] = var_r31->unk_44.unk_0C * var_r31->unk_40;
                 Hu3DCameraPerspectiveSet(var_r31->unk_3C, var_r31->unk_10, var_r31->unk_14, var_r31->unk_18, var_f31);
-                Hu3DCameraViewportSet(
-                    var_r31->unk_3C, var_r31->unk_44.unk_00 - (0.5f * sp10[2]), var_r31->unk_44.unk_04 - (0.5f * sp10[3]), sp10[2], sp10[3], 0.0f, 1.0f);
+                Hu3DCameraViewportSet(var_r31->unk_3C, var_r31->unk_44.unk_00 - (0.5f * sp10[2]), var_r31->unk_44.unk_04 - (0.5f * sp10[3]), sp10[2],
+                    sp10[3], 0.0f, 1.0f);
                 sp10[0] = var_r31->unk_44.unk_00 - (0.5f * sp10[2]);
                 sp10[1] = var_r31->unk_44.unk_04 - (0.5f * sp10[3]);
                 sp8[0] = var_r31->unk_44.unk_00 + (0.5f * sp10[2]);
@@ -731,7 +731,7 @@ void fn_1_3BC0(ModelData *model, Mtx mtx)
     DCStoreRange(&lbl_1_data_B8, 4);
     C_MTXPerspective(spC, 41.5f, 1.2f, 100.0f, 5500.0f);
     GXSetProjection(spC, GX_PERSPECTIVE);
-    PSMTXIdentity(sp3C);
+    MTXIdentity(sp3C);
     GXLoadPosMtxImm(sp3C, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -948,12 +948,12 @@ void fn_1_4388(Vec *sp8, Vec *var_r31)
     float var_f30;
     float var_f29;
 
-    PSVECSubtract(var_r31, sp8, &sp10);
+    VECSubtract(var_r31, sp8, &sp10);
     Center = *var_r31;
     CRot.x = atan2d(sp10.y, sqrtf((sp10.x * sp10.x) + (sp10.z * sp10.z)));
     CRot.y = atan2d(-sp10.x, -sp10.z);
     CRot.z = 0.0f;
-    CZoom = PSVECMag(&sp10);
+    CZoom = VECMag(&sp10);
 }
 
 void fn_1_4590(float arg8, float arg9, float argA, float argB, float argC, float argD)
@@ -968,12 +968,12 @@ void fn_1_4590(float arg8, float arg9, float argA, float argB, float argC, float
     sp30.x = argB;
     sp30.y = argC;
     sp30.z = argD;
-    PSVECSubtract(&sp30, &sp3C, &sp24);
+    VECSubtract(&sp30, &sp3C, &sp24);
     Center = sp30;
     CRot.x = atan2d(sp24.y, sqrtf((sp24.x * sp24.x) + (sp24.z * sp24.z)));
     CRot.y = atan2d(-sp24.x, -sp24.z);
     CRot.z = 0.0f;
-    CZoom = PSVECMag(&sp24);
+    CZoom = VECMag(&sp24);
 }
 
 float fn_1_47D0(float arg8, float arg9, float argA)

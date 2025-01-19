@@ -197,12 +197,12 @@ static omObjData *CreateHand(void)
     return hand;
 }
 
-static void KillHand(omObjData *hand)
+static void KillHand(omObjData *object)
 {
     s32 i;
 
     for (i = 0; i < 1; i++) {
-        Hu3DModelKill(hand->model[i]);
+        Hu3DModelKill(object->model[i]);
     }
 }
 
@@ -222,21 +222,21 @@ static omObjData *CreateSystem(void)
     return system;
 }
 
-static void KillSystem(omObjData *system)
+static void KillSystem(omObjData *object)
 {
     s32 i;
 
     for (i = 0; i < 1; i++) {
-        Hu3DModelKill(system->model[i]);
+        Hu3DModelKill(object->model[i]);
     }
 }
 
-static void StartSystemMotion(omObjData *system, s32 rumbleF, BOOL slowF)
+static void StartSystemMotion(omObjData *object, s32 rumbleF, BOOL slowF)
 {
-    s16 model = system->model[0];
+    s16 model = object->model[0];
 
-    Hu3DModelAttrReset(system->model[0], HU3D_MOTATTR_PAUSE);
-    Hu3DModelAttrReset(system->model[0], HU3D_MOTATTR_LOOP);
+    Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_PAUSE);
+    Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_LOOP);
     if (rumbleF) {
         Hu3DMotionStartEndSet(model, 60.0f, 120.0f);
         if (slowF) {
@@ -267,24 +267,24 @@ static omObjData *CreatePad(void)
     return pad;
 }
 
-static void KillPad(omObjData *pad)
+static void KillPad(omObjData *object)
 {
     s32 i;
 
     for (i = 0; i < 1; i++) {
-        Hu3DModelKill(pad->model[i]);
+        Hu3DModelKill(object->model[i]);
     }
 }
 
-static void ShakePad(omObjData *pad, BOOL on)
+static void ShakePad(omObjData *object, BOOL on)
 {
     if (on) {
-        Hu3DModelAttrReset(pad->model[0], HU3D_MOTATTR_PAUSE);
-        Hu3DModelAttrSet(pad->model[0], HU3D_MOTATTR_LOOP);
+        Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_PAUSE);
+        Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
     }
     else {
-        Hu3DModelAttrSet(pad->model[0], HU3D_MOTATTR_PAUSE);
-        Hu3DModelAttrReset(pad->model[0], HU3D_MOTATTR_LOOP);
+        Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_PAUSE);
+        Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_LOOP);
     }
 }
 

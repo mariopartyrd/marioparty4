@@ -1288,19 +1288,19 @@ void fn_1_758(omObjData *var_r29)
             sp124 = ((-90.175 <= lbl_1_bss_18) && (lbl_1_bss_18 <= -90.0f)) != 0
                 ? -90.175
                 : ((-90.0f <= lbl_1_bss_18) && (lbl_1_bss_18 <= -89.825) ? -89.825 : lbl_1_bss_18);
-            PSMTXRotRad(sp304, 0x78, 0.017453292f * (10.0f * var_r31->unk_5C));
-            PSMTXRotRad(sp364, 0x7A, 0.017453292f * (10.0f * -var_r31->unk_58));
-            PSMTXConcat(sp364, sp304, sp364);
-            PSMTXRotRad(sp304, 0x79, 0.017453292f * sp124);
-            PSMTXRotRad(sp334, 0x78, 0.017453292f * (15.0f * var_r31->unk_5C));
-            PSMTXConcat(sp334, sp304, sp334);
-            PSMTXRotRad(sp304, 0x7A, 0.017453292f * (15.0f * -var_r31->unk_58));
-            PSMTXConcat(sp304, sp334, sp334);
+            MTXRotRad(sp304, 0x78, 0.017453292f * (10.0f * var_r31->unk_5C));
+            MTXRotRad(sp364, 0x7A, 0.017453292f * (10.0f * -var_r31->unk_58));
+            MTXConcat(sp364, sp304, sp364);
+            MTXRotRad(sp304, 0x79, 0.017453292f * sp124);
+            MTXRotRad(sp334, 0x78, 0.017453292f * (15.0f * var_r31->unk_5C));
+            MTXConcat(sp334, sp304, sp334);
+            MTXRotRad(sp304, 0x7A, 0.017453292f * (15.0f * -var_r31->unk_58));
+            MTXConcat(sp304, sp334, sp334);
             Hu3DMtxRotGet(sp334, &sp2A8);
             sp2B4.x = var_r31->unk_60[var_r30];
             sp2B4.y = var_r31->unk_70[var_r30];
             sp2B4.z = var_r31->unk_80[var_r30];
-            PSMTXMultVec(sp364, &sp2B4, &sp2B4);
+            MTXMultVec(sp364, &sp2B4, &sp2B4);
             Hu3DModelPosSet(var_r29->model[var_r30 + 0xC], sp2D8.x + sp2B4.x, sp2D8.y + sp2B4.y, sp2D8.z + sp2B4.z);
             Hu3DModelRotSet(var_r29->model[var_r30 + 0xC], 10.0f * var_r31->unk_5C, 0.0f, 10.0f * -var_r31->unk_58);
             Hu3DModelRotSet(var_r29->model[var_r30 + 0xC], sp2A8.x, sp2A8.y, sp2A8.z);
@@ -1716,7 +1716,7 @@ void fn_1_7F94(ModelData *model, ParticleData *particle, Mtx matrix)
             var_r31->unk2C = 50.0f;
         }
         if (var_r31->unk00_s16 < 0xF0) {
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+            VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk08.x *= 0.9f;
             var_r31->unk08.z *= 0.9f;
             var_r31->unk08.y *= 0.9f;

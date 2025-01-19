@@ -5,7 +5,7 @@
 #include "msm/msmsys.h"
 
 void msmSePeriodicProc(void);
-MSMSE* msmSeGetIndexPtr(s32 arg0);
+MSM_SE* msmSeGetIndexPtr(s32 arg0);
 void msmSeDelListener(void);
 s32 msmSeUpdataListener(Vec* pos, Vec* heading);
 s32 msmSeSetListener(Vec* pos, Vec* heading, float sndDist, float sndSpeed, MSM_SELISTENER* listener);
@@ -18,6 +18,6 @@ void msmSePauseAll(BOOL pause, s32 speed);
 void msmSeStopAll(BOOL checkGrp, s32 speed);
 s32 msmSeStop(int seNo, s32 speed);
 int msmSePlay(int seId, MSM_SEPARAM* param);
-s32 msmSeInit(sysData* arg0, DVDFileInfo* arg1);
+s32 msmSeInit(MSM_SYS* arg0, DVDFileInfo* arg1);
 
 #endif

@@ -1274,7 +1274,7 @@ void fn_1_4028(Work2110 *arg0)
                     temp_r31->unk18++;
                     temp_f31 = temp_r31->unk18 / (VERSION_NTSC ? 54.0f : 45.0f);
                     if (temp_f31 >= 1.0f) {
-                        temp_r31->unk18 = VERSION_NTSC ? 54 : 45; 
+                        temp_r31->unk18 = VERSION_NTSC ? 54 : 45;
                         temp_f31 = 1.0f;
                     }
                     temp_f31 = cosd(temp_f31 * 90.0f);

@@ -1065,14 +1065,14 @@ config.libs = [
     Rel(
         "m425Dll",  # The Great Deflate
         objects={
-            Object(NonMatching, "REL/m425Dll/main.c"),
-            Object(NonMatching, "REL/m425Dll/thwomp.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m425Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m425Dll/thwomp.c"),
         },
     ),
     Rel(
         "m426Dll",  # Revers-a-Bomb
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m426Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m426Dll/main.c"),
         },
     ),
     Rel(
@@ -1086,9 +1086,9 @@ config.libs = [
     Rel(
         "m428Dll",  # Cliffhangers
         objects={
-            Object(NonMatching, "REL/m428Dll/main.c"),
-            Object(NonMatching, "REL/m428Dll/map.c"),
-            Object(NonMatching, "REL/m428Dll/player.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/map.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/player.c"),
         },
     ),
     Rel(
@@ -1396,10 +1396,10 @@ config.libs = [
     Rel(
         "mstory3Dll",
         objects={
-            Object(NonMatching, "REL/mstory3Dll/main.c"),
-            Object(NonMatching, "REL/mstory3Dll/result_seq.c"),
-            Object(NonMatching, "REL/mstory3Dll/result.c"),
-            Object(NonMatching, "REL/mstory3Dll/win_effect.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/main.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/result_seq.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/result.c"),
+            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/win_effect.c"),
         },
     ),
     Rel(

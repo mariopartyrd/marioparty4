@@ -608,13 +608,13 @@ void fn_1_9A64(omObjData *arg0)
     fn_1_C878(arg0->model[1], "hook1", sp74, 0);
     fn_1_C878(arg0->model[2], "hook2", sp74, 1);
     fn_1_C878(arg0->model[3], "hook3", sp74, 1);
-    PSMTXCopy(sp74, sp44);
+    MTXCopy(sp74, sp44);
     temp_r31->unk30.x = sp74[0][3];
     temp_r31->unk30.y = sp74[1][3];
     temp_r31->unk30.z = sp74[2][3];
 
     for (var_r29 = 0; var_r29 < 0xC; var_r29++) {
-        PSMTXCopy(sp44, sp74);
+        MTXCopy(sp44, sp74);
         fn_1_C878(arg0->model[4], lbl_1_data_21C[var_r29], sp74, 1);
         temp_r31->unkCC[var_r29] = temp_r31->unk3C[var_r29];
         temp_r31->unk3C[var_r29].x = sp74[0][3];
@@ -625,14 +625,14 @@ void fn_1_9A64(omObjData *arg0)
         sp2C.x = 0.0f;
         sp2C.y = temp_r31->unk174.y;
         sp2C.z = 0.0f;
-        PSVECSubtract(&temp_r31->unk174, &sp2C, &sp20);
-        var_f31 = PSVECMag(&sp20);
+        VECSubtract(&temp_r31->unk174, &sp2C, &sp20);
+        var_f31 = VECMag(&sp20);
         if (var_f31 != 0.0f) {
-            PSVECNormalize(&sp20, &sp20);
-            PSVECScale(&sp20, &sp20, 0.9f * var_f31);
-            PSVECAdd(&sp2C, &sp20, &temp_r31->unk174);
+            VECNormalize(&sp20, &sp20);
+            VECScale(&sp20, &sp20, 0.9f * var_f31);
+            VECAdd(&sp2C, &sp20, &temp_r31->unk174);
         }
-        PSVECAdd(&temp_r31->unk30, &temp_r31->unk174, &sp38);
+        VECAdd(&temp_r31->unk30, &temp_r31->unk174, &sp38);
         fn_1_88E8(temp_r31->unk168, sp38.x, sp38.y, sp38.z);
     }
     temp_r31->unk164 = 1;
@@ -911,7 +911,7 @@ s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3)
     var_r28 = 0;
     var_r24 = lbl_1_bss_6D8;
     temp_r31 = var_r24->data;
-    PSVECAdd(arg0, arg1, &sp24);
+    VECAdd(arg0, arg1, &sp24);
     spC = *arg1;
     *arg2 = *arg0;
     temp_f30 = 5.0f + arg8;
@@ -923,10 +923,10 @@ s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3)
             for (var_r29 = 0; var_r29 < 0xC; var_r29++) {
                 if (var_r28 != 0) {
                     sp24 = *arg2;
-                    PSVECSubtract(&sp24, arg0, &spC);
+                    VECSubtract(&sp24, arg0, &spC);
                 }
-                PSVECSubtract(&sp24, &temp_r31->unk3C[var_r29], &sp18);
-                var_f29 = PSVECMag(&sp18);
+                VECSubtract(&sp24, &temp_r31->unk3C[var_r29], &sp18);
+                var_f29 = VECMag(&sp18);
                 if (var_f29 < temp_f30) {
                     if (0.0f == var_f29) {
                         var_f29 = temp_f30;
@@ -939,9 +939,9 @@ s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3)
                         temp_r31->unk15C = 1;
                     }
                     else {
-                        PSVECNormalize(&sp18, &sp18);
-                        PSVECScale(&sp18, &sp18, temp_f30);
-                        PSVECAdd(&temp_r31->unk3C[var_r29], &sp18, arg2);
+                        VECNormalize(&sp18, &sp18);
+                        VECScale(&sp18, &sp18, temp_f30);
+                        VECAdd(&temp_r31->unk3C[var_r29], &sp18, arg2);
                     }
                     var_r28 = 1;
                 }
@@ -951,43 +951,43 @@ s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3)
             for (var_r29 = 0; var_r29 < 0xC; var_r29++) {
                 if (var_r28 != 0) {
                     sp24 = *arg2;
-                    PSVECSubtract(&sp24, arg0, &spC);
+                    VECSubtract(&sp24, arg0, &spC);
                 }
                 var_r26 = 0;
                 sp60 = temp_r31->unk3C[var_r29];
-                PSVECAdd(&temp_r31->unkCC[var_r29], &spC, &sp54);
-                PSVECSubtract(&sp60, &sp54, &sp18);
-                PSVECSubtract(&sp24, &sp54, &sp48);
+                VECAdd(&temp_r31->unkCC[var_r29], &spC, &sp54);
+                VECSubtract(&sp60, &sp54, &sp18);
+                VECSubtract(&sp24, &sp54, &sp48);
                 temp_f26 = (sp18.z * sp18.z) + ((sp18.x * sp18.x) + (sp18.y * sp18.y));
                 if (temp_f26 != 0.0f) {
                     var_f24 = (sp18.x * sp48.x) + (sp18.y * sp48.y) + (sp18.z * sp48.z);
                     temp_f27 = var_f24 / temp_f26;
                     if (temp_f27 >= 0.0f) {
                         if (temp_f27 <= 1.0f) {
-                            PSVECScale(&sp18, &sp18, temp_f27);
-                            PSVECAdd(&sp54, &sp18, &sp3C);
-                            PSVECSubtract(&sp24, &sp3C, &sp30);
-                            var_f29 = PSVECMag(&sp30);
+                            VECScale(&sp18, &sp18, temp_f27);
+                            VECAdd(&sp54, &sp18, &sp3C);
+                            VECSubtract(&sp24, &sp3C, &sp30);
+                            var_f29 = VECMag(&sp30);
                             if (var_f29 == 0.0f) {
-                                if (PSVECMag(&sp18) <= 0.0f) {
+                                if (VECMag(&sp18) <= 0.0f) {
                                     sp18.x = sp18.y = 0.0f;
                                     sp18.z = 1.0f;
                                 }
-                                PSVECNormalize(&sp18, &sp30);
-                                PSVECScale(&sp30, &sp30, temp_f30);
-                                PSVECAdd(&sp60, &sp30, arg2);
+                                VECNormalize(&sp18, &sp30);
+                                VECScale(&sp30, &sp30, temp_f30);
+                                VECAdd(&sp60, &sp30, arg2);
                                 var_r28 = 1;
                                 var_r26 = 1;
                             }
                             else if (var_f29 < temp_f30) {
-                                if (PSVECMag(&sp30) <= 0.0f) {
+                                if (VECMag(&sp30) <= 0.0f) {
 
                                     sp30.x = sp30.y = 0.0f;
                                     sp30.z = 1.0f;
                                 }
-                                PSVECNormalize(&sp30, &sp30);
-                                PSVECScale(&sp30, &sp30, temp_f30);
-                                PSVECAdd(&sp3C, &sp30, arg2);
+                                VECNormalize(&sp30, &sp30);
+                                VECScale(&sp30, &sp30, temp_f30);
+                                VECAdd(&sp3C, &sp30, arg2);
                                 var_r28 = 1;
                                 var_r26 = 1;
                             }
@@ -995,31 +995,31 @@ s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3)
                     }
                 }
                 if (var_r26 == 0) {
-                    PSVECSubtract(&sp24, &sp60, &sp18);
-                    var_f29 = PSVECMag(&sp18);
+                    VECSubtract(&sp24, &sp60, &sp18);
+                    var_f29 = VECMag(&sp18);
                     if (var_f29 < temp_f30) {
                         if (var_f29 <= 0.0f) {
                             sp18.x = sp18.y = 0.0f;
                             sp18.z = 1.0f;
                         }
-                        PSVECNormalize(&sp18, &sp18);
-                        PSVECScale(&sp18, &sp18, temp_f30);
-                        PSVECAdd(&temp_r31->unk3C[var_r29], &sp18, arg2);
+                        VECNormalize(&sp18, &sp18);
+                        VECScale(&sp18, &sp18, temp_f30);
+                        VECAdd(&temp_r31->unk3C[var_r29], &sp18, arg2);
                         var_r28 = 1;
                         var_r26 = 1;
                     }
                 }
                 if (var_r26 == 0) {
-                    PSVECSubtract(&sp24, &sp54, &sp18);
-                    var_f29 = PSVECMag(&sp18);
+                    VECSubtract(&sp24, &sp54, &sp18);
+                    var_f29 = VECMag(&sp18);
                     if (var_f29 < temp_f30) {
                         if (var_f29 <= 0.0f) {
                             sp18.x = sp18.y = 0.0f;
                             sp18.z = 1.0f;
                         }
-                        PSVECNormalize(&sp18, &sp18);
-                        PSVECScale(&sp18, &sp18, temp_f30);
-                        PSVECAdd(&temp_r31->unk3C[var_r29], &sp18, arg2);
+                        VECNormalize(&sp18, &sp18);
+                        VECScale(&sp18, &sp18, temp_f30);
+                        VECAdd(&temp_r31->unk3C[var_r29], &sp18, arg2);
                         var_r28 = 1;
                         var_r26 = 1;
                     }
@@ -1045,7 +1045,7 @@ s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3)
     if (var_r28 != 0) {
         if (--arg3 > 0) {
             sp24 = *arg2;
-            PSVECSubtract(&sp24, arg0, &spC);
+            VECSubtract(&sp24, arg0, &spC);
             if (fn_1_B9E0(arg0, &spC, arg8, &sp24, arg3) != 0) {
                 *arg2 = sp24;
             }
@@ -1077,8 +1077,8 @@ s32 fn_1_C210(Vec *arg0)
             sp1C.x = temp_r31->unk30.x;
             sp1C.y = -120.00001f + temp_r31->unk30.y;
             sp1C.z = temp_r31->unk30.z;
-            PSVECSubtract(arg0, &sp1C, &sp10);
-            if ((spC = PSVECMag(&sp10)) < 50.0f) {
+            VECSubtract(arg0, &sp1C, &sp10);
+            if ((spC = VECMag(&sp10)) < 50.0f) {
                 var_r29 = 1;
             }
     }
@@ -1118,7 +1118,7 @@ void fn_1_C2E0(s32 arg0)
                     spC = fn_1_8A00(var_r30);
                     sp28 = *temp_r28;
                     sp4C = temp_r27->unk60;
-                    PSVECSubtract(temp_r28, &sp4C, &sp40);
+                    VECSubtract(temp_r28, &sp4C, &sp40);
                     if (fn_1_B9E0(&sp4C, &sp40, 100.0f, &sp34, 0x10) != 0) {
                         *temp_r28 = sp34;
                         sp4C = sp34;
@@ -1141,7 +1141,7 @@ void fn_1_C2E0(s32 arg0)
                         if (fn_1_C210(&sp4C) != 0) {
                             temp_r31->unk168 = var_r30;
                             temp_r31->unk170 = fn_1_897C(var_r30);
-                            PSVECSubtract(&sp4C, &temp_r31->unk30, &temp_r31->unk174);
+                            VECSubtract(&sp4C, &temp_r31->unk30, &temp_r31->unk174);
                             fn_1_88E8(temp_r31->unk168, sp4C.x, sp4C.y, sp4C.z);
                         }
                     }
@@ -1174,8 +1174,8 @@ void fn_1_C604(s32 arg0, s32 arg1)
             var_r28 = &lbl_1_bss_60[var_r30];
             var_r31 = fn_1_89D4(var_r30);
             sp24 = *var_r31;
-            PSVECSubtract(&sp24, &sp30, &sp18);
-            var_f30 = PSVECMag(&sp18);
+            VECSubtract(&sp24, &sp30, &sp18);
+            var_f30 = VECMag(&sp18);
             if (var_f30 < 200.0f) {
                 if (var_f30 > 0.0f) {
                     temp_f31 = 1.0f / var_f30;
@@ -1228,11 +1228,11 @@ s32 fn_1_C878(s16 arg0, const char *arg1, Mtx arg2, s32 arg3)
         lbl_1_bss_6C4 = 0;
     }
     mtxRot(sp14, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
-    PSMTXScale(sp44, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
-    PSMTXConcat(sp14, sp44, sp44);
+    MTXScale(sp44, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
+    MTXConcat(sp14, sp44, sp44);
     mtxTransCat(sp44, temp_r31->pos.x, temp_r31->pos.y, temp_r31->pos.z);
     if (arg3 != 0) {
-        PSMTXConcat(arg2, sp44, sp44);
+        MTXConcat(arg2, sp44, sp44);
     }
     fn_1_C99C(temp_r30->root, sp44, arg1, arg2);
     return lbl_1_bss_6C8;
@@ -1263,21 +1263,21 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
             var_r31 = &arg0->data.base;
         }
         if ((var_r31->scale.x <= 0.0f) && (var_r31->scale.y <= 0.0f) && (var_r31->scale.z <= 0.0f)) {
-            PSMTXCopy(arg1, spF8);
+            MTXCopy(arg1, spF8);
             OSReport("OBJ MTX CHECK ERROR %s \n", arg0->name);
         }
         else {
             mtxRot(spC8, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-            PSMTXScale(spF8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-            PSMTXConcat(spC8, spF8, spF8);
+            MTXScale(spF8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+            MTXConcat(spC8, spF8, spF8);
             mtxTransCat(spF8, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-            PSMTXConcat(arg1, spF8, spF8);
+            MTXConcat(arg1, spF8, spF8);
         }
         if (lbl_1_bss_6C0 != 0) {
             OSReport("%s \n", arg0->name);
         }
         if (strcmp(arg2, arg0->name) == 0) {
-            PSMTXCopy(spF8, arg3);
+            MTXCopy(spF8, arg3);
             lbl_1_bss_6C8 = 1;
         }
         for (var_r25 = 0; var_r25 < arg0->data.childrenCount; var_r25++) {
@@ -1290,21 +1290,21 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
                     var_r30 = &temp_r28->data.base;
                 }
                 if ((var_r30->scale.x <= 0.0f) && (var_r30->scale.y <= 0.0f) && (var_r30->scale.z <= 0.0f)) {
-                    PSMTXCopy(spF8, sp68);
+                    MTXCopy(spF8, sp68);
                     OSReport("OBJ MTX CHECK ERROR %s \n", temp_r28->name);
                 }
                 else {
                     mtxRot(sp98, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
-                    PSMTXScale(sp68, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
-                    PSMTXConcat(sp98, sp68, sp68);
+                    MTXScale(sp68, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
+                    MTXConcat(sp98, sp68, sp68);
                     mtxTransCat(sp68, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
-                    PSMTXConcat(spF8, sp68, sp68);
+                    MTXConcat(spF8, sp68, sp68);
                 }
                 if (lbl_1_bss_6C0 != 0) {
                     OSReport("%s \n", temp_r28->name);
                 }
                 if (strcmp(arg2, temp_r28->name) == 0) {
-                    PSMTXCopy(sp68, arg3);
+                    MTXCopy(sp68, arg3);
                     lbl_1_bss_6C8 = 1;
                 }
                 for (var_r24 = 0; var_r24 < temp_r28->data.childrenCount; var_r24++) {
@@ -1317,21 +1317,21 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
                             var_r29 = &temp_r27->data.base;
                         }
                         if ((var_r29->scale.x <= 0.0f) && (var_r29->scale.y <= 0.0f) && (var_r29->scale.z <= 0.0f)) {
-                            PSMTXCopy(sp68, sp8);
+                            MTXCopy(sp68, sp8);
                             OSReport("OBJ MTX CHECK ERROR %s \n", temp_r27->name);
                         }
                         else {
                             mtxRot(sp38, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
-                            PSMTXScale(sp8, var_r29->scale.x, var_r29->scale.y, var_r29->scale.z);
-                            PSMTXConcat(sp38, sp8, sp8);
+                            MTXScale(sp8, var_r29->scale.x, var_r29->scale.y, var_r29->scale.z);
+                            MTXConcat(sp38, sp8, sp8);
                             mtxTransCat(sp8, var_r29->pos.x, var_r29->pos.y, var_r29->pos.z);
-                            PSMTXConcat(sp68, sp8, sp8);
+                            MTXConcat(sp68, sp8, sp8);
                         }
                         if (lbl_1_bss_6C0 != 0) {
                             OSReport("%s \n", temp_r27->name);
                         }
                         if (strcmp(arg2, temp_r27->name) == 0) {
-                            PSMTXCopy(sp8, arg3);
+                            MTXCopy(sp8, arg3);
                             lbl_1_bss_6C8 = 1;
                         }
                         for (var_r23 = 0; var_r23 < temp_r27->data.childrenCount; var_r23++) {

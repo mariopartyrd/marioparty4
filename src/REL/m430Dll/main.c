@@ -118,7 +118,7 @@ void ObjectSetup(void)
     sp8.x = sp8.z = 0.0f;
     sp8.y = lbl_1_data_18.z;
     mtxRot(sp20, lbl_1_data_18.x, lbl_1_data_18.y, 0.0f);
-    PSMTXMultVec(sp20, &sp8, &sp8);
+    MTXMultVec(sp20, &sp8, &sp8);
     Hu3DGLightPosAimSetV(lbl_1_bss_26, &sp8, &sp14);
     Hu3DShadowPosSet(&sp8, &lbl_1_data_34, &sp14);
     lbl_1_bss_24 = lbl_1_bss_22 = lbl_1_bss_20 = -1;

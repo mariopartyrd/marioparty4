@@ -212,12 +212,12 @@ u8 GWBoardPlayCountGet(s32 board)
     return GWGameStat.board_play_count[board];
 }
 
-void GWBoardMaxStarsSet(s32 board, s32 value)
+void GWBoardMaxStarsSet(s32 board, s16 value)
 {
     GWGameStat.board_max_stars[board] = value;
 }
 
-u16 GWBoardMaxStarsGet(s32 board)
+s32 GWBoardMaxStarsGet(s32 board)
 {
     return GWGameStat.board_max_stars[board];
 }
@@ -227,7 +227,7 @@ void GWBoardMaxCoinsSet(s32 board, s32 value)
     GWGameStat.board_max_coins[board] = value;
 }
 
-u16 GWBoardMaxCoinsGet(s32 board)
+s32 GWBoardMaxCoinsGet(s32 board)
 {
     return GWGameStat.board_max_coins[board];
 }

@@ -1075,8 +1075,8 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         DCStoreRange(&sp10, 4);
 
         DCStoreRange(&lbl_1_data_294, 32);
-        PSMTXTrans(spF4, -400.0f, 400.0f, -700.0f);
-        PSMTXConcat(Hu3DCameraMtx, spF4, sp64);
+        MTXTrans(spF4, -400.0f, 400.0f, -700.0f);
+        MTXConcat(Hu3DCameraMtx, spF4, sp64);
         GXLoadPosMtxImm(sp64, 0);
         GXSetNumChans(1);
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -1086,10 +1086,10 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         HuSprTexLoad(lbl_1_bss_70, 0, 1, GX_REPEAT, GX_REPEAT, GX_LINEAR);
         GXSetNumTexGens(2);
         C_MTXLightPerspective(sp94, 41.5f, 1.2f, 0.5555555f, -0.5f, 0.5555555f, 0.5f);
-        PSMTXConcat(sp94, Hu3DCameraMtx, sp94);
-        PSMTXInverse(Hu3DCameraMtx, sp34);
-        PSMTXConcat(sp34, sp64, sp124);
-        PSMTXConcat(sp94, sp124, spF4);
+        MTXConcat(sp94, Hu3DCameraMtx, sp94);
+        MTXInverse(Hu3DCameraMtx, sp34);
+        MTXConcat(sp34, sp64, sp124);
+        MTXConcat(sp94, sp124, spF4);
         GXLoadTexMtxImm(spF4, 30, GX_MTX3x4);
         GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, 30, GX_FALSE, 125);
         GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX2x4, GX_TG_TEXCOORD0, 33, GX_FALSE, 125);
@@ -1097,7 +1097,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXSetIndTexOrder(GX_INDTEXSTAGE0, GX_TEXCOORD1, GX_TEXMAP1);
         GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
         GXSetTevIndWarp(GX_TEVSTAGE0, GX_INDTEXSTAGE0, GX_TRUE, GX_FALSE, GX_ITM_0);
-        PSMTXScale(spF4, -0.5f, -0.5f, 0.5f);
+        MTXScale(spF4, -0.5f, -0.5f, 0.5f);
         GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spF4, -1);
         GXSetNumTevStages(1);
         GXSetTevColor(GX_TEVREG1, sp10);
@@ -1124,17 +1124,17 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
             if (var_r31->unk_00) {
                 lbl_1_data_294[var_r31->unk_02].a = 255.0f * var_r31->unk_0C;
                 GXSetTevColor(GX_TEVREG0, lbl_1_data_294[var_r31->unk_02]);
-                PSMTXTrans(spF4, var_r31->unk_10.x, var_r31->unk_10.y, var_r31->unk_10.z);
-                PSMTXRotRad(sp124, 90, 0.017453292f * var_r31->unk_08);
-                PSMTXConcat(spF4, sp124, spF4);
-                PSMTXScale(spC4, var_r31->unk_04, var_r31->unk_04, var_r31->unk_04);
-                PSMTXConcat(spF4, spC4, spF4);
-                PSMTXConcat(Hu3DCameraMtx, spF4, sp64);
+                MTXTrans(spF4, var_r31->unk_10.x, var_r31->unk_10.y, var_r31->unk_10.z);
+                MTXRotRad(sp124, 90, 0.017453292f * var_r31->unk_08);
+                MTXConcat(spF4, sp124, spF4);
+                MTXScale(spC4, var_r31->unk_04, var_r31->unk_04, var_r31->unk_04);
+                MTXConcat(spF4, spC4, spF4);
+                MTXConcat(Hu3DCameraMtx, spF4, sp64);
                 GXLoadPosMtxImm(sp64, 0);
-                PSMTXConcat(sp34, sp64, sp124);
-                PSMTXConcat(sp94, sp124, spF4);
+                MTXConcat(sp34, sp64, sp124);
+                MTXConcat(sp94, sp124, spF4);
                 GXLoadTexMtxImm(spF4, 30, GX_MTX3x4);
-                PSMTXRotRad(sp124, 90, 0.017453292f * -var_r31->unk_08);
+                MTXRotRad(sp124, 90, 0.017453292f * -var_r31->unk_08);
                 GXLoadTexMtxImm(sp124, 33, GX_MTX2x4);
                 GXCallDisplayList(var_r30->unk_120.unk_E5C, var_r30->unk_120.unk_E58);
             }

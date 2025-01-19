@@ -382,7 +382,7 @@ void fn_1_5BD4(omObjData *object)
             break;
     }
     fn_1_7340(object);
-    PSVECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
+    VECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
     fn_1_7130(object);
     fn_1_69B4(object);
 
@@ -428,11 +428,11 @@ void fn_1_6458(omObjData *object)
             var_r29 = 1;
     }
     fn_1_7340(object);
-    PSVECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
+    VECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
     fn_1_7130(object);
     fn_1_69B4(object);
     temp_r31->unk100->unk_1C = temp_r31->unkDC;
-    PSVECAdd(&temp_r31->unk100->unk_1C, &temp_r31->unk100->unk_54, &temp_r31->unk100->unk_1C);
+    VECAdd(&temp_r31->unk100->unk_1C, &temp_r31->unk100->unk_54, &temp_r31->unk100->unk_1C);
     if ((fn_1_42E4() == 3) && (var_r29 != 0)) {
         fn_1_43AC(object->work[0]);
         temp_r31->unk108 = 0;
@@ -451,11 +451,11 @@ void fn_1_6674(omObjData *object)
     temp_r31->unk14 = 0;
     temp_r31->unk18 = 0.0f;
     fn_1_7340(object);
-    PSVECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
+    VECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
     fn_1_7130(object);
     fn_1_69B4(object);
     temp_r31->unk100->unk_1C = temp_r31->unkDC;
-    PSVECAdd(&temp_r31->unk100->unk_1C, &temp_r31->unk100->unk_54, &temp_r31->unk100->unk_1C);
+    VECAdd(&temp_r31->unk100->unk_1C, &temp_r31->unk100->unk_54, &temp_r31->unk100->unk_1C);
     if (fn_1_42E4() == 5) {
         temp_r31->unk1C = 0;
         temp_r31->unk34 = 0;
@@ -468,7 +468,7 @@ void fn_1_6750(omObjData *object)
     M443DllWorkStruct *temp_r31;
 
     temp_r31 = object->data;
-    PSVECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
+    VECAdd(&temp_r31->unkC4, &temp_r31->unkD0, &temp_r31->unkC4);
     fn_1_7130(object);
     fn_1_69B4(object);
     switch (temp_r31->unk34) {
@@ -673,9 +673,9 @@ void fn_1_7130(omObjData *object)
             for (var_r28 = 0; var_r28 < 4; var_r28++) {
                 if (var_r29 != var_r28) {
                     temp_r30 = lbl_1_bss_90[var_r28]->data;
-                    PSVECSubtract(&temp_r31->unkC4, &temp_r30->unkC4, &sp8);
+                    VECSubtract(&temp_r31->unkC4, &temp_r30->unkC4, &sp8);
                     sp8.y = 0.0f;
-                    var_f31 = PSVECMag(&sp8);
+                    var_f31 = VECMag(&sp8);
                     if (var_f31 < (temp_r31->unkC0 + temp_r30->unkC0)) {
                         if (var_f31 > 0.0f) {
                             var_f31 = 0.5f * ((temp_r31->unkC0 + temp_r30->unkC0) - var_f31);
@@ -685,10 +685,10 @@ void fn_1_7130(omObjData *object)
                             sp8.x = (frandmod(0x3E8) - 0x1F4);
                             sp8.z = (frandmod(0x3E8) - 0x1F4);
                         }
-                        PSVECNormalize(&sp8, &sp8);
-                        PSVECScale(&sp8, &sp8, var_f31);
-                        PSVECAdd(&temp_r31->unkC4, &sp8, &temp_r31->unkC4);
-                        PSVECSubtract(&temp_r30->unkC4, &sp8, &temp_r30->unkC4);
+                        VECNormalize(&sp8, &sp8);
+                        VECScale(&sp8, &sp8, var_f31);
+                        VECAdd(&temp_r31->unkC4, &sp8, &temp_r31->unkC4);
+                        VECSubtract(&temp_r30->unkC4, &sp8, &temp_r30->unkC4);
                     }
                 }
             }
@@ -1139,7 +1139,7 @@ void fn_1_8E34(s32 arg0)
 
     for (var_r29 = 0; var_r29 < temp_r30->unk_30; var_r29++, var_r31++) {
         if (var_r31->unk00_s16 != 0) {
-            PSVECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
+            VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.z -= 0.3f;
             var_r31->unk2C += 2.0f;
             var_r31->unk40.a *= 0.98f;

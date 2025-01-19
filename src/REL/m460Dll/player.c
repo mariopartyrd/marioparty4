@@ -218,7 +218,7 @@ void fn_1_4F6C(omObjData *object)
             }
             break;
     }
-    PSVECAdd(&var_r31->unk_60, &var_r31->unk_6C, &var_r31->unk_60);
+    VECAdd(&var_r31->unk_60, &var_r31->unk_6C, &var_r31->unk_60);
     fn_1_57D8(object);
     if (fn_1_414C() == 2) {
         var_r31->unk_2C = 0;
@@ -343,7 +343,7 @@ void fn_1_5168(omObjData *object)
                 break;
         }
     }
-    PSVECAdd(&var_r31->unk_60, &var_r31->unk_6C, &var_r31->unk_60);
+    VECAdd(&var_r31->unk_60, &var_r31->unk_6C, &var_r31->unk_60);
     fn_1_57D8(object);
     if ((fn_1_4164() == 5) && (var_r27 != 0)) {
         var_r31->unk_2C = 0;
@@ -390,7 +390,7 @@ void fn_1_55EC(omObjData *object)
             fn_1_5CE0(object, 0);
             break;
     }
-    PSVECAdd(&var_r31->unk_60, &var_r31->unk_6C, &var_r31->unk_60);
+    VECAdd(&var_r31->unk_60, &var_r31->unk_6C, &var_r31->unk_60);
     fn_1_57D8(object);
     if (var_r31->unk_84 >= 0) {
         sp8 = var_r31->unk_60;
@@ -426,15 +426,15 @@ s32 fn_1_58C8(omObjData *object, float arg8, float arg9)
 
     var_r31 = object->data;
     var_r30 = 0;
-    PSVECSubtract(&var_r31->unk_78, &var_r31->unk_60, &spC);
+    VECSubtract(&var_r31->unk_78, &var_r31->unk_60, &spC);
     spC.y = 0.0f;
-    var_f31 = PSVECMag(&spC);
+    var_f31 = VECMag(&spC);
     if (var_f31 < arg9) {
         var_f31 = 0.0f;
         var_r30 = 1;
     }
     else {
-        if (PSVECMag(&spC) >= 100.0f) {
+        if (VECMag(&spC) >= 100.0f) {
             var_f31 = 100.0f;
         }
         var_f31 = 0.2f + (0.008f * var_f31);
@@ -636,12 +636,12 @@ void fn_1_61F4(omObjData *object)
                 object->trans.z += 11.666667f;
             }
             else {
-                var_f31 = PSVECMag(&sp10);
+                var_f31 = VECMag(&sp10);
                 if (var_f31 < 20.0f) {
                     var_f31 = 0.0f;
                 }
                 else {
-                    if (PSVECMag(&sp10) >= 100.0f) {
+                    if (VECMag(&sp10) >= 100.0f) {
                         var_f31 = 100.0f;
                     }
                     var_f31 = 0.2f + (0.008f * var_f31);

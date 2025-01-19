@@ -403,9 +403,9 @@ void fn_1_1D70(s16 arg0, char *arg1, Vec *arg2, Mtx arg3)
 
     var_r30 = &Hu3DData[arg0];
     Hu3DModelObjMtxGet(arg0, arg1, spC);
-    PSMTXConcat(var_r30->unk_F0, spC, spC);
+    MTXConcat(var_r30->unk_F0, spC, spC);
     if (NULL != arg3) {
-        PSMTXCopy(spC, arg3);
+        MTXCopy(spC, arg3);
     }
     arg2->x = spC[0][3];
     arg2->y = spC[1][3];
@@ -1186,7 +1186,8 @@ s32 lbl_1_data_128[8][5] = {
 
 s32 lbl_1_data_1C8[3] = { DATA_MAKE_NUM(DATADIR_M461, 0x02), DATA_MAKE_NUM(DATADIR_M461, 0x03), DATA_MAKE_NUM(DATADIR_M461, 0x08) };
 
-s32 lbl_1_data_1D4[4] = { DATA_MAKE_NUM(DATADIR_M461, 0x04), DATA_MAKE_NUM(DATADIR_M461, 0x05), DATA_MAKE_NUM(DATADIR_M461, 0x06), DATA_MAKE_NUM(DATADIR_M461, 0x07) };
+s32 lbl_1_data_1D4[4]
+    = { DATA_MAKE_NUM(DATADIR_M461, 0x04), DATA_MAKE_NUM(DATADIR_M461, 0x05), DATA_MAKE_NUM(DATADIR_M461, 0x06), DATA_MAKE_NUM(DATADIR_M461, 0x07) };
 
 float lbl_1_data_1E4[3] = { 0.3f, 0.5f, 0.9f };
 

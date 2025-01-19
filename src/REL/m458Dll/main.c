@@ -329,8 +329,8 @@ void fn_1_4C8(omObjData *object)
                 Vec sp1B0 = { 0.0f, 0.0f, 0.0f };
                 sp1B0.x = var_f31;
                 sp1B0.z = var_f30;
-                PSMTXRotRad(sp1E0, 0x79, 0.017453292f * CRot.y);
-                PSMTXMultVec(sp1E0, &sp1B0, &sp1B0);
+                MTXRotRad(sp1E0, 0x79, 0.017453292f * CRot.y);
+                MTXMultVec(sp1E0, &sp1B0, &sp1B0);
                 var_f31 = sp1B0.x;
                 var_f30 = sp1B0.z;
             }

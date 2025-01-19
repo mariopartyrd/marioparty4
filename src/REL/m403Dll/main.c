@@ -1384,18 +1384,18 @@ static void fn_1_46E4(Mtx arg0, float arg1, float arg2, float arg3)
     Mtx sp8;
 
     if (arg3 != 0.0f) {
-        PSMTXRotRad(arg0, 'Z', MTXDegToRad(arg3));
+        MTXRotRad(arg0, 'Z', MTXDegToRad(arg3));
     }
     else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg1 != 0.0f) {
-        PSMTXRotRad(sp38, 'X', MTXDegToRad(arg1));
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXRotRad(sp38, 'X', MTXDegToRad(arg1));
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg2 != 0.0f) {
-        PSMTXRotRad(sp8, 'Y', MTXDegToRad(arg2));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 'Y', MTXDegToRad(arg2));
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 

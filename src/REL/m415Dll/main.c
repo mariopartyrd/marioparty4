@@ -513,8 +513,8 @@ void fn_1_1A60(unkStruct3 *arg0)
         for (var_r31 = -1; var_r31 < 2; var_r31 += 2) {
             for (var_r29 = -1; var_r29 < 2; var_r29 += 2) {
                 MTXRotDeg(sp118, 0x59, temp_f30);
-                PSMTXTrans(spE8, (var_r30 * var_r31), 0.0f, (var_r30 * var_r29));
-                PSMTXConcat(sp118, spE8, spE8);
+                MTXTrans(spE8, (var_r30 * var_r31), 0.0f, (var_r30 * var_r29));
+                MTXConcat(sp118, spE8, spE8);
                 if ((spB8[0].y > spE8[2][3]) || ((spB8[0].y == spE8[2][3]) && (spB8[0].x > spE8[0][3]))) {
                     spB8[0].x = spE8[0][3];
                     spB8[0].y = spE8[2][3];
@@ -1604,15 +1604,15 @@ void fn_1_6958(Mtx arg0, f32 arg8, f32 arg9, f32 argA)
         MTXRotDeg(arg0, 0x5A, argA);
     }
     else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg8 != 0.0f) {
         MTXRotDeg(sp38, 0x58, arg8);
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg9 != 0.0f) {
         MTXRotDeg(sp8, 0x59, arg9);
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 
