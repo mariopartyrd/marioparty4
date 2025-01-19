@@ -1396,10 +1396,10 @@ config.libs = [
     Rel(
         "mstory3Dll",
         objects={
-            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/main.c"),
-            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/result_seq.c"),
-            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/result.c"),
-            Object(MatchingFor("GMPE01_00"), "REL/mstory3Dll/win_effect.c"),
+            Object(Matching, "REL/mstory3Dll/main.c"),
+            Object(Matching, "REL/mstory3Dll/result_seq.c"),
+            Object(Matching, "REL/mstory3Dll/result.c"),
+            Object(Matching, "REL/mstory3Dll/win_effect.c"),
         },
     ),
     Rel(
