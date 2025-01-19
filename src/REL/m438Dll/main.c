@@ -1920,10 +1920,10 @@ void fn_1_63B0(M438UnkStruct2 *arg0)
                     var_r31->unk_60.x = var_r31->unk_60.z = temp_f30;
                 }
                 var_r31->unk_58->unk_24 = 0;
-                var_r31->unk_78 = (s32)((60.0f * ((1.0f / 65536.0f) * fn_1_7DB4()))) + 1;
+                var_r31->unk_78[0] = (s32)((60.0f * ((1.0f / 65536.0f) * fn_1_7DB4()))) + 1;
                 var_r31->unk_5C++;
             case 1:
-                if (--var_r31->unk_78 == 0) {
+                if (--var_r31->unk_78[0] == 0) {
                     var_r31->unk_58->unk_24 = 0x11U;
                     var_r31->unk_58->unk_28 = 0.5f;
                     var_r31->unk_58->unk_2C = 0.0f;
@@ -1968,7 +1968,7 @@ void fn_1_6A3C(M438UnkStruct2 *arg0)
     var_r28 = 0;
 
     for (var_r27 = 0; var_r27 < arg0->unk_02; var_r27++, var_r31++) {
-        if ((arg0->unk_7C != 0) && (var_r31->unk_7A == 0)) {
+        if ((arg0->unk_7C != 0) && (var_r31->unk_78[1] == 0)) {
             var_r31->unk_5C = 0;
         }
         switch (var_r31->unk_5C) {
@@ -1985,8 +1985,8 @@ void fn_1_6A3C(M438UnkStruct2 *arg0)
                     var_r31->unk_6C.x = 100.0f * (0.1f * sp8.x);
                     var_r31->unk_6C.y = sp8.y + (2.5f * ((1.0f / 65536.0f) * fn_1_7DB4()));
                     var_r31->unk_6C.z = 100.0f * (0.1f * sp8.z);
-                    var_r31->unk_78 = (s32)(24.0f * ((1.0f / 65536.0f) * fn_1_7DB4())) + 1;
-                    var_r31->unk_7A = 1;
+                    var_r31->unk_78[0] = (s32)(24.0f * ((1.0f / 65536.0f) * fn_1_7DB4())) + 1;
+                    var_r31->unk_78[1] = 1;
                 }
                 else {
                     temp_f30 = (180.0f * ((1.0f / 65536.0f) * fn_1_7DB4())) - 90.0f;
@@ -2000,8 +2000,8 @@ void fn_1_6A3C(M438UnkStruct2 *arg0)
                     var_r31->unk_6C.x = (100.0 * (0.015 * sp8.x));
                     var_r31->unk_6C.y = sp8.y + ((1.0f / 65536.0f) * fn_1_7DB4());
                     var_r31->unk_6C.z = 100.0f * (0.015f * sp8.z);
-                    var_r31->unk_78 = (s32)(60.0f * ((1.0f / 65536.0f) * fn_1_7DB4())) + 1;
-                    var_r31->unk_7A = 0;
+                    var_r31->unk_78[0] = (s32)(60.0f * ((1.0f / 65536.0f) * fn_1_7DB4())) + 1;
+                    var_r31->unk_78[1] = 0;
                 }
                 var_r31->unk_38 &= ~4;
                 if ((fn_1_7DB4() & 0xF) != 0) {
@@ -2040,12 +2040,12 @@ void fn_1_6A3C(M438UnkStruct2 *arg0)
                 var_r31->unk_5C++;
                 break;
             case 1:
-                if (var_r31->unk_7A != 0) {
+                if (var_r31->unk_78[1] != 0) {
                     var_r31->unk_6C.y -= 0.5f;
                 }
-                if (--var_r31->unk_78 == 0) {
+                if (--var_r31->unk_78[0] == 0) {
                     var_r31->unk_58->unk_24 = 0x11;
-                    if (var_r31->unk_7A != 0) {
+                    if (var_r31->unk_78[1] != 0) {
                         var_r31->unk_58->unk_28 = 0.5f;
                     }
                     else {
@@ -2068,7 +2068,7 @@ void fn_1_6A3C(M438UnkStruct2 *arg0)
                 var_r31->unk_18.z *= 0.95f;
                 var_r31->unk_6C.y -= 1.5f;
                 if ((var_r31->unk_58->unk_24 & 8) != 0) {
-                    if (var_r31->unk_7A != 0) {
+                    if (var_r31->unk_78[1] != 0) {
                         var_r31->unk_5C = 3;
                     }
                     else {
