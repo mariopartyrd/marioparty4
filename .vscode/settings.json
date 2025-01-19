@@ -39,7 +39,8 @@
     "chrman.h": "c",
     "os.h": "c",
     "type_traits": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "xtr1common": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {
