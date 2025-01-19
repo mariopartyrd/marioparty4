@@ -89,6 +89,7 @@ void DVDInit();
 BOOL DVDClose(DVDFileInfo* f);
 BOOL DVDSetAutoFatalMessaging(BOOL);
 void DVDReset();
+int DVDSetAutoInvalidation(int autoInval);
 s32 DVDCancel(DVDCommandBlock* block);
 BOOL DVDOpen(char* fileName, DVDFileInfo* fileInfo);
 BOOL DVDFastOpen(s32 entrynum, DVDFileInfo* fileInfo);

@@ -10,6 +10,7 @@
 #define EXCEPTIONMASK_ADDR 0x80000044
 
 static u32 lc_base;
+extern u32 _db_stack_addr;
 
 static u32 TRK_ISR_OFFSETS[15] = { PPC_SystemReset,
 	                               PPC_MachineCheck,
@@ -64,8 +65,8 @@ asm void InitMetroTRK()
 	mtspr  0x3f2, r0
 	mtspr  0x3f5, r0
 	//Restore stack pointer
-	lis r1, 0x80426008@h
-	ori r1, r1, 0x80426008@l
+	lis r1, _db_stack_addr@h
+	ori r1, r1, _db_stack_addr@l
 	mr r3, r5
 	bl InitMetroTRKCommTable //Initialize comm table
 	/*

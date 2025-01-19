@@ -40,6 +40,9 @@ __OSExceptionHandler __OSGetExceptionHandler(__OSException exception);
 OSTime __OSGetSystemTime();
 OSTime __OSTimeToSystemTime(OSTime);
 
+// OSReset.c
+void __OSDoHotReset(s32);
+
 // OSReboot
 void __OSReboot(u32 resetCode, u32 bootDol);
 
