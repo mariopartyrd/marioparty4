@@ -462,9 +462,6 @@ void fn_1_F48(omObjData *object)
 void fn_1_FA8(omObjData *object)
 {
     M425DllUnkBss10Struct *var_r31;
-    s32 var_ctr;
-    void *var_r4;
-    s32 temp_r3;
     s32 var_r30;
     s16 *var_r28;
     s32 var_r27;
@@ -565,28 +562,25 @@ void fn_1_14CC(Mtx arg0, float arg8, float arg9, float argA)
     Mtx sp38;
     Mtx sp8;
     if (argA != 0.0f) {
-        PSMTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
+        MTXRotRad(arg0, 0x5A, MTXDegToRad(argA));
     }
     else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg8 != 0.0f) {
-        PSMTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXRotRad(sp38, 0x58, MTXDegToRad(arg8));
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg9 != 0.0f) {
-        PSMTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 0x59, MTXDegToRad(arg9));
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 
 float fn_1_15EC(float arg8, float arg9)
 {
-    float var_f31;
-    float var_f30;
-
-    var_f30 = 360.0f;
-    var_f31 = 180.0 * (atan2f(arg9, arg8) / M_PI);
+    float var_f30 = 360.0f;
+    float var_f31 = 180.0 * (atan2f(arg9, arg8) / M_PI);
     if (var_f31 < 0.0f) {
         var_f31 += var_f30;
     }
@@ -681,10 +675,57 @@ void fn_1_1B40(omObjData *object)
                 break;
         }
         if (0) {
-            int x = 12;
-            int y = 24;
-            char *str = "%f";
-            print8(x, y, 1.5f, str, sqrtf(fn_1_15EC(object->trans.x, object->trans.y)));
+            s32 var_r31;
+            s32 var_r30;
+            s32 var_r29;
+            float var_f31;
+            float var_f20;
+            float var_f19;
+            float var_f18;
+
+            (void) object;
+            (void) object;
+            (void) var_r31;
+            (void) var_r31;
+            (void) var_r31;
+            (void) var_r31;
+            (void) var_r31;
+            (void) var_r31;
+            (void) var_r30;
+            (void) var_r30;
+            (void) var_r30;
+            (void) var_r30;
+            (void) var_r30;
+            (void) var_r30;
+            (void) var_r29;
+            (void) var_r29;
+            (void) var_r29;
+            (void) var_r29;
+            (void) var_r29;
+            (void) var_r29;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f31;
+            (void) var_f20;
+            (void) var_f20;
+            (void) var_f20;
+            (void) var_f19;
+            (void) var_f19;
+            (void) var_f19;
+            (void) var_f18;
+            (void) var_f18;
+            (void) var_f18;
         }
         var_r31->unk_38 = var_r31->unk_04 * sind(var_r31->unk_18);
         var_r31->unk_40 = var_r31->unk_04 * cosd(var_r31->unk_18);
@@ -1368,7 +1409,7 @@ void fn_1_5044(s16 sp8)
     var_r31->unk_2C[1].unk_04 = 0;
     var_r31->unk_2C[1].unk_48 = 0x80;
     for (var_r30 = 0; var_r30 < (var_r31->unk_28 * var_r31->unk_2A); var_r30++) {
-        PSMTXIdentity(var_r31->unk_2C[var_r30].unk_14);
+        MTXIdentity(var_r31->unk_2C[var_r30].unk_14);
         var_r31->unk_2C[var_r30].unk_08.x = var_r31->unk_2C[var_r30].unk_08.y = var_r31->unk_2C[var_r30].unk_08.z = 0.0f;
     }
     for (var_r30 = 0; var_r30 < var_r31->unk_28; var_r30++) {
@@ -1497,8 +1538,8 @@ void fn_1_5C20(ModelData *var_r27, Mtx sp8)
     GXSetChanAmbColor(GX_COLOR0A0, var_r31->unk_20);
     GXSetChanMatColor(GX_COLOR0A0, var_r31->unk_24);
     GXLoadPosMtxImm(sp8, 0);
-    PSMTXInverse(sp8, sp5C);
-    PSMTXTranspose(sp5C, sp2C);
+    MTXInverse(sp8, sp5C);
+    MTXTranspose(sp5C, sp2C);
     GXLoadNrmMtxImm(sp2C, 0);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
     GXSetZMode(1, GX_LEQUAL, 1);
@@ -1506,7 +1547,7 @@ void fn_1_5C20(ModelData *var_r27, Mtx sp8)
     var_r28 = 0;
     spC = 0;
     for (var_r29 = GX_TEXMAP0; var_r29 < var_r31->unk_28; var_r29++) {
-        PSMTXRotRad(var_r31->unk_2C[var_r29].unk_14, 0x5A, 0.0f);
+        MTXRotRad(var_r31->unk_2C[var_r29].unk_14, 0x5A, 0.0f);
         mtxTransCat(
             var_r31->unk_2C[var_r29].unk_14, var_r31->unk_2C[var_r29].unk_08.x, var_r31->unk_2C[var_r29].unk_08.y, var_r31->unk_2C[var_r29].unk_08.z);
         switch (var_r31->unk_2C[var_r29].unk_04) {

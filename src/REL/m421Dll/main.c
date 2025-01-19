@@ -131,7 +131,7 @@ void ObjectSetup(void)
     sp8.x = sp8.z = 0.0f;
     sp8.y = lbl_1_data_18.z;
     mtxRot(sp2C, lbl_1_data_18.x, lbl_1_data_18.y, 0.0f);
-    PSMTXMultVec(sp2C, &sp8, &lbl_1_data_28);
+    MTXMultVec(sp2C, &sp8, &lbl_1_data_28);
     Hu3DGLightPosAimSetV(lbl_1_bss_12[0], &lbl_1_data_28, &lbl_1_data_40);
     Hu3DShadowPosSet(&lbl_1_data_28, &lbl_1_data_34, &lbl_1_data_40);
     lbl_1_bss_10 = lbl_1_bss_E = lbl_1_bss_C = -1;
@@ -647,7 +647,7 @@ void fn_1_38FC(ModelData *model, Mtx mtx)
     float var_f30;
     float var_f29;
 
-    PSMTXIdentity(spC);
+    MTXIdentity(spC);
     GXLoadPosMtxImm(spC, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);

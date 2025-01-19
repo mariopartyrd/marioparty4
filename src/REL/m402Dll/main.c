@@ -579,7 +579,7 @@ static void fn_1_1A60(Vec *arg0, s16 arg1, Vec *arg2)
     }
     temp_r31 = &Hu3DCamera[i];
     C_MTXLookAt(sp1C, &temp_r31->pos, &temp_r31->up, &temp_r31->target);
-    PSMTXMultVec(sp1C, arg0, &sp10);
+    MTXMultVec(sp1C, arg0, &sp10);
     temp_f30 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * temp_r31->aspect;
     temp_f29 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2));
     temp_f28 = 0.9f * temp_r31->viewport_x;
@@ -606,9 +606,9 @@ static void fn_1_1D70(s16 arg0, char *arg1, Vec *arg2, Mtx arg3)
 
     var_r30 = &Hu3DData[arg0];
     Hu3DModelObjMtxGet(arg0, arg1, spC);
-    PSMTXConcat(var_r30->unk_F0, spC, spC);
+    MTXConcat(var_r30->unk_F0, spC, spC);
     if (NULL != arg3) {
-        PSMTXCopy(spC, arg3);
+        MTXCopy(spC, arg3);
     }
     arg2->x = spC[0][3];
     arg2->y = spC[1][3];
@@ -1425,9 +1425,9 @@ static void fn_1_70E4(omObjData *arg0)
             spC.y = 0.0f;
             spC.z = var_f27;
             temp_r31->unk24.z *= 0.92f;
-            PSMTXIdentity(sp18);
+            MTXIdentity(sp18);
             mtxRot(sp18, temp_r31->unk24.x, temp_r31->unk24.y, 0.0f);
-            PSMTXMultVec(sp18, &spC, &spC);
+            MTXMultVec(sp18, &spC, &spC);
             VECAdd(&spC, &temp_r31->unk00, &temp_r31->unk00);
             omSetTra(arg0, temp_r31->unk00.x, temp_r31->unk00.y, temp_r31->unk00.z);
             Hu3DModelTPLvlSet(arg0->model[0], temp_r31->unk30);

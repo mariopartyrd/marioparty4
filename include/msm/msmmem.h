@@ -3,8 +3,8 @@
 
 #include "dolphin/types.h"
 
-void msmMemFree(void *);
-void *msmMemAlloc(u32);
-void msmMemInit(void *, u32);
+void msmMemFree(void *ptr);
+void *msmMemAlloc(u32 sze);
+void msmMemInit(void *ptr, u32 size);
 
 #endif

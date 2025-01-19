@@ -270,22 +270,22 @@ void fn_1_7C8C(omObjData *object)
     var_r31->unk_70 = 0.02f;
     if (var_r31->unk_0C) {
         Vec sp18 = { 0.0f, 1.0f, 0.0f };
-        PSMTXRotAxisRad(var_r31->unk_1C4, &sp18, 0.017453292f * var_r31->unk_64);
+        MTXRotAxisRad(var_r31->unk_1C4, &sp18, 0.017453292f * var_r31->unk_64);
     }
     else {
         Vec spC = { 0.0f, 1.0f, 0.0f };
-        PSMTXIdentity(var_r31->unk_1C4);
+        MTXIdentity(var_r31->unk_1C4);
         C_QUATRotAxisRad(&var_r31->unk_184, &spC, 0.0f);
         var_r31->unk_194 = var_r31->unk_184;
-        PSQUATInverse(&var_r31->unk_194, &var_r31->unk_1A4);
+        QUATInverse(&var_r31->unk_194, &var_r31->unk_1A4);
         var_r31->unk_1B4 = var_r31->unk_1A4;
         var_r31->unk_164 = var_r31->unk_194;
         var_r31->unk_174 = var_r31->unk_194;
         var_r31->unk_144 = 1.0f;
         var_r31->unk_D4.z += 50.0f;
     }
-    PSMTXInverse(var_r31->unk_1C4, var_r31->unk_1F4);
-    PSMTXCopy(var_r31->unk_1F4, var_r31->unk_224);
+    MTXInverse(var_r31->unk_1C4, var_r31->unk_1F4);
+    MTXCopy(var_r31->unk_1F4, var_r31->unk_224);
     var_r31->unk_134 = var_r31->unk_138 = 0.0f;
     var_r31->unk_12C = 1.0f;
     var_r31->unk_08 = -1;
@@ -634,7 +634,7 @@ void fn_1_9298(omObjData *object)
         else if (var_r31->unk_B4.x < 0.0f) {
             var_r31->unk_B4.x += 360.0f;
         }
-        PSMTXRotAxisRad(var_r31->unk_1C4, &sp8, 0.017453292f * var_r31->unk_B4.x);
+        MTXRotAxisRad(var_r31->unk_1C4, &sp8, 0.017453292f * var_r31->unk_B4.x);
     }
     object->rot.y = var_r31->unk_68 = var_r31->unk_B4.x - 180.0f;
     object->trans.x = var_r31->unk_D4.x = var_r31->unk_F8.x = var_r31->unk_C8.x = var_r31->unk_B4.z * sind(var_r31->unk_B4.x);
@@ -836,7 +836,7 @@ void fn_1_9C14(omObjData *object)
     if (fn_1_26F8() == 2) {
         sp1C.y += -5.8333335f * var_r31->unk_148;
     }
-    PSMTXMultVec(var_r31->unk_224, &sp1C, &sp1C);
+    MTXMultVec(var_r31->unk_224, &sp1C, &sp1C);
     VECAdd(&sp1C, &var_r31->unk_E0, &sp1C);
     sp10 = sp1C;
     sp10.y = 0.0f;
@@ -849,13 +849,13 @@ void fn_1_9C14(omObjData *object)
     sp1C.y = 80.0f;
     var_r31->unk_EC = sp1C;
     spC = atan2d(sp1C.x, sp1C.z);
-    PSMTXMultVec(var_r31->unk_1C4, &sp1C, &sp1C);
+    MTXMultVec(var_r31->unk_1C4, &sp1C, &sp1C);
     VECAdd(&sp1C, &var_r31->unk_F8, &var_r31->unk_D4);
     if (var_r31->unk_13C >= 0.95f) {
         var_r31->unk_3C = 1;
         return;
     }
-    PSQUATNormalize(&var_r31->unk_194, &sp28);
+    QUATNormalize(&var_r31->unk_194, &sp28);
     if (sp28.w < cosd(25)) {
         var_r31->unk_3C = 1;
     }
@@ -893,7 +893,7 @@ void fn_1_9FF0(omObjData *object)
             }
         }
         var_r31->unk_1B4 = var_r31->unk_1A4;
-        PSMTXCopy(var_r31->unk_1F4, var_r31->unk_224);
+        MTXCopy(var_r31->unk_1F4, var_r31->unk_224);
         var_r31->unk_104 = var_r31->unk_F8;
         var_f31 = fn_1_75BC();
         for (var_r30 = 0; var_r30 < 8; var_r30++) {
@@ -1054,12 +1054,12 @@ void fn_1_9FF0(omObjData *object)
             C_QUATRotAxisRad(&sp3C, &sp8, M_PI);
             C_QUATSlerp(&var_r31->unk_184, &sp3C, &var_r31->unk_184, 0.027777778f);
         }
-        PSQUATMultiply(&var_r31->unk_174, &var_r31->unk_184, &var_r31->unk_194);
-        PSQUATMultiply(&var_r31->unk_164, &var_r31->unk_194, &var_r31->unk_194);
-        PSQUATMultiply(&sp2C, &var_r31->unk_194, &var_r31->unk_194);
-        PSMTXQuat(var_r31->unk_1C4, &var_r31->unk_194);
-        PSMTXInverse(var_r31->unk_1C4, var_r31->unk_1F4);
-        PSQUATInverse(&var_r31->unk_194, &var_r31->unk_1A4);
+        QUATMultiply(&var_r31->unk_174, &var_r31->unk_184, &var_r31->unk_194);
+        QUATMultiply(&var_r31->unk_164, &var_r31->unk_194, &var_r31->unk_194);
+        QUATMultiply(&sp2C, &var_r31->unk_194, &var_r31->unk_194);
+        MTXQuat(var_r31->unk_1C4, &var_r31->unk_194);
+        MTXInverse(var_r31->unk_1C4, var_r31->unk_1F4);
+        QUATInverse(&var_r31->unk_194, &var_r31->unk_1A4);
     }
 }
 
@@ -1071,7 +1071,7 @@ void fn_1_AD24(omObjData *object)
     Hu3DModelPosSetV(object->model[0], &var_r30->unk_D4);
     Hu3DModelRotSet(object->model[0], 0.0f, var_r30->unk_64, 0.0f);
     Hu3DModelPosSetV(object->model[1], &var_r30->unk_F8);
-    PSMTXCopy(var_r30->unk_1C4, Hu3DData[object->model[1]].unk_F0);
+    MTXCopy(var_r30->unk_1C4, Hu3DData[object->model[1]].unk_F0);
 }
 
 void fn_1_ADC4(omObjData *object)

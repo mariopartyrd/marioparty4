@@ -1,133 +1,132 @@
 #include "msm/msmmem.h"
 
-typedef struct _unkStruct {
-    struct _unkStruct* prev;
-    struct _unkStruct* next;
-    u32 unk8;
-    u32 unkC;
-    void* unk10;
-    void* unk14;
-    char unk18[0x8];
-} unkStruct;
+typedef struct MSMBlock_s {
+    struct MSMBlock_s* prev;
+    struct MSMBlock_s* next;
+    u32 freeSize;
+    u32 size;
+    void* ptr;
+    char pad[12];
+} MSMBLOCK;
 
-typedef struct _unkMemStruct {
-    unkStruct* unk0;
-    u32 unk4;
-    unkStruct* unk8;
-    unkStruct unkC;
-} unkMemStruct;
+typedef struct MSMMem_s {
+    void *ptr;
+    u32 size;
+    MSMBLOCK *head;
+    MSMBLOCK first;
+} MSM_MEM;
 
-static unkMemStruct mem;
+static MSM_MEM mem;
 
-void msmMemFree(void* arg0) {
-    unkStruct* temp_r6;
-    unkStruct* temp_r7;
-    unkStruct* temp_r8;
-    unkStruct* temp_r5;
-    unkStruct* temp;
+void msmMemFree(void* ptr) {
+    MSMBLOCK* block;
+    MSMBLOCK* blockPrev;
+    MSMBLOCK* blockNext;
+    MSMBLOCK* blockHead;
+    MSMBLOCK* base;
     
-    temp = arg0;
+    base = ptr;
 
-    temp_r6 = &temp[-1];
-    temp_r7 = temp_r6->prev;
-    temp_r8 = temp_r6->next;
-    if (mem.unk0 > temp_r6 || ((u32)mem.unk0 + (u32)mem.unk4) <= (u32)temp_r6) {
+    block = &base[-1];
+    blockPrev = block->prev;
+    blockNext = block->next;
+    if (mem.ptr > block || ((u32)mem.ptr + (u32)mem.size) <= (u32)block) {
         return;
     }
 
-    if ((temp_r7->next != temp_r6) || (temp_r6->unk10 != arg0) || (temp_r8 && (temp_r8->prev != temp_r6))) {
+    if ((blockPrev->next != block) || (block->ptr != ptr) || (blockNext && (blockNext->prev != block))) {
         return;
     }
     
-    temp_r7->unkC += temp_r6->unk8 + temp_r6->unkC;
-    temp_r7->next = temp_r8;
-    temp_r5 = mem.unk8;
-    if ((temp_r5 == temp_r6) || (temp_r5->unkC < temp_r7->unkC)) {
-        mem.unk8 = temp_r7;
+    blockPrev->size += block->freeSize + block->size;
+    blockPrev->next = blockNext;
+    blockHead = mem.head;
+    if ((blockHead == block) || (blockHead->size < blockPrev->size)) {
+        mem.head = blockPrev;
     }
-    if (temp_r8) {
-        temp_r8->prev = temp_r7;
-        if (mem.unk8->unkC < temp_r8->unkC) {
-            mem.unk8 = temp_r8;
+    if (blockNext) {
+        blockNext->prev = blockPrev;
+        if (mem.head->size < blockNext->size) {
+            mem.head = blockNext;
         }
     }
 }
 
-void* msmMemAlloc(u32 arg0) {
-    s32 temp_r0;
-    u32 var_r5;
-    u32 var_r7;
-    unkStruct* temp_r5;
-    unkStruct* var_r8;
-    unkStruct* temp_r9;
+void* msmMemAlloc(u32 size) {
+    s32 alignOfs;
+    u32 freeSize;
+    u32 allocSize;
+    MSMBLOCK* block;
+    MSMBLOCK* blockPrev;
+    MSMBLOCK* blockNext;
 
-    var_r7 = arg0 + 0x20;
-    temp_r0 = var_r7 & 0x1F;
-    if (temp_r0 != 0) {
-        var_r7 += 0x20 - temp_r0;
+    allocSize = size + 0x20;
+    alignOfs = allocSize & 0x1F;
+    if (alignOfs) {
+        allocSize += 0x20 - alignOfs;
     }
-    if (mem.unk8->unkC >= var_r7) {
-        var_r8 = mem.unk8;
+    if (mem.head->size >= allocSize) {
+        blockPrev = mem.head;
     } else {
-        var_r8 = &mem.unkC;
+        blockPrev = &mem.first;
         
        do {
-            if (var_r8->unkC >= var_r7) break;
-            var_r8 = var_r8->next;
-        } while (var_r8);
-        if (!var_r8) {
+            if (blockPrev->size >= allocSize) break;
+            blockPrev = blockPrev->next;
+        } while (blockPrev);
+        if (!blockPrev) {
             return NULL;
         }
     }
     
-    var_r5 = var_r8->unk8;
-    if (var_r5 != 0) {
-        var_r5 -= 0x20;
+    freeSize = blockPrev->freeSize;
+    if (freeSize != 0) {
+        freeSize -= 0x20;
     }
-    temp_r5 = (void*)((u32)var_r8->unk10 + (var_r5));
-    temp_r9 = var_r8->next;
-    if ((mem.unk0 > temp_r5) || ((void*)((u32)mem.unk0 + (u32)mem.unk4) <= temp_r5)) {
+    block = (void*)((u32)blockPrev->ptr + (freeSize));
+    blockNext = blockPrev->next;
+    if ((mem.ptr > block) || ((void*)((u32)mem.ptr + (u32)mem.size) <= block)) {
         return NULL;
     }
-    temp_r5->unk8 = var_r7;
-    temp_r5->unkC = var_r8->unkC - var_r7;
-    temp_r5->unk10 = (temp_r5 + 1);
-    temp_r5->prev = var_r8;
-    temp_r5->next = temp_r9;
-    mem.unk8 = temp_r5;
-    var_r8->unkC = 0;
-    var_r8->next = temp_r5;
-    if (temp_r9) {
-        temp_r9->prev = temp_r5;
-        if (mem.unk8->unkC < temp_r9->unkC) {
-            mem.unk8 = temp_r9;
+    block->freeSize = allocSize;
+    block->size = blockPrev->size - allocSize;
+    block->ptr = (block + 1);
+    block->prev = blockPrev;
+    block->next = blockNext;
+    mem.head = block;
+    blockPrev->size = 0;
+    blockPrev->next = block;
+    if (blockNext) {
+        blockNext->prev = block;
+        if (mem.head->size < blockNext->size) {
+            mem.head = blockNext;
         }
     }
-    return temp_r5->unk10;
+    return block->ptr;
 }
 
-void msmMemInit(void* arg0, u32 arg1) {
-    unkStruct* temp_r7;
-    s32 temp;
+void msmMemInit(void* ptr, u32 size) {
+    MSMBLOCK* block;
+    s32 ofs;
 
-    temp = (s32)arg0 & 0x1F;
-    switch (temp) {
+    ofs = (s32)ptr & 0x1F;
+    switch (ofs) {
         default:
-            temp = 0x20 - temp;
+            ofs = 0x20 - ofs;
             break;
         case 0:
-            temp = 0;
+            ofs = 0;
             break;
     }
     
-    mem.unk0 = (void*)((s32)arg0 + temp);
-    temp = (s32)arg0 + arg1;
-    mem.unk4 = ((temp - (s32)mem.unk0) & ~0x1F);
-    temp_r7 = &mem.unkC;
-    temp_r7->unk8 = 0;
-    temp_r7->unkC = mem.unk4;
-    temp_r7->unk10 = mem.unk0;
-    temp_r7->prev = NULL;
-    temp_r7->next = NULL;
-    mem.unk8 = &mem.unkC;
+    mem.ptr = (void*)((s32)ptr + ofs);
+    ofs = (s32)ptr + size;
+    mem.size = ((ofs - (s32)mem.ptr) & ~0x1F);
+    block = &mem.first;
+    block->freeSize = 0;
+    block->size = mem.size;
+    block->ptr = mem.ptr;
+    block->prev = NULL;
+    block->next = NULL;
+    mem.head = &mem.first;
 }

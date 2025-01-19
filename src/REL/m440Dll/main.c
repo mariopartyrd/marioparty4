@@ -1276,7 +1276,7 @@ void fn_1_57B4(unkStruct6 *arg0)
                 var_r31->unkB8.z *= 0.5f;
             }
         }
-        PSMTXScale(sp14, var_r31->unk88.x, var_r31->unk88.y, var_r31->unk88.z);
+        MTXScale(sp14, var_r31->unk88.x, var_r31->unk88.y, var_r31->unk88.z);
         mtxTransCat(sp14, -var_r31->unk7C.x, -var_r31->unk7C.y, -var_r31->unk7C.z);
         mtxRotCat(sp14, var_r31->unkA0.x, var_r31->unkA0.y, var_r31->unkA0.z);
         mtxTransCat(sp14, var_r31->unk94.x + var_r31->unk7C.x, var_r31->unk94.y + var_r31->unk7C.y, var_r31->unk94.z + var_r31->unk7C.z);
@@ -1288,14 +1288,14 @@ void fn_1_57B4(unkStruct6 *arg0)
             else {
                 var_r29 = var_r31->unk18[var_r28];
             }
-            PSMTXMultVec(sp14, &temp_r26[var_r29], &sp8);
+            MTXMultVec(sp14, &temp_r26[var_r29], &sp8);
             arg0->unkC[var_r29].x = sp8.x;
             arg0->unkC[var_r29].y = sp8.y;
             arg0->unkC[var_r29].z = sp8.z;
         }
         if ((arg0->unk2 & 2) != 0) {
             var_r29 = var_r31->unk1E;
-            PSMTXMultVec(sp14, &temp_r26[var_r29], &sp8);
+            MTXMultVec(sp14, &temp_r26[var_r29], &sp8);
             arg0->unkC[var_r29].x = sp8.x;
             arg0->unkC[var_r29].y = sp8.y;
             arg0->unkC[var_r29].z = sp8.z;
@@ -1359,7 +1359,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
             var_r22 = NULL;
         }
         var_r25 = &arg1->data.base;
-        PSMTXScale(sp68, var_r25->scale.x, var_r25->scale.y, var_r25->scale.z);
+        MTXScale(sp68, var_r25->scale.x, var_r25->scale.y, var_r25->scale.z);
         mtxRotCat(sp68, var_r25->rot.x, var_r25->rot.y, var_r25->rot.z);
         mtxTransCat(sp68, var_r25->pos.x, var_r25->pos.y, var_r25->pos.z);
 
@@ -1375,7 +1375,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
                     var_r27 = arg2->unk24[var_r30].unk18[var_r28];
                     var_r23 = arg2->unk24[var_r30].unk0[var_r28].unk0;
                 }
-                PSMTXMultVec(sp68, &((Vec *)(arg1->data.vertex->data))[var_r23], &sp38);
+                MTXMultVec(sp68, &((Vec *)(arg1->data.vertex->data))[var_r23], &sp38);
                 arg2->unkC[var_r27] = sp38;
                 sp44[var_r28] = arg2->unkC[var_r27];
                 arg2->unk14[var_r27] = arg2->unk18[var_r23];
@@ -1860,7 +1860,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
         temp_r27(temp_r31);
     }
     GXLoadPosMtxImm(arg1, 0);
-    PSMTXInvXpose(arg1, sp14);
+    MTXInvXpose(arg1, sp14);
     GXLoadNrmMtxImm(sp14, 0);
     fn_1_8AC4(arg1);
     sp10.r = (temp_r31->unk28->unkB[0] * arg0->unk_58.x);
@@ -1974,7 +1974,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
             if (var_f31 < 0.1) {
                 var_f31 = 0.1f;
             }
-            PSMTXCopy(lbl_1_bss_30, sp10);
+            MTXCopy(lbl_1_bss_30, sp10);
             mtxScaleCat(sp10, var_f31, var_f31, var_f31);
             GXLoadTexMtxImm(sp10, 0x24, GX_MTX2x4);
             var_r31++;
@@ -2050,31 +2050,31 @@ void fn_1_8AC4(Mtx arg0)
     var_r29 = &Hu3DGlobalLight[0];
     sp34 = var_r29->unk_28;
     if ((var_r29->unk_00 & 0x8000) != 0) {
-        PSMTXMultVecSR(Hu3DCameraMtx, &sp34, &sp34);
+        MTXMultVecSR(Hu3DCameraMtx, &sp34, &sp34);
     }
     var_f30 = VECDotProduct(&sp34, &sp10);
     var_f30 *= 10000.0f;
     OSf32tos16(&var_f30, &temp_r31);
     if (temp_r31 == -0x2710) {
-        PSMTXScale(lbl_1_bss_30, 0.0f, 0.0f, 0.0f);
+        MTXScale(lbl_1_bss_30, 0.0f, 0.0f, 0.0f);
         return;
     }
     C_VECHalfAngle(&sp34, &sp10, &sp28);
     sp28.x = -sp28.x;
     sp28.y = -sp28.y;
     sp28.z = -sp28.z;
-    PSMTXInvXpose(arg0, sp70);
+    MTXInvXpose(arg0, sp70);
     if (temp_r31 == 0x2710) {
-        PSMTXIdentity(sp40);
+        MTXIdentity(sp40);
     }
     else {
         VECCrossProduct(&sp28, &sp10, &sp1C);
         var_f29 = acosf(VECDotProduct(&sp10, &sp28));
-        PSMTXRotAxisRad(sp40, &sp1C, var_f29);
+        MTXRotAxisRad(sp40, &sp1C, var_f29);
     }
-    PSMTXConcat(sp40, sp70, spA0);
-    PSMTXTrans(sp40, 0.5f, 0.5f, 0.0f);
-    PSMTXConcat(sp40, spA0, lbl_1_bss_30);
+    MTXConcat(sp40, sp70, spA0);
+    MTXTrans(sp40, 0.5f, 0.5f, 0.0f);
+    MTXConcat(sp40, spA0, lbl_1_bss_30);
 }
 
 void fn_1_8D1C(void)
@@ -2097,7 +2097,7 @@ void fn_1_8D1C(void)
     if (var_r30 == 5) {
         C_MTXOrtho(sp60, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 10.0f);
         GXSetProjection(sp60, GX_ORTHOGRAPHIC);
-        PSMTXIdentity(sp30);
+        MTXIdentity(sp30);
         GXLoadPosMtxImm(sp30, 0);
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -2491,9 +2491,9 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
             }
             else {
                 fn_1_A328(&temp_r30->unk2C, &sp38, &var_r29->unk48, 4);
-                PSMTXRotRad(spC8, 0x5A, 0.017453292f * var_r29->unk44);
-                PSMTXConcat(sp128, spC8, sp98);
-                PSMTXMultVecArray(sp98, &sp38, &sp8, 4);
+                MTXRotRad(spC8, 0x5A, 0.017453292f * var_r29->unk44);
+                MTXConcat(sp128, spC8, sp98);
+                MTXMultVecArray(sp98, &sp38, &sp8, 4);
                 VECAdd(&sp8, &var_r29->unk54, var_r31++);
                 VECAdd(&sp14, &var_r29->unk54, var_r31++);
                 VECAdd(&sp20, &var_r29->unk54, var_r31++);

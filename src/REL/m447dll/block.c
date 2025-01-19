@@ -161,13 +161,13 @@ void fn_1_9374(UnkM447Struct_01 *arg0)
     Mtx sp8;
 
     temp_r30 = &Hu3DData[arg0->unk58[arg0->unk00]];
-    PSMTXIdentity(temp_r30->unk_F0);
-    PSMTXRotRad(sp8, 'x', MTXDegToRad(arg0->unk1C.x));
-    PSMTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
-    PSMTXRotRad(sp8, 'y', MTXDegToRad(arg0->unk1C.y));
-    PSMTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
-    PSMTXRotRad(sp8, 'z', MTXDegToRad(arg0->unk1C.z));
-    PSMTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
+    MTXIdentity(temp_r30->unk_F0);
+    MTXRotRad(sp8, 'x', MTXDegToRad(arg0->unk1C.x));
+    MTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
+    MTXRotRad(sp8, 'y', MTXDegToRad(arg0->unk1C.y));
+    MTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
+    MTXRotRad(sp8, 'z', MTXDegToRad(arg0->unk1C.z));
+    MTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
     Hu3DModelPosSet(arg0->unk58[arg0->unk00], arg0->unk10.x, arg0->unk10.y, arg0->unk10.z);
     Hu3DModelPosSet(arg0->unk58[20], arg0->unk10.x, arg0->unk10.y - 100.0f, arg0->unk10.z);
     Hu3DModelPosSet(arg0->unk58[21], arg0->unk10.x, arg0->unk10.y, arg0->unk10.z + 120.0f * arg0->unk54);

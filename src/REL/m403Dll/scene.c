@@ -307,12 +307,12 @@ static void fn_1_6ED8(omObjData *arg0)
     Mtx sp8;
     s32 i;
 
-    PSMTXTrans(sp38, arg0->trans.x, arg0->trans.y, arg0->trans.z);
+    MTXTrans(sp38, arg0->trans.x, arg0->trans.y, arg0->trans.z);
     mtxRot(sp8, arg0->rot.x, arg0->rot.y, arg0->rot.z);
-    PSMTXConcat(sp38, sp8, sp38);
+    MTXConcat(sp38, sp8, sp38);
     for (i = 0; i < 6; i++) {
-        PSMTXTrans(sp8, lbl_1_data_A88[i].x, lbl_1_data_A88[i].y, lbl_1_data_A88[i].z);
-        PSMTXConcat(sp38, sp8, sp8);
+        MTXTrans(sp8, lbl_1_data_A88[i].x, lbl_1_data_A88[i].y, lbl_1_data_A88[i].z);
+        MTXConcat(sp38, sp8, sp8);
         Hu3DModelPosSet(arg0->model[i + 1], sp8[0][3], sp8[1][3], sp8[2][3]);
         Hu3DModelRotSet(arg0->model[i + 1], arg0->rot.x, arg0->rot.y, arg0->rot.z);
     }
@@ -598,16 +598,16 @@ static s32 fn_1_7D04(float arg0, float arg1, Vec *arg2)
     temp_r28 -= 6;
     fn_1_7BD4(temp_r21, &sp10);
     sp10 = lbl_1_data_A88[temp_r21];
-    PSMTXTrans(sp4C, temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
+    MTXTrans(sp4C, temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
     mtxRot(sp1C, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
-    PSMTXConcat(sp4C, sp1C, sp4C);
-    PSMTXTrans(sp1C, sp10.x, sp10.y, sp10.z);
-    PSMTXConcat(sp4C, sp1C, sp4C);
+    MTXConcat(sp4C, sp1C, sp4C);
+    MTXTrans(sp1C, sp10.x, sp10.y, sp10.z);
+    MTXConcat(sp4C, sp1C, sp4C);
     var_r30 = lbl_1_data_AFC[temp_r28];
     temp_r23 = lbl_1_data_B14[temp_r28];
     for (i = 0; i < temp_r23; i++) {
-        PSMTXTrans(sp1C, var_r30->x, var_r30->y, var_r30->z);
-        PSMTXConcat(sp4C, sp1C, sp1C);
+        MTXTrans(sp1C, var_r30->x, var_r30->y, var_r30->z);
+        MTXConcat(sp4C, sp1C, sp1C);
         arg2->x = sp1C[0][3];
         arg2->y = sp1C[1][3];
         arg2->z = sp1C[2][3];
@@ -703,17 +703,17 @@ s32 fn_1_8470(Vec *arg0)
     temp_r30 = lbl_1_bss_9C[lbl_1_bss_94];
     temp_r27 = temp_r30->data;
     var_r25 = fn_1_8274(temp_r27, sp8);
-    PSMTXTrans(sp50, temp_r30->trans.x, temp_r30->trans.y, temp_r30->trans.z);
+    MTXTrans(sp50, temp_r30->trans.x, temp_r30->trans.y, temp_r30->trans.z);
     mtxRot(sp20, temp_r30->rot.x, temp_r30->rot.y, temp_r30->rot.z);
-    PSMTXConcat(sp50, sp20, sp50);
+    MTXConcat(sp50, sp20, sp50);
     for (i = 0; i < var_r25; i++) {
         fn_1_7BD4(sp8[i], arg0);
         temp_r26 = fn_1_7C20(temp_r27, sp8[i]) - 6;
         arg0->x += lbl_1_data_B2C[temp_r26].x;
         arg0->y += lbl_1_data_B2C[temp_r26].y;
         arg0->z += lbl_1_data_B2C[temp_r26].z;
-        PSMTXTrans(sp20, arg0->x, arg0->y, arg0->z);
-        PSMTXConcat(sp50, sp20, sp20);
+        MTXTrans(sp20, arg0->x, arg0->y, arg0->z);
+        MTXConcat(sp50, sp20, sp20);
         arg0->x = sp20[0][3];
         arg0->y = sp20[1][3];
         arg0->z = sp20[2][3];

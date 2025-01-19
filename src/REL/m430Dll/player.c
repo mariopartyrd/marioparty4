@@ -278,8 +278,8 @@ void fn_1_BBC4(Process *process)
     sp14.x = CenterM[0].x + (CZoomM[0] * (sind(CRotM[0].y) * cosd(CRotM[0].x)));
     sp14.y = CenterM[0].y + (CZoomM[0] * -sind(CRotM[0].x));
     sp14.z = CenterM[0].z + (CZoomM[0] * (cosd(CRotM[0].y) * cosd(CRotM[0].x)));
-    PSVECSubtract(CenterM, &sp14, &sp8);
-    PSVECNormalize(&sp8, &sp8);
+    VECSubtract(CenterM, &sp14, &sp8);
+    VECNormalize(&sp8, &sp8);
     HuAudFXListnerSetEX(&sp14, &sp8, 100000.0f, 566.6667f, 0.0f, 300.0f, 300.0f);
 }
 
@@ -296,8 +296,8 @@ void fn_1_BE24(omObjData *object)
     sp14.x = CenterM[0].x + (CZoomM[0] * (sind(CRotM[0].y) * cosd(CRotM[0].x)));
     sp14.y = CenterM[0].y + (CZoomM[0] * -sind(CRotM[0].x));
     sp14.z = CenterM[0].z + (CZoomM[0] * (cosd(CRotM[0].y) * cosd(CRotM[0].x)));
-    PSVECSubtract(CenterM, &sp14, &sp8);
-    PSVECNormalize(&sp8, &sp8);
+    VECSubtract(CenterM, &sp14, &sp8);
+    VECNormalize(&sp8, &sp8);
     HuAudFXListnerUpdate(&sp14, &sp8);
 }
 
@@ -1619,7 +1619,7 @@ void fn_1_10948(ModelData *var_r29, Mtx var_r30)
     Mtx sp8;
     M430PlayerBss170Struct *var_r31 = var_r29->unk_120;
     GXLoadPosMtxImm(var_r30, 0);
-    PSMTXInvXpose(var_r30, sp8);
+    MTXInvXpose(var_r30, sp8);
     GXLoadNrmMtxImm(sp8, 0);
     GXSetNumTevStages(1);
     GXSetNumTexGens(1);

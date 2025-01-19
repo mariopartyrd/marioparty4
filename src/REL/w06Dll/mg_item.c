@@ -1,6 +1,15 @@
 #include "REL/w06Dll.h"
 #include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#include "game/board/main.h"
+#include "game/board/model.h"
+#include "game/board/player.h"
+#include "game/board/space.h"
+#include "game/board/ui.h"
+#include "game/board/window.h"
 #include "game/data.h"
+#include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
 #include "game/hsfman.h"
@@ -10,15 +19,7 @@
 #include "game/process.h"
 #include "game/sprite.h"
 #include "game/window.h"
-#include "game/frand.h"
-#include "game/board/audio.h"
-#include "game/board/com.h"
-#include "game/board/main.h"
-#include "game/board/model.h"
-#include "game/board/player.h"
-#include "game/board/space.h"
-#include "game/board/ui.h"
-#include "game/board/window.h"
+
 
 #include "dolphin.h"
 #include "ext_math.h"
@@ -132,7 +133,8 @@ static s8 lbl_1_data_1AD[3] = { 0, 0, 0 };
 static s16 lbl_1_data_1B0 = -1;
 static omObjData *lbl_1_data_1B4[3] = { NULL, NULL, NULL };
 
-void fn_1_D70(void) {
+void fn_1_D70(void)
+{
     Vec sp20;
     Vec sp14;
     Vec sp8;
@@ -157,7 +159,8 @@ void fn_1_D70(void) {
     }
 }
 
-void fn_1_F6C(void) {
+void fn_1_F6C(void)
+{
     s32 i;
 
     for (i = 0; i < 3; i++) {
@@ -173,7 +176,8 @@ void fn_1_F6C(void) {
     }
 }
 
-void fn_1_1054(void) {
+void fn_1_1054(void)
+{
     BoardRollDispSet(0);
     lbl_1_bss_18 = HuPrcChildCreate(fn_1_1148, 0x2003, 0x3800, 0, boardMainProc);
     HuPrcDestructorSet2(lbl_1_bss_18, fn_1_10E4);
@@ -183,7 +187,8 @@ void fn_1_1054(void) {
     BoardRollDispSet(1);
 }
 
-static void fn_1_10E4(void) {
+static void fn_1_10E4(void)
+{
     fn_1_43DC();
     if (lbl_1_data_1A8 != -1) {
         HuWinKill(lbl_1_data_1A8);
@@ -192,7 +197,8 @@ static void fn_1_10E4(void) {
     lbl_1_bss_18 = NULL;
 }
 
-static void fn_1_1148(void) {
+static void fn_1_1148(void)
+{
     s32 temp_r3;
     s32 temp_r31;
 
@@ -205,7 +211,8 @@ static void fn_1_1148(void) {
     HuPrcEnd();
 }
 
-static void fn_1_11B0(void) {
+static void fn_1_11B0(void)
+{
     float sp8[2];
     float var_f31;
     float var_f30;
@@ -219,7 +226,8 @@ static void fn_1_11B0(void) {
     HuWinMesSet(lbl_1_data_1A8, MAKE_MESSID(48, 25));
 }
 
-static s32 fn_1_12A0(s32 arg0) {
+static s32 fn_1_12A0(s32 arg0)
+{
     Vec sp38;
     Vec sp2C;
     Vec sp20;
@@ -285,7 +293,8 @@ static s32 fn_1_12A0(s32 arg0) {
     return 1;
 }
 
-static void fn_1_15CC(s32 arg0) {
+static void fn_1_15CC(s32 arg0)
+{
     s8 sp8[] = { 80, 50 };
     s32 var_r28;
     s16 temp_r26;
@@ -343,7 +352,8 @@ static void fn_1_15CC(s32 arg0) {
             BoardWinCreate(2, MAKE_MESSID(48, 41), 6);
             BoardWinWait();
             BoardWinKill();
-        } else {
+        }
+        else {
             for (var_r31 = 0; var_r31 < 3; var_r31++) {
                 if (lbl_1_bss_30[var_r31] == 0) {
                     lbl_1_bss_33 = var_r31;
@@ -400,7 +410,8 @@ static void fn_1_15CC(s32 arg0) {
     }
 }
 
-static void fn_1_1BE0(s32 arg0, s32 arg1) {
+static void fn_1_1BE0(s32 arg0, s32 arg1)
+{
     Vec sp18;
     Vec spC;
     s16 temp_r30;
@@ -420,7 +431,8 @@ static void fn_1_1BE0(s32 arg0, s32 arg1) {
     fn_1_2048(-1, 4);
 }
 
-static void fn_1_1CB0(s32 arg0) {
+static void fn_1_1CB0(s32 arg0)
+{
     while (!BoardModelMotionEndCheck(lbl_1_bss_3C[arg0])) {
         HuPrcVSleep();
     }
@@ -430,7 +442,8 @@ static void fn_1_1CB0(s32 arg0) {
     }
 }
 
-static void fn_1_1D5C(s32 arg0) {
+static void fn_1_1D5C(s32 arg0)
+{
     s8 spC[] = { 0x20, 0x40, 0x60 };
     s16 sp10[] = { -100, 0, 100 };
     s32 sp8;
@@ -442,7 +455,8 @@ static void fn_1_1D5C(s32 arg0) {
     }
 }
 
-static void fn_1_1E30(s32 arg0) {
+static void fn_1_1E30(s32 arg0)
+{
     s8 spC[] = { 0x20, 0x40, 0x60 };
     s16 sp10[] = { -100, 0, 100 };
     s32 sp8;
@@ -454,7 +468,8 @@ static void fn_1_1E30(s32 arg0) {
     }
 }
 
-static void fn_1_1F08(s32 arg0) {
+static void fn_1_1F08(s32 arg0)
+{
     s32 i;
     s32 j;
 
@@ -477,7 +492,8 @@ static void fn_1_1F08(s32 arg0) {
     }
 }
 
-static void fn_1_2048(s32 arg0, s32 arg1) {
+static void fn_1_2048(s32 arg0, s32 arg1)
+{
     Data1B4Work *temp_r30;
     s32 i;
 
@@ -490,7 +506,8 @@ static void fn_1_2048(s32 arg0, s32 arg1) {
     }
 }
 
-static void fn_1_20CC(s32 arg0) {
+static void fn_1_20CC(s32 arg0)
+{
     Data1B4Work *temp_r30;
     s32 i;
 
@@ -504,7 +521,8 @@ static void fn_1_20CC(s32 arg0) {
     }
 }
 
-static s32 fn_1_2174(s32 arg0) {
+static s32 fn_1_2174(s32 arg0)
+{
     Data1B4Work *temp_r31;
 
     if (!lbl_1_data_1B4[arg0]) {
@@ -514,7 +532,8 @@ static s32 fn_1_2174(s32 arg0) {
     return temp_r31->unk02;
 }
 
-static s16 fn_1_21CC(s32 arg0) {
+static s16 fn_1_21CC(s32 arg0)
+{
     Data1B4Work *temp_r31;
 
     if (!lbl_1_data_1B4[arg0]) {
@@ -524,7 +543,8 @@ static s16 fn_1_21CC(s32 arg0) {
     return temp_r31->unk06;
 }
 
-static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2) {
+static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2)
+{
     Mtx sp18;
     Vec spC;
     omObjData *temp_r3;
@@ -555,7 +575,7 @@ static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2) {
     temp_r3->rot.y = 0.0f;
     temp_r3->rot.z = 0.0f;
     if (arg2 == 5) {
-        PSMTXTrans(sp18, 0.0f, -50.0f, 0.0f);
+        MTXTrans(sp18, 0.0f, -50.0f, 0.0f);
         BoardModelMtxSet(temp_r31->unk06, &sp18);
     }
     BoardModelPosSet(temp_r31->unk06, temp_r3->trans.x, temp_r3->trans.y, temp_r3->trans.z);
@@ -563,7 +583,8 @@ static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2) {
     BoardModelLayerSet(temp_r31->unk06, 2);
 }
 
-static void fn_1_243C(omObjData *arg0) {
+static void fn_1_243C(omObjData *arg0)
+{
     Vec sp14;
     Vec sp8;
     Data1B4Work *temp_r31;
@@ -592,7 +613,8 @@ static void fn_1_243C(omObjData *arg0) {
                     sp8.y += 200.0f;
                     arg0->trans.y = (sp8.y - sp14.y) / 30.0f;
                     arg0->rot.z = 0.01f;
-                } else {
+                }
+                else {
                     arg0->rot.z += 0.033333335f;
                     if (arg0->rot.z > 1.0f) {
                         arg0->rot.z = 1.0f;
@@ -617,7 +639,8 @@ static void fn_1_243C(omObjData *arg0) {
                     BoardModelPosGet(lbl_1_bss_3C[temp_r31->unk00_field2], &sp8);
                     arg0->trans.y = (sp8.y - sp14.y) / 30.0f;
                     arg0->rot.z = 1.0f;
-                } else {
+                }
+                else {
                     arg0->rot.z -= 0.033333335f;
                     if (arg0->rot.z < 0.001f) {
                         arg0->rot.z = 0.001f;
@@ -644,11 +667,13 @@ static void fn_1_243C(omObjData *arg0) {
                 BoardPlayerPosGet(temp_r31->unk00_field1, &sp8);
                 arg0->rot.x = (sp8.x - sp14.x) / 30.0f;
                 arg0->rot.z = (sp8.z - sp14.z) / 30.0f;
-            } else if (temp_r31->unk08 < 30) {
+            }
+            else if (temp_r31->unk08 < 30) {
                 sp14.x += arg0->rot.x;
                 sp14.z += arg0->rot.z;
                 BoardModelPosSetV(temp_r31->unk06, &sp14);
-            } else {
+            }
+            else {
                 BoardPlayerPosGet(temp_r31->unk00_field1, &sp8);
                 arg0->trans.x = sp8.x;
                 arg0->trans.y = sp8.y;
@@ -669,13 +694,10 @@ static void fn_1_243C(omObjData *arg0) {
     }
 }
 
-static s8 lbl_1_data_1C5[14] = {
-    1, 1, 3, 3, 2,
-    2, 2, 1, 2, 3,
-    0, 4, 5, 0
-};
+static s8 lbl_1_data_1C5[14] = { 1, 1, 3, 3, 2, 2, 2, 1, 2, 3, 0, 4, 5, 0 };
 
-static s32 fn_1_2A1C(s32 arg0) {
+static s32 fn_1_2A1C(s32 arg0)
+{
     s32 var_r29;
     s32 var_r28;
     s32 var_r30;
@@ -696,24 +718,30 @@ static s32 fn_1_2A1C(s32 arg0) {
     if (var_r29 > var_r28) {
         if (var_r29 > var_r30) {
             var_r31 = 0;
-        } else if (var_r30 > var_r28) {
+        }
+        else if (var_r30 > var_r28) {
             var_r31 = 2;
-        } else {
+        }
+        else {
             var_r31 = 1;
         }
-    } else {
+    }
+    else {
         if (var_r28 > var_r30) {
             var_r31 = 1;
-        } else if (var_r30 > var_r29) {
+        }
+        else if (var_r30 > var_r29) {
             var_r31 = 2;
-        } else {
+        }
+        else {
             var_r31 = 0;
         }
     }
     return var_r31;
 }
 
-static void fn_1_2B60(s32 arg0) {
+static void fn_1_2B60(s32 arg0)
+{
     omObjData *temp_r3;
     Bss24Work *temp_r31;
 
@@ -728,7 +756,8 @@ static void fn_1_2B60(s32 arg0) {
     temp_r31->unk02 = 1;
 }
 
-static void fn_1_2C18(void) {
+static void fn_1_2C18(void)
+{
     Bss24Work *var_r27;
 
     if (lbl_1_bss_24) {
@@ -737,7 +766,8 @@ static void fn_1_2C18(void) {
     }
 }
 
-static void fn_1_2D90(s32 arg0) {
+static void fn_1_2D90(s32 arg0)
+{
     Bss24Work *var_r31;
 
     if (lbl_1_bss_24) {
@@ -746,7 +776,8 @@ static void fn_1_2D90(s32 arg0) {
     }
 }
 
-static s32 fn_1_2DD0(void) {
+static s32 fn_1_2DD0(void)
+{
     Bss24Work *var_r31;
 
     if (!lbl_1_bss_24) {
@@ -756,7 +787,8 @@ static s32 fn_1_2DD0(void) {
     return var_r31->unk01;
 }
 
-static u32 fn_1_2E18(Bss24Work *arg0) {
+static u32 fn_1_2E18(Bss24Work *arg0)
+{
     s32 temp_r31;
     s32 var_r30;
 
@@ -774,7 +806,8 @@ static u32 fn_1_2E18(Bss24Work *arg0) {
     return var_r30;
 }
 
-static void fn_1_2EF4(omObjData *arg0) {
+static void fn_1_2EF4(omObjData *arg0)
+{
     Vec sp14;
     Vec sp8;
     float var_f30;
@@ -794,12 +827,14 @@ static void fn_1_2EF4(omObjData *arg0) {
     }
     if (lbl_1_bss_30[0] != 0) {
         var_r25 = 1;
-    } else {
+    }
+    else {
         var_r25 = 0;
     }
     if (lbl_1_bss_30[2] != 0) {
         var_r26 = 1;
-    } else {
+    }
+    else {
         var_r26 = 2;
     }
     switch (temp_r30->unk01) {
@@ -820,13 +855,16 @@ static void fn_1_2EF4(omObjData *arg0) {
                     if (lbl_1_bss_30[0] == 0 && lbl_1_bss_30[1] == 0) {
                         if (BoardRandMod(100) < 50) {
                             var_r29 = 1;
-                        } else {
+                        }
+                        else {
                             var_r29 = 2;
                         }
-                    } else {
+                    }
+                    else {
                         if (lbl_1_bss_30[0] == 0) {
                             var_r29 = 2;
-                        } else if (lbl_1_bss_30[1] == 0) {
+                        }
+                        else if (lbl_1_bss_30[1] == 0) {
                             var_r29 = 1;
                         }
                     }
@@ -884,7 +922,8 @@ static void fn_1_2EF4(omObjData *arg0) {
     }
 }
 
-static void fn_1_3470(void) {
+static void fn_1_3470(void)
+{
     omObjData *temp_r3;
     Bss28Work *temp_r31;
 
@@ -901,7 +940,8 @@ static void fn_1_3470(void) {
     temp_r31->unk0A = BoardModelMotionCreate(lbl_1_bss_C[4], DATA_MAKE_NUM(DATADIR_W06, 23));
 }
 
-static void fn_1_3560(s32 arg0) {
+static void fn_1_3560(s32 arg0)
+{
     Bss28Work *temp_r31;
 
     if (!lbl_1_bss_28) {
@@ -910,13 +950,15 @@ static void fn_1_3560(s32 arg0) {
     temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_28, Bss28Work);
     temp_r31->unk00_field1 = arg0;
     if (arg0 != 1) {
-        (void) 0;
-    } else {
+        (void)0;
+    }
+    else {
         temp_r31->unk06 = 20;
     }
 }
 
-static s32 fn_1_35BC(void) {
+static s32 fn_1_35BC(void)
+{
     Bss28Work *temp_r31;
 
     if (!lbl_1_bss_28) {
@@ -926,7 +968,8 @@ static s32 fn_1_35BC(void) {
     return temp_r31->unk00_field1;
 }
 
-static void fn_1_3604(s32 arg0) {
+static void fn_1_3604(s32 arg0)
+{
     Bss28Work *temp_r31;
 
     if (!lbl_1_bss_28) {
@@ -949,7 +992,8 @@ static void fn_1_3604(s32 arg0) {
     }
 }
 
-static void fn_1_3698(s8 arg0) {
+static void fn_1_3698(s8 arg0)
+{
     Vec sp24;
     Vec sp18;
     Vec spC;
@@ -976,7 +1020,8 @@ static void fn_1_3698(s8 arg0) {
     if (ABS(temp_f31) >= 300.0f) {
         var_f30 = 40.0f;
         temp_r31->unk06 *= 2;
-    } else {
+    }
+    else {
         var_f30 = 20.0f;
     }
     VECSubtract(&sp18, &sp24, &spC);
@@ -986,7 +1031,8 @@ static void fn_1_3698(s8 arg0) {
     BoardModelMotionSpeedSet(lbl_1_bss_C[4], 2.0f);
 }
 
-static void fn_1_3974(omObjData *arg0) {
+static void fn_1_3974(omObjData *arg0)
+{
     Vec sp30;
     Vec sp24;
     s32 sp8;
@@ -1012,7 +1058,8 @@ static void fn_1_3974(omObjData *arg0) {
                     fn_1_3560(4);
                     return;
                 }
-            } else {
+            }
+            else {
                 temp_r31->unk03++;
             }
             fn_1_3560(1);
@@ -1062,7 +1109,8 @@ static void fn_1_3974(omObjData *arg0) {
     }
 }
 
-static void fn_1_4070(void) {
+static void fn_1_4070(void)
+{
     Bss2CWork *temp_r31;
 
     lbl_1_bss_1C = 0;
@@ -1074,7 +1122,8 @@ static void fn_1_4070(void) {
     temp_r31->unk04 = MGSeqTimerCreateXY(temp_r31->unk01, 288, 64);
 }
 
-static void fn_1_4124(void) {
+static void fn_1_4124(void)
+{
     Bss2CWork *temp_r31;
 
     if (!lbl_1_bss_2C) {
@@ -1086,7 +1135,8 @@ static void fn_1_4124(void) {
     temp_r31->unk00_field0 = 1;
 }
 
-static void fn_1_4194(omObjData *arg0) {
+static void fn_1_4194(omObjData *arg0)
+{
     Bss2CWork *temp_r31;
 
     temp_r31 = OM_GET_WORK_PTR(arg0, Bss2CWork);
@@ -1107,7 +1157,8 @@ static void fn_1_4194(omObjData *arg0) {
     }
     if (temp_r31->unk01 != 0) {
         temp_r31->unk01--;
-    } else {
+    }
+    else {
         MGSeqParamSet(temp_r31->unk04, 2, -1);
         temp_r31->unk04 = -1;
         lbl_1_bss_1C = 1;
@@ -1117,7 +1168,8 @@ static void fn_1_4194(omObjData *arg0) {
     temp_r31->unk02 = 60;
 }
 
-static void fn_1_42AC(s16 arg0) {
+static void fn_1_42AC(s16 arg0)
+{
     ParticleData *var_r31;
 
     lbl_1_bss_20 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_EFFECT, 0));
@@ -1132,7 +1184,8 @@ static void fn_1_42AC(s16 arg0) {
     var_r31->unk_02 = arg0;
 }
 
-static void fn_1_43DC(void) {
+static void fn_1_43DC(void)
+{
     if (lbl_1_data_1B0 != -1) {
         Hu3DModelKill(lbl_1_data_1B0);
         lbl_1_data_1B0 = -1;
@@ -1143,7 +1196,8 @@ static void fn_1_43DC(void) {
     }
 }
 
-static void fn_1_4460(ModelData *model, ParticleData *particle, Mtx matrix) {
+static void fn_1_4460(ModelData *model, ParticleData *particle, Mtx matrix)
+{
     HsfanimStruct01 *var_r31;
     Vec sp8;
     float var_f31;

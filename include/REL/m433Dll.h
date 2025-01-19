@@ -1,5 +1,5 @@
-#ifndef M4303LL_H
-#define M4303LL_H
+#ifndef M430DLL_H
+#define M430DLL_H
 
 #include "game/object.h"
 

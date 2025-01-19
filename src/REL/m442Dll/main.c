@@ -1489,7 +1489,7 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     var_r29 = Hu3DCamera;
     C_MTXOrtho(sp100, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f);
     GXSetProjection(sp100, GX_ORTHOGRAPHIC);
-    PSMTXIdentity(spD0);
+    MTXIdentity(spD0);
     GXLoadPosMtxImm(spD0, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -1529,7 +1529,7 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
     C_MTXPerspective(sp40, var_r29->fov, var_r29->aspect, var_r29->near, var_r29->far);
     GXSetProjection(sp40, GX_PERSPECTIVE);
-    PSMTXInverse(mtx, spA0);
+    MTXInverse(mtx, spA0);
     spA0[0][3] = spA0[1][3] = spA0[2][3] = 0.0f;
     PSMTXReorder(spA0, sp70);
     PSMTXROMultVecArray(sp70, &lbl_1_data_1C0[0], &sp10, 4);
@@ -1585,7 +1585,7 @@ void fn_1_54C8(ModelData *model, Mtx mtx)
     fn_1_8520(&lbl_1_bss_C05C[1], 0);
     C_MTXOrtho(sp5C, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f);
     GXSetProjection(sp5C, GX_ORTHOGRAPHIC);
-    PSMTXIdentity(sp2C);
+    MTXIdentity(sp2C);
     GXLoadPosMtxImm(sp2C, 0);
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
     GXSetNumTexGens(2);
@@ -1734,9 +1734,9 @@ void fn_1_5EDC(ModelData *model, float (*mtx)[4])
     s32 var_r30;
 
     var_r31 = model->unk_120;
-    PSMTXInverse(mtx, spC);
+    MTXInverse(mtx, spC);
     spC[0][3] = spC[1][3] = spC[2][3] = 0.0f;
-    PSMTXConcat(mtx, &spC[0], mtx);
+    MTXConcat(mtx, &spC[0], mtx);
     GXLoadPosMtxImm(mtx, 0);
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
     GXSetNumTexGens(1);

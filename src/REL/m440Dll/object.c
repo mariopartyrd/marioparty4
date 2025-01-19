@@ -10,11 +10,9 @@
 #include "string.h"
 #include "version.h"
 
-
 #ifdef __MWERKS__
 #include "game/audio.h"
 #endif
-
 
 // bss
 omObjData *lbl_1_bss_C0[4];
@@ -1025,7 +1023,7 @@ u8 fn_1_E8AC(omObjData *arg0, unkObjStruct *arg1)
                     arg1->unk24.z = (1050.0 * sind(var_f31));
                 }
                 arg1->unk30.y = 0.0f;
-                PSMTXRotRad(temp_r29->unk_F0, 0x59, 0.017453292f * arg1->unk68);
+                MTXRotRad(temp_r29->unk_F0, 0x59, 0.017453292f * arg1->unk68);
                 arg1->unk60++;
                 if (lbl_1_data_1D8 == 0) {
                     fn_1_18E0();
@@ -1044,7 +1042,7 @@ u8 fn_1_E8AC(omObjData *arg0, unkObjStruct *arg1)
             arg1->unk18.y = fn_1_93D0(lbl_1_bss_78.y, 1400.0f + lbl_1_bss_78.y, 0.0f, var_f31);
             arg1->unk18.z = lbl_1_bss_78.z + (var_f31 * (arg1->unk24.z - lbl_1_bss_78.x));
             arg1->unk30.x = 180.0f * var_f31;
-            PSMTXRotRad(temp_r29->unk_F0, 0x59, 0.017453292f * arg1->unk68);
+            MTXRotRad(temp_r29->unk_F0, 0x59, 0.017453292f * arg1->unk68);
             break;
         case 3:
             fn_1_F4D4(arg1, 15, 8);

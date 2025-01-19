@@ -956,9 +956,9 @@ void fn_1_6968(omObjData *object)
                     sp8.z = -var_r31->unk_1C.x;
                     var_f30 = VECMag(&sp8) / 30.000002f;
                     if (var_f30 >= 0.001f) {
-                        PSMTXRotAxisRad(sp14, &sp8, var_f30);
+                        MTXRotAxisRad(sp14, &sp8, var_f30);
                         var_r28 = &Hu3DData[object->model[var_r30]];
-                        PSMTXConcat(sp14, var_r28->unk_F0, var_r28->unk_F0);
+                        MTXConcat(sp14, var_r28->unk_F0, var_r28->unk_F0);
                     }
                 }
             }
@@ -1238,8 +1238,8 @@ s32 fn_1_79F8(s16 arg0, char *arg1, Mtx arg2)
     var_r30 = var_r31->hsfData;
     lbl_1_bss_30 = 0;
     mtxRot(sp14, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-    PSMTXScale(sp44, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-    PSMTXConcat(sp14, sp44, sp44);
+    MTXScale(sp44, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+    MTXConcat(sp14, sp44, sp44);
     mtxTransCat(sp44, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
     fn_1_7AC4(var_r30->root, sp44, arg1, arg2);
     return lbl_1_bss_30;
@@ -1274,12 +1274,12 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
     var_r31 = &arg0->data.curr;
 
     mtxRot(sp12C, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-    PSMTXScale(sp15C, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-    PSMTXConcat(sp12C, sp15C, sp15C);
+    MTXScale(sp15C, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+    MTXConcat(sp12C, sp15C, sp15C);
     mtxTransCat(sp15C, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-    PSMTXConcat(arg1, sp15C, sp15C);
+    MTXConcat(arg1, sp15C, sp15C);
     if (!strcmp(arg2, arg0->name)) {
-        PSMTXCopy(sp15C, arg3);
+        MTXCopy(sp15C, arg3);
         lbl_1_bss_30 = 1;
     }
 
@@ -1288,12 +1288,12 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
         if (!lbl_1_bss_30) {
             var_r30 = &var_r27->data.curr;
             mtxRot(spFC, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
-            PSMTXScale(spCC, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
-            PSMTXConcat(spFC, spCC, spCC);
+            MTXScale(spCC, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
+            MTXConcat(spFC, spCC, spCC);
             mtxTransCat(spCC, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
-            PSMTXConcat(sp15C, spCC, spCC);
+            MTXConcat(sp15C, spCC, spCC);
             if (!strcmp(arg2, var_r27->name)) {
-                PSMTXCopy(spCC, arg3);
+                MTXCopy(spCC, arg3);
                 lbl_1_bss_30 = 1;
             }
             for (var_r22 = 0; var_r22 < var_r27->data.childrenCount; var_r22++) {
@@ -1301,12 +1301,12 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
                 if (!lbl_1_bss_30) {
                     var_r29 = &var_r26->data.curr;
                     mtxRot(sp9C, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
-                    PSMTXScale(sp6C, var_r29->scale.x, var_r29->scale.y, var_r29->scale.z);
-                    PSMTXConcat(sp9C, sp6C, sp6C);
+                    MTXScale(sp6C, var_r29->scale.x, var_r29->scale.y, var_r29->scale.z);
+                    MTXConcat(sp9C, sp6C, sp6C);
                     mtxTransCat(sp6C, var_r29->pos.x, var_r29->pos.y, var_r29->pos.z);
-                    PSMTXConcat(spCC, sp6C, sp6C);
+                    MTXConcat(spCC, sp6C, sp6C);
                     if (!strcmp(arg2, var_r26->name)) {
-                        PSMTXCopy(sp6C, arg3);
+                        MTXCopy(sp6C, arg3);
                         lbl_1_bss_30 = 1;
                     }
 
@@ -1315,12 +1315,12 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
                         if (!lbl_1_bss_30) {
                             var_r28 = &var_r25->data.curr;
                             mtxRot(sp3C, var_r28->rot.x, var_r28->rot.y, var_r28->rot.z);
-                            PSMTXScale(spC, var_r28->scale.x, var_r28->scale.y, var_r28->scale.z);
-                            PSMTXConcat(sp3C, spC, spC);
+                            MTXScale(spC, var_r28->scale.x, var_r28->scale.y, var_r28->scale.z);
+                            MTXConcat(sp3C, spC, spC);
                             mtxTransCat(spC, var_r28->pos.x, var_r28->pos.y, var_r28->pos.z);
-                            PSMTXConcat(sp6C, spC, spC);
+                            MTXConcat(sp6C, spC, spC);
                             if (!strcmp(arg2, var_r25->name)) {
-                                PSMTXCopy(spC, arg3);
+                                MTXCopy(spC, arg3);
                                 lbl_1_bss_30 = 1;
                             }
 
