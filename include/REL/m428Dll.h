@@ -3,7 +3,7 @@
 
 #include "game/object.h"
 
-u32 fn_1_26E0(void);
+s32 fn_1_26E0(void);
 void fn_1_4170(s16 arg0, s32 arg1);
 
 void fn_1_4324(s32 arg0, Vec *arg1, Vec *arg2, Vec *arg3);
@@ -27,5 +27,8 @@ s32 fn_1_F4E8(s32 arg0);
 void fn_1_116C4(s32 arg0, s32 arg1);
 void fn_1_11754(s32 arg0, float arg8);
 void fn_1_11798(s32 arg0);
+
+extern s16 lbl_1_bss_50[4];
+extern s32 lbl_1_bss_18;
 
 #endif
