@@ -40,7 +40,14 @@
     "os.h": "c",
     "type_traits": "cpp",
     "xutility": "cpp",
-    "xtr1common": "c"
+    "xtr1common": "c",
+    "hsfdraw.h": "c",
+    "dolphin.h": "c",
+    "hsfman.h": "c",
+    "hsfformat.h": "c",
+    "hsfanim.h": "c",
+    "memory.h": "c",
+    "animdata.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {
