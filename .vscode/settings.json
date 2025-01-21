@@ -55,7 +55,10 @@
     "signal.h": "c",
     "gx.h": "c",
     "dol2asm.h": "c",
-    "__mem.h": "c"
+    "__mem.h": "c",
+    "fdlibm.h": "c",
+    "float.h": "c",
+    "corecrt_math_defines.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {

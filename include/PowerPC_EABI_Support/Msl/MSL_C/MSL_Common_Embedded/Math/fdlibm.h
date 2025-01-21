@@ -126,7 +126,7 @@ extern double sqrt __P((double));
 extern double ceil __P((double));
 extern double fabs __P((double));
 // NOTE: I have no idea how they got it to mangle like this
-extern double fabs__Fd(double);
+static inline double fabs__Fd(double v) { return __fabs(v); }
 extern double floor __P((double));
 extern double fmod __P((double, double));
 
