@@ -58,7 +58,9 @@
     "__mem.h": "c",
     "fdlibm.h": "c",
     "float.h": "c",
-    "corecrt_math_defines.h": "c"
+    "corecrt_math_defines.h": "c",
+    "math_ppc.h": "c",
+    "errno.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {

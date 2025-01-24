@@ -1,8 +1,4 @@
-extern double tan(double);
-extern double sin(double);
-extern double cos(double);
-extern double atan2(double);
-extern double acos(double);
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/math_ppc.h"
 
 float acosf(float arg0) {
     return (float) acos(arg0);
