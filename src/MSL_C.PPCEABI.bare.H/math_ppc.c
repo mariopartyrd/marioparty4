@@ -1,5 +1,4 @@
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/math_ppc.h"
-
 float acosf(float arg0) {
     return (float) acos(arg0);
 }
