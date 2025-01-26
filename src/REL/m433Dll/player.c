@@ -2174,7 +2174,7 @@ void fn_1_BD48(omObjData *object)
     for (var_r27 = ((ParticleData *)Hu3DData[var_r28].unk_120)->unk_48, var_r29 = 0; var_r29 < 0xC8; var_r29++, var_r27++) {
         var_r27->unk2C = 0.0f;
         var_r27->unk40.a = 0;
-        var_r27->unk00_s16 = 0;
+        var_r27->unk00 = 0;
     }
     object->model[9] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M433, 2));
     Hu3DModelScaleSet(object->model[9], 1.05f, 1.05f, 1.05f);
@@ -2581,18 +2581,18 @@ void fn_1_D6A8(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 var_r29;
 
     for (var_r31 = particle->unk_48, var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16 != 0) {
+        if (var_r31->unk00 != 0) {
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.x *= 0.92f;
             var_r31->unk08.z *= 0.92f;
             var_r31->unk08.y += -0.27222225f;
             var_r31->unk2C += 2.0f;
             var_r31->unk40.a *= 0.99f;
-            if (var_r31->unk00_s16 < 24.0f) {
+            if (var_r31->unk00 < 24.0f) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
-            if (--var_r31->unk00_s16 == 0) {
-                var_r31->unk00_s16 = 0;
+            if (--var_r31->unk00 == 0) {
+                var_r31->unk00 = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
             }
@@ -2613,8 +2613,8 @@ void fn_1_D888(Vec *arg0, float arg8)
     var_r31 = ((ParticleData *)Hu3DData[lbl_1_bss_7CC->model[5]].unk_120)->unk_48;
     var_r28 = 3.0f + (12.0f * arg8);
     for (var_r29 = 0; var_r29 < 0xC8; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16 == 0) {
-            var_r31->unk00_s16 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
+        if (var_r31->unk00 == 0) {
+            var_r31->unk00 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
             var_f30 = frandmod(0x168);
             sp8.x = sind(var_f30);
             sp8.y = 0.0f;

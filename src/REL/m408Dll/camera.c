@@ -449,15 +449,15 @@ void fn_1_A37C(ModelData *model, ParticleData *particle, Mtx matrix)
     else {
         temp_r31 = particle->unk_48;
         for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
-            if (temp_r31->unk00_s16) {
+            if (temp_r31->unk00) {
                 temp_r31->unk34.x += temp_r31->unk08.x;
                 temp_r31->unk34.y += temp_r31->unk08.y;
                 temp_r31->unk34.z += temp_r31->unk08.z;
                 temp_r31->unk2C += temp_r31->unk14.x;
                 temp_r31->unk14.y -= temp_r31->unk14.z;
                 temp_r31->unk40.a = temp_r31->unk14.y;
-                if (--temp_r31->unk00_s16 == 0) {
-                    temp_r31->unk00_s16 = 0;
+                if (--temp_r31->unk00 == 0) {
+                    temp_r31->unk00 = 0;
                     temp_r31->unk2C = 0;
                     temp_r31->unk40.a = 0;
                 }
@@ -477,10 +477,10 @@ void fn_1_A4E8(s32 arg0, Vec *arg1, u32 arg2)
     if (temp_r30->unk_00) {
         temp_r31 = temp_r30->unk_48;
         for (temp_r29 = 0; temp_r29 < temp_r30->unk_30; temp_r29++, temp_r31++) {
-            if (temp_r31->unk00_s16 != 0) {
+            if (temp_r31->unk00 != 0) {
                 continue;
             }
-            temp_r31->unk00_s16 = 60.0f * (((1.5f / 1000.0f) * frandmod(1000)) + 1.0f);
+            temp_r31->unk00 = 60.0f * (((1.5f / 1000.0f) * frandmod(1000)) + 1.0f);
             temp_r31->unk34.x = arg1->x;
             temp_r31->unk34.y = 12000;
             temp_r31->unk34.z = arg1->z;
@@ -491,7 +491,7 @@ void fn_1_A4E8(s32 arg0, Vec *arg1, u32 arg2)
             temp_r31->unk2C = 10;
             temp_r31->unk40.a = frandmod(127) + 64;
             temp_r31->unk14.y = temp_r31->unk40.a;
-            temp_r31->unk14.z = temp_r31->unk14.y * (1.0f / temp_r31->unk00_s16);
+            temp_r31->unk14.z = temp_r31->unk14.y * (1.0f / temp_r31->unk00);
             temp_f31 = frandmod(1000) * (1.0f / 1000.0f);
             temp_r31->unk40.r = (temp_f31 * 55) + 200;
             temp_r31->unk40.g = (temp_f31 * 50) + 205;
@@ -549,7 +549,7 @@ void fn_1_A894(ModelData *model, ParticleData *particle, Mtx matrix)
         else {
             temp_r31 = particle->unk_48;
             for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
-                if (temp_r31->unk00_s16 == 0) {
+                if (temp_r31->unk00 == 0) {
                     continue;
                 }
                 sp8.x = sind(CRot.y) * cosd(CRot.x);
@@ -649,7 +649,7 @@ void fn_1_AFF4(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_r30 = particle->unk_48;
             temp_f30 = 0;
             for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r30++) {
-                if (temp_r30->unk00_s16 == 0) {
+                if (temp_r30->unk00 == 0) {
                     continue;
                 }
                 temp_f30 += 1.0f / particle->unk_30;
@@ -751,15 +751,15 @@ void fn_1_BDE0(void)
     Vec sp14;
     Vec sp8;
     temp_r31 = lbl_1_bss_A4[0];
-    temp_r31->unk00_s16++;
-    if (temp_r31->unk00_s16 < 339.0f) {
+    temp_r31->unk00++;
+    if (temp_r31->unk00 < 339.0f) {
         return;
     }
-    if (temp_r31->unk00_s16 >= 600.0f) {
-        temp_r31->unk00_s16 = 601;
+    if (temp_r31->unk00 >= 600.0f) {
+        temp_r31->unk00 = 601;
         for (temp_r30 = 0; temp_r30 < lbl_1_bss_A0; temp_r30++) {
             temp_r31 = lbl_1_bss_A4[temp_r30];
-            temp_r31->unk00_s16 = 0;
+            temp_r31->unk00 = 0;
             temp_r31->unk2C = 0;
             temp_r31->unk40.a = 0;
         }

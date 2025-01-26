@@ -631,7 +631,7 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
             break;
     }
     for (var_r31 = particle->unk_48, var_r27 = 0, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-        switch (var_r31->unk00_s16) {
+        switch (var_r31->unk00) {
             case 0:
                 if (((var_r28 > (0.4f * particle->unk_30)) && (particle->unk_04.x == 0.0f)) || (var_r27 >= (10.0f + (0.75f * particle->unk_04.x)))) {
                     var_r31->unk2C = 0.01f;
@@ -662,7 +662,7 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
                     var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = 0xFF;
                     var_r31->unk02 = 0;
                     var_r27++;
-                    var_r31->unk00_s16++;
+                    var_r31->unk00++;
                 }
                 break;
             case 1:

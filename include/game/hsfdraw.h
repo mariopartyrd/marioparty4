@@ -6,7 +6,7 @@
 
 typedef struct model_data ModelData;
 
-typedef struct {
+typedef struct hsfdraw_struct_01 {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ s16 unk02;
     /* 0x04 */ s16 unk04;

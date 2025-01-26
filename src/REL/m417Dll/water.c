@@ -892,7 +892,7 @@ void fn_1_6B94(ModelData *model, ParticleData *particle, float (*matrix)[4])
         particle->unk_00++;
         var_r31 = particle->unk_48;
         for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-            var_r31->unk00_s16 = 0;
+            var_r31->unk00 = 0;
             var_r31->unk2C = 0.0f;
             var_r31->unk40.a = 0;
         }
@@ -900,16 +900,16 @@ void fn_1_6B94(ModelData *model, ParticleData *particle, float (*matrix)[4])
     }
     var_r31 = particle->unk_48;
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16) {
+        if (var_r31->unk00) {
             var_r31->unk34.x += var_r31->unk08.x;
             var_r31->unk34.y += var_r31->unk08.y;
             var_r31->unk34.z += var_r31->unk08.z;
             var_r31->unk08.y += -0.27222225f;
-            if (var_r31->unk00_s16 < 12.0f) {
+            if (var_r31->unk00 < 12.0f) {
                 var_r31->unk40.a = 0.88f * var_r31->unk40.a;
             }
-            if (!(--var_r31->unk00_s16)) {
-                var_r31->unk00_s16 = 0;
+            if (!(--var_r31->unk00)) {
+                var_r31->unk00 = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
             }
@@ -951,7 +951,7 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
             var_f27 = 0.0f;
         }
         for (var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
-            if (var_r31->unk00_s16) {
+            if (var_r31->unk00) {
                 continue;
             }
             var_r31->unk00 = 60.0f * (1.0f + (0.0005f * frandmod(1000)));

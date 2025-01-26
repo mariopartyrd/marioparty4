@@ -1300,14 +1300,14 @@ void fn_1_4A88(ModelData *model, ParticleData *particle, Mtx matrix)
     switch (var_r29->unk_04) {
         case 0:
             for (var_r31 = particle->unk_48, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-                var_r31->unk00_s16 = var_r31->unk02 = 0;
+                var_r31->unk00 = var_r31->unk02 = 0;
             }
             var_r29->unk_04++;
             break;
         case 1:
             for (var_r31 = particle->unk_48, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-                if (var_r31->unk00_s16 != 0) {
-                    var_r31->unk00_s16--;
+                if (var_r31->unk00 != 0) {
+                    var_r31->unk00--;
                 }
                 else {
                     if (var_r31->unk02 == 0) {
@@ -1325,7 +1325,7 @@ void fn_1_4A88(ModelData *model, ParticleData *particle, Mtx matrix)
                         var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = var_r31->unk40.a = 0xC0;
                         var_r31->unk40.b = 0xA0;
                         var_r31->unk2C = 0.0f;
-                        var_r31->unk00_s16 = (s32)(90.0 * (1.52587890625e-05 * (float)fn_1_64D4()));
+                        var_r31->unk00 = (s32)(90.0 * (1.52587890625e-05 * (float)fn_1_64D4()));
                         var_r31->unk02 = 0x3C;
                         var_r31->unk40.r = 0xC0;
                         var_r31->unk40.g = 0xE0;

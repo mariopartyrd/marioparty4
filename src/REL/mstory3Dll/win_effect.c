@@ -253,7 +253,7 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
         if (!var_r31->unk2C) {
             continue;
         }
-        if (var_r31->unk00_s16 == 0) {
+        if (var_r31->unk00 == 0) {
             PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk08.x *= 0.999f;
             var_r31->unk08.y -= 0.5f;
@@ -262,19 +262,19 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
                 PSVECScale(&var_r31->unk08, &var_r31->unk08, 1.0 - ((var_r31->unk02 - (temp_r26 - temp_r26 / 5.0)) / (temp_r26 / 5.0)));
             }
             if (var_r31->unk02 == temp_r26) {
-                var_r31->unk00_s16++;
+                var_r31->unk00++;
             }
             if (var_r31->unk34.y <= 0.0f) {
                 var_r31->unk08.y = 0.5f * -var_r31->unk08.y;
                 var_r31->unk34.y = 0.0f;
             }
-        } else if (var_r31->unk00_s16 == 1) {
+        } else if (var_r31->unk00 == 1) {
             sp8 = temp_r28->unk00[var_r29];
             PSVECSubtract(&sp8, &var_r31->unk34, &sp8);
             if (PSVECMag(&sp8) <= 1.0 + temp_f31) {
                 var_r23++;
                 var_r31->unk34 = temp_r28->unk00[var_r29];
-                var_r31->unk00_s16++;
+                var_r31->unk00++;
                 continue;
             }
             PSVECNormalize(&sp8, &sp8);
@@ -286,7 +286,7 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
         } else {
             var_r23++;
         }
-        if (var_r31->unk00_s16 >= 1) {
+        if (var_r31->unk00 >= 1) {
             var_r27 = var_r31->unk40.r;
             var_r27 += (var_r27 - 0xFF) / 20;
             if (var_r27 > 0xFF) {

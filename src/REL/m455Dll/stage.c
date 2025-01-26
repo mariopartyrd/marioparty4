@@ -1096,7 +1096,7 @@ void fn_1_6A6C(omObjData *object)
             HsfanimStruct01 *data = particleP->unk_48;
             s32 j;
             for(j=0; j<particleP->unk_30; j++, data++) {
-                if(++data->unk00_s16 > data->unk02) {
+                if(++data->unk00 > data->unk02) {
                     s32 alpha = data->unk40.a-1;
                     if(alpha < 0) {
                         data->unk2C = 0;
@@ -1163,7 +1163,7 @@ s32 fn_1_6CB0(Vec *arg0, float arg1)
         temp_r30->unk08.x = temp_f31*(0.65f*(50.0*(temp_f28*sind(temp_f29))));
         temp_r30->unk08.z = temp_f31*(0.65f*(50.0*(temp_f28*cosd(temp_f29))));
         temp_r30->unk08.y = temp_f31*(50*temp_f26*temp_f25);
-        temp_r30->unk00_s16 = 0;
+        temp_r30->unk00 = 0;
         temp_r30->unk02 = ((s32)frand()%16)+45;
         temp_r30->unk30 = (s32)frand()%360;
         temp_r30->unk2C = 145;
@@ -1280,10 +1280,10 @@ void fn_1_76B0(omObjData *object)
         if(temp_r30->unk2C <= 0.0f) {
             continue;
         }
-        if(++temp_r30->unk00_s16 > 360) {
-            temp_r30->unk00_s16 -= 360;
+        if(++temp_r30->unk00 > 360) {
+            temp_r30->unk00 -= 360;
         }
-        temp_r30->unk34.x += temp_r30->unk08.x*sind(2.0f*temp_r30->unk00_s16);
+        temp_r30->unk34.x += temp_r30->unk08.x*sind(2.0f*temp_r30->unk00);
         temp_r30->unk34.y += temp_r30->unk08.y;
         if(temp_r30->unk34.y >= 0.0f) {
             fn_1_6698(&temp_r30->unk34, 0.00625f*temp_r30->unk2C, 1, 15);
@@ -1322,7 +1322,7 @@ s32 fn_1_79C8(Vec *pos, float scale)
     temp_r31->unk08.x = (1.5f+(0.2f*(0.007874016f*((s32)frand() & 0x7F))))*0.5f;
     temp_r31->unk08.z = (1.5f+(0.2f*(0.007874016f*((s32)frand() & 0x7F))));
     temp_r31->unk08.y = (1.5f+(0.2f*(0.007874016f*((s32)frand() & 0x7F))))*2.0f;
-    temp_r31->unk00_s16 = (s32)frand()%360;
+    temp_r31->unk00 = (s32)frand()%360;
     temp_r31->unk2C = 20*scale;
     return i;
 }

@@ -391,7 +391,7 @@ void fn_1_9F40(ModelData *model, ParticleData *particle, Mtx matrix)
     if (particle->unk_00 == 0) {
         particle->unk_00 = 1;
         for (i = 0, var_r31 = particle->unk_48; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk00_s16 = i * 5;
+            var_r31->unk00 = i * 5;
             var_r31->unk02 = 0;
             var_r31->unk2C = 0.0f;
             var_r31->unk40.r = sp8.r;
@@ -401,7 +401,7 @@ void fn_1_9F40(ModelData *model, ParticleData *particle, Mtx matrix)
         }
     }
     for (i = 0, var_r27 = 0, var_r31 = particle->unk_48; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk00_s16 > 0 && --var_r31->unk00_s16 > 0) {
+        if (var_r31->unk00 > 0 && --var_r31->unk00 > 0) {
             continue;
         }
         if (var_r31->unk02 == 0 && temp_r29->unk04 == 5 && temp_r29->unk10.z > -700.0f) {

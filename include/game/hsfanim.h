@@ -11,10 +11,7 @@ typedef struct particle_data ParticleData;
 typedef void (*ParticleHook)(ModelData *model, ParticleData *particle, Mtx matrix);
 
 typedef struct {
-    /* 0x00 */ union {
-        u16 unk00;
-        s16 unk00_s16;
-    };
+    /* 0x00 */ s16 unk00;
     /* 0x02 */ s16 unk02;
     /* 0x04 */ s16 unk04;
     /* 0x06 */ s16 unk06;

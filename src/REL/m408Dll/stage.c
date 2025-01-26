@@ -413,7 +413,7 @@ s16 fn_1_D978(AnimData *arg0, s16 arg1, ParticleHook arg2)
     }
     temp_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(HsfanimStruct01), MEMORY_DEFAULT_NUM);
     temp_r29->unk_1C = temp_r30;
-    temp_r30->unk00_s16 = temp_r28;
+    temp_r30->unk00 = temp_r28;
     temp_r30->unk02 = 0;
     for (temp_r31 = 0; temp_r31 < 32; temp_r31++) {
         // Ugly expression to match store without new type
@@ -449,7 +449,7 @@ void fn_1_DA6C(ModelData *model, ParticleData *particle, Mtx matrix)
             for (temp_r28 = 0; temp_r28 < 100; temp_r28++) {
                 temp_r31 = particle->unk_48;
                 for (temp_r27 = 0; temp_r27 < particle->unk_30; temp_r27++, temp_r31++) {
-                    if (!temp_r31->unk00_s16) {
+                    if (!temp_r31->unk00) {
                         break;
                     }
                 }
@@ -472,13 +472,13 @@ void fn_1_DA6C(ModelData *model, ParticleData *particle, Mtx matrix)
                 temp_r31->unk2C = (0.01 * (frand() % 2000)) + 30.0;
                 temp_r31->unk2C *= 0.1f;
                 temp_r31->unk40.a = 255;
-                temp_r31->unk00_s16 = 30;
+                temp_r31->unk00 = 30;
             }
             break;
     }
     temp_r31 = particle->unk_48;
     for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
-        if (temp_r31->unk00_s16 == 0) {
+        if (temp_r31->unk00 == 0) {
             continue;
         }
         temp_f30 = temp_r31->unk14.x;
@@ -493,7 +493,7 @@ void fn_1_DA6C(ModelData *model, ParticleData *particle, Mtx matrix)
         temp_r31->unk08.y += 0.1f;
         if (temp_r31->unk40.a < 2) {
             temp_r31->unk40.a = 0;
-            temp_r31->unk00_s16 = 0;
+            temp_r31->unk00 = 0;
             particle->unk_00++;
         }
     }
@@ -566,7 +566,7 @@ void fn_1_E310(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_f30 = 360.0f / particle->unk_30;
 
             for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
-                temp_r31->unk00_s16 = (s32)(360.0 * ((1.0 / 65536.0) * (float)fn_1_11670()));
+                temp_r31->unk00 = (s32)(360.0 * ((1.0 / 65536.0) * (float)fn_1_11670()));
                 temp_r31->unk34.x = temp_r31->unk34.y = temp_r31->unk34.z = 0;
                 temp_r26 = (temp_f30 * temp_r28) + (int)((temp_f30 * 0.5f) * ((1.0 / 32768.0) * (float)(fn_1_11670() - 32768)));
                 temp_r31->unk20 = temp_r26;
@@ -598,15 +598,15 @@ void fn_1_E310(ModelData *model, ParticleData *particle, Mtx matrix)
         case 1:
             temp_r31 = particle->unk_48;
             for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
-                temp_r31->unk00_s16 += 4;
-                if (temp_r31->unk00_s16 >= 360) {
-                    temp_r31->unk00_s16 -= 360;
+                temp_r31->unk00 += 4;
+                if (temp_r31->unk00 >= 360) {
+                    temp_r31->unk00 -= 360;
                 }
                 temp_r31->unk34.x = temp_r31->unk14.x;
                 temp_r31->unk34.y = temp_r31->unk14.y;
                 temp_r31->unk34.z = temp_r31->unk14.z;
                 temp_r31->unk30 = M_PI * (90 + (temp_r31->unk20 + temp_r29->unk_04.z)) / 180;
-                temp_r31->unk2C = temp_r31->unk24 * ((0.1f * sind(temp_r31->unk00_s16)) + 1.0);
+                temp_r31->unk2C = temp_r31->unk24 * ((0.1f * sind(temp_r31->unk00)) + 1.0);
             }
             break;
     }
@@ -627,7 +627,7 @@ void fn_1_E9B4(ModelData *model, ParticleData *particle, Mtx matrix)
         case 0:
             temp_r31 = particle->unk_48;
             for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
-                temp_r31->unk00_s16 = fn_1_11670() % 360;
+                temp_r31->unk00 = fn_1_11670() % 360;
                 temp_r31->unk34.x = temp_r31->unk34.y = temp_r31->unk34.z = 0;
                 temp_r27 = fn_1_11670() % 360;
                 temp_r31->unk20 = temp_r27;
@@ -653,14 +653,14 @@ void fn_1_E9B4(ModelData *model, ParticleData *particle, Mtx matrix)
         case 1:
             temp_r31 = particle->unk_48;
             for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
-                temp_r31->unk00_s16 += 2;
-                if (temp_r31->unk00_s16 >= 360) {
-                    temp_r31->unk00_s16 -= 360;
+                temp_r31->unk00 += 2;
+                if (temp_r31->unk00 >= 360) {
+                    temp_r31->unk00 -= 360;
                 }
                 temp_r31->unk34.x = temp_r31->unk14.x;
                 temp_r31->unk34.y = temp_r31->unk14.y;
                 temp_r31->unk34.z = temp_r31->unk14.z;
-                temp_r31->unk2C = temp_r31->unk24 * ((0.1f * sind(temp_r31->unk00_s16)) + 1.0);
+                temp_r31->unk2C = temp_r31->unk24 * ((0.1f * sind(temp_r31->unk00)) + 1.0);
             }
             break;
     }
@@ -718,7 +718,7 @@ void fn_1_F06C(ModelData *model, ParticleData *particle, Mtx matrix)
         case 0:
             temp_r31 = particle->unk_48;
             for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
-                temp_r31->unk00_s16 = temp_r31->unk02 = 0;
+                temp_r31->unk00 = temp_r31->unk02 = 0;
             }
             temp_r29->unk_02++;
             break;
@@ -726,8 +726,8 @@ void fn_1_F06C(ModelData *model, ParticleData *particle, Mtx matrix)
         case 1:
             temp_r31 = particle->unk_48;
             for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
-                if (temp_r31->unk00_s16) {
-                    temp_r31->unk00_s16--;
+                if (temp_r31->unk00) {
+                    temp_r31->unk00--;
                     continue;
                 }
                 if (temp_r31->unk02 == 0) {
@@ -739,7 +739,7 @@ void fn_1_F06C(ModelData *model, ParticleData *particle, Mtx matrix)
                     temp_r31->unk40.r = temp_r31->unk40.g = temp_r31->unk40.b = temp_r31->unk40.a = 192;
                     temp_r31->unk40.b = 160;
                     temp_r31->unk2C = 0;
-                    temp_r31->unk00_s16 = (s32)(90.0 * ((1.0 / 65536.0) * (float)fn_1_11670()));
+                    temp_r31->unk00 = (s32)(90.0 * ((1.0 / 65536.0) * (float)fn_1_11670()));
                     temp_r31->unk02 = 60;
                 }
                 temp_r31->unk40.a = 248 * sind(temp_r31->unk02 * 3);

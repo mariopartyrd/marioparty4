@@ -1942,7 +1942,7 @@ static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx mat
                 var_r31->unk2C = 25.0f;
                 temp_f30 = 175.0f + frand8() * 0x50 * 0.003921569f;
                 var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = temp_f30;
-                var_r31->unk00_s16 = 0;
+                var_r31->unk00 = 0;
             }
         }
     }
@@ -1952,7 +1952,7 @@ static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx mat
     var_r31 = particle->unk_48;
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
         if (var_r31->unk2C != 0.0f) {
-            if (var_r31->unk00_s16 == 0) {
+            if (var_r31->unk00 == 0) {
                 VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
                 VECScale(&var_r31->unk08, &var_r31->unk08, 0.95f);
                 var_r31->unk2C += 8.0f;
@@ -1963,7 +1963,7 @@ static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx mat
                     var_r31->unk08.x = 6.0 * cosd(temp_f31);
                     var_r31->unk08.y = -4.0f;
                     var_r31->unk08.z = 6.0 * sind(temp_f31);
-                    var_r31->unk00_s16 = 1;
+                    var_r31->unk00 = 1;
                 }
                 var_r31->unk40.a = var_r31->unk14.y;
             }

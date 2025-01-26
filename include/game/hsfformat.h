@@ -99,7 +99,7 @@ typedef struct hsf_palette {
 
 typedef struct hsf_attribute {
     char *name;
-    void *unk04;
+    struct hsfdraw_struct_01 *unk04;
     u8 unk8[4];
     float unk0C;
     u8 unk10[4];

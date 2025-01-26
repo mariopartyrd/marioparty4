@@ -444,7 +444,7 @@ void fn_1_2DAC(ModelData *model, ParticleData *particle, Mtx matrix)
         }
     }
     for (i = 0, var_r31 = particle->unk_48; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk00_s16 < 0) {
+        if (var_r31->unk00 < 0) {
             continue;
         }
         var_r31->unk34.x += var_r31->unk08.x;

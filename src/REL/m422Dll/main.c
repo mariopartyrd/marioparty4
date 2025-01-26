@@ -1402,7 +1402,7 @@ void fn_1_9410(ModelData *model, ParticleData *particle, Mtx matrix)
     if (particle->unk_34 < 50) {
         var_r31 = particle->unk_48;
         for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk00_s16 = particle->unk_34 + 41;
+            var_r31->unk00 = particle->unk_34 + 41;
             var_r31->unk40.a = 0;
             var_r31->unk2C = 0.0f;
         }
@@ -1410,7 +1410,7 @@ void fn_1_9410(ModelData *model, ParticleData *particle, Mtx matrix)
     if (particle->unk_34 >= 255) {
         var_r31 = particle->unk_48;
         for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk00_s16 = 255;
+            var_r31->unk00 = 255;
             var_r31->unk40.a = 0;
             var_r31->unk2C = 0.0f;
         }
@@ -1423,7 +1423,7 @@ void fn_1_9410(ModelData *model, ParticleData *particle, Mtx matrix)
     }
     var_r31 = particle->unk_48;
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk00_s16 == 104) {
+        if (var_r31->unk00 == 104) {
             var_r31->unk34.x = var_r31->unk34.z = 0.0f;
             var_r31->unk34.y = 72.0f;
             temp_f31 = frandu8() * 360 / 256;
@@ -1440,7 +1440,7 @@ void fn_1_9410(ModelData *model, ParticleData *particle, Mtx matrix)
             var_r31->unk2C = 50.0f;
             VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
         }
-        if (var_r31->unk00_s16 < 240) {
+        if (var_r31->unk00 < 240) {
             VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk08.x *= 0.9f;
             var_r31->unk08.z *= 0.9f;
@@ -1456,7 +1456,7 @@ void fn_1_9410(ModelData *model, ParticleData *particle, Mtx matrix)
                 var_r31->unk2C = 0.0f;
             }
         }
-        var_r31->unk00_s16 += (var_r31->unk00_s16 < 0x8000);
+        var_r31->unk00 += (var_r31->unk00 < 0x8000);
     }
 }
 

@@ -1138,15 +1138,15 @@ void fn_1_8E34(s32 arg0)
     var_r31 = temp_r30->unk_48;
 
     for (var_r29 = 0; var_r29 < temp_r30->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16 != 0) {
+        if (var_r31->unk00 != 0) {
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.z -= 0.3f;
             var_r31->unk2C += 2.0f;
             var_r31->unk40.a *= 0.98f;
-            if (var_r31->unk00_s16 < 24.0f) {
+            if (var_r31->unk00 < 24.0f) {
                 var_r31->unk40.a = var_r31->unk40.a * 0.9f;
             }
-            if (--var_r31->unk00_s16 == 0) {
+            if (--var_r31->unk00 == 0) {
                 var_r31->unk00 = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
@@ -1183,10 +1183,10 @@ void fn_1_8FFC(u32 arg0, Point3d *arg1, f32 arg2, f32 arg3)
     var_r31 = temp_r29->unk_48;
 
     for (var_r28 = 0; var_r28 < temp_r29->unk_30; var_r28++, var_r31++) {
-        if (var_r31->unk00_s16 != 0)
+        if (var_r31->unk00 != 0)
             continue;
 
-        var_r31->unk00_s16 = (60.0f * (0.6f + (0.0005f * frandmod(0x3E8))));
+        var_r31->unk00 = (60.0f * (0.6f + (0.0005f * frandmod(0x3E8))));
         var_f29 = isEven(var_r27);
         temp_f31 = 0.030000001f * frandmod(0x3E8);
         var_r31->unk34.x = arg1->x + var_f29 * (70.0f + (0.07f * frandmod(0x3E8)));

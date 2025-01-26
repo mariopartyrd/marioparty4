@@ -2044,7 +2044,7 @@ void fn_1_11D70(void)
                 var_r25 = &Hu3DData[var_r31->unk_04];
                 var_r29 = var_r25->unk_120;
                 for (var_r30 = var_r29->unk_48, var_r27 = 0; var_r27 < var_r29->unk_30; var_r27++, var_r30++) {
-                    if (++var_r30->unk00_s16 > var_r30->unk02) {
+                    if (++var_r30->unk00 > var_r30->unk02) {
                         var_r24 = var_r30->unk40.a - 9;
                         if (var_r24 < 0) {
                             var_r30->unk2C = 0.0f;

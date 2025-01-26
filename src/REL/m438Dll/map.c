@@ -377,15 +377,15 @@ void fn_1_C764(ModelData *model, ParticleData *particle, Mtx matrix)
     var_r31 = particle->unk_48;
 
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16 != 0) {
+        if (var_r31->unk00 != 0) {
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.x *= 0.95f;
             var_r31->unk08.z *= 0.95f;
             var_r31->unk08.y += -0.27222225f;
-            if (var_r31->unk00_s16 < 24.0f) {
+            if (var_r31->unk00 < 24.0f) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
-            if (--var_r31->unk00_s16 == 0) {
+            if (--var_r31->unk00 == 0) {
                 var_r31->unk00 = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
@@ -404,16 +404,16 @@ void fn_1_C8E8(ModelData *model, ParticleData *particle, Mtx matrix)
     var_r31 = particle->unk_48;
 
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16 != 0) {
+        if (var_r31->unk00 != 0) {
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.x *= 0.92f;
             var_r31->unk08.z *= 0.92f;
             var_r31->unk2C += 5.0f;
             var_r31->unk40.a *= 0.99f;
-            if (var_r31->unk00_s16 < 24.0f) {
+            if (var_r31->unk00 < 24.0f) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
-            if (--var_r31->unk00_s16 == 0) {
+            if (--var_r31->unk00 == 0) {
                 var_r31->unk00 = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
@@ -440,8 +440,8 @@ void fn_1_CAB0(f32 arg8)
   
     for (var_r30 = 0; var_r30 < 0x96; var_r30++) {
         var_r31 = lbl_1_bss_E34[var_r30];
-        if (var_r31->unk00_s16 == 0) {
-            var_r31->unk00_s16 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
+        if (var_r31->unk00 == 0) {
+            var_r31->unk00 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
             temp_f31 = ((0.002f * frandmod(0x3E8)) - 1.0f);
             temp_f31 = arg8 + (temp_f31 * temp_f28);
             sp8.x = sind(temp_f31);
@@ -471,8 +471,8 @@ void fn_1_CAB0(f32 arg8)
     var_r31 = ((ParticleData *)(Hu3DData[lbl_1_bss_108C[0]->model[6]].unk_120))->unk_48;
     var_r29 = 0xF;
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r31++) {
-        if (var_r31->unk00_s16 == 0) {
-            var_r31->unk00_s16 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
+        if (var_r31->unk00 == 0) {
+            var_r31->unk00 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
             temp_f31 = ((0.002f * frandmod(0x3E8)) - 1.0f);
             temp_f31 = arg8 + (temp_f31 * temp_f28);
             sp8.x = sind(temp_f31);
@@ -513,14 +513,14 @@ void fn_1_D3FC(ModelData *model, ParticleData *particle, Mtx matrix)
     lbl_1_bss_E2C = 0;
     var_r31 = particle->unk_48;
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16 != 0) {
+        if (var_r31->unk00 != 0) {
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.y += -0.27222225f;
-            if (var_r31->unk00_s16 < 12.0f) {
+            if (var_r31->unk00 < 12.0f) {
                 var_r31->unk40.a = (0.8f * var_r31->unk40.a);
             }
-            if (--var_r31->unk00_s16 == 0) {
-                var_r31->unk00_s16 = 0;
+            if (--var_r31->unk00 == 0) {
+                var_r31->unk00 = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
             }
@@ -543,8 +543,8 @@ void fn_1_D57C(Vec *arg0, f32 arg1)
     var_r29 = (u32)(3.0f + (15.0f * arg1));
 
     for (var_r30 = 0; var_r30 < 0x1F4; var_r30++, var_r31++) {
-        if (var_r31->unk00_s16 == 0) {
-            var_r31->unk00_s16 = 60.0f * (0.3f + (0.0003f * frandmod(0x3E8)));
+        if (var_r31->unk00 == 0) {
+            var_r31->unk00 = 60.0f * (0.3f + (0.0003f * frandmod(0x3E8)));
             var_r31->unk34 = *arg0;
             var_r31->unk34.x += arg1 * (0.07f * (frandmod(0x3E8) - 0x1F4));
             var_r31->unk34.z += arg1 * (0.07f * (frandmod(0x3E8) - 0x1F4));

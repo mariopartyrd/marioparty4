@@ -1127,7 +1127,7 @@ void fn_1_5AB4(ModelData *model, ParticleData *particle, Mtx matrix)
     }
     temp_r31 = particle->unk_48;
     for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
-        if (temp_r31->unk00_s16 == 0 || temp_r31->unk00_s16 != 1) {
+        if (temp_r31->unk00 == 0 || temp_r31->unk00 != 1) {
             continue;
         }
         temp_r31->unk02++;
@@ -1163,7 +1163,7 @@ void fn_1_5DCC(s32 arg0, Vec *arg1, u32 arg2)
     if (temp_r29->unk_00 != 0) {
         temp_r31 = temp_r29->unk_48;
         for (temp_r28 = 0; temp_r28 < temp_r29->unk_30; temp_r28++, temp_r31++) {
-            if (temp_r31->unk00_s16) {
+            if (temp_r31->unk00) {
                 continue;
             }
             temp_r31->unk00 = 1;

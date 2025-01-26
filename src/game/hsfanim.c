@@ -55,7 +55,7 @@ s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
     Hu3DTexAnimDataStruct *var_r31;
     HsfAttribute *var_r29;
     HsfData *temp_r27;
-    HsfanimStruct01 *var_r30;
+    HsfdrawStruct01 *var_r30;
     s16 i;
     s16 var_r25;
     s16 var_r28;
@@ -75,7 +75,7 @@ s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
     for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
         if (strcmp(arg2, var_r29->bitmap->name) == 0) {
             if (!var_r29->unk04) {
-                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfanimStruct01), (u32) Hu3DData[arg1].unk_48);
+                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg1].unk_48);
                 var_r29->unk04 = var_r30;
                 var_r30->unk00 = 0;
             } else {
@@ -84,7 +84,7 @@ s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
             var_r30->unk00 |= 1;
             var_r30->unk02 = var_r28;
             var_r30->unk2C = var_r30->unk30 = 1.0f;
-            var_r30->unk34.x = var_r30->unk34.y = 0.0f;
+            var_r30->unk34 = var_r30->unk38 = 0.0f;
             var_r25++;
         }
     }
@@ -112,7 +112,7 @@ s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
     AnimData *temp_r4;
     HsfAttribute *var_r29;
     HsfData *temp_r27;
-    HsfanimStruct01 *var_r30;
+    HsfdrawStruct01 *var_r30;
     s16 var_r28;
     s16 i;
     s16 var_r25;
@@ -132,14 +132,14 @@ s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
     for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
         if (strcmp(arg2, var_r29->bitmap->name) == 0) {
             if (!var_r29->unk04) {
-                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfanimStruct01), (u32) Hu3DData[arg1].unk_48);
+                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg1].unk_48);
                 var_r29->unk04 = var_r30;
             } else {
                 var_r30 = var_r29->unk04;
             }
             var_r30->unk02 = var_r28;
             var_r30->unk2C = var_r30->unk30 = 1.0f;
-            var_r30->unk34.x = var_r30->unk34.y = 0.0f;
+            var_r30->unk34 = var_r30->unk38 = 0.0f;
             var_r25++;
         }
     }
@@ -162,7 +162,7 @@ void Hu3DAnimKill(s16 arg0) {
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
     HsfData *temp_r28 = Hu3DData[temp_r31->unk06].hsfData;
     HsfAttribute *var_r30;
-    HsfanimStruct01 *temp_r29;
+    HsfdrawStruct01 *temp_r29;
     s16 i;
 
     if (temp_r28) {
@@ -242,7 +242,7 @@ void Hu3DAnmNoSet(s16 arg0, u16 arg1) {
 }
 
 s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2) {
-    HsfanimStruct01 *temp_r30;
+    HsfdrawStruct01 *temp_r30;
     Hu3DTexAnimDataStruct *temp_r29;
     AnimData *temp_r27;
     AnimBmpData *temp_r28;
@@ -268,8 +268,8 @@ s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2) {
         (arg0->attr & HU3D_ATTR_TEX_NEAR) ? GX_NEAR : GX_LINEAR);
     temp_r30->unk2C = (float) temp_r31->sizeX / temp_r28->sizeX;
     temp_r30->unk30 = (float) temp_r31->sizeY / temp_r28->sizeY;
-    temp_r30->unk34.x = (float) temp_r31->startX / temp_r28->sizeX;
-    temp_r30->unk34.y = (float) temp_r31->startY / temp_r28->sizeY;
+    temp_r30->unk34 = (float) temp_r31->startX / temp_r28->sizeX;
+    temp_r30->unk38 = (float) temp_r31->startY / temp_r28->sizeY;
     return 1;
 }
 
@@ -359,7 +359,7 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
     Hu3DTexScrDataStruct *var_r31;
     HsfData *temp_r27;
     HsfAttribute *var_r29;
-    HsfanimStruct01 *var_r30;
+    HsfdrawStruct01 *var_r30;
     s16 i;
     s16 var_r25;
     s16 var_r28;
@@ -379,7 +379,7 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
     for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
         if (strcmp(arg1, var_r29->bitmap->name) == 0) {
             if (!var_r29->unk04) {
-                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfanimStruct01), (u32) Hu3DData[arg0].unk_48);
+                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg0].unk_48);
                 var_r29->unk04 = var_r30;
                 var_r30->unk00 = 0;
             } else {
@@ -388,7 +388,7 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
             var_r30->unk00 |= 2;
             var_r30->unk04 = var_r28;
             var_r30->unk2C = var_r30->unk30 = 1.0f;
-            var_r30->unk34.x = var_r30->unk34.y = 0.0f;
+            var_r30->unk34 = var_r30->unk38 = 0.0f;
             var_r25++;
         }
     }
@@ -408,7 +408,7 @@ void Hu3DTexScrollKill(s16 arg0) {
     Hu3DTexScrDataStruct *temp_r28 = &Hu3DTexScrData[arg0];
     HsfData *temp_r29 = Hu3DData[temp_r28->unk02].hsfData;
     HsfAttribute *var_r31;
-    HsfanimStruct01 *temp_r30;
+    HsfdrawStruct01 *temp_r30;
     s16 i;
 
     if (temp_r29) {
@@ -1241,7 +1241,7 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                     var_r29->unk2C = var_r29->unk28;
                 }
                 if (!(temp_r28->unk02 & 0x80)) {
-                    sp8 = var_r29->unk00_s16;
+                    sp8 = var_r29->unk00;
                     var_r29->unk34.x += var_r29->unk08.x + var_r29->unk14.x;
                     var_r29->unk34.y += var_r29->unk08.y + var_r29->unk14.y;
                     var_r29->unk34.z += var_r29->unk08.z + var_r29->unk14.z;
@@ -1261,7 +1261,7 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                         }
                     }
                     var_r29->unk28 *= temp_r26->unk28;
-                    var_f30 = (float) var_r29->unk00_s16 / temp_r26->unk00;
+                    var_f30 = (float) var_r29->unk00 / temp_r26->unk00;
                     if (var_f30 > 1.0f) {
                         var_f30 = 1.0f;
                     }
@@ -1272,10 +1272,10 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                     var_r29->unk40.g = temp_r27->g + var_f30 * (temp_r24->g - temp_r27->g);
                     var_r29->unk40.b = temp_r27->b + var_f30 * (temp_r24->b - temp_r27->b);
                     var_r29->unk40.a = temp_r27->a + var_f30 * (temp_r24->a - temp_r27->a);
-                    if (var_r29->unk2C < 0.01 || var_r29->unk00_s16 >= temp_r26->unk00) {
+                    if (var_r29->unk2C < 0.01 || var_r29->unk00 >= temp_r26->unk00) {
                         var_r29->unk2C = 0.0f;
                     }
-                    var_r29->unk00_s16++;
+                    var_r29->unk00++;
                 }
             }
         }

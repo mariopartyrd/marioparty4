@@ -408,7 +408,7 @@ void fn_1_7B94(s32 arg0)
 
     var_r30 = Hu3DData[arg0].unk_120;
     for (var_r31 = var_r30->unk_48, var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00_s16 != 0) {
+        if (var_r31->unk00 != 0) {
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             switch (var_r31->unk02) {
                 case 0:
@@ -425,11 +425,11 @@ void fn_1_7B94(s32 arg0)
                     var_r31->unk20 *= 0.995f;
                     break;
             }
-            if (var_r31->unk00_s16 < 12.0f) {
+            if (var_r31->unk00 < 12.0f) {
                 var_r31->unk20 = 0.9f * var_r31->unk20;
             }
             var_r31->unk40.a = var_r31->unk20;
-            if (--var_r31->unk00_s16 == 0) {
+            if (--var_r31->unk00 == 0) {
                 var_r31->unk00 = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
@@ -459,7 +459,7 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
     }
     var_r27 = sp10[arg2];
     for (var_r31 = var_r30->unk_48, var_r28 = 0; var_r28 < var_r30->unk_30; var_r28++, var_r31++) {
-        if (var_r31->unk00_s16 == 0) {
+        if (var_r31->unk00 == 0) {
             var_r31->unk02 = arg2;
             sp1C.x = 100.0f * ((0.0026f * frandmod(0x3E8)) - 1.3f);
             sp1C.y = 0.0f;
@@ -468,7 +468,7 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
             var_r31->unk30 = 0.0031415902f * frandmod(0x3E8);
             switch (arg2) {
                 case 0:
-                    var_r31->unk00_s16 = 60.0f * (0.8f + (0.0007f * frandmod(0x3E8)));
+                    var_r31->unk00 = 60.0f * (0.8f + (0.0007f * frandmod(0x3E8)));
                     var_r31->unk08.x = 1.6666667f * (0.000100000005f * frandmod(0x3E8) - 0.05f);
                     var_r31->unk08.y = 1.6666667f * (0.05f + (0.00020000001f * frandmod(0x3E8)));
                     var_r31->unk08.z = 1.6666667f * (0.1f + (0.0006f * frandmod(0x3E8)));

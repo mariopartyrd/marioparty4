@@ -1332,8 +1332,8 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
             }
             temp_r31->unk40.a = temp_r29;
         }
-        temp_r31->unk00_s16--;
-        if (temp_r31->unk00_s16 <= 0) {
+        temp_r31->unk00--;
+        if (temp_r31->unk00 <= 0) {
             temp_r31->unk2C = 0;
         }
     }
@@ -1501,8 +1501,8 @@ void fn_1_15D64(ModelData *model, ParticleData *particle, Mtx matrix)
             }
             temp_r31->unk40.a = temp_r28;
         }
-        temp_r31->unk00_s16--;
-        if (temp_r31->unk00_s16 <= 0) {
+        temp_r31->unk00--;
+        if (temp_r31->unk00 <= 0) {
             temp_r31->unk2C = 0;
         }
     }

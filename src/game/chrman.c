@@ -911,7 +911,7 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
                 var_r31->unk40.a = var_r28;
                 if (var_r31->unk2C) {
                     if (temp_r30[i].unk00 & 1) {
-                        var_r31->unk2C = var_r31->unk28 * (((var_r31->unk00_s16 + i) & 1) ? 1.0 : 0.5);
+                        var_r31->unk2C = var_r31->unk28 * (((var_r31->unk00 + i) & 1) ? 1.0 : 0.5);
                     }
                     else {
                         var_r31->unk2C = var_r31->unk28;
@@ -921,7 +921,7 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
                         var_r31->unk2C = 0.0f;
                     }
                 }
-                var_r31->unk00_s16++;
+                var_r31->unk00++;
             }
             else {
                 switch (var_r31->unk02) {
@@ -947,11 +947,11 @@ static void RotateEffect(HsfanimStruct01 *arg0)
     float var_f31;
 
     temp_r30 = &Hu3DData[(s32)arg0->unk08.x];
-    if (arg0->unk00_s16 < 8) {
-        var_f31 = 0.3 + sind(40.0f + 10.0f * (arg0->unk00_s16 + 1));
+    if (arg0->unk00 < 8) {
+        var_f31 = 0.3 + sind(40.0f + 10.0f * (arg0->unk00 + 1));
         arg0->unk2C = 50.0f * var_f31 * temp_r30->scale.x;
         arg0->unk40.a = 0xFF;
-        var_f31 = 0.3 + sind(15.0f * (arg0->unk00_s16 + 1));
+        var_f31 = 0.3 + sind(15.0f * (arg0->unk00 + 1));
     }
     else {
         var_f31 = 0.3 + sind(135);
@@ -960,14 +960,14 @@ static void RotateEffect(HsfanimStruct01 *arg0)
     arg0->unk34.x = temp_r30->pos.x + arg0->unk14.x * var_f31;
     arg0->unk34.y = temp_r30->pos.y + arg0->unk08.y * temp_r30->scale.x + arg0->unk14.y * var_f31;
     arg0->unk34.z = temp_r30->pos.z + arg0->unk14.z * var_f31;
-    if (arg0->unk00_s16 > 0x14) {
+    if (arg0->unk00 > 0x14) {
         arg0->unk40.a -= 0x20;
         arg0->unk2C -= 8.0f * temp_r30->scale.x;
         if (arg0->unk2C < 0.0f) {
             arg0->unk2C = 0.0f;
         }
     }
-    arg0->unk00_s16++;
+    arg0->unk00++;
 }
 
 static float voiceParam[16]
@@ -984,7 +984,7 @@ static void PlayEffectSound(HsfanimStruct01 *arg0)
     temp_r28 = arg0->unk08.x;
     temp_r29 = &charInstance[temp_r28];
     temp_r30 = &Hu3DData[temp_r29->unk00];
-    if (arg0->unk00_s16 < 0x14 && arg0->unk2C < 40.0f * temp_r30->scale.x) {
+    if (arg0->unk00 < 0x14 && arg0->unk2C < 40.0f * temp_r30->scale.x) {
         arg0->unk2C += 4.0f * temp_r30->scale.x;
     }
     arg0->unk40.a = 0xFF;
@@ -994,15 +994,15 @@ static void PlayEffectSound(HsfanimStruct01 *arg0)
     else {
         var_r25 = voiceParam[temp_r28 * 2 + 1];
     }
-    temp_r26 = (arg0->unk00_s16 * 5) % 360;
+    temp_r26 = (arg0->unk00 * 5) % 360;
     arg0->unk34.x = temp_r30->pos.x + 40.0 * sind(arg0->unk08.y + temp_r26) * temp_r30->scale.x;
     arg0->unk34.y = temp_r30->pos.y + var_r25 * temp_r30->scale.x;
     arg0->unk34.z = temp_r30->pos.z + 40.0 * cosd(arg0->unk08.y + temp_r26) * temp_r30->scale.x;
-    arg0->unk00_s16++;
-    if (arg0->unk00_s16 >= 0x8F) {
-        arg0->unk00_s16 = 0x48;
+    arg0->unk00++;
+    if (arg0->unk00 >= 0x8F) {
+        arg0->unk00 = 0x48;
     }
-    if (temp_r29->unk04 != 0x15 && temp_r29->unk04 != 0x16 && temp_r29->unk04 != 0x79 && arg0->unk00_s16 > 0x1E) {
+    if (temp_r29->unk04 != 0x15 && temp_r29->unk04 != 0x16 && temp_r29->unk04 != 0x79 && arg0->unk00 > 0x1E) {
         arg0->unk2C -= 4.0f * temp_r30->scale.x;
         if (arg0->unk2C < 0.0f) {
             arg0->unk2C = 0.0f;
@@ -1501,7 +1501,7 @@ static void OrbitEffect(HsfanimStruct01 *arg0)
     float var_f30;
     s16 temp_r30;
 
-    var_f30 = 20.0f + 3.75f * arg0->unk00_s16;
+    var_f30 = 20.0f + 3.75f * arg0->unk00;
     if (var_f30 > 90.0f) {
         var_f30 = 90.0f;
     }
@@ -1514,7 +1514,7 @@ static void OrbitEffect(HsfanimStruct01 *arg0)
     if (arg0->unk20 < 1.0f) {
         arg0->unk20 = 1.0f;
     }
-    if (arg0->unk00_s16 > 8) {
+    if (arg0->unk00 > 8) {
         temp_r30 = arg0->unk40.a;
         temp_r30 -= 8;
         if (temp_r30 < 0) {
@@ -1525,7 +1525,7 @@ static void OrbitEffect(HsfanimStruct01 *arg0)
             arg0->unk40.a = temp_r30;
         }
     }
-    arg0->unk00_s16++;
+    arg0->unk00++;
 }
 
 static EffectParamData coinParticleParam
