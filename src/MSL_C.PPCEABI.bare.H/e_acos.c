@@ -1,5 +1,5 @@
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common_Embedded/Math/fdlibm.h"
-#include "math.h"
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/math.h"
 
 #ifdef __STDC__
 static const double 

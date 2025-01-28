@@ -57,7 +57,7 @@
 
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common_Embedded/Math/fdlibm.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/errno.h"
-#include "math.h"
+#include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/math.h"
 
 #ifdef __STDC__
 static const double 
@@ -302,7 +302,7 @@ ivln2_l  =  1.92596299112661746887e-08; /* 0x3E54AE0B, 0xF85DDF44 =1/ln2 tail*/
 	z  = one-(r-z);
 	j  = __HI(z);
 	j += (n<<20);
-	if((j>>20)<=0) z = scalbn(z,n);	/* subnormal output */
+	if((j>>20)<=0) z = ldexp(z,n);	/* subnormal output */
 	else __HI(z) += (n<<20);
 	return s*z;
 }

@@ -6,8 +6,8 @@
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/printf.h"  // IWYU pragma: export
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/extras.h"  // IWYU pragma: export
 
-#define stdin  (&__files._stdin)
-#define stdout (&__files._stdout)
-#define stderr (&__files._stderr)
+#define stdin  (&__files[0])
+#define stdout (&__files[1])
+#define stderr (&__files[2])
 
 #endif

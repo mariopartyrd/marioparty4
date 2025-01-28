@@ -85,6 +85,7 @@ typedef struct _FILE {
 	file_modes file_mode;
 	file_states file_state;
 
+	char is_dynamically_allocated;
 	char char_buffer;
 	char char_buffer_overflow;
 	char ungetc_buffer[2];
@@ -104,19 +105,14 @@ typedef struct _FILE {
 	__io_proc write_fn;
 	__close_proc close_fn;
 	__idle_proc idle_fn;
+	struct _FILE* next_file_struct;
 } FILE;
-
-typedef struct _files {
-	FILE _stdin;
-	FILE _stdout;
-	FILE _stderr;
-} files;
 
 #define _IONBF 0
 #define _IOLBF 1
 #define _IOFBF 2
 
-extern files __files;
+extern FILE __files[];
 extern int __close_console(__file_handle file);
 extern int __write_console(__file_handle file, unsigned char* buf,
                            size_t* count, __idle_proc idle_fn);

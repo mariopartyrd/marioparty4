@@ -2,7 +2,7 @@
 
 int fwide(FILE* file, int mode)
 {
-	if (file->file_mode.file_kind == __closed_file) {
+	if (!file || file->file_mode.file_kind == __closed_file) {
 		return 0;
 	}
 
