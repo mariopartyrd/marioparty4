@@ -22,15 +22,6 @@ typedef struct decform {
 	short digits;
 } decform;
 
-/* void __ull2dec(decimal*, u64);
-void __timesdec(decimal*, const decimal*, const decimal*);
-void __str2dec(decimal*, const char*, short);
-void __two_exp(decimal*, s16);
-BOOL __equals_dec(const decimal*, const decimal*);
-BOOL __less_dec(const decimal*, const decimal*);
-void __minus_dec(decimal*, const decimal*, const decimal*);
-void __num2dec_internal(decimal*, f64);
-void __num2dec(const decform*, f64, decimal*);
-f64 __dec2num(const decimal*); */
+void __num2dec(const decform* form, double x, decimal* d);
 
 #endif

@@ -684,7 +684,7 @@ config.libs = [
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/alloc.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/errno.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/ansi_files.c"),
-            Object(NonMatching, "MSL_C.PPCEABI.bare.H/ansi_fp.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/ansi_fp.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/arith.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/buffer_io.c"),
             Object(NonMatching, "MSL_C.PPCEABI.bare.H/ctype.c"),
