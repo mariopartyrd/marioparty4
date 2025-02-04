@@ -28,18 +28,17 @@ typedef struct {
         u8 isBoardVisible : 1;
         u8 state : 3;
         u8 index : 2;
-        u8 unk00_field3 : 1;
-        u8 unk00_field4 : 1;
+        u8 isActionable : 1;
+        u8 hasRolled : 1;
     };
-    u8 unk01;
-    u8 unk02;
+    u8 delay;
+    u8 time;
     s8 unk03;
-    s8 unk04;
-    char unk05[1];
-    s16 unk06;
-    s16 unk08;
-    s16 unk0A;
-    s16 unk0C;
+    s8 digit;
+    s16 yRot;
+    s16 diceMdl;
+    s16 model;
+    s16 diceParManId;
     s8 unk0E;
 } PlayerStartWork;
 
@@ -265,8 +264,8 @@ static void ShowLogo(void) {
 
 static void FocusStart(void) {
     Vec boardPos;
-    Vec sp20;
-    Vec sp14;
+    Vec offset;
+    Vec offset2;
     Vec camRot;
     float zoom;
     u32 i;
@@ -277,20 +276,20 @@ static void FocusStart(void) {
     }
     BoardCameraZoomSet(2000.0f);
     BoardModelPosGet(camFocus, &boardPos);
-    sp20.x = spacePos.x + 150.0f;
-    sp20.y = spacePos.y + 100.0f;
-    sp20.z = spacePos.z + 150.0f;
-    VECSubtract(&sp20, &boardPos, &sp14);
-    sp14.x /= 120.0f;
-    sp14.y /= 120.0f;
-    sp14.z /= 120.0f;
+    offset.x = spacePos.x + 150.0f;
+    offset.y = spacePos.y + 100.0f;
+    offset.z = spacePos.z + 150.0f;
+    VECSubtract(&offset, &boardPos, &offset2);
+    offset2.x /= 120.0f;
+    offset2.y /= 120.0f;
+    offset2.z /= 120.0f;
     HuAudSStreamFadeOut(streamStatus, 0x1388);
     for (i = 0; i < 120; i++) {
-        VECAdd(&sp14, &boardPos, &boardPos);
+        VECAdd(&offset2, &boardPos, &boardPos);
         BoardModelPosSetV(camFocus, &boardPos);
         HuPrcVSleep();
     }
-    BoardModelPosSetV(camFocus, &sp20);
+    BoardModelPosSetV(camFocus, &offset);
     camRot.x = -22.0f;
     camRot.y = 0.0f;
     camRot.z = 0.0f;
@@ -299,7 +298,7 @@ static void FocusStart(void) {
 
 static void CreatePlayerStart(void) {
     Vec boardPos;
-    float temp_f30;
+    float offsetX;
     omObjData *boardObj;
     PlayerStartWork *boardData;
     s8 i;
@@ -313,22 +312,22 @@ static void CreatePlayerStart(void) {
         boardData->isBoardVisible = 0;
         boardData->index = i;
         boardData->unk03 = -1;
-        boardData->unk0A = -1;
-        boardData->unk0C = -1;
+        boardData->model = -1;
+        boardData->diceParManId = -1;
         boardData->state = 1;
-        boardData->unk01 = i * 30;
-        boardData->unk00_field3 = 0;
-        boardData->unk00_field4 = 0;
-        boardData->unk06 = 2;
-        boardData->unk04 = 1;
+        boardData->delay = i * 30;
+        boardData->isActionable = 0;
+        boardData->hasRolled = 0;
+        boardData->yRot = 2;
+        boardData->digit = 1;
         boardData->unk0E = 0x3C;
-        boardData->unk08 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x18), NULL, 0);
-        BoardModelVisibilitySet(boardData->unk08, 0);
-        BoardModelMotionSpeedSet(boardData->unk08, 0.0f);
-        OSs8tof32(&i, &temp_f30);
-        temp_f30 = 135.0f * (temp_f30 - 2.0f + 0.5f);
+        boardData->diceMdl = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x18), NULL, 0);
+        BoardModelVisibilitySet(boardData->diceMdl, 0);
+        BoardModelMotionSpeedSet(boardData->diceMdl, 0.0f);
+        OSs8tof32(&i, &offsetX);
+        offsetX = 135.0f * (offsetX - 2.0f + 0.5f);
         BoardModelVisibilitySet(BoardPlayerModelGet(playerOrderOld[boardData->index]), 1);
-        boardObj->trans.x = boardPos.x + temp_f30;
+        boardObj->trans.x = boardPos.x + offsetX;
         boardObj->trans.y = boardPos.y + 700.0f;
         boardObj->trans.z = boardPos.z + 100.0f;
         BoardPlayerPosSet(playerOrderOld[boardData->index], boardObj->trans.x, boardObj->trans.y, boardObj->trans.z);
@@ -354,8 +353,8 @@ static void ExecPlayerStart(omObjData *object) {
         omDelObjEx(HuPrcCurrentGet(), object);
         return;
     }
-    if (data->unk01 != 0) {
-        data->unk01--;
+    if (data->delay != 0) {
+        data->delay--;
         return;
     }
     switch (data->state) {
@@ -385,7 +384,7 @@ static void ExecPlayerStart(omObjData *object) {
 static void PlayerFall(omObjData *object, PlayerStartWork *data) {
     float temp_f31;
 
-    if (data->unk00_field3 != 0) {
+    if (data->isActionable != 0) {
         SetPlayerStartState(playerOrderOld[data->index], 0);
         BoardPlayerIdleSet(playerOrderOld[data->index]);
         if (_CheckFlag(FLAG_ID_MAKE(1, 11)) && data->index == 3) {
@@ -393,29 +392,29 @@ static void PlayerFall(omObjData *object, PlayerStartWork *data) {
         }
         return;
     }
-    if (data->unk02 > 200) {
-        data->unk02 = -56;
+    if (data->time > 200) {
+        data->time = -56;
     }
-    OSu8tof32(&data->unk02, &temp_f31);
+    OSu8tof32(&data->time, &temp_f31);
     object->trans.y += -0.08166667f * temp_f31 * temp_f31;
     if (object->trans.y < spacePos.y) {
         object->trans.y = spacePos.y;
-        data->unk02 = 0;
+        data->time = 0;
         BoardPlayerMotionShiftSet(playerOrderOld[data->index], 5, 0.0f, 4.0f, HU3D_MOTATTR_NONE);
-        data->unk01 = 0xC;
-        data->unk00_field3 = 1;
+        data->delay = 0xC;
+        data->isActionable = 1;
     }
-    data->unk02++;
+    data->time++;
     BoardPlayerPosSet(playerOrderOld[data->index], object->trans.x, object->trans.y, object->trans.z);
 }
 
 static void PlayerWaitSpeak(omObjData *object, PlayerStartWork *data) {
     float yRot;
 
-    if (data->unk02 == 0) {
+    if (data->time == 0) {
         yRot = 180.0f + BoardPlayerRotYGet(playerOrderOld[data->index]);
         BoardPlayerMotBlendSet(playerOrderOld[data->index], yRot, 0xF);
-        data->unk02 = 1;
+        data->time = 1;
         return;
     }
     if (BoardPlayerMotBlendCheck(playerOrderOld[data->index])) {
@@ -430,17 +429,17 @@ static void PlayerDiceFall(omObjData *object, PlayerStartWork *data) {
     float min;
     s32 i;
 
-    if (data->unk02 == 0) {
+    if (data->time == 0) {
         HuAudFXPlay(0x302);
         BoardPlayerPosGet(playerOrderOld[data->index], &boardPos);
         min = 250.0f;
         max = 700.0f;
         object->rot.x = (min - max) / 30.0f;
         boardPos.y += max;
-        BoardModelPosSetV(data->unk08, &boardPos);
-        BoardModelVisibilitySet(data->unk08, 1);
+        BoardModelPosSetV(data->diceMdl, &boardPos);
+        BoardModelVisibilitySet(data->diceMdl, 1);
     } else {
-        if (data->unk02 > 30.0f) {
+        if (data->time > 30.0f) {
             if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
                 if (data->index == 3) {
                     BoardTutorialHookExec(1, 0);
@@ -453,11 +452,11 @@ static void PlayerDiceFall(omObjData *object, PlayerStartWork *data) {
             SetPlayerStartState(playerOrderOld[data->index], 4);
             return;
         }
-        BoardModelPosGet(data->unk08, &boardPos);
+        BoardModelPosGet(data->diceMdl, &boardPos);
         boardPos.y += object->rot.x;
-        BoardModelPosSetV(data->unk08, &boardPos);
+        BoardModelPosSetV(data->diceMdl, &boardPos);
     }
-    data->unk02++;
+    data->time++;
 }
 
 static s32 digitMdlTbl[9] = {
@@ -472,177 +471,177 @@ static s32 playerOrderMesTbl[3] = {
     MAKE_MESSID(0x15, 0x15)
 };
 
-static void PlayerDiceRoll(omObjData *arg0, PlayerStartWork *arg1) {
+static void PlayerDiceRoll(omObjData *object, PlayerStartWork *data) {
     Vec boardPos;
-    float var_f30;
-    u32 var_r28;
-    s8 var_r29;
-    s8 temp_r26;
+    float time;
+    u32 jumpCheck;
+    s8 player;
+    s8 digit;
 
-    var_r28 = 0;
-    if (arg1->unk02 > arg1->unk06) {
-        arg1->unk02 = 0;
-        temp_r26 = arg1->unk04;
+    jumpCheck = 0;
+    if (data->time > data->yRot) {
+        data->time = 0;
+        digit = data->digit;
         do {
-            arg1->unk04 = BoardRandMod(9);
-        } while (arg1->unk04 == temp_r26);
-        OSs8tof32(&arg1->unk04, &var_f30);
-        BoardModelMotionTimeSet(arg1->unk08, var_f30 + 0.5f);
+            data->digit = BoardRandMod(9);
+        } while (data->digit == digit);
+        OSs8tof32(&data->digit, &time);
+        BoardModelMotionTimeSet(data->diceMdl, time + 0.5f);
     }
-    if (arg1->unk00_field4 == 0) {
-        if (GWPlayer[playerOrderOld[arg1->index]].com) {
+    if (data->hasRolled == 0) {
+        if (GWPlayer[playerOrderOld[data->index]].com) {
             if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
-                if (arg1->unk0E != 0) {
-                    arg1->unk0E--;
+                if (data->unk0E != 0) {
+                    data->unk0E--;
                 } else {
-                    var_r28 = 0x100;
+                    jumpCheck = PAD_BUTTON_A;
                 }
             } else if (BoardRandMod(100) < 5) {
-                var_r28 = 0x100;
+                jumpCheck = PAD_BUTTON_A;
             }
         } else {
-            var_r28 = HuPadBtnDown[GWPlayer[playerOrderOld[arg1->index]].port];
+            jumpCheck = HuPadBtnDown[GWPlayer[playerOrderOld[data->index]].port];
         }
-        if (var_r28 == 0x100) {
-            BoardPlayerDiceJumpStart(playerOrderOld[arg1->index]);
-            arg1->unk00_field4 = 1;
+        if (jumpCheck == PAD_BUTTON_A) {
+            BoardPlayerDiceJumpStart(playerOrderOld[data->index]);
+            data->hasRolled = 1;
         }
     } else {
-        if (BoardPlayerDiceJumpCheck(playerOrderOld[arg1->index])) {
-            SetPlayerStartState(playerOrderOld[arg1->index], 5);
-            arg1->unk06 = 360;
-            arg0->rot.x = arg0->rot.y = 1.0f;
-            arg1->unk04 = BoardRandMod(9);
+        if (BoardPlayerDiceJumpCheck(playerOrderOld[data->index])) {
+            SetPlayerStartState(playerOrderOld[data->index], 5);
+            data->yRot = 360;
+            object->rot.x = object->rot.y = 1.0f;
+            data->digit = BoardRandMod(9);
             HuAudFXPlay(0x303);
-            if (hitFX[arg1->index] != -1) {
-                HuAudFXStop(hitFX[arg1->index]);
-                hitFX[arg1->index] = -1;
+            if (hitFX[data->index] != -1) {
+                HuAudFXStop(hitFX[data->index]);
+                hitFX[data->index] = -1;
             }
-            var_r29 = 0;
-            while (var_r29 < 4) {
-                if (playerOrderNew[var_r29] == arg1->unk04 && var_r29 != playerOrderOld[arg1->index]) {
-                    arg1->unk04 = BoardRandMod(9);
-                    var_r29 = 0;
+            player = 0;
+            while (player < 4) {
+                if (playerOrderNew[player] == data->digit && player != playerOrderOld[data->index]) {
+                    data->digit = BoardRandMod(9);
+                    player = 0;
                 } else {
-                    var_r29++;
+                    player++;
                 }
             }
             if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
-                arg1->unk04 = tutorialRollTbl[arg1->index];
+                data->digit = tutorialRollTbl[data->index];
             }
-            playerOrderNew[playerOrderOld[arg1->index]] = arg1->unk04;
-            arg1->unk0A = BoardModelCreate(digitMdlTbl[arg1->unk04], NULL, 0);
-            BoardModelPosGet(arg1->unk08, &boardPos);
+            playerOrderNew[playerOrderOld[data->index]] = data->digit;
+            data->model = BoardModelCreate(digitMdlTbl[data->digit], NULL, 0);
+            BoardModelPosGet(data->diceMdl, &boardPos);
             boardPos.x += 50.0 * sin(0.0);
             boardPos.z += 50.0 * cos(0.0);
-            BoardModelPosSetV(arg1->unk0A, &boardPos);
-            BoardModelMotionStart(arg1->unk0A, 0, 0);
-            BoardModelMotionSpeedSet(arg1->unk0A, 0.0f);
-            BoardModelMotionTimeSet(arg1->unk0A, 0.0f);
-            BoardModelLayerSet(arg1->unk0A, 2);
-            arg1->unk0C = BoardDiceEffectCreate();
-            Hu3DParManPosSet(arg1->unk0C, boardPos.x, boardPos.y, boardPos.z);
-            Hu3DParManTimeLimitSet(arg1->unk0C, 0x96);
-            BoardModelVisibilitySet(arg1->unk08, 0);
+            BoardModelPosSetV(data->model, &boardPos);
+            BoardModelMotionStart(data->model, 0, 0);
+            BoardModelMotionSpeedSet(data->model, 0.0f);
+            BoardModelMotionTimeSet(data->model, 0.0f);
+            BoardModelLayerSet(data->model, 2);
+            data->diceParManId = BoardDiceEffectCreate();
+            Hu3DParManPosSet(data->diceParManId, boardPos.x, boardPos.y, boardPos.z);
+            Hu3DParManTimeLimitSet(data->diceParManId, 0x96);
+            BoardModelVisibilitySet(data->diceMdl, 0);
             return;
         }
     }
-    arg1->unk02++;
+    data->time++;
 }
 
-static void PlayerDiceNumShow(omObjData *arg0, PlayerStartWork *arg1) {
-    float var_f30;
+static void PlayerDiceNumShow(omObjData *object, PlayerStartWork *data) {
+    float yRot;
 
-    arg1->unk06 -= 18;
-    if (arg1->unk06 < 0) {
-        arg1->unk06 = 0;
-        SetPlayerStartState(playerOrderOld[arg1->index], 0);
+    data->yRot -= 18;
+    if (data->yRot < 0) {
+        data->yRot = 0;
+        SetPlayerStartState(playerOrderOld[data->index], 0);
         if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
             BoardTutorialHookExec(2, 0);
         }
     }
-    OSs16tof32(&arg1->unk06, &var_f30);
-    BoardModelRotYSet(arg1->unk0A, var_f30);
+    OSs16tof32(&data->yRot, &yRot);
+    BoardModelRotYSet(data->model, yRot);
 }
 
-static void PlayerDiceNumHide(omObjData *arg0, PlayerStartWork *arg1) {
-    float var_f28;
+static void PlayerDiceNumHide(omObjData *object, PlayerStartWork *data) {
+    float yRot;
 
-    switch (arg1->unk02) {
+    switch (data->time) {
         case 0:
-            arg1->unk06 += 18;
-            if (arg1->unk06 > 360) {
-                arg1->unk06 = 0;
-                arg1->unk02 = 1;
-                arg0->rot.x = 1.0f;
-                arg0->rot.y = 1.0f;
+            data->yRot += 18;
+            if (data->yRot > 360) {
+                data->yRot = 0;
+                data->time = 1;
+                object->rot.x = 1.0f;
+                object->rot.y = 1.0f;
             }
-            OSs16tof32(&arg1->unk06, &var_f28);
-            BoardModelRotYSet(arg1->unk0A, var_f28);
+            OSs16tof32(&data->yRot, &yRot);
+            BoardModelRotYSet(data->model, yRot);
             return;
         case 1:
-            arg1->unk06 += 9;
-            if (arg1->unk06 > 180) {
-                arg1->unk06 = 0;
-                arg1->unk02 = 2;
+            data->yRot += 9;
+            if (data->yRot > 180) {
+                data->yRot = 0;
+                data->time = 2;
             }
-            OSs16tof32(&arg1->unk06, &var_f28);
-            arg0->rot.x = 1.0 + 1.3f * sind(var_f28);
+            OSs16tof32(&data->yRot, &yRot);
+            object->rot.x = 1.0 + 1.3f * sind(yRot);
             break;
         case 2:
-            arg1->unk06 += 9;
-            if (arg1->unk06 > 180) {
-                arg1->unk06 = 179;
-                arg1->unk02 = 3;
+            data->yRot += 9;
+            if (data->yRot > 180) {
+                data->yRot = 179;
+                data->time = 3;
             }
-            OSs16tof32(&arg1->unk06, &var_f28);
-            arg0->rot.x = cosd(0.5f * var_f28);
-            arg0->rot.y = 1.0 + 1.3f * sind(var_f28);
+            OSs16tof32(&data->yRot, &yRot);
+            object->rot.x = cosd(0.5f * yRot);
+            object->rot.y = 1.0 + 1.3f * sind(yRot);
             break;
         case 3:
-            BoardModelVisibilitySet(arg1->unk0A, 0);
-            arg1->isBoardVisible = 1;
+            BoardModelVisibilitySet(data->model, 0);
+            data->isBoardVisible = 1;
             return;
     }
-    BoardModelScaleSet(arg1->unk0A, arg0->rot.x, arg0->rot.y, 1.0f);
+    BoardModelScaleSet(data->model, object->rot.x, object->rot.y, 1.0f);
 }
 
-static void SetPlayerStartState(s32 arg0, s32 arg1) {
-    PlayerStartWork *temp_r31;
-    omObjData *temp_r30;
+static void SetPlayerStartState(s32 player, s32 state) {
+    PlayerStartWork *data;
+    omObjData *object;
 
-    temp_r30 = playerStartObj[arg0];
-    temp_r31 = OM_GET_WORK_PTR(temp_r30, PlayerStartWork);
-    temp_r31->state = arg1;
-    temp_r31->unk02 = 0;
-    temp_r31->unk01 = 0;
-    switch (arg1) {
+    object = playerStartObj[player];
+    data = OM_GET_WORK_PTR(object, PlayerStartWork);
+    data->state = state;
+    data->time = 0;
+    data->delay = 0;
+    switch (state) {
         case 4:
-            hitFX[arg0] = HuAudFXPlay(0x300);
+            hitFX[player] = HuAudFXPlay(0x300);
             break;
         case 5:
             break;
         case 6:
-            temp_r31->unk06 = 0;
+            data->yRot = 0;
             break;
     }
 }
 
-static s32 GetPlayerStartState(s32 arg0) {
-    PlayerStartWork *temp_r31;
-    omObjData *temp_r30;
+static s32 GetPlayerStartState(s32 player) {
+    PlayerStartWork *data;
+    omObjData *object;
 
-    temp_r30 = playerStartObj[arg0];
-    temp_r31 = OM_GET_WORK_PTR(temp_r30, PlayerStartWork);
-    return temp_r31->state;
+    object = playerStartObj[player];
+    data = OM_GET_WORK_PTR(object, PlayerStartWork);
+    return data->state;
 }
 
 static void ExecStartRoll(void) {
     s32 sp84[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
-    s32 var_r29;
-    s32 var_r23;
-    s32 var_r22;
-    s32 var_r24;
+    s32 id;
+    s32 time;
+    s32 coinCount;
+    s32 j;
     s32 i;
 
     if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
@@ -653,11 +652,11 @@ static void ExecStartRoll(void) {
             HuPrcVSleep();
         }
         _CheckFlag(FLAG_ID_MAKE(1, 11));
-        var_r29 = startMesTbl[GWBoardGet()][0];
-        BoardWinCreate(2, var_r29, BoardWinPortraitGetStar());
+        id = startMesTbl[GWBoardGet()][0];
+        BoardWinCreate(2, id, BoardWinPortraitGetStar());
         BoardWinWait();
-        var_r29 = startMesTbl[GWBoardGet()][1];
-        BoardWinCreate(2, var_r29, BoardWinPortraitGetStar());
+        id = startMesTbl[GWBoardGet()][1];
+        BoardWinCreate(2, id, BoardWinPortraitGetStar());
         BoardWinWait();
         BoardWinKill();
         for (i = 0; i < 4; i++) {
@@ -695,11 +694,11 @@ static void ExecStartRoll(void) {
             BoardTutorialHookExec(3, i);
         } else {
             if (i == 0) {
-                var_r29 = startMesTbl[GWBoardGet()][2];
+                id = startMesTbl[GWBoardGet()][2];
             } else {
-                var_r29 = playerOrderMesTbl[i - 1];
+                id = playerOrderMesTbl[i - 1];
             }
-            BoardWinCreate(0, var_r29, -1);
+            BoardWinCreate(0, id, -1);
             BoardWinInsertMesSet(BoardPlayerGetCharMess(i), i);
             BoardWinWait();
         }
@@ -716,23 +715,23 @@ static void ExecStartRoll(void) {
         BoardPlayerIdleSet(i);
     }
     if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
-        var_r29 = startMesTbl[GWBoardGet()][3];
-        BoardWinCreate(2, var_r29, BoardWinPortraitGetStar());
+        id = startMesTbl[GWBoardGet()][3];
+        BoardWinCreate(2, id, BoardWinPortraitGetStar());
         BoardWinWait();
         HuPrcSleep(30);
         if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
-            var_r22 = 100;
-            var_r23 = 1;
+            coinCount = 100;
+            time = 1;
         } else {
-            var_r22 = 10;
-            var_r23 = 6;
+            coinCount = 10;
+            time = 6;
         }
-        for (i = 0; i < var_r22; i++) {
-            for (var_r24 = 0; var_r24 < 4; var_r24++) {
-                BoardPlayerCoinsAdd(var_r24, 1);
+        for (i = 0; i < coinCount; i++) {
+            for (j = 0; j < 4; j++) {
+                BoardPlayerCoinsAdd(j, 1);
             }
             HuAudFXPlay(7);
-            HuPrcSleep(var_r23);
+            HuPrcSleep(time);
         }
         for (i = 0; i < 4; i++) {
             BoardPlayerMotionShiftSet(i, 7, 0.0f, 8.0f, HU3D_MOTATTR_NONE);
@@ -749,16 +748,16 @@ static void ExecStartRoll(void) {
         for (i = 0; i < 4; i++) {
             BoardPlayerIdleSet(i);
         }
-        var_r29 = startMesTbl[GWBoardGet()][4];
-        BoardWinCreate(2, var_r29, BoardWinPortraitGetStar());
+        id = startMesTbl[GWBoardGet()][4];
+        BoardWinCreate(2, id, BoardWinPortraitGetStar());
         BoardWinWait();
         BoardWinKill();
     }
 }
 
 static void InitCamera(void) {
-    Vec sp14;
-    Vec sp8;
+    Vec offset;
+    Vec rotTarget;
 
     camStartFocusPos.x = 0.0f;
     camStartFocusPos.y = 100.0f;
@@ -793,96 +792,96 @@ static void InitCamera(void) {
     BoardModelPosSetV(camFocus, &camStartFocusPos);
     if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
         BoardCameraMoveSet(0);
-        sp14.x = spacePos.x + 150.0f;
-        sp14.y = spacePos.y + 100.0f;
-        sp14.z = spacePos.z + 150.0f;
-        BoardModelPosSetV(camFocus, &sp14);
-        sp8.x = -22.0f;
-        sp8.y = 0.0f;
-        sp8.z = 0.0f;
-        sp14.x = sp14.y = sp14.z = 0.0f;
-        BoardCameraMotionStartEx(camFocus, &sp8, NULL, 1500.0f, -1.0f, 1);
+        offset.x = spacePos.x + 150.0f;
+        offset.y = spacePos.y + 100.0f;
+        offset.z = spacePos.z + 150.0f;
+        BoardModelPosSetV(camFocus, &offset);
+        rotTarget.x = -22.0f;
+        rotTarget.y = 0.0f;
+        rotTarget.z = 0.0f;
+        offset.x = offset.y = offset.z = 0.0f;
+        BoardCameraMotionStartEx(camFocus, &rotTarget, NULL, 1500.0f, -1.0f, 1);
         BoardCameraMotionWait();
         BoardCameraMoveSet(1);
     } else {
-        sp14.x = 0.0f;
-        sp14.y = 0.0f;
-        sp14.z = 0.0f;
-        sp8.x = -70.0f;
-        sp8.y = 0.0f;
-        sp8.z = 0.0f;
+        offset.x = 0.0f;
+        offset.y = 0.0f;
+        offset.z = 0.0f;
+        rotTarget.x = -70.0f;
+        rotTarget.y = 0.0f;
+        rotTarget.z = 0.0f;
         BoardCameraMoveSet(0);
-        BoardCameraMotionStartEx(camFocus, &sp8, &sp14, 14000.0f, -1.0f, 1);
+        BoardCameraMotionStartEx(camFocus, &rotTarget, &offset, 14000.0f, -1.0f, 1);
         BoardCameraMotionWait();
         BoardCameraMoveSet(1);
     }
 }
 
 static void InitHost(void) {
-    Vec sp8;
+    Vec newPos;
 
     if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
         hostMdl = BoardStarHostMdlGet();
-        sp8.x = spacePos.x + 150.0f;
-        sp8.y = spacePos.y;
-        sp8.z = spacePos.z - 50.0f;
-        BoardModelPosSetV(hostMdl, &sp8);
+        newPos.x = spacePos.x + 150.0f;
+        newPos.y = spacePos.y;
+        newPos.z = spacePos.z - 50.0f;
+        BoardModelPosSetV(hostMdl, &newPos);
         BoardModelVisibilitySet(hostMdl, 1);
         BoardModelMotionStart(hostMdl, 1, 0x40000001);
     }
 }
 
 static void CreateTapWin(void) {
-    float sp8[2];
-    float var_f31;
-    float var_f30;
-    s32 var_r31;
+    float dimensions[2];
+    float x;
+    float y;
+    s32 id;
 
     if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
-        var_r31 = MAKE_MESSID(0x12, 0x14);
-        HuWinMesMaxSizeGet(1, sp8, var_r31);
-        var_f31 = -10000.0f;
-        var_f30 = 368.0f;
-        tapWin = HuWinCreate(var_f31, var_f30, sp8[0], sp8[1], 0);
+        id = MAKE_MESSID(0x12, 0x14);
+        HuWinMesMaxSizeGet(1, dimensions, id);
+        x = -10000.0f;
+        y = 368.0f;
+        tapWin = HuWinCreate(x, y, dimensions[0], dimensions[1], 0);
         HuWinBGTPLvlSet(tapWin, 0.0f);
         HuWinMesSpeedSet(tapWin, 0);
-        HuWinMesSet(tapWin, var_r31);
+        HuWinMesSet(tapWin, id);
         HuWinDispOff(tapWin);
     }
 }
 
 static void OrderPlayers(void) {
-    s32 temp_r29;
-    PlayerConfig *temp_r28;
-    PlayerState *temp_r27;
+    s32 pOrderTemp;
+    PlayerConfig *playerCfg;
+    PlayerState *state;
     s32 i;
     s32 j;
 
-    temp_r28 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GWPlayerCfg), MEMORY_DEFAULT_NUM);
-    temp_r27 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GWPlayer), MEMORY_DEFAULT_NUM);
+    playerCfg = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GWPlayerCfg), MEMORY_DEFAULT_NUM);
+    state = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GWPlayer), MEMORY_DEFAULT_NUM);
     for (i = 0; i < 4; i++) {
         playerOrderOld[i] = i;
-        memcpy(temp_r28 + i, &GWPlayerCfg[i], sizeof(PlayerConfig));
-        memcpy(temp_r27 + i, &GWPlayer[i], sizeof(PlayerState));
+        memcpy(playerCfg + i, &GWPlayerCfg[i], sizeof(PlayerConfig));
+        memcpy(state + i, &GWPlayer[i], sizeof(PlayerState));
     }
     for (i = 0; i < 3; i++) {
         for (j = 3; j > i; j--) {
             if (playerOrderNew[j - 1] < playerOrderNew[j]) {
-                temp_r29 = playerOrderNew[j];
+                pOrderTemp = playerOrderNew[j];
                 playerOrderNew[j] = playerOrderNew[j - 1];
-                playerOrderNew[j - 1] = temp_r29;
-                temp_r29 = playerOrderOld[j];
+                playerOrderNew[j - 1] = pOrderTemp;
+                pOrderTemp = playerOrderOld[j];
                 playerOrderOld[j] = playerOrderOld[j - 1];
-                playerOrderOld[j - 1] = temp_r29;
+                playerOrderOld[j - 1] = pOrderTemp;
             }
         }
     }
     for (i = 0; i < 4; i++) {
-        memcpy(&GWPlayerCfg[i], temp_r28 + playerOrderOld[i], sizeof(PlayerConfig));
-        memcpy(&GWPlayer[i], temp_r27 + playerOrderOld[i], sizeof(PlayerState));
+        memcpy(&GWPlayerCfg[i], playerCfg + playerOrderOld[i], sizeof(PlayerConfig));
+        memcpy(&GWPlayer[i], state + playerOrderOld[i], sizeof(PlayerState));
         GWPlayer[i].port = GWPlayerCfg[i].pad_idx;
         GWPlayerCfg[i].pad_idx = GWPlayerCfg[i].pad_idx;
     }
-    HuMemDirectFree(temp_r28);
-    HuMemDirectFree(temp_r27);
+    HuMemDirectFree(playerCfg);
+    HuMemDirectFree(state);
 }

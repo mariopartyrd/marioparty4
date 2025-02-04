@@ -52,8 +52,8 @@ typedef struct {
     /* 0x48 */ s32 unk48;
     /* 0x48 */ s32 unk4C;
     /* 0x50 */ s32 unk50;
-    /* 0x54 */ s16 particle;
-    /* 0x58 */ s32 particleTimer;
+    /* 0x54 */ s16 parMan;
+    /* 0x58 */ s32 parManTimer;
     /* 0x5C */ s32 unk5C;
 } M463PlayerData; // Size 0x60
 
@@ -625,11 +625,11 @@ void fn_1_4C8(omObjData *object)
                 HuAudFXPlay(0x7F5);
             }
             if (temp_r27 == 8) {
-                if (data->particle == -1) {
+                if (data->parMan == -1) {
                     lbl_1_bss_58 = data->player;
-                    data->particle = fn_1_4474();
-                    Hu3DParManPosSet(data->particle, model2->pos.x, model2->pos.y, model2->pos.z);
-                    data->particleTimer = 150;
+                    data->parMan = fn_1_4474();
+                    Hu3DParManPosSet(data->parMan, model2->pos.x, model2->pos.y, model2->pos.z);
+                    data->parManTimer = 150;
                 }
                 Hu3DModelAttrSet(object->model[1], HU3D_ATTR_DISPOFF);
             }
@@ -685,9 +685,9 @@ void fn_1_4C8(omObjData *object)
                 }
             }
             data->unk1C++;
-            if (data->unk1C == 60 && data->particle != -1) {
-                Hu3DParManKill(data->particle);
-                data->particle = -1;
+            if (data->unk1C == 60 && data->parMan != -1) {
+                Hu3DParManKill(data->parMan);
+                data->parMan = -1;
             }
             if (data->unk1C == 33) {
                 Hu3DModelAttrSet(lbl_1_bss_32C->model[data->unk44 + 1], HU3D_MOTATTR_PAUSE);
@@ -736,13 +736,13 @@ void fn_1_4C8(omObjData *object)
                                                                                             : HU3D_MOTATTR_LOOP);
         data->unk20 = var_r28;
     }
-    data->particleTimer -= (data->particleTimer > -1);
-    if (data->particleTimer == 0) {
-        if (data->particle != -1) {
-            Hu3DParManKill(data->particle);
-            data->particle = -1;
+    data->parManTimer -= (data->parManTimer > -1);
+    if (data->parManTimer == 0) {
+        if (data->parMan != -1) {
+            Hu3DParManKill(data->parMan);
+            data->parMan = -1;
         }
-        data->particleTimer = -1;
+        data->parManTimer = -1;
     }
 }
 
@@ -927,7 +927,7 @@ s16 fn_1_4474(void)
     Hu3DParManVecSet(var_r31, 0.0f, 0.4f, 0.2f);
     var_r30 = Hu3DParManModelIDGet(var_r31);
     Hu3DModelLayerSet(var_r30, 2);
-    Hu3DParticleBlendModeSet(var_r30, 0);
+    Hu3DparManBlendModeSet(var_r30, 0);
     return var_r31;
 }
 
@@ -969,9 +969,9 @@ void fn_1_45F8(omObjData *arg0)
             lbl_1_bss_50++;
             lbl_1_bss_54 = 0;
             for (i = 0; i < 9; i++) {
-                if (sp14[i]->particle != -1) {
-                    Hu3DParManKill(sp14[i]->particle);
-                    sp14[i]->particle = -1;
+                if (sp14[i]->parMan != -1) {
+                    Hu3DParManKill(sp14[i]->parMan);
+                    sp14[i]->parMan = -1;
                 }
             }
             break;
@@ -1285,8 +1285,8 @@ void fn_1_5850(omObjData *arg0)
         Hu3DModelLayerSet(arg0->model[i + 2], 1);
     }
     lbl_1_bss_58 = data->player;
-    data->particle = fn_1_4474();
-    Hu3DParManPosSet(data->particle, 10000.0f, -10000.0f, 10000.0f);
+    data->parMan = fn_1_4474();
+    Hu3DParManPosSet(data->parMan, 10000.0f, -10000.0f, 10000.0f);
     arg0->func = fn_1_4C8;
 }
 
@@ -1369,9 +1369,9 @@ void fn_1_659C(omObjData *arg0)
 
     for (var_r31 = 0; var_r31 < 9; var_r31++) {
         spC[var_r31] = playerObjs[var_r31]->data;
-        if (spC[var_r31]->particle != -1) {
-            Hu3DParManKill(spC[var_r31]->particle);
-            spC[var_r31]->particle = -1;
+        if (spC[var_r31]->parMan != -1) {
+            Hu3DParManKill(spC[var_r31]->parMan);
+            spC[var_r31]->parMan = -1;
         }
     }
     if (WipeStatGet() == 0) {

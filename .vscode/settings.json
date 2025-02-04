@@ -62,7 +62,9 @@
     "math_ppc.h": "c",
     "errno.h": "c",
     "m427dll.h": "c",
-    "sprite.h": "c"
+    "sprite.h": "c",
+    "gamework_data.h": "c",
+    "roll.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {
