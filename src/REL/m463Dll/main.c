@@ -927,7 +927,7 @@ s16 fn_1_4474(void)
     Hu3DParManVecSet(var_r31, 0.0f, 0.4f, 0.2f);
     var_r30 = Hu3DParManModelIDGet(var_r31);
     Hu3DModelLayerSet(var_r30, 2);
-    Hu3DparManBlendModeSet(var_r30, 0);
+    Hu3DParticleBlendModeSet(var_r30, 0);
     return var_r31;
 }
 
