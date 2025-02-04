@@ -7,9 +7,9 @@ extern "C" {
 
 #define EOF -1L
 
-extern const unsigned char __ctype_map[];
-extern const unsigned char __lower_map[];
-extern const unsigned char __upper_map[];
+extern unsigned char __ctype_map[];
+extern unsigned char __lower_map[];
+extern unsigned char __upper_map[];
 
 #define __control_char 0x01
 #define __motion_char  0x02
@@ -31,7 +31,7 @@ extern const unsigned char __upper_map[];
 int tolower(int c);
 int toupper(int c);
 
-inline int isalpha(int c)
+inline int _isalpha(int c)
 {
 	return (int)(__ctype_map[(unsigned char)c] & __letter);
 }
