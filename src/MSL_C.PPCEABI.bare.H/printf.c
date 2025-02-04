@@ -497,7 +497,125 @@ static char* longlong2str(long long num, char* pBuf, print_format fmt)
     return p;
 }
 
-static char * double2hex(long double num, char * buff, print_format format);
+static char * double2hex(long double num, char * buff, print_format format)  {
+    char *p;
+    unsigned char *q;
+    unsigned char temp_r7;
+    char working_byte;
+    long double ld;
+    long exp;
+    print_format exp_format;
+    int hex_precision;
+    decform form;
+    decimal dec;
+
+    p = buff;
+    ld = num;
+
+    if (format.precision > 509) {
+        return 0;
+    }
+
+    form.style = (char) 0;
+    form.digits = 0x20;
+    __num2dec(&form, num, &dec);
+
+    if (*dec.sig.text == 'I') {
+        if (*(short*) &ld & 0x8000) {
+            p = buff - 5;
+            if (format.conversion_char == 'A') strcpy(p, "-INF");
+            else strcpy(p, "-inf");
+        }
+        else {
+            p = buff - 4;
+            if (format.conversion_char == 'A') strcpy(p, "INF");
+            else strcpy(p, "inf");
+        }
+
+        return p;
+    }
+    if (*dec.sig.text == 'N') {
+        if (*(unsigned char*) &num & 0x80) {
+            p = buff - 5;
+            if (format.conversion_char == 'A') strcpy(p, "-NAN");
+            else strcpy(p, "-nan");
+        }
+        else {
+            p = buff - 4;
+            if (format.conversion_char == 'A') strcpy(p, "NAN");
+            else strcpy(p, "nan");
+        }
+
+        return p;
+    }
+
+    exp_format.justification_options = right_justification;
+    exp_format.sign_options = sign_always;
+    exp_format.precision_specified = 0;
+    exp_format.alternate_form = 0;
+    exp_format.argument_options = normal_argument;
+    exp_format.field_width = 0;
+    exp_format.precision = 1;
+    exp_format.conversion_char = 'd';
+
+    exp = (short) ((*(short*) &ld & 0x7FFF) >> 4) - 0x3FF;
+    p = long2str(exp, buff, exp_format);
+    if (format.conversion_char == 'a')
+        *--p = 'p';
+    else
+        *--p = 'P';
+    q = (unsigned char*) &num;
+
+    for (hex_precision = format.precision; hex_precision >= 1; hex_precision--) {
+        temp_r7 = *(q + (hex_precision / 2 + 1));
+        if (hex_precision % 2) {
+            working_byte = temp_r7 & 0xF;
+        } else {
+            working_byte = (temp_r7 >> 4);
+        }
+
+        if (working_byte < 10) {
+            working_byte += '0';
+        }
+        else
+            if (format.conversion_char == 'a') {
+                working_byte += 'a' - 10;
+            }
+            else {
+                working_byte += 'A' - 10;
+            }
+
+        *--p = working_byte;
+    }
+
+    if (TARGET_FLOAT_IMPLICIT_J_BIT){
+        if (format.precision || format.alternate_form) {
+            *--p = '.';
+        }
+        *--p = '1';
+    }
+
+    if (format.conversion_char == 'a') {
+        *--p = 'x';
+    }
+    else {
+        *--p = 'X';
+    }
+
+    *--p = '0';
+
+    if (*((short*) &ld) & 0x8000) {
+        *--p = '-';
+    }
+    else if (format.sign_options == sign_always) {
+        *--p = '+';
+    }
+    else if (format.sign_options == space_holder) {
+        *--p = ' ';
+    }
+
+    return p;
+}
 
 static void round_decimal(decimal* dec, int new_length)
 {

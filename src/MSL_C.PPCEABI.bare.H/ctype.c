@@ -12,7 +12,7 @@
 #define uhex (hexd | uppc)
 #define lhex (hexd | lowc)
 
-const unsigned char __ctype_map[256] = {
+unsigned char __ctype_map[256] = {
 	// clang-format off
 	ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, motn, motn, motn, motn, motn, ctrl, ctrl,
 	ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl, ctrl,
@@ -25,7 +25,7 @@ const unsigned char __ctype_map[256] = {
 	// clang-format on
 };
 
-const unsigned char __lower_map[256] = {
+unsigned char __lower_map[256] = {
 	// clang-format off
 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
 	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
@@ -46,7 +46,7 @@ const unsigned char __lower_map[256] = {
 	// clang-format on
 };
 
-const unsigned char __upper_map[256] = {
+unsigned char __upper_map[256] = {
 	// clang-format off
 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
 	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
@@ -67,19 +67,12 @@ const unsigned char __upper_map[256] = {
 	// clang-format on
 };
 
-int tolower(int __c)
+int isalpha(int __c)
 {
-	if (__c == -1)
-		return -1;
-
-	return __lower_map[__c & 0xff];
+	return __ctype_map[(unsigned char)__c] & __letter;
 }
 
-int toupper(int __c)
+int tolower(int __c)
 {
-
-	if (__c == -1)
-		return -1;
-
-	return __upper_map[__c & 0xff];
+	return __c == -1 ? -1 : __lower_map[(unsigned char)__c];
 }
