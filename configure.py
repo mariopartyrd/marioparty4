@@ -1144,7 +1144,7 @@ config.libs = [
         "m435Dll",  # Darts of Doom
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m435Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01" "GMPJ01_00"), "REL/m435Dll/sequence.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m435Dll/sequence.c"),
         },
     ),
     Rel(
