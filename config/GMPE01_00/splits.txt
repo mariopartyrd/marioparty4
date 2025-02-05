@@ -955,7 +955,7 @@ Runtime.PPCEABI.H/NewMore.cp:
 	.data       start:0x8013E208 end:0x8013E218
 	.sdata      start:0x801D39A0 end:0x801D39A8
 
-Runtime.PPCEABI.H/NMWException.cp:
+Runtime.PPCEABI.H/NMWException.cpp:
 	extab       start:0x80005650 end:0x80005670
 	extabindex  start:0x80005718 end:0x80005748
 	.text       start:0x800E2108 end:0x800E23CC
@@ -971,7 +971,7 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x8011DCE0 end:0x8011DCE8
 	.sdata      start:0x801D39B0 end:0x801D39B8
 
-Runtime.PPCEABI.H/Gecko_ExceptionPPC.cp:
+Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp:
 	extab       start:0x80005670 end:0x800056E4
 	extabindex  start:0x80005748 end:0x8000579C
 	.text       start:0x800E2B24 end:0x800E3F5C

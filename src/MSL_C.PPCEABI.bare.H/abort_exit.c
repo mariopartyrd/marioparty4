@@ -2,7 +2,6 @@
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/critical_regions.h"
 #include "PowerPC_EABI_Support/Msl/MSL_C/MSL_Common/signal.h"
 #include "stddef.h"
-#include "PowerPC_EABI_Support/Runtime/NMWException.h"
 
 void _ExitProcess();
 
