@@ -25,63 +25,63 @@
 #include "dolphin.h"
 #include "ext_math.h"
 
-static void fn_1_E100(void);
-static void fn_1_E154(void);
-static void fn_1_E2B8(omObjData *arg0);
-static void fn_1_E44C(omObjData *arg0);
-static void fn_1_E914(omObjData *arg0);
-static void fn_1_ECD4(omObjData *arg0);
-static void fn_1_EEA0(omObjData *arg0, u16 *arg1);
-static void fn_1_EED8(omObjData *arg0);
-static void fn_1_F09C(omObjData *arg0);
-static void fn_1_F348(omObjData *arg0);
-static void fn_1_F3F8(omObjData *arg0);
-static void fn_1_F6E8(omObjData *arg0);
-static void fn_1_F890(omObjData *arg0);
-static void fn_1_FA1C(omObjData *arg0);
-static void fn_1_FABC(omObjData *arg0);
-static void fn_1_FB58(void);
-static void fn_1_FC3C(omObjData *arg0);
-static void fn_1_FCEC(void);
-static void fn_1_FD3C(omObjData *arg0);
-static void fn_1_FE44(omObjData *arg0);
-static void fn_1_FED0(omObjData *arg0);
-static s16 fn_1_1001C(u32 arg0);
-static void fn_1_101B8(s16 arg0);
-static void fn_1_10664(omObjData *arg0);
-static void fn_1_10820(omObjData *arg0);
-static void fn_1_10AE8(omObjData *arg0);
-static float fn_1_10BB0(u32 arg0);
-static void fn_1_10CF0(u32 arg0);
-static float fn_1_10EB8(Vec *arg0);
-static void fn_1_11064(ModelData *model, ParticleData *particle, Mtx matrix);
-static void fn_1_11484(ModelData *model, ParticleData *particle, Mtx matrix);
+static void RoundItemEnd(void);
+static void RoundItemClose(void);
+static void RoundItemMainUpdate(omObjData *obj);
+static void RoundItemUmaStop(omObjData *obj);
+static void RoundItemPlayerJump(omObjData *obj);
+static void RoundItemStartWait(omObjData *obj);
+static void RoundItemComInputGet(omObjData *obj, u16 *btn);
+static void RoundItemInputWait(omObjData *obj);
+static void RoundItemStop(omObjData *obj);
+static void RoundItemLightFlicker(omObjData *obj);
+static void RoundItemUmaJumpWait(omObjData *obj);
+static void RoundItemUmaJump(omObjData *obj);
+static void RoundItemRotatePlayer(omObjData *obj);
+static void RoundItemStreamWait(omObjData *obj);
+static void RoundItemWinWait(omObjData *obj);
+static void ItemGetWinExec(void);
+static void ItemGetShrinkWait(omObjData *obj);
+static void ItemGetReturnWinExec(void);
+static void RoundItemGameClose(omObjData *obj);
+static void RoundItemGameEnd(omObjData *obj);
+static void RoundItemItemUpdate(omObjData *obj);
+static s16 RoundItemItemGet(u32 umaNo);
+static void ItemGetCreate(s16 itemNo);
+static void ItemGetObjUpdate(omObjData *obj);
+static void ItemGetPlayerMove(omObjData *obj);
+static void ItemGetShrink(omObjData *obj);
+static float RoundItemUmaRotYGet(u32 umaNo);
+static void RoundItemUmaPlayerSet(u32 umaNo);
+static float RoundItemAngleGet(Vec *arg0);
+static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix);
+static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix);
 
-static void *lbl_1_bss_818;
-static Vec lbl_1_bss_80C;
-static omObjData *lbl_1_bss_7FC[4];
-static omObjData *lbl_1_bss_7F8;
-static omObjData *lbl_1_bss_7F4;
-static omObjData *lbl_1_bss_7F0;
-static float lbl_1_bss_7EC;
-static float lbl_1_bss_7E8;
-static s32 lbl_1_bss_7E4;
-static Vec lbl_1_bss_7D8;
-static s16 lbl_1_bss_7D6;
-static s16 lbl_1_bss_7D4;
-static s16 lbl_1_bss_7D2;
-static s16 lbl_1_bss_7D0;
-static Vec lbl_1_bss_7C4;
+static void *itemAnim;
+static Vec roundItemPos;
+static omObjData *itemObj[4];
+static omObjData *roundItemUmaObj;
+static omObjData *roundItemMainObj;
+static omObjData *itemGetObj;
+static float umaSpeed;
+static float borderSpeed;
+static s32 roundItemPlayer;
+static Vec umaPos;
+static s16 seqStartId;
+static s16 timerSeqId;
+static s16 timerSec;
+static s16 timerFrame;
+static Vec roundItemPlayerPos;
 static s32 lbl_1_bss_7C0_pad;
-static s32 lbl_1_bss_7BC;
-static s32 lbl_1_bss_7B8;
-static s16 lbl_1_bss_7B4;
+static s32 itemGetMotId;
+static s32 jumpMotId;
+static s16 umaStopF;
 static s32 lbl_1_bss_7B0_pad;
-static s32 lbl_1_bss_7AC;
-static s16 lbl_1_bss_7AA;
-static s16 lbl_1_bss_7A8;
-static s32 lbl_1_bss_7A4;
-static AnimData *lbl_1_bss_7A0;
+static s32 itemGetSeNo;
+static s16 roundItemStopF;
+static s16 umaStopTimer;
+static s32 roundItemStreamId;
+static AnimData *roundItemEffAnim;
 
 #if VERSION_JP
 #define MDL_ID_SHIFT 0
@@ -89,7 +89,7 @@ static AnimData *lbl_1_bss_7A0;
 #define MDL_ID_SHIFT 1
 #endif
 
-static s32 lbl_1_data_F08[] = {
+static s32 itemMdlTbl[] = {
     DATA_MAKE_NUM(DATADIR_BOARD, 108 + MDL_ID_SHIFT),
     DATA_MAKE_NUM(DATADIR_BOARD, 109 + MDL_ID_SHIFT),
     DATA_MAKE_NUM(DATADIR_BOARD, 110 + MDL_ID_SHIFT),
@@ -106,884 +106,856 @@ static s32 lbl_1_data_F08[] = {
     DATA_MAKE_NUM(DATADIR_BOARD, 122 + MDL_ID_SHIFT),
 };
 
-static s32 lbl_1_data_F40[8] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 23), DATA_MAKE_NUM(DATADIR_LUIGIMOT, 23), DATA_MAKE_NUM(DATADIR_PEACHMOT, 23),
+static s32 itemGetMotTbl[8] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 23), DATA_MAKE_NUM(DATADIR_LUIGIMOT, 23), DATA_MAKE_NUM(DATADIR_PEACHMOT, 23),
     DATA_MAKE_NUM(DATADIR_YOSHIMOT, 23), DATA_MAKE_NUM(DATADIR_WARIOMOT, 23), DATA_MAKE_NUM(DATADIR_DONKEYMOT, 23),
     DATA_MAKE_NUM(DATADIR_DAISYMOT, 23), DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 23) };
 
-static s32 lbl_1_data_F60[8] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 64), DATA_MAKE_NUM(DATADIR_LUIGIMOT, 64), DATA_MAKE_NUM(DATADIR_PEACHMOT, 64),
+static s32 jumpMotTbl[8] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 64), DATA_MAKE_NUM(DATADIR_LUIGIMOT, 64), DATA_MAKE_NUM(DATADIR_PEACHMOT, 64),
     DATA_MAKE_NUM(DATADIR_YOSHIMOT, 64), DATA_MAKE_NUM(DATADIR_WARIOMOT, 64), DATA_MAKE_NUM(DATADIR_DONKEYMOT, 64),
     DATA_MAKE_NUM(DATADIR_DAISYMOT, 64), DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 64) };
 
-void fn_1_D740(s16 *arg0)
+void RoundItemInit(s16 *itemTbl)
 {
-    s16 sp10[14];
-    s16 sp8[4];
-    float temp_f30;
-    float temp_f29;
-    float var_f31;
-    s32 var_r28;
-    s32 var_r30;
+    s16 itemOrderTbl[14];
+    s16 itemMdlId[4];
+    float borderTime;
+    float borderMaxTime;
+    float itemAngle;
+    s32 itemOrderNum;
+    s32 itemNum;
     s32 i;
     s32 j;
 
-    lbl_1_bss_818 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_W01, 28), MEMORY_DEFAULT_NUM, HEAP_DATA);
-    BoardModelPosGet(lbl_1_bss_6C4[16], &lbl_1_bss_80C);
-    sp8[0] = BoardModelIDGet(lbl_1_bss_6C4[19]);
-    BoardModelVisibilitySet(lbl_1_bss_6C4[19], 1);
+    itemAnim = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_W01, 28), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    BoardModelPosGet(mapObjMdlId[MAPOBJ_ROUNDITEM], &roundItemPos);
+    itemMdlId[0] = BoardModelIDGet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM]);
+    BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM], 1);
     for (i = 1; i < 4; i++) {
-        sp8[i] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_W01, 24));
+        itemMdlId[i] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_W01, 24));
     }
-    var_r30 = 0;
+    itemNum = 0;
     for (i = 0; i < 4; i++) {
-        lbl_1_bss_7FC[i] = omAddObjEx(boardObjMan, 0x165, 2, 0, -1, NULL);
-        if (arg0[i] != -1) {
-            lbl_1_bss_7FC[var_r30++]->work[1] = arg0[i];
+        itemObj[i] = omAddObjEx(boardObjMan, 0x165, 2, 0, -1, NULL);
+        if (itemTbl[i] != -1) {
+            itemObj[itemNum++]->work[1] = itemTbl[i];
         }
     }
-    while (var_r30 != 4) {
-        var_r28 = 0;
+    while (itemNum != 4) {
+        itemOrderNum = 0;
         for (i = 0; i < 14; i++) {
-            for (j = 0; j < var_r30; j++) {
-                if (i == lbl_1_bss_7FC[j]->work[1]) {
+            for (j = 0; j < itemNum; j++) {
+                if (i == itemObj[j]->work[1]) {
                     break;
                 }
             }
-            if (j == var_r30) {
-                sp10[var_r28++] = i;
+            if (j == itemNum) {
+                itemOrderTbl[itemOrderNum++] = i;
             }
         }
-        lbl_1_bss_7FC[var_r30++]->work[1] = sp10[rand8() % var_r28];
+        itemObj[itemNum++]->work[1] = itemOrderTbl[rand8() % itemOrderNum];
     }
-    temp_f30 = BoardModelMotionTimeGet(lbl_1_bss_6C4[18]);
-    temp_f29 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[18]);
+    borderTime = BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]);
+    borderMaxTime = BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]);
     for (i = 0; i < 4; i++) {
-        lbl_1_bss_7FC[i]->model[0] = sp8[i];
-        lbl_1_bss_7FC[i]->model[1] = Hu3DModelCreateFile(lbl_1_data_F08[lbl_1_bss_7FC[i]->work[1]]);
-        if (lbl_1_bss_7FC[i]->work[1] == 5) {
-            Hu3DData[lbl_1_bss_7FC[i]->model[1]].unk_F0[1][3] = -50.0f;
+        itemObj[i]->model[0] = itemMdlId[i];
+        itemObj[i]->model[1] = Hu3DModelCreateFile(itemMdlTbl[itemObj[i]->work[1]]);
+        if (itemObj[i]->work[1] == 5) {
+            Hu3DData[itemObj[i]->model[1]].unk_F0[1][3] = -50.0f;
         }
-        if (lbl_1_bss_7FC[i]->work[1] == 11) {
-            Hu3DModelAttrSet(lbl_1_bss_7FC[i]->model[1], HU3D_MOTATTR_LOOP);
+        if (itemObj[i]->work[1] == 11) {
+            Hu3DModelAttrSet(itemObj[i]->model[1], HU3D_MOTATTR_LOOP);
         }
-        if (lbl_1_bss_7FC[i]->work[1] == 4) {
-            Hu3DMotionSpeedSet(lbl_1_bss_7FC[i]->model[1], 0.0f);
+        if (itemObj[i]->work[1] == 4) {
+            Hu3DMotionSpeedSet(itemObj[i]->model[1], 0.0f);
         }
-        Hu3DModelAttrReset(sp8[i], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(lbl_1_bss_7FC[i]->model[1], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(lbl_1_bss_7FC[i]->model[1], HU3D_MOTATTR_PAUSE);
-        omSetTra(lbl_1_bss_7FC[i], lbl_1_bss_80C.x, lbl_1_bss_80C.y + 66.0f, lbl_1_bss_80C.z);
-        var_f31 = 90.0f - 90.0f * i + 360.0f * (temp_f30 / temp_f29);
-        if (var_f31 >= 360.0f) {
-            var_f31 -= 360.0f;
+        Hu3DModelAttrReset(itemMdlId[i], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(itemObj[i]->model[1], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(itemObj[i]->model[1], HU3D_MOTATTR_PAUSE);
+        omSetTra(itemObj[i], roundItemPos.x, roundItemPos.y + 66.0f, roundItemPos.z);
+        itemAngle = 90.0f - 90.0f * i + 360.0f * (borderTime / borderMaxTime);
+        if (itemAngle >= 360.0f) {
+            itemAngle -= 360.0f;
         }
-        if (var_f31 < 0.0f) {
-            var_f31 += 360.0f;
+        if (itemAngle < 0.0f) {
+            itemAngle += 360.0f;
         }
-        omSetRot(lbl_1_bss_7FC[i], 0.0f, var_f31, 0.0f);
-        lbl_1_bss_7FC[i]->work[0] = Hu3DAnimCreate(lbl_1_bss_818, lbl_1_bss_7FC[i]->model[0], "item01");
-        Hu3DAnimAttrSet(lbl_1_bss_7FC[i]->work[0], 1);
-        lbl_1_bss_7FC[i]->work[2] = i;
+        omSetRot(itemObj[i], 0.0f, itemAngle, 0.0f);
+        itemObj[i]->work[0] = Hu3DAnimCreate(itemAnim, itemObj[i]->model[0], "item01");
+        Hu3DAnimAttrSet(itemObj[i]->work[0], 1);
+        itemObj[i]->work[2] = i;
     }
     for (i = 0; i < 4; i++) {
-        Hu3DAnmNoSet(lbl_1_bss_7FC[i]->work[0], lbl_1_bss_7FC[i]->work[1]);
+        Hu3DAnmNoSet(itemObj[i]->work[0], itemObj[i]->work[1]);
     }
 }
 
-void fn_1_DD84(void)
+void RoundItemKill(void)
 {
     s32 i;
 
     for (i = 0; i < 4; i++) {
         if (i != 0) {
-            Hu3DModelKill(lbl_1_bss_7FC[i]->model[0]);
+            Hu3DModelKill(itemObj[i]->model[0]);
         }
         else {
-            BoardModelVisibilitySet(lbl_1_bss_6C4[19], 0);
-            Hu3DAnimKill(lbl_1_bss_7FC[i]->work[0]);
+            BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM], 0);
+            Hu3DAnimKill(itemObj[i]->work[0]);
         }
-        Hu3DModelKill(lbl_1_bss_7FC[i]->model[1]);
-        omDelObjEx(boardObjMan, lbl_1_bss_7FC[i]);
+        Hu3DModelKill(itemObj[i]->model[1]);
+        omDelObjEx(boardObjMan, itemObj[i]);
     }
-    if (lbl_1_bss_7A0) {
-        HuSprAnimKill(lbl_1_bss_7A0);
-        lbl_1_bss_7A0 = NULL;
+    if (roundItemEffAnim) {
+        HuSprAnimKill(roundItemEffAnim);
+        roundItemEffAnim = NULL;
     }
 }
 
-void fn_1_DE94(void)
+void RoundItemEventStart(void)
 {
     s32 i;
 
-    BoardModelPosGet(lbl_1_bss_6C4[16], &lbl_1_bss_80C);
+    BoardModelPosGet(mapObjMdlId[MAPOBJ_ROUNDITEM], &roundItemPos);
     for (i = 0; i < 4; i++) {
-        lbl_1_bss_7FC[i]->func = fn_1_FED0;
+        itemObj[i]->func = RoundItemItemUpdate;
     }
-    lbl_1_bss_7F4 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_E2B8);
-    lbl_1_bss_7F8 = omAddObjEx(boardObjMan, 0x133, 0, 0, -1, fn_1_E44C);
-    lbl_1_bss_7F8->work[3] = rand8() % 200 + 10;
-    lbl_1_bss_7E4 = GWSystem.player_curr;
-    BoardPlayerPosGet(lbl_1_bss_7E4, &lbl_1_bss_7C4);
-    lbl_1_bss_7EC = 1.0f;
-    lbl_1_bss_7E8 = 1.0f;
-    lbl_1_bss_7AA = 0;
-    lbl_1_bss_7BC = BoardPlayerMotionCreate(lbl_1_bss_7E4, lbl_1_data_F40[GWPlayer[lbl_1_bss_7E4].character]);
-    lbl_1_bss_7B8 = BoardPlayerMotionCreate(lbl_1_bss_7E4, lbl_1_data_F60[GWPlayer[lbl_1_bss_7E4].character]);
-    lbl_1_bss_7A0 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_EFFECT, 0));
-    HuSprAnimLock(lbl_1_bss_7A0);
-    lbl_1_bss_7B4 = 0;
+    roundItemMainObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, RoundItemMainUpdate);
+    roundItemUmaObj = omAddObjEx(boardObjMan, 0x133, 0, 0, -1, RoundItemUmaStop);
+    roundItemUmaObj->work[3] = rand8() % 200 + 10;
+    roundItemPlayer = GWSystem.player_curr;
+    BoardPlayerPosGet(roundItemPlayer, &roundItemPlayerPos);
+    umaSpeed = 1.0f;
+    borderSpeed = 1.0f;
+    roundItemStopF = 0;
+    itemGetMotId = BoardPlayerMotionCreate(roundItemPlayer, itemGetMotTbl[GWPlayer[roundItemPlayer].character]);
+    jumpMotId = BoardPlayerMotionCreate(roundItemPlayer, jumpMotTbl[GWPlayer[roundItemPlayer].character]);
+    roundItemEffAnim = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_EFFECT, 0));
+    HuSprAnimLock(roundItemEffAnim);
+    umaStopF = 0;
 }
 
-static void fn_1_E100(void)
+static void RoundItemEnd(void)
 {
-    lbl_1_bss_7AA = 1;
+    roundItemStopF = 1;
     BoardMGExit();
     HuAudFXPlay(0x40F);
-    BoardModelMotionStart(lbl_1_bss_6C4[21], 0, 0x40000004);
+    BoardModelMotionStart(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_UP], 0, HU3D_MOTATTR_REV);
 }
 
-static void fn_1_E154(void)
+static void RoundItemClose(void)
 {
-    fn_1_DD84();
-    BoardPlayerMotionKill(lbl_1_bss_7E4, lbl_1_bss_7BC);
-    BoardPlayerMotionKill(lbl_1_bss_7E4, lbl_1_bss_7B8);
-    BoardModelVisibilitySet(lbl_1_bss_6C4[20], 0);
+    RoundItemKill();
+    BoardPlayerMotionKill(roundItemPlayer, itemGetMotId);
+    BoardPlayerMotionKill(roundItemPlayer, jumpMotId);
+    BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_LIGHT], 0);
     BoardMGDoneFlagSet(0);
 }
 
-static void fn_1_E2B8(omObjData *arg0)
+static void RoundItemMainUpdate(omObjData *obj)
 {
-    if (lbl_1_bss_7AA == 1 && BoardMGDoneFlagGet() == 1) {
-        fn_1_E154();
-        omDelObjEx(HuPrcCurrentGet(), arg0);
+    if (roundItemStopF == 1 && BoardMGDoneFlagGet() == 1) {
+        RoundItemClose();
+        omDelObjEx(HuPrcCurrentGet(), obj);
     }
 }
 
-static char *lbl_1_data_F9C[] = { "uma1", "uma2", "uma3", "uma4" };
+static char *umaHookTbl[] = { "uma1", "uma2", "uma3", "uma4" };
 
-static void fn_1_E44C(omObjData *arg0)
+static void RoundItemUmaStop(omObjData *obj)
 {
-    Vec sp18;
-    Vec spC;
-    float temp_f27;
-    float var_f29;
-    float temp_f28;
-    float var_f26;
-    float var_f24;
+    Vec playerPos;
+    Vec objPos;
+    float umaDist;
+    float motTime;
+    float motMaxTime;
+    float umaMinDist;
     s32 i;
 
-    temp_f28 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[17]);
-    var_f29 = BoardModelMotionTimeGet(lbl_1_bss_6C4[17]);
-    if (var_f29 >= temp_f28) {
-        var_f29 -= temp_f28;
+    motMaxTime = BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]);
+    motTime = BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]);
+    if (motTime >= motMaxTime) {
+        motTime -= motMaxTime;
     }
-    var_f24 = fmod(var_f29, temp_f28 / 4);
-    if (var_f24 >= temp_f28 / 4 - 30.0f && lbl_1_bss_7B4 == 0) {
-        lbl_1_bss_7B4 = 1;
-        lbl_1_bss_7A8 = 90;
+    if (fmodf(motTime, motMaxTime / 4) >= motMaxTime / 4 - 30.0f && umaStopF == 0) {
+        umaStopF = 1;
+        umaStopTimer = 90;
     }
-    if (lbl_1_bss_7B4 != 0) {
-        lbl_1_bss_7EC *= 0.97f;
-        lbl_1_bss_7A8--;
+    if (umaStopF != 0) {
+        umaSpeed *= 0.97f;
+        umaStopTimer--;
     }
-    if (lbl_1_bss_7EC != 1.0f && lbl_1_bss_7A8 == 0) {
-        lbl_1_bss_7EC = 0.0f;
+    if (umaSpeed != 1.0f && umaStopTimer == 0) {
+        umaSpeed = 0.0f;
         BoardAudSeqPause(0, 1, 1000);
-        BoardPlayerPosGet(lbl_1_bss_7E4, &sp18);
-        Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_6C4[17]), lbl_1_data_F9C[0], &spC);
-        var_f26 = VECSquareDistance(&sp18, &spC);
-        arg0->work[2] = 0;
+        BoardPlayerPosGet(roundItemPlayer, &playerPos);
+        Hu3DModelObjPosGet(BoardModelIDGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]), umaHookTbl[0], &objPos);
+        umaMinDist = VECSquareDistance(&playerPos, &objPos);
+        obj->work[2] = 0;
         for (i = 1; i < 4; i++) {
-            Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_6C4[17]), lbl_1_data_F9C[i], &spC);
-            temp_f27 = VECSquareDistance(&sp18, &spC);
-            if (temp_f27 < var_f26) {
-                var_f26 = temp_f27;
-                arg0->work[2] = i;
+            Hu3DModelObjPosGet(BoardModelIDGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]), umaHookTbl[i], &objPos);
+            umaDist = VECSquareDistance(&playerPos, &objPos);
+            if (umaDist < umaMinDist) {
+                umaMinDist = umaDist;
+                obj->work[2] = i;
             }
         }
-        Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_6C4[17]), lbl_1_data_F9C[arg0->work[2]], &lbl_1_bss_7D8);
-        VECSubtract(&lbl_1_bss_7D8, &sp18, &spC);
-        VECNormalize(&spC, &spC);
-        arg0->trans.x = spC.x;
-        arg0->trans.y = spC.y;
-        arg0->trans.z = spC.z;
-        arg0->rot.x = VECDistanceXZ(&lbl_1_bss_7D8, &sp18);
-        arg0->rot.y = 10.0f;
-        arg0->rot.z = sp18.y;
-        arg0->scale.x = 0.0f;
-        BoardPlayerMotionShiftSet(lbl_1_bss_7E4, 4, 0.0f, 5.0f, HU3D_MOTATTR_NONE);
-        arg0->func = fn_1_E914;
+        Hu3DModelObjPosGet(BoardModelIDGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]), umaHookTbl[obj->work[2]], &umaPos);
+        VECSubtract(&umaPos, &playerPos, &objPos);
+        VECNormalize(&objPos, &objPos);
+        obj->trans.x = objPos.x;
+        obj->trans.y = objPos.y;
+        obj->trans.z = objPos.z;
+        obj->rot.x = VECDistanceXZ(&umaPos, &playerPos);
+        obj->rot.y = 10.0f;
+        obj->rot.z = playerPos.y;
+        obj->scale.x = 0.0f;
+        BoardPlayerMotionShiftSet(roundItemPlayer, 4, 0.0f, 5.0f, HU3D_MOTATTR_NONE);
+        obj->func = RoundItemPlayerJump;
     }
-    BoardModelMotionSpeedSet(lbl_1_bss_6C4[17], lbl_1_bss_7EC);
+    BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA], umaSpeed);
 }
 
-static void fn_1_E914(omObjData *arg0)
+static void RoundItemPlayerJump(omObjData *obj)
 {
-    Vec spC;
+    Vec pos;
     s32 i;
 
-    BoardPlayerPosGet(lbl_1_bss_7E4, &spC);
-    spC.x += arg0->trans.x * arg0->rot.x / 32.760002f;
-    spC.z += arg0->trans.z * arg0->rot.x / 32.760002f;
-    spC.y += arg0->rot.y - 0.016666668f * arg0->scale.x * arg0->scale.x;
-    arg0->scale.x += 1.0f;
-    if (VECDistanceXZ(&lbl_1_bss_7D8, &spC) < 2.0f) {
-        spC = lbl_1_bss_7D8;
-        BoardPlayerRotSet(lbl_1_bss_7E4, 0.0f, fn_1_10BB0(arg0->work[2]), 0.0f);
-        lbl_1_bss_7EC = 0.05f;
-        lbl_1_bss_7E8 = 0.05f;
-        BoardModelAttrReset(lbl_1_bss_6C4[18], 0x40000002);
-        BoardModelAttrSet(lbl_1_bss_6C4[18], 0x40000001);
-        BoardModelMotionSpeedSet(lbl_1_bss_6C4[18], 0.0f);
+    BoardPlayerPosGet(roundItemPlayer, &pos);
+    pos.x += obj->trans.x * obj->rot.x / 32.760002f;
+    pos.z += obj->trans.z * obj->rot.x / 32.760002f;
+    pos.y += obj->rot.y - 0.016666668f * obj->scale.x * obj->scale.x;
+    obj->scale.x += 1.0f;
+    if (VECDistanceXZ(&umaPos, &pos) < 2.0f) {
+        pos = umaPos;
+        BoardPlayerRotSet(roundItemPlayer, 0.0f, RoundItemUmaRotYGet(obj->work[2]), 0.0f);
+        umaSpeed = 0.05f;
+        borderSpeed = 0.05f;
+        BoardModelAttrReset(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER], HU3D_MOTATTR_PAUSE);
+        BoardModelAttrSet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER], HU3D_MOTATTR_LOOP);
+        BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER], 0.0f);
         for (i = 0; i < 4; i++) {
-            lbl_1_bss_7FC[i]->func = fn_1_FED0;
+            itemObj[i]->func = RoundItemItemUpdate;
         }
-        BoardPlayerMotionShiftSet(lbl_1_bss_7E4, lbl_1_bss_7B8, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
-        lbl_1_bss_7D6 = MGSeqStartCreate();
+        BoardPlayerMotionShiftSet(roundItemPlayer, jumpMotId, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
+        seqStartId = MGSeqStartCreate();
         BoardMusStart(1, 0xE, 0x7F, 0);
-        arg0->func = fn_1_ECD4;
+        obj->func = RoundItemStartWait;
     }
-    BoardPlayerPosSetV(lbl_1_bss_7E4, &spC);
+    BoardPlayerPosSetV(roundItemPlayer, &pos);
 }
 
-static void fn_1_ECD4(omObjData *arg0)
+static void RoundItemStartWait(omObjData *obj)
 {
-    lbl_1_bss_7EC *= 1.05f;
-    lbl_1_bss_7E8 *= 1.05f;
-    if (lbl_1_bss_7EC > 2.0f) {
-        lbl_1_bss_7EC = 2.0f;
+    umaSpeed *= 1.05f;
+    borderSpeed *= 1.05f;
+    if (umaSpeed > 2.0f) {
+        umaSpeed = 2.0f;
     }
-    if (lbl_1_bss_7E8 > 4.0f) {
-        lbl_1_bss_7E8 = 4.0f;
+    if (borderSpeed > 4.0f) {
+        borderSpeed = 4.0f;
     }
-    if (MGSeqStatGet(lbl_1_bss_7D6) == 0) {
-        lbl_1_bss_7EC = 2.0f;
-        lbl_1_bss_7E8 = 4.0f;
-        arg0->func = fn_1_EED8;
-        lbl_1_bss_7D2 = 5;
-        lbl_1_bss_7D0 = REFRESH_RATE;
-        lbl_1_bss_7D4 = MGSeqTimerCreateXY(lbl_1_bss_7D2, 288, 64);
+    if (MGSeqStatGet(seqStartId) == 0) {
+        umaSpeed = 2.0f;
+        borderSpeed = 4.0f;
+        obj->func = RoundItemInputWait;
+        timerSec = 5;
+        timerFrame = REFRESH_RATE;
+        timerSeqId = MGSeqTimerCreateXY(timerSec, 288, 64);
     }
-    BoardModelMotionSpeedSet(lbl_1_bss_6C4[17], lbl_1_bss_7EC);
-    BoardModelMotionSpeedSet(lbl_1_bss_6C4[18], lbl_1_bss_7E8);
-    fn_1_10CF0(arg0->work[2]);
+    BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA], umaSpeed);
+    BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER], borderSpeed);
+    RoundItemUmaPlayerSet(obj->work[2]);
 }
 
-static void fn_1_EEA0(omObjData *arg0, u16 *arg1)
+static void RoundItemComInputGet(omObjData *obj, u16 *btn)
 {
-    *arg1 = 0;
-    if (arg0->work[3] != 0) {
-        arg0->work[3]--;
+    *btn = 0;
+    if (obj->work[3] != 0) {
+        obj->work[3]--;
     }
     else {
-        *arg1 |= 0x100;
+        *btn |= PAD_BUTTON_A;
     }
 }
 
-static void fn_1_EED8(omObjData *arg0)
+static void RoundItemInputWait(omObjData *obj)
 {
-    s16 temp_r29;
-    u16 var_r30;
+    s16 padNo;
+    u16 btn;
 
-    fn_1_10CF0(arg0->work[2]);
-    temp_r29 = GWPlayer[lbl_1_bss_7E4].port;
-    if ((--lbl_1_bss_7D0) == 0) {
-        if ((--lbl_1_bss_7D2) >= 0) {
-            MGSeqParamSet(lbl_1_bss_7D4, 1, lbl_1_bss_7D2);
+    RoundItemUmaPlayerSet(obj->work[2]);
+    padNo = GWPlayer[roundItemPlayer].port;
+    if ((--timerFrame) == 0) {
+        if ((--timerSec) >= 0) {
+            MGSeqParamSet(timerSeqId, 1, timerSec);
         }
-        lbl_1_bss_7D0 = REFRESH_RATE;
+        timerFrame = REFRESH_RATE;
     }
-    if (GWPlayerCfg[lbl_1_bss_7E4].iscom == 1) {
-        fn_1_EEA0(arg0, &var_r30);
+    if (GWPlayerCfg[roundItemPlayer].iscom == 1) {
+        RoundItemComInputGet(obj, &btn);
     }
     else {
-        var_r30 = HuPadBtnDown[temp_r29];
+        btn = HuPadBtnDown[padNo];
     }
-    if (lbl_1_bss_7D2 < 0 || (var_r30 & 0x100)) {
-        BoardModelMotionSpeedSet(lbl_1_bss_6C4[17], 0.0f);
-        MGSeqParamSet(lbl_1_bss_7D4, 2, -1);
-        arg0->scale.y = 0.0f;
-        arg0->func = fn_1_F09C;
+    if (timerSec < 0 || (btn & PAD_BUTTON_A)) {
+        BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA], 0.0f);
+        MGSeqParamSet(timerSeqId, 2, -1);
+        obj->scale.y = 0.0f;
+        obj->func = RoundItemStop;
     }
 }
 
-static void fn_1_F09C(omObjData *arg0)
+static void RoundItemStop(omObjData *obj)
 {
-    float temp_f31;
-    float var_f30;
+    float maxTime;
+    float time;
 
-    temp_f31 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[18]);
-    arg0->scale.y += lbl_1_bss_7E8;
-    if (arg0->scale.y >= temp_f31 - 150.0f) {
-        lbl_1_bss_7E8 *= 0.9745f;
-        if (lbl_1_bss_7E8 < 0.08f) {
-            lbl_1_bss_7E8 = 0.08f;
+    maxTime = BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]);
+    obj->scale.y += borderSpeed;
+    if (obj->scale.y >= maxTime - 150.0f) {
+        borderSpeed *= 0.9745f;
+        if (borderSpeed < 0.08f) {
+            borderSpeed = 0.08f;
         }
     }
-    BoardModelMotionSpeedSet(lbl_1_bss_6C4[18], lbl_1_bss_7E8);
-    if (arg0->scale.y >= temp_f31) {
-        BoardModelMotionSpeedSet(lbl_1_bss_6C4[18], 0.0f);
-        var_f30 = arg0->scale.y - temp_f31 + BoardModelMotionTimeGet(lbl_1_bss_6C4[18]);
-        if (var_f30 > temp_f31) {
-            var_f30 -= temp_f31;
+    BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER], borderSpeed);
+    if (obj->scale.y >= maxTime) {
+        BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER], 0.0f);
+        time = obj->scale.y - maxTime + BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]);
+        if (time > maxTime) {
+            time -= maxTime;
         }
-        BoardModelMotionTimeSet(lbl_1_bss_6C4[18], var_f30);
-        arg0->work[0] = fn_1_1001C(arg0->work[2]);
-        BoardModelVisibilitySet(lbl_1_bss_6C4[20], 1);
-        BoardModelPosSet(lbl_1_bss_6C4[20], lbl_1_bss_7FC[arg0->work[0]]->trans.x, lbl_1_bss_7FC[arg0->work[0]]->trans.y + 1.0f,
-            lbl_1_bss_7FC[arg0->work[0]]->trans.z);
+        BoardModelMotionTimeSet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER], time);
+        obj->work[0] = RoundItemItemGet(obj->work[2]);
+        BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_LIGHT], 1);
+        BoardModelPosSet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_LIGHT], itemObj[obj->work[0]]->trans.x, itemObj[obj->work[0]]->trans.y + 1.0f,
+            itemObj[obj->work[0]]->trans.z);
         BoardModelRotSet(
-            lbl_1_bss_6C4[20], lbl_1_bss_7FC[arg0->work[0]]->rot.x, lbl_1_bss_7FC[arg0->work[0]]->rot.y + 1.0f, lbl_1_bss_7FC[arg0->work[0]]->rot.z);
-        arg0->work[1] = 60;
+            mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_LIGHT], itemObj[obj->work[0]]->rot.x, itemObj[obj->work[0]]->rot.y + 1.0f, itemObj[obj->work[0]]->rot.z);
+        obj->work[1] = 60;
         BoardAudSeqFadeOut(1, 100);
-        arg0->func = fn_1_F348;
+        obj->func = RoundItemLightFlicker;
         HuAudFXPlay(0x40A);
     }
 }
 
-static void fn_1_F348(omObjData *arg0)
+static void RoundItemLightFlicker(omObjData *obj)
 {
-    if ((arg0->work[1] / 4) & 1) {
-        BoardModelVisibilitySet(lbl_1_bss_6C4[20], 0);
+    if ((obj->work[1] / 4) & 1) {
+        BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_LIGHT], 0);
     }
     else {
-        BoardModelVisibilitySet(lbl_1_bss_6C4[20], 1);
+        BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_LIGHT], 1);
     }
-    if ((arg0->work[1] -= 1) == 0) {
-        BoardModelVisibilitySet(lbl_1_bss_6C4[20], 0);
-        fn_1_101B8(arg0->work[0]);
+    if ((--obj->work[1]) == 0) {
+        BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_LIGHT], 0);
+        ItemGetCreate(obj->work[0]);
         HuAudFXPlay(0x310);
-        arg0->func = fn_1_F3F8;
+        obj->func = RoundItemUmaJumpWait;
     }
 }
 
-static void fn_1_F3F8(omObjData *arg0)
+static void RoundItemUmaJumpWait(omObjData *obj)
 {
-    Vec sp18;
-    Vec spC;
+    Vec playerPos;
+    Vec dir;
 
-    if (lbl_1_bss_7F0->work[0] != 1) {
+    if (itemGetObj->work[0] != 1) {
         return;
     }
-    BoardPlayerPosGet(lbl_1_bss_7E4, &sp18);
-    VECSubtract(&lbl_1_bss_7C4, &sp18, &spC);
-    VECNormalize(&spC, &spC);
-    arg0->trans.x = spC.x;
-    arg0->trans.y = spC.y;
-    arg0->trans.z = spC.z;
-    arg0->rot.x = VECDistanceXZ(&lbl_1_bss_7C4, &sp18);
-    arg0->scale.y = 20.0f + 40.0f * (arg0->rot.x / 445.0f);
-    arg0->rot.y = 0.016666668f * (arg0->scale.y / 2) * (arg0->scale.y / 2);
-    arg0->rot.z = sp18.y;
-    arg0->scale.x = 0.0f;
-    BoardPlayerMotionShiftSet(lbl_1_bss_7E4, 4, 0.0f, 5.0f, HU3D_MOTATTR_NONE);
-    VECSubtract(&lbl_1_bss_7C4, &sp18, &spC);
-    VECNormalize(&spC, &spC);
-    BoardPlayerRotSet(lbl_1_bss_7E4, 0.0f, fn_1_10EB8(&spC), 0.0f);
-    arg0->func = fn_1_F6E8;
+    BoardPlayerPosGet(roundItemPlayer, &playerPos);
+    VECSubtract(&roundItemPlayerPos, &playerPos, &dir);
+    VECNormalize(&dir, &dir);
+    obj->trans.x = dir.x;
+    obj->trans.y = dir.y;
+    obj->trans.z = dir.z;
+    obj->rot.x = VECDistanceXZ(&roundItemPlayerPos, &playerPos);
+    obj->scale.y = 20.0f + 40.0f * (obj->rot.x / 445.0f);
+    obj->rot.y = 0.016666668f * (obj->scale.y / 2) * (obj->scale.y / 2);
+    obj->rot.z = playerPos.y;
+    obj->scale.x = 0.0f;
+    BoardPlayerMotionShiftSet(roundItemPlayer, 4, 0.0f, 5.0f, HU3D_MOTATTR_NONE);
+    VECSubtract(&roundItemPlayerPos, &playerPos, &dir);
+    VECNormalize(&dir, &dir);
+    BoardPlayerRotSet(roundItemPlayer, 0.0f, RoundItemAngleGet(&dir), 0.0f);
+    obj->func = RoundItemUmaJump;
 }
 
-static void fn_1_F6E8(omObjData *arg0)
+static void RoundItemUmaJump(omObjData *obj)
 {
-    Vec sp8;
+    Vec pos;
 
-    BoardPlayerPosGet(lbl_1_bss_7E4, &sp8);
-    sp8.x += arg0->trans.x * arg0->rot.x / arg0->scale.y;
-    sp8.z += arg0->trans.z * arg0->rot.x / arg0->scale.y;
-    sp8.y += arg0->rot.y - 0.016666668f * arg0->scale.x * arg0->scale.x;
-    arg0->scale.x += 1.0f;
-    if (sp8.y < lbl_1_bss_80C.y || arg0->scale.x >= arg0->scale.y) {
-        sp8.y = lbl_1_bss_80C.y;
-        BoardCameraMotionStart(BoardPlayerModelGet(lbl_1_bss_7E4), NULL, 700.0f, -1.0f);
-        BoardPlayerMotionStart(lbl_1_bss_7E4, 2, 0x40000001);
-        arg0->func = fn_1_F890;
+    BoardPlayerPosGet(roundItemPlayer, &pos);
+    pos.x += obj->trans.x * obj->rot.x / obj->scale.y;
+    pos.z += obj->trans.z * obj->rot.x / obj->scale.y;
+    pos.y += obj->rot.y - 0.016666668f * obj->scale.x * obj->scale.x;
+    obj->scale.x += 1.0f;
+    if (pos.y < roundItemPos.y || obj->scale.x >= obj->scale.y) {
+        pos.y = roundItemPos.y;
+        BoardCameraMotionStart(BoardPlayerModelGet(roundItemPlayer), NULL, 700.0f, -1.0f);
+        BoardPlayerMotionStart(roundItemPlayer, 2, HU3D_MOTATTR_LOOP);
+        obj->func = RoundItemRotatePlayer;
     }
-    BoardPlayerPosSetV(lbl_1_bss_7E4, &sp8);
+    BoardPlayerPosSetV(roundItemPlayer, &pos);
 }
 
-static void fn_1_F890(omObjData *arg0)
+static void RoundItemRotatePlayer(omObjData *obj)
 {
-    Vec sp8;
+    Vec rot;
 
-    BoardPlayerRotGet(lbl_1_bss_7E4, &sp8);
-    if (sp8.y == 0.0f) {
-        BoardPlayerMotionShiftSet(lbl_1_bss_7E4, 1, 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
-        lbl_1_bss_7F0->work[0] = 0;
-        lbl_1_bss_7F0->func = fn_1_10820;
-        arg0->func = fn_1_FA1C;
+    BoardPlayerRotGet(roundItemPlayer, &rot);
+    if (rot.y == 0.0f) {
+        BoardPlayerMotionShiftSet(roundItemPlayer, 1, 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
+        itemGetObj->work[0] = 0;
+        itemGetObj->func = ItemGetPlayerMove;
+        obj->func = RoundItemStreamWait;
     }
-    else if (sp8.y > 180.0f) {
-        if (360.0f - sp8.y < 3.0f) {
-            sp8.y = 0.0f;
+    else if (rot.y > 180.0f) {
+        if (360.0f - rot.y < 3.0f) {
+            rot.y = 0.0f;
         }
         else {
-            sp8.y += 3.0f;
+            rot.y += 3.0f;
         }
     }
     else {
-        if (sp8.y < 3.0f) {
-            sp8.y = 0.0f;
+        if (rot.y < 3.0f) {
+            rot.y = 0.0f;
         }
         else {
-            sp8.y -= 3.0f;
+            rot.y -= 3.0f;
         }
     }
-    BoardPlayerRotSetV(lbl_1_bss_7E4, &sp8);
+    BoardPlayerRotSetV(roundItemPlayer, &rot);
 }
 
-static void fn_1_FA1C(omObjData *arg0)
+static void RoundItemStreamWait(omObjData *obj)
 {
-    if (lbl_1_bss_7F0->work[0] == 1) {
-        BoardPlayerMotionShiftSet(lbl_1_bss_7E4, lbl_1_bss_7BC, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
-        arg0->work[0] = 30;
-        lbl_1_bss_7A4 = HuAudSStreamPlay(2);
-        arg0->func = fn_1_FABC;
+    if (itemGetObj->work[0] == 1) {
+        BoardPlayerMotionShiftSet(roundItemPlayer, itemGetMotId, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+        obj->work[0] = 30;
+        roundItemStreamId = HuAudSStreamPlay(2);
+        obj->func = RoundItemWinWait;
     }
 }
 
-static void fn_1_FABC(omObjData *arg0)
+static void RoundItemWinWait(omObjData *obj)
 {
-    Process *var_r30;
+    Process *proc;
 
-    if (arg0->work[0] == 0) {
-        if (HuAudSStreamStatGet(lbl_1_bss_7A4) == 0) {
-            var_r30 = HuPrcCreate(fn_1_FB58, 0x2004, 0x1000, 0);
-            var_r30->user_data = arg0;
+    if (obj->work[0] == 0) {
+        if (HuAudSStreamStatGet(roundItemStreamId) == 0) {
+            proc = HuPrcCreate(ItemGetWinExec, 0x2004, 0x1000, 0);
+            proc->user_data = obj;
             BoardAudSeqPause(0, 0, 1000);
-            arg0->func = NULL;
+            obj->func = NULL;
         }
     }
     else {
-        arg0->work[0]--;
+        obj->work[0]--;
     }
 }
 
-static void fn_1_FB58(void)
+static void ItemGetWinExec(void)
 {
-    omObjData *temp_r31;
+    omObjData *obj;
 
     BoardWinCreate(2, MAKE_MESSID(10, 6), 0);
-    BoardWinInsertMesSet(MAKE_MESSID(8, lbl_1_bss_7F0->work[1]), 0);
+    BoardWinInsertMesSet(MAKE_MESSID(8, itemGetObj->work[1]), 0);
     BoardWinWait();
     BoardWinKill();
-    temp_r31 = HuPrcCurrentGet()->user_data;
-    BoardPlayerMotionShiftSet(lbl_1_bss_7E4, 1, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
-    lbl_1_bss_7F0->work[0] = 0;
+    obj = HuPrcCurrentGet()->user_data;
+    BoardPlayerMotionShiftSet(roundItemPlayer, 1, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+    itemGetObj->work[0] = 0;
     HuAudFXPlay(0x30D);
-    HuAudFXFadeOut(lbl_1_bss_7AC, 1000);
-    lbl_1_bss_7F0->func = fn_1_10AE8;
-    temp_r31->func = fn_1_FC3C;
+    HuAudFXFadeOut(itemGetSeNo, 1000);
+    itemGetObj->func = ItemGetShrink;
+    obj->func = ItemGetShrinkWait;
     HuPrcKill(NULL);
     while (TRUE) {
         HuPrcVSleep();
     }
 }
 
-static void fn_1_FC3C(omObjData *arg0)
+static void ItemGetShrinkWait(omObjData *obj)
 {
-    Process *var_r31;
+    Process *proc;
 
-    if (lbl_1_bss_7F0->work[0] == 1) {
-        BoardPlayerItemAdd(lbl_1_bss_7E4, lbl_1_bss_7F0->work[1]);
-        omVibrate(lbl_1_bss_7E4, 12, 6, 6);
-        var_r31 = HuPrcCreate(fn_1_FCEC, 0x2004, 0x1000, 0);
-        var_r31->user_data = arg0;
-        arg0->func = NULL;
+    if (itemGetObj->work[0] == 1) {
+        BoardPlayerItemAdd(roundItemPlayer, itemGetObj->work[1]);
+        omVibrate(roundItemPlayer, 12, 6, 6);
+        proc = HuPrcCreate(ItemGetReturnWinExec, 0x2004, 0x1000, 0);
+        proc->user_data = obj;
+        obj->func = NULL;
     }
 }
 
-static void fn_1_FCEC(void)
+static void ItemGetReturnWinExec(void)
 {
-    omObjData *var_r31;
+    omObjData *obj;
 
     BoardWinCreate(2, MAKE_MESSID(10, 7), 0);
     BoardWinWait();
     BoardWinKill();
-    var_r31 = HuPrcCurrentGet()->user_data;
-    var_r31->func = fn_1_FD3C;
+    obj = HuPrcCurrentGet()->user_data;
+    obj->func = RoundItemGameClose;
     HuPrcKill(NULL);
     while (TRUE) {
         HuPrcVSleep();
     }
 }
 
-static void fn_1_FD3C(omObjData *arg0)
+static void RoundItemGameClose(omObjData *obj)
 {
     BoardStatusShowSetAll(1);
-    BoardCameraTargetModelSet(lbl_1_bss_6C4[21]);
+    BoardCameraTargetModelSet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM_UP]);
     BoardCameraOffsetSet(0.0f, 0.0f, 0.0f);
     BoardCameraXRotZoomSet(1200.0f, -45.0f);
-    BoardModelMotionSpeedSet(lbl_1_bss_6C4[17], 1.0f);
-    Hu3DModelKill(lbl_1_bss_7F0->model[0]);
-    Hu3DModelKill(lbl_1_bss_7F0->model[1]);
-    Hu3DModelKill(lbl_1_bss_7F0->model[2]);
-    omDelObjEx(HuPrcCurrentGet(), lbl_1_bss_7F0);
-    arg0->func = fn_1_FE44;
+    BoardModelMotionSpeedSet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA], 1.0f);
+    Hu3DModelKill(itemGetObj->model[0]);
+    Hu3DModelKill(itemGetObj->model[1]);
+    Hu3DModelKill(itemGetObj->model[2]);
+    omDelObjEx(HuPrcCurrentGet(), itemGetObj);
+    obj->func = RoundItemGameEnd;
 }
 
-static void fn_1_FE44(omObjData *arg0)
+static void RoundItemGameEnd(omObjData *obj)
 {
-    if (BoardStatusStopCheck(lbl_1_bss_7E4) && BoardCameraMotionIsDone()) {
-        lbl_1_bss_7AA = 1;
-        BoardMGExit();
-        HuAudFXPlay(0x40F);
-        BoardModelMotionStart(lbl_1_bss_6C4[21], 0, 0x40000004);
-        arg0->func = NULL;
+    if (BoardStatusStopCheck(roundItemPlayer) && BoardCameraMotionIsDone()) {
+        RoundItemEnd();
+        obj->func = NULL;
     }
 }
 
-static void fn_1_FED0(omObjData *arg0)
+static void RoundItemItemUpdate(omObjData *obj)
 {
-    float temp_f30;
-    float var_f31;
-    float var_f29;
+    float time;
+    float rotY;
+    float maxTime;
 
-    temp_f30 = BoardModelMotionTimeGet(lbl_1_bss_6C4[18]);
-    var_f29 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[18]);
-    var_f31 = 90.0f - 90.0f * arg0->work[2] + 360.0f * (temp_f30 / var_f29);
-    if (var_f31 >= 360.0f) {
-        var_f31 -= 360.0f;
+    time = BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]);
+    maxTime = BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]);
+    rotY = 90.0f - 90.0f * obj->work[2] + 360.0f * (time / maxTime);
+    if (rotY >= 360.0f) {
+        rotY -= 360.0f;
     }
-    if (var_f31 < 0.0f) {
-        var_f31 += 360.0f;
+    if (rotY < 0.0f) {
+        rotY += 360.0f;
     }
-    omSetRot(arg0, 0.0f, var_f31, 0.0f);
+    omSetRot(obj, 0.0f, rotY, 0.0f);
 }
 
-static s16 fn_1_1001C(u32 arg0)
+static s16 RoundItemItemGet(u32 umaNo)
 {
-    float var_f29;
-    float var_f28;
-    float temp_f27;
-    float temp_f26;
-    float var_f31;
-    float var_f30;
+    float umaMaxTime;
+    float umaAngle;
+    float borderAngle;
+    float angle;
+    float umaTime;
 
-    temp_f26 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[18]);
-    temp_f27 = 360.0f - 360.0f * (BoardModelMotionTimeGet(lbl_1_bss_6C4[18]) / temp_f26);
-    var_f30 = BoardModelMotionTimeGet(lbl_1_bss_6C4[17]);
-    var_f29 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[17]);
-    var_f30 = var_f30 - (var_f29 / 4) * arg0;
-    if (var_f30 < 0.0f) {
-        var_f30 += var_f29;
+    borderAngle = 360.0f - 360.0f * (BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]) / BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]));
+    umaTime = BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]);
+    umaMaxTime = BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]);
+    umaTime = umaTime - (umaMaxTime / 4) * umaNo;
+    if (umaTime < 0.0f) {
+        umaTime += umaMaxTime;
     }
-    var_f28 = 360.0f * (var_f30 / var_f29);
-    var_f31 = var_f28 - temp_f27;
-    if (var_f31 < 0.0f) {
-        var_f31 += 360.0f;
+    umaAngle = 360.0f * (umaTime / umaMaxTime);
+    angle = umaAngle - borderAngle;
+    if (angle < 0.0f) {
+        angle += 360.0f;
     }
-    var_f31 /= 90.0f;
-    return var_f31;
+    angle /= 90.0f;
+    return angle;
 }
 
-static void fn_1_101B8(s16 arg0)
+static void ItemGetCreate(s16 itemNo)
 {
-    omObjData *var_r31;
-    float *var_r30;
-    float var_f27;
-    float temp_f26;
-    float temp_f30;
-    float temp_f29;
-    float temp_f28;
-    float var_f31;
+    omObjData *obj;
+    float *data;
+    float borderAngle;
+    float posX;
+    float posY;
+    float posZ;
+    float angle;
 
-    var_r31 = lbl_1_bss_7F0 = omAddObjEx(boardObjMan, 0x165, 3, 0, -1, fn_1_10664);
-    var_r31->model[0] = lbl_1_bss_7FC[arg0]->model[1];
-    Hu3DModelAttrReset(var_r31->model[0], HU3D_ATTR_DISPOFF);
-    lbl_1_bss_7F0->work[1] = lbl_1_bss_7FC[arg0]->work[1];
-    lbl_1_bss_7F0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 3 * sizeof(float), MEMORY_DEFAULT_NUM);
-    var_r30 = lbl_1_bss_7F0->data;
-    omSetRot(var_r31, 0.0f, 0.0f, 0.0f);
-    omSetSca(var_r31, 0.0f, 0.0f, 0.0f);
-    temp_f26 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[18]);
-    var_f27 = 360.0f - 360.0f * (BoardModelMotionTimeGet(lbl_1_bss_6C4[18]) / temp_f26);
-    var_f31 = 45.0f + var_f27 + 90.0f * arg0;
-    if (var_f31 >= 360.0f) {
-        var_f31 -= 360.0f;
+    obj = itemGetObj = omAddObjEx(boardObjMan, 0x165, 3, 0, -1, ItemGetObjUpdate);
+    obj->model[0] = itemObj[itemNo]->model[1];
+    Hu3DModelAttrReset(obj->model[0], HU3D_ATTR_DISPOFF);
+    itemGetObj->work[1] = itemObj[itemNo]->work[1];
+    itemGetObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, 3 * sizeof(float), MEMORY_DEFAULT_NUM);
+    data = itemGetObj->data;
+    omSetRot(obj, 0.0f, 0.0f, 0.0f);
+    omSetSca(obj, 0.0f, 0.0f, 0.0f);
+    borderAngle = 360.0f - 360.0f * (BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]) / BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_BORDER]));
+    angle = 45.0f + borderAngle + 90.0f * itemNo;
+    if (angle >= 360.0f) {
+        angle -= 360.0f;
     }
-    temp_f30 = lbl_1_bss_80C.x - 100.0 * cosd(var_f31);
-    temp_f28 = lbl_1_bss_80C.z - 100.0 * sind(var_f31);
-    temp_f29 = lbl_1_bss_80C.y + 66.0f + 1.0f;
-    omSetTra(var_r31, temp_f30, temp_f29, temp_f28);
-    var_r31->work[0] = 0;
-    var_r30[0] = 0.1f;
-    var_r30[2] = 20.0f;
-    var_r30[1] = 0.0f;
-    var_r31->model[1] = Hu3DParticleCreate(lbl_1_bss_7A0, 200);
-    var_r31->model[2] = Hu3DParticleCreate(lbl_1_bss_7A0, 100);
-    Hu3DParticleHookSet(var_r31->model[1], fn_1_11064);
-    Hu3DParticleHookSet(var_r31->model[2], fn_1_11484);
-    Hu3DParticleColSet(var_r31->model[1], 0xFF, 0xFF, 0);
-    Hu3DParticleColSet(var_r31->model[2], 0xFF, 0xFF, 0);
-    Hu3DModelPosSet(var_r31->model[1], 0.0f, 0.0f, 0.0f);
-    Hu3DModelPosSet(var_r31->model[2], temp_f30, temp_f29, temp_f28);
-    Hu3DParticleBlendModeSet(var_r31->model[1], 1);
-    Hu3DParticleBlendModeSet(var_r31->model[2], 1);
-    Hu3DModelLayerSet(var_r31->model[1], 3);
-    Hu3DModelLayerSet(var_r31->model[2], 3);
-    lbl_1_bss_7AC = HuAudFXPlay(0x35F);
+    posX = roundItemPos.x - 100.0 * cosd(angle);
+    posZ = roundItemPos.z - 100.0 * sind(angle);
+    posY = roundItemPos.y + 66.0f + 1.0f;
+    omSetTra(obj, posX, posY, posZ);
+    obj->work[0] = 0;
+    data[0] = 0.1f;
+    data[2] = 20.0f;
+    data[1] = 0.0f;
+    obj->model[1] = Hu3DParticleCreate(roundItemEffAnim, 200);
+    obj->model[2] = Hu3DParticleCreate(roundItemEffAnim, 100);
+    Hu3DParticleHookSet(obj->model[1], ItemGetEff1Hook);
+    Hu3DParticleHookSet(obj->model[2], ItemGetEff2Hook);
+    Hu3DParticleColSet(obj->model[1], 0xFF, 0xFF, 0);
+    Hu3DParticleColSet(obj->model[2], 0xFF, 0xFF, 0);
+    Hu3DModelPosSet(obj->model[1], 0.0f, 0.0f, 0.0f);
+    Hu3DModelPosSet(obj->model[2], posX, posY, posZ);
+    Hu3DParticleBlendModeSet(obj->model[1], 1);
+    Hu3DParticleBlendModeSet(obj->model[2], 1);
+    Hu3DModelLayerSet(obj->model[1], 3);
+    Hu3DModelLayerSet(obj->model[2], 3);
+    itemGetSeNo = HuAudFXPlay(0x35F);
 }
 
-static void fn_1_10664(omObjData *arg0)
+static void ItemGetObjUpdate(omObjData *obj)
 {
-    float *temp_r31;
-    float var_f31;
+    float *data;
+    float scale;
 
-    temp_r31 = arg0->data;
-    var_f31 = temp_r31[0];
-    if (arg0->work[0] == 0) {
-        if (var_f31 > 1.0f) {
-            var_f31 = 1.0f;
+    data = obj->data;
+    scale = data[0];
+    if (obj->work[0] == 0) {
+        if (scale > 1.0f) {
+            scale = 1.0f;
         }
         else {
-            temp_r31[0] += 0.025f;
+            data[0] += 0.025f;
         }
-        arg0->trans.y += temp_r31[2];
-        temp_r31[2] -= 1.0f;
-        if (temp_r31[2] < 0.0f && arg0->trans.y < lbl_1_bss_80C.y + 66.0f + 1.0f + 90.0f) {
-            arg0->work[0] = 1;
+        obj->trans.y += data[2];
+        data[2] -= 1.0f;
+        if (data[2] < 0.0f && obj->trans.y < roundItemPos.y + 66.0f + 1.0f + 90.0f) {
+            obj->work[0] = 1;
         }
-        omSetSca(arg0, var_f31, var_f31, var_f31);
+        omSetSca(obj, scale, scale, scale);
     }
     else {
-        arg0->trans.y += sind(temp_r31[1]);
-        temp_r31[1] += 4.0f;
-        if (temp_r31[1] >= 360.0f) {
-            temp_r31[1] -= 360.0f;
+        obj->trans.y += sind(data[1]);
+        data[1] += 4.0f;
+        if (data[1] >= 360.0f) {
+            data[1] -= 360.0f;
         }
     }
 }
 
-static void fn_1_10820(omObjData *arg0)
+static void ItemGetPlayerMove(omObjData *obj)
 {
-    Vec sp24;
-    Vec sp18;
-    Vec spC;
+    Vec playerPos;
+    Vec objPos;
+    Vec dir;
     float var_f28;
-    float *temp_r30;
+    float *data;
 
-    temp_r30 = arg0->data;
-    if (arg0->work[0] == 0) {
-        BoardPlayerPosGet(lbl_1_bss_7E4, &sp24);
-        sp18.x = arg0->trans.x;
-        sp18.y = 0.0f;
-        sp18.z = arg0->trans.z;
-        sp24.y = 0.0f;
-        VECSubtract(&sp24, &sp18, &spC);
-        VECNormalize(&spC, &spC);
-        var_f28 = VECDistanceXZ(&sp24, &sp18);
+    data = obj->data;
+    if (obj->work[0] == 0) {
+        BoardPlayerPosGet(roundItemPlayer, &playerPos);
+        objPos.x = obj->trans.x;
+        objPos.y = 0.0f;
+        objPos.z = obj->trans.z;
+        playerPos.y = 0.0f;
+        VECSubtract(&playerPos, &objPos, &dir);
+        VECNormalize(&dir, &dir);
+        var_f28 = VECDistanceXZ(&playerPos, &objPos);
         if (var_f28 < 8.0f) {
-            arg0->trans.x = sp24.x;
-            arg0->trans.z = sp24.z;
-            arg0->work[0] = 1;
+            obj->trans.x = playerPos.x;
+            obj->trans.z = playerPos.z;
+            obj->work[0] = 1;
         }
         else {
-            arg0->trans.x += 8.0f * spC.x;
-            arg0->trans.z += 8.0f * spC.z;
+            obj->trans.x += 8.0f * dir.x;
+            obj->trans.z += 8.0f * dir.z;
         }
     }
-    arg0->trans.y += sind(temp_r30[1]);
-    temp_r30[1] += 4.0f;
-    if (temp_r30[1] >= 360.0f) {
-        temp_r30[1] -= 360.0f;
+    obj->trans.y += sind(data[1]);
+    data[1] += 4.0f;
+    if (data[1] >= 360.0f) {
+        data[1] -= 360.0f;
     }
 }
 
-static void fn_1_10AE8(omObjData *arg0)
+static void ItemGetShrink(omObjData *obj)
 {
-    float *temp_r31;
+    float *data;
 
-    temp_r31 = arg0->data;
-    if (arg0->work[0] == 0) {
-        temp_r31[0] -= 0.016666668f;
-        if (temp_r31[0] <= 0.0f) {
-            temp_r31[0] = 0.0f;
-            arg0->work[0] = 1;
-            HuAudFXStop(lbl_1_bss_7AC);
+    data = obj->data;
+    if (obj->work[0] == 0) {
+        data[0] -= 0.016666668f;
+        if (data[0] <= 0.0f) {
+            data[0] = 0.0f;
+            obj->work[0] = 1;
+            HuAudFXStop(itemGetSeNo);
         }
-        arg0->trans.y -= 2.1666667f;
+        obj->trans.y -= 2.1666667f;
     }
-    omSetSca(arg0, temp_r31[0], temp_r31[0], temp_r31[0]);
+    omSetSca(obj, data[0], data[0], data[0]);
 }
 
-static float fn_1_10BB0(u32 arg0)
+static float RoundItemUmaRotYGet(u32 umaNo)
 {
-    float var_f30;
-    float temp_f29;
-    float var_f31;
+    float time;
+    float maxTime;
+    float rotY;
 
-    var_f30 = BoardModelMotionTimeGet(lbl_1_bss_6C4[17]);
-    temp_f29 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[17]);
-    var_f30 = var_f30 - (temp_f29 / 4) * arg0;
-    if (var_f30 < 0.0f) {
-        var_f30 += temp_f29;
+    time = BoardModelMotionTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]);
+    maxTime = BoardModelMotionMaxTimeGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]);
+    time = time - (maxTime / 4) * umaNo;
+    if (time < 0.0f) {
+        time += maxTime;
     }
-    var_f31 = 180.0f + -360.0f * (var_f30 / temp_f29);
-    if (var_f31 >= 360.0f) {
-        var_f31 -= 360.0f;
+    rotY = 180.0f + -360.0f * (time / maxTime);
+    if (rotY >= 360.0f) {
+        rotY -= 360.0f;
     }
-    if (var_f31 < 0.0f) {
-        var_f31 += 360.0f;
+    if (rotY < 0.0f) {
+        rotY += 360.0f;
     }
-    return var_f31;
+    return rotY;
 }
 
-static void fn_1_10CF0(u32 arg0)
+static void RoundItemUmaPlayerSet(u32 umaNo)
 {
-    float var_f30;
-    float temp_f29;
-    float var_f31;
-    float var_f28;
-
-    Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_6C4[17]), lbl_1_data_F9C[arg0], &lbl_1_bss_7D8);
-    BoardPlayerPosSetV(lbl_1_bss_7E4, &lbl_1_bss_7D8);
-    var_f30 = BoardModelMotionTimeGet(lbl_1_bss_6C4[17]);
-    temp_f29 = BoardModelMotionMaxTimeGet(lbl_1_bss_6C4[17]);
-    var_f30 = var_f30 - (temp_f29 / 4) * arg0;
-    if (var_f30 < 0.0f) {
-        var_f30 += temp_f29;
-    }
-    var_f31 = 180.0f + -360.0f * (var_f30 / temp_f29);
-    if (var_f31 >= 360.0f) {
-        var_f31 -= 360.0f;
-    }
-    if (var_f31 < 0.0f) {
-        var_f31 += 360.0f;
-    }
-    var_f28 = var_f31;
-    BoardPlayerRotSet(lbl_1_bss_7E4, 0.0f, var_f28, 0.0f);
+    Hu3DModelObjPosGet(BoardModelIDGet(mapObjMdlId[MAPOBJ_ROUNDITEM_UMA]), umaHookTbl[umaNo], &umaPos);
+    BoardPlayerPosSetV(roundItemPlayer, &umaPos);
+    BoardPlayerRotSet(roundItemPlayer, 0.0f, RoundItemUmaRotYGet(umaNo), 0.0f);
 }
 
-static float fn_1_10EB8(Vec *arg0)
+static float RoundItemAngleGet(Vec *dir)
 {
-    float var_f31;
+    float angle;
 
-    if (arg0->x || arg0->z) {
-        if (arg0->x == 0.0f) {
-            if (arg0->z > 0.0f) {
+    if (dir->x || dir->z) {
+        if (dir->x == 0.0f) {
+            if (dir->z > 0.0f) {
                 return 0.0f;
             }
             else {
                 return 180.0f;
             }
         }
-        if (arg0->z == 0.0f) {
-            if (arg0->x > 0.0f) {
+        if (dir->z == 0.0f) {
+            if (dir->x > 0.0f) {
                 return 90.0f;
             }
             else {
                 return 270.0f;
             }
         }
-        var_f31 = atan2d(arg0->z, arg0->x);
-        if (arg0->z < 0.0f) {
-            var_f31 = 90.0f - var_f31;
+        angle = atan2d(dir->z, dir->x);
+        if (dir->z < 0.0f) {
+            angle = 90.0f - angle;
         }
         else {
-            var_f31 = 90.0f - var_f31;
-            if (var_f31 < 0.0f) {
-                var_f31 += 360.0f;
+            angle = 90.0f - angle;
+            if (angle < 0.0f) {
+                angle += 360.0f;
             }
         }
-        return var_f31;
+        return angle;
     }
     return -1.0f;
 }
 
-static void fn_1_11064(ModelData *model, ParticleData *particle, Mtx matrix)
+static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *var_r31;
-    float temp_f30;
-    float temp_f29;
-    float temp_f31;
-    s32 var_r28;
+    HsfanimStruct01 *particleDataP;
+    float angle;
+    float radius;
+    float radiusBase;
+    s32 j;
     s32 i;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
-        for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+        particleDataP = particle->unk_48;
+        for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+            particleDataP->unk40.a = 0;
+            particleDataP->unk2C = 0.0f;
         }
         particle->unk_00 = 0;
     }
-    temp_f31 = lbl_1_bss_7F0->scale.x;
+    radiusBase = itemGetObj->scale.x;
     for (i = 0; i < 30; i++) {
-        var_r31 = particle->unk_48;
-        for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-            if (var_r31->unk2C == 0.0f) {
+        particleDataP = particle->unk_48;
+        for (j = 0; j < particle->unk_30; j++, particleDataP++) {
+            if (particleDataP->unk2C == 0.0f) {
                 break;
             }
         }
-        if (var_r28 != particle->unk_30) {
-            temp_f30 = 0.003921569f * frand8() * 360.0f;
-            temp_f29 = 0.003921569f * frand8() * 70.0f * temp_f31;
-            var_r31->unk34.x = lbl_1_bss_7F0->trans.x + temp_f29 * sind(temp_f30);
-            var_r31->unk34.z = lbl_1_bss_7F0->trans.z + temp_f29 * cosd(temp_f30);
-            var_r31->unk34.y = lbl_1_bss_7F0->trans.y + temp_f31 * (-30.0f + 0.003921569f * frand8() * 60.0f);
-            var_r31->unk08.x = 0.5f + 0.003921569f * frand8() * 3.0f;
-            var_r31->unk08.y = 0.3f + 0.003921569f * frand8() * 2.0f;
-            var_r31->unk40.a = 0xB4;
-            var_r31->unk2C = 15.0f * temp_f31;
+        if (j != particle->unk_30) {
+            angle = 0.003921569f * frand8() * 360.0f;
+            radius = 0.003921569f * frand8() * 70.0f * radiusBase;
+            particleDataP->unk34.x = itemGetObj->trans.x + radius * sind(angle);
+            particleDataP->unk34.z = itemGetObj->trans.z + radius * cosd(angle);
+            particleDataP->unk34.y = itemGetObj->trans.y + radiusBase * (-30.0f + 0.003921569f * frand8() * 60.0f);
+            particleDataP->unk08.x = 0.5f + 0.003921569f * frand8() * 3.0f;
+            particleDataP->unk08.y = 0.3f + 0.003921569f * frand8() * 2.0f;
+            particleDataP->unk40.a = 0xB4;
+            particleDataP->unk2C = 15.0f * radiusBase;
         }
     }
-    var_r31 = particle->unk_48;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk2C != 0.0f) {
-            var_r31->unk34.y -= var_r31->unk08.x;
-            var_r31->unk2C -= var_r31->unk08.y;
-            if (var_r31->unk2C <= 0.0f) {
-                var_r31->unk2C = 0.0f;
+    particleDataP = particle->unk_48;
+    for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+        if (particleDataP->unk2C != 0.0f) {
+            particleDataP->unk34.y -= particleDataP->unk08.x;
+            particleDataP->unk2C -= particleDataP->unk08.y;
+            if (particleDataP->unk2C <= 0.0f) {
+                particleDataP->unk2C = 0.0f;
             }
         }
     }
 }
 
-static void fn_1_11484(ModelData *model, ParticleData *particle, Mtx matrix)
+static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *var_r31;
-    float temp_f29;
-    float temp_f30;
-    float temp_f31;
-    s32 var_r28;
-    s32 var_r29;
+    HsfanimStruct01 *particleDataP;
+    float angle2;
+    float angle;
+    float radius;
+    s32 j;
+    s32 i;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
-        for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+        particleDataP = particle->unk_48;
+        for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+            particleDataP->unk40.a = 0;
+            particleDataP->unk2C = 0.0f;
         }
         particle->unk_00 = 0;
     }
     if (particle->unk_00 == 0) {
-        var_r31 = particle->unk_48;
-        for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-            temp_f30 = 0.003921569f * frand8() * 360.0f;
-            temp_f31 = 0.003921569f * frand8() * 50.0f;
-            var_r31->unk08.x = temp_f31 * cosd(temp_f30);
-            var_r31->unk08.y = 2.0f + 0.003921569f * frand8() * 4.0f;
-            var_r31->unk08.z = temp_f31 * sind(temp_f30);
-            temp_f29 = 60.0f + 20.0f * frand8() * 0.003921569f;
-            temp_f31 = 4.0f + 5.0f * frand8() * 0.003921569f;
-            var_r31->unk14.x = temp_f31 * sind(temp_f30) * cosd(temp_f29);
-            var_r31->unk14.y = temp_f31 * sind(temp_f29);
-            var_r31->unk14.z = temp_f31 * cosd(temp_f30) * cosd(temp_f29);
-            var_r31->unk20 = 1.0f;
-            var_r31->unk40.a = 0xB4;
-            var_r31->unk2C = 9.0f + 0.003921569f * frand8() * 4.0f;
+        particleDataP = particle->unk_48;
+        for (j = 0; j < particle->unk_30; j++, particleDataP++) {
+            angle = 0.003921569f * frand8() * 360.0f;
+            radius = 0.003921569f * frand8() * 50.0f;
+            particleDataP->unk08.x = radius * cosd(angle);
+            particleDataP->unk08.y = 2.0f + 0.003921569f * frand8() * 4.0f;
+            particleDataP->unk08.z = radius * sind(angle);
+            angle2 = 60.0f + 20.0f * frand8() * 0.003921569f;
+            radius = 4.0f + 5.0f * frand8() * 0.003921569f;
+            particleDataP->unk14.x = radius * sind(angle) * cosd(angle2);
+            particleDataP->unk14.y = radius * sind(angle2);
+            particleDataP->unk14.z = radius * cosd(angle) * cosd(angle2);
+            particleDataP->unk20 = 1.0f;
+            particleDataP->unk40.a = 0xB4;
+            particleDataP->unk2C = 9.0f + 0.003921569f * frand8() * 4.0f;
         }
         particle->unk_00 = 1;
     }
-    var_r31 = particle->unk_48;
-    for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk2C != 0.0f) {
-            var_r31->unk34.x = var_r31->unk08.x + var_r31->unk14.x * var_r31->unk20;
-            var_r31->unk34.z = var_r31->unk08.z + var_r31->unk14.z * var_r31->unk20;
-            var_r31->unk34.y = var_r31->unk08.y + var_r31->unk14.y * var_r31->unk20 - 0.2f * var_r31->unk20 * var_r31->unk20;
-            var_r31->unk2C -= 0.25f;
-            var_r31->unk20 += 1.0f;
-            if (var_r31->unk2C <= 0.0f) {
-                var_r31->unk2C = 0.0f;
+    particleDataP = particle->unk_48;
+    for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+        if (particleDataP->unk2C != 0.0f) {
+            particleDataP->unk34.x = particleDataP->unk08.x + particleDataP->unk14.x * particleDataP->unk20;
+            particleDataP->unk34.z = particleDataP->unk08.z + particleDataP->unk14.z * particleDataP->unk20;
+            particleDataP->unk34.y = particleDataP->unk08.y + particleDataP->unk14.y * particleDataP->unk20 - 0.2f * particleDataP->unk20 * particleDataP->unk20;
+            particleDataP->unk2C -= 0.25f;
+            particleDataP->unk20 += 1.0f;
+            if (particleDataP->unk2C <= 0.0f) {
+                particleDataP->unk2C = 0.0f;
             }
         }
     }

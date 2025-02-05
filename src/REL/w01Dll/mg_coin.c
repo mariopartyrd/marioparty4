@@ -25,102 +25,98 @@
 #include "ext_math.h"
 
 typedef struct {
-    /* 0x00 */ Vec unk00;
-    /* 0x0C */ float unk0C;
-} Data690InnerStruct; // Size 0x10
+    /* 0x00 */ Vec pos;
+    /* 0x0C */ float len;
+} SpaceAmidaPathPoint; // Size 0x10
 
-typedef Data690InnerStruct Data690Block[15];
+typedef SpaceAmidaPathPoint SpaceAmidaMap[15];
 
 typedef struct {
     /* 0x00 */ s16 unk00;
     /* 0x02 */ s16 unk02;
-    /* 0x04 */ Vec unk04;
-    /* 0x10 */ Vec unk10;
-    /* 0x1C */ u16 unk1C;
-    /* 0x1E */ char unk1E[2];
-    /* 0x20 */ float unk20;
-    /* 0x24 */ u16 unk24;
-    /* 0x26 */ s16 unk26;
-    /* 0x28 */ s16 unk28;
-    /* 0x2A */ char unk2A[2];
-} Bss720Data; // Size 0x2C
+    /* 0x04 */ Vec rocketPos;
+    /* 0x10 */ Vec jumpDir;
+    /* 0x1C */ u16 waitTime;
+    /* 0x20 */ float jumpTime;
+    /* 0x24 */ u16 comDelay;
+    /* 0x26 */ s16 comChoice;
+    /* 0x28 */ s16 comInputTimer;
+} SpaceAmidaGameWork; // Size 0x2C
 
 typedef struct {
     /* 0x00 */ char unk00[4];
-    /* 0x04 */ Data690Block *unk04;
-    /* 0x08 */ u16 unk08;
-    /* 0x0A */ char unk0A[2];
-    /* 0x0C */ float unk0C;
-    /* 0x10 */ float unk10;
-    /* 0x14 */ float unk14;
-    /* 0x18 */ float unk18;
-    /* 0x1C */ float unk1C;
-    /* 0x20 */ Vec unk20;
-    /* 0x2C */ Vec unk2C;
-    /* 0x38 */ float unk38;
+    /* 0x04 */ SpaceAmidaMap *map;
+    /* 0x08 */ u16 mapCursor;
+    /* 0x0C */ float len;
+    /* 0x10 */ float speed;
+    /* 0x14 */ float maxSpeed;
+    /* 0x18 */ float rocketXOfs;
+    /* 0x1C */ float kemuriSize;
+    /* 0x20 */ Vec kemuriScale;
+    /* 0x2C */ Vec kemuriScaleVel;
+    /* 0x38 */ float kemuriTPLvl;
     /* 0x3C */ float unk3C;
-    /* 0x40 */ s16 unk40;
-    /* 0x42 */ char unk42[2];
-} Bss714Data; // Size 0x44
+    /* 0x40 */ s16 targetNo;
+} RocketWork; // Size 0x44
 
-static void fn_1_A4B8(omObjData *arg0);
-static void fn_1_A554(void);
-static void fn_1_A5FC(void);
-static void fn_1_A6E0(omObjData *arg0);
-static float fn_1_B018(Data690Block *arg0);
-static void fn_1_B088(omObjData *arg0);
-static void fn_1_B1CC(omObjData *arg0, u16 *arg1, u16 *arg2);
-static void fn_1_B3B8(omObjData *arg0);
-static void fn_1_B478(omObjData *arg0);
-static void fn_1_BAF8(omObjData *arg0);
-static void fn_1_BCDC(omObjData *arg0);
-static void fn_1_BF00(omObjData *arg0);
-static void fn_1_BF68(omObjData *arg0);
-static void fn_1_C000(void);
-static void fn_1_C0FC(omObjData *arg0);
-static void fn_1_C25C(void);
-static void fn_1_C844(void);
-static void fn_1_C894(omObjData *arg0);
-static void fn_1_C94C(Vec *arg0, Vec *arg1, Vec *arg2);
-static float fn_1_C998(Vec *arg0);
-static u32 fn_1_CB44(Vec *arg0, float arg1);
-static void fn_1_CEC4(void);
-static void fn_1_D034(void);
-static void fn_1_D07C(omObjData *arg0);
-static void fn_1_D114(ModelData *model, ParticleData *particle, Mtx matrix);
+static void SpaceAmidaMainUpdate(omObjData *obj);
+static void SpaceAmidaStop(void);
+static void SpaceAmidaKill(void);
+static void SpaceAmidaRocketObjUpdate(omObjData *obj);
+static float SpaceAmidaMapLenGet(SpaceAmidaMap *obj);
+static void SpaceAmidaComChoiceSet(omObjData *obj);
+static void SpaceAmidaComInputGet(omObjData *obj, u16 *stkBtn, u16 *btn);
+static void SpaceAmidaGameOpen(omObjData *obj);
+static void SpaceAmidaGameUpdate(omObjData *obj);
+static void SpaceAmidaRocketJump(omObjData *obj);
+static void SpaceAmidaRocketKemuriExec(omObjData *obj);
+static void SpaceAmidaRocketWait(omObjData *obj);
+static void SpaceAmidaRocketUp(omObjData *obj);
+static void SpaceAmidaCoinWin(void);
+static void SpaceAmidaJumpDown(omObjData *obj);
+static void SpaceAmidaCoinRainMain(void);
+static void SpaceAmidaReturnWinMain(void);
+static void SpaceAmidaGameStop(omObjData *obj);
+static void SpaceAmidaDirGet(Vec *a, Vec *b, Vec *result);
+static float SpaceAmidaAngleGet(Vec *dir);
+static u32 SpaceAmidaPlayerRotAdd(Vec *rocketPos, float delta);
+static void SpaceAmidaEffCreate(void);
+static void SpaceAmidaEffKill(void);
+static void SpaceAmidaEffUpdate(omObjData *arg0);
+static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, Mtx matrix);
 
-static s32 lbl_1_bss_79C;
-static s32 lbl_1_bss_798;
-static s16 lbl_1_bss_796;
-static s16 lbl_1_bss_790[3];
-static s16 lbl_1_bss_78A[3];
-static s16 lbl_1_bss_788;
-static s16 lbl_1_bss_760[20];
-static Process *lbl_1_bss_75C;
-static omObjData *lbl_1_bss_758;
-static float lbl_1_bss_754;
-static s16 lbl_1_bss_750;
-static s32 lbl_1_bss_74C;
-static s32 lbl_1_bss_748;
-static s16 lbl_1_bss_744;
-static Vec lbl_1_bss_738;
-static s32 lbl_1_bss_734;
-static s32 lbl_1_bss_730;
-static s32 lbl_1_bss_72C;
-static u16 lbl_1_bss_72A;
-static u16 lbl_1_bss_728;
-static s32 lbl_1_bss_724;
-static omObjData *lbl_1_bss_720;
-static omObjData *lbl_1_bss_714[3];
-static omObjData *lbl_1_bss_710;
-static AnimData *lbl_1_bss_70C;
-static s16 lbl_1_bss_708;
+static s32 spaceAmidaPadNo;
+static s32 spaceAmidaPlayerNo;
+static s16 spaceAmidaMdlId;
+static s16 mapMdlId[3];
+static s16 rocketMdlId[3];
+static s16 spaceAmidaEffMdlId;
+static s16 coinMdlId[20];
+static Process *coinWinProc;
+static omObjData *spaceAmidaMainObj;
+static float spaceAmidaTime;
+static s16 kemuriMdlId;
+static s32 timerSec;
+static s32 timerFrame;
+static s16 timerSeqId;
+static Vec spaceAmidaPos;
+static s32 spaceAmidaMapNo;
+static s32 spaceAmidaPath;
+static s32 rocketWarpF;
+static u16 spaceAmidaStopF;
+static u16 spaceAmidaCoinNum;
+static s32 spaceAmidaSeNo;
+static omObjData *spaceAmidaGameObj;
+static omObjData *rocketObj[3];
+static omObjData *spaceAmidaEffObj;
+static AnimData *spaceAmidaEffAnim;
+static s16 spaceAmidaSeqStopF;
 
-static Vec lbl_1_data_658[3] = { { -50.0f, 238.0f, 0.0f }, { 0.0f, 275.5f, 0.0f }, { 50.0f, 238.0f, 0.0f } };
+static Vec effPosTbl[3] = { { -50.0f, 238.0f, 0.0f }, { 0.0f, 275.5f, 0.0f }, { 50.0f, 238.0f, 0.0f } };
 
-static u16 lbl_1_data_67C[3][3] = { { 10, 5, 20 }, { 10, 5, 20 }, { 5, 20, 10 } };
+static u16 spaceAmidaCoinNumTbl[3][3] = { { 10, 5, 20 }, { 10, 5, 20 }, { 5, 20, 10 } };
 
-static Data690Block lbl_1_data_690[3]
+static SpaceAmidaMap spaceAmidaMap1[3]
     = { { { { -50.0f, -12.0f, 0.0f }, 75.0f }, { { -50.0f, 63.0f, 0.0f }, 50.0f }, { { 0.0f, 63.0f, 0.0f }, 25.0f }, { { 0.0f, 88.0f, 0.0f }, 50.0f },
             { { 50.0f, 88.0f, 0.0f }, 87.5f }, { { 50.0f, 175.5f, 0.0f }, 0.0f } },
           { { { 0.0f, -12.0f, 0.0f }, 75.0f }, { { 0.0f, 63.0f, 0.0f }, 50.0f }, { { -50.0f, 63.0f, 0.0f }, 50.0f },
@@ -130,7 +126,7 @@ static Data690Block lbl_1_data_690[3]
               { { 0.0f, 113.0f, 0.0f }, 50.0f }, { { -50.0f, 113.0f, 0.0f }, 50.0f }, { { -50.0f, 163.0f, 0.0f }, 50.0f },
               { { 0.0f, 163.0f, 0.0f }, 50.0f }, { { 0.0f, 213.0f, 0.0f }, 0.0f } } };
 
-static Data690Block lbl_1_data_960[3]
+static SpaceAmidaMap spaceAmidaMap2[3]
     = { { { { -50.0f, -12.0f, 0.0f }, 125.0f }, { { -50.0f, 113.0f, 0.0f }, 50.0f }, { { 0.0f, 113.0f, 0.0f }, 25.0f },
             { { 0.0f, 138.0f, 0.0f }, 50.0f }, { { 50.0f, 138.0f, 0.0f }, 37.5f }, { { 50.0f, 175.5f, 0.0f }, 0.0f } },
           { { { 0.0f, -12.0f, 0.0f }, 75.0f }, { { 0.0f, 63.0f, 0.0f }, 50.0f }, { { 50.0f, 63.0f, 0.0f }, 75.0f },
@@ -140,7 +136,7 @@ static Data690Block lbl_1_data_960[3]
               { { 0.0f, 113.0f, 0.0f }, 50.0f }, { { -50.0f, 113.0f, 0.0f }, 50.0f }, { { -50.0f, 163.0f, 0.0f }, 50.0f },
               { { 0.0f, 163.0f, 0.0f }, 50.0f }, { { 0.0f, 213.0f, 0.0f }, 0.0f } } };
 
-static Data690Block lbl_1_data_C30[3]
+static SpaceAmidaMap spaceAmidaMap3[3]
     = { { { { -50.0f, -12.0f, 0.0f }, 100.0f }, { { -50.0f, 88.0f, 0.0f }, 50.0f }, { { 0.0f, 88.0f, 0.0f }, 50.0f },
             { { 0.0f, 138.0f, 0.0f }, 50.0f }, { { -50.0f, 138.0f, 0.0f }, 37.5f }, { { -50.0f, 175.5f, 0.0f }, 0.0f } },
           { { { 0.0f, -12.0f, 0.0f }, 75.0f }, { { 0.0f, 63.0f, 0.0f }, 50.0f }, { { 50.0f, 63.0f, 0.0f }, 100.0f },
@@ -149,911 +145,867 @@ static Data690Block lbl_1_data_C30[3]
               { { -50.0f, 88.0f, 0.0f }, 50.0f }, { { -50.0f, 138.0f, 0.0f }, 50.0f }, { { 0.0f, 138.0f, 0.0f }, 25.0f },
               { { 0.0f, 163.0f, 0.0f }, 50.0f }, { { 50.0f, 163.0f, 0.0f }, 12.5f }, { { 50.0f, 175.5f, 0.0f }, 0.0f } } };
 
-void fn_1_9D00(s32 arg0)
+void SpaceAmidaExec(void)
 {
-    s32 temp_r31;
-    s32 var_r30;
-
-    temp_r31 = GWSystem.star_pos;
-    var_r30 = 0;
-    if (lbl_1_bss_0->unk00_field0 != 0) {
-        if (temp_r31 == 0 || temp_r31 == 1 || temp_r31 == 7) {
-            var_r30 = 0;
-        }
-        else {
-            var_r30 = 1;
-        }
-    }
-    else if (temp_r31 == 0 || temp_r31 == 1 || temp_r31 == 7) {
-        var_r30 = 1;
-    }
-    else {
-        var_r30 = 0;
-    }
-    if (BoardPlayerCoinsGet(arg0) < 5) {
-        var_r30 = 0;
-    }
-    if (var_r30 != 0) {
-        BoardComKeySetLeft();
-    }
-    else {
-        BoardComKeySetRight();
-    }
-}
-
-void fn_1_9DD8(void)
-{
-    Vec sp2C[3];
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
-    Bss720Data *temp_r30;
-    Bss714Data *temp_r29;
+    Vec rocketMdlOfs[3];
+    Vec pos;
+    Vec rocketPos;
+    Vec scale;
+    SpaceAmidaGameWork *gameObjWork;
+    RocketWork *rocketWork;
     s32 i;
 
-    lbl_1_bss_79C = GWPlayer[GWSystem.player_curr].port;
-    lbl_1_bss_796 = lbl_1_bss_6C4[6];
-    lbl_1_bss_790[0] = lbl_1_bss_6C4[7];
-    lbl_1_bss_790[1] = lbl_1_bss_6C4[8];
-    lbl_1_bss_790[2] = lbl_1_bss_6C4[9];
-    lbl_1_bss_78A[0] = lbl_1_bss_6C4[10];
-    lbl_1_bss_78A[1] = lbl_1_bss_6C4[11];
-    lbl_1_bss_78A[2] = lbl_1_bss_6C4[12];
-    BoardModelVisibilitySet(lbl_1_bss_790[0], 0);
-    BoardModelVisibilitySet(lbl_1_bss_790[1], 0);
-    BoardModelVisibilitySet(lbl_1_bss_790[2], 0);
-    lbl_1_bss_734 = rand8() % 3;
-    BoardModelVisibilitySet(lbl_1_bss_790[lbl_1_bss_734], 1);
-    BoardModelMotionStart(lbl_1_bss_790[lbl_1_bss_734], 0, 0x40000001);
-    BoardModelPosGet(lbl_1_bss_796, &sp20);
-    sp8.x = sp8.y = sp8.z = 1.0f;
+    spaceAmidaPadNo = GWPlayer[GWSystem.player_curr].port;
+    spaceAmidaMdlId = mapObjMdlId[MAPOBJ_SPACEAMIDA];
+    mapMdlId[0] = mapObjMdlId[MAPOBJ_SPACEAMIDA_MAP1];
+    mapMdlId[1] = mapObjMdlId[MAPOBJ_SPACEAMIDA_MAP2];
+    mapMdlId[2] = mapObjMdlId[MAPOBJ_SPACEAMIDA_MAP3];
+    rocketMdlId[0] = mapObjMdlId[MAPOBJ_SPACEAMIDA_ROCKET1];
+    rocketMdlId[1] = mapObjMdlId[MAPOBJ_SPACEAMIDA_ROCKET2];
+    rocketMdlId[2] = mapObjMdlId[MAPOBJ_SPACEAMIDA_ROCKET3];
+    BoardModelVisibilitySet(mapMdlId[0], 0);
+    BoardModelVisibilitySet(mapMdlId[1], 0);
+    BoardModelVisibilitySet(mapMdlId[2], 0);
+    spaceAmidaMapNo = rand8() % 3;
+    BoardModelVisibilitySet(mapMdlId[spaceAmidaMapNo], 1);
+    BoardModelMotionStart(mapMdlId[spaceAmidaMapNo], 0, HU3D_MOTATTR_LOOP);
+    BoardModelPosGet(spaceAmidaMdlId, &pos);
+    scale.x = scale.y = scale.z = 1.0f;
     for (i = 0; i < 3; i++) {
-        sp2C[i] = lbl_1_data_690[i][0].unk00;
-        sp2C[i].y -= -12.0f;
-        BoardModelPosSet(lbl_1_bss_78A[i], sp20.x + sp2C[i].x, sp20.y + sp2C[i].y, sp20.z + 30.0f);
-        BoardModelVisibilitySet(lbl_1_bss_78A[i], 1);
-        BoardModelScaleSetV(lbl_1_bss_78A[i], &sp8);
+        rocketMdlOfs[i] = spaceAmidaMap1[i][0].pos;
+        rocketMdlOfs[i].y -= -12.0f;
+        BoardModelPosSet(rocketMdlId[i], pos.x + rocketMdlOfs[i].x, pos.y + rocketMdlOfs[i].y, pos.z + 30.0f);
+        BoardModelVisibilitySet(rocketMdlId[i], 1);
+        BoardModelScaleSetV(rocketMdlId[i], &scale);
     }
-    lbl_1_bss_798 = GWSystem.player_curr;
-    BoardModelPosGet(lbl_1_bss_796, &lbl_1_bss_738);
-    lbl_1_bss_730 = 1;
-    BoardModelPosGet(lbl_1_bss_78A[lbl_1_bss_730], &sp14);
-    BoardPlayerPosGet(lbl_1_bss_798, &sp20);
-    lbl_1_bss_758 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_A4B8);
-    lbl_1_bss_720 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_B3B8);
-    lbl_1_bss_720->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Bss720Data), MEMORY_DEFAULT_NUM);
-    temp_r30 = lbl_1_bss_720->data;
-    temp_r30->unk02 = 0;
-    temp_r30->unk04 = sp14;
-    temp_r30->unk28 = 0;
-    fn_1_CB44(&sp14, 0.0f);
-    fn_1_B088(lbl_1_bss_720);
-    lbl_1_bss_750 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_W01, 19));
-    Hu3DModelAttrSet(lbl_1_bss_750, HU3D_ATTR_DISPOFF);
+    spaceAmidaPlayerNo = GWSystem.player_curr;
+    BoardModelPosGet(spaceAmidaMdlId, &spaceAmidaPos);
+    spaceAmidaPath = 1;
+    BoardModelPosGet(rocketMdlId[spaceAmidaPath], &rocketPos);
+    BoardPlayerPosGet(spaceAmidaPlayerNo, &pos);
+    spaceAmidaMainObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, SpaceAmidaMainUpdate);
+    spaceAmidaGameObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, SpaceAmidaGameOpen);
+    spaceAmidaGameObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(SpaceAmidaGameWork), MEMORY_DEFAULT_NUM);
+    gameObjWork = spaceAmidaGameObj->data;
+    gameObjWork->unk02 = 0;
+    gameObjWork->rocketPos = rocketPos;
+    gameObjWork->comInputTimer = 0;
+    SpaceAmidaPlayerRotAdd(&rocketPos, 0.0f);
+    SpaceAmidaComChoiceSet(spaceAmidaGameObj);
+    kemuriMdlId = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_W01, 19));
+    Hu3DModelAttrSet(kemuriMdlId, HU3D_ATTR_DISPOFF);
     for (i = 0; i < 3; i++) {
-        lbl_1_bss_714[i] = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_A6E0);
-        lbl_1_bss_714[i]->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Bss714Data), MEMORY_DEFAULT_NUM);
-        lbl_1_bss_714[i]->work[0] = lbl_1_bss_78A[i];
-        lbl_1_bss_714[i]->work[1] = 0;
-        lbl_1_bss_714[i]->work[3] = 0;
-        temp_r29 = lbl_1_bss_714[i]->data;
-        if (i == lbl_1_bss_730) {
-            lbl_1_bss_714[i]->work[2] = 1;
+        rocketObj[i] = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, SpaceAmidaRocketObjUpdate);
+        rocketObj[i]->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(RocketWork), MEMORY_DEFAULT_NUM);
+        rocketObj[i]->work[0] = rocketMdlId[i];
+        rocketObj[i]->work[1] = 0;
+        rocketObj[i]->work[3] = 0;
+        rocketWork = rocketObj[i]->data;
+        if (i == spaceAmidaPath) {
+            rocketObj[i]->work[2] = 1;
         }
         else {
-            lbl_1_bss_714[i]->work[2] = 0;
+            rocketObj[i]->work[2] = 0;
         }
-        temp_r29->unk18 = 1.0f;
-        temp_r29->unk1C = 0.0f;
+        rocketWork->rocketXOfs = 1.0f;
+        rocketWork->kemuriSize = 0.0f;
     }
-    lbl_1_bss_72C = 0;
-    lbl_1_bss_74C = 5;
-    lbl_1_bss_748 = REFRESH_RATE;
-    lbl_1_bss_72A = 0;
-    fn_1_CEC4();
-    lbl_1_bss_788 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W01, 17), NULL, 0);
-    BoardModelMotionUpdateSet(lbl_1_bss_788, 1);
-    BoardModelVisibilitySet(lbl_1_bss_788, 0);
+    rocketWarpF = 0;
+    timerSec = 5;
+    timerFrame = REFRESH_RATE;
+    spaceAmidaStopF = 0;
+    SpaceAmidaEffCreate();
+    spaceAmidaEffMdlId = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W01, 17), NULL, 0);
+    BoardModelMotionUpdateSet(spaceAmidaEffMdlId, 1);
+    BoardModelVisibilitySet(spaceAmidaEffMdlId, 0);
     for (i = 0; i < 20; i++) {
-        lbl_1_bss_760[i] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 10), NULL, 1);
-        BoardModelVisibilitySet(lbl_1_bss_760[i], 0);
+        coinMdlId[i] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 10), NULL, 1);
+        BoardModelVisibilitySet(coinMdlId[i], 0);
     }
 }
 
-static void fn_1_A4B8(omObjData *arg0)
+static void SpaceAmidaMainUpdate(omObjData *obj)
 {
-    if (lbl_1_bss_72A == 0) {
+    if (spaceAmidaStopF == 0) {
         return;
     }
     if (BoardMGDoneFlagGet() == 1) {
-        if (lbl_1_bss_754 <= 0.0f) {
-            fn_1_A5FC();
-            omDelObjEx(HuPrcCurrentGet(), arg0);
+        if (spaceAmidaTime <= 0.0f) {
+            SpaceAmidaKill();
+            omDelObjEx(HuPrcCurrentGet(), obj);
         }
     }
-    lbl_1_bss_754 -= 1.0f;
+    spaceAmidaTime -= 1.0f;
 }
 
-static void fn_1_A554(void)
+static void SpaceAmidaStop(void)
 {
-    float temp_f1;
+    float time;
 
-    lbl_1_bss_72A = 1;
+    spaceAmidaStopF = 1;
     BoardMGExit();
-    temp_f1 = BoardModelMotionTimeGet(lbl_1_bss_796);
-    lbl_1_bss_754 = temp_f1;
-    BoardModelMotionStart(lbl_1_bss_796, 0, 0);
-    BoardModelMotionTimeSet(lbl_1_bss_796, temp_f1);
-    BoardModelMotionSpeedSet(lbl_1_bss_796, -1.0f);
+    time = BoardModelMotionTimeGet(spaceAmidaMdlId);
+    spaceAmidaTime = time;
+    BoardModelMotionStart(spaceAmidaMdlId, 0, 0);
+    BoardModelMotionTimeSet(spaceAmidaMdlId, time);
+    BoardModelMotionSpeedSet(spaceAmidaMdlId, -1.0f);
 }
 
-static void fn_1_A5FC(void)
+static void SpaceAmidaKill(void)
 {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        BoardModelVisibilitySet(lbl_1_bss_790[i], 0);
-        BoardModelVisibilitySet(lbl_1_bss_78A[i], 0);
-        omDelObjEx(HuPrcCurrentGet(), lbl_1_bss_714[i]);
+        BoardModelVisibilitySet(mapMdlId[i], 0);
+        BoardModelVisibilitySet(rocketMdlId[i], 0);
+        omDelObjEx(HuPrcCurrentGet(), rocketObj[i]);
     }
     for (i = 0; i < 20; i++) {
-        BoardModelKill(lbl_1_bss_760[i]);
+        BoardModelKill(coinMdlId[i]);
     }
-    fn_1_D034();
-    BoardModelKill(lbl_1_bss_788);
+    SpaceAmidaEffKill();
+    BoardModelKill(spaceAmidaEffMdlId);
     BoardMGDoneFlagSet(0);
-    Hu3DModelKill(lbl_1_bss_750);
+    Hu3DModelKill(kemuriMdlId);
 }
 
-static void fn_1_A6E0(omObjData *arg0)
+static void SpaceAmidaRocketObjUpdate(omObjData *obj)
 {
-    Bss714Data *temp_r31;
-    Vec sp2C;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
-    float var_f31;
+    RocketWork *work;
+    Vec scale;
+    Vec pos;
+    Vec rocketPos;
+    Vec dir;
+    float len;
 
-    temp_r31 = arg0->data;
-    BoardModelScaleGet(arg0->work[0], &sp2C);
-    switch (arg0->work[2]) {
+    work = obj->data;
+    BoardModelScaleGet(obj->work[0], &scale);
+    switch (obj->work[2]) {
         case 1:
-            if ((sp2C.x += 0.08f) >= 1.5f) {
-                sp2C.x = 1.5f;
-                sp2C.y = 1.5f;
-                if (arg0->work[3] == 1) {
-                    arg0->work[2] = 0;
+            if ((scale.x += 0.08f) >= 1.5f) {
+                scale.x = 1.5f;
+                scale.y = 1.5f;
+                if (obj->work[3] == 1) {
+                    obj->work[2] = 0;
                 }
                 else {
-                    arg0->work[2] = 2;
+                    obj->work[2] = 2;
                 }
             }
             else {
-                sp2C.y += 0.08f;
+                scale.y += 0.08f;
             }
-            BoardModelScaleSetV(arg0->work[0], &sp2C);
+            BoardModelScaleSetV(obj->work[0], &scale);
             break;
         case 2:
-            if ((sp2C.x -= 0.08f) <= 1.0f) {
-                sp2C.x = 1.0f;
-                sp2C.y = 1.0f;
-                if (arg0->work[1] == 1) {
-                    arg0->work[2] = 0;
-                    arg0->work[1] = 0;
+            if ((scale.x -= 0.08f) <= 1.0f) {
+                scale.x = 1.0f;
+                scale.y = 1.0f;
+                if (obj->work[1] == 1) {
+                    obj->work[2] = 0;
+                    obj->work[1] = 0;
                 }
                 else {
-                    arg0->work[2] = 1;
+                    obj->work[2] = 1;
                 }
             }
             else {
-                sp2C.y -= 0.08f;
+                scale.y -= 0.08f;
             }
-            BoardModelScaleSetV(arg0->work[0], &sp2C);
+            BoardModelScaleSetV(obj->work[0], &scale);
             break;
         case 3:
-            switch (lbl_1_bss_734) {
+            switch (spaceAmidaMapNo) {
                 case 0:
-                    temp_r31->unk04 = &lbl_1_data_690[lbl_1_bss_730];
+                    work->map = &spaceAmidaMap1[spaceAmidaPath];
                     break;
                 case 1:
-                    temp_r31->unk04 = &lbl_1_data_960[lbl_1_bss_730];
+                    work->map = &spaceAmidaMap2[spaceAmidaPath];
                     break;
                 case 2:
-                    temp_r31->unk04 = &lbl_1_data_C30[lbl_1_bss_730];
+                    work->map = &spaceAmidaMap3[spaceAmidaPath];
                     break;
             }
-            BoardModelPosGet(arg0->work[0], &sp14);
-            sp14.x = lbl_1_bss_738.x + ((*temp_r31->unk04)[0].unk00.x + temp_r31->unk18);
-            temp_r31->unk18 = -temp_r31->unk18;
-            BoardModelPosSetV(arg0->work[0], &sp14);
-            sp14.y += 5.0f;
-            BoardPlayerPosSetV(lbl_1_bss_798, &sp14);
-            temp_r31->unk1C += 0.022222223f;
-            temp_r31->unk38 -= 0.011111111f;
-            if (temp_r31->unk38 < 0.0f) {
-                temp_r31->unk38 = 0.0f;
+            BoardModelPosGet(obj->work[0], &rocketPos);
+            rocketPos.x = spaceAmidaPos.x + ((*work->map)[0].pos.x + work->rocketXOfs);
+            work->rocketXOfs = -work->rocketXOfs;
+            BoardModelPosSetV(obj->work[0], &rocketPos);
+            rocketPos.y += 5.0f;
+            BoardPlayerPosSetV(spaceAmidaPlayerNo, &rocketPos);
+            work->kemuriSize += 0.022222223f;
+            work->kemuriTPLvl -= 0.011111111f;
+            if (work->kemuriTPLvl < 0.0f) {
+                work->kemuriTPLvl = 0.0f;
             }
-            Hu3DModelTPLvlSet(lbl_1_bss_750, temp_r31->unk38);
-            if (temp_r31->unk1C > 1.0f) {
-                temp_r31->unk1C = 1.0f;
+            Hu3DModelTPLvlSet(kemuriMdlId, work->kemuriTPLvl);
+            if (work->kemuriSize > 1.0f) {
+                work->kemuriSize = 1.0f;
             }
-            VECAdd(&temp_r31->unk20, &temp_r31->unk2C, &temp_r31->unk20);
-            if (temp_r31->unk20.y >= 4.0f) {
-                temp_r31->unk20.y = 4.0f;
-                temp_r31->unk2C.y = -0.1f;
+            VECAdd(&work->kemuriScale, &work->kemuriScaleVel, &work->kemuriScale);
+            if (work->kemuriScale.y >= 4.0f) {
+                work->kemuriScale.y = 4.0f;
+                work->kemuriScaleVel.y = -0.1f;
             }
-            if (temp_r31->unk20.y < 1.0f) {
-                temp_r31->unk20.y = 1.0f;
+            if (work->kemuriScale.y < 1.0f) {
+                work->kemuriScale.y = 1.0f;
             }
-            Hu3DModelScaleSet(lbl_1_bss_750, temp_r31->unk20.x, temp_r31->unk20.y, temp_r31->unk20.z);
+            Hu3DModelScaleSet(kemuriMdlId, work->kemuriScale.x, work->kemuriScale.y, work->kemuriScale.z);
             break;
         case 4:
-            Hu3DModelAttrSet(lbl_1_bss_750, HU3D_ATTR_DISPOFF);
-            arg0->work[2] = 5;
-            temp_r31->unk08 = 0;
-            temp_r31->unk0C = 12.0f;
-            temp_r31->unk14 = (fn_1_B018(temp_r31->unk04) - temp_r31->unk0C) / 90.0f;
-            temp_r31->unk10 = temp_r31->unk14 / 20.0f;
+            Hu3DModelAttrSet(kemuriMdlId, HU3D_ATTR_DISPOFF);
+            obj->work[2] = 5;
+            work->mapCursor = 0;
+            work->len = 12.0f;
+            work->maxSpeed = (SpaceAmidaMapLenGet(work->map) - work->len) / 90.0f;
+            work->speed = work->maxSpeed / 20.0f;
             HuAudFXPlay(0x406);
             HuAudFXPlay(0x407);
-            HuAudFXStop(lbl_1_bss_724);
+            HuAudFXStop(spaceAmidaSeNo);
             break;
         case 5:
-            var_f31 = temp_r31->unk0C + temp_r31->unk10;
-            temp_r31->unk0C = var_f31;
-            temp_r31->unk10 *= 1.04f;
-            if (temp_r31->unk10 > temp_r31->unk14) {
-                temp_r31->unk10 = temp_r31->unk14;
+            len = work->len + work->speed;
+            work->len = len;
+            work->speed *= 1.04f;
+            if (work->speed > work->maxSpeed) {
+                work->speed = work->maxSpeed;
             }
-            BoardModelPosGet(arg0->work[0], &sp20);
-            while (var_f31 >= (*temp_r31->unk04)[temp_r31->unk08].unk0C) {
-                var_f31 -= (*temp_r31->unk04)[temp_r31->unk08].unk0C;
-                temp_r31->unk08++;
-                if ((*temp_r31->unk04)[temp_r31->unk08].unk0C == 0.0f) {
-                    omVibrate(lbl_1_bss_798, 12, 6, 6);
-                    var_f31 = 0.0f;
-                    lbl_1_bss_72C = 1;
-                    lbl_1_bss_724 = HuAudFXPlay(0x332);
-                    lbl_1_bss_708 = 0;
-                    arg0->work[2] = 6;
-                    if (sp20.x - lbl_1_bss_738.x < -25.0f) {
-                        temp_r31->unk40 = 0;
-                        lbl_1_bss_728 = 5;
+            BoardModelPosGet(obj->work[0], &pos);
+            while (len >= (*work->map)[work->mapCursor].len) {
+                len -= (*work->map)[work->mapCursor].len;
+                work->mapCursor++;
+                if ((*work->map)[work->mapCursor].len == 0.0f) {
+                    omVibrate(spaceAmidaPlayerNo, 12, 6, 6);
+                    len = 0.0f;
+                    rocketWarpF = 1;
+                    spaceAmidaSeNo = HuAudFXPlay(0x332);
+                    spaceAmidaSeqStopF = 0;
+                    obj->work[2] = 6;
+                    if (pos.x - spaceAmidaPos.x < -25.0f) {
+                        work->targetNo = 0;
+                        spaceAmidaCoinNum = 5;
                     }
-                    else if (sp20.x - lbl_1_bss_738.x > 25.0f) {
-                        temp_r31->unk40 = 2;
-                        lbl_1_bss_728 = 10;
+                    else if (pos.x - spaceAmidaPos.x > 25.0f) {
+                        work->targetNo = 2;
+                        spaceAmidaCoinNum = 10;
                     }
                     else {
-                        temp_r31->unk40 = 1;
-                        lbl_1_bss_728 = 20;
+                        work->targetNo = 1;
+                        spaceAmidaCoinNum = 20;
                     }
                     break;
                 }
             }
-            temp_r31->unk0C = var_f31;
-            sp14.x = sp14.y = sp14.z = 0.0f;
-            if (lbl_1_bss_72C == 0) {
-                fn_1_C94C(&(*temp_r31->unk04)[temp_r31->unk08].unk00, &(*temp_r31->unk04)[temp_r31->unk08 + 1].unk00, &sp8);
-                sp20.x = lbl_1_bss_738.x + (sp8.x * var_f31 + (*temp_r31->unk04)[temp_r31->unk08].unk00.x);
-                sp20.y = lbl_1_bss_738.y + (sp8.y * var_f31 + (*temp_r31->unk04)[temp_r31->unk08].unk00.y);
+            work->len = len;
+            rocketPos.x = rocketPos.y = rocketPos.z = 0.0f;
+            if (rocketWarpF == 0) {
+                SpaceAmidaDirGet(&(*work->map)[work->mapCursor].pos, &(*work->map)[work->mapCursor + 1].pos, &dir);
+                pos.x = spaceAmidaPos.x + (dir.x * len + (*work->map)[work->mapCursor].pos.x);
+                pos.y = spaceAmidaPos.y + (dir.y * len + (*work->map)[work->mapCursor].pos.y);
             }
             else {
-                sp20.x = lbl_1_bss_738.x + (*temp_r31->unk04)[temp_r31->unk08].unk00.x;
-                sp20.y = lbl_1_bss_738.y + (*temp_r31->unk04)[temp_r31->unk08].unk00.y;
+                pos.x = spaceAmidaPos.x + (*work->map)[work->mapCursor].pos.x;
+                pos.y = spaceAmidaPos.y + (*work->map)[work->mapCursor].pos.y;
             }
-            BoardModelPosSetV(arg0->work[0], &sp20);
-            sp20.y += 5.0f;
-            BoardPlayerPosSetV(lbl_1_bss_798, &sp20);
-            BoardModelRotSetV(arg0->work[0], &sp14);
-            BoardPlayerRotSetV(lbl_1_bss_798, &sp14);
+            BoardModelPosSetV(obj->work[0], &pos);
+            pos.y += 5.0f;
+            BoardPlayerPosSetV(spaceAmidaPlayerNo, &pos);
+            BoardModelRotSetV(obj->work[0], &rocketPos);
+            BoardPlayerRotSetV(spaceAmidaPlayerNo, &rocketPos);
             break;
         case 6:
-            if (lbl_1_bss_708 == 0 && (HuAudFXStatusGet(lbl_1_bss_724) == 1 || HuAudFXStatusGet(lbl_1_bss_724) == 0)) {
+            if (spaceAmidaSeqStopF == 0 && (HuAudFXStatusGet(spaceAmidaSeNo) == 1 || HuAudFXStatusGet(spaceAmidaSeNo) == 0)) {
                 BoardAudSeqPause(0, 0, 1000);
-                lbl_1_bss_708 = 1;
+                spaceAmidaSeqStopF = 1;
             }
-            BoardModelVisibilitySet(lbl_1_bss_788, 1);
-            sp20.x = lbl_1_bss_738.x + lbl_1_data_658[temp_r31->unk40].x;
-            sp20.y = lbl_1_bss_738.y + lbl_1_data_658[temp_r31->unk40].y;
-            sp20.z = lbl_1_bss_738.z + lbl_1_data_658[temp_r31->unk40].z;
-            BoardModelPosSetV(lbl_1_bss_788, &sp20);
-            temp_r31->unk1C -= 0.05f;
-            if (temp_r31->unk1C <= 0.0f) {
-                temp_r31->unk1C = 0.0f;
+            BoardModelVisibilitySet(spaceAmidaEffMdlId, 1);
+            pos.x = spaceAmidaPos.x + effPosTbl[work->targetNo].x;
+            pos.y = spaceAmidaPos.y + effPosTbl[work->targetNo].y;
+            pos.z = spaceAmidaPos.z + effPosTbl[work->targetNo].z;
+            BoardModelPosSetV(spaceAmidaEffMdlId, &pos);
+            work->kemuriSize -= 0.05f;
+            if (work->kemuriSize <= 0.0f) {
+                work->kemuriSize = 0.0f;
             }
             break;
     }
 }
 
-static float fn_1_B018(Data690Block *arg0)
+static float SpaceAmidaMapLenGet(SpaceAmidaMap *arg0)
 {
-    float var_f31;
+    float len;
     s32 i;
 
-    var_f31 = 0.0f;
+    len = 0.0f;
     i = 0;
     while (TRUE) {
-        if ((*arg0)[i].unk0C == 0.0f) {
+        if ((*arg0)[i].len == 0.0f) {
             break;
         }
-        var_f31 += (*arg0)[i].unk0C;
+        len += (*arg0)[i].len;
         i++;
     }
-    return var_f31;
+    return len;
 }
 
-static void fn_1_B088(omObjData *arg0)
+static void SpaceAmidaComChoiceSet(omObjData *obj)
 {
-    Bss720Data *temp_r31;
-    u16 sp8[] = { 20, 60, 120, 190 };
+    SpaceAmidaGameWork *work;
+    u16 chance[] = { 20, 60, 120, 190 };
     s32 i;
 
-    temp_r31 = arg0->data;
-    if (rand8() < sp8[GWPlayerCfg[lbl_1_bss_798].diff]) {
+    work = obj->data;
+    if (rand8() < chance[GWPlayerCfg[spaceAmidaPlayerNo].diff]) {
         for (i = 0; i < 3; i++) {
-            if (lbl_1_data_67C[lbl_1_bss_734][i] == 20) {
-                temp_r31->unk26 = i;
+            if (spaceAmidaCoinNumTbl[spaceAmidaMapNo][i] == 20) {
+                work->comChoice = i;
             }
         }
     }
     else {
-        temp_r31->unk26 = rand8() % 3;
+        work->comChoice = rand8() % 3;
     }
-    temp_r31->unk24 = rand8() % 20 + 20;
+    work->comDelay = rand8() % 20 + 20;
 }
 
-static void fn_1_B1CC(omObjData *arg0, u16 *arg1, u16 *arg2)
+static void SpaceAmidaComInputGet(omObjData *obj, u16 *stkBtn, u16 *btn)
 {
-    Bss720Data *temp_r31;
+    SpaceAmidaGameWork *work;
 
-    temp_r31 = arg0->data;
-    *arg1 = *arg2 = 0;
-    if (temp_r31->unk24 != 0) {
-        temp_r31->unk24--;
+    work = obj->data;
+    *stkBtn = *btn = 0;
+    if (work->comDelay != 0) {
+        work->comDelay--;
         return;
     }
-    if (temp_r31->unk28 >= 4 || (rand8() & 1)) {
-        if (temp_r31->unk26 == lbl_1_bss_730) {
-            *arg2 |= 0x100;
+    if (work->comInputTimer >= 4 || (rand8() & 1)) {
+        if (work->comChoice == spaceAmidaPath) {
+            *btn |= PAD_BUTTON_A;
         }
-        else if (temp_r31->unk26 < lbl_1_bss_730) {
-            *arg1 |= 1;
+        else if (work->comChoice < spaceAmidaPath) {
+            *stkBtn |= PAD_BUTTON_LEFT;
         }
         else {
-            *arg1 |= 2;
+            *stkBtn |= PAD_BUTTON_RIGHT;
         }
-        temp_r31->unk24 = rand8() % 10 + 10;
+        work->comDelay = rand8() % 10 + 10;
     }
     else {
-        temp_r31->unk28++;
-        temp_r31->unk24 = rand8() % 10 + 20;
-        if (lbl_1_bss_730 == 0) {
-            *arg1 |= 2;
+        work->comInputTimer++;
+        work->comDelay = rand8() % 10 + 20;
+        if (spaceAmidaPath == 0) {
+            *stkBtn |= PAD_BUTTON_RIGHT;
         }
-        else if (lbl_1_bss_730 == 2) {
-            *arg1 |= 1;
+        else if (spaceAmidaPath == 2) {
+            *stkBtn |= PAD_BUTTON_LEFT;
         }
         else if (rand8() & 1) {
-            *arg1 |= 1;
+            *stkBtn |= PAD_BUTTON_LEFT;
         }
         else {
-            *arg1 |= 2;
+            *stkBtn |= PAD_BUTTON_RIGHT;
         }
     }
 }
 
-static void fn_1_B3B8(omObjData *arg0)
+static void SpaceAmidaGameOpen(omObjData *obj)
 {
-    float temp_f31;
-
-    temp_f31 = BoardModelMotionMaxTimeGet(lbl_1_bss_796);
-    if (BoardModelMotionTimeGet(lbl_1_bss_796) >= temp_f31) {
-        lbl_1_bss_744 = MGSeqCreate(1, lbl_1_bss_74C, 0x120, 0x40);
-        lbl_1_bss_720->func = fn_1_B478;
+    if (BoardModelMotionTimeGet(spaceAmidaMdlId) >= BoardModelMotionMaxTimeGet(spaceAmidaMdlId)) {
+        timerSeqId = MGSeqCreate(1, timerSec, 0x120, 0x40);
+        spaceAmidaGameObj->func = SpaceAmidaGameUpdate;
         BoardMusStart(1, 0xF, 0x7F, 0);
-        lbl_1_bss_724 = HuAudFXPlay(0x408);
+        spaceAmidaSeNo = HuAudFXPlay(0x408);
     }
 }
 
-static void fn_1_B478(omObjData *arg0)
+static void SpaceAmidaGameUpdate(omObjData *obj)
 {
-    Bss720Data *temp_r31;
-    Vec sp18;
-    Vec spC;
-    float var_f28;
-    u16 var_r27;
-    u16 var_r29;
+    SpaceAmidaGameWork *work;
+    Vec rocketPos;
+    Vec playerPos;
+    float jumpDist;
+    u16 btn;
+    u16 stkBtn;
 
-    temp_r31 = arg0->data;
-    if ((--lbl_1_bss_748) == 0) {
-        if ((--lbl_1_bss_74C) >= 0) {
-            MGSeqParamSet(lbl_1_bss_744, 1, lbl_1_bss_74C);
+    work = obj->data;
+    if ((--timerFrame) == 0) {
+        if ((--timerSec) >= 0) {
+            MGSeqParamSet(timerSeqId, 1, timerSec);
         }
-        lbl_1_bss_748 = REFRESH_RATE;
+        timerFrame = REFRESH_RATE;
     }
-    if (GWPlayerCfg[lbl_1_bss_798].iscom == 1) {
-        fn_1_B1CC(arg0, &var_r29, &var_r27);
+    if (GWPlayerCfg[spaceAmidaPlayerNo].iscom == 1) {
+        SpaceAmidaComInputGet(obj, &stkBtn, &btn);
     }
     else {
-        var_r29 = HuPadDStkRep[lbl_1_bss_79C];
-        var_r27 = HuPadBtnDown[lbl_1_bss_79C];
+        stkBtn = HuPadDStkRep[spaceAmidaPadNo];
+        btn = HuPadBtnDown[spaceAmidaPadNo];
     }
-    if ((var_r29 & 1) && lbl_1_bss_730 != 0) {
-        lbl_1_bss_714[lbl_1_bss_730]->work[1] = 1;
-        lbl_1_bss_714[lbl_1_bss_730]->work[2] = 2;
-        lbl_1_bss_730--;
-        lbl_1_bss_714[lbl_1_bss_730]->work[2] = 1;
+    if ((stkBtn & PAD_BUTTON_LEFT) && spaceAmidaPath != 0) {
+        rocketObj[spaceAmidaPath]->work[1] = 1;
+        rocketObj[spaceAmidaPath]->work[2] = 2;
+        spaceAmidaPath--;
+        rocketObj[spaceAmidaPath]->work[2] = 1;
     }
-    if ((var_r29 & 2) && lbl_1_bss_730 != 2) {
-        lbl_1_bss_714[lbl_1_bss_730]->work[1] = 1;
-        lbl_1_bss_714[lbl_1_bss_730]->work[2] = 2;
-        lbl_1_bss_730++;
-        lbl_1_bss_714[lbl_1_bss_730]->work[2] = 1;
+    if ((stkBtn & PAD_BUTTON_RIGHT) && spaceAmidaPath != 2) {
+        rocketObj[spaceAmidaPath]->work[1] = 1;
+        rocketObj[spaceAmidaPath]->work[2] = 2;
+        spaceAmidaPath++;
+        rocketObj[spaceAmidaPath]->work[2] = 1;
     }
-    BoardModelPosGet(lbl_1_bss_78A[lbl_1_bss_730], &sp18);
-    BoardPlayerPosGet(lbl_1_bss_798, &spC);
-    fn_1_CB44(&sp18, 0.0f);
-    temp_r31->unk04 = sp18;
-    if (lbl_1_bss_74C < 0 || (var_r27 & 0x100)) {
-        MGSeqParamSet(lbl_1_bss_744, 2, -1);
-        lbl_1_bss_714[lbl_1_bss_730]->work[1] = 1;
-        BoardPlayerPosGet(lbl_1_bss_798, &spC);
-        var_f28 = VECDistanceXZ(&temp_r31->unk04, &spC);
-        fn_1_C94C(&spC, &temp_r31->unk04, &temp_r31->unk10);
-        temp_r31->unk10.y = 0.0f;
-        temp_r31->unk10.x *= var_f28 / 30.0f;
-        temp_r31->unk10.z *= var_f28 / 30.0f;
-        temp_r31->unk00 = 0;
-        temp_r31->unk20 = 0.0f;
-        arg0->func = fn_1_BAF8;
+    BoardModelPosGet(rocketMdlId[spaceAmidaPath], &rocketPos);
+    BoardPlayerPosGet(spaceAmidaPlayerNo, &playerPos);
+    SpaceAmidaPlayerRotAdd(&rocketPos, 0.0f);
+    work->rocketPos = rocketPos;
+    if (timerSec < 0 || (btn & PAD_BUTTON_A)) {
+        MGSeqParamSet(timerSeqId, 2, -1);
+        rocketObj[spaceAmidaPath]->work[1] = 1;
+        BoardPlayerPosGet(spaceAmidaPlayerNo, &playerPos);
+        jumpDist = VECDistanceXZ(&work->rocketPos, &playerPos);
+        SpaceAmidaDirGet(&playerPos, &work->rocketPos, &work->jumpDir);
+        work->jumpDir.y = 0.0f;
+        work->jumpDir.x *= jumpDist / 30.0f;
+        work->jumpDir.z *= jumpDist / 30.0f;
+        work->unk00 = 0;
+        work->jumpTime = 0.0f;
+        obj->func = SpaceAmidaRocketJump;
     }
 }
 
-static void fn_1_BAF8(omObjData *arg0)
+static void SpaceAmidaRocketJump(omObjData *obj)
 {
-    Bss720Data *temp_r31;
-    Vec sp14;
-    Vec sp8;
+    SpaceAmidaGameWork *work;
+    Vec playerPos;
+    Vec rocketPos;
 
-    temp_r31 = arg0->data;
-    if (lbl_1_bss_714[lbl_1_bss_730]->work[2] != 0) {
+    work = obj->data;
+    if (rocketObj[spaceAmidaPath]->work[2] != 0) {
         return;
     }
-    BoardPlayerMotionStart(lbl_1_bss_798, 4, 0);
-    BoardPlayerPosGet(lbl_1_bss_798, &sp14);
-    sp14.x += temp_r31->unk10.x;
-    sp14.z += temp_r31->unk10.z;
-    sp14.y = lbl_1_bss_738.y + 80.0 * sind(6.0f * temp_r31->unk20);
-    BoardModelPosGet(lbl_1_bss_714[lbl_1_bss_730]->work[0], &sp8);
-    if ((temp_r31->unk20 += 1.0f) == 30.0f) {
-        sp14.y = sp8.y + 5.0f;
-        BoardPlayerPosSetV(lbl_1_bss_798, &sp14);
-        BoardPlayerMotionShiftSet(lbl_1_bss_798, 2, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
-        arg0->func = fn_1_BCDC;
+    BoardPlayerMotionStart(spaceAmidaPlayerNo, 4, 0);
+    BoardPlayerPosGet(spaceAmidaPlayerNo, &playerPos);
+    playerPos.x += work->jumpDir.x;
+    playerPos.z += work->jumpDir.z;
+    playerPos.y = spaceAmidaPos.y + 80.0 * sind(6.0f * work->jumpTime);
+    BoardModelPosGet(rocketObj[spaceAmidaPath]->work[0], &rocketPos);
+    if ((++work->jumpTime) == 30.0f) {
+        playerPos.y = rocketPos.y + 5.0f;
+        BoardPlayerPosSetV(spaceAmidaPlayerNo, &playerPos);
+        BoardPlayerMotionShiftSet(spaceAmidaPlayerNo, 2, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+        obj->func = SpaceAmidaRocketKemuriExec;
     }
-    BoardPlayerPosSetV(lbl_1_bss_798, &sp14);
+    BoardPlayerPosSetV(spaceAmidaPlayerNo, &playerPos);
 }
 
-static void fn_1_BCDC(omObjData *arg0)
+static void SpaceAmidaRocketKemuriExec(omObjData *obj)
 {
-    Bss720Data *temp_r29;
-    Bss714Data *temp_r31;
-    Vec sp14;
-    Vec sp8;
+    SpaceAmidaGameWork *work;
+    RocketWork *rocketWork;
+    Vec playerPos;
+    Vec kemuriPos;
 
-    temp_r29 = arg0->data;
-    BoardPlayerPosGet(lbl_1_bss_798, &sp14);
-    sp8 = sp14;
-    sp8.z += 100.0f;
-    if (fn_1_CB44(&sp8, 10.0f) == 1) {
-        BoardPlayerMotionShiftSet(lbl_1_bss_798, 1, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
-        temp_r29->unk1C = 90;
-        lbl_1_bss_710->work[0] = 1;
-        lbl_1_bss_714[lbl_1_bss_730]->work[2] = 3;
-        temp_r31 = lbl_1_bss_714[lbl_1_bss_730]->data;
-        Hu3DModelAttrReset(lbl_1_bss_750, HU3D_ATTR_DISPOFF);
-        Hu3DModelPosSet(lbl_1_bss_750, sp14.x, sp14.y, sp14.z);
-        temp_r31->unk20.x = 1.4f;
-        temp_r31->unk20.y = 1.4f;
-        temp_r31->unk20.z = 1.4f;
-        temp_r31->unk2C.x = 0.055999998f;
-        temp_r31->unk2C.y = 0.08088889f;
-        temp_r31->unk2C.z = 0.055999998f;
-        temp_r31->unk38 = 1.0f;
-        temp_r31->unk3C = 0.0f;
-        Hu3DModelScaleSet(lbl_1_bss_750, 1.4f, 1.4f, 1.4f);
-        arg0->func = fn_1_BF00;
+    work = obj->data;
+    BoardPlayerPosGet(spaceAmidaPlayerNo, &playerPos);
+    kemuriPos = playerPos;
+    kemuriPos.z += 100.0f;
+    if (SpaceAmidaPlayerRotAdd(&kemuriPos, 10.0f) == 1) {
+        BoardPlayerMotionShiftSet(spaceAmidaPlayerNo, 1, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+        work->waitTime = 90;
+        spaceAmidaEffObj->work[0] = 1;
+        rocketObj[spaceAmidaPath]->work[2] = 3;
+        rocketWork = rocketObj[spaceAmidaPath]->data;
+        Hu3DModelAttrReset(kemuriMdlId, HU3D_ATTR_DISPOFF);
+        Hu3DModelPosSet(kemuriMdlId, playerPos.x, playerPos.y, playerPos.z);
+        rocketWork->kemuriScale.x = 1.4f;
+        rocketWork->kemuriScale.y = 1.4f;
+        rocketWork->kemuriScale.z = 1.4f;
+        rocketWork->kemuriScaleVel.x = 0.055999998f;
+        rocketWork->kemuriScaleVel.y = 0.08088889f;
+        rocketWork->kemuriScaleVel.z = 0.055999998f;
+        rocketWork->kemuriTPLvl = 1.0f;
+        rocketWork->unk3C = 0.0f;
+        Hu3DModelScaleSet(kemuriMdlId, 1.4f, 1.4f, 1.4f);
+        obj->func = SpaceAmidaRocketWait;
     }
 }
 
-static void fn_1_BF00(omObjData *arg0)
+static void SpaceAmidaRocketWait(omObjData *obj)
 {
-    Bss720Data *temp_r31;
+    SpaceAmidaGameWork *work;
 
-    temp_r31 = arg0->data;
-    if (temp_r31->unk1C == 0) {
-        lbl_1_bss_714[lbl_1_bss_730]->work[2] = 4;
-        arg0->func = fn_1_BF68;
+    work = obj->data;
+    if (work->waitTime == 0) {
+        rocketObj[spaceAmidaPath]->work[2] = 4;
+        obj->func = SpaceAmidaRocketUp;
     }
     else {
-        temp_r31->unk1C--;
+        work->waitTime--;
     }
 }
 
-static void fn_1_BF68(omObjData *arg0)
+static void SpaceAmidaRocketUp(omObjData *obj)
 {
-    Bss720Data *sp8;
+    SpaceAmidaGameWork *work;
 
-    sp8 = arg0->data;
-    if (lbl_1_bss_714[lbl_1_bss_730]->work[2] == 6) {
-        lbl_1_bss_75C = HuPrcCreate(fn_1_C000, 0x2004, 0x1000, 0);
-        lbl_1_bss_75C->user_data = arg0;
-        arg0->func = NULL;
+    work = obj->data;
+    if (rocketObj[spaceAmidaPath]->work[2] == 6) {
+        coinWinProc = HuPrcCreate(SpaceAmidaCoinWin, 0x2004, 0x1000, 0);
+        coinWinProc->user_data = obj;
+        obj->func = NULL;
     }
 }
 
-static void fn_1_C000(void)
+static void SpaceAmidaCoinWin(void)
 {
-    char sp8[16]; // array size may range between 1 and 16 (inclusive)
-    omObjData *temp_r30;
-    Bss720Data *temp_r31;
+    char mess[16]; // array size may range between 1 and 16 (inclusive)
+    omObjData *obj;
+    SpaceAmidaGameWork *work;
 
     BoardAudSeqFadeOut(1, 100);
-    sprintf(&sp8, "%d", lbl_1_bss_728);
+    sprintf(&mess, "%d", spaceAmidaCoinNum);
     BoardWinCreate(2, MAKE_MESSID(11, 6), 0);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(sp8), 0);
+    BoardWinInsertMesSet(MAKE_MESSID_PTR(mess), 0);
     BoardWinWait();
     BoardWinKill();
-    temp_r30 = HuPrcCurrentGet()->user_data;
-    temp_r31 = temp_r30->data;
-    temp_r31->unk10.x = 0.0f;
-    temp_r31->unk10.y = 10.0f;
-    temp_r31->unk10.z = 3.0f;
-    temp_r31->unk20 = 0.0f;
-    BoardPlayerMotionShiftSet(lbl_1_bss_798, 4, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
-    temp_r30->func = fn_1_C0FC;
+    obj = HuPrcCurrentGet()->user_data;
+    work = obj->data;
+    work->jumpDir.x = 0.0f;
+    work->jumpDir.y = 10.0f;
+    work->jumpDir.z = 3.0f;
+    work->jumpTime = 0.0f;
+    BoardPlayerMotionShiftSet(spaceAmidaPlayerNo, 4, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+    obj->func = SpaceAmidaJumpDown;
     HuPrcKill(NULL);
     while (TRUE) {
         HuPrcVSleep();
     }
 }
 
-static void fn_1_C0FC(omObjData *arg0)
+static void SpaceAmidaJumpDown(omObjData *obj)
 {
-    Bss720Data *temp_r31;
-    Vec sp8;
+    SpaceAmidaGameWork *work;
+    Vec pos;
 
-    temp_r31 = arg0->data;
-    BoardPlayerPosGet(lbl_1_bss_798, &sp8);
-    sp8.x += temp_r31->unk10.x;
-    sp8.y += temp_r31->unk10.y - 0.029166667f * temp_r31->unk20 * temp_r31->unk20;
-    sp8.z += temp_r31->unk10.z;
-    temp_r31->unk20 += 1.0f;
-    if (sp8.y <= lbl_1_bss_738.y) {
-        BoardPlayerMotionShiftSet(lbl_1_bss_798, 1, 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
-        sp8.y = lbl_1_bss_738.y;
-        lbl_1_bss_75C = HuPrcCreate(fn_1_C25C, 0x2004, 0x1000, 0);
-        lbl_1_bss_75C->user_data = arg0;
-        arg0->func = NULL;
+    work = obj->data;
+    BoardPlayerPosGet(spaceAmidaPlayerNo, &pos);
+    pos.x += work->jumpDir.x;
+    pos.y += work->jumpDir.y - 0.029166667f * work->jumpTime * work->jumpTime;
+    pos.z += work->jumpDir.z;
+    work->jumpTime += 1.0f;
+    if (pos.y <= spaceAmidaPos.y) {
+        BoardPlayerMotionShiftSet(spaceAmidaPlayerNo, 1, 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
+        pos.y = spaceAmidaPos.y;
+        coinWinProc = HuPrcCreate(SpaceAmidaCoinRainMain, 0x2004, 0x1000, 0);
+        coinWinProc->user_data = obj;
+        obj->func = NULL;
     }
-    BoardPlayerPosSetV(lbl_1_bss_798, &sp8);
+    BoardPlayerPosSetV(spaceAmidaPlayerNo, &pos);
 }
 
-static void fn_1_C25C(void)
+static void SpaceAmidaCoinRainMain(void)
 {
-    Vec sp11C[20];
-    Vec sp2C[20];
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
-    float var_f31;
-    s16 var_r30;
+    Vec coinPos[20];
+    Vec coinRot[20];
+    Vec playerPos;
+    Vec scale;
+    Vec coinEffPos;
+    float velY;
+    s16 coinNum;
     s16 i;
 
-    var_r30 = 0;
-    BoardPlayerPosGet(lbl_1_bss_798, &sp20);
-    sp14.x = sp14.y = sp14.z = 1.0f;
-    for (i = 0; i < lbl_1_bss_728; i++) {
-        BoardModelVisibilitySet(lbl_1_bss_760[i], 1);
-        sp11C[i] = sp20;
-        sp11C[i].y += 600.0f + i * 120;
-        sp11C[i].x += -25.0f + 50.0f * frand8() * 0.003921569f;
-        sp11C[i].z += -25.0f + 50.0f * frand8() * 0.003921569f;
-        sp2C[i].x = sp2C[i].z = 0.0f;
-        sp2C[i].y = 360.0f * frand8() * 0.003921569f;
-        BoardModelPosSetV(lbl_1_bss_760[i], &sp11C[i]);
-        BoardModelScaleSetV(lbl_1_bss_760[i], &sp14);
-        BoardModelRotSetV(lbl_1_bss_760[i], &sp2C[i]);
+    coinNum = 0;
+    BoardPlayerPosGet(spaceAmidaPlayerNo, &playerPos);
+    scale.x = scale.y = scale.z = 1.0f;
+    for (i = 0; i < spaceAmidaCoinNum; i++) {
+        BoardModelVisibilitySet(coinMdlId[i], 1);
+        coinPos[i] = playerPos;
+        coinPos[i].y += 600.0f + i * 120;
+        coinPos[i].x += -25.0f + 50.0f * frand8() * 0.003921569f;
+        coinPos[i].z += -25.0f + 50.0f * frand8() * 0.003921569f;
+        coinRot[i].x = coinRot[i].z = 0.0f;
+        coinRot[i].y = 360.0f * frand8() * 0.003921569f;
+        BoardModelPosSetV(coinMdlId[i], &coinPos[i]);
+        BoardModelScaleSetV(coinMdlId[i], &scale);
+        BoardModelRotSetV(coinMdlId[i], &coinRot[i]);
     }
-    var_f31 = -1.0f;
+    velY = -1.0f;
     while (TRUE) {
-        for (i = 0; i < lbl_1_bss_728; i++) {
-            if (i >= var_r30) {
-                sp11C[i].y += var_f31;
-                BoardModelPosSetV(lbl_1_bss_760[i], &sp11C[i]);
-                sp2C[i].y += 45.0f;
-                if (sp2C[i].y >= 360.0f) {
-                    sp2C[i].y -= 360.0f;
+        for (i = 0; i < spaceAmidaCoinNum; i++) {
+            if (i >= coinNum) {
+                coinPos[i].y += velY;
+                BoardModelPosSetV(coinMdlId[i], &coinPos[i]);
+                coinRot[i].y += 45.0f;
+                if (coinRot[i].y >= 360.0f) {
+                    coinRot[i].y -= 360.0f;
                 }
-                BoardModelRotSetV(lbl_1_bss_760[i], &sp2C[i]);
-                if (sp11C[i].y <= sp20.y + 80.0f) {
-                    sp8 = sp11C[i];
-                    CharModelCoinEffectCreate(1, &sp8);
-                    BoardModelVisibilitySet(lbl_1_bss_760[i], 0);
-                    var_r30++;
-                    BoardPlayerCoinsAdd(lbl_1_bss_798, 1);
+                BoardModelRotSetV(coinMdlId[i], &coinRot[i]);
+                if (coinPos[i].y <= playerPos.y + 80.0f) {
+                    Vec pos = coinPos[i];
+                    CharModelCoinEffectCreate(1, &pos);
+                    BoardModelVisibilitySet(coinMdlId[i], 0);
+                    coinNum++;
+                    BoardPlayerCoinsAdd(spaceAmidaPlayerNo, 1);
                     HuAudFXPlay(7);
-                    omVibrate(lbl_1_bss_798, 0xC, 6, 6);
+                    omVibrate(spaceAmidaPlayerNo, 0xC, 6, 6);
                 }
             }
         }
-        var_f31 *= 1.05f;
-        if (var_f31 < -20.0f) {
-            var_f31 = -20.0f;
+        velY *= 1.05f;
+        if (velY < -20.0f) {
+            velY = -20.0f;
         }
-        if (var_r30 == lbl_1_bss_728) {
-            BoardPlayerMotionShiftSet(lbl_1_bss_798, 7, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+        if (coinNum == spaceAmidaCoinNum) {
+            BoardPlayerMotionShiftSet(spaceAmidaPlayerNo, 7, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
             break;
         }
         HuPrcVSleep();
     }
-    while (!BoardPlayerMotionEndCheck(lbl_1_bss_798)) {
+    while (!BoardPlayerMotionEndCheck(spaceAmidaPlayerNo)) {
         HuPrcVSleep();
     }
-    lbl_1_bss_75C = HuPrcCreate(fn_1_C844, 0x2004, 0x1000, 0);
-    lbl_1_bss_75C->user_data = HuPrcCurrentGet()->user_data;
+    coinWinProc = HuPrcCreate(SpaceAmidaReturnWinMain, 0x2004, 0x1000, 0);
+    coinWinProc->user_data = HuPrcCurrentGet()->user_data;
     HuPrcKill(NULL);
     while (TRUE) {
         HuPrcVSleep();
     }
 }
 
-static void fn_1_C844(void)
+static void SpaceAmidaReturnWinMain(void)
 {
-    omObjData *var_r31;
+    omObjData *obj;
 
     BoardWinCreate(2, MAKE_MESSID(11, 7), 0);
     BoardWinWait();
     BoardWinKill();
-    var_r31 = HuPrcCurrentGet()->user_data;
-    var_r31->func = fn_1_C894;
+    obj = HuPrcCurrentGet()->user_data;
+    obj->func = SpaceAmidaGameStop;
     HuPrcKill(NULL);
     while (TRUE) {
         HuPrcVSleep();
     }
 }
 
-static void fn_1_C894(omObjData *arg0)
+static void SpaceAmidaGameStop(omObjData *obj)
 {
-    float temp_f31;
-
-    lbl_1_bss_72A = 1;
-    BoardMGExit();
-    temp_f31 = BoardModelMotionTimeGet(lbl_1_bss_796);
-    lbl_1_bss_754 = temp_f31;
-    BoardModelMotionStart(lbl_1_bss_796, 0, 0);
-    BoardModelMotionTimeSet(lbl_1_bss_796, temp_f31);
-    BoardModelMotionSpeedSet(lbl_1_bss_796, -1.0f);
-    omDelObjEx(HuPrcCurrentGet(), arg0);
+    SpaceAmidaStop();
+    omDelObjEx(HuPrcCurrentGet(), obj);
 }
 
-static void fn_1_C94C(Vec *arg0, Vec *arg1, Vec *arg2)
+static void SpaceAmidaDirGet(Vec *b, Vec *a, Vec *result)
 {
-    VECSubtract(arg1, arg0, arg2);
-    VECNormalize(arg2, arg2);
+    VECSubtract(a, b, result);
+    VECNormalize(result, result);
 }
 
-static float fn_1_C998(Vec *arg0)
+static float SpaceAmidaAngleGet(Vec *dir)
 {
-    float temp_f31;
+    float angle;
 
-    if (arg0->x || arg0->z) {
-        if (arg0->x == 0.0f) {
-            if (arg0->z > 0.0f) {
+    if (dir->x || dir->z) {
+        if (dir->x == 0.0f) {
+            if (dir->z > 0.0f) {
                 return 0.0f;
             }
             else {
                 return 180.0f;
             }
         }
-        if (arg0->z == 0.0f) {
-            if (arg0->x > 0.0f) {
+        if (dir->z == 0.0f) {
+            if (dir->x > 0.0f) {
                 return 90.0f;
             }
             else {
                 return 270.0f;
             }
         }
-        temp_f31 = atan2d(arg0->z, arg0->x);
-        if (arg0->z < 0.0f) {
-            temp_f31 = 90.0f - temp_f31;
+        angle = atan2d(dir->z, dir->x);
+        if (dir->z < 0.0f) {
+            angle = 90.0f - angle;
         }
         else {
-            temp_f31 = 90.0f - temp_f31;
-            if (temp_f31 < 0.0f) {
-                temp_f31 += 360.0f;
+            angle = 90.0f - angle;
+            if (angle < 0.0f) {
+                angle += 360.0f;
             }
         }
-        return temp_f31;
+        return angle;
     }
     return -1.0f;
 }
 
-static u32 fn_1_CB44(Vec *arg0, float arg1)
+static u32 SpaceAmidaPlayerRotAdd(Vec *rocketPos, float delta)
 {
-    Vec sp24;
-    Vec sp18;
-    Vec spC;
-    float var_f28;
-    float var_f30;
-    float var_f31;
+    Vec dir;
+    Vec playerPos;
+    Vec playerRot;
+    float rocketAngle;
+    float angleDelta;
+    float rotY;
 
-    BoardPlayerPosGet(lbl_1_bss_798, &sp18);
-    VECSubtract(arg0, &sp18, &sp24);
-    VECNormalize(&sp24, &sp24);
-    var_f28 = fn_1_C998(&sp24);
-    BoardPlayerRotGet(lbl_1_bss_798, &spC);
-    var_f31 = spC.y;
-    var_f30 = var_f28 - var_f31;
-    if (arg1 == 0.0f) {
-        var_f31 = var_f28;
+    BoardPlayerPosGet(spaceAmidaPlayerNo, &playerPos);
+    SpaceAmidaDirGet(&playerPos, rocketPos, &dir);
+    rocketAngle = SpaceAmidaAngleGet(&dir);
+    BoardPlayerRotGet(spaceAmidaPlayerNo, &playerRot);
+    rotY = playerRot.y;
+    angleDelta = rocketAngle - rotY;
+    if (delta == 0.0f) {
+        rotY = rocketAngle;
     }
-    else if (fabs(var_f30) > arg1) {
-        if (var_f30 < 0.0f) {
-            var_f30 += 360.0f;
+    else if (fabs(angleDelta) > delta) {
+        if (angleDelta < 0.0f) {
+            angleDelta += 360.0f;
         }
-        if (var_f30 < 180.0f) {
-            if (var_f30 > arg1) {
-                var_f31 += arg1;
+        if (angleDelta < 180.0f) {
+            if (angleDelta > delta) {
+                rotY += delta;
             }
             else {
-                var_f31 += var_f30;
+                rotY += angleDelta;
             }
         }
-        else if (360.0f - var_f30 > arg1) {
-            var_f31 -= arg1;
+        else if (360.0f - angleDelta > delta) {
+            rotY -= delta;
         }
         else {
-            var_f31 -= 360.0f - var_f30;
+            rotY -= 360.0f - angleDelta;
         }
     }
     else {
-        var_f31 = var_f28;
+        rotY = rocketAngle;
     }
-    if (var_f31 >= 360.0f) {
-        var_f31 -= 360.0f;
+    if (rotY >= 360.0f) {
+        rotY -= 360.0f;
     }
-    if (var_f31 < 0.0f) {
-        var_f31 += 360.0f;
+    if (rotY < 0.0f) {
+        rotY += 360.0f;
     }
-    BoardPlayerRotYSet(lbl_1_bss_798, var_f31);
-    if (var_f31 == var_f28) {
-        return 1;
+    BoardPlayerRotYSet(spaceAmidaPlayerNo, rotY);
+    if (rotY == rocketAngle) {
+        return TRUE;
     }
     else {
-        return 0;
+        return FALSE;
     }
 }
 
-static void fn_1_CEC4(void)
+static void SpaceAmidaEffCreate(void)
 {
-    lbl_1_bss_70C = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_W01, 20));
-    lbl_1_bss_710 = omAddObjEx(boardObjMan, 0x101, 1, 0, -1, fn_1_D07C);
-    lbl_1_bss_710->data = HuMemDirectMallocNum(HEAP_SYSTEM, 12, MEMORY_DEFAULT_NUM);
-    lbl_1_bss_710->model[0] = Hu3DParticleCreate(lbl_1_bss_70C, 0x320);
-    Hu3DParticleColSet(lbl_1_bss_710->model[0], 0xFF, 0, 0);
-    Hu3DParticleScaleSet(lbl_1_bss_710->model[0], 5.0f);
-    Hu3DParticleHookSet(lbl_1_bss_710->model[0], fn_1_D114);
-    Hu3DParticleBlendModeSet(lbl_1_bss_710->model[0], 1);
-    Hu3DModelAttrSet(lbl_1_bss_710->model[0], HU3D_ATTR_DISPOFF);
-    lbl_1_bss_710->work[0] = 0;
+    spaceAmidaEffAnim = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_W01, 20));
+    spaceAmidaEffObj = omAddObjEx(boardObjMan, 0x101, 1, 0, -1, SpaceAmidaEffUpdate);
+    spaceAmidaEffObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, 12, MEMORY_DEFAULT_NUM);
+    spaceAmidaEffObj->model[0] = Hu3DParticleCreate(spaceAmidaEffAnim, 0x320);
+    Hu3DParticleColSet(spaceAmidaEffObj->model[0], 255, 0, 0);
+    Hu3DParticleScaleSet(spaceAmidaEffObj->model[0], 5.0f);
+    Hu3DParticleHookSet(spaceAmidaEffObj->model[0], SpaceAmidaEffParticleHook);
+    Hu3DParticleBlendModeSet(spaceAmidaEffObj->model[0], 1);
+    Hu3DModelAttrSet(spaceAmidaEffObj->model[0], HU3D_ATTR_DISPOFF);
+    spaceAmidaEffObj->work[0] = 0;
 }
 
-static void fn_1_D034(void)
+static void SpaceAmidaEffKill(void)
 {
-    Hu3DModelKill(lbl_1_bss_710->model[0]);
-    omDelObjEx(HuPrcCurrentGet(), lbl_1_bss_710);
+    Hu3DModelKill(spaceAmidaEffObj->model[0]);
+    omDelObjEx(HuPrcCurrentGet(), spaceAmidaEffObj);
 }
 
-static void fn_1_D07C(omObjData *arg0)
+static void SpaceAmidaEffUpdate(omObjData *obj)
 {
-    void *sp8;
+    void *work;
 
-    sp8 = arg0->data;
-    switch (arg0->work[0]) {
+    work = obj->data;
+    switch (obj->work[0]) {
         case 0:
             break;
         case 1:
-            arg0->work[0] = 2;
-            Hu3DModelAttrReset(arg0->model[0], HU3D_ATTR_DISPOFF);
-            Hu3DModelScaleSet(arg0->model[0], 10.0f, 10.0f, 10.0f);
+            obj->work[0] = 2;
+            Hu3DModelAttrReset(obj->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelScaleSet(obj->model[0], 10.0f, 10.0f, 10.0f);
             break;
         case 2:
             break;
     }
 }
 
-static void fn_1_D114(ModelData *model, ParticleData *particle, Mtx matrix)
+static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    Bss714Data *temp_r28;
-    HsfanimStruct01 *var_r31;
-    Vec sp8;
-    float temp_f31;
+    RocketWork *work;
+    HsfanimStruct01 *particleDataP;
+    Vec pos;
+    float size;
     s32 i;
     s32 j;
-    s32 temp_r26;
+    s32 relSize;
 
-    BoardModelPosGet(lbl_1_bss_714[lbl_1_bss_730]->work[0], &sp8);
-    temp_r28 = lbl_1_bss_714[lbl_1_bss_730]->data;
+    BoardModelPosGet(rocketObj[spaceAmidaPath]->work[0], &pos);
+    work = rocketObj[spaceAmidaPath]->data;
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
-        for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk2C = 0.0f;
+        particleDataP = particle->unk_48;
+        for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+            particleDataP->unk2C = 0.0f;
         }
         particle->unk_1C = (void *)1;
     }
-    if (temp_r28->unk1C > 0.0f) {
-        for (i = 0; i < 80.0f * temp_r28->unk1C; i++) {
-            var_r31 = particle->unk_48;
-            for (j = 0; j < particle->unk_30; j++, var_r31++) {
-                if (var_r31->unk2C == 0.0f) {
+    if (work->kemuriSize > 0.0f) {
+        for (i = 0; i < 80.0f * work->kemuriSize; i++) {
+            particleDataP = particle->unk_48;
+            for (j = 0; j < particle->unk_30; j++, particleDataP++) {
+                if (particleDataP->unk2C == 0.0f) {
                     break;
                 }
             }
             if (j != particle->unk_30) {
-                temp_r26 = frand16();
-                temp_f31 = (-15.0f + 30.0f * (temp_r26 / 65536.0f)) * temp_r28->unk1C;
-                var_r31->unk08.x = sp8.x + temp_f31;
-                var_r31->unk08.y = sp8.y;
-                var_r31->unk08.z = sp8.z;
-                var_r31->unk14.x = 255.0f;
-                var_r31->unk14.y = 155.0f;
-                var_r31->unk14.z = 55.0f;
-                var_r31->unk40.a = 0xFF;
-                var_r31->unk20 = 0.0f;
-                var_r31->unk24 = temp_r28->unk1C * (-3.0 + (2.0 * (fabs(temp_f31) / 15.0)));
-                var_r31->unk28 = 0.0f;
-                var_r31->unk2C = 7.3f;
+                relSize = frand16();
+                size = (-15.0f + 30.0f * (relSize / 65536.0f)) * work->kemuriSize;
+                particleDataP->unk08.x = pos.x + size;
+                particleDataP->unk08.y = pos.y;
+                particleDataP->unk08.z = pos.z;
+                particleDataP->unk14.x = 255.0f;
+                particleDataP->unk14.y = 155.0f;
+                particleDataP->unk14.z = 55.0f;
+                particleDataP->unk40.a = 0xFF;
+                particleDataP->unk20 = 0.0f;
+                particleDataP->unk24 = work->kemuriSize * (-3.0 + (2.0 * (fabs(size) / 15.0)));
+                particleDataP->unk28 = 0.0f;
+                particleDataP->unk2C = 7.3f;
             }
         }
     }
-    var_r31 = particle->unk_48;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk2C == 0.0f) {
+    particleDataP = particle->unk_48;
+    for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+        if (particleDataP->unk2C == 0.0f) {
             continue;
         }
-        var_r31->unk34.x = var_r31->unk08.x;
-        var_r31->unk34.y = var_r31->unk08.y;
-        var_r31->unk34.z = var_r31->unk08.z;
-        var_r31->unk08.x += var_r31->unk20;
-        var_r31->unk08.y += var_r31->unk24;
-        var_r31->unk08.z += var_r31->unk28;
-        if (var_r31->unk08.y <= lbl_1_bss_738.y) {
-            var_r31->unk08.y = lbl_1_bss_738.y;
-            var_r31->unk24 = -var_r31->unk24 - 0.3f;
-            if (var_r31->unk24 < 0.0f) {
-                var_r31->unk24 = 0.0f;
+        particleDataP->unk34.x = particleDataP->unk08.x;
+        particleDataP->unk34.y = particleDataP->unk08.y;
+        particleDataP->unk34.z = particleDataP->unk08.z;
+        particleDataP->unk08.x += particleDataP->unk20;
+        particleDataP->unk08.y += particleDataP->unk24;
+        particleDataP->unk08.z += particleDataP->unk28;
+        if (particleDataP->unk08.y <= spaceAmidaPos.y) {
+            particleDataP->unk08.y = spaceAmidaPos.y;
+            particleDataP->unk24 = -particleDataP->unk24 - 0.3f;
+            if (particleDataP->unk24 < 0.0f) {
+                particleDataP->unk24 = 0.0f;
             }
-            temp_r26 = 80.0f * (2.0f * ((sp8.x - var_r31->unk08.x) / 15.0f) - rand8() / 255.0f);
-            var_r31->unk20 = 8.0 * sind(temp_r26);
-            var_r31->unk28 = 8.0 * cosd(temp_r26);
+            relSize = 80.0f * (2.0f * ((pos.x - particleDataP->unk08.x) / 15.0f) - rand8() / 255.0f);
+            particleDataP->unk20 = 8.0 * sind(relSize);
+            particleDataP->unk28 = 8.0 * cosd(relSize);
         }
-        var_r31->unk24 -= 0.35f;
-        if ((var_r31->unk14.x -= 25.5f) < 0.0f) {
-            var_r31->unk14.x = 0.0f;
+        particleDataP->unk24 -= 0.35f;
+        if ((particleDataP->unk14.x -= 25.5f) < 0.0f) {
+            particleDataP->unk14.x = 0.0f;
         }
-        if ((var_r31->unk14.y -= 36.42857f) < 0.0f) {
-            var_r31->unk14.y = 0.0f;
+        if ((particleDataP->unk14.y -= 36.42857f) < 0.0f) {
+            particleDataP->unk14.y = 0.0f;
         }
-        if ((var_r31->unk14.z -= 63.75f) < 0.0f) {
-            var_r31->unk14.z = 0.0f;
+        if ((particleDataP->unk14.z -= 63.75f) < 0.0f) {
+            particleDataP->unk14.z = 0.0f;
         }
-        var_r31->unk40.r = var_r31->unk14.x;
-        var_r31->unk40.g = var_r31->unk14.y;
-        var_r31->unk40.b = var_r31->unk14.z;
-        if (var_r31->unk40.r == 0 && var_r31->unk40.g == 0 && var_r31->unk40.b == 0) {
-            var_r31->unk2C = 0.0f;
+        particleDataP->unk40.r = particleDataP->unk14.x;
+        particleDataP->unk40.g = particleDataP->unk14.y;
+        particleDataP->unk40.b = particleDataP->unk14.z;
+        if (particleDataP->unk40.r == 0 && particleDataP->unk40.g == 0 && particleDataP->unk40.b == 0) {
+            particleDataP->unk2C = 0.0f;
         }
     }
 }

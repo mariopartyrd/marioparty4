@@ -4,24 +4,56 @@
 #include "dolphin/types.h"
 
 enum {
+    MAPOBJ_COASTER,
+    MAPOBJ_COASTER_RAIL,
+    MAPOBJ_HOST1,
+    MAPOBJ_HOST2,
+    MAPOBJ_HOST3,
+    MAPOBJ_HOST4,
+    MAPOBJ_SPACEAMIDA,
+    MAPOBJ_SPACEAMIDA_MAP1,
+    MAPOBJ_SPACEAMIDA_MAP2,
+    MAPOBJ_SPACEAMIDA_MAP3,
+    MAPOBJ_SPACEAMIDA_ROCKET1,
+    MAPOBJ_SPACEAMIDA_ROCKET2,
+    MAPOBJ_SPACEAMIDA_ROCKET3,
+    MAPOBJ_SPACEAMIDA_LIGHTEFF,
+    MAPOBJ_SPACEAMIDA_LAMP1,
+    MAPOBJ_SPACEAMIDA_LAMP2,
+    MAPOBJ_ROUNDITEM,
+    MAPOBJ_ROUNDITEM_UMA,
+    MAPOBJ_ROUNDITEM_BORDER,
+    MAPOBJ_ROUNDITEM_ITEM,
+    MAPOBJ_ROUNDITEM_ITEM_LIGHT,
+    MAPOBJ_ROUNDITEM_ITEM_UP,
+    MAPOBJ_ROUNDITEM_ITEM_DENSYOKU,
+    MAPOBJ_CUPR_DISH,
+    MAPOBJ_CUPR1,
+    MAPOBJ_CUPR2,
+    MAPOBJ_CUPR3,
+    MAPOBJ_CUPR_ARROW,
+    MAPOBJ_CUPL_DISH,
+    MAPOBJ_CUPL1,
+    MAPOBJ_CUPL2,
+    MAPOBJ_CUPL3,
+    MAPOBJ_CUPL_ARROW,
     MAPOBJ_MAX = 33
 };
 
 typedef struct {
     /* 0x00 */ struct {
-        u8 unk00_field0 : 1;
+        u8 hostSide : 1;
     };
-    /* 0x01 */ s8 unk01[2];
-} UnkBoardDataStruct; // Size unknown
+    /* 0x01 */ s8 cupDir[2];
+} W01BoardWork;
 
-extern void fn_1_9D00(s32 arg0);
-extern void fn_1_9DD8(void);
+extern void SpaceAmidaExec(void);
 
-extern void fn_1_D740(s16 *arg0);
-extern void fn_1_DD84(void);
-extern void fn_1_DE94(void);
+extern void RoundItemInit(s16 *itemTbl);
+extern void RoundItemKill(void);
+extern void RoundItemEventStart(void);
 
-extern s16 lbl_1_bss_6C4[MAPOBJ_MAX];
-extern UnkBoardDataStruct *lbl_1_bss_0;
+extern s16 mapObjMdlId[MAPOBJ_MAX];
+extern W01BoardWork *boardWork;
 
 #endif
