@@ -1967,7 +1967,7 @@ block_18:
     return 0;
 }
 
-s32 fn_1_15F10(Vec *arg0, Vec *arg1, s32 arg2, s32 arg3, s32 arg4)
+s32 fn_1_15F10(Vec arg0, Vec arg1, s32 arg2, s32 arg3, s32 arg4)
 {
     M427DllBss57CStruct *var_r31;
     s32 var_r30;
@@ -1986,12 +1986,12 @@ s32 fn_1_15F10(Vec *arg0, Vec *arg1, s32 arg2, s32 arg3, s32 arg4)
     var_r31->unk_10 = arg4;
     var_r31->unk_18 = arg3;
     var_r31->unk_14 = 0;
-    var_r31->unk_1C = *arg0;
-    var_r31->unk_28 = *arg1;
+    var_r31->unk_1C = arg0;
+    var_r31->unk_28 = arg1;
     return var_r30;
 }
 
-s32 fn_1_15FD0(Vec *arg0, s32 arg1, s32 arg2, s32 arg3, float arg8)
+s32 fn_1_15FD0(Vec arg0, float arg8, s32 arg1, s32 arg2, s32 arg3)
 {
     M427DllBss57CStruct *var_r31;
     s32 var_r30;
@@ -2010,7 +2010,7 @@ s32 fn_1_15FD0(Vec *arg0, s32 arg1, s32 arg2, s32 arg3, float arg8)
     var_r31->unk_10 = arg3;
     var_r31->unk_18 = arg2;
     var_r31->unk_14 = 0;
-    var_r31->unk_1C = *arg0;
+    var_r31->unk_1C = arg0;
     var_r31->unk_34 = arg8;
     return var_r30;
 }

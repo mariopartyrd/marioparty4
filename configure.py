@@ -1084,7 +1084,7 @@ config.libs = [
         "m427Dll",  # Right Oar Left?
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/main.c"),
-            Object(NonMatching, "REL/m427Dll/map.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/map.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/player.c"),
         },
     ),
