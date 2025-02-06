@@ -1453,9 +1453,9 @@ config.libs = [
     Rel(
         "resultDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/resultDll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/resultDll/battle.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/resultDll/datalist.c"),
+            Object(Matching, "REL/resultDll/main.c"),
+            Object(Matching, "REL/resultDll/battle.c"),
+            Object(Matching, "REL/resultDll/datalist.c"),
         },
     ),
     Rel(
