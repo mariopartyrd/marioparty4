@@ -53,7 +53,7 @@ void HuAudSStreamAllFadeOut(s32 speed);
 void HuAudSStreamAllStop(void);
 s32 HuAudSStreamStatGet(s32 seNo);
 void HuAudDllSndGrpSet(u16 ovl);
-void HuAudSndGrpSetSet(s16 data_size);
+void HuAudSndGrpSetSet(s16 dataSize);
 void HuAudSndGrpSet(s16 grpId);
 void HuAudSndCommonGrpSet(s16 grpId, s32 groupCheck);
 void HuAudAUXSet(s32 auxA, s32 auxB);

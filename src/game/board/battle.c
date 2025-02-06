@@ -21,26 +21,25 @@
 
 typedef struct {
     struct {
-        u8 unk00_field0 : 1;
-        u8 unk00_field1 : 2;
+        u8 isBoardVisible : 1;
+        u8 state : 2;
     };
-    s8 unk01;
-    s16 unk02;
-    s16 unk04[4];
+    s8 delay;
+    s16 bombModel;
+    s16 expModels[4];
 } ExplodeWork;
 
 typedef struct {
     struct {
-        u8 unk00_field0 : 1;
-        u8 unk00_field1 : 4;
-        u8 unk00_field2 : 1;
+        u8 isBoardVisible : 1;
+        u8 state : 4;
+        u8 hasExploded : 1;
         u8 unk00_field3 : 1;
     };
-    u8 unk01;
+    u8 scale;
     s8 unk02;
     s8 unk03;
     s8 unk04;
-    char unk05[3];
     s16 unk08;
 } BattleWork;
 
@@ -401,23 +400,23 @@ static void InitExplode(void) {
     BoardPlayerPosGet(currPlayer, &sp14);
     explodeObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, UpdateExplode);
     temp_r31 = OM_GET_WORK_PTR(explodeObj, ExplodeWork);
-    temp_r31->unk00_field0 = 0;
-    temp_r31->unk00_field1 = 0;
-    temp_r31->unk01 = 0x10;
-    temp_r31->unk02 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BGUEST, 38), NULL, 0);
-    BoardModelLayerSet(temp_r31->unk02, 2);
+    temp_r31->isBoardVisible = 0;
+    temp_r31->state = 0;
+    temp_r31->delay = 0x10;
+    temp_r31->bombModel = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BGUEST, 38), NULL, 0);
+    BoardModelLayerSet(temp_r31->bombModel, 2);
     explodeObj->trans.x = sp14.x;
     explodeObj->trans.y = sp14.y - 100.0f;
     explodeObj->trans.z = sp14.z;
-    BoardModelPosSet(temp_r31->unk02, explodeObj->trans.x, explodeObj->trans.y, explodeObj->trans.z);
-    BoardModelMotionStart(temp_r31->unk02, 0, 0x40000001);
+    BoardModelPosSet(temp_r31->bombModel, explodeObj->trans.x, explodeObj->trans.y, explodeObj->trans.z);
+    BoardModelMotionStart(temp_r31->bombModel, 0, 0x40000001);
     for (i = 0; i < 4; i++) {
-        temp_r31->unk04[i] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 102), NULL, 0);
+        temp_r31->expModels[i] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 102), NULL, 0);
         sp8.x = sp14.x + sp20[i][0];
         sp8.y = sp14.y;
         sp8.z = sp14.z + sp20[i][1];
-        BoardModelPosSetV(temp_r31->unk04[i], &sp8);
-        BoardModelLayerSet(temp_r31->unk04[i], 2);
+        BoardModelPosSetV(temp_r31->expModels[i], &sp8);
+        BoardModelLayerSet(temp_r31->expModels[i], 2);
     }
     HuAudFXPlay(0x33C);
 }
@@ -425,7 +424,7 @@ static void InitExplode(void) {
 static s32 CheckExplode(void) {
     ExplodeWork *temp_r31 = OM_GET_WORK_PTR(explodeObj, ExplodeWork);
 
-    return temp_r31->unk00_field1;
+    return temp_r31->state;
 }
 
 static void UpdateExplode(omObjData *arg0) {
@@ -438,18 +437,18 @@ static void UpdateExplode(omObjData *arg0) {
 
     (void) 1000.0f; // TODO: 1000.0f needs to appear right before 20.0f in sdata2 to match.
     temp_r30 = OM_GET_WORK_PTR(arg0, ExplodeWork);
-    if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
-        BoardModelKill(temp_r30->unk02);
+    if (temp_r30->isBoardVisible != 0 || BoardIsKill()) {
+        BoardModelKill(temp_r30->bombModel);
         for (i = 0; i < 4; i++) {
-            BoardModelKill(temp_r30->unk04[i]);
+            BoardModelKill(temp_r30->expModels[i]);
         }
         explodeObj = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);
         return;
     }
-    switch (temp_r30->unk00_field1) {
+    switch (temp_r30->state) {
         case 0:
-            if (temp_r30->unk01 == 0) {
+            if (temp_r30->delay == 0) {
                 for (i = 0; i < 4; i++) {
                     if (currSpace == GWPlayer[i].space_curr) {
                         temp_f31 = 20.0f * BoardRandFloat();
@@ -459,28 +458,28 @@ static void UpdateExplode(omObjData *arg0) {
                 }
                 CharModelLayerSetAll(2);
             }
-            if (temp_r30->unk01-- <= 0) {
+            if (temp_r30->delay-- <= 0) {
                 arg0->trans.y += 50.0f;
                 if (arg0->trans.y >= 800.0f) {
                     arg0->scale.x = 288.0f;
                     arg0->scale.y = -128.0f;
                     arg0->scale.z = 1000.0f;
                     for (i = 0; i < 4; i++) {
-                        BoardModelVisibilitySet(temp_r30->unk04[i], 0);
+                        BoardModelVisibilitySet(temp_r30->expModels[i], 0);
                     }
-                    temp_r30->unk00_field1 = 2;
+                    temp_r30->state = 2;
                 }
             }
             break;
         case 3:
-            BoardModelVisibilitySet(temp_r30->unk02, 0);
-            temp_r30->unk00_field0 = 1;
+            BoardModelVisibilitySet(temp_r30->bombModel, 0);
+            temp_r30->isBoardVisible = 1;
             break;
         case 2:
             BoardCameraRotGet(&sp8);
             PSMTXRotRad(sp20, 'x', MTXDegToRad(sp8.x + 10.0f));
-            BoardModelMtxSet(temp_r30->unk02, &sp20);
-            BoardModelRotSet(temp_r30->unk02, 0.0f, 0.0f, 0.0f);
+            BoardModelMtxSet(temp_r30->bombModel, &sp20);
+            BoardModelRotSet(temp_r30->bombModel, 0.0f, 0.0f, 0.0f);
             sp14.x = arg0->scale.x;
             sp14.y = arg0->scale.y;
             sp14.z = arg0->scale.z;
@@ -490,7 +489,7 @@ static void UpdateExplode(omObjData *arg0) {
             arg0->trans.z = sp14.z;
             break;
     }
-    BoardModelPosSet(temp_r30->unk02, arg0->trans.x, arg0->trans.y, arg0->trans.z);
+    BoardModelPosSet(temp_r30->bombModel, arg0->trans.x, arg0->trans.y, arg0->trans.z);
 }
 
 static void CreateBattleMain(void) {
@@ -514,14 +513,14 @@ static void CreateBattleMain(void) {
 
     battleObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, UpdateBattleMain);
     temp_r31 = OM_GET_WORK_PTR(battleObj, BattleWork);
-    temp_r31->unk00_field0 = 0;
-    temp_r31->unk00_field2 = 0;
-    temp_r31->unk01 = 0;
+    temp_r31->isBoardVisible = 0;
+    temp_r31->hasExploded = 0;
+    temp_r31->scale = 0;
     temp_r31->unk02 = 2;
     temp_r31->unk03 = 2;
     temp_r31->unk04 = 0;
     temp_r31->unk00_field3 = 0;
-    temp_r31->unk00_field1 = 0;
+    temp_r31->state = 0;
     battleCoinSpeed = 1.0f;
     battleCoinPosF = 5.0f * BoardRandFloat();
     coinTakeMax = 0;
@@ -544,13 +543,13 @@ static void UpdateBattleMain(omObjData *arg0) {
     float var_f31;
 
     temp_r30 = OM_GET_WORK_PTR(arg0, BattleWork);
-    if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
+    if (temp_r30->isBoardVisible != 0 || BoardIsKill()) {
         HuSprGrpKill(temp_r30->unk08);
         battleObj = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);
         return;
     }
-    switch (temp_r30->unk00_field1) {
+    switch (temp_r30->state) {
         case 0:
             DescendBattleBomb(temp_r30, arg0);
             break;
@@ -580,7 +579,7 @@ static void UpdateBattleMain(omObjData *arg0) {
     }
     var_f31 = arg0->trans.x + 240.0f;
     temp_r29 = OM_GET_WORK_PTR(explodeObj, ExplodeWork);
-    if (temp_r29->unk00_field1 == 2) {
+    if (temp_r29->state == 2) {
         explodeObj->scale.x = 288.0f;
         explodeObj->scale.y = var_f31;
         explodeObj->scale.z = 1000.0f;
@@ -594,7 +593,7 @@ static void DescendBattleBomb(BattleWork *arg0, omObjData *arg1) {
 
     if (temp_f31 < 0.1f) {
         arg1->trans.x = -132.0f;
-        arg0->unk00_field1 = 2;
+        arg0->state = 2;
     } else {
         arg1->trans.x += 0.3f * temp_f31;
     }
@@ -605,7 +604,7 @@ static void EndBattle(BattleWork *arg0, omObjData *arg1) {
 
     if (temp_f31 < 0.1f) {
         BoardFilterFadeOut(30);
-        arg0->unk00_field1 = 8;
+        arg0->state = 8;
     } else {
         arg1->trans.x += 0.3f * temp_f31;
     }
@@ -614,9 +613,9 @@ static void EndBattle(BattleWork *arg0, omObjData *arg1) {
 static void ShowBattleGame(BattleWork *arg0, omObjData *arg1) {
     float var_r29;
 
-    if (arg0->unk01 == 0) {
+    if (arg0->scale == 0) {
         if (BoardFilterFadePauseCheck()) {
-            arg0->unk01 = 1;
+            arg0->scale = 1;
             arg1->trans.z = 0.01f;
             arg1->trans.y = 0.0f;
             HuSprAttrReset(arg0->unk08, 0, HUSPR_ATTR_DISPOFF);
@@ -625,13 +624,13 @@ static void ShowBattleGame(BattleWork *arg0, omObjData *arg1) {
             return;
         }
     }
-    if (arg0->unk01 >= 90) {
-        arg0->unk00_field1 = 8;
-        arg0->unk01 = 90;
+    if (arg0->scale >= 90) {
+        arg0->state = 8;
+        arg0->scale = 90;
     }
-    OSs8tof32((s8*) &arg0->unk01, &var_r29);
+    OSs8tof32((s8*) &arg0->scale, &var_r29);
     arg1->trans.z = sind(var_r29);
-    arg0->unk01 += 4;
+    arg0->scale += 4;
 }
 
 static void RaiseBattleGame(BattleWork *arg0, omObjData *arg1) {
@@ -639,7 +638,7 @@ static void RaiseBattleGame(BattleWork *arg0, omObjData *arg1) {
 
     if (ABS(temp_f31) < 0.1f) {
         arg1->trans.y = -60.0f;
-        arg0->unk00_field1 = 8;
+        arg0->state = 8;
     } else {
         arg1->trans.y += 0.2f * temp_f31;
     }
@@ -648,7 +647,7 @@ static void RaiseBattleGame(BattleWork *arg0, omObjData *arg1) {
 static void UpdateBattleCoin(BattleWork *arg0, omObjData *arg1) {
     s8 temp_r28;
 
-    if (arg0->unk00_field2 != 0) {
+    if (arg0->hasExploded != 0) {
         if (arg0->unk03++ < arg0->unk02) {
             arg0->unk04++;
             if (arg0->unk04 > 20) {
@@ -668,8 +667,8 @@ static void UpdateBattleCoin(BattleWork *arg0, omObjData *arg1) {
         }
         OSf32tos8(&battleCoinPosF, &temp_r28);
         if (arg0->unk02 >= 30 && temp_r28 == battleCoinIdx) {
-            arg0->unk00_field1 = 7;
-            arg0->unk01 = 0;
+            arg0->state = 7;
+            arg0->scale = 0;
             coinTakeMax = battleCoinTbl[temp_r28];
             HuAudFXPlay(0x305);
         } else {
@@ -687,33 +686,33 @@ static void UpdateBattleCoin(BattleWork *arg0, omObjData *arg1) {
     HuSprPosSet(arg0->unk08, 2, 0.0f, 40.0f);
     HuSprPosSet(arg0->unk08, 1, 34.0f, 40.0f);
     HuSprScaleSet(arg0->unk08, 1, 0.9f, 0.9f);
-    arg0->unk00_field2 = 1;
-    arg0->unk01 = 0;
+    arg0->hasExploded = 1;
+    arg0->scale = 0;
     arg1->rot.x = 50.0f;
 }
 
 static void ShowBattleCoin(BattleWork *arg0, omObjData *arg1) {
-    float temp_f29;
-    float var_f30;
+    float scale2;
+    float scale;
 
-    if (arg0->unk01 >= 90) {
-        arg0->unk01 = 0;
-        arg0->unk00_field1 = 8;
-        var_f30 = 90.0f;
+    if (arg0->scale >= 90) {
+        arg0->scale = 0;
+        arg0->state = 8;
+        scale = 90.0f;
     } else {
-        arg0->unk01++;
-        OSu8tof32(&arg0->unk01, &var_f30);
+        arg0->scale++;
+        OSu8tof32(&arg0->scale, &scale);
     }
     if (coinTakeMax != 50) {
-        var_f30 *= 6.0f;
+        scale *= 6.0f;
     } else {
-        var_f30 *= 10.0f;
+        scale *= 10.0f;
     }
-    while (var_f30 > 180.0f) {
-        var_f30 -= 180.0f;
+    while (scale > 180.0f) {
+        scale -= 180.0f;
     }
-    temp_f29 = 0.9f + sind(var_f30);
-    HuSprScaleSet(arg0->unk08, 1, temp_f29, temp_f29);
+    scale2 = 0.9f + sind(scale);
+    HuSprScaleSet(arg0->unk08, 1, scale2, scale2);
 }
 
 static void InitBattleGameSpr(BattleWork *arg0, omObjData *arg1) {
@@ -734,7 +733,7 @@ static void InitBattleGameSpr(BattleWork *arg0, omObjData *arg1) {
     HuSprPosSet(arg0->unk08, 4, sp8[1][0], sp8[1][1]);
     HuSprPosSet(arg0->unk08, temp_r30 + 5, sp8[0][0], sp8[0][1]);
     HuSprPosSet(arg0->unk08, temp_r29 + 5, sp8[1][0], sp8[1][1]);
-    arg0->unk00_field1 = 8;
+    arg0->state = 8;
 }
 
 static void HideBattleSpr(void) {
@@ -753,24 +752,24 @@ static void VibratePad(BattleWork *arg0, omObjData *arg1) {
     for (i = 0; i < 4; i++) {
         omVibrate(i, 12, 0xC, 0);
     }
-    arg0->unk00_field1 = 8;
+    arg0->state = 8;
 }
 
 static void StopBattleBomb(void) {
     if (battleObj) {
-        OM_GET_WORK_PTR(battleObj, BattleWork)->unk00_field0 = 1;
+        OM_GET_WORK_PTR(battleObj, BattleWork)->isBoardVisible = 1;
     }
 }
 
 static s32 GetBattleBombState(void) {
-    return OM_GET_WORK_PTR(battleObj, BattleWork)->unk00_field1;
+    return OM_GET_WORK_PTR(battleObj, BattleWork)->state;
 }
 
 static void SetBattleBombState(s32 arg0) {
     BattleWork *var_r31 = OM_GET_WORK_PTR(battleObj, BattleWork);
 
-    var_r31->unk00_field1 = arg0;
-    var_r31->unk01 = 0;
+    var_r31->state = arg0;
+    var_r31->scale = 0;
 }
 
 static s8 battleChanceTbl[][3][5] = {

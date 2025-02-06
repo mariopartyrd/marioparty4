@@ -374,7 +374,7 @@ static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
 }
 
 static void CoinChgShow(omObjData* object, coinChg* coin_chg) {
-    Vec sp8;
+    Vec pos;
     f32 angle;
     f32 y_pos;
 
@@ -385,14 +385,14 @@ static void CoinChgShow(omObjData* object, coinChg* coin_chg) {
     } else {
         y_pos = (50.0f * angle) + object->trans.y;
     }
-    BoardModelPosGet(coin_chg->coin_model, &sp8);
-    BoardModelPosSet(coin_chg->coin_model, sp8.x, y_pos, sp8.z);
-    BoardModelPosGet(coin_chg->sign_model, &sp8);
-    BoardModelPosSet(coin_chg->sign_model, sp8.x, y_pos, sp8.z);
-    BoardModelPosGet(coin_chg->ones_model, &sp8);
-    BoardModelPosSet(coin_chg->ones_model, sp8.x, y_pos, sp8.z);
-    BoardModelPosGet(coin_chg->tens_model, &sp8);
-    BoardModelPosSet(coin_chg->tens_model, sp8.x, y_pos, sp8.z);
+    BoardModelPosGet(coin_chg->coin_model, &pos);
+    BoardModelPosSet(coin_chg->coin_model, pos.x, y_pos, pos.z);
+    BoardModelPosGet(coin_chg->sign_model, &pos);
+    BoardModelPosSet(coin_chg->sign_model, pos.x, y_pos, pos.z);
+    BoardModelPosGet(coin_chg->ones_model, &pos);
+    BoardModelPosSet(coin_chg->ones_model, pos.x, y_pos, pos.z);
+    BoardModelPosGet(coin_chg->tens_model, &pos);
+    BoardModelPosSet(coin_chg->tens_model, pos.x, y_pos, pos.z);
     if (coin_chg->angle < 90) {
         coin_chg->angle += 6;
         return;
