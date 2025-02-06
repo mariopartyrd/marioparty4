@@ -7,7 +7,7 @@
 
 #include "game/sprite.h"
 
-typedef struct datalist_model {
+typedef struct StageModel_s {
 	s32 datanum;
 	u32 attr;
 	s16 type;
@@ -16,33 +16,33 @@ typedef struct datalist_model {
 	Vec pos;
 	Vec rot;
 	Vec scale;
-} DataListModel;
+} StageModel;
 
-typedef struct datalist_sprite {
+typedef struct StageSprite_s {
 	u32 datanum;
 	s16 attr;
 	s16 prio;
 	float x;
 	float y;
 	GXColor color;
-} DataListSprite;
+} StageSprite;
 
-void fn_1_3FD8(void);
-void fn_1_40DC(void);
-void fn_1_423C(s16 *data);
+void ResultBoardDataRead(void);
+void ResultCoinAdd(void);
+void ResultCoinNumGet(s16 *coinNum);
 
-void fn_1_6490(void);
+void ResultBattleMain(void);
 
-void fn_1_8FF8(DataListModel *model_list);
-void fn_1_927C(DataListSprite *sprite_list);
-void fn_1_93B4(void);
+void StageModelCreate(StageModel *model_list);
+void StageSpriteCreate(StageSprite *sprite_list);
+void StageSpriteKill(void);
 
-extern s16 lbl_1_bss_1A9C[32];
-extern s16 lbl_1_bss_1A5C[32];
-extern s16 lbl_1_bss_1A1A[33];
+extern s16 stageMdlId[32];
+extern s16 stageMotId[32];
+extern s16 stageSprId[33];
 extern s16 lbl_1_bss_1A18;
-extern s32 lbl_1_bss_178;
-extern s32 lbl_1_bss_174;
-extern s16 lbl_1_bss_172;
+extern s32 resultReadEndF;
+extern s32 resultFastF;
+extern s16 resultBonusPlayer;
 
 #endif
