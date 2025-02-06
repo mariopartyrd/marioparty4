@@ -100,10 +100,10 @@ void HuAudAllStop(void) {
     HuAudSStreamAllStop();
 }
 
-void HuAudFadeOut(s32 arg0) {
+void HuAudFadeOut(s32 speed) {
     HuAudFXAllStop();
-    HuAudSeqAllFadeOut(arg0);
-    HuAudSStreamAllFadeOut(arg0);
+    HuAudSeqAllFadeOut(speed);
+    HuAudSStreamAllFadeOut(speed);
 }
 
 int HuAudFXPlay(int seId)
@@ -228,8 +228,8 @@ void HuAudFXListnerKill(void) {
     msmSeDelListener();
 }
 
-void HuAudFXPauseAll(s32 arg0) {
-    msmSePauseAll(arg0, 0x64);
+void HuAudFXPauseAll(s32 pause) {
+    msmSePauseAll(pause, 0x64);
 }
 
 s32 HuAudFXStatusGet(int seNo) {
@@ -259,35 +259,35 @@ s32 HuAudFXVolSet(int seNo, s16 vol)
     return msmSeSetParam(seNo, &param);
 }
 
-s32 HuAudSeqPlay(s16 arg0) {
-    s32 temp_r31;
+s32 HuAudSeqPlay(s16 musId) {
+    s32 channel;
 
     if (musicOffF != 0 || omSysExitReq != 0) {
         return 0;
     }
-    temp_r31 = msmMusPlay(arg0, NULL);
-    return temp_r31;
+    channel = msmMusPlay(musId, NULL);
+    return channel;
 }
 
-void HuAudSeqStop(s32 arg0) {
+void HuAudSeqStop(s32 musNo) {
     if (musicOffF != 0 || omSysExitReq != 0) {
         return;
     }
-    msmMusStop(arg0, 0);
+    msmMusStop(musNo, 0);
 }
 
-void HuAudSeqFadeOut(s32 arg0, s32 arg1) {
+void HuAudSeqFadeOut(s32 musNo, s32 speed) {
     if (musicOffF == 0) {
-        msmMusStop(arg0, arg1);
+        msmMusStop(musNo, speed);
     }
 }
 
-void HuAudSeqAllFadeOut(s32 arg0) {
+void HuAudSeqAllFadeOut(s32 speed) {
     s16 i;
 
     for (i = 0; i < 4; i++) {
         if (msmMusGetStatus(i) == 2) {
-            msmMusStop(i, arg0);
+            msmMusStop(i, speed);
         }
     }
 }
@@ -296,22 +296,22 @@ void HuAudSeqAllStop(void) {
     msmMusStopAll(0, 0);
 }
 
-void HuAudSeqPauseAll(s32 arg0) {
-    msmMusPauseAll(arg0, 0x64);
+void HuAudSeqPauseAll(s32 pause) {
+    msmMusPauseAll(pause, 0x64);
 }
 
-void HuAudSeqPause(s32 arg0, s32 arg1, s32 arg2) {
+void HuAudSeqPause(s32 musNo, s32 pause, s32 speed) {
     if (musicOffF != 0 || omSysExitReq != 0) {
         return;
     }
-    msmMusPause(arg0, arg1, arg2);
+    msmMusPause(musNo, pause, speed);
 }
 
-s32 HuAudSeqMidiCtrlGet(s32 arg0, s8 arg1, s8 arg2) {
+s32 HuAudSeqMidiCtrlGet(s32 musNo, s8 channel, s8 ctrl) {
     if (musicOffF != 0 || omSysExitReq != 0) {
         return 0;
     }
-    return msmMusGetMidiCtrl(arg0, arg1, arg2);
+    return msmMusGetMidiCtrl(musNo, channel, ctrl);
 }
 
 s32 HuAudSStreamPlay(s16 streamId) {
@@ -326,28 +326,28 @@ s32 HuAudSStreamPlay(s16 streamId) {
     return result;
 }
 
-void HuAudSStreamStop(s32 arg0) {
+void HuAudSStreamStop(s32 seNo) {
     if (musicOffF == 0) {
-        msmStreamStop(arg0, 0);
+        msmStreamStop(seNo, 0);
     }
 }
 
-void HuAudSStreamFadeOut(s32 arg0, s32 arg1) {
+void HuAudSStreamFadeOut(s32 seNo, s32 speed) {
     if (musicOffF == 0) {
-        msmStreamStop(arg0, arg1);
+        msmStreamStop(seNo, speed);
     }
 }
 
-void HuAudSStreamAllFadeOut(s32 arg0) {
-    msmStreamStopAll(arg0);
+void HuAudSStreamAllFadeOut(s32 speed) {
+    msmStreamStopAll(speed);
 }
 
 void HuAudSStreamAllStop(void) {
     msmStreamStopAll(0);
 }
 
-s32 HuAudSStreamStatGet(s32 arg0) {
-    return msmStreamGetStatus(arg0);
+s32 HuAudSStreamStatGet(s32 seNo) {
+    return msmStreamGetStatus(seNo);
 }
 
 SNDGRPTBL sndGrpTable[] = {
@@ -445,75 +445,75 @@ SNDGRPTBL sndGrpTable[] = {
 };
 
 void HuAudDllSndGrpSet(u16 ovl) {
-    SNDGRPTBL *var_r31;
-    s16 var_r29;
+    SNDGRPTBL *sndGrp;
+    s16 grpSet;
 
-    var_r31 = sndGrpTable;
+    sndGrp = sndGrpTable;
     while (1) {
-        if (var_r31->ovl == ovl) {
-            var_r29 = var_r31->grpSet;
+        if (sndGrp->ovl == ovl) {
+            grpSet = sndGrp->grpSet;
             break;
         }
-        if (var_r31->ovl == OVL_INVALID) {
-            var_r29 = 0x12;
+        if (sndGrp->ovl == OVL_INVALID) {
+            grpSet = 0x12;
             break;
         }
-        var_r31++;
+        sndGrp++;
     }
-    if (var_r29 != -1) {
+    if (grpSet != -1) {
         OSReport("SOUND ##########################\n");
-        HuAudSndGrpSetSet(var_r29);
-        if (var_r31->auxANo != auxANoBak || var_r31->auxBNo != auxBNoBak) {
-            msmSysSetAux(var_r31->auxANo, var_r31->auxBNo);
-            OSReport("Change AUX %d,%d\n", var_r31->auxANo, var_r31->auxBNo);
-            auxANoBak = var_r31->auxANo;
-            auxBNoBak = var_r31->auxBNo;
+        HuAudSndGrpSetSet(grpSet);
+        if (sndGrp->auxANo != auxANoBak || sndGrp->auxBNo != auxBNoBak) {
+            msmSysSetAux(sndGrp->auxANo, sndGrp->auxBNo);
+            OSReport("Change AUX %d,%d\n", sndGrp->auxANo, sndGrp->auxBNo);
+            auxANoBak = sndGrp->auxANo;
+            auxBNoBak = sndGrp->auxBNo;
             HuPrcVSleep();
         }
-        HuAudAUXVolSet(var_r31->auxAVol, var_r31->auxBVol);
+        HuAudAUXVolSet(sndGrp->auxAVol, sndGrp->auxBVol);
         OSReport("##########################\n");
     }
 }
 
-void HuAudSndGrpSetSet(s16 arg0) {
-    void *temp_r3;
-    OSTick temp_r31;
-    s32 temp_r26;
-    s32 temp_r27;
+void HuAudSndGrpSetSet(s16 data_size) {
+    void *buf;
+    OSTick osTick;
+    s32 numPlay;
+    s32 err;
 
-    if (sndGroupBak != arg0) {
+    if (sndGroupBak != data_size) {
         msmMusStopAll(1, 0);
         msmSeStopAll(1, 0);
-        temp_r31 = OSGetTick();
+        osTick = OSGetTick();
         while ((msmMusGetNumPlay(1) != 0 || msmSeGetNumPlay(1) != 0)
-            && OSTicksToMilliseconds(OSGetTick() - temp_r31) < 500);
-        OSReport("%d\n", OSTicksToMilliseconds(OSGetTick() - temp_r31));
-        if (OSTicksToMilliseconds(OSGetTick() - temp_r31) >= 500) {
-            temp_r26 = msmSeGetNumPlay(1);
-            OSReport("Timed Out! Mus %d:SE %d\n", msmMusGetNumPlay(1), temp_r26);
+            && OSTicksToMilliseconds(OSGetTick() - osTick) < 500);
+        OSReport("%d\n", OSTicksToMilliseconds(OSGetTick() - osTick));
+        if (OSTicksToMilliseconds(OSGetTick() - osTick) >= 500) {
+            numPlay = msmSeGetNumPlay(1);
+            OSReport("Timed Out! Mus %d:SE %d\n", msmMusGetNumPlay(1), numPlay);
         }
-        OSReport("GroupSet %d\n", arg0);
-        sndGroupBak = arg0;
-        temp_r27 = msmSysDelGroupAll();
-        temp_r3 = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(1));
-        temp_r27 = msmSysLoadGroupSet(arg0, temp_r3);
-        OSReport("***********GroupSet Error %d\n", temp_r27);
-        HuMemDirectFree(temp_r3);
+        OSReport("GroupSet %d\n", data_size);
+        sndGroupBak = data_size;
+        err = msmSysDelGroupAll();
+        buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(1));
+        err = msmSysLoadGroupSet(data_size, buf);
+        OSReport("***********GroupSet Error %d\n", err);
+        HuMemDirectFree(buf);
     }
 }
 
-void HuAudSndGrpSet(s16 arg0) {
-    void *temp_r3;
+void HuAudSndGrpSet(s16 grpId) {
+    void *buf;
 
-    temp_r3 = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(arg0));
-    msmSysLoadGroup(arg0, temp_r3, 0);
-    HuMemDirectFree(temp_r3);
+    buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grpId));
+    msmSysLoadGroup(grpId, buf, 0);
+    HuMemDirectFree(buf);
 }
 
-void HuAudSndCommonGrpSet(s16 arg0, s32 arg1) {
-    s16 temp_r30;
-    OSTick temp_r27;
-    void *temp_r3;
+void HuAudSndCommonGrpSet(s16 grpId, s32 groupCheck) {
+    s16 err;
+    OSTick osTick;
+    void *buf;
     s16 i;
 
     for (i = 0; i < 8; i++) {
@@ -521,75 +521,75 @@ void HuAudSndCommonGrpSet(s16 arg0, s32 arg1) {
     }
     msmMusStopAll(1, 0);
     msmSeStopAll(1, 0);
-    temp_r27 = OSGetTick();
+    osTick = OSGetTick();
     while ((msmMusGetNumPlay(1) != 0 || msmSeGetNumPlay(1) != 0)
-        && OSTicksToMilliseconds(OSGetTick() - temp_r27) < 500);
-    OSReport("CommonGrpSet %d\n", arg0);
-    if (arg1 != 0) {
-        temp_r30 = msmSysDelGroupBase(0);
-        if (temp_r30 < 0) {
-            OSReport("Del Group Error %d\n", temp_r30);
+        && OSTicksToMilliseconds(OSGetTick() - osTick) < 500);
+    OSReport("CommonGrpSet %d\n", grpId);
+    if (groupCheck != 0) {
+        err = msmSysDelGroupBase(0);
+        if (err < 0) {
+            OSReport("Del Group Error %d\n", err);
         }
     }
-    temp_r3 = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(arg0));
-    msmSysLoadGroupBase(arg0, temp_r3);
-    HuMemDirectFree(temp_r3);
+    buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grpId));
+    msmSysLoadGroupBase(grpId, buf);
+    HuMemDirectFree(buf);
     sndGroupBak = -1;
 }
 
-void HuAudAUXSet(s32 arg0, s32 arg1) {
-    if (arg0 == -1) {
-        arg0 = 0;
+void HuAudAUXSet(s32 auxA, s32 auxB) {
+    if (auxA == -1) {
+        auxA = 0;
     }
-    if (arg1 == -1) {
-        arg1 = 1;
+    if (auxB == -1) {
+        auxB = 1;
     }
-    msmSysSetAux(arg0, arg1);
+    msmSysSetAux(auxA, auxB);
 }
 
-void HuAudAUXVolSet(s8 arg0, s8 arg1) {
-    HuAuxAVol = arg0;
-    HuAuxBVol = arg1;
+void HuAudAUXVolSet(s8 auxA, s8 auxB) {
+    HuAuxAVol = auxA;
+    HuAuxBVol = auxB;
 }
 
 void HuAudVoiceInit(s16 ovl) {
-    SNDGRPTBL *var_r29;
-    OSTick temp_r23;
-    s16 var_r27;
-    s16 temp_r26;
+    SNDGRPTBL *sndGrp;
+    OSTick osTick;
+    s16 numNotChars;
+    s16 grpId;
     s16 temp_r25;
-    s16 temp_r30;
+    s16 character;
     
-    void *temp_r3;
+    void *buf;
     s16 i;
 
     if (ovl != OVL_INVALID) {
-        var_r29 = sndGrpTable;
+        sndGrp = sndGrpTable;
         while (1) {
-            if (var_r29->ovl == ovl && var_r29->grpSet == -1) {
+            if (sndGrp->ovl == ovl && sndGrp->grpSet == -1) {
                 return;
             }
-            if (var_r29->ovl == OVL_INVALID) {
+            if (sndGrp->ovl == OVL_INVALID) {
                 break;
             }
-            var_r29++;
+            sndGrp++;
         }
     }
-    for (i = var_r27 = 0; i < 4; i++) {
-        temp_r30 = GWPlayerCfg[i].character;
-        if (temp_r30 < 0 || temp_r30 >= 8 || temp_r30 == 0xFF || charVoiceGroupStat[temp_r30] != 0) {
-            var_r27++;
+    for (i = numNotChars = 0; i < 4; i++) {
+        character = GWPlayerCfg[i].character;
+        if (character < 0 || character >= 8 || character == 0xFF || charVoiceGroupStat[character] != 0) {
+            numNotChars++;
         }
     }
-    if (var_r27 < 4) {
+    if (numNotChars < 4) {
         for (i = 0; i < 8; i++) {
             charVoiceGroupStat[i] = 0;
         }
         msmMusStopAll(1, 0);
         msmSeStopAll(1, 0);
-        temp_r23 = OSGetTick();
+        osTick = OSGetTick();
         while ((msmMusGetNumPlay(1) != 0 || msmSeGetNumPlay(1) != 0)
-            && OSTicksToMilliseconds(OSGetTick() - temp_r23) < 500);
+            && OSTicksToMilliseconds(OSGetTick() - osTick) < 500);
         OSReport("############CharGrpSet\n");
         temp_r25 = msmSysDelGroupBase(0);
         if (temp_r25 < 0) {
@@ -598,39 +598,39 @@ void HuAudVoiceInit(s16 ovl) {
             OSReport("Del Group OK\n");
         }
         for (i = 0; i < 4; i++) {
-            temp_r30 = GWPlayerCfg[i].character;
-            if (temp_r30 >= 0 && temp_r30 < 8 && temp_r30 != 0xFF) {
-                charVoiceGroupStat[temp_r30] = 1;
-                temp_r26 = temp_r30 + 0xA;
-                temp_r3 = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(temp_r26));
+            character = GWPlayerCfg[i].character;
+            if (character >= 0 && character < 8 && character != 0xFF) {
+                charVoiceGroupStat[character] = 1;
+                grpId = character + 10;
+                buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grpId));
                 #if VERSION_NTSC
-                msmSysLoadGroupBase(temp_r26, temp_r3);
+                msmSysLoadGroupBase(grpId, buf);
                 #else
-                temp_r25 = msmSysLoadGroupBase(temp_r26, temp_r3);
+                temp_r25 = msmSysLoadGroupBase(grpId, buf);
                 #endif
-                HuMemDirectFree(temp_r3);
+                HuMemDirectFree(buf);
             }
         }
         sndGroupBak = -1;
     }
 }
 
-s32 HuAudPlayerVoicePlay(s16 arg0, s16 arg1) {
-    s16 temp_r31 = GWPlayerCfg[arg0].character;
+s32 HuAudPlayerVoicePlay(s16 player, s16 seId) {
+    s16 charNo = GWPlayerCfg[player].character;
 
-    return HuAudCharVoicePlay(temp_r31, arg1);
+    return HuAudCharVoicePlay(charNo, seId);
 }
 
-s32 HuAudPlayerVoicePlayPos(s16 arg0, s16 arg1, Vec *arg2) {
-    s16 temp_r31 = GWPlayerCfg[arg0].character;
+s32 HuAudPlayerVoicePlayPos(s16 player, s16 seId, Vec *pos) {
+    s16 charNo = GWPlayerCfg[player].character;
 
-    return HuAudCharVoicePlayPos(temp_r31, arg1, arg2);
+    return HuAudCharVoicePlayPos(charNo, seId, pos);
 }
 
-void HuAudPlayerVoicePlayEntry(s16 arg0, s16 arg1) {
-    s16 temp_r31 = GWPlayerCfg[arg0].character;
+void HuAudPlayerVoicePlayEntry(s16 player, s16 seId) {
+    s16 charNo = GWPlayerCfg[player].character;
 
-    HuAudCharVoicePlayEntry(temp_r31, arg1);
+    HuAudCharVoicePlayEntry(charNo, seId);
 }
 
 s32 HuAudCharVoicePlay(s16 charNo, s16 seId)
@@ -676,14 +676,14 @@ s32 HuAudCharVoicePlayPos(s16 charNo, s16 seId, Vec *pos) {
 }
 
 void HuAudCharVoicePlayEntry(s16 charNo, s16 seId) {
-    int spC[MSM_ENTRY_SENO_MAX]; // size unknown (min: 30, max: 33)
-    u16 temp_r29;
+    int seNoTbl[MSM_ENTRY_SENO_MAX]; // size unknown (min: 30, max: 33)
+    u16 id;
     u16 i;
 
     seId += (charNo << 6);
-    temp_r29 = msmSeGetEntryID(seId, spC);
-    for (i = 0; i < temp_r29; i++) {
-        msmSeStop(spC[i], 0);
+    id = msmSeGetEntryID(seId, seNoTbl);
+    for (i = 0; i < id; i++) {
+        msmSeStop(seNoTbl[i], 0);
     }
 }
 

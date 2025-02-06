@@ -209,7 +209,7 @@ else:
 cflags_runtime = [
     *cflags_base,
     "-use_lmw_stmw on",
-    "-str reuse,pool,readonly",
+    "-str reuse,readonly",
     "-common off",
     "-inline auto,deferred",
 ]
@@ -668,11 +668,15 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__mem.c"),
             Object(NonMatching, "Runtime.PPCEABI.H/New.cp"),
             Object(NonMatching, "Runtime.PPCEABI.H/NewMore.cp"),
-            Object(NonMatching, "Runtime.PPCEABI.H/NMWException.cp"),
+            Object(NonMatching, "Runtime.PPCEABI.H/NMWException.cpp"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/runtime.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
-            Object(NonMatching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cp"),
-            Object(NonMatching, "Runtime.PPCEABI.H/GCN_mem_alloc.c"),
+            Object(
+                NonMatching,
+                "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp",
+                extra_cflags=["-Cpp_exceptions on"]
+            ),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/GCN_mem_alloc.c"),
         ],
     },
     {
@@ -1080,7 +1084,7 @@ config.libs = [
         "m427Dll",  # Right Oar Left?
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/main.c"),
-            Object(NonMatching, "REL/m427Dll/map.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/map.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/player.c"),
         },
     ),
@@ -1140,7 +1144,7 @@ config.libs = [
         "m435Dll",  # Darts of Doom
         objects={
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m435Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01" "GMPJ01_00"), "REL/m435Dll/sequence.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m435Dll/sequence.c"),
         },
     ),
     Rel(

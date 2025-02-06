@@ -10,11 +10,6 @@
 #include "game/objsub.h"
 #include "game/wipe.h"
 
-typedef struct M427DllStruct {
-    s32 unk0;
-    s32 unk4;
-} M427DllStruct;
-
 typedef struct M427DllStruct2 {
     s32 unk0[3];
     s32 unkC;

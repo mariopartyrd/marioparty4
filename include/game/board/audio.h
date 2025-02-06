@@ -4,13 +4,13 @@
 #include "dolphin/types.h"
 
 void BoardMusStartBoard(void);
-void BoardMusStart(s32 arg0, s32 arg1, s8 arg2, u16 arg3);
-void BoardAudSeqFadeOutFast(s32 arg0);
-void BoardAudSeqFadeOut(s32 arg0, u16 arg1);
-void BoardMusLoudSet(s32 arg0, s32 arg1);
-void BoardMusVolPanSet(s32 arg0, s8 arg1, u16 arg2);
-void BoardAudSeqPause(s32 arg0, s32 arg1, u16 arg2);
-s32 BoardMusStatusGet(s32 arg0);
+void BoardMusStart(s32 boardNo, s32 musId, s8 vol, u16 speed);
+void BoardAudSeqFadeOutFast(s32 boardNo);
+void BoardAudSeqFadeOut(s32 boardNo, u16 speed);
+void BoardMusLoudSet(s32 boardNo, s32 isQuieter);
+void BoardMusVolPanSet(s32 boardNo, s8 vol, u16 fadeSpeed);
+void BoardAudSeqPause(s32 boardNo, s32 pause, u16 speed);
+s32 BoardMusStatusGet(s32 boardNo);
 void BoardAudSeqClear(void);
 void BoardAudSeqFadeOutAll(void);
 void BoardAudFXPlay(void);
