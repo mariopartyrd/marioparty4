@@ -930,10 +930,10 @@ void fn_1_4010(void)
         }
     }
     if (spA[0] >= 4 && spA[1] >= 3 && spA[2] >= 3 && spA[3] >= 2) {
-        GWGameStat.field10E_bit5 = 1;
+        GWGameStat.customPackEnable = 1;
     }
     else {
-        GWGameStat.field10E_bit5 = 0;
+        GWGameStat.customPackEnable = 0;
     }
     pos2D = lbl_1_data_40[2];
     pos2D.z = 800;

@@ -200,8 +200,8 @@ void fn_1_658C(Process *arg0)
         CharKill(-1);
     }
     lbl_1_bss_A8[4] = GWGameStat.open_w06;
-    lbl_1_bss_A8[5] = GWGameStat.field10E_bit4;
-    lbl_1_bss_A8[6] = GWGameStat.field10E_bit5;
+    lbl_1_bss_A8[5] = GWGameStat.veryHardUnlock;
+    lbl_1_bss_A8[6] = GWGameStat.customPackEnable;
     switch (lbl_1_bss_A8[0]) {
         case 0:
             HuAudSndGrpSetSet(7);
@@ -340,11 +340,9 @@ void fn_1_6C4C(void)
             print8(var_r30, var_r29 + 0xAA, 1.0f, "MODE:%d MAP:%d", lbl_1_bss_A8[0], lbl_1_bss_A8[2]);
             print8(var_r30, var_r29 + 0xBE, 1.0f, "NO) IDX:GRP:COM:DIF:PAD:CHR");
             for (var_r31 = 0; var_r31 < 4; var_r31++) {
-                s32 spC;
-                s32 sp8 = lbl_1_bss_3114[var_r31].unk_6C;
-                spC = lbl_1_bss_3114[var_r31].unk_68;
+
                 print8(var_r30, var_r29 + 0xC8 + (var_r31 * 0xA), 1.0f, "%2d) %3d:%3d:%3d:%3d:%3d:%3d", var_r31, lbl_1_bss_3114[var_r31].unk_58,
-                    lbl_1_bss_3114[var_r31].unk_5C, lbl_1_bss_3114[var_r31].unk_60, lbl_1_bss_3114[var_r31].unk_64);
+                    lbl_1_bss_3114[var_r31].unk_5C, lbl_1_bss_3114[var_r31].unk_60, lbl_1_bss_3114[var_r31].unk_64, lbl_1_bss_3114[var_r31].unk_6C, lbl_1_bss_3114[var_r31].unk_68);
             }
             print8(var_r30, var_r29 + 0xF0, 1.0f, "NO) FG0:FG1:FG2:FG3");
             for (var_r31 = 0; var_r31 < 4; var_r31++) {
@@ -2693,12 +2691,6 @@ void fn_1_E71C(s32 arg0)
     }
 }
 
-inline void fn_1_E874_inline(void)
-{
-    s32 sp18 = lbl_1_bss_3114[0].unk_68;
-    GWSystem.unk0C = sp18;
-}
-
 void fn_1_E874(omObjData *arg0, MentDllUnkBss35BCStruct *arg1)
 {
     s32 var_r31;
@@ -2757,7 +2749,7 @@ void fn_1_E874(omObjData *arg0, MentDllUnkBss35BCStruct *arg1)
         var_r18 = 0;
     }
     BoardStoryConfigSet(var_r24, var_r18);
-    fn_1_E874_inline();
+    GWStoryCharSet(lbl_1_bss_3114[0].unk_68);
     // looks a bit similar to fn_1_7304
     for (var_r31 = 1; var_r31 < 4; var_r31++) {
         lbl_1_bss_3114[var_r31].unk_68 = -1;

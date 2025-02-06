@@ -2441,7 +2441,7 @@ s32 fn_1_19A98(MpexDllUnkStruct4 *arg0)
                 goto block_2;
             }
         }
-        if (GWGameStat.field10E_bit4 == 1) {
+        if (GWGameStat.veryHardUnlock == 1) {
             arg0->unk_54++;
             var_r28 = 1;
             if (arg0->unk_54 > 3) {
@@ -2457,7 +2457,7 @@ s32 fn_1_19A98(MpexDllUnkStruct4 *arg0)
             goto block_1;
         block_2:
             if (HuPadStkX[lbl_1_bss_45C->unk_58] <= -5 || HuPadBtn[lbl_1_bss_45C->unk_58] & PAD_BUTTON_LEFT) {
-                if (GWGameStat.field10E_bit4 == 1) {
+                if (GWGameStat.veryHardUnlock == 1) {
                     arg0->unk_54--;
                     var_r28 = -1;
                     if (arg0->unk_54 < 0) {

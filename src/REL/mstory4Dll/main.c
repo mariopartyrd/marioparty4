@@ -575,15 +575,13 @@ void fn_1_13A0(void)
 	GWPlayerCfg[0].character = itemno/6;
 	{
 		s32 i;
-		s32 character;
 		for(i=1; i<4; i++) {
 			GWPlayerCfg[i].character = GWPlayerCfg[i-1].character+1;
 			if(GWPlayerCfg[i].character > GW_CHARACTER_MAX) {
 				GWPlayerCfg[i].character = 0;
 			}				
 		}
-		character = GWPlayerCfg[0].character;
-		GWSystem.unk0C = character;
+		GWStoryCharSet(GWPlayerCfg[0].character);
 		GWPlayer[0].character = GWPlayerCfg[0].character;
 		GWPlayer[1].character = GWPlayerCfg[1].character;
 		GWPlayer[2].character = GWPlayerCfg[2].character;

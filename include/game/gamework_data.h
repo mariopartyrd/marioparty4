@@ -40,8 +40,8 @@ typedef struct system_state {
 };
 /* 0x09 */ s8 last5_effect;
 /* 0x0A */ s8 player_curr;
-/* 0x0B */ u8 unk0B;
-/* 0x0C */ s8 unk0C;
+/* 0x0B */ u8 storyCharBit;
+/* 0x0C */ s8 storyChar;
 /* 0x0E */ s16 block_pos;
 /* 0x10 */ u8 ATTRIBUTE_ALIGN(4) board_data[32];
 /* 0x30 */ u8 mess_delay;
@@ -137,9 +137,9 @@ typedef struct game_stat {
         u8 story_continue : 1;
         u8 party_continue : 1;
         u8 open_w06 : 1;
-        u8 field10E_bit4 : 1;
-        u8 field10E_bit5 : 1;
-        u8 field10E_bit6 : 1;
+        u8 veryHardUnlock : 1;
+        u8 customPackEnable : 1;
+        u8 musicAllF : 1;
     };
 /* 0x10F */ PauseBackupConfig story_pause; 
 /* 0x110 */ PauseBackupConfig party_pause; 
@@ -300,11 +300,6 @@ static inline s32 GWSaveModeGet(void)
     return GWSystem.save_mode;
 }
 
-static inline s32 GWTurnGet(void)
-{
-    return GWSystem.turn;
-}
-
 static inline s32 GWBoardGet(void)
 {
     return GWSystem.board;
@@ -315,9 +310,14 @@ static inline s32 GWPlayerCurrGet(void)
     return GWSystem.player_curr;
 }
 
-static inline s32 GWUnkB1Get(void)
+static inline s32 GWStoryCharGet(void)
 {
-    return GWSystem.unk0C;
+    return GWSystem.storyChar;
+}
+
+static inline void GWStoryCharSet(s32 storyChar)
+{
+    GWSystem.storyChar = storyChar;
 }
 
 static inline s32 GWPlayerTeamGet(s32 player)

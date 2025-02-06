@@ -905,7 +905,7 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
         var_r30 |= 2;
     }
     temp_r29 = CheckPort(arg1->unk04);
-    if (GWGameStat.field10E_bit4 != 0) {
+    if (GWGameStat.veryHardUnlock != 0) {
         var_r27 = 4;
     } else {
         var_r27 = 3;
@@ -962,7 +962,7 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
         arg1->unk09 = 0;
     }
     arg1->unk05 += var_r28;
-    if (GWGameStat.field10E_bit4 == 0 && arg1->unk05 == 4) {
+    if (GWGameStat.veryHardUnlock == 0 && arg1->unk05 == 4) {
         arg1->unk05 += var_r28;
     }
     if (arg1->unk05 > var_r27) {
@@ -1100,7 +1100,7 @@ static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
     u32 temp_r28;
     Mtx sp8;
 
-    if (arg2 == 3 && GWGameStat.field10E_bit5 == 0) {
+    if (arg2 == 3 && GWGameStat.customPackEnable == 0) {
         var_r27 = 1;
     } else {
         var_r27 = 2;

@@ -1075,7 +1075,7 @@ s32 fn_1_1D688(StructBss8_24 *arg0)
         var_r28 = 0;
         var_r26 = arg0->unk64;
         if (HuPadStkX[lbl_1_bss_1E10->unk6C] >= 5 || (HuPadBtn[lbl_1_bss_1E10->unk6C] & 2)) {
-            if (GWGameStat.field10E_bit4 == 1) {
+            if (GWGameStat.veryHardUnlock == 1) {
                 arg0->unk64++;
                 var_r28 = 1;
                 if (arg0->unk64 > 3) {
@@ -1091,7 +1091,7 @@ s32 fn_1_1D688(StructBss8_24 *arg0)
             }
         }
         else if (HuPadStkX[lbl_1_bss_1E10->unk6C] <= -5 || (HuPadBtn[lbl_1_bss_1E10->unk6C] & 1)) {
-            if (GWGameStat.field10E_bit4 == 1) {
+            if (GWGameStat.veryHardUnlock == 1) {
                 arg0->unk64--;
                 var_r28 = -1;
                 if (arg0->unk64 < 0) {

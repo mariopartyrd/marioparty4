@@ -619,7 +619,7 @@ static void CreateBoard(void)
     s32 guest_status;
 
     GWSystem.mg_next = -1;
-    if(!GWGameStat.field10E_bit5 && GWMGListGet() == 2) {
+    if(!GWGameStat.customPackEnable && GWMGListGet() == 2) {
         GWMGListSet(0);
     }
     GWMessSpeedSet(GWMessSpeedGet());
