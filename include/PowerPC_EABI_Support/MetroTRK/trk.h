@@ -254,6 +254,9 @@ typedef struct ProcessorRestoreFlags_PPC {
 
 void TRKSaveExtended1Block();
 
+void SetUseSerialIO(u8);
+u8 GetUseSerialIO(void);
+
 #define SPR_XER    1
 #define SPR_LR     8
 #define SPR_CTR    9
