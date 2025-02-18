@@ -745,7 +745,7 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msgbuf.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/serpoll.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/usr_put.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/dispatch.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/dispatch.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msghndlr.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/support.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),

@@ -16,7 +16,7 @@ struct DispatchEntry gTRKDispatchTable[33] = {
 	{ &TRKDoUnsupported },   { &TRKDoUnsupported },    { &TRKDoUnsupported },
 	{ &TRKDoUnsupported },   { &TRKDoReadMemory },     { &TRKDoWriteMemory },
 	{ &TRKDoReadRegisters }, { &TRKDoWriteRegisters }, { &TRKDoUnsupported },
-	{ &TRKDoUnsupported },   { &TRKDoFlushCache },     { &TRKDoUnsupported },
+	{ &TRKDoUnsupported },   { &TRKDoFlushCache },     { &TRKDoSetOption },
 	{ &TRKDoContinue },      { &TRKDoStep },           { &TRKDoStop },
 	{ &TRKDoUnsupported },   { &TRKDoUnsupported },    { &TRKDoUnsupported },
 	{ &TRKDoUnsupported },   { &TRKDoUnsupported },
@@ -36,6 +36,7 @@ DSError TRKDispatchMessage(TRKBuffer* buffer)
 	error = DS_DispatchError;
 	TRKSetBufferPosition(buffer, 0);
 	TRKReadBuffer1_ui8(buffer, &command);
+	command &= 0xFF;
 	if (command < gTRKDispatchTableSize) {
 		error = gTRKDispatchTable[command].fn(buffer);
 	}
