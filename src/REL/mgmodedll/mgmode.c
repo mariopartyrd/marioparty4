@@ -7,6 +7,10 @@
 
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
+
 typedef struct camera_view_params {
     Vec rot;
     Vec pos;
@@ -15,8 +19,8 @@ typedef struct camera_view_params {
 
 CameraViewParams lbl_1_data_0[1] = { { { -5, 0, 0 }, { 0, 125, 0 }, 1750 } };
 
-omObjData *lbl_1_bss_2DC;
-Process *lbl_1_bss_2D8;
+omObjData *outViewObj;
+Process *objman;
 s32 lbl_1_bss_2D4;
 s32 lbl_1_bss_2D0;
 s16 lbl_1_bss_2CE;
@@ -31,7 +35,7 @@ Vec lbl_1_bss_28C[2];
 Vec lbl_1_bss_274[2];
 float lbl_1_bss_26C[2];
 StructBss8 lbl_1_bss_8;
-s16 lbl_1_bss_4;
+s16 mgModeEvtNo;
 s32 lbl_1_bss_0;
 
 void fn_1_464(void);
@@ -42,7 +46,7 @@ void ObjectSetup(void)
     s32 glight;
 
     OSReport("******* MG ObjectSetup *********\n");
-    lbl_1_bss_2D8 = omInitObjMan(50, 8192);
+    objman = omInitObjMan(50, 8192);
     lbl_1_bss_28C[0].x = -70;
     lbl_1_bss_28C[0].y = 0;
     lbl_1_bss_28C[0].z = 0;
@@ -58,8 +62,8 @@ void ObjectSetup(void)
     _ClearFlag(0x10008);
     GWSystem.mg_type = -1;
     GWSystem.player_curr = 0;
-    lbl_1_bss_4 = omovlevtno;
-    if (lbl_1_bss_4 == 0) {
+    mgModeEvtNo = omovlevtno;
+    if (mgModeEvtNo == 0) {
         mgGameStatBackup = GWGameStat;
     }
     lbl_1_bss_2CE = -1;
@@ -70,9 +74,9 @@ void ObjectSetup(void)
     Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
     glight = Hu3DGLightCreate(0, 100, 1000, 0, -0.5, -1, 255, 255, 255);
     Hu3DGLightInfinitytSet(glight);
-    HuPrcChildCreate(fn_1_464, 100, 12288, 0, lbl_1_bss_2D8);
-    HuPrcChildCreate(fn_1_54F4, 200, 4096, 0, lbl_1_bss_2D8);
-    lbl_1_bss_2DC = omAddObjEx(lbl_1_bss_2D8, 32730, 0, 0, -1, omOutView);
+    HuPrcChildCreate(fn_1_464, 100, 12288, 0, objman);
+    HuPrcChildCreate(fn_1_54F4, 200, 4096, 0, objman);
+    outViewObj = omAddObjEx(objman, 32730, 0, 0, -1, omOutView);
     Hu3DBGColorSet(0, 0, 0);
     HuWinInit(1);
     fn_1_279FC(0);
@@ -86,7 +90,7 @@ void fn_1_464(void)
 {
     s16 i;
     fn_1_52DC();
-    if (lbl_1_bss_4 == 0) {
+    if (mgModeEvtNo == 0) {
         HuAudSStreamPlay(12);
         fn_1_19018();
     }
@@ -103,7 +107,7 @@ void fn_1_464(void)
         Center.y = 215;
         CRot.x = 0;
         CRot.y = CRot.z = 0;
-        if (lbl_1_bss_4 == 1 || lbl_1_bss_4 == 2 || lbl_1_bss_4 == 3 || lbl_1_bss_4 == 4) {
+        if (mgModeEvtNo == 1 || mgModeEvtNo == 2 || mgModeEvtNo == 3 || mgModeEvtNo == 4) {
             Hu3DModelPosSet(lbl_1_bss_2C80[5], 0, 0, 640);
             Hu3DMotionSet(lbl_1_bss_2C80[5], lbl_1_bss_2C66[6]);
             Hu3DModelAttrSet(lbl_1_bss_2C80[5], HU3D_MOTATTR_LOOP);
@@ -136,7 +140,7 @@ void fn_1_6F8(void)
 {
     s16 i;
     s16 time;
-    if (lbl_1_bss_4 == 1 || lbl_1_bss_4 == 2 || lbl_1_bss_4 == 3 || lbl_1_bss_4 == 4) {
+    if (mgModeEvtNo == 1 || mgModeEvtNo == 2 || mgModeEvtNo == 3 || mgModeEvtNo == 4) {
         lbl_1_bss_2A6 = 0;
         goto freeplay;
     }
@@ -218,7 +222,7 @@ void fn_1_6F8(void)
             HuPrcVSleep();
         }
         fn_1_25E74(lbl_1_bss_2CC);
-        lbl_1_bss_4 = 0;
+        mgModeEvtNo = 0;
         espAttrSet(lbl_1_bss_2C2C[0], HUSPR_ATTR_DISPOFF);
         if (lbl_1_bss_2A6 == 0) {
         freeplay:
@@ -253,19 +257,19 @@ void fn_1_DF0(void)
     Vec posModel;
     float weight;
 
-    if (lbl_1_bss_4 == 1) {
+    if (mgModeEvtNo == 1) {
         lbl_1_bss_2A4 = 0;
         goto freeplay;
     }
-    if (lbl_1_bss_4 == 2) {
+    if (mgModeEvtNo == 2) {
         lbl_1_bss_2A4 = 1;
         goto teamplay;
     }
-    if (lbl_1_bss_4 == 3) {
+    if (mgModeEvtNo == 3) {
         lbl_1_bss_2A4 = 2;
         goto battle;
     }
-    if (lbl_1_bss_4 == 4) {
+    if (mgModeEvtNo == 4) {
         lbl_1_bss_2A4 = 3;
         goto tictactoe;
     }
@@ -386,7 +390,7 @@ void fn_1_DF0(void)
         }
         HuWinPushKeySet(lbl_1_bss_2CE, PAD_BUTTON_A | PAD_BUTTON_B);
     }
-    lbl_1_bss_4 = 0;
+    mgModeEvtNo = 0;
     pos2D = lbl_1_data_40[0];
     pos2D.z = 800;
     Hu3D2Dto3D(&pos2D, 1, &pos3D);
@@ -429,7 +433,7 @@ s32 fn_1_1B0C(void)
     ModelData *modelP;
     s16 temp_r29 = 0;
 
-    if (lbl_1_bss_4 == 1) {
+    if (mgModeEvtNo == 1) {
         pos2D.x = 60;
         pos2D.y = 70;
         pos2D.z = 1000;
@@ -480,12 +484,12 @@ s32 fn_1_1B0C(void)
     }
     mgPracticeEnableF = 1;
     if (fn_1_6D28()) {
-        lbl_1_bss_4 = 0;
+        mgModeEvtNo = 0;
         goto charsel;
     }
 exit:
     mgPracticeEnableF = 0;
-    lbl_1_bss_4 = 0;
+    mgModeEvtNo = 0;
     pos2D.x = 168;
     pos2D.y = 190;
     pos2D.z = 800;
@@ -518,7 +522,7 @@ s32 fn_1_21C4(void)
     s16 i;
     ModelData *modelP;
     s16 temp_r29 = 1;
-    if (lbl_1_bss_4 == 2) {
+    if (mgModeEvtNo == 2) {
         pos2D.x = 60;
         pos2D.y = 70;
         pos2D.z = 1000;
@@ -570,12 +574,12 @@ s32 fn_1_21C4(void)
     }
     mgPracticeEnableF = 1;
     if (fn_1_6D28()) {
-        lbl_1_bss_4 = 0;
+        mgModeEvtNo = 0;
         goto charsel;
     }
 exit:
     mgPracticeEnableF = 0;
-    lbl_1_bss_4 = 0;
+    mgModeEvtNo = 0;
     pos2D.x = 168;
     pos2D.y = 190;
     pos2D.z = 800;
@@ -611,7 +615,7 @@ s32 fn_1_2940(void)
     for (i = 0; i < 4; i++) {
         Hu3DModelLayerSet(lbl_1_bss_2C80[i + 9], 2);
     }
-    if (lbl_1_bss_4 == 3) {
+    if (mgModeEvtNo == 3) {
         OSReport("Eliminate Play STart\n");
         pos2D.x = 50;
         pos2D.y = 70;
@@ -665,7 +669,7 @@ s32 fn_1_2940(void)
     }
 
     if (fn_1_E72C() == 0) {
-        lbl_1_bss_4 = 0;
+        mgModeEvtNo = 0;
         goto charsel;
     }
 exit:
@@ -673,7 +677,7 @@ exit:
     for (i = 0; i < 4; i++) {
         Hu3DModelLayerSet(lbl_1_bss_2C80[i + 9], 3);
     }
-    lbl_1_bss_4 = 0;
+    mgModeEvtNo = 0;
     pos2D.x = 168;
     pos2D.y = 190;
     pos2D.z = 800;
@@ -706,7 +710,7 @@ s32 fn_1_3150(void)
     s16 i;
     ModelData *modelP;
     s16 temp_r29 = 1;
-    if (lbl_1_bss_4 == 4) {
+    if (mgModeEvtNo == 4) {
         pos2D.x = 60;
         pos2D.y = 70;
         pos2D.z = 1000;
@@ -759,12 +763,12 @@ s32 fn_1_3150(void)
     }
 
     if (fn_1_13418() == 0) {
-        lbl_1_bss_4 = 0;
+        mgModeEvtNo = 0;
         goto charsel;
     }
 exit:
     HuDataDirClose(DATADIR_INSTPIC);
-    lbl_1_bss_4 = 0;
+    mgModeEvtNo = 0;
     pos2D.x = 168;
     pos2D.y = 190;
     pos2D.z = 800;
@@ -1130,7 +1134,7 @@ void fn_1_52DC(void)
     lbl_1_bss_8.unk10 = lbl_1_bss_2C66[6];
     lbl_1_bss_8.unk14 = lbl_1_bss_2C66[7];
     lbl_1_bss_8.unk18 = lbl_1_bss_2C66[6];
-    fn_1_18DF8(lbl_1_bss_2D8, &lbl_1_bss_8);
+    fn_1_18DF8(objman, &lbl_1_bss_8);
     Hu3DModelShadowSet(lbl_1_bss_2C80[5]);
     Hu3DModelShadowMapSet(lbl_1_bss_2C80[0]);
 }

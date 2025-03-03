@@ -1162,7 +1162,7 @@ void fn_1_C604(s32 arg0, s32 arg1)
     Vec *var_r31;
     f32 temp_f31;
     f32 var_f30;
-    s32 var_r30;
+    s32 var_r30; // ! - uninitialized
     M424DllBallStruct2 *var_r28;
     Vec *var_r27;
 

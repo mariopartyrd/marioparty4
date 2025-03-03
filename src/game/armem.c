@@ -25,7 +25,7 @@ static ARQRequest arqReq;
 static ARMemBlock ARInfo[64];
 
 static s32 ARBase;
-static s32 arqCnt;
+static volatile s32 arqCnt;
 static s16 arqIdx;
 
 void HuARInit(void) {

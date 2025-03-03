@@ -132,7 +132,7 @@ void fn_1_41C(omObjData* object) {
     s16 sp12;
     s16 spE;
     s16 spA;
-    f32 var_f31;
+    f32 var_f31; // ! - uninitalized
     s32 var_r31;
     s32 var_r30;
     CameraData* var_r29;

@@ -14,6 +14,13 @@
 
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "string.h"
+#include "game/hsfex.h"
+#endif
+
+s32 rand8(void);
+
 typedef struct struct_bss_2A6C StructBss2A6C;
 
 typedef struct struct_sp_14C8 StructSp14C8;

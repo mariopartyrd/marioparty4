@@ -3874,7 +3874,7 @@ void fn_1_11D5C(omObjData *object)
 
     UnkM450Struct3 *var_r31;
     s32 var_r29;
-    s32 var_r27;
+    s32 var_r27; // ! - uninitialized
     s32 *var_r26;
 
     (void)var_r27;

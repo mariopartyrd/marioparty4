@@ -2800,7 +2800,7 @@ void fn_1_8CB4(omObjData *arg0)
     float temp_f28;
     float var_f30;
     float var_f31;
-    float var_f26;
+    float var_f26; // ! - uninitialized
     float temp_f27;
     StructBssBCData *temp_r31;
     ModelData *sp8;

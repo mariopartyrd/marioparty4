@@ -44,7 +44,7 @@ s32 fn_1_E72C(void)
     temp_r29 = 0;
     fn_1_279FC(0);
     fn_1_FF5C();
-    if (lbl_1_bss_4 == 3) {
+    if (mgModeEvtNo == 3) {
         mgTypeCurr = mgInfoTbl[GWSystem.mg_next].type;
         if (mgTypeCurr >= 4) {
             mgTypeCurr = 3;
@@ -105,7 +105,7 @@ s32 fn_1_E72C(void)
         }
     repeat_mode:
         if (lbl_1_bss_20AA == 0) {
-            HuPrcChildCreate(fn_1_27080, 100, 12288, 0, lbl_1_bss_2D8);
+            HuPrcChildCreate(fn_1_27080, 100, 12288, 0, objman);
             lbl_1_bss_20AA = 1;
         }
         lbl_1_bss_3A4 = fn_1_25CA8(0x1A0020);
@@ -843,7 +843,7 @@ void fn_1_12B64(s16 arg0)
 {
     Process *process;
     s32 *data;
-    process = HuPrcChildCreate(fn_1_12BEC, 100, 12288, 0, lbl_1_bss_2D8);
+    process = HuPrcChildCreate(fn_1_12BEC, 100, 12288, 0, objman);
     data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(s32), MEMORY_DEFAULT_NUM);
     process->user_data = data;
     *data = arg0;
