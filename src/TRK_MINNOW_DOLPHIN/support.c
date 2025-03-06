@@ -28,7 +28,7 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count,
 	*io_result = DS_IONoError;
 	done       = 0;
 	error      = DS_NoError;
-	while (!exit && done < *count && error == DS_NoError && *io_result == 0) {
+	while (!exit && done < *count && error == DS_NoError && *io_result == DS_IONoError) {
 		if (*count - done > 0x800) {
 			length = 0x800;
 		} else {
@@ -174,4 +174,115 @@ DSError TRKRequestSend(TRKBuffer* msgBuf, int* bufferId, u32 p1, u32 p2, int p3)
 	}
 
 	return error;
+}
+
+DSError HandleOpenFileSupportRequest(const char* path, u8 replyError, u32* param_3, u8* ioResult) {
+    int sp10;
+    int spC;
+    TRKBuffer* sp8;
+    TRKBuffer* var_r31;
+    DSError var_r26;
+
+    *param_3 = 0;
+    var_r26 = TRKGetFreeBuffer(&spC, &sp8);
+    if (var_r26 == DS_NoError) {
+        var_r26 = TRKAppendBuffer1_ui8(sp8, 0xD2);
+    }
+    if (var_r26 == DS_NoError) {
+        var_r26 = TRKAppendBuffer1_ui8(sp8, replyError);
+    }
+    if (var_r26 == DS_NoError) {
+        var_r26 = TRKAppendBuffer1_ui16(sp8, strlen(path) + 1);
+    }
+    if (var_r26 == DS_NoError) {
+        var_r26 = TRKAppendBuffer_ui8(sp8, (u8*) path, strlen(path) + 1);
+    }
+    if (var_r26 == DS_NoError) {
+        *ioResult = 0;
+        var_r26 = TRKRequestSend(sp8, &sp10, 7, 3, 0);
+        if (var_r26 == DS_NoError) {
+            var_r31 = TRKGetBuffer(sp10);
+            TRKSetBufferPosition(var_r31, 2);
+        }
+        if (var_r26 == DS_NoError) {
+            var_r26 = TRKReadBuffer1_ui8(var_r31, ioResult);
+        }
+        if (var_r26 == DS_NoError) {
+            var_r26 = TRKReadBuffer1_ui32(var_r31, param_3);
+        }
+        TRKReleaseBuffer(sp10);
+    }
+    TRKReleaseBuffer(spC);
+    return var_r26;
+}
+
+DSError HandleCloseFileSupportRequest(int replyError, u8* ioResult) {
+    int sp10;
+    int spC;
+    DSError var_r31;
+    TRKBuffer* sp8;
+    TRKBuffer* var_r30;
+
+    var_r31 = TRKGetFreeBuffer(&spC, &sp8);
+    if (var_r31 == DS_NoError) {
+        var_r31 = TRKAppendBuffer1_ui8(sp8, 0xD3);
+    }
+    if (var_r31 == DS_NoError) {
+        var_r31 = TRKAppendBuffer1_ui32(sp8, replyError);
+    }
+    if (var_r31 == DS_NoError) {
+        *ioResult = DS_IONoError;
+        var_r31 = TRKRequestSend(sp8, &sp10, 3, 3, 0);
+        if (var_r31 == DS_NoError) {
+            var_r30 = TRKGetBuffer(sp10);
+            TRKSetBufferPosition(var_r30, 2);
+        }
+        if (var_r31 == DS_NoError) {
+            var_r31 = TRKReadBuffer1_ui8(var_r30, ioResult);
+        }
+        TRKReleaseBuffer(sp10);
+    }
+    TRKReleaseBuffer(spC);
+    return var_r31;
+}
+
+DSError HandlePositionFileSupportRequest(u32 replyErr, u32* param_2, u8 param_3, u8* ioResult) {
+    int sp10;
+    int spC;
+    TRKBuffer* sp8;
+    TRKBuffer* var_r31;
+    DSError var_r27;
+
+    var_r27 = TRKGetFreeBuffer(&spC, &sp8);
+    if (var_r27 == DS_NoError) {
+        var_r27 = TRKAppendBuffer1_ui8(sp8, 0xD4);
+    }
+    if (var_r27 == DS_NoError) {
+        var_r27 = TRKAppendBuffer1_ui32(sp8, replyErr);
+    }
+    if (var_r27 == DS_NoError) {
+        var_r27 = TRKAppendBuffer1_ui32(sp8, *param_2);
+    }
+    if (var_r27 == DS_NoError) {
+        var_r27 = TRKAppendBuffer1_ui8(sp8, param_3);
+    }
+    if (var_r27 == DS_NoError) {
+        *ioResult = DS_IONoError;
+        var_r27 = TRKRequestSend(sp8, &sp10, 3, 3, 0);
+        if (var_r27 == DS_NoError) {
+            var_r31 = TRKGetBuffer(sp10);
+            TRKSetBufferPosition(var_r31, 2);
+        }
+        if (var_r27 == DS_NoError) {
+            var_r27 = TRKReadBuffer1_ui8(var_r31, ioResult);
+        }
+        if (var_r27 == DS_NoError) {
+            var_r27 = TRKReadBuffer1_ui32(var_r31, param_2);
+        } else {
+            *param_2 = -1;
+        }
+        TRKReleaseBuffer(sp10);
+    }
+    TRKReleaseBuffer(spC);
+    return var_r27;
 }

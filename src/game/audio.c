@@ -496,7 +496,7 @@ void HuAudSndGrpSetSet(s16 dataSize) {
         sndGroupBak = dataSize;
         err = msmSysDelGroupAll();
         buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(1));
-        err = msmSysLoadGroupSet(dataSize, buf);
+        err = msmSysLoadGroupSet(dataSize, buf);\
         OSReport("***********GroupSet Error %d\n", err);
         HuMemDirectFree(buf);
     }

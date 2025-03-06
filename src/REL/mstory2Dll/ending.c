@@ -105,7 +105,7 @@ void fn_1_188F0(Process *arg0, s32 arg1)
 {
     lbl_1_bss_B38 = arg0;
     if (GWSystem.diff_story == 2) {
-        GWGameStat.field10E_bit4 = TRUE;
+        GWGameStat.veryHardUnlock = TRUE;
     }
     lbl_1_bss_C0C.unk0C = arg1;
     fn_1_C30();
@@ -298,7 +298,7 @@ void fn_1_19334(void)
     Hu3DModelAttrSet(lbl_1_bss_B94.unk00->model[1], 1);
     HuAudSeqFadeOut(lbl_1_bss_78[0], 100);
     lbl_1_bss_B3C = 2;
-    GWGameStat.field10E_bit6 = TRUE;
+    GWGameStat.musicAllF = TRUE;
     WipeColorSet(0, 0, 0);
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);
     while (WipeStatGet()) {
@@ -406,8 +406,8 @@ void fn_1_199A0(void)
         HuPrcVSleep();
     }
     fn_1_BE8(60);
-    var_r28 = GWUnkB1Get();
-    GWSystem.unk0B |= 1 << var_r28;
+    var_r28 = GWStoryCharGet();
+    GWSystem.storyCharBit |= 1 << var_r28;
     if (SLSaveFlagGet() == 1) {
         HuWinInit(1);
         HuWinMesMaxSizeGet(1, sp8, MAKE_MESSID(30, 22));

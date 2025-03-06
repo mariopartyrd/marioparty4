@@ -238,12 +238,11 @@ cflags_msl = [
 cflags_trk = [
     *cflags_base,
     "-use_lmw_stmw on",
-    "-str reuse,pool,readonly",
+    "-str reuse,readonly",
     "-common off",
     "-sdata 0",
     "-sdata2 0",
     "-inline auto,deferred",
-    "-pool off",
     "-enum min",
     "-sdatathreshold 0"
 ]
@@ -742,13 +741,13 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mainloop.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/nubevent.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/nubinit.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/msg.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/msgbuf.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/serpoll.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/usr_put.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/dispatch.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/msghndlr.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/support.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msg.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msgbuf.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/serpoll.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/usr_put.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/dispatch.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msghndlr.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/support.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/notify.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/flush_cache.c"),
@@ -761,8 +760,8 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/main_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/targcont.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/target_options.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mslsupp.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/target_options.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mslsupp.c"),
         ],
     },
     MusyX(
@@ -1457,9 +1456,9 @@ config.libs = [
     Rel(
         "resultDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/resultDll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/resultDll/battle.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/resultDll/datalist.c"),
+            Object(Matching, "REL/resultDll/main.c"),
+            Object(Matching, "REL/resultDll/battle.c"),
+            Object(Matching, "REL/resultDll/datalist.c"),
         },
     ),
     Rel(

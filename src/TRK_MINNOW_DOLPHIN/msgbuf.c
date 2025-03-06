@@ -34,7 +34,7 @@ DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 
 		TRKAcquireMutex(buf);
 		if (!buf->isInUse) {
-			TRKResetBuffer(buf, TRUE);
+			TRKResetBuffer(buf, 1);
 			TRKSetBufferUsed(buf, TRUE);
 			error   = DS_NoError;
 			*outMsg = buf;
@@ -42,6 +42,10 @@ DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 			i       = 3; // why not break? weird choice
 		}
 		TRKReleaseMutex(buf);
+	}
+
+	if (error == DS_NoMessageBufferAvailable) {
+		usr_puts_serial("ERROR : No buffer available\n");
 	}
 
 	return error;
@@ -68,7 +72,7 @@ void TRKReleaseBuffer(int idx)
 	}
 }
 
-void TRKResetBuffer(TRKBuffer* msg, BOOL keepData)
+void TRKResetBuffer(TRKBuffer* msg, u8 keepData)
 {
 	msg->length   = 0;
 	msg->position = 0;
@@ -96,6 +100,7 @@ DSError TRKSetBufferPosition(TRKBuffer* msg, u32 pos)
 	return error;
 }
 
+#pragma dont_inline on
 DSError TRKAppendBuffer(TRKBuffer* msg, const void* data, size_t length)
 {
 	DSError error = DS_NoError; // r31
@@ -129,6 +134,7 @@ DSError TRKAppendBuffer(TRKBuffer* msg, const void* data, size_t length)
 
 	return error;
 }
+#pragma dont_inline reset
 
 DSError TRKReadBuffer(TRKBuffer* msg, void* data, size_t length)
 {

@@ -112,9 +112,9 @@ static inline void ResetFlag(GameStat *game_stat)
     game_stat->story_continue = 0;
     game_stat->party_continue = 0;
     game_stat->open_w06 = 0;
-    game_stat->field10E_bit4 = 0;
-    game_stat->field10E_bit5 = 0;
-    game_stat->field10E_bit6 = 0;
+    game_stat->veryHardUnlock = 0;
+    game_stat->customPackEnable = 0;
+    game_stat->musicAllF = 0;
 }
 
 static inline void ResetPauseConfig(GameStat *game_stat)

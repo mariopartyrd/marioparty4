@@ -245,4 +245,4 @@ lbl_8037149C:
 #endif // clang-format on
 }
 
-u32 TRKTargetCPUMinorType(void) { return 0x54; }
+u8 TRKTargetCPUMinorType(void) { return 0x54; }

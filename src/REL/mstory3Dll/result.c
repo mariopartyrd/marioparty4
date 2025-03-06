@@ -619,7 +619,7 @@ void fn_1_17570(void) {
     } else {
         fn_1_159A4();
         for (i = 0; i < 4; i++) {
-            if (lbl_1_bss_1A0C.unk38[i].unk10 != GWUnkB1Get()) {
+            if (lbl_1_bss_1A0C.unk38[i].unk10 != GWStoryCharGet()) {
                 continue;
             }
             _SetFlag(9);

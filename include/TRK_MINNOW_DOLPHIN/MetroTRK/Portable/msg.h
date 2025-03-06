@@ -8,7 +8,7 @@ typedef struct _TRK_Msg {
 	u8 _00[8];
 	u32 m_msgLength;
 	u32 _0C;
-	u32 m_msg;
+	u8 m_msg[4]; // TODO: unknown array length
 } TRK_Msg;
 
 #ifdef __cplusplus

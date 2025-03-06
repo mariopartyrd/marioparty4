@@ -2511,7 +2511,7 @@ s32 fn_1_F214(ZtarDllUnkStruct2 *arg0)
         var_r28 = 0;
         var_r26 = arg0->unk_54;
         if (HuPadStkX[lbl_1_bss_8C[0].unk_58] >= 5 || (HuPadBtn[lbl_1_bss_8C[0].unk_58] & PAD_BUTTON_RIGHT)) {
-            if (GWGameStat.field10E_bit4 == 1) {
+            if (GWGameStat.veryHardUnlock == 1) {
                 arg0->unk_54++;
                 var_r28 = 1;
                 if (arg0->unk_54 > 3) {
@@ -2527,7 +2527,7 @@ s32 fn_1_F214(ZtarDllUnkStruct2 *arg0)
             }
         }
         else if (HuPadStkX[lbl_1_bss_8C[0].unk_58] <= -5 || (HuPadBtn[lbl_1_bss_8C[0].unk_58] & PAD_BUTTON_LEFT)) {
-            if (GWGameStat.field10E_bit4 == 1) {
+            if (GWGameStat.veryHardUnlock == 1) {
                 arg0->unk_54--;
                 var_r28 = -1;
                 if (arg0->unk_54 < 0) {

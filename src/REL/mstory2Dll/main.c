@@ -171,7 +171,7 @@ void fn_1_4F4(void) {
             
         case 1:
             for (i = 0; i < 4; i++) {
-                if (GWPlayerCfg[i].character == GWUnkB1Get()) {
+                if (GWPlayerCfg[i].character == GWStoryCharGet()) {
                     break;
                 }
             }
@@ -179,7 +179,7 @@ void fn_1_4F4(void) {
             break;
         case 2:
             for (i = 0; i < 4; i++) {
-                if (GWPlayerCfg[i].character == GWUnkB1Get()) {
+                if (GWPlayerCfg[i].character == GWStoryCharGet()) {
                     break;
                 }
             }

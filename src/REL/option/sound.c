@@ -513,9 +513,9 @@ omObjData *OptionSoundCreate(void)
     for (i = 0; i < NUM_BOARDS; i++) {
         musicPageOn[i + 3] = (GWGameStat.board_play_count[i] != 0) ? TRUE : FALSE;
     }
-    musicPageOn[11] = (GWGameStat.field10E_bit6 != 0) ? TRUE : FALSE;
-    musicPageOn[12] = (GWGameStat.field10E_bit6 != 0) ? TRUE : FALSE;
-    musicPageOn[13] = (GWGameStat.field10E_bit6 != 0) ? TRUE : FALSE;
+    musicPageOn[11] = (GWGameStat.musicAllF != 0) ? TRUE : FALSE;
+    musicPageOn[12] = (GWGameStat.musicAllF != 0) ? TRUE : FALSE;
+    musicPageOn[13] = (GWGameStat.musicAllF != 0) ? TRUE : FALSE;
     return object;
 }
 

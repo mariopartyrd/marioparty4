@@ -147,7 +147,7 @@ void fn_1_488(void) {
     switch (omovlevtno) {
         case 0:
             for (i = 0; i < 4; i++) {
-                if (GWPlayerCfg[i].character == GWUnkB1Get()) {
+                if (GWPlayerCfg[i].character == GWStoryCharGet()) {
                     break;
                 }
             }
@@ -155,7 +155,7 @@ void fn_1_488(void) {
             break;
         case 1:
             for (i = 0; i < 4; i++) {
-                if (GWPlayerCfg[i].character == GWUnkB1Get()) {
+                if (GWPlayerCfg[i].character == GWStoryCharGet()) {
                     break;
                 }
             }
