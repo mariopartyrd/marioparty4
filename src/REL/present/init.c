@@ -144,20 +144,20 @@ static void FadeModel(void)
 
 BOOL PresentPadCheck(u16 btn)
 {
-    u32 var_r31 = HuPadBtnDown[0] & btn;
-    return var_r31 != 0;
+    u32 pressed = HuPadBtnDown[0] & btn;
+    return pressed != 0;
 }
 
 BOOL PresentPadDStkRepCheck(u16 dir)
 {
-    u32 var_r31 = HuPadDStkRep[0] & dir;
-    return var_r31 != 0;
+    u32 pressed = HuPadDStkRep[0] & dir;
+    return pressed != 0;
 }
 
 BOOL PresentPadDStkCheck(u16 dir)
 {
-    u32 var_r31 = HuPadDStk[0] & dir;
-    return var_r31 != 0;
+    u32 pressed = HuPadDStk[0] & dir;
+    return pressed != 0;
 }
 
 static void SceneMain(omObjData *object)

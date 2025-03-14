@@ -113,16 +113,16 @@ float PresentCameraZoomGet(omObjData *object)
 {
     CameraWork *work = object->data;
 
-    float var_f31 = work->zoom;
-    return var_f31;
+    float zoom = work->zoom;
+    return zoom;
 }
 
 float PresentCameraRotGet(omObjData *object)
 {
     CameraWork *work = object->data;
 
-    float var_f31 = work->rot;
-    return var_f31;
+    float rot = work->rot;
+    return rot;
 }
 
 void PresentCameraPosGet(omObjData *object, float *x, float *y, float *z)

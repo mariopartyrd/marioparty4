@@ -13,15 +13,15 @@ typedef struct {
 } StateWork; /* size = 0x0C */
 
 typedef struct {
-    /* 0x00 */ Vec src;
+    /* 0x00 */ Vec pos;
     /* 0x0C */ Vec dest;
     /* 0x18 */ GXColor color;
 } UnkLightDataStruct; /* size = 0x1C */ // TODO same as m446Dll::unkStruct10 and present::UnkPresentStruct3
 
 typedef struct UnkShadowDataStruct {
-    /* 0x00 */ Vec pos;
-    /* 0x0C */ Vec up;
-    /* 0x18 */ Vec target;
+    /* 0x00 */ Vec camPos;
+    /* 0x0C */ Vec camUp;
+    /* 0x18 */ Vec camTarget;
 } UnkShadowDataStruct; /* size = 0x24 */
 
 static void ExecState(omObjData *object);
@@ -51,12 +51,12 @@ omObjData *OptionStateCreate(void)
     optionRoom = OptionRoomCreate();
     work->window = OptionWinCreate(0);
     Hu3DLighInit();
-    work->light = Hu3DGLightCreateV(&lightTbl.src, &lightTbl.dest, &lightTbl.color);
+    work->light = Hu3DGLightCreateV(&lightTbl.pos, &lightTbl.dest, &lightTbl.color);
     Hu3DGLightInfinitytSet(work->light);
     lightData = &Hu3DGlobalLight[work->light];
     Hu3DShadowCreate(30.0f, 20.0f, 5000.0f);
     Hu3DShadowTPLvlSet(0.45f);
-    Hu3DShadowPosSet(&shadowPosTbl.pos, &shadowPosTbl.up, &shadowPosTbl.target);
+    Hu3DShadowPosSet(&shadowPosTbl.camPos, &shadowPosTbl.camUp, &shadowPosTbl.camTarget);
     return object;
 }
 

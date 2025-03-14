@@ -9,7 +9,6 @@
 #include "game/saveload.h"
 #include "game/wipe.h"
 
-
 #include "ext_math.h"
 
 s16 lbl_1_bss_3B8;
@@ -316,8 +315,8 @@ void fn_1_14CFC(void)
         }
     }
     if (lbl_1_bss_3A8 == 0) {
-        temp_r30 = HuSprGrpCreate(25);
-        lbl_1_bss_3A8 = temp_r30;
+
+        lbl_1_bss_3A8 = temp_r30 = HuSprGrpCreate(25);
         temp_r28 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGMODE, 84), MEMORY_DEFAULT_NUM));
         temp_r29 = HuSprCreate(temp_r28, 200, 0);
         HuSprGrpMemberSet(temp_r30, 0, temp_r29);
@@ -412,8 +411,8 @@ void fn_1_14CFC(void)
         HuSprTPLvlSet(temp_r30, 24, 0);
     }
     if (lbl_1_bss_3AA == 0) {
-        temp_r30 = HuSprGrpCreate(10);
-        lbl_1_bss_3AA = temp_r30;
+
+        lbl_1_bss_3AA = temp_r30 = HuSprGrpCreate(10);
         temp_r28 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGMODE, 15), MEMORY_DEFAULT_NUM));
         temp_r29 = HuSprCreate(temp_r28, 200, 0);
         HuSprGrpMemberSet(temp_r30, 0, temp_r29);
@@ -423,9 +422,8 @@ void fn_1_14CFC(void)
         HuSprGrpMemberSet(temp_r30, 1, temp_r29);
         HuSprPosSet(temp_r30, 1, 0, 0);
         for (temp_r31 = 0; temp_r31 < 4; temp_r31++) {
-            temp_r20 = GWPlayerCfg[lbl_1_bss_2C1C[temp_r31]].character;
-            lbl_1_bss_2C24[temp_r31] = temp_r20;
-            temp_r28 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGMODE, 16) + (s16)temp_r20, MEMORY_DEFAULT_NUM));
+            temp_r20 = lbl_1_bss_2C24[temp_r31] = GWPlayerCfg[lbl_1_bss_2C1C[temp_r31]].character;
+            temp_r28 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGMODE, 16) + temp_r20, MEMORY_DEFAULT_NUM));
             temp_r29 = HuSprCreate(temp_r28, 190, 0);
             HuSprGrpMemberSet(temp_r30, (temp_r31 * 2) + 2, temp_r29);
             HuSprPosSet(temp_r30, (temp_r31 * 2) + 2, lbl_1_data_19C[temp_r31], 0);
