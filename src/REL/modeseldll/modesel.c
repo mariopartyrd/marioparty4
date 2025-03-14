@@ -1,4 +1,3 @@
-#define HUWIN_USE_OLD_DEFS
 #include "game/audio.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
@@ -99,7 +98,7 @@ s32 fn_1_2490(void)
     }
     HuWinMesWait(lbl_1_bss_82);
 
-    lbl_1_bss_80 = temp_r26 = 0;
+    temp_r26 = lbl_1_bss_80 = 0;
     espAttrReset(lbl_1_bss_152[10], HUSPR_ATTR_DISPOFF);
     espBankSet(lbl_1_bss_152[10], 0);
     for (temp_r31 = 0; temp_r31 <= 10; temp_r31++) {
