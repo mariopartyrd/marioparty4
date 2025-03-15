@@ -1,3 +1,4 @@
+#include "game/audio.h"
 #include "game/data.h"
 #include "game/hsfman.h"
 #include "game/process.h"

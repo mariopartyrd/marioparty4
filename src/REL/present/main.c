@@ -13,14 +13,14 @@ typedef struct StateWork {
 } StateWork; /* size = 0x08 */
 
 typedef struct UnkShadowDataStruct {
-    /* 0x00 */ Vec pos;
-    /* 0x0C */ Vec up;
-    /* 0x18 */ Vec target;
+    /* 0x00 */ Vec camPos;
+    /* 0x0C */ Vec camUp;
+    /* 0x18 */ Vec camTarget;
 } UnkShadowDataStruct; /* size = 0x24 */
 
 omObjData *presentGuide;
 
-static UnkShadowDataStruct shadowPosTbl = {
+static UnkShadowDataStruct shadow = {
     { 0.0f, 3000.0f, 1.0f },
     { 0.0f, 1.0f, 0.0f },
     { 0.0f, 0.0f, 0.0f },
@@ -45,7 +45,7 @@ omObjData *PresentStateCreate(void)
     work->window = PresentWinCreate(0);
     Hu3DShadowCreate(30.0f, 20.0f, 5000.0f);
     Hu3DShadowTPLvlSet(0.45f);
-    Hu3DShadowPosSet(&shadowPosTbl.pos, &shadowPosTbl.up, &shadowPosTbl.target);
+    Hu3DShadowPosSet(&shadow.camPos, &shadow.camUp, &shadow.camTarget);
 
     if (omovlevtno > 0) {
         OSReport("*** PRESENTROOM ( PRESENT GET MODE ) ***\n");

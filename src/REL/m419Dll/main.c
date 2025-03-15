@@ -1593,7 +1593,7 @@ void fn_1_78B4(StructBss200 *arg0)
     float sp118;
     float sp114;
     float sp110;
-    float var_f27;
+    float var_f27; // ! - uninitialized
     float var_f29;
     float var_f28;
     float var_f30;

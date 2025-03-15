@@ -61,7 +61,7 @@ typedef struct PresentWork {
 } PresentWork; /* size = 0x364 */
 
 typedef struct UnkLightDataStruct {
-    /* 0x00 */ Vec src;
+    /* 0x00 */ Vec pos;
     /* 0x0C */ Vec dest;
     /* 0x18 */ GXColor color;
 } UnkLightDataStruct; /* size = 0x1C */ // same as option::state::UnkLightDataStruct
@@ -357,7 +357,7 @@ omObjData *PresentCreate(void)
 {
     s32 i;
     s32 j;
-    s16 light;
+    s16 lightId;
     LightData *lightData;
 
     omObjData *object = omAddObjEx(presentObjMan, 1003, 0, 0, 1, NULL);
@@ -382,10 +382,10 @@ omObjData *PresentCreate(void)
         work->presentUnlockedF[PRESENT_MAX - 1] = TRUE;
     }
     Hu3DLighInit();
-    light = Hu3DGLightCreateV(&lightTbl.src, &lightTbl.dest, &lightTbl.color);
-    Hu3DGLightInfinitytSet(light);
-    Hu3DGLightStaticSet(light, 1);
-    lightData = &Hu3DGlobalLight[light];
+    lightId = Hu3DGLightCreateV(&lightTbl.pos, &lightTbl.dest, &lightTbl.color);
+    Hu3DGLightInfinitytSet(lightId);
+    Hu3DGLightStaticSet(lightId, 1);
+    lightData = &Hu3DGlobalLight[lightId];
     lightData->unk_00 |= 0x8000;
 
     for (i = 0; i < PRESENT_MDL_MAX; i++) {
@@ -410,7 +410,7 @@ omObjData *PresentCreate(void)
     RotateCamera(object);
     PresentExecModeSet(object, PRESENT_MODE_NONE);
 
-    (void)light;
+    (void)lightId;
     return object;
 }
 

@@ -84,17 +84,30 @@ void fn_1_414(void)
             while (WipeStatGet()) {
                 HuPrcVSleep();
             }
+            #if VERSION_PAL
+            if(GwLanguageSave != -1) {
+                GWGameStat.language = GwLanguageSave;
+            } else if(GwLanguage != -1) {
+                GWGameStat.language = GwLanguage;
+            }
+            #endif
             omOvlReturnEx(1, 1);
             while (1) {
                 HuPrcVSleep();
             }
         }
         else {
-            s16 group = HuSprGrpCreate(1);
-            s16 sprite = HuTHPSprCreateVol("movie/opmov_s00.thp", 0, 3000, 70.0);
-            HuSprGrpMemberSet(group, 0, sprite);
-            HuSprPosSet(group, 0, 288, 240);
-            HuSprDrawNoSet(group, 0, 127);
+            s16 grpId;
+            s16 sprId;
+            #if VERSION_PAL
+            HuWinAllKill();
+            HuWinInit(1);
+            #endif
+            grpId = HuSprGrpCreate(1);
+            sprId = HuTHPSprCreateVol("movie/opmov_s00.thp", 0, 3000, 70.0);
+            HuSprGrpMemberSet(grpId, 0, sprId);
+            HuSprPosSet(grpId, 0, 288, 240);
+            HuSprDrawNoSet(grpId, 0, 127);
             HuPrcSleep(2);
             espAttrSet(lbl_1_bss_152[0], HUSPR_ATTR_DISPOFF);
             HuAudFXStop(lbl_1_data_100);
@@ -102,7 +115,7 @@ void fn_1_414(void)
                 HuPrcVSleep();
             }
             HuTHPClose();
-            HuSprGrpKill(group);
+            HuSprGrpKill(grpId);
         }
     }
     espAttrReset(lbl_1_bss_152[9], HUSPR_ATTR_DISPOFF);

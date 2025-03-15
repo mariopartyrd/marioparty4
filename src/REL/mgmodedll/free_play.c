@@ -88,7 +88,7 @@ s32 fn_1_6D28(void)
     else {
         temp_r28 = lbl_1_bss_2C2C[2];
     }
-    if (lbl_1_bss_4 == 1 || lbl_1_bss_4 == 2) {
+    if (mgModeEvtNo == 1 || mgModeEvtNo == 2) {
         mgTypeCurr = fn_1_B5A8(&spA, &sp8);
         espAttrReset(lbl_1_bss_2C2C[3], HUSPR_ATTR_DISPOFF);
         espTPLvlSet(lbl_1_bss_2C2C[3], 1.0f);
@@ -99,7 +99,7 @@ s32 fn_1_6D28(void)
         if (lbl_1_bss_2A6 == 0) {
             espAttrReset(lbl_1_bss_2C2C[4], HUSPR_ATTR_DISPOFF);
             espPosSet(lbl_1_bss_2C2C[4], 450, 404);
-            if (lbl_1_bss_4 == 1) {
+            if (mgModeEvtNo == 1) {
                 fn_1_BFA0(lbl_1_bss_264C[lbl_1_bss_318[mgTypeCurr][0]][spA + sp8]);
                 espAttrReset(lbl_1_bss_2C2C[14], HUSPR_ATTR_DISPOFF);
                 espPosSet(lbl_1_bss_2C2C[14], 450, 348);

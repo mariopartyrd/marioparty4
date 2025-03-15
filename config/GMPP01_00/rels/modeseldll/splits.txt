@@ -5,3 +5,30 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/modeseldll/main.c:
+	.text       start:0x000000A0 end:0x00002528
+	.rodata     start:0x00000000 end:0x000000B8
+	.data       start:0x00000000 end:0x00000080
+	.bss        start:0x00000000 end:0x00000080
+
+REL/modeseldll/modesel.c:
+	.text       start:0x00002528 end:0x00003874
+	.rodata     start:0x000000B8 end:0x000001B0
+	.data       start:0x00000080 end:0x00000100
+	.bss        start:0x00000080 end:0x00000088
+
+REL/modeseldll/filesel.c:
+	.text       start:0x00003874 end:0x0000BFDC
+	.rodata     start:0x000001B0 end:0x00000318
+	.data       start:0x00000100 end:0x00000428
+	.bss        start:0x00000088 end:0x00000150
+
+REL/modeseldll/datalist.c:
+	.text       start:0x0000BFDC end:0x0000C438
+	.rodata     start:0x00000318 end:0x00000328
+	.data       start:0x00000428 end:0x00000A2C
+	.bss        start:0x00000150 end:0x000001CA

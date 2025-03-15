@@ -199,6 +199,9 @@ cflags_base = [
     "-DMUSY_TARGET=MUSY_TARGET_DOLPHIN",
 ]
 
+if config.non_matching:
+    cflags_base.append("-DNON_MATCHING")
+
 # Debug flags
 if args.debug:
     cflags_base.extend(["-sym on", "-DDEBUG=1"])
@@ -279,6 +282,7 @@ cflags_musyx = [
     "-str reuse,pool,readonly",
     "-fp_contract off",
     "-DMUSY_TARGET=MUSY_TARGET_DOLPHIN",
+    "-sym on"
 ]
 
 cflags_musyx_debug = [
@@ -419,7 +423,7 @@ config.libs = [
             Object(Matching, "game/sprman.c"),
             Object(Matching, "game/sprput.c"),
             Object(Matching, "game/hsfload.c"),
-            Object(NonMatching, "game/hsfdraw.c"),
+            Object(Equivalent, "game/hsfdraw.c"),
             Object(Matching, "game/hsfman.c"),
             Object(Matching, "game/hsfmotion.c"),
             Object(Matching, "game/hsfanim.c"),
@@ -1290,7 +1294,7 @@ config.libs = [
     Rel(
         "m457Dll",  # Bowser Wrestling
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m457Dll/main.c"),
+            Object(Matching, "REL/m457Dll/main.c"),
         },
     ),
     Rel(
@@ -1352,7 +1356,7 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/free_play.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/record.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/battle.c"),
-            Object(NonMatching, "REL/mgmodedll/tictactoe.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/tictactoe.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/main.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/datalist.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/minigame.c"),
@@ -1369,10 +1373,10 @@ config.libs = [
     Rel(
         "modeseldll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeseldll/main.c"),
-            Object(NonMatching, "REL/modeseldll/modesel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeseldll/filesel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeseldll/datalist.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/modesel.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/filesel.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/datalist.c"),
         },
     ),
     Rel(

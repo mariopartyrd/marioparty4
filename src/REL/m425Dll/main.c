@@ -800,7 +800,7 @@ void fn_1_2A94(s16 arg0, Vec *arg1, Vec *arg2, float arg8)
 
 void fn_1_2B2C(omObjData *object)
 {
-    s32 sp8;
+    s32 sp8; // ! - uninitialized
     M425DllWork *var_r31;
     s32 var_r29;
     s32 var_r28;

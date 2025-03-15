@@ -7,9 +7,9 @@
 #include "game/object.h"
 #include "game/objsub.h"
 
+#include "game/pad.h"
 #include "game/sprite.h"
 #include "game/window.h"
-#include "game/pad.h"
 
 typedef struct datalist_model {
     s32 datanum;
@@ -33,7 +33,7 @@ typedef struct datalist_sprite {
 
 typedef struct struct_bss8_24 {
     omObjData *unk0;
-    void (*unk4)(omObjData*, ...);
+    void (*unk4)(omObjData *, ...);
     u8 unk8[0x50];
     s32 unk58;
     s32 unk5C;
@@ -72,7 +72,7 @@ extern s16 lbl_1_bss_20C0[10][70];
 extern s16 lbl_1_bss_20AC[10];
 extern s16 lbl_1_bss_20AA;
 
-extern Process *lbl_1_bss_2D8;
+extern Process *objman;
 
 extern s16 lbl_1_bss_2E4;
 
@@ -80,7 +80,7 @@ extern s16 lbl_1_bss_2A6;
 extern s16 lbl_1_bss_2A4;
 
 extern StructBss8 lbl_1_bss_8;
-extern s16 lbl_1_bss_4;
+extern s16 mgModeEvtNo;
 
 extern s16 lbl_1_data_A2[];
 extern DataListModel lbl_1_data_490[];
