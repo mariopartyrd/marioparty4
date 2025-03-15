@@ -1373,10 +1373,10 @@ config.libs = [
     Rel(
         "modeseldll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeseldll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeseldll/modesel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeseldll/filesel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/modeseldll/datalist.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/modesel.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/filesel.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/datalist.c"),
         },
     ),
     Rel(

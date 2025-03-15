@@ -213,7 +213,11 @@ s32 fn_1_2490(void)
     }
     _ClearFlag(FLAG_ID_MAKE(1, 11));
     WipeColorSet(255, 255, 255);
+    #if VERSION_PAL
+    WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 30);
+    #else
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 10);
+    #endif
     while (WipeStatGet()) {
         HuPrcVSleep();
     }
