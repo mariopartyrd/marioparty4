@@ -2,12 +2,14 @@
 
 namespace std {
     class exception {
-    public:
-        virtual ~exception();
-        virtual const char *what() const {
-            return "exception";
-        }
+        public:
+            virtual ~exception();
+            virtual const char *what() const;
     };
 }
 
-std::exception::~exception() {}
+const char *std::exception::what() const {
+    return "exception";
+};
+
+std::exception::~exception() {};
