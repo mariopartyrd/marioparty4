@@ -95,8 +95,6 @@ int InitMetroTRKCommTable(int hwId)
     return result;
 }
 
-void TRKUARTInterruptHandler() { }
-
 DSError TRKInitializeIntDrivenUART(u32 param_0, u32 param_1, u32 param_2,
                                    volatile u8** param_3)
 {
@@ -106,15 +104,15 @@ DSError TRKInitializeIntDrivenUART(u32 param_0, u32 param_1, u32 param_2,
 
 void EnableEXI2Interrupts(void) { gDBCommTable.init_interrupts_func(); }
 
-int TRKPollUART(void) { return gDBCommTable.peek_func(); }
+inline int TRKPollUART(void) { return gDBCommTable.peek_func(); }
 
-UARTError TRKReadUARTN(void* bytes, u32 length)
+inline UARTError TRKReadUARTN(void* bytes, u32 length)
 {
     int readErr = gDBCommTable.read_func(bytes, length);
     return readErr == 0 ? 0 : -1;
 }
 
-UARTError TRKWriteUARTN(const void* bytes, u32 length)
+inline UARTError TRKWriteUARTN(const void* bytes, u32 length)
 {
     int writeErr = gDBCommTable.write_func(bytes, length);
     return writeErr == 0 ? 0 : -1;
@@ -141,28 +139,29 @@ UARTError WriteUART1(u8 arg0)
     return 0;
 }
 
-UARTError TRKReadUARTPoll(u8* arg0)
-{
-    UARTError readErr = 4;
+s32 TRKReadUARTPoll(u8* arg0) {
+    UARTError var_r29;
+    s32 cnt;
 
+    var_r29 = 4;
     if (gReadPos >= gReadCount) {
         gReadPos = 0;
-        gReadCount = TRKPollUART();
-        if (gReadCount > 0) {
-            if (gReadCount > BUFF_LEN) {
-                gReadCount = BUFF_LEN;
+        cnt = gReadCount = TRKPollUART();
+        if (cnt > 0) {
+            if (cnt > 0x110A) {
+                gReadCount = 0x110A;
             }
-            readErr = TRKReadUARTN(gReadBuf, gReadCount);
-            if (readErr != 0) {
+            var_r29 = TRKReadUARTN(gReadBuf, gReadCount);
+            if (var_r29 != 0) {
                 gReadCount = 0;
             }
         }
     }
     if (gReadPos < gReadCount) {
         *arg0 = gReadBuf[gReadPos++];
-        readErr = 0;
+        var_r29 = 0;
     }
-    return readErr;
+    return var_r29;
 }
 
 void ReserveEXI2Port(void) { gDBCommTable.open_func(); }
@@ -170,3 +169,5 @@ void ReserveEXI2Port(void) { gDBCommTable.open_func(); }
 void UnreserveEXI2Port(void) { gDBCommTable.close_func(); }
 
 void TRK_board_display(char* str) { OSReport(str); }
+
+void TRKUARTInterruptHandler() { }

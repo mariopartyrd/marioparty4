@@ -13,6 +13,7 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.associations": {
+    "*.cp": "cpp",
     "*.csv": "plaintext",
     "*.s": "plaintext",
     "*.json": "jsonc",
@@ -64,7 +65,10 @@
     "m427dll.h": "c",
     "sprite.h": "c",
     "gamework_data.h": "c",
-    "roll.h": "c"
+    "roll.h": "c",
+    "msghndlr.h": "c",
+    "dispatch.h": "c",
+    "trk.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {
