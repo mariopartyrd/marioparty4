@@ -734,7 +734,7 @@ config.libs = [
     },
     {
         "lib": "TRK_MINNOW_DOLPHIN",
-        "mw_version": config.linker_version,
+        "mw_version": "GC/1.3",
         "cflags": cflags_trk,
         "host": False,
         "objects": [
@@ -751,7 +751,7 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/notify.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/flush_cache.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/targimpl.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/targsupp.s"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/__exception.s"),
