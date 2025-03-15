@@ -4,6 +4,19 @@
 #include "TRK_MINNOW_DOLPHIN/ppc/Generic/targimpl.h"
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
+inline DSError TRKDoNotifyStopped_Inline(TRKBuffer* msg, MessageCommandID cmd) {
+    DSError err;
+
+	if (msg->position >= 0x880) {
+		err = DS_MessageBufferOverflow;
+	} else {
+		msg->data[msg->position++] = cmd;
+		msg->length+=1;
+	    err = 0;
+	}
+    return err;
+}
+
 DSError TRKDoNotifyStopped(MessageCommandID cmd)
 {
 	DSError err;
@@ -13,13 +26,7 @@ DSError TRKDoNotifyStopped(MessageCommandID cmd)
 
 	err = TRKGetFreeBuffer(&bufIdx, &msg);
 	if (err == DS_NoError) {
-		if (msg->position >= 0x880) {
-			err = DS_MessageBufferOverflow;
-		} else {
-			msg->data[msg->position++] = cmd;
-			++msg->length;
-			err = 0;
-		}
+		err = TRKDoNotifyStopped_Inline(msg, cmd);
 
 		if (err == DS_NoError) {
 			if (cmd == DSMSG_NotifyStopped) {
