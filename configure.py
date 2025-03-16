@@ -27,7 +27,7 @@ from tools.project import (
 )
 
 # Game versions
-DEFAULT_VERSION = 1
+DEFAULT_VERSION = 0
 VERSIONS = [
     "GMPE01_00",  # USA 1.0
     "GMPE01_01",  # USA 1.1
@@ -254,7 +254,6 @@ cflags_odemuexi = [
     *cflags_base,
     "-inline deferred"
 ]
-
 
 cflags_amcstub = [
     *cflags_base,
