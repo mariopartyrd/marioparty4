@@ -139,8 +139,9 @@ UARTError WriteUART1(u8 arg0)
     return 0;
 }
 
-s32 TRKReadUARTPoll(u8* arg0) {
-    UARTError var_r29;
+UARTError TRKReadUARTPoll(u8* arg0)
+{
+    UARTError readErr = 4;
     s32 cnt;
 
     var_r29 = 4;
@@ -148,8 +149,8 @@ s32 TRKReadUARTPoll(u8* arg0) {
         gReadPos = 0;
         cnt = gReadCount = TRKPollUART();
         if (cnt > 0) {
-            if (cnt > 0x110A) {
-                gReadCount = 0x110A;
+            if (cnt > BUFF_LEN) {
+                gReadCount = BUFF_LEN;
             }
             var_r29 = TRKReadUARTN(gReadBuf, gReadCount);
             if (var_r29 != 0) {
