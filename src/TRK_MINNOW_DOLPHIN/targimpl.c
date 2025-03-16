@@ -1192,7 +1192,7 @@ DSError TRKPPCAccessSpecialReg(void* value, u32* access_func, BOOL read)
 #endif
 
     // Flush cache
-    TRK_flush_cache(access_func, (sizeof(access_func) * 10));
+    TRK_flush_cache((void*)(u32)access_func, (sizeof(access_func) * 10));
     (*asm_access)((u32*)value, (void*)&TRKvalue128_temp);
 
     return DS_NoError;
