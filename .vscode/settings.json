@@ -68,7 +68,8 @@
     "roll.h": "c",
     "msghndlr.h": "c",
     "dispatch.h": "c",
-    "trk.h": "c"
+    "trk.h": "c",
+    "debuggerdriver.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {
