@@ -144,7 +144,6 @@ UARTError TRKReadUARTPoll(u8* arg0)
     UARTError readErr = 4;
     s32 cnt;
 
-    var_r29 = 4;
     if (gReadPos >= gReadCount) {
         gReadPos = 0;
         cnt = gReadCount = TRKPollUART();
@@ -152,17 +151,17 @@ UARTError TRKReadUARTPoll(u8* arg0)
             if (cnt > BUFF_LEN) {
                 gReadCount = BUFF_LEN;
             }
-            var_r29 = TRKReadUARTN(gReadBuf, gReadCount);
-            if (var_r29 != 0) {
+            readErr = TRKReadUARTN(gReadBuf, gReadCount);
+            if (readErr != 0) {
                 gReadCount = 0;
             }
         }
     }
     if (gReadPos < gReadCount) {
         *arg0 = gReadBuf[gReadPos++];
-        var_r29 = 0;
+        readErr = 0;
     }
-    return var_r29;
+    return readErr;
 }
 
 void ReserveEXI2Port(void) { gDBCommTable.open_func(); }
