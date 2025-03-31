@@ -1,4 +1,5 @@
 #include "game/object.h"
+#include "math.h"
 
 void fn_1_68(omObjData *object);
 

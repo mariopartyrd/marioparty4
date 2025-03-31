@@ -2,7 +2,7 @@
 .file "targsupp.s"
 
 .text
-.balign 4
+.balign 16
 
 .fn TRKAccessFile, global
     twui r0, 0x0

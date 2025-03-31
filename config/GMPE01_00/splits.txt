@@ -1222,7 +1222,7 @@ TRK_MINNOW_DOLPHIN/targimpl.c:
 	.bss        start:0x801A9138 end:0x801A96B8
 
 TRK_MINNOW_DOLPHIN/targsupp.s:
-	.text       start:0x800F1CF0 end:0x800F1D10
+	.text       start:0x800F1CE4 end:0x800F1D10
 
 TRK_MINNOW_DOLPHIN/__exception.s:
 	.init       start:0x80003534 end:0x80005468
