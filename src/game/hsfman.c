@@ -1394,7 +1394,7 @@ inline s16 Hu3DLightCreateV(LightData *light, Vec *arg0, Vec *arg1, GXColor *arg
     light->color = *arg2;
 }
 
-s16 Hu3DGLightCreateV(Vec* arg0, Vec* arg1, GXColor* arg2) {
+s16 Hu3DGLightCreateV(Vec* pos, Vec* dir, GXColor* color) {
     s16 var_r30;
     LightData* var_r31;
 
@@ -1409,7 +1409,7 @@ s16 Hu3DGLightCreateV(Vec* arg0, Vec* arg1, GXColor* arg2) {
         return -1;
     }
 
-    Hu3DLightCreateV(var_r31, arg0, arg1, arg2);
+    Hu3DLightCreateV(var_r31, pos, dir, color);
 
     return var_r30;
 }
@@ -1894,10 +1894,10 @@ void Hu3DShadowCreate(f32 arg8, f32 arg9, f32 argA) {
     Hu3DShadowF = 1;
 }
 
-void Hu3DShadowPosSet(Vec* arg0, Vec* arg1, Vec* arg2) {
-    Hu3DShadowData.unk_14 = *arg0;
-    Hu3DShadowData.unk_20 = *arg2;
-    Hu3DShadowData.unk_2C = *arg1;
+void Hu3DShadowPosSet(Vec* camPos, Vec* camUp, Vec* camTarget) {
+    Hu3DShadowData.unk_14 = *camPos;
+    Hu3DShadowData.unk_20 = *camTarget;
+    Hu3DShadowData.unk_2C = *camUp;
 }
 
 void Hu3DShadowTPLvlSet(f32 arg8) {

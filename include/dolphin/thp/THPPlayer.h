@@ -2,11 +2,12 @@
 #define _THP_THPPLAYER_H
 
 #include "types.h"
-#include "Dolphin/os.h"
-#include "Dolphin/gx.h"
-#include "THP/THPBuffer.h"
-#include "THP/THPFile.h"
-#include "THP/THPInfo.h"
+#include <dolphin/dvd.h>
+#include "dolphin/os.h"
+#include "dolphin/gx.h"
+#include "dolphin/thp/THPBuffer.h"
+#include "dolphin/thp/THPFile.h"
+#include "dolphin/thp/THPInfo.h"
 
 #ifdef __cplusplus
 extern "C" {

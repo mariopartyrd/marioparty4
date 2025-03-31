@@ -94,6 +94,7 @@ static void TRK_ppc_memcpy(register void* dest, register const void* src,
 
 void TRKRestoreExtended1Block();
 void TRKUARTInterruptHandler();
+DSError TRKTargetReadInstruction(void* data, u32 start);
 
 static BOOL TRKTargetCheckStep();
 

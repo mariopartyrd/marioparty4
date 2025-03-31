@@ -240,7 +240,7 @@ s32 fn_1_4088(unkStruct6 *arg0, u8 arg1, u8 arg2, s32 arg3, unkStruct4 **arg4, s
             arg0->unk68 = 0x1E;
         }
         if ((arg0->unk68 > 0) && (arg5 == 0)) {
-            arg0->unk68 = (arg0->unk68 - 1);
+            arg0->unk68--;
         }
         else {
             var_r28 = (arg0->unk64 / 7) < (arg0->unk60 / 7);
