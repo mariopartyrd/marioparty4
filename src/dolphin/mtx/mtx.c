@@ -1202,7 +1202,7 @@ void PSMTXReflect(register Mtx m, const register Vec *p, const register Vec *n)
 }
 #endif
 
-void C_MTXLookAt(Mtx m, const Point3d *camPos, const Vec *camUp, const Point3d *target)
+void C_MTXLookAt(Mtx m, const Vec *camPos, const Vec *camUp, const Vec *target)
 {
     Vec vLook, vRight, vUp;
 

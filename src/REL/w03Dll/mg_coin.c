@@ -134,9 +134,9 @@ void fn_1_7C98(void)
 
 s32 fn_1_7D18(s32 arg0)
 {
-    Point3d sp38;
-    Point3d sp2C;
-    Point3d sp20;
+    Vec sp38;
+    Vec sp2C;
+    Vec sp20;
     Vec sp14;
     Vec sp8;
     f32 var_f31;
@@ -259,7 +259,7 @@ s32 lbl_1_data_490[] = {
 
 void fn_1_81E0(s32 arg0)
 {
-    Point3d sp8;
+    Vec sp8;
     omObjData *temp_r3;
     f32 temp_f31;
     s32 temp_r28;
@@ -499,7 +499,7 @@ s32 lbl_1_data_4B4[] = { 0x00000440, 0x00000441, 0x00000442, 0x00000443, 0x00000
 
 void fn_1_8C08(omObjData *arg0, someBits3 *arg1)
 {
-    Point3d spC;
+    Vec spC;
     f32 temp_f31;
     f32 temp_f30;
     s8 temp_r27;
@@ -535,7 +535,7 @@ void fn_1_8C08(omObjData *arg0, someBits3 *arg1)
 
 void fn_1_8E44(omObjData *arg0, someBits3 *arg1)
 {
-    Point3d sp8;
+    Vec sp8;
     f32 temp_f1;
     f32 temp_f31;
 
@@ -611,9 +611,9 @@ void fn_1_91B8(void)
 
 void fn_1_9230(s32 arg0)
 {
-    Point3d sp20;
-    Point3d sp14;
-    Point3d sp8;
+    Vec sp20;
+    Vec sp14;
+    Vec sp8;
     s16 temp_r30;
     f32 rotY;
 
@@ -747,7 +747,7 @@ void fn_1_95B8(omObjData *arg0)
 
 void fn_1_97F8(s32 arg0)
 {
-    Point3d sp8;
+    Vec sp8;
     f32 temp_f2;
     f32 var_f31;
     f64 temp_f1;

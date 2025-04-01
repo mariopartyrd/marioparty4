@@ -163,8 +163,8 @@ HsfanimStruct00 lbl_1_data_258 = {
         { /* r */ 0, /* g */ 0, /* b */ 0, /* a */ 0 }, { /* r */ 0, /* g */ 0, /* b */ 0, /* a */ 0 } },
 };
 
-const Point3d lbl_1_rodata_38 = { 0.0f, 0.0f, 0.0f };
-const Point3d lbl_1_rodata_44 = { 0.0f, 1.0f, 0.0f };
+const Vec lbl_1_rodata_38 = { 0.0f, 0.0f, 0.0f };
+const Vec lbl_1_rodata_44 = { 0.0f, 1.0f, 0.0f };
 s16 lbl_1_bss_99C;
 s16 lbl_1_bss_99A;
 s16 lbl_1_bss_98A[8];
@@ -196,9 +196,9 @@ static u8 unk_bss[8];
 
 void fn_1_29C(omObjData *arg0)
 {
-    Point3d sp20;
-    Point3d sp14;
-    Point3d sp8;
+    Vec sp20;
+    Vec sp14;
+    Vec sp8;
     Mtx sp2C;
     s16 var_r31;
     s16 temp_r27;
@@ -337,7 +337,7 @@ void fn_1_F38(void)
 
 // -------------------------------------------------------------------------- //
 
-static inline void HuControlCamCenter(Point3d *sp18, Point3d *sp30)
+static inline void HuControlCamCenter(Vec *sp18, Vec *sp30)
 {
     s8 temp_r28;
 
@@ -364,10 +364,10 @@ const HuUnkF9C2 lbl_1_rodata_B8 = { { 8, 6, 4, 7, 9, 10, 11 } };
 
 void fn_1_F9C(struct om_obj_data *omData)
 {
-    Point3d sp3C;
-    Point3d sp30;
-    Point3d sp24;
-    Point3d sp18;
+    Vec sp3C;
+    Vec sp30;
+    Vec sp24;
+    Vec sp18;
     f32 temp_f31;
     s32 var_r31;
     s16 var_r30;
@@ -643,9 +643,9 @@ void fn_1_20F4(void)
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_28F8(Point3d *arg0, Point3d *arg1)
+void fn_1_28F8(Vec *arg0, Vec *arg1)
 {
-    Point3d spC;
+    Vec spC;
     Mtx sp18;
     CameraData *cam;
     f32 temp_f31;

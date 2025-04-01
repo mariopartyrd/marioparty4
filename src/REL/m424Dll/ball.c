@@ -12,7 +12,6 @@
 #include "game/sprite.h"
 #include "string.h"
 
-
 // STRUCT
 typedef struct _M424DllBallStruct {
     u8 unk0;
@@ -1467,7 +1466,7 @@ void fn_1_79FC(Vec *arg0, Vec *arg1, f32 arg2, Vec *arg3, Vec *arg4, f32 arg5, f
     }
 }
 
-void fn_1_7CA0(Vec arg0, Vec arg1, f32 arg2, Point3d *arg3)
+void fn_1_7CA0(Vec arg0, Vec arg1, f32 arg2, Vec *arg3)
 {
     f32 var_f31;
 

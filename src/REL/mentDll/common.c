@@ -157,9 +157,9 @@ void fn_1_50C(void)
 
 void fn_1_5E8(s32 arg0)
 {
-    Point3d sp24 = { 0.0f, 3000.0f, 800.0f };
-    Point3d sp18 = { 0.0f, 0.0f, 640.0f };
-    Point3d spC = { 0.0f, 1.0f, 0.0f };
+    Vec sp24 = { 0.0f, 3000.0f, 800.0f };
+    Vec sp18 = { 0.0f, 0.0f, 640.0f };
+    Vec spC = { 0.0f, 1.0f, 0.0f };
 
     if (arg0 == 3) {
         sp24.x = sp18.x = 1200.0f;

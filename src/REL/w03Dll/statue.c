@@ -13,7 +13,6 @@
 #include "game/objsub.h"
 #include "game/process.h"
 
-
 #include "ext_math.h"
 
 void fn_1_1358(void);
@@ -142,11 +141,11 @@ s32 fn_1_15E8(void)
 
 s32 fn_1_1650(s32 arg0)
 {
-    Point3d sp38;
-    Point3d sp2C;
-    Point3d sp20;
-    Point3d sp14;
-    Point3d sp8;
+    Vec sp38;
+    Vec sp2C;
+    Vec sp20;
+    Vec sp14;
+    Vec sp8;
     f32 temp;
     s32 temp2;
 
@@ -356,7 +355,7 @@ s32 fn_1_1D1C(void)
 
 void fn_1_1ED4(s32 arg0)
 {
-    Point3d spC;
+    Vec spC;
     f32 sp8;
 
     lbl_1_data_284 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x0C), NULL, 0);
@@ -400,9 +399,9 @@ void fn_1_1ED4(s32 arg0)
 
 void fn_1_20E0(s32 arg0)
 {
-    Point3d sp24;
-    Point3d sp18;
-    Point3d spC;
+    Vec sp24;
+    Vec sp18;
+    Vec spC;
     f32 sp8;
     f32 var_f31;
     s32 i;
@@ -520,9 +519,9 @@ void fn_1_20E0(s32 arg0)
 
 void fn_1_26E0(s32 arg0)
 {
-    Point3d sp20;
-    Point3d sp14;
-    Point3d sp8;
+    Vec sp20;
+    Vec sp14;
+    Vec sp8;
     f32 temp;
 
     BoardSpacePosGet(0, GWPlayer[arg0].space_curr, &sp20);

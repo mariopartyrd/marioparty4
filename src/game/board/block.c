@@ -1,3 +1,4 @@
+#include "ext_math.h"
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/player.h"
@@ -6,7 +7,7 @@
 #include "game/flag.h"
 #include "game/objsub.h"
 #include "game/process.h"
-#include "ext_math.h"
+
 
 #define BLOCK_SPAWN 0
 #define BLOCK_HIT 2
@@ -89,7 +90,7 @@ static void BlockProc(void)
     s32 sp14[8] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x60), DATA_MAKE_NUM(DATADIR_LUIGIMOT, 0x60), DATA_MAKE_NUM(DATADIR_PEACHMOT, 0x60),
         DATA_MAKE_NUM(DATADIR_YOSHIMOT, 0x60), DATA_MAKE_NUM(DATADIR_WARIOMOT, 0x60), DATA_MAKE_NUM(DATADIR_DONKEYMOT, 0x60),
         DATA_MAKE_NUM(DATADIR_DAISYMOT, 0x60), DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 0x60) };
-    Point3d sp8;
+    Vec sp8;
     s32 var_r28;
     s32 i;
     s32 player;
@@ -191,7 +192,7 @@ static void DestroyBlock(void)
 
 static void CreateBlockObj(s32 arg0)
 {
-    Point3d player_pos;
+    Vec player_pos;
     BlockWork *work;
     s8 contains_star;
 
@@ -422,7 +423,7 @@ static inline s32 FindCoinModel(s16 *out_model)
 
 static void PopupCoin(void)
 {
-    Point3d star_pos;
+    Vec star_pos;
     omObjData *coinObj;
     s32 model_index;
     s16 model;
@@ -451,8 +452,8 @@ static void PopupCoin(void)
 
 static void PopupCoinExec(omObjData *obj)
 {
-    Point3d coin_pos;
-    Point3d coin_rot;
+    Vec coin_pos;
+    Vec coin_rot;
     CoinWork *work;
 
     work = OM_GET_WORK_PTR(obj, CoinWork);

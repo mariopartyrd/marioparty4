@@ -794,9 +794,9 @@ void fn_1_B350(omObjData *arg0)
 
 void fn_1_B4AC(omObjData *arg0, someBits2 *arg1)
 {
-    Point3d sp20;
-    Point3d sp14;
-    Point3d sp8;
+    Vec sp20;
+    Vec sp14;
+    Vec sp8;
     f32 temp_f31;
     s8 temp_r0;
     s32 i;
@@ -827,7 +827,7 @@ void fn_1_B4AC(omObjData *arg0, someBits2 *arg1)
 
 void fn_1_B688(omObjData *arg0, someBits2 *arg1)
 {
-    Point3d sp8;
+    Vec sp8;
 
     if (arg1->unk1-- != 0) {
         BoardModelPosGet(arg1->unk_06[arg1->unk2], &sp8);
@@ -844,7 +844,7 @@ void fn_1_B688(omObjData *arg0, someBits2 *arg1)
 void fn_1_B748(omObjData *arg0, someBits2 *arg1)
 {
     Vec sp14;
-    Point3d sp8;
+    Vec sp8;
     f32 temp_f0;
     s16 temp_r29;
 
@@ -877,8 +877,8 @@ void fn_1_B748(omObjData *arg0, someBits2 *arg1)
 
 void fn_1_B8E8(s32 arg0)
 {
-    Point3d sp14;
-    Point3d sp8;
+    Vec sp14;
+    Vec sp8;
     f32 temp_f31;
     someBits2 *temp_r31;
     f32 temp;
@@ -975,7 +975,7 @@ void fn_1_BDAC(void)
 
 void fn_1_BE30(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    Point3d sp8;
+    Vec sp8;
     f32 temp_f30;
     f32 temp_f29;
     f32 temp_f31;

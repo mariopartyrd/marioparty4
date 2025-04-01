@@ -30,7 +30,7 @@ void fn_1_1CA8(void);
 void fn_1_1CAC(float, float, float);
 void fn_1_1CD4(float *arg0, float *arg1, float *arg2);
 s32 fn_1_1D88(void);
-void fn_1_1DB0(Point3d *arg0, Point3d *arg1, float *arg2, s32 arg3, s32 arg4);
+void fn_1_1DB0(Vec *arg0, Vec *arg1, float *arg2, s32 arg3, s32 arg4);
 
 void fn_1_2354(Process *arg0);
 void fn_1_2564(void);

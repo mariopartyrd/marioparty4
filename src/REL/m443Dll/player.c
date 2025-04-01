@@ -1166,7 +1166,7 @@ static inline f32 isEven(u32 arg)
     }
 }
 
-void fn_1_8FFC(u32 arg0, Point3d *arg1, f32 arg2, f32 arg3)
+void fn_1_8FFC(u32 arg0, Vec *arg1, f32 arg2, f32 arg3)
 {
     f32 temp_f31;
     f32 var_f29;

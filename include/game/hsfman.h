@@ -6,7 +6,6 @@
 #include "game/hsfformat.h"
 #include "game/memory.h"
 
-
 #define HU3D_MODEL_MAX 512
 #define HU3D_MOTION_MAX 256
 #define HU3D_TEXANIM_MAX 256
@@ -109,7 +108,7 @@ struct model_data {
     u32 unk_4C;
     u32 attr;
     u32 motion_attr;
-    Point3d unk_58;
+    Vec unk_58;
     float unk_64;
     float unk_68;
     float unk_6C;
@@ -164,8 +163,8 @@ typedef struct ThreeDProjectionStruct {
     char unk_01[0x3];
     void *unk_04;
     Vec unk_08;
-    Point3d unk_14;
-    Point3d unk_20;
+    Vec unk_14;
+    Vec unk_20;
     Vec unk_2C;
     Mtx unk_38;
     Mtx unk_68;
@@ -271,12 +270,12 @@ void Hu3DLLightKill(s16, s16);
 void Hu3DLightAllKill(void);
 void Hu3DGLightColorSet(s16, u8, u8, u8, u8);
 void Hu3DLLightColorSet(s16, s16, u8, u8, u8, u8);
-void Hu3DGLightPosSetV(s16, Vec *, Point3d *);
-void Hu3DLLightPosSetV(s16, s16, Vec *, Point3d *);
+void Hu3DGLightPosSetV(s16, Vec *, Vec *);
+void Hu3DLLightPosSetV(s16, s16, Vec *, Vec *);
 void Hu3DGLightPosSet(s16, float, float, float, float, float, float);
 void Hu3DLLightPosSet(s16, s16, float, float, float, float, float, float);
-void Hu3DGLightPosAimSetV(s16, Point3d *, Point3d *);
-void Hu3DLLightPosAimSetV(s16, s16, Point3d *, Point3d *);
+void Hu3DGLightPosAimSetV(s16, Vec *, Vec *);
+void Hu3DLLightPosAimSetV(s16, s16, Vec *, Vec *);
 void Hu3DGLightPosAimSet(s16, float, float, float, float, float, float);
 void Hu3DLLightPosAimSet(s16, s16, float, float, float, float, float, float);
 void Hu3DGLightStaticSet(s16, s32);

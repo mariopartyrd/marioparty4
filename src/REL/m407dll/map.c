@@ -34,10 +34,10 @@ s32 lbl_1_data_198[] = {
 
 Vec lbl_1_data_1CC[] = { { 600.0f, 3.0f, -300.0f }, { 200.0f, 3.0f, -300.0f }, { -200.0f, 3.0f, -300.0f }, { -600.0f, 3.0f, -300.0f } };
 
-Point3d lbl_1_data_1FC = { 2000.0f, 3000.0f, 2000.0f };
-Point3d lbl_1_data_208 = { -0.5f, -0.5f, -0.5f };
+Vec lbl_1_data_1FC = { 2000.0f, 3000.0f, 2000.0f };
+Vec lbl_1_data_208 = { -0.5f, -0.5f, -0.5f };
 GXColor lbl_1_data_214 = { 255, 255, 255, 255 };
-Point3d lbl_1_data_218 = { 0.0f, 1.0f, 0.0f };
+Vec lbl_1_data_218 = { 0.0f, 1.0f, 0.0f };
 
 void fn_1_14F0(Process *arg0, s32 arg1)
 {
@@ -117,7 +117,7 @@ void fn_1_162C(omObjData *arg0)
 
 void fn_1_1A8C(omObjData *arg0)
 {
-    Point3d sp8;
+    Vec sp8;
 
     sp8.x = lbl_1_data_1FC.x;
     sp8.y = lbl_1_data_1FC.y;
