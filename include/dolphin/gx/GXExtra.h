@@ -19,7 +19,7 @@ typedef struct {
 
 typedef enum {
   GX_TF_R8_PC = 0x60,
-  GX_TF_RGBA8_PC = 0x61,
+  GX_TF_RGBA8_PC = 0x61
 } GXPCTexFmt;
 
 void GXDestroyTexObj(GXTexObj* obj);

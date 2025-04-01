@@ -5,7 +5,7 @@
 
 typedef enum {
     DMTF_POINTSAMPLE,
-    DMTF_BILERP,
+    DMTF_BILERP
 } DMTexFlt;
 
 typedef enum { DM_FT_OPQ, DM_FT_RVS, DM_FT_XLU } DMFontType;

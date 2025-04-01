@@ -28,13 +28,13 @@ enum __file_kinds {
 	__disk_file,
 	__console_file,
 	__string_file,
-	__unavailable_file,
+	__unavailable_file
 };
 
 enum __file_orientation {
 	/* 0x0 */ UNORIENTED,
 	/* 0x1 */ CHAR_ORIENTED,
-	/* 0x2 */ WIDE_ORIENTED,
+	/* 0x2 */ WIDE_ORIENTED
 };
 
 typedef struct _file_modes {
@@ -50,20 +50,20 @@ enum __io_modes {
 	__read       = 1,
 	__write      = 2,
 	__read_write = 3,
-	__append     = 4,
+	__append     = 4
 };
 
 enum __io_states {
 	__neutral,
 	__writing,
 	__reading,
-	__rereading,
+	__rereading
 };
 
 enum __io_results {
 	__no_io_error,
 	__io_error,
-	__io_EOF,
+	__io_EOF
 };
 
 typedef struct _file_states {

@@ -89,7 +89,7 @@ typedef enum _GXTlutSize
     GX_TLUT_2K = 128,
     GX_TLUT_4K = 256,
     GX_TLUT_8K = 512,
-    GX_TLUT_16K = 1024,
+    GX_TLUT_16K = 1024
 } GXTlutSize;
 
 typedef struct _GXVtxAttrFmtList {

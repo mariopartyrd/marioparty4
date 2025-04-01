@@ -12,7 +12,7 @@ extern "C" {
 typedef enum {
 	HARDWARE_AMC_DDH = 0,
 	HARDWARE_GDEV    = 1,
-	HARDWARE_BBA     = 2,
+	HARDWARE_BBA     = 2
 } HardwareType;
 
 // DS Error returns.
@@ -37,7 +37,7 @@ enum {
 	DS_InvalidThreadID  = 0x705,
 	DS_OSError          = 0x706,
 
-	DS_Error800 = 0x800,
+	DS_Error800 = 0x800
 };
 
 typedef int DSError;
@@ -46,14 +46,14 @@ typedef int DSError;
 typedef enum {
 	DS_Stdin  = 0,
 	DS_Stdout = 1,
-	DS_Stderr = 2,
+	DS_Stderr = 2
 } DSFileHandle;
 
 // IO returns.
 typedef enum {
 	DS_IONoError = 0,
 	DS_IOError   = 1,
-	DS_IOEOF     = 2,
+	DS_IOEOF     = 2
 } DSIOResult;
 
 // Message command IDs
@@ -86,7 +86,7 @@ typedef enum {
 	DSMSG_CloseFile    = 0xD3,
 	DSMSG_PositionFile = 0xD4,
 
-	DSMSG_ReplyNAK = 0xFF,
+	DSMSG_ReplyNAK = 0xFF
 } MessageCommandID;
 
 // Register commands.
@@ -94,7 +94,7 @@ typedef enum {
 	DSREG_Default   = 0,
 	DSREG_FP        = 1,
 	DSREG_Extended1 = 2,
-	DSREG_Extended2 = 3,
+	DSREG_Extended2 = 3
 } DSMessageRegisterOptions;
 
 // Step commands.
@@ -102,7 +102,7 @@ typedef enum {
 	DSSTEP_IntoCount = 0x0,
 	DSSTEP_IntoRange = 0x1,
 	DSSTEP_OverCount = 0x10,
-	DSSTEP_OverRange = 0x11,
+	DSSTEP_OverRange = 0x11
 } DSMessageStepOptions;
 
 typedef enum {
@@ -128,14 +128,14 @@ typedef enum {
 	DSREPLY_OSError            = 0x20,
 	DSREPLY_InvalidProcessID   = 0x21,
 	DSREPLY_InvalidThreadID    = 0x22,
-	DSREPLY_DebugSecurityError = 0x23,
+	DSREPLY_DebugSecurityError = 0x23
 } DSReplyError;
 
 typedef enum {
 	DSRECV_Wait          = 0,
 	DSRECV_Found         = 1,
 	DSRECV_InFrame       = 2,
-	DSRECV_FrameOverflow = 3,
+	DSRECV_FrameOverflow = 3
 } ReceiverState;
 
 typedef enum {
@@ -154,17 +154,17 @@ typedef enum {
 	NUBEVENT_Request    = 2,
 	NUBEVENT_Breakpoint = 3,
 	NUBEVENT_Exception  = 4,
-	NUBEVENT_Support    = 5,
+	NUBEVENT_Support    = 5
 } NubEventType;
 
 typedef enum {
 	VALIDMEM_Readable  = 0,
-	VALIDMEM_Writeable = 1,
+	VALIDMEM_Writeable = 1
 } ValidMemoryOptions;
 
 typedef enum {
 	MEMACCESS_UserMemory     = 0,
-	MEMACCESS_DebuggerMemory = 1,
+	MEMACCESS_DebuggerMemory = 1
 } MemoryAccessOptions;
 
 typedef int UARTError;
@@ -174,7 +174,7 @@ typedef enum {
 	UART_UnknownBaudRate    = 1,
 	UART_ConfigurationError = 2,
 	UART_BufferOverflow     = 3, // specified buffer was too small
-	UART_NoData             = 4, // no data available from polling
+	UART_NoData             = 4 // no data available from polling
 } UARTErrorOptions;
 
 typedef enum {

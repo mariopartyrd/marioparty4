@@ -7,7 +7,7 @@ typedef enum {
   GX_WARN_NONE,
   GX_WARN_SEVERE,
   GX_WARN_MEDIUM,
-  GX_WARN_ALL,
+  GX_WARN_ALL
 } GXWarningLevel;
 
 #ifdef _DEBUG
