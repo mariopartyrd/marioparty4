@@ -23,6 +23,10 @@
 
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
+
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
 
