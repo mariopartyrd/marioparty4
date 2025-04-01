@@ -27,10 +27,10 @@ void fn_1_15D8(void);
 
 void fn_1_1B1C(Process *arg0);
 void fn_1_1CA8(void);
-void fn_1_1CAC(f32, f32, f32);
-void fn_1_1CD4(f32* arg0, f32* arg1, f32* arg2);
+void fn_1_1CAC(float, float, float);
+void fn_1_1CD4(float *arg0, float *arg1, float *arg2);
 s32 fn_1_1D88(void);
-void fn_1_1DB0(Point3d *arg0, Point3d *arg1, f32 *arg2, s32 arg3, s32 arg4);
+void fn_1_1DB0(Point3d *arg0, Point3d *arg1, float *arg2, s32 arg3, s32 arg4);
 
 void fn_1_2354(Process *arg0);
 void fn_1_2564(void);
@@ -47,7 +47,7 @@ void fn_1_3B68(void);
 void fn_1_41CC(Process *arg0);
 void fn_1_44F4(void);
 
-void fn_1_4980(Process* arg0);
+void fn_1_4980(Process *arg0);
 void fn_1_4C6C(omObjData *obj);
 
 void fn_1_5C5C(Process *arg0, s16 arg1);

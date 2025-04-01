@@ -3,8 +3,9 @@
 
 #include "dolphin.h"
 
-#include "game/object.h"
 #include "game/hsfman.h"
+#include "game/object.h"
+
 
 // types
 typedef struct _unkStruct {
@@ -18,8 +19,8 @@ typedef struct _unkStruct {
     Vec unk10;
     HsfVector2f unk1C;
     Vec unk24;
-    f32 unk30;
-    f32 unk34;
+    float unk30;
+    float unk34;
 } unkStruct;
 
 typedef struct _unkStruct2 {
@@ -58,7 +59,7 @@ typedef struct _unkStruct3 {
     HsfVector2f unk4C;
     Vec unk54;
     Vec unk60;
-    f32 unk6C;
+    float unk6C;
     char unk70[0xC];
     Vec unk7C;
     s8 unk88;
@@ -68,7 +69,7 @@ typedef struct _unkStruct3 {
     u16 unk8C;
     u16 unk8E;
     HsfVector2f unk90;
-    f32 unk98;
+    float unk98;
     s32 unk9C;
     s32 unkA0;
     s32 unkA4;
@@ -83,38 +84,38 @@ typedef struct _unkStruct4 {
 
 // prototypes
 void ObjectSetup(void);
-void* fn_1_6EC(f32, f32, f32, s32);
+void *fn_1_6EC(float, float, float, s32);
 void fn_1_73C(void);
 void fn_1_7BC(void);
-void fn_1_894(omObjData* object);
-void fn_1_898(omObjData* object);
+void fn_1_894(omObjData *object);
+void fn_1_898(omObjData *object);
 void fn_1_8BC(void);
-f32 fn_1_1D08(f32);
+float fn_1_1D08(float);
 void fn_1_1D88(void);
 void fn_1_1DBC(void);
 void fn_1_2014(void);
 void fn_1_2064(void);
 s32 fn_1_2708(void);
-f32 fn_1_27C4(s32, f32, f32);
+float fn_1_27C4(s32, float, float);
 void fn_1_2A1C(void);
 void fn_1_3950(void);
 s8 fn_1_4BE4(s32, s32);
-void fn_1_4C9C(Vec*, f32, f32);
+void fn_1_4C9C(Vec *, float, float);
 s8 fn_1_4E58(s32, s32);
 u8 fn_1_525C(s32, s32);
 u16 fn_1_531C(s32);
 u16 fn_1_5388(s32);
-s32 fn_1_53F4(unkStruct3*, f32, f32, f32);
-s32 fn_1_561C(unkStruct3*, s32*);
-void fn_1_5838(unkStruct3*);
-f32 fn_1_6594(f32, f32, f32);
-f32 fn_1_6698(f32, f32, unkStruct3*);
-void fn_1_6814(unkStruct3*);
+s32 fn_1_53F4(unkStruct3 *, float, float, float);
+s32 fn_1_561C(unkStruct3 *, s32 *);
+void fn_1_5838(unkStruct3 *);
+float fn_1_6594(float, float, float);
+float fn_1_6698(float, float, unkStruct3 *);
+void fn_1_6814(unkStruct3 *);
 void fn_1_7C60(void);
-void fn_1_A01C(ModelData* model, ParticleData* particle, Mtx matrix);
-void fn_1_A618(ModelData* model, ParticleData* particle, Mtx matrix);
+void fn_1_A01C(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_A618(ModelData *model, ParticleData *particle, Mtx matrix);
 //...
-void fn_1_AA88(ModelData* model, ParticleData* particle, Mtx matrix); // *
+void fn_1_AA88(ModelData *model, ParticleData *particle, Mtx matrix); // *
 void fn_1_B160(void); // *
 void fn_1_B1C0(void); // *
 

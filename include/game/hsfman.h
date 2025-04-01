@@ -1,10 +1,11 @@
 #ifndef _GAME_HSFMAN_H
 #define _GAME_HSFMAN_H
 
+#include "game/data.h"
 #include "game/hsfanim.h"
 #include "game/hsfformat.h"
 #include "game/memory.h"
-#include "game/data.h"
+
 
 #define HU3D_MODEL_MAX 512
 #define HU3D_MOTION_MAX 256
@@ -109,24 +110,24 @@ struct model_data {
     u32 attr;
     u32 motion_attr;
     Point3d unk_58;
-    f32 unk_64;
-    f32 unk_68;
-    f32 unk_6C;
-    f32 unk_70;
-    f32 unk_74;
-    f32 unk_78;
-    f32 unk_7C;
-    f32 unk_80;
-    f32 unk_84;
-    f32 unk_88;
-    f32 unk_8C;
-    f32 unk_90;
-    f32 unk_94;
-    f32 unk_98;
-    f32 unk_9C;
-    f32 unk_A0;
-    f32 unk_A4[4];
-    f32 unk_B4[4];
+    float unk_64;
+    float unk_68;
+    float unk_6C;
+    float unk_70;
+    float unk_74;
+    float unk_78;
+    float unk_7C;
+    float unk_80;
+    float unk_84;
+    float unk_88;
+    float unk_8C;
+    float unk_90;
+    float unk_94;
+    float unk_98;
+    float unk_9C;
+    float unk_A0;
+    float unk_A4[4];
+    float unk_B4[4];
     union {
         HsfData *hsfData;
         ModelHookFunc hook;
@@ -139,11 +140,11 @@ struct model_data {
     void *unk_120;
 }; // sizeof 0x124
 typedef struct camera_data {
-    f32 fov;
-    f32 near;
-    f32 far;
-    f32 aspect;
-    f32 aspect_dupe;
+    float fov;
+    float near;
+    float far;
+    float aspect;
+    float aspect_dupe;
     Vec pos;
     Vec up;
     Vec target;
@@ -151,12 +152,12 @@ typedef struct camera_data {
     s16 scissor_y;
     s16 scissor_w;
     s16 scissor_h;
-    f32 viewport_x;
-    f32 viewport_y;
-    f32 viewport_w;
-    f32 viewport_h;
-    f32 near_z;
-    f32 far_z;
+    float viewport_x;
+    float viewport_y;
+    float viewport_w;
+    float viewport_h;
+    float near_z;
+    float far_z;
 } CameraData; // sizeof 0x58
 typedef struct ThreeDProjectionStruct {
     u8 unk_00;
@@ -173,7 +174,7 @@ typedef struct shadow_data {
     u8 unk_00;
     u8 unk_01;
     u16 unk_02;
-    void* unk_04;
+    void *unk_04;
     Vec unk_08;
     Vec unk_14;
     Vec unk_20;
@@ -184,8 +185,8 @@ typedef struct shadow_data {
 typedef struct light_data {
     s16 unk_00;
     s16 unk_02;
-    f32 unk_04;
-    f32 unk_08;
+    float unk_04;
+    float unk_08;
     char unk_0C[0x10];
     Vec unk_1C;
     Vec unk_28;
@@ -193,8 +194,8 @@ typedef struct light_data {
     GXColor color;
 } LightData;
 
-extern void GXWaitDrawDone();                                 /* extern */
-extern void GXInitSpecularDir(GXLightObj*, f32, f32, f32);
+extern void GXWaitDrawDone(); /* extern */
+extern void GXInitSpecularDir(GXLightObj *, float, float, float);
 
 void Hu3DInit(void);
 void Hu3DPreProc(void);
@@ -209,11 +210,11 @@ s16 Hu3DModelLink(s16);
 s16 Hu3DHookFuncCreate(ModelHookFunc);
 void Hu3DModelKill(s16);
 void Hu3DModelAllKill(void);
-void Hu3DModelPosSet(s16, f32, f32, f32);
+void Hu3DModelPosSet(s16, float, float, float);
 void Hu3DModelPosSetV(s16, Vec *);
-void Hu3DModelRotSet(s16, f32, f32, f32);
+void Hu3DModelRotSet(s16, float, float, float);
 void Hu3DModelRotSetV(s16, Vec *);
-void Hu3DModelScaleSet(s16, f32, f32, f32);
+void Hu3DModelScaleSet(s16, float, float, float);
 void Hu3DModelScaleSetV(s16, Vec *);
 void Hu3DModelAttrSet(s16, u32);
 void Hu3DModelAttrReset(s16, u32);
@@ -223,16 +224,16 @@ void Hu3DModelClusterAttrSet(s16, s16, s32);
 void Hu3DModelClusterAttrReset(s16, s16, s32);
 void Hu3DModelCameraSet(s16, u16);
 void Hu3DModelLayerSet(s16, s16);
-HsfObject* Hu3DModelObjPtrGet(s16, char *);
-void Hu3DModelTPLvlSet(s16, f32);
-void Hu3DModelHiliteMapSet(s16, AnimData*);
+HsfObject *Hu3DModelObjPtrGet(s16, char *);
+void Hu3DModelTPLvlSet(s16, float);
+void Hu3DModelHiliteMapSet(s16, AnimData *);
 void Hu3DModelShadowSet(s16);
 void Hu3DModelShadowReset(s16);
 void Hu3DModelShadowDispOn(s16);
 void Hu3DModelShadowDispOff(s16);
 void Hu3DModelShadowMapSet(s16);
 void Hu3DModelShadowMapObjSet(s16, char *);
-void Hu3DModelAmbSet(s16, f32, f32, f32);
+void Hu3DModelAmbSet(s16, float, float, float);
 void Hu3DModelHookSet(s16, char *, s16);
 void Hu3DModelHookReset(s16);
 void Hu3DModelHookObjReset(s16, char *);
@@ -241,10 +242,10 @@ void Hu3DModelProjectionReset(s16, s16);
 void Hu3DModelHiliteTypeSet(s16, s16);
 void Hu3DModelReflectTypeSet(s16, s16);
 void Hu3DCameraCreate(s32);
-void Hu3DCameraPerspectiveSet(s32, f32, f32, f32, f32);
-void Hu3DCameraViewportSet(s32, f32, f32, f32, f32, f32, f32);
+void Hu3DCameraPerspectiveSet(s32, float, float, float, float);
+void Hu3DCameraViewportSet(s32, float, float, float, float, float, float);
 void Hu3DCameraScissorSet(s32, u32, u32, u32, u32);
-void Hu3DCameraPosSet(s32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
+void Hu3DCameraPosSet(s32, float, float, float, float, float, float, float, float, float);
 void Hu3DCameraPosSetV(s32 cam, Vec *pos, Vec *up, Vec *target);
 void Hu3DCameraKill(s32);
 void Hu3DCameraAllKill(void);
@@ -255,47 +256,47 @@ void Hu3DCameraMotionOn(s16, s8);
 void Hu3DCameraMotionStart(s16, u16);
 void Hu3DCameraMotionOff(s16);
 void Hu3DLighInit(void);
-s16 Hu3DGLightCreate(f32, f32, f32, f32, f32, f32, u8, u8, u8);
-s16 Hu3DGLightCreateV(Vec*, Vec*, GXColor*);
-s16 Hu3DLLightCreate(s16, f32, f32, f32, f32, f32, f32, u8, u8, u8);
-s16 Hu3DLLightCreateV(s16, Vec*, Vec*, GXColor*);
-void Hu3DGLightSpotSet(s16, f32, u16);
-void Hu3DLLightSpotSet(s16, s16, f32, u16);
+s16 Hu3DGLightCreate(float, float, float, float, float, float, u8, u8, u8);
+s16 Hu3DGLightCreateV(Vec *, Vec *, GXColor *);
+s16 Hu3DLLightCreate(s16, float, float, float, float, float, float, u8, u8, u8);
+s16 Hu3DLLightCreateV(s16, Vec *, Vec *, GXColor *);
+void Hu3DGLightSpotSet(s16, float, u16);
+void Hu3DLLightSpotSet(s16, s16, float, u16);
 void Hu3DGLightInfinitytSet(s16);
 void Hu3DLLightInfinitytSet(s16, s16);
-void Hu3DGLightPointSet(s16, f32, f32, u16);
-void Hu3DLLightPointSet(s16, s16, f32, f32, u16);
+void Hu3DGLightPointSet(s16, float, float, u16);
+void Hu3DLLightPointSet(s16, s16, float, float, u16);
 void Hu3DGLightKill(s16);
 void Hu3DLLightKill(s16, s16);
 void Hu3DLightAllKill(void);
 void Hu3DGLightColorSet(s16, u8, u8, u8, u8);
 void Hu3DLLightColorSet(s16, s16, u8, u8, u8, u8);
-void Hu3DGLightPosSetV(s16, Vec*, Point3d*);
-void Hu3DLLightPosSetV(s16, s16, Vec*, Point3d*);
-void Hu3DGLightPosSet(s16, f32, f32, f32, f32, f32, f32);
-void Hu3DLLightPosSet(s16, s16, f32, f32, f32, f32, f32, f32);
-void Hu3DGLightPosAimSetV(s16, Point3d*, Point3d*);
-void Hu3DLLightPosAimSetV(s16, s16, Point3d*, Point3d*);
-void Hu3DGLightPosAimSet(s16, f32, f32, f32, f32, f32, f32);
-void Hu3DLLightPosAimSet(s16, s16, f32, f32, f32, f32, f32, f32);
+void Hu3DGLightPosSetV(s16, Vec *, Point3d *);
+void Hu3DLLightPosSetV(s16, s16, Vec *, Point3d *);
+void Hu3DGLightPosSet(s16, float, float, float, float, float, float);
+void Hu3DLLightPosSet(s16, s16, float, float, float, float, float, float);
+void Hu3DGLightPosAimSetV(s16, Point3d *, Point3d *);
+void Hu3DLLightPosAimSetV(s16, s16, Point3d *, Point3d *);
+void Hu3DGLightPosAimSet(s16, float, float, float, float, float, float);
+void Hu3DLLightPosAimSet(s16, s16, float, float, float, float, float, float);
 void Hu3DGLightStaticSet(s16, s32);
 void Hu3DLLightStaticSet(s16, s16, s32);
 s32 Hu3DModelLightInfoSet(s16, s16);
-s16 Hu3DLightSet(ModelData*, Mtx*, Mtx*, f32);
-void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8);
+s16 Hu3DLightSet(ModelData *, Mtx *, Mtx *, float);
+void lightSet(LightData *arg0, s16 arg1, Mtx *arg2, Mtx *arg3, float arg8);
 void Hu3DReflectNoSet(s16 arg0);
-void Hu3DFogSet(f32, f32, u8, u8, u8);
+void Hu3DFogSet(float, float, u8, u8, u8);
 void Hu3DFogClear(void);
-void Hu3DShadowCreate(f32, f32, f32);
-void Hu3DShadowPosSet(Vec*, Vec*, Vec*);
-void Hu3DShadowTPLvlSet(f32);
+void Hu3DShadowCreate(float, float, float);
+void Hu3DShadowPosSet(Vec *, Vec *, Vec *);
+void Hu3DShadowTPLvlSet(float);
 void Hu3DShadowSizeSet(u16);
 void Hu3DShadowExec(void);
-s16 Hu3DProjectionCreate(void*, f32, f32, f32);
+s16 Hu3DProjectionCreate(void *, float, float, float);
 void Hu3DProjectionKill(s16);
-void Hu3DProjectionPosSet(s16, Vec*, Vec*, Vec*);
-void Hu3DProjectionTPLvlSet(s16, f32);
-void Hu3DMipMapSet(char*, s16, s32, f32);
+void Hu3DProjectionPosSet(s16, Vec *, Vec *, Vec *);
+void Hu3DProjectionTPLvlSet(s16, float);
+void Hu3DMipMapSet(char *, s16, s32, float);
 
 extern ModelData Hu3DData[0x200];
 extern CameraData Hu3DCamera[0x10];

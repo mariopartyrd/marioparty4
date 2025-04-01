@@ -22,14 +22,14 @@ typedef struct M438UnkSubStruct {
     s8 unk_00;
     s8 unk_01;
     char unk02[0x2];
-    f32 unk_04;
-    f32 unk_08;
-    f32 unk_0C;
-    f32 unk_10;
-    f32 unk_14;
-    f32 unk_18;
-    f32 unk_1C;
-    f32 unk_20;
+    float unk_04;
+    float unk_08;
+    float unk_0C;
+    float unk_10;
+    float unk_14;
+    float unk_18;
+    float unk_1C;
+    float unk_20;
     u8 unk_24;
     float unk_28;
     float unk_2C;
@@ -47,13 +47,13 @@ typedef struct M438UnkStruct {
     u8 unk_34;
     u32 unk_38;
     s16 unk_3C;
-    void* unk_40;
-    Vec* unk_44;
-    GXColor* unk_48;
-    Vec* unk_4C;
+    void *unk_40;
+    Vec *unk_44;
+    GXColor *unk_48;
+    Vec *unk_4C;
     GXColor unk_50;
     GXColor unk_54;
-    M438UnkSubStruct* unk_58;
+    M438UnkSubStruct *unk_58;
     u8 unk_5C;
     char unk5D[0x3];
     Vec unk_60;
@@ -90,17 +90,17 @@ typedef struct M438UnkStruct2 {
     Vec unk_0C;
     Vec unk_18;
     Vec unk_24;
-    void (*unk_30)(struct M438UnkStruct2*);
-    s16* unk_34;
+    void (*unk_30)(struct M438UnkStruct2 *);
+    s16 *unk_34;
     char unk_38[0x4];
     M438UnkStruct *unk_3C;
     char unk40[0x8];
     s16 unk_48;
-    void* unk_4C;
-    Vec* unk_50;
-    GXColor* unk_54;
-    Vec* unk_58;
-    M438UnkSubStruct* unk_5C;
+    void *unk_4C;
+    Vec *unk_50;
+    GXColor *unk_54;
+    Vec *unk_58;
+    M438UnkSubStruct *unk_5C;
     u8 unk_60;
     char unk61[0x3];
     Vec unk_64;
@@ -121,7 +121,7 @@ typedef struct M438UnkStruct2 {
 } M438UnkStruct2; /* size = 0xBC */
 
 typedef struct M438UnkStruct3 {
-    AnimData* unk_00;
+    AnimData *unk_00;
     s16 unk_04;
     s16 unk_06;
     u32 unk_08;
@@ -133,10 +133,10 @@ typedef struct M438UnkStruct3 {
     s16 unk_4E;
     s16 unk_50;
     char unk52[0x2];
-    f32 unk_54;
-    f32 unk_58;
-    f32 unk_5C;
-    f32 unk_60;
+    float unk_54;
+    float unk_58;
+    float unk_5C;
+    float unk_60;
 } M438UnkStruct3; /* size = 0x64 */
 
 typedef struct M438StructBssDE4 {
