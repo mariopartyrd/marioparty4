@@ -32,4 +32,8 @@ typedef struct vec2f {
 #define asind(x) (180.0*(asinf((x)) / M_PI))
 #define atan2d(y, x) (180.0*(atan2((y), (x)) / M_PI))
 
+#ifndef __MWERKS__
+void HuSetVecF(Vec* arg0, f32 arg8, f32 arg9, f32 argA)
+#endif
+
 #endif
