@@ -10,6 +10,10 @@
 #include "game/objsub.h"
 #include "game/wipe.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 typedef struct M427DllStruct2 {
     s32 unk0[3];
     s32 unkC;

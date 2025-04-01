@@ -19,6 +19,10 @@
 
 #include "REL/resultdll.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 #define COIN_EFFECT_MAX 180
 
 static StageModel resultBattleModel[] = { { DATA_MAKE_NUM(DATADIR_RESULT, 0x08), 0, 0, -1, -1, { -300, 0, 0 }, { 0, 0, 0 }, { 0.9f, 0.9f, 0.9f } },

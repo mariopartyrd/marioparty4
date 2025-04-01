@@ -1,5 +1,9 @@
 #include "REL/resultdll.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 s16 stageMdlId[32];
 s16 stageMotId[32];
 s16 stageSprId[33];

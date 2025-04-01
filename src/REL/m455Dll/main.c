@@ -17,6 +17,10 @@
 #include "ext_math.h"
 #include "math.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 typedef struct camera_view_params {
     float zoom;
     Vec pos;

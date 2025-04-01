@@ -18,6 +18,10 @@
 
 #include "REL/resultdll.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 static StageModel resultModel[] = { { DATA_MAKE_NUM(DATADIR_RESULT, 0x00), 1, 0, -1, -1, { 148, 132, 500 }, { 0, 0, 0 }, { 1, 1, 1 } },
     { DATA_MAKE_NUM(DATADIR_RESULT, 0x01), 1, 0, -1, -1, { 148, 217, 500 }, { 0, 0, 0 }, { 1, 1, 1 } },
     { DATA_MAKE_NUM(DATADIR_RESULT, 0x02), 1, 0, -1, -1, { 148, 302, 500 }, { 0, 0, 0 }, { 1, 1, 1 } },

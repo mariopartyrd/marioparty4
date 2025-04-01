@@ -18,6 +18,10 @@
 
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 typedef struct {
     /* 0x000 */ u8 unk00;
     /* 0x001 */ char unk01[3];

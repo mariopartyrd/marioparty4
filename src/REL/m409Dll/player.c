@@ -9,6 +9,10 @@
 #include "game/sprite.h"
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 // bss
 omObjData *lbl_1_bss_3A0[4];
 omObjData *lbl_1_bss_39C;

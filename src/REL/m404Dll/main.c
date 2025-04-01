@@ -14,6 +14,11 @@
 #include "string.h"
 #include "version.h"
 
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/esprite.h"
+#endif
+
 typedef struct UnkM404Struct {
     s16 unk_00;
     s16 unk_02[6];

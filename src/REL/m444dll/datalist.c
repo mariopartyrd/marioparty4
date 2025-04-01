@@ -1,5 +1,9 @@
 #include "REL/m444dll.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 s16 lbl_1_bss_199C2[90];
 s16 lbl_1_bss_1990E[90];
 s16 lbl_1_bss_1990A[2];

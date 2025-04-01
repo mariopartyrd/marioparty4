@@ -11,6 +11,10 @@
 
 #include "REL/m410Dll.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 omObjData *lbl_1_bss_74;
 AnimData *lbl_1_bss_70;
 s32 lbl_1_bss_60[4];
@@ -141,8 +145,6 @@ void fn_1_7E30(Process *objman)
 
 void fn_1_806C(void)
 {
-    s32 var_lr;
-
     HuSprAnimKill(lbl_1_bss_70);
     CharModelKill(-1);
 }
