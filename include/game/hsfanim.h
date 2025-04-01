@@ -26,7 +26,7 @@ typedef struct {
     /* 0x40 */ GXColor unk40;
 } HsfanimStruct01; // Size 0x44
 
-typedef struct particle_data {
+struct particle_data {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ Vec unk_04;
@@ -50,7 +50,7 @@ typedef struct particle_data {
     /* 0x4C */ Vec *unk_4C;
     /* 0x50 */ void *unk_50;
     /* 0x54 */ ParticleHook unk_54;
-} ParticleData; // Size 0x58
+}; // Size 0x58
 
 typedef struct {
     /* 0x00 */ s16 unk00;

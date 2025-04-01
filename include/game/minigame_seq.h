@@ -48,7 +48,7 @@ typedef struct seq_work SeqWork;
 typedef s32 (*SeqUpdateFunc)(SeqWork *work);
 typedef s32 (*SeqInitFunc)(SeqWork *work, va_list params);
 
-typedef struct seq_work {
+struct seq_work {
 	SeqUpdateFunc update;
 	char *data;
 	float x;
@@ -73,7 +73,7 @@ typedef struct seq_work {
 	u8 stat;
 	u8 unk_7C;
 	u8 unk_7D;
-} SeqWork;
+};
 
 void MGSeqInit(void);
 void MGSeqMain(void);

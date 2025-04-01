@@ -2,6 +2,7 @@
 #include "game/hsfmotion.h"
 #include "game/object.h"
 #include "game/process.h"
+#include "math.h"
 
 #include "REL/m407dll.h"
 

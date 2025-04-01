@@ -5,13 +5,11 @@
 #include "game/object.h"
 #include "game/process.h"
 
-#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
+#include "REL/m407dll.h"
 
 #define MAX_WHOMPS_PLAYER 160
 #define MAX_WHOMPS_ALL_PLAYERS MAX_WHOMPS_PLAYER *ARRAY_COUNT(GWPlayer)
 #define MAX_WHOMPS (MAX_WHOMPS_PLAYER + 1) * ARRAY_COUNT(GWPlayer)
-
-typedef void (*ObjFuncs)(omObjData *);
 
 typedef struct unkDominationData7 {
     /* 0x00 */ u32 unk_00;

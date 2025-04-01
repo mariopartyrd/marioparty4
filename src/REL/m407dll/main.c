@@ -1,13 +1,12 @@
 #include "game/object.h"
 #include "game/gamework_data.h"
+#include "game/gamework.h"
 #include "game/minigame_seq.h"
 #include "game/wipe.h"
 #include "game/audio.h"
 #include "game/hsfman.h"
 
-#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
-
-typedef void (*ObjFuncs)(void);
+#include "REL/m407dll.h"
 
 typedef struct unkDominationData5 {
 /* 0x00 */ u32 unk_00;
@@ -27,12 +26,6 @@ typedef struct unkDominationData5 {
 } unkDominationData5; //sizeof 0x48
 
 //function signatures
-void fn_1_388(u8, s32);
-void fn_1_3C4(u8);
-s32 fn_1_4C0(s32);
-s32 fn_1_508(u8);
-s32 fn_1_53C(u8);
-void fn_1_568(s16, s16, s16);
 void fn_1_4B7C(void);
 void fn_1_4C3C(s32);
 void fn_1_4C6C(omObjData*);
@@ -56,7 +49,7 @@ omObjData* lbl_1_bss_397C;
 s16 lbl_1_bss_3978;
 
 //data
-ObjFuncs lbl_1_data_2A8[] = {
+VoidFuncs lbl_1_data_2A8[] = {
     fn_1_4D0C,
     fn_1_4D54,
     fn_1_4E8C,

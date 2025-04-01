@@ -17,7 +17,7 @@
 #include "dolphin/types.h"
 
 
-typedef struct data_read_stat {
+struct data_read_stat {
     s32 dir_id;
     void *dir;
     void *file;
@@ -27,7 +27,7 @@ typedef struct data_read_stat {
     s32 num;
     u32 status;
     DVDFileInfo file_info;
-} DataReadStat;
+};
 
 void HuDataInit(void);
 s32 HuDataReadChk(s32 data_num);

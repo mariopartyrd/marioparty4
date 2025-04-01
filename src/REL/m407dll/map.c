@@ -3,7 +3,7 @@
 #include "game/object.h"
 #include "game/process.h"
 
-#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
+#include "REL/m407dll.h"
 
 // function signatures
 void fn_1_162C(omObjData *);

@@ -1,15 +1,16 @@
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
+#include "game/hsfmotion.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/process.h"
 #include "math.h"
 
-#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
-typedef void (*ObjFuncs)(omObjData *);
+#include "REL/m407dll.h"
 
 typedef struct unkDominationData {
     u8 unk_00;

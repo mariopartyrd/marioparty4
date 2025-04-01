@@ -3,9 +3,7 @@
 #include "game/process.h"
 #include "game/sprite.h"
 
-#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
-
-typedef void (*ObjFuncs)(void);
+#include "REL/m407dll.h"
 
 typedef struct unkDominationData6 {
     /* 0x00 */ s32 unk_00;
@@ -30,7 +28,7 @@ Process *lbl_1_bss_398C;
 omObjData *lbl_1_bss_3988;
 
 // data
-ObjFuncs lbl_1_data_360[] = { fn_1_61A0, fn_1_6218, fn_1_62A0 };
+VoidFuncs lbl_1_data_360[] = { fn_1_61A0, fn_1_6218, fn_1_62A0 };
 
 void fn_1_5C5C(Process *arg0, s16 arg1)
 {

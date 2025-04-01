@@ -79,11 +79,12 @@
 
 #define Hu3DModelCreateFile(data_id) (Hu3DModelCreate(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
 
+typedef struct model_data ModelData;
 typedef struct particle_data ParticleData;
 
 typedef void (*ModelHookFunc)(struct model_data *, Mtx);
 
-typedef struct model_data {
+struct model_data {
     u8 unk_00;
     u8 unk_01;
     u8 unk_02;
@@ -136,7 +137,7 @@ typedef struct model_data {
     Vec scale;
     Mtx unk_F0;
     void *unk_120;
-} ModelData; // sizeof 0x124
+}; // sizeof 0x124
 typedef struct camera_data {
     f32 fov;
     f32 near;
