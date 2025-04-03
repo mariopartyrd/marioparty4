@@ -1,4 +1,5 @@
 #include "game/hsfanim.h"
+#include "dolphin/gx/GXStruct.h"
 #include "game/hsfdraw.h"
 #include "game/init.h"
 #include "game/memory.h"
@@ -824,13 +825,13 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
-        GXSetArray(GX_VA_POS, temp_r31->unk_4C, 0xC);
+        GXSETARRAY(GX_VA_POS, temp_r31->unk_4C, temp_r31->unk_30 * 4, 0xC);
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, &temp_r31->unk_48->unk40, 0x44);
+        GXSETARRAY(GX_VA_CLR0, &temp_r31->unk_48->unk40, temp_r31->unk_30, 0x44);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
-        GXSetArray(GX_VA_TEX0, baseST, 8);
+        GXSETARRAY(GX_VA_TEX0, baseST, sizeof(baseST), 8);
         GXCallDisplayList(temp_r31->unk_50, temp_r31->unk_40);
     }
     if (shadowModelDrawF == 0) {
