@@ -28,10 +28,10 @@ u32 HuMemHeapSizeGet(HeapID heap);
 void *HuMemHeapPtrGet(HeapID heap);
 
 void *HuMemHeapInit(void *ptr, s32 size);
-void *HuMemMemoryAlloc(void *heap_ptr, s32 size, size_t retaddr);
-void *HuMemMemoryAllocNum(void *heap_ptr, s32 size, u32 num, size_t retaddr);
-void HuMemMemoryFree(void *ptr, size_t retaddr);
-void HuMemMemoryFreeNum(void *heap_ptr, u32 num, size_t retaddr);
+void *HuMemMemoryAlloc(void *heap_ptr, s32 size, uintptr_t retaddr);
+void *HuMemMemoryAllocNum(void *heap_ptr, s32 size, u32 num, uintptr_t retaddr);
+void HuMemMemoryFree(void *ptr, uintptr_t retaddr);
+void HuMemMemoryFreeNum(void *heap_ptr, u32 num, uintptr_t retaddr);
 s32 HuMemUsedMemorySizeGet(void *heap_ptr);
 s32 HuMemUsedMemoryBlockGet(void *heap_ptr);
 s32 HuMemMemorySizeGet(void *ptr);
