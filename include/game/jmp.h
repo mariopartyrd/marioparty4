@@ -76,7 +76,7 @@ typedef struct _JUMP_BUFFER {
     uint32_t Fpscr;
     uint32_t long D[8]; // D8-D15 VFP/NEON regs
 } _JUMP_BUFFER;
-#elif defined(_M_ARM64) || defined(__arch64__)
+#elif defined(_M_ARM64) || defined(__aarch64__)
 typedef struct _JUMP_BUFFER {
     uint64_t Frame;
     uint64_t Reserved;
@@ -139,7 +139,7 @@ typedef struct _JUMP_BUFFER {
 #elif defined(_M_ARM) || defined(__arm__)
 #define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Pc = (size_t)func
 #define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (size_t)sp
-#elif defined(_M_ARM64) || defined(__arch64__)
+#elif defined(_M_ARM64) || defined(__aarch64__)
 #define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Lr = (size_t)func
 #define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (size_t)sp
 #elif defined(__riscv)

@@ -13,10 +13,10 @@ struct memory_block {
     struct memory_block *prev;
     struct memory_block *next;
     u32 num;
-    u32 retaddr;
+    size_t retaddr;
 };
 
-static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, u32 num, u32 retaddr);
+static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, u32 num, size_t retaddr);
 
 void *HuMemHeapInit(void *ptr, s32 size)
 {
