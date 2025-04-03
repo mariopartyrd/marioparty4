@@ -1,6 +1,6 @@
 #include "game/jmp.h"
 
-s32 gcsetjmp(register JMPBUF *jump)
+s32 gcsetjmp(register jmp_buf *jump)
 {
     // clang-format off
     asm {
@@ -37,7 +37,7 @@ s32 gcsetjmp(register JMPBUF *jump)
 }
 
 // clang-format off
-asm s32 gclongjmp(register JMPBUF *jump, register s32 status) {
+asm s32 gclongjmp(register jmp_buf *jump, register s32 status) {
     nofralloc
     lwz r5, jump->lr
     lwz r6, jump->cr

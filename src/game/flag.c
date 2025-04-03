@@ -1,5 +1,8 @@
-#include "dolphin.h"
 #include "game/gamework_data.h"
+
+#ifdef TARGET_PC
+#include "string.h"
+#endif
 
 static u8 _Sys_Flag[16];
 

@@ -23,11 +23,14 @@ set(DOLPHIN_FILES
 set(GAME_FILES
     src/game/card.c
     src/game/fault.c
+    src/game/flag.c
     src/game/frand.c
+    src/game/gamework.c
     src/game/main.c
     src/game/malloc.c
     src/game/memory.c
     src/game/init.c
+    src/game/pad.c
     src/game/process.c
 )
 

@@ -205,16 +205,16 @@ void main(void)
 #endif
 }
 
-// void HuSysVWaitSet(s16 vcount)
-//{
-//     minimumVcount = vcount;
-//     minimumVcountf = vcount;
-// }
-//
-// s16 HuSysVWaitGet(s16 param)
-//{
-//     return (s16) minimumVcount;
-// }
+void HuSysVWaitSet(s16 vcount)
+{
+    minimumVcount = vcount;
+    minimumVcountf = vcount;
+}
+
+s16 HuSysVWaitGet(s16 param)
+{
+    return (s16) minimumVcount;
+}
 
 s32 rnd_seed = 0x0000D9ED;
 

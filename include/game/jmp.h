@@ -164,10 +164,10 @@ s32 gcsetjmp(jmp_buf *jump);
 s32 gclongjmp(jmp_buf *jump, s32 status);
 
 #define SETJMP(jump) gcsetjmp(&(jump))
-#define SETJMP(jump, status) gclongjump(&(jump), (status))
+#define LONGJMP(jump, status) gclongjmp(&(jump), (status))
 
-#define SETJMP_SET_IP(jump, func) jmp_buf->lr = (u32)func
-#define SETJMP_SET_IP(jump, sp) jmp_buf->sp = (u32)sp
+#define SETJMP_SET_IP(jump, func) jump.lr = (u32)func
+#define SETJMP_SET_SP(jump, stack_ptr) jump.sp = (u32)stack_ptr
 #endif
 
 #endif

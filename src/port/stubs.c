@@ -518,6 +518,24 @@ OSInterruptMask __OSUnmaskInterrupts(OSInterruptMask mask)
     return 0;
 }
 
+void SISetSamplingRate(u32 msec)
+{
+    // Maybe we could include SI later
+    puts("SISetSamplingRate is a stub");
+}
+
+VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
+{
+    puts("VISetPostRetraceCallback is a stub");
+    // TODO
+    return callback;
+}
+
+void msmSysRegularProc(void)
+{
+    puts("msmSysRegularProc is a stub");
+}
+
 // Hudson
 void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }
 void HuAudInit() { }

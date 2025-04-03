@@ -84,7 +84,7 @@ Process *HuPrcCreate(void (*func)(void), u16 prio, u32 stack_size, s32 extra_siz
     process->stat = 0;
     process->prio = prio;
     process->sleep_time = 0;
-    process->base_sp = ((size_t)HuMemMemoryAlloc(heap, stack_size, FAKE_RETADDR)) + stack_size - 8;
+    process->base_sp = ((uintptr_t)HuMemMemoryAlloc(heap, stack_size, FAKE_RETADDR)) + stack_size - 8;
     SETJMP(process->jump);
     SETJMP_SET_IP(process->jump, func);
     SETJMP_SET_SP(process->jump, process->base_sp);
@@ -191,7 +191,7 @@ static void gcTerminateProcess(Process *process)
     }
     UnlinkProcess(&processtop, process);
     processcnt--;
-    longjmp(processjmpbuf, 2);
+    LONGJMP(processjmpbuf, 2);
 }
 
 void HuPrcEnd()
@@ -240,7 +240,7 @@ void HuPrcCall(s32 tick)
     Process *process;
     s32 ret;
     processcur = processtop;
-    ret = setjmp(processjmpbuf);
+    ret = SETJMP(processjmpbuf);
     while (1) {
         switch (ret) {
             case 2:
