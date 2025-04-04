@@ -3,15 +3,6 @@
 #include "game/data.h"
 #include "game/disp.h"
 
-#include "game/flag.h"
-#include "game/gamework.h"
-#include "game/gamework_data.h"
-#include "game/hsfanim.h"
-#include "game/hsfman.h"
-#include "game/msm.h"
-#include "game/objsub.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "game/board/audio.h"
 #include "game/board/com.h"
 #include "game/board/main.h"
@@ -21,6 +12,16 @@
 #include "game/board/tutorial.h"
 #include "game/board/ui.h"
 #include "game/board/window.h"
+#include "game/flag.h"
+#include "game/gamework.h"
+#include "game/gamework_data.h"
+#include "game/hsfanim.h"
+#include "game/hsfman.h"
+#include "game/msm.h"
+#include "game/objsub.h"
+#include "game/window.h"
+#include "game/wipe.h"
+
 
 #include "ext_math.h"
 
@@ -74,77 +75,28 @@ static Process *starProc;
 static s16 starParman = -1;
 static s16 hostMdl = -1;
 
-static const s32 starMesTbl1[9] = {
-    MAKE_MESSID(12, 0),
-    MAKE_MESSID(12, 9),
-    MAKE_MESSID(12, 18),
-    MAKE_MESSID(12, 27),
-    MAKE_MESSID(12, 36),
-    MAKE_MESSID(12, 45),
-    MAKE_MESSID(12, 0),
-    MAKE_MESSID(12, 0),
-    MAKE_MESSID(12, 0)
-};
+static const s32 starMesTbl1[9] = { MAKE_MESSID(12, 0), MAKE_MESSID(12, 9), MAKE_MESSID(12, 18), MAKE_MESSID(12, 27), MAKE_MESSID(12, 36),
+    MAKE_MESSID(12, 45), MAKE_MESSID(12, 0), MAKE_MESSID(12, 0), MAKE_MESSID(12, 0) };
 
-static const s32 starMesTbl2[9][2] = {
-    { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
-    { MAKE_MESSID(21, 35), MAKE_MESSID(21, 41) },
-    { MAKE_MESSID(21, 36), MAKE_MESSID(21, 42) },
-    { MAKE_MESSID(21, 37), MAKE_MESSID(21, 43) },
-    { MAKE_MESSID(21, 38), MAKE_MESSID(21, 44) },
-    { MAKE_MESSID(21, 39), MAKE_MESSID(21, 45) },
-    { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
-    { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
-    { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) }
-};
+static const s32 starMesTbl2[9][2]
+    = { { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) }, { MAKE_MESSID(21, 35), MAKE_MESSID(21, 41) }, { MAKE_MESSID(21, 36), MAKE_MESSID(21, 42) },
+          { MAKE_MESSID(21, 37), MAKE_MESSID(21, 43) }, { MAKE_MESSID(21, 38), MAKE_MESSID(21, 44) }, { MAKE_MESSID(21, 39), MAKE_MESSID(21, 45) },
+          { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) }, { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) }, { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) } };
 
-s32 boardStarSndTbl[] = {
-    0x00000120,
-    0x00000160,
-    0x000001A0,
-    0x000001E0,
-    0x00000220,
-    0x00000260,
-    0x000002A0,
-    0x000002E0
-};
+s32 boardStarSndTbl[] = { 0x00000120, 0x00000160, 0x000001A0, 0x000001E0, 0x00000220, 0x00000260, 0x000002A0, 0x000002E0 };
 
-static s32 hostMotTbl[9][2] = {
-    { DATA_MAKE_NUM(DATADIR_W01, 33), DATA_MAKE_NUM(DATADIR_BOARD, 157) },
-    { DATA_MAKE_NUM(DATADIR_W02, 7), DATA_MAKE_NUM(DATADIR_BOARD, 158) },
-    { DATA_MAKE_NUM(DATADIR_W03, 31), DATA_MAKE_NUM(DATADIR_BOARD, 159) },
-    { DATA_MAKE_NUM(DATADIR_W04, 11), DATA_MAKE_NUM(DATADIR_BOARD, 160) },
-    { DATA_MAKE_NUM(DATADIR_W05, 9), DATA_MAKE_NUM(DATADIR_BOARD, 161) },
-    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) }
-};
+static s32 hostMotTbl[9][2] = { { DATA_MAKE_NUM(DATADIR_W01, 33), DATA_MAKE_NUM(DATADIR_BOARD, 157) },
+    { DATA_MAKE_NUM(DATADIR_W02, 7), DATA_MAKE_NUM(DATADIR_BOARD, 158) }, { DATA_MAKE_NUM(DATADIR_W03, 31), DATA_MAKE_NUM(DATADIR_BOARD, 159) },
+    { DATA_MAKE_NUM(DATADIR_W04, 11), DATA_MAKE_NUM(DATADIR_BOARD, 160) }, { DATA_MAKE_NUM(DATADIR_W05, 9), DATA_MAKE_NUM(DATADIR_BOARD, 161) },
+    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) } };
 
-static HsfanimStruct00 starEffParam = {
-    0x001E,
-    { 0x00, 0x00 }, // padding?
-    3.3f,
-    70.0f,
-    7.0f,
-    { 0.0f, -0.05f, 0.0f },
-    2.0f,
-    1.0f,
-    20.0f,
-    0.98f,
-    0x0002,
-    {
-        0xFF, 0xFF, 0xFF, 0xFF,
-        0xFF, 0xFF, 0x40, 0xFF,
-        0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00
-    },
-    {
-        0xFF, 0x80, 0x80, 0x00,
-        0xFF, 0x40, 0x20, 0x00,
-        0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00
-    }
-};
+static HsfanimStruct00 starEffParam = { 0x001E, { 0x00, 0x00 }, // padding?
+    3.3f, 70.0f, 7.0f, { 0.0f, -0.05f, 0.0f }, 2.0f, 1.0f, 20.0f, 0.98f, 0x0002,
+    { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x40, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
+    { 0xFF, 0x80, 0x80, 0x00, 0xFF, 0x40, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } };
 
-void BoardStarHostSet(s16 arg0) {
+void BoardStarHostSet(s16 arg0)
+{
     hostMdl = arg0;
     if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
         return;
@@ -154,11 +106,13 @@ void BoardStarHostSet(s16 arg0) {
     }
 }
 
-s16 BoardStarHostMdlGet(void) {
+s16 BoardStarHostMdlGet(void)
+{
     return hostMdl;
 }
 
-void BoardStarExec(s32 arg0, s32 arg1) {
+void BoardStarExec(s32 arg0, s32 arg1)
+{
     if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
         return;
     }
@@ -173,7 +127,8 @@ void BoardStarExec(s32 arg0, s32 arg1) {
     }
 }
 
-static void ExecStar(void) {
+static void ExecStar(void)
+{
     Vec sp24;
     Vec sp18;
     Vec spC;
@@ -215,22 +170,23 @@ static void ExecStar(void) {
     BoardPlayerIdleSet(temp_r31);
     if (BoardDAngleCalc(temp_f30 - temp_f29) < 0.0f) {
         var_f28 = -BoardDAngleCalc(temp_f30 - temp_f29);
-    } else {
+    }
+    else {
         var_f28 = BoardDAngleCalc(temp_f30 - temp_f29);
     }
     if (var_f28 > 90.0f) {
         var_r25 = 30;
-    } else {
+    }
+    else {
         var_r25 = 15;
     }
     BoardPlayerMotBlendSet(temp_r31, temp_f30, var_r25);
     temp_f27 = BoardModelRotYGet(temp_r30);
     var_f31 = BoardDAngleCalc(temp_f30 + 180.0f) - temp_f27;
-    if ((var_f31 <= 4.0f && var_f31 >= 0.0f)
-        || (var_f31 <= 360.0f && var_f31 >= 355.0f)
-        || (var_f31 <= 0.0f && var_f31 >= -4.0f)) {
+    if ((var_f31 <= 4.0f && var_f31 >= 0.0f) || (var_f31 <= 360.0f && var_f31 >= 355.0f) || (var_f31 <= 0.0f && var_f31 >= -4.0f)) {
         var_r26 = 0;
-    } else {
+    }
+    else {
         var_r26 = 1;
     }
     if (var_r26 != 0) {
@@ -253,12 +209,14 @@ static void ExecStar(void) {
         BoardWinCreate(0, temp_r29, BoardWinPortraitGetStar());
         BoardWinWait();
         BoardWinKill();
-    } else if (BoardPlayerCoinsGet(temp_r31) < 20 && GWSystem.last5_effect != 4) {
+    }
+    else if (BoardPlayerCoinsGet(temp_r31) < 20 && GWSystem.last5_effect != 4) {
         temp_r29 = starMesTbl1[temp_r27] + 2;
         BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
         BoardWinWait();
         BoardWinKill();
-    } else {
+    }
+    else {
         BoardStatusShowSetAll(0);
         while (!BoardStatusStopCheck(0) || !BoardStatusStopCheck(1) || !BoardStatusStopCheck(2) || !BoardStatusStopCheck(3)) {
             HuPrcVSleep();
@@ -286,7 +244,8 @@ static void ExecStar(void) {
             if (GWPlayer[temp_r31].com) {
                 if (BoardPlayerCoinsGet(temp_r31) >= 20) {
                     BoardComKeySetUp();
-                } else {
+                }
+                else {
                     BoardComKeySetDown();
                 }
             }
@@ -325,7 +284,7 @@ static void ExecStar(void) {
                     break;
             }
         }
-block_A:
+    block_A:
         temp_r29 = starMesTbl1[temp_r27] + 3;
         BoardWinCreate(2, temp_r29, BoardWinPortraitGetStar());
         BoardWinWait();
@@ -381,7 +340,8 @@ block_B:
     HuPrcEnd();
 }
 
-static void DestroyStar(void) {
+static void DestroyStar(void)
+{
     s32 i;
 
     _ClearFlag(0x10017);
@@ -394,7 +354,8 @@ static void DestroyStar(void) {
     starProc = NULL;
 }
 
-static void GiveStarMain(omObjData *arg0) {
+static void GiveStarMain(omObjData *arg0)
+{
     GiveStarWork *temp_r30;
 
     temp_r30 = OM_GET_WORK_PTR(arg0, GiveStarWork);
@@ -407,7 +368,8 @@ static void GiveStarMain(omObjData *arg0) {
     }
     if (temp_r30->unk04 != 0) {
         temp_r30->unk04--;
-    } else {
+    }
+    else {
         switch (temp_r30->unk01) {
             case 4:
                 break;
@@ -431,7 +393,8 @@ static void GiveStarMain(omObjData *arg0) {
     }
 }
 
-static void UpdateStarAngle(GiveStarWork *arg0, omObjData *arg1) {
+static void UpdateStarAngle(GiveStarWork *arg0, omObjData *arg1)
+{
     float var_f31;
 
     if (arg0->unk00_field1 != 0) {
@@ -446,7 +409,8 @@ static void UpdateStarAngle(GiveStarWork *arg0, omObjData *arg1) {
     }
 }
 
-static void InitGiveStar(GiveStarWork *arg0, omObjData *arg1) {
+static void InitGiveStar(GiveStarWork *arg0, omObjData *arg1)
+{
     Vec sp8;
 
     BoardPlayerPosGet(arg0->unk00_field3, &sp8);
@@ -465,7 +429,8 @@ static void InitGiveStar(GiveStarWork *arg0, omObjData *arg1) {
     InitGiveStarEffect();
 }
 
-static void MoveGiveStar(GiveStarWork *arg0, omObjData *arg1) {
+static void MoveGiveStar(GiveStarWork *arg0, omObjData *arg1)
+{
     Vec sp8;
     float temp_f31;
 
@@ -482,7 +447,8 @@ static void MoveGiveStar(GiveStarWork *arg0, omObjData *arg1) {
         arg1->trans.z += arg1->rot.z;
         arg1->trans.y += -0.08166667f * temp_f31 * temp_f31 * 0.97f + 50.0f;
         arg0->unk0A++;
-    } else {
+    }
+    else {
         arg1->trans.y += -4.0f;
         if (arg1->trans.y <= sp8.y + 300.0f) {
             arg1->trans.y = sp8.y + 300.0f;
@@ -491,7 +457,8 @@ static void MoveGiveStar(GiveStarWork *arg0, omObjData *arg1) {
     }
 }
 
-static void ShrinkGiveStar(GiveStarWork *arg0, omObjData *arg1) {
+static void ShrinkGiveStar(GiveStarWork *arg0, omObjData *arg1)
+{
     Vec sp8;
     float var_f30;
 
@@ -505,7 +472,8 @@ static void ShrinkGiveStar(GiveStarWork *arg0, omObjData *arg1) {
         if (arg0->unk08 < 90) {
             if (BoardPlayerSizeGet(arg0->unk00_field3) != 1) {
                 arg0->unk08 += 2;
-            } else {
+            }
+            else {
                 arg0->unk08 += 1.4f;
             }
             if (arg0->unk08 > 90) {
@@ -519,7 +487,8 @@ static void ShrinkGiveStar(GiveStarWork *arg0, omObjData *arg1) {
         }
         arg1->scale.y = arg1->scale.x;
         arg1->scale.z = arg1->scale.x;
-    } else {
+    }
+    else {
         omVibrate(arg0->unk00_field3, 12, 0xC, 0);
         arg0->unk00_field0 = 1;
         arg0->unk01 = 4;
@@ -529,7 +498,8 @@ static void ShrinkGiveStar(GiveStarWork *arg0, omObjData *arg1) {
     }
 }
 
-static void StopGiveStar(void) {
+static void StopGiveStar(void)
+{
     GiveStarWork *temp_r31;
 
     if (giveStarObj) {
@@ -538,7 +508,8 @@ static void StopGiveStar(void) {
     }
 }
 
-static void InitGiveStarEffect(void) {
+static void InitGiveStarEffect(void)
+{
     s16 temp_r3;
     void *var_r30;
 
@@ -553,7 +524,8 @@ static void InitGiveStarEffect(void) {
     HuDataDirClose(DATADIR_EFFECT);
 }
 
-static void KillGiveStarEffect(void) {
+static void KillGiveStarEffect(void)
+{
     if (starParman != -1) {
         Hu3DParManKill(starParman);
         starParman = -1;
@@ -561,13 +533,15 @@ static void KillGiveStarEffect(void) {
     }
 }
 
-static inline void StarInlineFunc00(void) {
+static inline void StarInlineFunc00(void)
+{
     GiveStarWork *temp_r28 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
 
     temp_r28->unk01 = 0;
 }
 
-static inline void StarInlineFunc01(void) {
+static inline void StarInlineFunc01(void)
+{
     GiveStarWork *temp_r27 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
 
     while (temp_r27->unk01 != 4) {
@@ -575,7 +549,8 @@ static inline void StarInlineFunc01(void) {
     }
 }
 
-static inline void StarInlineFunc02(void) {
+static inline void StarInlineFunc02(void)
+{
     GiveStarWork *temp_r29 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
 
     temp_r29->unk00_field1 = 1;
@@ -584,7 +559,8 @@ static inline void StarInlineFunc02(void) {
     temp_r29->unk01 = 2;
 }
 
-void BoardStarGive(s32 arg0, Vec *arg1) {
+void BoardStarGive(s32 arg0, Vec *arg1)
+{
     Vec sp8;
     s32 temp_r25;
     GiveStarWork *temp_r31;
@@ -631,7 +607,8 @@ void BoardStarGive(s32 arg0, Vec *arg1) {
     HuPrcSleep(10);
     if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
         BoardPlayerMotionEndWait(arg0);
-    } else {
+    }
+    else {
         temp_r25 = HuAudSStreamPlay(6);
         BoardPlayerMotionEndWait(arg0);
         while (msmStreamGetStatus(temp_r25) != 0) {
@@ -641,7 +618,8 @@ void BoardStarGive(s32 arg0, Vec *arg1) {
     BoardPlayerVoiceEnableSet(arg0, 7, 1);
 }
 
-void BoardStarShowNext(s32 arg0) {
+void BoardStarShowNext(s32 arg0)
+{
     Mtx spBC;
     Mtx sp8C;
     Mtx sp5C;
@@ -669,7 +647,8 @@ void BoardStarShowNext(s32 arg0) {
         while (WipeStatGet() != 0) {
             HuPrcVSleep();
         }
-    } else {
+    }
+    else {
         HuPrcSleep(18);
     }
     BoardStatusItemSet(0);
@@ -703,14 +682,16 @@ void BoardStarShowNext(s32 arg0) {
     temp_f31 = VECMag(&sp20);
     if (temp_f31 > 3000.0f) {
         var_r27 = 0xF0;
-    } else if (temp_f31 > 1500.0f) {
+    }
+    else if (temp_f31 > 1500.0f) {
         var_r27 = 0x78;
-    } else {
+    }
+    else {
         var_r27 = 0x78;
     }
     BoardViewMoveStart(&sp38, &sp50, var_r27);
     showNextObj->trans.x = 68.0f;
-    showNextObj->trans.y = HU_DISP_HEIGHT-50;
+    showNextObj->trans.y = HU_DISP_HEIGHT - 50;
     showNextObj->trans.z = 100.0f;
     sp44.x = showNextObj->trans.x;
     sp44.y = showNextObj->trans.y;
@@ -718,9 +699,9 @@ void BoardStarShowNext(s32 arg0) {
     Hu3D2Dto3D(&sp44, 1, &sp44);
     BoardModelPosSetV(BoardStarHostMdlGet(), &sp44);
     BoardCameraRotGet(&sp2C);
-    PSMTXRotRad(sp5C, 'y', MTXDegToRad(10.0f));
-    PSMTXRotRad(sp8C, 'x', MTXDegToRad(sp2C.x));
-    PSMTXConcat(sp8C, sp5C, spBC);
+    RotRad(sp5C, 'y', MTXDegToRad(10.0f));
+    RotRad(sp8C, 'x', MTXDegToRad(sp2C.x));
+    Concat(sp8C, sp5C, spBC);
     BoardModelMtxSet(BoardStarHostMdlGet(), &spBC);
     BoardModelRotSet(BoardStarHostMdlGet(), 0.0f, 0.0f, 0.0f);
     BoardModelScaleSet(BoardStarHostMdlGet(), 0.09f, 0.09f, 0.09f);
@@ -735,7 +716,8 @@ void BoardStarShowNext(s32 arg0) {
     }
     if (var_r28 == 0) {
         var_r30 = starMesTbl1[GWBoardGet()] + 6;
-    } else {
+    }
+    else {
         var_r30 = starMesTbl2[GWBoardGet()][0];
     }
     BoardWinCreate(3, var_r30, -1);
@@ -749,7 +731,8 @@ void BoardStarShowNext(s32 arg0) {
     HuPrcSleep(3);
     if (var_r28 == 0) {
         var_r30 = starMesTbl1[GWBoardGet()] + 7;
-    } else {
+    }
+    else {
         var_r30 = starMesTbl2[GWBoardGet()][1];
     }
     BoardWinCreate(3, var_r30, -1);
@@ -765,7 +748,7 @@ void BoardStarShowNext(s32 arg0) {
         HuPrcVSleep();
     }
     BoardViewWait();
-    PSMTXIdentity(spBC);
+    Identity(spBC);
     BoardModelMtxSet(BoardStarHostMdlGet(), &spBC);
     HideNextHost(1);
     while (showNextObj) {
@@ -786,7 +769,8 @@ void BoardStarShowNext(s32 arg0) {
     _ClearFlag(FLAG_ID_MAKE(1, 28));
 }
 
-static void ShowNextUpdate(omObjData *arg0) {
+static void ShowNextUpdate(omObjData *arg0)
+{
     ShowNextWork *temp_r30 = OM_GET_WORK_PTR(arg0, ShowNextWork);
     Vec sp8;
 
@@ -815,7 +799,8 @@ static void ShowNextUpdate(omObjData *arg0) {
     BoardModelPosSetV(BoardStarHostMdlGet(), &sp8);
 }
 
-static void HideNextHost(s32 arg0) {
+static void HideNextHost(s32 arg0)
+{
     ShowNextWork *temp_r31 = OM_GET_WORK_PTR(showNextObj, ShowNextWork);
 
     temp_r31->unk01 = arg0;

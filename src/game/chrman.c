@@ -1421,7 +1421,7 @@ static void UpdateItemHook(void)
         effectDustParam.unk0C.z = frandmod(10) - 5;
         CreateEffectDust(temp_r31->unk02, sp8.x, sp8.y, sp8.z, 20.0f, &effectDustParam);
     }
-    PSMTXIdentity(temp_r30->unk_F0);
+    MTXIdentity(temp_r30->unk_F0);
     temp_r25 = HuPrcCurrentGet();
     for (var_r28 = 0; var_r28 < 32; var_r28++) {
         if (itemHookProcess[var_r28] == temp_r25) {

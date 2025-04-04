@@ -316,7 +316,7 @@ void Hu3DAnimExec(void) {
     for (i = 0; i < HU3D_TEXSCROLL_MAX; i++, var_r31++) {
         if (var_r31->unk02 != -1) {
             if (Hu3DPauseF != 0 && !(var_r31->unk00 & 8)) {
-                PSMTXRotRad(var_r31->unk3C, 'Z', MTXDegToRad(var_r31->unk34));
+                MTXRotRad(var_r31->unk3C, 'Z', MTXDegToRad(var_r31->unk34));
                 mtxTransCat(var_r31->unk3C, var_r31->unk04.x, var_r31->unk04.y, var_r31->unk04.z);
             } else {
                 if (var_r31->unk00 & 1) {
@@ -349,7 +349,7 @@ void Hu3DAnimExec(void) {
                         var_r31->unk34 += 360.0f;
                     }
                 }
-                PSMTXRotRad(var_r31->unk3C, 'Z', MTXDegToRad(var_r31->unk34));
+                MTXRotRad(var_r31->unk3C, 'Z', MTXDegToRad(var_r31->unk34));
                 mtxTransCat(var_r31->unk3C, var_r31->unk04.x, var_r31->unk04.y, var_r31->unk04.z);
             }
         }
@@ -401,7 +401,7 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
     var_r31->unk00 = 0;
     var_r31->unk04.x = var_r31->unk04.y = var_r31->unk04.z = 0.0f;
     var_r31->unk34 = 0.0f;
-    PSMTXIdentity(var_r31->unk3C);
+    MTXIdentity(var_r31->unk3C);
     return var_r28;
 }
 
@@ -687,16 +687,16 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
     temp_r31 = arg0->unk_120;
     temp_r22 = temp_r31->unk_44;
     if (HmfInverseMtxF3X3(arg1, sp128) == 0) {
-        PSMTXIdentity(sp128);
+        MTXIdentity(sp128);
     }
-    PSMTXReorder(sp128, sp8);
+    MTXReorder(sp128, sp8);
     if ((Hu3DPauseF == 0 || (arg0->attr & HU3D_ATTR_NOPAUSE)) && temp_r31->unk_54 && temp_r31->unk_38 != GlobalCounter) {
         var_r17 = temp_r31->unk_54;
         var_r17(arg0, temp_r31, arg1);
     }
     var_r29 = temp_r31->unk_48;
     var_r30 = temp_r31->unk_4C;
-    PSMTXROMultVecArray(sp8, &basePos[0], sp38, 4);
+    MTXROMultVecArray(sp8, &basePos[0], sp38, 4);
     for (i = 0, var_r19 = 0; i < temp_r31->unk_30; i++, var_r29++) {
         if (var_r29->unk2C && (var_r29->unk06 & Hu3DCameraBit)) {
             if (!var_r29->unk30) {
@@ -722,9 +722,9 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
                 VECScale(&basePos[1], &sp98[1], var_r29->unk2C);
                 VECScale(&basePos[2], &sp98[2], var_r29->unk2C);
                 VECScale(&basePos[3], &sp98[3], var_r29->unk2C);
-                PSMTXRotRad(spC8, 'Z', var_r29->unk30);
-                PSMTXConcat(sp128, spC8, spF8);
-                PSMTXMultVecArray(spF8, sp98, sp68, 4);
+                MTXRotRad(spC8, 'Z', var_r29->unk30);
+                MTXConcat(sp128, spC8, spF8);
+                MTXMultVecArray(spF8, sp98, sp68, 4);
                 VECAdd(&sp68[0], &var_r29->unk34, var_r30++);
                 VECAdd(&sp68[1], &var_r29->unk34, var_r30++);
                 VECAdd(&sp68[2], &var_r29->unk34, var_r30++);
@@ -800,7 +800,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
             temp_r24 = &temp_r22->bmp[temp_r27->bmpNo];
             temp_f29 = (float) temp_r27->sizeX / temp_r24->sizeX;
             temp_f30 = (float) temp_r27->sizeY / temp_r24->sizeY;
-            PSMTXScale(sp128, temp_f29, temp_f30, 1.0f);
+            MTXScale(sp128, temp_f29, temp_f30, 1.0f);
             temp_f29 = (float) temp_r27->startX / temp_r24->sizeX;
             temp_f30 = (float) temp_r27->startY / temp_r24->sizeY;
             mtxTransCat(sp128, temp_f29, temp_f30, 0.0f);

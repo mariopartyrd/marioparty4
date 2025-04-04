@@ -1385,7 +1385,7 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSetArray(GX_VA_TEX0, temp_r30->unk20, 8);
     fn_1_40A4(arg1, sp128);
-    PSMTXReorder(sp128, spF8);
+    Reorder(sp128, spF8);
     if (((u8)omPauseChk() == 0) && (temp_r30->unkC)) {
         var_r23 = temp_r30->unkC;
         var_r23(arg0, temp_r30, arg1);
@@ -1393,7 +1393,7 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
     var_r29 = temp_r30->unk18;
     var_r31 = temp_r30->unk1C;
     var_r26 = temp_r30->unk20;
-    PSMTXROMultVecArray(spF8, &temp_r30->unk2C, &sp68[0], 4);
+    ROMultVecArray(spF8, &temp_r30->unk2C, &sp68[0], 4);
 
     for (var_r25 = 0; var_r25 < temp_r30->unk0; var_r25++, var_r29++, var_r26 += 4) {
         if (var_r29->unk4E == 0) {

@@ -3028,7 +3028,7 @@ void fn_1_DCD4(ModelData *model, Mtx matrix)
     sp128[0][3] = 0.0f;
     sp128[1][3] = 0.0f;
     sp128[2][3] = 0.0f;
-    PSMTXReorder(sp128, spF8);
+    Reorder(sp128, spF8);
     if ((omPauseChk() == 0) && (var_r30->unk_0C)) {
         var_r23 = var_r30->unk_0C;
         var_r23(model, var_r30, matrix);
@@ -3036,7 +3036,7 @@ void fn_1_DCD4(ModelData *model, Mtx matrix)
     var_r29 = var_r30->unk_18;
     var_r31 = var_r30->unk_1C;
     var_r26 = var_r30->unk_20;
-    PSMTXROMultVecArray(spF8, &var_r30->unk_2C, sp68, 4);
+    ROMultVecArray(spF8, &var_r30->unk_2C, sp68, 4);
     for (var_r25 = 0; var_r25 < var_r30->unk_00; var_r25++, var_r29++, var_r26 += 4) {
         if (var_r29->unk_62 == 0) {
             var_r31->x = var_r31->y = var_r31->z = 0.0f;
@@ -3058,9 +3058,9 @@ void fn_1_DCD4(ModelData *model, Mtx matrix)
             }
             else {
                 fn_1_E420(&var_r30->unk_2C, &sp38, &var_r29->unk_48, 4);
-                PSMTXRotRad(spC8, 0x5A, MTXDegToRad(var_r29->unk_44));
-                PSMTXConcat(sp128, spC8, sp98);
-                PSMTXMultVecArray(sp98, &sp38, &sp8, 4);
+                RotRad(spC8, 0x5A, MTXDegToRad(var_r29->unk_44));
+                Concat(sp128, spC8, sp98);
+                MultVecArray(sp98, &sp38, &sp8, 4);
                 PSVECAdd(&sp8, &var_r29->unk_54, var_r31++);
                 PSVECAdd(&sp14, &var_r29->unk_54, var_r31++);
                 PSVECAdd(&sp20, &var_r29->unk_54, var_r31++);

@@ -1,13 +1,5 @@
 #include "game/board/shop.h"
 #include "game/audio.h"
-#include "game/gamework.h"
-#include "game/gamework_data.h"
-#include "game/object.h"
-#include "game/objsub.h"
-#include "game/disp.h"
-#include "game/pad.h"
-#include "game/process.h"
-#include "game/sprite.h"
 #include "game/board/audio.h"
 #include "game/board/com.h"
 #include "game/board/com_path.h"
@@ -20,6 +12,15 @@
 #include "game/board/ui.h"
 #include "game/board/view.h"
 #include "game/board/window.h"
+#include "game/disp.h"
+#include "game/gamework.h"
+#include "game/gamework_data.h"
+#include "game/object.h"
+#include "game/objsub.h"
+#include "game/pad.h"
+#include "game/process.h"
+#include "game/sprite.h"
+
 
 #include "dolphin.h"
 #include "ext_math.h"
@@ -103,39 +104,20 @@ static Process *shopProc;
 static s16 itemMdl = -1;
 static s8 itemChoice = -1;
 
-static BoardModelParam shopMdlParam[1] = {
-    { 0x00070094, { 0, 1, 0, 0, 0 }, -1 }
-};
+static BoardModelParam shopMdlParam[1] = { { 0x00070094, { 0, 1, 0, 0, 0 }, -1 } };
 
 static s16 hostMdl = -1;
 static s16 shopMot[3] = { -1, -1, -1 };
 static s8 itemCurChoice = -1;
 
-static s8 defaultItemTbl[5] = {
-    0x05, 0x07, 0x02, 0x03, 0x00
-};
+static s8 defaultItemTbl[5] = { 0x05, 0x07, 0x02, 0x03, 0x00 };
 
-static s32 hostMessTbl[] = {
-    MAKE_MESSID(0x0F, 0x04),
-    MAKE_MESSID(0x0F, 0x07),
-    MAKE_MESSID(0x0F, 0x0A),
-    MAKE_MESSID(0x0F, 0x0D),
-    MAKE_MESSID(0x0F, 0x10),
-    MAKE_MESSID(0x0F, 0x13),
-    MAKE_MESSID(0x0F, 0x04),
-    MAKE_MESSID(0x0F, 0x24),
-    MAKE_MESSID(0x0F, 0x24)
-};
+static s32 hostMessTbl[] = { MAKE_MESSID(0x0F, 0x04), MAKE_MESSID(0x0F, 0x07), MAKE_MESSID(0x0F, 0x0A), MAKE_MESSID(0x0F, 0x0D),
+    MAKE_MESSID(0x0F, 0x10), MAKE_MESSID(0x0F, 0x13), MAKE_MESSID(0x0F, 0x04), MAKE_MESSID(0x0F, 0x24), MAKE_MESSID(0x0F, 0x24) };
 
-static s8 itemPriceTbl[] = {
-     5,  5, 15, 15,
-    10, 10, 15, 15,
-    15, 15,  0, 25,
-    30, 30,  0,  0
-};
+static s8 itemPriceTbl[] = { 5, 5, 15, 15, 10, 10, 15, 15, 15, 15, 0, 25, 30, 30, 0, 0 };
 
-static s32 shopMotTbl[9][3] = {
-    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x01), DATA_MAKE_NUM(DATADIR_BGUEST, 0x03), DATA_MAKE_NUM(DATADIR_BGUEST, 0x04) },
+static s32 shopMotTbl[9][3] = { { DATA_MAKE_NUM(DATADIR_BGUEST, 0x01), DATA_MAKE_NUM(DATADIR_BGUEST, 0x03), DATA_MAKE_NUM(DATADIR_BGUEST, 0x04) },
     { DATA_MAKE_NUM(DATADIR_BGUEST, 0x09), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0B), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0C) },
     { DATA_MAKE_NUM(DATADIR_BGUEST, 0x0E), DATA_MAKE_NUM(DATADIR_BGUEST, 0x10), DATA_MAKE_NUM(DATADIR_BGUEST, 0x11) },
     { DATA_MAKE_NUM(DATADIR_BGUEST, 0x18), DATA_MAKE_NUM(DATADIR_BGUEST, 0x1A), DATA_MAKE_NUM(DATADIR_BGUEST, 0x1B) },
@@ -143,27 +125,26 @@ static s32 shopMotTbl[9][3] = {
     { DATA_MAKE_NUM(DATADIR_BGUEST, 0x22), DATA_MAKE_NUM(DATADIR_BGUEST, 0x24), DATA_MAKE_NUM(DATADIR_BGUEST, 0x25) },
     { DATA_MAKE_NUM(DATADIR_BGUEST, 0x09), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0B), DATA_MAKE_NUM(DATADIR_BGUEST, 0x0C) },
     { DATA_MAKE_NUM(DATADIR_BGUEST, 0x2A), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2C), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2D) },
-    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x2A), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2C), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2D) }
-};
+    { DATA_MAKE_NUM(DATADIR_BGUEST, 0x2A), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2C), DATA_MAKE_NUM(DATADIR_BGUEST, 0x2D) } };
 
-void BoardShopHostSet(s16 arg0) {
+void BoardShopHostSet(s16 arg0)
+{
     hostMdl = arg0;
 }
 
-s16 BoardShopHostGet(void) {
+s16 BoardShopHostGet(void)
+{
     return hostMdl;
 }
 
-void BoardShopInit(void) {
+void BoardShopInit(void)
+{
     BoardModelParam *var_r29;
     Vec sp1C;
     Vec sp10;
     s32 j;
     s32 i;
-    s32 sp8[2] = {
-        0x00080000,
-        0x00100000
-    };
+    s32 sp8[2] = { 0x00080000, 0x00100000 };
 
     for (i = 0; i < 2; i++) {
         BoardSpaceLinkTransformGet(sp8[i], &sp1C, &sp10, 0);
@@ -176,7 +157,8 @@ void BoardShopInit(void) {
     BoardModelVisibilitySet(hostMdl, 0);
 }
 
-void BoardShopKill(void) {
+void BoardShopKill(void)
+{
     s32 i;
     s32 j;
 
@@ -190,7 +172,8 @@ void BoardShopKill(void) {
     }
 }
 
-void BoardShopExec(s32 player, s32 space) {
+void BoardShopExec(s32 player, s32 space)
+{
     if (BoardPlayerSizeGet(GWSystem.player_curr) == 2) {
         return;
     }
@@ -204,7 +187,8 @@ void BoardShopExec(s32 player, s32 space) {
     BoardRollDispSet(1);
 }
 
-static void ExecShop(void) {
+static void ExecShop(void)
+{
     Vec sp38;
     Vec sp2C;
     Vec sp20;
@@ -229,7 +213,8 @@ static void ExecShop(void) {
     temp_r28 = GWPlayer[shopPlayer].space_curr;
     if (BoardSpaceFlagGet(0, temp_r28) & 0x80000) {
         shopMdlPtr = shopMdlIdx[0];
-    } else {
+    }
+    else {
         shopMdlPtr = shopMdlIdx[1];
     }
     BoardPlayerIdleSet(shopPlayer);
@@ -315,7 +300,8 @@ static void ExecShop(void) {
             if (var_r29 > BoardPlayerCoinsGet(shopPlayer)) {
                 BoardWinChoiceDisable(i);
                 choiceEnableTbl[i] = 0;
-            } else {
+            }
+            else {
                 choiceEnableTbl[i] = 1;
             }
         }
@@ -332,7 +318,8 @@ static void ExecShop(void) {
         HuPrcSleep(0xF);
         if (itemCurChoice == -1 || itemCurChoice == 5 || itemCurChoice == 0x7F) {
             PauseShopWin();
-        } else {
+        }
+        else {
             PauseShopWin();
             while (!BoardStatusStopCheck(shopPlayer)) {
                 HuPrcVSleep();
@@ -346,7 +333,8 @@ static void ExecShop(void) {
             temp_r24 = itemPriceTbl[activeItemTbl[itemCurChoice]];
             if (temp_r24 >= 20) {
                 var_r23 = 3;
-            } else {
+            }
+            else {
                 var_r23 = 6;
             }
             var_f30 = BoardDAngleCalc(180.0f + BoardPlayerRotYGet(shopPlayer));
@@ -391,7 +379,8 @@ static void ExecShop(void) {
     HuPrcEnd();
 }
 
-static void DestroyShop(void) {
+static void DestroyShop(void)
+{
     s16 temp_r30;
     s32 i;
 
@@ -413,7 +402,8 @@ static void DestroyShop(void) {
     shopProc = NULL;
 }
 
-static void PopupShop(void) {
+static void PopupShop(void)
+{
     s32 i;
 
     for (i = 0; i < 2; i++) {
@@ -443,7 +433,8 @@ static void PopupShop(void) {
     }
 }
 
-static void CloseShop(void) {
+static void CloseShop(void)
+{
     BoardModelMotionStart(shopMdlPtr[0], 0, 0x40000004);
     while (BoardModelMotionTimeGet(shopMdlPtr[0]) > 28.0f) {
         HuPrcVSleep();
@@ -458,7 +449,8 @@ static void CloseShop(void) {
     BoardModelVisibilitySet(BoardShopHostGet(), 0);
 }
 
-static void CreateShopWin(void) {
+static void CreateShopWin(void)
+{
     Vec sp8;
     omObjData *var_r31;
     ShopWinWork *var_r30;
@@ -473,12 +465,12 @@ static void CreateShopWin(void) {
     var_r30->unk01 = 0xC;
     var_r30->unk04 = 0;
     shopWinObj = var_r31;
-    var_r30->unk06 = HuWinCreate(36.0f, HU_DISP_HEIGHT-136, 0x1F8, 0x60, 0);
+    var_r30->unk06 = HuWinCreate(36.0f, HU_DISP_HEIGHT - 136, 0x1F8, 0x60, 0);
     HuWinMesSpeedSet(var_r30->unk06, 0);
     HuWinDrawNoSet(var_r30->unk06, 0x40);
     HuWinExAnimIn(var_r30->unk06);
     sp8.x = 84.0f;
-    sp8.y = HU_DISP_HEIGHT-88;
+    sp8.y = HU_DISP_HEIGHT - 88;
     sp8.z = 400.0f;
     var_r31->scale.x = var_r31->scale.y = var_r31->scale.z = 0.25f;
     Hu3D2Dto3D(&sp8, 1, &sp8);
@@ -488,7 +480,8 @@ static void CreateShopWin(void) {
     var_r31->scale.x = var_r31->scale.y = var_r31->scale.z = 1.0f;
 }
 
-static void UpdateShopWin(omObjData *arg0) {
+static void UpdateShopWin(omObjData *arg0)
+{
     Vec spC;
     float var_f29;
     float var_f28;
@@ -517,7 +510,8 @@ static void UpdateShopWin(omObjData *arg0) {
                 if (temp_r28->unk00_field0 == 0) {
                     BoardModelVisibilitySet(itemMdl, 0);
                 }
-            } else {
+            }
+            else {
                 HuWinDispOn(temp_r28->unk06);
                 SetShopWinItem(temp_r28, arg0);
                 BoardModelVisibilitySet(itemMdl, 1);
@@ -543,9 +537,9 @@ static void UpdateShopWin(omObjData *arg0) {
         }
         arg0->rot.y = BoardDAngleCalc(arg0->rot.y + 2.0f);
         BoardCameraRotGet(&spC);
-        PSMTXRotRad(sp48, 'y', MTXDegToRad(arg0->rot.y));
-        PSMTXRotRad(sp18, 'x', MTXDegToRad(spC.x + 10.0f));
-        PSMTXConcat(sp18, sp48, sp48);
+        RotRad(sp48, 'y', MTXDegToRad(arg0->rot.y));
+        RotRad(sp18, 'x', MTXDegToRad(spC.x + 10.0f));
+        Concat(sp18, sp48, sp48);
         BoardModelMtxSet(itemMdl, &sp48);
         BoardModelRotSet(itemMdl, 0.0f, 0.0f, 0.0f);
         BoardModelPosSet(itemMdl, arg0->trans.x, arg0->trans.y + var_f29, arg0->trans.z);
@@ -554,7 +548,8 @@ static void UpdateShopWin(omObjData *arg0) {
     }
 }
 
-static void SetShopWinItem(ShopWinWork *arg0, omObjData *arg1) {
+static void SetShopWinItem(ShopWinWork *arg0, omObjData *arg1)
+{
     Vec spC;
     s32 var_r26;
     s8 temp_r28;
@@ -581,14 +576,16 @@ static void SetShopWinItem(ShopWinWork *arg0, omObjData *arg1) {
     }
 }
 
-static void PauseShopWin(void) {
+static void PauseShopWin(void)
+{
     if (shopWinObj) {
         OM_GET_WORK_PTR(shopWinObj, ShopWinWork)->unk00_field0 = 1;
         shopWinObj = NULL;
     }
 }
 
-void StartItemGive(void) {
+void StartItemGive(void)
+{
     Vec sp14;
     Vec sp8;
     omObjData *temp_r30;
@@ -605,7 +602,7 @@ void StartItemGive(void) {
     BoardModelMotionStart(itemMdl, 0, 0);
     BoardModelMotionSpeedSet(itemMdl, 0.0f);
     BoardModelPosGet(itemMdl, &sp14);
-    PSMTXIdentity(sp20);
+    Identity(sp20);
     BoardModelMtxSet(itemMdl, &sp20);
     OSs16tof32(&angleVal, &temp_r30->scale.z);
     temp_r30->scale.z = -temp_r30->scale.z / 40.0f;
@@ -621,7 +618,8 @@ void StartItemGive(void) {
     itemGiveObj = temp_r30;
 }
 
-static void ExecItemGive(omObjData *arg0) {
+static void ExecItemGive(omObjData *arg0)
+{
     ItemGiveWork *temp_r29;
     float var_f30;
 
@@ -653,7 +651,8 @@ static void ExecItemGive(omObjData *arg0) {
     BoardModelRotYSet(itemMdl, var_f30);
 }
 
-static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1) {
+static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1)
+{
     Vec sp1C;
     Vec sp10;
     float temp_f27;
@@ -665,13 +664,15 @@ static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1) {
             arg1->unk00_field1 = 2;
             BoardMakeRandomItem();
             BoardItemStart(GWSystem.player_curr, 0xD);
-        } else {
+        }
+        else {
             arg1->unk00_field1 = 1;
             arg1->unk04 = 0xF;
             BoardPlayerPosGet(shopPlayer, &sp1C);
             if (BoardPlayerSizeGet(shopPlayer) == 1) {
                 arg0->rot.x = (sp1C.y + 30.0f - arg0->trans.y) / 22.5f;
-            } else {
+            }
+            else {
                 arg0->rot.x = (sp1C.y + 70.0f - arg0->trans.y) / 22.5f;
             }
             arg0->trans.y = arg0->rot.y;
@@ -692,7 +693,8 @@ static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1) {
         BoardCameraDirGet(&sp10);
         var_f26 = BoardDAngleCalc(atan2d(-sp10.x, -sp10.z));
         OSf32tos16(&var_f26, &angleVal);
-    } else {
+    }
+    else {
         arg0->scale.x += arg0->scale.y;
         arg0->trans.x += arg0->rot.x;
         arg0->trans.z += arg0->rot.z;
@@ -706,7 +708,8 @@ static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1) {
     arg1->unk02++;
 }
 
-static void ShrinkItemGive(omObjData *arg0, ItemGiveWork *arg1) {
+static void ShrinkItemGive(omObjData *arg0, ItemGiveWork *arg1)
+{
     float var_f30;
 
     if (arg1->unk02 == 0) {
@@ -733,10 +736,12 @@ static void ShrinkItemGive(omObjData *arg0, ItemGiveWork *arg1) {
     arg1->unk02 += 4;
 }
 
-static void WaitItemGive(omObjData *arg0, ItemGiveWork *arg1) {
+static void WaitItemGive(omObjData *arg0, ItemGiveWork *arg1)
+{
     if (arg1->unk02 > 20) {
         BoardModelVisibilitySet(itemMdl, 0);
-    } else {
+    }
+    else {
         arg1->unk02++;
     }
     if (BoardItemDoneCheck()) {
@@ -744,44 +749,25 @@ static void WaitItemGive(omObjData *arg0, ItemGiveWork *arg1) {
     }
 }
 
-static s8 itemPrioTbl[2][5][14] = {
-    {
-        { 0x14, 0x14, 0x0F, 0x0F, 0x05, 0x07, 0x05, 0x05, 0x00, 0x05, 0x00, 0x03, 0x00, 0x00 },
-        { 0x0F, 0x0F, 0x0D, 0x0A, 0x0A, 0x0A, 0x0A, 0x05, 0x00, 0x07, 0x00, 0x05, 0x00, 0x00 },
-        { 0x07, 0x07, 0x0E, 0x0C, 0x0A, 0x0A, 0x0A, 0x08, 0x05, 0x09, 0x00, 0x08, 0x00, 0x00 },
-        { 0x0A, 0x0A, 0x0D, 0x0C, 0x0A, 0x0A, 0x07, 0x0A, 0x05, 0x05, 0x00, 0x08, 0x00, 0x00 },
-        { 0x07, 0x07, 0x0D, 0x0A, 0x0D, 0x07, 0x0A, 0x0A, 0x07, 0x08, 0x00, 0x08, 0x00, 0x00 }
-    },
-    {
-        { 0x0F, 0x0F, 0x12, 0x0F, 0x05, 0x05, 0x05, 0x05, 0x00, 0x05, 0x00, 0x02, 0x05, 0x05 },
+static s8 itemPrioTbl[2][5][14] = { { { 0x14, 0x14, 0x0F, 0x0F, 0x05, 0x07, 0x05, 0x05, 0x00, 0x05, 0x00, 0x03, 0x00, 0x00 },
+                                        { 0x0F, 0x0F, 0x0D, 0x0A, 0x0A, 0x0A, 0x0A, 0x05, 0x00, 0x07, 0x00, 0x05, 0x00, 0x00 },
+                                        { 0x07, 0x07, 0x0E, 0x0C, 0x0A, 0x0A, 0x0A, 0x08, 0x05, 0x09, 0x00, 0x08, 0x00, 0x00 },
+                                        { 0x0A, 0x0A, 0x0D, 0x0C, 0x0A, 0x0A, 0x07, 0x0A, 0x05, 0x05, 0x00, 0x08, 0x00, 0x00 },
+                                        { 0x07, 0x07, 0x0D, 0x0A, 0x0D, 0x07, 0x0A, 0x0A, 0x07, 0x08, 0x00, 0x08, 0x00, 0x00 } },
+    { { 0x0F, 0x0F, 0x12, 0x0F, 0x05, 0x05, 0x05, 0x05, 0x00, 0x05, 0x00, 0x02, 0x05, 0x05 },
         { 0x0F, 0x0F, 0x0D, 0x0A, 0x07, 0x0A, 0x07, 0x03, 0x00, 0x07, 0x00, 0x00, 0x05, 0x08 },
         { 0x05, 0x04, 0x0D, 0x0C, 0x0A, 0x05, 0x0A, 0x08, 0x05, 0x05, 0x00, 0x05, 0x08, 0x0A },
         { 0x07, 0x04, 0x0D, 0x0C, 0x08, 0x08, 0x07, 0x0A, 0x05, 0x05, 0x00, 0x05, 0x08, 0x08 },
-        { 0x03, 0x02, 0x0D, 0x0A, 0x0D, 0x03, 0x08, 0x08, 0x07, 0x07, 0x00, 0x08, 0x08, 0x0A }
-    }
-};
+        { 0x03, 0x02, 0x0D, 0x0A, 0x0D, 0x03, 0x08, 0x08, 0x07, 0x07, 0x00, 0x08, 0x08, 0x0A } } };
 
-static s8 rankItemGroupTbl[2][4][3] = {
-    {
-        { 0x00, 0x01, 0x03 }, { 0x00, 0x02, 0x04 },
-        { 0x00, 0x02, 0x04 }, { 0x00, 0x02, 0x04 }
-    },
-    {
-        { 0x00, 0x01, 0x03 }, { 0x00, 0x02, 0x04 },
-        { 0x00, 0x02, 0x04 }, { 0x00, 0x02, 0x04 }
-    }
-};
+static s8 rankItemGroupTbl[2][4][3] = { { { 0x00, 0x01, 0x03 }, { 0x00, 0x02, 0x04 }, { 0x00, 0x02, 0x04 }, { 0x00, 0x02, 0x04 } },
+    { { 0x00, 0x01, 0x03 }, { 0x00, 0x02, 0x04 }, { 0x00, 0x02, 0x04 }, { 0x00, 0x02, 0x04 } } };
 
-static float cursorPosTbl[6][2] = {
-    { 190.0f, 182.0f },
-    { 190.0f, 208.0f },
-    { 190.0f, 234.0f },
-    { 190.0f, 260.0f },
-    { 190.0f, 286.0f },
-    { 190.0f, 312.0f }
-};
+static float cursorPosTbl[6][2]
+    = { { 190.0f, 182.0f }, { 190.0f, 208.0f }, { 190.0f, 234.0f }, { 190.0f, 260.0f }, { 190.0f, 286.0f }, { 190.0f, 312.0f } };
 
-static void GetShopItems(s32 arg0) {
+static void GetShopItems(s32 arg0)
+{
     s32 temp_r25;
     s32 temp_r20;
     s32 temp_r19;
@@ -795,10 +781,11 @@ static void GetShopItems(s32 arg0) {
     s32 var_r29;
     s32 var_r30;
 
-    temp_r22 = 3.0f * ((float) GWSystem.turn / GWSystem.max_turn);
+    temp_r22 = 3.0f * ((float)GWSystem.turn / GWSystem.max_turn);
     if (BoardPlayerCoinsGet(arg0) < 30) {
         var_r27 = 0;
-    } else {
+    }
+    else {
         var_r27 = 1;
     }
     temp_r19 = rankItemGroupTbl[var_r27][GWPlayer[arg0].rank][temp_r22];
@@ -839,7 +826,8 @@ static void GetShopItems(s32 arg0) {
     }
 }
 
-static void GetDefaultShopItems(s32 arg0) {
+static void GetDefaultShopItems(s32 arg0)
+{
     s32 temp_r29;
     s32 var_r31;
     s32 var_r30;
@@ -847,9 +835,11 @@ static void GetDefaultShopItems(s32 arg0) {
     temp_r29 = BoardRandMod(100);
     if (temp_r29 > 90) {
         var_r30 = 3;
-    } else if (temp_r29 > 40) {
+    }
+    else if (temp_r29 > 40) {
         var_r30 = BoardRandMod(2) + 1;
-    } else {
+    }
+    else {
         var_r30 = 0;
     }
     for (var_r31 = 0; var_r31 < 5; var_r31++) {
@@ -857,7 +847,8 @@ static void GetDefaultShopItems(s32 arg0) {
     }
 }
 
-static void SortShopItems(void) {
+static void SortShopItems(void)
+{
     s32 sp8[5];
     s32 var_r29;
     s32 i;
@@ -880,7 +871,8 @@ static void SortShopItems(void) {
     }
 }
 
-static void DecideComEnter(s32 arg0) {
+static void DecideComEnter(s32 arg0)
+{
     s32 temp_r27;
     s32 temp_r30;
     s32 temp_r29;
@@ -910,14 +902,13 @@ static void DecideComEnter(s32 arg0) {
             BoardComKeySetRight();
             return;
         }
-    } else {
+    }
+    else {
         temp_r27 = GWPlayer[arg0].space_curr;
         temp_r30 = BoardComPathShortcutLenGet(temp_r27, 8, 0);
         temp_r29 = BoardComPathShortcutLenGet(temp_r27, 8, 1);
-        if ((temp_r30 != 0 || temp_r29 != 0)
-            && (BoardPlayerCoinsGet(arg0) >= 17 || (temp_r29 >= temp_r26 && temp_r30 >= temp_r26))
-            && BoardPlayerCoinsGet(arg0) < 40
-            && ((temp_r30 < 20 && temp_r30 > 0) || (temp_r29 < 10 && temp_r29 > 0))
+        if ((temp_r30 != 0 || temp_r29 != 0) && (BoardPlayerCoinsGet(arg0) >= 17 || (temp_r29 >= temp_r26 && temp_r30 >= temp_r26))
+            && BoardPlayerCoinsGet(arg0) < 40 && ((temp_r30 < 20 && temp_r30 > 0) || (temp_r29 < 10 && temp_r29 > 0))
             && BoardRandMod(100) > var_r28) {
             BoardComKeySetRight();
             return;
@@ -926,18 +917,21 @@ static void DecideComEnter(s32 arg0) {
     BoardComKeySetLeft();
 }
 
-static void DecideComBuy(s32 arg0) {
+static void DecideComBuy(s32 arg0)
+{
     if (!GWPlayer[arg0].com) {
         return;
     }
     if (comF != 0) {
         BoardComKeySetDown();
-    } else {
+    }
+    else {
         BoardComKeySetUp();
     }
 }
 
-static s32 GetComItemChoice(s32 arg0) {
+static s32 GetComItemChoice(s32 arg0)
+{
     s16 sp8;
     s32 temp_r26;
     s32 var_r28 = 0;
@@ -954,7 +948,8 @@ static s32 GetComItemChoice(s32 arg0) {
     for (var_r27 = i = 0; i < 5; i++) {
         if (temp_r26 >= itemPriceTbl[activeItemTbl[i]]) {
             var_r30 = BoardComItemWeightGet(arg0, activeItemTbl[i]);
-        } else {
+        }
+        else {
             var_r30 = 0;
         }
         if (BoardPlayerItemFind(arg0, activeItemTbl[i]) != -1) {
@@ -968,28 +963,31 @@ static s32 GetComItemChoice(s32 arg0) {
     if (var_r27 == 0) {
         comF = 1;
         var_r28 = 5;
-    } else {
+    }
+    else {
         var_r28 = var_r25;
     }
     return var_r28;
 }
 
-static void WaitItemChoice(void) {
+static void WaitItemChoice(void)
+{
     while (itemChoiceObj) {
         HuPrcVSleep();
     }
 }
 
-static void CreateShopItemChoice(s32 arg0, s32 arg1) {
+static void CreateShopItemChoice(s32 arg0, s32 arg1)
+{
     omObjData *temp_r30;
     ItemChoiceWork *var_r31;
     s16 spC;
     s16 i;
-    #if VERSION_PAL
-    for(i=0; i<6; i++) {
+#if VERSION_PAL
+    for (i = 0; i < 6; i++) {
         cursorPosTbl[i][0] = 190;
     }
-    #endif
+#endif
     temp_r30 = omAddObjEx(boardObjMan, 0x7E01, 0, 0, -1, UpdateShopItemChoice);
     itemChoiceObj = temp_r30;
     itemChoice = -1;
@@ -1001,29 +999,30 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1) {
     var_r31->unk02 = 0;
     var_r31->unk03 = arg1;
     var_r31->unk06 = HuSprGrpCreate(1);
-    #if VERSION_PAL
+#if VERSION_PAL
     if (GWLanguageGet() != 0) {
         s16 winId = BoardWinIDGet();
-        if(winId != -1) {
+        if (winId != -1) {
             WindowData *winP = &winData[winId];
-            for(i=0; i<6; i++) {
-                cursorPosTbl[i][0] = winP->pos_x+96;
+            for (i = 0; i < 6; i++) {
+                cursorPosTbl[i][0] = winP->pos_x + 96;
             }
-        } else {
-            for(i=0; i<6; i++) {
+        }
+        else {
+            for (i = 0; i < 6; i++) {
                 cursorPosTbl[i][0] = 166;
             }
         }
     }
     temp_r30->trans.x = cursorPosTbl[0][0];
     temp_r30->trans.y = cursorPosTbl[0][1];
-    #else
+#else
     temp_r30->trans.x = cursorPosTbl[0][0];
     temp_r30->trans.y = cursorPosTbl[0][1];
     if (GWLanguageGet() != 0) {
         temp_r30->trans.x -= 24.0f;
     }
-    #endif
+#endif
     if (GWPlayer[arg0].com) {
         var_r31->unk01 = GWMessDelayGet();
     }
@@ -1033,11 +1032,13 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1) {
     HuSprPosSet(var_r31->unk06, 0, temp_r30->trans.x, temp_r30->trans.y);
 }
 
-static s32 GetShopItemChoice(void) {
+static s32 GetShopItemChoice(void)
+{
     return itemChoice;
 }
 
-static s32 GetShopItemWinChoice(void) {
+static s32 GetShopItemWinChoice(void)
+{
     ItemChoiceWork *var_r31;
 
     if (!itemChoiceObj) {
@@ -1047,7 +1048,8 @@ static s32 GetShopItemWinChoice(void) {
     return var_r31->unk02;
 }
 
-static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1) {
+static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1)
+{
     u32 sp8;
     s32 temp_r28;
     s32 temp_r29;
@@ -1055,14 +1057,15 @@ static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1) {
     temp_r28 = arg1->unk02;
     arg0->trans.x = cursorPosTbl[arg1->unk02][0];
     arg0->trans.y = cursorPosTbl[arg1->unk02][1];
-    #if VERSION_NTSC
+#if VERSION_NTSC
     if (GWLanguageGet() != 0) {
         arg0->trans.x -= 24.0f;
     }
-    #endif
+#endif
     if (GWPlayer[arg1->unk00_field1].com) {
         GetShopItemChoiceInput(arg1, arg0, &sp8);
-    } else {
+    }
+    else {
         temp_r29 = GWPlayer[arg1->unk00_field1].port;
         sp8 = HuPadDStkRep[temp_r29] | HuPadBtnDown[temp_r29];
     }
@@ -1077,7 +1080,8 @@ static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1) {
         HuAudFXPlay(2);
         if (GWPlayer[arg1->unk00_field1].com) {
             arg1->unk05 = 0x32;
-        } else {
+        }
+        else {
             arg1->unk05 = 5;
         }
         return;
@@ -1105,7 +1109,8 @@ static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1) {
     }
 }
 
-static void UpdateShopItemChoice(omObjData *arg0) {
+static void UpdateShopItemChoice(omObjData *arg0)
+{
     ItemChoiceWork *temp_r31;
 
     temp_r31 = OM_GET_WORK_PTR(arg0, ItemChoiceWork);
@@ -1120,25 +1125,31 @@ static void UpdateShopItemChoice(omObjData *arg0) {
         if (temp_r31->unk05 == 0) {
             temp_r31->unk00_field0 = 1;
         }
-    } else if (temp_r31->unk01 != 0) {
+    }
+    else if (temp_r31->unk01 != 0) {
         temp_r31->unk01--;
-    } else if (temp_r31->unk04 != 0) {
+    }
+    else if (temp_r31->unk04 != 0) {
         temp_r31->unk04--;
-    } else {
+    }
+    else {
         MoveShopItemChoice(arg0, temp_r31);
     }
     HuSprPosSet(temp_r31->unk06, 0, arg0->trans.x, arg0->trans.y);
 }
 
-static void GetShopItemChoiceInput(ItemChoiceWork *arg0, omObjData *arg1, u32 *arg2) {
+static void GetShopItemChoiceInput(ItemChoiceWork *arg0, omObjData *arg1, u32 *arg2)
+{
     if (arg0->unk02 == arg0->unk03) {
         *arg2 = 0x100;
-    } else {
+    }
+    else {
         *arg2 = 4;
     }
 }
 
-void BoardShopTutorialExec(s32 arg0) {
+void BoardShopTutorialExec(s32 arg0)
+{
     Vec sp48;
     Vec sp3C;
     Vec sp30;
@@ -1155,7 +1166,8 @@ void BoardShopTutorialExec(s32 arg0) {
     sp10 = BoardWinPortraitGet();
     if (BoardSpaceFlagGet(0, arg0) & 0x80000) {
         shopMdlPtr = shopMdlIdx[0];
-    } else {
+    }
+    else {
         shopMdlPtr = shopMdlIdx[1];
     }
     temp_r27 = BoardSpaceLinkFlagSearch(0, arg0, 0x02000000);

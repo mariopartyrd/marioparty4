@@ -181,14 +181,14 @@ void Hu3DExec(void) {
             for (j = 0; j < 8; j++) {
                 if (layerHook[j] != 0) {
                     Hu3DCameraSet(Hu3DCameraNo, Hu3DCameraMtx);
-                    PSMTXInvXpose(Hu3DCameraMtx, Hu3DCameraMtxXPose);
+                    MTXInvXpose(Hu3DCameraMtx, Hu3DCameraMtxXPose);
                     temp = layerHook[j];
                     temp(j);
                 }
                 if (layerNum[j] != 0) {
                     Hu3DDrawPreInit();
                     Hu3DCameraSet(Hu3DCameraNo, Hu3DCameraMtx);
-                    PSMTXInvXpose(Hu3DCameraMtx, Hu3DCameraMtxXPose);
+                    MTXInvXpose(Hu3DCameraMtx, Hu3DCameraMtxXPose);
                     data = Hu3DData;
                     for (i = 0, var_r23 = i; i < HU3D_MODEL_MAX; i++, data++) {
                         if (data->hsfData != 0) {
@@ -250,8 +250,8 @@ void Hu3DExec(void) {
                                         mtxRot(sp40, data->rot.x, data->rot.y, data->rot.z);
                                         mtxScaleCat(sp40, data->scale.x, data->scale.y, data->scale.z);
                                         mtxTransCat(sp40, data->pos.x, data->pos.y, data->pos.z);
-                                        PSMTXConcat(Hu3DCameraMtx, sp40, sp10);
-                                        PSMTXConcat(sp10, data->unk_F0, sp10);
+                                        MTXConcat(Hu3DCameraMtx, sp40, sp10);
+                                        MTXConcat(sp10, data->unk_F0, sp10);
                                         Hu3DDraw(data, sp10, &data->scale);
                                     }
                                     data->unk_00++;
@@ -396,7 +396,7 @@ s16 Hu3DModelCreate(void *arg0) {
     }
     var_r31->unk_01 = 0;
     var_r31->unk_00 = (u8) var_r30;
-    PSMTXIdentity(var_r31->unk_F0);
+    MTXIdentity(var_r31->unk_F0);
     layerNum[0] += 1;
     HuMemDCFlush(HEAP_DATA);
     if ((var_r31->hsfData->sceneCnt != 0) && ((var_r31->hsfData->scene->start) || (var_r31->hsfData->scene->end))) {
@@ -471,7 +471,7 @@ s16 Hu3DModelLink(s16 arg0) {
         var_r31->unk_38[i] = -1;
     }
     var_r31->unk_01 = 0;
-    PSMTXIdentity(var_r31->unk_F0);
+    MTXIdentity(var_r31->unk_F0);
     layerNum[0] += 1;
     return var_r28;
 }
@@ -519,7 +519,7 @@ s16 Hu3DHookFuncCreate(ModelHookFunc hook) {
         var_r31->unk_38[i] = -1;
     }
     var_r31->unk_01 = 0;
-    PSMTXIdentity(var_r31->unk_F0);
+    MTXIdentity(var_r31->unk_F0);
     layerNum[0] += 1;
     return var_r29;
 }
@@ -1828,8 +1828,8 @@ void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
         break;
     }
     if ((arg0->unk_00 & 0x8000) != 0) {
-        PSMTXMultVec(*arg2, &arg0->unk_28, &sp24);
-        PSMTXMultVec(*arg3, &arg0->unk_1C, &sp18);
+        MTXMultVec(*arg2, &arg0->unk_28, &sp24);
+        MTXMultVec(*arg3, &arg0->unk_1C, &sp18);
         GXInitLightPos(&sp30, sp18.x, sp18.y, sp18.z);
     } else {
         GXInitLightPos(&sp30, arg0->unk_1C.x, arg0->unk_1C.y, arg0->unk_1C.z);
@@ -1937,7 +1937,7 @@ void Hu3DShadowExec(void) {
         test = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
     }
     C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.unk_14, &Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_20);
-    PSMTXCopy(Hu3DCameraMtx, Hu3DShadowData.unk_38);
+    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.unk_38);
     var_r31 = Hu3DData;
     shadowModelDrawF = 1;
     GXInvalidateTexAll();
@@ -1984,11 +1984,11 @@ void Hu3DShadowExec(void) {
                 var_r31->attr |= HU3D_ATTR_MOT_EXEC;
             }
             mtxRot(sp58, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-            PSMTXScale(spB8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-            PSMTXConcat(sp58, spB8, spB8);
+            MTXScale(spB8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+            MTXConcat(sp58, spB8, spB8);
             mtxTransCat(spB8, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-            PSMTXConcat(Hu3DCameraMtx, spB8, sp88);
-            PSMTXConcat(sp88, var_r31->unk_F0, sp88);
+            MTXConcat(Hu3DCameraMtx, spB8, sp88);
+            MTXConcat(sp88, var_r31->unk_F0, sp88);
             Hu3DDraw(var_r31, sp88, &var_r31->scale);
         }
     }
@@ -2018,7 +2018,7 @@ void Hu3DShadowExec(void) {
     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
     GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, 1U, GX_TEVPREV);
     GXSetNumChans(0);
-    PSMTXIdentity(sp88);
+    MTXIdentity(sp88);
     GXLoadPosMtxImm(sp88, 0);
     GXSetZMode(0, GX_ALWAYS, 1);
     GXSetNumChans(1);

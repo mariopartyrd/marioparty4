@@ -478,7 +478,7 @@ static void UpdateExplode(omObjData *arg0) {
             break;
         case 2:
             BoardCameraRotGet(&sp8);
-            PSMTXRotRad(sp20, 'x', MTXDegToRad(sp8.x + 10.0f));
+            MTXRotRad(sp20, 'x', MTXDegToRad(sp8.x + 10.0f));
             BoardModelMtxSet(temp_r30->unk02, &sp20);
             BoardModelRotSet(temp_r30->unk02, 0.0f, 0.0f, 0.0f);
             sp14.x = arg0->scale.x;

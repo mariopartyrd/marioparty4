@@ -123,7 +123,7 @@ void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2) {
     temp_r28 = arg0->hsfData;
     if (arg0->attr & HU3D_ATTR_HOOKFUNC) {
         temp_r31 = &DrawObjData[DrawObjIdx];
-        PSMTXCopy(arg1, temp_r31->matrix);
+        MTXCopy(arg1, temp_r31->matrix);
         sp8.x = temp_r31->matrix[0][3];
         sp8.y = temp_r31->matrix[1][3];
         sp8.z = temp_r31->matrix[2][3];
@@ -139,7 +139,7 @@ void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2) {
     for (i = 0; i < 8; i++) {
         BmpPtrBak[i] = (HsfAttribute*) -1;
     }
-    PSMTXCopy(arg1, MTXBuf[0]);
+    MTXCopy(arg1, MTXBuf[0]);
     scaleBuf[0] = *arg2;
     MTXIdx = 1;
     CancelTRXF = 0;
@@ -220,12 +220,12 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
         if (CancelTRXF == 0) {
             if (arg1->data.cenvCnt != 0 && hookIdx == -1) {
                 temp_r21 = arg1 - temp_r20->object;
-                PSMTXConcat(MTXBuf[0], temp_r20->matrix->data[temp_r21 + temp_r20->matrix->base_idx], MTXBuf[MTXIdx]);
+                MTXConcat(MTXBuf[0], temp_r20->matrix->data[temp_r21 + temp_r20->matrix->base_idx], MTXBuf[MTXIdx]);
             } else {
-                PSMTXScale(sp1C, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
+                MTXScale(sp1C, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
                 mtxRotCat(sp1C, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
                 mtxTransCat(sp1C, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
-                PSMTXConcat(MTXBuf[MTXIdx - 1], sp1C, MTXBuf[MTXIdx]);
+                MTXConcat(MTXBuf[MTXIdx - 1], sp1C, MTXBuf[MTXIdx]);
             }
             temp_r28 = &scaleBuf[MTXIdx];
             temp_r24 = temp_r28 - 1;
@@ -234,29 +234,29 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
             temp_r28->z = temp_r24->z * var_r30->scale.z;
             temp_r29->scale = *temp_r28;
             if (arg1->flags & 1) {
-                PSMTXInverse(MTXBuf[MTXIdx], sp1C);
+                MTXInverse(MTXBuf[MTXIdx], sp1C);
                 sp1C[0][3] = sp1C[1][3] = sp1C[2][3] = 0.0f;
-                PSMTXConcat(MTXBuf[MTXIdx], sp1C, temp_r29->matrix);
+                MTXConcat(MTXBuf[MTXIdx], sp1C, temp_r29->matrix);
                 mtxScaleCat(temp_r29->matrix, temp_r28->x, temp_r28->y, temp_r28->z);
             } else {
-                PSMTXCopy(MTXBuf[MTXIdx], temp_r29->matrix);
+                MTXCopy(MTXBuf[MTXIdx], temp_r29->matrix);
             }
             MTXIdx++;
             var_r18 = 1;
         } else {
             if (arg1->flags & 1) {
-                PSMTXInverse(MTXBuf[MTXIdx - 1], sp1C);
+                MTXInverse(MTXBuf[MTXIdx - 1], sp1C);
                 sp1C[0][3] = sp1C[1][3] = sp1C[2][3] = 0.0f;
-                PSMTXConcat(MTXBuf[MTXIdx - 1], sp1C, temp_r29->matrix);
+                MTXConcat(MTXBuf[MTXIdx - 1], sp1C, temp_r29->matrix);
                 mtxScaleCat(temp_r29->matrix, scaleBuf[MTXIdx - 1].x, scaleBuf[MTXIdx - 1].y, scaleBuf[MTXIdx - 1].z);
             } else {
-                PSMTXCopy(MTXBuf[MTXIdx - 1], temp_r29->matrix);
+                MTXCopy(MTXBuf[MTXIdx - 1], temp_r29->matrix);
             }
             temp_r29->scale = scaleBuf[MTXIdx - 1];
             CancelTRXF = 0;
             var_r18 = 0;
         }
-        PSMTXCopy(temp_r29->matrix, temp_r25->matrix);
+        MTXCopy(temp_r29->matrix, temp_r25->matrix);
         if (temp_r25->hook != -1) {
             temp_r31 = &Hu3DData[temp_r25->hook];
             if (!(temp_r31->attr & HU3D_ATTR_DISPOFF)) {
@@ -268,11 +268,11 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
                 }
                 sp8 = hookIdx;
                 hookIdx = temp_r25->hook;
-                PSMTXScale(sp1C, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
+                MTXScale(sp1C, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
                 mtxRotCat(sp1C, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
                 mtxTransCat(sp1C, temp_r31->pos.x, temp_r31->pos.y, temp_r31->pos.z);
-                PSMTXConcat(sp1C, temp_r31->unk_F0, sp1C);
-                PSMTXConcat(temp_r29->matrix, sp1C, MTXBuf[MTXIdx]);
+                MTXConcat(sp1C, temp_r31->unk_F0, sp1C);
+                MTXConcat(temp_r29->matrix, sp1C, MTXBuf[MTXIdx]);
                 temp_r28 = &scaleBuf[MTXIdx];
                 temp_r24 = temp_r28 - 1;
                 temp_r28->x = temp_r24->x * temp_r31->scale.x;
@@ -377,8 +377,8 @@ s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2) {
     temp_f31 = (temp_r29->x - temp_r31->x) * 0.5;
     temp_f30 = (temp_r29->y - temp_r31->y) * 0.5;
     temp_f29 = (temp_r29->z - temp_r31->z) * 0.5;
-    PSMTXTrans(sp28, temp_f31 + temp_r31->x, temp_f30 + temp_r31->y, temp_f29 + temp_r31->z);
-    PSMTXConcat(arg2, sp28, sp28);
+    MTXTrans(sp28, temp_f31 + temp_r31->x, temp_f30 + temp_r31->y, temp_f29 + temp_r31->z);
+    MTXConcat(arg2, sp28, sp28);
     temp_f21 = var_f26 * sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30 + temp_f29 * temp_f29);
     temp_f20 = sp28[0][3];
     temp_f19 = sp28[1][3];
@@ -795,7 +795,7 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
             if (var_f31 < 0.1) {
                 var_f31 = 0.1f;
             }
-            PSMTXCopy(hiliteMtx, sp20);
+            MTXCopy(hiliteMtx, sp20);
             mtxScaleCat(sp20, var_f31, var_f31, var_f31);
             GXLoadTexMtxImm(sp20, GX_TEXMTX7, GX_MTX2x4);
             var_r30++;
@@ -935,12 +935,12 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         var_r30 = var_r31 = 1;
         temp_r29 = &temp_r19->data.attribute[arg1->attrs[0]];
         if (temp_r29->unk28 != 1.0f || temp_r29->unk2C != 1.0f) {
-            PSMTXScale(sp54, 1.0f / temp_r29->unk28, 1.0f / temp_r29->unk2C, 1.0f);
+            MTXScale(sp54, 1.0f / temp_r29->unk28, 1.0f / temp_r29->unk2C, 1.0f);
             mtxTransCat(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
             GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
             GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
         } else if (temp_r29->unk30 != 0.0f || temp_r29->unk34 != 0.0f) {
-            PSMTXTrans(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
+            MTXTrans(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
             GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
             GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
         } else {
@@ -953,13 +953,13 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                     GXLoadTexMtxImm(Hu3DTexScrData[temp_r28->unk04].unk3C, GX_TEXMTX0, GX_MTX2x4);
                     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
                 } else if (temp_r28->unk00 & 4) {
-                    PSMTXScale(sp54, 1.0f / temp_r28->unk20, 1.0f / temp_r28->unk24, 1.0f / temp_r28->unk28);
+                    MTXScale(sp54, 1.0f / temp_r28->unk20, 1.0f / temp_r28->unk24, 1.0f / temp_r28->unk28);
                     mtxRotCat(sp54, temp_r28->unk14, temp_r28->unk18, temp_r28->unk1C);
                     mtxTransCat(sp54, -temp_r28->unk08, -temp_r28->unk0C, -temp_r28->unk10);
                     GXLoadTexMtxImm(sp54, GX_TEXMTX0, GX_MTX2x4);
                     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
                 } else if (temp_r28->unk00 & 1) {
-                    PSMTXScale(sp54, temp_r28->unk2C, temp_r28->unk30, 1.0f);
+                    MTXScale(sp54, temp_r28->unk2C, temp_r28->unk30, 1.0f);
                     mtxTransCat(sp54, temp_r28->unk34, temp_r28->unk38, 0.0f);
                     GXLoadTexMtxImm(sp54, GX_TEXMTX0, GX_MTX2x4);
                     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
@@ -1056,7 +1056,7 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 if (var_f31 < 0.1) {
                     var_f31 = 0.1f;
                 }
-                PSMTXCopy(hiliteMtx, sp54);
+                MTXCopy(hiliteMtx, sp54);
                 mtxScaleCat(sp54, var_f31, var_f31, var_f31);
                 GXLoadTexMtxImm(sp54, GX_TEXMTX7, GX_MTX2x4);
                 var_r31++;
@@ -1131,7 +1131,7 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         temp_r23 = (u16) var_r30;
                         var_r30++;
                     } else if (temp_r28->unk00 & 4) {
-                        PSMTXScale(sp54, 1.0f / temp_r28->unk20, 1.0f / temp_r28->unk24, 1.0f / temp_r28->unk28);
+                        MTXScale(sp54, 1.0f / temp_r28->unk20, 1.0f / temp_r28->unk24, 1.0f / temp_r28->unk28);
                         mtxRotCat(sp54, temp_r28->unk14, temp_r28->unk18, temp_r28->unk1C);
                         mtxTransCat(sp54, -temp_r28->unk08, -temp_r28->unk0C, -temp_r28->unk10);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
@@ -1139,7 +1139,7 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         temp_r23 = (u16) var_r30;
                         var_r30++;
                     } else if (temp_r28->unk00 & 1) {
-                        PSMTXScale(sp54, temp_r28->unk2C, temp_r28->unk30, 1.0f);
+                        MTXScale(sp54, temp_r28->unk2C, temp_r28->unk30, 1.0f);
                         mtxTransCat(sp54, temp_r28->unk34, temp_r28->unk38, 0.0f);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
@@ -1152,12 +1152,12 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                     }
                 } else {
                     if (temp_r29->unk28 != 1.0f || temp_r29->unk2C != 1.0f) {
-                        PSMTXScale(sp54, 1.0f / temp_r29->unk28, 1.0f / temp_r29->unk2C, 1.0f);
+                        MTXScale(sp54, 1.0f / temp_r29->unk28, 1.0f / temp_r29->unk2C, 1.0f);
                         mtxTransCat(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
                     } else if (temp_r29->unk30 != 0.0f || temp_r29->unk34 != 0.0f) {
-                        PSMTXTrans(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
+                        MTXTrans(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
                     } else {
@@ -1298,11 +1298,11 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_APREV);
                 GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
             }
-            PSMTXScale(sp54, 1.0f / arg0->scale.x, 1.0f / arg0->scale.y, 1.0f / arg0->scale.z);
-            PSMTXConcat(arg0->matrix, sp54, sp54);
+            MTXScale(sp54, 1.0f / arg0->scale.x, 1.0f / arg0->scale.y, 1.0f / arg0->scale.z);
+            MTXConcat(arg0->matrix, sp54, sp54);
             sp54[0][3] = sp54[1][3] = sp54[2][3] = 0.0f;
-            PSMTXConcat(sp54, Hu3DCameraMtxXPose, sp54);
-            PSMTXConcat(refMtx, sp54, sp54);
+            MTXConcat(sp54, Hu3DCameraMtxXPose, sp54);
+            MTXConcat(refMtx, sp54, sp54);
             GXLoadTexMtxImm(sp54, 0x36, GX_MTX2x4);
             var_r31++;
             var_r30++;
@@ -1320,7 +1320,7 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 if (var_f31 < 0.1) {
                     var_f31 = 0.1f;
                 }
-                PSMTXCopy(hiliteMtx, sp54);
+                MTXCopy(hiliteMtx, sp54);
                 mtxScaleCat(sp54, var_f31, var_f31, var_f31);
                 GXLoadTexMtxImm(sp54, 0x33, GX_MTX2x4);
                 if (var_r20 == -1) {
@@ -1551,11 +1551,11 @@ static void SetReflect(HsfDrawObject *arg0, s16 arg1, s16 arg2, u8 arg3) {
     GXSetTevColorOp(arg1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
     GXSetTevAlphaIn(arg1, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_APREV);
     GXSetTevAlphaOp(arg1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
-    PSMTXScale(sp3C, 1.0f / arg0->scale.x, 1.0f / arg0->scale.y, 1.0f / arg0->scale.z);
-    PSMTXConcat(arg0->matrix, sp3C, spC);
+    MTXScale(sp3C, 1.0f / arg0->scale.x, 1.0f / arg0->scale.y, 1.0f / arg0->scale.z);
+    MTXConcat(arg0->matrix, sp3C, spC);
     spC[0][3] = spC[1][3] = spC[2][3] = 0.0f;
-    PSMTXConcat(spC, Hu3DCameraMtxXPose, sp3C);
-    PSMTXConcat(refMtx, sp3C, spC);
+    MTXConcat(spC, Hu3DCameraMtxXPose, sp3C);
+    MTXConcat(refMtx, sp3C, spC);
     GXLoadTexMtxImm(spC, GX_TEXMTX8, GX_MTX2x4);
 }
 
@@ -1854,10 +1854,10 @@ static void objNull(ModelData *arg0, HsfObject *arg1) {
             var_r31 = &arg1->data.curr;
         }
         if (arg0->hsfData->cenvCnt == 0 || hookIdx != -1) {
-            PSMTXScale(sp8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+            MTXScale(sp8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
             mtxRotCat(sp8, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
             mtxTransCat(sp8, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-            PSMTXConcat(MTXBuf[MTXIdx - 1], sp8, MTXBuf[MTXIdx]);
+            MTXConcat(MTXBuf[MTXIdx - 1], sp8, MTXBuf[MTXIdx]);
         }
         temp_r28 = &scaleBuf[MTXIdx];
         temp_r27 = temp_r28 - 1;
@@ -1893,10 +1893,10 @@ static void objRoot(ModelData *arg0, HsfObject *arg1) {
             var_r31 = &arg1->data.curr;
         }
         if (arg0->hsfData->cenvCnt == 0 || hookIdx != -1) {
-            PSMTXScale(sp8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+            MTXScale(sp8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
             mtxRotCat(sp8, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
             mtxTransCat(sp8, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-            PSMTXConcat(MTXBuf[MTXIdx - 1], sp8, MTXBuf[MTXIdx]);
+            MTXConcat(MTXBuf[MTXIdx - 1], sp8, MTXBuf[MTXIdx]);
         }
         temp_r30 = &scaleBuf[MTXIdx];
         temp_r29 = temp_r30 - 1;
@@ -1932,10 +1932,10 @@ static void objJoint(ModelData *arg0, HsfObject *arg1) {
             var_r31 = &arg1->data.curr;
         }
         if (arg0->hsfData->cenvCnt == 0 || hookIdx != -1) {
-            PSMTXScale(sp8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+            MTXScale(sp8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
             mtxRotCat(sp8, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
             mtxTransCat(sp8, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-            PSMTXConcat(MTXBuf[MTXIdx - 1], sp8, MTXBuf[MTXIdx]);
+            MTXConcat(MTXBuf[MTXIdx - 1], sp8, MTXBuf[MTXIdx]);
         }
         temp_r28 = &scaleBuf[MTXIdx];
         temp_r27 = temp_r28 - 1;
@@ -1970,10 +1970,10 @@ static void objMap(ModelData *arg0, HsfObject *arg1) {
         } else {
             var_r31 = &arg1->data.curr;
         }
-        PSMTXScale(spC, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+        MTXScale(spC, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
         mtxRotCat(spC, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
         mtxTransCat(spC, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-        PSMTXConcat(MTXBuf[MTXIdx - 1], spC, MTXBuf[MTXIdx]);
+        MTXConcat(MTXBuf[MTXIdx - 1], spC, MTXBuf[MTXIdx]);
         temp_r30 = &scaleBuf[MTXIdx];
         temp_r29 = temp_r30 - 1;
         temp_r30->x = temp_r29->x * var_r31->scale.x;
@@ -2004,10 +2004,10 @@ static void objReplica(ModelData *arg0, HsfObject *arg1) {
         var_r31 = &arg1->data.curr;
     }
     mtxRot(spC, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-    PSMTXScale(sp3C, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-    PSMTXConcat(spC, sp3C, sp3C);
+    MTXScale(sp3C, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+    MTXConcat(spC, sp3C, sp3C);
     mtxTransCat(sp3C, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-    PSMTXConcat(MTXBuf[MTXIdx - 1], sp3C, MTXBuf[MTXIdx]);
+    MTXConcat(MTXBuf[MTXIdx - 1], sp3C, MTXBuf[MTXIdx]);
     scaleBuf[MTXIdx].x = var_r31->scale.x * scaleBuf[MTXIdx - 1].x;
     scaleBuf[MTXIdx].y = var_r31->scale.y * scaleBuf[MTXIdx - 1].y;
     scaleBuf[MTXIdx].z = var_r31->scale.z * scaleBuf[MTXIdx - 1].z;
@@ -2112,13 +2112,13 @@ void Hu3DDrawPost(void) {
                 DLBufStartP = Hu3DObjInfoP->dlBuf;
                 DrawData = Hu3DObjInfoP->drawData;
                 GXLoadPosMtxImm(temp_r28->matrix, GX_PNMTX0);
-                PSMTXInvXpose(temp_r28->matrix, sp120);
+                MTXInvXpose(temp_r28->matrix, sp120);
                 GXLoadNrmMtxImm(sp120, 0);
                 if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
-                    PSMTXInverse(Hu3DCameraMtx, spF0);
-                    PSMTXConcat(spF0, temp_r28->matrix, sp120);
-                    PSMTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp150);
-                    PSMTXConcat(sp150, sp120, sp120);
+                    MTXInverse(Hu3DCameraMtx, spF0);
+                    MTXConcat(spF0, temp_r28->matrix, sp120);
+                    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp150);
+                    MTXConcat(sp150, sp120, sp120);
                     GXLoadTexMtxImm(sp120, GX_TEXMTX9, GX_MTX3x4);
                     var_r19 = 1;
                 } else {
@@ -2126,13 +2126,13 @@ void Hu3DDrawPost(void) {
                 }
                 if (temp_r28->model->unk_02 != 0) {
                     if (var_r19 == 0) {
-                        PSMTXInverse(Hu3DCameraMtx, spF0);
+                        MTXInverse(Hu3DCameraMtx, spF0);
                     }
                     for (i = 0, var_r21 = 1; i < 4; i++, var_r21 <<= 1) {
                         if (var_r21 & temp_r28->model->unk_02) {
-                            PSMTXConcat(spF0, temp_r28->matrix, sp120);
-                            PSMTXConcat(Hu3DProjection[i].unk_68, Hu3DProjection[i].unk_38, sp150);
-                            PSMTXConcat(sp150, sp120, sp120);
+                            MTXConcat(spF0, temp_r28->matrix, sp120);
+                            MTXConcat(Hu3DProjection[i].unk_68, Hu3DProjection[i].unk_38, sp150);
+                            MTXConcat(sp150, sp120, sp120);
                             GXLoadTexMtxImm(sp120, texMtxTbl[i + 3], GX_MTX3x4);
                         }
                     }
@@ -2142,32 +2142,32 @@ void Hu3DDrawPost(void) {
                     temp_r22 = &Hu3DGlobalLight[temp_r28->model->unk_03];
                     sp30 = temp_r22->unk_28;
                     if (temp_r22->unk_00 & 0x8000) {
-                        PSMTXMultVecSR(Hu3DCameraMtx, &sp30, &sp30);
+                        MTXMultVecSR(Hu3DCameraMtx, &sp30, &sp30);
                     }
                     temp_f30 = VECDotProduct(&sp30, &sp54);
                     temp_f30 *= 10000.0f;
                     OSf32tos16(&temp_f30, &sp8);
                     if (sp8 == -10000) {
-                        PSMTXScale(hiliteMtx, 0.0f, 0.0f, 0.0f);
+                        MTXScale(hiliteMtx, 0.0f, 0.0f, 0.0f);
                     } else {
                         C_VECHalfAngle(&sp30, &sp54, &sp3C);
                         sp3C.x = -sp3C.x;
                         sp3C.y = -sp3C.y;
                         sp3C.z = -sp3C.z;
-                        PSMTXScale(sp60, 1.0f / temp_r28->scale.x, 1.0f / temp_r28->scale.y, 1.0f / temp_r28->scale.z);
-                        PSMTXConcat(temp_r28->matrix, sp60, spC0);
+                        MTXScale(sp60, 1.0f / temp_r28->scale.x, 1.0f / temp_r28->scale.y, 1.0f / temp_r28->scale.z);
+                        MTXConcat(temp_r28->matrix, sp60, spC0);
                         spC0[0][3] = spC0[1][3] = spC0[2][3] = 0.0f;
-                        PSMTXInvXpose(spC0, sp90);
+                        MTXInvXpose(spC0, sp90);
                         if (sp8 == 10000) {
-                            PSMTXIdentity(spC0);
+                            MTXIdentity(spC0);
                         } else {
                             VECCrossProduct(&sp3C, &sp54, &sp48);
                             temp_f28 = acosf(VECDotProduct(&sp54, &sp3C));
-                            PSMTXRotAxisRad(spC0, &sp48, temp_f28);
+                            MTXRotAxisRad(spC0, &sp48, temp_f28);
                         }
-                        PSMTXConcat(spC0, sp90, sp60);
-                        PSMTXTrans(spC0, 0.5f, 0.5f, 0.0f);
-                        PSMTXConcat(spC0, sp60, hiliteMtx);
+                        MTXConcat(spC0, sp90, sp60);
+                        MTXTrans(spC0, 0.5f, 0.5f, 0.0f);
+                        MTXConcat(spC0, sp60, hiliteMtx);
                     }
                 }
                 temp_r24 = temp_r28->object->data.face;
@@ -2250,14 +2250,14 @@ static void ObjDraw(HsfDrawObject *arg0) {
     DLBufStartP = Hu3DObjInfoP->dlBuf;
     DrawData = Hu3DObjInfoP->drawData;
     GXLoadPosMtxImm(arg0->matrix, GX_PNMTX0);
-    PSMTXInvXpose(arg0->matrix, sp110);
+    MTXInvXpose(arg0->matrix, sp110);
     GXLoadNrmMtxImm(sp110, 0);
     GXInvalidateVtxCache();
     if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
-        PSMTXInverse(Hu3DCameraMtx, spE0);
-        PSMTXConcat(spE0, arg0->matrix, sp110);
-        PSMTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp140);
-        PSMTXConcat(sp140, sp110, sp110);
+        MTXInverse(Hu3DCameraMtx, spE0);
+        MTXConcat(spE0, arg0->matrix, sp110);
+        MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp140);
+        MTXConcat(sp140, sp110, sp110);
         GXLoadTexMtxImm(sp110, GX_TEXMTX9, GX_MTX3x4);
         var_r22 = 1;
     } else {
@@ -2265,13 +2265,13 @@ static void ObjDraw(HsfDrawObject *arg0) {
     }
     if (arg0->model->unk_02 != 0) {
         if (var_r22 == 0) {
-            PSMTXInverse(Hu3DCameraMtx, spE0);
+            MTXInverse(Hu3DCameraMtx, spE0);
         }
         for (i = 0, var_r23 = 1; i < 4; i++, var_r23 <<= 1) {
             if (var_r23 & arg0->model->unk_02) {
-                PSMTXConcat(spE0, arg0->matrix, sp110);
-                PSMTXConcat(Hu3DProjection[i].unk_68, Hu3DProjection[i].unk_38, sp140);
-                PSMTXConcat(sp140, sp110, sp110);
+                MTXConcat(spE0, arg0->matrix, sp110);
+                MTXConcat(Hu3DProjection[i].unk_68, Hu3DProjection[i].unk_38, sp140);
+                MTXConcat(sp140, sp110, sp110);
                 GXLoadTexMtxImm(sp110, texMtxTbl[i + 3], GX_MTX3x4);
             }
         }
@@ -2281,32 +2281,32 @@ static void ObjDraw(HsfDrawObject *arg0) {
         temp_r24 = &Hu3DGlobalLight[arg0->model->unk_03];
         sp20 = temp_r24->unk_28;
         if (temp_r24->unk_00 & 0x8000) {
-            PSMTXMultVecSR(Hu3DCameraMtx, &sp20, &sp20);
+            MTXMultVecSR(Hu3DCameraMtx, &sp20, &sp20);
         }
         temp_f30 = VECDotProduct(&sp20, &sp44);
         temp_f30 *= 10000.0f;
         OSf32tos16(&temp_f30, &var_r21);
         if (var_r21 == -10000) {
-            PSMTXScale(hiliteMtx, 0.0f, 0.0f, 0.0f);
+            MTXScale(hiliteMtx, 0.0f, 0.0f, 0.0f);
         } else {
             C_VECHalfAngle(&sp20, &sp44, &sp2C);
             sp2C.x = -sp2C.x;
             sp2C.y = -sp2C.y;
             sp2C.z = -sp2C.z;
-            PSMTXScale(sp50, 1.0f / arg0->scale.x, 1.0f / arg0->scale.y, 1.0f / arg0->scale.z);
-            PSMTXConcat(arg0->matrix, sp50, spB0);
+            MTXScale(sp50, 1.0f / arg0->scale.x, 1.0f / arg0->scale.y, 1.0f / arg0->scale.z);
+            MTXConcat(arg0->matrix, sp50, spB0);
             spB0[0][3] = spB0[1][3] = spB0[2][3] = 0.0f;
-            PSMTXInvXpose(spB0, sp80);
+            MTXInvXpose(spB0, sp80);
             if (var_r21 == 10000) {
-                PSMTXIdentity(spB0);
+                MTXIdentity(spB0);
             } else {
                 VECCrossProduct(&sp2C, &sp44, &sp38);
                 temp_f29 = acosf(VECDotProduct(&sp44, &sp2C));
-                PSMTXRotAxisRad(spB0, &sp38, temp_f29);
+                MTXRotAxisRad(spB0, &sp38, temp_f29);
             }
-            PSMTXConcat(spB0, sp80, sp50);
-            PSMTXTrans(spB0, 0.5f, 0.5f, 0.0f);
-            PSMTXConcat(spB0, sp50, hiliteMtx);
+            MTXConcat(spB0, sp80, sp50);
+            MTXTrans(spB0, 0.5f, 0.5f, 0.0f);
+            MTXConcat(spB0, sp50, hiliteMtx);
         }
     }
     temp_r26 = arg0->object->data.face;
@@ -2857,16 +2857,16 @@ void mtxRotCat(Mtx arg0, float arg1, float arg2, float arg3) {
     Mtx sp8;
 
     if (arg1 != 0.0f) {
-        PSMTXRotRad(sp8, 'X', MTXDegToRad(arg1));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 'X', MTXDegToRad(arg1));
+        MTXConcat(sp8, arg0, arg0);
     }
     if (arg2 != 0.0f) {
-        PSMTXRotRad(sp8, 'Y', MTXDegToRad(arg2));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 'Y', MTXDegToRad(arg2));
+        MTXConcat(sp8, arg0, arg0);
     }
     if (arg3 != 0.0f) {
-        PSMTXRotRad(sp8, 'Z', MTXDegToRad(arg3));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 'Z', MTXDegToRad(arg3));
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 
@@ -2875,17 +2875,17 @@ void mtxRot(Mtx arg0, float arg1, float arg2, float arg3) {
     Mtx sp8;
 
     if (arg1 != 0.0f) {
-        PSMTXRotRad(arg0, 'X', MTXDegToRad(arg1));
+        MTXRotRad(arg0, 'X', MTXDegToRad(arg1));
     } else {
-        PSMTXIdentity(arg0);
+        MTXIdentity(arg0);
     }
     if (arg2 != 0.0f) {
-        PSMTXRotRad(sp38, 'Y', MTXDegToRad(arg2));
-        PSMTXConcat(sp38, arg0, arg0);
+        MTXRotRad(sp38, 'Y', MTXDegToRad(arg2));
+        MTXConcat(sp38, arg0, arg0);
     }
     if (arg3 != 0.0f) {
-        PSMTXRotRad(sp8, 'Z', MTXDegToRad(arg3));
-        PSMTXConcat(sp8, arg0, arg0);
+        MTXRotRad(sp8, 'Z', MTXDegToRad(arg3));
+        MTXConcat(sp8, arg0, arg0);
     }
 }
 
@@ -2980,8 +2980,8 @@ void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2) {
     temp_r31 = &Hu3DData[arg0];
     temp_r30 = temp_r31->hsfData;
     mtxRot(sp70, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
-    PSMTXScale(spA0, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
-    PSMTXConcat(sp70, spA0, MTXBuf[0]);
+    MTXScale(spA0, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
+    MTXConcat(sp70, spA0, MTXBuf[0]);
     mtxTransCat(MTXBuf[0], temp_r31->pos.x, temp_r31->pos.y, temp_r31->pos.z);
     PGMaxPos.x = PGMaxPos.y = PGMaxPos.z = -1000000.0f;
     PGMinPos.x = PGMinPos.y = PGMinPos.z = 1000000.0f;
@@ -2997,10 +2997,10 @@ void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2) {
         attachMotionF = 0;
     }
     PGObjCall(temp_r31, temp_r30->root);
-    PSMTXCopy(MTXBuf[MTXIdx - 1], arg2);
+    MTXCopy(MTXBuf[MTXIdx - 1], arg2);
     if (PGFinishF == 0 && *PGName != 0) {
         OSReport("Error: Not Found %s for ObjPosGet\n", arg1);
-        PSMTXIdentity(MTXBuf[MTXIdx]);
+        MTXIdentity(MTXBuf[MTXIdx]);
     }
     HuMemDirectFree(PGName);
 }
@@ -3042,10 +3042,10 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
             var_r30 = &arg1->data.curr;
         }
         mtxRot(spA4, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
-        PSMTXScale(spD4, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
-        PSMTXConcat(spA4, spD4, spD4);
+        MTXScale(spD4, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
+        MTXConcat(spA4, spD4, spD4);
         mtxTransCat(spD4, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
-        PSMTXConcat(MTXBuf[MTXIdx - 1], spD4, MTXBuf[MTXIdx]);
+        MTXConcat(MTXBuf[MTXIdx - 1], spD4, MTXBuf[MTXIdx]);
         MTXIdx++;
         var_r24 = 1;
     } else {
@@ -3068,11 +3068,11 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
             }
             temp_r22 = hookIdx;
             hookIdx = temp_r28->hook;
-            PSMTXScale(spD4, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
+            MTXScale(spD4, temp_r31->scale.x, temp_r31->scale.y, temp_r31->scale.z);
             mtxRotCat(spD4, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
             mtxTransCat(spD4, temp_r31->pos.x, temp_r31->pos.y, temp_r31->pos.z);
-            PSMTXConcat(spD4, temp_r31->unk_F0, spD4);
-            PSMTXConcat(MTXBuf[MTXIdx - 1], spD4, MTXBuf[MTXIdx]);
+            MTXConcat(spD4, temp_r31->unk_F0, spD4);
+            MTXConcat(MTXBuf[MTXIdx - 1], spD4, MTXBuf[MTXIdx]);
             MTXIdx++;
             PGObjCall(temp_r31, temp_r31->hsfData->root);
             MTXIdx--;
@@ -3082,7 +3082,7 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
     }
     if (*PGName == 0 && arg1->type == 2) {
         var_r23 = arg1;
-        PSMTXMultVec(MTXBuf[MTXIdx - 1], (Vec*) &var_r23->data.mesh.min, &sp8);
+        MTXMultVec(MTXBuf[MTXIdx - 1], (Vec*) &var_r23->data.mesh.min, &sp8);
         if (sp8.x < PGMinPos.x) {
             PGMinPos.x = sp8.x;
         }
@@ -3101,7 +3101,7 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
         if (sp8.z > PGMaxPos.z) {
             PGMaxPos.z = sp8.z;
         }
-        PSMTXMultVec(MTXBuf[MTXIdx - 1], (Vec*) &var_r23->data.mesh.max, &sp8);
+        MTXMultVec(MTXBuf[MTXIdx - 1], (Vec*) &var_r23->data.mesh.max, &sp8);
         if (sp8.x < PGMinPos.x) {
             PGMinPos.x = sp8.x;
         }
@@ -3143,10 +3143,10 @@ void PGObjReplica(ModelData *arg0, HsfObject *arg1) {
         var_r31 = &arg1->data.curr;
     }
     mtxRot(sp188, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
-    PSMTXScale(sp1B8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
-    PSMTXConcat(sp188, sp1B8, sp1B8);
+    MTXScale(sp1B8, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
+    MTXConcat(sp188, sp1B8, sp1B8);
     mtxTransCat(sp1B8, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
-    PSMTXConcat(MTXBuf[MTXIdx - 1], sp1B8, MTXBuf[MTXIdx]);
+    MTXConcat(MTXBuf[MTXIdx - 1], sp1B8, MTXBuf[MTXIdx]);
     MTXIdx++;
     CancelTRXF = 1;
     PGObjCall(arg0, arg1->data.replica);
@@ -3208,7 +3208,7 @@ void Hu3DModelObjDraw(s16 arg0, char *arg1, Mtx arg2) {
     sp14.model = &Hu3DData[arg0];
     sp14.object = temp_r3 = Hu3DModelObjPtrGet(arg0, arg1);
     sp10 = temp_r3->constData;
-    PSMTXCopy(arg2, sp14.matrix);
+    MTXCopy(arg2, sp14.matrix);
     sp14.scale.x = sp14.scale.y = sp14.scale.z = 1.0f;
     ObjDraw(&sp14);
 }
