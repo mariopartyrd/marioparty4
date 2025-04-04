@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.13)
+if (APPLE)
+project(marioparty4 LANGUAGES C CXX OBJC)
+else ()
 project(marioparty4 LANGUAGES C CXX)
+endif ()
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
+
+# Set build type to Debug if not specified
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 if (CMAKE_SYSTEM_NAME STREQUAL Linux)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-pragmas -Wno-unused-variable -Wno-unused-parameter")
@@ -10,6 +20,10 @@ if (CMAKE_SYSTEM_NAME STREQUAL Linux)
   set(CMAKE_LIBRARY_ARCHITECTURE i386-linux-gnu)
   set(CMAKE_LIBRARY_PATH "/usr/lib32" CACHE PATH "")
   set(CMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX 32)
+endif ()
+
+if(APPLE)
+  add_compile_options(-Wno-declaration-after-statement)
 endif ()
 
 add_subdirectory(extern/aurora EXCLUDE_FROM_ALL)
@@ -51,6 +65,15 @@ set(PORT_FILES
 source_group("Dolphin" FILES ${DOLPHIN_FILES})
 source_group("Game" FILES ${GAME_FILES})
 source_group("Port" FILES ${PORT_FILES})
+
+if (NOT MSVC)
+foreach(file ${DOLPHIN_FILES})
+set_source_files_properties(${file} PROPERTIES COMPILE_FLAGS "-std=c89 -Dinline=")
+endforeach()
+foreach(file ${GAME_FILES})
+set_source_files_properties(${file} PROPERTIES COMPILE_FLAGS "-std=c89 -Dinline=")
+endforeach()
+endif ()
 
 add_executable(marioparty4 ${DOLPHIN_FILES} ${GAME_FILES} ${PORT_FILES})
 target_compile_definitions(marioparty4 PRIVATE TARGET_PC VERSION=0)

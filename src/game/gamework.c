@@ -39,6 +39,13 @@ static inline void InitPlayerConfig(void)
     }
 }
 
+// TODO: get these properly declared somewhere
+extern void GWRumbleSet(s32 value);
+extern void GWMGExplainSet(s32 value);
+extern void GWMGShowComSet(s32 value);
+extern void GWMessSpeedSet(s32 value);
+extern void GWSaveModeSet(s32 value);
+
 static inline void ResetBoardSettings(void)
 {
     GWRumbleSet(1);

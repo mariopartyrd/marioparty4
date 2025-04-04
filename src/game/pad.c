@@ -2,6 +2,9 @@
 #include "game/msm.h"
 #include "game/pad.h"
 
+#ifdef TARGET_PC
+#include <stdlib.h>
+#endif
 
 typedef struct pad_rumble {
     s16 duration;
