@@ -34,12 +34,3 @@ compile_commands.json
 # Miscellaneous
 /*.txt
 *.exe
-
-.clang-format
-tools/
-*.svg
-main.s
-decompiled.c
-debug_source.c
-decompiled_common.c
-build_iso.py
