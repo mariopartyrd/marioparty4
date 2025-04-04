@@ -1298,3 +1298,57 @@ void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, float scaleS, float scal
     m[2][2] = 0.0f;
     m[2][3] = 1.0f;
 }
+
+#ifdef TARGET_PC
+void C_MTXReorder(const Mtx src, ROMtx dest)
+{
+    u32 i, j;
+    for (i = 0; i < 3; j++) {
+        for (int j = 0; j < 4; j++) {
+            dest[j][i] = src[i][j];
+        }
+    }
+}
+
+void C_MTXMultVec(const Mtx m, const Vec *in, Vec *out)
+{
+    out->x = m[0][0] * in->x + m[0][1] * in->y + m[0][2] * in->z + m[0][3];
+    out->y = m[1][0] * in->x + m[1][1] * in->y + m[1][2] * in->z + m[1][3];
+    out->z = m[2][0] * in->x + m[2][1] * in->y + m[2][2] * in->z + m[2][3];
+}
+
+void C_MTXMultVecArray(const Mtx m, const Vec *srcBase, Vec *dstBase, u32 count)
+{
+    u32 i;
+    for (i = 0; i < count; i++) {
+        dstBase[i].x = m[0][0] * srcBase[i].x + m[0][1] * srcBase[i].y + m[0][2] * srcBase[i].z + m[0][3];
+        dstBase[i].y = m[1][0] * srcBase[i].x + m[1][1] * srcBase[i].y + m[1][2] * srcBase[i].z + m[1][3];
+        dstBase[i].z = m[2][0] * srcBase[i].x + m[2][1] * srcBase[i].y + m[2][2] * srcBase[i].z + m[2][3];
+    }
+}
+
+void C_MTXROMultVecArray(const ROMtx m, const Vec *srcBase, Vec *dstBase, u32 count)
+{
+    u32 i;
+    for (u32 i = 0; i < count; ++i) {
+        Vec* src = &srcBase[i];
+        Vec* dst = &dstBase[i];
+
+        // Perform matrix-vector multiplication: ROMtx * Vec -> Vec
+        dst->x = m[0][0] * src->x + m[0][1] * src->y + m[0][2] * src->z;
+        dst->y = m[1][0] * src->x + m[1][1] * src->y + m[1][2] * src->z;
+        dst->z = m[2][0] * src->x + m[2][1] * src->y + m[2][2] * src->z;
+    }
+}
+
+void C_MTXMultVecSR(const Mtx mtx, const Vec* in, Vec* out) {
+    float x = in->x;
+    float y = in->y;
+    float z = in->z;
+
+    out->x = mtx[0][0] * x + mtx[0][1] * y + mtx[0][2] * z;
+    out->y = mtx[1][0] * x + mtx[1][1] * y + mtx[1][2] * z;
+    out->z = mtx[2][0] * x + mtx[2][1] * y + mtx[2][2] * z;
+}
+
+#endif
