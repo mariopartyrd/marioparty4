@@ -30,11 +30,12 @@ add_subdirectory(extern/aurora EXCLUDE_FROM_ALL)
 add_subdirectory(extern/musyx EXCLUDE_FROM_ALL)
 
 set(DOLPHIN_FILES
-    src/dolphin/os/OSAlloc.c
-    src/dolphin/os/OSArena.c
-    src/dolphin/mtx/mtx.c
-    src/dolphin/mtx/mtx44.c
-    src/dolphin/mtx/vec.c
+  src/dolphin/mtx/mtx.c
+  src/dolphin/mtx/mtx44.c
+  src/dolphin/mtx/vec.c
+  src/dolphin/os/OSAlloc.c
+  src/dolphin/os/OSArena.c
+  src/dolphin/os/OSStopwatch.c
 )
 
 set(GAME_FILES
@@ -43,12 +44,19 @@ set(GAME_FILES
     src/game/flag.c
     src/game/font.c
     src/game/frand.c
+    src/game/hsfanim.c
+    src/game/hsfdraw.c
+    src/game/hsfman.c
+    src/game/hsfmotion.c
     src/game/gamework.c
     src/game/main.c
     src/game/malloc.c
     src/game/memory.c
     src/game/init.c
+    src/game/sprman.c
+    src/game/sprput.c
     src/game/pad.c
+    src/game/perf.c
     src/game/printfunc.c
     src/game/process.c
 )

@@ -116,13 +116,13 @@ void main(void)
     // HuSprInit();
     // Hu3DInit();
     // HuDataInit();
-    // HuPerfInit();
+    HuPerfInit();
     // HuPerfCreate("USR0", 0xFF, 0xFF, 0xFF, 0xFF);
     // HuPerfCreate("USR1", 0, 0xFF, 0xFF, 0xFF);
     // WipeInit(RenderMode);
 
     for (i = 0; i < 4; i++) {
-        // GWPlayerCfg[i].character = -1;
+        GWPlayerCfg[i].character = -1;
     }
 
     // omMasterInit(0, _ovltbl, OVL_COUNT, OVL_BOOT);
@@ -151,24 +151,24 @@ void main(void)
         if (HuSoftResetButtonCheck() != 0 || HuDvdErrWait != 0) {
             continue;
         }*/
-        // HuPerfZero();
+        HuPerfZero();
 
-        // HuPerfBegin(2);
+        HuPerfBegin(2);
 #ifdef TARGET_PC
         aurora_begin_frame();
 #endif
-        /* HuSysBeforeRender();
-         GXSetGPMetric(GX_PERF0_CLIP_VTX, GX_PERF1_VERTICES);
-         GXClearGPMetric();
-         GXSetVCacheMetric(GX_VC_ALL);
-         GXClearVCacheMetric();
-         GXClearPixMetric();
-         GXClearMemMetric();
+        // HuSysBeforeRender();
+        GXSetGPMetric(GX_PERF0_CLIP_VTX, GX_PERF1_VERTICES);
+        GXClearGPMetric();
+        GXSetVCacheMetric(GX_VC_ALL);
+        GXClearVCacheMetric();
+        GXClearPixMetric();
+        GXClearMemMetric();
 
-         HuPerfBegin(0);
-         Hu3DPreProc();
-         HuPadRead();
-         pfClsScr();*/
+        HuPerfBegin(0);
+        Hu3DPreProc();
+        HuPadRead();
+        pfClsScr();
 
         HuPrcCall(1);
         /* MGSeqMain();
