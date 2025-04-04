@@ -18,12 +18,16 @@ add_subdirectory(extern/musyx EXCLUDE_FROM_ALL)
 set(DOLPHIN_FILES
     src/dolphin/os/OSAlloc.c
     src/dolphin/os/OSArena.c
+    src/dolphin/mtx/mtx.c
+    src/dolphin/mtx/mtx44.c
+    src/dolphin/mtx/vec.c
 )
 
 set(GAME_FILES
     src/game/card.c
     src/game/fault.c
     src/game/flag.c
+    src/game/font.c
     src/game/frand.c
     src/game/gamework.c
     src/game/main.c
@@ -31,6 +35,7 @@ set(GAME_FILES
     src/game/memory.c
     src/game/init.c
     src/game/pad.c
+    src/game/printfunc.c
     src/game/process.c
 )
 
@@ -50,5 +55,5 @@ source_group("Port" FILES ${PORT_FILES})
 add_executable(marioparty4 ${DOLPHIN_FILES} ${GAME_FILES} ${PORT_FILES})
 target_compile_definitions(marioparty4 PRIVATE TARGET_PC VERSION=0)
 target_compile_definitions(musyx PRIVATE MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
-target_include_directories(marioparty4 PRIVATE include)
+target_include_directories(marioparty4 PRIVATE include build/GMPE01_00/include)
 target_link_libraries(marioparty4 PRIVATE aurora::aurora aurora::main musyx)

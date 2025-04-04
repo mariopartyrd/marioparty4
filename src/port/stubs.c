@@ -185,12 +185,6 @@ s32 CARDWriteAsync(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 off
     return 0;
 }
 
-void C_MTXScale(Mtx m, f32 xS, f32 yS, f32 zS)
-{
-    *(volatile int *)0 = 0;
-    puts("C_MTXScale is a stub");
-}
-
 void DCFlushRange(void *addr, u32 nBytes)
 {
     puts("DCFlushRange is a stub");

@@ -109,10 +109,10 @@ void main(void)
     HuSysInit(&GXPal528IntDf);
 #endif
     HuPrcInit();
-    // HuPadInit();
-    // GWInit();
-    // pfInit();
-    // GlobalCounter = 0;
+    HuPadInit();
+    GWInit();
+    pfInit();
+    GlobalCounter = 0;
     // HuSprInit();
     // Hu3DInit();
     // HuDataInit();
@@ -125,7 +125,7 @@ void main(void)
         // GWPlayerCfg[i].character = -1;
     }
 
-    //omMasterInit(0, _ovltbl, OVL_COUNT, OVL_BOOT);
+    // omMasterInit(0, _ovltbl, OVL_COUNT, OVL_BOOT);
     VIWaitForRetrace();
 
     if (VIGetNextField() == 0) {
@@ -170,7 +170,7 @@ void main(void)
          HuPadRead();
          pfClsScr();*/
 
-         HuPrcCall(1);
+        HuPrcCall(1);
         /* MGSeqMain();
          HuPerfBegin(1);
          Hu3DExec();
@@ -213,7 +213,7 @@ void HuSysVWaitSet(s16 vcount)
 
 s16 HuSysVWaitGet(s16 param)
 {
-    return (s16) minimumVcount;
+    return (s16)minimumVcount;
 }
 
 s32 rnd_seed = 0x0000D9ED;

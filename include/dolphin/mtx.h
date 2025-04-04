@@ -6,7 +6,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#if defined(__MWERKS__) && !defined(GEKKO)
 #define GEKKO
+#endif
+
 #ifndef GEKKO
 #define MTX_USE_C
 #undef MTX_USE_PS

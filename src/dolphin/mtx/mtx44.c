@@ -74,9 +74,10 @@ void C_MTXOrtho(Mtx44 m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f)
     m[3][3] = 1.0f;
 }
 
+#ifdef GEKKO
 asm void PSMTX44Copy(register Mtx44 src, register Mtx44 dest)
 {
-#ifdef __MWERKS__ // clang-format off
+// clang-format off
 	nofralloc;
 	psq_l fp1, 0(src), 0, 0;
 	psq_st fp1, 0(dest), 0, 0;
@@ -95,5 +96,6 @@ asm void PSMTX44Copy(register Mtx44 src, register Mtx44 dest)
 	psq_l fp1, 0x38(src), 0, 0;
 	psq_st fp1, 0x38(dest), 0, 0;
 	blr;
-#endif // clang-format on
+// clang-format on
 }
+#endif
