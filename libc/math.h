@@ -1,8 +1,6 @@
 #ifndef _MATH_H
 #define _MATH_H
 
-#define M_PI 3.141592653589793
-
 #ifndef _MATH_INLINE
 #define _MATH_INLINE static inline
 #endif
