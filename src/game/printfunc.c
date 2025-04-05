@@ -176,13 +176,10 @@ void pfDrawFonts(void)
             GXSetNumTevStages(1);
             GXSetNumTexGens(0);
             GXBegin(GX_QUADS, GX_VTXFMT0, 4);
-#ifdef __MWERKS__
-            // TODO PC
             GXPosition2s16(x, y);
             GXPosition2s16(x + w, y);
             GXPosition2s16(x + w, y + h);
             GXPosition2s16(x, y + h);
-#endif
             GXEnd();
             GXClearVtxDesc();
             GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -236,8 +233,6 @@ void pfDrawFonts(void)
                         default:
                             texcoord_x = (c % 16) / 16.0f;
                             texcoord_y = ((c / 16) / 16.0f) + (1 / 128.0f);
-#ifdef __MWERKS__
-                            // TODO PC
                             if (shadow_color < 0) {
                                 GXBegin(GX_QUADS, GX_VTXFMT0, 4);
                                 GXPosition3s16(x, y, 0);
@@ -282,7 +277,6 @@ void pfDrawFonts(void)
                                 GXTexCoord2f32(texcoord_x, texcoord_y + (1 / 16.0f));
                                 GXEnd();
                             }
-#endif
                             x += char_w;
                             if (x > HU_FB_WIDTH) {
                                 x = 0;
@@ -330,8 +324,6 @@ static void WireDraw(void)
     MTXIdentity(modelview);
     GXLoadPosMtxImm(modelview, GX_PNMTX0);
     GXBegin(GX_LINES, 0, 8);
-#ifdef __MWERKS__
-    // TODO PC
     GXPosition2f32(SAFETY_W, SAFETY_H);
     GXColor3u8(255, 0, 0);
     GXPosition2f32(SAFETY_W, HU_DISP_HEIGHT - SAFETY_H);
@@ -348,6 +340,5 @@ static void WireDraw(void)
     GXColor3u8(255, 0, 0);
     GXPosition2f32(SAFETY_W, HU_DISP_HEIGHT - SAFETY_H);
     GXColor3u8(255, 0, 0);
-#endif
     GXEnd();
 }

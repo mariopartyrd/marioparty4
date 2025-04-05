@@ -531,7 +531,7 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
     puts("GXSetGPMetric is a stub");
 }
 
-void GXReadGPMetric(u32* cnt0, u32* cnt1)
+void GXReadGPMetric(u32 *cnt0, u32 *cnt1)
 {
     puts("GXReadGPMetric is a stub");
 }
@@ -557,7 +557,7 @@ void GXClearVCacheMetric(void)
     puts("GXClearVCacheMetric is a stub");
 }
 
-void GXReadPixMetric(u32* top_pixels_in, u32* top_pixels_out, u32* bot_pixels_in, u32* bot_pixels_out, u32* clr_pixels_in, u32* copy_clks)
+void GXReadPixMetric(u32 *top_pixels_in, u32 *top_pixels_out, u32 *bot_pixels_in, u32 *bot_pixels_out, u32 *clr_pixels_in, u32 *copy_clks)
 {
     puts("GXReadPixMetric is a stub");
 }
@@ -572,7 +572,7 @@ void GXSetVCacheMetric(GXVCachePerf attr)
     puts("GXSetVCacheMetric is a stub");
 }
 
-void GXReadVCacheMetric(u32* check, u32* miss, u32* stall)
+void GXReadVCacheMetric(u32 *check, u32 *miss, u32 *stall)
 {
     puts("GXReadVCacheMetric is a stub");
 }
@@ -600,6 +600,71 @@ void GXColor3u8(u8 r, u8 g, u8 b)
     GXColor4u8(r, g, b, 255);
 }
 
+void GXNormal1x16(u16 index)
+{
+    puts("GXNormal1x16 is a stub");
+}
+
+void GXColor1x16(u16 index)
+{
+    puts("GXColor1x16 is a stub");
+}
+
+void GXTexCoord1x16(u16 index)
+{
+    puts("GXTexCoord1x16 is a stub");
+}
+
+void GXUnknownu16(const u16 x)
+{
+    puts("GXUnknownu16 is a stub");
+}
+
+void GXNormal3s16(s16 x, s16 y, s16 z)
+{
+    puts("GXNormal3s16 is a stub");
+}
+
+void GXPosition2u16(const u16 x, const u16 y)
+{
+    puts("GXPosition2u16 is a stub");
+}
+
+void GXPosition2f32(const f32 x, const f32 y)
+{
+    puts("GXPosition2f32 is a stub");
+}
+
+void GXPosition2s16(const s16 x, const s16 y)
+{
+    puts("GXPosition2s16 is a stub");
+}
+
+void GXColor1x8(u8 index) {
+    puts("GXColor1x8 is a stub");
+}
+
+void GXWaitDrawDone(void)
+{
+    puts("GXWaitDrawDone is a stub");
+}
+
+void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tilesize_s, u16 tilesize_t, u16 tilespacing_s, u16 tilespacing_t,
+    GXIndTexFormat format, GXIndTexMtxID matrix_sel, GXIndTexBiasSel bias_sel, GXIndTexAlphaSel alpha_sel)
+{
+    puts("GXSetTevIndTile is a stub");
+}
+
+void GXSetTexCoordScaleManually(GXTexCoordID coord, u8 enable, u16 ss, u16 ts)
+{
+    puts("GXSetTexCoordScaleManually is a stub");
+}
+
+void GXResetWriteGatherPipe(void)
+{
+    puts("GXResetWriteGatherPipe is a stub");
+}
+
 // Hudson
 void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }
 
@@ -610,4 +675,19 @@ void HuARInit(void) { }
 void msmSysRegularProc(void)
 {
     puts("msmSysRegularProc is a stub");
+}
+
+void msmMusFdoutEnd(void)
+{
+    puts("msmMusFdoutEnd is a stub");
+}
+
+s32 HuSoftResetButtonCheck(void)
+{
+    puts("HuSoftResetButtonCheck is a stub");
+}
+
+void MGSeqMain(void)
+{
+    puts("MGSeqMain is a stub");
 }

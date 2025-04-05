@@ -113,13 +113,13 @@ void main(void)
     GWInit();
     pfInit();
     GlobalCounter = 0;
-    // HuSprInit();
-    // Hu3DInit();
-    // HuDataInit();
+    HuSprInit();
+    Hu3DInit();
+    HuDataInit();
     HuPerfInit();
-    // HuPerfCreate("USR0", 0xFF, 0xFF, 0xFF, 0xFF);
-    // HuPerfCreate("USR1", 0, 0xFF, 0xFF, 0xFF);
-    // WipeInit(RenderMode);
+    HuPerfCreate("USR0", 0xFF, 0xFF, 0xFF, 0xFF);
+    HuPerfCreate("USR1", 0, 0xFF, 0xFF, 0xFF);
+    WipeInit(RenderMode);
 
     for (i = 0; i < 4; i++) {
         GWPlayerCfg[i].character = -1;
@@ -147,17 +147,17 @@ void main(void)
             break;
         }
 #endif
-        /*retrace = VIGetRetraceCount();
+        retrace = VIGetRetraceCount();
         if (HuSoftResetButtonCheck() != 0 || HuDvdErrWait != 0) {
             continue;
-        }*/
+        }
         HuPerfZero();
 
         HuPerfBegin(2);
 #ifdef TARGET_PC
         aurora_begin_frame();
 #endif
-        // HuSysBeforeRender();
+        HuSysBeforeRender();
         GXSetGPMetric(GX_PERF0_CLIP_VTX, GX_PERF1_VERTICES);
         GXClearGPMetric();
         GXSetVCacheMetric(GX_VC_ALL);
@@ -171,29 +171,29 @@ void main(void)
         pfClsScr();
 
         HuPrcCall(1);
-        /* MGSeqMain();
-         HuPerfBegin(1);
-         Hu3DExec();
-         HuDvdErrorWatch();
-         WipeExecAlways();
-         HuPerfEnd(0);
+        MGSeqMain();
+        HuPerfBegin(1);
+        Hu3DExec();
+        HuDvdErrorWatch();
+        WipeExecAlways();
+        HuPerfEnd(0);
 
-         pfDrawFonts();
-         HuPerfEnd(1);*/
+        pfDrawFonts();
+        HuPerfEnd(1);
 
 #ifdef TARGET_PC
         imgui_main(&auroraInfo);
         aurora_end_frame();
 #endif
 
-        /*msmMusFdoutEnd();
+        msmMusFdoutEnd();
         HuSysDoneRender(retrace);
         GXReadGPMetric(&met0, &met1);
         GXReadVCacheMetric(&vcheck, &vmiss, &vstall);
         GXReadPixMetric(&top_pixels_in, &top_pixels_out, &bot_pixels_in, &bot_pixels_out, &clr_pixels_in, &total_copy_clks);
         GXReadMemMetric(&cp_req, &tc_req, &cpu_rd_req, &cpu_wr_req, &dsp_req, &io_req, &vi_req, &pe_req, &rf_req, &fi_req);
         HuPerfEnd(2);
-        GlobalCounter++;*/
+        GlobalCounter++;
 
 #ifdef TARGET_PC
         frame_limiter();

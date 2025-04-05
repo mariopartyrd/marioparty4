@@ -160,3 +160,8 @@ s32 DVDGetDriveStatus(void)
     // puts("DVDGetDriveStatus is a stub");
     return 0;
 }
+
+void HuDvdErrorWatch(void)
+{
+    
+}

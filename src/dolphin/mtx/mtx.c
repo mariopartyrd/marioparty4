@@ -1345,7 +1345,7 @@ void C_MTXMultVecSR(const Mtx mtx, const Vec* in, Vec* out) {
     float x = in->x;
     float y = in->y;
     float z = in->z;
-
+  
     out->x = mtx[0][0] * x + mtx[0][1] * y + mtx[0][2] * z;
     out->y = mtx[1][0] * x + mtx[1][1] * y + mtx[1][2] * z;
     out->z = mtx[2][0] * x + mtx[2][1] * y + mtx[2][2] * z;

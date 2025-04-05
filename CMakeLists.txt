@@ -40,12 +40,17 @@ set(DOLPHIN_FILES
 
 set(GAME_FILES
     src/game/card.c
+    src/game/ClusterExec.c
+    src/game/data.c
+    src/game/EnvelopeExec.c
     src/game/fault.c
     src/game/flag.c
     src/game/font.c
     src/game/frand.c
     src/game/hsfanim.c
     src/game/hsfdraw.c
+    src/game/hsfex.c
+    src/game/hsfload.c
     src/game/hsfman.c
     src/game/hsfmotion.c
     src/game/gamework.c
@@ -53,12 +58,14 @@ set(GAME_FILES
     src/game/malloc.c
     src/game/memory.c
     src/game/init.c
+    src/game/ShapeExec.c
     src/game/sprman.c
     src/game/sprput.c
     src/game/pad.c
     src/game/perf.c
     src/game/printfunc.c
     src/game/process.c
+    src/game/wipe.c
 )
 
 set(PORT_FILES
