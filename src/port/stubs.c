@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <types.h>
 
+#include <game/dvd.h>
+#include <game/object.h>
+
 // Credits: Super Monkey Ball
 
 void OSReport(const char *msg, ...)
@@ -640,7 +643,8 @@ void GXPosition2s16(const s16 x, const s16 y)
     puts("GXPosition2s16 is a stub");
 }
 
-void GXColor1x8(u8 index) {
+void GXColor1x8(u8 index)
+{
     puts("GXColor1x8 is a stub");
 }
 
@@ -690,4 +694,9 @@ s32 HuSoftResetButtonCheck(void)
 void MGSeqMain(void)
 {
     puts("MGSeqMain is a stub");
+}
+
+void omMasterInit(s32 prio, FileListEntry *ovl_list, s32 ovl_count, OverlayID start_ovl)
+{
+    puts("omMasterInit is a stub");
 }

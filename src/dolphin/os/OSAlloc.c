@@ -246,7 +246,7 @@ void *OSAllocFixed(void **rstart, void **rend)
                         ASSERTMSG(0x1F3, MINOBJSIZE <= (char *)cellEnd - (char *)end);
                         newCell = (struct Cell *)end;
 
-                        newCell->size = (intptr_t)((char *)cellEnd - (char *)end);
+                        newCell->size = (uintptr_t)((char *)cellEnd - (char *)end);
                         newCell->next = cell->next;
                         if (newCell->next) {
                             newCell->next->prev = newCell;

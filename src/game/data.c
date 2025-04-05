@@ -279,8 +279,8 @@ BOOL HuDataGetAsyncStat(s32 status)
 
 static void GetFileInfo(DataReadStat *read_stat, s32 file_num)
 {
-    u32 *temp_ptr;
-    temp_ptr = (u32 *)PTR_OFFSET(read_stat->dir, (file_num * 4))+1;
+    uintptr_t *temp_ptr;
+    temp_ptr = (uintptr_t *)PTR_OFFSET(read_stat->dir, (file_num * 4))+1;
     read_stat->file = PTR_OFFSET(read_stat->dir, *temp_ptr);
     temp_ptr = read_stat->file;
     read_stat->raw_len = *temp_ptr++;

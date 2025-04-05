@@ -1608,7 +1608,7 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         sp130[0][3] = 0.0f;
         sp130[1][3] = 0.0f;
         sp130[2][3] = 0.0f;
-        Reorder(sp130, sp100);
+        MTXReorder(sp130, sp100);
         if ((omPauseChk() == 0) && (var_r31->unk_00)) {
             spC = var_r31->unk_00;
             spC(arg0, var_r31, arg1);
@@ -1616,7 +1616,7 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         var_r29 = var_r31->unk_10;
         var_r30 = var_r31->unk_14;
         var_r27 = var_r31->unk_18;
-        ROMultVecArray(sp100, &var_r31->unk_28, sp70, 4);
+        MTXROMultVecArray(sp100, &var_r31->unk_28, sp70, 4);
         for (var_r19 = 0; var_r19 < var_r31->unk_64; var_r19++, var_r29++, var_r27 += 4) {
             if (var_r29->unk_3E < 0) {
                 var_r30->x = var_r30->y = var_r30->z = 0.0f;

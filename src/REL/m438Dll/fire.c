@@ -64,17 +64,17 @@ void fn_1_E790(M438UnkStruct2 *arg0)
     s32 var_r19;
 
     mtxRot(sp60, arg0->unk_18.x, arg0->unk_18.y, arg0->unk_18.z);
-    Scale(sp90, arg0->unk_24.x, arg0->unk_24.y, arg0->unk_24.z);
-    Concat(sp60, sp90, sp90);
+    MTXScale(sp90, arg0->unk_24.x, arg0->unk_24.y, arg0->unk_24.z);
+    MTXConcat(sp60, sp90, sp90);
     mtxTransCat(sp90, arg0->unk_0C.x, arg0->unk_0C.y, arg0->unk_0C.z);
-    Concat(Hu3DCameraMtx, sp90, spC0);
+    MTXConcat(Hu3DCameraMtx, sp90, spC0);
     var_r29 = 0;
     var_r28 = 0;
     sp8 = 0;
     for (var_r27 = GX_TEXMAP0; var_r27 < arg0->unk_04; var_r27++) {
         if (arg0->unk_34[var_r27] != 0) {
             temp_r26 = &lbl_1_bss_DE4.unk_3C[arg0->unk_34[var_r27]];
-            Copy(temp_r26->unk_18, sp30);
+            MTXCopy(temp_r26->unk_18, sp30);
             mtxTransCat(sp30, temp_r26->unk_0C.x, temp_r26->unk_0C.y, temp_r26->unk_0C.z);
             switch (temp_r26->unk_04) {
                 case 0:
@@ -141,14 +141,14 @@ void fn_1_E790(M438UnkStruct2 *arg0)
                     break;
                 case 4:
                     mtxRot(sp60, arg0->unk_18.x, arg0->unk_18.y, arg0->unk_18.z);
-                    Scale(sp90, arg0->unk_24.x, arg0->unk_24.y, arg0->unk_24.z);
-                    Concat(sp60, sp90, sp90);
+                    MTXScale(sp90, arg0->unk_24.x, arg0->unk_24.y, arg0->unk_24.z);
+                    MTXConcat(sp60, sp90, sp90);
                     mtxTransCat(sp90, arg0->unk_0C.x, arg0->unk_0C.y, arg0->unk_0C.z);
-                    Concat(Hu3DCameraMtx, sp90, sp30);
-                    Inverse(Hu3DCameraMtx, sp60);
-                    Concat(sp60, sp30, sp60);
-                    Concat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp90);
-                    Concat(sp90, sp60, sp30);
+                    MTXConcat(Hu3DCameraMtx, sp90, sp30);
+                    MTXInverse(Hu3DCameraMtx, sp60);
+                    MTXConcat(sp60, sp30, sp60);
+                    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp90);
+                    MTXConcat(sp90, sp60, sp30);
                     GXLoadTexMtxImm(sp30, texMtxTbl[var_r28], GX_MTX3x4);
                     var_r19 = texMtxTbl[var_r28];
                     GXSetTexCoordGen2(var_r28, GX_TG_MTX3x4, GX_TG_POS, var_r19, 0, 0x7D);
@@ -184,42 +184,42 @@ void fn_1_E790(M438UnkStruct2 *arg0)
                 case 0:
                     mtxRot(sp60, var_r31->unk_0C.x, var_r31->unk_0C.y, var_r31->unk_0C.z);
                     if (var_r31->unk_31 == 2) {
-                        Concat(lbl_1_bss_DE4.unk_00, sp60, sp60);
+                        MTXConcat(lbl_1_bss_DE4.unk_00, sp60, sp60);
                     }
                     else if (var_r31->unk_31 == 1) {
-                        RotRad(sp90, 0x59, MTXDegToRad(CRot.y));
-                        Concat(sp90, sp60, sp60);
+                        MTXRotRad(sp90, 0x59, MTXDegToRad(CRot.y));
+                        MTXConcat(sp90, sp60, sp60);
                     }
-                    Scale(sp90, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
-                    Trans(sp30, var_r31->unk_24.x, var_r31->unk_24.y, var_r31->unk_24.z);
-                    Concat(sp90, sp30, sp90);
-                    Concat(sp60, sp90, sp90);
+                    MTXScale(sp90, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
+                    MTXTrans(sp30, var_r31->unk_24.x, var_r31->unk_24.y, var_r31->unk_24.z);
+                    MTXConcat(sp90, sp30, sp90);
+                    MTXConcat(sp60, sp90, sp90);
                     mtxTransCat(sp90, var_r31->unk_00.x, var_r31->unk_00.y, var_r31->unk_00.z);
-                    Concat(Hu3DCameraMtx, sp90, spF0);
+                    MTXConcat(Hu3DCameraMtx, sp90, spF0);
                     break;
                 case 1:
                     mtxRot(sp60, var_r31->unk_0C.x, var_r31->unk_0C.y, var_r31->unk_0C.z);
                     if (var_r31->unk_31 == 2) {
                         if (HmfInverseMtxF3X3(spC0, sp90) == 0) {
-                            Identity(sp90);
+                            MTXIdentity(sp90);
                         }
-                        Concat(sp90, sp60, sp60);
+                        MTXConcat(sp90, sp60, sp60);
                     }
                     else if (var_r31->unk_31 == 1) {
-                        RotRad(sp90, 0x59, MTXDegToRad(CRot.y));
-                        Concat(sp90, sp60, sp60);
+                        MTXRotRad(sp90, 0x59, MTXDegToRad(CRot.y));
+                        MTXConcat(sp90, sp60, sp60);
                     }
-                    Scale(sp90, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
-                    Trans(sp30, var_r31->unk_24.x, var_r31->unk_24.y, var_r31->unk_24.z);
-                    Concat(sp90, sp30, sp90);
-                    Concat(sp60, sp90, sp90);
+                    MTXScale(sp90, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
+                    MTXTrans(sp30, var_r31->unk_24.x, var_r31->unk_24.y, var_r31->unk_24.z);
+                    MTXConcat(sp90, sp30, sp90);
+                    MTXConcat(sp60, sp90, sp90);
                     mtxTransCat(sp90, var_r31->unk_00.x, var_r31->unk_00.y, var_r31->unk_00.z);
-                    Concat(spC0, sp90, spF0);
+                    MTXConcat(spC0, sp90, spF0);
                     break;
             }
             GXLoadPosMtxImm(spF0, 0);
-            Inverse(spF0, sp90);
-            Transpose(sp90, sp60);
+            MTXInverse(spF0, sp90);
+            MTXTranspose(sp90, sp60);
             GXLoadNrmMtxImm(sp60, 0);
             GXSetChanAmbColor(GX_COLOR0A0, var_r31->unk_50);
             GXSetChanMatColor(GX_COLOR0A0, var_r31->unk_54);
@@ -291,8 +291,8 @@ void fn_1_F538(ModelData *arg0, Mtx arg1)
 
     var_r31 = lbl_1_bss_DE4.unk_40;
     GXLoadPosMtxImm(arg1, 0);
-    Inverse(arg1, sp38);
-    Transpose(sp38, sp8);
+    MTXInverse(arg1, sp38);
+    MTXTranspose(sp38, sp8);
     GXLoadNrmMtxImm(sp8, 0);
     HmfInverseMtxF3X3(Hu3DCameraMtx, lbl_1_bss_DE4.unk_00);
 
@@ -780,7 +780,7 @@ s16 fn_1_10910(u32 arg0, s16 arg1, s16 arg2)
     }
     var_r31->unk_48.r = var_r31->unk_48.g = var_r31->unk_48.b = 0xFF;
     var_r31->unk_48.a = 0xFF;
-    Identity(var_r31->unk_18);
+    MTXIdentity(var_r31->unk_18);
     var_r31->unk_0C.x = var_r31->unk_0C.y = var_r31->unk_0C.z = 0.0f;
     return var_r29;
 }

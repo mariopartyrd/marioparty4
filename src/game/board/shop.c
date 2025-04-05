@@ -21,7 +21,6 @@
 #include "game/process.h"
 #include "game/sprite.h"
 
-
 #include "dolphin.h"
 #include "ext_math.h"
 
@@ -537,9 +536,9 @@ static void UpdateShopWin(omObjData *arg0)
         }
         arg0->rot.y = BoardDAngleCalc(arg0->rot.y + 2.0f);
         BoardCameraRotGet(&spC);
-        RotRad(sp48, 'y', MTXDegToRad(arg0->rot.y));
-        RotRad(sp18, 'x', MTXDegToRad(spC.x + 10.0f));
-        Concat(sp18, sp48, sp48);
+        MTXRotRad(sp48, 'y', MTXDegToRad(arg0->rot.y));
+        MTXRotRad(sp18, 'x', MTXDegToRad(spC.x + 10.0f));
+        MTXConcat(sp18, sp48, sp48);
         BoardModelMtxSet(itemMdl, &sp48);
         BoardModelRotSet(itemMdl, 0.0f, 0.0f, 0.0f);
         BoardModelPosSet(itemMdl, arg0->trans.x, arg0->trans.y + var_f29, arg0->trans.z);
@@ -602,7 +601,7 @@ void StartItemGive(void)
     BoardModelMotionStart(itemMdl, 0, 0);
     BoardModelMotionSpeedSet(itemMdl, 0.0f);
     BoardModelPosGet(itemMdl, &sp14);
-    Identity(sp20);
+    MTXIdentity(sp20);
     BoardModelMtxSet(itemMdl, &sp20);
     OSs16tof32(&angleVal, &temp_r30->scale.z);
     temp_r30->scale.z = -temp_r30->scale.z / 40.0f;

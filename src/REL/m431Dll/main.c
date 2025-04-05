@@ -2095,7 +2095,7 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSetArray(GX_VA_TEX0, temp_r30->unk20, sizeof(HsfVector2f));
     fn_1_79FC(mtx, sp128);
-    Reorder(sp128, spF8);
+    MTXReorder(sp128, spF8);
     if (!omPauseChk() && temp_r30->unkC) {
         temp_r23 = temp_r30->unkC;
         temp_r23(model, temp_r30, mtx);
@@ -2103,7 +2103,7 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
     temp_r29 = temp_r30->unk18;
     temp_r31 = temp_r30->unk1C;
     temp_r27 = temp_r30->unk20;
-    ROMultVecArray(spF8, temp_r30->unk2C, sp68, 4);
+    MTXROMultVecArray(spF8, temp_r30->unk2C, sp68, 4);
     for (temp_r26 = 0; temp_r26 < temp_r30->unk0; temp_r26++, temp_r29++, temp_r27 += 4) {
         if (temp_r29->unk56 == 0) {
             temp_r31->x = temp_r31->y = temp_r31->z = 0;

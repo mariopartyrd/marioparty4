@@ -574,8 +574,8 @@ void fn_1_4E64(omObjData *object)
                 MTXScale(spC8, var_f31, var_f31, var_f31 * var_r31->unk_28);
                 MTXConcat(sp68, spC8, sp98);
                 MTXInverse(sp98, spC8);
-                Reorder(spC8, sp38);
-                ROMultVecArray(sp38, lbl_1_bss_178.unk_2C, lbl_1_bss_178.unk_34, lbl_1_bss_178.unk_18);
+                MTXReorder(spC8, sp38);
+                MTXROMultVecArray(sp38, lbl_1_bss_178.unk_2C, lbl_1_bss_178.unk_34, lbl_1_bss_178.unk_18);
                 sp2C.x = (0.15f * var_r31->unk_18) * (var_r31->unk_24 * sind(var_r31->unk_10));
                 sp2C.y = 0.0f;
                 sp2C.z = (0.15f * var_r31->unk_18) * (var_r31->unk_24 * cosd(var_r31->unk_10));

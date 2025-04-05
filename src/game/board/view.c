@@ -9,7 +9,6 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/player.h"
@@ -593,9 +592,9 @@ static void UpdateOverheadView(omObjData *arg0)
     sp20.y = var_r29[1];
     sp20.z = 1000.0f;
     BoardCameraRotGet(&sp8);
-    RotRad(sp5C, 'x', MTXDegToRad(sp8.x));
-    RotRad(sp2C, 'y', MTXDegToRad(sp8.y));
-    Concat(sp2C, sp5C, sp2C);
+    MTXRotRad(sp5C, 'x', MTXDegToRad(sp8.x));
+    MTXRotRad(sp2C, 'y', MTXDegToRad(sp8.y));
+    MTXConcat(sp2C, sp5C, sp2C);
     BoardModelMtxSet(temp_r31->unk04, &sp2C);
     Hu3D2Dto3D(&sp20, 1, &sp20);
     BoardModelPosSetV(temp_r31->unk04, &sp20);

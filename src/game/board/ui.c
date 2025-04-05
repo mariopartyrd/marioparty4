@@ -19,7 +19,6 @@
 #include "game/sprite.h"
 #include "game/window.h"
 
-
 #include "ext_math.h"
 
 typedef struct {
@@ -1946,9 +1945,9 @@ static void UpdateItemWindow(omObjData *arg0)
                 Hu3D2Dto3D(&sp14, 1, &sp14);
                 BoardModelPosSetV(temp_r31->unk06[i], &sp14);
                 BoardCameraRotGet(&sp8);
-                RotRad(sp2C, 'y', MTXDegToRad(arg0->trans.x));
-                RotRad(sp5C, 'x', MTXDegToRad(sp8.x + 10.0f));
-                Concat(sp5C, sp2C, sp2C);
+                MTXRotRad(sp2C, 'y', MTXDegToRad(arg0->trans.x));
+                MTXRotRad(sp5C, 'x', MTXDegToRad(sp8.x + 10.0f));
+                MTXConcat(sp5C, sp2C, sp2C);
                 BoardModelMtxSet(temp_r31->unk06[i], &sp2C);
                 BoardModelRotSet(temp_r31->unk06[i], 0.0f, 0.0f, 0.0f);
             }

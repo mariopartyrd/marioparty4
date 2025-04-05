@@ -5148,7 +5148,7 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     if (HmfInverseMtxF3X3(arg1, sp128) == 0) {
         MTXIdentity(sp128);
     }
-    Reorder(sp128, sp8);
+    MTXReorder(sp128, sp8);
     if (temp_r31->unk4C) {
         var_r18 = temp_r31->unk4C;
         var_r18(arg0, temp_r31, arg1);
@@ -5156,7 +5156,7 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     var_r29 = temp_r31->unk3C;
     var_r30 = temp_r31->unk40;
     var_r28 = temp_r31->unk44;
-    ROMultVecArray(sp8, lbl_1_data_8C4, sp38, 4);
+    MTXROMultVecArray(sp8, lbl_1_data_8C4, sp38, 4);
     for (i = 0; i < temp_r31->unk26; i++, var_r29++) {
         if (!var_r29->unk30) {
             var_r30->x = var_r30->y = var_r30->z = 0.0f;

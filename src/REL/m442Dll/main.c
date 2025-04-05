@@ -1531,8 +1531,8 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     GXSetProjection(sp40, GX_PERSPECTIVE);
     MTXInverse(mtx, spA0);
     spA0[0][3] = spA0[1][3] = spA0[2][3] = 0.0f;
-    Reorder(spA0, sp70);
-    ROMultVecArray(sp70, &lbl_1_data_1C0[0], &sp10, 4);
+    MTXReorder(spA0, sp70);
+    MTXROMultVecArray(sp70, &lbl_1_data_1C0[0], &sp10, 4);
     GXLoadPosMtxImm(mtx, 0);
     var_r31 = lbl_1_bss_5C;
     for (var_r30 = 0; var_r30 < 1024; var_r30++, var_r31++) {

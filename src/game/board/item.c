@@ -1035,7 +1035,7 @@ static void ExecItemSwap(void)
     }
     BoardModelRotGet(suitMdl, &sp3C);
     Hu3DCameraSet(0, sp108);
-    Inverse(sp108, spD8);
+    MTXInverse(sp108, spD8);
     Hu3DMtxRotGet(spD8, &sp48);
     sp3C.x = sp48.x;
     for (var_r31 = 0; var_r31 < var_r28 / 2; var_r31++) {

@@ -8,7 +8,7 @@
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/process.h"
-#include "math.h"
+#include "ext_math.h"
 
 #include "REL/m407dll.h"
 

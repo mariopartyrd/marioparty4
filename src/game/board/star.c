@@ -22,7 +22,6 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-
 #include "ext_math.h"
 
 typedef struct {
@@ -699,9 +698,9 @@ void BoardStarShowNext(s32 arg0)
     Hu3D2Dto3D(&sp44, 1, &sp44);
     BoardModelPosSetV(BoardStarHostMdlGet(), &sp44);
     BoardCameraRotGet(&sp2C);
-    RotRad(sp5C, 'y', MTXDegToRad(10.0f));
-    RotRad(sp8C, 'x', MTXDegToRad(sp2C.x));
-    Concat(sp8C, sp5C, spBC);
+    MTXRotRad(sp5C, 'y', MTXDegToRad(10.0f));
+    MTXRotRad(sp8C, 'x', MTXDegToRad(sp2C.x));
+    MTXConcat(sp8C, sp5C, spBC);
     BoardModelMtxSet(BoardStarHostMdlGet(), &spBC);
     BoardModelRotSet(BoardStarHostMdlGet(), 0.0f, 0.0f, 0.0f);
     BoardModelScaleSet(BoardStarHostMdlGet(), 0.09f, 0.09f, 0.09f);
@@ -748,7 +747,7 @@ void BoardStarShowNext(s32 arg0)
         HuPrcVSleep();
     }
     BoardViewWait();
-    Identity(spBC);
+    MTXIdentity(spBC);
     BoardModelMtxSet(BoardStarHostMdlGet(), &spBC);
     HideNextHost(1);
     while (showNextObj) {

@@ -18,7 +18,6 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-
 typedef struct {
     struct {
         u8 unk00_field0 : 1;
@@ -441,7 +440,7 @@ static void DeletePauseScreen(void)
         HuSprGrpKill(pauseCursorPos);
         pauseCursorPos = -1;
     }
-    Identity(sp8);
+    MTXIdentity(sp8);
     BoardModelLayerSet(hostMdl, hostOldLayer);
     BoardModelVisibilitySet(hostMdl, 1);
     BoardModelMtxSet(hostMdl, &sp8);
@@ -1568,11 +1567,11 @@ static void RotateBox(float arg0, float arg1, Mtx arg2)
     Mtx sp20;
 
     BoardCameraRotGet(&sp14);
-    RotRad(spB0, 'x', MTXDegToRad(sp14.x));
-    RotRad(sp80, 'y', MTXDegToRad(sp14.y));
-    RotRad(sp50, 'x', MTXDegToRad(arg0));
-    RotRad(sp20, 'y', MTXDegToRad(arg1));
-    Concat(sp80, spB0, sp80);
-    Concat(sp50, sp20, sp20);
-    Concat(sp80, sp20, arg2);
+    MTXRotRad(spB0, 'x', MTXDegToRad(sp14.x));
+    MTXRotRad(sp80, 'y', MTXDegToRad(sp14.y));
+    MTXRotRad(sp50, 'x', MTXDegToRad(arg0));
+    MTXRotRad(sp20, 'y', MTXDegToRad(arg1));
+    MTXConcat(sp80, spB0, sp80);
+    MTXConcat(sp50, sp20, sp20);
+    MTXConcat(sp80, sp20, arg2);
 }
