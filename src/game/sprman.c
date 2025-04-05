@@ -3,6 +3,9 @@
 #include "game/init.h"
 
 #include "dolphin/mtx.h"
+#include <stdint.h>
+
+#include "port/byteswap.h"
 
 #define SPRITE_DIRTY_ATTR 0x1
 #define SPRITE_DIRTY_XFORM 0x2
@@ -212,27 +215,58 @@ AnimData *HuSprAnimRead(void *data)
     AnimBmpData *bmp;
     AnimBankData *bank;
     AnimPatData *pat;
+#ifdef TARGET_PC
+    AnimBmpData *bmp2;
+    AnimBankData *bank2;
+    AnimPatData *pat2;
+#endif
     
+#ifdef TARGET_PC
+    AnimData *anim = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimData), MEMORY_DEFAULT_NUM);
+    byteswap_animdata(data, anim);
+#else
     AnimData *anim = (AnimData *)data;
-    if((u32)anim->bank & 0xFFFF0000) {
+#endif
+    if((uintptr_t)anim->bank & ~0xFFFF) {
         anim->useNum++;
         return anim;
     }
-    bank = (AnimBankData *)((u32)anim->bank+(u32)data);
+    bank = (AnimBankData *)((uintptr_t)anim->bank+(uintptr_t)data);
+#ifdef TARGET_PC
+    bank2 = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimBankData), MEMORY_DEFAULT_NUM);
+    byteswap_animbankdata(bank, bank2);
+    bank = bank2;
+#endif
     anim->bank = bank;
-    pat = (AnimPatData *)((u32)anim->pat+(u32)data);
+    pat = (AnimPatData *)((uintptr_t)anim->pat+(uintptr_t)data);
+#ifdef TARGET_PC
+    pat2 = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimPatData), MEMORY_DEFAULT_NUM);
+    byteswap_animpatdata(pat, pat2);
+    pat = pat2;
+#endif
     anim->pat = pat;
-    bmp = (AnimBmpData *)((u32)anim->bmp+(u32)data);
+    bmp = (AnimBmpData *)((uintptr_t)anim->bmp+(uintptr_t)data);
+#ifdef TARGET_PC
+    bmp2 = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimBmpData), MEMORY_DEFAULT_NUM);
+    byteswap_animbmpdata(bmp, bmp2);
+    bmp = bmp2;
+#endif
     anim->bmp = bmp;
     for(i=0; i<anim->bankNum; i++, bank++) {
-        bank->frame = (AnimFrameData *)((u32)bank->frame+(u32)data);
+        bank->frame = (AnimFrameData *)((uintptr_t)bank->frame+(uintptr_t)data);
+#ifdef TARGET_PC
+        byteswap_animframedata(bank->frame);
+#endif
     }
     for(i=0; i<anim->patNum; i++, pat++) {
-        pat->layer = (AnimLayerData *)((u32)pat->layer+(u32)data);
+        pat->layer = (AnimLayerData *)((uintptr_t)pat->layer+(uintptr_t)data);
+#ifdef TARGET_PC
+        byteswap_animlayerdata(pat->layer);
+#endif
     }
     for(i=0; i<anim->bmpNum; i++, bmp++) {
-        bmp->palData = (void *)((u32)bmp->palData+(u32)data);
-        bmp->data = (void *)((u32)bmp->data+(u32)data);
+        bmp->palData = (void *)((uintptr_t)bmp->palData+(uintptr_t)data);
+        bmp->data = (void *)((uintptr_t)bmp->data+(uintptr_t)data);
     }
     anim->useNum = 0;
     return anim;
@@ -401,6 +435,11 @@ void HuSprAnimKill(AnimData *anim)
                 HuMemDirectFree(anim->bmp->palData);
             }
         }
+#ifdef TARGET_PC
+        HuMemDirectFree(anim->bank);
+        HuMemDirectFree(anim->pat);
+        HuMemDirectFree(anim->bmp);
+#endif
         HuMemDirectFree(anim);
     }
 }

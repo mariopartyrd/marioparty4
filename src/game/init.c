@@ -54,7 +54,7 @@ void HuSysInit(GXRenderModeObj *mode)
     VISetWindowTitle("Mario Party 4");
     #endif
     PADInit();
-    #ifndef TARGET_PC
+    #ifdef __MWERKS__
     #if VERSION_NTSC
     if(OSGetProgressiveMode() == 1 && VIGetDTVStatus() == 1) {
         mode = &GXNtsc480Prog;

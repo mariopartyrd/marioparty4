@@ -39,9 +39,12 @@ set(DOLPHIN_FILES
 )
 
 set(GAME_FILES
+    src/game/armem.c
     src/game/card.c
     src/game/ClusterExec.c
     src/game/data.c
+    src/game/decode.c
+    src/game/dvd.c
     src/game/EnvelopeExec.c
     src/game/fault.c
     src/game/flag.c
@@ -71,6 +74,7 @@ set(GAME_FILES
 set(PORT_FILES
     src/port/ar.c
     src/port/arq.c
+    src/port/byteswap.cpp
     src/port/dvd.c
     src/port/imgui.cpp
     src/port/OS.c

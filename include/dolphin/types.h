@@ -67,7 +67,7 @@ typedef int BOOL;
 #define NULL ((void *)0)
 #endif
 #endif
-#if !defined(__cplusplus) || __cplusplus < 201103L
+#if !defined(__cplusplus)
 #ifndef nullptr
 #define nullptr NULL
 #endif

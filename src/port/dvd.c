@@ -161,7 +161,8 @@ s32 DVDGetDriveStatus(void)
     return 0;
 }
 
-void HuDvdErrorWatch(void)
+s32 DVDGetCommandBlockStatus(const DVDCommandBlock *block)
 {
-    
+    // TODO
+    return 0;
 }

@@ -669,12 +669,14 @@ void GXResetWriteGatherPipe(void)
     puts("GXResetWriteGatherPipe is a stub");
 }
 
+void ARQInit(void) {
+    puts("ARQInit is a stub");
+}
+
 // Hudson
 void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }
 
 void HuAudInit(void) { }
-
-void HuARInit(void) { }
 
 void msmSysRegularProc(void)
 {
@@ -689,6 +691,7 @@ void msmMusFdoutEnd(void)
 s32 HuSoftResetButtonCheck(void)
 {
     puts("HuSoftResetButtonCheck is a stub");
+    return 0;
 }
 
 void MGSeqMain(void)
