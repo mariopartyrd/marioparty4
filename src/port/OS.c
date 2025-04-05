@@ -5,7 +5,7 @@
 
 // Credits: Super Monkey Ball
 
-#define MEM_SIZE (32 * 1024 * 1024)
+#define MEM_SIZE (64 * 1024 * 1024)
 
 u8 LC_CACHE_BASE[4096];
 
