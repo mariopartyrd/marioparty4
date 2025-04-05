@@ -57,8 +57,8 @@ u32 OSUncachedToCached(void *ucaddr);
 
 #define OSDiffTick(tick1, tick0) ((s32)(tick1) - (s32)(tick0))
 
-#define OSRoundUp32B(x) (((u32)(x) + 0x1F) & ~(0x1F))
-#define OSRoundDown32B(x) (((u32)(x)) & ~(0x1F))
+#define OSRoundUp32B(x) (((size_t)(x) + 0x1F) & ~(0x1F))
+#define OSRoundDown32B(x) (((size_t)(x)) & ~(0x1F))
 
 #define OSRoundUp(x, align) (((x) + (align)-1) & (-(align)))
 #define OSRoundUpPtr(x, align) ((void*)((((u32)(x)) + (align)-1) & (~((align)-1))))

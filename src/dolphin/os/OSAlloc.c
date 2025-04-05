@@ -350,16 +350,16 @@ void *OSInitAlloc(void *arenaStart, void *arenaEnd, int maxHeaps)
     }
     __OSCurrHeap = -1;
     arenaStart = (void *)((uintptr_t)((char *)HeapArray + arraySize));
-    arenaStart = (void *)(((uintptr_t)arenaStart + 0x1F) & 0xFFFFFFFFFFFFFFE0);
+    arenaStart = (void *)(((uintptr_t)arenaStart + 0x1F) & ~0x1F);
     ArenaStart = arenaStart;
-    ArenaEnd = (void *)((uintptr_t)arenaEnd & 0xFFFFFFFFFFFFFFE0);
+    ArenaEnd = (void *)((uintptr_t)arenaEnd & ~0x1F);
     ASSERTMSG1(0x2A4, ((uintptr_t)ArenaEnd - (uintptr_t)ArenaStart) >= 0x40U, "OSInitAlloc(): too small range.");
     return arenaStart;
 }
 
 uintptr_t OSCreateHeap(void *start, void *end)
 {
-    uintptr_t heap;
+    s32 heap;
     struct HeapDesc *hd;
     struct Cell *cell;
 

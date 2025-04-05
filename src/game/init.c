@@ -144,13 +144,8 @@ static void InitMem()
     uintptr_t *fb1;
     uintptr_t *fb2;
     u32 i;
-#ifdef TARGET_PC
-    DemoFrameBuffer1 = (void *)arena_lo;
-    DemoFrameBuffer2 = (void *)((uintptr_t)DemoFrameBuffer1 + fb_size);
-#else
-    DemoFrameBuffer1 = (void *)OSRoundUp32B((u32)arena_lo);
-    DemoFrameBuffer2 = (void *)OSRoundUp32B((u32)DemoFrameBuffer1 + fb_size);
-#endif
+    DemoFrameBuffer1 = (void *)OSRoundUp32B((uintptr_t)arena_lo);
+    DemoFrameBuffer2 = (void *)OSRoundUp32B((uintptr_t)DemoFrameBuffer1 + fb_size);
     DemoCurrentBuffer = DemoFrameBuffer2;
     #if VERSION_PAL
     fb1 = DemoFrameBuffer1;
@@ -161,26 +156,17 @@ static void InitMem()
     DCStoreRangeNoSync(DemoFrameBuffer1, fb_size);
     DCStoreRangeNoSync(DemoFrameBuffer2, fb_size);
     #endif
-#ifdef TARGET_PC
-    arena_lo = (void *)((uintptr_t)DemoFrameBuffer2 + fb_size);
-#else
-    arena_lo = (void *)OSRoundUp32B((u32)DemoFrameBuffer2 + fb_size);
-#endif
+    arena_lo = (void *)OSRoundUp32B((uintptr_t)DemoFrameBuffer2 + fb_size);
     OSSetArenaLo(arena_lo);
     if(OSGetConsoleType() == OS_CONSOLE_DEVHW1 && OSGetPhysicalMemSize() != 0x400000 && OSGetConsoleSimulatedMemSize() < 0x1800000) {
         LoadMemInfo();
     } else {
-#ifdef TARGET_PC
         arena_lo = OSGetArenaLo();
         arena_hi = OSGetArenaHi();
-#else
-        arena_lo = (void *)OSRoundUp32B((u32)arena_lo);
-        arena_hi = (void *)OSRoundDown32B((u32)arena_hi);
-#endif
         arena_lo = OSInitAlloc(arena_lo, arena_hi, 1);
         OSSetArenaLo(arena_lo);
-        arena_lo = (void *)arena_lo;
-        arena_hi = (void *)arena_hi;
+        arena_lo = (void *)OSRoundUp32B((uintptr_t)arena_lo);
+        arena_hi = (void *)OSRoundDown32B((uintptr_t)arena_hi);
         OSSetCurrentHeap(currentHeapHandle = OSCreateHeap(arena_lo, arena_hi));
         arena_lo = arena_hi;
         OSSetArenaLo(arena_lo);
