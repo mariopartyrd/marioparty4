@@ -8,6 +8,8 @@
 
 #include "string.h"
 
+#define THP_DECODE_STACK_SIZE 0x2000
+
 static void THPTestProc(void);
 static void THPViewFunc(ModelData *arg0, Mtx arg1);
 static void THPViewSprFunc(HuSprite *arg0);
@@ -153,8 +155,8 @@ static void THPTestProc(void)
         HuPrcVSleep();
     }
     HuPrcVSleep();
-    decodeStackP = HuMemDirectMalloc(HEAP_SYSTEM, 0x2000);
-    decodeThread = OSSetIdleFunction(THPDecodeFunc, NULL, decodeStackP + 0x2000, 0x2000);
+    decodeStackP = HuMemDirectMalloc(HEAP_SYSTEM, THP_DECODE_STACK_SIZE);
+    decodeThread = OSSetIdleFunction(THPDecodeFunc, NULL, (decodeStackP + THP_DECODE_STACK_SIZE), THP_DECODE_STACK_SIZE);
     decodeRate = 0;
     THPStart = 1;
     if (SimpleControl.unk19C == 1) {

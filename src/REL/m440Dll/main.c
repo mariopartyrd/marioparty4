@@ -640,7 +640,7 @@ void fn_1_2470(omObjData *arg0)
     temp_r29 = &Hu3DData[temp_r26];
     temp_r28 = temp_r29->hsfData->root;
     lbl_1_bss_60 = temp_r28->data.childrenCount;
-    lbl_1_bss_64 = HuMemDirectMalloc(HEAP_DATA, lbl_1_bss_60 * 64);
+    lbl_1_bss_64 = HuMemDirectMalloc(HEAP_DATA, lbl_1_bss_60 * sizeof(unkStruct6));
     OSReport("Koopa Object Count %d\n", temp_r29->hsfData->objectCnt);
 
     for (var_r30 = 0; var_r30 < lbl_1_bss_60; var_r30++) {

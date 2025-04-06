@@ -71,13 +71,13 @@ typedef struct anim_bmp_data {
 } AnimBmpData;
 
 typedef struct anim_data {
-    s16 bankNum;
-    s16 patNum;
-    s16 bmpNum;
-    s16 useNum;
-    AnimBankData *bank;
-    AnimPatData *pat;
-    AnimBmpData *bmp;
-} AnimData;
+/* 0x00 */ s16 bankNum;
+/* 0x02 */ s16 patNum;
+/* 0x04 */ s16 bmpNum;
+/* 0x06 */ s16 useNum;
+/* 0x08 */ AnimBankData *bank;
+/* 0x0C */ AnimPatData *pat;
+/* 0x10 */ AnimBmpData *bmp;
+} AnimData; //sizeof 0x14
 
 #endif

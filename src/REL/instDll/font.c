@@ -2,6 +2,8 @@
 
 #include "REL/instDll.h"
 
+#define FONT_CHAR_MAX 100
+
 static s32 FontCharFile[0xC6] = {
     0,
     0,
@@ -227,9 +229,9 @@ s32 FontCreate(SeqWork *work, char *mess, s16 jp_flag)
     if (grpNo == 0x10) {
         return -1;
     }
-    animP = HuMemDirectMalloc(HEAP_SYSTEM, 0x190);
-    posX = HuMemDirectMalloc(HEAP_SYSTEM, 0xC8);
-    posY = HuMemDirectMalloc(HEAP_SYSTEM, 0xC8);
+    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(AnimData*)));
+    posX = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posX));
+    posY = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posY));
 
     for (str = mess, len = 0, charNum = 0; str[0] != 0; str++) {
         if (str[0] == 0x20 || str[0] == 0x10) {

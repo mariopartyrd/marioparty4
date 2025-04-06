@@ -5,6 +5,8 @@
 #include "game/wipe.h"
 #include "game/gamework_data.h"
 
+#define MUSIC_HEAP_SIZE 0x13FC00
+
 static int HuSePlay(int seId, MSM_SEPARAM *param);
 
 extern s16 omSysExitReq;
@@ -32,7 +34,6 @@ static char *lbl_8012E9AC[] = {
     ""
 };
 
-
 void HuAudInit(void)
 {
     MSM_INIT msmInit;
@@ -41,8 +42,8 @@ void HuAudInit(void)
     s32 result;
     s16 i;
 
-    msmInit.heap = HuMemDirectMalloc(HEAP_MUSIC, 0x13FC00);
-    msmInit.heapSize = 0x13FC00;
+    msmInit.heap = HuMemDirectMalloc(HEAP_MUSIC, MUSIC_HEAP_SIZE);
+    msmInit.heapSize = MUSIC_HEAP_SIZE;
     msmInit.msmPath = "/sound/mpgcsnd.msm";
     msmInit.pdtPath = "/sound/mpgcstr.pdt";
     msmInit.open = NULL;

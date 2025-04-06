@@ -69,7 +69,8 @@
     "msghndlr.h": "c",
     "dispatch.h": "c",
     "trk.h": "c",
-    "debuggerdriver.h": "c"
+    "debuggerdriver.h": "c",
+    "mpexdll.h": "c"
   },
   "search.useIgnoreFiles": false,
   "search.exclude": {

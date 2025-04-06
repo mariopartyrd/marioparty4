@@ -661,7 +661,7 @@ void fn_1_2064(void)
 
         for (var_r30 = 0; var_r30 < 0x17; var_r30++) {
             temp_r26 = HuPrcChildCreate(fn_1_1DBC, 0x2000, 0x1000, 0, HuPrcCurrentGet());
-            var_r27 = HuMemDirectMalloc(HEAP_DATA, 0x18);
+            var_r27 = HuMemDirectMalloc(HEAP_DATA, sizeof(unkStruct4));
             temp_r26->user_data = var_r27;
             var_r27->unk0 = temp_r31->unk4;
             var_r27->unk4 = var_r30;
@@ -692,7 +692,7 @@ s32 fn_1_2708(void)
     if (var_r31 >= 0x20) {
         var_r31 = -1;
     }
-    lbl_1_bss_278[var_r31] = HuMemDirectMalloc(HEAP_DATA, 0x34);
+    lbl_1_bss_278[var_r31] = HuMemDirectMalloc(HEAP_DATA, sizeof(unkStruct));
     lbl_1_bss_278[var_r31]->unk6 = -1;
     lbl_1_bss_278[var_r31]->unkA = 0;
     return var_r31;

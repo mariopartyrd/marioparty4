@@ -17,6 +17,8 @@
 #include "math.h"
 #include "ext_math.h"
 
+#define SHADOW_HEAP_SIZE 0x9000
+
 ModelData Hu3DData[HU3D_MODEL_MAX];
 CameraData Hu3DCamera[HU3D_CAM_MAX];
 static s16 layerNum[8];
@@ -1876,7 +1878,7 @@ void Hu3DFogClear(void) {
 void Hu3DShadowCreate(f32 arg8, f32 arg9, f32 argA) {
     Hu3DShadowData.unk_02 = 0xC0;
     if (Hu3DShadowData.unk_04 == 0) {
-        Hu3DShadowData.unk_04 = HuMemDirectMalloc(HEAP_DATA, 0x9000);
+        Hu3DShadowData.unk_04 = HuMemDirectMalloc(HEAP_DATA, SHADOW_HEAP_SIZE);
     }
     Hu3DShadowData.unk_08.x = arg8;
     Hu3DShadowData.unk_08.y = arg9;

@@ -20,7 +20,6 @@ typedef struct _unkStruct {
     HsfVector2f unk1C;
     Vec unk24;
     float unk30;
-    float unk34;
 } unkStruct;
 
 typedef struct _unkStruct2 {

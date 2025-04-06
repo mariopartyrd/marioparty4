@@ -3,6 +3,8 @@
 
 #include "REL/ztardll.h"
 
+#define FONT_CHAR_MAX 100
+
 #if VERSION_ENG
 s32 lbl_1_data_B0[0xC6] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, DATA_MAKE_NUM(DATADIR_INSTFONT, 0x00), DATA_MAKE_NUM(DATADIR_INSTFONT, 0x01), DATA_MAKE_NUM(DATADIR_INSTFONT, 0x02),
@@ -107,156 +109,158 @@ s32 lbl_1_data_B0[0x132] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 
 s32 fn_1_7754(SeqWork *work, char *mess)
 {
-    char *var_r31;
-    s16 var_r30;
-    s16 *var_r29;
-    s16 var_r28;
-    s32 *var_r27;
-    s16 var_r26;
-    s16 var_r25;
-    s32 var_r24;
-    s16 *var_r22;
-    AnimData **var_r21;
-    s16 var_r20;
-    s16 var_r19;
+    char* str;
+    s16 len;
+    s16* posY;
+    s16 charNum;
+    s32* fileTbl;
+    s16 i;
+    s16 grpNo;
+    s32 file;
+    s16 *posX;
+    AnimData **animP;
+    s16 gid;
+    s16 sprid;
     s32 var_r19_2;
 
-    var_r27 = lbl_1_data_B0;
-    for (var_r25 = 0; var_r25 < 0x10; var_r25++) {
-        if (work->spr_grp[var_r25] == -1) {
+    fileTbl = lbl_1_data_B0;
+    for (grpNo = 0; grpNo < 0x10; grpNo++) {
+        if (work->spr_grp[grpNo] == -1) {
             break;
         }
     }
-    if (var_r25 == 0x10) {
+    if (grpNo == 0x10) {
         return -1;
     }
-    var_r21 = HuMemDirectMalloc(HEAP_SYSTEM, 0x190);
-    var_r22 = HuMemDirectMalloc(HEAP_SYSTEM, 0xC8);
-    var_r29 = HuMemDirectMalloc(HEAP_SYSTEM, 0xC8);
-    for (var_r31 = mess, var_r30 = 0, var_r28 = 0; var_r31[0] != 0; var_r31++) {
-        if (var_r31[0] == 0x20 || var_r31[0] == 0x10) {
-            var_r30 += VERSION_JP ? 0x1C : 0xE;
+
+    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(AnimData*)));
+    posX = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posX));
+    posY = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posY));
+
+    for (str = mess, len = 0, charNum = 0; str[0] != 0; str++) {
+        if (str[0] == 0x20 || str[0] == 0x10) {
+            len += VERSION_JP ? 0x1C : 0xE;
         }
 #if VERSION_PAL
-        else if (*var_r31 >= 0x30) {
-            var_r19_2 = var_r27[*var_r31];
-            var_r21[var_r28] = HuSprAnimReadFile(var_r19_2);
-            var_r22[var_r28] = var_r30;
-            if ((*var_r31 >= 0x61) && (*var_r31 <= 0x7A)) {
-                var_r29[var_r28] = 2;
-                var_r30 += 0x12;
+        else if (*str >= 0x30) {
+            var_r19_2 = fileTbl[*str];
+            animP[charNum] = HuSprAnimReadFile(var_r19_2);
+            posX[charNum] = len;
+            if ((*str >= 0x61) && (*str <= 0x7A)) {
+                posY[charNum] = 2;
+                len += 0x12;
             }
-            else if ((*var_r31 == 0xC2) || (*var_r31 == 0xC3) || (*var_r31 == 0xC7)) {
-                var_r29[var_r28] = 0;
-                var_r30 += 0x12;
+            else if ((*str == 0xC2) || (*str == 0xC3) || (*str == 0xC7)) {
+                posY[charNum] = 0;
+                len += 0x12;
             }
-            else if (*var_r31 == 0xC6) {
-                var_r29[var_r28] = 0;
-                var_r30 += 0x18;
+            else if (*str == 0xC6) {
+                posY[charNum] = 0;
+                len += 0x18;
             }
-            else if (*var_r31 == 0x5C) {
-                var_r29[var_r28] = 0;
-                var_r30 += 8;
+            else if (*str == 0x5C) {
+                posY[charNum] = 0;
+                len += 8;
             }
-            else if ((*var_r31 >= 0x90) && (*var_r31 <= 0x9F)) {
-                var_r29[var_r28] = -2;
-                var_r30 += 0x18;
+            else if ((*str >= 0x90) && (*str <= 0x9F)) {
+                posY[charNum] = -2;
+                len += 0x18;
             }
-            else if ((*var_r31 >= 0xD0) && (*var_r31 <= 0xEF)) {
-                var_r29[var_r28] = -2;
-                var_r30 += 0x12;
+            else if ((*str >= 0xD0) && (*str <= 0xEF)) {
+                posY[charNum] = -2;
+                len += 0x12;
             }
-            else if ((*var_r31 == 0x3D) || (*var_r31 == 0x84)) {
-                var_r29[var_r28] = 0;
-                var_r30 += 0x14;
+            else if ((*str == 0x3D) || (*str == 0x84)) {
+                posY[charNum] = 0;
+                len += 0x14;
             }
             else {
-                var_r29[var_r28] = 0;
-                var_r30 += 0x1C;
+                posY[charNum] = 0;
+                len += 0x1C;
             }
-            var_r28++;
+            charNum++;
         }
 #else
-        else if (var_r31[0] < 0x30) {
+        else if (str[0] < 0x30) {
         }
-        else if (var_r31[0] == 0x80) {
+        else if (str[0] == 0x80) {
         }
-        else if (var_r31[0] == 0x81) {
+        else if (str[0] == 0x81) {
         }
         else {
-            if (var_r31[1] == 0x80) {
-                if ((var_r31[0] >= 0x96) && (var_r31[0] <= 0xA4)) {
-                    var_r24 = var_r27[var_r31[0] + 0x6A];
+            if (str[1] == 0x80) {
+                if ((str[0] >= 0x96) && (str[0] <= 0xA4)) {
+                    file = fileTbl[str[0] + 0x6A];
                 }
-                else if ((var_r31[0] >= 0xAA) && (var_r31[0] <= 0xAE)) {
-                    var_r24 = var_r27[var_r31[0] + 0x65];
+                else if ((str[0] >= 0xAA) && (str[0] <= 0xAE)) {
+                    file = fileTbl[str[0] + 0x65];
                 }
-                else if ((var_r31[0] >= 0xD6) && (var_r31[0] <= 0xE4)) {
-                    var_r24 = var_r27[var_r31[0] + 0x43];
+                else if ((str[0] >= 0xD6) && (str[0] <= 0xE4)) {
+                    file = fileTbl[str[0] + 0x43];
                 }
-                else if ((var_r31[0] >= 0xEA) && (var_r31[0] <= 0xEE)) {
-                    var_r24 = var_r27[var_r31[0] + 0x3E];
+                else if ((str[0] >= 0xEA) && (str[0] <= 0xEE)) {
+                    file = fileTbl[str[0] + 0x3E];
                 }
             }
-            else if (var_r31[1] == 0x81) {
-                if ((var_r31[0] >= 0xAA) && (var_r31[0] <= 0xAE)) {
-                    var_r24 = var_r27[var_r31[0] + 0x6A];
+            else if (str[1] == 0x81) {
+                if ((str[0] >= 0xAA) && (str[0] <= 0xAE)) {
+                    file = fileTbl[str[0] + 0x6A];
                 }
-                else if ((var_r31[0] >= 0xEA) && (var_r31[0] <= 0xEE)) {
-                    var_r24 = var_r27[var_r31[0] + 0x43];
+                else if ((str[0] >= 0xEA) && (str[0] <= 0xEE)) {
+                    file = fileTbl[str[0] + 0x43];
                 }
             }
             else {
-                var_r24 = var_r27[var_r31[0]];
+                file = fileTbl[str[0]];
             }
-            var_r21[var_r28] = HuSprAnimReadFile(var_r24);
-            var_r22[var_r28] = var_r30;
-            if ((var_r31[0] >= 0x61) && (var_r31[0] <= 0x7A)) {
-                var_r29[var_r28] = 2;
-                var_r30 += 0x12;
+            animP[charNum] = HuSprAnimReadFile(file);
+            posX[charNum] = len;
+            if ((str[0] >= 0x61) && (str[0] <= 0x7A)) {
+                posY[charNum] = 2;
+                len += 0x12;
             }
-            else if ((var_r31[0] == 0xC2) || (var_r31[0] == 0xC3)) {
-                var_r29[var_r28] = 0;
-                var_r30 += 0x12;
+            else if ((str[0] == 0xC2) || (str[0] == 0xC3)) {
+                posY[charNum] = 0;
+                len += 0x12;
             }
-            else if (var_r31[0] == 0x5C) {
-                var_r29[var_r28] = 0;
-                var_r30 += 8;
+            else if (str[0] == 0x5C) {
+                posY[charNum] = 0;
+                len += 8;
             }
-            else if ((var_r31[0] >= 0x87) && (var_r31[0] <= 0x8F)) {
-                var_r29[var_r28] = 4;
-                var_r30 += 0x18;
+            else if ((str[0] >= 0x87) && (str[0] <= 0x8F)) {
+                posY[charNum] = 4;
+                len += 0x18;
             }
-            else if ((var_r31[0] >= 0xC7) && (var_r31[0] <= 0xCF)) {
-                var_r29[var_r28] = 4;
-                var_r30 += 0x18;
+            else if ((str[0] >= 0xC7) && (str[0] <= 0xCF)) {
+                posY[charNum] = 4;
+                len += 0x18;
             }
 #if !VERSION_JP
-            else if ((var_r31[0] == 0x3D) || (var_r31[0] == 0x84)) {
-                var_r29[var_r28] = 0;
-                var_r30 += 0x14;
+            else if ((str[0] == 0x3D) || (str[0] == 0x84)) {
+                posY[charNum] = 0;
+                len += 0x14;
             }
 #endif
             else {
-                var_r29[var_r28] = 0;
-                var_r30 += 0x1C;
+                posY[charNum] = 0;
+                len += 0x1C;
             }
-            var_r28++;
+            charNum++;
         }
 #endif
     }
-    var_r20 = HuSprGrpCreate(var_r28);
-    work->spr_grp[var_r25] = var_r20;
-    work->alt_word_len = var_r30;
-    var_r30 = (var_r30 / 2) - 0xE;
-    for (var_r26 = 0; var_r26 < var_r28; var_r26++) {
-        var_r19 = HuSprCreate(var_r21[var_r26], 0, 0);
-        HuSprGrpMemberSet(var_r20, var_r26, var_r19);
-        HuSprPosSet(var_r20, var_r26, var_r22[var_r26] - var_r30, var_r29[var_r26]);
+    gid = HuSprGrpCreate(charNum);
+    work->spr_grp[grpNo] = gid;
+    work->alt_word_len = len;
+    len = (len / 2) - 0xE;
+    for (i = 0; i < charNum; i++) {
+        sprid = HuSprCreate(animP[i], 0, 0);
+        HuSprGrpMemberSet(gid, i, sprid);
+        HuSprPosSet(gid, i, posX[i] - len, posY[i]);
     }
-    work->word_len = var_r28;
-    HuMemDirectFree(var_r21);
-    HuMemDirectFree(var_r22);
-    HuMemDirectFree(var_r29);
-    return var_r25;
+    work->word_len = charNum;
+    HuMemDirectFree(animP);
+    HuMemDirectFree(posX);
+    HuMemDirectFree(posY);
+    return grpNo;
 }
