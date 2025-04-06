@@ -8,7 +8,6 @@
 #include "game/pad.h"
 #include "game/printfunc.h"
 
-
 #define OM_OVL_HIS_MAX 16
 #define OM_MAX_GROUPS 10
 
@@ -47,8 +46,8 @@ s16 omdispinfo;
 
 static omOvlHisData omovlhis[OM_OVL_HIS_MAX];
 
-SHARED_SYM u8 omSysPauseEnableFlag = TRUE;
-SHARED_SYM OverlayID omprevovl = OVL_INVALID;
+u8 omSysPauseEnableFlag = TRUE;
+OverlayID omprevovl = OVL_INVALID;
 
 static void omWatchOverlayProc(void);
 static void omInsertObj(Process *objman_process, omObjData *object);

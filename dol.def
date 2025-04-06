@@ -1,6 +1,10 @@
 EXPORTS
    OSReport
    OSGetTick
+   HuAudFXPlay
+   HuAudSStreamAllFadeOut
+   HuAudSStreamPlay
+   HuAudSndGrpSetSet
    HuMemDirectMalloc
    HuMemDirectFree
    HuDataSelHeapReadNum
@@ -20,8 +24,35 @@ EXPORTS
    HuPrcCurrentGet
    HuPrcSleep
    HuPrcVSleep
+   HuSprAnimRead
+   HuSprCreate
+   HuSprGrpCreate
+   HuSprGrpMemberSet
+   HuSprGrpKill
+   HuSprAttrSet
+   HuSprAttrReset
+   HuSprDrawNoSet
+   HuSprPosSet
+   HuSprScaleSet
+   HuSprTPLvlSet
+   HuWindowInit
+   HuWinInit
+   HuWinCreate
+   HuWinKill
+   HuWinHomeClear
+   HuWinPriSet
+   HuWinAttrSet
+   HuWinBGTPLvlSet
+   HuWinMesSpeedSet
+   HuWinMesSet
+   HuWinMesMaxSizeBetGet
    omOvlCallEx
    omOvlReturnEx
    omOvlHisChg
    omOvlHisGet
    omInitObjMan
+   WipeColorSet
+   WipeCreate
+   WipeExecAlways
+   WipeInit
+   WipeStatGet

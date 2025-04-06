@@ -2,6 +2,7 @@
 #define _GAME_WIPE_H
 
 #include "dolphin.h"
+#include "version.h"
 
 #define WIPE_TYPE_PREV -1
 #define WIPE_TYPE_NORMAL 0
@@ -37,7 +38,7 @@ void WipeCreate(s16 mode, s16 type, s16 duration);
 void WipeColorSet(u8 r, u8 g, u8 b);
 u8 WipeStatGet(void);
 
-extern WipeState wipeData;
+SHARED_SYM extern WipeState wipeData;
 extern BOOL wipeFadeInF;
 
 #endif

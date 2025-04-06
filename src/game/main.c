@@ -15,6 +15,7 @@
 #include "game/sprite.h"
 #include "game/sreset.h"
 #include "game/wipe.h"
+#include "version.h"
 
 #ifdef TARGET_PC
 #include "port/imgui.h"
@@ -45,7 +46,7 @@ static u32 pe_req;
 static u32 rf_req;
 static u32 fi_req;
 s32 HuDvdErrWait;
-s32 SystemInitF;
+SHARED_SYM s32 SystemInitF;
 
 #ifdef TARGET_PC
 #include <stdio.h>

@@ -9,7 +9,7 @@
 
 // Credits: Super Monkey Ball
 
-__declspec(dllexport) void OSReport(const char *msg, ...)
+void OSReport(const char *msg, ...)
 {
     va_list args;
     va_start(args, msg);
@@ -20,6 +20,11 @@ __declspec(dllexport) void OSReport(const char *msg, ...)
 u32 OSGetConsoleType()
 {
     return OS_CONSOLE_RETAIL1;
+}
+
+u32 OSGetSoundMode()
+{
+    return 2;
 }
 
 s32 CARDCancel(CARDFileInfo *fileInfo)
@@ -675,8 +680,6 @@ void ARQInit(void) {
 
 // Hudson
 void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }
-
-void HuAudInit(void) { }
 
 void msmSysRegularProc(void)
 {

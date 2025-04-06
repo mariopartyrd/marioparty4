@@ -40,7 +40,6 @@ set(DOLPHIN_FILES
 
 set(GAME_FILES
     src/game/armem.c
-    src/game/audio.c
     src/game/card.c
     src/game/ClusterExec.c
     src/game/data.c
@@ -73,12 +72,14 @@ set(GAME_FILES
     src/game/perf.c
     src/game/printfunc.c
     src/game/process.c
+    src/game/window.c
     src/game/wipe.c
 )
 
 set(PORT_FILES
     src/port/ar.c
     src/port/arq.c
+    src/port/audio.c
     src/port/byteswap.cpp
     src/port/dvd.c
     src/port/imgui.cpp

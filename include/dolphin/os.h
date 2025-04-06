@@ -225,7 +225,7 @@ BOOL OSRestoreInterrupts(BOOL level);
 
 #endif // _DEBUG
 
-__declspec(dllexport) void OSReport(const char *msg, ...);
+void OSReport(const char *msg, ...);
 void OSPanic(const char *file, int line, const char *msg, ...);
 void OSFatal(GXColor fg, GXColor bg, const char *msg);
 

@@ -9,7 +9,7 @@ s16 HuSysVWaitGet(s16 old);
 
 typedef s32 (*fadeFunc)(void);
 
-WipeState wipeData;
+SHARED_SYM WipeState wipeData;
 BOOL wipeFadeInF;
 
 static void WipeColorFill(GXColor color);
