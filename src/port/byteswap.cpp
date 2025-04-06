@@ -311,6 +311,37 @@ template <typename B> void bswap(B &base, AnimLayerData &obj)
     bswap_flat(base, obj.vtx, sizeof(obj.vtx) / sizeof(s16));
 }
 
+template <typename B> void bswap(B &base, HsfSection &obj)
+{
+    bswap(base, obj.ofs);
+    bswap(base, obj.count);
+}
+
+template <typename B> void bswap(B &base, HsfHeader &obj)
+{
+    bswap(base, obj.scene);
+    bswap(base, obj.color);
+    bswap(base, obj.material);
+    bswap(base, obj.attribute);
+    bswap(base, obj.vertex);
+    bswap(base, obj.normal);
+    bswap(base, obj.st);
+    bswap(base, obj.face);
+    bswap(base, obj.object);
+    bswap(base, obj.bitmap);
+    bswap(base, obj.palette);
+    bswap(base, obj.motion);
+    bswap(base, obj.cenv);
+    bswap(base, obj.skeleton);
+    bswap(base, obj.part);
+    bswap(base, obj.cluster);
+    bswap(base, obj.shape);
+    bswap(base, obj.mapAttr);
+    bswap(base, obj.matrix);
+    bswap(base, obj.symbol);
+    bswap(base, obj.string);
+}
+
 void byteswap_u32(u32 *src)
 {
     bswap(*src, *src);
@@ -358,6 +389,12 @@ void byteswap_animframedata(AnimFrameData *src)
 }
 
 void byteswap_animlayerdata(AnimLayerData *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfheader(HsfHeader *src)
 {
     bswap(*src, *src);
     sVisitedPtrs.clear();

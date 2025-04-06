@@ -7,6 +7,7 @@ extern "C"
 #endif
 
 #include "game/animdata.h"
+#include "game/hsfformat.h"
 
 void byteswap_u32(u32 *src);
 void byteswap_s32(s32 *src);
@@ -16,6 +17,9 @@ void byteswap_animpatdata(void *src, AnimPatData *dest);
 void byteswap_animbmpdata(void *src, AnimBmpData *dest);
 void byteswap_animframedata(AnimFrameData *src);
 void byteswap_animlayerdata(AnimLayerData *src);
+
+
+void byteswap_hsfheader(HsfHeader *src);
 
 #ifdef __cplusplus
 }

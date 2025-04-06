@@ -2,6 +2,10 @@
 #include "string.h"
 #include "ctype.h"
 
+#ifdef TARGET_PC
+#include "port/byteswap.h"
+#endif
+
 #define AS_S16(field) (*((s16 *)&(field)))
 #define AS_U16(field) (*((u16 *)&(field)))
 
@@ -117,11 +121,14 @@ static void FileLoad(void *data)
     fileptr = data;
     memcpy(&head, fileptr, sizeof(HsfHeader));
     memset(&Model, 0, sizeof(HsfData));
-    NSymIndex = (void **)((u32)fileptr+head.symbol.ofs);
-    StringTable = (char *)((u32)fileptr+head.string.ofs);
-    ClusterTop = (HsfCluster *)((u32)fileptr+head.cluster.ofs);
-    AttributeTop = (HsfAttribute *)((u32)fileptr+head.attribute.ofs);
-    MaterialTop = (HsfMaterial *)((u32)fileptr+head.material.ofs);
+#ifdef TARGET_PC
+    byteswap_hsfheader(&head);
+#endif
+    NSymIndex = (void **)((uintptr_t)fileptr+head.symbol.ofs);
+    StringTable = (char *)((uintptr_t)fileptr+head.string.ofs);
+    ClusterTop = (HsfCluster *)((uintptr_t)fileptr+head.cluster.ofs);
+    AttributeTop = (HsfAttribute *)((uintptr_t)fileptr + head.attribute.ofs);
+    MaterialTop = (HsfMaterial *)((uintptr_t)fileptr + head.material.ofs);
 }
 
 static HsfData *SetHsfModel(void)
