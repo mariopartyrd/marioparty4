@@ -311,6 +311,18 @@ template <typename B> void bswap(B &base, AnimLayerData &obj)
     bswap_flat(base, obj.vtx, sizeof(obj.vtx) / sizeof(s16));
 }
 
+void byteswap_u32(u32 *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_s32(s32 *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
 void byteswap_animdata(void *src, AnimData *dest)
 {
     auto *anim = reinterpret_cast<AnimData32b *>(src);

@@ -113,7 +113,7 @@ endif ()
 target_link_libraries(marioparty4 PRIVATE aurora::aurora aurora::main musyx)
 
 add_library(bootDll SHARED src/REL/bootDll/main.c src/REL/bootDll/language.c)
-target_compile_definitions(marioparty4 PRIVATE TARGET_PC VERSION=0 TARGET_REL)
+target_compile_definitions(bootDll PRIVATE TARGET_PC VERSION=0 TARGET_REL)
 target_include_directories(bootDll PRIVATE include build/GMPE01_00/include)
 set_target_properties(bootDll PROPERTIES LINK_FLAGS "/EXPORT:ObjectSetup")
 target_link_libraries(bootDll PRIVATE musyx marioparty4)

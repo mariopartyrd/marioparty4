@@ -98,7 +98,7 @@ void ObjectSetup(void)
      Process *curr = HuPrcCurrentGet();
      #if VERSION_NTSC
      if (omovlevtno == 0) {
-         BootProgExec();
+         //BootProgExec();
      }
      #else
      if(SystemInitF == FALSE) {
@@ -120,11 +120,11 @@ void ObjectSetup(void)
      HuSprAttrSet(group, 0, HUSPR_ATTR_DISPOFF);
      if (omovlevtno != 0) {
          HuAudSndGrpSetSet(0);
-         data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
-         sprite_hudson = HuSprCreate(data, 0, 0);
-         HuSprGrpMemberSet(group, 1, sprite_hudson);
-         HuSprPosSet(group, 1, 288, 240);
-         HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
+        //  data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
+        //  sprite_hudson = HuSprCreate(data, 0, 0);
+        //  HuSprGrpMemberSet(group, 1, sprite_hudson);
+        //  HuSprPosSet(group, 1, 288, 240);
+        //  HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
          HuWinInit(1);
          BootTitleCreate();
          SystemInitF = 1;
@@ -169,9 +169,9 @@ void ObjectSetup(void)
 #endif
              HuWinInit(1);
              BootTitleCreate();
-             data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
-             sprite_hudson = HuSprCreate(data, 0, 0);
-             HuSprGrpMemberSet(group, 1, sprite_hudson);
+            //  data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
+            //  sprite_hudson = HuSprCreate(data, 0, 0);
+            //  HuSprGrpMemberSet(group, 1, sprite_hudson);
              HuSprPosSet(group, 1, 288, 240);
              HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
              while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 3000) {
@@ -365,19 +365,19 @@ void ObjectSetup(void)
      }
 #endif
      group = HuSprGrpCreate(3);
-     data = HuSprAnimReadFile(TITLE_PROGRESSIVE_CHOOSE_ANM);
-     sprite = HuSprCreate(data, 0, 0);
-     HuSprGrpMemberSet(group, 0, sprite);
-     HuSprPosSet(group, 0, 288, 240);
-     data = HuSprAnimReadFile(TITLE_PROGRESSIVE_CURSOR_ON_ANM);
-     sprite = HuSprCreate(data, 0, 0);
-     HuSprGrpMemberSet(group, 1, sprite);
-     HuSprPosSet(group, 1, progPosTbl[option * 2], progPosTbl[(option * 2) + 1]);
-     data = HuSprAnimReadFile(TITLE_PROGRESSIVE_CURSOR_OFF_ANM);
-     sprite = HuSprCreate(data, 0, 0);
-     HuSprGrpMemberSet(group, 2, sprite);
-     HuSprPosSet(group, 2, progPosTbl[option * 2], progPosTbl[(option * 2) + 1]);
-     HuSprAttrSet(group, 2, HUSPR_ATTR_DISPOFF);
+    //  data = HuSprAnimReadFile(TITLE_PROGRESSIVE_CHOOSE_ANM);
+    //  sprite = HuSprCreate(data, 0, 0);
+    //  HuSprGrpMemberSet(group, 0, sprite);
+    //  HuSprPosSet(group, 0, 288, 240);
+    //  data = HuSprAnimReadFile(TITLE_PROGRESSIVE_CURSOR_ON_ANM);
+    //  sprite = HuSprCreate(data, 0, 0);
+    //  HuSprGrpMemberSet(group, 1, sprite);
+    //  HuSprPosSet(group, 1, progPosTbl[option * 2], progPosTbl[(option * 2) + 1]);
+    //  data = HuSprAnimReadFile(TITLE_PROGRESSIVE_CURSOR_OFF_ANM);
+    //  sprite = HuSprCreate(data, 0, 0);
+    //  HuSprGrpMemberSet(group, 2, sprite);
+    //  HuSprPosSet(group, 2, progPosTbl[option * 2], progPosTbl[(option * 2) + 1]);
+    //  HuSprAttrSet(group, 2, HUSPR_ATTR_DISPOFF);
      WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 30);
      while (WipeStatGet()) {
          HuPrcVSleep();
@@ -414,15 +414,15 @@ void ObjectSetup(void)
 #endif
      HuSprGrpKill(group);
      group = HuSprGrpCreate(1);
-     if (!option) {
-         data = HuSprAnimReadFile(TITLE_PROGRESSIVE_ON_ANM);
-     }
-     else {
-         data = HuSprAnimReadFile(TITLE_PROGRESSIVE_OFF_ANM);
-     }
-     sprite = HuSprCreate(data, 0, 0);
-     HuSprGrpMemberSet(group, 0, sprite);
-     HuSprPosSet(group, 0, 288, 240);
+    //  if (!option) {
+    //      data = HuSprAnimReadFile(TITLE_PROGRESSIVE_ON_ANM);
+    //  }
+    //  else {
+    //      data = HuSprAnimReadFile(TITLE_PROGRESSIVE_OFF_ANM);
+    //  }
+    //  sprite = HuSprCreate(data, 0, 0);
+    //  HuSprGrpMemberSet(group, 0, sprite);
+    //  HuSprPosSet(group, 0, 288, 240);
      WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 20);
      while (WipeStatGet()) {
          HuPrcVSleep();
@@ -557,28 +557,28 @@ void ObjectSetup(void)
      #else
      bootGrpId = HuSprGrpCreate(13);
      #endif
-     sprite_data = HuSprAnimReadFile(TITLE_BG_ANM);
-     sprite = HuSprCreate(sprite_data, 0, 0);
-     HuSprGrpMemberSet(bootGrpId, 0, sprite);
-     HuSprAttrSet(bootGrpId, 0, HUSPR_ATTR_DISPOFF);
-     HuSprDrawNoSet(bootGrpId, 0, 127);
-     HuSprPosSet(bootGrpId, 0, 288, 240);
-     sprite_data = HuSprAnimReadFile(TITLE_COPYRIGHT_ANM);
-     sprite = HuSprCreate(sprite_data, 1, 0);
-     HuSprGrpMemberSet(bootGrpId, 1, sprite);
-     HuSprAttrSet(bootGrpId, 1, HUSPR_ATTR_DISPOFF);
-     HuSprPosSet(bootGrpId, 1, 288, 420);
-     #if VERSION_NTSC
-     sprite_data = HuSprAnimReadFile(TITLE_PRESS_START_ANM);
-     sprite = HuSprCreate(sprite_data, 2, 0);
-     HuSprGrpMemberSet(bootGrpId, 2, sprite);
-     HuSprAttrSet(bootGrpId, 2, HUSPR_ATTR_DISPOFF | HUSPR_ATTR_LINEAR);
-     HuSprPosSet(bootGrpId, 2, 288, 380);
-     sprite_data = HuSprAnimReadFile(TITLE_LOGO_ANM);
-     sprite = HuSprCreate(sprite_data, 0, 0);
-     HuSprGrpMemberSet(bootGrpId, 3, sprite);
-     HuSprAttrSet(bootGrpId, 3, HUSPR_ATTR_DISPOFF | HUSPR_ATTR_LINEAR);
-     HuSprPosSet(bootGrpId, 3, 288, 200);
+    //  sprite_data = HuSprAnimReadFile(TITLE_BG_ANM);
+    //  sprite = HuSprCreate(sprite_data, 0, 0);
+    //  HuSprGrpMemberSet(bootGrpId, 0, sprite);
+    //  HuSprAttrSet(bootGrpId, 0, HUSPR_ATTR_DISPOFF);
+    //  HuSprDrawNoSet(bootGrpId, 0, 127);
+    //  HuSprPosSet(bootGrpId, 0, 288, 240);
+    //  sprite_data = HuSprAnimReadFile(TITLE_COPYRIGHT_ANM);
+    //  sprite = HuSprCreate(sprite_data, 1, 0);
+    //  HuSprGrpMemberSet(bootGrpId, 1, sprite);
+    //  HuSprAttrSet(bootGrpId, 1, HUSPR_ATTR_DISPOFF);
+    //  HuSprPosSet(bootGrpId, 1, 288, 420);
+    #if VERSION_NTSC
+    //  sprite_data = HuSprAnimReadFile(TITLE_PRESS_START_ANM);
+    //  sprite = HuSprCreate(sprite_data, 2, 0);
+    //  HuSprGrpMemberSet(bootGrpId, 2, sprite);
+    //  HuSprAttrSet(bootGrpId, 2, HUSPR_ATTR_DISPOFF | HUSPR_ATTR_LINEAR);
+    //  HuSprPosSet(bootGrpId, 2, 288, 380);
+    //  sprite_data = HuSprAnimReadFile(TITLE_LOGO_ANM);
+    //  sprite = HuSprCreate(sprite_data, 0, 0);
+    //  HuSprGrpMemberSet(bootGrpId, 3, sprite);
+    //  HuSprAttrSet(bootGrpId, 3, HUSPR_ATTR_DISPOFF | HUSPR_ATTR_LINEAR);
+    //  HuSprPosSet(bootGrpId, 3, 288, 200);
      #else
      sprite_data = HuSprAnimReadFile(TITLE_LOGO_ANM);
      sprite = HuSprCreate(sprite_data, 0, 0);
@@ -586,11 +586,11 @@ void ObjectSetup(void)
      HuSprAttrSet(bootGrpId, 2, HUSPR_ATTR_DISPOFF | HUSPR_ATTR_LINEAR);
      HuSprPosSet(bootGrpId, 2, 288, 200);
      for(i=0; i<5; i++) {
-         sprite_data = HuSprAnimReadFile(TITLE_PRESS_START_EN_ANM+i);
-         sprite = HuSprCreate(sprite_data, 3+i, 0);
-         HuSprGrpMemberSet(bootGrpId, 3+i, sprite);
-         HuSprAttrSet(bootGrpId, 3+i, HUSPR_ATTR_DISPOFF | HUSPR_ATTR_LINEAR);
-         HuSprPosSet(bootGrpId, 3+i, 288, 340);
+        //  sprite_data = HuSprAnimReadFile(TITLE_PRESS_START_EN_ANM+i);
+        //  sprite = HuSprCreate(sprite_data, 3+i, 0);
+        //  HuSprGrpMemberSet(bootGrpId, 3+i, sprite);
+        //  HuSprAttrSet(bootGrpId, 3+i, HUSPR_ATTR_DISPOFF | HUSPR_ATTR_LINEAR);
+        //  HuSprPosSet(bootGrpId, 3+i, 288, 340);
      }
      for(i=0; i<5; i++) {
          sprite_data = HuSprAnimReadFile(TITLE_LANGUAGE_EN_ANM+i);
@@ -794,8 +794,16 @@ void ObjectSetup(void)
  {
      u32 *src = (u32 *)nintendoData;
      u32 size = *src++;
-     void *dst = HuMemDirectMalloc(HEAP_DATA, size);
-     int decode_type = *src++;
+     void *dst;
+     s32 decode_type;
+#ifdef TARGET_PC
+     byteswap_u32(&size);
+#endif
+     dst = HuMemDirectMalloc(HEAP_DATA, size);
+     decode_type = *src++;
+#ifdef TARGET_PC
+     byteswap_s32(&decode_type);
+#endif
      if(dst) {
          HuDecodeData(src, dst, size, decode_type);
      }

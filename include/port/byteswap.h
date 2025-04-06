@@ -8,6 +8,8 @@ extern "C"
 
 #include "game/animdata.h"
 
+void byteswap_u32(u32 *src);
+void byteswap_s32(s32 *src);
 void byteswap_animdata(void *src, AnimData* dest);
 void byteswap_animbankdata(void *src, AnimBankData *dest);
 void byteswap_animpatdata(void *src, AnimPatData *dest);
