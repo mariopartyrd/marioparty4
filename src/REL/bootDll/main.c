@@ -126,7 +126,7 @@ void ObjectSetup(void)
         //  HuSprPosSet(group, 1, 288, 240);
         //  HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
          HuWinInit(1);
-         BootTitleCreate();
+         //BootTitleCreate();
          SystemInitF = 1;
      }
      else {
@@ -167,16 +167,16 @@ void ObjectSetup(void)
              // TODO PC
              MGSeqInit();
 #endif
-             HuWinInit(1);
-             BootTitleCreate();
+             //HuWinInit(1);
+             //BootTitleCreate();
             //  data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
             //  sprite_hudson = HuSprCreate(data, 0, 0);
             //  HuSprGrpMemberSet(group, 1, sprite_hudson);
              HuSprPosSet(group, 1, 288, 240);
              HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
-             while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 3000) {
-                 HuPrcVSleep();
-             }
+             //while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 3000) {
+             //    HuPrcVSleep();
+             //}
          }
          else {
              for (i = 0; i < 180; i++) {
@@ -209,9 +209,9 @@ void ObjectSetup(void)
              //group_samp = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(0));
              //msmSysLoadGroup(0, group_samp, 0);
              //HuMemDirectFree(group_samp);
-             while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 3000) {
-                 HuPrcVSleep();
-             }
+             //while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 3000) {
+             //    HuPrcVSleep();
+             //}
          }
          else {
              for (i = 0; i < 180; i++) {
@@ -234,14 +234,14 @@ void ObjectSetup(void)
          while (WipeStatGet()) {
              HuPrcVSleep();
          }
-         tick_prev = OSGetTick();
-         if (!SystemInitF) {
-             HuAudSndGrpSetSet(0);
-             SystemInitF = 1;
-         }
-         while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 1000) {
-             HuPrcVSleep();
-         }
+         //tick_prev = OSGetTick();
+         //if (!SystemInitF) {
+         //    HuAudSndGrpSetSet(0);
+         //    SystemInitF = 1;
+         //}
+         //while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 1000) {
+         //    HuPrcVSleep();
+         //}
          HuSprAttrSet(group, 0, HUSPR_ATTR_DISPOFF);
          HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
          group_thp = HuSprGrpCreate(1);
@@ -249,11 +249,11 @@ void ObjectSetup(void)
          //HuSprGrpMemberSet(group_thp, 0, sprite_thp);
          //HuSprPosSet(group_thp, 0, 288, 240);
          HuWinMesMaxSizeBetGet(win_size, MAKE_MESSID(54, 0), MAKE_MESSID(54, 4));
-         demoWinId = HuWinCreate(-10000, 448 - win_size[1], win_size[0], win_size[1], 0);
-         HuWinMesSpeedSet(demoWinId, 0);
-         HuWinBGTPLvlSet(demoWinId, 0);
-         HuWinPriSet(demoWinId, 10);
-         HuWinAttrSet(demoWinId, 0x800);
+         //demoWinId = HuWinCreate(-10000, 448 - win_size[1], win_size[0], win_size[1], 0);
+         //HuWinMesSpeedSet(demoWinId, 0);
+         //HuWinBGTPLvlSet(demoWinId, 0);
+         //HuWinPriSet(demoWinId, 10);
+         //HuWinAttrSet(demoWinId, 0x800);
          HuPrcSleep(5);
          WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 10);
          while (WipeStatGet()) {
@@ -622,7 +622,7 @@ void ObjectSetup(void)
      OSReport(">>>>>>>>MSM_SE_SEL_01 %d\n", msmSeGetEntryID(2092, seNo));
      OSReport(">>>>>>>>SE Num %d\n", msmSeGetNumPlay(0));
 #endif
-     HuAudSStreamPlay(20);
+     //HuAudSStreamPlay(20);
      WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 30);
      while (WipeStatGet()) {
          HuPrcVSleep();

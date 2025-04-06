@@ -536,53 +536,53 @@ VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
 
 void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 {
-    puts("GXSetGPMetric is a stub");
+    // puts("GXSetGPMetric is a stub");
 }
 
 void GXReadGPMetric(u32 *cnt0, u32 *cnt1)
 {
-    puts("GXReadGPMetric is a stub");
+    // puts("GXReadGPMetric is a stub");
 }
 
 void GXClearGPMetric(void)
 {
-    puts("GXClearGPMetric is a stub");
+    // puts("GXClearGPMetric is a stub");
 }
 
 void GXReadMemMetric(
     u32 *cp_req, u32 *tc_req, u32 *cpu_rd_req, u32 *cpu_wr_req, u32 *dsp_req, u32 *io_req, u32 *vi_req, u32 *pe_req, u32 *rf_req, u32 *fi_req)
 {
-    puts("GXReadMemMetric is a stub");
+    // puts("GXReadMemMetric is a stub");
 }
 
 void GXClearMemMetric(void)
 {
-    puts("GXClearMemMetric is a stub");
+    // puts("GXClearMemMetric is a stub");
 }
 
 void GXClearVCacheMetric(void)
 {
-    puts("GXClearVCacheMetric is a stub");
+    // puts("GXClearVCacheMetric is a stub");
 }
 
 void GXReadPixMetric(u32 *top_pixels_in, u32 *top_pixels_out, u32 *bot_pixels_in, u32 *bot_pixels_out, u32 *clr_pixels_in, u32 *copy_clks)
 {
-    puts("GXReadPixMetric is a stub");
+    // puts("GXReadPixMetric is a stub");
 }
 
 void GXClearPixMetric(void)
 {
-    puts("GXClearPixMetric is a stub");
+    // puts("GXClearPixMetric is a stub");
 }
 
 void GXSetVCacheMetric(GXVCachePerf attr)
 {
-    puts("GXSetVCacheMetric is a stub");
+    // puts("GXSetVCacheMetric is a stub");
 }
 
 void GXReadVCacheMetric(u32 *check, u32 *miss, u32 *stall)
 {
-    puts("GXReadVCacheMetric is a stub");
+    // puts("GXReadVCacheMetric is a stub");
 }
 
 void GXSetDrawSync(u16 token)
