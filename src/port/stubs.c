@@ -9,7 +9,7 @@
 
 // Credits: Super Monkey Ball
 
-void OSReport(const char *msg, ...)
+__declspec(dllexport) void OSReport(const char *msg, ...)
 {
     va_list args;
     va_start(args, msg);
@@ -353,7 +353,7 @@ BOOL OSInitFont(OSFontHeader *fontData)
 BOOL OSLink(OSModuleInfo *newModule, void *bss)
 {
     puts("OSLink is a stub");
-    return FALSE;
+    return TRUE;
 }
 
 void OSLoadContext(OSContext *context)
@@ -699,7 +699,5 @@ void MGSeqMain(void)
     puts("MGSeqMain is a stub");
 }
 
-void omMasterInit(s32 prio, FileListEntry *ovl_list, s32 ovl_count, OverlayID start_ovl)
-{
-    puts("omMasterInit is a stub");
-}
+// TODO remove
+u8 fadeStat = 0;

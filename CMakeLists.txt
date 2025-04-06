@@ -40,27 +40,32 @@ set(DOLPHIN_FILES
 
 set(GAME_FILES
     src/game/armem.c
+    src/game/audio.c
     src/game/card.c
     src/game/ClusterExec.c
     src/game/data.c
     src/game/decode.c
     src/game/dvd.c
     src/game/EnvelopeExec.c
+    src/game/esprite.c
     src/game/fault.c
     src/game/flag.c
     src/game/font.c
     src/game/frand.c
+    src/game/gamework.c
     src/game/hsfanim.c
     src/game/hsfdraw.c
     src/game/hsfex.c
     src/game/hsfload.c
     src/game/hsfman.c
     src/game/hsfmotion.c
-    src/game/gamework.c
+    src/game/init.c
     src/game/main.c
     src/game/malloc.c
     src/game/memory.c
-    src/game/init.c
+    src/game/objdll.c
+    src/game/objmain.c
+    src/game/ovllist.c
     src/game/ShapeExec.c
     src/game/sprman.c
     src/game/sprput.c
@@ -94,8 +99,20 @@ set_source_files_properties(${file} PROPERTIES COMPILE_FLAGS "-std=c89 -Dinline=
 endforeach()
 endif ()
 
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -rdynamic")
+
 add_executable(marioparty4 ${DOLPHIN_FILES} ${GAME_FILES} ${PORT_FILES})
-target_compile_definitions(marioparty4 PRIVATE TARGET_PC VERSION=0)
+set_property(TARGET marioparty4 PROPERTY ENABLE_EXPORTS ON)
+target_compile_definitions(marioparty4 PRIVATE TARGET_PC VERSION=0 TARGET_MAIN)
 target_compile_definitions(musyx PRIVATE MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
 target_include_directories(marioparty4 PRIVATE include build/GMPE01_00/include)
+if (MSVC)
+target_link_options(marioparty4 PRIVATE "/DEF:${CMAKE_SOURCE_DIR}/dol.def")
+endif ()
 target_link_libraries(marioparty4 PRIVATE aurora::aurora aurora::main musyx)
+
+add_library(bootDll SHARED src/REL/bootDll/main.c src/REL/bootDll/language.c)
+target_compile_definitions(marioparty4 PRIVATE TARGET_PC VERSION=0 TARGET_REL)
+target_include_directories(bootDll PRIVATE include build/GMPE01_00/include)
+set_target_properties(bootDll PROPERTIES LINK_FLAGS "/EXPORT:ObjectSetup")
+target_link_libraries(bootDll PRIVATE musyx marioparty4)

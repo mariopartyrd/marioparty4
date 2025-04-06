@@ -4,14 +4,14 @@
 #include "string.h"
 #include "version.h"
 
-s16 GwLanguage = 1;
-s16 GwLanguageSave = -1;
+SHARED_SYM s16 GwLanguage = 1;
+SHARED_SYM s16 GwLanguageSave = -1;
 
-GameStat GWGameStatDefault;
-GameStat GWGameStat;
-SystemState GWSystem;
-PlayerState GWPlayer[4];
-PlayerConfig GWPlayerCfg[4];
+SHARED_SYM GameStat GWGameStatDefault;
+SHARED_SYM GameStat GWGameStat;
+SHARED_SYM SystemState GWSystem;
+SHARED_SYM PlayerState GWPlayer[4];
+SHARED_SYM PlayerConfig GWPlayerCfg[4];
 
 static inline void GWErase(void)
 {

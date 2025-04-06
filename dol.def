@@ -1,0 +1,27 @@
+EXPORTS
+   OSReport
+   OSGetTick
+   HuMemDirectMalloc
+   HuMemDirectFree
+   HuDataSelHeapReadNum
+   HuDecodeData
+   Hu3DBGColorSet
+   Hu3DModelCreate
+   Hu3DModelAttrSet
+   Hu3DModelAttrReset
+   Hu3DCameraCreate
+   Hu3DCameraPerspectiveSet
+   Hu3DCameraViewportSet
+   Hu3DCameraPosSet
+   Hu3DModelCameraInfoSet
+   Hu3DModelLightInfoSet
+   HuPrcEnd
+   HuPrcCreate
+   HuPrcCurrentGet
+   HuPrcSleep
+   HuPrcVSleep
+   omOvlCallEx
+   omOvlReturnEx
+   omOvlHisChg
+   omOvlHisGet
+   omInitObjMan

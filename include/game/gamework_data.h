@@ -145,13 +145,13 @@ typedef struct game_stat {
     /* 0x110 */ PauseBackupConfig party_pause;
 } GameStat;
 
-extern s16 GwLanguage;
-extern s16 GwLanguageSave;
+SHARED_SYM extern s16 GwLanguage;
+SHARED_SYM extern s16 GwLanguageSave;
 
-extern PlayerConfig GWPlayerCfg[4];
-extern PlayerState GWPlayer[4];
-extern SystemState GWSystem;
-extern GameStat GWGameStat;
+SHARED_SYM extern PlayerConfig GWPlayerCfg[4];
+SHARED_SYM extern PlayerState GWPlayer[4];
+SHARED_SYM extern SystemState GWSystem;
+SHARED_SYM extern GameStat GWGameStat;
 
 static inline s32 GWPlayerCfgGroupGet(s32 player)
 {
