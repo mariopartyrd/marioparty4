@@ -29,8 +29,8 @@ u32 __OSCoreClock AT_ADDRESS(OS_BASE_CACHED | 0x00FC); // sync with OSLoMem.h
 #define OS_BUS_CLOCK (u32) __OSBusClock
 #define OS_CORE_CLOCK __OSCoreClock
 #else
-#define OS_BUS_CLOCK 162000000
-#define OS_BUS_CLOCK 486000000
+#define OS_BUS_CLOCK 162000000ull
+#define OS_CORE_CLOCK 486000000ull
 #endif
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
 

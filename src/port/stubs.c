@@ -452,7 +452,7 @@ void VIConfigurePan(u16 xOrg, u16 yOrg, u16 width, u16 height)
 
 u32 VIGetRetraceCount()
 {
-    puts("VIGetRetraceCount is a stub");
+    // puts("VIGetRetraceCount is a stub");
     return 0; // TODO this might be important
 }
 
@@ -469,12 +469,12 @@ void VISetBlack(BOOL black)
 
 void VISetNextFrameBuffer(void *fb)
 {
-    puts("VISetNextFrameBuffer is a stub");
+    // puts("VISetNextFrameBuffer is a stub");
 }
 
 void VIWaitForRetrace()
 {
-    puts("VIWaitForRetrace is a stub");
+    // puts("VIWaitForRetrace is a stub");
 }
 
 s32 __CARDFormatRegionAsync(int a, int b)
@@ -587,7 +587,7 @@ void GXReadVCacheMetric(u32 *check, u32 *miss, u32 *stall)
 
 void GXSetDrawSync(u16 token)
 {
-    puts("GXSetDrawSync is a stub");
+    // puts("GXSetDrawSync is a stub");
 }
 
 GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback cb)
@@ -635,17 +635,17 @@ void GXNormal3s16(s16 x, s16 y, s16 z)
 
 void GXPosition2u16(const u16 x, const u16 y)
 {
-    puts("GXPosition2u16 is a stub");
+    GXPosition3f32(x, y, 0);
 }
 
 void GXPosition2f32(const f32 x, const f32 y)
 {
-    puts("GXPosition2f32 is a stub");
+    GXPosition3f32(x, y, 0);
 }
 
 void GXPosition2s16(const s16 x, const s16 y)
 {
-    puts("GXPosition2s16 is a stub");
+    GXPosition3f32(x, y, 0);
 }
 
 void GXColor1x8(u8 index)
@@ -688,18 +688,17 @@ void msmSysRegularProc(void)
 
 void msmMusFdoutEnd(void)
 {
-    puts("msmMusFdoutEnd is a stub");
 }
 
 s32 HuSoftResetButtonCheck(void)
 {
-    puts("HuSoftResetButtonCheck is a stub");
+    //puts("HuSoftResetButtonCheck is a stub");
     return 0;
 }
 
 void MGSeqMain(void)
 {
-    puts("MGSeqMain is a stub");
+    // puts("MGSeqMain is a stub");
 }
 
 // TODO remove

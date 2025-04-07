@@ -28,11 +28,6 @@ static LARGE_INTEGER PerfFrequency;
 
 u8 LC_CACHE_BASE[4096];
 
-static u64 GetGCTicksPerSec()
-{
-    return 486000000ull;
-}
-
 static u64 GetGCTicks()
 {
 #if __APPLE__
@@ -45,7 +40,7 @@ static u64 GetGCTicks()
 #elif _WIN32
     LARGE_INTEGER perf;
     QueryPerformanceCounter(&perf);
-    perf.QuadPart *= GetGCTicksPerSec();
+    perf.QuadPart *= OS_CORE_CLOCK;
     perf.QuadPart /= PerfFrequency.QuadPart;
     return perf.QuadPart;
 #else
@@ -64,7 +59,7 @@ void OSInit()
     #if __APPLE__
     mach_timebase_info_data_t timebase;
     mach_timebase_info(&timebase);
-    MachToDolphinNum = GetGCTicksPerSec() * timebase.numer;
+    MachToDolphinNum = OS_CORE_CLOCK * timebase.numer;
     MachToDolphinDenom = 1000000000ull * timebase.denom;
 #elif _WIN32
     QueryPerformanceFrequency(&PerfFrequency);
