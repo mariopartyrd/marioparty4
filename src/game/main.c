@@ -79,6 +79,8 @@ void aurora_log_callback(AuroraLogLevel level, const char *message, unsigned int
         abort();
     }
 }
+
+void VICallPostRetraceCallback(s32 retraceCount);
 #endif
 
 #ifdef TARGET_PC
@@ -182,13 +184,9 @@ void main(void)
         pfDrawFonts();
         HuPerfEnd(1);
 
-#ifdef TARGET_PC
-        imgui_main(&auroraInfo);
-        aurora_end_frame();
-#endif
-
         msmMusFdoutEnd();
         HuSysDoneRender(retrace);
+
         GXReadGPMetric(&met0, &met1);
         GXReadVCacheMetric(&vcheck, &vmiss, &vstall);
         GXReadPixMetric(&top_pixels_in, &top_pixels_out, &bot_pixels_in, &bot_pixels_out, &clr_pixels_in, &total_copy_clks);
@@ -197,6 +195,10 @@ void main(void)
         GlobalCounter++;
 
 #ifdef TARGET_PC
+        imgui_main(&auroraInfo);
+        aurora_end_frame();
+        // TODO PC remove
+        VICallPostRetraceCallback(0);
         frame_limiter();
 #endif
     }

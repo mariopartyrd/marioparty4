@@ -1,4 +1,5 @@
 #include "dolphin/gx/GXVert.h"
+#include "dolphin/vitypes.h"
 #include <dolphin.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -527,11 +528,18 @@ void SISetSamplingRate(u32 msec)
     puts("SISetSamplingRate is a stub");
 }
 
+VIRetraceCallback postRetraceCallback = NULL;
+
 VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
 {
-    puts("VISetPostRetraceCallback is a stub");
-    // TODO
-    return callback;
+    postRetraceCallback = callback;
+    return NULL;
+}
+
+void VICallPostRetraceCallback(s32 retraceCount)
+{
+    if (postRetraceCallback != NULL)
+        postRetraceCallback(retraceCount);
 }
 
 void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
@@ -674,7 +682,8 @@ void GXResetWriteGatherPipe(void)
     puts("GXResetWriteGatherPipe is a stub");
 }
 
-void ARQInit(void) {
+void ARQInit(void)
+{
     puts("ARQInit is a stub");
 }
 
@@ -683,16 +692,13 @@ void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }
 
 void msmSysRegularProc(void)
 {
-    puts("msmSysRegularProc is a stub");
 }
 
-void msmMusFdoutEnd(void)
-{
-}
+void msmMusFdoutEnd(void) { }
 
 s32 HuSoftResetButtonCheck(void)
 {
-    //puts("HuSoftResetButtonCheck is a stub");
+    // puts("HuSoftResetButtonCheck is a stub");
     return 0;
 }
 
