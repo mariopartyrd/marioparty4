@@ -1,5 +1,4 @@
 #include "dolphin/gx/GXVert.h"
-#include "dolphin/vitypes.h"
 #include <dolphin.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -9,6 +8,8 @@
 #include <game/object.h>
 
 // Credits: Super Monkey Ball
+
+static VIRetraceCallback sVIRetraceCallback = NULL;
 
 void OSReport(const char *msg, ...)
 {
@@ -475,7 +476,10 @@ void VISetNextFrameBuffer(void *fb)
 
 void VIWaitForRetrace()
 {
-    // puts("VIWaitForRetrace is a stub");
+if (sVIRetraceCallback)
+{
+    sVIRetraceCallback(0);
+}
 }
 
 s32 __CARDFormatRegionAsync(int a, int b)
@@ -528,18 +532,10 @@ void SISetSamplingRate(u32 msec)
     puts("SISetSamplingRate is a stub");
 }
 
-VIRetraceCallback postRetraceCallback = NULL;
-
 VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback callback)
 {
-    postRetraceCallback = callback;
-    return NULL;
-}
-
-void VICallPostRetraceCallback(s32 retraceCount)
-{
-    if (postRetraceCallback != NULL)
-        postRetraceCallback(retraceCount);
+sVIRetraceCallback = callback;
+    return callback;
 }
 
 void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
@@ -610,55 +606,9 @@ void PPCSync(void)
     puts("PPCSync is a stub");
 }
 
-void GXColor3u8(u8 r, u8 g, u8 b)
-{
-    // TODO
-    GXColor4u8(r, g, b, 255);
-}
-
-void GXNormal1x16(u16 index)
-{
-    puts("GXNormal1x16 is a stub");
-}
-
-void GXColor1x16(u16 index)
-{
-    puts("GXColor1x16 is a stub");
-}
-
-void GXTexCoord1x16(u16 index)
-{
-    puts("GXTexCoord1x16 is a stub");
-}
-
 void GXUnknownu16(const u16 x)
 {
     puts("GXUnknownu16 is a stub");
-}
-
-void GXNormal3s16(s16 x, s16 y, s16 z)
-{
-    puts("GXNormal3s16 is a stub");
-}
-
-void GXPosition2u16(const u16 x, const u16 y)
-{
-    GXPosition3f32(x, y, 0);
-}
-
-void GXPosition2f32(const f32 x, const f32 y)
-{
-    GXPosition3f32(x, y, 0);
-}
-
-void GXPosition2s16(const s16 x, const s16 y)
-{
-    GXPosition3f32(x, y, 0);
-}
-
-void GXColor1x8(u8 index)
-{
-    puts("GXColor1x8 is a stub");
 }
 
 void GXWaitDrawDone(void)
@@ -682,8 +632,7 @@ void GXResetWriteGatherPipe(void)
     puts("GXResetWriteGatherPipe is a stub");
 }
 
-void ARQInit(void)
-{
+void ARQInit(void) {
     puts("ARQInit is a stub");
 }
 
@@ -692,13 +641,16 @@ void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }
 
 void msmSysRegularProc(void)
 {
+    puts("msmSysRegularProc is a stub");
 }
 
-void msmMusFdoutEnd(void) { }
+void msmMusFdoutEnd(void)
+{
+}
 
 s32 HuSoftResetButtonCheck(void)
 {
-    // puts("HuSoftResetButtonCheck is a stub");
+    //puts("HuSoftResetButtonCheck is a stub");
     return 0;
 }
 

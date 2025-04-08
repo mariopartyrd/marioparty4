@@ -28,6 +28,10 @@ endif ()
 
 add_compile_options(-fsanitize=address)
 
+if (MSVC)
+  add_compile_options(/bigobj)
+endif ()
+
 add_subdirectory(extern/aurora EXCLUDE_FROM_ALL)
 add_subdirectory(extern/musyx EXCLUDE_FROM_ALL)
 
@@ -112,7 +116,7 @@ target_include_directories(marioparty4 PRIVATE include build/GMPE01_00/include)
 if (MSVC)
 target_link_options(marioparty4 PRIVATE "/DEF:${CMAKE_SOURCE_DIR}/dol.def")
 endif ()
-target_link_libraries(marioparty4 PRIVATE aurora::aurora aurora::main musyx)
+target_link_libraries(marioparty4 PRIVATE aurora::core aurora::gx aurora::vi aurora::main musyx)
 
 add_library(bootDll SHARED src/REL/bootDll/main.c src/REL/bootDll/language.c)
 target_compile_definitions(bootDll PRIVATE TARGET_PC VERSION=0 TARGET_REL)

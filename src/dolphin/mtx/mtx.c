@@ -1,4 +1,5 @@
 #include "dolphin/mtx.h"
+#include "dolphin/gx/GXPriv.h"
 
 static f32 Unit01[] = { 0.0f, 1.0f };
 
@@ -6,17 +7,21 @@ extern f32 sinf(f32);
 extern f32 cosf(f32);
 extern f32 tanf(f32);
 
-void C_MTXIdentity(Mtx mtx)
+void C_MTXIdentity(Mtx m)
 {
-    mtx[0][0] = 1.0f;
-    mtx[0][1] = 0.0f;
-    mtx[0][2] = 0.0f;
-    mtx[1][0] = 0.0f;
-    mtx[1][1] = 1.0f;
-    mtx[1][2] = 0.0f;
-    mtx[2][0] = 0.0f;
-    mtx[2][1] = 0.0f;
-    mtx[2][2] = 1.0f;
+    ASSERTMSGLINE(189, m, "MtxIdentity():  NULL Mtx 'm' ");
+    m[0][0] = 1;
+    m[0][1] = 0;
+    m[0][2] = 0;
+    m[0][3] = 0;
+    m[1][0] = 0;
+    m[1][1] = 1;
+    m[1][2] = 0;
+    m[1][3] = 0;
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = 1;
+    m[2][3] = 0;
 }
 
 #ifdef GEKKO
@@ -41,27 +46,23 @@ void PSMTXIdentity(register Mtx m)
 }
 #endif
 
-void C_MTXCopy(const Mtx src, Mtx dst)
-{
-
-    if (src == dst) {
-        return;
+void C_MTXCopy(const Mtx src, Mtx dst) {
+    ASSERTMSGLINE(250, src, "MTXCopy():  NULL MtxPtr 'src' ");
+    ASSERTMSGLINE(251, dst, "MTXCopy():  NULL MtxPtr 'dst' ");
+    if (src != dst) {
+        dst[0][0] = src[0][0];
+        dst[0][1] = src[0][1];
+        dst[0][2] = src[0][2];
+        dst[0][3] = src[0][3];
+        dst[1][0] = src[1][0];
+        dst[1][1] = src[1][1];
+        dst[1][2] = src[1][2];
+        dst[1][3] = src[1][3];
+        dst[2][0] = src[2][0];
+        dst[2][1] = src[2][1];
+        dst[2][2] = src[2][2];
+        dst[2][3] = src[2][3];
     }
-
-    dst[0][0] = src[0][0];
-    dst[0][1] = src[0][1];
-    dst[0][2] = src[0][2];
-    dst[0][3] = src[0][3];
-
-    dst[1][0] = src[1][0];
-    dst[1][1] = src[1][1];
-    dst[1][2] = src[1][2];
-    dst[1][3] = src[1][3];
-
-    dst[2][0] = src[2][0];
-    dst[2][1] = src[2][1];
-    dst[2][2] = src[2][2];
-    dst[2][3] = src[2][3];
 }
 
 #ifdef GEKKO
@@ -88,33 +89,34 @@ asm void PSMTXCopy(const register Mtx src, register Mtx dst)
 }
 #endif
 
-void C_MTXConcat(const Mtx a, const Mtx b, Mtx ab)
-{
+void C_MTXConcat(const Mtx a, const Mtx b, Mtx ab) {
     Mtx mTmp;
     MtxPtr m;
 
-    if ((ab == a) || (ab == b)) {
-        m = mTmp;
-    }
+    ASSERTMSGLINE(324, a, "MTXConcat():  NULL MtxPtr 'a'  ");
+    ASSERTMSGLINE(325, b, "MTXConcat():  NULL MtxPtr 'b'  ");
+    ASSERTMSGLINE(326, ab, "MTXConcat():  NULL MtxPtr 'ab' ");
 
-    else {
+    if (ab == a || ab == b) {
+        m = mTmp;
+    } else {
         m = ab;
     }
 
-    m[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0] + a[0][2] * b[2][0];
-    m[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1] + a[0][2] * b[2][1];
-    m[0][2] = a[0][0] * b[0][2] + a[0][1] * b[1][2] + a[0][2] * b[2][2];
-    m[0][3] = a[0][0] * b[0][3] + a[0][1] * b[1][3] + a[0][2] * b[2][3] + a[0][3];
+    m[0][0] =       0 +  a[0][2] * b[2][0] + ((a[0][0] * b[0][0]) + (a[0][1] * b[1][0]));
+    m[0][1] =       0 +  a[0][2] * b[2][1] + ((a[0][0] * b[0][1]) + (a[0][1] * b[1][1]));
+    m[0][2] =       0 +  a[0][2] * b[2][2] + ((a[0][0] * b[0][2]) + (a[0][1] * b[1][2]));
+    m[0][3] = a[0][3] + (a[0][2] * b[2][3] +  (a[0][0] * b[0][3]  + (a[0][1] * b[1][3])));
 
-    m[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0] + a[1][2] * b[2][0];
-    m[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1] + a[1][2] * b[2][1];
-    m[1][2] = a[1][0] * b[0][2] + a[1][1] * b[1][2] + a[1][2] * b[2][2];
-    m[1][3] = a[1][0] * b[0][3] + a[1][1] * b[1][3] + a[1][2] * b[2][3] + a[1][3];
+    m[1][0] =       0 +  a[1][2] * b[2][0] + ((a[1][0] * b[0][0]) + (a[1][1] * b[1][0]));
+    m[1][1] =       0 +  a[1][2] * b[2][1] + ((a[1][0] * b[0][1]) + (a[1][1] * b[1][1]));
+    m[1][2] =       0 +  a[1][2] * b[2][2] + ((a[1][0] * b[0][2]) + (a[1][1] * b[1][2]));
+    m[1][3] = a[1][3] + (a[1][2] * b[2][3] +  (a[1][0] * b[0][3]  + (a[1][1] * b[1][3])));
 
-    m[2][0] = a[2][0] * b[0][0] + a[2][1] * b[1][0] + a[2][2] * b[2][0];
-    m[2][1] = a[2][0] * b[0][1] + a[2][1] * b[1][1] + a[2][2] * b[2][1];
-    m[2][2] = a[2][0] * b[0][2] + a[2][1] * b[1][2] + a[2][2] * b[2][2];
-    m[2][3] = a[2][0] * b[0][3] + a[2][1] * b[1][3] + a[2][2] * b[2][3] + a[2][3];
+    m[2][0] =       0 +  a[2][2] * b[2][0] + ((a[2][0] * b[0][0]) + (a[2][1] * b[1][0]));
+    m[2][1] =       0 +  a[2][2] * b[2][1] + ((a[2][0] * b[0][1]) + (a[2][1] * b[1][1]));
+    m[2][2] =       0 +  a[2][2] * b[2][2] + ((a[2][0] * b[0][2]) + (a[2][1] * b[1][2]));
+    m[2][3] = a[2][3] + (a[2][2] * b[2][3] +  (a[2][0] * b[0][3]  + (a[2][1] * b[1][3])));
 
     if (m == mTmp) {
         C_MTXCopy(mTmp, ab);
@@ -222,12 +224,16 @@ asm void PSMTXConcat(const register Mtx mA, const register Mtx mB, register Mtx 
 }
 #endif
 
-void C_MTXConcatArray(const Mtx a, const Mtx *srcBase, Mtx *dstBase, u32 count)
-{
+void C_MTXConcatArray(const Mtx a, const Mtx* srcBase, Mtx* dstBase, u32 count) {
     u32 i;
+
+    ASSERTMSGLINE(580, a != 0, "MTXConcatArray(): NULL MtxPtr 'a' ");
+    ASSERTMSGLINE(581, srcBase != 0, "MTXConcatArray(): NULL MtxPtr 'srcBase' ");
+    ASSERTMSGLINE(582, dstBase != 0, "MTXConcatArray(): NULL MtxPtr 'dstBase' ");
+    ASSERTMSGLINE(583, count > 1, "MTXConcatArray(): count must be greater than 1.");
+
     for (i = 0; i < count; i++) {
         C_MTXConcat(a, *srcBase, *dstBase);
-
         srcBase++;
         dstBase++;
     }
@@ -351,31 +357,31 @@ _loop:
 
 #endif
 
-void C_MTXTranspose(const Mtx src, Mtx xPose)
-{
+void C_MTXTranspose(const Mtx src, Mtx xPose) {
     Mtx mTmp;
     MtxPtr m;
 
+    ASSERTMSGLINE(851, src, "MTXTranspose():  NULL MtxPtr 'src' ");
+    ASSERTMSGLINE(852, xPose, "MTXTranspose():  NULL MtxPtr 'xPose' ");
+
     if (src == xPose) {
         m = mTmp;
-    }
-    else {
+    } else {
         m = xPose;
     }
 
     m[0][0] = src[0][0];
     m[0][1] = src[1][0];
     m[0][2] = src[2][0];
-    m[0][3] = 0.0f;
+    m[0][3] = 0;
     m[1][0] = src[0][1];
     m[1][1] = src[1][1];
     m[1][2] = src[2][1];
-    m[1][3] = 0.0f;
+    m[1][3] = 0;
     m[2][0] = src[0][2];
     m[2][1] = src[1][2];
     m[2][2] = src[2][2];
-    m[2][3] = 0.0f;
-
+    m[2][3] = 0;
     if (m == mTmp) {
         C_MTXCopy(mTmp, xPose);
     }
@@ -413,48 +419,48 @@ void PSMTXTranspose(const register Mtx src, register Mtx xPose)
 }
 #endif
 
-u32 C_MTXInverse(const Mtx src, Mtx inv)
-{
+u32 C_MTXInverse(const Mtx src, Mtx inv) {
     Mtx mTmp;
     MtxPtr m;
     f32 det;
 
+    ASSERTMSGLINE(950, src, "MTXInverse():  NULL MtxPtr 'src' ");
+    ASSERTMSGLINE(951, inv, "MTXInverse():  NULL MtxPtr 'inv' ");
+
     if (src == inv) {
         m = mTmp;
-    }
-    else {
+    } else {
         m = inv;
     }
-
-    det = src[0][0] * src[1][1] * src[2][2] + src[0][1] * src[1][2] * src[2][0] + src[0][2] * src[1][0] * src[2][1]
-        - src[2][0] * src[1][1] * src[0][2] - src[1][0] * src[0][1] * src[2][2] - src[0][0] * src[2][1] * src[1][2];
-
-    if (det == 0.0f) {
+    det = ((((src[2][1] * (src[0][2] * src[1][0]))
+          + ((src[2][2] * (src[0][0] * src[1][1]))
+           + (src[2][0] * (src[0][1] * src[1][2]))))
+           - (src[0][2] * (src[2][0] * src[1][1])))
+           - (src[2][2] * (src[1][0] * src[0][1])))
+           - (src[1][2] * (src[0][0] * src[2][1]));
+    if (0 == det) {
         return 0;
     }
+    det = 1 / det;
+    m[0][0] = (det * +((src[1][1] * src[2][2]) - (src[2][1] * src[1][2])));
+    m[0][1] = (det * -((src[0][1] * src[2][2]) - (src[2][1] * src[0][2])));
+    m[0][2] = (det * +((src[0][1] * src[1][2]) - (src[1][1] * src[0][2])));
 
-    det = 1.0f / det;
+    m[1][0] = (det * -((src[1][0] * src[2][2]) - (src[2][0] * src[1][2])));
+    m[1][1] = (det * +((src[0][0] * src[2][2]) - (src[2][0] * src[0][2])));
+    m[1][2] = (det * -((src[0][0] * src[1][2]) - (src[1][0] * src[0][2])));
 
-    m[0][0] = (src[1][1] * src[2][2] - src[2][1] * src[1][2]) * det;
-    m[0][1] = -(src[0][1] * src[2][2] - src[2][1] * src[0][2]) * det;
-    m[0][2] = (src[0][1] * src[1][2] - src[1][1] * src[0][2]) * det;
+    m[2][0] = (det * +((src[1][0] * src[2][1]) - (src[2][0] * src[1][1])));
+    m[2][1] = (det * -((src[0][0] * src[2][1]) - (src[2][0] * src[0][1])));
+    m[2][2] = (det * +((src[0][0] * src[1][1]) - (src[1][0] * src[0][1])));
 
-    m[1][0] = -(src[1][0] * src[2][2] - src[2][0] * src[1][2]) * det;
-    m[1][1] = (src[0][0] * src[2][2] - src[2][0] * src[0][2]) * det;
-    m[1][2] = -(src[0][0] * src[1][2] - src[1][0] * src[0][2]) * det;
-
-    m[2][0] = (src[1][0] * src[2][1] - src[2][0] * src[1][1]) * det;
-    m[2][1] = -(src[0][0] * src[2][1] - src[2][0] * src[0][1]) * det;
-    m[2][2] = (src[0][0] * src[1][1] - src[1][0] * src[0][1]) * det;
-
-    m[0][3] = -m[0][0] * src[0][3] - m[0][1] * src[1][3] - m[0][2] * src[2][3];
-    m[1][3] = -m[1][0] * src[0][3] - m[1][1] * src[1][3] - m[1][2] * src[2][3];
-    m[2][3] = -m[2][0] * src[0][3] - m[2][1] * src[1][3] - m[2][2] * src[2][3];
+    m[0][3] = ((-m[0][0] * src[0][3]) - (m[0][1] * src[1][3])) - (m[0][2] * src[2][3]);
+    m[1][3] = ((-m[1][0] * src[0][3]) - (m[1][1] * src[1][3])) - (m[1][2] * src[2][3]);
+    m[2][3] = ((-m[2][0] * src[0][3]) - (m[2][1] * src[1][3])) - (m[2][2] * src[2][3]);
 
     if (m == mTmp) {
         C_MTXCopy(mTmp, inv);
     }
-
     return 1;
 }
 
@@ -531,48 +537,48 @@ _regular:
 }
 #endif
 
-u32 C_MTXInvXpose(const Mtx src, Mtx invX)
-{
+u32 C_MTXInvXpose(const Mtx src, Mtx invX) {
     Mtx mTmp;
     MtxPtr m;
     f32 det;
 
+    ASSERTMSGLINE(1185, src, "MTXInvXpose(): NULL MtxPtr 'src' ");
+    ASSERTMSGLINE(1186, invX, "MTXInvXpose(): NULL MtxPtr 'invX' ");
+
     if (src == invX) {
         m = mTmp;
-    }
-    else {
+    } else {
         m = invX;
     }
-
-    det = src[0][0] * src[1][1] * src[2][2] + src[0][1] * src[1][2] * src[2][0] + src[0][2] * src[1][0] * src[2][1]
-        - src[2][0] * src[1][1] * src[0][2] - src[1][0] * src[0][1] * src[2][2] - src[0][0] * src[2][1] * src[1][2];
-
-    if (det == 0.0f) {
+    det = ((((src[2][1] * (src[0][2] * src[1][0]))
+          + ((src[2][2] * (src[0][0] * src[1][1]))
+          +  (src[2][0] * (src[0][1] * src[1][2]))))
+          -  (src[0][2] * (src[2][0] * src[1][1])))
+          -  (src[2][2] * (src[1][0] * src[0][1])))
+          -  (src[1][2] * (src[0][0] * src[2][1]));
+    if (0 == det) {
         return 0;
     }
+    det = 1 / det;
+    m[0][0] = (det * +((src[1][1] * src[2][2]) - (src[2][1] * src[1][2])));
+    m[0][1] = (det * -((src[1][0] * src[2][2]) - (src[2][0] * src[1][2])));
+    m[0][2] = (det * +((src[1][0] * src[2][1]) - (src[2][0] * src[1][1])));
 
-    det = 1.0f / det;
+    m[1][0] = (det * -((src[0][1] * src[2][2]) - (src[2][1] * src[0][2])));
+    m[1][1] = (det * +((src[0][0] * src[2][2]) - (src[2][0] * src[0][2])));
+    m[1][2] = (det * -((src[0][0] * src[2][1]) - (src[2][0] * src[0][1])));
 
-    m[0][0] = (src[1][1] * src[2][2] - src[2][1] * src[1][2]) * det;
-    m[0][1] = -(src[1][0] * src[2][2] - src[2][0] * src[1][2]) * det;
-    m[0][2] = (src[1][0] * src[2][1] - src[2][0] * src[1][1]) * det;
+    m[2][0] = (det * +((src[0][1] * src[1][2]) - (src[1][1] * src[0][2])));
+    m[2][1] = (det * -((src[0][0] * src[1][2]) - (src[1][0] * src[0][2])));
+    m[2][2] = (det * +((src[0][0] * src[1][1]) - (src[1][0] * src[0][1])));
 
-    m[1][0] = -(src[0][1] * src[2][2] - src[2][1] * src[0][2]) * det;
-    m[1][1] = (src[0][0] * src[2][2] - src[2][0] * src[0][2]) * det;
-    m[1][2] = -(src[0][0] * src[2][1] - src[2][0] * src[0][1]) * det;
-
-    m[2][0] = (src[0][1] * src[1][2] - src[1][1] * src[0][2]) * det;
-    m[2][1] = -(src[0][0] * src[1][2] - src[1][0] * src[0][2]) * det;
-    m[2][2] = (src[0][0] * src[1][1] - src[1][0] * src[0][1]) * det;
-
-    m[0][3] = 0.0F;
-    m[1][3] = 0.0F;
-    m[2][3] = 0.0F;
+    m[0][3] = 0;
+    m[1][3] = 0;
+    m[2][3] = 0;
 
     if (m == mTmp) {
         C_MTXCopy(mTmp, invX);
     }
-
     return 1;
 }
 
@@ -638,10 +644,11 @@ _regular:
 }
 #endif
 
-void C_MTXRotRad(Mtx m, char axis, f32 rad)
-{
+void C_MTXRotRad(Mtx m, char axis, f32 rad) {
+    f32 sinA;
+    f32 cosA;
 
-    f32 sinA, cosA;
+    ASSERTMSGLINE(1447, m, "MTXRotRad():  NULL MtxPtr 'm' ");
     sinA = sinf(rad);
     cosA = cosf(rad);
     C_MTXRotTrig(m, axis, sinA, cosA);
@@ -659,60 +666,57 @@ void PSMTXRotRad(Mtx m, char axis, f32 rad)
 }
 #endif
 
-void C_MTXRotTrig(Mtx m, char axis, f32 sinA, f32 cosA)
-{
-    switch (axis) {
-
-        case 'x':
-        case 'X':
-            m[0][0] = 1.0f;
-            m[0][1] = 0.0f;
-            m[0][2] = 0.0f;
-            m[0][3] = 0.0f;
-            m[1][0] = 0.0f;
-            m[1][1] = cosA;
-            m[1][2] = -sinA;
-            m[1][3] = 0.0f;
-            m[2][0] = 0.0f;
-            m[2][1] = sinA;
-            m[2][2] = cosA;
-            m[2][3] = 0.0f;
-            break;
-
-        case 'y':
-        case 'Y':
-            m[0][0] = cosA;
-            m[0][1] = 0.0f;
-            m[0][2] = sinA;
-            m[0][3] = 0.0f;
-            m[1][0] = 0.0f;
-            m[1][1] = 1.0f;
-            m[1][2] = 0.0f;
-            m[1][3] = 0.0f;
-            m[2][0] = -sinA;
-            m[2][1] = 0.0f;
-            m[2][2] = cosA;
-            m[2][3] = 0.0f;
-            break;
-
-        case 'z':
-        case 'Z':
-            m[0][0] = cosA;
-            m[0][1] = -sinA;
-            m[0][2] = 0.0f;
-            m[0][3] = 0.0f;
-            m[1][0] = sinA;
-            m[1][1] = cosA;
-            m[1][2] = 0.0f;
-            m[1][3] = 0.0f;
-            m[2][0] = 0.0f;
-            m[2][1] = 0.0f;
-            m[2][2] = 1.0f;
-            m[2][3] = 0.0f;
-            break;
-
-        default:
-            break;
+void C_MTXRotTrig(Mtx m, char axis, f32 sinA, f32 cosA) {
+    ASSERTMSGLINE(1502, m, "MTXRotTrig():  NULL MtxPtr 'm' ");
+    switch(axis) {
+    case 'x':
+    case 'X':
+        m[0][0] = 1;
+        m[0][1] = 0;
+        m[0][2] = 0;
+        m[0][3] = 0;
+        m[1][0] = 0;
+        m[1][1] = cosA;
+        m[1][2] = -sinA;
+        m[1][3] = 0;
+        m[2][0] = 0;
+        m[2][1] = sinA;
+        m[2][2] = cosA;
+        m[2][3] = 0;
+        break;
+    case 'y':
+    case 'Y':
+        m[0][0] = cosA;
+        m[0][1] = 0;
+        m[0][2] = sinA;
+        m[0][3] = 0;
+        m[1][0] = 0;
+        m[1][1] = 1;
+        m[1][2] = 0;
+        m[1][3] = 0;
+        m[2][0] = -sinA;
+        m[2][1] = 0;
+        m[2][2] = cosA;
+        m[2][3] = 0;
+        break;
+    case 'z':
+    case 'Z':
+        m[0][0] = cosA;
+        m[0][1] = -sinA;
+        m[0][2] = 0;
+        m[0][3] = 0;
+        m[1][0] = sinA;
+        m[1][1] = cosA;
+        m[1][2] = 0;
+        m[1][3] = 0;
+        m[2][0] = 0;
+        m[2][1] = 0;
+        m[2][2] = 1;
+        m[2][3] = 0;
+        break;
+    default:
+        ASSERTMSGLINE(1529, FALSE, "MTXRotTrig():  invalid 'axis' value ");
+        break;
     }
 }
 
@@ -780,42 +784,43 @@ _end:
 
 #endif
 
-void C_MTXRotAxisRad(Mtx m, const Vec *axis, f32 rad)
-{
+void C_MTXRotAxisRad(Mtx m, const Vec* axis, f32 rad) {
     Vec vN;
-    f32 s, c;
+    f32 s;
+    f32 c;
     f32 t;
-    f32 x, y, z;
-    f32 xSq, ySq, zSq;
+    f32 x;
+    f32 y;
+    f32 z;
+    f32 xSq;
+    f32 ySq;
+    f32 zSq;
+
+    ASSERTMSGLINE(1677, m, "MTXRotAxisRad():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(1678, axis, "MTXRotAxisRad():  NULL VecPtr 'axis' ");
 
     s = sinf(rad);
     c = cosf(rad);
-    t = 1.0f - c;
-
+    t = 1 - c;
     C_VECNormalize(axis, &vN);
-
     x = vN.x;
     y = vN.y;
     z = vN.z;
-
-    xSq = x * x;
-    ySq = y * y;
-    zSq = z * z;
-
-    m[0][0] = (t * xSq) + (c);
-    m[0][1] = (t * x * y) - (s * z);
-    m[0][2] = (t * x * z) + (s * y);
-    m[0][3] = 0.0f;
-
-    m[1][0] = (t * x * y) + (s * z);
-    m[1][1] = (t * ySq) + (c);
-    m[1][2] = (t * y * z) - (s * x);
-    m[1][3] = 0.0f;
-
-    m[2][0] = (t * x * z) - (s * y);
-    m[2][1] = (t * y * z) + (s * x);
-    m[2][2] = (t * zSq) + (c);
-    m[2][3] = 0.0f;
+    xSq = (x * x);
+    ySq = (y * y);
+    zSq = (z * z);
+    m[0][0] = (c + (t * xSq));
+    m[0][1] = (y * (t * x)) - (s * z);
+    m[0][2] = (z * (t * x)) + (s * y);
+    m[0][3] = 0;
+    m[1][0] = ((y * (t * x)) + (s * z));
+    m[1][1] = (c + (t * ySq));
+    m[1][2] = ((z * (t * y)) - (s * x));
+    m[1][3] = 0;
+    m[2][0] = ((z * (t * x)) - (s * y));
+    m[2][1] = ((z * (t * y)) + (s * x));
+    m[2][2] = (c + (t * zSq));
+    m[2][3] = 0;
 }
 
 #ifdef GEKKO
@@ -875,19 +880,19 @@ void PSMTXRotAxisRad(register Mtx m, const Vec *axis, register f32 rad)
 
 #endif
 
-void C_MTXTrans(Mtx m, f32 xT, f32 yT, f32 zT)
-{
-    m[0][0] = 1.0f;
-    m[0][1] = 0.0f;
-    m[0][2] = 0.0f;
+void C_MTXTrans(Mtx m, f32 xT, f32 yT, f32 zT) {
+    ASSERTMSGLINE(1866, m, "MTXTrans():  NULL MtxPtr 'm' ");
+    m[0][0] = 1;
+    m[0][1] = 0;
+    m[0][2] = 0;
     m[0][3] = xT;
-    m[1][0] = 0.0f;
-    m[1][1] = 1.0f;
-    m[1][2] = 0.0f;
+    m[1][0] = 0;
+    m[1][1] = 1;
+    m[1][2] = 0;
     m[1][3] = yT;
-    m[2][0] = 0.0f;
-    m[2][1] = 0.0f;
-    m[2][2] = 1.0f;
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = 1;
     m[2][3] = zT;
 }
 
@@ -914,8 +919,10 @@ void PSMTXTrans(register Mtx m, register f32 xT, register f32 yT, register f32 z
 }
 #endif
 
-void C_MTXTransApply(const Mtx src, Mtx dst, f32 xT, f32 yT, f32 zT)
-{
+void C_MTXTransApply(const Mtx src, Mtx dst, f32 xT, f32 yT, f32 zT) {
+    ASSERTMSGLINE(1933, src, "MTXTransApply(): NULL MtxPtr 'src' ");
+    ASSERTMSGLINE(1934, dst, "MTXTransApply(): NULL MtxPtr 'src' "); //! wrong assert string
+
     if (src != dst) {
         dst[0][0] = src[0][0];
         dst[0][1] = src[0][1];
@@ -928,9 +935,9 @@ void C_MTXTransApply(const Mtx src, Mtx dst, f32 xT, f32 yT, f32 zT)
         dst[2][2] = src[2][2];
     }
 
-    dst[0][3] = src[0][3] + xT;
-    dst[1][3] = src[1][3] + yT;
-    dst[2][3] = src[2][3] + zT;
+    dst[0][3] = (src[0][3] + xT);
+    dst[1][3] = (src[1][3] + yT);
+    dst[2][3] = (src[2][3] + zT);
 }
 
 #ifdef GEKKO
@@ -961,20 +968,20 @@ asm void PSMTXTransApply(const register Mtx src, register Mtx dst, register f32 
 }
 #endif
 
-void C_MTXScale(Mtx m, f32 xS, f32 yS, f32 zS)
-{
+void C_MTXScale(Mtx m, f32 xS, f32 yS, f32 zS) {
+    ASSERTMSGLINE(2008, m, "MTXScale():  NULL MtxPtr 'm' ");
     m[0][0] = xS;
-    m[0][1] = 0.0f;
-    m[0][2] = 0.0f;
-    m[0][3] = 0.0f;
-    m[1][0] = 0.0f;
+    m[0][1] = 0;
+    m[0][2] = 0;
+    m[0][3] = 0;
+    m[1][0] = 0;
     m[1][1] = yS;
-    m[1][2] = 0.0f;
-    m[1][3] = 0.0f;
-    m[2][0] = 0.0f;
-    m[2][1] = 0.0f;
+    m[1][2] = 0;
+    m[1][3] = 0;
+    m[2][0] = 0;
+    m[2][1] = 0;
     m[2][2] = zS;
-    m[2][3] = 0.0f;
+    m[2][3] = 0;
 }
 
 #ifdef GEKKO
@@ -997,22 +1004,21 @@ void PSMTXScale(register Mtx m, register f32 xS, register f32 yS, register f32 z
 }
 #endif
 
-void C_MTXScaleApply(const Mtx src, Mtx dst, f32 xS, f32 yS, f32 zS)
-{
-    dst[0][0] = src[0][0] * xS;
-    dst[0][1] = src[0][1] * xS;
-    dst[0][2] = src[0][2] * xS;
-    dst[0][3] = src[0][3] * xS;
-
-    dst[1][0] = src[1][0] * yS;
-    dst[1][1] = src[1][1] * yS;
-    dst[1][2] = src[1][2] * yS;
-    dst[1][3] = src[1][3] * yS;
-
-    dst[2][0] = src[2][0] * zS;
-    dst[2][1] = src[2][1] * zS;
-    dst[2][2] = src[2][2] * zS;
-    dst[2][3] = src[2][3] * zS;
+void C_MTXScaleApply(const Mtx src, Mtx dst, f32 xS, f32 yS, f32 zS) {
+    ASSERTMSGLINE(2070, src, "MTXScaleApply(): NULL MtxPtr 'src' ");
+    ASSERTMSGLINE(2071, dst, "MTXScaleApply(): NULL MtxPtr 'dst' ");
+    dst[0][0] = (src[0][0] * xS);
+    dst[0][1] = (src[0][1] * xS);
+    dst[0][2] = (src[0][2] * xS);
+    dst[0][3] = (src[0][3] * xS);
+    dst[1][0] = (src[1][0] * yS);
+    dst[1][1] = (src[1][1] * yS);
+    dst[1][2] = (src[1][2] * yS);
+    dst[1][3] = (src[1][3] * yS);
+    dst[2][0] = (src[2][0] * zS);
+    dst[2][1] = (src[2][1] * zS);
+    dst[2][2] = (src[2][2] * zS);
+    dst[2][3] = (src[2][3] * zS);
 }
 
 #ifdef GEKKO
@@ -1046,12 +1052,25 @@ asm void PSMTXScaleApply(const register Mtx src, register Mtx dst, register f32 
 }
 #endif
 
-void C_MTXQuat(Mtx m, const Quaternion *q)
-{
+void C_MTXQuat(Mtx m, const Quaternion* q) {
+    f32 s;
+    f32 xs;
+    f32 ys;
+    f32 zs;
+    f32 wx;
+    f32 wy;
+    f32 wz;
+    f32 xx;
+    f32 xy;
+    f32 xz;
+    f32 yy;
+    f32 yz;
+    f32 zz;
 
-    f32 s, xs, ys, zs, wx, wy, wz, xx, xy, xz, yy, yz, zz;
-    s = 2.0f / ((q->x * q->x) + (q->y * q->y) + (q->z * q->z) + (q->w * q->w));
-
+    ASSERTMSGLINE(2145, m, "MTXQuat():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2146, q, "MTXQuat():  NULL QuaternionPtr 'q' ");
+    ASSERTMSGLINE(2147, q->x || q->y || q->z || q->w, "MTXQuat():  zero-value quaternion ");
+    s = 2 / ((q->w * q->w) + ((q->z * q->z) + ((q->x * q->x) + (q->y * q->y))));
     xs = q->x * s;
     ys = q->y * s;
     zs = q->z * s;
@@ -1064,21 +1083,18 @@ void C_MTXQuat(Mtx m, const Quaternion *q)
     yy = q->y * ys;
     yz = q->y * zs;
     zz = q->z * zs;
-
-    m[0][0] = 1.0f - (yy + zz);
-    m[0][1] = xy - wz;
-    m[0][2] = xz + wy;
-    m[0][3] = 0.0f;
-
-    m[1][0] = xy + wz;
-    m[1][1] = 1.0f - (xx + zz);
-    m[1][2] = yz - wx;
-    m[1][3] = 0.0f;
-
-    m[2][0] = xz - wy;
-    m[2][1] = yz + wx;
-    m[2][2] = 1.0f - (xx + yy);
-    m[2][3] = 0.0f;
+    m[0][0] = (1 - (yy + zz));
+    m[0][1] = (xy - wz);
+    m[0][2] = (xz + wy);
+    m[0][3] = 0;
+    m[1][0] = (xy + wz);
+    m[1][1] = (1 - (xx + zz));
+    m[1][2] = (yz - wx);
+    m[1][3] = 0;
+    m[2][0] = (xz - wy);
+    m[2][1] = (yz + wx);
+    m[2][2] = (1 - (xx + yy));
+    m[2][3] = 0;
 }
 
 #ifdef GEKKO
@@ -1136,29 +1152,28 @@ void PSMTXQuat(register Mtx m, const register Quaternion *q)
 }
 #endif
 
-void C_MTXReflect(Mtx m, const Vec *p, const Vec *n)
-{
-    f32 vxy, vxz, vyz, pdotn;
+void C_MTXReflect(Mtx m, const Vec* p, const Vec* n) {
+    f32 vxy;
+    f32 vxz;
+    f32 vyz;
+    f32 pdotn;
 
-    vxy = -2.0f * n->x * n->y;
-    vxz = -2.0f * n->x * n->z;
-    vyz = -2.0f * n->y * n->z;
-    pdotn = 2.0f * C_VECDotProduct(p, n);
-
-    m[0][0] = 1.0f - 2.0f * n->x * n->x;
+    vxy = -2 * n->x * n->y;
+    vxz = -2 * n->x * n->z;
+    vyz = -2 * n->y * n->z;
+    pdotn = 2 * C_VECDotProduct(p, n);
+    m[0][0] = (1 - (2 * n->x * n->x));
     m[0][1] = vxy;
     m[0][2] = vxz;
-    m[0][3] = pdotn * n->x;
-
+    m[0][3] = (pdotn * n->x);
     m[1][0] = vxy;
-    m[1][1] = 1.0f - 2.0f * n->y * n->y;
+    m[1][1] = (1 - (2 * n->y * n->y));
     m[1][2] = vyz;
-    m[1][3] = pdotn * n->y;
-
+    m[1][3] = (pdotn * n->y);
     m[2][0] = vxz;
     m[2][1] = vyz;
-    m[2][2] = 1.0f - 2.0f * n->z * n->z;
-    m[2][3] = pdotn * n->z;
+    m[2][2] = (1 - (2 * n->z * n->z));
+    m[2][3] = (pdotn * n->z);
 }
 
 #ifdef GEKKO
@@ -1202,9 +1217,15 @@ void PSMTXReflect(register Mtx m, const register Vec *p, const register Vec *n)
 }
 #endif
 
-void C_MTXLookAt(Mtx m, const Vec *camPos, const Vec *camUp, const Vec *target)
-{
-    Vec vLook, vRight, vUp;
+void C_MTXLookAt(Mtx m, const Point3d* camPos, const Vec* camUp, const Point3d* target) {
+    Vec vLook;
+    Vec vRight;
+    Vec vUp;
+
+    ASSERTMSGLINE(2438, m, "MTXLookAt():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2439, camPos, "MTXLookAt():  NULL VecPtr 'camPos' ");
+    ASSERTMSGLINE(2440, camUp, "MTXLookAt():  NULL VecPtr 'camUp' ");
+    ASSERTMSGLINE(2441, target, "MTXLookAt():  NULL Point3dPtr 'target' ");
 
     vLook.x = camPos->x - target->x;
     vLook.y = camPos->y - target->y;
@@ -1213,90 +1234,88 @@ void C_MTXLookAt(Mtx m, const Vec *camPos, const Vec *camUp, const Vec *target)
     VECCrossProduct(camUp, &vLook, &vRight);
     VECNormalize(&vRight, &vRight);
     VECCrossProduct(&vLook, &vRight, &vUp);
-
     m[0][0] = vRight.x;
     m[0][1] = vRight.y;
     m[0][2] = vRight.z;
-    m[0][3] = -(camPos->x * vRight.x + camPos->y * vRight.y + camPos->z * vRight.z);
-
+    m[0][3] = -((camPos->z * vRight.z) + ((camPos->x * vRight.x) + (camPos->y * vRight.y)));
     m[1][0] = vUp.x;
     m[1][1] = vUp.y;
     m[1][2] = vUp.z;
-    m[1][3] = -(camPos->x * vUp.x + camPos->y * vUp.y + camPos->z * vUp.z);
-
+    m[1][3] = -((camPos->z * vUp.z) + ((camPos->x * vUp.x) + (camPos->y * vUp.y)));
     m[2][0] = vLook.x;
     m[2][1] = vLook.y;
     m[2][2] = vLook.z;
-    m[2][3] = -(camPos->x * vLook.x + camPos->y * vLook.y + camPos->z * vLook.z);
+    m[2][3] = -((camPos->z * vLook.z) + ((camPos->x * vLook.x) + (camPos->y * vLook.y)));
 }
 
-void C_MTXLightFrustum(Mtx m, float t, float b, float l, float r, float n, float scaleS, float scaleT, float transS, float transT)
-{
+void C_MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32 scaleT, f32 transS, f32 transT) {
     f32 tmp;
 
-    tmp = 1.0f / (r - l);
-    m[0][0] = ((2 * n) * tmp) * scaleS;
-    m[0][1] = 0.0f;
-    m[0][2] = (((r + l) * tmp) * scaleS) - transS;
-    m[0][3] = 0.0f;
+    ASSERTMSGLINE(2541, m, "MTXLightFrustum():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2542, (t != b), "MTXLightFrustum():  't' and 'b' clipping planes are equal ");
+    ASSERTMSGLINE(2543, (l != r), "MTXLightFrustum():  'l' and 'r' clipping planes are equal ");
 
-    tmp = 1.0f / (t - b);
-    m[1][0] = 0.0f;
-    m[1][1] = ((2 * n) * tmp) * scaleT;
-    m[1][2] = (((t + b) * tmp) * scaleT) - transT;
-    m[1][3] = 0.0f;
-
-    m[2][0] = 0.0f;
-    m[2][1] = 0.0f;
-    m[2][2] = -1.0f;
-    m[2][3] = 0.0f;
+    tmp = 1 / (r - l);
+    m[0][0] = (scaleS * (2 * n * tmp));
+    m[0][1] = 0;
+    m[0][2] = (scaleS * (tmp * (r + l))) - transS;
+    m[0][3] = 0;
+    tmp = 1 / (t - b);
+    m[1][0] = 0;
+    m[1][1] = (scaleT * (2 * n * tmp));
+    m[1][2] = (scaleT * (tmp * (t + b))) - transT;
+    m[1][3] = 0;
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = -1;
+    m[2][3] = 0;
 }
 
-void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, float scaleS, float scaleT, float transS, float transT)
-{
+void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT) {
     f32 angle;
     f32 cot;
 
-    angle = fovY * 0.5f;
+    ASSERTMSGLINE(2605, m, "MTXLightPerspective():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2606, (fovY > 0.0) && (fovY < 180.0), "MTXLightPerspective():  'fovY' out of range ");
+    ASSERTMSGLINE(2607, 0 != aspect, "MTXLightPerspective():  'aspect' is 0 ");
+
+    angle = (0.5f * fovY);
     angle = MTXDegToRad(angle);
-
-    cot = 1.0f / tanf(angle);
-
-    m[0][0] = (cot / aspect) * scaleS;
-    m[0][1] = 0.0f;
+    cot = 1 / tanf(angle);
+    m[0][0] = (scaleS * (cot / aspect));
+    m[0][1] = 0;
     m[0][2] = -transS;
-    m[0][3] = 0.0f;
-
-    m[1][0] = 0.0f;
-    m[1][1] = cot * scaleT;
+    m[0][3] = 0;
+    m[1][0] = 0;
+    m[1][1] = (cot * scaleT);
     m[1][2] = -transT;
-    m[1][3] = 0.0f;
-
-    m[2][0] = 0.0f;
-    m[2][1] = 0.0f;
-    m[2][2] = -1.0f;
-    m[2][3] = 0.0f;
+    m[1][3] = 0;
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = -1;
+    m[2][3] = 0;
 }
 
-void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, float scaleS, float scaleT, float transS, float transT)
-{
+void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 scaleS, f32 scaleT, f32 transS, f32 transT) {
     f32 tmp;
-    tmp = 1.0f / (r - l);
-    m[0][0] = (2.0f * tmp * scaleS);
-    m[0][1] = 0.0f;
-    m[0][2] = 0.0f;
-    m[0][3] = ((-(r + l) * tmp) * scaleS) + transS;
 
-    tmp = 1.0f / (t - b);
-    m[1][0] = 0.0f;
-    m[1][1] = (2.0f * tmp) * scaleT;
-    m[1][2] = 0.0f;
-    m[1][3] = ((-(t + b) * tmp) * scaleT) + transT;
-
-    m[2][0] = 0.0f;
-    m[2][1] = 0.0f;
-    m[2][2] = 0.0f;
-    m[2][3] = 1.0f;
+    ASSERTMSGLINE(2673, m, "MTXLightOrtho():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2674, (t != b), "MTXLightOrtho():  't' and 'b' clipping planes are equal ");
+    ASSERTMSGLINE(2675, (l != r), "MTXLightOrtho():  'l' and 'r' clipping planes are equal ");
+    tmp = 1 / (r - l);
+    m[0][0] = (2 * tmp * scaleS);
+    m[0][1] = 0;
+    m[0][2] = 0;
+    m[0][3] = (transS + (scaleS * (tmp * -(r + l))));
+    tmp = 1/ (t - b);
+    m[1][0] = 0;
+    m[1][1] = (2 * tmp * scaleT);
+    m[1][2] = 0;
+    m[1][3] = (transT + (scaleT * (tmp * -(t + b))));
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = 0;
+    m[2][3] = 1;
 }
 
 #ifdef TARGET_PC
@@ -1310,20 +1329,39 @@ void C_MTXReorder(const Mtx src, ROMtx dest)
     }
 }
 
-void C_MTXMultVec(const Mtx m, const Vec *in, Vec *out)
-{
-    out->x = m[0][0] * in->x + m[0][1] * in->y + m[0][2] * in->z + m[0][3];
-    out->y = m[1][0] * in->x + m[1][1] * in->y + m[1][2] * in->z + m[1][3];
-    out->z = m[2][0] * in->x + m[2][1] * in->y + m[2][2] * in->z + m[2][3];
+void C_MTXMultVec(const Mtx m, const Vec* src, Vec* dst) {
+    Vec vTmp;
+
+    ASSERTMSGLINE(66, m, "MTXMultVec():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(67, src, "MTXMultVec():  NULL VecPtr 'src' ");
+    ASSERTMSGLINE(68, dst, "MTXMultVec():  NULL VecPtr 'dst' ");
+
+    vTmp.x = m[0][3] + ((m[0][2] * src->z) + ((m[0][0] * src->x) + (m[0][1] * src->y)));
+    vTmp.y = m[1][3] + ((m[1][2] * src->z) + ((m[1][0] * src->x) + (m[1][1] * src->y)));
+    vTmp.z = m[2][3] + ((m[2][2] * src->z) + ((m[2][0] * src->x) + (m[2][1] * src->y)));
+    dst->x = vTmp.x;
+    dst->y = vTmp.y;
+    dst->z = vTmp.z;
 }
 
-void C_MTXMultVecArray(const Mtx m, const Vec *srcBase, Vec *dstBase, u32 count)
-{
+void C_MTXMultVecArray(const Mtx m, const Vec* srcBase, Vec* dstBase, u32 count) {
     u32 i;
-    for (i = 0; i < count; i++) {
-        dstBase[i].x = m[0][0] * srcBase[i].x + m[0][1] * srcBase[i].y + m[0][2] * srcBase[i].z + m[0][3];
-        dstBase[i].y = m[1][0] * srcBase[i].x + m[1][1] * srcBase[i].y + m[1][2] * srcBase[i].z + m[1][3];
-        dstBase[i].z = m[2][0] * srcBase[i].x + m[2][1] * srcBase[i].y + m[2][2] * srcBase[i].z + m[2][3];
+    Vec vTmp;
+
+    ASSERTMSGLINE(168, m, "MTXMultVecArray():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(169, srcBase, "MTXMultVecArray():  NULL VecPtr 'srcBase' ");
+    ASSERTMSGLINE(170, dstBase, "MTXMultVecArray():  NULL VecPtr 'dstBase' ");
+    ASSERTMSGLINE(171, count > 1, "MTXMultVecArray():  count must be greater than 1.");
+
+    for(i = 0; i < count; i++) {
+        vTmp.x = m[0][3] + ((m[0][2] * srcBase->z) + ((m[0][0] * srcBase->x) + (m[0][1] * srcBase->y)));
+        vTmp.y = m[1][3] + ((m[1][2] * srcBase->z) + ((m[1][0] * srcBase->x) + (m[1][1] * srcBase->y)));
+        vTmp.z = m[2][3] + ((m[2][2] * srcBase->z) + ((m[2][0] * srcBase->x) + (m[2][1] * srcBase->y)));
+        dstBase->x = vTmp.x;
+        dstBase->y = vTmp.y;
+        dstBase->z = vTmp.z;
+        srcBase++;
+        dstBase++;
     }
 }
 
@@ -1341,14 +1379,19 @@ void C_MTXROMultVecArray(const ROMtx m, const Vec *srcBase, Vec *dstBase, u32 co
     }
 }
 
-void C_MTXMultVecSR(const Mtx mtx, const Vec* in, Vec* out) {
-    float x = in->x;
-    float y = in->y;
-    float z = in->z;
-  
-    out->x = mtx[0][0] * x + mtx[0][1] * y + mtx[0][2] * z;
-    out->y = mtx[1][0] * x + mtx[1][1] * y + mtx[1][2] * z;
-    out->z = mtx[2][0] * x + mtx[2][1] * y + mtx[2][2] * z;
+void C_MTXMultVecSR(const Mtx m, const Vec* src, Vec* dst) {
+    Vec vTmp;
+
+    ASSERTMSGLINE(313, m, "MTXMultVecSR():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(314, src, "MTXMultVecSR():  NULL VecPtr 'src' ");
+    ASSERTMSGLINE(315, dst, "MTXMultVecSR():  NULL VecPtr 'dst' ");
+
+    vTmp.x = (m[0][2] * src->z) + ((m[0][0] * src->x) + (m[0][1] * src->y));
+    vTmp.y = (m[1][2] * src->z) + ((m[1][0] * src->x) + (m[1][1] * src->y));
+    vTmp.z = (m[2][2] * src->z) + ((m[2][0] * src->x) + (m[2][1] * src->y));
+    dst->x = vTmp.x;
+    dst->y = vTmp.y;
+    dst->z = vTmp.z;
 }
 
 #endif

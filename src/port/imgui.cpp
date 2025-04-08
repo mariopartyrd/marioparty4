@@ -142,9 +142,9 @@ void imgui_main(const AuroraInfo *info)
             hasPrevious = true;
 
             ImGuiStringViewText(
-                fmt::format(FMT_STRING("Queued pipelines:  {}\n"), aurora::gfx::queuedPipelines));
+                fmt::format(FMT_STRING("Queued pipelines:  {}\n"), aurora::gfx::queuedPipelines.load()));
             ImGuiStringViewText(
-                fmt::format(FMT_STRING("Done pipelines:    {}\n"), aurora::gfx::createdPipelines));
+                fmt::format(FMT_STRING("Done pipelines:    {}\n"), aurora::gfx::createdPipelines.load()));
             ImGuiStringViewText(
                 fmt::format(FMT_STRING("Draw call count:   {}\n"), aurora::gfx::g_drawCallCount));
             ImGuiStringViewText(fmt::format(FMT_STRING("Merged draw calls: {}\n"),
