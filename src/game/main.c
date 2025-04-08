@@ -22,6 +22,11 @@
 #include <aurora/aurora.h>
 #include <aurora/event.h>
 #include <aurora/main.h>
+
+const char *__asan_default_options()
+{
+    return "new_delete_type_mismatch=0,sleep_before_dying=5,allocator_may_return_null=1";
+}
 #endif
 
 extern FileListEntry _ovltbl[];
