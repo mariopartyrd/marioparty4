@@ -119,13 +119,16 @@ void ObjectSetup(void)
      HuSprPosSet(group, 0, 288, 240);
      HuSprAttrSet(group, 0, HUSPR_ATTR_DISPOFF);
      if (omovlevtno != 0) {
-         //HuAudSndGrpSetSet(0);
+         HuAudSndGrpSetSet(0);
          data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
          sprite_hudson = HuSprCreate(data, 0, 0);
          HuSprGrpMemberSet(group, 1, sprite_hudson);
          HuSprPosSet(group, 1, 288, 240);
          HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
-         //HuWinInit(1);
+#ifdef __MWERKS__
+         // TODO PC
+         HuWinInit(1);
+#endif
          BootTitleCreate();
          SystemInitF = 1;
      }
@@ -161,13 +164,10 @@ void ObjectSetup(void)
 #ifdef __MWERKS__
              // TODO PC
              CharManInit();
-#endif
-#ifdef __MWERKS__
-             // TODO PC
              HuWindowInit();
              MGSeqInit();
+             HuWinInit(1);
 #endif
-             //HuWinInit(1);
              BootTitleCreate();
              data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
              sprite_hudson = HuSprCreate(data, 0, 0);
@@ -204,11 +204,17 @@ void ObjectSetup(void)
              HuPrcVSleep();
          }
          if (!SystemInitF) {
-             //void *group_samp;
+#ifdef __MWERKS__
+             // TODO PC
+             void *group_samp;
+#endif
              tick_prev = OSGetTick();
-             //group_samp = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(0));
-             //msmSysLoadGroup(0, group_samp, 0);
-             //HuMemDirectFree(group_samp);
+#ifdef __MWERKS__
+             // TODO PC
+             group_samp = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(0));
+             msmSysLoadGroup(0, group_samp, 0);
+             HuMemDirectFree(group_samp);
+#endif
              while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 3000) {
                 HuPrcVSleep();
              }
@@ -236,7 +242,7 @@ void ObjectSetup(void)
          }
          tick_prev = OSGetTick();
          if (!SystemInitF) {
-         //    HuAudSndGrpSetSet(0);
+             HuAudSndGrpSetSet(0);
              SystemInitF = 1;
          }
          while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 1000) {
@@ -245,37 +251,49 @@ void ObjectSetup(void)
          HuSprAttrSet(group, 0, HUSPR_ATTR_DISPOFF);
          HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
          group_thp = HuSprGrpCreate(1);
-         //sprite_thp = HuTHPSprCreateVol("movie/opmov_a00.thp", 0, 100, 122);
-         //HuSprGrpMemberSet(group_thp, 0, sprite_thp);
-         //HuSprPosSet(group_thp, 0, 288, 240);
-         //HuWinMesMaxSizeBetGet(win_size, MAKE_MESSID(54, 0), MAKE_MESSID(54, 4));
-         //demoWinId = HuWinCreate(-10000, 448 - win_size[1], win_size[0], win_size[1], 0);
-         //HuWinMesSpeedSet(demoWinId, 0);
-         //HuWinBGTPLvlSet(demoWinId, 0);
-         //HuWinPriSet(demoWinId, 10);
-         //HuWinAttrSet(demoWinId, 0x800);
+#ifdef __MWERKS__
+         // TODO PC
+         sprite_thp = HuTHPSprCreateVol("movie/opmov_a00.thp", 0, 100, 122);
+         HuSprGrpMemberSet(group_thp, 0, sprite_thp);
+         HuSprPosSet(group_thp, 0, 288, 240);
+         HuWinMesMaxSizeBetGet(win_size, MAKE_MESSID(54, 0), MAKE_MESSID(54, 4));
+         demoWinId = HuWinCreate(-10000, 448 - win_size[1], win_size[0], win_size[1], 0);
+         HuWinMesSpeedSet(demoWinId, 0);
+         HuWinBGTPLvlSet(demoWinId, 0);
+         HuWinPriSet(demoWinId, 10);
+         HuWinAttrSet(demoWinId, 0x800);
+#endif
          HuPrcSleep(5);
          WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 10);
          while (WipeStatGet()) {
              HuPrcVSleep();
          }
          skip_wait = FALSE;
-         //while (!HuTHPEndCheck()) {
-         //    UpdateDemoMess();
-         //    if (HuPadBtnDown[0] & (PAD_BUTTON_START | PAD_BUTTON_A)) {
-         //        skip_wait = TRUE;
-         //        break;
-         //    }
-         //    HuPrcVSleep();
-         //}
+#ifdef __MWERKS__
+         // TODO PC
+         while (!HuTHPEndCheck()) {
+             UpdateDemoMess();
+             if (HuPadBtnDown[0] & (PAD_BUTTON_START | PAD_BUTTON_A)) {
+                 skip_wait = TRUE;
+                 break;
+             }
+             HuPrcVSleep();
+         }
+#endif
          WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 30);
          while (WipeStatGet()) {
              HuPrcVSleep();
          }
-         //HuWinKill(demoWinId);
-         //HuTHPClose();
+#ifdef __MWERKS__
+         // TODO PC
+         HuWinKill(demoWinId);
+         HuTHPClose();
+#endif
          HuPrcVSleep();
-         //HuSprGrpKill(group_thp);
+#ifdef __MWERKS__
+         // TODO PC
+         HuSprGrpKill(group_thp);
+#endif
          if (!skip_wait) {
              HuPrcSleep(60);
          }
@@ -286,7 +304,7 @@ void ObjectSetup(void)
          goto repeat;
      }
      WipeColorSet(255, 255, 255);
-     //HuAudSStreamAllFadeOut(500);
+     HuAudSStreamAllFadeOut(500);
      WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 30);
      while (WipeStatGet()) {
          HuPrcVSleep();
@@ -328,10 +346,16 @@ void ObjectSetup(void)
      int i;
      for (i = 0; demoMessTimeTbl[i * 2] != -1; i++) {
          if (frame == demoMessTimeTbl[i * 2]) {
-             //HuWinMesSet(demoWinId, MAKE_MESSID(54, i));
+#ifdef __MWERKS__
+             // TODO PC
+             HuWinMesSet(demoWinId, MAKE_MESSID(54, i));
+#endif
          }
          if (frame == demoMessTimeTbl[(i * 2) + 1]) {
-             //HuWinHomeClear(demoWinId);
+#ifdef __MWERKS__
+             // TODO PC
+             HuWinHomeClear(demoWinId);
+#endif
          }
      }
  }
@@ -541,17 +565,20 @@ void ObjectSetup(void)
      s16 sprite;
      AnimData *sprite_data;
      s16 i;
-     //titleMdlId[0] = model = Hu3DModelCreateFile(TITLE_CHAR_HSF);
-     //Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
-     //Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
-     //titleMdlId[1] = model = Hu3DModelCreateFile(TITLE_CUBE_HSF);
-     //Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
-     //Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
-     //titleMdlId[2] = model = Hu3DModelCreateFile(TITLE_SKY_HSF);
-     //Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
-     //Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
-     //Hu3DModelCameraInfoSet(model, 1);
-     //Hu3DModelLightInfoSet(model, 1);
+#ifdef __MWERKS__
+     // TODO PC
+     titleMdlId[0] = model = Hu3DModelCreateFile(TITLE_CHAR_HSF);
+     Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
+     Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
+     titleMdlId[1] = model = Hu3DModelCreateFile(TITLE_CUBE_HSF);
+     Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
+     Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
+     titleMdlId[2] = model = Hu3DModelCreateFile(TITLE_SKY_HSF);
+     Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
+     Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
+     Hu3DModelCameraInfoSet(model, 1);
+     Hu3DModelLightInfoSet(model, 1);
+#endif
      #if VERSION_NTSC
      bootGrpId = HuSprGrpCreate(4);
      #else
@@ -612,9 +639,12 @@ void ObjectSetup(void)
      s16 i;
      s16 choice;
      float temp;
-     repeat:
-     //Hu3DModelAttrReset(titleMdlId[0], HU3D_ATTR_DISPOFF);
-     //Hu3DModelAttrReset(titleMdlId[1], HU3D_ATTR_DISPOFF);
+ repeat:
+#ifdef __MWERKS__
+     // TODO PC
+     Hu3DModelAttrReset(titleMdlId[0], HU3D_ATTR_DISPOFF);
+     Hu3DModelAttrReset(titleMdlId[1], HU3D_ATTR_DISPOFF);
+#endif
      HuSprAttrReset(bootGrpId, 0, HUSPR_ATTR_DISPOFF);
      HuSprAttrReset(bootGrpId, 1, HUSPR_ATTR_DISPOFF);
 #ifdef __MWERKS__
@@ -744,10 +774,10 @@ void ObjectSetup(void)
              HuSprTPLvlSet(bootGrpId, 2, i / 10.0);
          }
          if (HuPadBtnDown[0] & PAD_BUTTON_START) {
-             //s32 ret = HuAudFXPlay(2092);
-             //if (ret < 0) {
-             //    OSReport(">>>>>Error %d\n", ret);
-             //}
+             s32 ret = HuAudFXPlay(2092);
+             if (ret < 0) {
+                 OSReport(">>>>>Error %d\n", ret);
+             }
              HuSprAttrSet(bootGrpId, 2, HUSPR_ATTR_DISPOFF);
              return 1;
          }
@@ -766,9 +796,12 @@ void ObjectSetup(void)
      while (WipeStatGet()) {
          HuPrcVSleep();
      }
-     //Hu3DModelAttrSet(titleMdlId[0], HU3D_ATTR_DISPOFF);
-     //Hu3DModelAttrSet(titleMdlId[1], HU3D_ATTR_DISPOFF);
-     //Hu3DModelAttrSet(titleMdlId[2], HU3D_ATTR_DISPOFF);
+#ifdef __MWERKS__
+     // TODO PC
+     Hu3DModelAttrSet(titleMdlId[0], HU3D_ATTR_DISPOFF);
+     Hu3DModelAttrSet(titleMdlId[1], HU3D_ATTR_DISPOFF);
+     Hu3DModelAttrSet(titleMdlId[2], HU3D_ATTR_DISPOFF);
+#endif
      #if VERSION_NTSC
      HuSprAttrSet(bootGrpId, 0, HUSPR_ATTR_DISPOFF);
      HuSprAttrSet(bootGrpId, 1, HUSPR_ATTR_DISPOFF);
