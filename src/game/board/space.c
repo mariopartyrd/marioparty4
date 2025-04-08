@@ -1095,10 +1095,6 @@ void BoardSpaceInit(s32 data_num)
         }
     }
     spaceDrawF = 1;
-#ifdef TARGET_PC
-    GXDestroyTexObj(&spaceHiliteTex);
-    GXDestroyTexObj(&spaceTex);
-#endif
 }
 
 void BoardSpaceDestroy(void)
@@ -1115,4 +1111,8 @@ void BoardSpaceDestroy(void)
         HuMemDirectFree(spaceTexData);
         spaceTexData = NULL;
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&spaceHiliteTex);
+    GXDestroyTexObj(&spaceTex);
+#endif
 }
