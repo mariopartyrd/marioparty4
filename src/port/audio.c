@@ -108,12 +108,7 @@ void HuAudFadeOut(s32 speed) {
 
 int HuAudFXPlay(int seId)
 {
-    WipeState *wipe = &wipeData;
-
-    if (omSysExitReq != 0 || (wipeData.mode == WIPE_MODE_OUT && wipe->time / wipe->duration > 0.5)) {
-        return 0;
-    }
-    return HuAudFXPlayVolPan(seId, MSM_VOL_MAX, MSM_PAN_CENTER);
+    return 5;
 }
 
 int HuAudFXPlayVol(int seId, s16 vol) {

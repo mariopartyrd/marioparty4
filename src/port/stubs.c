@@ -641,7 +641,6 @@ void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }
 
 void msmSysRegularProc(void)
 {
-    puts("msmSysRegularProc is a stub");
 }
 
 void msmMusFdoutEnd(void)
