@@ -288,6 +288,9 @@ void pfDrawFonts(void)
             }
         }
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&font_tex);
+#endif
 }
 
 #define SAFETY_W 16

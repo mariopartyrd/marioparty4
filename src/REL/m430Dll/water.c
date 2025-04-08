@@ -1284,6 +1284,9 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp24);
+#endif
 }
 
 Vec lbl_1_data_60[6] = {

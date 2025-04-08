@@ -1825,4 +1825,7 @@ void fn_1_ABDC(ModelData *model, Mtx matrix)
             GXColor1x8(1);
         }
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp8);
+#endif
 }

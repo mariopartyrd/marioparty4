@@ -1843,7 +1843,10 @@ void fn_1_7D60(unkStruct15 *arg0, unkStruct13 *arg1, s16 arg2)
     }
     GXInitTexObjLOD(&sp1C, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&sp1C, arg2);
-    return;
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp1C);
+    GXDestroyTlutObj(&sp10);
+#endif
 }
 
 void fn_1_806C(ModelData *arg0, Mtx arg1)
@@ -2132,6 +2135,9 @@ void fn_1_8D1C(void)
     GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGBA8, GX_FALSE);
     GXCopyTex(lbl_1_bss_28, 0);
     DCFlushRange(lbl_1_bss_28, lbl_1_bss_24);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp10);
+#endif
 }
 
 void fn_1_91A4(Vec *arg0, Vec *arg1, Vec *arg2, f32 arg3[5])

@@ -1630,6 +1630,9 @@ void fn_1_54C8(ModelData *model, Mtx mtx)
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&spC);
+#endif
 }
 
 s16 fn_1_5918(Vec *arg0)

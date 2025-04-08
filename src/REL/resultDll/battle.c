@@ -676,4 +676,7 @@ static void ResultShadowDraw(struct model_data *model, Mtx matrix)
     GXPosition3f32(500.0f, 0, 500.0f);
     GXPosition3f32(-500.0f, 0, 500.0f);
     GXEnd();
+#ifdef TARGET_PC
+    GXDestroyTexObj(&tex);
+#endif
 }

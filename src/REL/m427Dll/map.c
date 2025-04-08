@@ -1076,6 +1076,9 @@ void fn_1_618C(ModelData *arg0, Mtx arg1)
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp14);
+#endif
 }
 
 s32 lbl_1_data_FC[0xC] = {
@@ -2443,6 +2446,9 @@ void fn_1_B3CC(ModelData *model, Mtx matrix)
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp44);
+#endif
 }
 
 void fn_1_BD2C(ModelData *model, Mtx matrix)

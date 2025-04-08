@@ -53,6 +53,9 @@ void DEMOLoadFont(enum _GXTexMapID texMap, enum _GXTexMtx texMtx, DMTexFlt texFl
     GXLoadTexMtxImm(fontTMtx, texMtx, 1);
     GXSetNumTexGens(1);
     GXSetTexCoordGen(0, 1, 4, texMtx);
+#ifdef TARGET_PC
+  GXDestroyTexObj(&fontTexObj);
+#endif
 }
 
 void DEMOSetupScrnSpc(long width, long height, float depth)

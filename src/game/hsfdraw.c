@@ -1604,6 +1604,9 @@ static s32 SetShadowTex(void) {
     GXInitTexObj(&sp8, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&sp8, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp8, shadowMapNo);
+#ifdef TARGET_PC
+  GXDestroyTexObj(&sp8);
+#endif
 }
 
 static void SetShadow(HsfDrawObject *arg0, s16 arg1, s16 arg2) {
@@ -1837,6 +1840,10 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
         GXInitTexObjLOD(&sp1C, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, arg1->maxLod - 1, 0.0f, GX_TRUE, GX_TRUE, GX_ANISO_1);
     }
     GXLoadTexObj(&sp1C, arg3);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp1C);
+    GXDestroyTlutObj(&sp10);
+#endif
 }
 
 static void objNull(ModelData *arg0, HsfObject *arg1) {

@@ -106,4 +106,9 @@ void THPGXYuv2RgbDraw(u32 *yImage, u32 *uImage, u32 *vImage, s16 x, s16 y, s16 t
     GXPosition3s16(x, y + polyHeight, 0);
     GXTexCoord2s16(0, 1);
     GXEnd();
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp54);
+    GXDestroyTexObj(&sp34);
+    GXDestroyTexObj(&sp14);
+#endif
 }

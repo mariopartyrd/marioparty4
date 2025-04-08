@@ -866,6 +866,9 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
     GXSetTevDirect(GX_TEVSTAGE1);
     GXSetTevDirect(GX_TEVSTAGE2);
     GXSetTevDirect(GX_TEVSTAGE3);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp18);
+#endif
 }
 
 void fn_1_6B04(ModelData *model, Mtx arg1)

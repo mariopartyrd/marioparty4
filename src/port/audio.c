@@ -478,30 +478,6 @@ void HuAudDllSndGrpSet(u16 ovl) {
 }
 
 void HuAudSndGrpSetSet(s16 dataSize) {
-    void *buf;
-    OSTick osTick;
-    s32 numPlay;
-    s32 err;
-
-    if (sndGroupBak != dataSize) {
-        // msmMusStopAll(1, 0);
-        // msmSeStopAll(1, 0);
-        osTick = OSGetTick();
-        // while ((msmMusGetNumPlay(1) != 0 || msmSeGetNumPlay(1) != 0)
-        //     && OSTicksToMilliseconds(OSGetTick() - osTick) < 500);
-        OSReport("%d\n", OSTicksToMilliseconds(OSGetTick() - osTick));
-        if (OSTicksToMilliseconds(OSGetTick() - osTick) >= 500) {
-            // numPlay = msmSeGetNumPlay(1);
-            // OSReport("Timed Out! Mus %d:SE %d\n", msmMusGetNumPlay(1), numPlay);
-        }
-        OSReport("GroupSet %d\n", dataSize);
-        sndGroupBak = dataSize;
-        // err = msmSysDelGroupAll();
-        // buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(1));
-        // err = msmSysLoadGroupSet(dataSize, buf);
-        OSReport("***********GroupSet Error %d\n", err);
-        // HuMemDirectFree(buf);
-    }
 }
 
 void HuAudSndGrpSet(s16 grpId) {

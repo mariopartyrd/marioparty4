@@ -332,4 +332,7 @@ static void WipeFrameStill(GXColor color)
 	GXTexCoord2f32(0, 1);
 	GXEnd();
 	GXSetChanMatColor(GX_COLOR0A0, colorN);
+#ifdef TARGET_PC
+  	GXDestroyTexObj(&tex);
+#endif
 }

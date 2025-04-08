@@ -1144,4 +1144,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXSetNumIndStages(0);
         GXSetTevDirect(GX_TEVSTAGE0);
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp14);
+#endif
 }

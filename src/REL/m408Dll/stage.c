@@ -1138,6 +1138,10 @@ void fn_1_10830(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3)
         GXInitTexObjLOD(&sp1C, GX_LINEAR, GX_LINEAR, 0, 0, 0, GX_FALSE, GX_FALSE, GX_ANISO_1);
     }
     GXLoadTexObj(&sp1C, arg3);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp1C);
+    GXDestroyTlutObj(&sp10);
+#endif
 }
 
 #define SET_TEVCOLOR_ALPHA(reg, color_var, value)                                                                                                    \

@@ -4497,6 +4497,9 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     }
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp14);
+#endif
 }
 
 s32 fn_1_F574(Vec arg0, float arg1, s32 arg2)
@@ -4911,6 +4914,9 @@ void fn_1_11008(StructBssD0Data *arg0, void *arg1, s16 arg2, GXTexWrapMode arg3,
         GXInitTexObjLOD(&sp18, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     }
     GXLoadTexObj(&sp18, arg2);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp18);
+#endif
 }
 
 s16 fn_1_11114(AnimData *arg0, s16 arg1)
