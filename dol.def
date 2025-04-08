@@ -1,4 +1,5 @@
 EXPORTS
+   game_main
    byteswap_u32
    byteswap_s32
    OSReport

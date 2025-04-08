@@ -87,7 +87,7 @@ void aurora_log_callback(AuroraLogLevel level, const char* module, const char *m
 #endif
 
 #ifdef TARGET_PC
-int main(int argc, char *argv[])
+int game_main(int argc, char *argv[])
 #else
 void main(void)
 #endif

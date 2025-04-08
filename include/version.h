@@ -22,7 +22,7 @@
 #endif
 
 #if _WIN32
-#ifdef TARGET_MAIN
+#ifdef TARGET_DOL
 #define SHARED_SYM __declspec(dllexport)
 #else
 #define SHARED_SYM __declspec(dllimport)
