@@ -1180,4 +1180,7 @@ static void ShadowDraw(ModelData *model, Mtx mtx)
     GXPosition3f32(2000.0f, 0, 2000.0f);
     GXPosition3f32(-2000.0f, 0, 2000.0f);
     GXEnd();
+#ifdef TARGET_PC
+    GXDestroyTexObj(&tex);
+#endif
 }

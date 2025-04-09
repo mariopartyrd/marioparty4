@@ -3,6 +3,7 @@
 
 #include "game/animdata.h"
 #include "dolphin.h"
+#include "version.h"
 
 #define MAKE_MESSID(bank, mess) (((bank) << 16)+(mess))
 #define MAKE_MESSID_PTR(ptr) ((u32)(ptr))
@@ -75,8 +76,8 @@ typedef struct {
     /* 0x160 */ u8 ATTRIBUTE_ALIGN(32) mess_pal[10][3];
 } WindowData; // Size 0x180
 
-extern WindowData winData[32];
-extern void *messDataPtr;
+SHARED_SYM extern WindowData winData[32];
+SHARED_SYM extern void *messDataPtr;
 
 void HuWindowInit(void);
 void HuWinInit(s32 mess_data_no);
@@ -138,7 +139,5 @@ void HuWinExAnimOut(s16 window);
 void HuWinExCleanup(s16 window);
 void HuWinExAnimPopIn(s16 window, s16 portrait);
 void *MessData_MesPtrGet(void *data, u32 index);
-
-extern void *messDataPtr;
 
 #endif

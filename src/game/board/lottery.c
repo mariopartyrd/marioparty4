@@ -1,5 +1,14 @@
 #include "game/board/lottery.h"
 #include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#include "game/board/main.h"
+#include "game/board/model.h"
+#include "game/board/player.h"
+#include "game/board/space.h"
+#include "game/board/tutorial.h"
+#include "game/board/ui.h"
+#include "game/board/window.h"
 #include "game/chrman.h"
 #include "game/data.h"
 #include "game/esprite.h"
@@ -11,15 +20,6 @@
 #include "game/pad.h"
 #include "game/process.h"
 #include "game/sprite.h"
-#include "game/board/audio.h"
-#include "game/board/com.h"
-#include "game/board/main.h"
-#include "game/board/model.h"
-#include "game/board/player.h"
-#include "game/board/space.h"
-#include "game/board/tutorial.h"
-#include "game/board/ui.h"
-#include "game/board/window.h"
 
 #include "ext_math.h"
 #include "stdlib.h"
@@ -109,104 +109,58 @@ static s16 ballMdl[4] = { -1, -1, -1, -1 };
 static s16 loseMot = -1;
 static s16 ticketSprGrp = -1;
 
-static s8 comInputDraw1[][2] = {
-    { 0x0B, 0xF8 }, { 0x2B, 0xDD }, { 0x2A, 0xDC }, { 0x2B, 0xDC },
-    { 0x2B, 0xDC }, { 0x29, 0xDB }, { 0x24, 0xD6 }, { 0x02, 0xE8 },
-    { 0x00, 0x00 }, { 0xFC, 0x02 }, { 0xD8, 0x27 }, { 0xD8, 0x28 },
-    { 0xD8, 0x28 }, { 0xD8, 0x27 }, { 0xDA, 0x29 }, { 0xDE, 0x2C },
-    { 0xE4, 0x31 }, { 0xF0, 0x3A }, { 0x00, 0x3C }, { 0x06, 0x3A },
-    { 0x1B, 0x32 }, { 0x23, 0x2B }, { 0x24, 0x2A }, { 0x25, 0x29 },
-    { 0x26, 0x29 }, { 0x28, 0x27 }, { 0x28, 0x27 }, { 0x28, 0x26 },
-    { 0x28, 0x26 }, { 0x2E, 0x20 }, { 0x39, 0x11 }, { 0x48, 0x00 },
-    { 0x48, 0x00 }, { 0x35, 0xEA }, { 0x29, 0xDB }, { 0x24, 0xD5 },
-    { 0x17, 0xCB }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 },
-    { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xEB, 0xCA }, { 0xD6, 0xDB },
-    { 0xD6, 0xDB }, { 0xD4, 0xDE }, { 0xD1, 0xE2 }, { 0xC4, 0xF2 },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xC1, 0x0B },
-    { 0xC6, 0x10 }, { 0xC9, 0x14 }, { 0xCB, 0x16 }, { 0xCB, 0x17 },
-    { 0xCE, 0x1A }, { 0xD1, 0x1E }, { 0xD5, 0x23 }, { 0xD4, 0x22 },
-    { 0xDB, 0x29 }, { 0xF5, 0x3E }, { 0x00, 0x48 }, { 0x00, 0x42 },
-    { 0x0D, 0x3D }, { 0x24, 0x2A }, { 0x29, 0x26 }, { 0x29, 0x26 },
-    { 0x29, 0x25 }, { 0x2D, 0x21 }, { 0x34, 0x18 }, { 0x40, 0x09 },
-    { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x43, 0xFA }, { 0x33, 0xE6 },
-    { 0x29, 0xDB }, { 0x1B, 0xCF }, { 0x05, 0xBD }, { 0x00, 0xB8 },
-    { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xFB, 0xBD }, { 0xDD, 0xD5 },
-    { 0xD6, 0xDC }, { 0xD6, 0xDC }, { 0xD4, 0xDE }, { 0xCB, 0xE9 },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xC5, 0x0F },
-    { 0xD0, 0x1D }, { 0xD5, 0x23 }, { 0xDC, 0x2A }, { 0xF0, 0x3B },
-    { 0x00, 0x3D }, { 0x08, 0x3F }, { 0x15, 0x36 }, { 0x24, 0x2A },
-    { 0x29, 0x26 }, { 0x2A, 0x24 }, { 0x30, 0x1C }, { 0x3B, 0x0F },
-    { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x3E, 0xF4 }, { 0x2D, 0xE0 },
-    { 0x22, 0xD4 }, { 0x02, 0xBB }, { 0x00, 0xB8 }, { 0xFB, 0xBD },
-    { 0xD9, 0xD8 }, { 0xD4, 0xDE }, { 0x7F, 0x7F }
-};
+static s8 comInputDraw1[][2] = { { 0x0B, 0xF8 }, { 0x2B, 0xDD }, { 0x2A, 0xDC }, { 0x2B, 0xDC }, { 0x2B, 0xDC }, { 0x29, 0xDB }, { 0x24, 0xD6 },
+    { 0x02, 0xE8 }, { 0x00, 0x00 }, { 0xFC, 0x02 }, { 0xD8, 0x27 }, { 0xD8, 0x28 }, { 0xD8, 0x28 }, { 0xD8, 0x27 }, { 0xDA, 0x29 }, { 0xDE, 0x2C },
+    { 0xE4, 0x31 }, { 0xF0, 0x3A }, { 0x00, 0x3C }, { 0x06, 0x3A }, { 0x1B, 0x32 }, { 0x23, 0x2B }, { 0x24, 0x2A }, { 0x25, 0x29 }, { 0x26, 0x29 },
+    { 0x28, 0x27 }, { 0x28, 0x27 }, { 0x28, 0x26 }, { 0x28, 0x26 }, { 0x2E, 0x20 }, { 0x39, 0x11 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x35, 0xEA },
+    { 0x29, 0xDB }, { 0x24, 0xD5 }, { 0x17, 0xCB }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xEB, 0xCA },
+    { 0xD6, 0xDB }, { 0xD6, 0xDB }, { 0xD4, 0xDE }, { 0xD1, 0xE2 }, { 0xC4, 0xF2 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
+    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xC1, 0x0B }, { 0xC6, 0x10 }, { 0xC9, 0x14 }, { 0xCB, 0x16 }, { 0xCB, 0x17 }, { 0xCE, 0x1A },
+    { 0xD1, 0x1E }, { 0xD5, 0x23 }, { 0xD4, 0x22 }, { 0xDB, 0x29 }, { 0xF5, 0x3E }, { 0x00, 0x48 }, { 0x00, 0x42 }, { 0x0D, 0x3D }, { 0x24, 0x2A },
+    { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x29, 0x25 }, { 0x2D, 0x21 }, { 0x34, 0x18 }, { 0x40, 0x09 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x43, 0xFA },
+    { 0x33, 0xE6 }, { 0x29, 0xDB }, { 0x1B, 0xCF }, { 0x05, 0xBD }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xFB, 0xBD }, { 0xDD, 0xD5 },
+    { 0xD6, 0xDC }, { 0xD6, 0xDC }, { 0xD4, 0xDE }, { 0xCB, 0xE9 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xC5, 0x0F }, { 0xD0, 0x1D },
+    { 0xD5, 0x23 }, { 0xDC, 0x2A }, { 0xF0, 0x3B }, { 0x00, 0x3D }, { 0x08, 0x3F }, { 0x15, 0x36 }, { 0x24, 0x2A }, { 0x29, 0x26 }, { 0x2A, 0x24 },
+    { 0x30, 0x1C }, { 0x3B, 0x0F }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x3E, 0xF4 }, { 0x2D, 0xE0 }, { 0x22, 0xD4 }, { 0x02, 0xBB }, { 0x00, 0xB8 },
+    { 0xFB, 0xBD }, { 0xD9, 0xD8 }, { 0xD4, 0xDE }, { 0x7F, 0x7F } };
 
-static s8 comInputDraw2[][2] = {
-    { 0x07, 0x00 }, { 0x1F, 0x00 }, { 0x3A, 0x00 }, { 0x48, 0x00 },
-    { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x48, 0x00 },
-    { 0x43, 0xFA }, { 0x35, 0xEA }, { 0x2A, 0xDB }, { 0x1A, 0xCE },
-    { 0x00, 0xB9 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 },
-    { 0x00, 0xBA }, { 0xE9, 0xCC }, { 0xD5, 0xDD }, { 0xD4, 0xDE },
-    { 0xD4, 0xDE }, { 0xD0, 0xE3 }, { 0xBD, 0xFB }, { 0xB8, 0x00 },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xBC, 0x03 }, { 0xC2, 0x0C },
-    { 0xCB, 0x17 }, { 0xD5, 0x23 }, { 0xD8, 0x27 }, { 0xF0, 0x3A },
-    { 0x00, 0x43 }, { 0x18, 0x34 }, { 0x29, 0x26 }, { 0x29, 0x26 },
-    { 0x29, 0x26 }, { 0x29, 0x25 }, { 0x29, 0x26 }, { 0x29, 0x25 },
-    { 0x29, 0x25 }, { 0x2C, 0x22 }, { 0x31, 0x1B }, { 0x39, 0x12 },
-    { 0x47, 0x00 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x37, 0xEC },
-    { 0x26, 0xD7 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 },
-    { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xFB, 0xBD },
-    { 0xE5, 0xCE }, { 0xD6, 0xDC }, { 0xD6, 0xDC }, { 0xD6, 0xDC },
-    { 0xD5, 0xDD }, { 0xD2, 0xE0 }, { 0xCC, 0xE8 }, { 0xC4, 0xF2 },
-    { 0xBE, 0xFA }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
-    { 0xC7, 0x12 }, { 0xD8, 0x27 }, { 0xF6, 0x3E }, { 0x00, 0x47 },
-    { 0x00, 0x44 }, { 0x05, 0x42 }, { 0x16, 0x35 }, { 0x28, 0x27 },
-    { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x29, 0x26 },
-    { 0x7F, 0x7F }
-};
+static s8 comInputDraw2[][2] = { { 0x07, 0x00 }, { 0x1F, 0x00 }, { 0x3A, 0x00 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x48, 0x00 },
+    { 0x48, 0x00 }, { 0x43, 0xFA }, { 0x35, 0xEA }, { 0x2A, 0xDB }, { 0x1A, 0xCE }, { 0x00, 0xB9 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 },
+    { 0x00, 0xBA }, { 0xE9, 0xCC }, { 0xD5, 0xDD }, { 0xD4, 0xDE }, { 0xD4, 0xDE }, { 0xD0, 0xE3 }, { 0xBD, 0xFB }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
+    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xBC, 0x03 }, { 0xC2, 0x0C }, { 0xCB, 0x17 }, { 0xD5, 0x23 },
+    { 0xD8, 0x27 }, { 0xF0, 0x3A }, { 0x00, 0x43 }, { 0x18, 0x34 }, { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x29, 0x25 }, { 0x29, 0x26 },
+    { 0x29, 0x25 }, { 0x29, 0x25 }, { 0x2C, 0x22 }, { 0x31, 0x1B }, { 0x39, 0x12 }, { 0x47, 0x00 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x37, 0xEC },
+    { 0x26, 0xD7 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xFB, 0xBD }, { 0xE5, 0xCE },
+    { 0xD6, 0xDC }, { 0xD6, 0xDC }, { 0xD6, 0xDC }, { 0xD5, 0xDD }, { 0xD2, 0xE0 }, { 0xCC, 0xE8 }, { 0xC4, 0xF2 }, { 0xBE, 0xFA }, { 0xB8, 0x00 },
+    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xB8, 0x00 },
+    { 0xB8, 0x00 }, { 0xC7, 0x12 }, { 0xD8, 0x27 }, { 0xF6, 0x3E }, { 0x00, 0x47 }, { 0x00, 0x44 }, { 0x05, 0x42 }, { 0x16, 0x35 }, { 0x28, 0x27 },
+    { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x29, 0x26 }, { 0x7F, 0x7F } };
 
-static s8 comInputBall[][2] = {
-    { 0xE5, 0x00 }, { 0xC0, 0x03 }, { 0xBC, 0x04 }, { 0xBC, 0x03 },
-    { 0xBF, 0x07 }, { 0xC3, 0x0C }, { 0xCB, 0x17 }, { 0xD5, 0x24 },
-    { 0xDE, 0x2C }, { 0xF9, 0x3E }, { 0x00, 0x48 }, { 0x00, 0x45 },
-    { 0x06, 0x40 }, { 0x21, 0x2C }, { 0x28, 0x27 }, { 0x28, 0x26 },
-    { 0x29, 0x25 }, { 0x30, 0x1D }, { 0x43, 0x05 }, { 0x48, 0x00 },
-    { 0x33, 0xE7 }, { 0x24, 0xD6 }, { 0x07, 0xBF }, { 0x00, 0xB8 },
-    { 0x00, 0xB8 }, { 0xE4, 0xCF }, { 0xD4, 0xDE }, { 0xC6, 0xF0 },
-    { 0xB8, 0x00 }, { 0xC7, 0x11 }, { 0xD2, 0x20 }, { 0xD5, 0x24 },
-    { 0xD6, 0x25 }, { 0xD8, 0x27 }, { 0xE1, 0x2E }, { 0x00, 0x43 },
-    { 0x00, 0x48 }, { 0x00, 0x44 }, { 0x1D, 0x30 }, { 0x28, 0x27 },
-    { 0x28, 0x27 }, { 0x2C, 0x22 }, { 0x39, 0x12 }, { 0x48, 0x00 },
-    { 0x34, 0xE8 }, { 0x23, 0xD5 }, { 0x0A, 0xC1 }, { 0x00, 0xB8 },
-    { 0x00, 0xB8 }, { 0xF4, 0xC3 }, { 0xD4, 0xDE }, { 0xC3, 0xF4 },
-    { 0xB8, 0x00 }, { 0xC6, 0x10 }, { 0xD3, 0x21 }, { 0xD6, 0x25 },
-    { 0xD8, 0x27 }, { 0xDF, 0x2D }, { 0xEA, 0x36 }, { 0x00, 0x48 },
-    { 0x00, 0x48 }, { 0x00, 0x48 }, { 0x17, 0x35 }, { 0x28, 0x27 },
-    { 0x29, 0x25 }, { 0x33, 0x19 }, { 0x48, 0x00 }, { 0x48, 0x00 },
-    { 0x34, 0xE8 }, { 0x23, 0xD5 }, { 0x00, 0xB9 }, { 0x00, 0xB8 },
-    { 0x00, 0xB8 }, { 0xFA, 0xBE }, { 0xD4, 0xDE }, { 0xC8, 0xED },
-    { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xC0, 0x09 }, { 0xD0, 0x1C },
-    { 0xD6, 0x24 }, { 0xDC, 0x2A }, { 0xED, 0x38 }, { 0x00, 0x48 },
-    { 0x00, 0x48 }, { 0x00, 0x48 }, { 0x1B, 0x31 }, { 0x28, 0x27 },
-    { 0x29, 0x26 }, { 0x2D, 0x21 }, { 0x3D, 0x0C }, { 0x48, 0x00 },
-    { 0x33, 0xE7 }, { 0x20, 0xD3 }, { 0x00, 0xB8 }, { 0x00, 0xB8 },
-    { 0x00, 0xBB }, { 0xDB, 0xD7 }, { 0xD4, 0xDE }, { 0xD3, 0xDF },
-    { 0xBB, 0xFD }, { 0xB8, 0x00 }, { 0x7F, 0x7F }
-};
+static s8 comInputBall[][2] = { { 0xE5, 0x00 }, { 0xC0, 0x03 }, { 0xBC, 0x04 }, { 0xBC, 0x03 }, { 0xBF, 0x07 }, { 0xC3, 0x0C }, { 0xCB, 0x17 },
+    { 0xD5, 0x24 }, { 0xDE, 0x2C }, { 0xF9, 0x3E }, { 0x00, 0x48 }, { 0x00, 0x45 }, { 0x06, 0x40 }, { 0x21, 0x2C }, { 0x28, 0x27 }, { 0x28, 0x26 },
+    { 0x29, 0x25 }, { 0x30, 0x1D }, { 0x43, 0x05 }, { 0x48, 0x00 }, { 0x33, 0xE7 }, { 0x24, 0xD6 }, { 0x07, 0xBF }, { 0x00, 0xB8 }, { 0x00, 0xB8 },
+    { 0xE4, 0xCF }, { 0xD4, 0xDE }, { 0xC6, 0xF0 }, { 0xB8, 0x00 }, { 0xC7, 0x11 }, { 0xD2, 0x20 }, { 0xD5, 0x24 }, { 0xD6, 0x25 }, { 0xD8, 0x27 },
+    { 0xE1, 0x2E }, { 0x00, 0x43 }, { 0x00, 0x48 }, { 0x00, 0x44 }, { 0x1D, 0x30 }, { 0x28, 0x27 }, { 0x28, 0x27 }, { 0x2C, 0x22 }, { 0x39, 0x12 },
+    { 0x48, 0x00 }, { 0x34, 0xE8 }, { 0x23, 0xD5 }, { 0x0A, 0xC1 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xF4, 0xC3 }, { 0xD4, 0xDE }, { 0xC3, 0xF4 },
+    { 0xB8, 0x00 }, { 0xC6, 0x10 }, { 0xD3, 0x21 }, { 0xD6, 0x25 }, { 0xD8, 0x27 }, { 0xDF, 0x2D }, { 0xEA, 0x36 }, { 0x00, 0x48 }, { 0x00, 0x48 },
+    { 0x00, 0x48 }, { 0x17, 0x35 }, { 0x28, 0x27 }, { 0x29, 0x25 }, { 0x33, 0x19 }, { 0x48, 0x00 }, { 0x48, 0x00 }, { 0x34, 0xE8 }, { 0x23, 0xD5 },
+    { 0x00, 0xB9 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0xFA, 0xBE }, { 0xD4, 0xDE }, { 0xC8, 0xED }, { 0xB8, 0x00 }, { 0xB8, 0x00 }, { 0xC0, 0x09 },
+    { 0xD0, 0x1C }, { 0xD6, 0x24 }, { 0xDC, 0x2A }, { 0xED, 0x38 }, { 0x00, 0x48 }, { 0x00, 0x48 }, { 0x00, 0x48 }, { 0x1B, 0x31 }, { 0x28, 0x27 },
+    { 0x29, 0x26 }, { 0x2D, 0x21 }, { 0x3D, 0x0C }, { 0x48, 0x00 }, { 0x33, 0xE7 }, { 0x20, 0xD3 }, { 0x00, 0xB8 }, { 0x00, 0xB8 }, { 0x00, 0xBB },
+    { 0xDB, 0xD7 }, { 0xD4, 0xDE }, { 0xD3, 0xDF }, { 0xBB, 0xFD }, { 0xB8, 0x00 }, { 0x7F, 0x7F } };
 
-void BoardLotteryHostSet(s16 arg0) {
+void BoardLotteryHostSet(s16 arg0)
+{
     hostMdl = arg0;
 }
 
-s16 BoardLotteryHostGet(void) {
+s16 BoardLotteryHostGet(void)
+{
     return hostMdl;
 }
 
-void BoardLotteryExec(void) {
+void BoardLotteryExec(void)
+{
     if (BoardPlayerSizeGet(GWSystem.player_curr) == 2) {
         return;
     }
@@ -219,7 +173,8 @@ void BoardLotteryExec(void) {
     BoardRollDispSet(1);
 }
 
-void BoardLotteryInit(void) {
+void BoardLotteryInit(void)
+{
     Vec sp14;
     Vec sp8;
     s32 i;
@@ -247,73 +202,28 @@ void BoardLotteryInit(void) {
     }
 }
 
-static void CreateModel(void) {
+static void CreateModel(void)
+{
     s32 i;
-    s32 sp10[4] = {
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 5),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 6),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 7),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 8)
-    };
-    s32 sp8[2] = {
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 3),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 4)
-    };
+    s32 sp10[4] = { DATA_MAKE_NUM(DATADIR_BKUJIYA, 5), DATA_MAKE_NUM(DATADIR_BKUJIYA, 6), DATA_MAKE_NUM(DATADIR_BKUJIYA, 7),
+        DATA_MAKE_NUM(DATADIR_BKUJIYA, 8) };
+    s32 sp8[2] = { DATA_MAKE_NUM(DATADIR_BKUJIYA, 3), DATA_MAKE_NUM(DATADIR_BKUJIYA, 4) };
     s32 sp20[9][4] = {
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 1),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 2),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 3),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 4)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST,  9),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 10),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 11),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 12)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 14),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 15),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 16),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 17)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 24),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 25),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 26),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 27)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 29),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 30),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 31),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 32)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 34),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 35),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 36),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 37)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 14),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 15),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 16),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 17)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 42),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 43),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 44),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 45)
-        },
-        {
-            DATA_MAKE_NUM(DATADIR_BGUEST, 42),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 43),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 44),
-            DATA_MAKE_NUM(DATADIR_BGUEST, 45)
-        }
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 1), DATA_MAKE_NUM(DATADIR_BGUEST, 2), DATA_MAKE_NUM(DATADIR_BGUEST, 3), DATA_MAKE_NUM(DATADIR_BGUEST, 4) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 9), DATA_MAKE_NUM(DATADIR_BGUEST, 10), DATA_MAKE_NUM(DATADIR_BGUEST, 11), DATA_MAKE_NUM(DATADIR_BGUEST, 12) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 14), DATA_MAKE_NUM(DATADIR_BGUEST, 15), DATA_MAKE_NUM(DATADIR_BGUEST, 16),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 17) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 24), DATA_MAKE_NUM(DATADIR_BGUEST, 25), DATA_MAKE_NUM(DATADIR_BGUEST, 26),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 27) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 29), DATA_MAKE_NUM(DATADIR_BGUEST, 30), DATA_MAKE_NUM(DATADIR_BGUEST, 31),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 32) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 34), DATA_MAKE_NUM(DATADIR_BGUEST, 35), DATA_MAKE_NUM(DATADIR_BGUEST, 36),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 37) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 14), DATA_MAKE_NUM(DATADIR_BGUEST, 15), DATA_MAKE_NUM(DATADIR_BGUEST, 16),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 17) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 42), DATA_MAKE_NUM(DATADIR_BGUEST, 43), DATA_MAKE_NUM(DATADIR_BGUEST, 44),
+            DATA_MAKE_NUM(DATADIR_BGUEST, 45) },
+        { DATA_MAKE_NUM(DATADIR_BGUEST, 42), DATA_MAKE_NUM(DATADIR_BGUEST, 43), DATA_MAKE_NUM(DATADIR_BGUEST, 44), DATA_MAKE_NUM(DATADIR_BGUEST, 45) }
     };
 
     lotteryMdl[1] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BKUJIYA, 1), NULL, 0);
@@ -352,7 +262,8 @@ static void CreateModel(void) {
     BoardModelHookSet(lotteryMdl[1], "toto_grip1", gripMdl[1]);
 }
 
-static void KillModel(void) {
+static void KillModel(void)
+{
     s32 i;
 
     if (lotteryMdl[1] != -1) {
@@ -390,7 +301,8 @@ static void KillModel(void) {
     BoardModelVisibilitySet(BoardLotteryHostGet(), 0);
 }
 
-void BoardLotteryKill(void) {
+void BoardLotteryKill(void)
+{
     if (lotteryProc) {
         HuPrcKill(lotteryProc);
     }
@@ -400,7 +312,8 @@ void BoardLotteryKill(void) {
     }
 }
 
-static void DestroyLottery(void) {
+static void DestroyLottery(void)
+{
     s32 i;
 
     for (i = 0; i < 4; i++) {
@@ -421,7 +334,8 @@ static void DestroyLottery(void) {
     lotteryProc = NULL;
 }
 
-static void ExecLottery(void) {
+static void ExecLottery(void)
+{
     Vec sp38;
     Vec sp2C;
     Vec sp20;
@@ -472,7 +386,8 @@ static void ExecLottery(void) {
     if (GWPlayer[temp_r31].com) {
         if (BoardPlayerCoinsGet(temp_r31) >= 5) {
             BoardComKeySetLeft();
-        } else {
+        }
+        else {
             BoardComKeySetRight();
         }
     }
@@ -512,7 +427,8 @@ static void ExecLottery(void) {
     if (BoardPlayerSizeGet(temp_r31) == 1) {
         BoardModelVisibilitySet(gripMdl[0], 0);
         BoardModelVisibilitySet(gripMdl[1], 1);
-    } else {
+    }
+    else {
         BoardModelVisibilitySet(gripMdl[0], 1);
         BoardModelVisibilitySet(gripMdl[1], 0);
     }
@@ -561,7 +477,8 @@ static void ExecLottery(void) {
         SetupTicket(temp_r31);
         ShowTicket();
         var_r27 = 1;
-    } else {
+    }
+    else {
         var_r27 = 0;
     }
     if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
@@ -571,7 +488,8 @@ static void ExecLottery(void) {
     var_r25 = BoardRandMod(100) & 0xFF;
     if (var_r25 < 50) {
         ExecBallGame();
-    } else {
+    }
+    else {
         ExecScratch();
     }
     ExecPrize();
@@ -601,7 +519,8 @@ static void ExecLottery(void) {
     HuPrcEnd();
 }
 
-static void DoMiniJumpUp(s32 arg0) {
+static void DoMiniJumpUp(s32 arg0)
+{
     Mtx sp34;
     Vec sp28;
     Vec sp1C;
@@ -629,7 +548,8 @@ static void DoMiniJumpUp(s32 arg0) {
         OSs16tof32(&i, &temp_f30);
         if (i < 4) {
             var_f27 = 5.0f;
-        } else {
+        }
+        else {
             var_f27 = 0.0f;
         }
         sp1C.x += sp10.x;
@@ -643,7 +563,8 @@ static void DoMiniJumpUp(s32 arg0) {
     BoardPlayerIdleSet(arg0);
 }
 
-static void DoMiniJumpDown(s32 arg0) {
+static void DoMiniJumpDown(s32 arg0)
+{
     Vec sp24;
     Vec sp18;
     Vec spC;
@@ -661,7 +582,8 @@ static void DoMiniJumpDown(s32 arg0) {
         OSs16tof32(&i, &temp_f31);
         if (i < 3) {
             var_f29 = 10.0f;
-        } else {
+        }
+        else {
             var_f29 = 0.0f;
         }
         sp18.x += spC.x;
@@ -681,7 +603,8 @@ static void DoMiniJumpDown(s32 arg0) {
     }
 }
 
-static void PayEnterFee(s32 arg0) {
+static void PayEnterFee(s32 arg0)
+{
     s32 var_r29;
     s32 temp_r31;
     s32 i;
@@ -691,7 +614,8 @@ static void PayEnterFee(s32 arg0) {
     BoardStatusShowSet(temp_r31, 1);
     if (arg0 != 0) {
         var_r29 = lotteryMessBase + 12;
-    } else {
+    }
+    else {
         var_r29 = lotteryMessBase;
     }
     BoardWinCreate(2, var_r29, BoardWinPortraitGet());
@@ -709,7 +633,8 @@ static void PayEnterFee(s32 arg0) {
     BoardStatusShowSet(temp_r31, 0);
 }
 
-static void ShowTicket(void) {
+static void ShowTicket(void)
+{
     s16 sp10;
     s16 spE;
     s16 spC;
@@ -720,22 +645,15 @@ static void ShowTicket(void) {
     s32 var_r29;
     s32 i;
     u8 *var_r28;
-    s32 sp14[] = {
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 21),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 22),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 23),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 24),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 25),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 26),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 27),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 28)
-    };
+    s32 sp14[] = { DATA_MAKE_NUM(DATADIR_BKUJIYA, 21), DATA_MAKE_NUM(DATADIR_BKUJIYA, 22), DATA_MAKE_NUM(DATADIR_BKUJIYA, 23),
+        DATA_MAKE_NUM(DATADIR_BKUJIYA, 24), DATA_MAKE_NUM(DATADIR_BKUJIYA, 25), DATA_MAKE_NUM(DATADIR_BKUJIYA, 26),
+        DATA_MAKE_NUM(DATADIR_BKUJIYA, 27), DATA_MAKE_NUM(DATADIR_BKUJIYA, 28) };
 
     if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
         return;
     }
     sp8 = GWPlayer[GWSystem.player_curr].ticket_player;
-    var_r28 = (u8*) &sp8;
+    var_r28 = (u8 *)&sp8;
     temp_r31 = HuSprGrpCreate(4);
     BoardSpriteCreate(DATA_MAKE_NUM(DATADIR_BKUJIYA, 20), 30001, 0, &spA);
     HuSprGrpMemberSet(temp_r31, 0, spA);
@@ -784,10 +702,11 @@ static void ShowTicket(void) {
         HuPrcVSleep();
     }
     HuSprGrpKill(temp_r31);
-    (void) var_r29; // Required to match
+    (void)var_r29; // Required to match
 }
 
-static void SetupTicket(s32 arg0) {
+static void SetupTicket(s32 arg0)
+{
     u8 sp8[4];
     u8 var_r29;
     s32 var_r28;
@@ -816,11 +735,9 @@ static void SetupTicket(s32 arg0) {
     GWPlayer[arg0].draw_ticket = 1;
 }
 
-static void LotteryInlineFunc00(s32 arg0, s32 arg1) {
-    s32 sp20[2] = {
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 18),
-        DATA_MAKE_NUM(DATADIR_BKUJIYA, 19)
-    };
+static void LotteryInlineFunc00(s32 arg0, s32 arg1)
+{
+    s32 sp20[2] = { DATA_MAKE_NUM(DATADIR_BKUJIYA, 18), DATA_MAKE_NUM(DATADIR_BKUJIYA, 19) };
     s16 sp10[2] = { 152, 120 };
     s16 sp14[2] = { 120, 120 };
     Vec sp34;
@@ -835,7 +752,8 @@ static void LotteryInlineFunc00(s32 arg0, s32 arg1) {
             lotterySpr = espEntry(sp20[arg0], 30001, 0);
             espAttrSet(lotterySpr, HUSPR_ATTR_NOANIM);
         }
-    } else {
+    }
+    else {
         sp34.y = (sp10[arg0] / 2) + 40;
         temp_f30 = -4.0f;
     }
@@ -850,7 +768,8 @@ static void LotteryInlineFunc00(s32 arg0, s32 arg1) {
     }
 }
 
-static void ExecBallGame(void) {
+static void ExecBallGame(void)
+{
     Vec sp4C;
     float temp_f24;
     float var_f23;
@@ -871,16 +790,9 @@ static void ExecBallGame(void) {
     s8 spA;
     s8 sp9;
     s8 *temp_r23;
-    s32 sp58[] = {
-        DATA_MAKE_NUM(DATADIR_MARIOMOT, 29),
-        DATA_MAKE_NUM(DATADIR_LUIGIMOT, 29),
-        DATA_MAKE_NUM(DATADIR_PEACHMOT, 29),
-        DATA_MAKE_NUM(DATADIR_YOSHIMOT, 29),
-        DATA_MAKE_NUM(DATADIR_WARIOMOT, 29),
-        DATA_MAKE_NUM(DATADIR_DONKEYMOT, 29),
-        DATA_MAKE_NUM(DATADIR_DAISYMOT, 29),
-        DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 29)
-    };
+    s32 sp58[] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 29), DATA_MAKE_NUM(DATADIR_LUIGIMOT, 29), DATA_MAKE_NUM(DATADIR_PEACHMOT, 29),
+        DATA_MAKE_NUM(DATADIR_YOSHIMOT, 29), DATA_MAKE_NUM(DATADIR_WARIOMOT, 29), DATA_MAKE_NUM(DATADIR_DONKEYMOT, 29),
+        DATA_MAKE_NUM(DATADIR_DAISYMOT, 29), DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 29) };
 
     temp_r27 = GWSystem.player_curr;
     currPrize = -1;
@@ -949,24 +861,28 @@ static void ExecBallGame(void) {
                 temp_r25 = GWPlayer[temp_r27].port;
                 spB = HuPadStkX[temp_r25];
                 spA = HuPadStkY[temp_r25];
-            } else {
+            }
+            else {
                 temp_r23 = comInputBall[comInputPos++];
                 spB = temp_r23[0];
                 spA = temp_r23[1];
             }
-        } else {
+        }
+        else {
             spB = spA = 0;
         }
         if (spB == 0x7F || spA == 0x7F) {
             var_r20 = 1;
-        } else {
+        }
+        else {
             if ((abs(spB) < 57.600002f && abs(spA) < 57.600002f) || (var_r17 == spB && sp9 == spA) || (spB == 0 && spA == 0)) {
                 var_f28 *= 0.93f;
                 var_f27 *= 0.8f;
                 if (var_f27 < 0.01f && var_r26 != 0) {
                     var_r26--;
                 }
-            } else {
+            }
+            else {
                 OSs8tof32(&spB, &var_f26);
                 OSs8tof32(&spA, &var_f19);
                 var_f25 = atan2d(var_f26, var_f19);
@@ -984,7 +900,8 @@ static void ExecBallGame(void) {
                     var_f27 += 0.01f * var_f26;
                     if (var_f28 + var_f27 < 2.0f) {
                         var_f28 += var_f27;
-                    } else {
+                    }
+                    else {
                         var_f28 = 2.0f;
                     }
                 }
@@ -996,7 +913,8 @@ static void ExecBallGame(void) {
     LotteryInlineFunc00(0, 1);
 }
 
-static void SetBallPrize(void) {
+static void SetBallPrize(void)
+{
     Process *sp8;
     s32 temp_r31;
 
@@ -1004,11 +922,14 @@ static void SetBallPrize(void) {
         temp_r31 = BoardRandMod(100);
         if (temp_r31 > 97) {
             currPrize = 0;
-        } else if (temp_r31 > 87) {
+        }
+        else if (temp_r31 > 87) {
             currPrize = 1;
-        } else if (temp_r31 > 67) {
+        }
+        else if (temp_r31 > 67) {
             currPrize = 2;
-        } else {
+        }
+        else {
             currPrize = 3;
         }
         if (GWSystem.max_turn - GWSystem.turn != 0 || currPrize != 2) {
@@ -1018,7 +939,8 @@ static void SetBallPrize(void) {
     sp8 = HuPrcChildCreate(ExecBallPrize, 0x2004, 0x3800, 0, lotteryProc);
 }
 
-static void ExecBallPrize(void) {
+static void ExecBallPrize(void)
+{
     Vec sp30;
     Vec sp24;
     Vec sp18;
@@ -1042,19 +964,19 @@ static void ExecBallPrize(void) {
     temp_r29 = ballMdl[currPrize & 3];
     BoardModelPosGet(lotteryMdl[0], &sp30);
     BoardModelRotGet(lotteryMdl[0], &sp18);
-    PSMTXRotRad(sp6C, 'Y', MTXDegToRad(sp18.y));
+    MTXRotRad(sp6C, 'Y', MTXDegToRad(sp18.y));
     var_r27 = BoardModelIDGet(lotteryMdl[0]);
     temp_r3 = Hu3DModelObjPtrGet(var_r27, "toto_gara");
     temp_f28 = sp30.y + temp_r3->data.curr.pos.y + 100.0f;
-    PSMTXTrans(sp3C, temp_r3->data.curr.pos.x, temp_r3->data.curr.pos.y + 210.0f, temp_r3->data.curr.pos.z + -40.0f);
-    PSMTXConcat(sp6C, sp3C, sp3C);
+    MTXTrans(sp3C, temp_r3->data.curr.pos.x, temp_r3->data.curr.pos.y + 210.0f, temp_r3->data.curr.pos.z + -40.0f);
+    MTXConcat(sp6C, sp3C, sp3C);
     Hu3DMtxTransGet(sp3C, &spC);
     VECAdd(&spC, &sp30, &sp30);
     BoardModelVisibilitySet(temp_r29, 1);
     sp24.x = 10.5f;
     sp24.y = -3.0f;
     sp24.z = 0.0f;
-    PSMTXMultVec(sp6C, &sp24, &sp24);
+    MTXMultVec(sp6C, &sp24, &sp24);
     var_f29 = 0.0f;
     var_f30 = 1.8f;
     temp_f27 = 0.016666668f;
@@ -1084,62 +1006,29 @@ static void ExecBallPrize(void) {
     }
 }
 
-static const s32 pickSpr[] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 30),
-    DATA_MAKE_NUM(DATADIR_BOARD, 31),
-    DATA_MAKE_NUM(DATADIR_BOARD, 32),
-    DATA_MAKE_NUM(DATADIR_BOARD, 33),
-    DATA_MAKE_NUM(DATADIR_BOARD, 34),
-    DATA_MAKE_NUM(DATADIR_BOARD, 35),
-    DATA_MAKE_NUM(DATADIR_BOARD, 36),
-    DATA_MAKE_NUM(DATADIR_BOARD, 37)
-};
+static const s32 pickSpr[]
+    = { DATA_MAKE_NUM(DATADIR_BOARD, 30), DATA_MAKE_NUM(DATADIR_BOARD, 31), DATA_MAKE_NUM(DATADIR_BOARD, 32), DATA_MAKE_NUM(DATADIR_BOARD, 33),
+          DATA_MAKE_NUM(DATADIR_BOARD, 34), DATA_MAKE_NUM(DATADIR_BOARD, 35), DATA_MAKE_NUM(DATADIR_BOARD, 36), DATA_MAKE_NUM(DATADIR_BOARD, 37) };
 
-static const s32 handMdl[] = {
-    DATA_MAKE_NUM(DATADIR_BKUJIYA,  9),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 10),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 11),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 12),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 13),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 14),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 15),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 16)
-};
+static const s32 handMdl[] = { DATA_MAKE_NUM(DATADIR_BKUJIYA, 9), DATA_MAKE_NUM(DATADIR_BKUJIYA, 10), DATA_MAKE_NUM(DATADIR_BKUJIYA, 11),
+    DATA_MAKE_NUM(DATADIR_BKUJIYA, 12), DATA_MAKE_NUM(DATADIR_BKUJIYA, 13), DATA_MAKE_NUM(DATADIR_BKUJIYA, 14), DATA_MAKE_NUM(DATADIR_BKUJIYA, 15),
+    DATA_MAKE_NUM(DATADIR_BKUJIYA, 16) };
 
-static const s32 ticketSpr[] = {
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 29),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 30),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 31),
-    DATA_MAKE_NUM(DATADIR_BKUJIYA, 32)
-};
+static const s32 ticketSpr[] = { DATA_MAKE_NUM(DATADIR_BKUJIYA, 29), DATA_MAKE_NUM(DATADIR_BKUJIYA, 30), DATA_MAKE_NUM(DATADIR_BKUJIYA, 31),
+    DATA_MAKE_NUM(DATADIR_BKUJIYA, 32) };
 
 static omObjData *ticketObj[12] = { NULL };
 static s8 ticketPrize[12] = { 0 };
 static Vec handLastPos = { 0.0f, 0.0f, 0.0f };
 
-static s32 loseSoundTbl[] = {
-    0x0000012E,
-    0x0000016E,
-    0x000001AE,
-    0x000001EE,
-    0x0000022E,
-    0x0000026E,
-    0x000002AE,
-    0x000002EE
-};
+static s32 loseSoundTbl[] = { 0x0000012E, 0x0000016E, 0x000001AE, 0x000001EE, 0x0000022E, 0x0000026E, 0x000002AE, 0x000002EE };
 
-static s32 loseMotTbl[] = {
-    DATA_MAKE_NUM(DATADIR_MARIOMOT, 51),
-    DATA_MAKE_NUM(DATADIR_LUIGIMOT, 51),
-    DATA_MAKE_NUM(DATADIR_PEACHMOT, 51),
-    DATA_MAKE_NUM(DATADIR_YOSHIMOT, 51),
-    DATA_MAKE_NUM(DATADIR_WARIOMOT, 51),
-    DATA_MAKE_NUM(DATADIR_DONKEYMOT, 51),
-    DATA_MAKE_NUM(DATADIR_DAISYMOT, 51),
-    DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 51)
-};
+static s32 loseMotTbl[] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 51), DATA_MAKE_NUM(DATADIR_LUIGIMOT, 51), DATA_MAKE_NUM(DATADIR_PEACHMOT, 51),
+    DATA_MAKE_NUM(DATADIR_YOSHIMOT, 51), DATA_MAKE_NUM(DATADIR_WARIOMOT, 51), DATA_MAKE_NUM(DATADIR_DONKEYMOT, 51),
+    DATA_MAKE_NUM(DATADIR_DAISYMOT, 51), DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 51) };
 
-static void ExecScratchTicket(s32 arg0) {
+static void ExecScratchTicket(s32 arg0)
+{
     Vec sp24;
     Vec sp18;
     Vec spC;
@@ -1178,7 +1067,8 @@ static void ExecScratchTicket(s32 arg0) {
     comInputPos = 0;
     if (BoardRandMod(100) < 50) {
         comInputDrawP = comInputDraw1;
-    } else {
+    }
+    else {
         comInputDrawP = comInputDraw2;
     }
     temp_r27 = HuAudFXPlay(0x335);
@@ -1217,7 +1107,8 @@ static void ExecScratchTicket(s32 arg0) {
     lotteryMdl[4] = -1;
 }
 
-static void ExecScratch(void) {
+static void ExecScratch(void)
+{
     TicketWork *temp_r28;
     float var_f31;
     s32 temp_curr;
@@ -1259,7 +1150,8 @@ static void ExecScratch(void) {
     BoardFilterFadeOut(30);
 }
 
-static void KillScratch(void) {
+static void KillScratch(void)
+{
     if (ticketSprGrp != -1) {
         HuSprGrpKill(ticketSprGrp);
         ticketSprGrp = -1;
@@ -1270,7 +1162,8 @@ static void KillScratch(void) {
     memset(ticketObj, 0, sizeof(ticketObj));
 }
 
-static void ExecScratchSpr(omObjData *arg0) {
+static void ExecScratchSpr(omObjData *arg0)
+{
     Vec sp20;
     Vec sp14;
     Vec sp8;
@@ -1298,7 +1191,8 @@ static void ExecScratchSpr(omObjData *arg0) {
     if (ABS(sp8.x) < 1.0f && ABS(sp8.y) < 1.0f) {
         sp8 = sp14;
         temp_r30->unk00_field1 = 1;
-    } else {
+    }
+    else {
         VECScale(&sp8, &sp8, 0.2f);
         VECAdd(&sp20, &sp8, &sp8);
         temp_r30->unk00_field1 = 0;
@@ -1309,7 +1203,8 @@ static void ExecScratchSpr(omObjData *arg0) {
     arg0->rot.y = sp8.y;
 }
 
-static void HideScratchSpr(void) {
+static void HideScratchSpr(void)
+{
     s32 i;
 
     for (i = 0; i < 12; i++) {
@@ -1319,7 +1214,8 @@ static void HideScratchSpr(void) {
     }
 }
 
-static void InitScratchSpr(void) {
+static void InitScratchSpr(void)
+{
     Vec sp18;
     Vec spC;
     omObjData *temp_r31;
@@ -1361,7 +1257,8 @@ static void InitScratchSpr(void) {
     HuSprGrpDrawNoSet(temp_r28, 0x40);
 }
 
-static inline u32 ExecStratchPickInlineFunc(LotteryTicketPickWork *temp_r29) {
+static inline u32 ExecStratchPickInlineFunc(LotteryTicketPickWork *temp_r29)
+{
     s32 var_r21;
     s32 temp_r23;
     u32 var_r26;
@@ -1371,17 +1268,21 @@ static inline u32 ExecStratchPickInlineFunc(LotteryTicketPickWork *temp_r29) {
     if (!GWPlayer[var_r21].com) {
         temp_r23 = GWPlayer[GWSystem.player_curr].port;
         var_r26 = HuPadDStkRep[temp_r23] | HuPadBtnDown[temp_r23];
-    } else if (comLotteryType != temp_r29->unk02) {
+    }
+    else if (comLotteryType != temp_r29->unk02) {
         var_r26 = 2;
-    } else if (comLotteryWinType != temp_r29->unk03) {
+    }
+    else if (comLotteryWinType != temp_r29->unk03) {
         var_r26 = 4;
-    } else if (comLotteryType == temp_r29->unk02 && comLotteryWinType == temp_r29->unk03) {
+    }
+    else if (comLotteryType == temp_r29->unk02 && comLotteryWinType == temp_r29->unk03) {
         var_r26 = 0x100;
     }
     return var_r26;
 }
 
-static void ExecScratchPick(omObjData *arg0) {
+static void ExecScratchPick(omObjData *arg0)
+{
     float var_f29;
     float var_f28;
     s8 var_r28;
@@ -1434,14 +1335,16 @@ static void ExecScratchPick(omObjData *arg0) {
     if (temp_r29->unk02 < 0) {
         temp_r29->unk02 = 0;
         var_r28 = 0;
-    } else if (temp_r29->unk03 < 0) {
+    }
+    else if (temp_r29->unk03 < 0) {
         temp_r29->unk03 = 0;
         var_r28 = 0;
     }
     if (temp_r29->unk02 >= 4) {
         temp_r29->unk02 = 3;
         var_r28 = 0;
-    } else if (temp_r29->unk03 >= 3) {
+    }
+    else if (temp_r29->unk03 >= 3) {
         temp_r29->unk03 = 2;
         var_r28 = 0;
     }
@@ -1455,7 +1358,8 @@ static void ExecScratchPick(omObjData *arg0) {
     HuSprPosSet(temp_r29->unk08, 0, var_f29, var_f28);
 }
 
-static void InitScratchPick(void) {
+static void InitScratchPick(void)
+{
     float temp_f31 = 91.0f;
     float temp_f30 = 106.0f;
     omObjData *temp_r30;
@@ -1476,7 +1380,8 @@ static void InitScratchPick(void) {
     HuSprGrpDrawNoSet(var_r31->unk08, 0x40);
 }
 
-static void InitTicketPrizes(void) {
+static void InitTicketPrizes(void)
+{
     s32 temp_r31;
     s32 i;
 
@@ -1492,7 +1397,8 @@ static void InitTicketPrizes(void) {
     }
 }
 
-static void ExecTicketFocus(s32 arg0) {
+static void ExecTicketFocus(s32 arg0)
+{
     float var_f31;
     float temp_f30;
     omObjData *var_r30;
@@ -1516,7 +1422,8 @@ static void ExecTicketFocus(s32 arg0) {
     }
 }
 
-static BOOL ScratchTicketCheckDone(AnimBmpData *arg0) {
+static BOOL ScratchTicketCheckDone(AnimBmpData *arg0)
+{
     s32 var_r29;
     s32 var_r31;
     s32 var_r30;
@@ -1532,12 +1439,14 @@ static BOOL ScratchTicketCheckDone(AnimBmpData *arg0) {
     }
     if (var_r29 >= arg0->sizeX * arg0->sizeY - 300) {
         return TRUE;
-    } else {
+    }
+    else {
         return FALSE;
     }
 }
 
-static u16 TicketGetPixel(u16 arg0, u16 arg1, u16 arg2) {
+static u16 TicketGetPixel(u16 arg0, u16 arg1, u16 arg2)
+{
     u16 var_r31;
     u16 var_r30;
     u16 var_r29;
@@ -1550,7 +1459,8 @@ static u16 TicketGetPixel(u16 arg0, u16 arg1, u16 arg2) {
     return var_r29 + (var_r28 << 2) + ((var_r31 + var_r30 * (arg0 >> 2)) << 4);
 }
 
-static s32 TicketUpdate(AnimBmpData *arg0, Vec *arg1, s32 arg2) {
+static s32 TicketUpdate(AnimBmpData *arg0, Vec *arg1, s32 arg2)
+{
     Vec sp48;
     Vec sp3C;
     float temp_f25;
@@ -1574,7 +1484,8 @@ static s32 TicketUpdate(AnimBmpData *arg0, Vec *arg1, s32 arg2) {
         }
         OSs8tof32(&temp_r19[0], &sp48.x);
         OSs8tof32(&temp_r19[1], &sp48.y);
-    } else {
+    }
+    else {
         sp34 = GWPlayer[GWSystem.player_curr].port;
         sp48.x = HuPadStkX[sp34];
         sp48.y = HuPadStkY[sp34];
@@ -1643,12 +1554,13 @@ static s32 TicketUpdate(AnimBmpData *arg0, Vec *arg1, s32 arg2) {
             }
         }
     }
-    DCFlushRange(arg0->data, (u32) (arg0->sizeX * arg0->sizeY * 2) >> 3);
+    DCFlushRange(arg0->data, (u32)(arg0->sizeX * arg0->sizeY * 2) >> 3);
     handLastPos = *arg1;
     return 0;
 }
 
-static s32 ExecCoinPrizeInlineFunc(void) {
+static s32 ExecCoinPrizeInlineFunc(void)
+{
     s32 i;
 
     for (i = 0; i < 10; i++) {
@@ -1659,7 +1571,8 @@ static s32 ExecCoinPrizeInlineFunc(void) {
     return -1;
 }
 
-static void ExecCoinPrize(void) {
+static void ExecCoinPrize(void)
+{
     Vec sp64[10];
     Vec sp8;
     float sp3C[10];
@@ -1674,7 +1587,8 @@ static void ExecCoinPrize(void) {
     temp_r27 = GWSystem.player_curr;
     if (currPrize == 0) {
         var_r28 = 100;
-    } else {
+    }
+    else {
         var_r28 = 30;
     }
     memset(coinMdl, 0, sizeof(coinMdl));
@@ -1703,7 +1617,8 @@ static void ExecCoinPrize(void) {
                 BoardModelScaleSet(coinMdl[var_r30], 0.5f, 0.5f, 0.5f);
                 var_r28--;
             }
-        } else {
+        }
+        else {
             var_r26 = 0;
             for (i = 0; i < 10; i++) {
                 if (coinF[i] != 0) {
@@ -1725,7 +1640,8 @@ static void ExecCoinPrize(void) {
                     BoardPlayerCoinsAdd(temp_r27, 1);
                     HuAudFXPlay(7);
                     omVibrate(temp_r27, 12, 6, 6);
-                } else {
+                }
+                else {
                     BoardModelPosSetV(coinMdl[i], &sp64[i]);
                     BoardModelRotSet(coinMdl[i], 0.0f, sp3C[i], 0.0f);
                     sp3C[i] = BoardDAngleCalc(45.0f + sp3C[i]);
@@ -1736,7 +1652,8 @@ static void ExecCoinPrize(void) {
     }
 }
 
-static void ExecItemPrize(void) {
+static void ExecItemPrize(void)
+{
     Vec sp20;
     Vec sp14;
     float temp_f29;
@@ -1748,10 +1665,7 @@ static void ExecItemPrize(void) {
     s32 temp_r29;
     s16 *var_r31;
     s16 i;
-    s32 spC[2] = {
-        DATA_MAKE_NUM(DATADIR_BOARD, 111),
-        DATA_MAKE_NUM(DATADIR_BOARD, 112)
-    };
+    s32 spC[2] = { DATA_MAKE_NUM(DATADIR_BOARD, 111), DATA_MAKE_NUM(DATADIR_BOARD, 112) };
     s8 sp8[2] = { 2, 3 };
 
     temp_r29 = GWSystem.player_curr;
@@ -1779,7 +1693,8 @@ static void ExecItemPrize(void) {
     BoardPlayerPosGet(temp_r29, &sp20);
     if (BoardPlayerSizeGet(temp_r29) == 0) {
         sp20.y += 100.0f;
-    } else {
+    }
+    else {
         sp20.y += 30.000002f;
     }
     temp_f29 = (sp20.y - sp14.y) / 30.0f;
@@ -1805,7 +1720,8 @@ static void ExecItemPrize(void) {
     omVibrate(GWSystem.player_curr, 12, 6, 6);
 }
 
-static void KillCoin(void) {
+static void KillCoin(void)
+{
     s32 i;
 
     for (i = 0; i < 10; i++) {
@@ -1814,7 +1730,8 @@ static void KillCoin(void) {
     }
 }
 
-static void ExecPrize(void) {
+static void ExecPrize(void)
+{
     Vec sp14;
     Vec sp8;
     s16 var_r29;
@@ -1865,7 +1782,8 @@ static void ExecPrize(void) {
             if (var_r24 < 3) {
                 var_r29 = 7;
                 var_r26 = 80;
-            } else {
+            }
+            else {
                 var_r29 = 8;
             }
             break;
@@ -1890,11 +1808,12 @@ static void ExecPrize(void) {
         HuPrcSleep(0x14);
         if (var_r31 == 0) {
             var_r27 = HuAudSStreamPlay(0xA);
-        } else {
+        }
+        else {
             var_r27 = HuAudSStreamPlay(9);
         }
     }
-    var_r23 = (s32) BoardPlayerRotYGet(temp_r30) + 180;
+    var_r23 = (s32)BoardPlayerRotYGet(temp_r30) + 180;
     BoardPlayerMotBlendSet(temp_r30, var_r23, 0xF);
     while (!BoardPlayerMotBlendCheck(temp_r30)) {
         HuPrcVSleep();
@@ -1912,7 +1831,8 @@ static void ExecPrize(void) {
         if (var_r24 == 3) {
             BoardWinCreate(2, lotteryMessBase + 6, BoardWinPortraitGet());
             BoardWinWait();
-        } else {
+        }
+        else {
             BoardAudSeqPause(1, 1, 1000);
             HuPrcSleep(0x30);
             var_r27 = HuAudSStreamPlay(2);
@@ -1931,7 +1851,8 @@ static void ExecPrize(void) {
         case 2:
             if (var_r24 < 3) {
                 ExecItemPrize();
-            } else {
+            }
+            else {
                 var_r31 = 3;
             }
             break;
@@ -1948,7 +1869,8 @@ static void ExecPrize(void) {
     }
     if (var_r31 != 3) {
         var_r28 = lotteryMessBase + 3;
-    } else {
+    }
+    else {
         var_r28 = lotteryMessBase + 8;
     }
     BoardModelMotionShiftSet(BoardLotteryHostGet(), lotteryMot[2], 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
@@ -1963,7 +1885,8 @@ static void ExecPrize(void) {
     }
 }
 
-static void ExecLose(s32 arg0) {
+static void ExecLose(s32 arg0)
+{
     s32 temp_r30;
 
     temp_r30 = GWPlayer[arg0].character;
@@ -1975,7 +1898,8 @@ static void ExecLose(s32 arg0) {
     }
 }
 
-static void CreateLotteryWin(s32 arg0) {
+static void CreateLotteryWin(s32 arg0)
+{
     float sp8[2];
     float temp_f30;
     float var_f31;
@@ -1985,10 +1909,12 @@ static void CreateLotteryWin(s32 arg0) {
     if (arg0 == 0) {
         var_r31 = MAKE_MESSID(6, 80);
         var_f31 = 352.0f;
-    } else if (arg0 == 1) {
+    }
+    else if (arg0 == 1) {
         var_f31 = 352.0f;
         var_r31 = MAKE_MESSID(6, 81);
-    } else {
+    }
+    else {
         var_f31 = 364.0f;
         var_r31 = MAKE_MESSID(32, 22);
     }
@@ -1999,14 +1925,16 @@ static void CreateLotteryWin(s32 arg0) {
     HuWinMesSet(lotteryInstWin, var_r31);
 }
 
-static void KillLotteryWin(void) {
+static void KillLotteryWin(void)
+{
     if (lotteryInstWin != -1) {
         HuWinKill(lotteryInstWin);
         lotteryInstWin = -1;
     }
 }
 
-void BoardLotteryTutorialExec(void) {
+void BoardLotteryTutorialExec(void)
+{
     Vec sp38;
     Vec sp2C;
     Vec sp20;

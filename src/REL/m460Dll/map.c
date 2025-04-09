@@ -398,6 +398,9 @@ void fn_1_7790(ModelData *model, Mtx mtx)
     GXPosition3f32(var_f31, var_f30, -var_f29);
     GXPosition3f32(var_f31, -var_f30, -var_f29);
     GXPosition3f32(-var_f31, -var_f30, -var_f29);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&spC);
+#endif
 }
 
 void fn_1_7B94(s32 arg0)

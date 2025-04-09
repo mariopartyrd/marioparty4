@@ -20,6 +20,9 @@ typedef unsigned char u8;
 typedef unsigned short int u16;
 typedef unsigned long u32;
 typedef unsigned long long int u64;
+
+typedef u32 size_t;
+typedef u32 uintptr_t;
 #endif
 
 typedef volatile u8 vu8;
@@ -64,7 +67,7 @@ typedef int BOOL;
 #define NULL ((void *)0)
 #endif
 #endif
-#if !defined(__cplusplus) || __cplusplus < 201103L
+#if !defined(__cplusplus)
 #ifndef nullptr
 #define nullptr NULL
 #endif

@@ -4,6 +4,8 @@
 #include "math.h"
 #include "dolphin/mtx.h"
 
+#define M_PI 3.141592653589793
+
 typedef struct vec2f {
     float x;
     float y;
@@ -33,7 +35,7 @@ typedef struct vec2f {
 #define atan2d(y, x) (180.0*(atan2((y), (x)) / M_PI))
 
 #ifndef __MWERKS__
-void HuSetVecF(Vec* arg0, f32 arg8, f32 arg9, f32 argA)
+void HuSetVecF(Vec *arg0, f32 arg8, f32 arg9, f32 argA);
 #endif
 
 #endif

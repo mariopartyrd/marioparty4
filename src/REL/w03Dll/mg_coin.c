@@ -761,7 +761,7 @@ void fn_1_97F8(s32 arg0)
     temp_r30 = OM_GET_WORK_PTR(temp_r3, unkTemp2);
     temp_r30->unk00_bit0 = 0;
     temp_r30->unk4 = arg0;
-    temp_r30->unk_0C = HuMemDirectMallocNum(0, 0x190, MEMORY_DEFAULT_NUM);
+    temp_r30->unk_0C = HuMemDirectMallocNum(0, 20 * sizeof(unkTemp), MEMORY_DEFAULT_NUM);
     BoardPlayerPosGet(arg0, &sp8);
     temp_r30->unk8 = (80.0f + sp8.y);
     memset(temp_r30->unk_0C, 0, 0x190);

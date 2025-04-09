@@ -76,7 +76,7 @@ void InitEnvelope(HsfData *arg0) {
             nObj = temp_r28->count;
             nMesh = temp_r28->base_idx;
         }
-        PSMTXIdentity(sp10);
+        MTXIdentity(sp10);
         SetMtx(arg0->root, sp10);
         SetRevMtx();
     }
@@ -89,19 +89,19 @@ static void SetEnvelopMtx(HsfObject *arg0, HsfObject *arg1, Mtx arg2) {
     s32 var_r29;
     s32 i;
 
-    PSMTXTrans(spC, arg1->data.curr.pos.x, arg1->data.curr.pos.y, arg1->data.curr.pos.z);
-    PSMTXConcat(arg2, spC, sp3C);
+    MTXTrans(spC, arg1->data.curr.pos.x, arg1->data.curr.pos.y, arg1->data.curr.pos.z);
+    MTXConcat(arg2, spC, sp3C);
     if (arg1->data.curr.rot.z) {
-        PSMTXRotRad(sp6C, 'z', MTXDegToRad(arg1->data.curr.rot.z));
-        PSMTXConcat(sp3C, sp6C, sp3C);
+        MTXRotRad(sp6C, 'z', MTXDegToRad(arg1->data.curr.rot.z));
+        MTXConcat(sp3C, sp6C, sp3C);
     }
     if (arg1->data.curr.rot.y) {
-        PSMTXRotRad(sp6C, 'y', MTXDegToRad(arg1->data.curr.rot.y));
-        PSMTXConcat(sp3C, sp6C, sp3C);
+        MTXRotRad(sp6C, 'y', MTXDegToRad(arg1->data.curr.rot.y));
+        MTXConcat(sp3C, sp6C, sp3C);
     }
     if (arg1->data.curr.rot.x) {
-        PSMTXRotRad(sp6C, 'x', MTXDegToRad(arg1->data.curr.rot.x));
-        PSMTXConcat(sp3C, sp6C, sp3C);
+        MTXRotRad(sp6C, 'x', MTXDegToRad(arg1->data.curr.rot.x));
+        MTXConcat(sp3C, sp6C, sp3C);
     }
     if (arg1->data.curr.scale.x != 1.0f) {
         sp3C[0][0] *= arg1->data.curr.scale.x;
@@ -119,7 +119,7 @@ static void SetEnvelopMtx(HsfObject *arg0, HsfObject *arg1, Mtx arg2) {
         sp3C[2][2] *= arg1->data.curr.scale.z;
     }
     var_r29 = arg1 - arg0;
-    PSMTXCopy(sp3C, MtxTop[nMesh + var_r29]);
+    MTXCopy(sp3C, MtxTop[nMesh + var_r29]);
     for (i = 0; i < arg1->data.childrenCount; i++) {
         SetEnvelopMtx(arg0, arg1->data.children[i], sp3C);
     }
@@ -136,7 +136,7 @@ void EnvelopeProc(HsfData *arg0) {
     nObj = temp_r31->count;
     nMesh = temp_r31->base_idx;
     temp_r29 = arg0->root;
-    PSMTXIdentity(sp8);
+    MTXIdentity(sp8);
     SetEnvelopMtx(arg0->object, temp_r29, sp8);
     SetEnvelopMain(arg0);
 }
@@ -167,7 +167,7 @@ static void SetEnvelopMain(HsfData *arg0) {
     var_r31 = arg0->object;
     for (Meshno = i = 0; i < arg0->objectCnt; i++, var_r31++) {
         if (var_r31->type == 2) {
-            PSMTXInverse(MtxTop[&var_r31[nMesh] - arg0->object], MtxTop[Meshno]);
+            MTXInverse(MtxTop[&var_r31[nMesh] - arg0->object], MtxTop[Meshno]);
             temp_r30 = var_r31->data.vertex;
             temp_r28 = var_r31->data.normal;
             if (var_r31->data.unk120[0] != 0) {
@@ -233,37 +233,37 @@ static void SetEnvelop(HsfCenv *arg0) {
         temp_r31 = &Vertextop[temp_r21];
         temp_r22 = &normenv[temp_r18];
         temp_r26 = &normtop[temp_r18];
-        PSMTXConcat(MtxTop[nMesh + var_r27->target], MtxTop[nMesh + nObj + nObj * Meshno + var_r27->target], sp140);
-        PSMTXConcat(MtxTop[Meshno], sp140, sp1A0);
+        MTXConcat(MtxTop[nMesh + var_r27->target], MtxTop[nMesh + nObj + nObj * Meshno + var_r27->target], sp140);
+        MTXConcat(MtxTop[Meshno], sp140, sp1A0);
         Hu3DMtxScaleGet(&sp1A0[0], &sp14);
         if (sp14.x != 1.0f || sp14.y != 1.0f || sp14.z != 1.0f) {
-            PSMTXScale(spE0, 1.0 / sp14.x, 1.0 / sp14.y, 1.0 / sp14.z);
-            PSMTXConcat(spE0, sp1A0, sp170);
-            PSMTXInvXpose(sp170, sp170);
+            MTXScale(spE0, 1.0 / sp14.x, 1.0 / sp14.y, 1.0 / sp14.z);
+            MTXConcat(spE0, sp1A0, sp170);
+            MTXInvXpose(sp170, sp170);
         } else {
-            PSMTXInvXpose(sp1A0, sp170);
+            MTXInvXpose(sp1A0, sp170);
         }
         if (var_r27->posCnt == 1) {
-            PSMTXMultVec(sp1A0, temp_r31, temp_r28);
-            PSMTXMultVec(sp170, temp_r26, temp_r22);
+            MTXMultVec(sp1A0, temp_r31, temp_r28);
+            MTXMultVec(sp170, temp_r26, temp_r22);
         } else if (var_r27->posCnt <= 6) {
-            PSMTXMultVecArray(sp1A0, temp_r31, temp_r28, var_r27->posCnt);
-            PSMTXMultVecArray(sp170, temp_r26, temp_r22, var_r27->normalCnt);
+            MTXMultVecArray(sp1A0, temp_r31, temp_r28, var_r27->posCnt);
+            MTXMultVecArray(sp170, temp_r26, temp_r22, var_r27->normalCnt);
         } else {
-            PSMTXReorder(sp1A0, (ROMtxPtr) sp140);
-            PSMTXReorder(sp170, (ROMtxPtr) sp110);
-            PSMTXROMultVecArray((ROMtxPtr) sp140, temp_r31, temp_r28, var_r27->posCnt);
-            PSMTXROMultVecArray((ROMtxPtr) sp110, temp_r26, temp_r22, var_r27->normalCnt);
+            MTXReorder(sp1A0, (ROMtxPtr) sp140);
+            MTXReorder(sp170, (ROMtxPtr) sp110);
+            MTXROMultVecArray((ROMtxPtr) sp140, temp_r31, temp_r28, var_r27->posCnt);
+            MTXROMultVecArray((ROMtxPtr) sp110, temp_r26, temp_r22, var_r27->normalCnt);
         }
     }
     var_r20 = arg0->dualData;
     for (i = 0; i < arg0->dualCount; i++, var_r20++) {
         spC = var_r20->target1;
         sp8 = var_r20->target2;
-        PSMTXConcat(MtxTop[nMesh + spC], MtxTop[nMesh + nObj + nObj * Meshno + spC], sp140);
-        PSMTXConcat(MtxTop[Meshno], sp140, sp1A0);
-        PSMTXConcat(MtxTop[nMesh + sp8], MtxTop[nMesh + nObj + nObj * Meshno + sp8], sp140);
-        PSMTXConcat(MtxTop[Meshno], sp140, (float (*)[4]) &spB0[0]);
+        MTXConcat(MtxTop[nMesh + spC], MtxTop[nMesh + nObj + nObj * Meshno + spC], sp140);
+        MTXConcat(MtxTop[Meshno], sp140, sp1A0);
+        MTXConcat(MtxTop[nMesh + sp8], MtxTop[nMesh + nObj + nObj * Meshno + sp8], sp140);
+        MTXConcat(MtxTop[Meshno], sp140, (float (*)[4]) &spB0[0]);
         var_r30 = var_r20->weight;
         for (j = 0; j < var_r20->weightCnt; j++, var_r30++) {
             temp_r18 = var_r30->normal;
@@ -316,32 +316,32 @@ static void SetEnvelop(HsfCenv *arg0) {
             var_r29[2][2] = sp110[2][2] + sp140[2][2];
             var_r29[2][3] = sp110[2][3] + sp140[2][3];
             if (var_r29 == sp50) {
-                PSMTXCopy(sp50, sp80);
+                MTXCopy(sp50, sp80);
             }
             Hu3DMtxScaleGet(&sp80[0], &sp14);
             if (sp14.x != 1.0f || sp14.y != 1.0f || sp14.z != 1.0f) {
-                PSMTXScale(spE0, 1.0 / sp14.x, 1.0 / sp14.y, 1.0 / sp14.z);
-                PSMTXConcat(spE0, sp80, sp110);
-                PSMTXInvXpose(sp110, sp110);
+                MTXScale(spE0, 1.0 / sp14.x, 1.0 / sp14.y, 1.0 / sp14.z);
+                MTXConcat(spE0, sp80, sp110);
+                MTXInvXpose(sp110, sp110);
             } else {
-                PSMTXInvXpose(sp80, sp110);
+                MTXInvXpose(sp80, sp110);
             }
             if (var_r30->posCnt == 1) {
-                PSMTXMultVec(sp80, temp_r31, temp_r28);
+                MTXMultVec(sp80, temp_r31, temp_r28);
             } else if (var_r30->posCnt <= 6) {
-                PSMTXMultVecArray(sp80, temp_r31, temp_r28, var_r30->posCnt);
+                MTXMultVecArray(sp80, temp_r31, temp_r28, var_r30->posCnt);
             } else {
-                PSMTXReorder(sp80, (ROMtxPtr) sp140);
-                PSMTXROMultVecArray((ROMtxPtr) sp140, temp_r31, temp_r28, var_r30->posCnt);
+                MTXReorder(sp80, (ROMtxPtr) sp140);
+                MTXROMultVecArray((ROMtxPtr) sp140, temp_r31, temp_r28, var_r30->posCnt);
             }
             if (var_r30->normalCnt != 0) {
                 if (var_r30->normalCnt == 1) {
-                    PSMTXMultVec(sp110, temp_r26, temp_r22);
+                    MTXMultVec(sp110, temp_r26, temp_r22);
                 } else if (var_r30->normalCnt <= 6) {
-                    PSMTXMultVecArray(sp110, temp_r26, temp_r22, var_r30->normalCnt);
+                    MTXMultVecArray(sp110, temp_r26, temp_r22, var_r30->normalCnt);
                 } else {
-                    PSMTXReorder(sp110, (ROMtxPtr) sp140);
-                    PSMTXROMultVecArray((ROMtxPtr) sp140, temp_r26, temp_r22, var_r30->normalCnt);
+                    MTXReorder(sp110, (ROMtxPtr) sp140);
+                    MTXROMultVecArray((ROMtxPtr) sp140, temp_r26, temp_r22, var_r30->normalCnt);
                 }
             }
         }
@@ -359,11 +359,11 @@ static void SetEnvelop(HsfCenv *arg0) {
         sp20.x = sp20.y = sp20.z = 0.0f;
         sp10 = 0;
         for (j = 0; j < var_r19->weightCnt; j++, var_r25++) {
-            PSMTXConcat(MtxTop[nMesh + var_r25->target], MtxTop[nMesh + nObj + nObj * Meshno + var_r25->target], sp1A0);
-            PSMTXConcat(MtxTop[Meshno], sp1A0, sp1A0);
-            PSMTXInvXpose(sp1A0, sp170);
-            PSMTXMultVec(sp1A0, temp_r31, &sp44);
-            PSMTXMultVec(sp170, temp_r26, &sp2C);
+            MTXConcat(MtxTop[nMesh + var_r25->target], MtxTop[nMesh + nObj + nObj * Meshno + var_r25->target], sp1A0);
+            MTXConcat(MtxTop[Meshno], sp1A0, sp1A0);
+            MTXInvXpose(sp1A0, sp170);
+            MTXMultVec(sp1A0, temp_r31, &sp44);
+            MTXMultVec(sp170, temp_r26, &sp2C);
             sp44.x = var_r25->value * (sp44.x - temp_r31->x);
             sp44.y = var_r25->value * (sp44.y - temp_r31->y);
             sp44.z = var_r25->value * (sp44.z - temp_r31->z);
@@ -410,18 +410,18 @@ static void SetMtx(HsfObject *arg0, Mtx arg1) {
         arg0->data.base.scale.y = temp_r3->transform.scale.y;
         arg0->data.base.scale.z = temp_r3->transform.scale.z;
     }
-    PSMTXTrans(spFC, arg0->data.base.pos.x, arg0->data.base.pos.y, arg0->data.base.pos.z);
-    PSMTXScale(spCC, arg0->data.base.scale.x, arg0->data.base.scale.y, arg0->data.base.scale.z);
-    PSMTXConcat(arg1, spFC, spFC);
-    PSMTXRotRad(sp9C, 'z', MTXDegToRad(arg0->data.base.rot.z));
-    PSMTXConcat(spFC, sp9C, spFC);
-    PSMTXRotRad(sp9C, 'y', MTXDegToRad(arg0->data.base.rot.y));
-    PSMTXConcat(spFC, sp9C, spFC);
-    PSMTXRotRad(sp9C, 'x', MTXDegToRad(arg0->data.base.rot.x));
-    PSMTXConcat(spFC, sp9C, spFC);
-    PSMTXConcat(spFC, spCC, spFC);
+    MTXTrans(spFC, arg0->data.base.pos.x, arg0->data.base.pos.y, arg0->data.base.pos.z);
+    MTXScale(spCC, arg0->data.base.scale.x, arg0->data.base.scale.y, arg0->data.base.scale.z);
+    MTXConcat(arg1, spFC, spFC);
+    MTXRotRad(sp9C, 'z', MTXDegToRad(arg0->data.base.rot.z));
+    MTXConcat(spFC, sp9C, spFC);
+    MTXRotRad(sp9C, 'y', MTXDegToRad(arg0->data.base.rot.y));
+    MTXConcat(spFC, sp9C, spFC);
+    MTXRotRad(sp9C, 'x', MTXDegToRad(arg0->data.base.rot.x));
+    MTXConcat(spFC, sp9C, spFC);
+    MTXConcat(spFC, spCC, spFC);
     temp_r25 = arg0 - objtop;
-    PSMTXCopy(spFC, MtxTop[nMesh + temp_r25]);
+    MTXCopy(spFC, MtxTop[nMesh + temp_r25]);
     for (i = 0; i < arg0->data.childrenCount; i++) {
         SetMtx(arg0->data.children[i], spFC);
     }
@@ -438,12 +438,12 @@ static void SetRevMtx(void) {
     var_r29 = CurHsf->object;
     for (var_r28 = i = 0; i < CurHsf->objectCnt; i++, var_r29++) {
         if (var_r29->type == 2) {
-            PSMTXCopy(MtxTop[nMesh + i], sp8);
+            MTXCopy(MtxTop[nMesh + i], sp8);
             for (var_r30 = 0; var_r30 < CurHsf->objectCnt; var_r30++) {
-                PSMTXInverse(MtxTop[nMesh + var_r30], sp38);
-                PSMTXConcat(sp38, sp8, MtxTop[nMesh + nObj + nObj * var_r28 + var_r30]);
+                MTXInverse(MtxTop[nMesh + var_r30], sp38);
+                MTXConcat(sp38, sp8, MtxTop[nMesh + nObj + nObj * var_r28 + var_r30]);
             }
-            PSMTXInverse(MtxTop[nMesh + i], sp8);
+            MTXInverse(MtxTop[nMesh + i], sp8);
             var_r28++;
         }
     }

@@ -160,6 +160,7 @@ config.asflags = [
     "-mgekko",
     "--strip-local-absolute",
     "-I include",
+    "-I libc",
     f"-I build/{config.version}/include",
     f"--defsym version={version_num}",
 ]
@@ -192,6 +193,7 @@ cflags_base = [
     "-fp_contract on",
     "-str reuse",
     "-i include",
+    "-i libc",
     "-i extern/musyx/include",
     f"-i build/{config.version}/include",
     "-multibyte",
@@ -270,6 +272,7 @@ cflags_musyx = [
     "-nodefaults",
     "-nosyspath",
     "-i include",
+    "-i libc",
     "-i extern/musyx/include",
     "-inline auto",
     "-O4,p",

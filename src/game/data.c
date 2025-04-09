@@ -281,11 +281,18 @@ static void GetFileInfo(DataReadStat *read_stat, s32 file_num)
 {
     u32 *temp_ptr;
     temp_ptr = (u32 *)PTR_OFFSET(read_stat->dir, (file_num * 4))+1;
+#ifdef TARGET_PC
+    byteswap_u32(temp_ptr);
+#endif
     read_stat->file = PTR_OFFSET(read_stat->dir, *temp_ptr);
     temp_ptr = read_stat->file;
     read_stat->raw_len = *temp_ptr++;
     read_stat->comp_type = *temp_ptr++;
     read_stat->file = temp_ptr;
+#ifdef TARGET_PC
+    byteswap_u32(&read_stat->raw_len);
+    byteswap_u32(&read_stat->comp_type);
+#endif
 }
 
 void *HuDataRead(s32 data_num)

@@ -5,6 +5,10 @@
 typedef s32 (*DLLProlog)(void);
 typedef void (*DLLEpilog)(void);
 
+#ifdef TARGET_PC
+typedef void (*DLLObjectSetup)(void);
+#endif
+
 omDllData *omDLLinfoTbl[OM_DLL_MAX];
 
 static FileListEntry *omDLLFileList;
@@ -31,6 +35,10 @@ s32 omDLLStart(s16 overlay, s16 flag)
 	dllno = omDLLSearch(overlay);
 	if(dllno >= 0 && !flag) {
 		omDllData *dll = omDLLinfoTbl[dllno];
+#ifdef TARGET_PC
+		// TODO PC
+		OSReport("objdll>Already Loaded %s\n", dll->name);
+#else
 		OSReport("objdll>Already Loaded %s(%08x %08x)\n", dll->name, dll->module, dll->bss);
 		
 		omDLLInfoDump(&dll->module->info);
@@ -38,6 +46,7 @@ s32 omDLLStart(s16 overlay, s16 flag)
 		memset(dll->bss, 0, dll->module->bssSize);
 		HuMemDCFlushAll();
 		dll->ret = ((DLLProlog)dll->module->prolog)();
+#endif
 		OSReport("objdll> %s prolog end\n", dll->name);
 		return dllno;
 	} else {
@@ -80,8 +89,10 @@ void omDLLEnd(s16 dllno, s16 flag)
 	} else {
 		omDllData *dll;
 		dll = omDLLinfoTbl[dllno];
+#ifdef __MWERKS__
 		OSReport("objdll>Call Epilog\n");
 		((DLLEpilog)dll->module->epilog)();
+#endif
 		OSReport("objdll>End DLL stayed:%s\n", omDLLinfoTbl[dllno]->name);
 	}
 	OSReport("objdll>End DLL finish\n");
@@ -95,6 +106,12 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 	dll = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(omDllData));
 	*dll_ptr = dll;
 	dll->name = dllFile->name;
+#ifdef _WIN32
+    dll->hModule = LoadLibrary(dllFile->name);
+	if (dll->hModule == NULL) {
+		OSReport("objdll>++++++++++++++++ DLL Link Failed\n");
+	}
+#else
 	dll->module = HuDvdDataReadDirect(dllFile->name, HEAP_SYSTEM);
 	dll->bss = HuMemDirectMalloc(HEAP_SYSTEM, dll->module->bssSize);
 	if(OSLink(&dll->module->info, dll->bss) != TRUE) {
@@ -103,9 +120,17 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 	omDLLInfoDump(&dll->module->info);
 	omDLLHeaderDump(dll->module);
 	OSReport("objdll>LinkOK %08x %08x\n", dll->module, dll->bss);
+#endif
 	if(flag == 1) {
 		OSReport("objdll> %s prolog start\n", dllFile->name);
+#ifdef _WIN32
+		{
+		DLLObjectSetup objectSetup = (DLLObjectSetup)GetProcAddress(dll->hModule, "ObjectSetup");
+		objectSetup();
+		}
+#else
 		dll->ret = ((DLLProlog)dll->module->prolog)();
+#endif
 		OSReport("objdll> %s prolog end\n", dllFile->name);
 	}
 	return dll;
@@ -114,6 +139,9 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 void omDLLUnlink(omDllData *dll_ptr, s16 flag)
 {
 	OSReport("odjdll>Unlink DLL:%s\n", dll_ptr->name);
+#ifdef _WIN32
+    FreeLibrary(dll_ptr->hModule);
+#else
 	if(flag == 1) {
 		OSReport("objdll>Unlink DLL epilog\n");
 		((DLLEpilog)dll_ptr->module->epilog)();
@@ -124,6 +152,7 @@ void omDLLUnlink(omDllData *dll_ptr, s16 flag)
 	}
 	HuMemDirectFree(dll_ptr->bss);
 	HuMemDirectFree(dll_ptr->module);
+#endif
 	HuMemDirectFree(dll_ptr);
 }
 

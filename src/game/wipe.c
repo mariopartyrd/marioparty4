@@ -9,7 +9,7 @@ s16 HuSysVWaitGet(s16 old);
 
 typedef s32 (*fadeFunc)(void);
 
-WipeState wipeData;
+SHARED_SYM WipeState wipeData;
 BOOL wipeFadeInF;
 
 static void WipeColorFill(GXColor color);
@@ -111,9 +111,11 @@ void WipeExecAlways(void)
 void WipeCreate(s16 mode, s16 type, s16 duration)
 {
 	WipeState *wipe;
+#ifdef __MWERKS__ // TODO PC
 	if(_CheckFlag(FLAG_ID_MAKE(1, 11)) && boardTutorialF) {
 		return;
 	}
+#endif
 	wipe = &wipeData;
 	if(wipe->stat) {
 		return;
@@ -330,4 +332,7 @@ static void WipeFrameStill(GXColor color)
 	GXTexCoord2f32(0, 1);
 	GXEnd();
 	GXSetChanMatColor(GX_COLOR0A0, colorN);
+#ifdef TARGET_PC
+  	GXDestroyTexObj(&tex);
+#endif
 }

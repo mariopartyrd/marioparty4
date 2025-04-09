@@ -278,6 +278,9 @@ void fn_1_89BC(ModelData *model, Mtx mtx)
     GXTexCoord2f32(0, 1);
     GXEnd();
     fn_1_8904(lbl_1_bss_1180, GX_FALSE);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp14);
+#endif
 }
 
 void fn_1_8EA0(void)

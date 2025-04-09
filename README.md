@@ -59,7 +59,7 @@ Linux
 - For non-x86(_64) platforms: Install wine from your package manager.
   - For x86(_64), [wibo](https://github.com/decompals/wibo), a minimal 32-bit Windows binary wrapper, will be automatically downloaded and used.
 
-Building
+Building the game for the GameCube
 ========
 
 - Clone the repository:
@@ -89,11 +89,13 @@ Building
   ninja
   ```
 
-Diffing
-=======
+Building the game for PC
+=====
+After you got the GameCube build up and running for `GMPE01_00`:
+- Generate project files using CMake:
+  ```
+  cmake -B build/port -G "Visual Studio 17 2022" -A Win32
+  ```
+Linux and MacOS, and x64 support is coming later.
 
-Once the initial build succeeds, an `objdiff.json` should exist in the project root. 
-
-Download the latest release from [encounter/objdiff](https://github.com/encounter/objdiff). Under project settings, set `Project directory`. The configuration should be loaded automatically. 
-
-Select an object from the left sidebar to begin diffing. Changes to the project will rebuild automatically: changes to source files, headers, `configure.py`, `splits.txt` or `symbols.txt`.
+- Open the solution in Visual Studio and build. [Fix for UtilsVulkan.h](https://github.com/encounter/dawn-cmake/blob/f10e70a26db00bb89f88be4204cf49ffc869e194/src/dawn/native/vulkan/UtilsVulkan.h#L128-L132)

@@ -185,6 +185,7 @@ int msmMusPlay(int musId, MSM_MUSPARAM *musParam);
 s32 msmMusStop(int musNo, s32 speed);
 void msmMusPauseAll(BOOL pause, s32 speed);
 s32 msmMusPause(int musNo, BOOL pause, s32 speed);
+void msmMusFdoutEnd(void);
 s32 msmMusGetMidiCtrl(int musNo, s32 channel, s32 ctrl);
 void msmMusStopAll(BOOL checkGrp, s32 speed);
 s32 msmMusGetStatus(int musNo);

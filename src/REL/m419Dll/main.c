@@ -323,6 +323,10 @@ void fn_1_AD0(s16 arg0)
     GXPosition3f32(lbl_1_bss_0[arg0].x, lbl_1_bss_0[arg0].y + 192.0f, 0.0f);
     GXTexCoord2f32(0.0f, 1.0f);
     GXEnd();
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp58);
+    GXDestroyTexObj(&sp38);
+#endif
 }
 
 void fn_1_F58(void)

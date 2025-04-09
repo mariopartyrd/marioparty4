@@ -1538,4 +1538,7 @@ void fn_1_7414(ModelData *model, Mtx matrix)
     GXPosition3f32(500.0f, 0.0f, -500.0f);
     GXPosition3f32(500.0f, 0.0f, 500.0f);
     GXPosition3f32(-500.0f, 0.0f, 500.0f);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&spC);
+#endif
 }

@@ -243,15 +243,15 @@ static void THPViewSprFunc(HuSprite *arg0)
         sp8.b = arg0->b;
         sp8.a = arg0->a;
         if (arg0->z_rot != 0.0f) {
-            PSMTXRotAxisRad(sp18, &spC, MTXDegToRad(arg0->z_rot));
-            PSMTXScale(sp48, arg0->scale_x, arg0->scale_y, 1.0f);
-            PSMTXConcat(sp18, sp48, sp48);
+            MTXRotAxisRad(sp18, &spC, MTXDegToRad(arg0->z_rot));
+            MTXScale(sp48, arg0->scale_x, arg0->scale_y, 1.0f);
+            MTXConcat(sp18, sp48, sp48);
         }
         else {
-            PSMTXScale(sp48, arg0->scale_x, arg0->scale_y, 1.0f);
+            MTXScale(sp48, arg0->scale_x, arg0->scale_y, 1.0f);
         }
         mtxTransCat(sp48, arg0->x, arg0->y, 0.0f);
-        PSMTXConcat(*arg0->group_mtx, sp48, sp48);
+        MTXConcat(*arg0->group_mtx, sp48, sp48);
         temp_r30 = -((s32)audioTrack.unk00 / 2);
         temp_r29 = -((s32)audioTrack.unk04 / 2);
         GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);

@@ -3045,7 +3045,7 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
         if (!HmfInverseMtxF3X3(arg1, sp128)) {
             MTXIdentity(sp128);
         }
-        PSMTXReorder(sp128, sp8);
+        MTXReorder(sp128, sp8);
         if (var_r31->unk_4C) {
             var_r18 = var_r31->unk_4C;
             var_r18(arg0, var_r31, arg1);
@@ -3053,7 +3053,7 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
         var_r29 = var_r31->unk_3C;
         var_r30 = var_r31->unk_40;
         var_r26 = var_r31->unk_44;
-        PSMTXROMultVecArray(sp8, lbl_1_data_22C, &sp38[0], 4);
+        MTXROMultVecArray(sp8, lbl_1_data_22C, &sp38[0], 4);
         for (var_r23 = 0; var_r23 < var_r31->unk_24; var_r23++, var_r29++) {
             if (!var_r29->unk_28) {
                 var_r30->x = var_r30->y = var_r30->z = 0.0f;
@@ -3135,7 +3135,7 @@ void fn_1_88B4(ModelData *arg0, Mtx arg1)
     var_f27 = var_r30->pos.y - arg0->pos.y;
     var_f30 = var_r30->pos.z - arg0->pos.z;
     var_f26 = sqrtf((var_f31 * var_f31) + (var_f30 * var_f30));
-    arg0->rot.x = (atan2d(var_f26, var_f27)) - 90.0;
+    arg0->rot.x = (atan2d(var_f26, var_f27))-90.0;
     arg0->rot.y = atan2d(var_f31, var_f30);
     var_r29 = arg0->unk_120;
     GXLoadPosMtxImm(arg1, 0);

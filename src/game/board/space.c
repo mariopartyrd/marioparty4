@@ -1111,4 +1111,8 @@ void BoardSpaceDestroy(void)
         HuMemDirectFree(spaceTexData);
         spaceTexData = NULL;
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&spaceHiliteTex);
+    GXDestroyTexObj(&spaceTex);
+#endif
 }

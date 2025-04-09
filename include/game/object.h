@@ -5,6 +5,10 @@
 #include "game/process.h"
 #include "game/dvd.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #define OM_DLL_MAX 20
 
 #define OVL_DEFINE(name, path) name,
@@ -60,9 +64,14 @@ typedef struct om_obj_data {
 
 typedef struct om_dll_data {
 	char *name;
+#if _WIN32
+        HMODULE hModule;
+#else
 	OSModuleHeader *module;
 	void *bss;
 	s32 ret;
+#endif
+
 } omDllData;
 
 void omMasterInit(s32 prio, FileListEntry *ovl_list, s32 ovl_count, OverlayID start_ovl);
@@ -112,26 +121,26 @@ void omSysPauseCtrl(s16 flag);
 extern omObjData *omDBGSysKeyObj;
 extern Process *omwatchproc;
 extern OverlayID omnextovl;
-extern OverlayID omcurovl;
+SHARED_SYM extern OverlayID omcurovl;
 extern s32 omcurdll;
-extern s32 omovlhisidx;
-extern s32 omovlevtno;
+SHARED_SYM extern s32 omovlhisidx;
+SHARED_SYM extern s32 omovlevtno;
 extern s32 omnextovlevtno;
-extern u32 omovlstat;
+SHARED_SYM extern u32 omovlstat;
 extern char omUPauseFlag;
-extern s16 omSysExitReq;
+SHARED_SYM extern s16 omSysExitReq;
 extern s16 omdispinfo;
 extern u8 omSysPauseEnableFlag;
 extern OverlayID omprevovl;
 
 extern omDllData *omDLLinfoTbl[OM_DLL_MAX];
 
-extern Vec CRot;
-extern Vec Center;
-extern float CZoom;
-extern Vec CRotM[16];
-extern Vec CenterM[16];
-extern float CZoomM[16];
-extern s16 omDBGMenuButton;
+SHARED_SYM extern Vec CRot;
+SHARED_SYM extern Vec Center;
+SHARED_SYM extern float CZoom;
+SHARED_SYM extern Vec CRotM[16];
+SHARED_SYM extern Vec CenterM[16];
+SHARED_SYM extern float CZoomM[16];
+SHARED_SYM extern s16 omDBGMenuButton;
 
 #endif

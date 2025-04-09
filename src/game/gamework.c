@@ -4,14 +4,14 @@
 #include "string.h"
 #include "version.h"
 
-s16 GwLanguage = 1;
-s16 GwLanguageSave = -1;
+SHARED_SYM s16 GwLanguage = 1;
+SHARED_SYM s16 GwLanguageSave = -1;
 
-GameStat GWGameStatDefault;
-GameStat GWGameStat;
-SystemState GWSystem;
-PlayerState GWPlayer[4];
-PlayerConfig GWPlayerCfg[4];
+SHARED_SYM GameStat GWGameStatDefault;
+SHARED_SYM GameStat GWGameStat;
+SHARED_SYM SystemState GWSystem;
+SHARED_SYM PlayerState GWPlayer[4];
+SHARED_SYM PlayerConfig GWPlayerCfg[4];
 
 static inline void GWErase(void)
 {
@@ -38,6 +38,13 @@ static inline void InitPlayerConfig(void)
         }
     }
 }
+
+// TODO: get these properly declared somewhere
+extern void GWRumbleSet(s32 value);
+extern void GWMGExplainSet(s32 value);
+extern void GWMGShowComSet(s32 value);
+extern void GWMessSpeedSet(s32 value);
+extern void GWSaveModeSet(s32 value);
 
 static inline void ResetBoardSettings(void)
 {

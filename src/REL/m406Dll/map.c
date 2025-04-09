@@ -1111,19 +1111,19 @@ void fn_1_45BC(ModelData *arg0, Mtx arg1)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r31->unk_84, sizeof(Vec));
+        GXSETARRAY(GX_VA_POS, var_r31->unk_84, var_r31->unk_80 * sizeof(Vec), sizeof(Vec));
         GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_NRM, var_r31->unk_88, sizeof(Vec));
+        GXSETARRAY(GX_VA_NRM, var_r31->unk_88, var_r31->unk_80 * sizeof(Vec), sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, var_r31->unk_90, 4);
+        GXSETARRAY(GX_VA_CLR0, var_r31->unk_90, var_r31->unk_80 * sizeof(GXColor), sizeof(GXColor));
         GXCallDisplayList(var_r31->unk_A4, var_r31->unk_A0);
         for (var_r30 = 1; var_r30 < 29; var_r30++) {
             var_r29 = var_r30 * 35;
-            GXSetArray(GX_VA_POS, &var_r31->unk_84[var_r29], sizeof(Vec));
-            GXSetArray(GX_VA_NRM, &var_r31->unk_88[var_r29], sizeof(Vec));
-            GXSetArray(GX_VA_CLR0, &var_r31->unk_90[var_r29], sizeof(GXColor));
+            GXSETARRAY(GX_VA_POS, &var_r31->unk_84[var_r29], 35 * sizeof(Vec), sizeof(Vec));
+            GXSETARRAY(GX_VA_NRM, &var_r31->unk_88[var_r29], 35 * sizeof(Vec), sizeof(Vec));
+            GXSETARRAY(GX_VA_CLR0, &var_r31->unk_90[var_r29], 35 * sizeof(GXColor), sizeof(GXColor));
             GXCallDisplayList(var_r31->unk_A4, var_r31->unk_A0);
         }
     }
@@ -2956,7 +2956,7 @@ void fn_1_BC18(ModelData *arg0, float (*arg1)[4])
         if (HmfInverseMtxF3X3(arg1, sp128) == 0) {
             MTXIdentity(sp128);
         }
-        PSMTXReorder(sp128, sp8);
+        MTXReorder(sp128, sp8);
         if (var_r31->unk_4C) {
             var_r18 = var_r31->unk_4C;
             var_r18(arg0, var_r31, arg1);
@@ -2964,7 +2964,7 @@ void fn_1_BC18(ModelData *arg0, float (*arg1)[4])
         var_r29 = var_r31->unk_3C;
         var_r30 = var_r31->unk_40;
         var_r28 = var_r31->unk_44;
-        PSMTXROMultVecArray(sp8, lbl_1_data_8E0, &sp38[0], 4);
+        MTXROMultVecArray(sp8, lbl_1_data_8E0, &sp38[0], 4);
         for (var_r26 = 0; var_r26 < var_r31->unk_26; var_r26++, var_r29++) {
             if (!var_r29->unk_28) {
                 var_r30->x = var_r30->y = var_r30->z = 0.0f;
@@ -3169,7 +3169,7 @@ void fn_1_C86C(ModelData *arg0, Mtx arg1)
         if (HmfInverseMtxF3X3(arg1, sp9C) == 0) {
             MTXIdentity(sp9C);
         }
-        PSMTXReorder(sp9C, spC);
+        MTXReorder(sp9C, spC);
         if (var_r31->unk_4C) {
             var_r23 = var_r31->unk_4C;
             var_r23(arg0, var_r31, arg1);
@@ -3177,7 +3177,7 @@ void fn_1_C86C(ModelData *arg0, Mtx arg1)
         var_r29 = var_r31->unk_3C;
         var_r30 = var_r31->unk_40;
         sp8 = var_r31->unk_44;
-        PSMTXROMultVecArray(spC, lbl_1_data_930, (Vec *)sp3C, 4);
+        MTXROMultVecArray(spC, lbl_1_data_930, (Vec *)sp3C, 4);
         for (var_r25 = 0; var_r25 < var_r31->unk_26; var_r25++, var_r29++) {
             if (!var_r29->unk_28) {
                 var_r30->x = var_r30->y = var_r30->z = 0.0f;

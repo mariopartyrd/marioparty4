@@ -441,8 +441,8 @@ void Hu3D2Dto3D(Vec *arg0, s16 arg1, Vec *arg2) {
     arg2->y = -(temp_f27 - 0.5) * temp_f31;
     arg2->z = -arg0->z;
     C_MTXLookAt(spC, &temp_r31->pos, &temp_r31->up, &temp_r31->target);
-    PSMTXInverse(spC, spC);
-    PSMTXMultVec(spC, arg2, arg2);
+    MTXInverse(spC, spC);
+    MTXMultVec(spC, arg2, arg2);
 }
 
 void Hu3D3Dto2D(Vec *arg0, s16 arg1, Vec *arg2) {
@@ -460,7 +460,7 @@ void Hu3D3Dto2D(Vec *arg0, s16 arg1, Vec *arg2) {
     }
     temp_r31 = &Hu3DCamera[i];
     C_MTXLookAt(sp1C, &temp_r31->pos, &temp_r31->up, &temp_r31->target);
-    PSMTXMultVec(sp1C, arg0, &sp10);
+    MTXMultVec(sp1C, arg0, &sp10);
     temp_f31 = (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * sp10.z * HU_DISP_ASPECT;
     temp_f30 = (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * sp10.z;
     arg2->x = DISP_HALF_W + sp10.x * (DISP_HALF_W / -temp_f31);

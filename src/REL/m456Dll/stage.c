@@ -857,6 +857,9 @@ void fn_1_5C74(Work2FACUnk4 *fbWork, float x1, float y1, float scale)
     GXPosition3f32(x1, y2, 0);
     GXTexCoord2f32(0, 1);
     GXEnd();
+#ifdef TARGET_PC
+    GXDestroyTexObj(&texObj);
+#endif
 }
 
 void fn_1_60C4(s16 arg0, Work2FACUnk4 *arg1, GXTexWrapMode arg2, s32 arg3, BOOL arg4)
@@ -870,6 +873,9 @@ void fn_1_60C4(s16 arg0, Work2FACUnk4 *arg1, GXTexWrapMode arg2, s32 arg3, BOOL 
         GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     }
     GXLoadTexObj(&texObj, arg0);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&texObj);
+#endif
 }
 
 s32 fn_1_61C8(Vec *arg0, float arg1, float arg2, s32 arg3)

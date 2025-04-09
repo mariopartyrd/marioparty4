@@ -1308,6 +1308,9 @@ void fn_1_58E4(ModelData *modelData, Mtx arg1)
         GXSetTevColor(GX_TEVREG0, sp14);
         GXCallDisplayList(var_r31->unk_44, var_r31->unk_48);
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp3C);
+#endif
 }
 
 AnimData *fn_1_5D64(u16 sizeX, u16 sizeY, s32 arg2)

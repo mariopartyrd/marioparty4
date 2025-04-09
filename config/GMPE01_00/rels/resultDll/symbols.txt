@@ -207,4 +207,4 @@ lbl_1_bss_19F8 = .bss:0x000019F8; // type:object size:0x20
 lbl_1_bss_1A18 = .bss:0x00001A18; // type:object size:0x2
 stageSprId = .bss:0x00001A1A; // type:object size:0x42 data:2byte
 stageMotId = .bss:0x00001A5C; // type:object size:0x40 data:2byte
-stageSprId = .bss:0x00001A9C; // type:object size:0x40 data:2byte
+stageMdlId = .bss:0x00001A9C; // type:object size:0x40 data:2byte

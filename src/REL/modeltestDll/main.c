@@ -859,6 +859,9 @@ void fn_1_2B68(ModelData *mdl, Mtx arg1)
     GXSetNumIndStages(0U);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp30);
+#endif
 }
 
 // -------------------------------------------------------------------------- //

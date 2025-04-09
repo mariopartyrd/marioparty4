@@ -1,8 +1,13 @@
 #ifndef _GAME_PROCESS_H
 #define _GAME_PROCESS_H
 
-#include "game/jmp.h"
 #include "dolphin/types.h"
+
+#include "game/jmp.h"
+
+#ifdef TARGET_PC
+#include <stdio.h>
+#endif
 
 #define PROCESS_STAT_PAUSE 0x1
 #define PROCESS_STAT_UPAUSE 0x2

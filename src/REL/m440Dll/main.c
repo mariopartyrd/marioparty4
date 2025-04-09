@@ -1843,7 +1843,10 @@ void fn_1_7D60(unkStruct15 *arg0, unkStruct13 *arg1, s16 arg2)
     }
     GXInitTexObjLOD(&sp1C, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&sp1C, arg2);
-    return;
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp1C);
+    GXDestroyTlutObj(&sp10);
+#endif
 }
 
 void fn_1_806C(ModelData *arg0, Mtx arg1)
@@ -2132,6 +2135,9 @@ void fn_1_8D1C(void)
     GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGBA8, GX_FALSE);
     GXCopyTex(lbl_1_bss_28, 0);
     DCFlushRange(lbl_1_bss_28, lbl_1_bss_24);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp10);
+#endif
 }
 
 void fn_1_91A4(Vec *arg0, Vec *arg1, Vec *arg2, f32 arg3[5])
@@ -2460,7 +2466,7 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSetArray(GX_VA_TEX0, temp_r30->unk20, 8);
     fn_1_9344(arg1, sp128);
-    PSMTXReorder(sp128, spF8);
+    MTXReorder(sp128, spF8);
     if (((u8)omPauseChk() == 0) && (temp_r30->unkC)) {
         var_r23 = temp_r30->unkC;
         var_r23(arg0, temp_r30, arg1);
@@ -2468,7 +2474,7 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     var_r29 = temp_r30->unk18;
     var_r31 = temp_r30->unk1C;
     var_r27 = temp_r30->unk20;
-    PSMTXROMultVecArray(spF8, &temp_r30->unk2C, (Vec *)&sp68[0], 4);
+    MTXROMultVecArray(spF8, &temp_r30->unk2C, (Vec *)&sp68[0], 4);
 
     for (var_r26 = 0; var_r26 < temp_r30->unk0; var_r26++, var_r29++, var_r27 += 4) {
         if (var_r29->unk62 == 0) {

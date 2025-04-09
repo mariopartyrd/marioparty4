@@ -4497,6 +4497,9 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     }
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp14);
+#endif
 }
 
 s32 fn_1_F574(Vec arg0, float arg1, s32 arg2)
@@ -4911,6 +4914,9 @@ void fn_1_11008(StructBssD0Data *arg0, void *arg1, s16 arg2, GXTexWrapMode arg3,
         GXInitTexObjLOD(&sp18, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     }
     GXLoadTexObj(&sp18, arg2);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp18);
+#endif
 }
 
 s16 fn_1_11114(AnimData *arg0, s16 arg1)
@@ -5148,7 +5154,7 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     if (HmfInverseMtxF3X3(arg1, sp128) == 0) {
         MTXIdentity(sp128);
     }
-    PSMTXReorder(sp128, sp8);
+    MTXReorder(sp128, sp8);
     if (temp_r31->unk4C) {
         var_r18 = temp_r31->unk4C;
         var_r18(arg0, temp_r31, arg1);
@@ -5156,7 +5162,7 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     var_r29 = temp_r31->unk3C;
     var_r30 = temp_r31->unk40;
     var_r28 = temp_r31->unk44;
-    PSMTXROMultVecArray(sp8, lbl_1_data_8C4, sp38, 4);
+    MTXROMultVecArray(sp8, lbl_1_data_8C4, sp38, 4);
     for (i = 0; i < temp_r31->unk26; i++, var_r29++) {
         if (!var_r29->unk30) {
             var_r30->x = var_r30->y = var_r30->z = 0.0f;

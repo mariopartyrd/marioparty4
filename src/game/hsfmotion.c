@@ -843,7 +843,11 @@ void Hu3DSubMotionExec(s16 arg0) {
     }
 }
 
+#ifdef __MWERKS__
 __declspec(weak) float *GetObjTRXPtr(HsfObject *arg0, u16 arg1) {
+#else
+float *GetObjTRXPtr(HsfObject *arg0, u16 arg1) {
+#endif
     HsfConstData *temp_r31 = arg0->constData;
 
     switch (arg1) {
@@ -1234,7 +1238,11 @@ float GetLinear(s32 arg0, float arg1[][2], float arg2) {
     return arg1[arg0 - 1][1];
 }
 
+#ifdef __MWERKS__
 __declspec(weak) float GetBezier(s32 arg0, HsfTrack *arg1, float arg2) {
+#else
+float GetBezier(s32 arg0, HsfTrack *arg1, float arg2) {
+#endif
     float temp_f24;
     float temp_f29;
     float temp_f28;

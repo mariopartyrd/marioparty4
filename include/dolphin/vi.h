@@ -15,6 +15,7 @@ u32 VIGetTvFormat(void);
 void VISetNextFrameBuffer(void* fb);
 void VIWaitForRetrace(void);
 void VISetBlack(BOOL black);
+void VIConfigurePan(u16 xOrg, u16 yOrg, u16 width, u16 height);
 
 #ifdef TARGET_PC
 void VISetWindowTitle(const char* title);

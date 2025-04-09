@@ -47,39 +47,55 @@ void HuMemDCFlush(HeapID heap)
 
 void *HuMemDirectMalloc(HeapID heap, s32 size)
 {
+#ifdef TARGET_PC
+    u32 retaddr = 0;
+#else
     register u32 retaddr;
     asm {
         mflr retaddr
     }
+#endif
     size = (size+31) & 0xFFFFFFE0;
     return HuMemMemoryAlloc(HeapTbl[heap], size, retaddr);
 }
 
 void *HuMemDirectMallocNum(HeapID heap, s32 size, u32 num)
 {
+#ifdef TARGET_PC
+    u32 retaddr = 0;
+#else
     register u32 retaddr;
     asm {
         mflr retaddr
     }
+#endif
     size = (size+31) & 0xFFFFFFE0;
     return HuMemMemoryAllocNum(HeapTbl[heap], size, num, retaddr);
 }
 
 void HuMemDirectFree(void *ptr)
 {
+#ifdef TARGET_PC
+    u32 retaddr = 0;
+#else
     register u32 retaddr;
     asm {
         mflr retaddr
     }
+#endif
     HuMemMemoryFree(ptr, retaddr);
 }
 
 void HuMemDirectFreeNum(HeapID heap, u32 num)
 {
+#ifdef TARGET_PC
+    u32 retaddr = 0;
+#else
     register u32 retaddr;
     asm {
         mflr retaddr
     }
+#endif
     HuMemMemoryFreeNum(HeapTbl[heap], num, retaddr);
 }
 

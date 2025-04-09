@@ -45,8 +45,8 @@ static void GetMesMaxSizeSub(u32 mess);
 static s32 GetMesMaxSizeSub2(WindowData *window, u8 *mess_data);
 
 void mtxTransCat(Mtx, float, float, float);
-WindowData ATTRIBUTE_ALIGN(32) winData[32];
-u32 winKey[4];
+SHARED_SYM WindowData ATTRIBUTE_ALIGN(32) winData[32];
+static u32 winKey[4];
 keyBufData winComKeyBuf[256];
 
 static AnimData *iconAnim;
@@ -54,7 +54,7 @@ static AnimData *cursorAnim;
 static AnimData *cardAnimA;
 static AnimData *cardAnimB;
 static Process *winProc;
-void *messDataPtr;
+SHARED_SYM void *messDataPtr;
 static s32 messDataNo;
 static s16 winMaxWidth;
 static s16 winMaxHeight;
@@ -1313,6 +1313,8 @@ void HuWinMesRead(s32 mess_data_no)
 
 void HuWinMesSet(s16 window, u32 mess)
 {
+#ifdef __MWERKS__
+    // TODO PC
     WindowData *window_ptr = &winData[window];
 
     window_ptr->stat = 1;
@@ -1339,10 +1341,13 @@ void HuWinMesSet(s16 window, u32 mess)
         window_ptr->mess_time = 0;
 #endif
     }
+#endif
 }
 
 void HuWinInsertMesSet(s16 window, u32 mess, s16 index)
 {
+#ifdef __MWERKS__
+    // TODO PC
     WindowData *window_ptr = &winData[window];
 
     if (!(mess & 0x80000000)) {
@@ -1358,6 +1363,7 @@ void HuWinInsertMesSet(s16 window, u32 mess, s16 index)
     else {
         window_ptr->insert_mess[index] = (u8 *)mess;
     }
+#endif
 }
 
 s16 HuWinChoiceGet(s16 window, s16 start_choice)
@@ -1662,6 +1668,8 @@ void HuWinMesMaxSizeBetGet(float *size, u32 start, u32 end)
 
 static void GetMesMaxSizeSub(u32 mess)
 {
+#ifdef __MWERKS__
+    // TODO PC
     s16 line_h;
     s16 char_w;
     s16 line_w;
@@ -1765,6 +1773,7 @@ static void GetMesMaxSizeSub(u32 mess)
     if (winMaxHeight < line_h) {
         winMaxHeight = line_h;
     }
+#endif
 }
 
 static s32 GetMesMaxSizeSub2(WindowData *window, u8 *mess_data)
@@ -1845,6 +1854,8 @@ s16 HuWinKeyWaitNumGet(u32 mess)
 {
     s16 wait_num;
     u8 *mess_data;
+#ifdef __MWERKS__
+    // TODO PC
 
     if (mess > 0x80000000) {
         mess_data = (u8 *)mess;
@@ -1857,6 +1868,7 @@ s16 HuWinKeyWaitNumGet(u32 mess)
             wait_num++;
         }
     }
+#endif
     return wait_num;
 }
 

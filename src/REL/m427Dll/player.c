@@ -1645,7 +1645,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
     var_r27 = &lbl_1_bss_578[*var_r25];
     var_r24 = lbl_1_bss_56C[*var_r25];
     GXLoadPosMtxImm(matrix, 0);
-    PSMTXInvXpose(matrix, sp70);
+    MTXInvXpose(matrix, sp70);
     GXLoadNrmMtxImm(sp70, 0);
     GXSetNumTevStages(1);
     GXSetNumTexGens(1);

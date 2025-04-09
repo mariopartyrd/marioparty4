@@ -1,5 +1,11 @@
 #include "game/board/pause.h"
 #include "game/audio.h"
+#include "game/board/main.h"
+#include "game/board/model.h"
+#include "game/board/player.h"
+#include "game/board/roll.h"
+#include "game/board/star.h"
+#include "game/board/ui.h"
 #include "game/data.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
@@ -11,12 +17,6 @@
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
-#include "game/board/main.h"
-#include "game/board/model.h"
-#include "game/board/player.h"
-#include "game/board/roll.h"
-#include "game/board/star.h"
-#include "game/board/ui.h"
 
 typedef struct {
     struct {
@@ -38,7 +38,6 @@ typedef struct {
     s16 unk0A;
     u32 unk0C;
 } ConfigWork;
-
 
 static void PauseExit(void);
 static void PauseProcess(void);
@@ -91,56 +90,25 @@ static s16 controlWin = -1;
 static s16 quitWin = -1;
 static s16 settingsWin = -1;
 
-static s16 boxModelID[8] = {
-    -1, -1, -1, -1, -1, -1, -1, -1
-};
+static s16 boxModelID[8] = { -1, -1, -1, -1, -1, -1, -1, -1 };
 
-static float boxPosTbl[8][2] = {
-    { 120.0f, 120.0f },
-    { 232.0f, 120.0f },
-    { 344.0f, 120.0f },
-    { 456.0f, 120.0f },
-    { 120.0f, 232.0f },
-    { 232.0f, 232.0f },
-    { 344.0f, 232.0f },
-    { 456.0f, 232.0f }
-};
+static float boxPosTbl[8][2] = { { 120.0f, 120.0f }, { 232.0f, 120.0f }, { 344.0f, 120.0f }, { 456.0f, 120.0f }, { 120.0f, 232.0f },
+    { 232.0f, 232.0f }, { 344.0f, 232.0f }, { 456.0f, 232.0f } };
 
-static float padConfigPosTbl[4][2] = {
-    { 170.0f, 160.0f },
-    { 266.0f, 160.0f },
-    { 362.0f, 160.0f },
-    { 458.0f, 160.0f }
-};
+static float padConfigPosTbl[4][2] = { { 170.0f, 160.0f }, { 266.0f, 160.0f }, { 362.0f, 160.0f }, { 458.0f, 160.0f } };
 
-static s32 boardLogoTbl[] = {
-    DATA_MAKE_NUM(DATADIR_BOARD, 87),
-    DATA_MAKE_NUM(DATADIR_BOARD, 88),
-    DATA_MAKE_NUM(DATADIR_BOARD, 89),
-    DATA_MAKE_NUM(DATADIR_BOARD, 90),
-    DATA_MAKE_NUM(DATADIR_BOARD, 91),
-    DATA_MAKE_NUM(DATADIR_BOARD, 92),
-    DATA_MAKE_NUM(DATADIR_BOARD, 87),
-    DATA_MAKE_NUM(DATADIR_BOARD, 93),
-    DATA_MAKE_NUM(DATADIR_BOARD, 94)
-};
+static s32 boardLogoTbl[] = { DATA_MAKE_NUM(DATADIR_BOARD, 87), DATA_MAKE_NUM(DATADIR_BOARD, 88), DATA_MAKE_NUM(DATADIR_BOARD, 89),
+    DATA_MAKE_NUM(DATADIR_BOARD, 90), DATA_MAKE_NUM(DATADIR_BOARD, 91), DATA_MAKE_NUM(DATADIR_BOARD, 92), DATA_MAKE_NUM(DATADIR_BOARD, 87),
+    DATA_MAKE_NUM(DATADIR_BOARD, 93), DATA_MAKE_NUM(DATADIR_BOARD, 94) };
 
-static float turnDigitPosTbl[] = {
-    145.0f, 188.0f, 285.0f, 328.0f
-};
+static float turnDigitPosTbl[] = { 145.0f, 188.0f, 285.0f, 328.0f };
 
-static s32 boxMdlTbl[] = {
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 8),
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 9),
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 10),
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 11),
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 12),
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 13),
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 14),
-    DATA_MAKE_NUM(DATADIR_BPAUSE, 15)
-};
+static s32 boxMdlTbl[] = { DATA_MAKE_NUM(DATADIR_BPAUSE, 8), DATA_MAKE_NUM(DATADIR_BPAUSE, 9), DATA_MAKE_NUM(DATADIR_BPAUSE, 10),
+    DATA_MAKE_NUM(DATADIR_BPAUSE, 11), DATA_MAKE_NUM(DATADIR_BPAUSE, 12), DATA_MAKE_NUM(DATADIR_BPAUSE, 13), DATA_MAKE_NUM(DATADIR_BPAUSE, 14),
+    DATA_MAKE_NUM(DATADIR_BPAUSE, 15) };
 
-void BoardPauseStart(void) {
+void BoardPauseStart(void)
+{
     mainProcess = HuPrcChildCreate(PauseProcess, 0x2001, 0x3800, 0, boardMainProc);
     hostMdl = BoardStarHostMdlGet();
     BoardModelMotionStart(hostMdl, 1, 0x40000001);
@@ -151,7 +119,8 @@ void BoardPauseStart(void) {
     HuPrcDestructorSet2(mainProcess, PauseExit);
 }
 
-static void PauseExit(void) {
+static void PauseExit(void)
+{
     if (pauseQuitF == 0) {
         BoardRollWinDispSet(1);
         BoardRollDispSet(1);
@@ -160,7 +129,8 @@ static void PauseExit(void) {
         BoardLast5GfxShowSet(1);
         HuAudFXPauseAll(0);
         HuAudSeqPauseAll(0);
-    } else {
+    }
+    else {
         BoardConfettiKill();
         BoardAudSeqFadeOutAll();
         HuAudAllStop();
@@ -173,7 +143,8 @@ static void PauseExit(void) {
     omSysPauseCtrl(0);
     if (GWMGExplainGet()) {
         _SetFlag(FLAG_ID_MAKE(0, 11));
-    } else {
+    }
+    else {
         _ClearFlag(FLAG_ID_MAKE(0, 11));
     }
     if (GWPartyGet() == 0) {
@@ -182,7 +153,8 @@ static void PauseExit(void) {
         GWGameStat.story_pause.mg_list = GWMGListGet();
         GWGameStat.story_pause.mess_speed = GWMessSpeedGet();
         GWGameStat.story_pause.save_mode = GWSaveModeGet();
-    } else {
+    }
+    else {
         GWGameStat.party_pause.explain_mg = GWMGExplainGet();
         GWGameStat.party_pause.show_com_mg = GWMGShowComGet();
         GWGameStat.party_pause.mg_list = GWMGListGet();
@@ -192,7 +164,8 @@ static void PauseExit(void) {
     mainProcess = NULL;
 }
 
-static void PauseProcess(void) {
+static void PauseProcess(void)
+{
     s32 temp_r31;
 
     pauseQuitF = 0;
@@ -222,14 +195,16 @@ static void PauseProcess(void) {
         HuPrcSleep(20);
         WipeColorSet(0, 0, 0);
         BoardKill();
-    } else {
+    }
+    else {
         BoardFilterFadeOut(30);
         HuPrcSleep(30);
     }
     HuPrcEnd();
 }
 
-void CreatePauseScreen(void) {
+void CreatePauseScreen(void)
+{
     Mtx sp30;
     Vec sp24;
     Vec sp18;
@@ -294,10 +269,12 @@ void CreatePauseScreen(void) {
     if (GWPartyGet() == 1) {
         if (GWTeamGet()) {
             HuSprBankSet(pauseSprGrp, 2, 2);
-        } else {
+        }
+        else {
             HuSprBankSet(pauseSprGrp, 2, 0);
         }
-    } else {
+    }
+    else {
         HuSprBankSet(pauseSprGrp, 2, 1);
     }
     for (i = 0; i < 4; i++) {
@@ -334,7 +311,8 @@ void CreatePauseScreen(void) {
     sp24.x = 68.0f;
     if (GWBoardGet() == 3) {
         sp24.y = 464.0f;
-    } else {
+    }
+    else {
         sp24.y = 434.0f;
     }
     sp24.z = 1100.0f;
@@ -436,7 +414,8 @@ void CreatePauseScreen(void) {
     SetBoxVisible(0);
 }
 
-static void DeletePauseScreen(void) {
+static void DeletePauseScreen(void)
+{
     ConfigWork *temp_r30;
     Mtx sp8;
     s32 i;
@@ -461,7 +440,7 @@ static void DeletePauseScreen(void) {
         HuSprGrpKill(pauseCursorPos);
         pauseCursorPos = -1;
     }
-    PSMTXIdentity(sp8);
+    MTXIdentity(sp8);
     BoardModelLayerSet(hostMdl, hostOldLayer);
     BoardModelVisibilitySet(hostMdl, 1);
     BoardModelMtxSet(hostMdl, &sp8);
@@ -471,7 +450,8 @@ static void DeletePauseScreen(void) {
     }
 }
 
-static void SetBoxVisible(s32 arg0) {
+static void SetBoxVisible(s32 arg0)
+{
     s32 i;
 
     for (i = 0; i < 8; i++) {
@@ -479,7 +459,8 @@ static void SetBoxVisible(s32 arg0) {
     }
 }
 
-static void PauseConfigObjFunc(omObjData *arg0) {
+static void PauseConfigObjFunc(omObjData *arg0)
+{
     ConfigWork *temp_r31;
     s16 temp_r28;
     s32 var_r29;
@@ -578,7 +559,8 @@ static void PauseConfigObjFunc(omObjData *arg0) {
                     InitPauseQuit(arg0, temp_r31);
                     break;
             }
-        } else {
+        }
+        else {
             cursorPos = ExecPauseConfig(arg0, temp_r31);
             if (temp_r28 != cursorPos) {
                 arg0->trans.x = -40.0f + boxPosTbl[cursorPos][0];
@@ -590,7 +572,8 @@ static void PauseConfigObjFunc(omObjData *arg0) {
     }
 }
 
-static void UpdatePauseText(s32 arg0) {
+static void UpdatePauseText(s32 arg0)
+{
     s32 var_r28;
     s32 j;
     s32 i;
@@ -603,7 +586,8 @@ static void UpdatePauseText(s32 arg0) {
                     if (i == GWPlayer[j].port) {
                         if (GWPlayer[j].com) {
                             var_r28 = MAKE_MESSID(16, 30);
-                        } else {
+                        }
+                        else {
                             var_r28 = MAKE_MESSID(16, 29);
                         }
                         HuWinInsertMesSet(settingsWin, var_r28, i);
@@ -615,14 +599,16 @@ static void UpdatePauseText(s32 arg0) {
         case 1:
             if (boxState[arg0] != 0) {
                 HuWinMesSet(settingsWin, MAKE_MESSID(16, 33));
-            } else {
+            }
+            else {
                 HuWinMesSet(settingsWin, MAKE_MESSID(16, 34));
             }
             break;
         case 2:
             if (boxState[arg0] != 0) {
                 HuWinMesSet(settingsWin, MAKE_MESSID(16, 35));
-            } else {
+            }
+            else {
                 HuWinMesSet(settingsWin, MAKE_MESSID(16, 36));
             }
             break;
@@ -642,7 +628,8 @@ static void UpdatePauseText(s32 arg0) {
         case 4:
             if (boxState[arg0] != 0) {
                 HuWinMesSet(settingsWin, MAKE_MESSID(16, 40));
-            } else {
+            }
+            else {
                 HuWinMesSet(settingsWin, MAKE_MESSID(16, 41));
             }
             break;
@@ -678,7 +665,8 @@ static void UpdatePauseText(s32 arg0) {
     }
 }
 
-static void InitPauseQuit(omObjData *arg0, ConfigWork *arg1) {
+static void InitPauseQuit(omObjData *arg0, ConfigWork *arg1)
+{
     float var_f31;
 
     switch (arg1->unk01) {
@@ -696,7 +684,8 @@ static void InitPauseQuit(omObjData *arg0, ConfigWork *arg1) {
             if (quitWin != -1 && HuWinStatGet(quitWin) == 3) {
                 if (HuWinChoiceNowGet(quitWin) != 0) {
                     HuWinMesSet(settingsWin, MAKE_MESSID(16, 51));
-                } else {
+                }
+                else {
                     HuWinMesSet(settingsWin, MAKE_MESSID(16, 50));
                 }
             }
@@ -725,7 +714,8 @@ static void InitPauseQuit(omObjData *arg0, ConfigWork *arg1) {
     }
 }
 
-static void PauseQuitProcess(void) {
+static void PauseQuitProcess(void)
+{
     WindowData *temp_r31;
     float sp10[2];
     float sp8[2];
@@ -748,7 +738,8 @@ static void PauseQuitProcess(void) {
     HuPrcEnd();
 }
 
-static void DeletePauseQuit(void) {
+static void DeletePauseQuit(void)
+{
     if (quitWin != -1) {
         HuWinExCleanup(quitWin);
         quitWin = -1;
@@ -757,7 +748,8 @@ static void DeletePauseQuit(void) {
     quitProcess = NULL;
 }
 
-static s32 UpdatePadConfig(omObjData *arg0, ConfigWork *arg1) {
+static s32 UpdatePadConfig(omObjData *arg0, ConfigWork *arg1)
+{
     switch (arg1->unk01) {
         case 0:
             CreatePadConfig(arg0, arg1);
@@ -777,12 +769,14 @@ static s32 UpdatePadConfig(omObjData *arg0, ConfigWork *arg1) {
     }
     if (arg1->unk00_field1 != 0) {
         return 0;
-    } else {
+    }
+    else {
         return 1;
     }
 }
 
-static void CreatePadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void CreatePadConfig(omObjData *arg0, ConfigWork *arg1)
+{
     Vec sp14;
     Vec sp8;
     s32 i;
@@ -817,7 +811,8 @@ static void CreatePadConfig(omObjData *arg0, ConfigWork *arg1) {
     arg1->unk01 = 1;
 }
 
-static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1)
+{
     Vec sp8;
     s32 i;
 
@@ -834,7 +829,8 @@ static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1) {
             arg1->unk04 = 0;
             arg1->unk05 = 0;
             arg1->unk01 = 0;
-        } else {
+        }
+        else {
             arg1->unk01 = 2;
         }
         return;
@@ -848,7 +844,8 @@ static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1) {
     arg1->unk07--;
 }
 
-static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1)
+{
     float sp8[4];
     s32 temp_r29;
     u32 temp_r30;
@@ -861,16 +858,19 @@ static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1) {
         if (GWPlayer[temp_r29].com) {
             arg1->unk00_field3 = GWPlayer[temp_r29].diff + 1;
             arg1->unk05 = GWPlayer[temp_r29].diff + 1;
-        } else {
+        }
+        else {
             arg1->unk00_field3 = 0;
             arg1->unk05 = 0;
         }
         HuSprBankSet(padConfigSprGrp, arg1->unk04 + 8, 1);
         HuAudFXPlay(2);
-    } else if (temp_r30 == 0x200) {
+    }
+    else if (temp_r30 == 0x200) {
         HuAudFXPlay(3);
         arg1->unk01 = 4;
-    } else {
+    }
+    else {
         if (temp_r30 == 1) {
             arg1->unk04--;
         }
@@ -879,9 +879,11 @@ static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1) {
         }
         if (arg1->unk04 < 0) {
             arg1->unk04 = 0;
-        } else if (arg1->unk04 >= 4) {
+        }
+        else if (arg1->unk04 >= 4) {
             arg1->unk04 = 3;
-        } else if (temp_r30 == 1 || temp_r30 == 2) {
+        }
+        else if (temp_r30 == 1 || temp_r30 == 2) {
             HuAudFXPlay(0);
             arg1->unk06 = 4;
         }
@@ -891,7 +893,8 @@ static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1) {
     }
 }
 
-static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1)
+{
     s32 temp_r29;
     s32 var_r28;
     s32 var_r26;
@@ -901,13 +904,15 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
     var_r30 = 0;
     if (HuPadStkX[pausePad] < -20) {
         var_r30 |= 1;
-    } else if (HuPadStkX[pausePad] > 20) {
+    }
+    else if (HuPadStkX[pausePad] > 20) {
         var_r30 |= 2;
     }
     temp_r29 = CheckPort(arg1->unk04);
     if (GWGameStat.veryHardUnlock != 0) {
         var_r27 = 4;
-    } else {
+    }
+    else {
         var_r27 = 3;
     }
     HuWinMesSet(settingsWin, MAKE_MESSID(16, 32));
@@ -916,13 +921,15 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
             if (arg1->unk09++ < 10) {
                 return;
             }
-        } else {
+        }
+        else {
             if (arg1->unk09++ < 2) {
                 return;
             }
             arg1->unk0C = var_r30;
         }
-    } else {
+    }
+    else {
         arg1->unk0C = 0;
     }
     arg1->unk09 = 0;
@@ -936,7 +943,8 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
     if (var_r28 != 0) {
         HuAudFXPlay(0);
         arg1->unk06 = 4;
-    } else {
+    }
+    else {
         if (HuPadBtnDown[pausePad] == 0x100) {
             arg1->unk01 = 2;
             if (arg1->unk05 != 0) {
@@ -944,7 +952,8 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
                 GWPlayerCfg[temp_r29].iscom = 1;
                 GWPlayer[temp_r29].diff = arg1->unk05 - 1;
                 GWPlayerCfg[temp_r29].diff = arg1->unk05 - 1;
-            } else {
+            }
+            else {
                 GWPlayer[temp_r29].com = 0;
                 GWPlayerCfg[temp_r29].iscom = 0;
             }
@@ -967,18 +976,21 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
     }
     if (arg1->unk05 > var_r27) {
         arg1->unk05 = 0;
-    } else if (arg1->unk05 < 0) {
+    }
+    else if (arg1->unk05 < 0) {
         arg1->unk05 = var_r27;
     }
     if (arg1->unk05 != 0) {
         var_r26 = arg1->unk05 + 3;
-    } else {
+    }
+    else {
         var_r26 = arg1->unk04;
     }
     HuSprBankSet(padConfigSprGrp, arg1->unk04 + 4, var_r26);
 }
 
-static void ScrollOutPadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void ScrollOutPadConfig(omObjData *arg0, ConfigWork *arg1)
+{
     Vec sp14;
     Vec sp8;
 
@@ -1003,7 +1015,8 @@ static void ScrollOutPadConfig(omObjData *arg0, ConfigWork *arg1) {
     arg1->unk00_field2 = 1;
 }
 
-static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
+static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2)
+{
     float var_f31;
     float var_f30;
     float var_f29;
@@ -1031,21 +1044,26 @@ static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
             }
             if (arg1->unk04 < 0) {
                 arg1->unk04 = 0;
-            } else if (arg1->unk04 > 1) {
+            }
+            else if (arg1->unk04 > 1) {
                 arg1->unk04 = 1;
-            } else if (temp_r28 == 1 || temp_r28 == 2) {
+            }
+            else if (temp_r28 == 1 || temp_r28 == 2) {
                 HuAudFXPlay(0);
             }
             if (temp_r28 == 0x100) {
                 arg1->unk01 = 3;
                 HuAudFXPlay(2);
-            } else if (temp_r28 == 0x200) {
+            }
+            else if (temp_r28 == 0x200) {
                 arg1->unk01 = 4;
                 HuAudFXPlay(3);
-            } else if (temp_r27 != arg1->unk04) {
+            }
+            else if (temp_r27 != arg1->unk04) {
                 if (arg1->unk04 != 0) {
                     var_f30 = 0.0f;
-                } else {
+                }
+                else {
                     var_f30 = -90.0f;
                 }
                 var_f29 = arg0->rot.x;
@@ -1058,7 +1076,8 @@ static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
             if (arg1->unk07 != 0) {
                 arg0->rot.x += arg0->rot.y;
                 arg1->unk07--;
-            } else {
+            }
+            else {
                 arg1->unk01 = 1;
             }
             break;
@@ -1091,7 +1110,8 @@ static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
     return 0;
 }
 
-static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
+static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2)
+{
     float var_f31;
     float var_f30;
     float var_f29;
@@ -1102,7 +1122,8 @@ static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
 
     if (arg2 == 3 && GWGameStat.customPackEnable == 0) {
         var_r27 = 1;
-    } else {
+    }
+    else {
         var_r27 = 2;
     }
     switch (arg1->unk01) {
@@ -1125,18 +1146,22 @@ static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
             }
             if (arg1->unk04 < 0) {
                 arg1->unk04 = 0;
-            } else if (arg1->unk04 > var_r27) {
+            }
+            else if (arg1->unk04 > var_r27) {
                 arg1->unk04 = var_r27;
-            } else if (temp_r28 == 1 || temp_r28 == 2) {
+            }
+            else if (temp_r28 == 1 || temp_r28 == 2) {
                 HuAudFXPlay(0);
             }
             if (temp_r28 == 0x100) {
                 arg1->unk01 = 3;
                 HuAudFXPlay(2);
-            } else if (temp_r28 == 0x200) {
+            }
+            else if (temp_r28 == 0x200) {
                 arg1->unk01 = 4;
                 HuAudFXPlay(3);
-            } else if (temp_r26 != arg1->unk04) {
+            }
+            else if (temp_r26 != arg1->unk04) {
                 switch (arg1->unk04) {
                     case 0:
                         var_f30 = 90.0f;
@@ -1158,7 +1183,8 @@ static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
             if (arg1->unk07 != 0) {
                 arg0->rot.x += arg0->rot.y;
                 arg1->unk07--;
-            } else {
+            }
+            else {
                 arg1->unk01 = 1;
             }
             break;
@@ -1191,7 +1217,8 @@ static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
     return 0;
 }
 
-static s32 ExecPauseConfig(omObjData *arg0, ConfigWork *arg1) {
+static s32 ExecPauseConfig(omObjData *arg0, ConfigWork *arg1)
+{
     s32 var_r27;
     s32 var_r26;
     s32 var_r29;
@@ -1218,17 +1245,21 @@ static s32 ExecPauseConfig(omObjData *arg0, ConfigWork *arg1) {
     arg1->unk03 += var_r28;
     if (arg1->unk03 < 0) {
         arg1->unk03 = 0;
-    } else if (arg1->unk03 >= 2) {
+    }
+    else if (arg1->unk03 >= 2) {
         arg1->unk03 = 1;
-    } else if (var_r28 != 0) {
+    }
+    else if (var_r28 != 0) {
         HuAudFXPlay(0);
         arg1->unk06 = 4;
     }
     if (arg1->unk02 < 0) {
         arg1->unk02 = 0;
-    } else if (arg1->unk02 >= 4) {
+    }
+    else if (arg1->unk02 >= 4) {
         arg1->unk02 = 3;
-    } else if (var_r29 != 0) {
+    }
+    else if (var_r29 != 0) {
         HuAudFXPlay(0);
         arg1->unk06 = 4;
     }
@@ -1251,7 +1282,8 @@ static s32 ExecPauseConfig(omObjData *arg0, ConfigWork *arg1) {
         }
         if (var_r26 != 0) {
             HuAudFXPlay(4);
-        } else if (var_r27 != 0) {
+        }
+        else if (var_r27 != 0) {
             HuAudFXPlay(2);
             arg1->unk00_field1 = 1;
         }
@@ -1263,7 +1295,8 @@ static s32 ExecPauseConfig(omObjData *arg0, ConfigWork *arg1) {
     return arg1->unk02 + arg1->unk03 * 4;
 }
 
-static void CreatePauseControlWin(void) {
+static void CreatePauseControlWin(void)
+{
     float sp8[2];
     float var_f31;
     float var_f30;
@@ -1280,7 +1313,8 @@ static void CreatePauseControlWin(void) {
     HuWinDispOff(settingsControlWin);
     if (GWBoardGet() == 7 || GWBoardGet() == 8) {
         var_r31 = MAKE_MESSID(16, 73);
-    } else {
+    }
+    else {
         var_r31 = MAKE_MESSID(16, 52);
     }
     HuWinMesMaxSizeGet(1, sp8, var_r31);
@@ -1304,7 +1338,8 @@ static void CreatePauseControlWin(void) {
     sp8[1] = 128.0f;
 }
 
-static void DeletePauseControlWin(void) {
+static void DeletePauseControlWin(void)
+{
     if (settingsControlWin != -1) {
         HuWinKill(settingsControlWin);
         settingsControlWin = -1;
@@ -1319,7 +1354,8 @@ static void DeletePauseControlWin(void) {
     }
 }
 
-static s32 WaitPauseInput(void) {
+static s32 WaitPauseInput(void)
+{
     s32 var_r28;
     s32 var_r31;
     u32 temp_r30;
@@ -1327,7 +1363,8 @@ static s32 WaitPauseInput(void) {
     mainScreenF = 1;
     if (GWBoardGet() == 7 || GWBoardGet() == 8) {
         var_r28 = 1;
-    } else {
+    }
+    else {
         var_r28 = 0;
     }
     HuWinDispOn(controlWin);
@@ -1344,13 +1381,15 @@ static s32 WaitPauseInput(void) {
             var_r31 = 0;
             HuAudFXPlay(0x1C);
             break;
-        } else if (var_r28 == 0) {
+        }
+        else if (var_r28 == 0) {
             if (temp_r30 == 0x100) {
                 var_r31 = 1;
                 HuAudFXPlay(1);
                 break;
             }
-        } else if (temp_r30 == 0x10) {
+        }
+        else if (temp_r30 == 0x10) {
             pauseQuitF = 1;
             var_r31 = 2;
             mgQuitExtraF = 1;
@@ -1368,7 +1407,8 @@ static s32 WaitPauseInput(void) {
     return var_r31;
 }
 
-static void ShowPauseConfig(void) {
+static void ShowPauseConfig(void)
+{
     float var_f31;
     float var_f30;
 
@@ -1383,7 +1423,8 @@ static void ShowPauseConfig(void) {
         var_f30 = boxPosTbl[0][1];
         HuSprPosSet(pauseCursorPos, 1, var_f31, var_f30);
         HuSprAttrReset(pauseCursorPos, 1, HUSPR_ATTR_DISPOFF);
-    } else {
+    }
+    else {
         HuSprAttrSet(pauseCursorPos, 1, HUSPR_ATTR_DISPOFF);
     }
     while (configObj) {
@@ -1391,7 +1432,8 @@ static void ShowPauseConfig(void) {
     }
 }
 
-static void CreatePadConfigSprite(void) {
+static void CreatePadConfigSprite(void)
+{
     float temp_f31;
     float temp_f30;
     s32 var_r29;
@@ -1415,7 +1457,8 @@ static void CreatePadConfigSprite(void) {
         HuSprBankSet(padConfigSprGrp, i, temp_r28);
         if (temp_r26 != 0) {
             var_r29 = temp_r27 + 4;
-        } else {
+        }
+        else {
             var_r29 = i;
         }
         HuSprBankSet(padConfigSprGrp, i + 4, var_r29);
@@ -1427,7 +1470,8 @@ static void CreatePadConfigSprite(void) {
     HuSprGrpPosSet(padConfigSprGrp, 0.0f, 0.0f);
 }
 
-static void ShowPadConfigSprite(s32 arg0) {
+static void ShowPadConfigSprite(s32 arg0)
+{
     s32 temp_r31;
     s32 i;
 
@@ -1437,7 +1481,8 @@ static void ShowPadConfigSprite(s32 arg0) {
             HuSprAttrReset(padConfigSprGrp, temp_r31, HUSPR_ATTR_DISPOFF);
             HuSprAttrReset(padConfigSprGrp, temp_r31 + 4, HUSPR_ATTR_DISPOFF);
             HuSprAttrReset(padConfigSprGrp, temp_r31 + 8, HUSPR_ATTR_DISPOFF);
-        } else {
+        }
+        else {
             HuSprAttrSet(padConfigSprGrp, temp_r31, HUSPR_ATTR_DISPOFF);
             HuSprAttrSet(padConfigSprGrp, temp_r31 + 4, HUSPR_ATTR_DISPOFF);
             HuSprAttrSet(padConfigSprGrp, temp_r31 + 8, HUSPR_ATTR_DISPOFF);
@@ -1445,12 +1490,14 @@ static void ShowPadConfigSprite(s32 arg0) {
     }
     if (arg0 != 0) {
         HuSprAttrReset(padConfigSprGrp, 12, HUSPR_ATTR_DISPOFF);
-    } else {
+    }
+    else {
         HuSprAttrSet(padConfigSprGrp, 12, HUSPR_ATTR_DISPOFF);
     }
 }
 
-static void PauseCreateNumber(s32 arg0, s8 arg1) {
+static void PauseCreateNumber(s32 arg0, s8 arg1)
+{
     s32 var_r31;
     s32 temp_r30;
     s32 temp_r29;
@@ -1459,22 +1506,26 @@ static void PauseCreateNumber(s32 arg0, s8 arg1) {
     temp_r30 = arg1 / 10;
     if (arg0 == 0) {
         var_r31 = 3;
-    } else {
+    }
+    else {
         var_r31 = 5;
     }
     if (temp_r30 != 0) {
         HuSprBankSet(pauseSprGrp, var_r31, temp_r30);
-    } else {
+    }
+    else {
         HuSprAttrSet(pauseSprGrp, var_r31, 4);
     }
     HuSprBankSet(pauseSprGrp, var_r31 + 1, temp_r29);
 }
 
-BOOL BoardPauseActiveCheck(void) {
+BOOL BoardPauseActiveCheck(void)
+{
     return (mainProcess != NULL) ? TRUE : FALSE;
 }
 
-BOOL BoardPauseReqCheck(void) {
+BOOL BoardPauseReqCheck(void)
+{
     s32 temp_r30;
     s32 i;
 
@@ -1495,7 +1546,8 @@ BOOL BoardPauseReqCheck(void) {
     return FALSE;
 }
 
-static s32 CheckPort(s32 arg0) {
+static s32 CheckPort(s32 arg0)
+{
     s32 i;
 
     for (i = 0; i < 4; i++) {
@@ -1506,7 +1558,8 @@ static s32 CheckPort(s32 arg0) {
     return i;
 }
 
-static void RotateBox(float arg0, float arg1, Mtx arg2) {
+static void RotateBox(float arg0, float arg1, Mtx arg2)
+{
     Vec sp14;
     Mtx spB0;
     Mtx sp80;
@@ -1514,11 +1567,11 @@ static void RotateBox(float arg0, float arg1, Mtx arg2) {
     Mtx sp20;
 
     BoardCameraRotGet(&sp14);
-    PSMTXRotRad(spB0, 'x', MTXDegToRad(sp14.x));
-    PSMTXRotRad(sp80, 'y', MTXDegToRad(sp14.y));
-    PSMTXRotRad(sp50, 'x', MTXDegToRad(arg0));
-    PSMTXRotRad(sp20, 'y', MTXDegToRad(arg1));
-    PSMTXConcat(sp80, spB0, sp80);
-    PSMTXConcat(sp50, sp20, sp20);
-    PSMTXConcat(sp80, sp20, arg2);
+    MTXRotRad(spB0, 'x', MTXDegToRad(sp14.x));
+    MTXRotRad(sp80, 'y', MTXDegToRad(sp14.y));
+    MTXRotRad(sp50, 'x', MTXDegToRad(arg0));
+    MTXRotRad(sp20, 'y', MTXDegToRad(arg1));
+    MTXConcat(sp80, spB0, sp80);
+    MTXConcat(sp50, sp20, sp20);
+    MTXConcat(sp80, sp20, arg2);
 }

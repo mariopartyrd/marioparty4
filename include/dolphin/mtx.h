@@ -6,7 +6,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#if defined(__MWERKS__) && !defined(GEKKO)
 #define GEKKO
+#endif
+
 #ifndef GEKKO
 #define MTX_USE_C
 #undef MTX_USE_PS
@@ -300,6 +304,20 @@ void PSMTXROSkin2VecArray(const ROMtx m0, const ROMtx m1, const f32* wtBase, con
                           Vec* dstBase, u32 count);
 void PSMTXMultS16VecArray(const Mtx m, const S16Vec* srcBase, Vec* dstBase, u32 count);
 void PSMTXROMultS16VecArray(const ROMtx m, const S16Vec* srcBase, Vec* dstBase, u32 count);
+#endif
+
+#ifdef MTX_USE_PS
+#define MTXReorder PSMTXReorder
+#define MTXROMultVecArray PSMTXROMultVecArray
+#define MTXROSkin2VecArray PSMTXROSkin2VecArray
+#define MTXROMultS16VecArray PSMTXROMultS16VecArray
+#define MTXMultS16VecArray PSMTXMultS16VecArray
+#else // MTX_USE_C
+#define MTXReorder C_MTXReorder
+#define MTXROMultVecArray C_MTXROMultVecArray
+#define MTXROSkin2VecArray C_MTXROSkin2VecArray
+#define MTXROMultS16VecArray C_MTXROMultS16VecArray
+#define MTXMultS16VecArray C_MTXMultS16VecArray
 #endif
 
 void MTXInitStack(MtxStack* sPtr, u32 numMtx);

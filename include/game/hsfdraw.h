@@ -56,7 +56,6 @@ typedef struct hsf_draw_object {
 void Hu3DDrawPreInit(void);
 void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2);
 s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2);
-void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1);
 void Hu3DDrawPost(void);
 void MakeDisplayList(s16 arg0, u32 arg1);
 HsfConstData *ObjConstantMake(HsfObject *arg0, u32 arg1);

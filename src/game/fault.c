@@ -23,7 +23,11 @@ static RGBColor XFB_Colors[5] = {
     { 0x40, 0x80, 0x80 }
 };
 
+#ifdef TARGET_PC
+u8 Ascii8x8_1bpp[0x800];
+#else
 #include "Ascii8x8_1bpp.inc"
+#endif
 
 static XFBGeometry XFB_Geometry;
 
@@ -44,26 +48,29 @@ static void XFB_CR(s32 arg0, s32* arg1, s32* arg2);
 void OSPanic(const char* file, int line, const char* msg, ...) {
     static char* titleMes = "OSPanic encounterd:";
     
-    va_list sp78;
+    va_list args;
     s32 sp74;
     s32 sp70;
-    char sp84[1024];
+    char buffer[1024];
     s32 puts;
 
     sp74 = x_start = 0x10;
     sp70 = y_start = 0x20;
     puts = XFB_puts((s8*)titleMes, sp74, sp70);
     XFB_CR(puts + 1, &sp74, &sp70);
-    sprintf(sp84, "%s:%d", file, line);
-    puts = XFB_puts((s8*)sp84, sp74, sp70);
+    sprintf(buffer, "%s:%d", file, line);
+    puts = XFB_puts((s8*)buffer, sp74, sp70);
     XFB_CR(puts, &sp74, &sp70);
-    va_start(sp78, msg);
-    vsnprintf(sp84, 0x400U, msg, &sp78[0]);
-    puts = XFB_puts((s8*)sp84, sp74, sp70);
+    va_start(args, msg);
+    vsnprintf(buffer, 0x400U, msg, &args[0]);
+#ifdef TARGET_PC
+    fputs(buffer, stderr);
+#endif
+    puts = XFB_puts((s8*)buffer, sp74, sp70);
     XFB_CR(puts, &sp74, &sp70);
     XFB_WriteBackCache();
     PPCHalt();
-    va_end(sp78);
+    va_end(args);
 }
 
 void HuFaultInitXfbDirectDraw(GXRenderModeObj *mode) {

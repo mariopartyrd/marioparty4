@@ -980,6 +980,9 @@ void fn_1_3B64(void)
             GXTexCoord2f32(0.0f, 1.0f);
         }
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp14);
+#endif
 }
 
 s32 lbl_1_data_EC[] = {

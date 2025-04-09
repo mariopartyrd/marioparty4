@@ -240,6 +240,10 @@ void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, G
     }
     GXInitTexObjLOD(&tex_obj, filter, filter, 0, 0, 0, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&tex_obj, slot);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&tex_obj);
+    GXDestroyTlutObj(&tlut_obj);
+#endif
 }
 
 void HuSprExecLayerSet(short draw_no, short layer)

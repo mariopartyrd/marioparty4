@@ -19,14 +19,22 @@ extern char _db_stack_end[];
 
 extern char *__OSResetSWInterruptHandler[];
 
+#ifdef TARGET_PC
+vu16 __OSDeviceCode;
+#else
 vu16 __OSDeviceCode : (OS_BASE_CACHED | 0x30E6);
+#endif
 static DVDDriveInfo DriveInfo ATTRIBUTE_ALIGN(32);
 static DVDCommandBlock DriveBlock;
 
 static OSBootInfo *BootInfo;
 static u32 *BI2DebugFlag;
 static u32 *BI2DebugFlagHolder;
+#ifdef _MSC_VER
+BOOL __OSIsGcam = FALSE;
+#else
 __declspec(weak) BOOL __OSIsGcam = FALSE;
+#endif
 static f64 ZeroF;
 static f32 ZeroPS[2];
 static BOOL AreWeInitialized = FALSE;
@@ -56,6 +64,7 @@ void OSDefaultExceptionHandler(__OSException exception, OSContext *context);
 extern BOOL __DBIsExceptionMarked(__OSException);
 static void OSExceptionInit(void);
 
+#ifdef __MWERKS__
 /* clang-format off */
 asm void __OSFPRInit(void)
 {
@@ -143,6 +152,7 @@ SkipPairedSingles:
     blr
 }
 /* clang-format on */
+#endif
 
 u32 OSGetConsoleType()
 {
@@ -155,8 +165,8 @@ u32 OSGetConsoleType()
 void *__OSSavedRegionStart;
 void *__OSSavedRegionEnd;
 
-extern u32 BOOT_REGION_START : 0x812FDFF0; //(*(u32 *)0x812fdff0)
-extern u32 BOOT_REGION_END : 0x812FDFEC; //(*(u32 *)0x812fdfec)
+extern u32 BOOT_REGION_START AT_ADDRESS(0x812FDFF0); //(*(u32 *)0x812fdff0)
+extern u32 BOOT_REGION_END AT_ADDRESS(0x812FDFEC); //(*(u32 *)0x812fdfec)
 
 void ClearArena(void)
 {
@@ -477,6 +487,7 @@ static void OSExceptionInit(void)
     DBPrintf("Exceptions initialized...\n");
 }
 
+#ifdef __MWERKS__
 static asm void __OSDBIntegrator(void)
 {
     /* clang-format off */
@@ -505,6 +516,7 @@ entry __OSDBJUMPEND
     /* clang-format on */
 
 }
+#endif
 
 __OSExceptionHandler __OSSetExceptionHandler(__OSException exception, __OSExceptionHandler handler)
 {
@@ -519,6 +531,7 @@ __OSExceptionHandler __OSGetExceptionHandler(__OSException exception)
     return OSExceptionTable[exception];
 }
 
+#ifdef __MWERKS__
 static asm void OSExceptionVector(void)
 {
     /* clang-format off */
@@ -603,8 +616,10 @@ entry __OSEVEnd
     nop
     /* clang-format on */
 }
+#endif
 
 void __OSUnhandledException(__OSException exception, OSContext *context, u32 dsisr, u32 dar);
+#ifdef __MWERKS__
 asm void OSDefaultExceptionHandler(register __OSException exception, register OSContext *context)
 {
     /* clang-format off */
@@ -631,6 +646,7 @@ void __OSPSInit(void)
     }
     // clang-format on
 }
+#endif
 
 #define DI_CONFIG_IDX 0x9
 #define DI_CONFIG_CONFIG_MASK 0xFF

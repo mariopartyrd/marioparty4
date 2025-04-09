@@ -21,4 +21,15 @@
 #define REFRESH_RATE 60
 #endif
 
+#if _WIN32
+#ifdef TARGET_DOL
+#define SHARED_SYM __declspec(dllexport)
+#else
+#define SHARED_SYM __declspec(dllimport)
+#endif
+
+#else
+    #define SHARED_SYM
+#endif
+
 #endif

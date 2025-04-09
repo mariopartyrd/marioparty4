@@ -2,6 +2,8 @@
 
 static u32 frand_seed;
 
+extern s32 rand8(void);
+
 static inline u32 frandom(u32 param)
 {
     s32 rand2, rand3;

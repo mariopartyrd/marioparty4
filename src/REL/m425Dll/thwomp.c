@@ -2131,7 +2131,7 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     if (HmfInverseMtxF3X3(var_r28, sp50) == 0) {
         MTXIdentity(sp50);
     }
-    PSMTXReorder(sp50, sp20);
+    MTXReorder(sp50, sp20);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
@@ -2694,7 +2694,7 @@ void fn_1_11EE0(ModelData *var_r24, Mtx var_r21)
         if (HmfInverseMtxF3X3(var_r21, sp128) == 0) {
             MTXIdentity(sp128);
         }
-        PSMTXReorder(sp128, &sp8[0]);
+        MTXReorder(sp128, &sp8[0]);
         if (var_r31->unk_4C) {
             var_r18 = var_r31->unk_4C;
             var_r18(var_r24, var_r31, var_r21);
@@ -2702,7 +2702,7 @@ void fn_1_11EE0(ModelData *var_r24, Mtx var_r21)
         var_r29 = var_r31->unk_3C;
         var_r30 = var_r31->unk_40;
         var_r26 = var_r31->unk_44;
-        PSMTXROMultVecArray(sp8, lbl_1_data_19C, &sp38[0], 4);
+        MTXROMultVecArray(sp8, lbl_1_data_19C, &sp38[0], 4);
         for (var_r23 = 0; var_r23 < var_r31->unk_24; var_r23++, var_r29++) {
             if (!var_r29->unk_28) {
                 var_r30->x = var_r30->y = var_r30->z = 0.0f;

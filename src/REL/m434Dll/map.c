@@ -348,6 +348,9 @@ void fn_1_2978(ModelData *model, Mtx mtx)
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&spC);
+#endif
 }
 
 void fn_1_3004(void)
@@ -468,6 +471,9 @@ void fn_1_3594(ModelData *model, Mtx mtx)
     GXPosition3f32(1000.0f, -5.000001f, 1000.0f);
     GXPosition3f32(-1000.0f, -5.000001f, 1000.0f);
     GXEnd();
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp10);
+#endif
 }
 
 GXColor lbl_1_data_170 = { 255, 0, 0, 255 };

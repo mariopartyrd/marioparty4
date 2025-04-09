@@ -114,7 +114,7 @@ void fn_1_6B7C(void)
     lbl_1_bss_94 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_7284);
     lbl_1_bss_8C = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_78A0);
     lbl_1_bss_90 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, NULL);
-    lbl_1_bss_90->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x14, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_90->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(dataCopy), MEMORY_DEFAULT_NUM);
     if (lbl_1_bss_78 == NULL) {
         lbl_1_bss_78 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_EFFECT, 0x00));
         HuSprAnimLock(lbl_1_bss_78);

@@ -301,6 +301,9 @@ void fn_1_4FC(ModelData *model, Mtx matrix)
             }
         }
     }
+#ifdef TARGET_PC
+    GXDestroyTexObj(&lbl_1_bss_40);
+#endif
 }
 
 const Vec lbl_1_rodata_100 = { 0.0f, 0.0f, 0.0f };

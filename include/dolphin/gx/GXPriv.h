@@ -2,8 +2,9 @@
 #define _DOLPHIN_GXPRIV
 
 #include "dolphin/gx.h"
+#include "dolphin/os.h"
 
-#ifdef DEBUG
+#ifndef NDEBUG
 #define ASSERTLINE(line, cond) \
     ((cond) || (OSPanic(__FILE__, line, "Failed assertion " #cond), 0))
 

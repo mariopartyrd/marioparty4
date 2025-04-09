@@ -1608,7 +1608,7 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         sp130[0][3] = 0.0f;
         sp130[1][3] = 0.0f;
         sp130[2][3] = 0.0f;
-        PSMTXReorder(sp130, sp100);
+        MTXReorder(sp130, sp100);
         if ((omPauseChk() == 0) && (var_r31->unk_00)) {
             spC = var_r31->unk_00;
             spC(arg0, var_r31, arg1);
@@ -1616,7 +1616,7 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         var_r29 = var_r31->unk_10;
         var_r30 = var_r31->unk_14;
         var_r27 = var_r31->unk_18;
-        PSMTXROMultVecArray(sp100, &var_r31->unk_28, sp70, 4);
+        MTXROMultVecArray(sp100, &var_r31->unk_28, sp70, 4);
         for (var_r19 = 0; var_r19 < var_r31->unk_64; var_r19++, var_r29++, var_r27 += 4) {
             if (var_r29->unk_3E < 0) {
                 var_r30->x = var_r30->y = var_r30->z = 0.0f;
@@ -5048,7 +5048,7 @@ void fn_1_15BAC(Vec *arg0, Vec *arg1, float arg8, s32 arg2, float *arg3, float *
     else if (0.0f > arg8) {
         arg8 += 360.0f;
     }
-    *arg3 = (atan2d(sp14.z, sp14.x)) - 90.0;
+    *arg3 = (atan2d(sp14.z, sp14.x))-90.0;
     *arg4 = atan2d(sp14.y, sqrtf((sp14.x * sp14.x) + (sp14.z * sp14.z)));
     if (arg2 == 0) {
         *arg3 *= -1.0f;

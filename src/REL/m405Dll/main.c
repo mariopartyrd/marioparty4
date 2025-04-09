@@ -1002,12 +1002,15 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
-    GXSetArray(GX_VA_POS, lbl_1_bss_5AC.unk14, 0xC);
+    GXSETARRAY(GX_VA_POS, lbl_1_bss_5AC.unk14, 900 * sizeof(Vec), sizeof(Vec));
     GXSetCullMode(GX_CULL_BACK);
     GXCallDisplayList(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&spC);
+#endif
 }
 
 void fn_1_3F1C(ModelData *arg0, Mtx arg1)
@@ -1077,6 +1080,9 @@ void fn_1_4024(ModelData *arg0, Mtx arg1)
     GXPosition3f32(600.0f, -2.0f, 1250.0f);
     GXPosition3f32(-600.0f, -2.0f, 1250.0f);
     GXEnd();
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp18);
+#endif
 }
 
 void fn_1_4700(ModelData *arg0, Mtx arg1)

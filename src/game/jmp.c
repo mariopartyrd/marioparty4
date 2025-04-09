@@ -1,6 +1,7 @@
 #include "game/jmp.h"
 
-s32 gcsetjmp(register jmp_buf *jump) {
+s32 gcsetjmp(register jmp_buf *jump)
+{
     // clang-format off
     asm {
         mflr r5
