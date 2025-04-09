@@ -3,7 +3,8 @@
 #include "game/hsfmotion.h"
 #include "game/sprite.h"
 
-float GetClusterCurve(HsfTrack *arg0, float arg1) {
+float GetClusterCurve(HsfTrack *arg0, float arg1)
+{
     float *var_r30;
 
     switch (arg0->curveType) {
@@ -18,7 +19,8 @@ float GetClusterCurve(HsfTrack *arg0, float arg1) {
     return 0.0f;
 }
 
-float GetClusterWeightCurve(HsfTrack *arg0, float arg1) {
+float GetClusterWeightCurve(HsfTrack *arg0, float arg1)
+{
     float *var_r30;
 
     switch (arg0->curveType) {
@@ -33,7 +35,8 @@ float GetClusterWeightCurve(HsfTrack *arg0, float arg1) {
     return 0.0f;
 }
 
-void SetClusterMain(HsfCluster *arg0) {
+void SetClusterMain(HsfCluster *arg0)
+{
     float var_f30;
     float var_f31;
     s32 temp_r24;
@@ -53,51 +56,53 @@ void SetClusterMain(HsfCluster *arg0) {
             temp_r30 = *arg0->vertex;
             var_f30 = 0.0f;
             for (i = 0; i < arg0->vertexCnt; i++) {
-                var_f30 += arg0->unk14[i];
+                var_f30 += arg0->weight[i];
             }
             for (i = 0; i < temp_r27->count; i++, var_r28++) {
                 temp_r29 = *var_r28;
-                Vertextop[temp_r29].x = ((Vec*) temp_r30->data)[i].x;
-                Vertextop[temp_r29].y = ((Vec*) temp_r30->data)[i].y;
-                Vertextop[temp_r29].z = ((Vec*) temp_r30->data)[i].z;
+                Vertextop[temp_r29].x = ((Vec *)temp_r30->data)[i].x;
+                Vertextop[temp_r29].y = ((Vec *)temp_r30->data)[i].y;
+                Vertextop[temp_r29].z = ((Vec *)temp_r30->data)[i].z;
             }
             for (i = 1; i < arg0->vertexCnt; i++) {
                 temp_r30 = arg0->vertex[i];
                 var_r28 = temp_r27->vertex;
-                var_f31 = arg0->unk14[i];
+                var_f31 = arg0->weight[i];
                 if (var_f31 < 0.0f) {
                     var_f31 = 0.0f;
-                } else if (var_f30 > 1.0f) {
+                }
+                else if (var_f30 > 1.0f) {
                     var_f31 /= var_f30;
                 }
                 for (j = 0; j < temp_r27->count; j++, var_r28++) {
                     temp_r29 = *var_r28;
-                    Vertextop[temp_r29].x += var_f31 * (((Vec*) temp_r30->data)[j].x - Vertextop[temp_r29].x);
-                    Vertextop[temp_r29].y += var_f31 * (((Vec*) temp_r30->data)[j].y - Vertextop[temp_r29].y);
-                    Vertextop[temp_r29].z += var_f31 * (((Vec*) temp_r30->data)[j].z - Vertextop[temp_r29].z);
+                    Vertextop[temp_r29].x += var_f31 * (((Vec *)temp_r30->data)[j].x - Vertextop[temp_r29].x);
+                    Vertextop[temp_r29].y += var_f31 * (((Vec *)temp_r30->data)[j].y - Vertextop[temp_r29].y);
+                    Vertextop[temp_r29].z += var_f31 * (((Vec *)temp_r30->data)[j].z - Vertextop[temp_r29].z);
                 }
             }
             return;
         }
-        temp_r24 = arg0->unk10;
+        temp_r24 = arg0->index;
         var_r23 = temp_r24 + 1;
         if (var_r23 >= arg0->vertexCnt) {
             var_r23 = temp_r24;
         }
-        var_f31 = arg0->unk10 - temp_r24;
+        var_f31 = arg0->index - temp_r24;
         temp_r30 = arg0->vertex[temp_r24];
         temp_r25 = arg0->vertex[var_r23];
         var_r28 = temp_r27->vertex;
         for (i = 0; i < temp_r27->count; i++, var_r28++) {
             temp_r29 = *var_r28;
-            Vertextop[temp_r29].x = ((Vec*) temp_r30->data)[i].x + var_f31 * (((Vec*) temp_r25->data)[i].x - ((Vec*) temp_r30->data)[i].x);
-            Vertextop[temp_r29].y = ((Vec*) temp_r30->data)[i].y + var_f31 * (((Vec*) temp_r25->data)[i].y - ((Vec*) temp_r30->data)[i].y);
-            Vertextop[temp_r29].z = ((Vec*) temp_r30->data)[i].z + var_f31 * (((Vec*) temp_r25->data)[i].z - ((Vec*) temp_r30->data)[i].z);
+            Vertextop[temp_r29].x = ((Vec *)temp_r30->data)[i].x + var_f31 * (((Vec *)temp_r25->data)[i].x - ((Vec *)temp_r30->data)[i].x);
+            Vertextop[temp_r29].y = ((Vec *)temp_r30->data)[i].y + var_f31 * (((Vec *)temp_r25->data)[i].y - ((Vec *)temp_r30->data)[i].y);
+            Vertextop[temp_r29].z = ((Vec *)temp_r30->data)[i].z + var_f31 * (((Vec *)temp_r25->data)[i].z - ((Vec *)temp_r30->data)[i].z);
         }
     }
 }
 
-void ClusterProc(ModelData *arg0) {
+void ClusterProc(ModelData *arg0)
+{
     s32 temp_r24;
     s32 i;
     s32 j;
@@ -122,9 +127,9 @@ void ClusterProc(ModelData *arg0) {
                     Vertextop = temp_r31->data.vertex->data;
                     if (temp_r31->data.cenvCnt) {
                         for (k = 0; k < temp_r31->data.vertex->count; k++) {
-                            Vertextop[k].x = ((Vec*) temp_r31->data.file[0])[k].x;
-                            Vertextop[k].y = ((Vec*) temp_r31->data.file[0])[k].y;
-                            Vertextop[k].z = ((Vec*) temp_r31->data.file[0])[k].z;
+                            Vertextop[k].x = ((Vec *)temp_r31->data.file[0])[k].x;
+                            Vertextop[k].y = ((Vec *)temp_r31->data.file[0])[k].y;
+                            Vertextop[k].z = ((Vec *)temp_r31->data.file[0])[k].z;
                         }
                     }
                     SetClusterMain(var_r29);
@@ -136,7 +141,8 @@ void ClusterProc(ModelData *arg0) {
     }
 }
 
-void ClusterMotionExec(ModelData *arg0) {
+void ClusterMotionExec(ModelData *arg0)
+{
     float temp_f31;
     s32 i;
     s32 j;
@@ -161,12 +167,12 @@ void ClusterMotionExec(ModelData *arg0) {
                 switch (var_r31->type) {
                     case 5:
                         temp_r26 = &temp_r28->cluster[var_r31->target_s16];
-                        temp_r26->unk10 = GetClusterCurve(var_r31, temp_f31);
+                        temp_r26->index = GetClusterCurve(var_r31, temp_f31);
                         break;
                     case 6:
                         var_r30 = var_r31;
                         temp_r26 = &temp_r28->cluster[var_r30->target_s16];
-                        temp_r26->unk14[var_r30->unk04] = GetClusterCurve(var_r30, temp_f31);
+                        temp_r26->weight[var_r30->unk04] = GetClusterCurve(var_r30, temp_f31);
                         break;
                 }
             }
