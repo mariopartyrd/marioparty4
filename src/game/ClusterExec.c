@@ -117,7 +117,7 @@ void ClusterProc(ModelData *arg0)
         temp_r24 = arg0->unk_10[i];
         if (temp_r24 != -1) {
             temp_r22 = &Hu3DMotion[temp_r24];
-            temp_r27 = temp_r22->unk_04;
+            temp_r27 = temp_r22->hsfData;
             temp_r23 = arg0->hsfData;
             var_r29 = temp_r27->cluster;
             for (j = 0; j < temp_r27->clusterCnt; j++, var_r29++) {
@@ -159,7 +159,7 @@ void ClusterMotionExec(ModelData *arg0)
         if (arg0->unk_10[i] != -1) {
             var_r20 = arg0->unk_10[i];
             var_r23 = &Hu3DMotion[var_r20];
-            temp_r28 = var_r23->unk_04;
+            temp_r28 = var_r23->hsfData;
             temp_r27 = temp_r28->motion;
             var_r31 = temp_r27->track;
             temp_f31 = arg0->unk_A4[i];

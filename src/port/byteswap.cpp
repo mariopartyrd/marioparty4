@@ -45,7 +45,6 @@ typedef struct AnimBmpData32b {
     u32 palData;
     u32 data;
 } AnimBmpData32b;
-
 }
 
 template <typename T> [[nodiscard]] constexpr T bswap16(T val) noexcept
@@ -206,6 +205,13 @@ template <typename B> void bswap(B &base, Vec2f &vec)
 {
     bswap(base, vec.x);
     bswap(base, vec.y);
+}
+
+template <typename B> void bswap(B &base, HsfVector3f &vec)
+{
+    bswap(base, vec.x);
+    bswap(base, vec.y);
+    bswap(base, vec.z);
 }
 
 template <typename B> void bswap(B &base, AnimData32b &obj, AnimData &dest)
@@ -459,7 +465,7 @@ template <typename B> void bswap(B &base, HsfMatrix &obj)
             bswap_flat(base, obj.data[i][j], 4);
         }
     }
-}   
+}
 
 template <typename B> void bswap(B &base, HsfPalette32b &obj, HsfPalette &dest)
 {
@@ -582,6 +588,74 @@ template <typename B> void bswap(B &base, HsfCenv32b &obj, HsfCenv &dest)
     dest.copyCount = obj.copyCount;
 }
 
+template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &dest, u32 type)
+{
+    bswap(base, obj.parent);
+    bswap(base, obj.childrenCount);
+    bswap(base, obj.children);
+    bswap(base, obj.base);
+    bswap(base, obj.curr);
+    bswap(base, obj.face);
+    bswap(base, obj.vertex);
+    bswap(base, obj.normal);
+    bswap(base, obj.color);
+    bswap(base, obj.st);
+    bswap(base, obj.material);
+    bswap(base, obj.attribute);
+    bswap(base, obj.vertexShapeCnt);
+    bswap(base, obj.vertexShape);
+    bswap(base, obj.clusterCnt);
+    bswap(base, obj.cluster);
+    bswap(base, obj.cenvCnt);
+    bswap(base, obj.cenv);
+    bswap_flat(base, obj.file, sizeof(obj.file) / sizeof(u32));
+
+    dest.parent = reinterpret_cast<struct hsf_object *>(obj.parent);
+    dest.childrenCount = obj.childrenCount;
+    dest.children = reinterpret_cast<struct hsf_object **>(obj.children);
+    dest.base = obj.base;
+    dest.curr = obj.curr;
+    dest.face = reinterpret_cast<HsfBuffer *>(obj.face);
+    dest.vertex = reinterpret_cast<HsfBuffer *>(obj.vertex);
+    dest.normal = reinterpret_cast<HsfBuffer *>(obj.normal);
+    dest.color = reinterpret_cast<HsfBuffer *>(obj.color);
+    dest.st = reinterpret_cast<HsfBuffer *>(obj.st);
+    dest.material = reinterpret_cast<HsfMaterial *>(obj.material);
+    dest.attribute = reinterpret_cast<HsfAttribute *>(obj.attribute);
+    std::copy(std::begin(obj.unk120), std::end(obj.unk120), dest.unk120);
+    dest.shapeType = obj.shapeType;
+    dest.unk123 = obj.unk123;
+    dest.vertexShapeCnt = obj.vertexShapeCnt;
+    dest.vertexShape = reinterpret_cast<HsfBuffer **>(obj.vertexShape);
+    dest.clusterCnt = obj.clusterCnt;
+    dest.cluster = reinterpret_cast<HsfCluster **>(obj.cluster);
+    dest.cenvCnt = obj.cenvCnt;
+    dest.cenv = reinterpret_cast<HsfCenv *>(obj.cenv);
+    dest.file[0] = reinterpret_cast<void *>(obj.file[0]);
+    dest.file[1] = reinterpret_cast<void *>(obj.file[1]);
+
+    switch (type) {
+        case HSF_OBJ_MESH:
+            bswap(base, obj.mesh.min);
+            bswap(base, obj.mesh.max);
+            bswap(base, obj.mesh.baseMorph);
+            bswap_flat(base, obj.mesh.morphWeight, std::size(obj.mesh.morphWeight));
+
+            dest.mesh.min = obj.mesh.min;
+            dest.mesh.max = obj.mesh.max;
+            dest.mesh.baseMorph = obj.mesh.baseMorph;
+            std::copy(std::begin(obj.mesh.morphWeight), std::end(obj.mesh.morphWeight), dest.mesh.morphWeight);
+            break;
+        case HSF_OBJ_REPLICA:
+            bswap(base, obj.replica);
+
+            dest.replica = obj.replica;
+            break;
+        default:
+            break;
+    }
+}
+
 template <typename B> void bswap(B &base, HsfObject32b &obj, HsfObject &dest)
 {
     bswap(base, obj.name);
@@ -593,6 +667,58 @@ template <typename B> void bswap(B &base, HsfObject32b &obj, HsfObject &dest)
     dest.type = obj.type;
     dest.constData = reinterpret_cast<void *>(obj.constData);
     dest.flags = obj.flags;
+
+    bswap(base, obj.data, dest.data, obj.type);
+}
+
+template <typename B> void bswap(B &base, HsfBitmapKey32b &obj, HsfBitmapKey &dest)
+{
+    bswap(base, obj.time);
+    bswap(base, obj.data);
+
+    dest.time = obj.time;
+    dest.data = reinterpret_cast<HsfBitmap *>(obj.data);
+}
+
+template <typename B> void bswap(B &base, HsfTrack32b &obj, HsfTrack &dest)
+{
+    bswap(base, obj.type);
+    bswap(base, obj.start);
+    bswap(base, obj.curveType);
+    bswap(base, obj.numKeyframes);
+    bswap(base, obj.data); // this byteswaps "value" too
+
+    dest.type = obj.type;
+    dest.start = obj.start;
+    dest.curveType = obj.curveType;
+    dest.numKeyframes = obj.numKeyframes;
+    dest.data = reinterpret_cast<void *>(obj.data); // this correctly sets "value" too
+
+    if (obj.type = HSF_TRACK_CLUSTER_WEIGHT) {
+        bswap(base, obj.unk04);
+
+        dest.unk04 = obj.unk04;
+    }
+    else {
+        bswap(base, obj.param);
+        bswap(base, obj.channel);
+
+        dest.param = obj.param;
+        dest.channel = obj.channel;
+    }
+}
+
+template <typename B> void bswap(B &base, HsfMotion32b &obj, HsfMotion &dest)
+{
+    bswap(base, obj.name);
+    bswap(base, obj.numTracks);
+    bswap(base, obj.track);
+    bswap(base, obj.len);
+
+    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.numTracks = obj.numTracks;
+    dest.track = reinterpret_cast<HsfTrack *>(obj.track);
+    dest.len = obj.len;
 }
 
 void byteswap_u16(u16 *src)
@@ -621,8 +747,7 @@ void byteswap_s32(s32 *src)
 
 void byteswap_hsfvec3f(HsfVector3f *src)
 {
-    auto *vec = reinterpret_cast<Vec *>(src);
-    bswap(*vec, *vec);
+    bswap(*src, *src);
     sVisitedPtrs.clear();
 }
 
@@ -751,7 +876,7 @@ void byteswap_hsfshape(HsfShape32b *src, HsfShape *dest)
     sVisitedPtrs.clear();
 }
 
-void byteswap_hsfcenvsingle(HsfCenvSingle *src)
+void byteswap_hsfcenv_single(HsfCenvSingle *src)
 {
     bswap(*src, *src);
     sVisitedPtrs.clear();
@@ -764,6 +889,26 @@ void byteswap_hsfcenv(HsfCenv32b *src, HsfCenv *dest)
 }
 
 void byteswap_hsfobject(HsfObject32b *src, HsfObject *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+
+void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+
+void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest)
 {
     bswap(*src, *src, *dest);
     sVisitedPtrs.clear();

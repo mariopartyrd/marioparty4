@@ -132,18 +132,88 @@ typedef struct HsfCenv32b {
     u32 copyCount;
 } HsfCenv32b;
 
+typedef struct HsfObjectData32b {
+    u32 parent;
+    u32 childrenCount;
+    u32 children;
+    HsfTransform base;
+    HsfTransform curr;
+    union {
+        struct {
+            HsfVector3f min;
+            HsfVector3f max;
+            float baseMorph;
+            float morphWeight[33];
+        } mesh;
+        struct hsf_object *replica;
+    };
+
+    u32 face;
+    u32 vertex;
+    u32 normal;
+    u32 color;
+    u32 st;
+    u32 material;
+    u32 attribute;
+    u8 unk120[2];
+    u8 shapeType;
+    u8 unk123;
+    u32 vertexShapeCnt;
+    u32 vertexShape;
+    u32 clusterCnt;
+    u32 cluster;
+    u32 cenvCnt;
+    u32 cenv;
+    u32 file[2];
+} HsfObjectData32b;
+
 typedef struct HsfObject32b {
     u32 name;
     u32 type;
     u32 constData;
     u32 flags;
-    // TODO PC
-    union {
-        HsfObjectData data;
-        HsfCamera camera;
-        HsfLight light;
-    };
+    HsfObjectData32b data;
 } HsfObject32b;
+
+typedef struct HsfTrack32b {
+    u8 type;
+    u8 start;
+    union {
+        u16 target;
+        s16 target_s16;
+    };
+    union {
+        s32 unk04;
+        struct {
+            union {
+                s16 param;
+                u16 param_u16;
+            };
+            union {
+                u16 channel;
+                s16 channel_s16;
+            };
+        };
+    };
+    u16 curveType;
+    u16 numKeyframes;
+    union {
+        float value;
+        u32 data;
+    };
+} HsfTrack32b;
+
+typedef struct HsfMotion32b {
+    u32 name;
+    s32 numTracks;
+    u32 track;
+    float len;
+} HsfMotion32b;
+
+typedef struct HsfBitmapKey32b {
+    float time;
+    u32 data;
+} HsfBitmapKey32b;
 
 void byteswap_u16(u16 *src);
 void byteswap_s16(s16 *src);
@@ -172,9 +242,12 @@ void byteswap_hsfbitmap(HsfBitmap32b *src, HsfBitmap *dest);
 void byteswap_hsfmapattr(HsfMapAttr32b *src, HsfMapAttr *dest);
 void byteswap_hsfskeleton(HsfSkeleton32b *src, HsfSkeleton *dest);
 void byteswap_hsfshape(HsfShape32b *src, HsfShape *dest);
-void byteswap_hsfcenvsingle(HsfCenvSingle *src);
+void byteswap_hsfcenv_single(HsfCenvSingle *src);
 void byteswap_hsfcenv(HsfCenv32b *src, HsfCenv *dest);
 void byteswap_hsfobject(HsfObject32b *src, HsfObject *dest);
+void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest);
+void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest);
+void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest);
 
 #ifdef __cplusplus
 }

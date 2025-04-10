@@ -565,9 +565,9 @@ void ObjectSetup(void)
      s16 sprite;
      AnimData *sprite_data;
      s16 i;
+     titleMdlId[0] = model = Hu3DModelCreateFile(TITLE_CHAR_HSF);
 #ifdef __MWERKS__
      // TODO PC
-     titleMdlId[0] = model = Hu3DModelCreateFile(TITLE_CHAR_HSF);
      Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
      Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
      titleMdlId[1] = model = Hu3DModelCreateFile(TITLE_CUBE_HSF);

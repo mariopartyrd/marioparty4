@@ -10,9 +10,9 @@
 
 
 typedef struct motion_data {
-    s16 unk_00;
-    s16 unk_02;
-    HsfData *unk_04;
+    s16 attr;
+    s16 modelId;
+    HsfData *hsfData;
 } MotionData;
 
 typedef struct {

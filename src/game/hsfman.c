@@ -453,7 +453,7 @@ s16 Hu3DModelLink(s16 arg0) {
     for (i = 0; i < 4; i++) {
         var_r31->unk_10[i] = temp_r30->unk_10[i];
         if (var_r31->unk_10[i] != -1) {
-            ClusterAdjustObject(var_r31->hsfData, Hu3DMotion[var_r31->unk_10[i]].unk_04);
+            ClusterAdjustObject(var_r31->hsfData, Hu3DMotion[var_r31->unk_10[i]].hsfData);
             var_r31->attr |= HU3D_ATTR_CLUSTER_ON;
         }
     }
@@ -564,6 +564,9 @@ void Hu3DModelKill(s16 arg0) {
         }
         Hu3DAnimModelKill(arg0);
         if (temp_r31->unk_24 != -1) {
+#ifdef TARGET_PC
+            KillHSF(temp_r31->hsfData);
+#endif
             HuMemDirectFree(temp_r31->hsfData);
             HuMemDirectFreeNum(HEAP_DATA, temp_r31->unk_4C);
             var_r28 = temp_r31->unk_C8;
@@ -581,7 +584,7 @@ void Hu3DModelKill(s16 arg0) {
             if (temp_r31->unk_20 != -1) {
                 for (i = 0; i < HU3D_MODEL_MAX; i++, var_r30++) {
                     if (var_r30->hsfData != 0 && var_r30->unk_24 != -1 && var_r30->unk_C8 == var_r28) {
-                        Hu3DMotion[temp_r31->unk_20].unk_02 = i;
+                        Hu3DMotion[temp_r31->unk_20].modelId = i;
                         break;
                     }
                 }
@@ -592,7 +595,7 @@ void Hu3DModelKill(s16 arg0) {
             return;
         }
         if (temp_r31->unk_20 != -1 && Hu3DMotionKill(temp_r31->unk_20) == 0) {
-            Hu3DMotion[temp_r31->unk_20].unk_02 = -1;
+            Hu3DMotion[temp_r31->unk_20].modelId = -1;
             HuMemDirectFreeNum(HEAP_DATA, temp_r31->unk_48);
             temp_r31->hsfData = NULL;
             if (modelKillAllF == 0) {
@@ -600,6 +603,9 @@ void Hu3DModelKill(s16 arg0) {
             }
             return;
         }
+#ifdef TARGET_PC
+        KillHSF(temp_r31->hsfData);
+#endif
         HuMemDirectFree(temp_r31->hsfData);
         HuMemDirectFreeNum(HEAP_DATA, temp_r31->unk_48);
         for (i = 0; i < temp_r31->unk_26; i++) {
