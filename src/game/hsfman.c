@@ -43,7 +43,7 @@ s32 shadowModelDrawF;
 s16 Hu3DProjectionNum;
 s16 Hu3DCameraNo;
 s16 Hu3DCameraBit;
-u32 Hu3DMallocNo;
+uintptr_t Hu3DMallocNo;
 s16 Hu3DPauseF;
 u16 Hu3DCameraExistF;
 static u16 NoSyncF;
@@ -350,7 +350,7 @@ s16 Hu3DModelCreate(void *arg0) {
         return -1;
     }
     var_r31->hsfData = LoadHSF(arg0);
-    var_r31->unk_48 = Hu3DMallocNo = (u32)var_r31->hsfData;
+    var_r31->unk_48 = Hu3DMallocNo = (uintptr_t)var_r31->hsfData;
     var_r31->attr = HU3D_ATTR_NONE;
     var_r31->motion_attr = HU3D_ATTR_NONE;
     var_r31->unk_02 = 0;

@@ -57,7 +57,7 @@ void Hu3DDrawPreInit(void);
 void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2);
 s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2);
 void Hu3DDrawPost(void);
-void MakeDisplayList(s16 arg0, u32 arg1);
+void MakeDisplayList(s16 arg0, uintptr_t arg1);
 HsfConstData *ObjConstantMake(HsfObject *arg0, u32 arg1);
 void mtxTransCat(Mtx arg0, float arg1, float arg2, float arg3);
 void mtxRotCat(Mtx arg0, float arg1, float arg2, float arg3);

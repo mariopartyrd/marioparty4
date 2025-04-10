@@ -603,7 +603,7 @@ GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback cb)
 
 void PPCSync(void)
 {
-    puts("PPCSync is a stub");
+    //puts("PPCSync is a stub");
 }
 
 void GXUnknownu16(const u16 x)

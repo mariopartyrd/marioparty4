@@ -59,7 +59,7 @@ void *HuMemDirectMalloc(HeapID heap, s32 size)
     return HuMemMemoryAlloc(HeapTbl[heap], size, retaddr);
 }
 
-void *HuMemDirectMallocNum(HeapID heap, s32 size, u32 num)
+void *HuMemDirectMallocNum(HeapID heap, s32 size, uintptr_t num)
 {
 #ifdef TARGET_PC
     u32 retaddr = 0;
@@ -86,7 +86,7 @@ void HuMemDirectFree(void *ptr)
     HuMemMemoryFree(ptr, retaddr);
 }
 
-void HuMemDirectFreeNum(HeapID heap, u32 num)
+void HuMemDirectFreeNum(HeapID heap, uintptr_t num)
 {
 #ifdef TARGET_PC
     u32 retaddr = 0;

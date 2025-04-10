@@ -138,7 +138,9 @@ static void FileLoad(void *data)
     byteswap_hsfheader(&head);
     NSymIndex = HuMemDirectMallocNum(HEAP_DATA, sizeof(void*) * head.symbol.count, MEMORY_DEFAULT_NUM);
     for (i = 0; i < head.symbol.count; i++) {
-        byteswap_u32(&((void **)((uintptr_t)fileptr + head.symbol.ofs))[i]);
+        u32 *file_symbol_real = (u32 *)((uintptr_t)fileptr + head.symbol.ofs);
+        byteswap_u32(&file_symbol_real[i]);
+        NSymIndex[i] = (void *)file_symbol_real[i];
     }
     StringTable = (char *)((uintptr_t)fileptr+head.string.ofs);
     ClusterTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfCluster) * head.cluster.count, MEMORY_DEFAULT_NUM);
