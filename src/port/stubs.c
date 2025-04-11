@@ -198,27 +198,27 @@ s32 CARDWriteAsync(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 off
 
 void DCFlushRange(void *addr, u32 nBytes)
 {
-    puts("DCFlushRange is a stub");
+    //puts("DCFlushRange is a stub");
 }
 
 void DCFlushRangeNoSync(void *addr, u32 nBytes)
 {
-    puts("DCFlushRangeNoSync is a stub");
+    //puts("DCFlushRangeNoSync is a stub");
 }
 
 void DCInvalidateRange(void *addr, u32 nBytes)
 {
-    puts("DCInvalidateRange is a stub");
+    //puts("DCInvalidateRange is a stub");
 }
 
 void DCStoreRange(void *addr, u32 nBytes)
 {
-    puts("DCStoreRange is a stub");
+    //puts("DCStoreRange is a stub");
 }
 
 void DCStoreRangeNoSync(void *addr, u32 nBytes)
 {
-    puts("DCStoreRangeNoSync is a stub");
+    //puts("DCStoreRangeNoSync is a stub");
 }
 
 void DEMOUpdateStats(unsigned char inc)

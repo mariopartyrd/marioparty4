@@ -350,6 +350,9 @@ typedef struct hsf_track {
         float value;
         void *data;
     };
+#ifdef TARGET_PC
+    void *dataTop;
+#endif
 } HsfTrack;
 
 typedef struct hsf_motion {

@@ -721,6 +721,31 @@ template <typename B> void bswap(B &base, HsfMotion32b &obj, HsfMotion &dest)
     dest.len = obj.len;
 }
 
+template <typename B> void bswap(B &base, HsfFace32b &obj, HsfFace &dest)
+{
+    bswap(base, obj.type);
+    bswap(base, obj.mat);
+    bswap(base, obj.nbt);
+
+    dest.type = obj.type;
+    dest.mat = obj.mat;
+    dest.nbt = obj.nbt;
+
+    if (obj.type == 4) {
+        bswap(base, obj.strip.count);
+        bswap(base, obj.strip.data);
+        bswap_flat(base, obj.strip.indices[0], 3 * 4);
+    
+        dest.strip.count = obj.strip.count;
+        dest.strip.data = reinterpret_cast<s16 *>(obj.strip.data);
+        std::copy(&obj.strip.indices[0][0], &obj.strip.indices[0][0] + 3 * 4, &dest.strip.indices[0][0]);
+    }
+    else {
+        bswap_flat(base, obj.indices[0], 4 * 4);
+        std::copy(&obj.indices[0][0], &obj.indices[0][0] + 4 * 4, &dest.indices[0][0]);
+    }
+}
+
 void byteswap_u16(u16 *src)
 {
     bswap(*src, *src);
@@ -909,6 +934,12 @@ void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest)
 }
 
 void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfface(HsfFace32b *src, HsfFace *dest)
 {
     bswap(*src, *src, *dest);
     sVisitedPtrs.clear();

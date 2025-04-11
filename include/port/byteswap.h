@@ -215,6 +215,20 @@ typedef struct HsfBitmapKey32b {
     u32 data;
 } HsfBitmapKey32b;
 
+typedef struct HsfFace32b {
+    s16 type;
+    s16 mat;
+    union {
+        struct {
+            s16 indices[3][4];
+            u32 count;
+            u32 data;
+        } strip;
+        s16 indices[4][4];
+    };
+    Vec nbt;
+} HsfFace32b;
+
 void byteswap_u16(u16 *src);
 void byteswap_s16(s16 *src);
 void byteswap_u32(u32 *src);
@@ -248,6 +262,7 @@ void byteswap_hsfobject(HsfObject32b *src, HsfObject *dest);
 void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest);
 void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest);
 void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest);
+void byteswap_hsfface(HsfFace32b *src, HsfFace *dest);
 
 #ifdef __cplusplus
 }

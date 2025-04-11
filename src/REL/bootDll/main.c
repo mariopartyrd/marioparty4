@@ -371,8 +371,10 @@ void ObjectSetup(void)
      s16 group;
      s16 sprite;
      AnimData *data;
+#ifdef TARGET_PC
+     return;
+#else
      option = 0;
-#ifdef __MWERKS__
      if (OSGetResetCode() != OS_RESET_RESTART) {
          return;
      }
@@ -425,7 +427,6 @@ void ObjectSetup(void)
          HuPrcVSleep();
      }
 #ifdef __MWERKS__
-     // TODO PC
      if (!option) {
          OSSetProgressiveMode(OS_PROGRESSIVE_MODE_ON);
          VIConfigure(&GXNtsc480Prog);

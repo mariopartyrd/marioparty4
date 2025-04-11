@@ -272,7 +272,7 @@ static void MaterialLoad(void)
             new_mat->refAlpha = curr_mat->refAlpha;
             new_mat->unk2C = curr_mat->unk2C;
             new_mat->numAttrs = curr_mat->numAttrs;
-            new_mat->attrs = (s32 *)(NSymIndex+((uintptr_t)curr_mat->attrs));
+            new_mat->attrs = (s32 *)(NSymIndex+((u32)curr_mat->attrs));
             rgba[i].r = new_mat->litColor[0];
             rgba[i].g = new_mat->litColor[1];
             rgba[i].b = new_mat->litColor[2];
@@ -458,6 +458,14 @@ static void NormalLoad(void)
             new_normal->count = file_normal->count;
             new_normal->name = SetName((u32 *)&file_normal->name);
             new_normal->data = (void *)((uintptr_t)data+(uintptr_t)temp_data);
+#ifdef TARGET_PC
+            if (cenv_count != 0) {
+                for (i = 0; i < new_normal->count; i++) {
+                    HsfVector3f *normalData = &((HsfVector3f *)new_normal->data)[i];
+                    byteswap_hsfvec3f(normalData);
+                }
+            }
+#endif
         }
     }
 }
@@ -530,9 +538,10 @@ static void FaceLoad(void)
     if(head.face.count) {
 #ifdef TARGET_PC
         HsfBuffer32b *file_face_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.face.ofs);
+        HsfFace32b *file_facedata_real = (HsfFace32b *)&file_face_real[head.face.count];
         temp_face = file_face = FaceTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.face.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.face.count; i++) {
-            byteswap_hsfbuffer(&file_face[i], &file_face[i]);
+            byteswap_hsfbuffer(&file_face_real[i], &file_face[i]);
         }
 #else
         temp_face = file_face = (HsfBuffer *)((u32)fileptr+head.face.ofs);
@@ -541,9 +550,7 @@ static void FaceLoad(void)
         new_face = temp_face;
         Model.face = new_face;
         Model.faceCnt = head.face.count;
-#ifdef TARGET_PC
-        data = (void *)&file_face_real[head.face.count];
-#else
+#ifdef __MWERKS__
         file_face = (HsfBuffer *)((u32)fileptr+head.face.ofs);
         data = (HsfFace *)&file_face[head.face.count];
 #endif
@@ -551,22 +558,30 @@ static void FaceLoad(void)
             temp_data = file_face->data;
             new_face->name = SetName((u32 *)&file_face->name);
             new_face->count = file_face->count;
+#ifdef TARGET_PC
+            {
+                HsfFace32b *facedata_start = (HsfFace32b *)((uintptr_t)file_facedata_real + (uintptr_t)temp_data);
+                data = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfFace) * new_face->count, MEMORY_DEFAULT_NUM);
+                for (j = 0; j < new_face->count; j++) {
+                    byteswap_hsfface(&facedata_start[j], &data[j]);
+                }
+                new_face->data = data;
+                strip = (u8 *)(&facedata_start[new_face->count]);
+            }
+#else
             new_face->data = (void *)((uintptr_t)data+(uintptr_t)temp_data);
             strip = (u8 *)(&((HsfFace *)new_face->data)[new_face->count]);
+#endif
         }
         new_face = temp_face;
         for(i=0; i<head.face.count; i++, new_face++) {
             file_face_strip = new_face_strip = new_face->data;
             for(j=0; j<new_face->count; j++, new_face_strip++, file_face_strip++) {
-#ifdef TARGET_PC
-                byteswap_s16(&file_face_strip->type);
-#endif
                 if(AS_U16(file_face_strip->type) == 4) {
                     new_face_strip->strip.data = (s16 *)(strip+(uintptr_t)file_face_strip->strip.data*(sizeof(s16)*4));
 #ifdef TARGET_PC
                     {
                         s32 k;
-                        byteswap_u32(&new_face_strip->strip.count);
                         for (k = 0; k < new_face_strip->strip.count; k++) {
                             byteswap_s16(&new_face_strip->strip.data[k]);
                         }
@@ -1554,7 +1569,7 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
         {
 #ifdef TARGET_PC
             HsfBitmapKey32b *file_frame_real = (HsfBitmapKey32b *)((uintptr_t)data + (uintptr_t)track->data);
-            new_frame = file_frame = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBitmapKey) * track->numKeyframes, MEMORY_DEFAULT_NUM);
+            new_frame = file_frame = track->dataTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBitmapKey) * track->numKeyframes, MEMORY_DEFAULT_NUM);
 #else
             new_frame = file_frame = (HsfBitmapKey *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = file_frame;
@@ -1845,6 +1860,9 @@ void KillHSF(HsfData *data)
     HuMemDirectFree(data->bitmap);
     HuMemDirectFree(data->cenv);
     HuMemDirectFree(data->skeleton);
+    for (i = 0; i < data->faceCnt; i++) { 
+        HuMemDirectFree(data->face[i].data);
+    }
     HuMemDirectFree(data->face);
     HuMemDirectFree(data->material);
     for (i = 0; i < data->motionCnt; i++) {
@@ -1853,7 +1871,7 @@ void KillHSF(HsfData *data)
             HsfTrack *track = data->motion[i].track;
             if (track->type == HSF_TRACK_ATTRIBUTE && track->curveType == HSF_CURVE_BITMAP) {
                 // in this case we needed to allocate space for HsfBitmapKey structs
-                HuMemDirectFree(track->data);
+                HuMemDirectFree(track->dataTop);
             }
         }
         HuMemDirectFree(motion->track);
