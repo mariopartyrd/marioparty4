@@ -3,6 +3,7 @@
 #include "ctype.h"
 
 #ifdef TARGET_PC
+#include "game/memory.h"
 #include "port/byteswap.h"
 #endif
 
@@ -26,6 +27,15 @@ HsfBuffer *vtxtop;
 HsfCluster *ClusterTop;
 HsfAttribute *AttributeTop;
 HsfMaterial *MaterialTop;
+#ifdef TARGET_PC
+HsfBuffer *NormalTop;
+HsfBuffer *StTop;
+HsfBuffer *ColorTop;
+HsfBuffer *FaceTop;
+HsfCenv *CenvTop;
+HsfPart *PartTop;
+HsfBitmap *BitmapTop;
+#endif
 
 static void FileLoad(void *data);
 static HsfData *SetHsfModel(void);
@@ -118,17 +128,43 @@ void ClusterAdjustObject(HsfData *model, HsfData *src_model)
 
 static void FileLoad(void *data)
 {
+#ifdef TARGET_PC
+    s32 i;
+#endif
     fileptr = data;
     memcpy(&head, fileptr, sizeof(HsfHeader));
     memset(&Model, 0, sizeof(HsfData));
 #ifdef TARGET_PC
     byteswap_hsfheader(&head);
-#endif
+    NSymIndex = HuMemDirectMallocNum(HEAP_DATA, sizeof(void*) * head.symbol.count, MEMORY_DEFAULT_NUM);
+    for (i = 0; i < head.symbol.count; i++) {
+        u32 *file_symbol_real = (u32 *)((uintptr_t)fileptr + head.symbol.ofs);
+        byteswap_u32(&file_symbol_real[i]);
+        NSymIndex[i] = (void *)file_symbol_real[i];
+    }
+    StringTable = (char *)((uintptr_t)fileptr+head.string.ofs);
+    ClusterTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfCluster) * head.cluster.count, MEMORY_DEFAULT_NUM);
+    for (i = 0; i < head.cluster.count; i++) {
+        HsfCluster32b *file_cluster_real = (HsfCluster32b *)((uintptr_t)fileptr + head.cluster.ofs);
+        byteswap_hsfcluster(&file_cluster_real[i], &ClusterTop[i]);
+    }
+    AttributeTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfAttribute) * head.attribute.count, MEMORY_DEFAULT_NUM);
+    for (i = 0; i < head.attribute.count; i++) {
+        HsfAttribute32b *file_attribute_real = (HsfAttribute32b *)((uintptr_t)fileptr + head.attribute.ofs);
+        byteswap_hsfattribute(&file_attribute_real[i], &AttributeTop[i]);
+    }
+    MaterialTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMaterial) * head.material.count, MEMORY_DEFAULT_NUM);
+    for (i = 0; i < head.material.count; i++) {
+        HsfMaterial32b *file_material_real = (HsfMaterial32b *)((uintptr_t)fileptr + head.material.ofs);
+        byteswap_hsfmaterial(&file_material_real[i], &MaterialTop[i]);
+    }
+#else
     NSymIndex = (void **)((uintptr_t)fileptr+head.symbol.ofs);
     StringTable = (char *)((uintptr_t)fileptr+head.string.ofs);
     ClusterTop = (HsfCluster *)((uintptr_t)fileptr+head.cluster.ofs);
     AttributeTop = (HsfAttribute *)((uintptr_t)fileptr + head.attribute.ofs);
     MaterialTop = (HsfMaterial *)((uintptr_t)fileptr + head.material.ofs);
+#endif
 }
 
 static HsfData *SetHsfModel(void)
@@ -173,6 +209,9 @@ static HsfData *SetHsfModel(void)
     data->shapeCnt = Model.shapeCnt;
     data->mapAttr = Model.mapAttr;
     data->mapAttrCnt = Model.mapAttrCnt;
+#ifdef TARGET_PC
+    data->symbol = NSymIndex;
+#endif
     return data;
 }
 
@@ -193,7 +232,11 @@ static void MaterialLoad(void)
     s32 i;
     s32 j;
     if(head.material.count) {
-        HsfMaterial *file_mat = (HsfMaterial *)((u32)fileptr+head.material.ofs);
+#ifdef TARGET_PC
+        HsfMaterial *file_mat = MaterialTop;
+#else
+        HsfMaterial *file_mat = (HsfMaterial *)((uintptr_t)fileptr+head.material.ofs);
+#endif
         HsfMaterial *curr_mat;
         HsfMaterial *new_mat;
         for(i=0; i<head.material.count; i++) {
@@ -202,7 +245,11 @@ static void MaterialLoad(void)
         new_mat = file_mat;
         Model.material = new_mat;
         Model.materialCnt = head.material.count;
+#ifdef TARGET_PC
+        file_mat = MaterialTop;
+#else
         file_mat = (HsfMaterial *)((u32)fileptr+head.material.ofs);
+#endif
         for(i=0; i<head.material.count; i++, new_mat++) {
             curr_mat = &file_mat[i];
             new_mat->name = SetName((u32 *)&curr_mat->name);
@@ -244,7 +291,11 @@ static void AttributeLoad(void)
     HsfAttribute *temp_attr;
     s32 i;
     if(head.attribute.count) {
+#ifdef TARGET_PC
+        temp_attr = file_attr = AttributeTop;
+#else
         temp_attr = file_attr = (HsfAttribute *)((u32)fileptr+head.attribute.ofs);
+#endif
         new_attr = temp_attr;
         Model.attribute = new_attr;
         Model.attributeCnt = head.attribute.count;
@@ -261,10 +312,18 @@ static void AttributeLoad(void)
 
 static void SceneLoad(void)
 {
+#ifdef TARGET_PC
+    s32 i;
+#endif
     HsfScene *file_scene;
     HsfScene *new_scene;
     if(head.scene.count) {
-        file_scene = (HsfScene *)((u32)fileptr+head.scene.ofs);
+        file_scene = (HsfScene *)((uintptr_t)fileptr+head.scene.ofs);
+#ifdef TARGET_PC
+        for (i = 0; i < head.scene.count; i++) {
+            byteswap_hsfscene(&file_scene[i]);
+        }
+#endif
         new_scene = file_scene;
         new_scene->end = file_scene->end;
         new_scene->start = file_scene->start;
@@ -283,18 +342,30 @@ static void ColorLoad(void)
     HsfBuffer *temp_color;
     
     if(head.color.count) {
+#ifdef TARGET_PC
+        HsfBuffer32b * file_color_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.color.ofs);
+        temp_color = file_color = ColorTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.color.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.color.count; i++) {
+            byteswap_hsfbuffer(&file_color_real[i], &file_color[i]);
+        }
+#else
         temp_color = file_color = (HsfBuffer *)((u32)fileptr+head.color.ofs);
         data = &file_color[head.color.count];
         for(i=0; i<head.color.count; i++, file_color++);
+#endif
         new_color = temp_color;
         Model.color = new_color;
         Model.colorCnt = head.color.count;
+#ifdef TARGET_PC
+        data = (u16 *)&file_color_real[head.color.count];
+#else
         file_color = (HsfBuffer *)((u32)fileptr+head.color.ofs);
         data = &file_color[head.color.count];
+#endif
         for(i=0; i<head.color.count; i++, new_color++, file_color++) {
             color_data = file_color->data;
             new_color->name = SetName((u32 *)&file_color->name);
-            new_color->data = (void *)((u32)data+(u32)color_data);
+            new_color->data = (void *)((uintptr_t)data+(uintptr_t)color_data);
         }
     }
 }
@@ -309,25 +380,40 @@ static void VertexLoad(void)
     void *temp_data;
     
     if(head.vertex.count) {
+#ifdef TARGET_PC
+        HsfBuffer32b *file_vertex_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.vertex.ofs);
+        vtxtop = file_vertex = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.vertex.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.vertex.count; i++) {
+            byteswap_hsfbuffer(&file_vertex_real[i], &file_vertex[i]);
+        }
+#else
         vtxtop = file_vertex = (HsfBuffer *)((u32)fileptr+head.vertex.ofs);
         data = (void *)&file_vertex[head.vertex.count];
         for(i=0; i<head.vertex.count; i++, file_vertex++) {
             for(j=0; j<(u32)file_vertex->count; j++) {
-                data_elem = (HsfVector3f *)(((u32)data)+((u32)file_vertex->data)+(j*sizeof(HsfVector3f)));
+                data_elem = (HsfVector3f *)(((uintptr_t)data)+((uintptr_t)file_vertex->data)+(j*sizeof(HsfVector3f)));
             }
         }
+#endif
         new_vertex = vtxtop;
         Model.vertex = new_vertex;
         Model.vertexCnt = head.vertex.count;
+#ifdef TARGET_PC
+        VertexDataTop = data = (void *)&file_vertex_real[head.vertex.count];
+#else
         file_vertex = (HsfBuffer *)((u32)fileptr+head.vertex.ofs);
         VertexDataTop = data = (void *)&file_vertex[head.vertex.count];
+#endif
         for(i=0; i<head.vertex.count; i++, new_vertex++, file_vertex++) {
             temp_data = file_vertex->data;
             new_vertex->count = file_vertex->count;
             new_vertex->name = SetName((u32 *)&file_vertex->name);
-            new_vertex->data = (void *)((u32)data+(u32)temp_data);
+            new_vertex->data = (void *)((uintptr_t)data + (uintptr_t)temp_data);
             for(j=0; j<new_vertex->count; j++) {
-                data_elem = (HsfVector3f *)(((u32)data)+((u32)temp_data)+(j*sizeof(HsfVector3f)));
+                data_elem = (HsfVector3f *)((uintptr_t)data + (uintptr_t)temp_data + (j * sizeof(HsfVector3f)));
+#ifdef TARGET_PC
+                byteswap_hsfvec3f(data_elem);
+#endif
                 ((HsfVector3f *)new_vertex->data)[j].x = data_elem->x;
                 ((HsfVector3f *)new_vertex->data)[j].y = data_elem->y;
                 ((HsfVector3f *)new_vertex->data)[j].z = data_elem->z;
@@ -348,18 +434,38 @@ static void NormalLoad(void)
     
     if(head.normal.count) {
         s32 cenv_count = head.cenv.count;
+#ifdef TARGET_PC
+        HsfBuffer32b *file_normal_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.normal.ofs);
+        temp_normal = file_normal = NormalTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.normal.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.normal.count; i++) {
+            byteswap_hsfbuffer(&file_normal_real[i], &file_normal[i]);
+        }
+#else
         temp_normal = file_normal = (HsfBuffer *)((u32)fileptr+head.normal.ofs);
         data = (void *)&file_normal[head.normal.count];
+#endif
         new_normal = temp_normal;
         Model.normal = new_normal;
         Model.normalCnt = head.normal.count;
+#ifdef TARGET_PC
+        VertexDataTop = data = (void *)&file_normal_real[head.normal.count];
+#else
         file_normal = (HsfBuffer *)((u32)fileptr+head.normal.ofs);
         NormalDataTop = data = (void *)&file_normal[head.normal.count];
+#endif
         for(i=0; i<head.normal.count; i++, new_normal++, file_normal++) {
             temp_data = file_normal->data;
             new_normal->count = file_normal->count;
             new_normal->name = SetName((u32 *)&file_normal->name);
-            new_normal->data = (void *)((u32)data+(u32)temp_data);
+            new_normal->data = (void *)((uintptr_t)data+(uintptr_t)temp_data);
+#ifdef TARGET_PC
+            if (cenv_count != 0) {
+                for (i = 0; i < new_normal->count; i++) {
+                    HsfVector3f *normalData = &((HsfVector3f *)new_normal->data)[i];
+                    byteswap_hsfvec3f(normalData);
+                }
+            }
+#endif
         }
     }
 }
@@ -375,6 +481,13 @@ static void STLoad(void)
     void *temp_data;
     
     if(head.st.count) {
+#ifdef TARGET_PC
+        HsfBuffer32b *file_st_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.st.ofs);
+        temp_st = file_st = StTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.st.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.st.count; i++) {
+            byteswap_hsfbuffer(&file_st_real[i], &file_st[i]);
+        }
+#else
         temp_st = file_st = (HsfBuffer *)((u32)fileptr+head.st.ofs);
         data = (void *)&file_st[head.st.count];
         for(i=0; i<head.st.count; i++, file_st++) {
@@ -382,18 +495,26 @@ static void STLoad(void)
                 data_elem = (HsfVector2f *)(((u32)data)+((u32)file_st->data)+(j*sizeof(HsfVector2f)));
             }
         }
+#endif
         new_st = temp_st;
         Model.st = new_st;
         Model.stCnt = head.st.count;
+#ifdef TARGET_PC
+        data = (void *)&file_st_real[head.st.count];
+#else
         file_st = (HsfBuffer *)((u32)fileptr+head.st.ofs);
         data = (void *)&file_st[head.st.count];
+#endif
         for(i=0; i<head.st.count; i++, new_st++, file_st++) {
             temp_data = file_st->data;
             new_st->count = file_st->count;
             new_st->name = SetName((u32 *)&file_st->name);
-            new_st->data = (void *)((u32)data+(u32)temp_data);
+            new_st->data = (void *)((uintptr_t)data + (uintptr_t)temp_data);
             for(j=0; j<new_st->count; j++) {
-                data_elem = (HsfVector2f *)(((u32)data)+((u32)temp_data)+(j*sizeof(HsfVector2f)));
+                data_elem = (HsfVector2f *)((uintptr_t)data + (uintptr_t)temp_data + (j*sizeof(HsfVector2f)));
+#ifdef TARGET_PC
+                byteswap_hsfvec2f(data_elem);
+#endif
                 ((HsfVector2f *)new_st->data)[j].x = data_elem->x;
                 ((HsfVector2f *)new_st->data)[j].y = data_elem->y;
             }
@@ -415,26 +536,57 @@ static void FaceLoad(void)
     s32 j;
     
     if(head.face.count) {
+#ifdef TARGET_PC
+        HsfBuffer32b *file_face_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.face.ofs);
+        HsfFace32b *file_facedata_real = (HsfFace32b *)&file_face_real[head.face.count];
+        temp_face = file_face = FaceTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.face.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.face.count; i++) {
+            byteswap_hsfbuffer(&file_face_real[i], &file_face[i]);
+        }
+#else
         temp_face = file_face = (HsfBuffer *)((u32)fileptr+head.face.ofs);
         data = (HsfFace *)&file_face[head.face.count];
+#endif
         new_face = temp_face;
         Model.face = new_face;
         Model.faceCnt = head.face.count;
+#ifdef __MWERKS__
         file_face = (HsfBuffer *)((u32)fileptr+head.face.ofs);
         data = (HsfFace *)&file_face[head.face.count];
+#endif
         for(i=0; i<head.face.count; i++, new_face++, file_face++) {
             temp_data = file_face->data;
             new_face->name = SetName((u32 *)&file_face->name);
             new_face->count = file_face->count;
-            new_face->data = (void *)((u32)data+(u32)temp_data);
+#ifdef TARGET_PC
+            {
+                HsfFace32b *facedata_start = (HsfFace32b *)((uintptr_t)file_facedata_real + (uintptr_t)temp_data);
+                data = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfFace) * new_face->count, MEMORY_DEFAULT_NUM);
+                for (j = 0; j < new_face->count; j++) {
+                    byteswap_hsfface(&facedata_start[j], &data[j]);
+                }
+                new_face->data = data;
+                strip = (u8 *)(&facedata_start[new_face->count]);
+            }
+#else
+            new_face->data = (void *)((uintptr_t)data+(uintptr_t)temp_data);
             strip = (u8 *)(&((HsfFace *)new_face->data)[new_face->count]);
+#endif
         }
         new_face = temp_face;
         for(i=0; i<head.face.count; i++, new_face++) {
             file_face_strip = new_face_strip = new_face->data;
             for(j=0; j<new_face->count; j++, new_face_strip++, file_face_strip++) {
                 if(AS_U16(file_face_strip->type) == 4) {
-                    new_face_strip->strip.data = (s16 *)(strip+(u32)file_face_strip->strip.data*(sizeof(s16)*4));
+                    new_face_strip->strip.data = (s16 *)(strip+(uintptr_t)file_face_strip->strip.data*(sizeof(s16)*4));
+#ifdef TARGET_PC
+                    {
+                        s32 k;
+                        for (k = 0; k < new_face_strip->strip.count; k++) {
+                            byteswap_s16(&new_face_strip->strip.data[k]);
+                        }
+                    }
+#endif
                 }
             }
         }
@@ -463,9 +615,9 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             data = &object->data;
             new_object = temp_object = object;
             new_object->data.childrenCount = data->childrenCount;
-            new_object->data.children = (HsfObject **)&NSymIndex[(u32)data->children];
+            new_object->data.children = (HsfObject **)&NSymIndex[(uintptr_t)data->children];
             for(i=0; i<new_object->data.childrenCount; i++) {
-                child_obj = &objtop[(u32)new_object->data.children[i]];
+                child_obj = &objtop[(uintptr_t)new_object->data.children[i]];
                 new_object->data.children[i] = child_obj;
             }
             new_object->data.parent = parent;
@@ -478,14 +630,14 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             new_object->data.st = SearchStPtr((s32)data->st);
             new_object->data.color = SearchColorPtr((s32)data->color);
             new_object->data.face = SearchFacePtr((s32)data->face);
-            new_object->data.vertexShape = (HsfBuffer **)&NSymIndex[(u32)data->vertexShape];
+            new_object->data.vertexShape = (HsfBuffer **)&NSymIndex[(uintptr_t)data->vertexShape];
             for(i=0; i<new_object->data.vertexShapeCnt; i++) {
-                temp.shape = &vtxtop[(u32)new_object->data.vertexShape[i]];
+                temp.shape = &vtxtop[(uintptr_t)new_object->data.vertexShape[i]];
                 new_object->data.vertexShape[i] = temp.shape;
             }
-            new_object->data.cluster = (HsfCluster **)&NSymIndex[(u32)data->cluster];
+            new_object->data.cluster = (HsfCluster **)&NSymIndex[(uintptr_t)data->cluster];
             for(i=0; i<new_object->data.clusterCnt; i++) {
-                temp.cluster = &ClusterTop[(u32)new_object->data.cluster[i]];
+                temp.cluster = &ClusterTop[(uintptr_t)new_object->data.cluster[i]];
                 new_object->data.cluster[i] = temp.cluster;
             }
             new_object->data.cenv = SearchCenvPtr((s32)data->cenv);
@@ -495,8 +647,8 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             } else {
                 new_object->data.attribute = NULL;
             }
-            new_object->data.file[0] = (void *)((u32)fileptr+(u32)data->file[0]);
-            new_object->data.file[1] = (void *)((u32)fileptr+(u32)data->file[1]);
+            new_object->data.file[0] = (void *)((uintptr_t)fileptr + (uintptr_t)data->file[0]);
+            new_object->data.file[1] = (void *)((uintptr_t)fileptr + (uintptr_t)data->file[1]);
             new_object->data.base.pos.x = data->base.pos.x;
             new_object->data.base.pos.y = data->base.pos.y;
             new_object->data.base.pos.z = data->base.pos.z;
@@ -526,9 +678,9 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             new_object = temp_object = object;
             new_object->data.parent = parent;
             new_object->data.childrenCount = data->childrenCount;
-            new_object->data.children = (HsfObject **)&NSymIndex[(u32)data->children];
+            new_object->data.children = (HsfObject **)&NSymIndex[(uintptr_t)data->children];
             for(i=0; i<new_object->data.childrenCount; i++) {
-                child_obj = &objtop[(u32)new_object->data.children[i]];
+                child_obj = &objtop[(uintptr_t)new_object->data.children[i]];
                 new_object->data.children[i] = child_obj;
             }
             if(Model.root == NULL) {
@@ -548,15 +700,15 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             new_object = temp_object = object;
             new_object->data.parent = parent;
             new_object->data.childrenCount = data->childrenCount;
-            new_object->data.children = (HsfObject **)&NSymIndex[(u32)data->children];
+            new_object->data.children = (HsfObject **)&NSymIndex[(uintptr_t)data->children];
             for(i=0; i<new_object->data.childrenCount; i++) {
-                child_obj = &objtop[(u32)new_object->data.children[i]];
+                child_obj = &objtop[(uintptr_t)new_object->data.children[i]];
                 new_object->data.children[i] = child_obj;
             }
             if(Model.root == NULL) {
                 Model.root = temp_object;
             }
-            new_object->data.replica = &objtop[(u32)new_object->data.replica];
+            new_object->data.replica = &objtop[(uintptr_t)new_object->data.replica];
             for(i=0; i<data->childrenCount; i++) {
                 DispObject(new_object, new_object->data.children[i]);
             }
@@ -691,7 +843,15 @@ static void ObjectLoad(void)
     s32 obj_type;
 
     if(head.object.count) {
+#ifdef TARGET_PC
+        HsfObject32b *file_object_real = (HsfObject32b *)((uintptr_t)fileptr + head.object.ofs);
+        objtop = object = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfObject) * head.object.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.object.count; i++) {
+            byteswap_hsfobject(&file_object_real[i], &objtop[i]);
+        }
+#else
         objtop = object = (HsfObject *)((u32)fileptr+head.object.ofs);
+#endif
         for(i=0; i<head.object.count; i++, object++) {
             new_object = object;
             new_object->name = SetName((u32 *)&object->name);
@@ -729,24 +889,37 @@ static void CenvLoad(void)
     s32 i;
     
     if(head.cenv.count) {
+#ifdef TARGET_PC
+        HsfCenv32b *file_cenv_real = (HsfCenv32b *)((uintptr_t)fileptr + head.cenv.ofs);
+        cenv_file = CenvTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfCenv) * head.cenv.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.cenv.count; i++) {
+            byteswap_hsfcenv(&file_cenv_real[i], &cenv_file[i]);
+        }
+        data_base = &file_cenv_real[head.cenv.count];
+#else
         cenv_file = (HsfCenv *)((u32)fileptr+head.cenv.ofs);
         data_base = &cenv_file[head.cenv.count];
+#endif
         weight_base = data_base;
         cenv_new = cenv_file;
         Model.cenvCnt = head.cenv.count;
         Model.cenv = cenv_file;
         for(i=0; i<head.cenv.count; i++) {
-            cenv_new[i].singleData = (HsfCenvSingle *)((u32)cenv_file[i].singleData+(u32)data_base);
-            cenv_new[i].dualData = (HsfCenvDual *)((u32)cenv_file[i].dualData+(u32)data_base);
-            cenv_new[i].multiData = (HsfCenvMulti *)((u32)cenv_file[i].multiData+(u32)data_base);
+            cenv_new[i].singleData = (HsfCenvSingle *)((uintptr_t)cenv_file[i].singleData + (uintptr_t)data_base);
+            cenv_new[i].dualData = (HsfCenvDual *)((uintptr_t)cenv_file[i].dualData + (uintptr_t)data_base);
+            cenv_new[i].multiData = (HsfCenvMulti *)((uintptr_t)cenv_file[i].multiData + (uintptr_t)data_base);
             cenv_new[i].singleCount = cenv_file[i].singleCount;
             cenv_new[i].dualCount = cenv_file[i].dualCount;
             cenv_new[i].multiCount = cenv_file[i].multiCount;
             cenv_new[i].copyCount = cenv_file[i].copyCount;
             cenv_new[i].vtxCount = cenv_file[i].vtxCount;
-            weight_base = (void *)((u32)weight_base+(cenv_new[i].singleCount*sizeof(HsfCenvSingle)));
-            weight_base = (void *)((u32)weight_base+(cenv_new[i].dualCount*sizeof(HsfCenvDual)));
-            weight_base = (void *)((u32)weight_base+(cenv_new[i].multiCount*sizeof(HsfCenvMulti)));
+            weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].singleCount * sizeof(HsfCenvSingle)));
+            weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].dualCount * sizeof(HsfCenvDual)));
+            weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].multiCount * sizeof(HsfCenvMulti)));
+#ifdef TARGET_PC
+            byteswap_hsfcenv_single(cenv_new[i].singleData);
+            // TODO PC malloc dual, multi etc and byteswap them
+#endif
         }
         for(i=0; i<head.cenv.count; i++) {
             single_new = single_file = cenv_new[i].singleData;
@@ -763,7 +936,7 @@ static void CenvLoad(void)
                 dual_new[j].target1 = dual_file[j].target1;
                 dual_new[j].target2 = dual_file[j].target2;
                 dual_new[j].weightCnt = dual_file[j].weightCnt;
-                dual_new[j].weight = (HsfCenvDualWeight *)((u32)weight_base+(u32)dual_file[j].weight);
+                dual_new[j].weight = (HsfCenvDualWeight *)((uintptr_t)weight_base + (uintptr_t)dual_file[j].weight);
             }
             multi_new = multi_file = cenv_new[i].multiData;
             for(j=0; j<cenv_new[i].multiCount; j++) {
@@ -772,7 +945,7 @@ static void CenvLoad(void)
                 multi_new[j].posCnt = multi_file[j].posCnt;
                 multi_new[j].normal = multi_file[j].normal;
                 multi_new[j].normalCnt = multi_file[j].normalCnt;
-                multi_new[j].weight = (HsfCenvMultiWeight *)((u32)weight_base+(u32)multi_file[j].weight);
+                multi_new[j].weight = (HsfCenvMultiWeight *)((uintptr_t)weight_base + (uintptr_t)multi_file[j].weight);
             }
             dual_new = dual_file = cenv_new[i].dualData;
             for(j=0; j<cenv_new[i].dualCount; j++) {
@@ -795,7 +968,15 @@ static void SkeletonLoad(void)
     s32 i;
     
     if(head.skeleton.count) {
+#ifdef TARGET_PC
+        HsfSkeleton32b *file_skeleton_real = (HsfSkeleton32b *)((uintptr_t)fileptr + head.skeleton.ofs);
+        skeleton_new = skeleton_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfSkeleton) * head.skeleton.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.skeleton.count; i++) {
+            byteswap_hsfskeleton(&file_skeleton_real[i], &skeleton_file[i]);
+        }
+#else
         skeleton_new = skeleton_file = (HsfSkeleton *)((u32)fileptr+head.skeleton.ofs);
+#endif
         Model.skeletonCnt = head.skeleton.count;
         Model.skeleton = skeleton_file;
         for(i=0; i<head.skeleton.count; i++) {
@@ -822,16 +1003,31 @@ static void PartLoad(void)
     s32 i, j;
     
     if(head.part.count) {
+#ifdef TARGET_PC
+        HsfPart32b *file_part_real = (HsfPart32b *)((uintptr_t)fileptr + head.part.ofs);
+        part_new = part_file = PartTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfPart) * head.part.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.part.count; i++) {
+            byteswap_hsfpart(&file_part_real[i], &part_file[i]);
+        }
+#else
         part_new = part_file = (HsfPart *)((u32)fileptr+head.part.ofs);
+#endif
         Model.partCnt = head.part.count;
         Model.part = part_file;
+#ifdef TARGET_PC
+        data = (u16 *)&file_part_real[head.part.count];
+#else
         data = (u16 *)&part_file[head.part.count];
+#endif
         for(i=0; i<head.part.count; i++, part_new++) {
             part_new->name = SetName((u32 *)&part_file[i].name);
             part_new->count = part_file[i].count;
-            part_new->vertex = &data[(u32)part_file[i].vertex];
+            part_new->vertex = &data[(uintptr_t)part_file[i].vertex];
             for(j=0; j<part_new->count; j++) {
                 part_new->vertex[j] = part_new->vertex[j];
+#ifdef TARGET_PC
+                byteswap_u16(&part_new->vertex[j]);
+#endif
             }
         }
     }
@@ -845,7 +1041,11 @@ static void ClusterLoad(void)
     s32 i, j;
     
     if(head.cluster.count) {
+#ifdef TARGET_PC
+        cluster_new = cluster_file = ClusterTop;
+#else
         cluster_new = cluster_file = (HsfCluster *)((u32)fileptr+head.cluster.ofs);
+#endif
         Model.clusterCnt = head.cluster.count;
         Model.cluster = cluster_file;
         for(i=0; i<head.cluster.count; i++) {
@@ -858,7 +1058,7 @@ static void ClusterLoad(void)
             cluster_new[i].unk95 = cluster_file[i].unk95;
             cluster_new[i].type = cluster_file[i].type;
             cluster_new[i].vertexCnt = cluster_file[i].vertexCnt;
-            vertexSym = (u32)cluster_file[i].vertex;
+            vertexSym = (uintptr_t)cluster_file[i].vertex;
             cluster_new[i].vertex = (HsfBuffer **)&NSymIndex[vertexSym];
             for(j=0; j<cluster_new[i].vertexCnt; j++) {
                 vertex = SearchVertexPtr((s32)cluster_new[i].vertex[j]);
@@ -875,7 +1075,15 @@ static void ShapeLoad(void)
     HsfShape *shape_file;
 
     if(head.shape.count) {
+#ifdef TARGET_PC
+        HsfShape32b *file_shape_real = (HsfShape32b *)((uintptr_t)fileptr + head.shape.ofs);
+        shape_new = shape_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfShape) * head.shape.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.shape.count; i++) {
+            byteswap_hsfshape(&file_shape_real[i], &shape_file[i]);
+        }
+#else
         shape_new = shape_file = (HsfShape *)((u32)fileptr+head.shape.ofs);
+#endif
         Model.shapeCnt = head.shape.count;
         Model.shape = shape_file;
         for(i=0; i<Model.shapeCnt; i++) {
@@ -885,7 +1093,7 @@ static void ShapeLoad(void)
             shape_new[i].name = SetName((u32 *)&shape_file[i].name);
             shape_new[i].count16[0] = shape_file[i].count16[0];
             shape_new[i].count16[1] = shape_file[i].count16[1];
-            vertexSym = (u32)shape_file[i].vertex;
+            vertexSym = (uintptr_t)shape_file[i].vertex;
             shape_new[i].vertex = (HsfBuffer **)&NSymIndex[vertexSym];
             for(j=0; j<shape_new[i].count16[1]; j++) {
                 vertex = &vtxtop[(u32)shape_new[i].vertex[j]];
@@ -904,11 +1112,23 @@ static void MapAttrLoad(void)
     u16 *data;
     
     if(head.mapAttr.count) {
+#ifdef TARGET_PC
+        HsfMapAttr32b *file_mapattr_real = (HsfMapAttr32b *)((uintptr_t)fileptr + head.mapAttr.ofs);
+        mapattr_file = mapattr_base = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMapAttr) * head.mapAttr.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.mapAttr.count; i++) {
+            byteswap_hsfmapattr(&file_mapattr_real[i], &mapattr_base[i]);
+        }
+#else
         mapattr_file = mapattr_base = (HsfMapAttr *)((u32)fileptr+head.mapAttr.ofs);
+#endif
         mapattr_new = mapattr_base;
         Model.mapAttrCnt = head.mapAttr.count;
         Model.mapAttr = mapattr_base;
+#ifdef TARGET_PC
+        data = (u16 *)&file_mapattr_real[head.part.count];
+#else
         data = (u16 *)&mapattr_base[head.mapAttr.count];
+#endif
         for(i=0; i<head.mapAttr.count; i++, mapattr_file++, mapattr_new++) {
             mapattr_new->data = &data[(u32)mapattr_file->data];
         }
@@ -925,14 +1145,26 @@ static void BitmapLoad(void)
     s32 i;
     
     if(head.bitmap.count) {
+#ifdef TARGET_PC
+        HsfBitmap32b *file_bitmap_real = (HsfBitmap32b *)((uintptr_t)fileptr + head.bitmap.ofs);
+        bitmap_temp = bitmap_file = BitmapTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBitmap) * head.bitmap.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.bitmap.count; i++) {
+            byteswap_hsfbitmap(&file_bitmap_real[i], &bitmap_file[i]);
+        }
+#else
         bitmap_temp = bitmap_file = (HsfBitmap *)((u32)fileptr+head.bitmap.ofs);
         data = &bitmap_file[head.bitmap.count];
         for(i=0; i<head.bitmap.count; i++, bitmap_file++);
+#endif
         bitmap_new = bitmap_temp;
         Model.bitmap = bitmap_file;
         Model.bitmapCnt = head.bitmap.count;
+#ifdef TARGET_PC
+        data = (void *)&file_bitmap_real[head.st.count];
+#else
         bitmap_file = (HsfBitmap *)((u32)fileptr+head.bitmap.ofs);
         data = &bitmap_file[head.bitmap.count];
+#endif
         for(i=0; i<head.bitmap.count; i++, bitmap_file++, bitmap_new++) {
             bitmap_new->name = SetName((u32 *)&bitmap_file->name);
             bitmap_new->dataFmt = bitmap_file->dataFmt;
@@ -940,11 +1172,11 @@ static void BitmapLoad(void)
             bitmap_new->sizeX = bitmap_file->sizeX;
             bitmap_new->sizeY = bitmap_file->sizeY;
             bitmap_new->palSize = bitmap_file->palSize;
-            palette = SearchPalettePtr((u32)bitmap_file->palData);
+            palette = SearchPalettePtr((uintptr_t)bitmap_file->palData);
             if(palette) {
                 bitmap_new->palData = palette->data;
             }
-            bitmap_new->data = (void *)((u32)data+(u32)bitmap_file->data);
+            bitmap_new->data = (void *)((uintptr_t)data+(uintptr_t)bitmap_file->data);
         }
     }
 }
@@ -962,24 +1194,39 @@ static void PaletteLoad(void)
     u16 *data;
     
     if(head.palette.count) {
+#ifdef TARGET_PC
+        HsfPalette32b *file_palette_real = (HsfPalette32b *)((uintptr_t)fileptr + head.palette.ofs);
+        palette_temp = palette_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfPalette) * head.palette.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.palette.count; i++) {
+            byteswap_hsfpalette(&file_palette_real[i], &palette_file[i]);
+        }
+#else
         palette_temp = palette_file = (HsfPalette *)((u32)fileptr+head.palette.ofs);
         data_base = (u16 *)&palette_file[head.palette.count];
         for(i=0; i<head.palette.count; i++, palette_file++) {
-            temp_data = (u16 *)((u32)data_base+(u32)palette_file->data);
+            temp_data = (u16 *)((uintptr_t)data_base+(uintptr_t)palette_file->data);
         }
+#endif
         Model.palette = palette_temp;
         Model.paletteCnt = head.palette.count;
         palette_new = palette_temp;
+#ifdef TARGET_PC
+        data_base = (u16 *)&file_palette_real[head.palette.count];
+#else
         palette_file = (HsfPalette *)((u32)fileptr+head.palette.ofs);
         data_base = (u16 *)&palette_file[head.palette.count];
+#endif
         for(i=0; i<head.palette.count; i++, palette_file++, palette_new++) {
-            temp_data = (u16 *)((u32)data_base+(u32)palette_file->data);
+            temp_data = (u16 *)((uintptr_t)data_base+(uintptr_t)palette_file->data);
             data = temp_data;
             palette_new->name = SetName((u32 *)&palette_file->name);
             palette_new->data = data;
             palette_new->palSize = palette_file->palSize;
             for(j=0; j<palette_file->palSize; j++) {
                 data[j] = data[j];
+#ifdef TARGET_PC
+                byteswap_u16(&data[j]);
+#endif
             }
         }
     }
@@ -1126,21 +1373,21 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
     switch(track->curveType) {
         case HSF_CURVE_STEP:
         {
-            step_data = (float *)((u32)data+(u32)track->data);
+            step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
         }
         break;
         
         case HSF_CURVE_LINEAR:
         {
-            linear_data = (float *)((u32)data+(u32)track->data);
+            linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
         }
         break;
         
         case HSF_CURVE_BEZIER:
         {
-            bezier_data = (float *)((u32)data+(u32)track->data);
+            bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
         }
         break;
@@ -1171,21 +1418,21 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
     switch(track->curveType) {
         case HSF_CURVE_STEP:
         {
-            step_data = (float *)((u32)data+(u32)track->data);
+            step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
         }
         break;
         
         case HSF_CURVE_LINEAR:
         {
-            linear_data = (float *)((u32)data+(u32)track->data);
+            linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
         }
         break;
         
         case HSF_CURVE_BEZIER:
         {
-            bezier_data = (float *)((u32)data+(u32)track->data);
+            bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
         }
         break;
@@ -1216,21 +1463,21 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
     switch(track->curveType) {
         case HSF_CURVE_STEP:
         {
-            step_data = (float *)((u32)data+(u32)track->data);
+            step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
         }
         break;
         
         case HSF_CURVE_LINEAR:
         {
-            linear_data = (float *)((u32)data+(u32)track->data);
+            linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
         }
         break;
         
         case HSF_CURVE_BEZIER:
         {
-            bezier_data = (float *)((u32)data+(u32)track->data);
+            bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
         }
         break;
@@ -1252,21 +1499,21 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
     switch(track->curveType) {
         case HSF_CURVE_STEP:
         {
-            step_data = (float *)((u32)data+(u32)track->data);
+            step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
         }
         break;
         
         case HSF_CURVE_LINEAR:
         {
-            linear_data = (float *)((u32)data+(u32)track->data);
+            linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
         }
         break;
         
         case HSF_CURVE_BEZIER:
         {
-            bezier_data = (float *)((u32)data+(u32)track->data);
+            bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
         }
         break;
@@ -1299,30 +1546,38 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
     switch(track->curveType) {
         case HSF_CURVE_STEP:
         {
-            step_data = (float *)((u32)data+(u32)track->data);
+            step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
         }
         break;
         
         case HSF_CURVE_LINEAR:
         {
-            linear_data = (float *)((u32)data+(u32)track->data);
+            linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
         }
         break;
         
         case HSF_CURVE_BEZIER:
         {
-            bezier_data = (float *)((u32)data+(u32)track->data);
+            bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
         }
         break;
         
         case HSF_CURVE_BITMAP:
         {
-            new_frame = file_frame = (HsfBitmapKey *)((u32)data+(u32)track->data);
+#ifdef TARGET_PC
+            HsfBitmapKey32b *file_frame_real = (HsfBitmapKey32b *)((uintptr_t)data + (uintptr_t)track->data);
+            new_frame = file_frame = track->dataTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBitmapKey) * track->numKeyframes, MEMORY_DEFAULT_NUM);
+#else
+            new_frame = file_frame = (HsfBitmapKey *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = file_frame;
+#endif
             for(i=0; i<out_track->numKeyframes; i++, file_frame++, new_frame++) {
+#ifdef TARGET_PC
+                byteswap_hsfbitmapkey(&file_frame_real[i], new_frame);
+#endif
                 new_frame->data = SearchBitmapPtr((s32)file_frame->data);
             }
         }
@@ -1344,12 +1599,31 @@ static void MotionLoad(void)
     MotionOnly = FALSE;
     MotionModel = NULL;
     if(head.motion.count) {
-        temp_motion = file_motion = (HsfMotion *)((u32)fileptr+head.motion.ofs);
+#ifdef TARGET_PC
+        HsfMotion32b *file_motion_real = (HsfMotion32b *)((uintptr_t)fileptr + head.motion.ofs);
+        temp_motion = file_motion = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMotion) * head.motion.count, MEMORY_DEFAULT_NUM);
+        for (i = 0; i < head.motion.count; i++) {
+            byteswap_hsfmotion(&file_motion_real[i], &file_motion[i]);
+        }
+#else
+        temp_motion = file_motion = (HsfMotion *)((uintptr_t)fileptr+head.motion.ofs);
+#endif
         new_motion = temp_motion;
         Model.motion = new_motion;
         Model.motionCnt = file_motion->numTracks;
+#ifdef TARGET_PC
+        {
+            HsfTrack32b *track_base_real = (HsfTrack32b *)&file_motion_real[head.motion.count];
+            track_base = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfTrack) * file_motion->numTracks, MEMORY_DEFAULT_NUM);
+            track_data = &track_base_real[file_motion->numTracks];
+            for (i = 0; i < file_motion->numTracks; i++) {
+                byteswap_hsftrack(&track_base_real[i], &track_base[i]);
+            }
+        }
+#else
         track_base = (HsfTrack *)&file_motion[head.motion.count];
         track_data = &track_base[file_motion->numTracks];
+#endif
         new_motion->track = track_base;
         for(i=0; i<(s32)file_motion->numTracks; i++) {
             switch(track_base[i].type) {
@@ -1410,8 +1684,13 @@ static void MatrixLoad(void)
     HsfMatrix *matrix_file;
     
     if(head.matrix.count) {
-        matrix_file = (HsfMatrix *)((u32)fileptr+head.matrix.ofs);
+#ifdef TARGET_PC
+        matrix_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMatrix) * head.matrix.count, MEMORY_DEFAULT_NUM);
+        byteswap_hsfmatrix((HsfMatrix *)((uintptr_t)fileptr + head.matrix.ofs));
+#else
+        matrix_file = (HsfMatrix *)((uintptr_t)fileptr+head.matrix.ofs);
         matrix_file->data = (Mtx *)((u32)fileptr+head.matrix.ofs+sizeof(HsfMatrix));
+#endif
         Model.matrix = matrix_file;
         Model.matrixCnt = head.matrix.count;
     }
@@ -1436,7 +1715,11 @@ static HsfBuffer *SearchVertexPtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    vertex = (HsfBuffer *)((u32)fileptr+head.vertex.ofs);
+#ifdef TARGET_PC
+    vertex = vtxtop;
+#else
+    vertex = (HsfBuffer *)((uintptr_t)fileptr+head.vertex.ofs);
+#endif
     vertex += id;
     return vertex;
 }
@@ -1447,7 +1730,11 @@ static HsfBuffer *SearchNormalPtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    normal = (HsfBuffer *)((u32)fileptr+head.normal.ofs);
+#ifdef TARGET_PC
+    normal = NormalTop;
+#else
+    normal = (HsfBuffer *)((uintptr_t)fileptr+head.normal.ofs);
+#endif
     normal += id;
     return normal;
 }
@@ -1458,7 +1745,11 @@ static HsfBuffer *SearchStPtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    st = (HsfBuffer *)((u32)fileptr+head.st.ofs);
+#ifdef TARGET_PC
+    st = StTop;
+#else
+    st = (HsfBuffer *)((uintptr_t)fileptr+head.st.ofs);
+#endif
     st += id;
     return st;
 }
@@ -1469,7 +1760,11 @@ static HsfBuffer *SearchColorPtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    color = (HsfBuffer *)((u32)fileptr+head.color.ofs);
+#ifdef TARGET_PC
+    color = ColorTop;
+#else
+    color = (HsfBuffer *)((uintptr_t)fileptr+head.color.ofs);
+#endif
     color += id;
     return color;
 }
@@ -1480,7 +1775,11 @@ static HsfBuffer *SearchFacePtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    face = (HsfBuffer *)((u32)fileptr+head.face.ofs);
+#ifdef TARGET_PC
+    face = FaceTop;
+#else
+    face = (HsfBuffer *)((uintptr_t)fileptr+head.face.ofs);
+#endif
     face += id;
     return face;
 }
@@ -1491,7 +1790,11 @@ static HsfCenv *SearchCenvPtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    cenv = (HsfCenv *)((u32)fileptr+head.cenv.ofs);
+#ifdef TARGET_PC
+    cenv = CenvTop;
+#else
+    cenv = (HsfCenv *)((uintptr_t)fileptr + head.cenv.ofs);
+#endif
     cenv += id;
     return cenv;
 }
@@ -1502,7 +1805,11 @@ static HsfPart *SearchPartPtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    part = (HsfPart *)((u32)fileptr+head.part.ofs);
+#ifdef TARGET_PC
+    part = PartTop;
+#else
+    part = (HsfPart *)((uintptr_t)fileptr+head.part.ofs);
+#endif
     part += id;
     return part;
 }
@@ -1524,7 +1831,11 @@ static HsfBitmap *SearchBitmapPtr(s32 id)
     if(id == -1) {
         return NULL;
     }
-    bitmap = (HsfBitmap *)((u32)fileptr+head.bitmap.ofs);
+#ifdef TARGET_PC
+    bitmap = BitmapTop;
+#else
+    bitmap = (HsfBitmap *)((uintptr_t)fileptr+head.bitmap.ofs);
+#endif
     bitmap += id;
     return bitmap;
 }
@@ -1540,3 +1851,44 @@ static char *GetMotionString(u16 *str_ofs)
     char *ret = &StringTable[*str_ofs];
     return ret;
 }
+
+#ifdef TARGET_PC
+void KillHSF(HsfData *data)
+{
+    s32 i, j;
+    HuMemDirectFree(data->attribute);
+    HuMemDirectFree(data->bitmap);
+    HuMemDirectFree(data->cenv);
+    HuMemDirectFree(data->skeleton);
+    for (i = 0; i < data->faceCnt; i++) { 
+        HuMemDirectFree(data->face[i].data);
+    }
+    HuMemDirectFree(data->face);
+    HuMemDirectFree(data->material);
+    for (i = 0; i < data->motionCnt; i++) {
+        HsfMotion *motion = &data->motion[i];
+        for (j = 0; j < motion->numTracks; j++) {
+            HsfTrack *track = data->motion[i].track;
+            if (track->type == HSF_TRACK_ATTRIBUTE && track->curveType == HSF_CURVE_BITMAP) {
+                // in this case we needed to allocate space for HsfBitmapKey structs
+                HuMemDirectFree(track->dataTop);
+            }
+        }
+        HuMemDirectFree(motion->track);
+    }
+    HuMemDirectFree(data->motion);
+    HuMemDirectFree(data->normal);
+    HuMemDirectFree(data->object);
+    HuMemDirectFree(data->matrix);
+    HuMemDirectFree(data->palette);
+    HuMemDirectFree(data->st);
+    HuMemDirectFree(data->vertex);
+    HuMemDirectFree(data->cenv);
+    HuMemDirectFree(data->cluster);
+    HuMemDirectFree(data->part);
+    HuMemDirectFree(data->shape);
+    HuMemDirectFree(data->mapAttr);
+    HuMemDirectFree(data->symbol);
+    // TODO PC free embedded data
+}
+#endif

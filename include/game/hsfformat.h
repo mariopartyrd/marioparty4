@@ -227,9 +227,8 @@ typedef struct hsf_cluster {
         s32 target;
     };
     HsfPart *part;
-    float unk10;
-    float unk14[1]; // unknown array size
-    u8 unk18[124];
+    float index;
+    float weight[32]; // unknown array size
     u8 adjusted;
     u8 unk95;
     u16 type;
@@ -261,7 +260,7 @@ typedef struct hsf_object_data {
         } mesh;
         struct hsf_object *replica;
     };
-    
+
     HsfBuffer *face;
     HsfBuffer *vertex;
     HsfBuffer *normal;
@@ -351,6 +350,9 @@ typedef struct hsf_track {
         float value;
         void *data;
     };
+#ifdef TARGET_PC
+    void *dataTop;
+#endif
 } HsfTrack;
 
 typedef struct hsf_motion {
@@ -397,6 +399,9 @@ typedef struct hsf_data {
     HsfObject *object;
     HsfMapAttr *mapAttr;
     HsfMatrix *matrix;
+#ifdef TARGET_PC
+    void **symbol;
+#endif
     s16 sceneCnt;
     s16 attributeCnt;
     s16 materialCnt;

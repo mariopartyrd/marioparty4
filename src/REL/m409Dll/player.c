@@ -1263,7 +1263,7 @@ f32 fn_1_BF38(s16 arg0)
     f32 length;
 
     motionData = &Hu3DMotion[arg0];
-    hsfMotionData = motionData->unk_04->motion;
+    hsfMotionData = motionData->hsfData->motion;
     length = hsfMotionData->len;
     return length;
 }

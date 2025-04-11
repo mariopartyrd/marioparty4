@@ -747,7 +747,7 @@ float BoardModelMotionShapeMaxTimeGet(s16 model)
             return 0;
         }
         motion = &Hu3DMotion[hsf_model->unk_0E];
-        motion_hsf = motion->unk_04->motion;
+        motion_hsf = motion->hsfData->motion;
         return motion_hsf->len;
     }
 }

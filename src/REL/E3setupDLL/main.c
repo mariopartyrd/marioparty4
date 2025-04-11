@@ -300,7 +300,7 @@ float MotionMaxTimeGet(s16 arg0)
     HsfMotion *temp_r30;
     s16 temp_r29;
 
-    temp_r30 = temp_r31->unk_04->motion;
+    temp_r30 = temp_r31->hsfData->motion;
     temp_r29 = temp_r30->len;
     return temp_r29;
 }

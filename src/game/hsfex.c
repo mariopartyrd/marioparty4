@@ -59,7 +59,7 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
     temp_r23 = &Hu3DData[arg0];
     temp_r19 = &Hu3DMotion[temp_r23->unk_08];
     temp_r22 = temp_r23->hsfData;
-    temp_r18 = temp_r19->unk_04;
+    temp_r18 = temp_r19->hsfData;
     temp_r26 = temp_r18->motion;
     for (var_r25 = 0; var_r25 < HU3D_CAM_MAX; var_r25++) {
         if (arg1 & (1 << var_r25)) {

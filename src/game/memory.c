@@ -12,11 +12,11 @@ struct memory_block {
     u8 flag;
     struct memory_block *prev;
     struct memory_block *next;
-    u32 num;
+    uintptr_t num;
     uintptr_t retaddr;
 };
 
-static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, u32 num, uintptr_t retaddr);
+static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, uintptr_t num, uintptr_t retaddr);
 
 void *HuMemHeapInit(void *ptr, s32 size)
 {
@@ -31,7 +31,7 @@ void *HuMemHeapInit(void *ptr, s32 size)
     return block;
 }
 
-void *HuMemMemoryAllocNum(void *heap_ptr, s32 size, u32 num, uintptr_t retaddr)
+void *HuMemMemoryAllocNum(void *heap_ptr, s32 size, uintptr_t num, uintptr_t retaddr)
 {
     return HuMemMemoryAlloc2(heap_ptr, size, num, retaddr);
 }
@@ -41,7 +41,7 @@ void *HuMemMemoryAlloc(void *heap_ptr, s32 size, uintptr_t retaddr)
     return HuMemMemoryAlloc2(heap_ptr, size, -256, retaddr);
 }
 
-static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, u32 num, uintptr_t retaddr)
+static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, uintptr_t num, uintptr_t retaddr)
 {
     s32 alloc_size = MEM_ALLOC_SIZE(size);
     struct memory_block *block = heap_ptr;
@@ -76,7 +76,7 @@ static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, u32 num, uintptr_t reta
     return NULL;
 }
 
-void HuMemMemoryFreeNum(void *heap_ptr, u32 num, uintptr_t retaddr)
+void HuMemMemoryFreeNum(void *heap_ptr, uintptr_t num, uintptr_t retaddr)
 {
     struct memory_block *block = heap_ptr;
     do {

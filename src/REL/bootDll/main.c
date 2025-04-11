@@ -371,8 +371,10 @@ void ObjectSetup(void)
      s16 group;
      s16 sprite;
      AnimData *data;
+#ifdef TARGET_PC
+     return;
+#else
      option = 0;
-#ifdef __MWERKS__
      if (OSGetResetCode() != OS_RESET_RESTART) {
          return;
      }
@@ -425,7 +427,6 @@ void ObjectSetup(void)
          HuPrcVSleep();
      }
 #ifdef __MWERKS__
-     // TODO PC
      if (!option) {
          OSSetProgressiveMode(OS_PROGRESSIVE_MODE_ON);
          VIConfigure(&GXNtsc480Prog);
@@ -565,8 +566,6 @@ void ObjectSetup(void)
      s16 sprite;
      AnimData *sprite_data;
      s16 i;
-#ifdef __MWERKS__
-     // TODO PC
      titleMdlId[0] = model = Hu3DModelCreateFile(TITLE_CHAR_HSF);
      Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
      Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
@@ -578,7 +577,6 @@ void ObjectSetup(void)
      Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
      Hu3DModelCameraInfoSet(model, 1);
      Hu3DModelLightInfoSet(model, 1);
-#endif
      #if VERSION_NTSC
      bootGrpId = HuSprGrpCreate(4);
      #else
@@ -640,11 +638,8 @@ void ObjectSetup(void)
      s16 choice;
      float temp;
  repeat:
-#ifdef __MWERKS__
-     // TODO PC
      Hu3DModelAttrReset(titleMdlId[0], HU3D_ATTR_DISPOFF);
      Hu3DModelAttrReset(titleMdlId[1], HU3D_ATTR_DISPOFF);
-#endif
      HuSprAttrReset(bootGrpId, 0, HUSPR_ATTR_DISPOFF);
      HuSprAttrReset(bootGrpId, 1, HUSPR_ATTR_DISPOFF);
 #ifdef __MWERKS__
@@ -796,12 +791,9 @@ void ObjectSetup(void)
      while (WipeStatGet()) {
          HuPrcVSleep();
      }
-#ifdef __MWERKS__
-     // TODO PC
      Hu3DModelAttrSet(titleMdlId[0], HU3D_ATTR_DISPOFF);
      Hu3DModelAttrSet(titleMdlId[1], HU3D_ATTR_DISPOFF);
      Hu3DModelAttrSet(titleMdlId[2], HU3D_ATTR_DISPOFF);
-#endif
      #if VERSION_NTSC
      HuSprAttrSet(bootGrpId, 0, HUSPR_ATTR_DISPOFF);
      HuSprAttrSet(bootGrpId, 1, HUSPR_ATTR_DISPOFF);

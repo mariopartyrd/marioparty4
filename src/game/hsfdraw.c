@@ -89,7 +89,7 @@ static u16 faceCnt;
 static u16 *faceNumBuf;
 static s32 DLTotalNum;
 static u32 totalSize;
-static u32 mallocNo;
+static uintptr_t mallocNo;
 static s32 curModelID;
 static s16 polySize;
 static s32 PGFinishF;
@@ -2367,7 +2367,7 @@ static void ObjDraw(HsfDrawObject *arg0) {
     }
 }
 
-void MakeDisplayList(s16 arg0, u32 arg1) {
+void MakeDisplayList(s16 arg0, uintptr_t arg1) {
     HsfData *temp_r31;
     ModelData *var_r30;
 
