@@ -14,7 +14,7 @@
 #define EXEC_CHILDWATCH 2
 #define EXEC_KILLED 3
 
-static jmp_buf processjmpbuf;
+static JMPBUF processjmpbuf;
 static Process *processtop;
 static Process *processcur;
 static u16 processcnt;

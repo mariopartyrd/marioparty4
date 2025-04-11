@@ -2,12 +2,20 @@
 #define _GAME_JMP_H
 
 #ifdef TARGET_PC
-#include <setjmp.h>
 #include <stdint.h>
 
-
+#ifdef _M_X64
+#include "../extern/longjmp_win64/longjmp_win64.h"
+#define SETJMP setjmp_win64
+#define LONGJMP longjmp_win64
+#define JMPBUF JMP_BUF_WIN64
+#else
+#include <setjmp.h>
 #define SETJMP setjmp
 #define LONGJMP longjmp
+#define JMPBUF jmp_buf
+#endif
+
 
 #ifndef _JMP_BUF_DEFINED
 #if defined(_M_IX86) || defined(__i386__)
@@ -24,7 +32,7 @@ typedef struct __JUMP_BUFFER {
     uint32_t UnwindFunc;
     uint32_t UnwindData[6];
 } _JUMP_BUFFER;
-#elif defined(_M_X64) || defined(__x86_64__)
+#elif defined(__x86_64__)
 #ifndef SETJMP_FLOAT128
 // TODO do we need to align this?
 typedef struct _SETJMP_FLOAT128 {
@@ -136,9 +144,12 @@ typedef struct _JUMP_BUFFER {
 #if defined(_M_IX86) || defined(__i386__)
 #define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Eip = (uintptr_t)func
 #define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Esp = (uintptr_t)sp
-#elif defined(_M_X64) || defined(__x86_64__)
+#elif defined(__x86_64__)
 #define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Rip = (uintptr_t)func
 #define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Rsp = (uintptr_t)sp
+#elif defined(_M_X64)
+#define SETJMP_SET_IP(jump, func) (jump)->rip_getjmp = (uintptr_t)func
+#define SETJMP_SET_SP(jump, sp) (jump)->rsp_getjmp = (uintptr_t)sp
 #elif defined(_M_ARM) || defined(__arm__)
 #define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Pc = (uintptr_t)func
 #define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (uintptr_t)sp
@@ -166,6 +177,7 @@ typedef struct jmp_buf {
 s32 gcsetjmp(jmp_buf *jump);
 s32 gclongjmp(jmp_buf *jump, s32 status);
 
+#define JMPBUF jmp_buf
 #define SETJMP(jump) gcsetjmp(&(jump))
 #define LONGJMP(jump, status) gclongjmp(&(jump), (status))
 
