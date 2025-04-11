@@ -5,8 +5,10 @@
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/object.h"
+#include <game/sprite.h>
 #include "game/pad.h"
 #include "game/printfunc.h"
+
 
 #define OM_OVL_HIS_MAX 16
 #define OM_MAX_GROUPS 10

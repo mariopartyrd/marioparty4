@@ -629,7 +629,7 @@ void GXSetTexCoordScaleManually(GXTexCoordID coord, u8 enable, u16 ss, u16 ts)
 
 void GXResetWriteGatherPipe(void)
 {
-    puts("GXResetWriteGatherPipe is a stub");
+    // puts("GXResetWriteGatherPipe is a stub");
 }
 
 void ARQInit(void) {

@@ -134,20 +134,20 @@ typedef struct _JUMP_BUFFER {
 #endif
 
 #if defined(_M_IX86) || defined(__i386__)
-#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Eip = (size_t)func
-#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Esp = (size_t)sp
+#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Eip = (uintptr_t)func
+#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Esp = (uintptr_t)sp
 #elif defined(_M_X64) || defined(__x86_64__)
-#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Rip = (size_t)func
-#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Rsp = (size_t)sp
+#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Rip = (uintptr_t)func
+#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Rsp = (uintptr_t)sp
 #elif defined(_M_ARM) || defined(__arm__)
-#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Pc = (size_t)func
-#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (size_t)sp
+#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Pc = (uintptr_t)func
+#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (uintptr_t)sp
 #elif defined(_M_ARM64) || defined(__aarch64__)
-#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Lr = (size_t)func
-#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (size_t)sp
+#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Lr = (uintptr_t)func
+#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (uintptr_t)sp
 #elif defined(__riscv)
-#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->ra = (size_t)func
-#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->sp = (size_t)sp
+#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->ra = (uintptr_t)func
+#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->sp = (uintptr_t)sp
 #endif
 
 #else

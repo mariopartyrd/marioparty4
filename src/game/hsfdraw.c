@@ -1842,7 +1842,9 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
     GXLoadTexObj(&sp1C, arg3);
 #ifdef TARGET_PC
     GXDestroyTexObj(&sp1C);
-    GXDestroyTlutObj(&sp10);
+    if (arg1->dataFmt == 9 || arg1->dataFmt == 10 || arg1->dataFmt == 11) {
+        GXDestroyTlutObj(&sp10);
+    }
 #endif
 }
 
@@ -2579,6 +2581,9 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                         GXTexCoord1x16(arg1->indices[1][3]);
                     }
                 }
+#ifdef TARGET_PC
+                GXEnd();
+#endif
                 faceCnt = faceNumBuf[drawCnt] / 3;
                 break;
             case 3:
@@ -2649,6 +2654,9 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                         GXTexCoord1x16(arg1->indices[1][3]);
                     }
                 }
+#ifdef TARGET_PC
+                GXEnd();
+#endif
                 faceCnt = faceNumBuf[drawCnt] / 4;
                 break;
             case 4:
@@ -2720,6 +2728,9 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                         GXTexCoord1x16(var_r24[3]);
                     }
                 }
+#ifdef TARGET_PC
+                GXEnd();
+#endif
                 faceCnt = arg1->strip.count + 1;
                 break;
         }

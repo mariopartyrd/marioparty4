@@ -145,7 +145,7 @@ typedef struct HsfObjectData32b {
             float baseMorph;
             float morphWeight[33];
         } mesh;
-        struct hsf_object *replica;
+        u32 replica;
     };
 
     u32 face;

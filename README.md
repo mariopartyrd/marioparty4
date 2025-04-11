@@ -98,4 +98,4 @@ After you got the GameCube build up and running for `GMPE01_00`:
   ```
 Linux and MacOS, and x64 support is coming later.
 
-- Open the solution in Visual Studio and build. [Fix for UtilsVulkan.h](https://github.com/encounter/dawn-cmake/blob/f10e70a26db00bb89f88be4204cf49ffc869e194/src/dawn/native/vulkan/UtilsVulkan.h#L128-L132)
+- Open the solution in Visual Studio and build.
