@@ -72,6 +72,9 @@ Process *HuPrcCreate(void (*func)(void), u16 prio, u32 stack_size, s32 extra_siz
     if (stack_size == 0) {
         stack_size = 2048;
     }
+#ifdef TARGET_PC
+    stack_size *= 2;
+#endif
     alloc_size = HuMemMemoryAllocSizeGet(sizeof(Process)) + HuMemMemoryAllocSizeGet(stack_size) + HuMemMemoryAllocSizeGet(extra_size);
     if (!(heap = HuMemDirectMalloc(HEAP_SYSTEM, alloc_size))) {
         OSReport("process> malloc error size %d\n", alloc_size);

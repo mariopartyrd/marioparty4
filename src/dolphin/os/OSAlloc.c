@@ -155,7 +155,7 @@ void *OSAllocFromHeap(int heap, unsigned long size)
 
     hd = &HeapArray[heap];
     size += 0x20;
-    size = (size + 0x1F) & 0xFFFFFFE0;
+    size = (size + 0x1F) & ~0x1F;
 
     for (cell = hd->free; cell != NULL; cell = cell->next) {
         if ((signed)size <= (signed)cell->size) {

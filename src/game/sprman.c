@@ -215,12 +215,7 @@ AnimData *HuSprAnimRead(void *data)
     AnimBmpData *bmp;
     AnimBankData *bank;
     AnimPatData *pat;
-#ifdef TARGET_PC
-    AnimBmpData *bmp2;
-    AnimBankData *bank2;
-    AnimPatData *pat2;
-#endif
-    
+
 #ifdef TARGET_PC
     AnimData *anim = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimData), MEMORY_DEFAULT_NUM);
     byteswap_animdata(data, anim);
@@ -231,25 +226,28 @@ AnimData *HuSprAnimRead(void *data)
         anim->useNum++;
         return anim;
     }
-    bank = (AnimBankData *)((uintptr_t)anim->bank+(uintptr_t)data);
+    bank = (void *)((uintptr_t)anim->bank+(uintptr_t)data);
 #ifdef TARGET_PC
-    bank2 = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimBankData), MEMORY_DEFAULT_NUM);
-    byteswap_animbankdata(bank, bank2);
-    bank = bank2;
+    bank = HuMemDirectMallocNum(HEAP_DATA, anim->bankNum * sizeof(AnimBankData), MEMORY_DEFAULT_NUM);
+    for(i=0; i<anim->bankNum; i++) {
+        byteswap_animbankdata(&((AnimBankData32b*)((uintptr_t)anim->bank+(uintptr_t)data))[i], &bank[i]);
+    }
 #endif
     anim->bank = bank;
-    pat = (AnimPatData *)((uintptr_t)anim->pat+(uintptr_t)data);
+    pat = (void *)((uintptr_t)anim->pat+(uintptr_t)data);
 #ifdef TARGET_PC
-    pat2 = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimPatData), MEMORY_DEFAULT_NUM);
-    byteswap_animpatdata(pat, pat2);
-    pat = pat2;
+    pat = HuMemDirectMallocNum(HEAP_DATA, anim->patNum * sizeof(AnimPatData), MEMORY_DEFAULT_NUM);
+    for(i=0; i<anim->patNum; i++) {
+        byteswap_animpatdata(&((AnimPatData32b*)((uintptr_t)anim->pat+(uintptr_t)data))[i], &pat[i]);
+    }
 #endif
     anim->pat = pat;
-    bmp = (AnimBmpData *)((uintptr_t)anim->bmp+(uintptr_t)data);
+    bmp = (void *)((uintptr_t)anim->bmp+(uintptr_t)data);
 #ifdef TARGET_PC
-    bmp2 = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimBmpData), MEMORY_DEFAULT_NUM);
-    byteswap_animbmpdata(bmp, bmp2);
-    bmp = bmp2;
+    bmp = HuMemDirectMallocNum(HEAP_DATA, anim->bmpNum * sizeof(AnimBmpData), MEMORY_DEFAULT_NUM);
+    for(i=0; i<anim->bmpNum; i++) {
+        byteswap_animbmpdata(&((AnimBmpData32b*)((uintptr_t)anim->bmp+(uintptr_t)data))[i], &bmp[i]);
+    }
 #endif
     anim->bmp = bmp;
     for(i=0; i<anim->bankNum; i++, bank++) {

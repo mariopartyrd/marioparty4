@@ -2,12 +2,48 @@
 #define _SRC_BYTESWAP_H_
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "game/animdata.h"
 #include "game/hsfformat.h"
+
+typedef struct AnimData32b {
+    s16 bankNum;
+    s16 patNum;
+    s16 bmpNum;
+    s16 useNum;
+
+    u32 bank;
+    u32 pat;
+    u32 bmp;
+} AnimData32b;
+
+typedef struct AnimBankData32b {
+    s16 timeNum;
+    s16 unk;
+    u32 frame;
+} AnimBankData32b;
+
+typedef struct AnimPatData32b {
+    s16 layerNum;
+    s16 centerX;
+    s16 centerY;
+    s16 sizeX;
+    s16 sizeY;
+    u32 layer;
+} AnimPatData32b;
+
+typedef struct AnimBmpData32b {
+    u8 pixSize;
+    u8 dataFmt;
+    s16 palNum;
+    s16 sizeX;
+    s16 sizeY;
+    u32 dataSize;
+    u32 palData;
+    u32 data;
+} AnimBmpData32b;
 
 typedef struct HsfCluster32b {
     u32 name[2];
@@ -236,10 +272,10 @@ void byteswap_s32(s32 *src);
 void byteswap_hsfvec3f(HsfVector3f *src);
 void byteswap_hsfvec2f(HsfVector2f *src);
 
-void byteswap_animdata(void *src, AnimData* dest);
-void byteswap_animbankdata(void *src, AnimBankData *dest);
-void byteswap_animpatdata(void *src, AnimPatData *dest);
-void byteswap_animbmpdata(void *src, AnimBmpData *dest);
+void byteswap_animdata(void *src, AnimData *dest);
+void byteswap_animbankdata(AnimBankData32b *src, AnimBankData *dest);
+void byteswap_animpatdata(AnimPatData32b *src, AnimPatData *dest);
+void byteswap_animbmpdata(AnimBmpData32b *src, AnimBmpData *dest);
 void byteswap_animframedata(AnimFrameData *src);
 void byteswap_animlayerdata(AnimLayerData *src);
 

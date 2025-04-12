@@ -566,6 +566,8 @@ void ObjectSetup(void)
      s16 sprite;
      AnimData *sprite_data;
      s16 i;
+#ifdef __MWERKS__
+     // TODO PC
      titleMdlId[0] = model = Hu3DModelCreateFile(TITLE_CHAR_HSF);
      Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);
      Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
@@ -577,6 +579,7 @@ void ObjectSetup(void)
      Hu3DModelAttrSet(model, HU3D_MOTATTR_LOOP);
      Hu3DModelCameraInfoSet(model, 1);
      Hu3DModelLightInfoSet(model, 1);
+#endif
      #if VERSION_NTSC
      bootGrpId = HuSprGrpCreate(4);
      #else

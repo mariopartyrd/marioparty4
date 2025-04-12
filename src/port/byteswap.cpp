@@ -8,43 +8,6 @@
 
 extern "C" {
 #include "port/byteswap.h"
-
-typedef struct AnimData32b {
-    s16 bankNum;
-    s16 patNum;
-    s16 bmpNum;
-    s16 useNum;
-
-    u32 bank;
-    u32 pat;
-    u32 bmp;
-} AnimData32b;
-
-typedef struct AnimBankData32b {
-    s16 timeNum;
-    s16 unk;
-    u32 frame;
-} AnimBankData32b;
-
-typedef struct AnimPatData32b {
-    s16 layerNum;
-    s16 centerX;
-    s16 centerY;
-    s16 sizeX;
-    s16 sizeY;
-    u32 layer;
-} AnimPatData32b;
-
-typedef struct AnimBmpData32b {
-    u8 pixSize;
-    u8 dataFmt;
-    s16 palNum;
-    s16 sizeX;
-    s16 sizeY;
-    u32 dataSize;
-    u32 palData;
-    u32 data;
-} AnimBmpData32b;
 }
 
 template <typename T> [[nodiscard]] constexpr T bswap16(T val) noexcept
@@ -796,24 +759,21 @@ void byteswap_animdata(void *src, AnimData *dest)
     sVisitedPtrs.clear();
 }
 
-void byteswap_animbankdata(void *src, AnimBankData *dest)
+void byteswap_animbankdata(AnimBankData32b *src, AnimBankData *dest)
 {
-    auto *bank = reinterpret_cast<AnimBankData32b *>(src);
-    bswap(*bank, *bank, *dest);
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
-void byteswap_animpatdata(void *src, AnimPatData *dest)
+void byteswap_animpatdata(AnimPatData32b *src, AnimPatData *dest)
 {
-    auto *pat = reinterpret_cast<AnimPatData32b *>(src);
-    bswap(*pat, *pat, *dest);
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
-void byteswap_animbmpdata(void *src, AnimBmpData *dest)
+void byteswap_animbmpdata(AnimBmpData32b *src, AnimBmpData *dest)
 {
-    auto *bmp = reinterpret_cast<AnimBmpData32b *>(src);
-    bswap(*bmp, *bmp, *dest);
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
