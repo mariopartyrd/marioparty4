@@ -36,6 +36,7 @@ typedef struct vec2f {
 
 #ifndef __MWERKS__
 void HuSetVecF(Vec *arg0, f32 arg8, f32 arg9, f32 argA);
+void HuSubVecF(Vec* out, Vec* in, Vec* sub);
 #endif
 
 #endif

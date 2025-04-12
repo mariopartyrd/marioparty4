@@ -377,7 +377,7 @@ void fn_1_1074(void)
     CameraData *var_r31;
 
     var_r31 = &Hu3DCamera[0];
-    C_MTXPerspective(sp64, var_r31->fov, var_r31->aspect, var_r31->near, var_r31->far);
+    C_MTXPerspective(sp64, var_r31->fov, var_r31->aspect, var_r31->nnear, var_r31->ffar);
     GXSetProjection(sp64, GX_PERSPECTIVE);
     GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
     GXSetScissor(0, 0, 640, 480);

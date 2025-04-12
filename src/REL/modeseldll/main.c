@@ -1,5 +1,7 @@
 #include "REL/modeseldll.h"
+#include "ext_math.h"
 #include "game/audio.h"
+#include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/object.h"
@@ -8,7 +10,8 @@
 #include "game/process.h"
 #include "game/window.h"
 #include "game/wipe.h"
-#include "ext_math.h"
+
+#include <msm/msmsys.h>
 
 typedef struct camera_view_params {
     Vec rot;

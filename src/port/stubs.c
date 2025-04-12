@@ -5,6 +5,7 @@
 #include <types.h>
 
 #include <game/dvd.h>
+#include <game/msm.h>
 #include <game/object.h>
 
 // Credits: Super Monkey Ball
@@ -193,6 +194,16 @@ s32 CARDWrite(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 offset)
 s32 CARDWriteAsync(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 offset, CARDCallback callback)
 {
     puts("CARDWriteAsync is a stub");
+    return 0;
+}
+
+s32 CARDGetSerialNo(s32 chan, u64* serialNo)
+{
+    return 0;
+}
+
+s32 CARDSetStatus(s32 chan, s32 fileNo, CARDStat* stat)
+{
     return 0;
 }
 
@@ -647,15 +658,38 @@ void msmMusFdoutEnd(void)
 {
 }
 
+int msmMusPlay(int musId, MSM_MUSPARAM *musParam)
+{
+    // TODO
+    return 0;
+}
+
+s32 msmMusGetStatus(int musNo)
+{
+    // TODO
+    return 0;
+}
+
+s32 msmStreamGetStatus(int streamNo)
+{
+    // TODO
+    return 0;
+}
+
+s32 msmSeSetParam(int seNo, MSM_SEPARAM* param)
+{
+    return 0;
+}
+
+s32 msmMusSetParam(s32 arg0, MSM_MUSPARAM* arg1)
+{
+    return 0;
+}
+
 s32 HuSoftResetButtonCheck(void)
 {
     //puts("HuSoftResetButtonCheck is a stub");
     return 0;
-}
-
-void MGSeqMain(void)
-{
-    // puts("MGSeqMain is a stub");
 }
 
 // TODO remove

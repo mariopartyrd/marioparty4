@@ -16,6 +16,7 @@
 #include "game/wipe.h"
 #include "math.h"
 
+#include "port/byteswap.h"
 
 #include "data_num/title.h"
 
@@ -290,10 +291,7 @@ void ObjectSetup(void)
          HuTHPClose();
 #endif
          HuPrcVSleep();
-#ifdef __MWERKS__
-         // TODO PC
          HuSprGrpKill(group_thp);
-#endif
          if (!skip_wait) {
              HuPrcSleep(60);
          }

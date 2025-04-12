@@ -140,8 +140,8 @@ struct model_data {
 }; // sizeof 0x124
 typedef struct camera_data {
     float fov;
-    float near;
-    float far;
+    float nnear;
+    float ffar;
     float aspect;
     float aspect_dupe;
     Vec pos;

@@ -1,9 +1,11 @@
 #include "game/mapspace.h"
 #include "game/hsfman.h"
 
-#include "math.h"
+#include <ext_math.h>
 
+#ifdef __MWERKS__
 extern void HuSetVecF(Vec*, double, double, double);
+#endif
 
 static BOOL PolygonRangeCheck(HsfMapAttr *arg0, float arg1, float arg2, float *arg3, float arg4);
 static s32 DefIfnnerMapCircle(Vec *arg0, s16 *arg1, Vec *arg2, Vec *arg3);

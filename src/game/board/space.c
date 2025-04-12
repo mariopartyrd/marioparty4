@@ -817,7 +817,7 @@ static void DrawSpaces(ModelData *model, Mtx matrix)
     camera = &boardCamera;
     BoardCameraPosGet(&pos);
     BoardCameraTargetGet(&target);
-    MTXPerspective(proj, camera->fov, camera->aspect, camera->near, camera->far);
+    MTXPerspective(proj, camera->fov, camera->aspect, camera->nnear, camera->ffar);
     GXSetProjection(proj, GX_PERSPECTIVE);
     MTXLookAt(lookat, &pos, &camera->up, &target);
     GXSetViewport(camera->viewport_x, camera->viewport_y, camera->viewport_w, camera->viewport_h, camera->viewport_near, camera->viewport_far);

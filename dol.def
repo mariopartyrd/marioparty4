@@ -2,6 +2,23 @@ EXPORTS
    game_main
    byteswap_u32
    byteswap_s32
+   espAttrReset
+   espAttrSet
+   espBankSet
+   espColorSet
+   espDispOff
+   espDispOn
+   espDrawNoSet
+   espEntry
+   espGrpIDGet
+   espInit
+   espKill
+   espPosSet
+   espPriSet
+   espScaleSet
+   espSpeedSet
+   espTPLvlSet
+   espZRotSet
    OSReport
    OSGetTick
    HuAudFXPlay
@@ -27,6 +44,7 @@ EXPORTS
    HuPrcCurrentGet
    HuPrcSleep
    HuPrcVSleep
+   HuSetVecF
    HuSprAnimRead
    HuSprCreate
    HuSprGrpCreate
@@ -38,6 +56,7 @@ EXPORTS
    HuSprPosSet
    HuSprScaleSet
    HuSprTPLvlSet
+   HuSubVecF
    HuWindowInit
    HuWinInit
    HuWinCreate

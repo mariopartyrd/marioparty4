@@ -19,7 +19,7 @@ typedef struct hsfdraw_struct_01 {
     /* 0x1C */ float unk1C;
     /* 0x20 */ float unk20;
     /* 0x24 */ float unk24;
-    /* 0x28 */ float unk28;
+    /* 0x28 */ float unk28; 
     /* 0x2C */ float unk2C;
     /* 0x30 */ float unk30;
     /* 0x34 */ float unk34;

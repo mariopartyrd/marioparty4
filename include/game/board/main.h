@@ -1,66 +1,67 @@
 #ifndef _BOARD_MAIN_H
 #define _BOARD_MAIN_H
 
+#include "dolphin.h"
+#include "game/data.h"
 #include "game/gamework_data.h"
 #include "game/object.h"
-#include "game/data.h"
-#include "dolphin.h"
 
-#define BOARD_ID_MAIN1 0 //TOADS_MIDWAY_MADNESS
-#define BOARD_ID_MAIN2 1 //GOOMBAS_GREEDY_GALA
-#define BOARD_ID_MAIN3 2 //SHY_GUYS_JUNGLE_JAM
-#define BOARD_ID_MAIN4 3 //BOOS_HAUNTED_BASH
-#define BOARD_ID_MAIN5 4 //KOOPAS_SEASIDE_SOIREE
-#define BOARD_ID_MAIN6 5 //BOWSERS_GNARLY_PARTY
-#define BOARD_ID_TUTORIAL 6 //TUTORIAL_BOARD
-#define BOARD_ID_EXTRA1 7 //MEGA_BOARD_MAYHEM
-#define BOARD_ID_EXTRA2 8 //MINI_BOARD_MAD_DASH
+
+#define BOARD_ID_MAIN1 0 // TOADS_MIDWAY_MADNESS
+#define BOARD_ID_MAIN2 1 // GOOMBAS_GREEDY_GALA
+#define BOARD_ID_MAIN3 2 // SHY_GUYS_JUNGLE_JAM
+#define BOARD_ID_MAIN4 3 // BOOS_HAUNTED_BASH
+#define BOARD_ID_MAIN5 4 // KOOPAS_SEASIDE_SOIREE
+#define BOARD_ID_MAIN6 5 // BOWSERS_GNARLY_PARTY
+#define BOARD_ID_TUTORIAL 6 // TUTORIAL_BOARD
+#define BOARD_ID_EXTRA1 7 // MEGA_BOARD_MAYHEM
+#define BOARD_ID_EXTRA2 8 // MINI_BOARD_MAD_DASH
 
 #define BOARD_FABS(value) ((value < 0) ? -(value) : (value))
 
 typedef struct board_focus_data {
-	u16 view_type;
-	s16 time;
-	s16 max_time;
-	float fov_start;
-	float fov_end;
-	float zoom_start;
-	float zoom_end;
-	Vec rot_start;
-	Vec rot_end;
-	Vec target_start;
-	Vec target_end;
+    u16 view_type;
+    s16 time;
+    s16 max_time;
+    float fov_start;
+    float fov_end;
+    float zoom_start;
+    float zoom_end;
+    Vec rot_start;
+    Vec rot_end;
+    Vec target_start;
+    Vec target_end;
 } BoardFocusData;
 
 typedef struct board_camera_data {
-	struct {
-		u8 hide_all : 1;
-		u8 moving : 1;
-		u8 quaking : 1;
-	};
-	u16 mask;
-	s16 target_mdl;
-	s16 target_space;
-	s32 quake_timer;
-	float quake_strength;
-	float fov;
-	float near;
-	float far;
-	float aspect;
-	float viewport_x;
-	float viewport_y;
-	float viewport_w;
-	float viewport_h;
-	float viewport_near;
-	float viewport_far;
-	Vec pos;
-	Vec up;
-	Vec target;
-	Vec offset;
-	Vec rot;
-	float zoom;
-	void (*pos_calc)(struct board_camera_data *);
-	BoardFocusData focus;
+    struct {
+        u8 hide_all : 1;
+        u8 moving : 1;
+        u8 quaking : 1;
+    };
+    u16 mask;
+    s16 target_mdl;
+    s16 target_space;
+    s32 quake_timer;
+    float quake_strength;
+    float fov;
+    float nnear;
+    float ffar;
+    float aspect;
+    float viewport_x;
+    float viewport_y;
+    float viewport_w;
+    float viewport_h;
+    float viewport_near;
+    float viewport_far;
+    Vec pos;
+    Vec up;
+    Vec target;
+    Vec offset;
+    Vec rot;
+    float zoom;
+    void (*pos_calc)(struct board_camera_data *);
+    BoardFocusData focus;
 } BoardCameraData;
 
 extern BoardCameraData boardCamera;
@@ -123,8 +124,8 @@ void BoardCameraPosSet(float x, float y, float z);
 void BoardCameraXRotZoomSet(float zoom, float x_rot);
 void BoardCameraZoomSet(float zoom);
 void BoardCameraRotSet(float x, float y);
-void BoardCameraNearFarSet(float near, float far);
-void BoardCameraNearFarGet(float *near, float *far);
+void BoardCameraNearFarSet(float nnear, float ffar);
+void BoardCameraNearFarGet(float *nnear, float *ffar);
 void BoardCameraMotionStart(s16 model_target, Vec *rot_target, float zoom_target, float fov_target);
 void BoardCameraMotionStartEx(s16 model_target, Vec *rot_target, Vec *offset_end, float zoom_target, float fov_target, s16 max_time);
 void BoardCameraFovSet(float fov);

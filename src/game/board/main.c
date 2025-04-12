@@ -1016,21 +1016,21 @@ void BoardCameraRotSet(float x, float y)
     camera->rot.y = y;
 }
 
-void BoardCameraNearFarSet(float near, float far)
+void BoardCameraNearFarSet(float nnear, float ffar)
 {
     BoardCameraData *camera = &boardCamera;
-    camera->near = near;
-    camera->far = far;
+    camera->nnear = nnear;
+    camera->ffar = ffar;
 }
 
-void BoardCameraNearFarGet(float *near, float *far)
+void BoardCameraNearFarGet(float *nnear, float *ffar)
 {
     BoardCameraData *camera = &boardCamera;
-    if(near) {
-        *near = camera->near;
+    if(nnear) {
+        *nnear = camera->nnear;
     }
-    if(far) {
-        *far = camera->far;
+    if(ffar) {
+        *ffar = camera->ffar;
     }
 }
 
@@ -1137,8 +1137,8 @@ void BoardCameraInit(void)
     memset(&boardCamera, 0, sizeof(BoardCameraData));
     camera = &boardCamera;
     camera->fov = 25;
-    camera->near = 100;
-    camera->far = 13000;
+    camera->nnear = 100;
+    camera->ffar = 13000;
     camera->aspect = HU_DISP_ASPECT;
     camera->viewport_x = 0;
     camera->viewport_y = 0;
@@ -1187,7 +1187,7 @@ static void UpdateCamera(omObjData *object)
     }
     CalcCameraView();
     camera = &boardCamera;
-    Hu3DCameraPerspectiveSet(camera->mask, camera->fov, camera->near, camera->far, camera->aspect);
+    Hu3DCameraPerspectiveSet(camera->mask, camera->fov, camera->nnear, camera->ffar, camera->aspect);
     Hu3DCameraViewportSet(camera->mask, camera->viewport_x, camera->viewport_y, camera->viewport_w, camera->viewport_h, camera->viewport_near, camera->viewport_far);
     target = &camera->target;
     if(camera->pos_calc) {

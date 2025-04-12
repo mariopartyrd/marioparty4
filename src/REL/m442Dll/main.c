@@ -243,7 +243,7 @@ void ObjectSetup(void)
     var_r29 = Hu3DGLightCreateV(&lbl_1_data_54, &lbl_1_bss_14, &lbl_1_data_6C);
     Hu3DGLightInfinitytSet(var_r29);
     Hu3DGLightStaticSet(var_r29, 1);
-    Hu3DShadowCreate(10.0f, var_r30->near, var_r30->far);
+    Hu3DShadowCreate(10.0f, var_r30->nnear, var_r30->ffar);
     Hu3DShadowTPLvlSet(0.625f);
     Hu3DShadowPosSet(&lbl_1_data_70, &lbl_1_data_7C, &lbl_1_data_60);
     HuAudSndGrpSet(0x44);
@@ -1527,7 +1527,7 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
-    C_MTXPerspective(sp40, var_r29->fov, var_r29->aspect, var_r29->near, var_r29->far);
+    C_MTXPerspective(sp40, var_r29->fov, var_r29->aspect, var_r29->nnear, var_r29->ffar);
     GXSetProjection(sp40, GX_PERSPECTIVE);
     MTXInverse(mtx, spA0);
     spA0[0][3] = spA0[1][3] = spA0[2][3] = 0.0f;

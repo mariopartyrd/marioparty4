@@ -75,7 +75,7 @@ void ObjectSetup(void)
     light = Hu3DGLightCreateV(&lbl_1_data_38, &lbl_1_bss_8, &lbl_1_data_50);
     Hu3DGLightInfinitytSet(light);
     Hu3DGLightStaticSet(light, 1);
-    Hu3DShadowCreate(10, camera->near, camera->far);
+    Hu3DShadowCreate(10, camera->nnear, camera->ffar);
     Hu3DShadowTPLvlSet(0.7f);
     Hu3DShadowPosSet(&lbl_1_data_54, &lbl_1_data_60, &lbl_1_data_44);
     HuAudSndGrpSet(77);
