@@ -17,8 +17,7 @@ BOOL ARCheckInit()
 
 u32 ARGetSize()
 {
-    // TODO
-    return 0x8000;
+    return sizeof(ARAM);
 }
 
 void ARStartDMA(u32 type, u32 mainmem_addr, u32 aram_addr, u32 length)

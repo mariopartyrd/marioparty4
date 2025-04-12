@@ -692,5 +692,56 @@ s32 HuSoftResetButtonCheck(void)
     return 0;
 }
 
+s16 HuTHPSprCreateVol(char *path, s16 loop, s16 prio, float volume)
+{
+    return 0;
+}
+
+s16 HuTHPSprCreate(char *path, s16 loop, s16 prio)
+{
+    return 0;
+}
+
+s16 HuTHP3DCreateVol(char *path, s16 loop, float volume)
+{
+    return 0;
+}
+
+s16 HuTHP3DCreate(char *path, s16 loop)
+{
+    return 0;
+}
+
+void HuTHPStop(void)
+{
+}
+
+void HuTHPClose(void)
+{
+}
+
+void HuTHPRestart(void)
+{
+}
+
+BOOL HuTHPEndCheck(void)
+{
+    return TRUE;
+}
+
+s32 HuTHPFrameGet(void)
+{
+    return 0;
+}
+
+s32 HuTHPTotalFrameGet(void)
+{
+    return 0;
+}
+
+void HuTHPSetVolume(s32 left, s32 right)
+{
+}
+
 // TODO remove
 u8 fadeStat = 0;

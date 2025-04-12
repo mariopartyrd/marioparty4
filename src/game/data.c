@@ -3,6 +3,8 @@
 #include "game/process.h"
 #include "dolphin/dvd.h"
 
+#include "port/byteswap.h"
+
 #define PTR_OFFSET(ptr, offset) (void *)(((u8 *)(ptr)+(u32)(offset)))
 #define DATA_EFF_SIZE(size) (((size)+1) & ~0x1)
 
@@ -22,7 +24,12 @@ static FileListEntry DataDirStat[] = {
 u32 DirDataSize;
 static u32 DataDirMax;
 static s32 shortAccessSleep;
-static DataReadStat ATTRIBUTE_ALIGN(32) ReadDataStat[DATA_MAX_READSTAT];
+static DataReadStat ATTRIBUTE_ALIGN(32)
+#if TARGET_PC
+ReadDataStat[DATA_MAX_READSTAT + 1]; // to avoid bug
+#else
+ReadDataStat[DATA_MAX_READSTAT];
+#endif
 
 void HuDataInit(void)
 {

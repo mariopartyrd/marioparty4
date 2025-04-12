@@ -103,7 +103,7 @@ set(GAME_FILES
         src/game/malloc.c
         src/game/mapspace.c
         src/game/memory.c
-#        src/game/messdata.c
+        src/game/messdata.c
         src/game/minigame_seq.c
         src/game/objdll.c
         src/game/objmain.c
@@ -151,7 +151,7 @@ endif ()
 
 
 add_library(dol SHARED ${DOLPHIN_FILES} ${GAME_FILES} ${PORT_FILES})
-target_compile_definitions(dol PRIVATE TARGET_PC TARGET_DOL VERSION=${VERSION} MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
+target_compile_definitions(dol PRIVATE TARGET_PC NON_MATCHING TARGET_DOL VERSION=${VERSION} MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
 target_include_directories(dol PRIVATE include build/GMPE01_00/include)
 target_link_libraries(dol PRIVATE aurora::core aurora::gx aurora::vi musyx)
 if (MSVC)
@@ -166,7 +166,7 @@ else ()
 endif ()
 
 add_executable(marioparty4 src/port/portmain.c)
-target_compile_definitions(marioparty4 PRIVATE TARGET_PC VERSION=${VERSION})
+target_compile_definitions(marioparty4 PRIVATE TARGET_PC NON_MATCHING VERSION=${VERSION})
 target_include_directories(marioparty4 PRIVATE include)
 target_link_libraries(marioparty4 PRIVATE dol aurora::main)
 
@@ -178,7 +178,7 @@ foreach (dir ${REL_DIRS})
 
         if (REL_FILES)
             add_library(${dir} SHARED ${REL_FILES})
-            target_compile_definitions(${dir} PRIVATE TARGET_PC VERSION=${VERSION})
+            target_compile_definitions(${dir} PRIVATE TARGET_PC NON_MATCHING VERSION=${VERSION})
             target_include_directories(${dir} PRIVATE include build/GMPE01_00/include)
             if (MSVC)
                 set_target_properties(${dir} PROPERTIES LINK_FLAGS "/EXPORT:ObjectSetup")
