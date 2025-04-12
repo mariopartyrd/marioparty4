@@ -1,6 +1,7 @@
 #include "REL/modeseldll.h"
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/board/ui.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
@@ -106,6 +107,7 @@ void fn_1_414(void)
             HuWinAllKill();
             HuWinInit(1);
             #endif
+#ifdef __MWERKS__
             grpId = HuSprGrpCreate(1);
             sprId = HuTHPSprCreateVol("movie/opmov_s00.thp", 0, 3000, 70.0);
             HuSprGrpMemberSet(grpId, 0, sprId);
@@ -119,6 +121,7 @@ void fn_1_414(void)
             }
             HuTHPClose();
             HuSprGrpKill(grpId);
+#endif
         }
     }
     espAttrReset(lbl_1_bss_152[9], HUSPR_ATTR_DISPOFF);

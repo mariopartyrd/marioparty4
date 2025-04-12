@@ -197,7 +197,6 @@ static inline void GWRumbleSet(s32 value)
 {
     GWGameStat.rumble = value;
     if (value == 0) {
-        // TODO PC: get rumble working
         HuPadRumbleAllStop();
     }
 }
