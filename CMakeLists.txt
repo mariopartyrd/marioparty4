@@ -189,4 +189,4 @@ foreach (dir ${REL_DIRS})
     endif ()
 endforeach ()
 
-add_dependencies(marioparty4 bootDll)
+add_dependencies(marioparty4 bootDll modeseldll)

@@ -1,7 +1,18 @@
 EXPORTS
     game_main
+    C_MTXCopy
+    C_MTXScale
+    C_VECAdd
+    C_VECScale
+    C_VECSubtract
+    C_VECNormalize
+    C_VECMag
+    C_VECCrossProduct
+    mtxRotCat
     byteswap_u32
     byteswap_s32
+    msmMusSetMasterVolume
+    msmSysGetOutputMode
     BoardRollExec
     BoardRollKill
     BoardDiceValueSet
@@ -390,12 +401,30 @@ EXPORTS
     espTPLvlSet
     espZRotSet
     HuAudFXPlay
+    HuAudFXStop
+    HuAudSeqPlay
+    HuAudSeqAllFadeOut
     HuAudSStreamAllFadeOut
     HuAudSStreamPlay
     HuAudSndGrpSetSet
     HuMemDirectMalloc
+    HuMemDirectMallocNum
     HuMemDirectFree
+    HuDataInit
+    HuDataDirRead
+    HuDataRead
+    HuDataReadNum
+    HuDataReadMulti
+    HuDataDirReadAsync
+    HuDataDirReadNumAsync
+    HuDataSelHeapRead
     HuDataSelHeapReadNum
+    HuDataGetSize
+    HuDataDirClose
+    HuDataDirCloseNum
+    HuDataClose
+    HuDataCloseMulti
+    HuDataReadNumHeapShortForce
     HuDecodeData
     Hu3DLayerHookSet
     Hu3DNoSyncSet
@@ -597,16 +626,32 @@ EXPORTS
     Hu3DProjectionPosSet
     Hu3DProjectionTPLvlSet
     Hu3DProjectionKill
-    HuPrcEnd
+    HuPrcInit
+    HuPrcCall
     HuPrcCreate
-    HuPrcCurrentGet
+    HuPrcKill
+    HuPrcEnd
+    HuPrcWakeup
     HuPrcSleep
     HuPrcVSleep
+    HuPrcCurrentGet
+    HuPrcDestructorSet
+    HuPrcDestructorSet2
+    HuPrcChildCreate
+    HuPrcChildLink
+    HuPrcChildUnlink
+    HuPrcChildKill
+    HuPrcMemAlloc
+    HuPrcMemFree
     HuSetVecF
     HuSprAnimRead
+    HuSprBankSet
     HuSprCreate
     HuSprGrpCreate
     HuSprGrpMemberSet
+    HuSprGrpPosSet
+    HuSprGrpScaleSet
+    HuSprGrpScissorSet
     HuSprGrpKill
     HuSprAttrSet
     HuSprAttrReset
@@ -626,6 +671,45 @@ EXPORTS
     HuTHPFrameGet
     HuTHPTotalFrameGet
     HuTHPSetVolume
+    HuCardCheck
+    HuCardMount
+    HuCardUnMount
+    HuCardFormat
+    HuCardOpen
+    HuCardRead
+    HuCardCreate
+    HuCardClose
+    HuCardWrite
+    HuCardDelete
+    HuCardSectorSizeGet
+    HuCardFreeSpaceGet
+    HuCardSlotCheck
+    SLFileOpen
+    SLFileCreate
+    SLFileWrite
+    SLFileClose
+    SLFileRead
+    SLCurSlotNoSet
+    SLSaveDataMake
+    SLCommonSet
+    SLSaveBoard
+    SLSaveBoardStory
+    SLSave
+    SLLoadGameStat
+    SLLoadBoard
+    SLLoadBoardStory
+    SLLoad
+    SLCurBoxNoSet
+    SLSaveFlagSet
+    SLSaveFlagGet
+    SLCheckSumCheck
+    SLCheckSumSet
+    SLSerialNoGet
+    SLSerialNoCheck
+    SLStatSet
+    _CheckFlag
+    _SetFlag
+    _ClearFlag
     HuWindowInit
     HuWinInit
     HuWinCreate
@@ -709,15 +793,21 @@ EXPORTS
     MGSeqInit
     MGSeqCreate
     MGSeqPosSet
+    omAddObjEx
+    omGameSysInit
     omOvlCallEx
-    omOvlReturnEx
+    omOvlGotoEx
     omOvlHisChg
     omOvlHisGet
+    omOvlReturnEx
     omInitObjMan
     OSGetTick
+    OSGetTime
+    OSTicksToCalendarTime
     OSReport
     WipeColorSet
     WipeCreate
     WipeExecAlways
     WipeInit
     WipeStatGet
+    GWGameStatReset

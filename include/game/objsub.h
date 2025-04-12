@@ -4,6 +4,7 @@
 #include "dolphin.h"
 #include "game/process.h"
 #include "game/gamework_data.h"
+#include "version.h"
 
 typedef struct mg_info {
     u16 ovl;
@@ -27,10 +28,10 @@ extern s16 mgBattleStar[4];
 extern s16 mgBattleStarMax;
 extern u8 lbl_801D3E94;
 extern u32 mgRecordExtra;
-extern s32 mgQuitExtraF;
-extern s32 mgPracticeEnableF;
+SHARED_SYM extern s32 mgQuitExtraF;
+SHARED_SYM extern s32 mgPracticeEnableF;
 extern s32 mgInstExitEnableF;
-extern u8 mgBoardHostEnableF;
+SHARED_SYM extern u8 mgBoardHostEnableF;
 
 extern s16 mgTicTacToeGrid[3][3];
 extern u8 mgIndexList[256];

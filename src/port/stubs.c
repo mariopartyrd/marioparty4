@@ -686,6 +686,15 @@ s32 msmMusSetParam(s32 arg0, MSM_MUSPARAM* arg1)
     return 0;
 }
 
+void msmMusSetMasterVolume(s32 vol)
+{
+}
+
+s32 msmSysGetOutputMode(void)
+{
+    return 0;
+}
+
 s32 HuSoftResetButtonCheck(void)
 {
     //puts("HuSoftResetButtonCheck is a stub");

@@ -22,7 +22,7 @@
 
 #define SHADOW_HEAP_SIZE 0x9000
 
-ModelData Hu3DData[HU3D_MODEL_MAX];
+SHARED_SYM ModelData Hu3DData[HU3D_MODEL_MAX];
 CameraData Hu3DCamera[HU3D_CAM_MAX];
 static s16 layerNum[8];
 static void (*layerHook[8])(s16);

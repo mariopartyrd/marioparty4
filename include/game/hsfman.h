@@ -5,6 +5,7 @@
 #include "game/hsfanim.h"
 #include "game/hsfformat.h"
 #include "game/memory.h"
+#include "version.h"
 
 #define HU3D_MODEL_MAX 512
 #define HU3D_MOTION_MAX 256
@@ -297,7 +298,7 @@ void Hu3DProjectionPosSet(s16, Vec *, Vec *, Vec *);
 void Hu3DProjectionTPLvlSet(s16, float);
 void Hu3DMipMapSet(char *, s16, s32, float);
 
-extern ModelData Hu3DData[0x200];
+SHARED_SYM extern ModelData Hu3DData[0x200];
 extern CameraData Hu3DCamera[0x10];
 extern AnimData *reflectAnim[5];
 extern AnimData *hiliteAnim[4];

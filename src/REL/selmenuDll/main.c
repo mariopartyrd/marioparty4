@@ -907,9 +907,12 @@ static void SMSound3DDraw(void);
 
 static void SMSound3DInit(omObjData *object)
 {
+#ifdef __MWERKS__
+    // TODO PC
     s8 *data = msmSeGetIndexPtr(emiCompDataNo);
     emiCompVal = data[12];
     object->func = SMSound3DUpdate;
+#endif
 }
 
 static void SMSound3DUpdate(omObjData *object)

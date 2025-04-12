@@ -8,6 +8,8 @@
 #include <game/sprite.h>
 #include "game/pad.h"
 #include "game/printfunc.h"
+#include "game/minigame_seq.h"
+#include "game/window.h"
 
 
 #define OM_OVL_HIS_MAX 16
@@ -46,6 +48,11 @@ char omUPauseFlag;
 SHARED_SYM s16 omSysExitReq;
 s16 omdispinfo;
 
+#ifdef TARGET_PC
+OverlayID pcOvlToKill = OVL_INVALID;
+s16 pcOvlKillArg = 0;
+#endif
+
 static omOvlHisData omovlhis[OM_OVL_HIS_MAX];
 
 u8 omSysPauseEnableFlag = TRUE;
@@ -63,16 +70,19 @@ void omMasterInit(s32 prio, FileListEntry *ovl_list, s32 ovl_count, OverlayID st
     omovlhisidx = -1;
     omOvlCallEx(start_ovl, 1, 0, 0);
     omDBGSysKeyObj = NULL;
-#ifdef __MWERKS__
-    // TODO PC
     omSysPauseEnable(TRUE);
-#endif
 }
 
 static void omWatchOverlayProc(void)
 {
     while (1) {
         if (omcurovl == OVL_INVALID) {
+#ifdef TARGET_PC
+            if (pcOvlToKill >= 0) {
+                omDLLNumEnd(pcOvlToKill, pcOvlKillArg);
+                pcOvlToKill = OVL_INVALID;
+            }
+#endif
             if (omnextovl >= 0 && fadeStat == 0) {
                 HuPrcSleep(0);
                 OSReport("++++++++++++++++++++ Start New OVL %d (EVT:%d STAT:0x%08x) ++++++++++++++++++\n", omnextovl, omnextovlevtno, omnextovlstat);
@@ -84,22 +94,16 @@ static void omWatchOverlayProc(void)
                 OSReport("objman>Init esp\n");
                 espInit();
                 OSReport("objman>Call objectsetup\n");
-#ifdef __MWERKS__
-                // TODO PC
                 HuAudVoiceInit(omnextovl);
                 HuAudDllSndGrpSet(omnextovl);
-#endif
                 omcurovl = omnextovl;
                 omovlevtno = omnextovlevtno;
                 omovlstat = omnextovlstat;
                 omnextovl = OVL_INVALID;
-#ifdef __MWERKS__
-                // TODO PC
                 if (_CheckFlag(FLAG_ID_MAKE(1, 12))) {
                     MGSeqPracticeInit();
                 }
                 omSysPauseEnable(TRUE);
-#endif
                 omcurdll = omDLLStart(omcurovl, 0);
                 OSReport("objman>ObjectSetup end\n");
                 if (omcurovl != OVL_INVALID) {
@@ -130,6 +134,7 @@ void omOvlCallEx(OverlayID overlay, s16 arg2, s32 event, s32 stat)
     omovlhis[++omovlhisidx].overlay = overlay;
     omovlhis[omovlhisidx].event = event;
     omovlhis[omovlhisidx].stat = stat;
+
     omOvlGotoEx(overlay, arg2, event, stat);
 }
 
@@ -157,16 +162,10 @@ void omOvlReturnEx(s16 level, s16 arg2)
 
 void omOvlKill(s16 arg)
 {
-#ifdef __MWERKS__
-    // TODO PC
     CharModelKill(-1);
     MGSeqKillAll();
-#endif
     Hu3DAllKill();
-#ifdef __MWERKS__
-    // TODO PC
     HuWinAllKill();
-#endif
     HuSprClose();
     HuPrcChildKill(omwatchproc);
     HuMemDirectFreeNum(HEAP_SYSTEM, MEMORY_DEFAULT_NUM);
@@ -174,13 +173,16 @@ void omOvlKill(s16 arg)
     HuMemDirectFreeNum(HEAP_DVD, MEMORY_DEFAULT_NUM);
     HuMemDirectFreeNum(HEAP_DATA, MEMORY_DEFAULT_NUM);
     HuPadRumbleAllStop();
-#ifdef __MWERKS__
-    // TODO PC
     HuAudFXListnerKill();
-#endif
     OSReport("OvlKill %d\n", arg);
     omSysExitReq = FALSE;
+#ifdef TARGET_PC
+    // this function is called from the DLL, we can't kill it directly here
+    pcOvlToKill = omcurovl;
+    pcOvlKillArg = arg;
+#else
     omDLLNumEnd(omcurovl, arg);
+#endif
     omcurovl = OVL_INVALID;
     omDBGSysKeyObj = NULL;
 }

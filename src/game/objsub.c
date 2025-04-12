@@ -1168,10 +1168,10 @@ s16 mgBattleStar[4];
 s16 mgBattleStarMax;
 u8 lbl_801D3E94;
 u32 mgRecordExtra;
-s32 mgQuitExtraF;
-s32 mgPracticeEnableF;
+SHARED_SYM s32 mgQuitExtraF;
+SHARED_SYM s32 mgPracticeEnableF;
 s32 mgInstExitEnableF;
-u8 mgBoardHostEnableF;
+SHARED_SYM u8 mgBoardHostEnableF;
 
 s16 mgTicTacToeGrid[3][3];
 u8 mgIndexList[256];

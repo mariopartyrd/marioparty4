@@ -140,7 +140,7 @@ void omDLLUnlink(omDllData *dll_ptr, s16 flag)
 {
 	OSReport("odjdll>Unlink DLL:%s\n", dll_ptr->name);
 #ifdef _WIN32
-    FreeLibrary(dll_ptr->hModule);
+        FreeLibrary(dll_ptr->hModule);
 #else
 	if(flag == 1) {
 		OSReport("objdll>Unlink DLL epilog\n");
