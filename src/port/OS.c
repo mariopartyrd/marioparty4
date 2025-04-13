@@ -4,6 +4,7 @@
 #include <dolphin.h>
 
 #ifndef _WIN32
+#include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
 #if __APPLE__
@@ -36,7 +37,7 @@ static u64 GetGCTicks()
     struct timespec tp;
     clock_gettime(CLOCK_MONOTONIC, &tp);
 
-    return u64((tp.tv_sec * 1000000000ull) + tp.tv_nsec) * GetGCTicksPerSec() / 1000000000ull;
+    return ((tp.tv_sec * 1000000000ull) + tp.tv_nsec) * OS_CORE_CLOCK / 1000000000ull;
 #elif _WIN32
     LARGE_INTEGER perf;
     QueryPerformanceCounter(&perf);

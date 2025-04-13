@@ -751,6 +751,3 @@ s32 HuTHPTotalFrameGet(void)
 void HuTHPSetVolume(s32 left, s32 right)
 {
 }
-
-// TODO remove
-u8 fadeStat = 0;

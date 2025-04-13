@@ -265,7 +265,11 @@ void *HuAR_ARAMtoMRAMNum(u32 src, s32 num) {
 
     block = HuARInfoGet(src);
     if (HuDataReadChk(block->dir << 16) >= 0) {
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     size = HuARSizeGet(src);
     dst = HuMemDirectMallocNum(HEAP_DVD, size, num);

@@ -685,13 +685,14 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
 
 static s32 PlayCharVoice(s16 character, s16 arg1, u8 arg2)
 {
-    UnkCharInstanceStruct *temp_r31;
-    ModelData *temp_r29;
-
-    temp_r31 = &charInstance[character];
-    temp_r29 = &Hu3DData[temp_r31->unk00];
+    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    ModelData *temp_r29 = &Hu3DData[temp_r31->unk00];
     if (arg2 & 1) {
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     if (temp_r31->unkAC & 8) {
         return HuAudCharVoicePlayPos(character, arg1, &temp_r29->pos);
@@ -1973,7 +1974,11 @@ static s32 PlayStepFX(s16 character, s16 arg1, u8 arg2)
     temp_r31 = &charInstance[character];
     var_r28 = &Hu3DData[temp_r31->unk00];
     if (arg2 & 1) {
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     if (temp_r31->unkB0 == 4) {
         arg1 = 0x109;

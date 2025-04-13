@@ -729,9 +729,11 @@ s32 BoardPlayerSizeGet(s32 idx)
     PlayerState *player;
 
     player = BoardPlayerGet(idx);
+#ifndef NON_MATCHING
     if (!player) {
         return;
     }
+#endif
     return player->size;
 }
 
@@ -2220,9 +2222,11 @@ s32 BoardPlayerAutoSizeGet(s32 arg0)
     PlayerState *player;
 
     player = BoardPlayerGet(arg0);
+#ifndef NON_MATCHING
     if (!player) {
         return;
     }
+#endif
     return player->auto_size;
 }
 

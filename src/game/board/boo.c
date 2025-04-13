@@ -95,6 +95,8 @@ typedef struct {
     float unk04;
 } BallTakeCoinWork;
 
+static BOOL CheckBallCoinDone(void);
+static void TakeBallStar(void);
 static void ComSetupStealPlayer(s32 arg0);
 static void ComSetStealPlayerInput(s32 arg0, s32 arg1);
 static void ExecCoinSteal(void);
@@ -131,8 +133,10 @@ static void BallBooAttack(omObjData *arg0, BallBooWork *arg1);
 static void BallBooFlash(omObjData *arg0, BallBooWork *arg1);
 static void TakeBallCoin(void);
 static void ExecTakeBallCoin(omObjData *arg0);
+static void ExecTakeBallStar(omObjData *arg0);
 static void TakeBallCoinPosSet(BallTakeCoinData *arg0, Vec *arg1);
 static void UpdatePlayerCoins(void);
+static BOOL CheckTakeBallStarDone(void);
 
 s8 lbl_801D41E2;
 static s8 stealTarget;

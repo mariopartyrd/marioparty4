@@ -268,7 +268,7 @@ void omDestroyObjMan(void)
     OSReport("objman>Destory ObjMan\n");
 }
 
-omObjData *omAddObjEx(Process *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, void (*func)(omObjData *))
+omObjData *omAddObjEx(Process *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, omObjFunc func)
 {
     s32 i;
     omObjData *object;

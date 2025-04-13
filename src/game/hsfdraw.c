@@ -1828,7 +1828,11 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
 
     if (arg1 == 0) {
         OSReport("Error: No Texture\n");
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     var_r27 = arg1->sizeX;
     var_r26 = arg1->sizeY;

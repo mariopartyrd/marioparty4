@@ -226,7 +226,6 @@ void HuAudFXListnerKill(void) {
 
 void HuAudFXPauseAll(s32 pause) {
     // msmSePauseAll(pause, 0x64);
-    return 12;
 }
 
 s32 HuAudFXStatusGet(int seNo) {
