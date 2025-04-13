@@ -120,6 +120,9 @@ void BoardCameraTargetSpaceSet(s32 space);
 void BoardCameraQuakeSet(s32 duration, float strength);
 void BoardCameraQuakeReset();
 void BoardCameraTargetSet(float x, float y, float z);
+#ifndef __MWERKS__
+void BoardCameraPosCalcFuncSet(BoardCameraPosCalcFunc func);
+#endif
 void BoardCameraPosSet(float x, float y, float z);
 void BoardCameraXRotZoomSet(float zoom, float x_rot);
 void BoardCameraZoomSet(float zoom);

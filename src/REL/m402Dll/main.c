@@ -682,7 +682,9 @@ static void fn_1_1FC4(Vec *arg0, float *arg1, s32 arg2, s32 arg3)
     VECAdd((Vec *)&arg0, &sp18, (Vec *)&arg0);
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 static void fn_1_2454(void)
 {

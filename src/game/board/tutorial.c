@@ -1,9 +1,11 @@
 #include "game/board/tutorial.h"
+#include "game/board/main.h"
+#include "game/board/model.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
 #include "game/process.h"
-#include "game/board/main.h"
-#include "game/board/model.h"
+
+#include <game/board/space.h>
 
 s32 boardTutorialData[4]; // maybe a single s32 + padding?
 static void (*tutorialHook)(s16, s32);

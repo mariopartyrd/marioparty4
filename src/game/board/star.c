@@ -21,8 +21,13 @@
 #include "game/objsub.h"
 #include "game/window.h"
 #include "game/wipe.h"
+#include "game/hsfex.h"
 
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+#include <game/board/view.h>
+#endif
 
 typedef struct {
     struct {

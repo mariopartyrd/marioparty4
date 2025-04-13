@@ -31,7 +31,7 @@ void *DemoFrameBuffer2;
 void *DemoCurrentBuffer;
 u32 minimumVcount;
 float minimumVcountf;
-u32 worstVcount;
+SHARED_SYM u32 worstVcount;
 static BOOL DemoStatEnable;
 
 

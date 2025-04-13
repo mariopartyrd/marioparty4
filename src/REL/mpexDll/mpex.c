@@ -44,7 +44,7 @@ typedef struct MpexDllUnkStruct4 {
     /* 0x2C */ char unk2C[0x1C];
 } MpexDllUnkStruct4; /* size = 0x48 */
 
-s32 rand8(void);
+extern s32 rand8(void);
 float fn_1_1B52C(float arg8, float arg9, float argA, float argB);
 float fn_1_1B574(float arg0, float arg1, float arg2, float arg3);
 float fn_1_1B64C(float arg0, float arg1, float arg2, float arg3);

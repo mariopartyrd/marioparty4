@@ -19,6 +19,8 @@
 
 #include "ext_math.h"
 
+#include <game/hsfex.h>
+
 typedef struct {
     struct {
         u8 unk00_field0 : 1;

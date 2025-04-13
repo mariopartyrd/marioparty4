@@ -1,4 +1,5 @@
 #include "ext_math.h"
+#include "game/audio.h"
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/player.h"
@@ -8,6 +9,8 @@
 #include "game/objsub.h"
 #include "game/process.h"
 
+#include <game/board/audio.h>
+#include <game/board/tutorial.h>
 
 #define BLOCK_SPAWN 0
 #define BLOCK_HIT 2

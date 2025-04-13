@@ -2,6 +2,7 @@
 #define _GAME_INIT_H
 
 #include "dolphin.h"
+#include "version.h"
 
 extern GXRenderModeObj *RenderMode;
 extern OSHeapHandle currentHeapHandle;
@@ -11,7 +12,7 @@ extern void *DemoFrameBuffer2;
 extern void *DemoCurrentBuffer;
 extern u32 minimumVcount;
 extern float minimumVcountf;
-extern u32 worstVcount;
+SHARED_SYM extern u32 worstVcount;
 
 void HuSysInit(GXRenderModeObj *mode);
 void HuSysBeforeRender();

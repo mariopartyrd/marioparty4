@@ -1,5 +1,5 @@
+#include "game/audio.h"
 #include "game/board/boo_house.h"
-
 #include "game/board/audio.h"
 #include "game/board/boo.h"
 #include "game/board/com.h"
@@ -15,6 +15,9 @@
 #include "game/msm.h"
 
 #include "ext_math.h"
+
+#include <game/board/tutorial.h>
+#include <game/hsfex.h>
 
 // bss
 static s16 houseMdl[6];

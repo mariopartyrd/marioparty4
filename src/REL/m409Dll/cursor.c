@@ -6,8 +6,7 @@
 
 void fn_1_BF88(s16 arg0, s16 arg1)
 {
-    s32 var_r31;
-    s32 var_r31_2;
+    s32 i;
     unkStruct8 *var_r29;
     unkStruct9Sub *var_r30;
 
@@ -20,11 +19,11 @@ void fn_1_BF88(s16 arg0, s16 arg1)
     var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(unkStruct9Sub), MEMORY_DEFAULT_NUM);
     lbl_1_bss_F0.unkC = var_r30;
 
-    for (var_r31 = 0; var_r31 < arg0; var_r31++, var_r29++) {
+    for (i = 0; i < arg0; i++, var_r29++) {
         var_r29->unk8 = 0;
     }
 
-    for (var_r31 = 0; var_r31 < arg1; var_r31++, var_r30++) {
+    for (i = 0; i < arg1; i++, var_r30++) {
         var_r30->unk6 = 0;
         var_r30->unk8 = 0;
     }

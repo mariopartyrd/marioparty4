@@ -9,8 +9,13 @@
 
 #include "game/objsub.h"
 
-#include "math.h"
 #include "ext_math.h"
+#include "math.h"
+
+#include <game/audio.h>
+#include <game/board/tutorial.h>
+#include <game/board/window.h>
+#include <game/hsfex.h>
 
 extern s32 boardTutorialData[4];
 
@@ -70,9 +75,6 @@ static void WaitItemGive(void);
 static void MushroomMain(void) {
     Vec sp14[2];
     Vec sp8;
-    s32 temp_r0;
-    s32 temp_r0_2;
-    s32 var_r30;
     s32 curPlayer;
     s8 var_r29;
     boxObjWork* box;
@@ -236,7 +238,6 @@ static void ShowBox(ItemGiveWork2*, omObjData*);
 
 
 static void BoxMain(omObjData* arg0) {
-    s32 temp_r0;
     ItemGiveWork2* temp_r30;
 
     temp_r30 = OM_GET_WORK_PTR(arg0, ItemGiveWork2);

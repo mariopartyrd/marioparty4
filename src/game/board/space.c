@@ -17,6 +17,17 @@
 #include "ext_math.h"
 #include "string.h"
 
+#include <game/audio.h>
+#include <game/board/basic_space.h>
+#include <game/board/bowser.h>
+#include <game/board/fortune.h>
+#include <game/board/warp.h>
+
+s32 BoardBlockExec(s32 player, s32 space); // wrong
+extern void BoardMushroomExec(s32 player, s32 space); // wrong
+extern void BoardBooHouseExec(s32 player, s32 space); // wrong
+extern void BoardBlockHouseExec(s32 player, s32 space); // wrong
+
 static BoardSpace spaceData[2][256];
 s16 boardSpaceStarTbl[8];
 static GXTexObj spaceHiliteTex;
@@ -300,7 +311,6 @@ void BoardSpaceHostSet(s32 space)
 {
     s16 host_space;
     Vec pos;
-    BoardSpace *space_plat;
     BoardSpaceTypeSet(0, space, 8);
     host_space = BoardSpaceLinkFlagSearch(0, space, 0x04000000);
     BoardSpacePosGet(0, host_space, &pos);
@@ -1079,14 +1089,11 @@ void BoardSpaceInit(s32 data_num)
         if (_CheckFlag(FLAG_ID_MAKE(1, 1))) {
             Vec pos;
             Vec rot;
-            s16 space;
             BoardModelVisibilitySet(starPlatMdl, 1);
             GWSystem.star_flag |= (u8)(1 << GWSystem.star_pos);
             BoardSpaceTypeSet(0, boardSpaceStarTbl[GWSystem.star_pos], 8);
             {
-                int space;
-                BoardSpace *space_plat;
-                space = BoardSpaceLinkFlagSearch(0, BoardSpaceStarGetCurr(), 0x04000000);
+                int space = BoardSpaceLinkFlagSearch(0, BoardSpaceStarGetCurr(), 0x04000000);
                 BoardSpacePosGet(0, space, &pos);
                 BoardModelPosSetV(StarPlatGetMdl(), &pos);
                 BoardSpaceRotGet(0, space, &rot);

@@ -127,8 +127,6 @@ static inline void BoardViewInlineFunc00(Vec *arg0, Vec *arg1, u16 arg2)
 
 void BoardViewFocusSet(Vec *arg0, u16 arg1)
 {
-    u16 var_r31;
-
     if (BoardPauseDisableGet() == 0) {
         BoardPauseDisableSet(1);
         pauseDisableF = 1;
@@ -143,8 +141,6 @@ void BoardViewFocusSet(Vec *arg0, u16 arg1)
 
 void BoardViewMoveStart(Vec *arg0, Vec *arg1, u16 arg2)
 {
-    u16 var_r31;
-
     if (BoardPauseDisableGet() == 0) {
         BoardPauseDisableSet(1);
         pauseDisableF = 1;

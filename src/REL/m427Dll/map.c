@@ -18,7 +18,7 @@
 #include "string.h"
 
 extern s32 rand8(void);
-extern LightData Hu3DLocalLight[0x20];
+SHARED_SYM extern LightData Hu3DLocalLight[0x20];
 
 #define FABS(value) ((value < 0) ? -(value) : (value))
 

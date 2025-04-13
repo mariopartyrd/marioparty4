@@ -30,13 +30,13 @@ extern u8 lbl_801D3E94;
 extern u32 mgRecordExtra;
 SHARED_SYM extern s32 mgQuitExtraF;
 SHARED_SYM extern s32 mgPracticeEnableF;
-extern s32 mgInstExitEnableF;
+SHARED_SYM extern s32 mgInstExitEnableF;
 SHARED_SYM extern u8 mgBoardHostEnableF;
 
 extern s16 mgTicTacToeGrid[3][3];
 extern u8 mgIndexList[256];
 extern GameStat mgGameStatBackup;
 
-extern MgInfo mgInfoTbl[];
+SHARED_SYM extern MgInfo mgInfoTbl[];
 
 #endif

@@ -26,7 +26,7 @@
 #include "game/hsfex.h"
 #endif
 
-s32 rand8(void);
+extern s32 rand8(void);
 
 typedef struct UnkCameraStruct {
     /* 0x00 */ float unk_00;

@@ -1,15 +1,7 @@
-#include "game/gamework_data.h"
+#include "game/board/main.h"
 #include "ext_math.h"
-#include "game/object.h"
-#include "game/flag.h"
-#include "game/data.h"
-#include "game/wipe.h"
-#include "string.h"
-#include "game/hsfman.h"
-#include "game/hsfdraw.h"
 #include "game/board/battle.h"
 #include "game/board/lottery.h"
-#include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/pause.h"
 #include "game/board/player.h"
@@ -18,9 +10,30 @@
 #include "game/board/start.h"
 #include "game/board/tutorial.h"
 #include "game/board/ui.h"
-#include "game/pad.h"
+#include "game/data.h"
 #include "game/disp.h"
+#include "game/flag.h"
+#include "game/gamework_data.h"
+#include "game/hsfdraw.h"
+#include "game/hsfman.h"
 #include "game/msm.h"
+#include "game/object.h"
+#include "game/pad.h"
+#include "game/wipe.h"
+#include "string.h"
+
+#include <game/armem.h>
+#include <game/audio.h>
+#include <game/board/audio.h>
+#include <game/board/boo_house.h>
+#include <game/board/bowser.h>
+#include <game/board/fortune.h>
+#include <game/board/mg_setup.h>
+#include <game/board/roll.h>
+#include <game/board/window.h>
+#include <game/chrman.h>
+
+extern void BoardLast5Exec(void);
 
 typedef struct camera_view {
     s16 x_rot;
@@ -297,7 +310,6 @@ void BoardSaveInit(s32 board)
     GWSystem.block_pos = 0;
     memset(GWSystem.board_data, 0, sizeof(GWSystem.board_data));
     for(i=0; i<4; i++) {
-        s32 party_flag;
         BoardPlayerAutoSizeSet(i, 0);
         GWPlayer[i].draw_ticket = 0;
         GWPlayer[i].color = 0;

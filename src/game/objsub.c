@@ -6,7 +6,7 @@
 #include "game/window.h"
 
 
-MgInfo mgInfoTbl[] = {
+SHARED_SYM MgInfo mgInfoTbl[] = {
     {
         OVL_M401, // ovl
         0, // type
@@ -1170,7 +1170,7 @@ u8 lbl_801D3E94;
 u32 mgRecordExtra;
 SHARED_SYM s32 mgQuitExtraF;
 SHARED_SYM s32 mgPracticeEnableF;
-s32 mgInstExitEnableF;
+SHARED_SYM s32 mgInstExitEnableF;
 SHARED_SYM u8 mgBoardHostEnableF;
 
 s16 mgTicTacToeGrid[3][3];

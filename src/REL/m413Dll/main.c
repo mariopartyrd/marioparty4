@@ -19,7 +19,7 @@
 #include "game/hsfex.h"
 #endif
 
-s32 rand8(void);
+extern s32 rand8(void);
 
 typedef struct struct_bss_2A6C StructBss2A6C;
 

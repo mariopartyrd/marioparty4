@@ -1,13 +1,29 @@
 EXPORTS
     game_main
+    frand
+    frandf
+    rand8
+    print8
+    C_MTXConcat
     C_MTXCopy
+    C_MTXLightPerspective
+    C_MTXLookAt
+    C_MTXMultVec
+    C_MTXPerspective
+    C_MTXRotRad
     C_MTXScale
+    C_MTXTrans
+    C_MTXInverse
+    C_MTXInvXpose
+    C_MTXIdentity
     C_VECAdd
+    C_VECCrossProduct
+    C_VECDotProduct
+    C_VECMag
+    C_VECNormalize
     C_VECScale
     C_VECSubtract
-    C_VECNormalize
-    C_VECMag
-    C_VECCrossProduct
+    mtxRot
     mtxRotCat
     byteswap_u32
     byteswap_s32
@@ -400,16 +416,28 @@ EXPORTS
     espSpeedSet
     espTPLvlSet
     espZRotSet
+    HuAudAllStop
     HuAudFXPlay
+    HuAudFXListnerKill
+    HuAudFXEmiterPlay
+    HuAudFXEmiterUpDate
+    HuAudFXListnerSetEX
+    HuAudFXListnerUpdate
+    HuAudPlayerVoicePlay
+    HuAudAUXVolSet
+    HuAudCharVoicePlay
     HuAudFXStop
-    HuAudSeqPlay
     HuAudSeqAllFadeOut
+    HuAudSeqFadeOut
+    HuAudSeqPlay
     HuAudSStreamAllFadeOut
     HuAudSStreamPlay
     HuAudSndGrpSetSet
     HuMemDirectMalloc
     HuMemDirectMallocNum
     HuMemDirectFree
+    HuMemHeapPtrGet
+    HuMemHeapDump
     HuDataInit
     HuDataDirRead
     HuDataRead
@@ -644,6 +672,8 @@ EXPORTS
     HuPrcMemAlloc
     HuPrcMemFree
     HuSetVecF
+    HuSprAnimKill
+    HuSprAnimLock
     HuSprAnimRead
     HuSprBankSet
     HuSprCreate
@@ -790,17 +820,34 @@ EXPORTS
     CharModelItemHookCreate
     CharModelEffectCreate
     CharModelCoinEffectCreate
+    CharModelVoiceEnableSet
+    CharModelStepTypeSet
     MGSeqInit
+    MGSeqSprKill
     MGSeqCreate
     MGSeqPosSet
+    MGSeqStatGet
+    MGSeqKill
+    MGSeqKillAll
+    MGSeqDoneCheck
+    MGSeqParamSet
     omAddObjEx
+    omDelObjEx
+    omInitObjMan
     omGameSysInit
+    omGetGroupMemberListEx
+    omMakeGroupEx
     omOvlCallEx
     omOvlGotoEx
     omOvlHisChg
     omOvlHisGet
     omOvlReturnEx
-    omInitObjMan
+    omOutView
+    omSetStatBit
+    omSetTra
+    omSetRot
+    omSetSca
+    omVibrate
     OSGetTick
     OSGetTime
     OSTicksToCalendarTime
@@ -811,3 +858,38 @@ EXPORTS
     WipeInit
     WipeStatGet
     GWGameStatReset
+    frandmod
+    GXDestroyTexObj
+    GXSetVtxDesc
+    GXClearVtxDesc
+    GXSetVtxAttrFmt
+    GXSetNumTexGens
+    GXBegin
+    GXSetTexCoordGen2
+    GXSetNumChans
+    GXSetChanCtrl
+    GXSetBlendMode
+    GXSetZMode
+    GXSetTevColorIn
+    GXSetTevAlphaIn
+    GXSetTevColorOp
+    GXSetTevAlphaOp
+    GXSetTevOrder
+    GXSetNumTevStages
+    GXInitTexObj
+    GXInitTexObjLOD
+    GXLoadTexObj
+    GXLoadPosMtxImm
+    GXLoadNrmMtxImm
+    GXLoadTexMtxImm
+    GXPosition3f32
+    GXColor3u8
+    GXEnd
+    HuDataGetAsyncStat
+    omSysPauseEnable
+    HuSprGrpDrawNoSet
+    HuSprPriSet
+    HuSprTexLoad
+    HuSysVWaitSet
+    MessData_MesPtrGet
+    GWMGAvailSet

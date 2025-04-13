@@ -23,18 +23,18 @@
 #define SHADOW_HEAP_SIZE 0x9000
 
 SHARED_SYM ModelData Hu3DData[HU3D_MODEL_MAX];
-CameraData Hu3DCamera[HU3D_CAM_MAX];
+SHARED_SYM CameraData Hu3DCamera[HU3D_CAM_MAX];
 static s16 layerNum[8];
 static void (*layerHook[8])(s16);
 AnimData *reflectAnim[5];
-AnimData *hiliteAnim[4];
+SHARED_SYM AnimData *hiliteAnim[4];
 ThreeDProjectionStruct Hu3DProjection[4];
-ShadowData Hu3DShadowData;
+SHARED_SYM ShadowData Hu3DShadowData;
 HsfScene FogData;
-Mtx Hu3DCameraMtx;
-Mtx Hu3DCameraMtxXPose;
-LightData Hu3DGlobalLight[0x8];
-LightData Hu3DLocalLight[0x20];
+SHARED_SYM Mtx Hu3DCameraMtx;
+SHARED_SYM Mtx Hu3DCameraMtxXPose;
+SHARED_SYM LightData Hu3DGlobalLight[0x8];
+SHARED_SYM LightData Hu3DLocalLight[0x20];
 Mtx lbl_8018D39C;
 
 GXColor BGColor;

@@ -352,7 +352,7 @@ s32 HuAudSStreamStatGet(s32 seNo) {
     // return msmStreamGetStatus(seNo);
 }
 
-SNDGRPTBL sndGrpTable[] = {
+SHARED_SYM SNDGRPTBL sndGrpTable[] = {
     { OVL_BOOT, -1, 0,  1, -1, -1 },
     { OVL_INST, -1, 0,  1, -1, -1 },
     { OVL_M401, 18, 0,  2, 64, 64 },

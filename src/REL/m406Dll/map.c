@@ -455,7 +455,7 @@ UnkM406Struct5 lbl_1_bss_48;
 Vec lbl_1_bss_3C;
 s32 lbl_1_bss_30[3];
 
-extern LightData Hu3DLocalLight[0x20];
+SHARED_SYM extern LightData Hu3DLocalLight[0x20];
 
 omObjData *fn_1_2308(Process *arg0)
 {

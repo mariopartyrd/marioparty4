@@ -24,6 +24,8 @@
 #include "dolphin.h"
 #include "ext_math.h"
 
+#include <game/hsfex.h>
+
 typedef struct {
     struct {
         u8 unk00_field0 : 1;
@@ -981,7 +983,6 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1)
     omObjData *temp_r30;
     ItemChoiceWork *var_r31;
     s16 spC;
-    s16 i;
 #if VERSION_PAL
     for (i = 0; i < 6; i++) {
         cursorPosTbl[i][0] = 190;

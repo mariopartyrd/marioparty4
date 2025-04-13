@@ -259,14 +259,8 @@ void fn_1_8414(omObjData *object)
 
 void fn_1_8678(omObjData *object)
 {
-    float var_f31;
-    float var_f30;
-    float var_f29;
-    UnkM410Struct5 *var_r31;
-    s32 var_r29;
-
-    var_r31 = object->data;
-    var_r29 = 0;
+    UnkM410Struct5 *var_r31 = object->data;
+    s32 var_r29 = 0;
     var_r31->unk_10 = 0;
     if (fn_1_281C() == 2) {
         var_r31->unk_10 = HuPadBtnDown[GWPlayerCfg[object->work[0]].pad_idx];
@@ -465,8 +459,6 @@ void fn_1_9040(omObjData *object)
     Mtx sp38;
     Vec sp2C;
     Vec sp20;
-    Vec sp14;
-    Vec sp8;
 
     float var_f31;
     float var_f30;
@@ -475,18 +467,11 @@ void fn_1_9040(omObjData *object)
     float var_f27;
     float var_f26;
     float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    double var_f21;
-    double var_f20;
 
     UnkM410Struct5 *var_r31;
     s32 var_r29;
     s32 var_r28;
     s16 var_r27;
-    Vec *var_r26;
-    Vec *var_r25;
 
     var_r31 = object->data;
     fn_1_79F8(object->model[0], lbl_1_data_16C[var_r31->unk_08], sp38);

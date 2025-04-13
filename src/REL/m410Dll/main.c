@@ -8,6 +8,8 @@
 
 #include "REL/m410Dll.h"
 
+#include <game/audio.h>
+
 Process *lbl_1_bss_28;
 omObjData *lbl_1_bss_24;
 omObjData *lbl_1_bss_20;
@@ -223,11 +225,7 @@ void fn_1_DEC(omObjData *object)
 
 void fn_1_FF0(omObjData *object)
 {
-    void *var_r31;
-    UnkM410Struct *var_r29;
-    void *var_r28;
-
-    var_r29 = object->data;
+    UnkM410Struct *var_r29 = object->data;
 
     fn_1_5A8(object);
     switch (var_r29->unk_14) {
@@ -265,11 +263,8 @@ void fn_1_FF0(omObjData *object)
 
 void fn_1_139C(omObjData *object)
 {
-    UnkM410Struct *var_r29;
-    s32 var_r27;
-
-    var_r29 = object->data;
-    var_r27 = 0;
+    UnkM410Struct *var_r29 = object->data;
+    s32 var_r27 = 0;
     fn_1_5A8(object);
 
     if (!--var_r29->unk_20) {
@@ -470,9 +465,6 @@ s32 fn_1_28DC(void)
 void fn_1_2914(Vec *arg0, Vec *arg1)
 {
     Vec sp10;
-    float var_f29;
-    float var_f28;
-    float var_f27;
 
     sp10.x = arg1->x - arg0->x;
     sp10.y = arg1->y - arg0->y;
