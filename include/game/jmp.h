@@ -18,7 +18,7 @@
 
 
 #ifndef _JMP_BUF_DEFINED
-#if defined(_M_IX86) || defined(__i386__)
+#if defined(_M_IX86)
 typedef struct __JUMP_BUFFER {
     uint32_t Ebp;
     uint32_t Ebx;
@@ -32,41 +32,27 @@ typedef struct __JUMP_BUFFER {
     uint32_t UnwindFunc;
     uint32_t UnwindData[6];
 } _JUMP_BUFFER;
+#elif defined(__i386__)
+typedef struct __JUMP_BUFFER {
+    uint32_t Bx;
+    uint32_t Si;
+    uint32_t Di;
+    uint32_t Bp;
+    uint32_t Sp;
+    uint32_t Pc;
+} _JUMP_BUFFER;
 #elif defined(__x86_64__)
-#ifndef SETJMP_FLOAT128
-// TODO do we need to align this?
-typedef struct _SETJMP_FLOAT128 {
-    uint64_t Part[2];
-} SETJMP_FLOAT128;
-#endif
-typedef struct _JUMP_BUFFER {
-    uint64_t Frame;
+typedef struct __JUMP_BUFFER {
     uint64_t Rbx;
-    uint64_t Rsp;
     uint64_t Rbp;
-    uint64_t Rsi;
-    uint64_t Rdi;
     uint64_t R12;
     uint64_t R13;
     uint64_t R14;
     uint64_t R15;
-    uint64_t Rip;
-    uint32_t MxCsr;
-    uint16_t FpCsr;
-    uint16_t Spare;
-
-    SETJMP_FLOAT128 Xmm6;
-    SETJMP_FLOAT128 Xmm7;
-    SETJMP_FLOAT128 Xmm8;
-    SETJMP_FLOAT128 Xmm9;
-    SETJMP_FLOAT128 Xmm10;
-    SETJMP_FLOAT128 Xmm11;
-    SETJMP_FLOAT128 Xmm12;
-    SETJMP_FLOAT128 Xmm13;
-    SETJMP_FLOAT128 Xmm14;
-    SETJMP_FLOAT128 Xmm15;
+    uint64_t Rsp;
+    uint64_t Pc;
 } _JUMP_BUFFER;
-#elif defined(_M_ARM) || defined(__arm__)
+#elif defined(_M_ARM)
 typedef struct _JUMP_BUFFER {
     uint32_t Frame;
 
@@ -84,7 +70,7 @@ typedef struct _JUMP_BUFFER {
     uint32_t Fpscr;
     uint32_t long D[8]; // D8-D15 VFP/NEON regs
 } _JUMP_BUFFER;
-#elif defined(_M_ARM64) || defined(__aarch64__)
+#elif defined(_M_ARM64)
 typedef struct _JUMP_BUFFER {
     uint64_t Frame;
     uint64_t Reserved;
@@ -141,11 +127,14 @@ typedef struct _JUMP_BUFFER {
 #endif
 #endif
 
-#if defined(_M_IX86) || defined(__i386__)
+#if defined(_M_IX86)
 #define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Eip = (uintptr_t)func
 #define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Esp = (uintptr_t)sp
+#elif defined(__i386__)
+#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Pc = (uintptr_t)func
+#define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Sp = (uintptr_t)sp
 #elif defined(__x86_64__)
-#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Rip = (uintptr_t)func
+#define SETJMP_SET_IP(jump, func) ((_JUMP_BUFFER *)((jump)))->Pc = (uintptr_t)func
 #define SETJMP_SET_SP(jump, sp) ((_JUMP_BUFFER *)((jump)))->Rsp = (uintptr_t)sp
 #elif defined(_M_X64)
 #define SETJMP_SET_IP(jump, func) (jump)->rip_getjmp = (uintptr_t)func
