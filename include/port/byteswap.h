@@ -299,6 +299,25 @@ void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest);
 void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest);
 void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest);
 void byteswap_hsfface(HsfFace32b *src, HsfFace *dest);
+void byteswap_hsfcluster(HsfCluster32b *src, HsfCluster *dest);
+void byteswap_hsfattribute(HsfAttribute32b *src, HsfAttribute *dest);
+void byteswap_hsfmaterial(HsfMaterial32b *src, HsfMaterial *dest);
+void byteswap_hsfscene(HsfScene *src);
+void byteswap_hsfbuffer(HsfBuffer32b *src, HsfBuffer *dest);
+void byteswap_hsfmatrix(HsfMatrix *src);
+void byteswap_hsfpalette(HsfPalette32b *src, HsfPalette *dest);
+void byteswap_hsfpart(HsfPart32b *src, HsfPart *dest);
+void byteswap_hsfbitmap(HsfBitmap32b *src, HsfBitmap *dest);
+void byteswap_hsfmapattr(HsfMapAttr32b *src, HsfMapAttr *dest);
+void byteswap_hsfskeleton(HsfSkeleton32b *src, HsfSkeleton *dest);
+void byteswap_hsfshape(HsfShape32b *src, HsfShape *dest);
+void byteswap_hsfcenv_single(HsfCenvSingle *src);
+void byteswap_hsfcenv(HsfCenv32b *src, HsfCenv *dest);
+void byteswap_hsfobject(HsfObject32b *src, HsfObject *dest);
+void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest);
+void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest);
+void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest);
+void byteswap_hsfface(HsfFace32b *src, HsfFace *dest);
 
 #ifdef __cplusplus
 }

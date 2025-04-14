@@ -1,4 +1,5 @@
 #include "game/hsfformat.h"
+#include "game/hsfformat.h"
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
@@ -6,6 +7,7 @@
 #include <ext_math.h>
 #include <unordered_set>
 
+extern "C" {
 extern "C" {
 #include "port/byteswap.h"
 }
@@ -16,6 +18,7 @@ template <typename T> [[nodiscard]] constexpr T bswap16(T val) noexcept
     union {
         u16 u;
         T t;
+    } v { .t = val };
     } v { .t = val };
 #if __GNUC__
     v.u = __builtin_bswap16(v.u);
@@ -34,11 +37,13 @@ template <typename T> [[nodiscard]] constexpr T bswap32(T val) noexcept
         u32 u;
         T t;
     } v { .t = val };
+    } v { .t = val };
 #if __GNUC__
     v.u = __builtin_bswap32(v.u);
 #elif _WIN32
     v.u = _byteswap_ulong(v.u);
 #else
+    v.u = ((v.u & 0x0000FFFF) << 16) | ((v.u & 0xFFFF0000) >> 16) | ((v.u & 0x00FF00FF) << 8) | ((v.u & 0xFF00FF00) >> 8);
     v.u = ((v.u & 0x0000FFFF) << 16) | ((v.u & 0xFFFF0000) >> 16) | ((v.u & 0x00FF00FF) << 8) | ((v.u & 0xFF00FF00) >> 8);
 #endif
     return v.t;
@@ -66,9 +71,11 @@ static std::unordered_set<void *> sVisitedPtrs;
 template <typename B, typename T> T *offset_ptr(B &base, T *ptr)
 {
     return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr));
+    return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr));
 }
 template <typename B, typename T> T *offset_ptr(B &base, T *ptr, void *extra)
 {
+    return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr) + reinterpret_cast<uintptr_t>(extra));
     return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr) + reinterpret_cast<uintptr_t>(extra));
 }
 
@@ -116,6 +123,7 @@ template <typename B, typename T> T *offset_ptr(B &base, T *ptr, void *extra)
 template <typename B, typename T> void bswap_flat(B &base, T *start, s32 count)
 {
     T *objBase = start;
+    for (s32 i = 0; i < count; ++i) {
     for (s32 i = 0; i < count; ++i) {
         bswap(base, objBase[i]);
     }
@@ -168,6 +176,13 @@ template <typename B> void bswap(B &base, Vec2f &vec)
 {
     bswap(base, vec.x);
     bswap(base, vec.y);
+}
+
+template <typename B> void bswap(B &base, HsfVector3f &vec)
+{
+    bswap(base, vec.x);
+    bswap(base, vec.y);
+    bswap(base, vec.z);
 }
 
 template <typename B> void bswap(B &base, HsfVector3f &vec)
@@ -752,6 +767,19 @@ void byteswap_hsfvec2f(HsfVector2f *src)
     sVisitedPtrs.clear();
 }
 
+void byteswap_hsfvec3f(HsfVector3f *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfvec2f(HsfVector2f *src)
+{
+    auto *vec = reinterpret_cast<Vec2f *>(src);
+    bswap(*vec, *vec);
+    sVisitedPtrs.clear();
+}
+
 void byteswap_animdata(void *src, AnimData *dest)
 {
     auto *anim = reinterpret_cast<AnimData32b *>(src);
@@ -792,6 +820,122 @@ void byteswap_animlayerdata(AnimLayerData *src)
 void byteswap_hsfheader(HsfHeader *src)
 {
     bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcluster(HsfCluster32b *src, HsfCluster *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfattribute(HsfAttribute32b *src, HsfAttribute *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmaterial(HsfMaterial32b *src, HsfMaterial *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfscene(HsfScene *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfbuffer(HsfBuffer32b *src, HsfBuffer *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmatrix(HsfMatrix *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfpalette(HsfPalette32b *src, HsfPalette *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfpart(HsfPart32b *src, HsfPart *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfbitmap(HsfBitmap32b *src, HsfBitmap *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmapattr(HsfMapAttr32b *src, HsfMapAttr *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfskeleton(HsfSkeleton32b *src, HsfSkeleton *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfshape(HsfShape32b *src, HsfShape *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv_single(HsfCenvSingle *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv(HsfCenv32b *src, HsfCenv *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfobject(HsfObject32b *src, HsfObject *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+
+void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+
+void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfface(HsfFace32b *src, HsfFace *dest)
+{
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
