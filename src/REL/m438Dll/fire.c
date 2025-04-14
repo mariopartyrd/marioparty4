@@ -359,7 +359,7 @@ void fn_1_F84C(M438FireStruct **arg0, s16 arg1, Vec *arg2)
     s32 var_r29;
     s32 var_r28;
 
-    var_r31 = (Vec *)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct), 0x10000000);
+    var_r31 = (Vec *)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct), MEMORY_DEFAULT_NUM);
 
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {

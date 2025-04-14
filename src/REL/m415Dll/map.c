@@ -885,7 +885,7 @@ s32 fn_1_B0B8(s16 arg0, u8 arg1, s16 arg2)
     return 1;
 }
 
-void fn_1_B634(s32 arg0)
+void fn_1_B634(void)
 {
     s32 var_r28;
     s32 var_r27;

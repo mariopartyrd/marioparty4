@@ -3,21 +3,16 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/flag.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "string.h"
 
 #include "REL/m433Dll.h"
@@ -3456,9 +3451,7 @@ s32 fn_1_10D24(Vec *sp8)
     Vec sp18;
     Vec spC;
     float var_f31;
-    float var_f30;
     M433PlayerWork2 *var_r31;
-    M433PlayerWork2 *var_r30;
 
     var_r31 = lbl_1_bss_7CC->data;
     fn_1_10D24_inline(&spC);

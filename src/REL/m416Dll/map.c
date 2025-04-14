@@ -5,15 +5,11 @@
 #include "game/hsfanim.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
-#include "game/pad.h"
 #include "game/sprite.h"
-#include "game/wipe.h"
 
 #include "ext_math.h"
-#include "math.h"
 
 #include "REL/m416Dll.h"
 

@@ -211,9 +211,7 @@ void fn_1_207C(void)
 
 void fn_1_20D4(void)
 {
-    m446Func1 *temp_r4;
     f32 temp_f31;
-    s32 temp_r5;
     unkStruct4 *temp_r31;
     unkStruct3 *var_r30;
 

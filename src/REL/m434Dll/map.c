@@ -3,17 +3,12 @@
 #include "game/object.h"
 #include "game/objsub.h"
 
-#include "game/audio.h"
 #include "game/frand.h"
 #include "game/hsfmotion.h"
 #include "game/sprite.h"
-#include "game/wipe.h"
 
 #include "REL/m434Dll.h"
 #include "ext_math.h"
-#include "game/gamework_data.h"
-#include "game/minigame_seq.h"
-#include "math.h"
 #include "version.h"
 
 typedef struct bss_2468_data {

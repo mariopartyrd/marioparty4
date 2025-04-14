@@ -1,23 +1,19 @@
+#include "game/audio.h"
 #include "game/object.h"
-#include "game/chrman.h"
-#include "game/minigame_seq.h"
 #include "game/objsub.h"
-#include "game/pad.h"
-#include "game/wipe.h"
-
 #include "game/hsfanim.h"
-#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/sprite.h"
 
-#include "game/audio.h"
-#include "game/gamework_data.h"
-
 #include "REL/m408Dll.h"
 
 #include "ext_math.h"
-#include "math.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
+s32 rand8(void);
 
 typedef struct struct_data_20C {
     s32 unk0;
@@ -372,10 +368,9 @@ void fn_1_11E3C(StructBssDA4 *arg0, s32 arg1)
 
 void fn_1_12354(omObjData *object)
 {
-    s32 temp_r31;
-    u32 temp_r30;
-    temp_r30 = fn_1_6878();
+    u32 temp_r30 = fn_1_6878();
     if (temp_r30 == 2) {
+        s32 temp_r31;
         for (temp_r31 = 0; temp_r31 < lbl_1_bss_DA0; temp_r31++)
             ;
         object->func = fn_1_123C8;
@@ -522,7 +517,6 @@ void fn_1_127A0(StructBssDA4 *arg0)
 
 void fn_1_12C6C(StructBssDA4 *arg0)
 {
-    Work2FAC *temp_r30;
     float temp_f31;
     float temp_f30;
     float temp_f26;

@@ -1,13 +1,19 @@
 #include "REL/m424Dll.h"
 
-#include "math.h"
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/EnvelopeExec.h"
 #include "game/gamework_data.h"
+#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/pad.h"
+#include "math.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 // STRUCT
 typedef struct _M424DllClawStruct {

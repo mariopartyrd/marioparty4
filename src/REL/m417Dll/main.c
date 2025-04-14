@@ -1,10 +1,13 @@
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/chrman.h"
 #include "game/hsfdraw.h"
 #include "game/minigame_seq.h"
+#include "game/objsub.h"
 #include "game/wipe.h"
 
 #include "REL/m417Dll.h"
+
 
 typedef struct UnkM417Struct {
     /* 0x00 */ u32 unk_00;

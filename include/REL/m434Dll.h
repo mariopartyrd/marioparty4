@@ -6,6 +6,9 @@
 void fn_1_1C44(s32 arg0, s32 arg1);
 s32 fn_1_1C88(s32 arg0);
 s32 fn_1_1CB8(void);
+#ifndef __MWERKS__
+s16 fn_1_1D44(void);
+#endif
 s32 fn_1_1D54(void);
 void fn_1_1D64(s32 arg0);
 s32 fn_1_1D74(s32 arg0);

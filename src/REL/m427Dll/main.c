@@ -2,6 +2,8 @@
 
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/chrman.h"
+#include "game/frand.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfformat.h"
@@ -736,7 +738,6 @@ void fn_1_21E8(s32 arg0, s32 arg1) {
 
 void fn_1_232C(s32 arg0) {
     M427DllStruct2* temp_r29;
-    f32 temp_f0;
     s32 var_r31;
 
     temp_r29 = lbl_1_bss_40;
@@ -785,7 +786,6 @@ void fn_1_232C(s32 arg0) {
 
 void fn_1_2518(s32 arg0) {
     M427DllStruct2* temp_r29;
-    f32 temp_f0;
     s32 var_r31;
 
     temp_r29 = lbl_1_bss_40;

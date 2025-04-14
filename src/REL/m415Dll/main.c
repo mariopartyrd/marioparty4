@@ -14,7 +14,6 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
-#include "math.h"
 
 // bss
 unkStruct5 lbl_1_bss_36C;

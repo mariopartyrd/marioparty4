@@ -809,9 +809,6 @@ void fn_1_3770(omObjData *arg0)
     s32 var_r26;
     u32 var_r25;
     s32 var_r24;
-    s32 var_r23;
-    u32 var_r22;
-    u32 var_r21;
 
     var_r28 = arg0->data;
     {

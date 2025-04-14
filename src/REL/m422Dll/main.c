@@ -10,13 +10,16 @@
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
+#include "game/objsub.h"
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+s32 rand8(void);
+#endif
 
 typedef struct {
     /* 0x00 */ s32 unk00;

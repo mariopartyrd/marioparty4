@@ -6,6 +6,7 @@
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
+#include "game/objsub.h"
 #include "game/window.h"
 #include "game/wipe.h"
 
@@ -287,9 +288,6 @@ void fn_1_53C(unkStruct *arg0)
 
 void fn_1_958(unkStruct *arg0)
 {
-    s32 temp_r3;
-    s32 temp_r3_2;
-    s32 temp_r3_3;
     s32 var_r30;
 
     switch (arg0->unk10) {
@@ -680,7 +678,6 @@ void fn_1_19D4(void)
 {
     s16 temp_r3;
     s16 var_r30;
-    s32 temp_r0;
     s32 var_r29;
     u32 temp_r27;
 

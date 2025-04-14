@@ -1,6 +1,6 @@
 #include "REL/m446Dll.h"
 
-#include "math.h"
+#include "game/audio.h"
 #include "ext_math.h"
 
 // bss

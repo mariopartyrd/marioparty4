@@ -3,19 +3,18 @@
 #include "game/hsfman.h"
 #include "game/hsfdraw.h"
 #include "game/hsfmotion.h"
+#include "game/gamework_data.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/wipe.h"
-
-
-#include "REL/m434Dll.h"
 #include "ext_math.h"
-#include "game/gamework_data.h"
-#include "game/minigame_seq.h"
-#include "math.h"
 #include "version.h"
 
+#include "REL/m434Dll.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 typedef struct data_224_struct {
     u16 unk0;

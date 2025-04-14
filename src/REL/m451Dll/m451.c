@@ -17,6 +17,10 @@
 
 #include "game/gamework_data.h"
 
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
+
 typedef struct bss_348_data {
     s16 unk0[5];
     s16 unkA;

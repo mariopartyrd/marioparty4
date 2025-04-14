@@ -127,12 +127,9 @@ void fn_1_5FE4(omObjData *arg0)
 
 void fn_1_61A0(void)
 {
-    s32 i;
-    unkDominationData6 *temp_r31;
-
-    temp_r31 = lbl_1_bss_3988->data;
-
+    unkDominationData6 *temp_r31 = lbl_1_bss_3988->data;
     if (temp_r31->unk_04 == 0) {
+        s32 i;
         for (i = 0; i < ARRAY_COUNT(temp_r31->unk_0C); i++) {
             espDispOff(temp_r31->unk_0C[i]);
         }
@@ -142,12 +139,9 @@ void fn_1_61A0(void)
 
 void fn_1_6218(void)
 {
-    s16 i;
-    unkDominationData6 *temp_r31;
-
-    temp_r31 = lbl_1_bss_3988->data;
-
+    unkDominationData6 *temp_r31 = lbl_1_bss_3988->data;
     if (temp_r31->unk_04 == 0) {
+        s16 i;
         for (i = 0; i < ARRAY_COUNT(temp_r31->unk_0C); i++) {
             espDispOn(temp_r31->unk_0C[i]);
         }

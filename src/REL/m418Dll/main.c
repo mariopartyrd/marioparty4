@@ -1,5 +1,6 @@
 #include "ext_math.h"
 #include "game/chrman.h"
+#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
@@ -8,6 +9,12 @@
 #include "math.h"
 
 #include "REL/m418Dll.h"
+
+
+#ifndef __MWERKS__
+s32 rand8(void);
+#include "game/audio.h"
+#endif
 
 // types
 typedef struct M418DllUnkStruct2 {
@@ -432,7 +439,7 @@ void fn_1_E74(omObjData *object)
     }
     if (object->work[1] != 0) {
         const char *sp8[4] = { "doukasen-null_B", "doukasen-null_A", "doukasen-null_X", "doukasen-null_Y" };
-        Hu3DModelObjMtxGet(object->model[3], sp8[object->work[0]], sp18);
+        Hu3DModelObjMtxGet(object->model[3], (char*)sp8[object->work[0]], sp18);
         Hu3DModelPosSet(object->model[4], sp18[0][3], sp18[1][3], sp18[2][3]);
     }
     temp_r27 = &lbl_1_bss_170[object->work[0]];
@@ -494,7 +501,6 @@ s32 fn_1_18FC(omObjData *object, Vec arg1, f32 arg8, f32 arg9)
     f32 var_f30;
     f32 var_f27;
     f32 var_f26;
-    f32 var_f24;
     f32 var_f20;
 
     var_r28 = 0;
@@ -806,7 +812,6 @@ void fn_1_3240(omObjData *object)
     Vec sp8;
     M418DllUnkStruct3 *temp_r28;
     ModelData *temp_r30;
-    M418DllWorkStruct *var_r29;
 
     temp_r30 = &Hu3DData[object->model[11]];
     temp_r28 = &lbl_1_bss_26C[object->work[0]];
@@ -858,7 +863,6 @@ void fn_1_3444(omObjData *object, Vec arg1, f32 arg8, f32 arg9)
     f32 temp_f28;
     f32 var_f24;
     f32 var_f23;
-    f32 var_f22;
 
     s32 var_r27;
     s32 var_r29;
@@ -961,17 +965,14 @@ void fn_1_3444(omObjData *object, Vec arg1, f32 arg8, f32 arg9)
 
 void fn_1_3EB0(omObjData *object, Vec arg1, f32 arg8, f32 arg9)
 {
-    M418DllUnkStruct3 *temp_r30;
-    s32 sp10;
     f32 var_f31;
     f32 var_f30;
     f32 var_f27;
     f32 var_f26;
-    f32 var_f24;
     f32 var_f20;
 
-    sp10 = 0;
-    temp_r30 = &lbl_1_bss_26C[object->work[0]];
+    s32 sp10 = 0;
+    M418DllUnkStruct3 *temp_r30 = &lbl_1_bss_26C[object->work[0]];
     var_f31 = arg1.x - object->trans.x;
     var_f30 = object->trans.z - arg1.z;
     var_f26 = 90.0 + atan2d(var_f30, var_f31);
@@ -1132,16 +1133,10 @@ void fn_1_4C84(omObjData *object)
     Mtx sp14;
     Vec sp8;
     f32 var_f31;
-    M418DllUnkStruct3 *temp_r26;
-    M418DllWorkStruct *var_r27;
-    M418DllUnkStruct3 *temp_r30;
-    ModelData *temp_r28;
-    ModelData *temp_r29;
-    s32 temp_r0;
-    u32 temp_r3;
 
-    temp_r30 = &lbl_1_bss_26C[object->work[0]];
+    M418DllUnkStruct3 *temp_r30 = &lbl_1_bss_26C[object->work[0]];
     if (temp_r30->unk8 == 0) {
+        ModelData *temp_r29;
         var_f31 = (0.5f * temp_r30->unk3C) + ((CRot.x / 90.0f) * (0.5f * temp_r30->unk3C));
         temp_r29 = &Hu3DData[object->model[12]];
         if ((temp_r30->unk14 == 7) || (temp_r30->unk14 == 5)) {
@@ -1261,11 +1256,9 @@ void fn_1_56AC(s32 arg0)
 void fn_1_5768(s32 arg0)
 {
     s32 var_r31;
-    M418DllUnkStruct4 *var_r30;
-    M418DllUnkStruct *var_r26;
 
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
-        var_r30 = &lbl_1_bss_170[var_r31];
+        M418DllUnkStruct4 *var_r30 = &lbl_1_bss_170[var_r31];
         var_r30->unkC = 0;
     }
 
@@ -1275,9 +1268,8 @@ void fn_1_5768(s32 arg0)
 s32 fn_1_57E4(s32 arg0)
 {
     M418DllUnkStruct4 *temp_r31;
-    M418DllUnkStruct *var_r25;
-    s32 var_r29;
     s32 var_r30;
+    s32 var_r29;
 
     if (fn_1_B0C8(&lbl_1_bss_50, 0) >= 0x3C) {
         for (var_r30 = 0; var_r30 < 3; var_r30++) {
@@ -1359,7 +1351,6 @@ s32 fn_1_5A6C(s32 arg0)
     s32 var_r26;
     omObjData *temp_r25;
     s32 var_r24;
-    M418DllUnkStruct *temp_r20;
 
     temp_r27 = &lbl_1_bss_3EC;
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
@@ -1651,7 +1642,6 @@ void fn_1_6808(s32 arg0)
     M418DllUnkStruct6 *var_r30 = &lbl_1_bss_3EC;
     M418DllUnkStruct3 *var_r29;
     M418DllUnkStruct4 *var_r28;
-    M418DllUnkStruct *var_r23;
 
     HuAudAUXVolSet(0x40, 0x40);
 
@@ -1678,12 +1668,10 @@ s32 fn_1_6914(s32 arg0)
 {
     Vec sp14;
     M418DllUnkStruct3 *temp_r31;
-    M418DllUnkStruct3 *temp_r30;
     s32 var_r29;
     s32 temp_r27;
     M418DllUnkStruct6 *var_r26;
     M418DllUnkStruct4 *var_r25;
-    M418DllUnkStruct *var_r18;
 
     var_r26 = &lbl_1_bss_3EC;
 
@@ -2006,7 +1994,6 @@ s32 fn_1_7B68(s32 arg0)
     M418DllUnkStruct4 *temp_r28;
     s32 var_r27;
     s32 var_r26;
-    M418DllUnkStruct *temp_r21;
 
     var_r26 = -1;
     temp_r30 = &lbl_1_bss_3EC;
@@ -2251,7 +2238,6 @@ void fn_1_8548(void)
 void fn_1_8668(void)
 {
     M418DllUnkStruct sp8;
-    f32 temp_f1;
 
     M418DllUnkStruct *var_r31 = &lbl_1_bss_1F4;
 
@@ -2312,7 +2298,6 @@ s32 fn_1_88B4(s32 arg0)
     s32 var_r29;
     M418DllUnkStruct3 *var_r28;
     M418DllUnkStruct3 *var_r27;
-    M418DllUnkStruct *var_r23;
 
     var_r29 = 5;
     var_r30 = &lbl_1_bss_3EC;
@@ -2426,10 +2411,8 @@ void fn_1_8C84(s32 arg0)
     s32 var_r30;
     M418DllUnkStruct6 *temp_r29;
     M418DllUnkStruct3 *temp_r28;
-    s32 var_r27;
-    s32 temp_r0;
 
-    var_r27 = 0;
+    s32 var_r27 = 0;
     temp_r29 = &lbl_1_bss_3EC;
     for (var_r30 = 0; var_r30 < 3; var_r30++) {
         temp_r31 = &lbl_1_bss_26C[temp_r29->unk4[var_r30]];
@@ -2452,17 +2435,12 @@ Vec lbl_1_data_3FC[6] = { { -200.0f, 0.0f, -450.0f }, { 0.0f, 0.0f, -400.0f }, {
 
 s32 fn_1_8D70(s32 arg0)
 {
-    s32 sp10;
-    s32 spC;
-    s32 sp8;
     M418DllUnkStruct3 *temp_r31;
     M418DllUnkStruct6 *temp_r30;
     s32 var_r29;
     M418DllUnkStruct3 *temp_r28;
     M418DllUnkStruct3 *temp_r27;
     omObjData *var_r26;
-    s32 temp_r3;
-    void *temp_r4;
 
     temp_r30 = &lbl_1_bss_3EC;
 
@@ -2493,9 +2471,7 @@ s32 fn_1_8D70(s32 arg0)
     if (fn_1_B0C8(&lbl_1_bss_20, 1) != 0) {
         return fn_1_AF38(&lbl_1_bss_20);
     }
-    else {
-        return 0;
-    }
+    return 0;
 }
 
 void fn_1_8F74(s32 arg0)
@@ -2669,10 +2645,8 @@ void fn_1_958C(void)
     M418DllUnkStruct4 *temp_r27;
     M418DllUnkStruct4 *temp_r26;
     M418DllUnkStruct3 *temp_r25;
-    s32 temp_r0;
-    s32 var_r24;
 
-    var_r24 = 0;
+    s32 var_r24 = 0;
     temp_r28 = &lbl_1_bss_1E0;
     for (var_r30 = 1; var_r30 < 4; var_r30++) {
         fn_1_ABC4(temp_r28->unk0, var_r30, var_r30, 0, 2);

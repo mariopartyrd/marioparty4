@@ -834,8 +834,6 @@ s32 fn_1_3FF8(void)
 void fn_1_4030(Vec *sp8, Vec *var_r31)
 {
     Vec sp10;
-    float var_f30;
-    float var_f29;
 
     VECSubtract(var_r31, sp8, &sp10);
     Center = *var_r31;

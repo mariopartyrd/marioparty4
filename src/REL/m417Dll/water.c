@@ -6,6 +6,10 @@
 
 #include "REL/m417Dll.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
+
 typedef struct UnkM417Struct3 {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ char unk02[4];
@@ -265,12 +269,10 @@ void fn_1_3D54(omObjData *object) { }
 void fn_1_3D58(omObjData *object)
 {
     Vec spC;
-    float sp8;
 
     float var_f31;
     float var_f29;
     float var_f28;
-    float var_f27;
 
     s32 var_r31;
     s32 var_r30;
@@ -752,9 +754,6 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
     Mtx sp38;
     GXTexObj sp18;
 
-    GXColor *var_r30;
-    GXColor *var_r29;
-
     GXColor sp14 = { 0xD8, 0xE2, 0xE5, 0x4C };
     GXColor sp10 = { 0xE0, 0xD8, 0xF4, 0x40 };
     DCStoreRangeNoSync(&sp14, 4);
@@ -1004,14 +1003,7 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
 
 void fn_1_7510(float arg8, float arg9, float argA, float argB)
 {
-    float var_f31;
-    float var_f30;
-    float var_f28;
-
-    s32 var_r31;
-    s32 var_r30;
-
-    var_f31 = 180.0 + (atan2d(arg8, argA));
+    float var_f31 = 180.0 + (atan2d(arg8, argA));
     if (var_f31 >= 360.0f) {
         var_f31 -= 360.0f;
     }

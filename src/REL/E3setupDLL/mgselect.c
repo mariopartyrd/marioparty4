@@ -1,4 +1,7 @@
 #include "ext_math.h"
+#include "game/audio.h"
+#include "game/frand.h"
+#include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/init.h"
@@ -8,6 +11,10 @@
 #include "game/wipe.h"
 
 #include "REL/E3SetupDLL.h"
+
+#ifndef __MWERKS__
+void HuSysVWaitSet(s16 vcount);
+#endif
 
 static s16 mgDefault;
 static omObjData *mgInterfaceObj;

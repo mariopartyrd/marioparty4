@@ -10,6 +10,7 @@
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
+#include "game/frand.h"
 #endif
 
 #include "REL/m443Dll.h"
@@ -212,7 +213,6 @@ void fn_1_5680(omObjData *object)
 {
     f32 spC[4] = { 0.25f, 0.5f, 0.75f, 1.0f };
     s32 sp8;
-    f32 temp_f0;
     s32 temp_r27;
     s32 temp_r3;
     s32 var_r29;
@@ -403,7 +403,6 @@ void fn_1_6458(omObjData *object)
     f32 var_f31;
     s32 var_r29;
     M443DllWorkStruct *temp_r31;
-    void *temp_r4;
 
     temp_r31 = object->data;
     var_r29 = 0;
@@ -444,7 +443,6 @@ void fn_1_6458(omObjData *object)
 void fn_1_6674(omObjData *object)
 {
     M443DllWorkStruct *temp_r31;
-    void *temp_r4;
 
     temp_r31 = object->data;
     temp_r31->unk10 = 0;
@@ -567,9 +565,6 @@ void fn_1_6B90(omObjData *object)
         { 3, 2, 1, 0 },
     };
     f32 sp18[4] = { 0.0f, -700.0f, 600.0f, 1200.0f };
-    s32 sp14;
-    s32 sp10;
-    s32 spC;
     s32 sp8[4] = { 2, 4, 8, 16 };
     f32 var_f31;
     s32 var_r28;
@@ -978,7 +973,6 @@ void fn_1_8508(omObjData *object)
     s32 var_r30;
     M443DllWorkStruct *temp_r28;
     M443DllUnkStruct *temp_r31;
-    f32 *temp_r4;
 
     temp_r28 = object->data;
     temp_r31 = &temp_r28->unk108s;

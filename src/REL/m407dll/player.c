@@ -257,7 +257,6 @@ void fn_1_404(void)
 {
     omObjData *temp_r31;
     unkDominationData *unkData;
-    s32 temp_r0;
     u8 i;
 
     for (i = 0; i < 4; i++) {
@@ -330,7 +329,6 @@ void fn_1_628(omObjData *arg0, s32 arg1)
 void fn_1_64C(omObjData *arg0)
 {
     u32 temp_r29;
-    unkDominationData *temp_r27;
     unkDominationData *temp_r31;
     u32 i;
 
@@ -526,10 +524,7 @@ void fn_1_1074(omObjData *arg0)
 
 void fn_1_11CC(omObjData *arg0)
 {
-    unkDominationData *temp_r31;
-    s16 temp;
-
-    temp_r31 = arg0->data;
+    unkDominationData *temp_r31 = arg0->data;
     if (temp_r31->unk_20 == 0) {
         CharModelVoiceEnableSet(temp_r31->unk_01, arg0->motion[3], 0);
         CharModelMotionShiftSet(temp_r31->unk_01, arg0->motion[3], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
@@ -543,6 +538,7 @@ void fn_1_11CC(omObjData *arg0)
     temp_r31->unk_24 += 0.3f;
 
     if (!(temp_r31->unk_14 > 300.0f)) {
+        s16 temp;
         temp_r31->unk_14 = 300.0f;
         CharModelVoiceEnableSet(temp_r31->unk_01, arg0->motion[4], 0);
         CharModelMotionShiftSet(temp_r31->unk_01, arg0->motion[4], 0.0f, 10.0f, HU3D_MOTATTR_NONE);

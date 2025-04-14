@@ -13,6 +13,10 @@
 #include "string.h"
 #include "version.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
+
 typedef struct UnkM426Struct {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ omObjData *unk_04[2];
@@ -799,7 +803,6 @@ void fn_1_16F8(omObjData *object)
     float var_f26;
     float var_f25;
     float var_f24;
-    float var_f23;
     float var_f22;
     float var_f21;
 
@@ -1310,8 +1313,6 @@ void fn_1_2F5C(omObjData *object, float *arg1, float *arg2, s32 *arg3)
     s32 sp14[6];
     s32 spC[2];
     UnkM426Struct *sp8;
-
-    float var_f31;
 
     UnkM426Struct2 *var_r31;
     s32 var_r30;
@@ -3122,7 +3123,6 @@ void fn_1_88B4(ModelData *arg0, Mtx arg1)
 {
     float var_f31;
     float var_f30;
-    float var_f28;
     float var_f27;
     float var_f26;
 

@@ -3,6 +3,7 @@
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
+#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
@@ -13,7 +14,6 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
-#include "math.h"
 
 #include "REL/m416Dll.h"
 

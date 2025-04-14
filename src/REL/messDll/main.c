@@ -7,7 +7,6 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
 
 extern s32 sprintf(char *, const char *, s32);

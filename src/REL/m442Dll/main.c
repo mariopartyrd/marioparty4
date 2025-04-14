@@ -16,6 +16,11 @@
 
 #include "REL/m442Dll.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#include "game/frand.h"
+#endif
+
 typedef struct M442StructBss5C {
     /* 0x00 */ float unk_00; // probably Vec
     /* 0x04 */ float unk_04;
@@ -818,7 +823,6 @@ void fn_1_2254(omObjData *object)
 
     float var_f31;
     float var_f30;
-    double var_f29;
     float var_f28;
     float var_f27;
     float var_f26;
@@ -1465,26 +1469,10 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     Vec sp10;
 
     float var_f31;
-    float var_f30;
-    float var_f29;
-    float var_f28;
-    float var_f27;
-    float var_f26;
-    float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    float var_f21;
-    float var_f20;
-    float var_f19;
 
     M442StructBss5C *var_r31;
     s32 var_r30;
     CameraData *var_r29;
-    u16 var_r28;
-    u16 var_r27;
-    u16 var_r26;
-    u16 var_r25;
 
     var_r29 = Hu3DCamera;
     C_MTXOrtho(sp100, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f);
@@ -1667,15 +1655,6 @@ s32 fn_1_59C0(Vec *arg0)
 
 void fn_1_5A48(ModelData *arg0, Mtx arg1)
 {
-    float var_f31;
-    float var_f30;
-    float var_f29;
-    float var_f28;
-    float var_f27;
-    float var_f26;
-    float var_f25;
-    float var_f24;
-
     M442StructBssC9F8 *var_r31;
     s32 var_r30;
 
@@ -1729,8 +1708,6 @@ GXColor lbl_1_data_218 = { 0xFF, 0xFF, 0xFF, 0x80 };
 
 void fn_1_5EDC(ModelData *model, float (*mtx)[4])
 {
-    float sp38;
-    float sp28;
     Mtx spC;
 
     M442MainWork *var_r31;
@@ -2141,8 +2118,6 @@ void fn_1_7EBC(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     s32 sp14;
     float sp10;
-    float spC;
-    float sp8;
 
     float var_f31;
 

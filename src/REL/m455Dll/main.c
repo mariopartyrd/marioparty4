@@ -19,6 +19,7 @@
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
+#include "game/hsfex.h"
 #endif
 
 typedef struct camera_view_params {

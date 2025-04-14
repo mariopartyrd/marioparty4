@@ -629,7 +629,6 @@ void fn_1_4218(omObjData *arg0)
     M427DllMapStruct5 *var_r31;
     s16 var_r30;
     M427DllMapStruct4 *var_r29;
-    s32 temp_r28;
 
     var_r29 = &lbl_1_bss_98;
     var_r31 = &lbl_1_bss_E4[0];
@@ -798,12 +797,6 @@ void fn_1_50A0(ModelData *arg0, Mtx arg1)
 
 void fn_1_510C(s32 arg0, s16 arg1, s16 arg2)
 {
-    s16 sp12;
-    s16 sp10;
-    s16 spE;
-    s16 spC;
-    s16 spA;
-    s16 sp8;
     M427DllMapStruct4 *var_r31;
     M427DllMapSubstruct5 *var_r30;
     s16 var_r29;
@@ -895,11 +888,9 @@ void fn_1_558C(M427DllMapStruct4 *arg0)
     Vec *var_r29;
     Vec *var_r28;
     s16 var_r27;
-    M427DllMapStruct5 *var_r26;
     Vec2f *var_r25;
     s16 var_r24;
     CameraData *var_r23;
-    s16 var_r22;
 
     var_r23 = &Hu3DCamera[0];
     if (lbl_1_data_F8 == -1.0f) {
@@ -1112,7 +1103,6 @@ void fn_1_6760(omObjData *object)
     s16 var_r26;
     M427DllMapSubstruct3Sub *var_r25;
     M427DllMapStruct3 *var_r24;
-    u16 var_r23;
 
     var_r24 = &lbl_1_bss_158;
     Hu3DFogSet(3500.0f, 20000.0f, 0, 0, 0);
@@ -2058,7 +2048,6 @@ s16 fn_1_A1F4(s32 arg0, s16 arg1, s16 arg2, s16 arg3, float arg8, Vec *arg4, Vec
     Vec2f *var_r26;
     void *var_r25;
     M427DllMapStruct3 *var_r22;
-    u16 var_r21;
     s16 var_r19;
     void *var_r18;
 
@@ -2799,7 +2788,6 @@ M427DllMapSubstruct6 *fn_1_D4FC(s16 arg0, Vec *arg1, Vec *arg2, float arg8, GXCo
 
 s16 fn_1_D63C(AnimData *arg0, s16 arg1, float arg8, s16 arg2, s16 arg3)
 {
-    float temp_f0;
     M427DllMapStruct7 *var_r31;
     s16 var_r30;
     Vec2f *var_r29;

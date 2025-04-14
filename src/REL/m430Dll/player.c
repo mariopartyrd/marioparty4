@@ -11,14 +11,10 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "string.h"
 
 #include "REL/m430Dll.h"
@@ -785,11 +781,6 @@ void fn_1_D828(omObjData *var_r30)
     float var_f25;
     float var_f24;
     float var_f23;
-    float var_f22;
-    float var_f21;
-    float var_f20;
-    float var_f19;
-    float var_f18;
     M430PlayerWork *var_r31;
     M430PlayerBss174Struct *var_r29;
     s32 var_r28;
@@ -1262,12 +1253,6 @@ s32 fn_1_F62C(omObjData *object)
 void fn_1_F6A0(omObjData *object)
 {
     Vec sp38;
-    float sp30;
-    float sp28;
-    float sp20;
-    float sp18;
-    float sp10;
-    float sp8;
     float var_f31;
     float var_f30;
     float var_f29;
@@ -1275,13 +1260,6 @@ void fn_1_F6A0(omObjData *object)
     float var_f27;
     float var_f26;
     float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    float var_f21;
-    float var_f20;
-    float var_f19;
-    float var_f18;
     M430PlayerWork *work;
     s32 var_r29;
     s32 var_r28;

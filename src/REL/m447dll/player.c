@@ -4,6 +4,7 @@
 #include "game/data.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
+#include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"

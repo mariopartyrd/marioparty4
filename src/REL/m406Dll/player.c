@@ -12,6 +12,11 @@
 
 #include "REL/m406Dll.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#include "game/hsfex.h"
+#endif
+
 typedef struct UnkM406PlayerStruct {
     /* 0x00 */ float unk_00;
     /* 0x04 */ float unk_04;

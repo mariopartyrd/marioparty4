@@ -1,13 +1,14 @@
-#include "REL/m409Dll.h"
-
-#include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfmotion.h"
+#include "game/objsub.h"
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "ext_math.h"
+
+#include "REL/m409Dll.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"

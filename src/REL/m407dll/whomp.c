@@ -155,7 +155,11 @@ void fn_1_26CC(u8 arg0)
     }
 }
 
+#ifdef __MWERKS__
 void fn_1_2770(u8 arg0, s16 arg2)
+#else
+void fn_1_2770(u8 arg0)
+#endif
 {
     omObjData *temp_r30;
     unkDominationData7 *temp_r31;
@@ -199,15 +203,13 @@ void fn_1_290C(omObjData *arg0, s32 arg1)
 
 void fn_1_2930(omObjData *arg0)
 {
-    unkDominationData7 *temp_r28;
     omObjData *temp_r29;
     u32 i;
-    unkDominationData7 *temp_r31;
-
-    temp_r31 = arg0->data;
+    unkDominationData7 *temp_r31 = arg0->data;
     lbl_1_data_258[temp_r31->unk_24](arg0);
     if ((temp_r31->unk_08.z > (Center.z - 2000.0f)) && (temp_r31->unk_08.z < (2000.0f + Center.z)) && (temp_r31->unk_04 == 0)) {
         for (i = 0; i < 8; i++) {
+            unkDominationData7 *temp_r28;
             temp_r29 = lbl_1_bss_2DB0[(temp_r31->unk_00 % 80) + (i * 80)];
             temp_r29->model[0] = -1;
             temp_r28 = temp_r29->data;
@@ -472,9 +474,7 @@ void fn_1_36D0(omObjData *arg0)
 
 void fn_1_37B0(omObjData *arg0)
 {
-    unkDominationData7 *temp_r31;
-
-    temp_r31 = arg0->data;
+    unkDominationData7 *temp_r31 = arg0->data;
     if (temp_r31->unk_2C == 0) {
         temp_r31->unk_14.x = 0.0f;
         temp_r31->unk_08.y = 0.0f;

@@ -1,23 +1,13 @@
 #include "dolphin/gx/GXEnum.h"
 #include "dolphin/gx/GXVert.h"
 #include "ext_math.h"
-#include "game/audio.h"
-#include "game/chrman.h"
-#include "game/gamework_data.h"
 #include "game/hsfanim.h"
-#include "game/hsfdraw.h"
 #include "game/hsfformat.h"
 #include "game/hsfman.h"
-#include "game/hsfmotion.h"
-#include "game/init.h"
 #include "game/memory.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
-#include "game/pad.h"
 #include "game/sprite.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "string.h"
 
 #include "REL/m428Dll.h"
@@ -565,8 +555,6 @@ void fn_1_5CCC(HsfData *var_r31, HsfObject *var_r23)
 
 void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
 {
-    s32 sp3C;
-    s32 sp38;
     Vec sp8;
     float var_f31;
     float var_f30;
@@ -1131,7 +1119,6 @@ void fn_1_939C(float *arg0, float (*arg1)[3], float (*arg2)[3], s32 var_r28)
     float spD4[16];
     float sp94[16];
     Vec sp8;
-    s32 var_r31;
     s32 var_r30;
     s32 var_r27;
 

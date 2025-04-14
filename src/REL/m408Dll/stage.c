@@ -1,23 +1,20 @@
+#include "game/audio.h"
 #include "game/chrman.h"
-#include "game/minigame_seq.h"
-#include "game/object.h"
-#include "game/objsub.h"
-#include "game/pad.h"
-#include "game/wipe.h"
-
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+#include "game/object.h"
+#include "game/objsub.h"
 #include "game/sprite.h"
-
-#include "game/audio.h"
-#include "game/gamework_data.h"
+#include "game/wipe.h"
+#include "ext_math.h"
 
 #include "REL/m408Dll.h"
 
-#include "ext_math.h"
-#include "math.h"
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 s32 lbl_1_bss_160[2];
 AnimData *lbl_1_bss_14C[5];
@@ -262,18 +259,14 @@ void fn_1_D6F0(omObjData *object);
 void fn_1_D004(omObjData *object)
 {
     float temp_f31;
-    float temp_f30;
     float temp_f29;
-    float temp_f28;
-    u16 *temp_r30;
     float *temp_r28;
     s32 temp_r27;
     s32 temp_r26;
-    CameraData *sp8;
-    temp_r30 = object->data;
-    sp8 = &Hu3DCamera[0];
-    temp_f30 = fn_1_6888();
-    temp_f28 = 7000;
+    u16 *temp_r30 = object->data;
+    CameraData *sp8 = &Hu3DCamera[0];
+    float temp_f30 = fn_1_6888();
+    float temp_f28 = 7000;
     switch (temp_r30[0]) {
         case 2:
             Hu3DModelAttrReset(object->model[9], HU3D_ATTR_DISPOFF);

@@ -9,13 +9,18 @@
 #include "game/memory.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
+#include "game/objsub.h"
 #include "game/pad.h"
 #include "game/process.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
+
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 #define frand7() (frand() & 0x7F)
 
@@ -4508,7 +4513,6 @@ s32 fn_1_F574(Vec arg0, float arg1, s32 arg2)
     ModelData *var_r28;
     StructM423_0B *var_r26;
     StructM423_0A *var_r31;
-    s32 var_r27;
     s32 i;
 
     var_r29 = lbl_1_bss_9C;

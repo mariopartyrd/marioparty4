@@ -3,16 +3,14 @@
 #include "game/hsfmotion.h"
 #include "game/object.h"
 #include "game/objsub.h"
-#include "game/wipe.h"
-
 
 #include "REL/m434Dll.h"
 #include "ext_math.h"
-#include "game/gamework_data.h"
-#include "game/minigame_seq.h"
-#include "math.h"
 #include "version.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 typedef struct bss_7480_struct {
     s32 unk0;

@@ -1,6 +1,7 @@
 #include "REL/m436Dll.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -15,6 +16,11 @@
 
 #include "ext_math.h"
 #include "version.h"
+
+s32 rand8(void);
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 typedef struct {
     /* 0x00 */ omObjData *unk00;

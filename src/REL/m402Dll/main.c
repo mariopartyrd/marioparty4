@@ -24,6 +24,11 @@
 #include "ext_math.h"
 #include "version.h"
 
+#ifndef __MWERKS__
+#include "game/audio.h"
+void HuSysVWaitSet(s16 vcount);
+#endif
+
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
 

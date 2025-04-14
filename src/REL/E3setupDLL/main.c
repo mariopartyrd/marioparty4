@@ -14,6 +14,10 @@
 
 #include "REL/E3SetupDLL.h"
 
+#ifndef __MWERKS__
+void HuSysVWaitSet(s16 vcount);
+#endif
+
 static struct {
 	s16 playerCnt;
 	s16 rumble;

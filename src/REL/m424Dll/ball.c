@@ -4,6 +4,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
