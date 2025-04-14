@@ -984,6 +984,7 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1)
     ItemChoiceWork *var_r31;
     s16 spC;
 #if VERSION_PAL
+    s16 i;
     for (i = 0; i < 6; i++) {
         cursorPosTbl[i][0] = 190;
     }
