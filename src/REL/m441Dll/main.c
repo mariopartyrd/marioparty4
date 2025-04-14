@@ -23,6 +23,12 @@
 #include "ext_math.h"
 #include "version.h"
 
+
+#ifndef __MWERKS__
+#include <game/hsfex.h>
+#include <game/audio.h>
+#endif
+
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
 
@@ -700,7 +706,9 @@ HsfanimStruct00 lbl_1_data_48C = {
     { { 255, 255, 255, 0 }, { 255, 255, 255, 0 }, { 255, 255, 255, 0 }, { 255, 255, 255, 0 } },
 };
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_2454(omObjData *object)
 {

@@ -5,6 +5,7 @@
 #include <types.h>
 
 #include <game/dvd.h>
+#include <game/msm.h>
 #include <game/object.h>
 
 // Credits: Super Monkey Ball
@@ -193,6 +194,16 @@ s32 CARDWrite(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 offset)
 s32 CARDWriteAsync(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 offset, CARDCallback callback)
 {
     puts("CARDWriteAsync is a stub");
+    return 0;
+}
+
+s32 CARDGetSerialNo(s32 chan, u64* serialNo)
+{
+    return 0;
+}
+
+s32 CARDSetStatus(s32 chan, s32 fileNo, CARDStat* stat)
+{
     return 0;
 }
 
@@ -629,11 +640,49 @@ void GXSetTexCoordScaleManually(GXTexCoordID coord, u8 enable, u16 ss, u16 ts)
 
 void GXResetWriteGatherPipe(void)
 {
-    puts("GXResetWriteGatherPipe is a stub");
+    // puts("GXResetWriteGatherPipe is a stub");
 }
 
 void ARQInit(void) {
     puts("ARQInit is a stub");
+}
+
+void GXProject(f32 x, f32 y, f32 z, const f32 mtx[3][4], const f32 *pm, const f32 *vp, f32 *sx, f32 *sy, f32 *sz)
+{
+    Vec peye;
+    f32 xc;
+    f32 yc;
+    f32 zc;
+    f32 wc;
+
+    peye.x = mtx[0][3] + ((mtx[0][2] * z) + ((mtx[0][0] * x) + (mtx[0][1] * y)));
+    peye.y = mtx[1][3] + ((mtx[1][2] * z) + ((mtx[1][0] * x) + (mtx[1][1] * y)));
+    peye.z = mtx[2][3] + ((mtx[2][2] * z) + ((mtx[2][0] * x) + (mtx[2][1] * y)));
+    if (pm[0] == 0.0f) {
+        xc = (peye.x * pm[1]) + (peye.z * pm[2]);
+        yc = (peye.y * pm[3]) + (peye.z * pm[4]);
+        zc = pm[6] + (peye.z * pm[5]);
+        wc = 1.0f / -peye.z;
+    }
+    else {
+        xc = pm[2] + (peye.x * pm[1]);
+        yc = pm[4] + (peye.y * pm[3]);
+        zc = pm[6] + (peye.z * pm[5]);
+        wc = 1.0f;
+    }
+    *sx = (vp[2] / 2.0f) + (vp[0] + (wc * (xc * vp[2] / 2.0f)));
+    *sy = (vp[3] / 2.0f) + (vp[1] + (wc * (-yc * vp[3] / 2.0f)));
+    *sz = vp[5] + (wc * (zc * (vp[5] - vp[4])));
+}
+
+void GXGetViewportv(f32 *vp)
+{
+    // TODO
+}
+
+void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
+{
+    // TODO
 }
 
 // Hudson
@@ -647,16 +696,114 @@ void msmMusFdoutEnd(void)
 {
 }
 
+int msmMusPlay(int musId, MSM_MUSPARAM *musParam)
+{
+    // TODO
+    return 0;
+}
+
+s32 msmMusGetStatus(int musNo)
+{
+    // TODO
+    return 0;
+}
+
+s32 msmStreamGetStatus(int streamNo)
+{
+    // TODO
+    return 0;
+}
+
+s32 msmSeSetParam(int seNo, MSM_SEPARAM* param)
+{
+    return 0;
+}
+
+s32 msmMusSetParam(s32 arg0, MSM_MUSPARAM* arg1)
+{
+    return 0;
+}
+
+void msmMusSetMasterVolume(s32 vol)
+{
+}
+
+s32 msmSysGetOutputMode(void)
+{
+    return 0;
+}
+
+s32 msmSeSetListener(Vec* pos, Vec* heading, float sndDist, float sndSpeed, MSM_SELISTENER* listener)
+{
+    return 0;
+}
+
+void msmSeStopAll(BOOL checkGrp, s32 speed)
+{
+}
+
+BOOL msmSysSetOutputMode(SND_OUTPUTMODE mode)
+{
+    return TRUE;
+}
+
+void OSSetSoundMode(u32 mode)
+{
+}
+
 s32 HuSoftResetButtonCheck(void)
 {
     //puts("HuSoftResetButtonCheck is a stub");
     return 0;
 }
 
-void MGSeqMain(void)
+s16 HuTHPSprCreateVol(char *path, s16 loop, s16 prio, float volume)
 {
-    // puts("MGSeqMain is a stub");
+    return 0;
 }
 
-// TODO remove
-u8 fadeStat = 0;
+s16 HuTHPSprCreate(char *path, s16 loop, s16 prio)
+{
+    return 0;
+}
+
+s16 HuTHP3DCreateVol(char *path, s16 loop, float volume)
+{
+    return 0;
+}
+
+s16 HuTHP3DCreate(char *path, s16 loop)
+{
+    return 0;
+}
+
+void HuTHPStop(void)
+{
+}
+
+void HuTHPClose(void)
+{
+}
+
+void HuTHPRestart(void)
+{
+}
+
+BOOL HuTHPEndCheck(void)
+{
+    return TRUE;
+}
+
+s32 HuTHPFrameGet(void)
+{
+    return 0;
+}
+
+s32 HuTHPTotalFrameGet(void)
+{
+    return 0;
+}
+
+void HuTHPSetVolume(s32 left, s32 right)
+{
+}

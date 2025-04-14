@@ -2,6 +2,7 @@
 #define _GAME_PRINTFUNC_H
 
 #include "dolphin.h"
+#include "version.h"
 
 #define FONT_COLOR_BLACK 0
 #define FONT_COLOR_DARK_BLUE 1
@@ -29,7 +30,7 @@ void pfDrawFonts(void);
 extern BOOL saftyFrameF;
 extern u16 strlinecnt;
 extern u16 empstrline;
-extern int fontcolor;
+SHARED_SYM extern int fontcolor;
 extern u32 procfunc;
 
 #endif

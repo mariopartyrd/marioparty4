@@ -21,7 +21,7 @@
 #include "ext_math.h"
 #include "version.h"
 
-s32 rand8(void);
+extern s32 rand8(void);
 
 #define MSM_SE_BOWSER_LAUGH 0x3A
 #define MSM_SE_BOWSER_HOWL 0x3E

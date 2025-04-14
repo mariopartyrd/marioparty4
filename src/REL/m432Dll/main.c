@@ -2238,7 +2238,9 @@ void fn_1_AF28(omObjData *object)
     fn_1_4ED8(&var_r31->unk_00, 0);
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_B234(void)
 {

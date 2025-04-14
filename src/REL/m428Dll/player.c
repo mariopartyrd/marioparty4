@@ -239,7 +239,7 @@ s32 fn_1_F288(Vec *arg0, Vec *arg1, float arg8);
 s32 fn_1_F538(Vec *arg0, Vec *arg1, Vec *arg2, float arg8);
 s32 fn_1_FB8C(Vec *arg0, Vec *arg1, float arg8, s32 arg2, s32 arg3);
 
-extern u32 GlobalCounter;
+SHARED_SYM extern u32 GlobalCounter;
 
 Vec lbl_1_data_150[4] = {
     { -140.0f, -400.0f, 0.0f },
@@ -2120,7 +2120,7 @@ void fn_1_FE98(M428DllPlayerUnk120Struct *arg0)
         }
     }
     for (var_r29 = 0, var_r30 = arg0->unk_54; var_r29 < arg0->unk_02; var_r29++, var_r30++) {
-        PSVECSubtract(&var_r30->unk_08[0], &var_r30->unk_08[2], &sp24);
+        VECSubtract(&var_r30->unk_08[0], &var_r30->unk_08[2], &sp24);
         var_f30 = var_r30->unk_08[0].z;
         if ((sp8 = fn_1_F88C(&var_r30->unk_08[2], &sp24, &sp18)) != -1) {
             var_r30->unk_08[0] = sp18;
@@ -2137,7 +2137,7 @@ void fn_1_FE98(M428DllPlayerUnk120Struct *arg0)
     }
 }
 
-s32 lbl_1_data_694[2] = { 0xFFA040FF, 0xC8FFFF };
+GXColor lbl_1_data_694[2] = { { 0xFF, 0xA0, 0x40, 0xFF }, { 0x00, 0xC8, 0xFF, 0xFF } };
 s16 lbl_1_data_69C[2] = { -0x10, 0x10 };
 s16 lbl_1_data_6A0[2] = { 0x1A4, 0x60 };
 Vec lbl_1_data_6A4[4] = {
@@ -2181,10 +2181,10 @@ void fn_1_102A8(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, var_r31->unk_54->unk_08, sizeof(M428DllPlayerUnkStruct));
+    GXSETARRAY(GX_VA_POS, var_r31->unk_54->unk_08, sizeof(var_r31->unk_54->unk_08), sizeof(M428DllPlayerUnkStruct));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, &lbl_1_data_694[var_r31->unk_10], 4);
+    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_694[var_r31->unk_10], sizeof(GXColor), sizeof(GXColor));
     GXBegin(GX_LINESTRIP, GX_VTXFMT0, var_r31->unk_02);
     for (var_r30 = 0; var_r30 < var_r31->unk_02; var_r30++) {
         GXPosition1x16(var_r30);
@@ -3182,13 +3182,13 @@ void fn_1_134C0(ModelData *var_r23, Mtx var_r22)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r31->unk_40, sizeof(Vec));
+        GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_26 * sizeof(Vec) * 4, sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, &var_r31->unk_3C->unk_44, sizeof(M428DllPlayerUnkStruct2)); // bug?
+        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_44, sizeof(GXColor), sizeof(M428DllPlayerUnkStruct2)); // bug?
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_TEX0, var_r31->unk_44, sizeof(Vec2f));
+        GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
         GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (shadowModelDrawF == 0) {
             if ((var_r31->unk_21 & 2) == 0) {

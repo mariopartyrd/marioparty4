@@ -20,7 +20,7 @@ extern "C" {
 #define ARQ_PRIORITY_LOW 0
 #define ARQ_PRIORITY_HIGH 1
 
-typedef void (*ARQCallback)(u32 pointerToARQRequest);
+typedef void (*ARQCallback)(uintptr_t pointerToARQRequest);
 
 typedef struct ARQRequest {
 
@@ -37,7 +37,7 @@ typedef struct ARQRequest {
 
 void ARQInit(void);
 void ARQReset(void);
-void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 source, u32 dest,
+void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, uintptr_t source, uintptr_t dest,
                     u32 length, ARQCallback callback);
 void ARQRemoveRequest(ARQRequest* task);
 void ARQRemoveOwnerRequest(u32 owner);

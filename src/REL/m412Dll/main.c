@@ -569,8 +569,6 @@ void fn_1_2064(void)
     Vec sp28;
     Vec sp1C;
     Vec sp10;
-    f32 spC;
-    f32 sp8;
     Process *temp_r26;
     s32 var_r30;
     unkStruct *temp_r28;
@@ -701,10 +699,6 @@ s32 fn_1_2708(void)
 f32 fn_1_27C4(s32 arg0, f32 arg8, f32 arg9)
 {
     f32 temp_f31;
-    f32 var_f25;
-    f32 var_f26;
-    f32 var_f27;
-    f32 var_f28;
     f32 var_f29;
 
     temp_f31 = arg8 - fn_1_1D08(arg9);
@@ -922,18 +916,11 @@ void fn_1_3950(void)
     f32 sp5C;
     volatile f32 sp58;
     f32 sp54;
-    f32 temp_f27;
     f32 var_f29;
     f32 temp_f31;
     f32 temp_f30;
     f32 var_f18;
-    f32 var_f19;
-    f32 var_f20;
-    f32 var_f21;
-    f32 var_f22;
-    f32 var_f23;
     f32 var_f24;
-    s32 var_r28;
     s32 var_r24;
     s32 var_r25;
     s32 var_r29;
@@ -1269,9 +1256,6 @@ void fn_1_5838(unkStruct3 *arg0)
     Vec spA8;
     Vec sp9C;
     Vec sp90;
-    Vec sp84;
-    Vec sp78;
-    Vec sp6C;
     s32 sp68;
     f32 sp64;
     f32 sp60;
@@ -1593,13 +1577,6 @@ void fn_1_6814(unkStruct3 *arg0)
 void fn_1_7C60(void)
 {
     Vec sp1A0;
-    Vec sp188;
-    Vec sp17C;
-    Vec sp170;
-    Vec sp164;
-    Vec sp158;
-    Vec sp14C;
-    Vec sp140;
     f32 sp13C;
     f32 sp138;
     f32 sp134;
@@ -2020,8 +1997,6 @@ void fn_1_AA88(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
 
 void fn_1_ADC8(void)
 {
-    Vec sp14;
-    Vec sp8;
     f32 var_f31;
     void *temp_r28;
     Process *var_r29;

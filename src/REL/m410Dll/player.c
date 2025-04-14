@@ -259,14 +259,8 @@ void fn_1_8414(omObjData *object)
 
 void fn_1_8678(omObjData *object)
 {
-    float var_f31;
-    float var_f30;
-    float var_f29;
-    UnkM410Struct5 *var_r31;
-    s32 var_r29;
-
-    var_r31 = object->data;
-    var_r29 = 0;
+    UnkM410Struct5 *var_r31 = object->data;
+    s32 var_r29 = 0;
     var_r31->unk_10 = 0;
     if (fn_1_281C() == 2) {
         var_r31->unk_10 = HuPadBtnDown[GWPlayerCfg[object->work[0]].pad_idx];
@@ -465,8 +459,6 @@ void fn_1_9040(omObjData *object)
     Mtx sp38;
     Vec sp2C;
     Vec sp20;
-    Vec sp14;
-    Vec sp8;
 
     float var_f31;
     float var_f30;
@@ -475,18 +467,11 @@ void fn_1_9040(omObjData *object)
     float var_f27;
     float var_f26;
     float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    double var_f21;
-    double var_f20;
 
     UnkM410Struct5 *var_r31;
     s32 var_r29;
     s32 var_r28;
     s16 var_r27;
-    Vec *var_r26;
-    Vec *var_r25;
 
     var_r31 = object->data;
     fn_1_79F8(object->model[0], lbl_1_data_16C[var_r31->unk_08], sp38);
@@ -1117,9 +1102,9 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r30->unk_120.unk_1C0, 12);
-        GXSetArray(GX_VA_CLR0, var_r30->unk_120.unk_E40, 4);
-        GXSetArray(GX_VA_TEX0, var_r30->unk_120.unk_940, 8);
+        GXSETARRAY(GX_VA_POS, var_r30->unk_120.unk_1C0, sizeof(var_r30->unk_120.unk_1C0), sizeof(Vec));
+        GXSETARRAY(GX_VA_CLR0, var_r30->unk_120.unk_E40, sizeof(var_r30->unk_120.unk_E40), sizeof(GXColor));
+        GXSETARRAY(GX_VA_TEX0, var_r30->unk_120.unk_940, sizeof(var_r30->unk_120.unk_940), sizeof(Vec2f));
         var_r31 = var_r30->unk_120.unk_00;
 
         for (var_r29 = 0; var_r29 < 16; var_r29++, var_r31++) {

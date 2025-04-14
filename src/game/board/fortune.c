@@ -8,6 +8,10 @@
 
 #include "game/wipe.h"
 
+#include <game/audio.h>
+#include <game/board/window.h>
+#include <game/objsub.h>
+
 static Vec camTargetFortune;
 static Vec camPosFortune;
 
@@ -197,7 +201,6 @@ static void FortunePostMG(void)
 
 static void CreateFortunePlatform(void)
 {
-	PlayerState *player;
 	Vec pos, rot;
 	PlatformWork *work;
 	fortunePlatformObj = omAddObjEx(boardObjMan, 257, 0, 0, -1, ExecFortunePlatform);

@@ -1,16 +1,20 @@
+#include "game/audio.h"
 #include "game/object.h"
 #include "game/hsfman.h"
 #include "game/pad.h"
 #include "game/objsub.h"
 #include "game/minigame_seq.h"
 #include "game/sprite.h"
-#include "game/hsfman.h"
-#include "game/audio.h"
 #include "ext_math.h"
 
-Vec CRot;
-Vec Center;
-float CZoom;
+#ifndef __MWERKS__
+void MGSeqPauseKill(void);
+#include "game/wipe.h"
+#endif
+
+SHARED_SYM Vec CRot;
+SHARED_SYM Vec Center;
+SHARED_SYM float CZoom;
 Vec CRotM[16];
 Vec CenterM[16];
 float CZoomM[16];

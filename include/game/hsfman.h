@@ -5,6 +5,7 @@
 #include "game/hsfanim.h"
 #include "game/hsfformat.h"
 #include "game/memory.h"
+#include "version.h"
 
 #define HU3D_MODEL_MAX 512
 #define HU3D_MOTION_MAX 256
@@ -104,7 +105,7 @@ struct model_data {
     u16 unk_26;
     u16 unk_28[8];
     s16 unk_38[8];
-    u32 unk_48;
+    uintptr_t unk_48;
     u32 unk_4C;
     u32 attr;
     u32 motion_attr;
@@ -140,8 +141,8 @@ struct model_data {
 }; // sizeof 0x124
 typedef struct camera_data {
     float fov;
-    float near;
-    float far;
+    float nnear;
+    float ffar;
     float aspect;
     float aspect_dupe;
     Vec pos;
@@ -297,23 +298,23 @@ void Hu3DProjectionPosSet(s16, Vec *, Vec *, Vec *);
 void Hu3DProjectionTPLvlSet(s16, float);
 void Hu3DMipMapSet(char *, s16, s32, float);
 
-extern ModelData Hu3DData[0x200];
-extern CameraData Hu3DCamera[0x10];
+SHARED_SYM extern ModelData Hu3DData[0x200];
+SHARED_SYM extern CameraData Hu3DCamera[0x10];
 extern AnimData *reflectAnim[5];
-extern AnimData *hiliteAnim[4];
+SHARED_SYM extern AnimData *hiliteAnim[4];
 extern ThreeDProjectionStruct Hu3DProjection[4];
-extern ShadowData Hu3DShadowData;
-extern Mtx Hu3DCameraMtx;
-extern Mtx Hu3DCameraMtxXPose;
-extern LightData Hu3DGlobalLight[0x8];
+SHARED_SYM extern ShadowData Hu3DShadowData;
+SHARED_SYM extern Mtx Hu3DCameraMtx;
+SHARED_SYM extern Mtx Hu3DCameraMtxXPose;
+SHARED_SYM extern LightData Hu3DGlobalLight[0x8];
 extern s16 reflectMapNo;
 extern AnimData *toonAnim;
-extern s16 Hu3DShadowCamBit;
-extern s32 Hu3DShadowF;
-extern s32 shadowModelDrawF;
-extern s16 Hu3DCameraNo;
+SHARED_SYM extern s16 Hu3DShadowCamBit;
+SHARED_SYM extern s32 Hu3DShadowF;
+SHARED_SYM extern s32 shadowModelDrawF;
+SHARED_SYM extern s16 Hu3DCameraNo;
 extern s16 Hu3DCameraBit;
 extern s16 Hu3DPauseF;
-extern GXColor BGColor;
+SHARED_SYM extern GXColor BGColor;
 
 #endif

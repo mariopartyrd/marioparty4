@@ -24,7 +24,7 @@ struct strline_data {
 static struct strline_data strline[256];
 static char pfStrBuf[256];
 
-int fontcolor;
+SHARED_SYM int fontcolor;
 u16 empstrline;
 u16 strlinecnt;
 BOOL saftyFrameF;

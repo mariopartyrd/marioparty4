@@ -4252,7 +4252,9 @@ void fn_1_14760(omObjData* arg0) {
     arg0->func = fn_1_14384;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_14A54(void) {
     lbl_1_bss_0 = omInitObjMan(62, 0x2000);

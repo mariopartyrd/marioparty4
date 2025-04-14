@@ -3,7 +3,7 @@
 #include "game/hsfman.h"
 #include "game/object.h"
 
-extern u8 texMtxTbl[];
+SHARED_SYM extern u8 texMtxTbl[];
 
 #define FABS(x) ((x < 0.0f) ? -(x) : (x))
 

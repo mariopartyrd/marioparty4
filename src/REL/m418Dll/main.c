@@ -2857,7 +2857,9 @@ void fn_1_9F94(omObjData *object)
     object->func = fn_1_9BA4;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_A1F0(void)
 {

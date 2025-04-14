@@ -150,7 +150,7 @@ void ObjectSetup(void)
     var_r29 = Hu3DGLightCreateV(&lbl_1_data_38, &lbl_1_bss_8, &lbl_1_data_50);
     Hu3DGLightInfinitytSet(var_r29);
     Hu3DGLightStaticSet(var_r29, 1);
-    Hu3DShadowCreate(10.0f, var_r30->near, var_r30->far);
+    Hu3DShadowCreate(10.0f, var_r30->nnear, var_r30->ffar);
     Hu3DShadowTPLvlSet(0.7f);
     Hu3DShadowPosSet(&lbl_1_data_54, &lbl_1_data_60, &lbl_1_data_44);
     HuAudSndGrpSet(0x4E);

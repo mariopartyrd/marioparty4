@@ -27,13 +27,13 @@ static void SLKillSaveWin(void);
 
 extern u8 UnMountCnt;
 
-CARDFileInfo curFileInfo;
-SaveBufAll saveBuf;
+SHARED_SYM CARDFileInfo curFileInfo;
+SHARED_SYM SaveBufAll saveBuf;
 
 u64 SLSerialNo;
-s32 saveExecF;
+SHARED_SYM s32 saveExecF;
 u8 curBoxNo;
-s16 curSlotNo;
+SHARED_SYM s16 curSlotNo;
 
 #if VERSION_JP
 static u8 commentTbl[2][32] = { "マリオパーティ４", "？？月？？日　データ？です。" };
@@ -42,7 +42,7 @@ static u8 sjisNumTbl[20] = "０１２３４５６７８９";
 static u8 commentTbl[2][32] = { "Mario Party 4", "File 0  00/00/0000" };
 #endif
 
-char *SaveFileNameTbl[] = { "MARIPA4BOX0", "MARIPA4BOX1", "MARIPA4BOX2" };
+SHARED_SYM char *SaveFileNameTbl[] = { "MARIPA4BOX0", "MARIPA4BOX1", "MARIPA4BOX2" };
 
 s32 SaveEnableF = 1;
 

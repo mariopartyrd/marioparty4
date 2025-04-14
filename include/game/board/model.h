@@ -41,6 +41,7 @@ s32 BoardModelMotionUpdateSet(s16 model, s32 flag);
 s32 BoardModelVoiceEnableSet(s16 model, s32 motion, s32 flag);
 s32 BoardModelMotionStart(s16 model, s32 slot, u32 attr);
 s32 BoardModelMotionShiftSet(s16 model, s32 motion, float time, float shift_time, u32 attr);
+s32 BoardModelMotionShiftIDGet(s16 model);
 s32 BoardModelAttrSet(s16 model, u32 attr);
 s32 BoardModelAttrReset(s16 model, u32 attr);
 s32 BoardModelMotionTimeSet(s16 model, float time);

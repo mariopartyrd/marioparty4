@@ -74,7 +74,6 @@ ObjFuncs lbl_1_data_258[] = {
 
 void fn_1_2354(Process *arg0)
 {
-    Process *sp8;
     u32 i;
     u32 j;
 
@@ -123,7 +122,7 @@ void fn_1_2564(void)
 
 void fn_1_25C0(void)
 {
-    u32 i, j;
+    u32 i;
 
     lbl_1_bss_38 = 0;
 
@@ -371,7 +370,7 @@ void fn_1_31F8(omObjData *arg0)
     }
 }
 
-void fn_1_3360(omObjData *) { }
+void fn_1_3360(omObjData *arg0) { }
 
 void fn_1_3364(omObjData *arg0)
 {

@@ -39,6 +39,7 @@ typedef struct {
 #define MTXRadToDeg(a) ((a)*57.29577951f)
 #define MTXRowCol(m, r, c) ((m)[(r)][(c)])
 
+
 void C_MTXIdentity(Mtx m);
 void C_MTXCopy(const Mtx src, Mtx dst);
 void C_MTXConcat(const Mtx a, const Mtx b, Mtx ab);
@@ -46,6 +47,8 @@ void C_MTXConcatArray(const Mtx a, const Mtx* srcBase, Mtx* dstBase, u32 count);
 void C_MTXTranspose(const Mtx src, Mtx xPose);
 u32 C_MTXInverse(const Mtx src, Mtx inv);
 u32 C_MTXInvXpose(const Mtx src, Mtx invX);
+void C_MTXReorder(const Mtx src, ROMtx dest);
+void C_MTXROMultVecArray(const ROMtx m, const Vec *srcBase, Vec *dstBase, u32 count);
 
 #ifdef GEKKO
 void PSMTXIdentity(Mtx m);

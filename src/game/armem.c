@@ -39,8 +39,13 @@ void HuARInit(void) {
     for (i = 0; i < 64; i++) {
         ARInfo[i].amemptr = 0;
     }
+#ifdef TARGET_PC
+    size = ARGetSize() - 0x20;
+    ARBase = 0x20;
+#else
     size = ARGetSize() - 0x808000;
     ARBase = 0x808000;
+#endif
     ARInfo[0].amemptr = ARBase;
     ARInfo[0].size = size;
     ARInfo[0].flag = 0;
@@ -260,7 +265,11 @@ void *HuAR_ARAMtoMRAMNum(u32 src, s32 num) {
 
     block = HuARInfoGet(src);
     if (HuDataReadChk(block->dir << 16) >= 0) {
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     size = HuARSizeGet(src);
     dst = HuMemDirectMallocNum(HEAP_DVD, size, num);
@@ -272,7 +281,7 @@ void *HuAR_ARAMtoMRAMNum(u32 src, s32 num) {
     ARQueBuf[arqIdx].dst = dst;
     arqCnt++;
     PPCSync();
-    ARQPostRequest(&ARQueBuf[arqIdx].req, 0x1234, 1, 0, src, (u32) dst, size, ArqCallBackAM);
+    ARQPostRequest(&ARQueBuf[arqIdx].req, 0x1234, 1, 0, src, (uintptr_t) dst, size, ArqCallBackAM);
     arqIdx++;
     arqIdx &= 0xF;
     return dst;

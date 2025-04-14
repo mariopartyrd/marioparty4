@@ -28,6 +28,13 @@
 
 #include "ext_math.h"
 
+#include <game/msm.h>
+
+#ifndef __MWERKS__
+#include <game/hsfex.h>
+extern s32 rand8(void);
+#endif
+
 typedef struct {
     /* 0x00 */ s16 unk00;
     /* 0x02 */ s16 unk02;

@@ -86,7 +86,7 @@ typedef struct PresentDistanceStruct {
 static void ExecSelectRoom(omObjData *object);
 static void ChangeRoom(omObjData *object, s32 direction);
 static void ExecSelectPresent(omObjData *object);
-static void GetCursorPos(omObjData *object, float *x, float *y, float *z);
+static void PresentGetCursorPos(omObjData *object, float *x, float *y, float *z);
 static void SetCameraRot(omObjData *object, float rot, s32 duration);
 static void RotateCamera(omObjData *object);
 static BOOL CameraRotationDoneCheck(omObjData *object);
@@ -731,7 +731,7 @@ static void ExecSelectPresent(omObjData *object)
             work->cursorSpeed = 1.0f / 6.0f;
             if (work->roomNotEmptyF) {
                 Vec cursorPos;
-                GetCursorPos(work->object[roomTbl[room].presentData[idxInRoom].cursorPosIdx], &cursorPos.x, &cursorPos.y, &cursorPos.z);
+                PresentGetCursorPos(work->object[roomTbl[room].presentData[idxInRoom].cursorPosIdx], &cursorPos.x, &cursorPos.y, &cursorPos.z);
                 Hu3D3Dto2D(&cursorPos, 1, &cursorPos);
                 cursorPos.y -= 15.0f;
                 cursorPos.x -= 20.0f;
@@ -818,7 +818,7 @@ static void ExecSelectPresent(omObjData *object)
     }
 }
 
-static void GetCursorPos(omObjData *object, float *x, float *y, float *z)
+static void PresentGetCursorPos(omObjData *object, float *x, float *y, float *z)
 {
     Mtx sp8;
 
@@ -966,7 +966,7 @@ static s32 MoveCursor(omObjData *object, s32 arg1)
         return work->idxInRoom;
     }
 
-    GetCursorPos(work->object[roomTbl[work->room].presentData[work->idxInRoom].cursorPosIdx], &cursorPos.x, &cursorPos.y, &cursorPos.z);
+    PresentGetCursorPos(work->object[roomTbl[work->room].presentData[work->idxInRoom].cursorPosIdx], &cursorPos.x, &cursorPos.y, &cursorPos.z);
     Hu3D3Dto2D(&cursorPos, 1, &cursorPos);
     for (i = 0, j = 0; i == 0 && j < 1; j++) {
         for (i = 0, present = 0; present < totalPresents; present++) {
@@ -978,7 +978,7 @@ static s32 MoveCursor(omObjData *object, s32 arg1)
             if (!PresentUnlocked(object, work->room, present)) {
                 continue;
             }
-            GetCursorPos(work->object[roomTbl[work->room].presentData[present].cursorPosIdx], &cursorPosNew.x, &cursorPosNew.y, &cursorPosNew.z);
+            PresentGetCursorPos(work->object[roomTbl[work->room].presentData[present].cursorPosIdx], &cursorPosNew.x, &cursorPosNew.y, &cursorPosNew.z);
             Hu3D3Dto2D(&cursorPosNew, 1, &cursorPosNew);
             dx = cursorPos.x - cursorPosNew.x;
             dy = cursorPos.y - cursorPosNew.y;

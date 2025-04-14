@@ -340,7 +340,7 @@ static void SetTeamResultTarget(s32 team, Vec *pos);
 static void KillTeamResult(void);
 static void UpdateTeamResult(omObjData *object);
 
-void BoardLast5Exec()
+void BoardLast5Exec(void)
 {
 	GWSystem.player_curr = -1;
 	last5Proc = HuPrcChildCreate(ExecLast5, 8200, 14336, 0, boardMainProc);
@@ -703,10 +703,10 @@ static void Last5Main(void)
 	temp_r20 = GetLast5RouletteResult();
 	GWSystem.last5_effect = temp_r20;
 	if(GWSystem.last5_effect == 2) {
-		BoardSpaceTypeForce(2, 3);
+            BoardSpaceTypeForce(2, 3);
 	}
 	if(GWSystem.last5_effect == 3) {
-		BoardSpaceTypeForce(2, 7);
+	    BoardSpaceTypeForce(2, 7);
 	}
 	temp_r24 = 18+messBase+temp_r20;
 	BoardWinCreate(2, temp_r24, BoardWinPortraitGetStar());

@@ -36,7 +36,6 @@ s32 omDLLStart(s16 overlay, s16 flag)
 	if(dllno >= 0 && !flag) {
 		omDllData *dll = omDLLinfoTbl[dllno];
 #ifdef TARGET_PC
-		// TODO PC
 		OSReport("objdll>Already Loaded %s\n", dll->name);
 #else
 		OSReport("objdll>Already Loaded %s(%08x %08x)\n", dll->name, dll->module, dll->bss);
@@ -140,7 +139,7 @@ void omDLLUnlink(omDllData *dll_ptr, s16 flag)
 {
 	OSReport("odjdll>Unlink DLL:%s\n", dll_ptr->name);
 #ifdef _WIN32
-    FreeLibrary(dll_ptr->hModule);
+        FreeLibrary(dll_ptr->hModule);
 #else
 	if(flag == 1) {
 		OSReport("objdll>Unlink DLL epilog\n");

@@ -77,10 +77,10 @@ static void __DEMOInitMem()
     void *arenaHi = OSGetArenaHi();
     unsigned long fbSize = ((u16)(rmode->fbWidth + 15) & 0xFFF0) * rmode->xfbHeight * 2;
 
-    DemoFrameBuffer1 = (void *)(((u32)arenaLo + 0x1F) & 0xFFFFFFE0);
-    DemoFrameBuffer2 = (void *)(((u32)DemoFrameBuffer1 + fbSize + 0x1F) & 0xFFFFFFE0);
+    DemoFrameBuffer1 = (void *)(((uintptr_t)arenaLo + 0x1F) & ~0x1F);
+    DemoFrameBuffer2 = (void *)(((uintptr_t)DemoFrameBuffer1 + fbSize + 0x1F) & ~0x1F);
     DemoCurrentBuffer = DemoFrameBuffer2;
-    arenaLo = (void *)(((u32)DemoFrameBuffer2 + fbSize + 0x1F) & 0xFFFFFFE0);
+    arenaLo = (void *)(((uintptr_t)DemoFrameBuffer2 + fbSize + 0x1F) & ~0x1F);
     OSSetArenaLo(arenaLo);
     if (((OSGetConsoleType() + 0xF0000000) == 4U) && ((OSGetPhysicalMemSize() + 0xFFC00000) != 0U)
         && (OSGetConsoleSimulatedMemSize() < 0x01800000U)) {
@@ -91,9 +91,9 @@ static void __DEMOInitMem()
     arenaHi = OSGetArenaHi();
     arenaLo = OSInitAlloc(arenaLo, arenaHi, 1);
     OSSetArenaLo(arenaLo);
-    arenaLo = (void *)(((u32)arenaLo + 0x1F) & 0xFFFFFFE0);
-    arenaHi = (void *)((u32)arenaHi & 0xFFFFFFE0);
-    OSSetCurrentHeap(OSCreateHeap((void *)(((u32)arenaLo)), arenaHi));
+    arenaLo = (void *)(((uintptr_t)arenaLo + 0x1F) & ~0x1F);
+    arenaHi = (void *)((uintptr_t)arenaHi & ~0x1F);
+    OSSetCurrentHeap(OSCreateHeap((void *)(((uintptr_t)arenaLo)), arenaHi));
     OSSetArenaLo((arenaLo = arenaHi));
 }
 
@@ -210,13 +210,13 @@ static void LoadMemInfo()
         arenaHi = OSGetArenaHi();
         arenaLo = OSInitAlloc(arenaLo, arenaHi, 1);
         OSSetArenaLo(arenaLo);
-        arenaLo = (void *)(((u32)arenaLo + 0x1F) & 0xFFFFFFE0);
-        arenaHi = (void *)((u32)arenaHi & 0xFFFFFFE0);
+        arenaLo = (void *)(((uintptr_t)arenaLo + 0x1F) & ~0x1F);
+        arenaHi = (void *)((uintptr_t)arenaHi & ~0x1F);
         OSSetCurrentHeap(OSCreateHeap((void *)(((u32)arenaLo)), arenaHi));
         OSSetArenaLo((arenaLo = arenaHi));
         return;
     }
-    memEntry = (void *)((u32)buf + 0x1F & 0xFFFFFFE0);
+    memEntry = (void *)((uintptr_t)buf + 0x1F & ~0x1F);
     arenaHiOld = OSGetArenaHi();
     simMemEnd = OSPhysicalToCached(OSGetConsoleSimulatedMemSize());
     OSSetArenaHi(OSPhysicalToCached(OSGetPhysicalMemSize()));
@@ -224,8 +224,8 @@ static void LoadMemInfo()
     arenaHi = OSGetArenaHi();
     arenaLo = OSInitAlloc(arenaLo, arenaHi, 1);
     OSSetArenaLo(arenaLo);
-    arenaLo = (void *)(((u32)arenaLo + 0x1F) & 0xFFFFFFE0);
-    arenaHi = (void *)((u32)arenaHi & 0xFFFFFFE0);
+    arenaLo = (void *)(((uintptr_t)arenaLo + 0x1F) & ~0x1F);
+    arenaHi = (void *)((uintptr_t)arenaHi & ~0x1F);
     OSSetCurrentHeap(OSCreateHeap((void *)(arenaLo), arenaHi));
     OSSetArenaLo((arenaLo = arenaHi));
     OSAllocFixed(&arenaHiOld, &simMemEnd);
@@ -234,7 +234,7 @@ static void LoadMemInfo()
     while (length) {
         OSReport("loop\n");
         transferLength = (length < 0x20) ? length : 0x20;
-        if (DVDReadPrio(&fileInfo, memEntry, (transferLength + 0x1F) & 0xFFFFFFE0, offset, 2) < 0) {
+        if (DVDReadPrio(&fileInfo, memEntry, (transferLength + 0x1F) & ~0x1F, offset, 2) < 0) {
             OSPanic(__FILE__, 0x49F, "An error occurred when issuing read to /meminfo.bin\n");
         }
         indexMax = (transferLength / 8);

@@ -260,7 +260,7 @@ void ObjectSetup(void)
     var_r29 = Hu3DGLightCreateV(&lbl_1_data_770, &lbl_1_bss_10, &lbl_1_data_788);
     Hu3DGLightInfinitytSet(var_r29);
     Hu3DGLightStaticSet(var_r29, 1);
-    Hu3DShadowCreate(45.0f, var_r30->near, var_r30->far);
+    Hu3DShadowCreate(45.0f, var_r30->nnear, var_r30->ffar);
     Hu3DShadowTPLvlSet(0.625f);
     Hu3DShadowPosSet(&lbl_1_data_78C, &lbl_1_data_798, &lbl_1_data_77C);
     HuAudSndGrpSet(29);
@@ -471,7 +471,12 @@ void fn_1_7E0(omObjData *object)
                     espTPLvlSet(var_r31->unk_02[var_r30], 0.5f);
                     break;
                 case 2:
+#ifdef NON_MATCHING
+                    // TODO 1 or 0?
+                    var_r31->unk_02[var_r30] = espEntry(lbl_1_data_86C[var_r27->unk_02[5]], 0, 0);
+#else
                     var_r31->unk_02[var_r30] = espEntry(lbl_1_data_86C[var_r27->unk_02[5]]);
+#endif
                     espPriSet(var_r31->unk_02[var_r30], 255);
                     break;
                 case 3:

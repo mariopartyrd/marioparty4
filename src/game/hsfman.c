@@ -14,34 +14,37 @@
 
 #include "dolphin/gx/GXVert.h"
 
-#include "math.h"
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+#include "string.h"
+#endif
 
 #define SHADOW_HEAP_SIZE 0x9000
 
-ModelData Hu3DData[HU3D_MODEL_MAX];
-CameraData Hu3DCamera[HU3D_CAM_MAX];
+SHARED_SYM ModelData Hu3DData[HU3D_MODEL_MAX];
+SHARED_SYM CameraData Hu3DCamera[HU3D_CAM_MAX];
 static s16 layerNum[8];
 static void (*layerHook[8])(s16);
 AnimData *reflectAnim[5];
-AnimData *hiliteAnim[4];
+SHARED_SYM AnimData *hiliteAnim[4];
 ThreeDProjectionStruct Hu3DProjection[4];
-ShadowData Hu3DShadowData;
+SHARED_SYM ShadowData Hu3DShadowData;
 HsfScene FogData;
-Mtx Hu3DCameraMtx;
-Mtx Hu3DCameraMtxXPose;
-LightData Hu3DGlobalLight[0x8];
-LightData Hu3DLocalLight[0x20];
+SHARED_SYM Mtx Hu3DCameraMtx;
+SHARED_SYM Mtx Hu3DCameraMtxXPose;
+SHARED_SYM LightData Hu3DGlobalLight[0x8];
+SHARED_SYM LightData Hu3DLocalLight[0x20];
 Mtx lbl_8018D39C;
 
-GXColor BGColor;
+SHARED_SYM GXColor BGColor;
 s16 reflectMapNo;
 AnimData *toonAnim;
-s16 Hu3DShadowCamBit;
-s32 Hu3DShadowF;
-s32 shadowModelDrawF;
+SHARED_SYM s16 Hu3DShadowCamBit;
+SHARED_SYM s32 Hu3DShadowF;
+SHARED_SYM s32 shadowModelDrawF;
 s16 Hu3DProjectionNum;
-s16 Hu3DCameraNo;
+SHARED_SYM s16 Hu3DCameraNo;
 s16 Hu3DCameraBit;
 uintptr_t Hu3DMallocNo;
 s16 Hu3DPauseF;
@@ -178,7 +181,7 @@ void Hu3DExec(void) {
                 HuSprExec(0x7F);
             }
             if (FogData.fogType != GX_FOG_NONE) {
-                GXSetFog(FogData.fogType, FogData.start, FogData.end, camera->near, camera->far, FogData.color);
+                GXSetFog(FogData.fogType, FogData.start, FogData.end, camera->nnear, camera->ffar, FogData.color);
             }
             for (j = 0; j < 8; j++) {
                 if (layerHook[j] != 0) {
@@ -1121,7 +1124,7 @@ void Hu3DCameraCreate(s32 cam) {
     }
 }
 
-void Hu3DCameraPerspectiveSet(s32 cam, f32 fov, f32 near, f32 far, f32 aspect) {
+void Hu3DCameraPerspectiveSet(s32 cam, f32 fov, f32 nnear, f32 ffar, f32 aspect) {
     s16 mask;
     s16 i;
     CameraData* cam_ptr;
@@ -1130,8 +1133,8 @@ void Hu3DCameraPerspectiveSet(s32 cam, f32 fov, f32 near, f32 far, f32 aspect) {
         if ((cam & mask) != 0) {
             cam_ptr = &Hu3DCamera[i];
             cam_ptr->fov = fov;
-            cam_ptr->near = near;
-            cam_ptr->far = far;
+            cam_ptr->nnear = nnear;
+            cam_ptr->ffar = ffar;
             cam_ptr->aspect = aspect;
         }
     }
@@ -1248,7 +1251,7 @@ void Hu3DCameraSet(s32 arg0, Mtx arg1) {
     CameraData* temp_r31;
 
     temp_r31 = &Hu3DCamera[arg0];
-    C_MTXPerspective(sp10, temp_r31->fov, temp_r31->aspect, temp_r31->near, temp_r31->far);
+    C_MTXPerspective(sp10, temp_r31->fov, temp_r31->aspect, temp_r31->nnear, temp_r31->ffar);
     GXSetProjection(sp10, GX_PERSPECTIVE);
     if (RenderMode->field_rendering != 0) {
         GXSetViewportJitter(temp_r31->viewport_x, temp_r31->viewport_y, temp_r31->viewport_w, temp_r31->viewport_h, temp_r31->near_z, temp_r31->far_z, VIGetNextField());
@@ -1299,7 +1302,7 @@ BOOL Hu3DModelCameraInfoSet(s16 arg0, u16 arg1) {
                              sp8.x, sp8.y, sp8.z, 
                              obj_copy->camera.pos.x, obj_copy->camera.pos.y, obj_copy->camera.pos.z);
             
-            Hu3DCameraPerspectiveSet(arg1, obj_copy->camera.fov, obj_copy->camera.near, obj_copy->camera.far, HU_DISP_ASPECT);
+            Hu3DCameraPerspectiveSet(arg1, obj_copy->camera.fov, obj_copy->camera.nnear, obj_copy->camera.ffar, HU_DISP_ASPECT);
             
             temp_r28->unk_01 = arg1;
             temp_r24 = &Hu3DData[arg0];

@@ -14,8 +14,11 @@
 
 #include "REL/modeseldll.h"
 
+s32 msmSysGetOutputMode(void);
+
 #ifndef __MWERKS__
 #include "game/esprite.h"
+#include "game/hsfex.h"
 #endif
 
 s16 lbl_1_data_100 = -1;

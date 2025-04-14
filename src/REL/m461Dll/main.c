@@ -1127,7 +1127,9 @@ void fn_1_507C(WorkPlayerOld *player, s32 attr)
     player->unk3C &= ~attr;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 Vec lbl_1_data_A0 = { 0, 600, 600 };
 Vec lbl_1_data_AC = { 0, 1, 0 };

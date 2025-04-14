@@ -8,6 +8,7 @@
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
+#include <game/hsfex.h>
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
@@ -22,6 +23,11 @@
 
 #include "dolphin.h"
 #include "ext_math.h"
+
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -1277,7 +1283,9 @@ float fn_1_5664(Vec *arg0)
     return lbl_1_bss_5AC.unk04[fn_1_23B4(arg0)].y;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 Vec lbl_1_data_100 = { 0.0f, 1.0f, 0.0f };
 Vec lbl_1_data_10C = { 450.0f, 300.0f, 500.0f };

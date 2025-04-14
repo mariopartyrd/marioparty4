@@ -24,6 +24,10 @@
 #include "ext_math.h"
 #include "stdlib.h"
 
+#ifndef __MWERKS__
+#include <game/board/shop.h>
+#endif
+
 typedef struct {
     struct {
         u8 unk00_field0 : 1;

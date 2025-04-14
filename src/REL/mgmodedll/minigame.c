@@ -60,7 +60,7 @@ void fn_1_26C54(s16 layer)
     Vec pos, target, up;
     GXColor color;
     CameraData *camera = &Hu3DCamera[0];
-    MTXPerspective(proj, camera->fov, camera->aspect, camera->near, camera->far);
+    MTXPerspective(proj, camera->fov, camera->aspect, camera->nnear, camera->ffar);
     GXSetProjection(proj, GX_PERSPECTIVE);
     GXSetViewport(0, 0, 640, 480, 0, 1);
     GXSetScissor(0, 0, 640, 480);

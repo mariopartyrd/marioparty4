@@ -174,17 +174,11 @@ void fn_1_7344(omObjData *arg0)
     f32 temp_f28;
     f32 temp_f29;
     f32 temp_f30;
-    f32 var_f25;
-    f32 var_f26;
-    f32 var_f27;
     f32 var_f31;
-    s16 temp_r0;
     s32 temp_r19;
     s16 temp_r22;
     s16 temp_r26;
     s16 temp_r25;
-    s16 var_r20;
-    s16 var_r21;
     s16 var_r27;
     s16 var_r28;
     s32 var_r24;
@@ -379,23 +373,15 @@ void fn_1_7FE8(omObjData *arg0)
 {
     Vec sp20;
     Vec sp14;
-    s32 sp10;
-    f32 spC;
-    s16 sp8;
     unkStruct10 *var_r30;
     unkStruct8Sub *temp_r29;
-    f32 temp_f0;
-    f32 temp_f0_2;
-    f32 temp_f1;
     f32 temp_f29;
     f32 temp_f30;
-    f32 var_f28;
     s32 var_r28;
-    unkStruct7 *temp_r31;
 
-    temp_r31 = (unkStruct7 *)arg0->data;
-    sp10 = arg0->model[0];
-    sp8 = temp_r31->unk1C;
+    unkStruct7 *temp_r31 = (unkStruct7 *)arg0->data;
+    s32 sp10 = arg0->model[0];
+    s16 sp8 = temp_r31->unk1C;
     temp_r31->unkE = temp_r31->unk10 = 0;
     temp_r29 = fn_1_CCCC(temp_r31->unk57, 0);
     sp20.x = sp20.y = sp20.z = 0.0f;
@@ -1023,10 +1009,8 @@ s32 fn_1_A584(unkStruct10 *arg0)
 
 s8 fn_1_A9C0(Vec *arg0, f32 *arg1)
 {
-    f32 sp8;
     f32 temp_f29;
     f32 var_f30;
-    f32 var_f28;
     s32 var_r27;
     s32 var_r29;
     unkStruct10 *var_r31;
@@ -1080,8 +1064,6 @@ void fn_1_AC08(s32 *arg0, s32 arg1)
 f32 fn_1_AD40(f32 arg0, f32 arg1, f32 arg2)
 {
     f32 var_f31;
-    f32 var_f30;
-    f32 var_f29;
 
     var_f31 = fmodf(arg1 - arg0, 360.0);
     if (var_f31 < 0.0f) {

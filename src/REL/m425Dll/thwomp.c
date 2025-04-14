@@ -26,8 +26,8 @@
 
 #include "REL/m425Dll.h"
 
-extern u32 GlobalCounter;
-extern LightData Hu3DLocalLight[0x20];
+SHARED_SYM extern u32 GlobalCounter;
+SHARED_SYM extern LightData Hu3DLocalLight[0x20];
 
 typedef struct M425DllUnkStruct4 {
     s16 unk_00;
@@ -431,24 +431,24 @@ s32 fn_1_6EC4(float var_f24, float sp8, s16 var_r22, s16 var_r24)
     var_r31->unk_10E = var_r24;
     var_r31->unk_110 = var_r31->unk_144[24] + var_r31->unk_112[24];
     var_r31->unk_240 = 0x19;
-    var_r31->unk_178 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 2, var_r23->unk_48);
-    memset(var_r31->unk_178, 0, var_r31->unk_110 * 2);
-    var_r31->unk_17C = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 0xC, var_r23->unk_48);
-    memset(var_r31->unk_17C, 0, var_r31->unk_110 * 0xC);
-    var_r31->unk_180 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 0xC, var_r23->unk_48);
-    memset(var_r31->unk_180, 0, var_r31->unk_110 * 0xC);
-    var_r31->unk_184 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 8, var_r23->unk_48);
-    memset(var_r31->unk_184, 0, var_r31->unk_110 * 8);
-    var_r31->unk_188 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 0xC, var_r23->unk_48);
-    memset(var_r31->unk_188, 0, var_r31->unk_110 * 0xC);
-    var_r31->unk_18C = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 0xC, var_r23->unk_48);
-    memset(var_r31->unk_18C, 0, var_r31->unk_110 * 0xC);
+    var_r31->unk_178 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * sizeof(s16), var_r23->unk_48);
+    memset(var_r31->unk_178, 0, var_r31->unk_110 * sizeof(s16));
+    var_r31->unk_17C = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * sizeof(Vec), var_r23->unk_48);
+    memset(var_r31->unk_17C, 0, var_r31->unk_110 * sizeof(Vec));
+    var_r31->unk_180 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * sizeof(Vec), var_r23->unk_48);
+    memset(var_r31->unk_180, 0, var_r31->unk_110 * sizeof(Vec));
+    var_r31->unk_184 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * sizeof(Vec2f), var_r23->unk_48);
+    memset(var_r31->unk_184, 0, var_r31->unk_110 * sizeof(Vec2f));
+    var_r31->unk_188 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * sizeof(Vec), var_r23->unk_48);
+    memset(var_r31->unk_188, 0, var_r31->unk_110 * sizeof(Vec));
+    var_r31->unk_18C = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * sizeof(Vec), var_r23->unk_48);
+    memset(var_r31->unk_18C, 0, var_r31->unk_110 * sizeof(Vec));
     var_r31->unk_190 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 6, var_r23->unk_48);
     memset(var_r31->unk_190, 0, var_r31->unk_110 * 6);
-    var_r31->unk_194 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * 0xC, var_r23->unk_48);
-    memset(var_r31->unk_194, 0, var_r31->unk_110 * 0xC);
-    var_r31->unk_198 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_112[0] * 0xC, var_r23->unk_48);
-    memset(var_r31->unk_198, 0, var_r31->unk_112[0] * 0xC);
+    var_r31->unk_194 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110 * sizeof(Vec), var_r23->unk_48);
+    memset(var_r31->unk_194, 0, var_r31->unk_110 * sizeof(Vec));
+    var_r31->unk_198 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_112[0] * sizeof(Vec), var_r23->unk_48);
+    memset(var_r31->unk_198, 0, var_r31->unk_112[0] * sizeof(Vec));
     var_r31->unk_1A0 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_110, var_r23->unk_48);
     memset(var_r31->unk_1A0, 0, var_r31->unk_110);
     for (var_r30 = 0; var_r30 < var_r31->unk_110; var_r30++) {
@@ -2135,16 +2135,16 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, var_r31->unk_180, 0xC);
+    GXSETARRAY(GX_VA_POS, var_r31->unk_180, var_r31->unk_110 * sizeof(Vec), sizeof(Vec));
     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_NRM, var_r31->unk_188, 0xC);
+    GXSETARRAY(GX_VA_NRM, var_r31->unk_188, var_r31->unk_110 * sizeof(Vec), sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, &var_r31->unk_23A, 4);
+    GXSETARRAY(GX_VA_CLR0, &var_r31->unk_23A, var_r31->unk_110 * sizeof(GXColor), sizeof(GXColor));
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_CLR_RGBA, GX_RGBA6, 0);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
-    GXSetArray(GX_VA_TEX0, var_r31->unk_184, 8);
+    GXSETARRAY(GX_VA_TEX0, var_r31->unk_184, var_r31->unk_110 * sizeof(Vec2f), sizeof(Vec2f));
     for (var_r30 = 0; var_r30 < var_r31->unk_240; var_r30++) {
         if (var_r31->unk_2A8[var_r30] && var_r31->unk_244[var_r30] != 0 && var_r30 != 1) {
             GXCallDisplayList(var_r31->unk_2A8[var_r30], var_r31->unk_244[var_r30]);
@@ -2181,16 +2181,16 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     GXClearVtxDesc();
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_TEX_ST, GX_RGBA6, 0);
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
-    GXSetArray(GX_VA_POS, var_r31->unk_180, 0xC);
+    GXSETARRAY(GX_VA_POS, var_r31->unk_180, var_r31->unk_110 * sizeof(Vec), sizeof(Vec));
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_TEX_S, GX_RGBA6, 0);
     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
-    GXSetArray(GX_VA_NRM, var_r31->unk_188, 0xC);
+    GXSETARRAY(GX_VA_NRM, var_r31->unk_188, var_r31->unk_110 * sizeof(Vec), sizeof(Vec));
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_TEX_ST, GX_RGBA8, 0);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
-    GXSetArray(GX_VA_CLR0, &var_r31->unk_23A, 4);
+    GXSETARRAY(GX_VA_CLR0, &var_r31->unk_23A, var_r31->unk_110 * sizeof(GXColor), sizeof(GXColor));
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
-    GXSetArray(GX_VA_TEX0, var_r31->unk_184, 8);
+    GXSETARRAY(GX_VA_TEX0, var_r31->unk_184, var_r31->unk_110 * sizeof(Vec2f), sizeof(Vec2f));
     if (var_r31->unk_2A8[1] && (var_r31->unk_244[1] != 0)) {
         GXCallDisplayList(var_r31->unk_2A8[1], var_r31->unk_244[1]);
     }
@@ -2684,13 +2684,13 @@ void fn_1_11EE0(ModelData *var_r24, Mtx var_r21)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_TEX_ST, GX_RGBA6, 0);
-        GXSetArray(GX_VA_POS, var_r31->unk_40, 0xC);
+        GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_24 * sizeof(Vec) * 4, sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_TEX_ST, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, 0x44);
+        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, sizeof(var_r31->unk_3C->unk_3C), 0x44);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
-        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
-        GXSetArray(GX_VA_TEX0, var_r31->unk_44, 8);
+        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
+        GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_24 * sizeof(Vec2f) * 4, sizeof(Vec2f));
         if (HmfInverseMtxF3X3(var_r21, sp128) == 0) {
             MTXIdentity(sp128);
         }
@@ -2748,8 +2748,8 @@ void fn_1_11EE0(ModelData *var_r24, Mtx var_r21)
                 }
             }
         }
-        DCFlushRangeNoSync(var_r31->unk_40, var_r31->unk_24 * 0xC * 4);
-        DCFlushRangeNoSync(var_r31->unk_44, var_r31->unk_24 * 8 * 4);
+        DCFlushRangeNoSync(var_r31->unk_40, var_r31->unk_24 * sizeof(Vec) * 4);
+        DCFlushRangeNoSync(var_r31->unk_44, var_r31->unk_24 * sizeof(Vec2f) * 4);
         PPCSync();
         GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (shadowModelDrawF == 0) {

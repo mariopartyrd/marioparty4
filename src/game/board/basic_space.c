@@ -1,3 +1,4 @@
+#include "game/audio.h"
 #include "game/board/basic_space.h"
 #include "game/board/main.h"
 #include "game/board/model.h"
@@ -236,10 +237,10 @@ static void CreateCoinChg(coinChg *coin_chg, Vec *pos) {
     BoardModelMotionSpeedSet(coin_chg->sign_model, 0.0f);
     BoardModelMotionSpeedSet(coin_chg->tens_model, 0.0f);
     BoardModelMotionSpeedSet(coin_chg->ones_model, 0.0f);
-    BoardModelScaleSet(coin_chg->sign_model, 0.001, 0.001, 0.001);
-    BoardModelScaleSet(coin_chg->tens_model, 0.001, 0.001, 0.001);
-    BoardModelScaleSet(coin_chg->ones_model, 0.001, 0.001, 0.001);
-    BoardModelScaleSet(coin_chg->coin_model, 0.001, 0.001, 0.001);
+    BoardModelScaleSet(coin_chg->sign_model, 0.001f, 0.001f, 0.001f);
+    BoardModelScaleSet(coin_chg->tens_model, 0.001f, 0.001f, 0.001f);
+    BoardModelScaleSet(coin_chg->ones_model, 0.001f, 0.001f, 0.001f);
+    BoardModelScaleSet(coin_chg->coin_model, 0.001f, 0.001f, 0.001f);
     BoardModelLayerSet(coin_chg->sign_model, 1);
     BoardModelLayerSet(coin_chg->tens_model, 1);
     BoardModelLayerSet(coin_chg->ones_model, 1);

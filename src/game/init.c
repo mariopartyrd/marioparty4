@@ -22,7 +22,7 @@ extern u32 frand();
 static GXRenderModeObj rmodeobj;
 
 static BOOL FirstFrame = TRUE;
-GXRenderModeObj *RenderMode;
+SHARED_SYM GXRenderModeObj *RenderMode;
 OSHeapHandle currentHeapHandle;
 static void *DefaultFifo;
 static GXFifoObj *DefaultFifoObj;
@@ -31,7 +31,7 @@ void *DemoFrameBuffer2;
 void *DemoCurrentBuffer;
 u32 minimumVcount;
 float minimumVcountf;
-u32 worstVcount;
+SHARED_SYM u32 worstVcount;
 static BOOL DemoStatEnable;
 
 

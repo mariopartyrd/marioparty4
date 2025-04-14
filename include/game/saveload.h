@@ -24,13 +24,13 @@ typedef union save_buf_all {
 	u8 ATTRIBUTE_ALIGN(32) buf[SAVE_BUF_SIZE];
 } SaveBufAll;
 
-extern char *SaveFileNameTbl[];
-extern CARDFileInfo curFileInfo;
-extern SaveBufAll saveBuf;
+SHARED_SYM extern char *SaveFileNameTbl[];
+SHARED_SYM extern CARDFileInfo curFileInfo;
+SHARED_SYM extern SaveBufAll saveBuf;
 extern u64 SLSerialNo;
-extern s32 saveExecF;
+SHARED_SYM extern s32 saveExecF;
 extern u8 curBoxNo;
-extern s16 curSlotNo;
+SHARED_SYM extern s16 curSlotNo;
 
 s32 SLFileOpen(char *fileName);
 s32 SLFileCreate(char *fileName, u32 size, void *addr);

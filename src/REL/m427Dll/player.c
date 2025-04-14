@@ -1666,10 +1666,10 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_TEX_ST, GX_RGBA6, 0);
-    GXSetArray(GX_VA_POS, lbl_1_data_260, sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, lbl_1_data_260, sizeof(lbl_1_data_260), sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_TEX_ST, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, &lbl_1_data_648, sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_648, sizeof(lbl_1_data_648), sizeof(GXColor));
     GXBegin(GX_LINESTRIP, GX_VTXFMT0, 0x1D);
     for (var_r29 = 0; var_r29 < 0x1DU; var_r29++) {
         GXPosition1x16(var_r29);
@@ -1678,10 +1678,10 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, &lbl_1_data_3BC, sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, &lbl_1_data_3BC, sizeof(lbl_1_data_3BC), sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, &lbl_1_data_648, sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_648, sizeof(lbl_1_data_648), sizeof(GXColor));
     GXBegin(GX_LINESTRIP, GX_VTXFMT0, 0x1D);
     for (var_r29 = 0; var_r29 < 0x1DU; var_r29++) {
         GXPosition1x16(var_r29);
@@ -1690,10 +1690,10 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, lbl_1_bss_584, sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, lbl_1_bss_584, lbl_1_bss_580 * sizeof(Vec), sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, &lbl_1_data_650, sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_650, sizeof(lbl_1_data_650), sizeof(GXColor));
     GXBegin(GX_LINESTRIP, GX_VTXFMT0, 0x1D);
     for (var_r29 = 0; var_r29 < lbl_1_bss_580; var_r29++) {
         GXPosition1x16(var_r29);

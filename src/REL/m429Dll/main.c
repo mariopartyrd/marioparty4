@@ -1323,7 +1323,9 @@ void fn_1_3DCC(Work8F68 *arg0)
     }
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_40C0(Work8F68 *arg0, omObjData *arg1, s32 arg2)
 {

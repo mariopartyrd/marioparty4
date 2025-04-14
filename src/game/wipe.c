@@ -111,11 +111,9 @@ void WipeExecAlways(void)
 void WipeCreate(s16 mode, s16 type, s16 duration)
 {
 	WipeState *wipe;
-#ifdef __MWERKS__ // TODO PC
 	if(_CheckFlag(FLAG_ID_MAKE(1, 11)) && boardTutorialF) {
 		return;
 	}
-#endif
 	wipe = &wipeData;
 	if(wipe->stat) {
 		return;

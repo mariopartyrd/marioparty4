@@ -16,6 +16,7 @@
 #include "game/wipe.h"
 #include "math.h"
 
+#include "port/byteswap.h"
 
 #include "data_num/title.h"
 
@@ -125,10 +126,7 @@ void ObjectSetup(void)
          HuSprGrpMemberSet(group, 1, sprite_hudson);
          HuSprPosSet(group, 1, 288, 240);
          HuSprAttrSet(group, 1, HUSPR_ATTR_DISPOFF);
-#ifdef __MWERKS__
-         // TODO PC
          HuWinInit(1);
-#endif
          BootTitleCreate();
          SystemInitF = 1;
      }
@@ -161,13 +159,10 @@ void ObjectSetup(void)
          WipeColorSet(255, 255, 255);
          if (!SystemInitF) {
              tick_prev = OSGetTick();
-#ifdef __MWERKS__
-             // TODO PC
              CharManInit();
              HuWindowInit();
              MGSeqInit();
              HuWinInit(1);
-#endif
              BootTitleCreate();
              data = HuSprAnimReadFile(TITLE_HUDSON_ANM);
              sprite_hudson = HuSprCreate(data, 0, 0);
@@ -269,8 +264,6 @@ void ObjectSetup(void)
              HuPrcVSleep();
          }
          skip_wait = FALSE;
-#ifdef __MWERKS__
-         // TODO PC
          while (!HuTHPEndCheck()) {
              UpdateDemoMess();
              if (HuPadBtnDown[0] & (PAD_BUTTON_START | PAD_BUTTON_A)) {
@@ -279,21 +272,14 @@ void ObjectSetup(void)
              }
              HuPrcVSleep();
          }
-#endif
          WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 30);
          while (WipeStatGet()) {
              HuPrcVSleep();
          }
-#ifdef __MWERKS__
-         // TODO PC
          HuWinKill(demoWinId);
          HuTHPClose();
-#endif
          HuPrcVSleep();
-#ifdef __MWERKS__
-         // TODO PC
          HuSprGrpKill(group_thp);
-#endif
          if (!skip_wait) {
              HuPrcSleep(60);
          }
@@ -346,16 +332,10 @@ void ObjectSetup(void)
      int i;
      for (i = 0; demoMessTimeTbl[i * 2] != -1; i++) {
          if (frame == demoMessTimeTbl[i * 2]) {
-#ifdef __MWERKS__
-             // TODO PC
              HuWinMesSet(demoWinId, MAKE_MESSID(54, i));
-#endif
          }
          if (frame == demoMessTimeTbl[(i * 2) + 1]) {
-#ifdef __MWERKS__
-             // TODO PC
              HuWinHomeClear(demoWinId);
-#endif
          }
      }
  }

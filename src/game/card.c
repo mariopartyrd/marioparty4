@@ -4,7 +4,7 @@
 #include "version.h"
 
 static void *cardWork;
-u8 UnMountCnt;
+SHARED_SYM u8 UnMountCnt;
 
 static void MountCallBack(s32 chan, s32 result);
 

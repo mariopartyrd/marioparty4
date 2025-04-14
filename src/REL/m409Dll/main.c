@@ -212,12 +212,7 @@ void fn_1_DDC(omObjData *object)
 
 void fn_1_F70(omObjData *object)
 {
-    s16 *sp8;
-    s16 temp_r3;
-    s16 temp_r3_2;
-    s32 var_r31;
-
-    sp8 = (s16 *)object->data;
+    s16 *sp8 = (s16 *)object->data;
     switch (fn_1_2454(7)) {
         case 1:
             if (lbl_1_bss_6 == 0) {
@@ -225,10 +220,11 @@ void fn_1_F70(omObjData *object)
                 WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 0x3C);
             }
             if (WipeStatGet() == 0) {
+                s32 i;
                 fn_1_2414(7, 2);
 
-                for (var_r31 = 0; var_r31 < 4; var_r31++) {
-                    omVibrate(var_r31, 0xC8, 6, 6);
+                for (i = 0; i < 4; i++) {
+                    omVibrate(i, 0xC8, 6, 6);
                 }
             }
             break;
@@ -382,13 +378,7 @@ s8 fn_1_10E8(omObjData *object)
 
 s8 fn_1_1B74(omObjData *object)
 {
-    f32 temp_f30;
-    f32 temp_f31;
-    s16 temp_r27;
-    s32 temp_r28;
-    unkStruct4 *temp_r30;
-
-    temp_r30 = (unkStruct4 *)object->data;
+    unkStruct4 *temp_r30 = object->data;
     switch (lbl_1_bss_8) {
         case 0:
             temp_r30->unk2 = MGSeqCreate(3, 1);
@@ -440,14 +430,12 @@ s8 fn_1_1B74(omObjData *object)
 
 void fn_1_2098(omObjData *object)
 {
-    ModelData *temp_r31;
     f32 var_f28;
     f32 var_f29;
     f32 var_f31;
     f32 var_f30;
-    s32 var_r30;
 
-    temp_r31 = &Hu3DData[lbl_1_bss_DC->model[4]];
+    ModelData *temp_r31 = &Hu3DData[lbl_1_bss_DC->model[4]];
     if (fn_1_2454(0x18) != 0x18) {
         lbl_1_bss_18 += 0.008f;
         if (lbl_1_bss_18 >= 1.0f) {
@@ -584,10 +572,6 @@ void fn_1_2484(omObjData *object)
 
 void fn_1_2DCC(omObjData *object)
 {
-    u16 spE;
-    u16 spC;
-    u16 spA;
-    u16 sp8;
     ModelData *temp_r30;
     f32 temp_f29;
     f32 var_f31;
@@ -597,8 +581,6 @@ void fn_1_2DCC(omObjData *object)
     s16 var_r28;
     s16 var_r27;
     s16 var_r29;
-    s32 temp_r16;
-    s16 var_r18;
     unkStruct4 *var_r31;
 
     if ((lbl_1_bss_24.unk0 == 0) || (fn_1_2454(0x18) == 0x18)) {
@@ -991,7 +973,6 @@ void fn_1_4FFC(s16 arg0, f32 arg1, f32 arg2, f32 arg3, s16 arg4)
     Vec sp2C;
     Vec sp20;
     GXColor sp1A;
-    s16 sp18;
     f32 temp_f31;
     s16 var_r30;
     unkStruct5 *temp_r31;
@@ -1179,7 +1160,6 @@ unkStruct5 *fn_1_58E0(s16 arg0, Vec *arg1, Vec *arg2, f32 arg3, GXColor *arg4)
 s16 fn_1_5A18(AnimData *arg0, s16 arg1, f32 arg8, s16 arg2, s16 arg3)
 {
     ModelData *temp_r28;
-    f32 temp_f0;
     s16 var_r21;
     s16 var_r22;
     s16 var_r30;
@@ -1377,13 +1357,13 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, temp_r30->unk1C, 12);
+    GXSETARRAY(GX_VA_POS, temp_r30->unk1C, temp_r30->unk0 * sizeof(Vec) * 4, sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, temp_r30->unk24, 4);
+    GXSETARRAY(GX_VA_CLR0, temp_r30->unk24, temp_r30->unk0 * sizeof(GXColor), sizeof(GXColor));
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_TEX0, temp_r30->unk20, 8);
+    GXSETARRAY(GX_VA_TEX0, temp_r30->unk20, temp_r30->unk0 * sizeof(Vec2f) * 4, sizeof(Vec2f));
     fn_1_40A4(arg1, sp128);
     MTXReorder(sp128, spF8);
     if (((u8)omPauseChk() == 0) && (temp_r30->unkC)) {

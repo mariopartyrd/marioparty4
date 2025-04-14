@@ -1313,8 +1313,6 @@ void HuWinMesRead(s32 mess_data_no)
 
 void HuWinMesSet(s16 window, u32 mess)
 {
-#ifdef __MWERKS__
-    // TODO PC
     WindowData *window_ptr = &winData[window];
 
     window_ptr->stat = 1;
@@ -1341,13 +1339,10 @@ void HuWinMesSet(s16 window, u32 mess)
         window_ptr->mess_time = 0;
 #endif
     }
-#endif
 }
 
 void HuWinInsertMesSet(s16 window, u32 mess, s16 index)
 {
-#ifdef __MWERKS__
-    // TODO PC
     WindowData *window_ptr = &winData[window];
 
     if (!(mess & 0x80000000)) {
@@ -1363,7 +1358,6 @@ void HuWinInsertMesSet(s16 window, u32 mess, s16 index)
     else {
         window_ptr->insert_mess[index] = (u8 *)mess;
     }
-#endif
 }
 
 s16 HuWinChoiceGet(s16 window, s16 start_choice)
@@ -1668,8 +1662,6 @@ void HuWinMesMaxSizeBetGet(float *size, u32 start, u32 end)
 
 static void GetMesMaxSizeSub(u32 mess)
 {
-#ifdef __MWERKS__
-    // TODO PC
     s16 line_h;
     s16 char_w;
     s16 line_w;
@@ -1773,7 +1765,6 @@ static void GetMesMaxSizeSub(u32 mess)
     if (winMaxHeight < line_h) {
         winMaxHeight = line_h;
     }
-#endif
 }
 
 static s32 GetMesMaxSizeSub2(WindowData *window, u8 *mess_data)

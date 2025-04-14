@@ -18,6 +18,9 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
+#include <game/board/audio.h>
+#include <game/hsfex.h>
+
 typedef struct {
     struct {
         u8 unk00_field0 : 1;

@@ -34,7 +34,7 @@ void OSStopStopwatch(struct OSStopwatch *sw)
     }
 }
 
-long long OSCheckStopwatch(struct OSStopwatch *sw)
+OSTime OSCheckStopwatch(OSStopwatch *sw)
 {
     long long currTotal;
 

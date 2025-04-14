@@ -535,7 +535,6 @@ float fn_1_4FEC(Vec arg0, Vec arg1, float arg8, Vec arg2, Vec arg3, float arg9, 
     float sp2C;
 
     float var_f28;
-    float var_f26;
     float var_f25;
     float var_f24;
     float var_f23;
@@ -777,19 +776,6 @@ void fn_1_61DC(UnkM410Struct2 *arg0, UnkM410Struct2 *arg1)
     Vec sp68;
     Vec sp5C;
     Vec sp50;
-    Vec sp44;
-    Vec sp38;
-    Vec sp2C;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
-
-    Vec *var_r29;
-    Vec *var_r28;
-    Vec *var_r27;
-    Vec *var_r26;
-    Vec *var_r25;
-    Vec *var_r24;
 
     if (arg0->unk_00_field1 || arg1->unk_00_field1) {
         if (arg0->unk_00_field1) {

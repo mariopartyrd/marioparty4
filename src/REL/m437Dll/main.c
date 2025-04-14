@@ -3443,7 +3443,9 @@ void fn_1_108A4(omObjData *arg0)
     arg0->func = fn_1_1043C;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_10B30(void)
 {

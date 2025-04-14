@@ -11,6 +11,9 @@ void HuMemInitAll(void)
     void *ptr;
     u32 free_size;
     for(i=0; i<4; i++) {
+#ifdef TARGET_PC
+        HeapSizeTbl[i] *= 2;
+#endif
         ptr = OSAlloc(HeapSizeTbl[i]);
         if(ptr == NULL) {
             OSReport("HuMem> Failed OSAlloc Size:%d\n", HeapSizeTbl[i]);
@@ -55,7 +58,7 @@ void *HuMemDirectMalloc(HeapID heap, s32 size)
         mflr retaddr
     }
 #endif
-    size = (size+31) & 0xFFFFFFE0;
+    size = (size + 31) & ~0x1F;
     return HuMemMemoryAlloc(HeapTbl[heap], size, retaddr);
 }
 
@@ -69,7 +72,7 @@ void *HuMemDirectMallocNum(HeapID heap, s32 size, uintptr_t num)
         mflr retaddr
     }
 #endif
-    size = (size+31) & 0xFFFFFFE0;
+    size = (size + 31) & ~0x1F;
     return HuMemMemoryAllocNum(HeapTbl[heap], size, num, retaddr);
 }
 

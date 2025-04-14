@@ -1042,7 +1042,7 @@ void fn_1_10484(UnkFn10484 *arg0, HsfFace *arg1, HsfDrawData *arg2, GXColor *arg
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, temp_r30->data.vertex->data, sizeof(HsfVector3f));
+    GXSETARRAY(GX_VA_POS, temp_r30->data.vertex->data, temp_r30->data.vertex->count * sizeof(HsfVector3f), sizeof(HsfVector3f));
     if (temp_r25 & 0x2) {
         GXSetVtxDesc(GX_VA_NBT, GX_DIRECT);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_S16, 8);
@@ -1050,15 +1050,15 @@ void fn_1_10484(UnkFn10484 *arg0, HsfFace *arg1, HsfDrawData *arg2, GXColor *arg
     else {
         GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_NRM, temp_r30->data.normal->data, sizeof(HsfVector3f));
+        GXSETARRAY(GX_VA_NRM, temp_r30->data.normal->data, temp_r30->data.vertex->count * sizeof(HsfVector3f), sizeof(HsfVector3f));
     }
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_TEX0, temp_r30->data.st->data, sizeof(HsfVector2f));
+    GXSETARRAY(GX_VA_TEX0, temp_r30->data.st->data, temp_r30->data.vertex->count * sizeof(HsfVector2f), sizeof(HsfVector2f));
     if (temp_r25 & 0x4) {
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, arg3, sizeof(GXColor));
+        GXSETARRAY(GX_VA_CLR0, arg3, arg0->unk4->data.color->count * sizeof(GXColor), sizeof(GXColor));
     }
     GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
     GXSetZCompLoc(GX_FALSE);
@@ -1150,7 +1150,7 @@ void fn_1_10830(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3)
         GXSetTevColor(reg, color_var);                                                                                                               \
     }
 
-extern u32 texMtxTbl[];
+SHARED_SYM extern u32 texMtxTbl[];
 
 void fn_1_10B60(UnkFn10484 *arg0, HsfMaterial *arg1)
 {

@@ -19,7 +19,7 @@
 
 #define frand7() (frand() & 0x7F)
 
-extern u32 GlobalCounter;
+SHARED_SYM extern u32 GlobalCounter;
 
 typedef struct {
     /* 0x00 */ s32 unk00;
@@ -874,16 +874,16 @@ void fn_1_14A0(ModelData *arg0, Mtx arg1)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_POS, lbl_1_data_29C, 12);
+        GXSETARRAY(GX_VA_POS, lbl_1_data_29C, sizeof(lbl_1_data_29C), sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, lbl_1_data_30C, 4);
+        GXSETARRAY(GX_VA_CLR0, lbl_1_data_30C, sizeof(lbl_1_data_30C), sizeof(GXColor));
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_TEX0, lbl_1_data_2CC, 8);
+        GXSETARRAY(GX_VA_TEX0, lbl_1_data_2CC, sizeof(lbl_1_data_2CC), sizeof(Vec2f));
         GXSetVtxDesc(GX_VA_TEX1, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX1, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_TEX1, lbl_1_data_2EC, 8);
+        GXSETARRAY(GX_VA_TEX1, lbl_1_data_2EC, sizeof(lbl_1_data_2EC), sizeof(Vec2f));
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
         for (i = 0; i < 4; i++) {
             GXPosition1x16(i);
@@ -1255,8 +1255,8 @@ void fn_1_29BC(ModelData *arg0, Mtx arg1)
             DCFlushRangeNoSync(temp_r31->unk14, temp_r31->unk00 * sizeof(*temp_r31->unk14));
             DCFlushRangeNoSync(temp_r31->unk1C, temp_r31->unk00 * sizeof(*temp_r31->unk1C));
             PPCSync();
-            GXSetArray(GX_VA_POS, temp_r31->unk14, sizeof(*temp_r31->unk14));
-            GXSetArray(GX_VA_CLR0, temp_r31->unk1C, sizeof(*temp_r31->unk1C));
+            GXSETARRAY(GX_VA_POS, temp_r31->unk14, temp_r31->unk00 * sizeof(*temp_r31->unk14), sizeof(*temp_r31->unk14));
+            GXSETARRAY(GX_VA_CLR0, temp_r31->unk1C, temp_r31->unk00 * sizeof(*temp_r31->unk1C), sizeof(*temp_r31->unk1C));
             GXCallDisplayList(temp_r31->unk38, temp_r31->unk34);
         }
     }
@@ -4471,9 +4471,9 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_POS, temp_r30->unk20C, 12);
-    GXSetArray(GX_VA_CLR0, temp_r30->unk214, 4);
-    GXSetArray(GX_VA_TEX0, temp_r30->unk210, 8);
+    GXSETARRAY(GX_VA_POS, temp_r30->unk20C, 32 * sizeof(*temp_r30->unk20C), sizeof(Vec));
+    GXSETARRAY(GX_VA_CLR0, temp_r30->unk214, 5 * sizeof(*temp_r30->unk214), sizeof(GXColor));
+    GXSETARRAY(GX_VA_TEX0, temp_r30->unk210, 32 * sizeof(*temp_r30->unk210), sizeof(Vec2f));
     var_r31 = temp_r30->unk00;
     for (i = 0; i < 16; i++, var_r31++) {
         if (var_r31->unk00 == 0) {
@@ -4864,7 +4864,7 @@ void fn_1_10BC8(void)
     if (var_r31->fov <= 0.0f) {
         return;
     }
-    C_MTXPerspective(sp64, var_r31->fov, var_r31->aspect, var_r31->near, var_r31->far);
+    C_MTXPerspective(sp64, var_r31->fov, var_r31->aspect, var_r31->nnear, var_r31->ffar);
     GXSetProjection(sp64, GX_PERSPECTIVE);
     GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
     GXSetScissor(0, 0, 640, 480);
@@ -5227,13 +5227,13 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, temp_r31->unk40, 12);
+    GXSETARRAY(GX_VA_POS, temp_r31->unk40, temp_r31->unk26 * sizeof(Vec) * 4, sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, &temp_r31->unk3C->unk44, 76);
+    GXSETARRAY(GX_VA_CLR0, &temp_r31->unk3C->unk44, sizeof(GXColor), 76);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_TEX0, temp_r31->unk44, 8);
+    GXSETARRAY(GX_VA_TEX0, temp_r31->unk44, temp_r31->unk26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
     GXCallDisplayList(temp_r31->unk48, temp_r31->unk34);
     if (shadowModelDrawF == 0) {
         if (!(temp_r31->unk21 & 2)) {

@@ -2,8 +2,9 @@
 #define _GAME_CARD_H
 
 #include "dolphin.h"
+#include "version.h"
 
-extern u8 UnMountCnt;
+SHARED_SYM extern u8 UnMountCnt;
 
 void HuCardInit(void);
 s32 HuCardCheck(void);

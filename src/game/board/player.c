@@ -21,6 +21,8 @@
 #include "ext_math.h"
 #include "stdlib.h"
 
+#include <game/audio.h>
+
 static void InitJunction(s32, s32, f32);
 static void UpdateJunctionGfx(omObjData *);
 static void StopJunctionPlayer(s32);
@@ -67,7 +69,7 @@ static HsfMaterial *playerMatCopy[4];
 static s32 (*postTurnHook[4])();
 static s32 (*preTurnHook[4])();
 
-s16 boardPlayerMdl[4];
+SHARED_SYM s16 boardPlayerMdl[4];
 static s16 playerMot[4];
 static s8 itemPrev;
 static s8 moveAwayPlayer[4];
@@ -266,7 +268,6 @@ void BoardPlayerModelInit(void)
     s32 temp_r25;
     s32 temp_r24;
     s16 temp_r3;
-    s32 temp_r4;
     PlayerState *temp_r27;
 
     s32 ro0[8] = { DATA_MAKE_NUM(DATADIR_MARIOMDL1, 0x00), DATA_MAKE_NUM(DATADIR_LUIGIMDL1, 0x00), DATA_MAKE_NUM(DATADIR_PEACHMDL1, 0x00),
@@ -337,7 +338,6 @@ void BoardPlayerModelKill(void)
 {
     s32 var_r31;
     PlayerState *temp_r30;
-    PlayerState *temp_r29;
 
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
         temp_r30 = BoardPlayerGet(var_r31);
@@ -689,7 +689,6 @@ s32 BoardPlayerCoinsGet(s32 arg0)
 void BoardPlayerCoinsAdd(s32 arg0, s32 arg1)
 {
     PlayerState *player;
-    s16 coins;
 
     player = BoardPlayerGet(arg0);
     if ((arg1 > 0) && (player->coins_total < 0x3E7)) {
@@ -730,9 +729,11 @@ s32 BoardPlayerSizeGet(s32 idx)
     PlayerState *player;
 
     player = BoardPlayerGet(idx);
+#ifndef NON_MATCHING
     if (!player) {
         return;
     }
+#endif
     return player->size;
 }
 
@@ -833,7 +834,6 @@ void BoardPlayerTurnExec(s32 arg0)
 
 void BoardPlayerTurnRollExec(s32 arg0)
 {
-    s32 temp_r28;
     s32 temp_r30;
 
     GWPlayer[arg0].roll = 0;
@@ -876,8 +876,6 @@ void BoardPlayerTurnMoveExec(s32 arg0)
     s32 temp_r30;
     s32 var_r29;
     s32 var_r28;
-    s32 temp_r0;
-    s32 temp_r1;
 
     BoardPauseDisableSet(1);
     var_r28 = 0;
@@ -977,7 +975,6 @@ void BoardPlayerTurnMoveExec(s32 arg0)
         GWSystem.bowser_event = 0xF;
     }
     BoardPlayerZoomRestore(arg0);
-    return;
 }
 
 void BoardPlayerPostTurnHookExec(s32 arg0)
@@ -1067,9 +1064,6 @@ static inline GetLinkCount(s32 playerIdx, s32 boardIdx)
     s32 linkCount;
     BoardSpace *boardSpaceLink;
     BoardSpace *boardSpaceFlag;
-    PlayerState *player;
-    s32 color;
-    s32 temp;
 
     linkCount = 0;
     boardSpaceLink = BoardSpaceGet(0, boardIdx);
@@ -1325,7 +1319,6 @@ static s32 DoDebugMove(s32 arg0, s16 *arg1)
     s32 var_r21;
     s32 var_r20;
     s32 var_r18;
-    bitcopy *var_r17;
 
     var_r18 = -1;
 
@@ -1653,7 +1646,6 @@ void BoardPlayerMoveTo(s32 arg0, s32 arg1)
 {
     Vec sp18;
     Vec spC;
-    PlayerState *player;
 
     BoardModelPosGet(BoardPlayerModelGet(arg0), &sp18);
     BoardSpacePosGet(0, arg1, &spC);
@@ -1667,8 +1659,6 @@ void BoardPlayerMoveBetween(s32 arg0, s32 arg1, s32 arg2)
 {
     Vec sp1C;
     Vec sp10;
-    s32 spC;
-    s32 sp8;
 
     BoardSpacePosGet(0, arg1, &sp1C);
     BoardSpacePosGet(0, arg2, &sp10);
@@ -1682,7 +1672,6 @@ void BoardPlayerMoveToAsync(s32 arg0, s32 arg1)
 {
     Vec sp18;
     Vec spC;
-    s32 sp8;
 
     BoardModelPosGet(BoardPlayerModelGet(arg0), &sp18);
     BoardSpacePosGet(0, arg1, &spC);
@@ -1868,11 +1857,8 @@ static void DiceJumpFunc(omObjData *arg0)
 {
     Vec sp38;
     f32 temp_f31;
-    PlayerState *var_r30;
     bitcopy2 *temp_r31;
     s16 var_r28;
-    s32 var_r23;
-    s32 var_r17;
 
     temp_r31 = OM_GET_WORK_PTR(arg0, bitcopy2);
     if ((temp_r31->field00_bit0 != 0) || (BoardIsKill() != 0)) {
@@ -1938,7 +1924,6 @@ void BoardPlayerMotBlendSet(s32 arg0, s16 arg1, s16 arg2)
     f32 var_f27;
     f32 var_f22;
     f32 var_f21;
-    f32 var_f19;
     omObjData *temp_r3;
     s32 var_r22;
     s32 var_r20;
@@ -2212,11 +2197,7 @@ static void UpdateRoll(omObjData *arg0)
 
 void BoardPlayerBtnDownWait(s32 arg0, u32 arg1)
 {
-    s32 spC;
-    s32 sp8;
-    s32 temp_r31;
-
-    temp_r31 = GWPlayer[arg0].port;
+    s32 temp_r31 = GWPlayer[arg0].port;
     while (1) {
         if ((HuPadBtnDown[temp_r31] & arg1) != 0)
             return;
@@ -2226,9 +2207,7 @@ void BoardPlayerBtnDownWait(s32 arg0, u32 arg1)
 
 void BoardPlayerAutoSizeSet(s32 player, s32 value)
 {
-    PlayerState *temp_r28;
-
-    temp_r28 = BoardPlayerGet(player);
+    PlayerState *temp_r28 = BoardPlayerGet(player);
     if ((temp_r28->auto_size != 0) || (value == 0)) {
         BoardStatusHammerKill(player);
     }
@@ -2243,9 +2222,11 @@ s32 BoardPlayerAutoSizeGet(s32 arg0)
     PlayerState *player;
 
     player = BoardPlayerGet(arg0);
+#ifndef NON_MATCHING
     if (!player) {
         return;
     }
+#endif
     return player->auto_size;
 }
 
@@ -2360,8 +2341,6 @@ void BoardBowserSuitInit(s32 arg0)
 
 void BoardBowserSuitKill(s32 arg0)
 {
-    bitcopy3 *temp;
-
     if (bowserSuitObj != 0) {
         OM_GET_WORK_PTR(bowserSuitObj, bitcopy3)->field00_bit0 = 1;
     }

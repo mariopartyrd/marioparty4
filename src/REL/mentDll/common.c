@@ -29,18 +29,8 @@ s32 lbl_1_data_0[][4] = {
 
 s32 lbl_1_data_70 = -1;
 
-// char lbl_1_data_74[] = ">>>>>>>>>> CAMERA DATA <<<<<<<<<<";
-// char lbl_1_data_96[] = "CENTER : %.2f, %.2f, %.2f";
-// char lbl_1_data_B0[] = "ROT    : %.2f, %.2f, %.2f";
-// char lbl_1_data_CA[] = "ZOOM   : %.2f";
-
-extern s32 _prolog();
-extern void _epilog();
 void fn_1_144(void);
 void fn_1_2318(s32);
-typedef void (*VoidFunc)(void);
-extern const VoidFunc _ctors[];
-extern const VoidFunc _dtors[];
 
 void fn_1_0(omObjData *arg0)
 {
@@ -58,27 +48,11 @@ void fn_1_4C(omObjData *object)
     }
 }
 
-s32 _prolog(void)
-{
-    const VoidFunc *ctors = _ctors;
-    while (*ctors != 0) {
-        (**ctors)();
-        ctors++;
-    }
-    fn_1_144();
-    return 0;
-}
+#ifdef __MWERKS__
+#include "src/REL/executor.c"
+#endif
 
-void _epilog(void)
-{
-    const VoidFunc *dtors = _dtors;
-    while (*dtors != 0) {
-        (**dtors)();
-        dtors++;
-    }
-}
-
-void fn_1_144(void)
+void ObjectSetup(void)
 {
     _ClearFlag(0x1000BU);
     boardTutorialF = 0;

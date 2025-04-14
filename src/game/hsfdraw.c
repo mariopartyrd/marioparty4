@@ -1,9 +1,9 @@
 #include "game/hsfdraw.h"
+#include "game/disp.h"
 #include "game/hsfanim.h"
 #include "game/hsfformat.h"
 #include "game/hsfload.h"
 #include "game/sprite.h"
-#include "game/disp.h"
 
 #include "ext_math.h"
 #include "string.h"
@@ -90,6 +90,7 @@ static u16 *faceNumBuf;
 static s32 DLTotalNum;
 static u32 totalSize;
 static uintptr_t mallocNo;
+static uintptr_t mallocNo;
 static s32 curModelID;
 static s16 polySize;
 static s32 PGFinishF;
@@ -97,23 +98,19 @@ static u8 *PGName;
 static s32 TL32F;
 static s32 CancelTRXF;
 
-u8 texMtxTbl[] = {
-    GX_TEXMTX0, GX_TEXMTX1,
-    GX_TEXMTX2, GX_TEXMTX3,
-    GX_TEXMTX4, GX_TEXMTX5,
-    GX_TEXMTX6, GX_TEXMTX7,
-    GX_TEXMTX8, GX_TEXMTX9
-};
+SHARED_SYM u8 texMtxTbl[] = { GX_TEXMTX0, GX_TEXMTX1, GX_TEXMTX2, GX_TEXMTX3, GX_TEXMTX4, GX_TEXMTX5, GX_TEXMTX6, GX_TEXMTX7, GX_TEXMTX8, GX_TEXMTX9 };
 
 static s16 oneceF = 1;
 static GXColor firstTev = { 0xFF, 0xFF, 0x00, 0x00 };
 static GXColor secondTev = { 0x00, 0x00, 0xFF, 0xFF };
 
-void Hu3DDrawPreInit(void) {
+void Hu3DDrawPreInit(void)
+{
     DrawObjIdx = 0;
 }
 
-void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2) {
+void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2)
+{
     HsfDrawObject *temp_r31;
     HsfData *temp_r28;
     float temp_f31;
@@ -137,7 +134,7 @@ void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2) {
     modelObjNum = 0;
     GXSetCullMode(GX_CULL_BACK);
     for (i = 0; i < 8; i++) {
-        BmpPtrBak[i] = (HsfAttribute*) -1;
+        BmpPtrBak[i] = (HsfAttribute *)-1;
     }
     MTXCopy(arg1, MTXBuf[0]);
     scaleBuf[0] = *arg2;
@@ -146,10 +143,11 @@ void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2) {
     hookIdx = -1;
     shadingBak = -1;
     vtxModeBak = -1;
-    materialBak = (HsfMaterial*) -1;
+    materialBak = (HsfMaterial *)-1;
     if (arg0->unk_08 != -1) {
         attachMotionF = 1;
-    } else {
+    }
+    else {
         attachMotionF = 0;
     }
     objCall(arg0, temp_r28->root);
@@ -157,7 +155,8 @@ void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2) {
     oneceF = 1;
 }
 
-static void objCall(ModelData *arg0, HsfObject *arg1) {
+static void objCall(ModelData *arg0, HsfObject *arg1)
+{
     modelObjNum++;
     switch (arg1->type) {
         case 2:
@@ -188,7 +187,8 @@ static void objCall(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-static void objMesh(ModelData *arg0, HsfObject *arg1) {
+static void objMesh(ModelData *arg0, HsfObject *arg1)
+{
     HsfDrawObject *temp_r29;
     HsfConstData *temp_r25;
     HsfTransform *var_r30;
@@ -212,7 +212,8 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
     temp_r20 = arg0->hsfData;
     if (attachMotionF == 0) {
         var_r30 = &arg1->data.base;
-    } else {
+    }
+    else {
         var_r30 = &arg1->data.curr;
     }
     temp_r25 = arg1->constData;
@@ -221,7 +222,8 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
             if (arg1->data.cenvCnt != 0 && hookIdx == -1) {
                 temp_r21 = arg1 - temp_r20->object;
                 MTXConcat(MTXBuf[0], temp_r20->matrix->data[temp_r21 + temp_r20->matrix->base_idx], MTXBuf[MTXIdx]);
-            } else {
+            }
+            else {
                 MTXScale(sp1C, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
                 mtxRotCat(sp1C, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
                 mtxTransCat(sp1C, var_r30->pos.x, var_r30->pos.y, var_r30->pos.z);
@@ -238,18 +240,21 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
                 sp1C[0][3] = sp1C[1][3] = sp1C[2][3] = 0.0f;
                 MTXConcat(MTXBuf[MTXIdx], sp1C, temp_r29->matrix);
                 mtxScaleCat(temp_r29->matrix, temp_r28->x, temp_r28->y, temp_r28->z);
-            } else {
+            }
+            else {
                 MTXCopy(MTXBuf[MTXIdx], temp_r29->matrix);
             }
             MTXIdx++;
             var_r18 = 1;
-        } else {
+        }
+        else {
             if (arg1->flags & 1) {
                 MTXInverse(MTXBuf[MTXIdx - 1], sp1C);
                 sp1C[0][3] = sp1C[1][3] = sp1C[2][3] = 0.0f;
                 MTXConcat(MTXBuf[MTXIdx - 1], sp1C, temp_r29->matrix);
                 mtxScaleCat(temp_r29->matrix, scaleBuf[MTXIdx - 1].x, scaleBuf[MTXIdx - 1].y, scaleBuf[MTXIdx - 1].z);
-            } else {
+            }
+            else {
                 MTXCopy(MTXBuf[MTXIdx - 1], temp_r29->matrix);
             }
             temp_r29->scale = scaleBuf[MTXIdx - 1];
@@ -263,7 +268,8 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
                 temp_r21 = attachMotionF;
                 if (temp_r31->unk_08 != -1) {
                     attachMotionF = 1;
-                } else {
+                }
+                else {
                     attachMotionF = 0;
                 }
                 sp8 = hookIdx;
@@ -284,10 +290,12 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
                 hookIdx = sp8;
                 attachMotionF = temp_r21;
             }
-        } else {
+        }
+        else {
             if (arg0->attr & HU3D_ATTR_NOCULL) {
                 var_r19 = ObjCullCheck(arg0->hsfData, arg1, temp_r29->matrix);
-            } else {
+            }
+            else {
                 var_r19 = 1;
             }
             if ((temp_r25->flags & 0x2000) || (arg1->flags & HU3D_ATTR_CLUSTER_ON)) {
@@ -303,7 +311,8 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
                     temp_f31 = VECMag(&sp10);
                     if (temp_r25->flags & 0x10000) {
                         temp_r29->z = -(900000.0f - temp_f31);
-                    } else {
+                    }
+                    else {
                         temp_r29->z = -(1000000.0f - temp_f31);
                     }
                     DrawObjIdx++;
@@ -311,15 +320,17 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
                         OSReport("Error: DrawObjIdx Over\n");
                         DrawObjIdx--;
                     }
-                } else if (arg0->attr & HU3D_ATTR_ZCMP_OFF) {
+                }
+                else if (arg0->attr & HU3D_ATTR_ZCMP_OFF) {
                     temp_r29->z = -1000000.0f;
                     DrawObjIdx++;
                     if (DrawObjIdx > 0x200) {
                         OSReport("Error: DrawObjIdx Over\n");
                         DrawObjIdx--;
                     }
-                } else {
-                    materialBak = (HsfMaterial*) -1;
+                }
+                else {
+                    materialBak = (HsfMaterial *)-1;
                     ObjDraw(temp_r29);
                 }
             }
@@ -333,7 +344,8 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2) {
+s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2)
+{
     CameraData *temp_r30;
     HsfVector3f *temp_r29;
     HsfVector3f *temp_r31;
@@ -362,16 +374,21 @@ s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2) {
     if (temp_f23 > temp_f22) {
         if (temp_f23 > temp_f25) {
             var_f26 = temp_f23;
-        } else if (temp_f22 > temp_f25) {
+        }
+        else if (temp_f22 > temp_f25) {
             var_f26 = temp_f22;
-        } else {
+        }
+        else {
             var_f26 = temp_f25;
         }
-    } else if (temp_f22 > temp_f25) {
+    }
+    else if (temp_f22 > temp_f25) {
         var_f26 = temp_f22;
-    } else if (temp_f23 > temp_f25) {
+    }
+    else if (temp_f23 > temp_f25) {
         var_f26 = temp_f23;
-    } else {
+    }
+    else {
         var_f26 = temp_f25;
     }
     temp_f31 = (temp_r29->x - temp_r31->x) * 0.5;
@@ -383,7 +400,7 @@ s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2) {
     temp_f20 = sp28[0][3];
     temp_f19 = sp28[1][3];
     temp_f18 = -sp28[2][3];
-    if (temp_f18 + temp_f21 < temp_r30->near || temp_f18 - temp_f21 > temp_r30->far) {
+    if (temp_f18 + temp_f21 < temp_r30->nnear || temp_f18 - temp_f21 > temp_r30->ffar) {
         return 0;
     }
     sp24 = sind(temp_r30->fov * 0.5) / cosd(temp_r30->fov * 0.5);
@@ -398,21 +415,22 @@ s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2) {
 }
 
 // TODO: not matching (https://decomp.me/scratch/54Pjw)
-static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
+static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
+{
     GXColor sp2C;
     void *sp28;
     Hu3DTexAnimDataStruct *sp24;
-	s16 var_r31;
-	HsfMaterial *temp_r30;
-	ModelData *temp_r29;
-	HsfObject *temp_r28;
-	HsfBitmap *temp_r27;
+    s16 var_r31;
+    HsfMaterial *temp_r30;
+    ModelData *temp_r29;
+    HsfObject *temp_r28;
+    HsfBitmap *temp_r27;
     HsfAttribute *temp_r26;
     s16 var_r24;
-	HsfdrawStruct01 *temp_r23;
+    HsfdrawStruct01 *temp_r23;
     s16 var_r22;
-	s16 var_r21;
-	HsfConstData *temp_r20;
+    s16 var_r21;
+    HsfConstData *temp_r20;
     s16 var_r18;
     u32 temp_r19;
     s16 var_r17;
@@ -426,10 +444,12 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
     if (temp_r19 & 0x30) {
         if (temp_r19 & 0x10) {
             GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_NOOP);
-        } else {
+        }
+        else {
             GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVDSTCLR, GX_LO_NOOP);
         }
-    } else {
+    }
+    else {
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
     }
     if (temp_r30 != materialBak) {
@@ -447,24 +467,30 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
         GXSetChanMatColor(GX_COLOR0A0, sp2C);
         if (temp_r29->attr & HU3D_ATTR_ZCMP_OFF) {
             var_r31 = GX_FALSE;
-        } else {
+        }
+        else {
             var_r31 = GX_TRUE;
         }
-        if ((temp_r30->invAlpha != 0.0f || (temp_r30->pass & 0xF) || (temp_r20->flags & 0x800)) && !((temp_r29->attr & HU3D_ATTR_ZWRITE_OFF) | (temp_r19 & 0x1200))) {
+        if ((temp_r30->invAlpha != 0.0f || (temp_r30->pass & 0xF) || (temp_r20->flags & 0x800))
+            && !((temp_r29->attr & HU3D_ATTR_ZWRITE_OFF) | (temp_r19 & 0x1200))) {
             GXSetZMode(var_r31, GX_LEQUAL, GX_FALSE);
-        } else {
+        }
+        else {
             GXSetZMode(var_r31, GX_LEQUAL, GX_TRUE);
         }
         if (temp_r19 & 0x1200) {
             GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_OR, GX_GEQUAL, 0x80);
-        } else {
+        }
+        else {
             GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
         }
         if (temp_r29->attr & HU3D_ATTR_CULL_FRONT) {
             GXSetCullMode(GX_CULL_FRONT);
-        } else if (temp_r19 & 2) {
+        }
+        else if (temp_r19 & 2) {
             GXSetCullMode(GX_CULL_NONE);
-        } else {
+        }
+        else {
             GXSetCullMode(GX_CULL_BACK);
         }
         if (TL32F != 0) {
@@ -488,7 +514,8 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
                 if (temp_r29->hsfData->cenvCnt == 0) {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
                     GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.vertex->count * 3, 3);
-                } else {
+                }
+                else {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
                     GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.vertex->count * sizeof(Vec), sizeof(Vec));
                 }
@@ -501,10 +528,11 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
             }
             if (temp_r30->refAlpha != 0.0f) {
                 reflectionMapNo = 0;
-                BmpPtrBak[0] = (HsfAttribute*) -1;
+                BmpPtrBak[0] = (HsfAttribute *)-1;
                 if (temp_r29->unk_04 != -1) {
                     var_r17 = temp_r29->unk_04;
-                } else {
+                }
+                else {
                     var_r17 = reflectMapNo;
                 }
                 HuSprTexLoad(reflectAnim[var_r17], 0, reflectionMapNo, GX_REPEAT, GX_REPEAT, GX_LINEAR);
@@ -512,12 +540,12 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
             if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
                 shadowMapNo = 1;
                 SetShadowTex();
-                BmpPtrBak[1] = (HsfAttribute*) -1;
+                BmpPtrBak[1] = (HsfAttribute *)-1;
             }
             if (temp_r29->attr & HU3D_ATTR_TOON_MAP) {
                 toonMapNo = 2;
                 HuSprTexLoad(toonAnim, 0, toonMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                BmpPtrBak[2] = (HsfAttribute*) -1;
+                BmpPtrBak[2] = (HsfAttribute *)-1;
             }
             if (temp_r29->unk_02 != 0) {
                 projectionMapNo = 3;
@@ -525,28 +553,32 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
                 for (var_r31 = 0, var_r24 = 1; var_r31 < 4; var_r31++, var_r24 <<= 1) {
                     if (var_r24 & temp_r29->unk_02) {
                         HuSprTexLoad(Hu3DProjection[var_r31].unk_04, 0, projectionMapNo + var_r31, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                        BmpPtrBak[projectionMapNo + var_r31] = (HsfAttribute*) -1;
+                        BmpPtrBak[projectionMapNo + var_r31] = (HsfAttribute *)-1;
                         hiliteMapNo++;
                     }
                 }
-            } else {
+            }
+            else {
                 hiliteMapNo = 3;
             }
             if ((temp_r29->attr & HU3D_ATTR_HILITE) || (temp_r19 & 0x100)) {
                 if (temp_r20->hiliteMap == 0) {
                     if (temp_r30->flags != 0) {
                         var_r18 = (temp_r30->pass >> 4) & 0xF;
-                    } else {
+                    }
+                    else {
                         var_r18 = (temp_r28->data.unk123 >> 4) & 0xF;
                     }
                     HuSprTexLoad(hiliteAnim[var_r18], 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                } else {
+                }
+                else {
                     HuSprTexLoad(temp_r20->hiliteMap, 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 }
-                BmpPtrBak[hiliteMapNo] = (HsfAttribute*) -1;
+                BmpPtrBak[hiliteMapNo] = (HsfAttribute *)-1;
             }
             SetTevStageNoTex(arg0, temp_r30);
-        } else {
+        }
+        else {
             var_r22 = (temp_r30->vtxMode == 5) ? 5 : 1;
             if (DrawData[drawCnt].flags & 2) {
                 var_r22 |= 2;
@@ -560,12 +592,14 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
                 if (var_r22 & 2) {
                     GXSetVtxDesc(GX_VA_NBT, GX_DIRECT);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_S16, 8);
-                } else {
+                }
+                else {
                     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                     if (temp_r29->hsfData->cenvCnt == 0) {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
                         GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * 3, 3);
-                    } else {
+                    }
+                    else {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
                         GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * sizeof(Vec), sizeof(Vec));
                     }
@@ -589,126 +623,143 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
                     temp_r23 = temp_r26->unk04;
                     sp24 = &Hu3DTexAnimData[temp_r23->unk02];
                     if ((temp_r23->unk00 & 1) && !(sp24->unk00 & 4)) {
-                        if (Hu3DAnimSet(arg0->model, temp_r26, (s16) var_r31) != 0) {
-                            BmpPtrBak[var_r31] = (HsfAttribute*) -1;
+                        if (Hu3DAnimSet(arg0->model, temp_r26, (s16)var_r31) != 0) {
+                            BmpPtrBak[var_r31] = (HsfAttribute *)-1;
                             totalTexCnt++;
                             continue;
                         }
-                    } else if (temp_r23->unk00 & 8) {
+                    }
+                    else if (temp_r23->unk00 & 8) {
                         temp_r27 = temp_r23->unk3C;
                         if (temp_r27->dataFmt != 0xB) {
-                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16) var_r31);
-                        } else {
-                            LoadTexture(arg0->model, temp_r23->unk3C, temp_r26, (s16) var_r31);
+                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16)var_r31);
+                        }
+                        else {
+                            LoadTexture(arg0->model, temp_r23->unk3C, temp_r26, (s16)var_r31);
                             LoadTexture(arg0->model, temp_r23->unk3C, temp_r26, var_r21 | 0x8000);
-                            texCol[var_r31].r = (s16) var_r21;
+                            texCol[var_r31].r = (s16)var_r21;
                             texCol[var_r31].a = 2;
                             var_r21++;
                         }
                         if (temp_r27->sizeX * temp_r27->sizeY * temp_r27->pixSize > 0x40000) {
                             for (var_r24 = 0; var_r24 < 8; var_r24++) {
-                                BmpPtrBak[var_r24] = (HsfAttribute*) -1;
+                                BmpPtrBak[var_r24] = (HsfAttribute *)-1;
                             }
-                        } else {
-                            BmpPtrBak[var_r31] = (HsfAttribute*) -1;
+                        }
+                        else {
+                            BmpPtrBak[var_r31] = (HsfAttribute *)-1;
                         }
                         totalTexCnt++;
                         continue;
                     }
                 }
                 if (BmpPtrBak[var_r31] != temp_r26) {
-                    if (BmpPtrBak[var_r31] != (HsfAttribute*) -1 && BmpPtrBak[var_r31]->bitmap == temp_r27 && temp_r26->wrap_s == BmpPtrBak[var_r31]->wrap_s && temp_r26->wrap_t == BmpPtrBak[var_r31]->wrap_t) {
+                    if (BmpPtrBak[var_r31] != (HsfAttribute *)-1 && BmpPtrBak[var_r31]->bitmap == temp_r27
+                        && temp_r26->wrap_s == BmpPtrBak[var_r31]->wrap_s && temp_r26->wrap_t == BmpPtrBak[var_r31]->wrap_t) {
                         if (temp_r27->dataFmt == 0xB) {
                             TL32F = 1;
                         }
                         totalTexCacheCnt++;
-                    } else {
+                    }
+                    else {
                         texCol[var_r31].a = 0;
                         if (temp_r27->dataFmt != 0xB) {
-                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16) var_r31);
-                        } else {
-                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16) var_r31);
+                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16)var_r31);
+                        }
+                        else {
+                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16)var_r31);
                             LoadTexture(arg0->model, temp_r27, temp_r26, var_r21 | 0x8000);
-                            texCol[var_r31].r = (s16) var_r21;
+                            texCol[var_r31].r = (s16)var_r21;
                             texCol[var_r31].a = 2;
                             var_r21++;
                         }
                         if (temp_r27->sizeX * temp_r27->sizeY * temp_r27->pixSize > 0x40000) {
                             for (var_r24 = 0; var_r24 < 8; var_r24++) {
-                                BmpPtrBak[var_r24] = (HsfAttribute*) -1;
+                                BmpPtrBak[var_r24] = (HsfAttribute *)-1;
                             }
-                        } else {
+                        }
+                        else {
                             BmpPtrBak[var_r31] = temp_r26;
                         }
                         totalTexCnt++;
                     }
-                } else {
+                }
+                else {
                     totalTexCacheCnt++;
                 }
             }
             if (temp_r30->refAlpha != 0.0f) {
-                reflectionMapNo = (s16) var_r21;
+                reflectionMapNo = (s16)var_r21;
                 shadowMapNo = reflectionMapNo + 1;
                 if (temp_r29->unk_04 != -1) {
                     var_r17 = temp_r29->unk_04;
-                } else {
+                }
+                else {
                     var_r17 = reflectMapNo;
                 }
                 HuSprTexLoad(reflectAnim[var_r17], 0, reflectionMapNo, GX_REPEAT, GX_REPEAT, GX_LINEAR);
-                BmpPtrBak[reflectionMapNo] = (HsfAttribute*) -1;
-            } else {
-                shadowMapNo = (s16) var_r21;
+                BmpPtrBak[reflectionMapNo] = (HsfAttribute *)-1;
+            }
+            else {
+                shadowMapNo = (s16)var_r21;
             }
             if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
                 toonMapNo = shadowMapNo + 1;
                 SetShadowTex();
-                BmpPtrBak[shadowMapNo] = (HsfAttribute*) -1;
-            } else {
+                BmpPtrBak[shadowMapNo] = (HsfAttribute *)-1;
+            }
+            else {
                 toonMapNo = shadowMapNo;
             }
             if (temp_r29->attr & HU3D_ATTR_TOON_MAP) {
                 HuSprTexLoad(toonAnim, 0, toonMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                BmpPtrBak[toonMapNo] = (HsfAttribute*) -1;
+                BmpPtrBak[toonMapNo] = (HsfAttribute *)-1;
                 projectionMapNo = toonMapNo + 1;
-            } else {
+            }
+            else {
                 projectionMapNo = toonMapNo;
             }
             if (temp_r29->unk_02 != 0) {
                 for (var_r31 = 0, var_r24 = 1; var_r31 < 4; var_r31++, var_r24 <<= 1) {
                     if (var_r24 & temp_r29->unk_02) {
                         HuSprTexLoad(Hu3DProjection[var_r31].unk_04, 0, projectionMapNo + var_r31, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                        BmpPtrBak[projectionMapNo + var_r31] = (HsfAttribute*) -1;
+                        BmpPtrBak[projectionMapNo + var_r31] = (HsfAttribute *)-1;
                         hiliteMapNo = projectionMapNo + var_r31 + 1;
                     }
                 }
-            } else {
+            }
+            else {
                 hiliteMapNo = projectionMapNo;
             }
             if ((temp_r29->attr & HU3D_ATTR_HILITE) || (temp_r19 & 0x100)) {
                 if (temp_r20->hiliteMap == 0) {
                     if (temp_r30->flags != 0) {
                         var_r18 = (temp_r30->pass >> 4) & 0xF;
-                    } else {
+                    }
+                    else {
                         var_r18 = (temp_r28->data.unk123 >> 4) & 0xF;
                     }
                     HuSprTexLoad(hiliteAnim[var_r18], 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                } else {
+                }
+                else {
                     HuSprTexLoad(temp_r20->hiliteMap, 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 }
-                BmpPtrBak[toonMapNo] = (HsfAttribute*) -1;
+                BmpPtrBak[toonMapNo] = (HsfAttribute *)-1;
             }
             SetTevStageTex(arg0, temp_r30);
         }
-        sp28 = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
+        sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
         GXCallDisplayList(sp28, DrawData[drawCnt].dlSize);
-    } else {
-        sp28 = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
+    }
+    else {
+        sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
         GXCallDisplayList(sp28, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
 
-static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
+static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1)
+{
     GXColor sp1C;
     ModelData *temp_r28;
     HsfObject *var_r21;
@@ -735,11 +786,13 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
     if (arg1->vtxMode == 2 || arg1->vtxMode == 3) {
         var_r26 = 1;
         var_r24 = 1;
-    } else {
+    }
+    else {
         var_r26 = 0;
         if (arg1->vtxMode == 0 || arg1->vtxMode == 5) {
             var_r24 = 0;
-        } else {
+        }
+        else {
             var_r24 = 1;
         }
     }
@@ -747,7 +800,8 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         var_r19 = GX_COLOR0A0;
         var_r18 = GX_CA_RASA;
         var_r22 = 1;
-    } else {
+    }
+    else {
         var_r19 = GX_COLOR0;
         var_r18 = GX_CA_KONST;
         var_r22 = 0;
@@ -765,7 +819,8 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_KONST, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO);
         GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
         var_r29++;
-    } else {
+    }
+    else {
         GXSetTevColor(GX_TEVREG0, sp1C);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, var_r19);
         GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_RASC);
@@ -774,12 +829,12 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
     }
     if (arg1->refAlpha != 0.0f) {
-        SetReflect(arg0, var_r30, (s16) var_r29, arg1->refAlpha * 255.0f);
+        SetReflect(arg0, var_r30, (s16)var_r29, arg1->refAlpha * 255.0f);
         var_r30++;
         var_r29++;
     }
     if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
-        SetShadow(arg0, var_r30, (s16) var_r29);
+        SetShadow(arg0, var_r30, (s16)var_r29);
         var_r30++;
         var_r29++;
     }
@@ -802,7 +857,8 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
             var_r29++;
             var_r24 = 1;
             var_r26 = 0;
-        } else {
+        }
+        else {
             GXSetTevOrder(var_r30, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR1A1);
             GXSetTevColorIn(var_r30, GX_CC_CPREV, GX_CC_ONE, GX_CC_RASC, GX_CC_ZERO);
             GXSetTevColorOp(var_r30, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -810,7 +866,8 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
             GXSetTevAlphaOp(var_r30, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
             var_r30++;
         }
-    } else if (arg1->invAlpha != 0.0f) {
+    }
+    else if (arg1->invAlpha != 0.0f) {
         GXSetTevOrder(var_r30, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
         GXSetTevColorIn(var_r30, GX_CC_ZERO, GX_CC_ONE, GX_CC_CPREV, GX_CC_ZERO);
         GXSetTevColorOp(var_r30, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -821,7 +878,7 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
     if (temp_r28->unk_02 != 0) {
         for (var_r25 = 0, var_r23 = 1; var_r25 < 4; var_r25++, var_r23 <<= 1) {
             if (var_r23 & temp_r28->unk_02) {
-                SetProjection(arg0, var_r30, var_r25, (GXTexMapID) var_r29, projectionMapNo + var_r25, texMtxTbl[var_r25 + 3]);
+                SetProjection(arg0, var_r30, var_r25, (GXTexMapID)var_r29, projectionMapNo + var_r25, texMtxTbl[var_r25 + 3]);
                 var_r29++;
                 var_r30 += 2;
             }
@@ -835,7 +892,8 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         shadingBak = var_r20;
         if (var_r26 != 0) {
             var_f30 = arg1->hilite_scale;
-        } else {
+        }
+        else {
             var_f30 = 0.0f;
         }
         lightBit = Hu3DLightSet(arg0->model, &Hu3DCameraMtx, &Hu3DCameraMtxXPose, var_f30);
@@ -848,26 +906,31 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
             if (var_r22 != 0) {
                 GXSetChanCtrl(GX_ALPHA0, GX_TRUE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
                 GXSetChanCtrl(GX_ALPHA1, GX_TRUE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_SPEC);
-            } else {
+            }
+            else {
                 GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
                 GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             }
-        } else {
+        }
+        else {
             GXSetChanCtrl(GX_COLOR0, GX_TRUE, GX_SRC_REG, GX_SRC_REG, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, lightBit, GX_DF_NONE, GX_AF_SPEC);
             GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
         }
-    } else {
+    }
+    else {
         GXSetNumChans(1);
         if (arg1->vtxMode == 5) {
             GXSetChanCtrl(GX_COLOR0, var_r24, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_SPOT);
             if (var_r22 != 0) {
                 GXSetChanCtrl(GX_ALPHA0, GX_TRUE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_SPOT);
-            } else {
+            }
+            else {
                 GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             }
-        } else {
+        }
+        else {
             GXSetChanCtrl(GX_COLOR0, var_r24, GX_SRC_REG, GX_SRC_REG, lightBit, GX_DF_CLAMP, GX_AF_SPOT);
             GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
         }
@@ -875,13 +938,10 @@ static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
     }
 }
 
-static Mtx refMtx = {
-    { 0.25f,   0.0f,  0.0f, -0.5f },
-    {  0.0f, -0.25f,  0.0f, -0.5f },
-    {  0.0f,   0.0f, 0.25f, -0.5f }
-};
+static Mtx refMtx = { { 0.25f, 0.0f, 0.0f, -0.5f }, { 0.0f, -0.25f, 0.0f, -0.5f }, { 0.0f, 0.0f, 0.25f, -0.5f } };
 
-static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
+static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1)
+{
     GXColor sp50;
     GXTexMapID sp4C;
     GXTevStageID sp48;
@@ -914,11 +974,13 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
     sp40 = temp_r19->flags | arg1->flags;
     if (arg1->vtxMode == 2 || arg1->vtxMode == 3) {
         var_r21 = 1;
-    } else {
+    }
+    else {
         var_r21 = 0;
         if (arg1->vtxMode == 0 || arg1->vtxMode == 5) {
             var_r18 = 0;
-        } else {
+        }
+        else {
             var_r18 = 1;
         }
     }
@@ -926,7 +988,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         sp3C = GX_COLOR0A0;
         var_r17 = GX_CA_RASA;
         sp38 = 1;
-    } else {
+    }
+    else {
         sp3C = GX_COLOR0;
         var_r17 = GX_CA_KONST;
         sp38 = 0;
@@ -939,11 +1002,13 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
             mtxTransCat(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
             GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
             GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
-        } else if (temp_r29->unk30 != 0.0f || temp_r29->unk34 != 0.0f) {
+        }
+        else if (temp_r29->unk30 != 0.0f || temp_r29->unk34 != 0.0f) {
             MTXTrans(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
             GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
             GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
-        } else {
+        }
+        else {
             GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
         }
         if (temp_r29->unk20 == 1.0f) {
@@ -952,13 +1017,15 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 if (temp_r28->unk00 & 2) {
                     GXLoadTexMtxImm(Hu3DTexScrData[temp_r28->unk04].unk3C, GX_TEXMTX0, GX_MTX2x4);
                     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
-                } else if (temp_r28->unk00 & 4) {
+                }
+                else if (temp_r28->unk00 & 4) {
                     MTXScale(sp54, 1.0f / temp_r28->unk20, 1.0f / temp_r28->unk24, 1.0f / temp_r28->unk28);
                     mtxRotCat(sp54, temp_r28->unk14, temp_r28->unk18, temp_r28->unk1C);
                     mtxTransCat(sp54, -temp_r28->unk08, -temp_r28->unk0C, -temp_r28->unk10);
                     GXLoadTexMtxImm(sp54, GX_TEXMTX0, GX_MTX2x4);
                     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
-                } else if (temp_r28->unk00 & 1) {
+                }
+                else if (temp_r28->unk00 & 1) {
                     MTXScale(sp54, temp_r28->unk2C, temp_r28->unk30, 1.0f);
                     mtxTransCat(sp54, temp_r28->unk34, temp_r28->unk38, 0.0f);
                     GXLoadTexMtxImm(sp54, GX_TEXMTX0, GX_MTX2x4);
@@ -973,7 +1040,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
                 GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                 var_r31++;
-            } else {
+            }
+            else {
                 GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0);
                 if (!(temp_r25->attr & HU3D_ATTR_TOON_MAP)) {
                     if (texCol[0].a == 1) {
@@ -990,7 +1058,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_APREV, var_r17, GX_CA_ZERO);
                         GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                         var_r31++;
-                    } else if (texCol[0].a == 2) {
+                    }
+                    else if (texCol[0].a == 2) {
                         GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_ALPHA, GX_CH_ALPHA, GX_CH_ALPHA);
                         GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_BLUE, GX_CH_BLUE, GX_CH_BLUE, GX_CH_ALPHA);
                         GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP1);
@@ -1006,20 +1075,23 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                         GXSetTevOrder(var_r31, GX_TEXCOORD0, texCol->r, GX_COLOR_NULL);
                         var_r31++;
-                    } else {
+                    }
+                    else {
                         GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_TEXC, GX_CC_RASC, GX_CC_ZERO);
                         GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                         GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, var_r17, GX_CA_ZERO);
                         GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                     }
-                } else {
+                }
+                else {
                     GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_TEXC, GX_CC_ONE, GX_CC_ZERO);
                     GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_ZERO);
                     GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                 }
             }
-        } else {
+        }
+        else {
             GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
         }
         if (temp_r25->attr & HU3D_ATTR_TOON_MAP) {
@@ -1035,12 +1107,12 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         sp50.a = 255.0f * (1.0f - arg1->invAlpha);
         GXSetTevColor(GX_TEVREG0, sp50);
         if (arg1->refAlpha != 0.0f) {
-            SetReflect(arg0, var_r31, (u16) var_r30, 255.0f * arg1->refAlpha);
+            SetReflect(arg0, var_r31, (u16)var_r30, 255.0f * arg1->refAlpha);
             var_r30++;
             var_r31++;
         }
         if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
-            SetShadow(arg0, var_r31, (u16) var_r30);
+            SetShadow(arg0, var_r31, (u16)var_r30);
             var_r30++;
             var_r31++;
         }
@@ -1063,11 +1135,13 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 var_r30++;
                 var_r21 = 0;
                 var_r18 = 1;
-            } else {
+            }
+            else {
                 if (temp_r29->unk20 == 1.0f) {
                     GXSetTevOrder(var_r31, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR1A1);
                     GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_ONE, GX_CC_RASC, GX_CC_ZERO);
-                } else {
+                }
+                else {
                     GXSetTexCoordGen2(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
                     GXSetTevOrder(var_r31, var_r30, GX_TEXMAP0, GX_COLOR1A1);
                     GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_TEXC, GX_CC_RASC, GX_CC_CPREV);
@@ -1078,7 +1152,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                 var_r31++;
             }
-        } else if (arg1->invAlpha != 0.0f) {
+        }
+        else if (arg1->invAlpha != 0.0f) {
             GXSetTevOrder(var_r31, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
             GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_CPREV);
             GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -1089,13 +1164,14 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         if (temp_r25->unk_02 != 0) {
             for (i = 0, var_r22 = 1; i < 4; i++, var_r22 <<= 1) {
                 if (var_r22 & temp_r25->unk_02) {
-                    SetProjection(arg0, var_r31, i, (u16) var_r30, projectionMapNo + i, texMtxTbl[i + 3]);
+                    SetProjection(arg0, var_r31, i, (u16)var_r30, projectionMapNo + i, texMtxTbl[i + 3]);
                     var_r30++;
                     var_r31 += 2;
                 }
             }
         }
-    } else {
+    }
+    else {
         sp44 = 0;
         var_r30 = 0;
         sp4C = -1;
@@ -1119,51 +1195,59 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
                 var_r30++;
                 sp44 = 1;
-            } else if (temp_r29->unk20 != 1.0f) {
+            }
+            else if (temp_r29->unk20 != 1.0f) {
                 var_r20 = i;
                 continue;
-            } else {
+            }
+            else {
                 if (temp_r29->unk04) {
                     temp_r28 = temp_r29->unk04;
                     if (temp_r28->unk00 & 2) {
                         GXLoadTexMtxImm(Hu3DTexScrData[temp_r28->unk04].unk3C, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
-                        temp_r23 = (u16) var_r30;
+                        temp_r23 = (u16)var_r30;
                         var_r30++;
-                    } else if (temp_r28->unk00 & 4) {
+                    }
+                    else if (temp_r28->unk00 & 4) {
                         MTXScale(sp54, 1.0f / temp_r28->unk20, 1.0f / temp_r28->unk24, 1.0f / temp_r28->unk28);
                         mtxRotCat(sp54, temp_r28->unk14, temp_r28->unk18, temp_r28->unk1C);
                         mtxTransCat(sp54, -temp_r28->unk08, -temp_r28->unk0C, -temp_r28->unk10);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
-                        temp_r23 = (u16) var_r30;
+                        temp_r23 = (u16)var_r30;
                         var_r30++;
-                    } else if (temp_r28->unk00 & 1) {
+                    }
+                    else if (temp_r28->unk00 & 1) {
                         MTXScale(sp54, temp_r28->unk2C, temp_r28->unk30, 1.0f);
                         mtxTransCat(sp54, temp_r28->unk34, temp_r28->unk38, 0.0f);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
-                        temp_r23 = (u16) var_r30;
-                        var_r30++;
-                    } else {
-                        GXSetTexCoordGen2(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
-                        temp_r23 = (u16) var_r30;
+                        temp_r23 = (u16)var_r30;
                         var_r30++;
                     }
-                } else {
+                    else {
+                        GXSetTexCoordGen2(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+                        temp_r23 = (u16)var_r30;
+                        var_r30++;
+                    }
+                }
+                else {
                     if (temp_r29->unk28 != 1.0f || temp_r29->unk2C != 1.0f) {
                         MTXScale(sp54, 1.0f / temp_r29->unk28, 1.0f / temp_r29->unk2C, 1.0f);
                         mtxTransCat(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
-                    } else if (temp_r29->unk30 != 0.0f || temp_r29->unk34 != 0.0f) {
+                    }
+                    else if (temp_r29->unk30 != 0.0f || temp_r29->unk34 != 0.0f) {
                         MTXTrans(sp54, -temp_r29->unk30, -temp_r29->unk34, 0.0f);
                         GXLoadTexMtxImm(sp54, texMtxTbl[var_r30], GX_MTX2x4);
                         GXSetTexCoordGen(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[var_r30]);
-                    } else {
+                    }
+                    else {
                         GXSetTexCoordGen2(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
                     }
-                    temp_r23 = (u16) var_r30;
+                    temp_r23 = (u16)var_r30;
                     var_r30++;
                 }
                 GXSetTevOrder(var_r31, temp_r23, i, GX_COLOR0A0);
@@ -1181,7 +1265,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         GXSetTevOrder(var_r31, temp_r23, i, sp3C);
                         GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_CPREV, GX_CC_KONST, GX_CC_ZERO);
                         GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_ZERO);
-                    } else if (texCol[i].a == 2) {
+                    }
+                    else if (texCol[i].a == 2) {
                         GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_ALPHA, GX_CH_ALPHA, GX_CH_ALPHA);
                         GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_BLUE, GX_CH_BLUE, GX_CH_BLUE, GX_CH_ALPHA);
                         GXSetTevSwapMode(var_r31, GX_TEV_SWAP0, GX_TEV_SWAP1);
@@ -1195,15 +1280,18 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_TEXC, GX_CC_KONST, GX_CC_C2);
                         GXSetTevAlphaIn(var_r31, GX_CA_APREV, GX_CA_KONST, GX_CA_TEXA, GX_CA_ZERO);
                         GXSetTevOrder(var_r31, GX_TEXCOORD0, texCol->r, GX_COLOR_NULL);
-                    } else {
+                    }
+                    else {
                         GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_TEXC, GX_CC_RASC, GX_CC_ZERO);
                         GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_TEXA, var_r17, GX_CA_ZERO);
                     }
-                } else if (sp44 != 0) {
+                }
+                else if (sp44 != 0) {
                     GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_CPREV, GX_CC_TEXC, GX_CC_ZERO);
                     GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_TEXA);
                     sp44 = 0;
-                } else if (temp_r29->unk8[2] == 0) {
+                }
+                else if (temp_r29->unk8[2] == 0) {
                     if (temp_r29->unk0C != 1.0f) {
                         sp50.a = temp_r29->unk0C * 255.0f;
                         SetKColorRGB(var_r31, &sp50);
@@ -1215,7 +1303,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         GXSetTevOrder(var_r31, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
                         GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_C2, GX_CC_A2, GX_CC_ZERO);
                         GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_APREV);
-                    } else {
+                    }
+                    else {
                         GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_TEXC, GX_CC_RASC, GX_CC_ZERO);
                         GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVREG2);
                         GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO);
@@ -1225,7 +1314,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                         GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_C2, GX_CC_TEXA, GX_CC_ZERO);
                         GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_APREV);
                     }
-                } else if (texCol[i].a == 1) {
+                }
+                else if (texCol[i].a == 1) {
                     sp50 = texCol[i];
                     sp50.a = 0xFF;
                     SetKColorRGB(var_r31, &sp50);
@@ -1238,7 +1328,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                     SetKColor(var_r31, temp_r29->unk0C * 255.0f);
                     GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_C2, GX_CC_KONST, GX_CC_ZERO);
                     GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_TEXA, GX_CA_APREV, GX_CA_ZERO);
-                } else if (texCol[i].a == 2) {
+                }
+                else if (texCol[i].a == 2) {
                     GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_ALPHA, GX_CH_ALPHA, GX_CH_ALPHA);
                     GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_BLUE, GX_CH_BLUE, GX_CH_BLUE, GX_CH_ALPHA);
                     GXSetTevSwapMode(var_r31, GX_TEV_SWAP0, GX_TEV_SWAP1);
@@ -1252,7 +1343,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                     GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_TEXC, GX_CC_KONST, GX_CC_C2);
                     GXSetTevAlphaIn(var_r31, GX_CA_APREV, GX_CA_KONST, GX_CA_TEXA, GX_CA_ZERO);
                     GXSetTevOrder(var_r31, GX_TEXCOORD0, texCol->r, GX_COLOR_NULL);
-                } else {
+                }
+                else {
                     SetKColor(var_r31, temp_r29->unk0C * 255.0f);
                     GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_TEXC, GX_CC_KONST, GX_CC_ZERO);
                     GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_TEXA, GX_CA_APREV, GX_CA_ZERO);
@@ -1289,7 +1381,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                 GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_APREV);
                 GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
-            } else {
+            }
+            else {
                 SetKColor(var_r31, arg1->refAlpha * 255.0f);
                 GXSetTexCoordGen2(var_r30, GX_TG_MTX2x4, GX_TG_NRM, GX_TEXMTX8, GX_FALSE, GX_PTIDENTITY);
                 GXSetTevOrder(var_r31, var_r30, reflectionMapNo, GX_COLOR0A0);
@@ -1308,7 +1401,7 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
             var_r30++;
         }
         if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
-            SetShadow(arg0, var_r31, (u16) var_r30);
+            SetShadow(arg0, var_r31, (u16)var_r30);
             var_r30++;
             var_r31++;
         }
@@ -1330,7 +1423,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                     GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                     GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_APREV, GX_CA_A0, GX_CA_ZERO);
                     GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
-                } else {
+                }
+                else {
                     GXSetTexCoordGen2(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
                     GXSetTevOrder(var_r31, var_r30, var_r20, GX_COLOR0A0);
                     GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_TEXC, GX_CC_ONE, GX_CC_ZERO);
@@ -1350,11 +1444,13 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 var_r30++;
                 var_r21 = 0;
                 var_r18 = 1;
-            } else {
+            }
+            else {
                 if (var_r20 == -1) {
                     GXSetTevOrder(var_r31, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR1A1);
                     GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_ONE, GX_CC_RASC, GX_CC_ZERO);
-                } else {
+                }
+                else {
                     GXSetTexCoordGen2(var_r30, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
                     GXSetTevOrder(var_r31, var_r30, var_r20, GX_COLOR1A1);
                     GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_TEXC, GX_CC_RASC, GX_CC_CPREV);
@@ -1365,7 +1461,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
                 GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
                 var_r31++;
             }
-        } else if (arg1->invAlpha != 0.0f) {
+        }
+        else if (arg1->invAlpha != 0.0f) {
             GXSetTevOrder(var_r31, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
             GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_CPREV);
             GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -1376,7 +1473,7 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         if (temp_r25->unk_02 != 0) {
             for (i = 0, var_r22 = 1; i < 4; i++, var_r22 <<= 1) {
                 if (var_r22 & temp_r25->unk_02) {
-                    SetProjection(arg0, var_r31, i, (u16) var_r30, projectionMapNo + i, texMtxTbl[i + 3]);
+                    SetProjection(arg0, var_r31, i, (u16)var_r30, projectionMapNo + i, texMtxTbl[i + 3]);
                     var_r30++;
                     var_r31 += 2;
                 }
@@ -1395,7 +1492,8 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
         shadingBak = arg1->vtxMode;
         if (var_r21 != 0) {
             var_f30 = arg1->hilite_scale;
-        } else {
+        }
+        else {
             var_f30 = 0.0f;
         }
         lightBit = Hu3DLightSet(arg0->model, &Hu3DCameraMtx, &Hu3DCameraMtxXPose, var_f30);
@@ -1408,26 +1506,31 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
             if (sp38 != 0) {
                 GXSetChanCtrl(GX_ALPHA0, GX_TRUE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
                 GXSetChanCtrl(GX_ALPHA1, GX_TRUE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_SPEC);
-            } else {
+            }
+            else {
                 GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
                 GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             }
-        } else {
+        }
+        else {
             GXSetChanCtrl(GX_COLOR0, GX_TRUE, GX_SRC_REG, GX_SRC_REG, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, lightBit, GX_DF_NONE, GX_AF_SPEC);
             GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
         }
-    } else {
+    }
+    else {
         GXSetNumChans(1);
         if (arg1->vtxMode == 5) {
             GXSetChanCtrl(GX_COLOR0, var_r18, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_SPOT);
             if (sp38 != 0) {
                 GXSetChanCtrl(GX_ALPHA0, GX_TRUE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_SPOT);
-            } else {
+            }
+            else {
                 GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
             }
-        } else {
+        }
+        else {
             GXSetChanCtrl(GX_COLOR0, var_r18, GX_SRC_REG, GX_SRC_REG, lightBit, GX_DF_CLAMP, GX_AF_SPOT);
             GXSetChanCtrl(GX_ALPHA0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, lightBit, GX_DF_CLAMP, GX_AF_NONE);
         }
@@ -1435,43 +1538,17 @@ static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
     }
 }
 
-static s32 kColorSelTbl[] = {
-    GX_TEV_KCSEL_K0_R,
-	GX_TEV_KCSEL_K0_G,
-	GX_TEV_KCSEL_K0_B,
-    GX_TEV_KCSEL_K1_R,
-	GX_TEV_KCSEL_K1_G,
-	GX_TEV_KCSEL_K1_B,
-    GX_TEV_KCSEL_K2_R,
-	GX_TEV_KCSEL_K2_G,
-	GX_TEV_KCSEL_K2_B,
-    GX_TEV_KCSEL_K3_R,
-	GX_TEV_KCSEL_K3_G,
-	GX_TEV_KCSEL_K3_B
-};
+static s32 kColorSelTbl[] = { GX_TEV_KCSEL_K0_R, GX_TEV_KCSEL_K0_G, GX_TEV_KCSEL_K0_B, GX_TEV_KCSEL_K1_R, GX_TEV_KCSEL_K1_G, GX_TEV_KCSEL_K1_B,
+    GX_TEV_KCSEL_K2_R, GX_TEV_KCSEL_K2_G, GX_TEV_KCSEL_K2_B, GX_TEV_KCSEL_K3_R, GX_TEV_KCSEL_K3_G, GX_TEV_KCSEL_K3_B };
 
-static s32 kColorTbl[] = {
-    GX_KCOLOR0,
-    GX_KCOLOR1,
-    GX_KCOLOR2,
-    GX_KCOLOR3
-};
+static s32 kColorTbl[] = { GX_KCOLOR0, GX_KCOLOR1, GX_KCOLOR2, GX_KCOLOR3 };
 
-static s32 kColorSelTbl2[] = {
-	GX_TEV_KCSEL_K0,
-	GX_TEV_KCSEL_K1,
-	GX_TEV_KCSEL_K2,
-	GX_TEV_KCSEL_K3
-};
+static s32 kColorSelTbl2[] = { GX_TEV_KCSEL_K0, GX_TEV_KCSEL_K1, GX_TEV_KCSEL_K2, GX_TEV_KCSEL_K3 };
 
-static s32 kColorSelATbl[] = {
-	GX_TEV_KASEL_K0_A,
-	GX_TEV_KASEL_K1_A,
-	GX_TEV_KASEL_K2_A,
-	GX_TEV_KASEL_K3_A
-};
+static s32 kColorSelATbl[] = { GX_TEV_KASEL_K0_A, GX_TEV_KASEL_K1_A, GX_TEV_KASEL_K2_A, GX_TEV_KASEL_K3_A };
 
-static GXTevKColorSel SetKColor(GXTevStageID arg0, u8 arg1) {
+static GXTevKColorSel SetKColor(GXTevStageID arg0, u8 arg1)
+{
     GXTevKColorSel temp_r30;
 
     switch (kColorIdx % 3) {
@@ -1497,7 +1574,8 @@ static GXTevKColorSel SetKColor(GXTevStageID arg0, u8 arg1) {
     return temp_r30;
 }
 
-static GXTevKColorSel SetKColorRGB(GXTevStageID arg0, GXColor *arg1) {
+static GXTevKColorSel SetKColorRGB(GXTevStageID arg0, GXColor *arg1)
+{
     GXTevKColorSel temp_r30;
 
     GXSetTevKColor(kColorTbl[kColorIdx / 3], kColor);
@@ -1513,14 +1591,16 @@ static GXTevKColorSel SetKColorRGB(GXTevStageID arg0, GXColor *arg1) {
     return temp_r30;
 }
 
-static void FlushKColor(void) {
+static void FlushKColor(void)
+{
     kColor.a = 0xFF;
     if (kColorIdx % 3 != 0) {
         GXSetTevKColor(kColorTbl[kColorIdx / 3], kColor);
     }
 }
 
-static void SetReflect(HsfDrawObject *arg0, s16 arg1, s16 arg2, u8 arg3) {
+static void SetReflect(HsfDrawObject *arg0, s16 arg1, s16 arg2, u8 arg3)
+{
     GXTevKColorSel var_r27;
     Mtx sp3C;
     Mtx spC;
@@ -1559,7 +1639,8 @@ static void SetReflect(HsfDrawObject *arg0, s16 arg1, s16 arg2, u8 arg3) {
     GXLoadTexMtxImm(spC, GX_TEXMTX8, GX_MTX2x4);
 }
 
-static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXTexMapID arg4, u32 arg5) {
+static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXTexMapID arg4, u32 arg5)
+{
     GXTevKColorSel var_r26;
     u8 temp_r30;
 
@@ -1598,18 +1679,20 @@ static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXT
     GXSetTevAlphaOp(arg1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
 }
 
-static s32 SetShadowTex(void) {
+static s32 SetShadowTex(void)
+{
     GXTexObj sp8;
 
     GXInitTexObj(&sp8, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&sp8, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp8, shadowMapNo);
 #ifdef TARGET_PC
-  GXDestroyTexObj(&sp8);
+    GXDestroyTexObj(&sp8);
 #endif
 }
 
-static void SetShadow(HsfDrawObject *arg0, s16 arg1, s16 arg2) {
+static void SetShadow(HsfDrawObject *arg0, s16 arg1, s16 arg2)
+{
     GXSetTexCoordGen2(arg2, GX_TG_MTX3x4, GX_TG_POS, GX_TEXMTX9, GX_FALSE, GX_PTIDENTITY);
     GXSetTevOrder(arg1, arg2, shadowMapNo, GX_COLOR0A0);
     GXSetTevColorIn(arg1, GX_CC_CPREV, GX_CC_ZERO, GX_CC_TEXC, GX_CC_ZERO);
@@ -1618,7 +1701,8 @@ static void SetShadow(HsfDrawObject *arg0, s16 arg1, s16 arg2) {
     GXSetTevAlphaOp(arg1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
 }
 
-static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1) {
+static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
+{
     HsfObject *temp_r31;
     ModelData *temp_r28;
     HsfConstData *temp_r27;
@@ -1652,7 +1736,8 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1) {
                 if (temp_r28->hsfData->cenvCnt == 0) {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
                     GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * 3, 3);
-                } else {
+                }
+                else {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
                     GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec));
                 }
@@ -1670,7 +1755,8 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1) {
             GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
             GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_A0);
             GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-        } else {
+        }
+        else {
             var_r30 = (temp_r29->vtxMode == 5) ? 5 : 1;
             if (DrawData[drawCnt].flags & 2) {
                 var_r30 |= 2;
@@ -1684,12 +1770,14 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1) {
                 if (var_r30 & 2) {
                     GXSetVtxDesc(GX_VA_NBT, GX_DIRECT);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_S16, 8);
-                } else {
+                }
+                else {
                     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                     if (temp_r28->hsfData->cenvCnt == 0) {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_RGB8, 0);
                         GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * 3, 3);
-                    } else {
+                    }
+                    else {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
                         GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec));
                     }
@@ -1714,20 +1802,22 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1) {
         }
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
-        var_r26 = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
+        var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
         GXCallDisplayList(var_r26, DrawData[drawCnt].dlSize);
-    } else {
+    }
+    else {
         if (!(temp_r27->flags & 0x400)) {
             drawCnt++;
             return;
         }
-        var_r26 = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
+        var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
         GXCallDisplayList(var_r26, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
 
-static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3) {
+static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3)
+{
     GXTexObj sp1C;
     GXTlutObj sp10;
     s16 var_r27;
@@ -1739,7 +1829,11 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
 
     if (arg1 == 0) {
         OSReport("Error: No Texture\n");
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     var_r27 = arg1->sizeX;
     var_r26 = arg1->sizeY;
@@ -1761,7 +1855,8 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
                 GXInitTlutObj(&sp10, arg1->palData, GX_TL_RGB565, arg1->palSize);
                 GXLoadTlut(&sp10, arg3);
                 GXInitTexObjCI(&sp1C, arg1->data, var_r27, var_r26, GX_TF_C4, var_r22, var_r21, var_r20, arg3);
-            } else {
+            }
+            else {
                 GXInitTlutObj(&sp10, arg1->palData, GX_TL_RGB565, arg1->palSize);
                 GXLoadTlut(&sp10, arg3);
                 GXInitTexObjCI(&sp1C, arg1->data, var_r27, var_r26, GX_TF_C8, var_r22, var_r21, var_r20, arg3);
@@ -1772,14 +1867,15 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
                 GXInitTlutObj(&sp10, arg1->palData, GX_TL_RGB5A3, arg1->palSize);
                 GXLoadTlut(&sp10, arg3);
                 GXInitTexObjCI(&sp1C, arg1->data, var_r27, var_r26, GX_TF_C4, var_r22, var_r21, var_r20, arg3);
-            } else {
+            }
+            else {
                 GXInitTlutObj(&sp10, arg1->palData, GX_TL_RGB5A3, arg1->palSize);
                 GXLoadTlut(&sp10, arg3);
                 GXInitTexObjCI(&sp1C, arg1->data, var_r27, var_r26, GX_TF_C8, var_r22, var_r21, var_r20, arg3);
             }
             break;
         case 0:
-            var_r30 = (s16) arg3;
+            var_r30 = (s16)arg3;
             texCol[var_r30].r = arg1->tint.r;
             texCol[var_r30].g = arg1->tint.g;
             texCol[var_r30].b = arg1->tint.b;
@@ -1787,7 +1883,7 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
             GXInitTexObj(&sp1C, arg1->data, var_r27, var_r26, GX_TF_I4, var_r22, var_r21, var_r20);
             break;
         case 1:
-            var_r30 = (s16) arg3;
+            var_r30 = (s16)arg3;
             texCol[var_r30].r = arg1->tint.r;
             texCol[var_r30].g = arg1->tint.g;
             texCol[var_r30].b = arg1->tint.b;
@@ -1795,7 +1891,7 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
             GXInitTexObj(&sp1C, arg1->data, var_r27, var_r26, GX_TF_I8, var_r22, var_r21, var_r20);
             break;
         case 2:
-            var_r30 = (s16) arg3;
+            var_r30 = (s16)arg3;
             texCol[var_r30].r = arg1->tint.r;
             texCol[var_r30].g = arg1->tint.g;
             texCol[var_r30].b = arg1->tint.b;
@@ -1803,7 +1899,7 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
             GXInitTexObj(&sp1C, arg1->data, var_r27, var_r26, GX_TF_IA4, var_r22, var_r21, var_r20);
             break;
         case 3:
-            var_r30 = (s16) arg3;
+            var_r30 = (s16)arg3;
             texCol[var_r30].r = arg1->tint.r;
             texCol[var_r30].g = arg1->tint.g;
             texCol[var_r30].b = arg1->tint.b;
@@ -1815,15 +1911,17 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
             break;
         case 11:
             if (arg3 & 0x8000) {
-                GXInitTlutObj(&sp10, &((s16*) arg1->palData)[(arg1->palSize + 0xF) & 0xFFF0], GX_TL_IA8, arg1->palSize);
-            } else {
+                GXInitTlutObj(&sp10, &((s16 *)arg1->palData)[(arg1->palSize + 0xF) & 0xFFF0], GX_TL_IA8, arg1->palSize);
+            }
+            else {
                 GXInitTlutObj(&sp10, arg1->palData, GX_TL_IA8, arg1->palSize);
             }
             arg3 &= 0x7FFF;
             if (arg1->pixSize < 8) {
                 GXLoadTlut(&sp10, arg3);
                 GXInitTexObjCI(&sp1C, arg1->data, var_r27, var_r26, GX_TF_C4, var_r22, var_r21, var_r20, arg3);
-            } else {
+            }
+            else {
                 GXLoadTlut(&sp10, arg3);
                 GXInitTexObjCI(&sp1C, arg1->data, var_r27, var_r26, GX_TF_C8, var_r22, var_r21, var_r20, arg3);
             }
@@ -1832,21 +1930,27 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
     }
     if ((arg0->attr & HU3D_ATTR_TEX_NEAR) || (arg2->flag & 0x40)) {
         GXInitTexObjLOD(&sp1C, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-    } else if (var_r20) {
+    }
+    else if (var_r20) {
         GXInitTexObjLOD(&sp1C, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, arg2->unk78, 0.0f, GX_FALSE, GX_TRUE, GX_ANISO_2);
-    } else if (arg1->maxLod == 0) {
+    }
+    else if (arg1->maxLod == 0) {
         GXInitTexObjLOD(&sp1C, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-    } else {
+    }
+    else {
         GXInitTexObjLOD(&sp1C, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, arg1->maxLod - 1, 0.0f, GX_TRUE, GX_TRUE, GX_ANISO_1);
     }
     GXLoadTexObj(&sp1C, arg3);
 #ifdef TARGET_PC
     GXDestroyTexObj(&sp1C);
-    GXDestroyTlutObj(&sp10);
+    if (arg1->dataFmt == 9 || arg1->dataFmt == 10 || arg1->dataFmt == 11) {
+        GXDestroyTlutObj(&sp10);
+    }
 #endif
 }
 
-static void objNull(ModelData *arg0, HsfObject *arg1) {
+static void objNull(ModelData *arg0, HsfObject *arg1)
+{
     HsfTransform *var_r31;
     Vec *temp_r27;
     Vec *temp_r28;
@@ -1857,7 +1961,8 @@ static void objNull(ModelData *arg0, HsfObject *arg1) {
     if (CancelTRXF == 0) {
         if (attachMotionF == 0) {
             var_r31 = &arg1->data.base;
-        } else {
+        }
+        else {
             var_r31 = &arg1->data.curr;
         }
         if (arg0->hsfData->cenvCnt == 0 || hookIdx != -1) {
@@ -1873,7 +1978,8 @@ static void objNull(ModelData *arg0, HsfObject *arg1) {
         temp_r28->z = temp_r27->z * var_r31->scale.z;
         MTXIdx++;
         var_r24 = 1;
-    } else {
+    }
+    else {
         CancelTRXF = 0;
         var_r24 = 0;
     }
@@ -1885,7 +1991,8 @@ static void objNull(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-static void objRoot(ModelData *arg0, HsfObject *arg1) {
+static void objRoot(ModelData *arg0, HsfObject *arg1)
+{
     HsfTransform *var_r31;
     Vec *temp_r29;
     Vec *temp_r30;
@@ -1896,7 +2003,8 @@ static void objRoot(ModelData *arg0, HsfObject *arg1) {
     if (CancelTRXF == 0) {
         if (attachMotionF == 0) {
             var_r31 = &arg1->data.base;
-        } else {
+        }
+        else {
             var_r31 = &arg1->data.curr;
         }
         if (arg0->hsfData->cenvCnt == 0 || hookIdx != -1) {
@@ -1912,7 +2020,8 @@ static void objRoot(ModelData *arg0, HsfObject *arg1) {
         temp_r30->z = temp_r29->z * var_r31->scale.z;
         MTXIdx++;
         var_r26 = 1;
-    } else {
+    }
+    else {
         CancelTRXF = 0;
         var_r26 = 0;
     }
@@ -1924,7 +2033,8 @@ static void objRoot(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-static void objJoint(ModelData *arg0, HsfObject *arg1) {
+static void objJoint(ModelData *arg0, HsfObject *arg1)
+{
     HsfTransform *var_r31;
     Vec *temp_r27;
     Vec *temp_r28;
@@ -1935,7 +2045,8 @@ static void objJoint(ModelData *arg0, HsfObject *arg1) {
     if (CancelTRXF == 0) {
         if (attachMotionF == 0) {
             var_r31 = &arg1->data.base;
-        } else {
+        }
+        else {
             var_r31 = &arg1->data.curr;
         }
         if (arg0->hsfData->cenvCnt == 0 || hookIdx != -1) {
@@ -1951,7 +2062,8 @@ static void objJoint(ModelData *arg0, HsfObject *arg1) {
         temp_r28->z = temp_r27->z * var_r31->scale.z;
         MTXIdx++;
         var_r24 = 1;
-    } else {
+    }
+    else {
         CancelTRXF = 0;
         var_r24 = 0;
     }
@@ -1963,7 +2075,8 @@ static void objJoint(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-static void objMap(ModelData *arg0, HsfObject *arg1) {
+static void objMap(ModelData *arg0, HsfObject *arg1)
+{
     HsfTransform *var_r31;
     Vec *temp_r29;
     Vec *temp_r30;
@@ -1974,7 +2087,8 @@ static void objMap(ModelData *arg0, HsfObject *arg1) {
     if (CancelTRXF == 0) {
         if (attachMotionF == 0) {
             var_r31 = &arg1->data.base;
-        } else {
+        }
+        else {
             var_r31 = &arg1->data.curr;
         }
         MTXScale(spC, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
@@ -1988,7 +2102,8 @@ static void objMap(ModelData *arg0, HsfObject *arg1) {
         temp_r30->z = temp_r29->z * var_r31->scale.z;
         MTXIdx++;
         var_r26 = 1;
-    } else {
+    }
+    else {
         CancelTRXF = 0;
         var_r26 = 0;
     }
@@ -2000,14 +2115,16 @@ static void objMap(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-static void objReplica(ModelData *arg0, HsfObject *arg1) {
+static void objReplica(ModelData *arg0, HsfObject *arg1)
+{
     HsfTransform *var_r31;
     Mtx sp3C;
     Mtx spC;
 
     if (attachMotionF == 0) {
         var_r31 = &arg1->data.base;
-    } else {
+    }
+    else {
         var_r31 = &arg1->data.curr;
     }
     mtxRot(spC, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
@@ -2025,13 +2142,14 @@ static void objReplica(ModelData *arg0, HsfObject *arg1) {
     MTXIdx--;
 }
 
-void Hu3DDrawPost(void) {
+void Hu3DDrawPost(void)
+{
     Vec sp54;
     Vec sp48;
     Vec sp3C;
     Vec sp30;
     GXColor sp2C;
-    void (*sp28)(ModelData*, Mtx);
+    void (*sp28)(ModelData *, Mtx);
     s16 spA;
     s16 sp8;
     HsfBuffer *temp_r24;
@@ -2077,7 +2195,8 @@ void Hu3DDrawPost(void) {
                         if (DrawObjData[DrawObjNum[var_r26]].z < temp_f29) {
                             DrawObjNum[var_r26 + var_r25] = DrawObjNum[var_r26];
                             var_r26 -= var_r25;
-                        } else {
+                        }
+                        else {
                             break;
                         }
                     }
@@ -2099,22 +2218,23 @@ void Hu3DDrawPost(void) {
         }
         GXInvalidateTexAll();
         GXInvalidateVtxCache();
-        materialBak = (HsfMaterial*) -1;
+        materialBak = (HsfMaterial *)-1;
         for (i = 0; i < 8; i++) {
-            BmpPtrBak[i] = (HsfAttribute*) -1;
+            BmpPtrBak[i] = (HsfAttribute *)-1;
         }
         GXSetCullMode(GX_CULL_BACK);
         for (var_r23 = 0; var_r23 < DrawObjIdx; var_r23++) {
             temp_r28 = &DrawObjData[DrawObjNum[var_r23]];
             if (temp_r28->model->attr & HU3D_ATTR_HOOKFUNC) {
-                sp28 = (void*) temp_r28->model->hsfData;
+                sp28 = (void *)temp_r28->model->hsfData;
                 sp28(temp_r28->model, temp_r28->matrix);
                 for (i = 0; i < 8; i++) {
-                    BmpPtrBak[i] = (HsfAttribute*) -1;
+                    BmpPtrBak[i] = (HsfAttribute *)-1;
                 }
-                materialBak = (HsfMaterial*) -1;
+                materialBak = (HsfMaterial *)-1;
                 Hu3DCameraSet(Hu3DCameraNo, Hu3DCameraMtx);
-            } else {
+            }
+            else {
                 Hu3DObjInfoP = temp_r28->object->constData;
                 DLBufStartP = Hu3DObjInfoP->dlBuf;
                 DrawData = Hu3DObjInfoP->drawData;
@@ -2128,7 +2248,8 @@ void Hu3DDrawPost(void) {
                     MTXConcat(sp150, sp120, sp120);
                     GXLoadTexMtxImm(sp120, GX_TEXMTX9, GX_MTX3x4);
                     var_r19 = 1;
-                } else {
+                }
+                else {
                     var_r19 = 0;
                 }
                 if (temp_r28->model->unk_02 != 0) {
@@ -2156,7 +2277,8 @@ void Hu3DDrawPost(void) {
                     OSf32tos16(&temp_f30, &sp8);
                     if (sp8 == -10000) {
                         MTXScale(hiliteMtx, 0.0f, 0.0f, 0.0f);
-                    } else {
+                    }
+                    else {
                         C_VECHalfAngle(&sp30, &sp54, &sp3C);
                         sp3C.x = -sp3C.x;
                         sp3C.y = -sp3C.y;
@@ -2167,7 +2289,8 @@ void Hu3DDrawPost(void) {
                         MTXInvXpose(spC0, sp90);
                         if (sp8 == 10000) {
                             MTXIdentity(spC0);
-                        } else {
+                        }
+                        else {
                             VECCrossProduct(&sp3C, &sp54, &sp48);
                             temp_f28 = acosf(VECDotProduct(&sp54, &sp3C));
                             MTXRotAxisRad(spC0, &sp48, temp_f28);
@@ -2182,7 +2305,7 @@ void Hu3DDrawPost(void) {
                 drawCnt = 0;
                 shadingBak = -1;
                 vtxModeBak = -1;
-                materialBak = (HsfMaterial*) -1;
+                materialBak = (HsfMaterial *)-1;
                 if (shadowModelDrawF == 0) {
                     for (i = 0; i < temp_r24->count;) {
                         FaceDraw(temp_r28, var_r27);
@@ -2190,13 +2313,15 @@ void Hu3DDrawPost(void) {
                             totalPolyCnt += DrawData[drawCnt - 1].polyCnt;
                             i++;
                             var_r27++;
-                        } else {
+                        }
+                        else {
                             totalPolyCnt += DrawData[drawCnt - 1].polyCnt * ((var_r27->type & 7) == 3 ? 2 : 1);
                             i += DrawData[drawCnt - 1].polyCnt;
                             var_r27 += DrawData[drawCnt - 1].polyCnt;
                         }
                     }
-                } else {
+                }
+                else {
                     sp2C.a = 0xFF;
                     GXSetChanAmbColor(GX_COLOR0A0, sp2C);
                     GXSetChanMatColor(GX_COLOR0A0, sp2C);
@@ -2208,7 +2333,8 @@ void Hu3DDrawPost(void) {
                         if (var_r27->type == 4) {
                             i++;
                             var_r27++;
-                        } else {
+                        }
+                        else {
                             i += DrawData[drawCnt - 1].polyCnt;
                             var_r27 += DrawData[drawCnt - 1].polyCnt;
                         }
@@ -2226,7 +2352,8 @@ void Hu3DDrawPost(void) {
     (void)var_r19; // required to match
 }
 
-static void ObjDraw(HsfDrawObject *arg0) {
+static void ObjDraw(HsfDrawObject *arg0)
+{
     Vec sp44;
     Vec sp38;
     Vec sp2C;
@@ -2267,7 +2394,8 @@ static void ObjDraw(HsfDrawObject *arg0) {
         MTXConcat(sp140, sp110, sp110);
         GXLoadTexMtxImm(sp110, GX_TEXMTX9, GX_MTX3x4);
         var_r22 = 1;
-    } else {
+    }
+    else {
         var_r22 = 0;
     }
     if (arg0->model->unk_02 != 0) {
@@ -2295,7 +2423,8 @@ static void ObjDraw(HsfDrawObject *arg0) {
         OSf32tos16(&temp_f30, &var_r21);
         if (var_r21 == -10000) {
             MTXScale(hiliteMtx, 0.0f, 0.0f, 0.0f);
-        } else {
+        }
+        else {
             C_VECHalfAngle(&sp20, &sp44, &sp2C);
             sp2C.x = -sp2C.x;
             sp2C.y = -sp2C.y;
@@ -2306,7 +2435,8 @@ static void ObjDraw(HsfDrawObject *arg0) {
             MTXInvXpose(spB0, sp80);
             if (var_r21 == 10000) {
                 MTXIdentity(spB0);
-            } else {
+            }
+            else {
                 VECCrossProduct(&sp2C, &sp44, &sp38);
                 temp_f29 = acosf(VECDotProduct(&sp44, &sp2C));
                 MTXRotAxisRad(spB0, &sp38, temp_f29);
@@ -2321,7 +2451,7 @@ static void ObjDraw(HsfDrawObject *arg0) {
     drawCnt = 0;
     shadingBak = -1;
     vtxModeBak = -1;
-    materialBak = (HsfMaterial*) -1;
+    materialBak = (HsfMaterial *)-1;
     if (shadowModelDrawF == 0) {
         for (i = 0; i < temp_r26->count;) {
             FaceDraw(arg0, var_r27);
@@ -2329,11 +2459,13 @@ static void ObjDraw(HsfDrawObject *arg0) {
                 totalPolyCnt += DrawData[drawCnt - 1].polyCnt;
                 i++;
                 var_r27++;
-            } else {
+            }
+            else {
                 temp_r25 = &DrawData[drawCnt - 1];
                 if ((var_r27->type & 7) == 3) {
                     var_r20 = 2;
-                } else {
+                }
+                else {
                     var_r20 = 1;
                 }
                 totalPolyCnt += temp_r25->polyCnt * var_r20;
@@ -2341,7 +2473,8 @@ static void ObjDraw(HsfDrawObject *arg0) {
                 var_r27 += temp_r25->polyCnt;
             }
         }
-    } else {
+    }
+    else {
         sp1C.a = 0xFF;
         GXSetChanAmbColor(GX_COLOR0A0, sp1C);
         GXSetChanMatColor(GX_COLOR0A0, sp1C);
@@ -2353,7 +2486,8 @@ static void ObjDraw(HsfDrawObject *arg0) {
             if (var_r27->type == 4) {
                 i++;
                 var_r27++;
-            } else {
+            }
+            else {
                 i += DrawData[drawCnt - 1].polyCnt;
                 var_r27 += DrawData[drawCnt - 1].polyCnt;
             }
@@ -2367,7 +2501,8 @@ static void ObjDraw(HsfDrawObject *arg0) {
     }
 }
 
-void MakeDisplayList(s16 arg0, uintptr_t arg1) {
+void MakeDisplayList(s16 arg0, uintptr_t arg1)
+{
     HsfData *temp_r31;
     ModelData *var_r30;
 
@@ -2383,7 +2518,8 @@ void MakeDisplayList(s16 arg0, uintptr_t arg1) {
     }
 }
 
-static void MDObjCall(HsfData *arg0, HsfObject *arg1) {
+static void MDObjCall(HsfData *arg0, HsfObject *arg1)
+{
     s16 i;
 
     switch (arg1->type) {
@@ -2404,7 +2540,8 @@ static void MDObjCall(HsfData *arg0, HsfObject *arg1) {
     }
 }
 
-static void MDObjMesh(HsfData *arg0, HsfObject *arg1) {
+static void MDObjMesh(HsfData *arg0, HsfObject *arg1)
+{
     HsfBuffer *temp_r29;
     HsfFace *var_r28;
     s16 i;
@@ -2413,7 +2550,7 @@ static void MDObjMesh(HsfData *arg0, HsfObject *arg1) {
     DLFirstF = 0;
     drawCnt = matChgCnt = triCnt = quadCnt = 0;
     faceNumBuf[0] = 0;
-    materialBak = (HsfMaterial*) -1;
+    materialBak = (HsfMaterial *)-1;
     polyTypeBak = 0xFF;
     DLTotalNum = 0;
     var_r28 = temp_r29->data;
@@ -2427,7 +2564,7 @@ static void MDObjMesh(HsfData *arg0, HsfObject *arg1) {
     DLBufP = DLBufStartP = HuMemDirectMallocNum(HEAP_DATA, DLTotalNum, mallocNo);
     DCInvalidateRange(DLBufStartP, DLTotalNum);
     DLFirstF = 0;
-    materialBak = (HsfMaterial*) -1;
+    materialBak = (HsfMaterial *)-1;
     polyTypeBak = 0xFF;
     totalSize = drawCnt = 0;
     var_r28 = temp_r29->data;
@@ -2457,7 +2594,8 @@ static void MDObjMesh(HsfData *arg0, HsfObject *arg1) {
     }
 }
 
-HsfConstData *ObjConstantMake(HsfObject *arg0, u32 arg1) {
+HsfConstData *ObjConstantMake(HsfObject *arg0, u32 arg1)
+{
     HsfConstData *temp_r3;
 
     temp_r3 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfConstData), arg1);
@@ -2468,7 +2606,8 @@ HsfConstData *ObjConstantMake(HsfObject *arg0, u32 arg1) {
     return temp_r3;
 }
 
-static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
+static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1)
+{
     HsfMaterial *temp_r30;
     s16 *var_r24;
     s16 var_r26;
@@ -2483,12 +2622,13 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
     if (temp_r30 != materialBak || polyTypeBak != (arg1->type & 7) || (arg1->type & 7) == 4) {
         polyTypeBak = arg1->type & 7;
         materialBak = temp_r30;
-        DrawData[drawCnt].dlOfs = (u32) DLBufP - (u32) DLBufStartP;
+        DrawData[drawCnt].dlOfs = (u32)DLBufP - (u32)DLBufStartP;
         GXBeginDisplayList(DLBufP, 0x20000);
         GXResetWriteGatherPipe();
         if (temp_r30->numAttrs == 0) {
             var_r25 = 0;
-        } else {
+        }
+        else {
             var_r25 = 1;
             for (var_r27 = 0; var_r27 < temp_r30->numAttrs; var_r27++) {
                 if (arg0->data.attribute[temp_r30->attrs[var_r27]].unk14 != 0.0) {
@@ -2533,13 +2673,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(arg1->indices[0][0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(arg1->indices[0][1]);
-                    } else {
+                    }
+                    else {
                         MakeCalcNBT(arg0, arg1, 0, 1);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = arg1->indices[0][2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2549,13 +2690,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(arg1->indices[2][0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(arg1->indices[2][1]);
-                    } else {
+                    }
+                    else {
                         MakeNBT(arg0, arg1, 2, 0);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = arg1->indices[2][2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2565,13 +2707,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(arg1->indices[1][0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(arg1->indices[1][1]);
-                    } else {
+                    }
+                    else {
                         MakeNBT(arg0, arg1, 1, 2);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = arg1->indices[1][2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2579,6 +2722,9 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                         GXTexCoord1x16(arg1->indices[1][3]);
                     }
                 }
+#ifdef TARGET_PC
+                GXEnd();
+#endif
                 faceCnt = faceNumBuf[drawCnt] / 3;
                 break;
             case 3:
@@ -2587,13 +2733,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(arg1->indices[0][0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(arg1->indices[0][1]);
-                    } else {
+                    }
+                    else {
                         MakeCalcNBT(arg0, arg1, 0, 1);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = arg1->indices[0][2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2603,13 +2750,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(arg1->indices[2][0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(arg1->indices[2][1]);
-                    } else {
+                    }
+                    else {
                         MakeNBT(arg0, arg1, 2, 0);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = arg1->indices[2][2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2619,13 +2767,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(arg1->indices[3][0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(arg1->indices[3][1]);
-                    } else {
+                    }
+                    else {
                         MakeNBT(arg0, arg1, 3, 2);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = arg1->indices[3][2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2635,13 +2784,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(arg1->indices[1][0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(arg1->indices[1][1]);
-                    } else {
+                    }
+                    else {
                         MakeNBT(arg0, arg1, 1, 3);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = arg1->indices[1][2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2649,6 +2799,9 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                         GXTexCoord1x16(arg1->indices[1][3]);
                     }
                 }
+#ifdef TARGET_PC
+                GXEnd();
+#endif
                 faceCnt = faceNumBuf[drawCnt] / 4;
                 break;
             case 4:
@@ -2656,13 +2809,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                 GXPosition1x16(arg1->indices[0][0]);
                 if (var_r26 == -1) {
                     GXNormal1x16(arg1->indices[0][1]);
-                } else {
+                }
+                else {
                     MakeCalcNBT(arg0, arg1, 0, 1);
                 }
                 if (temp_r30->vtxMode == 5) {
                     temp_r28 = arg1->indices[0][2];
                     GXColor1x16(temp_r28);
-                    if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                    if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                         Hu3DObjInfoP->flags |= 0x4001;
                     }
                 }
@@ -2672,13 +2826,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                 GXPosition1x16(arg1->indices[2][0]);
                 if (var_r26 == -1) {
                     GXNormal1x16(arg1->indices[2][1]);
-                } else {
+                }
+                else {
                     MakeNBT(arg0, arg1, 2, 0);
                 }
                 if (temp_r30->vtxMode == 5) {
                     temp_r28 = arg1->indices[2][2];
                     GXColor1x16(temp_r28);
-                    if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                    if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                         Hu3DObjInfoP->flags |= 0x4001;
                     }
                 }
@@ -2688,13 +2843,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                 GXPosition1x16(arg1->indices[1][0]);
                 if (var_r26 == -1) {
                     GXNormal1x16(arg1->indices[1][1]);
-                } else {
+                }
+                else {
                     MakeNBT(arg0, arg1, 1, 2);
                 }
                 if (temp_r30->vtxMode == 5) {
                     temp_r28 = arg1->indices[1][2];
                     GXColor1x16(temp_r28);
-                    if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                    if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                         Hu3DObjInfoP->flags |= 0x4001;
                     }
                 }
@@ -2706,13 +2862,14 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                     GXPosition1x16(var_r24[0]);
                     if (var_r26 == -1) {
                         GXNormal1x16(var_r24[1]);
-                    } else {
+                    }
+                    else {
                         MakeCalcNBT(arg0, arg1, 0, 1);
                     }
                     if (temp_r30->vtxMode == 5) {
                         temp_r28 = var_r24[2];
                         GXColor1x16(temp_r28);
-                        if (((GXColor*) arg0->data.color->data)[temp_r28].a != 0xFF) {
+                        if (((GXColor *)arg0->data.color->data)[temp_r28].a != 0xFF) {
                             Hu3DObjInfoP->flags |= 0x4001;
                         }
                     }
@@ -2720,6 +2877,9 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
                         GXTexCoord1x16(var_r24[3]);
                     }
                 }
+#ifdef TARGET_PC
+                GXEnd();
+#endif
                 faceCnt = arg1->strip.count + 1;
                 break;
         }
@@ -2728,15 +2888,16 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1) {
         DrawData[drawCnt].polyCnt = faceCnt;
         totalSize += temp_r3;
         drawCnt++;
-        DLBufP = (u8*) DLBufP + temp_r3;
+        DLBufP = (u8 *)DLBufP + temp_r3;
     }
 }
 
-static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
+static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3)
+{
     Vec sp10;
     Vec *temp_r29;
     Vec *temp_r31;
-    s8 (*temp_r28)[3];
+    s8(*temp_r28)[3];
     s16 temp_r25;
     s16 temp_r24;
     s16 temp_r27;
@@ -2750,7 +2911,8 @@ static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
         sp10.x = temp_r29[temp_r27].x;
         sp10.y = temp_r29[temp_r27].y;
         sp10.z = temp_r29[temp_r27].z;
-    } else {
+    }
+    else {
         temp_r28 = arg0->data.normal->data;
         sp10.x = temp_r28[temp_r27][0];
         sp10.y = temp_r28[temp_r27][1];
@@ -2767,11 +2929,12 @@ static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
     GXNormal3s16(NBTT.x * 256.0f, NBTT.y * 256.0f, NBTT.z * 256.0f);
 }
 
-static s32 MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
+static s32 MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3)
+{
     Vec sp10;
     Vec *temp_r30;
     Vec *spC;
-    s8 (*temp_r29)[3];
+    s8(*temp_r29)[3];
     s16 temp_r28;
 
     spC = arg0->data.vertex->data;
@@ -2781,7 +2944,8 @@ static s32 MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
         sp10.x = temp_r30[temp_r28].x;
         sp10.y = temp_r30[temp_r28].y;
         sp10.z = temp_r30[temp_r28].z;
-    } else {
+    }
+    else {
         temp_r29 = arg0->data.normal->data;
         sp10.x = temp_r29[temp_r28][0];
         sp10.y = temp_r29[temp_r28][1];
@@ -2793,7 +2957,8 @@ static s32 MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3) {
     GXNormal3s16(NBTT.x * 256.0f, NBTT.y * 256.0f, NBTT.z * 256.0f);
 }
 
-static void MDFaceCnt(HsfObject *arg0, HsfFace *arg1) {
+static void MDFaceCnt(HsfObject *arg0, HsfFace *arg1)
+{
     HsfMaterial *temp_r30;
     s16 i;
 
@@ -2808,7 +2973,8 @@ static void MDFaceCnt(HsfObject *arg0, HsfFace *arg1) {
             drawCnt++;
             faceNumBuf[drawCnt] = 0;
             DLTotalNum = ((DLTotalNum + 0x20) & ~0x1F) + 0x20;
-        } else {
+        }
+        else {
             DLFirstF = 1;
         }
         if (temp_r30->numAttrs != 0) {
@@ -2852,7 +3018,8 @@ static void MDFaceCnt(HsfObject *arg0, HsfFace *arg1) {
     }
 }
 
-void mtxTransCat(Mtx arg0, float arg1, float arg2, float arg3) {
+void mtxTransCat(Mtx arg0, float arg1, float arg2, float arg3)
+{
     if (arg1 != 0.0f || arg2 != 0.0f || arg3 != 0.0f) {
         arg0[0][3] += arg1;
         arg0[1][3] += arg2;
@@ -2860,7 +3027,8 @@ void mtxTransCat(Mtx arg0, float arg1, float arg2, float arg3) {
     }
 }
 
-void mtxRotCat(Mtx arg0, float arg1, float arg2, float arg3) {
+void mtxRotCat(Mtx arg0, float arg1, float arg2, float arg3)
+{
     Mtx sp8;
 
     if (arg1 != 0.0f) {
@@ -2877,13 +3045,15 @@ void mtxRotCat(Mtx arg0, float arg1, float arg2, float arg3) {
     }
 }
 
-void mtxRot(Mtx arg0, float arg1, float arg2, float arg3) {
+void mtxRot(Mtx arg0, float arg1, float arg2, float arg3)
+{
     Mtx sp38;
     Mtx sp8;
 
     if (arg1 != 0.0f) {
         MTXRotRad(arg0, 'X', MTXDegToRad(arg1));
-    } else {
+    }
+    else {
         MTXIdentity(arg0);
     }
     if (arg2 != 0.0f) {
@@ -2896,7 +3066,8 @@ void mtxRot(Mtx arg0, float arg1, float arg2, float arg3) {
     }
 }
 
-void mtxScaleCat(Mtx arg0, float arg1, float arg2, float arg3) {
+void mtxScaleCat(Mtx arg0, float arg1, float arg2, float arg3)
+{
     arg0[0][0] *= arg1;
     arg0[1][0] *= arg1;
     arg0[2][0] *= arg1;
@@ -2908,7 +3079,8 @@ void mtxScaleCat(Mtx arg0, float arg1, float arg2, float arg3) {
     arg0[2][2] *= arg3;
 }
 
-s16 HmfInverseMtxF3X3(Mtx arg0, Mtx arg1) {
+s16 HmfInverseMtxF3X3(Mtx arg0, Mtx arg1)
+{
     float temp_f30;
     float temp_f29;
     float temp_f28;
@@ -2935,7 +3107,8 @@ s16 HmfInverseMtxF3X3(Mtx arg0, Mtx arg1) {
     return 1;
 }
 
-static inline void SetDefLightInlineFunc(GXLightObj *arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9) {
+static inline void SetDefLightInlineFunc(GXLightObj *arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9)
+{
     GXColor spE;
 
     spE.r = arg1;
@@ -2954,7 +3127,8 @@ static inline void SetDefLightInlineFunc(GXLightObj *arg0, u8 arg1, u8 arg2, u8 
     GXSetChanMatColor(GX_COLOR0A0, spE);
 }
 
-void SetDefLight(Vec *arg0, Vec *arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 argA) {
+void SetDefLight(Vec *arg0, Vec *arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 argA)
+{
     GXLightObj sp20;
 
     GXInitLightAttn(&sp20, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
@@ -2964,7 +3138,8 @@ void SetDefLight(Vec *arg0, Vec *arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 ar
     SetDefLightInlineFunc(&sp20, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, argA);
 }
 
-void Hu3DModelObjPosGet(s16 arg0, char *arg1, Vec *arg2) {
+void Hu3DModelObjPosGet(s16 arg0, char *arg1, Vec *arg2)
+{
     Mtx spC;
 
     Hu3DModelObjMtxGet(arg0, arg1, spC);
@@ -2977,7 +3152,8 @@ void Hu3DModelObjPosGet(s16 arg0, char *arg1, Vec *arg2) {
     }
 }
 
-void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2) {
+void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2)
+{
     ModelData *temp_r31;
     HsfData *temp_r30;
     Mtx spA0;
@@ -2997,10 +3173,11 @@ void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2) {
     PGFinishF = 0;
     hookIdx = -1;
     PGName = HuMemDirectMallocNum(HEAP_SYSTEM, 0x200, MEMORY_DEFAULT_NUM);
-    strcpy((char*) PGName, MakeObjectName(arg1));
+    strcpy((char *)PGName, MakeObjectName(arg1));
     if (temp_r31->unk_08 != -1) {
         attachMotionF = 1;
-    } else {
+    }
+    else {
         attachMotionF = 0;
     }
     PGObjCall(temp_r31, temp_r30->root);
@@ -3012,7 +3189,8 @@ void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2) {
     HuMemDirectFree(PGName);
 }
 
-void PGObjCall(ModelData *arg0, HsfObject *arg1) {
+void PGObjCall(ModelData *arg0, HsfObject *arg1)
+{
     switch (arg1->type) {
         case 0:
         case 2:
@@ -3029,7 +3207,8 @@ void PGObjCall(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
+void PGObjCalc(ModelData *arg0, HsfObject *arg1)
+{
     Vec sp8;
     s16 temp_r22;
     s16 var_r24;
@@ -3045,7 +3224,8 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
     if (CancelTRXF == 0) {
         if (attachMotionF == 0) {
             var_r30 = &arg1->data.base;
-        } else {
+        }
+        else {
             var_r30 = &arg1->data.curr;
         }
         mtxRot(spA4, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
@@ -3055,11 +3235,12 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
         MTXConcat(MTXBuf[MTXIdx - 1], spD4, MTXBuf[MTXIdx]);
         MTXIdx++;
         var_r24 = 1;
-    } else {
+    }
+    else {
         CancelTRXF = 0;
         var_r24 = 0;
     }
-    if (strcmp((char*) PGName, arg1->name) == 0) {
+    if (strcmp((char *)PGName, arg1->name) == 0) {
         PGFinishF = 1;
         return;
     }
@@ -3070,7 +3251,8 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
             var_r27 = attachMotionF;
             if (temp_r31->unk_08 != -1) {
                 attachMotionF = 1;
-            } else {
+            }
+            else {
                 attachMotionF = 0;
             }
             temp_r22 = hookIdx;
@@ -3089,7 +3271,7 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
     }
     if (*PGName == 0 && arg1->type == 2) {
         var_r23 = arg1;
-        MTXMultVec(MTXBuf[MTXIdx - 1], (Vec*) &var_r23->data.mesh.min, &sp8);
+        MTXMultVec(MTXBuf[MTXIdx - 1], (Vec *)&var_r23->data.mesh.min, &sp8);
         if (sp8.x < PGMinPos.x) {
             PGMinPos.x = sp8.x;
         }
@@ -3108,7 +3290,7 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
         if (sp8.z > PGMaxPos.z) {
             PGMaxPos.z = sp8.z;
         }
-        MTXMultVec(MTXBuf[MTXIdx - 1], (Vec*) &var_r23->data.mesh.max, &sp8);
+        MTXMultVec(MTXBuf[MTXIdx - 1], (Vec *)&var_r23->data.mesh.max, &sp8);
         if (sp8.x < PGMinPos.x) {
             PGMinPos.x = sp8.x;
         }
@@ -3139,14 +3321,16 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-void PGObjReplica(ModelData *arg0, HsfObject *arg1) {
+void PGObjReplica(ModelData *arg0, HsfObject *arg1)
+{
     HsfTransform *var_r31;
     Mtx sp1B8;
     Mtx sp188;
 
     if (attachMotionF == 0) {
         var_r31 = &arg1->data.base;
-    } else {
+    }
+    else {
         var_r31 = &arg1->data.curr;
     }
     mtxRot(sp188, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
@@ -3163,7 +3347,8 @@ void PGObjReplica(ModelData *arg0, HsfObject *arg1) {
     }
 }
 
-HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1) {
+HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1)
+{
     HsfObject *temp_r27;
     HsfObject *var_r30;
     HsfObject *var_r31;
@@ -3177,7 +3362,7 @@ HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1) {
     for (i = 0; i < arg0->objectCnt; i++, var_r31++, var_r30++) {
         if (var_r31->type != 8 && var_r31->type != 7) {
             if (var_r31->data.parent) {
-                var_r31->data.parent = (HsfObject*) ((u8*) temp_r27 + ((u32) var_r30->data.parent - (u32) arg0->object));
+                var_r31->data.parent = (HsfObject *)((u8 *)temp_r27 + ((u32)var_r30->data.parent - (u32)arg0->object));
             }
             var_r31->data.children = HuMemDirectMallocNum(HEAP_DATA, var_r30->data.childrenCount * 4, arg1);
             if (var_r30->constData) {
@@ -3185,29 +3370,31 @@ HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1) {
                 memcpy(var_r31->constData, var_r30->constData, sizeof(HsfConstData));
             }
             for (j = 0; j < var_r30->data.childrenCount; j++) {
-                var_r31->data.children[j] = (HsfObject*) ((u8*) temp_r27 + ((u32) var_r30->data.children[j] - (u32) arg0->object));
+                var_r31->data.children[j] = (HsfObject *)((u8 *)temp_r27 + ((u32)var_r30->data.children[j] - (u32)arg0->object));
             }
         }
     }
     return temp_r27;
 }
 
-void Hu3DModelObjDrawInit(void) {
+void Hu3DModelObjDrawInit(void)
+{
     s16 i;
 
     GXSetCullMode(GX_CULL_BACK);
     for (i = 0; i < 8; i++) {
-        BmpPtrBak[i] = (HsfAttribute*) -1;
+        BmpPtrBak[i] = (HsfAttribute *)-1;
     }
     CancelTRXF = 0;
     hookIdx = -1;
     shadingBak = -1;
     vtxModeBak = -1;
-    materialBak = (HsfMaterial*) -1;
+    materialBak = (HsfMaterial *)-1;
     attachMotionF = 0;
 }
 
-void Hu3DModelObjDraw(s16 arg0, char *arg1, Mtx arg2) {
+void Hu3DModelObjDraw(s16 arg0, char *arg1, Mtx arg2)
+{
     HsfDrawObject sp14;
     HsfConstData *sp10;
     HsfObject *temp_r3;

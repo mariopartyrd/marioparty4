@@ -13,7 +13,7 @@
 #include "game/board/space.h"
 #include "game/board/ui.h"
 
-extern s16 boardPlayerMdl[4];
+SHARED_SYM extern s16 boardPlayerMdl[4];
 
 static inline s32 BoardPlayerHandicapGet(s32 player)
 {
@@ -97,6 +97,9 @@ void BoardJunctionMaskReset(s32);
 void BoardJunctionMaskZero(void);
 void BoardPlayerVoiceEnableSet(s32, s32, s32);
 
+#ifndef __MWERKS__
+void BoardPlayerMoveBetween(s32 arg0, s32 arg1, s32 arg2);
+#endif
 
 void BoardPlayerMoveTo(s32, s32);
 void BoardPlayerMoveToAsync(s32, s32);

@@ -2,10 +2,11 @@
 #include "game/data.h"
 #include "game/gamework_data.h"
 #include "game/object.h"
+#include "game/pad.h"
 #include "game/window.h"
 
 
-MgInfo mgInfoTbl[] = {
+SHARED_SYM MgInfo mgInfoTbl[] = {
     {
         OVL_M401, // ovl
         0, // type
@@ -1162,19 +1163,19 @@ MgInfo mgInfoTbl[] = {
 
 void MGSeqPracticeExitCheck(omObjData *);
 
-s16 mgTypeCurr;
-s16 mgBattleStar[4];
-s16 mgBattleStarMax;
-u8 lbl_801D3E94;
-u32 mgRecordExtra;
-s32 mgQuitExtraF;
-s32 mgPracticeEnableF;
-s32 mgInstExitEnableF;
-u8 mgBoardHostEnableF;
+SHARED_SYM s16 mgTypeCurr;
+SHARED_SYM s16 mgBattleStar[4];
+SHARED_SYM s16 mgBattleStarMax;
+SHARED_SYM u8 lbl_801D3E94;
+SHARED_SYM u32 mgRecordExtra;
+SHARED_SYM s32 mgQuitExtraF;
+SHARED_SYM s32 mgPracticeEnableF;
+SHARED_SYM s32 mgInstExitEnableF;
+SHARED_SYM u8 mgBoardHostEnableF;
 
-s16 mgTicTacToeGrid[3][3];
-u8 mgIndexList[256];
-GameStat mgGameStatBackup;
+SHARED_SYM s16 mgTicTacToeGrid[3][3];
+SHARED_SYM u8 mgIndexList[256];
+SHARED_SYM GameStat mgGameStatBackup;
 
 s32 omMgIndexGet(s16 overlay)
 {

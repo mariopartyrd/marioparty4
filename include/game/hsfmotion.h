@@ -3,6 +3,7 @@
 
 #include "dolphin.h"
 #include "game/hsfformat.h"
+#include "version.h"
 
 #define Hu3DMotionCreateFile(data_id) (Hu3DMotionCreate(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
 
@@ -76,6 +77,6 @@ s16 Hu3DJointMotion(s16 arg0, void *arg1);
 void JointModel_Motion(s16 arg0, s16 arg1);
 void Hu3DMotionCalc(s16 arg0);
 
-extern MotionData Hu3DMotion[256];
+SHARED_SYM extern MotionData Hu3DMotion[256];
 
 #endif

@@ -2,6 +2,7 @@
 #define _GAME_AUDIO_H
 
 #include "dolphin.h"
+#include "version.h"
 
 typedef struct sndGrpTbl_s {
     s16 ovl;
@@ -74,6 +75,6 @@ extern float Snd3DDistOffset;
 extern s32 musicOffF;
 extern u8 fadeStat;
 
-extern SNDGRPTBL sndGrpTable[];
+SHARED_SYM extern SNDGRPTBL sndGrpTable[];
 
 #endif

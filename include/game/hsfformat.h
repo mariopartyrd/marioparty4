@@ -285,8 +285,8 @@ typedef struct hsf_camera {
     HsfVector3f pos;
     float aspect_dupe;
     float fov;
-    float near;
-    float far;
+    float nnear;
+    float ffar;
 } HsfCamera;
 
 typedef struct hsf_light {

@@ -1,10 +1,18 @@
 #include "game/memory.h"
 #include "dolphin/os.h"
 
+
+#if INTPTR_MAX == INT32_MAX
+#define MEM_ALLOC_SIZE(size) (((size) + 63) & ~0x1F)
 #define DATA_GET_BLOCK(ptr) ((struct memory_block *)(((char *)(ptr)) - 32))
 #define BLOCK_GET_DATA(block) (((char *)(block)) + 32)
-
-#define MEM_ALLOC_SIZE(size) (((size) + 63) & 0xFFFFFFE0)
+#define BLOCK_ALIGNMENT 32u
+#else
+#define MEM_ALLOC_SIZE(size) (((size - 1) / 32 + 1) * 32 + 64)
+#define DATA_GET_BLOCK(ptr) ((struct memory_block *)(((char *)(ptr)) - 64))
+#define BLOCK_GET_DATA(block) (((char *)(block)) + 64)
+#define BLOCK_ALIGNMENT 64u
+#endif
 
 struct memory_block {
     s32 size;
@@ -47,9 +55,9 @@ static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, uintptr_t num, uintptr_
     struct memory_block *block = heap_ptr;
     do {
         if (!block->flag && block->size >= alloc_size) {
-            if (block->size - alloc_size > 32u) {
+            if (block->size - alloc_size > BLOCK_ALIGNMENT) {
 #ifdef TARGET_PC
-                struct memory_block *new_block = (struct memory_block *)(((char *)block) + alloc_size);
+                struct memory_block *new_block = (struct memory_block *)((char *)block + alloc_size);
 #else
                 struct memory_block *new_block = (struct memory_block *)(((u32)block) + alloc_size);
 #endif
@@ -202,7 +210,7 @@ s32 HuMemMemorySizeGet(void *ptr)
     }
     block = DATA_GET_BLOCK(ptr);
     if (block->flag == 1 && block->magic == 165) {
-        return block->size - 32;
+        return block->size - BLOCK_ALIGNMENT;
     }
     else {
         return 0;

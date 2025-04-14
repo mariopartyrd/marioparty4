@@ -127,7 +127,9 @@ void fn_1_A4(void) {
     }
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_40C(void) {
     lbl_1_bss_0 = omInitObjMan(62, 0x2000);

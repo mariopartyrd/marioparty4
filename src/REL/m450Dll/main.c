@@ -1589,13 +1589,13 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r31->unk_14, 0xC);
+        GXSETARRAY(GX_VA_POS, var_r31->unk_14, var_r31->unk_64 * sizeof(Vec) * 4, sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, var_r31->unk_20, 4);
+        GXSETARRAY(GX_VA_CLR0, var_r31->unk_20, var_r31->unk_64 * sizeof(GXColor), sizeof(GXColor));
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_TEX0, var_r31->unk_18, 8);
+        GXSETARRAY(GX_VA_TEX0, var_r31->unk_18, var_r31->unk_64 * sizeof(Vec2f) * 4, sizeof(Vec2f));
         sp130[0][0] = arg1[0][0];
         sp130[1][0] = arg1[0][1];
         sp130[2][0] = arg1[0][2];
@@ -1651,8 +1651,8 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
                 }
             }
         }
-        DCFlushRangeNoSync(var_r31->unk_14, var_r31->unk_64 * 0xC * 4);
-        DCFlushRangeNoSync(var_r31->unk_18, var_r31->unk_64 * 8 * 4);
+        DCFlushRangeNoSync(var_r31->unk_14, var_r31->unk_64 * sizeof(Vec) * 4);
+        DCFlushRangeNoSync(var_r31->unk_18, var_r31->unk_64 * sizeof(Vec2f) * 4);
         GXCallDisplayList(var_r31->unk_24, var_r31->unk_58);
     }
 }
@@ -6098,7 +6098,9 @@ void fn_1_1A3F0(void)
     lbl_1_bss_30C.y += 150.0f;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_1A714(void)
 {

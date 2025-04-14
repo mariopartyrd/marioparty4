@@ -19,7 +19,7 @@
 #include "game/hsfex.h"
 #endif
 
-s32 rand8(void);
+extern s32 rand8(void);
 
 typedef struct struct_bss_2A6C StructBss2A6C;
 
@@ -2011,7 +2011,11 @@ void fn_1_C6E0(omObjData *object)
     lbl_1_bss_FC = 0;
     memset(lbl_1_bss_D4, 0, sizeof(lbl_1_bss_D4));
     lbl_1_bss_D0 = 0;
+#ifdef NON_MATCHING
+    memset(&lbl_1_bss_B8, 0, sizeof(lbl_1_bss_B8));
+#else
     memset(lbl_1_bss_B8, 0, sizeof(lbl_1_bss_B8));
+#endif
     object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M413, 0x00));
     omSetTra(object, 0, 0, 0);
     Hu3DMotionSpeedSet(object->model[0], 0);

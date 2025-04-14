@@ -1,4 +1,5 @@
 #include "game/hsfformat.h"
+#include "game/hsfformat.h"
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
@@ -7,44 +8,8 @@
 #include <unordered_set>
 
 extern "C" {
+extern "C" {
 #include "port/byteswap.h"
-
-typedef struct AnimData32b {
-    s16 bankNum;
-    s16 patNum;
-    s16 bmpNum;
-    s16 useNum;
-
-    u32 bank;
-    u32 pat;
-    u32 bmp;
-} AnimData32b;
-
-typedef struct AnimBankData32b {
-    s16 timeNum;
-    s16 unk;
-    u32 frame;
-} AnimBankData32b;
-
-typedef struct AnimPatData32b {
-    s16 layerNum;
-    s16 centerX;
-    s16 centerY;
-    s16 sizeX;
-    s16 sizeY;
-    u32 layer;
-} AnimPatData32b;
-
-typedef struct AnimBmpData32b {
-    u8 pixSize;
-    u8 dataFmt;
-    s16 palNum;
-    s16 sizeX;
-    s16 sizeY;
-    u32 dataSize;
-    u32 palData;
-    u32 data;
-} AnimBmpData32b;
 }
 
 template <typename T> [[nodiscard]] constexpr T bswap16(T val) noexcept
@@ -53,6 +18,7 @@ template <typename T> [[nodiscard]] constexpr T bswap16(T val) noexcept
     union {
         u16 u;
         T t;
+    } v { .t = val };
     } v { .t = val };
 #if __GNUC__
     v.u = __builtin_bswap16(v.u);
@@ -71,11 +37,13 @@ template <typename T> [[nodiscard]] constexpr T bswap32(T val) noexcept
         u32 u;
         T t;
     } v { .t = val };
+    } v { .t = val };
 #if __GNUC__
     v.u = __builtin_bswap32(v.u);
 #elif _WIN32
     v.u = _byteswap_ulong(v.u);
 #else
+    v.u = ((v.u & 0x0000FFFF) << 16) | ((v.u & 0xFFFF0000) >> 16) | ((v.u & 0x00FF00FF) << 8) | ((v.u & 0xFF00FF00) >> 8);
     v.u = ((v.u & 0x0000FFFF) << 16) | ((v.u & 0xFFFF0000) >> 16) | ((v.u & 0x00FF00FF) << 8) | ((v.u & 0xFF00FF00) >> 8);
 #endif
     return v.t;
@@ -103,56 +71,59 @@ static std::unordered_set<void *> sVisitedPtrs;
 template <typename B, typename T> T *offset_ptr(B &base, T *ptr)
 {
     return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr));
+    return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr));
 }
 template <typename B, typename T> T *offset_ptr(B &base, T *ptr, void *extra)
 {
     return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr) + reinterpret_cast<uintptr_t>(extra));
+    return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr) + reinterpret_cast<uintptr_t>(extra));
 }
 
-template <typename B, typename T> static inline void bswap(B &base, T &data);
-template <typename B, typename P> void bswap(B &base, P *&ptr)
-{
-    ptr = bswap32(ptr);
-}
-template <typename B, typename T> void bswap(B &base, T *&ptr, s32 count)
-{
-    ptr = bswap32(ptr);
-    if (ptr == nullptr) {
-        return;
-    }
-    T *objBase = offset_ptr(base, ptr);
-    for (s32 i = 0; i < count; ++i) {
-        if (sVisitedPtrs.contains(objBase)) {
-            continue;
-        }
-        sVisitedPtrs.insert(objBase);
-        bswap(base, *objBase);
-        ++objBase;
-    }
-}
-template <typename B, typename T> void bswap_list(B &base, T **&ptr)
-{
-    ptr = bswap32(ptr);
-    if (ptr == nullptr) {
-        return;
-    }
-    T **objBase = offset_ptr(base, ptr);
-    while (*objBase != nullptr) {
-        bswap(base, *objBase, 1);
-        ++objBase;
-    }
-}
-template <typename B, typename T> void bswap_list(B &base, T *(&ptr)[])
-{
-    T **objBase = ptr;
-    while (*objBase != nullptr) {
-        bswap(base, *objBase, 1);
-        ++objBase;
-    }
-}
+// template <typename B, typename T> static inline void bswap(B &base, T &data);
+// template <typename B, typename P> void bswap(B &base, P *&ptr)
+// {
+//     ptr = bswap32(ptr);
+// }
+// template <typename B, typename T> void bswap(B &base, T *&ptr, s32 count)
+// {
+//     ptr = bswap32(ptr);
+//     if (ptr == nullptr) {
+//         return;
+//     }
+//     T *objBase = offset_ptr(base, ptr);
+//     for (s32 i = 0; i < count; ++i) {
+//         if (sVisitedPtrs.contains(objBase)) {
+//             continue;
+//         }
+//         sVisitedPtrs.insert(objBase);
+//         bswap(base, *objBase);
+//         ++objBase;
+//     }
+// }
+// template <typename B, typename T> void bswap_list(B &base, T **&ptr)
+// {
+//     ptr = bswap32(ptr);
+//     if (ptr == nullptr) {
+//         return;
+//     }
+//     T **objBase = offset_ptr(base, ptr);
+//     while (*objBase != nullptr) {
+//         bswap(base, *objBase, 1);
+//         ++objBase;
+//     }
+// }
+// template <typename B, typename T> void bswap_list(B &base, T *(&ptr)[])
+// {
+//     T **objBase = ptr;
+//     while (*objBase != nullptr) {
+//         bswap(base, *objBase, 1);
+//         ++objBase;
+//     }
+// }
 template <typename B, typename T> void bswap_flat(B &base, T *start, s32 count)
 {
     T *objBase = start;
+    for (s32 i = 0; i < count; ++i) {
     for (s32 i = 0; i < count; ++i) {
         bswap(base, objBase[i]);
     }
@@ -214,6 +185,13 @@ template <typename B> void bswap(B &base, HsfVector3f &vec)
     bswap(base, vec.z);
 }
 
+template <typename B> void bswap(B &base, HsfVector3f &vec)
+{
+    bswap(base, vec.x);
+    bswap(base, vec.y);
+    bswap(base, vec.z);
+}
+
 template <typename B> void bswap(B &base, AnimData32b &obj, AnimData &dest)
 {
     bswap(base, obj.bankNum);
@@ -228,9 +206,9 @@ template <typename B> void bswap(B &base, AnimData32b &obj, AnimData &dest)
     dest.patNum = obj.patNum;
     dest.bmpNum = obj.bmpNum;
     dest.useNum = obj.useNum;
-    dest.bank = reinterpret_cast<AnimBankData *>(obj.bank);
-    dest.pat = reinterpret_cast<AnimPatData *>(obj.pat);
-    dest.bmp = reinterpret_cast<AnimBmpData *>(obj.bmp);
+    dest.bank = reinterpret_cast<AnimBankData *>(static_cast<uintptr_t>(obj.bank));
+    dest.pat = reinterpret_cast<AnimPatData *>(static_cast<uintptr_t>(obj.pat));
+    dest.bmp = reinterpret_cast<AnimBmpData *>(static_cast<uintptr_t>(obj.bmp));
 }
 
 template <typename B> void bswap(B &base, AnimBankData32b &obj, AnimBankData &dest)
@@ -241,7 +219,7 @@ template <typename B> void bswap(B &base, AnimBankData32b &obj, AnimBankData &de
 
     dest.timeNum = obj.timeNum;
     dest.unk = obj.unk;
-    dest.frame = reinterpret_cast<AnimFrameData *>(obj.frame);
+    dest.frame = reinterpret_cast<AnimFrameData *>(static_cast<uintptr_t>(obj.frame));
 }
 
 template <typename B> void bswap(B &base, AnimPatData32b &obj, AnimPatData &dest)
@@ -258,7 +236,7 @@ template <typename B> void bswap(B &base, AnimPatData32b &obj, AnimPatData &dest
     dest.centerY = obj.centerY;
     dest.sizeX = obj.sizeX;
     dest.sizeY = obj.sizeY;
-    dest.layer = reinterpret_cast<AnimLayerData *>(obj.layer);
+    dest.layer = reinterpret_cast<AnimLayerData *>(static_cast<uintptr_t>(obj.layer));
 }
 
 template <typename B> void bswap(B &base, AnimBmpData32b &obj, AnimBmpData &dest)
@@ -278,8 +256,8 @@ template <typename B> void bswap(B &base, AnimBmpData32b &obj, AnimBmpData &dest
     dest.sizeX = obj.sizeX;
     dest.sizeY = obj.sizeY;
     dest.dataSize = obj.dataSize;
-    dest.palData = reinterpret_cast<void *>(obj.palData);
-    dest.data = reinterpret_cast<void *>(obj.data);
+    dest.palData = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.palData));
+    dest.data = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.data));
 }
 
 template <typename B> void bswap(B &base, AnimFrameData &obj)
@@ -349,10 +327,10 @@ template <typename B> void bswap(B &base, HsfCluster32b &obj, HsfCluster &dest)
     bswap(base, obj.vertexCnt);
     bswap(base, obj.vertex);
 
-    dest.name[0] = reinterpret_cast<char *>(obj.name[0]);
-    dest.name[1] = reinterpret_cast<char *>(obj.name[1]);
+    dest.name[0] = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name[0]));
+    dest.name[1] = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name[1]));
 
-    dest.targetName = reinterpret_cast<char *>(obj.targetName);
+    dest.targetName = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.targetName));
     dest.index = obj.index;
     std::copy(std::begin(obj.weight), std::end(obj.weight), dest.weight);
 
@@ -360,7 +338,7 @@ template <typename B> void bswap(B &base, HsfCluster32b &obj, HsfCluster &dest)
     dest.unk95 = obj.unk95;
     dest.type = obj.type;
     dest.vertexCnt = obj.vertexCnt;
-    dest.vertex = reinterpret_cast<HsfBuffer **>(obj.vertex);
+    dest.vertex = reinterpret_cast<HsfBuffer **>(static_cast<uintptr_t>(obj.vertex));
 }
 
 template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &dest)
@@ -380,8 +358,8 @@ template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &de
     bswap(base, obj.flag);
     bswap(base, obj.bitmap);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
-    dest.unk04 = reinterpret_cast<struct hsfdraw_struct_01 *>(obj.unk04);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
+    dest.unk04 = reinterpret_cast<struct hsfdraw_struct_01 *>(static_cast<uintptr_t>(obj.unk04));
     std::copy(std::begin(obj.unk8), std::end(obj.unk8), dest.unk8);
     dest.unk0C = obj.unk0C;
     std::copy(std::begin(obj.unk10), std::end(obj.unk10), dest.unk10);
@@ -399,7 +377,7 @@ template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &de
     std::copy(std::begin(obj.unk6C), std::end(obj.unk6C), dest.unk6C);
     dest.unk78 = obj.unk78;
     dest.flag = obj.flag;
-    dest.bitmap = reinterpret_cast<HsfBitmap *>(obj.bitmap);
+    dest.bitmap = reinterpret_cast<HsfBitmap *>(static_cast<uintptr_t>(obj.bitmap));
 }
 
 template <typename B> void bswap(B &base, HsfMaterial32b &obj, HsfMaterial &dest)
@@ -416,7 +394,7 @@ template <typename B> void bswap(B &base, HsfMaterial32b &obj, HsfMaterial &dest
     bswap(base, obj.numAttrs);
     bswap(base, obj.attrs);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     std::copy(std::begin(obj.unk4), std::end(obj.unk4), dest.unk4);
     dest.pass = obj.pass;
     dest.vtxMode = obj.vtxMode;
@@ -431,7 +409,7 @@ template <typename B> void bswap(B &base, HsfMaterial32b &obj, HsfMaterial &dest
     dest.unk2C = obj.unk2C;
     dest.flags = obj.flags;
     dest.numAttrs = obj.numAttrs;
-    dest.attrs = reinterpret_cast<s32 *>(obj.attrs);
+    dest.attrs = reinterpret_cast<s32 *>(static_cast<uintptr_t>(obj.attrs));
 }
 
 template <typename B> void bswap(B &base, HsfScene &obj)
@@ -449,9 +427,9 @@ template <typename B> void bswap(B &base, HsfBuffer32b &obj, HsfBuffer &dest)
     bswap(base, obj.count);
     bswap(base, obj.data);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.count = obj.count;
-    dest.data = reinterpret_cast<void *>(obj.data);
+    dest.data = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.data));
 }
 
 template <typename B> void bswap(B &base, HsfMatrix &obj)
@@ -459,7 +437,7 @@ template <typename B> void bswap(B &base, HsfMatrix &obj)
     bswap(base, obj.base_idx);
     bswap(base, obj.count);
 
-    obj.data = (Mtx *)((uintptr_t)&obj + sizeof(0xC)); // hardcoded for 64 bit support
+    obj.data = reinterpret_cast<Mtx *>(reinterpret_cast<uintptr_t>(&obj) + 0xC); // hardcoded for 64 bit support
     for (s32 i = 0; i < obj.count; i++) {
         for (s32 j = 0; j < 3; j++) {
             bswap_flat(base, obj.data[i][j], 4);
@@ -474,10 +452,10 @@ template <typename B> void bswap(B &base, HsfPalette32b &obj, HsfPalette &dest)
     bswap(base, obj.palSize);
     bswap(base, obj.data);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.unk = obj.unk;
     dest.palSize = obj.palSize;
-    dest.data = reinterpret_cast<u16 *>(obj.data);
+    dest.data = reinterpret_cast<u16 *>(static_cast<uintptr_t>(obj.data));
 }
 
 template <typename B> void bswap(B &base, HsfPart32b &obj, HsfPart &dest)
@@ -486,9 +464,9 @@ template <typename B> void bswap(B &base, HsfPart32b &obj, HsfPart &dest)
     bswap(base, obj.count);
     bswap(base, obj.vertex);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.count = obj.count;
-    dest.vertex = reinterpret_cast<u16 *>(obj.vertex);
+    dest.vertex = reinterpret_cast<u16 *>(static_cast<uintptr_t>(obj.vertex));
 }
 
 template <typename B> void bswap(B &base, HsfBitmap32b &obj, HsfBitmap &dest)
@@ -502,7 +480,7 @@ template <typename B> void bswap(B &base, HsfBitmap32b &obj, HsfBitmap &dest)
     bswap(base, obj.unk);
     bswap(base, obj.data);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.maxLod = obj.maxLod;
     dest.dataFmt = obj.dataFmt;
     dest.pixSize = obj.pixSize;
@@ -510,9 +488,9 @@ template <typename B> void bswap(B &base, HsfBitmap32b &obj, HsfBitmap &dest)
     dest.sizeY = obj.sizeY;
     dest.palSize = obj.palSize;
     dest.tint = obj.tint;
-    dest.palData = reinterpret_cast<void *>(obj.palData);
+    dest.palData = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.palData));
     dest.unk = obj.unk;
-    dest.data = reinterpret_cast<void *>(obj.data);
+    dest.data = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.data));
 }
 
 template <typename B> void bswap(B &base, HsfMapAttr32b &obj, HsfMapAttr &dest)
@@ -527,7 +505,7 @@ template <typename B> void bswap(B &base, HsfMapAttr32b &obj, HsfMapAttr &dest)
     dest.minX = obj.minX;
     dest.minZ = obj.minZ;
     dest.maxX = obj.maxZ;
-    dest.data = reinterpret_cast<u16 *>(obj.data);
+    dest.data = reinterpret_cast<u16 *>(static_cast<uintptr_t>(obj.data));
     dest.dataLen = obj.dataLen;
 }
 
@@ -543,7 +521,7 @@ template <typename B> void bswap(B &base, HsfSkeleton32b &obj, HsfSkeleton &dest
     bswap(base, obj.name);
     bswap(base, obj.transform);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.transform = obj.transform;
 }
 
@@ -552,8 +530,8 @@ template <typename B> void bswap(B &base, HsfShape32b &obj, HsfShape &dest)
     bswap(base, obj.name);
     bswap(base, obj.vertex);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
-    dest.vertex = reinterpret_cast<HsfBuffer **>(obj.vertex);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
+    dest.vertex = reinterpret_cast<HsfBuffer **>(static_cast<uintptr_t>(obj.vertex));
 }
 
 template <typename B> void bswap(B &base, HsfCenvSingle &obj)
@@ -577,10 +555,10 @@ template <typename B> void bswap(B &base, HsfCenv32b &obj, HsfCenv &dest)
     bswap(base, obj.vtxCount);
     bswap(base, obj.copyCount);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
-    dest.singleData = reinterpret_cast<HsfCenvSingle *>(obj.singleData);
-    dest.dualData = reinterpret_cast<HsfCenvDual *>(obj.dualData);
-    dest.multiData = reinterpret_cast<HsfCenvMulti *>(obj.multiData);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
+    dest.singleData = reinterpret_cast<HsfCenvSingle *>(static_cast<uintptr_t>(obj.singleData));
+    dest.dualData = reinterpret_cast<HsfCenvDual *>(static_cast<uintptr_t>(obj.dualData));
+    dest.multiData = reinterpret_cast<HsfCenvMulti *>(static_cast<uintptr_t>(obj.multiData));
     dest.singleCount = obj.singleCount;
     dest.dualCount = obj.dualCount;
     dest.multiCount = obj.multiCount;
@@ -610,29 +588,29 @@ template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &
     bswap(base, obj.cenv);
     bswap_flat(base, obj.file, sizeof(obj.file) / sizeof(u32));
 
-    dest.parent = reinterpret_cast<struct hsf_object *>(obj.parent);
+    dest.parent = reinterpret_cast<struct hsf_object *>(static_cast<uintptr_t>(obj.parent));
     dest.childrenCount = obj.childrenCount;
-    dest.children = reinterpret_cast<struct hsf_object **>(obj.children);
+    dest.children = reinterpret_cast<struct hsf_object **>(static_cast<uintptr_t>(obj.children));
     dest.base = obj.base;
     dest.curr = obj.curr;
-    dest.face = reinterpret_cast<HsfBuffer *>(obj.face);
-    dest.vertex = reinterpret_cast<HsfBuffer *>(obj.vertex);
-    dest.normal = reinterpret_cast<HsfBuffer *>(obj.normal);
-    dest.color = reinterpret_cast<HsfBuffer *>(obj.color);
-    dest.st = reinterpret_cast<HsfBuffer *>(obj.st);
-    dest.material = reinterpret_cast<HsfMaterial *>(obj.material);
-    dest.attribute = reinterpret_cast<HsfAttribute *>(obj.attribute);
+    dest.face = reinterpret_cast<HsfBuffer *>(static_cast<uintptr_t>(obj.face));
+    dest.vertex = reinterpret_cast<HsfBuffer *>(static_cast<uintptr_t>(obj.vertex));
+    dest.normal = reinterpret_cast<HsfBuffer *>(static_cast<uintptr_t>(obj.normal));
+    dest.color = reinterpret_cast<HsfBuffer *>(static_cast<uintptr_t>(obj.color));
+    dest.st = reinterpret_cast<HsfBuffer *>(static_cast<uintptr_t>(obj.st));
+    dest.material = reinterpret_cast<HsfMaterial *>(static_cast<uintptr_t>(obj.material));
+    dest.attribute = reinterpret_cast<HsfAttribute *>(static_cast<uintptr_t>(obj.attribute));
     std::copy(std::begin(obj.unk120), std::end(obj.unk120), dest.unk120);
     dest.shapeType = obj.shapeType;
     dest.unk123 = obj.unk123;
     dest.vertexShapeCnt = obj.vertexShapeCnt;
-    dest.vertexShape = reinterpret_cast<HsfBuffer **>(obj.vertexShape);
+    dest.vertexShape = reinterpret_cast<HsfBuffer **>(static_cast<uintptr_t>(obj.vertexShape));
     dest.clusterCnt = obj.clusterCnt;
-    dest.cluster = reinterpret_cast<HsfCluster **>(obj.cluster);
+    dest.cluster = reinterpret_cast<HsfCluster **>(static_cast<uintptr_t>(obj.cluster));
     dest.cenvCnt = obj.cenvCnt;
-    dest.cenv = reinterpret_cast<HsfCenv *>(obj.cenv);
-    dest.file[0] = reinterpret_cast<void *>(obj.file[0]);
-    dest.file[1] = reinterpret_cast<void *>(obj.file[1]);
+    dest.cenv = reinterpret_cast<HsfCenv *>(static_cast<uintptr_t>(obj.cenv));
+    dest.file[0] = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.file[0]));
+    dest.file[1] = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.file[1]));
 
     switch (type) {
         case HSF_OBJ_MESH:
@@ -649,7 +627,7 @@ template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &
         case HSF_OBJ_REPLICA:
             bswap(base, obj.replica);
 
-            dest.replica = obj.replica;
+            dest.replica = reinterpret_cast<struct hsf_object *>(static_cast<uintptr_t>(obj.replica));
             break;
         default:
             break;
@@ -663,9 +641,9 @@ template <typename B> void bswap(B &base, HsfObject32b &obj, HsfObject &dest)
     bswap(base, obj.constData);
     bswap(base, obj.flags);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.type = obj.type;
-    dest.constData = reinterpret_cast<void *>(obj.constData);
+    dest.constData = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.constData));
     dest.flags = obj.flags;
 
     bswap(base, obj.data, dest.data, obj.type);
@@ -677,7 +655,7 @@ template <typename B> void bswap(B &base, HsfBitmapKey32b &obj, HsfBitmapKey &de
     bswap(base, obj.data);
 
     dest.time = obj.time;
-    dest.data = reinterpret_cast<HsfBitmap *>(obj.data);
+    dest.data = reinterpret_cast<HsfBitmap *>(static_cast<uintptr_t>(obj.data));
 }
 
 template <typename B> void bswap(B &base, HsfTrack32b &obj, HsfTrack &dest)
@@ -686,17 +664,23 @@ template <typename B> void bswap(B &base, HsfTrack32b &obj, HsfTrack &dest)
     bswap(base, obj.start);
     bswap(base, obj.curveType);
     bswap(base, obj.numKeyframes);
-    bswap(base, obj.data); // this byteswaps "value" too
 
     dest.type = obj.type;
     dest.start = obj.start;
     dest.curveType = obj.curveType;
     dest.numKeyframes = obj.numKeyframes;
-    dest.data = reinterpret_cast<void *>(obj.data); // this correctly sets "value" too
 
-    if (obj.type = HSF_TRACK_CLUSTER_WEIGHT) {
+    if (obj.curveType == HSF_CURVE_CONST) {
+        bswap(base, obj.value);
+        dest.value = obj.value;
+    }
+    else {
+        bswap(base, obj.data);
+        dest.data = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.data));
+    }
+
+    if (obj.type == HSF_TRACK_CLUSTER_WEIGHT) {
         bswap(base, obj.unk04);
-
         dest.unk04 = obj.unk04;
     }
     else {
@@ -715,9 +699,9 @@ template <typename B> void bswap(B &base, HsfMotion32b &obj, HsfMotion &dest)
     bswap(base, obj.track);
     bswap(base, obj.len);
 
-    dest.name = reinterpret_cast<char *>(obj.name);
+    dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.numTracks = obj.numTracks;
-    dest.track = reinterpret_cast<HsfTrack *>(obj.track);
+    dest.track = reinterpret_cast<HsfTrack *>(static_cast<uintptr_t>(obj.track));
     dest.len = obj.len;
 }
 
@@ -737,7 +721,7 @@ template <typename B> void bswap(B &base, HsfFace32b &obj, HsfFace &dest)
         bswap_flat(base, obj.strip.indices[0], 3 * 4);
     
         dest.strip.count = obj.strip.count;
-        dest.strip.data = reinterpret_cast<s16 *>(obj.strip.data);
+        dest.strip.data = reinterpret_cast<s16 *>(static_cast<uintptr_t>(obj.strip.data));
         std::copy(&obj.strip.indices[0][0], &obj.strip.indices[0][0] + 3 * 4, &dest.strip.indices[0][0]);
     }
     else {
@@ -783,6 +767,19 @@ void byteswap_hsfvec2f(HsfVector2f *src)
     sVisitedPtrs.clear();
 }
 
+void byteswap_hsfvec3f(HsfVector3f *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfvec2f(HsfVector2f *src)
+{
+    auto *vec = reinterpret_cast<Vec2f *>(src);
+    bswap(*vec, *vec);
+    sVisitedPtrs.clear();
+}
+
 void byteswap_animdata(void *src, AnimData *dest)
 {
     auto *anim = reinterpret_cast<AnimData32b *>(src);
@@ -790,24 +787,21 @@ void byteswap_animdata(void *src, AnimData *dest)
     sVisitedPtrs.clear();
 }
 
-void byteswap_animbankdata(void *src, AnimBankData *dest)
+void byteswap_animbankdata(AnimBankData32b *src, AnimBankData *dest)
 {
-    auto *bank = reinterpret_cast<AnimBankData32b *>(src);
-    bswap(*bank, *bank, *dest);
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
-void byteswap_animpatdata(void *src, AnimPatData *dest)
+void byteswap_animpatdata(AnimPatData32b *src, AnimPatData *dest)
 {
-    auto *pat = reinterpret_cast<AnimPatData32b *>(src);
-    bswap(*pat, *pat, *dest);
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
-void byteswap_animbmpdata(void *src, AnimBmpData *dest)
+void byteswap_animbmpdata(AnimBmpData32b *src, AnimBmpData *dest)
 {
-    auto *bmp = reinterpret_cast<AnimBmpData32b *>(src);
-    bswap(*bmp, *bmp, *dest);
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
@@ -826,6 +820,122 @@ void byteswap_animlayerdata(AnimLayerData *src)
 void byteswap_hsfheader(HsfHeader *src)
 {
     bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcluster(HsfCluster32b *src, HsfCluster *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfattribute(HsfAttribute32b *src, HsfAttribute *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmaterial(HsfMaterial32b *src, HsfMaterial *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfscene(HsfScene *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfbuffer(HsfBuffer32b *src, HsfBuffer *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmatrix(HsfMatrix *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfpalette(HsfPalette32b *src, HsfPalette *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfpart(HsfPart32b *src, HsfPart *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfbitmap(HsfBitmap32b *src, HsfBitmap *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmapattr(HsfMapAttr32b *src, HsfMapAttr *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfskeleton(HsfSkeleton32b *src, HsfSkeleton *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfshape(HsfShape32b *src, HsfShape *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv_single(HsfCenvSingle *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv(HsfCenv32b *src, HsfCenv *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfobject(HsfObject32b *src, HsfObject *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+
+void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+
+void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfface(HsfFace32b *src, HsfFace *dest)
+{
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 

@@ -19,4 +19,6 @@ void fn_1_68(omObjData *object)
     }
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif

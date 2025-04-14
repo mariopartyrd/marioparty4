@@ -11,6 +11,10 @@
 
 #include "REL/m401Dll.h"
 
+#ifndef __MWERKS__
+extern s32 rand8(void);
+#endif
+
 struct Bss13EData {
     s16 unk0;
     s16 unk2[3];
@@ -43,7 +47,7 @@ void fn_2_10240(Vec *arg0, Vec *arg1)
     camera = &Hu3DCamera[0];
     MTXLookAt(lookat, &camera->pos, &camera->up, &camera->target);
     MTXMultVec(lookat, arg0, arg0);
-    MTXPerspective(proj, camera->fov, camera->aspect, camera->near, camera->far);
+    MTXPerspective(proj, camera->fov, camera->aspect, camera->nnear, camera->ffar);
     coord[0] = (arg0->x * proj[0][0]) + (arg0->y * proj[0][1]) + (arg0->z * proj[0][2]) + proj[0][3];
     coord[1] = (arg0->x * proj[1][0]) + (arg0->y * proj[1][1]) + (arg0->z * proj[1][2]) + proj[1][3];
     coord[2] = (arg0->x * proj[2][0]) + (arg0->y * proj[2][1]) + (arg0->z * proj[2][2]) + proj[2][3];
@@ -319,7 +323,6 @@ void fn_2_113AC(omObjData *object)
     M401WorkPlayer *temp_r28;
     omObjData *temp_r27;
     ParticleData *temp_r25;
-    s16 temp_r24;
     temp_r30 = object->data;
     temp_r30->unk0.z += (lbl_2_bss_50 * 0.5f);
     object->trans.x = temp_r30->unk0.x;
@@ -564,7 +567,6 @@ void fn_2_123F8(ModelData *model, ParticleData *particle, Mtx matrix)
     HsfanimStruct01 *temp_r31;
     s32 temp_r29;
     s32 temp_r28;
-    UnkWork10A88 *temp_r27;
     if (!particle->unk_02) {
         particle->unk_02 = 1;
         temp_r31 = particle->unk_48;

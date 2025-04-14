@@ -26,8 +26,8 @@ typedef struct process {
     u16 stat;
     u16 prio;
     s32 sleep_time;
-    u32 base_sp;
-    jmp_buf jump;
+    uintptr_t base_sp;
+    JMPBUF jump;
     void (*dtor)(void);
     void *user_data;
 } Process;

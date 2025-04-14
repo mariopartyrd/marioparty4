@@ -1,15 +1,7 @@
-#include "game/gamework_data.h"
+#include "game/board/main.h"
 #include "ext_math.h"
-#include "game/object.h"
-#include "game/flag.h"
-#include "game/data.h"
-#include "game/wipe.h"
-#include "string.h"
-#include "game/hsfman.h"
-#include "game/hsfdraw.h"
 #include "game/board/battle.h"
 #include "game/board/lottery.h"
-#include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/pause.h"
 #include "game/board/player.h"
@@ -18,9 +10,30 @@
 #include "game/board/start.h"
 #include "game/board/tutorial.h"
 #include "game/board/ui.h"
-#include "game/pad.h"
+#include "game/data.h"
 #include "game/disp.h"
+#include "game/flag.h"
+#include "game/gamework_data.h"
+#include "game/hsfdraw.h"
+#include "game/hsfman.h"
 #include "game/msm.h"
+#include "game/object.h"
+#include "game/pad.h"
+#include "game/wipe.h"
+#include "string.h"
+
+#include <game/armem.h>
+#include <game/audio.h>
+#include <game/board/audio.h>
+#include <game/board/boo_house.h>
+#include <game/board/bowser.h>
+#include <game/board/fortune.h>
+#include <game/board/mg_setup.h>
+#include <game/board/roll.h>
+#include <game/board/window.h>
+#include <game/chrman.h>
+
+extern void BoardLast5Exec(void);
 
 typedef struct camera_view {
     s16 x_rot;
@@ -33,11 +46,11 @@ u32 boardRandSeed;
 static omObjData *last5GfxObj;
 static omObjData *confettiObj;
 static omObjData *filterObj;
-BoardTurnStartHook boardTurnStartFunc;
-BoardBowserHook boardBowserHook;
-void (*boardStarShowNextHook)(void);
-void (*boardStarGiveHook)(void);
-BoardFunc boardTurnFunc;
+SHARED_SYM BoardTurnStartHook boardTurnStartFunc;
+SHARED_SYM BoardBowserHook boardBowserHook;
+SHARED_SYM void (*boardStarShowNextHook)(void);
+SHARED_SYM void (*boardStarGiveHook)(void);
+SHARED_SYM BoardFunc boardTurnFunc;
 BoardLightHook boardLightResetHook;
 BoardLightHook boardLightSetHook;
 static BoardFunc destroyFunc;
@@ -297,7 +310,6 @@ void BoardSaveInit(s32 board)
     GWSystem.block_pos = 0;
     memset(GWSystem.board_data, 0, sizeof(GWSystem.board_data));
     for(i=0; i<4; i++) {
-        s32 party_flag;
         BoardPlayerAutoSizeSet(i, 0);
         GWPlayer[i].draw_ticket = 0;
         GWPlayer[i].color = 0;
@@ -1016,21 +1028,21 @@ void BoardCameraRotSet(float x, float y)
     camera->rot.y = y;
 }
 
-void BoardCameraNearFarSet(float near, float far)
+void BoardCameraNearFarSet(float nnear, float ffar)
 {
     BoardCameraData *camera = &boardCamera;
-    camera->near = near;
-    camera->far = far;
+    camera->nnear = nnear;
+    camera->ffar = ffar;
 }
 
-void BoardCameraNearFarGet(float *near, float *far)
+void BoardCameraNearFarGet(float *nnear, float *ffar)
 {
     BoardCameraData *camera = &boardCamera;
-    if(near) {
-        *near = camera->near;
+    if(nnear) {
+        *nnear = camera->nnear;
     }
-    if(far) {
-        *far = camera->far;
+    if(ffar) {
+        *ffar = camera->ffar;
     }
 }
 
@@ -1137,8 +1149,8 @@ void BoardCameraInit(void)
     memset(&boardCamera, 0, sizeof(BoardCameraData));
     camera = &boardCamera;
     camera->fov = 25;
-    camera->near = 100;
-    camera->far = 13000;
+    camera->nnear = 100;
+    camera->ffar = 13000;
     camera->aspect = HU_DISP_ASPECT;
     camera->viewport_x = 0;
     camera->viewport_y = 0;
@@ -1187,7 +1199,7 @@ static void UpdateCamera(omObjData *object)
     }
     CalcCameraView();
     camera = &boardCamera;
-    Hu3DCameraPerspectiveSet(camera->mask, camera->fov, camera->near, camera->far, camera->aspect);
+    Hu3DCameraPerspectiveSet(camera->mask, camera->fov, camera->nnear, camera->ffar, camera->aspect);
     Hu3DCameraViewportSet(camera->mask, camera->viewport_x, camera->viewport_y, camera->viewport_w, camera->viewport_h, camera->viewport_near, camera->viewport_far);
     target = &camera->target;
     if(camera->pos_calc) {

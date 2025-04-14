@@ -13,6 +13,10 @@
 
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
+
 typedef struct {
     /* 0x00 */ s16 unk00;
     /* 0x02 */ s16 unk02;
@@ -87,8 +91,8 @@ static UnkCharInstanceStruct charInstance[8];
 static s16 effectMdl[8];
 static EffectParamData *particleData[8];
 static Process *itemHookProcess[32];
-static u16 lbl_801975B0[8];
-static u8 lbl_801975C0[0x90]; // Unused?
+static u16 effectFlag[15];
+static u8 lbl_801975C0[0x82]; // Unused?
 
 static s32 skipAnimUpdate;
 static void *effectAMemP;
@@ -681,13 +685,14 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
 
 static s32 PlayCharVoice(s16 character, s16 arg1, u8 arg2)
 {
-    UnkCharInstanceStruct *temp_r31;
-    ModelData *temp_r29;
-
-    temp_r31 = &charInstance[character];
-    temp_r29 = &Hu3DData[temp_r31->unk00];
+    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    ModelData *temp_r29 = &Hu3DData[temp_r31->unk00];
     if (arg2 & 1) {
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     if (temp_r31->unkAC & 8) {
         return HuAudCharVoicePlayPos(character, arg1, &temp_r29->pos);
@@ -1131,7 +1136,7 @@ void CharModelKill(s16 character)
             CharModelKill(i);
         }
         for (i = 0; i < 15; i++) {
-            lbl_801975B0[i] = 0;
+            effectFlag[i] = 0;
         }
         return;
     }
@@ -1732,10 +1737,10 @@ void CharModelEffectEnableSet(s16 character, s32 arg1)
 
     if (character >= 8) {
         if (arg1 == 0) {
-            lbl_801975B0[character] |= 0x10;
+            effectFlag[character] |= 0x10;
         }
         else {
-            lbl_801975B0[character] &= ~0x10;
+            effectFlag[character] &= ~0x10;
         }
         return;
     }
@@ -1831,7 +1836,7 @@ static void UpdateNpcEffect(void)
         temp_r26 = Hu3DMotionTimeGet(temp_r25);
         switch (temp_r27[2]) {
             case 0:
-                if (!(temp_r26 & 0xF) && !(lbl_801975B0[temp_r28] & 0x10)) {
+                if (!(temp_r26 & 0xF) && !(effectFlag[temp_r28] & 0x10)) {
                     effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
                     effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
                     effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
@@ -1850,7 +1855,7 @@ static void UpdateNpcEffect(void)
                 }
                 break;
             case 1:
-                if (!(temp_r26 & 3) && !(lbl_801975B0[temp_r28] & 0x10)) {
+                if (!(temp_r26 & 3) && !(effectFlag[temp_r28] & 0x10)) {
                     effectDustParam.unk0C.x = 4.0 * -sind(temp_r30->rot.y);
                     effectDustParam.unk0C.y = 2.0 + 0.1 * frandmod(10);
                     effectDustParam.unk0C.z = 4.0 * -cosd(temp_r30->rot.y);
@@ -1870,7 +1875,7 @@ static void UpdateNpcEffect(void)
                 break;
             case 2:
                 if (temp_r28 != -1) {
-                    if (!(temp_r26 & 0x1F) && !(lbl_801975B0[temp_r28] & 0x10)) {
+                    if (!(temp_r26 & 0x1F) && !(effectFlag[temp_r28] & 0x10)) {
                         effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
                         effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
                         effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
@@ -1889,7 +1894,7 @@ static void UpdateNpcEffect(void)
                 break;
             case 3:
                 if (temp_r28 != -1) {
-                    if (!(temp_r26 & 3) && !(lbl_801975B0[temp_r28] & 0x10)) {
+                    if (!(temp_r26 & 3) && !(effectFlag[temp_r28] & 0x10)) {
                         effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
                         effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
                         effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
@@ -1908,7 +1913,7 @@ static void UpdateNpcEffect(void)
                 break;
             case 4:
                 if (temp_r28 != -1) {
-                    if (!(temp_r26 & 7) && !(lbl_801975B0[temp_r28] & 0x10)) {
+                    if (!(temp_r26 & 7) && !(effectFlag[temp_r28] & 0x10)) {
                         effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
                         effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
                         effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
@@ -1929,7 +1934,7 @@ static void UpdateNpcEffect(void)
                 if (temp_r26 != 0) {
                     break;
                 }
-                if (lbl_801975B0[temp_r28] & 0x10) {
+                if (effectFlag[temp_r28] & 0x10) {
                     break;
                 }
                 for (i = 0; i < 8; i++) {
@@ -1969,7 +1974,11 @@ static s32 PlayStepFX(s16 character, s16 arg1, u8 arg2)
     temp_r31 = &charInstance[character];
     var_r28 = &Hu3DData[temp_r31->unk00];
     if (arg2 & 1) {
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     if (temp_r31->unkB0 == 4) {
         arg1 = 0x109;
