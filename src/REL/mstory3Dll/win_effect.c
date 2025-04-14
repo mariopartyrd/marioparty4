@@ -222,8 +222,8 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
     temp_r21 = temp_r28->unk24 - (temp_r28->unk24 / 5.0f);
     temp_r26 = temp_r21 / 2;
     temp_r20 = temp_r21 - temp_r26;
-    PSVECSubtract(&temp_r28->unk04, &temp_r28->unk10, &sp8);
-    temp_f31 = PSVECMag(&sp8) / temp_r20;
+    VECSubtract(&temp_r28->unk04, &temp_r28->unk10, &sp8);
+    temp_f31 = VECMag(&sp8) / temp_r20;
     for (var_r22 = 0; var_r22 < particle->unk_30 / (temp_r28->unk24 / 5.0f); var_r22++) {
         var_r31 = particle->unk_48;
         for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
@@ -254,12 +254,12 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
             continue;
         }
         if (var_r31->unk00 == 0) {
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+            VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk08.x *= 0.999f;
             var_r31->unk08.y -= 0.5f;
             var_r31->unk08.z *= 0.999f;
             if (var_r31->unk02 > temp_r26 - (temp_r26 / 5.0)) {
-                PSVECScale(&var_r31->unk08, &var_r31->unk08, 1.0 - ((var_r31->unk02 - (temp_r26 - temp_r26 / 5.0)) / (temp_r26 / 5.0)));
+                VECScale(&var_r31->unk08, &var_r31->unk08, 1.0 - ((var_r31->unk02 - (temp_r26 - temp_r26 / 5.0)) / (temp_r26 / 5.0)));
             }
             if (var_r31->unk02 == temp_r26) {
                 var_r31->unk00++;
@@ -270,18 +270,18 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
             }
         } else if (var_r31->unk00 == 1) {
             sp8 = temp_r28->unk00[var_r29];
-            PSVECSubtract(&sp8, &var_r31->unk34, &sp8);
-            if (PSVECMag(&sp8) <= 1.0 + temp_f31) {
+            VECSubtract(&sp8, &var_r31->unk34, &sp8);
+            if (VECMag(&sp8) <= 1.0 + temp_f31) {
                 var_r23++;
                 var_r31->unk34 = temp_r28->unk00[var_r29];
                 var_r31->unk00++;
                 continue;
             }
-            PSVECNormalize(&sp8, &sp8);
+            VECNormalize(&sp8, &sp8);
             var_r31->unk08.x = sp8.x * temp_f31 + sind(var_r31->unk14.x);
             var_r31->unk08.y = sp8.y * temp_f31;
             var_r31->unk08.z = sp8.z * temp_f31;
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
+            VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk14.x += 20.0f;
         } else {
             var_r23++;

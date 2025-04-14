@@ -113,7 +113,7 @@ void HuSprGrpCenterSet(s16 group, float x, float y);
 void HuSprGrpZRotSet(s16 group, float z_rot);
 void HuSprGrpScaleSet(s16 group, float x, float y);
 void HuSprGrpTPLvlSet(s16 group, float tp_lvl);
-#ifndef HUSPR_USE_OLD_DEFS
+#if !defined(HUSPR_USE_OLD_DEFS) || !defined(__MWERKS__)
 void HuSprGrpDrawNoSet(s16 group, s32 draw_no);
 #endif
 void HuSprDrawNoSet(s16 group, s16 member, s32 draw_no);
@@ -127,7 +127,7 @@ void AnimDebug(AnimData *anim);
 
 void HuSprDispInit(void);
 void HuSprDisp(HuSprite *sprite);
-#ifndef HUSPR_USE_OLD_DEFS
+#if !defined(HUSPR_USE_OLD_DEFS) || !defined(__MWERKS__)
 void HuSprTexLoad(AnimData *anim, s16 bmp, s16 slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter);
 #endif
 void HuSprExecLayerSet(s16 draw_no, s16 layer);

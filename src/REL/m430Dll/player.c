@@ -1493,11 +1493,11 @@ void fn_1_100A0(void)
         var_r31->unk_34 = var_r31->unk_38 = var_r31->unk_3C = 0.0f;
         var_r31->unk_40 = var_r31->unk_44 = var_r31->unk_48 = 1000.0f;
         var_r31->unk_58 = 0;
-        var_r31->unk_4C = HuMemDirectMallocNum(HEAP_SYSTEM, 0xC0, MEMORY_DEFAULT_NUM);
+        var_r31->unk_4C = HuMemDirectMallocNum(HEAP_SYSTEM, 16 * sizeof(Vec), MEMORY_DEFAULT_NUM);
         memset(var_r31->unk_4C, 0, 0xC0);
-        var_r31->unk_50 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xC0, MEMORY_DEFAULT_NUM);
+        var_r31->unk_50 = HuMemDirectMallocNum(HEAP_SYSTEM, 16 * sizeof(Vec), MEMORY_DEFAULT_NUM);
         memset(var_r31->unk_50, 0, 0xC0);
-        var_r31->unk_54 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x80, MEMORY_DEFAULT_NUM);
+        var_r31->unk_54 = HuMemDirectMallocNum(HEAP_SYSTEM, 16 * sizeof(Vec2f), MEMORY_DEFAULT_NUM);
         memset(var_r31->unk_54, 0, 0x80);
         var_r30 = &Hu3DData[var_r31->unk_04];
         var_r27 = HuMemDirectMallocNum(HEAP_DATA, 0x200, var_r30->unk_48);
@@ -1639,14 +1639,14 @@ void fn_1_10948(ModelData *var_r29, Mtx var_r30)
     GXSetLineWidth(0x10, GX_TO_ZERO);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
-    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_TEX_ST, GX_RGBA6, 0);
-    GXSetArray(GX_VA_POS, var_r31->unk_50, 0xC);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+    GXSETARRAY(GX_VA_POS, var_r31->unk_50, 16 * sizeof(Vec), sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
-    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_TEX_ST, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, &lbl_1_data_308, 4);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
+    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_308, sizeof(lbl_1_data_308), sizeof(GXColor));
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
-    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
-    GXSetArray(GX_VA_TEX0, var_r31->unk_54, 8);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
+    GXSETARRAY(GX_VA_TEX0, var_r31->unk_54, 16 * sizeof(Vec2f), sizeof(Vec2f));
     GXCallDisplayList(var_r31->unk_60, var_r31->unk_5C);
 }
 

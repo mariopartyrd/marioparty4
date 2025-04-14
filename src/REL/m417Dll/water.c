@@ -305,7 +305,7 @@ void fn_1_3D58(omObjData *object)
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
         lbl_1_bss_178.unk_6BC[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, 30 * 36 * sizeof(Vec), MEMORY_DEFAULT_NUM);
         lbl_1_bss_178.unk_6C4[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, 30 * 36 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-        lbl_1_bss_178.unk_6CC[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, 1080 * sizeof(GXColor), MEMORY_DEFAULT_NUM);
+        lbl_1_bss_178.unk_6CC[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, 30 * 36 * sizeof(GXColor), MEMORY_DEFAULT_NUM);
         lbl_1_bss_178.unk_6D4[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, 30 * 36 * sizeof(Vec2f), MEMORY_DEFAULT_NUM);
         lbl_1_bss_178.unk_6E0[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_178.unk_6DC, MEMORY_DEFAULT_NUM);
         DCFlushRange(lbl_1_bss_178.unk_6E0[var_r31], lbl_1_bss_178.unk_6DC);
@@ -856,10 +856,10 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_POS, lbl_1_bss_178.unk_6BC[lbl_1_bss_178.unk_6B4], 12);
-    GXSetArray(GX_VA_NRM, lbl_1_bss_178.unk_6C4[lbl_1_bss_178.unk_6B4], 12);
-    GXSetArray(GX_VA_CLR0, lbl_1_bss_178.unk_6CC[lbl_1_bss_178.unk_6B4], 4);
-    GXSetArray(GX_VA_TEX0, lbl_1_bss_178.unk_6D4[lbl_1_bss_178.unk_6B4], 8);
+    GXSETARRAY(GX_VA_POS, lbl_1_bss_178.unk_6BC[lbl_1_bss_178.unk_6B4], 30 * 36 * sizeof(Vec), sizeof(Vec));
+    GXSETARRAY(GX_VA_NRM, lbl_1_bss_178.unk_6C4[lbl_1_bss_178.unk_6B4], 30 * 36 * sizeof(Vec), sizeof(Vec));
+    GXSETARRAY(GX_VA_CLR0, lbl_1_bss_178.unk_6CC[lbl_1_bss_178.unk_6B4], 30 * 36 * sizeof(GXColor), sizeof(GXColor));
+    GXSETARRAY(GX_VA_TEX0, lbl_1_bss_178.unk_6D4[lbl_1_bss_178.unk_6B4], 30 * 36 * sizeof(Vec2f), sizeof(Vec2f));
     GXCallDisplayList(lbl_1_bss_178.unk_6E0[0], lbl_1_bss_178.unk_6E8[0]);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);

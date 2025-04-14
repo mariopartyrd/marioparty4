@@ -3035,13 +3035,13 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r31->unk_40, 12);
+        GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_24 * sizeof(Vec) * 4, sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, 68);
+        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, sizeof(var_r31->unk_3C->unk_3C), 68);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_TEX0, var_r31->unk_44, 8);
+        GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_24 * sizeof(Vec2f) * 4, sizeof(Vec2f));
         if (!HmfInverseMtxF3X3(arg1, sp128)) {
             MTXIdentity(sp128);
         }
@@ -3169,13 +3169,13 @@ void fn_1_88B4(ModelData *arg0, Mtx arg1)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, lbl_1_data_27C, 12);
+    GXSETARRAY(GX_VA_POS, lbl_1_data_27C, sizeof(lbl_1_data_27C), sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, lbl_1_data_2AC, 4);
+    GXSETARRAY(GX_VA_CLR0, lbl_1_data_2AC, sizeof(lbl_1_data_2AC), sizeof(GXColor));
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_TEX0, lbl_1_data_2BC, 8);
+    GXSETARRAY(GX_VA_TEX0, lbl_1_data_2BC, sizeof(lbl_1_data_2BC), sizeof(Vec2f));
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
     GXPosition1x16(0);

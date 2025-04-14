@@ -370,7 +370,7 @@ void fn_1_31F8(omObjData *arg0)
     }
 }
 
-void fn_1_3360(omObjData *) { }
+void fn_1_3360(omObjData *arg0) { }
 
 void fn_1_3364(omObjData *arg0)
 {

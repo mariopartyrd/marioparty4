@@ -1102,9 +1102,9 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r30->unk_120.unk_1C0, 12);
-        GXSetArray(GX_VA_CLR0, var_r30->unk_120.unk_E40, 4);
-        GXSetArray(GX_VA_TEX0, var_r30->unk_120.unk_940, 8);
+        GXSETARRAY(GX_VA_POS, var_r30->unk_120.unk_1C0, sizeof(var_r30->unk_120.unk_1C0), sizeof(Vec));
+        GXSETARRAY(GX_VA_CLR0, var_r30->unk_120.unk_E40, sizeof(var_r30->unk_120.unk_E40), sizeof(GXColor));
+        GXSETARRAY(GX_VA_TEX0, var_r30->unk_120.unk_940, sizeof(var_r30->unk_120.unk_940), sizeof(Vec2f));
         var_r31 = var_r30->unk_120.unk_00;
 
         for (var_r29 = 0; var_r29 < 16; var_r29++, var_r31++) {

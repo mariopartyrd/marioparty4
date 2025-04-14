@@ -8,6 +8,10 @@
 
 #include "REL/m406Dll.h"
 
+#ifndef __MWERKS__
+#include <game/frand.h>
+#endif
+
 typedef struct UnkM406Struct {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
@@ -1250,7 +1254,11 @@ void fn_1_4964(ModelData *arg0)
         fn_1_71C4(spC4, spA0, 100.0f + (50.0f * (0.007874016f * (frand() & 0x7F))), -0.1f, sp3C);
     }
     var_r29 = var_r30->unk_2C;
+#ifdef NON_MATCHING
+    memset(&lbl_1_bss_48, 0, sizeof(UnkM406Struct5));
+#else
     memset(lbl_1_bss_48, 0, sizeof(UnkM406Struct5));
+#endif
     for (var_r27 = 0; var_r27 < 105; var_r27++, var_r29++) {
         fn_1_D488(var_r29->unk_04, &var_r30->unk_84[var_r29->unk_00], &var_r30->unk_84[var_r29->unk_00 + 1], &var_r29->unk_18);
         if (var_r29->unk_08 >= 0) {
@@ -2946,13 +2954,13 @@ void fn_1_BC18(ModelData *arg0, float (*arg1)[4])
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r31->unk_40, 0xC);
+        GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_26 * sizeof(Vec) * 4, sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, 0x44);
+        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, sizeof(GXColor), 0x44);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_TEX0, var_r31->unk_44, 8);
+        GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
         if (HmfInverseMtxF3X3(arg1, sp128) == 0) {
             MTXIdentity(sp128);
         }
@@ -3162,10 +3170,10 @@ void fn_1_C86C(ModelData *arg0, Mtx arg1)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_POS, var_r31->unk_40, sizeof(Vec));
+        GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_26 * sizeof(Vec) * 4, sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, 0x44);
+        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_3C, sizeof(GXColor), 0x44);
         if (HmfInverseMtxF3X3(arg1, sp9C) == 0) {
             MTXIdentity(sp9C);
         }
