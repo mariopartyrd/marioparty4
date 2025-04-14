@@ -65,9 +65,9 @@ typedef struct board_camera_data {
 } BoardCameraData;
 
 extern BoardCameraData boardCamera;
-extern Process *boardObjMan;
-extern Process *boardMainProc;
-extern u32 boardRandSeed;
+SHARED_SYM extern Process *boardObjMan;
+SHARED_SYM extern Process *boardMainProc;
+SHARED_SYM extern u32 boardRandSeed;
 extern omObjData *boardMainObj;
 
 typedef void (*BoardFunc)(void);
@@ -79,11 +79,11 @@ typedef void (*BoardCameraPosCalcFunc)(BoardCameraData *camera);
 
 typedef void (*BoardTurnStartHook)(s32 player, s32 space);
 
-extern BoardTurnStartHook boardTurnStartFunc;
-extern void (*boardStarShowNextHook)(void);
-extern void (*boardStarGiveHook)(void);
-extern BoardBowserHook boardBowserHook;
-extern BoardFunc boardTurnFunc;
+SHARED_SYM extern BoardTurnStartHook boardTurnStartFunc;
+SHARED_SYM extern void (*boardStarShowNextHook)(void);
+SHARED_SYM extern void (*boardStarGiveHook)(void);
+SHARED_SYM extern BoardBowserHook boardBowserHook;
+SHARED_SYM extern BoardFunc boardTurnFunc;
 extern BoardLightHook boardLightResetHook;
 extern BoardLightHook boardLightSetHook;
 

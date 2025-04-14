@@ -72,7 +72,7 @@ static inline void HuControlCamCenter(Vec *sp18, Vec *sp30)
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_37DC(omObjData *)
+void fn_1_37DC(omObjData *object)
 {
     Vec sp3C;
     Vec sp30;
@@ -135,7 +135,7 @@ void fn_1_37DC(omObjData *)
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_439C(omObjData *)
+void fn_1_439C(omObjData *object)
 {
     s16 var_r31;
     f32 temp_f30;

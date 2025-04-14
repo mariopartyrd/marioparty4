@@ -29,9 +29,6 @@ typedef struct {
     HsfObject *obj; // 0030
 } HuObjUnk;
 
-extern Vec CRot;
-extern Vec Center;
-extern float CZoom;
 void fn_1_29C();
 void fn_1_28F8(Vec *arg0, Vec *arg1);
 void fn_1_37DC(omObjData *);

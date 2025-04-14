@@ -22,7 +22,7 @@ extern u32 frand();
 static GXRenderModeObj rmodeobj;
 
 static BOOL FirstFrame = TRUE;
-GXRenderModeObj *RenderMode;
+SHARED_SYM GXRenderModeObj *RenderMode;
 OSHeapHandle currentHeapHandle;
 static void *DefaultFifo;
 static GXFifoObj *DefaultFifoObj;

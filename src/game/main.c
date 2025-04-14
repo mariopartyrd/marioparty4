@@ -30,7 +30,7 @@ const char *__asan_default_options()
 #endif
 
 extern FileListEntry _ovltbl[];
-u32 GlobalCounter;
+SHARED_SYM u32 GlobalCounter;
 static u32 vcheck;
 static u32 vmiss;
 static u32 vstall;

@@ -4,7 +4,7 @@
 #include "dolphin.h"
 #include "version.h"
 
-extern GXRenderModeObj *RenderMode;
+SHARED_SYM extern GXRenderModeObj *RenderMode;
 extern OSHeapHandle currentHeapHandle;
 
 extern void *DemoFrameBuffer1;

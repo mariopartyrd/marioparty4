@@ -12,9 +12,9 @@ void MGSeqPauseKill(void);
 #include "game/wipe.h"
 #endif
 
-Vec CRot;
-Vec Center;
-float CZoom;
+SHARED_SYM Vec CRot;
+SHARED_SYM Vec Center;
+SHARED_SYM float CZoom;
 Vec CRotM[16];
 Vec CenterM[16];
 float CZoomM[16];

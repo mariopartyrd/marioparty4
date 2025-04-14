@@ -12,7 +12,6 @@ typedef struct w03UnkWorkStruct {
 
 extern w03State* lbl_1_bss_0;
 omObjData* lbl_1_bss_138[2];
-extern Process *boardObjMan;
 extern s16 lbl_1_data_1E0;
 
 void fn_1_79E0(omObjData* arg0);

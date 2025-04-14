@@ -265,7 +265,7 @@ void fn_1_DB8(omObjData *object);
 void fn_1_E18(omObjData *object);
 void fn_1_EB8(void);
 
-extern u32 GlobalCounter;
+SHARED_SYM extern u32 GlobalCounter;
 
 Vec lbl_1_data_0[4] = {
     { -600.0f, 0.0f, -285.0f },

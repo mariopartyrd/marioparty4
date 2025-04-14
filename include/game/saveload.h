@@ -28,7 +28,7 @@ SHARED_SYM extern char *SaveFileNameTbl[];
 SHARED_SYM extern CARDFileInfo curFileInfo;
 SHARED_SYM extern SaveBufAll saveBuf;
 extern u64 SLSerialNo;
-extern s32 saveExecF;
+SHARED_SYM extern s32 saveExecF;
 extern u8 curBoxNo;
 SHARED_SYM extern s16 curSlotNo;
 

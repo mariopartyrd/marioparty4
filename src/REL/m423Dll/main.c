@@ -19,7 +19,7 @@
 
 #define frand7() (frand() & 0x7F)
 
-extern u32 GlobalCounter;
+SHARED_SYM extern u32 GlobalCounter;
 
 typedef struct {
     /* 0x00 */ s32 unk00;

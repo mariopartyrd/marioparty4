@@ -31,10 +31,10 @@ static void ParManHook(ModelData *arg0, ParticleData *arg1, Mtx matrix);
 
 u32 frand(void);
 
-extern u32 GlobalCounter;
+SHARED_SYM extern u32 GlobalCounter;
 
-Hu3DTexAnimDataStruct Hu3DTexAnimData[HU3D_TEXANIM_MAX];
-Hu3DTexScrDataStruct Hu3DTexScrData[16];
+SHARED_SYM Hu3DTexAnimDataStruct Hu3DTexAnimData[HU3D_TEXANIM_MAX];
+SHARED_SYM Hu3DTexScrDataStruct Hu3DTexScrData[16];
 static Process *parManProc[64];
 
 void Hu3DAnimInit(void) {

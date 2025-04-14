@@ -309,12 +309,12 @@ SHARED_SYM extern Mtx Hu3DCameraMtxXPose;
 SHARED_SYM extern LightData Hu3DGlobalLight[0x8];
 extern s16 reflectMapNo;
 extern AnimData *toonAnim;
-extern s16 Hu3DShadowCamBit;
-extern s32 Hu3DShadowF;
-extern s32 shadowModelDrawF;
-extern s16 Hu3DCameraNo;
+SHARED_SYM extern s16 Hu3DShadowCamBit;
+SHARED_SYM extern s32 Hu3DShadowF;
+SHARED_SYM extern s32 shadowModelDrawF;
+SHARED_SYM extern s16 Hu3DCameraNo;
 extern s16 Hu3DCameraBit;
 extern s16 Hu3DPauseF;
-extern GXColor BGColor;
+SHARED_SYM extern GXColor BGColor;
 
 #endif

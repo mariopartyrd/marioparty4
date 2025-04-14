@@ -13,7 +13,7 @@
 #include "game/board/space.h"
 #include "game/board/ui.h"
 
-extern s16 boardPlayerMdl[4];
+SHARED_SYM extern s16 boardPlayerMdl[4];
 
 static inline s32 BoardPlayerHandicapGet(s32 player)
 {

@@ -27,7 +27,7 @@
 
 #include "REL/m425Dll.h"
 
-extern u8 texMtxTbl[]; // TODO maybe put in hsfdraw.h?
+SHARED_SYM extern u8 texMtxTbl[]; // TODO maybe put in hsfdraw.h?
 
 typedef struct M425DllWork {
     u8 unk_00;

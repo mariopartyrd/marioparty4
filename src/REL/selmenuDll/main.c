@@ -16,10 +16,13 @@
 #include "game/wipe.h"
 #include "math.h"
 
-
+#ifdef __MWERKS__
 // MSM Definitions
 static s8 *msmSeGetIndexPtr(s16 datano);
 static void msmMusSetMasterVolume(s32 value);
+#else
+#include "game/msm.h"
+#endif
 
 #define SM_PAGE_MAX 7
 #define SM_PAGE_SIZE 10

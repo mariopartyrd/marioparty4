@@ -13,6 +13,10 @@
 #include "dolphin.h"
 #include "math.h"
 
+#ifndef __MWERKS__
+#include <game/audio.h>
+#endif
+
 typedef struct {
     /* 0x000 */ omObjData *object[26];
     /* 0x068 */ OptionWindow *window[13];
@@ -110,7 +114,7 @@ static void CreateNote(omObjData *object, s32 type, s32 side, s32 color);
 static void CreateNoteSpawner(omObjData *object);
 static void KillNoteSpawner(omObjData *object);
 static void ExecNoteSpawner(void);
-static void PlaySound(omObjData *object);
+static void OptionPlaySound(omObjData *object);
 static void FadeSound(omObjData *object);
 
 omObjData *optionSound;
@@ -920,7 +924,7 @@ static void ExecMusic(omObjData *object)
                         HuAudSeqFadeOut(work->bgMusicStat, 0x64);
                         work->bgMusicStat = -1;
                     }
-                    PlaySound(object);
+                    OptionPlaySound(object);
                 }
                 else if (OptionPadCheck(PAD_BUTTON_B)) {
                     HuAudFXPlay(3);
@@ -1101,7 +1105,7 @@ static void ExecVoice(omObjData *object)
         case 6:
             if (work->window[0]->state == 0 && work->window[1]->state == 0) {
                 if (OptionPadCheck(PAD_BUTTON_A)) {
-                    PlaySound(object);
+                    OptionPlaySound(object);
                 }
                 else if (OptionPadCheck(PAD_BUTTON_B)) {
                     HuAudFXPlay(3);
@@ -1665,7 +1669,7 @@ static void ExecNoteSpawner(void)
     }
 }
 
-static void PlaySound(omObjData *object)
+static void OptionPlaySound(omObjData *object)
 {
     SoundWork *work = object->data;
     SndSelData *sndSelData;

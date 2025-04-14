@@ -37,6 +37,7 @@ set(DOLPHIN_FILES
         src/dolphin/mtx/mtx.c
         src/dolphin/mtx/mtx44.c
         src/dolphin/mtx/vec.c
+        src/dolphin/mtx/quat.c
         src/dolphin/os/OSAlloc.c
         src/dolphin/os/OSArena.c
         src/dolphin/os/OSStopwatch.c
@@ -168,27 +169,31 @@ target_include_directories(marioparty4 PRIVATE include)
 target_link_libraries(marioparty4 PRIVATE dol aurora::main)
 
 file(GLOB REL_DIRS RELATIVE ${CMAKE_SOURCE_DIR}/src/REL ${CMAKE_SOURCE_DIR}/src/REL/*)
+set(EXCLUDED_RELS "nisDll" "safDll")
 
 foreach (dir ${REL_DIRS})
     if (IS_DIRECTORY ${CMAKE_SOURCE_DIR}/src/REL/${dir})
+        if (dir IN_LIST EXCLUDED_RELS)
+            continue()
+        endif()
         file(GLOB_RECURSE REL_FILES src/REL/${dir}/*.c)
 
         if (REL_FILES)
             add_library(${dir} SHARED ${REL_FILES})
+            if (dir MATCHES "^w..Dll")
+                target_sources(${dir} PRIVATE src/REL/board_executor.c)
+            endif()
             target_compile_definitions(${dir} PRIVATE TARGET_PC NON_MATCHING VERSION=${VERSION})
             target_include_directories(${dir} PRIVATE include build/GMPE01_00/include)
             if (MSVC)
                 set_target_properties(${dir} PROPERTIES LINK_FLAGS "/EXPORT:ObjectSetup")
-            else ()
-            endif ()
-            if (NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
+            elseif (NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
                 target_compile_options(${dir} PRIVATE "-fvisibility=hidden")
                 target_link_options(${dir} PRIVATE "LINKER:--version-script=${CMAKE_CURRENT_SOURCE_DIR}/rel.map")
                 set_target_properties(${dir} PROPERTIES PREFIX "")
             endif ()
             target_link_libraries(${dir} PRIVATE dol musyx)
+            add_dependencies(marioparty4 ${dir})
         endif ()
     endif ()
 endforeach ()
-
-add_dependencies(marioparty4 bootDll modeseldll)

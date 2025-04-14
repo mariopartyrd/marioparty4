@@ -17,7 +17,7 @@
 #include <game/board/window.h>
 #include <game/hsfex.h>
 
-extern s32 boardTutorialData[4];
+SHARED_SYM extern s32 boardTutorialData[4];
 
 
 static void KillMushroom();

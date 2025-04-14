@@ -421,8 +421,11 @@ void fn_1_1960(omObjData *object)
             GXDrawDone();
             temp_r3 = fn_1_9734(object->model[2]);
             temp_r29 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
+#ifdef __MWERKS__
+            // TODO PC
             memcpy((*temp_r3)->bmp->data, OSCachedToUncached(Hu3DShadowData.unk_04), temp_r29);
-            DCStoreRangeNoSync((*temp_r3)->bmp->data, temp_r29);
+#endif
+        DCStoreRangeNoSync((*temp_r3)->bmp->data, temp_r29);
             break;
         case 2:
             Hu3DModelShadowMapObjSet(object->model[0], "kyanbasu");

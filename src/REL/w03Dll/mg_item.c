@@ -60,8 +60,6 @@ typedef struct w03UnkMG {
 
 // external symbols
 
-extern u16 HuPadBtnDown[4];
-
 // function signatures
 s32 BoardVecDAngleCalcRange(float *value, float min, float range);
 

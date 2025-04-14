@@ -130,7 +130,9 @@ void fn_1_A4(void) {
     }
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_3E4(void)
 {

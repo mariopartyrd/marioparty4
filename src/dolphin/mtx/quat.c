@@ -14,6 +14,7 @@ void C_QUATAdd(const Quaternion *p, const Quaternion *q, Qtrn *r)
     r->w = p->w + q->w;
 }
 
+#ifdef GEKKO
 void PSQUATAdd(register const Quaternion *p, register const Quaternion *q, register Quaternion *r)
 {
     asm {
@@ -27,7 +28,16 @@ void PSQUATAdd(register const Quaternion *p, register const Quaternion *q, regis
       psq_st f0, 0x8(r5), 0, 0
     }
 }
+#endif
 
+#ifdef TARGET_PC
+void C_QUATMultiply(const Quaternion *a, const Quaternion *b, Quaternion *ab)
+{
+    // TODO PC
+}
+#endif
+
+#ifdef GEKKO
 void PSQUATMultiply(register const Quaternion *a, register const Quaternion *b, register Quaternion *ab)
 {
     asm {
@@ -55,7 +65,16 @@ void PSQUATMultiply(register const Quaternion *a, register const Quaternion *b, 
         psq_st f5, 8(ab), 0, 0
     }
 }
+#endif
 
+#ifdef TARGET_PC
+void C_QUATNormalize(register Quaternion *src, Quaternion *unit)
+{
+    // TODO PC
+}
+#endif
+
+#ifdef GEKKO
 void PSQUATNormalize(const register Quaternion *src, register Quaternion *unit)
 {
     // sdata2
@@ -95,7 +114,16 @@ void PSQUATNormalize(const register Quaternion *src, register Quaternion *unit)
         }
     }
 }
+#endif
 
+#ifdef TARGET_PC
+void C_QUATInverse(const Quaternion *src, Quaternion *inv)
+{
+    // TODO PC
+}
+#endif
+
+#ifdef GEKKO
 void PSQUATInverse(const register Quaternion *src, register Quaternion *inv)
 {
     register f32 vv1, vv2, vv3, vv4;
@@ -126,6 +154,7 @@ void PSQUATInverse(const register Quaternion *src, register Quaternion *inv)
         psq_st      vv3, 8(inv), 1, 0;
     }
 }
+#endif
 
 void C_QUATRotAxisRad(Quaternion *q, const Vec *axis, f32 rad)
 {
@@ -133,7 +162,7 @@ void C_QUATRotAxisRad(Quaternion *q, const Vec *axis, f32 rad)
     Vec dst;
 
     tmp = rad;
-    PSVECNormalize(axis, &dst);
+    VECNormalize(axis, &dst);
 
     tmp2 = tmp * 0.5f;
     tmp3 = sinf(tmp * 0.5f);

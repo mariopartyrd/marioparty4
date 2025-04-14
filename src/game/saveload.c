@@ -31,7 +31,7 @@ SHARED_SYM CARDFileInfo curFileInfo;
 SHARED_SYM SaveBufAll saveBuf;
 
 u64 SLSerialNo;
-s32 saveExecF;
+SHARED_SYM s32 saveExecF;
 u8 curBoxNo;
 SHARED_SYM s16 curSlotNo;
 

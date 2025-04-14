@@ -33,7 +33,7 @@ typedef struct seq_info {
     s32 time_max;
 } SeqInfo;
 
-OverlayID mgSeqOvlPrev = OVL_INVALID;
+SHARED_SYM OverlayID mgSeqOvlPrev = OVL_INVALID;
 
 static SeqInfo seqInfoTbl[] = {
     { NULL, NULL, HU_DISP_CENTERX + 4, HU_DISP_CENTERY, 1.0f, 1.0f, 60 },

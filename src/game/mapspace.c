@@ -19,7 +19,7 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3);
 static s32 PrecalcPntToTriangle(Vec *arg0, Vec *arg1, Vec *arg2, Vec* arg3, Vec *arg4, Vec *arg5);
 static void DefSetHitFace(float arg0, float arg1, float arg2);
 
-omObjData *MapObject[16];
+SHARED_SYM omObjData *MapObject[16];
 Mtx MapMT;
 Mtx MapMTR;
 static Vec MTRAdd;
@@ -30,10 +30,10 @@ static Vec OldXYZ;
 Vec HitFace[32];
 u8 CharObject[0x30];
 
-float AddX;
-float AddZ;
-s32 nMap;
-s32 nChar;
+SHARED_SYM float AddX;
+SHARED_SYM float AddZ;
+SHARED_SYM s32 nMap;
+SHARED_SYM s32 nChar;
 s32 HitFaceCount;
 static HsfData *AttrHsf;
 static Vec *topvtx;

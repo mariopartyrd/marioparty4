@@ -226,7 +226,7 @@ void fn_1_D488(float arg8, Vec *arg0, Vec *arg1, Vec *arg2);
 void fn_1_D518(Mtx arg0, Vec *arg1);
 float fn_1_D5CC(Vec *arg0, Vec *arg1, float arg8, float arg9);
 
-extern u32 GlobalCounter;
+SHARED_SYM extern u32 GlobalCounter;
 
 Vec lbl_1_data_F0[0x46] = {
     { -495.876f, 50.005f, -0.0f },

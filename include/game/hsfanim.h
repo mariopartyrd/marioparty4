@@ -4,6 +4,7 @@
 #include "game/hsfformat.h"
 #include "game/hsfman.h"
 #include "game/animdata.h"
+#include "version.h"
 
 typedef struct model_data ModelData;
 typedef struct particle_data ParticleData;
@@ -138,7 +139,7 @@ void Hu3DParManTimeLimitSet(s16 arg0, s32 arg1);
 void Hu3DParManVacumeSet(s16 arg0, float arg1, float arg2, float arg3, float arg4);
 void Hu3DParManColorSet(s16 arg0, s16 arg1);
 
-extern Hu3DTexAnimDataStruct Hu3DTexAnimData[256];
-extern Hu3DTexScrDataStruct Hu3DTexScrData[16];
+SHARED_SYM extern Hu3DTexAnimDataStruct Hu3DTexAnimData[256];
+SHARED_SYM extern Hu3DTexScrDataStruct Hu3DTexScrData[16];
 
 #endif

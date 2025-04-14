@@ -105,7 +105,6 @@ s32 lbl_1_data_56C[] = {
 };
 
 void fn_1_EC(void);
-void fn_1_12E8(void);
 void fn_1_13A0(void);
 
 s32 lbl_1_bss_14;
@@ -454,25 +453,11 @@ void fn_1_EC(void)
 	}
 }
 
-s32 _prolog(void) {
-    const VoidFunc* ctors = _ctors;
-    while (*ctors != 0) {
-        (**ctors)();
-        ctors++;
-    }
-    fn_1_12E8();
-    return 0;
-}
+#ifdef __MWERKS__
+#include "src/REL/executor.c"
+#endif
 
-void _epilog(void) {
-    const VoidFunc* dtors = _dtors;
-    while (*dtors != 0) {
-        (**dtors)();
-        dtors++;
-    }
-}
-
-void fn_1_12E8(void)
+void ObjectSetup(void)
 {
 	lbl_1_bss_0 = omInitObjMan(62, 8192);
 	omGameSysInit(lbl_1_bss_0);

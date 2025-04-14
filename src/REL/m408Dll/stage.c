@@ -1150,7 +1150,7 @@ void fn_1_10830(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3)
         GXSetTevColor(reg, color_var);                                                                                                               \
     }
 
-extern u32 texMtxTbl[];
+SHARED_SYM extern u32 texMtxTbl[];
 
 void fn_1_10B60(UnkFn10484 *arg0, HsfMaterial *arg1)
 {

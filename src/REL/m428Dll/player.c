@@ -239,7 +239,7 @@ s32 fn_1_F288(Vec *arg0, Vec *arg1, float arg8);
 s32 fn_1_F538(Vec *arg0, Vec *arg1, Vec *arg2, float arg8);
 s32 fn_1_FB8C(Vec *arg0, Vec *arg1, float arg8, s32 arg2, s32 arg3);
 
-extern u32 GlobalCounter;
+SHARED_SYM extern u32 GlobalCounter;
 
 Vec lbl_1_data_150[4] = {
     { -140.0f, -400.0f, 0.0f },
@@ -2137,7 +2137,7 @@ void fn_1_FE98(M428DllPlayerUnk120Struct *arg0)
     }
 }
 
-GXColor lbl_1_data_694[2] = { {0xFF, 0xA0, 0x40, 0xFF}, {0x00, 0xC8, 0xFF, 0xFF} };
+GXColor lbl_1_data_694[2] = { { 0xFF, 0xA0, 0x40, 0xFF }, { 0x00, 0xC8, 0xFF, 0xFF } };
 s16 lbl_1_data_69C[2] = { -0x10, 0x10 };
 s16 lbl_1_data_6A0[2] = { 0x1A4, 0x60 };
 Vec lbl_1_data_6A4[4] = {
