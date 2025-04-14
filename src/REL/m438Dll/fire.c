@@ -4,6 +4,8 @@
 #define HUSPR_USE_OLD_DEFS
 #include "game/sprite.h"
 
+#include <ext_math.h>
+
 extern u8 texMtxTbl[];
 
 // PROTO
@@ -264,19 +266,19 @@ void fn_1_E790(M438UnkStruct2 *arg0)
             }
             GXClearVtxDesc();
             GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
-            GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
-            GXSetArray(GX_VA_POS, var_r31->unk_44, 12);
+            GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+            GXSETARRAY(GX_VA_POS, var_r31->unk_44, 4 * sizeof(Vec), sizeof(Vec));
             GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-            GXSetArray(GX_VA_CLR0, var_r31->unk_48, 4);
+            GXSETARRAY(GX_VA_CLR0, var_r31->unk_48, 4 * sizeof(GXColor), sizeof(GXColor));
             for (var_r27 = 0; var_r27 < var_r31->unk_34; var_r27++) {
                 GXSetVtxDesc(var_r27 + GX_VA_TEX0, GX_INDEX16);
-                GXSetVtxAttrFmt(GX_VTXFMT0, var_r27 + GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
-                GXSetArray(var_r27 + GX_VA_TEX0, &var_r31->unk_58[var_r27].unk_04, 8);
+                GXSetVtxAttrFmt(GX_VTXFMT0, var_r27 + GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
+                GXSETARRAY(var_r27 + GX_VA_TEX0, &var_r31->unk_58[var_r27].unk_04, 4 * sizeof(Vec2f), sizeof(Vec2f));
             }
             GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
-            GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_RGBA6, 0U);
-            GXSetArray(GX_VA_NRM, var_r31->unk_4C, 12);
+            GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0U);
+            GXSETARRAY(GX_VA_NRM, var_r31->unk_4C, sizeof(Vec), sizeof(Vec));
             GXCallDisplayList(var_r31->unk_40, var_r31->unk_3C);
         }
     }
@@ -593,15 +595,15 @@ s16 fn_1_10258(u8 arg0, u8 arg1)
     var_r31->unk_30 = NULL;
     var_r31->unk_02 = arg0;
     var_r31->unk_04 = arg1;
-    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0x98, 0x10000000);
+    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0x98, MEMORY_DEFAULT_NUM);
     var_r31->unk_3C = var_r30;
-    var_r31->unk_34 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * 2, 0x10000000);
+    var_r31->unk_34 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * 2, MEMORY_DEFAULT_NUM);
     var_r31->unk_48 = 0;
-    var_r31->unk_4C = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 << 8, 0x10000000);
-    var_r31->unk_50 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0x30, 0x10000000);
-    var_r31->unk_54 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0x10, 0x10000000);
-    var_r31->unk_58 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0xC, 0x10000000);
-    var_r31->unk_5C = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * (arg0 * 0x30), 0x10000000);
+    var_r31->unk_4C = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 << 8, MEMORY_DEFAULT_NUM);
+    var_r31->unk_50 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0x30, MEMORY_DEFAULT_NUM);
+    var_r31->unk_54 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0x10, MEMORY_DEFAULT_NUM);
+    var_r31->unk_58 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 0xC, MEMORY_DEFAULT_NUM);
+    var_r31->unk_5C = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * (arg0 * 0x30), MEMORY_DEFAULT_NUM);
     DCFlushRangeNoSync(var_r31->unk_4C, arg0 << 8);
     var_r31->unk_0C.x = var_r31->unk_0C.y = var_r31->unk_0C.z = 0.0f;
     var_r31->unk_18.x = var_r31->unk_18.y = var_r31->unk_18.z = 0.0f;

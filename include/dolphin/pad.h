@@ -84,8 +84,8 @@ PADSamplingCallback PADSetSamplingCallback(PADSamplingCallback);
 #ifdef TARGET_PC
 /* New API to facilitate controller interactions */
 typedef struct PADDeadZones {
-  bool emulateTriggers;
-  bool useDeadzones;
+  BOOL emulateTriggers;
+  BOOL useDeadzones;
   u16 stickDeadZone;
   u16 substickDeadZone;
   u16 leftTriggerActivationZone;
@@ -118,7 +118,7 @@ const char* PADGetNativeButtonName(u32 button);
 /* Returns any pressed native button */
 s32 PADGetNativeButtonPressed(u32 port);
 void PADRestoreDefaultMapping(u32 port);
-void PADBlockInput(bool block);
+void PADBlockInput(BOOL block);
 #endif
 
 #ifdef __cplusplus

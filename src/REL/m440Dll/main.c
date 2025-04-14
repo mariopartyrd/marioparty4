@@ -1344,12 +1344,12 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
         arg2->unk38 = NULL;
         arg2->unk3C = 0xFF;
         arg2->unk3E = 0;
-        arg2->unk18 = HuMemDirectMallocNum(HEAP_DATA, arg1->data.vertex->count * 0xC, var_r29->unk_48);
+        arg2->unk18 = HuMemDirectMallocNum(HEAP_DATA, arg1->data.vertex->count * sizeof(Vec), var_r29->unk_48);
         fn_1_6554(arg2, arg1);
         fn_1_6B58(arg2, arg1);
-        arg2->unkC = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * 0xC, var_r29->unk_48);
-        arg2->unk10 = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * 0xC, var_r29->unk_48);
-        arg2->unk14 = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * 0xC, var_r29->unk_48);
+        arg2->unkC = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * sizeof(Vec), var_r29->unk_48);
+        arg2->unk10 = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * sizeof(Vec), var_r29->unk_48);
+        arg2->unk14 = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * sizeof(Vec), var_r29->unk_48);
         if (arg2->unk28->numAttrs != 0) {
             arg2->unk1C = HuMemDirectMallocNum(HEAP_DATA, arg1->data.st->count * 8, var_r29->unk_48);
             var_r22 = arg1->data.st->data;
@@ -1879,10 +1879,10 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, temp_r31->unkC, 12);
+    GXSETARRAY(GX_VA_POS, temp_r31->unkC, temp_r31->unk8 * sizeof(Vec), sizeof(Vec));
     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_NRM, temp_r31->unk14, 12);
+    GXSETARRAY(GX_VA_NRM, temp_r31->unk14, temp_r31->unk8 * sizeof(Vec), sizeof(Vec));
     lbl_1_bss_C = temp_r31->unk3C;
     if (temp_r31->unk28->unk34 == 0) {
         GXSetNumTevStages(1);
@@ -1897,7 +1897,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     else {
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSetArray(GX_VA_TEX0, temp_r31->unk1C, 8);
+        GXSETARRAY(GX_VA_TEX0, temp_r31->unk1C, sizeof(Vec2f), sizeof(Vec2f)); // TODO PC
         temp_r29 = &temp_r31->unk2C[temp_r31->unk28->unk38[0]];
         fn_1_7D60(temp_r29->unk80, temp_r29, 0);
         lbl_1_bss_2C = 1;
@@ -2269,19 +2269,19 @@ s16 fn_1_956C(AnimData *arg0, s16 arg1, f32 arg2, s16 arg3, s16 arg4)
         var_r24->unk60 = -1;
         var_r24->unk62 = 0;
     }
-    var_r25 = HuMemDirectMallocNum(HEAP_DATA, arg1 * 0xC * 4, temp_r28->unk_48);
+    var_r25 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(Vec) * 4, temp_r28->unk_48);
     var_r31->unk1C = var_r25;
 
     for (var_r30 = 0; var_r30 < (arg1 * 4); var_r30++, var_r25++) {
         var_r25->x = var_r25->y = var_r25->z = 0.0f;
     }
-    var_r27 = HuMemDirectMallocNum(HEAP_DATA, arg1 * 4, temp_r28->unk_48);
+    var_r27 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(GXColor), temp_r28->unk_48);
     var_r31->unk24 = var_r27;
 
     for (var_r30 = 0; var_r30 < arg1; var_r30++, var_r27++) {
         var_r27->r = var_r27->g = var_r27->b = var_r27->a = 0xFF;
     }
-    var_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * 8 * 4, temp_r28->unk_48);
+    var_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(Vec2f) * 4, temp_r28->unk_48);
     var_r31->unk20 = var_r29;
 
     for (var_r30 = 0; var_r30 < arg1; var_r30++) {
@@ -2458,13 +2458,13 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, temp_r30->unk1C, 0xC);
+    GXSETARRAY(GX_VA_POS, temp_r30->unk1C, temp_r30->unk0 * sizeof(Vec) * 4, sizeof(Vec));
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSetArray(GX_VA_CLR0, temp_r30->unk24, 4);
+    GXSETARRAY(GX_VA_CLR0, temp_r30->unk24, temp_r30->unk0 * sizeof(GXColor), sizeof(GXColor));
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_TEX0, temp_r30->unk20, 8);
+    GXSETARRAY(GX_VA_TEX0, temp_r30->unk20, temp_r30->unk0 * sizeof(Vec2f) * 4, sizeof(Vec2f));
     fn_1_9344(arg1, sp128);
     MTXReorder(sp128, spF8);
     if (((u8)omPauseChk() == 0) && (temp_r30->unkC)) {
@@ -2510,8 +2510,8 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
             }
         }
     }
-    DCFlushRangeNoSync(temp_r30->unk1C, temp_r30->unk0 * 0xC * 4);
-    DCFlushRangeNoSync(temp_r30->unk20, temp_r30->unk0 * 8 * 4);
+    DCFlushRangeNoSync(temp_r30->unk1C, temp_r30->unk0 * sizeof(Vec) * 4);
+    DCFlushRangeNoSync(temp_r30->unk20, temp_r30->unk0 * sizeof(Vec2f) * 4);
     GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
 }
 

@@ -109,7 +109,7 @@ typedef struct _unkStruct6 {
     m440Func6 unk38;
     s16 unk3C;
     s16 unk3E;
-} unkStruct6; // sizeof 0x40
+} unkStruct6; // sizeof 0x40 // TODO same as unkStruct14?
 
 typedef struct _unkStruct7 {
     GXColor unk0;
@@ -178,7 +178,8 @@ typedef struct _unkStruct13 {
 typedef struct _unkStruct14 {
     s16 unk0;
     s16 unk2;
-    char unk4[0x8];
+    char unk4[4];
+    s32 unk8;
     void *unkC;
     char unk10[0x4];
     void *unk14;

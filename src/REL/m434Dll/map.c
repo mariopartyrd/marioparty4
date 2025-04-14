@@ -342,7 +342,7 @@ void fn_1_2978(ModelData *model, Mtx mtx)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, lbl_1_bss_2868, sizeof(lbl_1_bss_2868), sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, lbl_1_bss_2868, sizeof(lbl_1_bss_2868), sizeof(Vec));
     GXSetCullMode(GX_CULL_BACK);
     GXCallDisplayList(lbl_1_bss_450.unk0, lbl_1_bss_450.unk4);
     GXSetNumIndStages(0);
