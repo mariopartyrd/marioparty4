@@ -344,7 +344,7 @@ void *HuAR_ARAMtoMRAMFileRead(u32 dir, u32 num, HeapID heap) {
     DCInvalidateRange(&preLoadBuf, sizeof(preLoadBuf));
     amem_src = amemptr + (u32)((u32)(((u16)dir + 1) * 4) & 0xFFFFFFFE0);
     arqCnt++;
-    ARQPostRequest(&ARQueBuf[arqIdx].req, 0x1234, 1, 0, amem_src, (u32) &preLoadBuf, sizeof(preLoadBuf), ArqCallBackAMFileRead);
+    ARQPostRequest(&ARQueBuf[arqIdx].req, 0x1234, 1, 0, amem_src, (uintptr_t) &preLoadBuf, sizeof(preLoadBuf), ArqCallBackAMFileRead);
     arqIdx++;
     arqIdx &= 0xF;
     while (HuARDMACheck());

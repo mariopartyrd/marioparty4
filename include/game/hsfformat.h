@@ -277,7 +277,8 @@ typedef struct hsf_object_data {
     HsfCluster **cluster;
     u32 cenvCnt;
     HsfCenv *cenv;
-    void *file[2];
+    HsfVector3f *vtxtop;
+    HsfVector3f *normtop;
 } HsfObjectData;
 
 typedef struct hsf_camera {

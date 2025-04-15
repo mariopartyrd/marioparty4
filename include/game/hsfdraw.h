@@ -70,7 +70,7 @@ void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2);
 void PGObjCall(ModelData *arg0, HsfObject *arg1);
 void PGObjCalc(ModelData *arg0, HsfObject *arg1);
 void PGObjReplica(ModelData *arg0, HsfObject *arg1);
-HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1);
+HsfObject *Hu3DObjDuplicate(HsfData *arg0, uintptr_t arg1);
 void Hu3DModelObjDrawInit(void);
 void Hu3DModelObjDraw(s16 arg0, char *arg1, Mtx arg2);
 

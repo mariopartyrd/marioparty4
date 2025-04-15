@@ -36,7 +36,7 @@ void InitEnvelope(HsfData *arg0) {
         var_r31 = arg0->object;
         for (Meshcnt = i = 0; i < arg0->objectCnt; i++, var_r31++) {
             if (var_r31->type == 2) {
-                if (var_r31->data.file[0]) {
+                if (var_r31->data.vtxtop) {
                     spC = var_r31->data.vertex;
                     sp8 = var_r31->data.normal;
                     Meshcnt++;
@@ -173,17 +173,17 @@ static void SetEnvelopMain(HsfData *arg0) {
             if (var_r31->data.unk120[0] != 0) {
                 Vertextop = temp_r30->data;
             } else {
-                Vertextop = var_r31->data.file[0];
+                Vertextop = (Vec*)var_r31->data.vtxtop;
             }
             vtxenv = temp_r30->data;
-            normtop = var_r31->data.file[1];
+            normtop = (Vec*)var_r31->data.normtop;
             normenv = temp_r28->data;
             var_r25 = var_r31->data.cenv;
             for (j = 0; j < var_r31->data.cenvCnt; j++, var_r25++) {
                 SetEnvelop(var_r25);
             }
             sp10 = temp_r30->data;
-            spC = var_r31->data.file[0];
+            spC = var_r31->data.vtxtop;
             sp8 = temp_r30->data;
             DCStoreRangeNoSync(normenv, temp_r28->count * sizeof(Vec));
             DCStoreRangeNoSync(vtxenv, temp_r30->count * sizeof(Vec));

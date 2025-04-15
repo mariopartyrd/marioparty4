@@ -286,10 +286,11 @@ BOOL HuDataGetAsyncStat(s32 status)
 
 static void GetFileInfo(DataReadStat *read_stat, s32 file_num)
 {
-    u32 *temp_ptr;
-    temp_ptr = (u32 *)PTR_OFFSET(read_stat->dir, (file_num * 4))+1;
+    u32 *temp_ptr = (u32 *)PTR_OFFSET(read_stat->dir, (file_num * 4))+1;
 #ifdef TARGET_PC
-    byteswap_u32(temp_ptr);
+    u32 ofs = *temp_ptr;
+    byteswap_u32(&ofs);
+    temp_ptr = &ofs;
 #endif
     read_stat->file = PTR_OFFSET(read_stat->dir, *temp_ptr);
     temp_ptr = read_stat->file;
@@ -336,7 +337,7 @@ void *HuDataReadNum(s32 data_num, s32 num)
     }
     read_stat = &ReadDataStat[status];
     GetFileInfo(read_stat, data_num & 0xFFFF);
-    buf = HuMemDirectMallocNum(0, DATA_EFF_SIZE(read_stat->raw_len), num);
+    buf = HuMemDirectMallocNum(HEAP_SYSTEM, DATA_EFF_SIZE(read_stat->raw_len), num);
     if(buf) {
         HuDecodeData(read_stat->file, buf, read_stat->raw_len, read_stat->comp_type);
     }
