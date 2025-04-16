@@ -402,8 +402,8 @@ static void MesDispFunc(HuSprite *sprite)
         GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
         GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
         GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
-        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
-        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
+        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGB, GX_RGBA8, 0);
         GXSetCullMode(GX_CULL_NONE);
         GXSetNumTexGens(1);
@@ -453,16 +453,16 @@ static void MesDispFunc(HuSprite *sprite)
             }
             GXPosition3f32(char_x + 1.0f, char_y, 0.0f);
             GXColor4u8(window->mess_pal[color][0], window->mess_pal[color][1], window->mess_pal[color][2], alpha);
-            GXPosition2f32(uv_minx, uv_miny);
+            GXTexCoord2f32(uv_minx, uv_miny);
             GXPosition3f32(char_x + char_w, char_y, 0.0f);
             GXColor4u8(window->mess_pal[color][0], window->mess_pal[color][1], window->mess_pal[color][2], alpha);
-            GXPosition2f32(uv_maxx, uv_miny);
+            GXTexCoord2f32(uv_maxx, uv_miny);
             GXPosition3f32(char_x + char_w, char_y + 24.0f, 0.0f);
             GXColor4u8(window->mess_pal[color][0], window->mess_pal[color][1], window->mess_pal[color][2], alpha);
-            GXPosition2f32(uv_maxx, uv_maxy);
+            GXTexCoord2f32(uv_maxx, uv_maxy);
             GXPosition3f32(char_x + 1.0f, char_y + 24.0f, 0.0f);
             GXColor4u8(window->mess_pal[color][0], window->mess_pal[color][1], window->mess_pal[color][2], alpha);
-            GXPosition2f32(uv_minx, uv_maxy);
+            GXTexCoord2f32(uv_minx, uv_maxy);
         }
         GXEnd();
         mesCharCnt++;

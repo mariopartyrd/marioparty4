@@ -189,6 +189,10 @@ static void objCall(ModelData *arg0, HsfObject *arg1)
 
 static void objMesh(ModelData *arg0, HsfObject *arg1)
 {
+#ifdef TARGET_PC
+    // TODO PC
+    return;
+#endif
     HsfDrawObject *temp_r29;
     HsfConstData *temp_r25;
     HsfTransform *var_r30;
