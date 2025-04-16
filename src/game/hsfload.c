@@ -1908,7 +1908,7 @@ void KillHSF(HsfData *data)
     for (i = 0; i < data->motionCnt; i++) {
         HsfMotion *motion = &data->motion[i];
         for (j = 0; j < motion->numTracks; j++) {
-            HsfTrack *track = data->motion[i].track;
+            HsfTrack *track = motion->track;
             if (track->type == HSF_TRACK_ATTRIBUTE && track->curveType == HSF_CURVE_BITMAP) {
                 // in this case we needed to allocate space for HsfBitmapKey structs
                 HuMemDirectFree(track->dataTop);
