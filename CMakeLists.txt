@@ -28,7 +28,7 @@ elseif (MSVC)
     add_compile_options(/bigobj)
 endif ()
 
-#add_compile_options(-fsanitize=address)
+add_compile_options(-fsanitize=address)
 
 add_subdirectory(extern/aurora EXCLUDE_FROM_ALL)
 add_subdirectory(extern/musyx EXCLUDE_FROM_ALL)
