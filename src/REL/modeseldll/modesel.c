@@ -173,10 +173,13 @@ s32 fn_1_2490(void)
     HuWinExAnimOut(lbl_1_bss_82);
     HuAudFXStop(temp_r25);
     temp_r27 = HuSprGrpCreate(1);
+#ifdef __MWERKS__
+    // TODO PC
     temp_r21 = HuTHPSprCreateVol("movie/opmov_c00.thp", 0, 3000, 90.0);
     HuSprGrpMemberSet(temp_r27, 0, temp_r21);
     HuSprPosSet(temp_r27, 0, 288.0f, 240.0f);
     HuSprDrawNoSet(temp_r27, 0, 127);
+#endif
     HuPrcSleep(2);
     espAttrSet(lbl_1_bss_152[9], HUSPR_ATTR_DISPOFF);
     for (temp_r31 = 0; temp_r31 <= 10; temp_r31++) {

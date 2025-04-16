@@ -154,9 +154,7 @@ void ClusterMotionExec(ModelData *arg0)
     HsfTrack *var_r30;
     MotionData *var_r23;
 
-#ifdef AVOID_UB
-    //var_r31 = temp_r27->track;
-#else
+#ifndef NON_MATCHING
     var_r31 = temp_r27->track;
 #endif
     for (i = 0; i < 4; i++) {

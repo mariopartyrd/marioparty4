@@ -3,9 +3,11 @@
 #include "game/init.h"
 
 #include "dolphin/mtx.h"
-#include <stdint.h>
 
 #include "port/byteswap.h"
+#ifndef __MWERKS__
+#include "game/hsfdraw.h"
+#endif
 
 #define SPRITE_DIRTY_ATTR 0x1
 #define SPRITE_DIRTY_XFORM 0x2
