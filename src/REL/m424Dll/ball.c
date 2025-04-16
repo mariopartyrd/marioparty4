@@ -9,6 +9,7 @@
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+#include "game/memory.h"
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "string.h"
@@ -1085,7 +1086,7 @@ void *fn_1_6078(s32 arg0)
     if (var_r31 == 0x20) {
         return NULL;
     }
-    lbl_1_bss_5BC[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, arg0, 0x10000000);
+    lbl_1_bss_5BC[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, arg0, MEMORY_DEFAULT_NUM);
     return lbl_1_bss_5BC[var_r31];
 }
 

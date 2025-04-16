@@ -1901,7 +1901,7 @@ static void HuWinExCreatePortrait(s16 window, s16 portrait, float x, float y)
     WindowData *window_ptr;
     void *data;
 
-    data = HuAR_ARAMtoMRAMFileRead(winPortraitTbl[portrait], MEMORY_DEFAULT_NUM, 2);
+    data = HuAR_ARAMtoMRAMFileRead(winPortraitTbl[portrait], MEMORY_DEFAULT_NUM, HEAP_DATA);
     anim = HuSprAnimRead(data);
     window_ptr = &winData[window];
     sprite = HuSprCreate(anim, window_ptr->prio - 1, 0);

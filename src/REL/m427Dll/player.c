@@ -1570,10 +1570,10 @@ void fn_1_12B08(void)
     lbl_1_bss_558 = lbl_1_data_260;
     lbl_1_bss_554 = lbl_1_data_3BC;
     lbl_1_bss_550 = lbl_1_bss_584;
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x40 * sizeof(M427DllBss57CStruct), MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 64 * sizeof(M427DllBss57CStruct), MEMORY_DEFAULT_NUM);
     lbl_1_bss_57C = var_r29;
-    memset(lbl_1_bss_57C, 0, 0x40 * sizeof(M427DllBss57CStruct));
-    for (var_r30 = 0; var_r30 < 0x40; var_r30++, var_r29++) {
+    memset(lbl_1_bss_57C, 0, 64 * sizeof(M427DllBss57CStruct));
+    for (var_r30 = 0; var_r30 < 64; var_r30++, var_r29++) {
         var_r29->unk_00 = var_r30;
         var_r29->unk_04 = -1;
         var_r29->unk_08 = -1;

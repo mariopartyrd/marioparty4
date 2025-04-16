@@ -220,7 +220,7 @@ void fn_1_5680(omObjData *object)
     M443DllWorkStruct *temp_r31;
     HsfanimStruct01 *var_r28;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x134, MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M443DllWorkStruct), MEMORY_DEFAULT_NUM);
     temp_r31 = object->data;
     memset(temp_r31, 0, 0x134);
     object->stat |= 0x100;

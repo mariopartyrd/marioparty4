@@ -660,7 +660,7 @@ void fn_1_48EC(s32 arg0)
     temp_r31->unkbit_04 = 0;
     temp_r31->unk_02 = -1;
     temp_r31->unkbit_01 = arg0;
-    temp_r31->unk_08 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xA00, MEMORY_DEFAULT_NUM);
+    temp_r31->unk_08 = HuMemDirectMallocNum(HEAP_SYSTEM, 80 * sizeof(w03StructUnk3), MEMORY_DEFAULT_NUM);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_C[2]), "coin", &spC);
     temp_r31->model = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x07), NULL, 0);
     BoardModelVisibilitySet(temp_r31->model, 0);

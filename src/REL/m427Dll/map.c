@@ -388,9 +388,9 @@ void fn_1_32F4(Process *arg0)
 
     lbl_1_bss_158.unk0 = 0;
     lbl_1_bss_548 = omAddObjEx(arg0, 0x7F, 0, 0, -1, fn_1_6760);
-    lbl_1_bss_F0 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10 * sizeof(M427DllMapStruct), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_F0 = HuMemDirectMallocNum(HEAP_SYSTEM, 16 * sizeof(M427DllMapStruct), MEMORY_DEFAULT_NUM);
 
-    for (var_r31 = 0; var_r31 < 0x10; var_r31++) {
+    for (var_r31 = 0; var_r31 < 16; var_r31++) {
         lbl_1_bss_F0[var_r31].unk2 = -1;
     }
     temp_r30 = HuSprAnimRead(HuDataReadNum(0x3A0017, MEMORY_DEFAULT_NUM));
@@ -613,8 +613,8 @@ void fn_1_3E58(omObjData *arg0)
     var_r29->unk48[0] = 0;
     var_r29->unk4A = 0;
     var_r29->unk4 = 0;
-    lbl_1_bss_E4 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10 * sizeof(M427DllMapStruct5), MEMORY_DEFAULT_NUM);
-    for (var_r28 = 0; var_r28 < 0x10; var_r28++) {
+    lbl_1_bss_E4 = HuMemDirectMallocNum(HEAP_SYSTEM, 16 * sizeof(M427DllMapStruct5), MEMORY_DEFAULT_NUM);
+    for (var_r28 = 0; var_r28 < 16; var_r28++) {
         lbl_1_bss_E4[var_r28].unk10 = -1.0f;
     }
     fn_1_510C(0, 0x32, 0x32);

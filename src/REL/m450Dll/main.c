@@ -1707,7 +1707,7 @@ s16 fn_1_5ED8(AnimData *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
     var_r31->unk_00 = 0;
     var_r31->unk_66 = arg3;
     var_r31->unk_6B = 0;
-    var_r31->unk_10 = HuMemDirectMallocNum(HEAP_DATA, arg3 * 0x40, var_r28->unk_48);
+    var_r31->unk_10 = HuMemDirectMallocNum(HEAP_DATA, arg3 * sizeof(UnkM450Struct2), var_r28->unk_48);
     for (var_r24 = var_r31->unk_10, var_r30 = 0; var_r30 < arg3; var_r30++, var_r24++) {
         var_r24->unk_3E = -1;
         var_r24->unk_3C = -1;

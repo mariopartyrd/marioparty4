@@ -2328,7 +2328,7 @@ void fn_1_B974(Vec *arg0, float arg8, float arg9)
     if (lbl_1_bss_402 < 0xF0) {
         lbl_1_bss_402++;
         var_r30 = omAddObjEx(lbl_1_bss_5B4, 0x67, 1, 0, 3, fn_1_B7E4);
-        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM432DllStruct2), 0x10000000);
+        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM432DllStruct2), MEMORY_DEFAULT_NUM);
         var_r31 = var_r30->data;
         var_r31->unk_00 = *arg0;
         var_r31->unk_00.x += 30.0f * arg9;

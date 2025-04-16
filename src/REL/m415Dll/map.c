@@ -1,3 +1,4 @@
+#include "game/memory.h"
 #define HUSPR_USE_OLD_DEFS
 #include "REL/m415Dll.h"
 
@@ -767,7 +768,7 @@ void fn_1_ACF4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5)
     HuSprAnimKill(var_r31->unk0);
     var_r31->unk8 |= 0xFFFF0000;
     var_r30 = HuSprAnimMake(arg2, arg3, arg1);
-    var_r30->bmp->data = HuMemDirectMallocNum(HEAP_SYSTEM, arg3 * (var_r30->bmp->pixSize * arg2), 0x10000000U);
+    var_r30->bmp->data = HuMemDirectMallocNum(HEAP_SYSTEM, arg3 * (var_r30->bmp->pixSize * arg2), MEMORY_DEFAULT_NUM);
     var_f31 = arg4 / (f32)var_r30->bmp->sizeX;
     var_f30 = arg5 / (f32)var_r30->bmp->sizeY;
     var_r31->unk0 = var_r30;

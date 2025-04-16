@@ -53,9 +53,9 @@ void fn_1_AEE4(omObjData *arg0)
     s16 var_r29;
     unkObjStruct *temp_r31;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x78, MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkObjStruct), MEMORY_DEFAULT_NUM);
     temp_r31 = (unkObjStruct *)arg0->data;
-    memset(temp_r31, 0, 0x78);
+    memset(temp_r31, 0, sizeof(unkObjStruct));
     arg0->stat |= 0x100;
     temp_r31->unk4 = arg0->work[0];
     temp_r31->unk6 = GWPlayerCfg[temp_r31->unk4].pad_idx;

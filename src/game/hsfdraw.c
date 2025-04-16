@@ -2510,9 +2510,12 @@ void MakeDisplayList(s16 arg0, uintptr_t arg1)
     var_r30 = &Hu3DData[arg0];
     curModelID = arg0;
     mallocNo = arg1;
+#ifdef __MWERKS__
+    // TODO PC
     faceNumBuf = HuMemDirectMallocNum(HEAP_DATA, 0x800 * sizeof(u16), mallocNo);
     MDObjCall(temp_r31, temp_r31->root);
     HuMemDirectFree(faceNumBuf);
+#endif
     if (var_r30->attr & HU3D_ATTR_SHADOW) {
         Hu3DShadowCamBit++;
     }

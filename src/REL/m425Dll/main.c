@@ -1450,7 +1450,7 @@ void fn_1_5608(GXColor **arg0, s16 arg1, GXColor *arg2)
     s32 var_r29;
     s32 var_r28;
 
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * (4 * sizeof(GXColor)), 0x10000000);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * (4 * sizeof(GXColor)), MEMORY_DEFAULT_NUM);
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
             var_r31->r = arg2->r;

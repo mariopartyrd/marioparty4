@@ -767,7 +767,7 @@ s32 fn_1_E2A8(s16 arg0, u8 arg1, u32 arg2, s16 arg3, s16 arg4)
         temp_r31->unkC = 1.0f;
         temp_r31->unk10 = 0.0f;
         if (temp_r31->unk4 == NULL) {
-            temp_r31->unk4 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x20, MEMORY_DEFAULT_NUM);
+            temp_r31->unk4 = HuMemDirectMallocNum(HEAP_SYSTEM, 4 * sizeof(HsfVector2f), MEMORY_DEFAULT_NUM);
         }
         temp_r31->unk4[0].x = temp_r31->unk0 * temp_r30->unk54;
         temp_r31->unk4[0].y = temp_r31->unk0 * temp_r30->unk58;

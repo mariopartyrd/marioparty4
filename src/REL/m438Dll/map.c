@@ -4,6 +4,7 @@
 #include "game/audio.h"
 #include "game/hsfanim.h"
 #include "game/hsfmotion.h"
+#include "game/memory.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
 #include "string.h"
@@ -96,7 +97,7 @@ void fn_1_B54C(omObjData *arg0)
     M438MapStruct *var_r24;
     M438MapStruct3 *temp_r23;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x108C, 0x10000000);
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x108C, MEMORY_DEFAULT_NUM);
     temp_r23 = arg0->data;
     memset(temp_r23, 0, 0x108C);
     arg0->model[0] = Hu3DModelCreateFile(0x450000);

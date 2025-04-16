@@ -15,7 +15,7 @@ unkStruct2 *fn_1_1C64(s32 arg0)
 {
     unkStruct2 *temp_r3;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xC, MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct2), MEMORY_DEFAULT_NUM);
     if (!temp_r3) {
         return NULL;
     }
@@ -86,7 +86,7 @@ unkStruct3 *fn_1_1DF4(void *arg0)
 {
     unkStruct3 *temp_r3;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xC, MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct3), MEMORY_DEFAULT_NUM);
     if (!temp_r3) {
         return NULL;
     }
@@ -273,7 +273,7 @@ unkStruct4 *m446CardCreate(s32 arg0)
     unkStruct4 *temp_r31;
     unkStruct3 *temp_r30;
 
-    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x98, MEMORY_DEFAULT_NUM);
+    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct4), MEMORY_DEFAULT_NUM);
     if (!temp_r31) {
         OSReport("[!] m446CardCreate ERROR...\n");
         return NULL;

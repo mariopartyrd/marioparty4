@@ -47,7 +47,7 @@ unkStruct6 *fn_1_39D0(void)
     unkStruct3 *var_r29;
     unkStruct6 *var_r31;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x70, MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct6), MEMORY_DEFAULT_NUM);
     if (!var_r31) {
         return NULL;
     }

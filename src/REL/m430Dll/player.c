@@ -1633,9 +1633,9 @@ void fn_1_10B88(void)
     M430PlayerBss16CStruct *var_r31;
     s32 var_r30;
 
-    var_r31 = lbl_1_bss_16C = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10 * sizeof(M430PlayerBss16CStruct), MEMORY_DEFAULT_NUM);
-    memset(var_r31, 0, 0x10 * sizeof(M430PlayerBss16CStruct));
-    for (var_r30 = 0; var_r30 < 0x10; var_r30++, var_r31++) {
+    var_r31 = lbl_1_bss_16C = HuMemDirectMallocNum(HEAP_SYSTEM, 16 * sizeof(M430PlayerBss16CStruct), MEMORY_DEFAULT_NUM);
+    memset(var_r31, 0, 16 * sizeof(M430PlayerBss16CStruct));
+    for (var_r30 = 0; var_r30 < 16; var_r30++, var_r31++) {
         var_r31->unk_00 = var_r30;
         if (var_r30 == 0) {
             var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x23));
@@ -1810,9 +1810,9 @@ void fn_1_113AC(void)
     M430PlayerBss168Struct *var_r31;
     s32 var_r30;
 
-    var_r31 = lbl_1_bss_168 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x20 * sizeof(M430PlayerBss168Struct), MEMORY_DEFAULT_NUM);
-    memset(var_r31, 0, 0x20 * sizeof(M430PlayerBss168Struct));
-    for (var_r30 = 0; var_r30 < 0x20; var_r31++) {
+    var_r31 = lbl_1_bss_168 = HuMemDirectMallocNum(HEAP_SYSTEM, 32 * sizeof(M430PlayerBss168Struct), MEMORY_DEFAULT_NUM);
+    memset(var_r31, 0, 32 * sizeof(M430PlayerBss168Struct));
+    for (var_r30 = 0; var_r30 < 32; var_r31++) {
         var_r31->unk_00 = var_r30;
         if (var_r30 == 0) {
             var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x22));

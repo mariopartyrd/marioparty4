@@ -94,7 +94,7 @@ unkStruct *m446FlowCreate(void)
     s32 var_r30;
     unkStruct *temp_r3;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x9C, MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct), MEMORY_DEFAULT_NUM);
     if (temp_r3 == 0) {
         OSReport("[!] m446FlowCreate() ERROR...\n");
         return NULL;
