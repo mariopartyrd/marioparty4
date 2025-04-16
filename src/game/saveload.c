@@ -5,11 +5,13 @@
 #include "game/flag.h"
 #include "game/gamework_data.h"
 #include "game/pad.h"
+#include "game/process.h"
 #include "game/sprite.h"
 #include "game/window.h"
 
 #include "stddef.h"
 #include "string.h"
+
 
 #if VERSION_ENG
 #define SAVE_WRITE_BEGIN _SetFlag(FLAG_ID_MAKE(3, 0));

@@ -165,6 +165,7 @@ s32 msmSysDelGroupAll(void);
 s32 msmSysGetSampSize(BOOL baseGrp);
 s32 msmSysDelGroupBase(s32 grpNum);
 s32 msmSysSetAux(s32 auxA, s32 auxB);
+void msmSysRegularProc(void);
 
 s32 msmSeSetParam(int seNo, MSM_SEPARAM *param);
 int msmSePlay(int seId, MSM_SEPARAM *param);
