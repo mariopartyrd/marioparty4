@@ -1845,8 +1845,6 @@ s16 HuWinKeyWaitNumGet(u32 mess)
 {
     s16 wait_num;
     u8 *mess_data;
-#ifdef __MWERKS__
-    // TODO PC
 
     if (mess > 0x80000000) {
         mess_data = (u8 *)mess;
@@ -1859,7 +1857,6 @@ s16 HuWinKeyWaitNumGet(u32 mess)
             wait_num++;
         }
     }
-#endif
     return wait_num;
 }
 
