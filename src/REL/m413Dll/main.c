@@ -468,12 +468,12 @@ void fn_1_10B8(Work19C8 *arg0)
 {
     s32 temp_r31;
     s32 temp_r30;
-    u8 sp16C[12][17] = {};
-    u8 sp6C[12] = {};
+    u8 sp16C[12][17] = {0};
+    u8 sp6C[12] = {0};
     s32 temp_r22 = (arg0->unk48[0]->unk18 - 4 < 0) ? 0 : (arg0->unk48[0]->unk18 - 4);
     s32 temp_r21 = (arg0->unk48[0]->unk18 + 4 > 11) ? 11 : (arg0->unk48[0]->unk18 + 4);
-    s32 sp44[2] = {};
-    s32 sp3C[2] = {};
+    s32 sp44[2] = {0};
+    s32 sp3C[2] = {0};
     s32 sp34[2] = { 9, 9 };
     s32 temp_r20 = 0;
     s32 temp_r19 = 0;
@@ -722,12 +722,11 @@ void fn_1_19C8(omObjData *object)
                 HuSprAttrReset(temp_r31->unkA4, 0, HUSPR_ATTR_DISPOFF);
                 HuSprAttrReset(temp_r31->unkA4, 0, HUSPR_ATTR_REVERSE);
                 {
-                    s32 sp258[12] = {};
+                    s32 sp258[12] = {0};
                     s32 sp194;
                     for (sp194 = 0; sp194 < 3; sp194++) {
                         StructBss2A6C *sp190;
                         for (sp190 = lbl_1_bss_7884[sp194 + (temp_r31->unk10 * 3)]; sp190; sp190 = sp190->unk48) {
-
                             sp258[sp194] += (sp190 && sp190->unk0 && (sp190->unk1 & 0x2) == 0 && sp258[sp194] < 9);
                         }
                     }
@@ -942,7 +941,7 @@ void fn_1_8AC8(StructBss2A6C *arg0, StructSp14C8 *arg1);
 void fn_1_52A4(s32 arg0)
 {
     omObjData *sp1EC = lbl_1_bss_30;
-    StructBss2A6C *sp2E48[14][19] = {};
+    StructBss2A6C *sp2E48[14][19] = {NULL};
     StructBss2A6C *sp1E8 = NULL;
     StructBss2A6C *temp_r31;
     StructBss2A6C *temp_r30;

@@ -27,7 +27,7 @@ static void MarkKillBox(void);
 static void InitBox(s32 arg0);
 
 static const float boxOfs[2] = {-150.0f, 150.0f};
-static omObjData *boxObj[2] = {};
+static omObjData *boxObj[2] = {NULL, NULL};
 static s16 itemMdl = -1;
 static s8 itemResult;
 static u8 pickerChoice;

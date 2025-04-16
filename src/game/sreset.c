@@ -20,10 +20,10 @@
 
 extern s32 HuDvdErrWait;
 
-static s32 SR_PreRstChk[4] = {};
+static s32 SR_PreRstChk[4] = {0, 0, 0, 0};
 
 #if VERSION_JP
-static s32 padding[4] = {};
+static s32 padding[4] = {0, 0, 0, 0};
 #endif
 
 #if VERSION_ENG

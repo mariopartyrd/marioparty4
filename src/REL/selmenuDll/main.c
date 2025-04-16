@@ -133,7 +133,7 @@ static u16 keyDStkDown;
 static u16 btnDownAll[4];
 static u16 keyDStkAll[4];
 static u16 keyDStkAllDown[4];
-static u16 keyDStkAllPrev[4] = {};
+static u16 keyDStkAllPrev[4] = {0, 0, 0, 0};
 
 static void SMInit(omObjData *object);
 static void SMRand8Tick(omObjData *object);

@@ -185,7 +185,7 @@ static s32 boardSparkSfxTblAlt[] = {
     0x2E3,
 };
 
-static omObjData *megaSquishObj[4] = {};
+static omObjData *megaSquishObj[4] = {NULL, NULL, NULL, NULL};
 
 static s32 megaSquishSfxTbl[] = {
     0x128,

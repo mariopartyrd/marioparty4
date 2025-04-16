@@ -752,7 +752,7 @@ static char seqFontKanaTbl[] = { "ｱｲｳｴｵｶｷｸ"
 
 static char seqFontNumTbl[] = "0123456789";
 
-static s32 *letterBufTbl[5] = {};
+static s32 *letterBufTbl[5] = {NULL, NULL, NULL, NULL, NULL};
 
 static char wordStartE[] = "START!";
 

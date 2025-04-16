@@ -744,7 +744,7 @@ void fn_1_27A0(Vec *arg0, Vec *arg1, float arg2)
     arg1->z = fn_1_26F8(arg2, arg0[0].z, arg0[1].z, arg0[2].z, arg0[3].z);
 }
 
-float lbl_1_data_184[2] = {};
+float lbl_1_data_184[2] = {0.0f, 0.0f};
 
 void fn_1_2AF4(s32 arg0, s32 arg1, float arg2);
 
