@@ -1,23 +1,21 @@
+#include "game/audio.h"
 #include "game/chrman.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
-#include "game/pad.h"
 #include "game/wipe.h"
-
 #include "game/hsfanim.h"
-#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/sprite.h"
-
-#include "game/audio.h"
-#include "game/gamework_data.h"
 
 #include "REL/m408Dll.h"
 
 #include "ext_math.h"
 #include "math.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 omObjData *lbl_1_bss_110;
 u32 lbl_1_bss_10C;
@@ -266,7 +264,6 @@ void fn_1_A4E8(s32 arg0, Vec *arg1, u32 arg2);
 void fn_1_99C8(omObjData *object)
 {
     float temp_f31;
-    float temp_f30;
 
     Vec sp2C;
     Vec sp20;
@@ -282,7 +279,7 @@ void fn_1_99C8(omObjData *object)
     switch (object->work[0]) {
         case 0:
             if (object->work[1] < 120.0f) {
-                temp_f30 = (1.0f / 60.0f) * (1.5f * (120.0f - object->work[1]));
+                float temp_f30 = (1.0f / 60.0f) * (1.5f * (120.0f - object->work[1]));
                 if (temp_f30 > 1.0f) {
                     temp_f30 = 1.0f;
                 }
@@ -469,13 +466,11 @@ void fn_1_A37C(ModelData *model, ParticleData *particle, Mtx matrix)
 
 void fn_1_A4E8(s32 arg0, Vec *arg1, u32 arg2)
 {
-    float temp_f31;
-    HsfanimStruct01 *temp_r31;
-    ParticleData *temp_r30;
-    s32 temp_r29;
-    temp_r30 = Hu3DData[arg0].unk_120;
+    ParticleData *temp_r30 = Hu3DData[arg0].unk_120;
     if (temp_r30->unk_00) {
-        temp_r31 = temp_r30->unk_48;
+        float temp_f31;
+        s32 temp_r29;
+        HsfanimStruct01 *temp_r31 = temp_r30->unk_48;
         for (temp_r29 = 0; temp_r29 < temp_r30->unk_30; temp_r29++, temp_r31++) {
             if (temp_r31->unk00 != 0) {
                 continue;
@@ -514,7 +509,6 @@ void fn_1_A894(ModelData *model, ParticleData *particle, Mtx matrix)
         { 600, 1, 0.6, 0.9, 0.3, 0 },
         { 13, 1, 1, 1, 0.5, 0 },
     };
-    Vec sp8;
     if (particle->unk_00 == 0) {
         particle->unk_00++;
         temp_r31 = particle->unk_48;
@@ -549,6 +543,7 @@ void fn_1_A894(ModelData *model, ParticleData *particle, Mtx matrix)
         else {
             temp_r31 = particle->unk_48;
             for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
+                Vec sp8;
                 if (temp_r31->unk00 == 0) {
                     continue;
                 }
@@ -598,9 +593,6 @@ void fn_1_AFF4(ModelData *model, ParticleData *particle, Mtx matrix)
     float temp_f30;
     HsfanimStruct01 *temp_r30;
     s32 temp_r29;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
     if (particle->unk_00 == 0) {
         particle->unk_00++;
         temp_f31 = -70;
@@ -635,6 +627,9 @@ void fn_1_AFF4(ModelData *model, ParticleData *particle, Mtx matrix)
             }
         }
         else {
+            Vec sp20;
+            Vec sp14;
+            Vec sp8;
             sp20.x = sind(CRot.y) * cosd(CRot.x);
             sp20.y = -sind(CRot.x);
             sp20.z = cosd(CRot.y) * cosd(CRot.x);

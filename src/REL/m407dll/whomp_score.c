@@ -1,4 +1,5 @@
 #include "game/esprite.h"
+#include "game/hsfex.h"
 #include "game/gamework_data.h"
 #include "game/object.h"
 #include "game/process.h"
@@ -16,7 +17,6 @@ typedef struct unkDominationData3 {
 } unkDominationData3; // sizeof 0x24
 
 // function signatures
-void Hu3D3Dto2D(Vec *arg0, s16 arg1, Vec *arg2);
 void fn_1_3D28(omObjData *arg0, s32 arg1);
 void fn_1_3E34(omObjData *);
 void fn_1_3F7C(omObjData *arg0);
@@ -58,17 +58,14 @@ void fn_1_3B68(void)
 
 void fn_1_3BB8(s16 arg0, f32 arg8, f32 arg9)
 {
-    omObjData *obj;
-    Vec sp14;
-    unkDominationData3 *temp_r31;
     u32 i;
-    s16 temp;
 
     for (i = 0; i < ARRAY_COUNT(lbl_1_bss_37C8); i++) {
-        obj = lbl_1_bss_37C8[i];
-        temp_r31 = obj->data;
+        omObjData *obj = lbl_1_bss_37C8[i];
+        unkDominationData3 *temp_r31 = obj->data;
         if (temp_r31->unk_04 == 0) {
-            temp = arg0;
+            Vec sp14;
+            s16 temp = arg0;
             espBankSet(temp_r31->unk_18[1], (temp / 100));
             temp = (temp - ((temp / 100) * 100));
             espBankSet(temp_r31->unk_18[2], (temp / 10));
@@ -95,7 +92,6 @@ void fn_1_3D28(omObjData *arg0, s32 arg1)
 
 void fn_1_3D4C(omObjData *arg0)
 {
-    s32 temp_r5;
     unkDominationData3 *temp_r31;
 
     temp_r31 = arg0->data;

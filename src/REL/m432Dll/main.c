@@ -1,5 +1,4 @@
 #include "REL/executor.h"
-#include "dolphin/types.h"
 #include "game/chrman.h"
 #include "game/frand.h"
 #include "game/memory.h"
@@ -1358,8 +1357,6 @@ void fn_1_5848(UnkM432DllStruct *var_r28, UnkM432DllBss0SubStruct *var_r31)
     s32 sp20;
     float var_f31;
     float var_f30;
-    float var_f29;
-    float var_f28;
 
     s32 var_r30;
     s32 var_r27;
@@ -2246,8 +2243,6 @@ void fn_1_B234(void)
 {
     UnkM432DllStruct *var_r31;
     s32 var_r30;
-    u32 var_r29;
-    u32 var_r28;
 
     if (HuPadBtn[0] & 2) {
         lbl_1_bss_57C = 300 * REFRESH_RATE;
@@ -2303,12 +2298,7 @@ void fn_1_B518(omObjData *object)
 void fn_1_B7E4(omObjData *object)
 {
     UnkM432DllStruct2 *var_r30;
-    UnkBss5D0Struct *var_r29;
-    UnkBss5D0Struct *var_r28;
-    UnkBss5D0Struct *var_r27;
     s16 var_r26;
-    s16 var_r25;
-    s16 var_r24;
 
     var_r26 = fn_1_AC(0x1000);
     if (var_r26 < 0) {
@@ -2338,7 +2328,7 @@ void fn_1_B974(Vec *arg0, float arg8, float arg9)
     if (lbl_1_bss_402 < 0xF0) {
         lbl_1_bss_402++;
         var_r30 = omAddObjEx(lbl_1_bss_5B4, 0x67, 1, 0, 3, fn_1_B7E4);
-        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM432DllStruct2), 0x10000000);
+        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM432DllStruct2), MEMORY_DEFAULT_NUM);
         var_r31 = var_r30->data;
         var_r31->unk_00 = *arg0;
         var_r31->unk_00.x += 30.0f * arg9;
@@ -2483,17 +2473,9 @@ void fn_1_C33C(UnkM432DllStruct *arg0)
 
 void fn_1_C724(UnkM432DllStruct *var_r31, omObjData *var_r25, omObjData *var_r24)
 {
-    Vec spC;
     float var_f25;
 
-    UnkBss0Struct *var_r30;
-    UnkM432DllStruct *var_r29;
-    s32 var_r28;
-    void *var_r27;
-    s32 var_r26;
-    float var_f19;
-
-    var_r30 = &lbl_1_bss_0[var_r31->unk_184 >> 1];
+    UnkBss0Struct *var_r30 = &lbl_1_bss_0[var_r31->unk_184 >> 1];
     fn_1_BF9C(var_r31);
     if (fn_1_BF08(var_r31) == 0x7D4) {
         var_r30->unk_1D4 += 1.0f - (2.0f * (var_r31->unk_14C / REFRESH_RATE));
@@ -3057,11 +3039,7 @@ void fn_1_10CCC(omObjData *object)
 
     UnkM432DllStruct *var_r31;
     s32 var_r29;
-    s32 var_r28;
-    s32 var_r27;
     UnkM432DllBss0SubStruct *var_r26;
-    s32 var_r24;
-    s32 var_r23;
 
     var_r31 = object->data;
     var_r26 = lbl_1_bss_0[var_r31->unk_184 >> 1].unk_10[var_r31->unk_184 & 1];
@@ -3265,13 +3243,7 @@ void fn_1_128C8(omObjData *object)
     s32 var_r31;
     UnkM432DllStruct *var_r30;
     UnkM432DllStruct *var_r29;
-    s32 var_r28;
-    s32 var_r27;
-    void *var_r26;
-    void *var_r25;
     omObjData *var_r24;
-    void *var_r23;
-    void *var_r22;
 
     if (lbl_1_bss_41C->work[0] >= 0x3EB) {
         for (var_r31 = 0; var_r31 < 2; var_r31++) {
@@ -3375,8 +3347,6 @@ void fn_1_131A8(omObjData *var_r28)
     float var_f30;
     float var_f27;
     float var_f26;
-    float var_f22;
-    float var_f21;
 
     UnkBss0Struct *var_r29;
     s32 var_r26;
@@ -3622,7 +3592,6 @@ void fn_1_131A8(omObjData *var_r28)
 
 void fn_1_15320(omObjData *object)
 {
-    s32 var_r31;
     object->work[0] = 0x3E8;
     fn_1_B4C(80.0f, DATA_MAKE_NUM(DATADIR_M432, 0x1E));
     fn_1_9EC();
@@ -3633,17 +3602,12 @@ void fn_1_15320(omObjData *object)
 void ObjectSetup(void)
 {
     Vec sp8;
-    float var_f31;
-    float var_f30;
-    float var_f29;
 
-    UnkBss0Struct *var_r31;
     s32 var_r30;
     float *var_r29;
     UnkM432DllStruct *var_r28;
     omObjData *var_r27;
     s32 var_r26;
-    s32 var_r24;
     s32 var_r23;
     s32 var_r22;
     s32 var_r21;

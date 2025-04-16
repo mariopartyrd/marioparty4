@@ -6,18 +6,15 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfformat.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/wipe.h"
 #include "string.h"
 
 #ifndef __MWERKS__
@@ -1460,26 +1457,6 @@ void fn_1_12580(omObjData *var_r24)
 void fn_1_12B08(void)
 {
     Vec sp20;
-    float sp1C;
-    float sp18;
-    float sp14;
-    float sp10;
-    float spC;
-    float sp8;
-    float var_f31;
-    float var_f30;
-    float var_f29;
-    float var_f28;
-    float var_f27;
-    float var_f26;
-    float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    float var_f21;
-    float var_f20;
-    float var_f19;
-    float var_f18;
     M427DllBss590Struct *var_r31;
     s32 var_r30;
     M427DllBss57CStruct *var_r29;
@@ -1593,10 +1570,10 @@ void fn_1_12B08(void)
     lbl_1_bss_558 = lbl_1_data_260;
     lbl_1_bss_554 = lbl_1_data_3BC;
     lbl_1_bss_550 = lbl_1_bss_584;
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x40 * sizeof(M427DllBss57CStruct), MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 64 * sizeof(M427DllBss57CStruct), MEMORY_DEFAULT_NUM);
     lbl_1_bss_57C = var_r29;
-    memset(lbl_1_bss_57C, 0, 0x40 * sizeof(M427DllBss57CStruct));
-    for (var_r30 = 0; var_r30 < 0x40; var_r30++, var_r29++) {
+    memset(lbl_1_bss_57C, 0, 64 * sizeof(M427DllBss57CStruct));
+    for (var_r30 = 0; var_r30 < 64; var_r30++, var_r29++) {
         var_r29->unk_00 = var_r30;
         var_r29->unk_04 = -1;
         var_r29->unk_08 = -1;
@@ -1849,9 +1826,6 @@ s32 fn_1_154BC(float arg8, float arg9, float argA)
 s32 fn_1_155E0(float arg8, float arg9, float argA, float *arg0)
 {
     float var_f31;
-    float var_f30;
-    double var_f29;
-    double var_f28;
     M427DllBss590Struct *var_r31;
     s32 var_r30;
     M427DllBss590Struct *var_r29;
@@ -2138,7 +2112,6 @@ float fn_1_166AC(float arg8, float arg9, float argA)
 {
     float var_f31;
     float var_f30;
-    float var_f26;
 
     if (arg8 >= 360.0) {
         arg8 -= 360.0;

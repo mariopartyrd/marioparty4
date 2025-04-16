@@ -600,7 +600,7 @@ void fn_1_2470(omObjData *arg0)
     s16 var_r30;
     unkStruct2 *temp_r27;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x34, MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct2), MEMORY_DEFAULT_NUM);
     temp_r27 = arg0->data;
     arg0->stat |= 0x100;
     arg0->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M440, 0x08));
@@ -1565,7 +1565,7 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
                 break;
         }
     }
-    arg0->unk24 = HuMemDirectMallocNum(HEAP_DATA, arg0->unk20 * 0xD0, var_r22->unk_48);
+    arg0->unk24 = HuMemDirectMallocNum(HEAP_DATA, arg0->unk20 * sizeof(unkStruct8), var_r22->unk_48);
     var_r31 = arg0->unk24;
     if (var_r24 != 0) {
         var_r30 = arg1->data.vertex->count;
@@ -2255,14 +2255,14 @@ s16 fn_1_956C(AnimData *arg0, s16 arg1, f32 arg2, s16 arg3, s16 arg4)
 
     var_r20 = Hu3DHookFuncCreate(fn_1_9C04);
     temp_r28 = &Hu3DData[var_r20];
-    var_r31 = HuMemDirectMallocNum(HEAP_DATA, 0x68, temp_r28->unk_48);
+    var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(unkStruct5), temp_r28->unk_48);
     temp_r28->unk_120 = var_r31;
     arg0->useNum += 1;
     var_r31->unk10 = arg0;
     var_r31->unk0 = arg1;
     var_r31->unk8 = 0;
     var_r31->unkC = NULL;
-    var_r24 = HuMemDirectMallocNum(HEAP_DATA, arg1 * 0x64, temp_r28->unk_48);
+    var_r24 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(unkStruct4), temp_r28->unk_48);
     var_r31->unk18 = var_r24;
 
     for (var_r30 = 0; var_r30 < arg1; var_r30++, var_r24++) {

@@ -1,6 +1,5 @@
 #include "REL/m446Dll.h"
 
-#include "math.h"
 #include "ext_math.h"
 #include "game/hsfman.h"
 #include "game/printfunc.h"

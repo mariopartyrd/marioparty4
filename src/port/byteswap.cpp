@@ -421,15 +421,18 @@ template <typename B> void bswap(B &base, HsfBuffer32b &obj, HsfBuffer &dest)
     dest.data = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.data));
 }
 
-template <typename B> void bswap(B &base, HsfMatrix &obj)
+template <typename B> void bswap(B &base, HsfMatrix32b &obj, HsfMatrix &dest)
 {
     bswap(base, obj.base_idx);
     bswap(base, obj.count);
 
-    obj.data = reinterpret_cast<Mtx *>(reinterpret_cast<uintptr_t>(&obj) + 0xC); // hardcoded for 64 bit support
+    dest.base_idx = obj.base_idx;
+    dest.count = obj.count;
+
+    dest.data = reinterpret_cast<Mtx *>(&obj + 1);
     for (s32 i = 0; i < obj.count; i++) {
         for (s32 j = 0; j < 3; j++) {
-            bswap_flat(base, obj.data[i][j], 4);
+            bswap_flat(base, dest.data[i][j], 4);
         }
     }
 }
@@ -532,6 +535,48 @@ template <typename B> void bswap(B &base, HsfCenvSingle &obj)
     bswap(base, obj.normalCnt);
 }
 
+template <typename B> void bswap(B &base, HsfCenvDualWeight &obj)
+{
+    bswap(base, obj.weight);
+    bswap(base, obj.pos);
+    bswap(base, obj.posCnt);
+    bswap(base, obj.normal);
+    bswap(base, obj.normalCnt);
+}
+
+template <typename B> void bswap(B &base, HsfCenvDual32b &obj, HsfCenvDual &dest)
+{
+    bswap(base, obj.target1);
+    bswap(base, obj.target2);
+    bswap(base, obj.weightCnt);
+    bswap(base, obj.weight);
+
+    dest.target1 = obj.target1;
+    dest.target2 = obj.target2;
+    dest.weightCnt = obj.weightCnt;
+    dest.weight = reinterpret_cast<HsfCenvDualWeight *>(static_cast<uintptr_t>(obj.weight));
+}
+
+template <typename B> void bswap(B &base, HsfCenvMultiWeight &obj)
+{
+    bswap(base, obj.target);
+    bswap(base, obj.value);
+}
+
+template <typename B> void bswap(B &base, HsfCenvMulti32b &obj, HsfCenvMulti &dest)
+{
+    bswap(base, obj.weightCnt);
+    bswap(base, obj.pos);
+    bswap(base, obj.posCnt);
+    bswap(base, obj.normal);
+    bswap(base, obj.normalCnt);
+
+    dest.weightCnt = obj.weightCnt;
+    dest.pos = obj.pos;
+    dest.posCnt = obj.posCnt;
+    dest.weight = reinterpret_cast<HsfCenvMultiWeight *>(static_cast<uintptr_t>(obj.weight));
+}
+
 template <typename B> void bswap(B &base, HsfCenv32b &obj, HsfCenv &dest)
 {
     bswap(base, obj.name);
@@ -575,7 +620,8 @@ template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &
     bswap(base, obj.cluster);
     bswap(base, obj.cenvCnt);
     bswap(base, obj.cenv);
-    bswap_flat(base, obj.file, sizeof(obj.file) / sizeof(u32));
+    bswap(base, obj.vtxtop);
+    bswap(base, obj.normtop);
 
     dest.parent = reinterpret_cast<struct hsf_object *>(static_cast<uintptr_t>(obj.parent));
     dest.childrenCount = obj.childrenCount;
@@ -598,8 +644,8 @@ template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &
     dest.cluster = reinterpret_cast<HsfCluster **>(static_cast<uintptr_t>(obj.cluster));
     dest.cenvCnt = obj.cenvCnt;
     dest.cenv = reinterpret_cast<HsfCenv *>(static_cast<uintptr_t>(obj.cenv));
-    dest.file[0] = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.file[0]));
-    dest.file[1] = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.file[1]));
+    dest.vtxtop = reinterpret_cast<HsfVector3f *>(static_cast<uintptr_t>(obj.vtxtop));
+    dest.normtop = reinterpret_cast<HsfVector3f *>(static_cast<uintptr_t>(obj.normtop));
 
     switch (type) {
         case HSF_OBJ_MESH:
@@ -829,9 +875,9 @@ void byteswap_hsfbuffer(HsfBuffer32b *src, HsfBuffer *dest)
     sVisitedPtrs.clear();
 }
 
-void byteswap_hsfmatrix(HsfMatrix *src)
+void byteswap_hsfmatrix(HsfMatrix32b *src, HsfMatrix *dest)
 {
-    bswap(*src, *src);
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 
@@ -874,6 +920,30 @@ void byteswap_hsfshape(HsfShape32b *src, HsfShape *dest)
 void byteswap_hsfcenv_single(HsfCenvSingle *src)
 {
     bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv_dual_weight(HsfCenvDualWeight *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv_dual(HsfCenvDual32b *src, HsfCenvDual *dest)
+{
+    bswap(*src, *src, *dest);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv_multi_weight(HsfCenvMultiWeight *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_hsfcenv_multi(HsfCenvMulti32b *src, HsfCenvMulti *dest)
+{
+    bswap(*src, *src, *dest);
     sVisitedPtrs.clear();
 }
 

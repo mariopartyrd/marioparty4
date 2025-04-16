@@ -4,12 +4,14 @@
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfmotion.h"
-#include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/wipe.h"
 
 #include "REL/m417Dll.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 typedef struct UnkM417Struct8 {
     /* 0x00 */ u16 unk_00;

@@ -11,14 +11,10 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "string.h"
 
 #include "REL/m430Dll.h"
@@ -785,11 +781,6 @@ void fn_1_D828(omObjData *var_r30)
     float var_f25;
     float var_f24;
     float var_f23;
-    float var_f22;
-    float var_f21;
-    float var_f20;
-    float var_f19;
-    float var_f18;
     M430PlayerWork *var_r31;
     M430PlayerBss174Struct *var_r29;
     s32 var_r28;
@@ -1262,12 +1253,6 @@ s32 fn_1_F62C(omObjData *object)
 void fn_1_F6A0(omObjData *object)
 {
     Vec sp38;
-    float sp30;
-    float sp28;
-    float sp20;
-    float sp18;
-    float sp10;
-    float sp8;
     float var_f31;
     float var_f30;
     float var_f29;
@@ -1275,13 +1260,6 @@ void fn_1_F6A0(omObjData *object)
     float var_f27;
     float var_f26;
     float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    float var_f21;
-    float var_f20;
-    float var_f19;
-    float var_f18;
     M430PlayerWork *work;
     s32 var_r29;
     s32 var_r28;
@@ -1655,9 +1633,9 @@ void fn_1_10B88(void)
     M430PlayerBss16CStruct *var_r31;
     s32 var_r30;
 
-    var_r31 = lbl_1_bss_16C = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10 * sizeof(M430PlayerBss16CStruct), MEMORY_DEFAULT_NUM);
-    memset(var_r31, 0, 0x10 * sizeof(M430PlayerBss16CStruct));
-    for (var_r30 = 0; var_r30 < 0x10; var_r30++, var_r31++) {
+    var_r31 = lbl_1_bss_16C = HuMemDirectMallocNum(HEAP_SYSTEM, 16 * sizeof(M430PlayerBss16CStruct), MEMORY_DEFAULT_NUM);
+    memset(var_r31, 0, 16 * sizeof(M430PlayerBss16CStruct));
+    for (var_r30 = 0; var_r30 < 16; var_r30++, var_r31++) {
         var_r31->unk_00 = var_r30;
         if (var_r30 == 0) {
             var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x23));
@@ -1832,9 +1810,9 @@ void fn_1_113AC(void)
     M430PlayerBss168Struct *var_r31;
     s32 var_r30;
 
-    var_r31 = lbl_1_bss_168 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x20 * sizeof(M430PlayerBss168Struct), MEMORY_DEFAULT_NUM);
-    memset(var_r31, 0, 0x20 * sizeof(M430PlayerBss168Struct));
-    for (var_r30 = 0; var_r30 < 0x20; var_r31++) {
+    var_r31 = lbl_1_bss_168 = HuMemDirectMallocNum(HEAP_SYSTEM, 32 * sizeof(M430PlayerBss168Struct), MEMORY_DEFAULT_NUM);
+    memset(var_r31, 0, 32 * sizeof(M430PlayerBss168Struct));
+    for (var_r30 = 0; var_r30 < 32; var_r31++) {
         var_r31->unk_00 = var_r30;
         if (var_r30 == 0) {
             var_r31->unk_04 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x22));

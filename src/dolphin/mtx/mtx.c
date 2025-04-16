@@ -1322,8 +1322,8 @@ void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 scaleS, f32 scaleT, 
 void C_MTXReorder(const Mtx src, ROMtx dest)
 {
     u32 i, j;
-    for (i = 0; i < 3; j++) {
-        for (int j = 0; j < 4; j++) {
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 4; j++) {
             dest[j][i] = src[i][j];
         }
     }

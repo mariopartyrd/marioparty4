@@ -1315,7 +1315,6 @@ void fn_1_3F38(ModelData *model, ParticleData *particle, Mtx matrix)
     float var_f31;
     float var_f30;
     float var_f29;
-    float var_f28;
 
     HsfanimStruct01 *var_r31;
     s32 var_r29;
@@ -1464,18 +1463,8 @@ float fn_1_4B34(float arg8, float arg9, float argA, float argB)
 void fn_1_4BAC(float *arg0, float *arg1, float *arg2, float *arg3, float arg8)
 {
     float spC[3];
-    float sp8;
-    float var_f31;
     float var_f30;
-    float var_f28;
     float var_f29;
-    float var_f27;
-    float var_f26;
-    float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    float var_f21;
 
     s32 var_r31;
 
@@ -1615,13 +1604,6 @@ void fn_1_5670(float arg8, float *arg0, float *arg1, float (*arg2)[3], float (*a
     float sp48[16];
     float sp8[16];
 
-    float var_f31;
-    float var_f30;
-    float var_f29;
-    float var_f28;
-    float var_f27;
-
-    s32 var_r31;
     s32 var_r30;
     s32 var_r29;
 

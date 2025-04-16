@@ -1,6 +1,7 @@
 #include "REL/m440Dll.h"
 
 #include "ext_math.h"
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
@@ -9,10 +10,6 @@
 #include "math.h"
 #include "string.h"
 #include "version.h"
-
-#ifdef __MWERKS__
-#include "game/audio.h"
-#endif
 
 // bss
 omObjData *lbl_1_bss_C0[4];
@@ -56,9 +53,9 @@ void fn_1_AEE4(omObjData *arg0)
     s16 var_r29;
     unkObjStruct *temp_r31;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x78, MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkObjStruct), MEMORY_DEFAULT_NUM);
     temp_r31 = (unkObjStruct *)arg0->data;
-    memset(temp_r31, 0, 0x78);
+    memset(temp_r31, 0, sizeof(unkObjStruct));
     arg0->stat |= 0x100;
     temp_r31->unk4 = arg0->work[0];
     temp_r31->unk6 = GWPlayerCfg[temp_r31->unk4].pad_idx;
@@ -107,13 +104,9 @@ void fn_1_B180(omObjData *arg0)
 {
     s16 var_r29;
     s16 var_r31;
-    s32 var_r28;
-    u32 temp_r0;
-    u32 temp_r3;
-    u32 temp_r3_2;
     unkObjStruct *temp_r30;
 
-    var_r28 = GWSystem.player_curr;
+    s32 var_r28 = GWSystem.player_curr;
     if (var_r28 < 0) {
         var_r28 = 0;
     }
@@ -236,9 +229,6 @@ void fn_1_B884(omObjData *arg0, unkObjStruct *arg1)
     f32 var_f28;
     f32 var_f31;
     f32 var_f30;
-    s16 temp_r0;
-    s16 temp_r0_2;
-    s16 temp_r3;
     s16 var_r30;
 
     switch (lbl_1_bss_74) {
@@ -372,13 +362,8 @@ void fn_1_C1D4(omObjData *arg0, unkObjStruct *arg1)
 {
     s16 sp12[5];
     s16 sp8[5];
-    f32 var_f28;
-    f32 var_f29;
     f32 var_f30;
     f32 var_f31;
-    s16 temp_r0;
-    s16 temp_r0_2;
-    s16 temp_r3;
     s16 var_r29;
     s16 var_r28;
     s16 var_r30;
@@ -490,7 +475,6 @@ void fn_1_C944(omObjData *arg0, unkObjStruct *arg1)
     f32 var_f29;
     f32 var_f30;
     f32 var_f31;
-    s16 var_r28;
     s16 var_r30;
     s16 var_r29;
 
@@ -658,10 +642,8 @@ s16 fn_1_CFAC(unkObjStruct *arg0, u8 arg1)
 
 void fn_1_D24C(unkObjStruct *arg0, f32 arg1, f32 arg2)
 {
-    f32 var_f28;
-    f32 var_f29;
-    f32 var_f30;
     f32 var_f31;
+    f32 var_f28;
 
     var_f28 = REFRESH_RATE_F / 6.0f;
     arg0->unk6C = arg1;
@@ -1129,14 +1111,8 @@ void fn_1_F168(void)
 void fn_1_F228(void)
 {
     omObjData *temp_r30;
-    s16 temp_r0;
     s16 var_r29;
-    s32 temp_r27;
-    s32 temp_r27_2;
     s32 var_r28;
-    u32 temp_r0_2;
-    u32 temp_r3;
-    u32 temp_r3_2;
     unkObjStruct *temp_r31;
 
     for (var_r29 = 0; var_r29 < 4; var_r29++) {

@@ -1,5 +1,6 @@
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
+#include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/object.h"
@@ -22,6 +23,12 @@
 
 #include "REL/m439data.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include "game/ClusterExec.h"
+#include "game/EnvelopeExec.h"
+#include "game/ShapeExec.h"
+#endif
 
 typedef struct camera_params {
     float zoom;

@@ -1,18 +1,17 @@
+#include "game/audio.h"
 #include "game/chrman.h"
+#include "game/hsfanim.h"
+#include "game/hsfdraw.h"
+#include "game/hsfman.h"
+#include "game/hsfmotion.h"
+#include "game/gamework_data.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/wipe.h"
-
-#include "game/hsfanim.h"
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
 #include "game/sprite.h"
 
-#include "game/audio.h"
-#include "game/gamework_data.h"
 
 #include "REL/m408Dll.h"
 
@@ -20,6 +19,7 @@
 #include "math.h"
 
 #ifndef __MWERKS__
+#include "game/frand.h"
 #include "game/esprite.h"
 #endif
 
@@ -384,12 +384,12 @@ void fn_1_12A0(omObjData *object)
 
 void fn_1_148C(omObjData *object)
 {
-    Vec sp30;
-    Vec sp24;
-    Vec sp18;
-    Vec spC;
-    float temp_f29;
     if (!WipeStatGet()) {
+        Vec sp30;
+        Vec sp24;
+        Vec sp18;
+        Vec spC;
+        float temp_f29;
         lbl_1_bss_54 = 0;
         sp30.x = 0;
         sp30.y = 50;
@@ -515,17 +515,14 @@ void fn_1_1E54(omObjData *object)
 
 s32 fn_1_1EBC(omObjData *object)
 {
-    float temp_f31;
-    float temp_f22;
-    float temp_f21;
-    Vec sp3C;
-    Vec sp30;
-    Vec sp24;
-
     Work2FAC *temp_r31 = object->data;
-    temp_f31 = (temp_r31->unk1C.x * temp_r31->unk1C.x) + ((10.0f / 7.0f) * ((10.0f / 7.0f) * temp_r31->unk1C.z * temp_r31->unk1C.z));
+    float temp_f31 = (temp_r31->unk1C.x * temp_r31->unk1C.x) + ((10.0f / 7.0f) * ((10.0f / 7.0f) * temp_r31->unk1C.z * temp_r31->unk1C.z));
     if (temp_f31 > 6400) {
-        temp_f22 = 80.0f / sqrtf(temp_f31);
+        Vec sp3C;
+        Vec sp30;
+        Vec sp24;
+        float temp_f21;
+        float temp_f22 = 80.0f / sqrtf(temp_f31);
         sp3C.x = temp_r31->unk1C.x * temp_f22;
         sp3C.z = temp_r31->unk1C.z * temp_f22;
         temp_r31->unk34.x = sp3C.x - temp_r31->unk1C.x;
@@ -551,9 +548,7 @@ s32 fn_1_1EBC(omObjData *object)
         temp_r31->unk28.z += (sp30.z * 20.0f) + (sp30.z * 2.0f * temp_f22);
         return 1;
     }
-    else {
-        return 0;
-    }
+    return 0;
 }
 
 void fn_1_26E4(omObjData *object);
@@ -747,12 +742,9 @@ void fn_1_2FAC(omObjData *object)
     }
 }
 
-void fn_1_38D0(omObjData *arg0, s8 *arg1, s8 *arg2)
+void fn_1_38D0(omObjData *object, s8 *arg1, s8 *arg2)
 {
     float temp_f31;
-    float temp_f30;
-    float temp_f29;
-    Work2FAC *temp_r31;
     Work2FAC *temp_r30;
     s8 temp_r29;
     s32 temp_r28;
@@ -761,79 +753,79 @@ void fn_1_38D0(omObjData *arg0, s8 *arg1, s8 *arg2)
     Vec spC;
     s8 sp8[4];
 
-    temp_r31 = arg0->data;
-    *arg1 = temp_r31->unk7C[0];
-    *arg2 = temp_r31->unk7C[1];
-    sp18.x = temp_r31->unk1C.x;
-    sp18.y = temp_r31->unk1C.y;
-    sp18.z = temp_r31->unk1C.z;
+    Work2FAC *work = object->data;
+    *arg1 = work->unk7C[0];
+    *arg2 = work->unk7C[1];
+    sp18.x = work->unk1C.x;
+    sp18.y = work->unk1C.y;
+    sp18.z = work->unk1C.z;
     temp_r25 = fn_1_162CC(&sp18, &spC);
     temp_r29 = 0;
     sp8[0] = -1;
     for (temp_r28 = 0; temp_r28 < 4; temp_r28++) {
-        if (temp_r28 != temp_r31->unk0) {
+        if (temp_r28 != work->unk0) {
             temp_r30 = fn_1_68A8(temp_r28);
             if ((temp_r30->unk4 & 0x12) == 0) {
                 sp8[temp_r29++] = temp_r28;
             }
         }
     }
-    switch (temp_r31->unk8E) {
+    switch (work->unk8E) {
         case 0:
             if (temp_r29 > 0 || temp_r25) {
                 if (temp_r29 > 0) {
-                    temp_r31->unk8C = sp8[frandmod(temp_r29)];
+                    work->unk8C = sp8[frandmod(temp_r29)];
                 }
-                temp_r31->unk74 = frandmod(180) + 120.0f;
-                temp_r31->unk78 = 0;
-                temp_r31->unk8E = 1;
+                work->unk74 = frandmod(180) + 120.0f;
+                work->unk78 = 0;
+                work->unk8E = 1;
             }
             else {
-                temp_r31->unk78 = 0;
-                temp_r31->unk8E = 2;
+                work->unk78 = 0;
+                work->unk8E = 2;
             }
             break;
 
         case 1:
-            if ((temp_r31->unk78 & 0x3) == 0) {
+            if ((work->unk78 & 0x3) == 0) {
                 if (temp_r25) {
-                    temp_f31 = atan2d(spC.x - temp_r31->unk1C.x, spC.z - temp_r31->unk1C.z);
+                    temp_f31 = atan2d(spC.x - work->unk1C.x, spC.z - work->unk1C.z);
                 }
                 else {
-                    temp_r30 = fn_1_68A8(temp_r31->unk8C);
-                    temp_f31 = atan2d(temp_r30->unk1C.x - temp_r31->unk1C.x, temp_r30->unk1C.z - temp_r31->unk1C.z);
+                    temp_r30 = fn_1_68A8(work->unk8C);
+                    temp_f31 = atan2d(temp_r30->unk1C.x - work->unk1C.x, temp_r30->unk1C.z - work->unk1C.z);
                 }
-                temp_r31->unk84[1] = fn_1_883C(temp_r31->unk84[0], temp_f31, (0.3f * temp_r31->unk90) + 0.15f);
+                work->unk84[1] = fn_1_883C(work->unk84[0], temp_f31, (0.3f * work->unk90) + 0.15f);
             }
-            temp_r31->unk78++;
-            temp_r31->unk84[0] = fn_1_883C(temp_r31->unk84[0], temp_r31->unk84[1], 0.2f);
-            temp_r31->unk7C[0] = sind(temp_r31->unk84[0]) * 80.0;
-            temp_r31->unk7C[1] = -cosd(temp_r31->unk84[0]) * 80.0;
-            *arg1 = temp_r31->unk7C[0];
-            *arg2 = temp_r31->unk7C[1];
-            temp_r31->unk74--;
+            work->unk78++;
+            work->unk84[0] = fn_1_883C(work->unk84[0], work->unk84[1], 0.2f);
+            work->unk7C[0] = sind(work->unk84[0]) * 80.0;
+            work->unk7C[1] = -cosd(work->unk84[0]) * 80.0;
+            *arg1 = work->unk7C[0];
+            *arg2 = work->unk7C[1];
+            work->unk74--;
             if (temp_r25 == 0 && (temp_r30->unk4 & 0x12)) {
-                temp_r31->unk74 = 0;
+                work->unk74 = 0;
             }
-            if (temp_r31->unk74 == 0) {
-                temp_r31->unk8E = 0;
+            if (work->unk74 == 0) {
+                work->unk8E = 0;
             }
             break;
 
         case 2:
-            if ((temp_r31->unk78 & 0xF) == 0) {
-                temp_f30 = (0.04f * frandmod(1000)) - 20.0f;
-                temp_f29 = (0.04f * frandmod(1000)) - 20.0f;
-                temp_r31->unk84[1] = temp_f31 = atan2d(temp_f30 - temp_r31->unk1C.x, temp_f29 - temp_r31->unk1C.z);
+            if ((work->unk78 & 0xF) == 0) {
+                float temp_f30 = (0.04f * frandmod(1000)) - 20.0f;
+                float temp_f29 = (0.04f * frandmod(1000)) - 20.0f;
+                work->unk84[1] = temp_f31 = atan2d(temp_f30 - work->unk1C.x, temp_f29 - work->unk1C.z);
             }
-            temp_r31->unk78++;
-            temp_r31->unk84[0] = fn_1_883C(temp_r31->unk84[0], temp_r31->unk84[1], 0.2f);
-            temp_r31->unk7C[0] = sind(temp_r31->unk84[0]) * 80.0;
-            temp_r31->unk7C[1] = -cosd(temp_r31->unk84[0]) * 80.0;
-            *arg1 = temp_r31->unk7C[0];
-            *arg2 = temp_r31->unk7C[1];
+            work->unk78++;
+            work->unk84[0] = fn_1_883C(work->unk84[0], work->unk84[1], 0.2f);
+            work->unk7C[0] = sind(work->unk84[0]) * 80.0;
+            work->unk7C[1] = -cosd(work->unk84[0]) * 80.0;
+            *arg1 = work->unk7C[0];
+            *arg2 = work->unk7C[1];
             if (temp_r29 > 0 || temp_r25) {
-                temp_r31->unk8E = 0;
+                work->unk8E = 0;
             }
             break;
     }
@@ -942,12 +934,10 @@ void fn_1_3E80(omObjData *object)
 
 void fn_1_4A58(omObjData *object)
 {
-    Work2FAC *temp_r31;
     s32 temp_r28;
     s32 temp_r26;
-    s32 sp8;
-    temp_r31 = object->data;
-    sp8 = temp_r31->unk0;
+    Work2FAC *temp_r31 = object->data;
+    s32 sp8 = temp_r31->unk0;
     temp_r31->unk4 |= 2;
     temp_r31->unk1C.y = lbl_1_bss_54;
     fn_1_1EBC(object);
@@ -1006,38 +996,36 @@ void fn_1_54E4(omObjData *object);
 
 void fn_1_5098(omObjData *object)
 {
-    Work2FAC *temp_r29;
-    s32 temp_r27;
-
-    temp_r29 = object->data;
+    Work2FAC *work = object->data;
     object->trans.x = lbl_1_data_144[object->work[0]].x;
     object->trans.z = lbl_1_data_144[object->work[0]].z;
     if (object->work[1] == 0) {
-        if (lbl_1_bss_3C < temp_r29->unk8) {
-            lbl_1_bss_3C = temp_r29->unk8;
+        if (lbl_1_bss_3C < work->unk8) {
+            lbl_1_bss_3C = work->unk8;
         }
     }
-    else if (object->work[1] == 10 && lbl_1_bss_3C == temp_r29->unk8) {
+    else if (object->work[1] == 10 && lbl_1_bss_3C == work->unk8) {
+        s32 temp_r27;
         for (temp_r27 = 0; lbl_1_bss_28[temp_r27] >= 0; temp_r27++)
             ;
-        lbl_1_bss_28[temp_r27] = temp_r29->unk2;
+        lbl_1_bss_28[temp_r27] = work->unk2;
     }
     object->work[1]++;
-    temp_r29->unk1C.y = lbl_1_bss_54;
-    temp_r29->unk58.y = 0;
-    temp_r29->unk58.x = 0;
+    work->unk1C.y = lbl_1_bss_54;
+    work->unk58.y = 0;
+    work->unk58.x = 0;
     object->rot.x = object->rot.y = object->rot.z = 0;
-    object->trans.y = temp_r29->unk1C.y;
-    temp_r29->unk1C.x = object->trans.x;
-    temp_r29->unk1C.z = object->trans.z;
-    temp_r29->unk1C.y += lbl_1_data_A0[temp_r29->unk2];
+    object->trans.y = work->unk1C.y;
+    work->unk1C.x = object->trans.x;
+    work->unk1C.z = object->trans.z;
+    work->unk1C.y += lbl_1_data_A0[work->unk2];
     if (object->trans.y < 0) {
         object->trans.y = 0;
     }
     fn_1_1BE8(object, 1.0f);
     if (fn_1_6878() == 5) {
         object->func = fn_1_54E4;
-        if (temp_r29->unk14) {
+        if (work->unk14) {
             lbl_1_bss_C = 1;
         }
     }
@@ -1069,9 +1057,7 @@ void fn_1_5AA0(omObjData *object);
 
 void fn_1_5684(omObjData *object)
 {
-    Work2FAC *temp_r31;
-    s32 temp_r29;
-    temp_r31 = object->data;
+    Work2FAC *temp_r31 = object->data;
     if (fabs(object->trans.x) < 160.0 || fabs(object->trans.z) < 160.0) {
         temp_r31->unk1C.x += temp_r31->unk28.x * (1.0f / 60.0f);
         temp_r31->unk1C.z += temp_r31->unk28.z * (1.0f / 60.0f);
@@ -1088,6 +1074,7 @@ void fn_1_5684(omObjData *object)
         omSetTra(object, temp_r31->unk1C.x + temp_r31->unk68.x, temp_r31->unk1C.y + temp_r31->unk68.y, temp_r31->unk1C.z + temp_r31->unk68.z);
     }
     if (fn_1_6878() >= 4) {
+        s32 temp_r29;
         GWPlayerCoinCollectAdd(object->work[0], temp_r31->unk14);
         if (lbl_1_bss_48) {
             Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
@@ -1157,15 +1144,13 @@ void fn_1_5AB4(ModelData *model, ParticleData *particle, Mtx matrix)
 
 void fn_1_5DCC(s32 arg0, Vec *arg1, u32 arg2)
 {
-    float temp_f31;
-    float temp_f30;
 
-    HsfanimStruct01 *temp_r31;
-    ParticleData *temp_r29;
-    s32 temp_r28;
-    temp_r29 = Hu3DData[arg0].unk_120;
+    ParticleData *temp_r29 = Hu3DData[arg0].unk_120;
     if (temp_r29->unk_00 != 0) {
-        temp_r31 = temp_r29->unk_48;
+        float temp_f31;
+        float temp_f30;
+        HsfanimStruct01 *temp_r31 = temp_r29->unk_48;
+        s32 temp_r28;
         for (temp_r28 = 0; temp_r28 < temp_r29->unk_30; temp_r28++, temp_r31++) {
             if (temp_r31->unk00) {
                 continue;

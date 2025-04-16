@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/hsfex.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
@@ -12,6 +13,10 @@
 #include "game/wipe.h"
 
 #include "REL/m438Dll.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 #define BOARD_FABS(value) ((value < 0.0f) ? -(value) : (value))
 
@@ -1197,7 +1202,6 @@ void fn_1_35C0(omObjData *object)
     s16 sp0A;
     s16 sp8;
 
-    float var_f31;
     float var_f30;
     float var_f29;
 
@@ -1497,7 +1501,6 @@ void fn_1_4984(omObjData *object)
     Vec sp8;
     float var_f31;
     s32 var_r27;
-    M438MainWork3 *var_r28;
     M438MainWork3 *var_r30;
     M438MainWork3 *var_r31;
 
@@ -1592,9 +1595,7 @@ void fn_1_4F50(omObjData *object)
     float var_f29;
     float var_f28;
     float var_f27;
-    float var_f25;
     s32 var_r26;
-    M438MainWork3 *var_r27;
     s32 var_r28;
     M438MainWork *var_r29;
     M438MainWork3 *var_r31;
@@ -2601,8 +2602,6 @@ void fn_1_9420(float arg8, float *arg0, float *arg1, float arg2[3][3], float arg
     float sp48[16];
     float sp8[16];
 
-    float var_f29;
-
     s32 var_r30;
     s32 var_r29;
 
@@ -2672,8 +2671,6 @@ f32 fn_1_9960(Vec *arg0, Vec *arg1, Vec *arg2)
 {
     Vec sp44;
     f32 var_f31;
-    f32 var_f30;
-    f32 temp_f29;
 
     if (0.0f == ((arg2->z * arg2->z) + ((arg2->x * arg2->x) + (arg2->y * arg2->y)))) {
         return ((arg0->z - arg1->z) * (arg0->z - arg1->z))
@@ -2686,28 +2683,7 @@ f32 fn_1_9960(Vec *arg0, Vec *arg1, Vec *arg2)
 
 f32 fn_1_9C9C(Vec *arg0, Vec *arg1, Vec *arg2, Vec *arg3, Vec *arg4)
 {
-    f32 sp44;
-    f32 sp40;
-    f32 sp3C;
-    f32 sp38;
-    f32 sp34;
-    f32 sp30;
-    f32 sp2C;
-    f32 sp28;
-    f32 sp24;
-    Vec sp18;
-    f32 sp14;
-    f32 sp10;
-    f32 spC;
-    f32 sp8;
-    f32 temp_f25;
-    f32 temp_f26;
-    f32 temp_f28;
-    f32 var_f24;
     f32 var_f27;
-    f64 temp_f31;
-    f64 temp_f31_2;
-    f64 temp_f31_3;
 
     if (0.0f == ((arg2->z * arg2->z) + ((arg2->x * arg2->x) + (arg2->y * arg2->y)))) {
         return ((arg0->z - arg1->z) * (arg0->z - arg1->z))

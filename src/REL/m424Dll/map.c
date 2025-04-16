@@ -55,8 +55,8 @@ void fn_1_1BB8(omObjData *arg0)
 {
     M424DllMapStruct *var_r30;
 
-    var_r30 = arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x54, 0x10000000);
-    memset(var_r30, 0, 0x54);
+    var_r30 = arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M424DllMapStruct), MEMORY_DEFAULT_NUM);
+    memset(var_r30, 0, sizeof(M424DllMapStruct));
     var_r30->unk0 = 0.0f;
     var_r30->unk4 = 0.0f;
     var_r30->unk38 = -1;

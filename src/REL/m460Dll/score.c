@@ -77,9 +77,6 @@ void fn_1_8F38(void)
 
 void fn_1_8FAC(s32 arg0)
 {
-    s32 sp8;
-    s32 var_r3;
-
     switch (arg0) {
         case 0:
             fn_1_9020(1);

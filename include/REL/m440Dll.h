@@ -241,6 +241,7 @@ typedef struct _unkObjStruct {
     float unk68;
     float unk6C;
     float unk70;
+    char unk74[0x4];
 } unkObjStruct;
 
 #if VERSION_NTSC

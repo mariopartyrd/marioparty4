@@ -10,6 +10,10 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
+
 typedef struct UnkM414Struct {
     s32 unk00;
     s32 unk04;

@@ -2,6 +2,8 @@
 
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/chrman.h"
+#include "game/frand.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfformat.h"
@@ -541,7 +543,7 @@ void fn_1_1954(void) {
     s32 var_r31;
     M427DllStruct2* var_r30;
 
-    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xA4, 0x10000000);
+    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M427DllStruct2), MEMORY_DEFAULT_NUM);
     lbl_1_bss_40 = var_r30;
     var_r30->unk9C = 0;
     var_r30->unkA0 = 0;
@@ -736,7 +738,6 @@ void fn_1_21E8(s32 arg0, s32 arg1) {
 
 void fn_1_232C(s32 arg0) {
     M427DllStruct2* temp_r29;
-    f32 temp_f0;
     s32 var_r31;
 
     temp_r29 = lbl_1_bss_40;
@@ -785,7 +786,6 @@ void fn_1_232C(s32 arg0) {
 
 void fn_1_2518(s32 arg0) {
     M427DllStruct2* temp_r29;
-    f32 temp_f0;
     s32 var_r31;
 
     temp_r29 = lbl_1_bss_40;

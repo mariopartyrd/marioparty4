@@ -156,6 +156,22 @@ typedef struct HsfShape32b {
     u32 vertex;
 } HsfShape32b;
 
+typedef struct HsfCenvDual32b {
+    u32 target1;
+    u32 target2;
+    u32 weightCnt;
+    u32 weight;
+} HsfCenvDual32b;
+
+typedef struct HsfCenvMulti32b {
+    u32 weightCnt;
+    u16 pos;
+    u16 posCnt;
+    u16 normal;
+    u16 normalCnt;
+    u32 weight;
+} HsfCenvMulti32b;
+
 typedef struct HsfCenv32b {
     u32 name;
     u32 singleData;
@@ -200,7 +216,8 @@ typedef struct HsfObjectData32b {
     u32 cluster;
     u32 cenvCnt;
     u32 cenv;
-    u32 file[2];
+    u32 vtxtop;
+    u32 normtop;
 } HsfObjectData32b;
 
 typedef struct HsfObject32b {
@@ -265,6 +282,12 @@ typedef struct HsfFace32b {
     Vec nbt;
 } HsfFace32b;
 
+typedef struct HsfMatrix32b {
+    u32 base_idx;
+    u32 count;
+    u32 data;
+} HsfMatrix32b;
+
 void byteswap_u16(u16 *src);
 void byteswap_s16(s16 *src);
 void byteswap_u32(u32 *src);
@@ -285,7 +308,7 @@ void byteswap_hsfattribute(HsfAttribute32b *src, HsfAttribute *dest);
 void byteswap_hsfmaterial(HsfMaterial32b *src, HsfMaterial *dest);
 void byteswap_hsfscene(HsfScene *src);
 void byteswap_hsfbuffer(HsfBuffer32b *src, HsfBuffer *dest);
-void byteswap_hsfmatrix(HsfMatrix *src);
+void byteswap_hsfmatrix(HsfMatrix32b *src, HsfMatrix *dest);
 void byteswap_hsfpalette(HsfPalette32b *src, HsfPalette *dest);
 void byteswap_hsfpart(HsfPart32b *src, HsfPart *dest);
 void byteswap_hsfbitmap(HsfBitmap32b *src, HsfBitmap *dest);
@@ -304,7 +327,6 @@ void byteswap_hsfattribute(HsfAttribute32b *src, HsfAttribute *dest);
 void byteswap_hsfmaterial(HsfMaterial32b *src, HsfMaterial *dest);
 void byteswap_hsfscene(HsfScene *src);
 void byteswap_hsfbuffer(HsfBuffer32b *src, HsfBuffer *dest);
-void byteswap_hsfmatrix(HsfMatrix *src);
 void byteswap_hsfpalette(HsfPalette32b *src, HsfPalette *dest);
 void byteswap_hsfpart(HsfPart32b *src, HsfPart *dest);
 void byteswap_hsfbitmap(HsfBitmap32b *src, HsfBitmap *dest);
@@ -312,6 +334,10 @@ void byteswap_hsfmapattr(HsfMapAttr32b *src, HsfMapAttr *dest);
 void byteswap_hsfskeleton(HsfSkeleton32b *src, HsfSkeleton *dest);
 void byteswap_hsfshape(HsfShape32b *src, HsfShape *dest);
 void byteswap_hsfcenv_single(HsfCenvSingle *src);
+void byteswap_hsfcenv_dual_weight(HsfCenvDualWeight *src);
+void byteswap_hsfcenv_dual(HsfCenvDual32b *src, HsfCenvDual *dest);
+void byteswap_hsfcenv_multi_weight(HsfCenvMultiWeight *src);
+void byteswap_hsfcenv_multi(HsfCenvMulti32b *src, HsfCenvMulti *dest);
 void byteswap_hsfcenv(HsfCenv32b *src, HsfCenv *dest);
 void byteswap_hsfobject(HsfObject32b *src, HsfObject *dest);
 void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest);

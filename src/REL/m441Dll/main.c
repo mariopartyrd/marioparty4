@@ -6,6 +6,7 @@
 #include "game/objsub.h"
 #include "game/wipe.h"
 
+#include "game/gamework.h"
 #include "game/gamework_data.h"
 
 #include "game/mapspace.h"
@@ -23,11 +24,12 @@
 #include "ext_math.h"
 #include "version.h"
 
-
 #ifndef __MWERKS__
 #include <game/hsfex.h>
 #include <game/audio.h>
 #endif
+
+void HuSysVWaitSet(s16 vcount);
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -1780,9 +1782,6 @@ void fn_1_892C(s16 arg0, s16 arg1, Vec *arg2)
 {
     omObjData *object;
     Work713C *work;
-    float x;
-    float y;
-    float z;
     if (lbl_1_bss_1E >= 400) {
         OSReport("over!!\n");
         return;

@@ -9,15 +9,11 @@
 #include "game/hsfload.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-#include "game/init.h"
 #include "game/memory.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/sprite.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "string.h"
 
 #include "REL/m428Dll.h"
@@ -973,8 +969,6 @@ void fn_1_BBD0(omObjData *object)
     float var_f31;
     float var_f30;
     float var_f27;
-    float var_f26;
-    float var_f25;
     float var_f24;
     float var_f23;
     float var_f22;

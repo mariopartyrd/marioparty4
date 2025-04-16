@@ -4,6 +4,7 @@
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/minigame_seq.h"
+#include "game/objsub.h"
 #include "game/wipe.h"
 
 #include "REL/m406Dll.h"

@@ -10,7 +10,6 @@
 #include "game/hsfmotion.h"
 #include "game/memory.h"
 #include "game/object.h"
-#include "game/pad.h"
 #include "game/sprite.h"
 #include "string.h"
 

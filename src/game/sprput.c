@@ -202,12 +202,18 @@ void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, G
         case ANIM_BMP_C8:
             GXInitTlutObj(&tlut_obj, bmp_ptr->palData, GX_TL_RGB5A3, bmp_ptr->palNum);
             GXLoadTlut(&tlut_obj, slot);
+#ifdef TARGET_PC
+            GXDestroyTlutObj(&tlut_obj);
+#endif
             GXInitTexObjCI(&tex_obj,bmp_ptr->data, sizeX, sizeY, GX_TF_C8, wrap_s, wrap_t, GX_FALSE, slot);
             break;
             
         case ANIM_BMP_C4:
             GXInitTlutObj(&tlut_obj, bmp_ptr->palData, GX_TL_RGB5A3, bmp_ptr->palNum);
             GXLoadTlut(&tlut_obj, slot);
+#ifdef TARGET_PC
+            GXDestroyTlutObj(&tlut_obj);
+#endif
             GXInitTexObjCI(&tex_obj,bmp_ptr->data, sizeX, sizeY, GX_TF_C4, wrap_s, wrap_t, GX_FALSE, slot);
             break;
             
@@ -242,7 +248,6 @@ void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, G
     GXLoadTexObj(&tex_obj, slot);
 #ifdef TARGET_PC
     GXDestroyTexObj(&tex_obj);
-    GXDestroyTlutObj(&tlut_obj);
 #endif
 }
 

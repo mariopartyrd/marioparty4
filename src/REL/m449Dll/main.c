@@ -5,7 +5,6 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/esprite.h"
-#include "game/flag.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
@@ -16,7 +15,6 @@
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
@@ -1317,15 +1315,7 @@ float lbl_1_data_294 = -30.0f;
 void fn_1_6850(omObjData *object)
 {
     M449DllWork *sp20[2];
-    s32 sp1C;
-    s32 sp18;
-    s32 sp14;
-    s32 sp10;
-    s32 spC;
-    s32 sp8;
     float var_f31;
-    float var_f30;
-    float var_f29;
 
     s32 var_r31;
     s32 var_r30;
@@ -1450,8 +1440,6 @@ void fn_1_71A8(void)
     s16 var_r31;
     s32 var_r30;
     s16 var_r29;
-    s32 var_r28;
-    s32 var_r27;
     u32 var_r26;
 
     var_r29 = 0;

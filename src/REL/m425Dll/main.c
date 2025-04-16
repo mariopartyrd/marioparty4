@@ -5,7 +5,6 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/esprite.h"
 #include "game/flag.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
@@ -18,9 +17,7 @@
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
-#include "game/window.h"
 #include "game/wipe.h"
 #include "math.h"
 #include "string.h"
@@ -342,8 +339,6 @@ void fn_1_8E4(omObjData *object)
     s32 var_r30;
     s32 var_r29;
     s32 var_r28;
-    s16 var_r26;
-    s16 var_r25;
 
     switch (lbl_1_bss_648) {
         case 4:
@@ -1455,7 +1450,7 @@ void fn_1_5608(GXColor **arg0, s16 arg1, GXColor *arg2)
     s32 var_r29;
     s32 var_r28;
 
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * (4 * sizeof(GXColor)), 0x10000000);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * (4 * sizeof(GXColor)), MEMORY_DEFAULT_NUM);
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
             var_r31->r = arg2->r;
@@ -1678,18 +1673,7 @@ float fn_1_66BC(float arg8, float arg9, float argA, float argB)
 void fn_1_6734(float *arg0, float *arg1, float *arg2, float *arg3, float arg8)
 {
     float spC[3];
-    float sp8;
-    float var_f31;
-    float var_f30;
     float var_f29;
-    float var_f28;
-    float var_f27;
-    float var_f26;
-    float var_f25;
-    float var_f24;
-    float var_f23;
-    float var_f22;
-    float var_f21;
     s32 var_r31;
 
     for (var_r31 = 0; var_r31 < 3; var_r31++) {

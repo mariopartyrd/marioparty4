@@ -189,6 +189,10 @@ static void objCall(ModelData *arg0, HsfObject *arg1)
 
 static void objMesh(ModelData *arg0, HsfObject *arg1)
 {
+#ifdef TARGET_PC
+    // TODO PC
+    return;
+#endif
     HsfDrawObject *temp_r29;
     HsfConstData *temp_r25;
     HsfTransform *var_r30;
@@ -2510,9 +2514,12 @@ void MakeDisplayList(s16 arg0, uintptr_t arg1)
     var_r30 = &Hu3DData[arg0];
     curModelID = arg0;
     mallocNo = arg1;
+#ifdef __MWERKS__
+    // TODO PC
     faceNumBuf = HuMemDirectMallocNum(HEAP_DATA, 0x800 * sizeof(u16), mallocNo);
     MDObjCall(temp_r31, temp_r31->root);
     HuMemDirectFree(faceNumBuf);
+#endif
     if (var_r30->attr & HU3D_ATTR_SHADOW) {
         Hu3DShadowCamBit++;
     }
@@ -3347,14 +3354,13 @@ void PGObjReplica(ModelData *arg0, HsfObject *arg1)
     }
 }
 
-HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1)
+HsfObject *Hu3DObjDuplicate(HsfData *arg0, uintptr_t arg1)
 {
     HsfObject *temp_r27;
     HsfObject *var_r30;
     HsfObject *var_r31;
     s16 i;
     s16 j;
-
     var_r31 = HuMemDirectMallocNum(HEAP_DATA, arg0->objectCnt * sizeof(HsfObject), arg1);
     temp_r27 = var_r31;
     var_r30 = arg0->object;
@@ -3362,7 +3368,7 @@ HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1)
     for (i = 0; i < arg0->objectCnt; i++, var_r31++, var_r30++) {
         if (var_r31->type != 8 && var_r31->type != 7) {
             if (var_r31->data.parent) {
-                var_r31->data.parent = (HsfObject *)((u8 *)temp_r27 + ((u32)var_r30->data.parent - (u32)arg0->object));
+                var_r31->data.parent = (HsfObject *)((u8 *)temp_r27 + ((uintptr_t)var_r30->data.parent - (uintptr_t)arg0->object));
             }
             var_r31->data.children = HuMemDirectMallocNum(HEAP_DATA, var_r30->data.childrenCount * 4, arg1);
             if (var_r30->constData) {
@@ -3370,7 +3376,7 @@ HsfObject *Hu3DObjDuplicate(HsfData *arg0, u32 arg1)
                 memcpy(var_r31->constData, var_r30->constData, sizeof(HsfConstData));
             }
             for (j = 0; j < var_r30->data.childrenCount; j++) {
-                var_r31->data.children[j] = (HsfObject *)((u8 *)temp_r27 + ((u32)var_r30->data.children[j] - (u32)arg0->object));
+                var_r31->data.children[j] = (HsfObject *)((u8 *)temp_r27 + ((uintptr_t)var_r30->data.children[j] - (uintptr_t)arg0->object));
             }
         }
     }

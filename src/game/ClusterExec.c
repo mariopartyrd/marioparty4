@@ -127,9 +127,9 @@ void ClusterProc(ModelData *arg0)
                     Vertextop = temp_r31->data.vertex->data;
                     if (temp_r31->data.cenvCnt) {
                         for (k = 0; k < temp_r31->data.vertex->count; k++) {
-                            Vertextop[k].x = ((Vec *)temp_r31->data.file[0])[k].x;
-                            Vertextop[k].y = ((Vec *)temp_r31->data.file[0])[k].y;
-                            Vertextop[k].z = ((Vec *)temp_r31->data.file[0])[k].z;
+                            Vertextop[k].x = ((Vec *)temp_r31->data.vtxtop)[k].x;
+                            Vertextop[k].y = ((Vec *)temp_r31->data.vtxtop)[k].y;
+                            Vertextop[k].z = ((Vec *)temp_r31->data.vtxtop)[k].z;
                         }
                     }
                     SetClusterMain(var_r29);

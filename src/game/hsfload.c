@@ -1,6 +1,8 @@
 #include "game/hsfload.h"
-#include "string.h"
+#include "game/EnvelopeExec.h"
 #include "ctype.h"
+#include "string.h"
+
 
 #ifdef TARGET_PC
 #include "game/memory.h"
@@ -89,7 +91,9 @@ HsfData *LoadHSF(void *data)
     NormalLoad();
     STLoad();
     FaceLoad();
+#if __MWERKS__
     ObjectLoad();
+#endif
     CenvLoad();
     SkeletonLoad();
     PartLoad();
@@ -98,6 +102,10 @@ HsfData *LoadHSF(void *data)
     MapAttrLoad();
     MotionLoad();
     MatrixLoad();
+#if TARGET_PC
+    // to properly set pointers
+    ObjectLoad();
+#endif
     hsf = SetHsfModel();
     InitEnvelope(hsf);
     objtop = NULL;
@@ -448,7 +456,7 @@ static void NormalLoad(void)
         Model.normal = new_normal;
         Model.normalCnt = head.normal.count;
 #ifdef TARGET_PC
-        VertexDataTop = data = (void *)&file_normal_real[head.normal.count];
+        NormalDataTop = data = (void *)&file_normal_real[head.normal.count];
 #else
         file_normal = (HsfBuffer *)((u32)fileptr+head.normal.ofs);
         NormalDataTop = data = (void *)&file_normal[head.normal.count];
@@ -460,8 +468,8 @@ static void NormalLoad(void)
             new_normal->data = (void *)((uintptr_t)data+(uintptr_t)temp_data);
 #ifdef TARGET_PC
             if (cenv_count != 0) {
-                for (i = 0; i < new_normal->count; i++) {
-                    HsfVector3f *normalData = &((HsfVector3f *)new_normal->data)[i];
+                for (j = 0; j < new_normal->count; j++) {
+                    HsfVector3f *normalData = &((HsfVector3f *)new_normal->data)[j];
                     byteswap_hsfvec3f(normalData);
                 }
             }
@@ -647,8 +655,16 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             } else {
                 new_object->data.attribute = NULL;
             }
-            new_object->data.file[0] = (void *)((uintptr_t)fileptr + (uintptr_t)data->file[0]);
-            new_object->data.file[1] = (void *)((uintptr_t)fileptr + (uintptr_t)data->file[1]);
+            new_object->data.vtxtop = (void *)((uintptr_t)fileptr + (uintptr_t)data->vtxtop);
+            new_object->data.normtop = (void *)((uintptr_t)fileptr + (uintptr_t)data->normtop);
+#ifdef TARGET_PC
+            for (i = 0; i < new_object->data.vertex->count; i++) {
+                byteswap_hsfvec3f(&new_object->data.vtxtop[i]);
+            }
+            for (i = 0; i < new_object->data.normal->count; i++) {
+                byteswap_hsfvec3f(&new_object->data.normtop[i]);
+            }
+#endif
             new_object->data.base.pos.x = data->base.pos.x;
             new_object->data.base.pos.y = data->base.pos.y;
             new_object->data.base.pos.z = data->base.pos.z;
@@ -906,46 +922,70 @@ static void CenvLoad(void)
         Model.cenv = cenv_file;
         for(i=0; i<head.cenv.count; i++) {
             cenv_new[i].singleData = (HsfCenvSingle *)((uintptr_t)cenv_file[i].singleData + (uintptr_t)data_base);
+#ifdef __MWERKS__
             cenv_new[i].dualData = (HsfCenvDual *)((uintptr_t)cenv_file[i].dualData + (uintptr_t)data_base);
             cenv_new[i].multiData = (HsfCenvMulti *)((uintptr_t)cenv_file[i].multiData + (uintptr_t)data_base);
+#endif
             cenv_new[i].singleCount = cenv_file[i].singleCount;
             cenv_new[i].dualCount = cenv_file[i].dualCount;
             cenv_new[i].multiCount = cenv_file[i].multiCount;
             cenv_new[i].copyCount = cenv_file[i].copyCount;
             cenv_new[i].vtxCount = cenv_file[i].vtxCount;
+#if TARGET_PC
+            weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].singleCount * sizeof(HsfCenvSingle)));
+            weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].dualCount * sizeof(HsfCenvDual32b)));
+            weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].multiCount * sizeof(HsfCenvMulti32b)));
+#else
             weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].singleCount * sizeof(HsfCenvSingle)));
             weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].dualCount * sizeof(HsfCenvDual)));
             weight_base = (void *)((uintptr_t)weight_base + (cenv_new[i].multiCount * sizeof(HsfCenvMulti)));
-#ifdef TARGET_PC
-            byteswap_hsfcenv_single(cenv_new[i].singleData);
-            // TODO PC malloc dual, multi etc and byteswap them
 #endif
         }
         for(i=0; i<head.cenv.count; i++) {
+#ifdef TARGET_PC
+            HsfCenvDual32b *dual_data_real = (HsfCenvDual32b *)((uintptr_t)cenv_file[i].dualData + (uintptr_t)data_base);
+            HsfCenvMulti32b *multi_data_real = (HsfCenvMulti32b *)((uintptr_t)cenv_file[i].multiData + (uintptr_t)data_base);
+            cenv_new[i].dualData = HuMemDirectMallocNum(HEAP_DATA, cenv_file[i].dualCount * sizeof(HsfCenvDual), MEMORY_DEFAULT_NUM);
+            cenv_new[i].multiData = HuMemDirectMallocNum(HEAP_DATA, cenv_file[i].multiCount * sizeof(HsfCenvMulti), MEMORY_DEFAULT_NUM);
+#endif
             single_new = single_file = cenv_new[i].singleData;
             for(j=0; j<cenv_new[i].singleCount; j++) {
+#ifdef TARGET_PC
+                byteswap_hsfcenv_single(&single_new[j]);
+#endif
                 single_new[j].target = single_file[j].target;
                 single_new[j].posCnt = single_file[j].posCnt;
                 single_new[j].pos = single_file[j].pos;
                 single_new[j].normalCnt = single_file[j].normalCnt;
                 single_new[j].normal = single_file[j].normal;
-                
             }
             dual_new = dual_file = cenv_new[i].dualData;
             for(j=0; j<cenv_new[i].dualCount; j++) {
+#ifdef TARGET_PC
+                byteswap_hsfcenv_dual(&dual_data_real[j], &dual_new[j]);
+#endif
                 dual_new[j].target1 = dual_file[j].target1;
                 dual_new[j].target2 = dual_file[j].target2;
                 dual_new[j].weightCnt = dual_file[j].weightCnt;
                 dual_new[j].weight = (HsfCenvDualWeight *)((uintptr_t)weight_base + (uintptr_t)dual_file[j].weight);
+#ifdef TARGET_PC
+                byteswap_hsfcenv_dual_weight(dual_new[j].weight);
+#endif
             }
             multi_new = multi_file = cenv_new[i].multiData;
             for(j=0; j<cenv_new[i].multiCount; j++) {
+#ifdef TARGET_PC
+                byteswap_hsfcenv_multi(&multi_data_real[j], &multi_new[j]);
+#endif
                 multi_new[j].weightCnt = multi_file[j].weightCnt;
                 multi_new[j].pos = multi_file[j].pos;
                 multi_new[j].posCnt = multi_file[j].posCnt;
                 multi_new[j].normal = multi_file[j].normal;
                 multi_new[j].normalCnt = multi_file[j].normalCnt;
                 multi_new[j].weight = (HsfCenvMultiWeight *)((uintptr_t)weight_base + (uintptr_t)multi_file[j].weight);
+#ifdef TARGET_PC
+                byteswap_hsfcenv_multi_weight(dual_new[j].weight);
+#endif
             }
             dual_new = dual_file = cenv_new[i].dualData;
             for(j=0; j<cenv_new[i].dualCount; j++) {
@@ -1686,7 +1726,7 @@ static void MatrixLoad(void)
     if(head.matrix.count) {
 #ifdef TARGET_PC
         matrix_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMatrix) * head.matrix.count, MEMORY_DEFAULT_NUM);
-        byteswap_hsfmatrix((HsfMatrix *)((uintptr_t)fileptr + head.matrix.ofs));
+        byteswap_hsfmatrix((HsfMatrix32b *)((uintptr_t)fileptr + head.matrix.ofs), matrix_file);
 #else
         matrix_file = (HsfMatrix *)((uintptr_t)fileptr+head.matrix.ofs);
         matrix_file->data = (Mtx *)((u32)fileptr+head.matrix.ofs+sizeof(HsfMatrix));
@@ -1883,12 +1923,16 @@ void KillHSF(HsfData *data)
     HuMemDirectFree(data->palette);
     HuMemDirectFree(data->st);
     HuMemDirectFree(data->vertex);
+    for (i = 0; i < data->cenvCnt; i++) {
+        HsfCenv *cenv = &data->cenv[i];
+        HuMemDirectFree(cenv->dualData);
+        HuMemDirectFree(cenv->multiData);
+    }
     HuMemDirectFree(data->cenv);
     HuMemDirectFree(data->cluster);
     HuMemDirectFree(data->part);
     HuMemDirectFree(data->shape);
     HuMemDirectFree(data->mapAttr);
     HuMemDirectFree(data->symbol);
-    // TODO PC free embedded data
 }
 #endif

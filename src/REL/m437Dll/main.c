@@ -15,10 +15,14 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "math.h"
 #include "string.h"
 #include "version.h"
+
+s32 rand8(void);
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 typedef struct {
     /* 0x000 */ omObjData *unk00;

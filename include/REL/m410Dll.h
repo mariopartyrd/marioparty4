@@ -205,6 +205,10 @@ void fn_1_28AC(s32 arg0);
 s32 fn_1_28DC(void);
 float fn_1_2FD4(float arg8, float arg9, float argA);
 float fn_1_30F0(float arg8, float arg9);
+void fn_1_31A4(Process *process);
+void fn_1_31F8(void);
+void fn_1_33A8(Process *objman);
+void fn_1_3484(void);
 s32 fn_1_76B8(Vec arg0, Vec arg1, u16 arg2);
 void fn_1_77E8(void *arg0);
 void fn_1_77F8(u16 arg0, Vec *arg1);
@@ -213,5 +217,6 @@ void fn_1_7888(u16 arg0, u16 arg1, Vec *arg2);
 s32 fn_1_79F8(s16 arg0, char *arg1, Mtx arg2);
 void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3);
 void fn_1_7E30(Process *objman);
+void fn_1_806C(void);
 
 #endif

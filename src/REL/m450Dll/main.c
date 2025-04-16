@@ -1707,7 +1707,7 @@ s16 fn_1_5ED8(AnimData *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
     var_r31->unk_00 = 0;
     var_r31->unk_66 = arg3;
     var_r31->unk_6B = 0;
-    var_r31->unk_10 = HuMemDirectMallocNum(HEAP_DATA, arg3 * 0x40, var_r28->unk_48);
+    var_r31->unk_10 = HuMemDirectMallocNum(HEAP_DATA, arg3 * sizeof(UnkM450Struct2), var_r28->unk_48);
     for (var_r24 = var_r31->unk_10, var_r30 = 0; var_r30 < arg3; var_r30++, var_r24++) {
         var_r24->unk_3E = -1;
         var_r24->unk_3C = -1;
@@ -1889,12 +1889,7 @@ void fn_1_6798(s16 arg0, s16 arg1, Vec *arg2, float arg8, float arg9, float argA
 
 s16 fn_1_69F8(Vec *arg0, float *arg1, s16 arg2)
 {
-    s16 var_r31;
-    void *var_r30;
-    ModelData *var_r29;
-    ModelData *var_r28;
-
-    var_r31 = fn_1_5ED8(lbl_1_bss_14, arg0, arg1, arg2, 80.0f, 0x40, 0x40);
+    s16 var_r31 = fn_1_5ED8(lbl_1_bss_14, arg0, arg1, arg2, 80.0f, 0x40, 0x40);
     fn_1_6638(var_r31, fn_1_5148);
     fn_1_6670(var_r31, 1);
     Hu3DModelLayerSet(var_r31, 5);
@@ -2295,8 +2290,6 @@ void fn_1_8120(void)
     float var_f29;
 
     s32 var_r31;
-    s32 var_r30;
-    s32 var_r29;
 
     float sp10[2] = { 0.0f, 0.0f };
     s32 sp24[22] = {
@@ -2358,12 +2351,6 @@ void fn_1_8120(void)
 
 void fn_1_8500(void)
 {
-    float sp28;
-    float sp20;
-    float sp18;
-    float sp10;
-    float sp8;
-
     s32 var_r31;
 
     float sp30[2] = { 0.0f, 0.0f };
@@ -2407,8 +2394,6 @@ void fn_1_8500(void)
 
 void fn_1_8BDC(void)
 {
-    s32 var_r31;
-
     lbl_1_bss_4 = 2;
     lbl_1_bss_0 = -1;
     fn_1_E1A8(1, 0xD, 8.0f, 0x40000001, -1, 0.0f);
@@ -2841,7 +2826,6 @@ void fn_1_AD58(omObjData *object)
     float spC8;
 
     UnkM450Struct3 *var_r31;
-    Vec2f *var_r25;
     s32 var_r20;
 
     var_r20 = 0;
@@ -3482,7 +3466,6 @@ void fn_1_E478(UnkM450Struct3 *arg0, omObjData *arg1)
 void fn_1_E604(UnkM450Struct3 *arg0, omObjData *arg1)
 {
     Vec spC;
-    float sp8;
 
     arg0->unk_D4 = ((UnkM450Struct5 *)lbl_1_bss_138->data)->unk_00.unk_6C;
     if (((arg0->unk_154 & 0x10) != 0) && ((arg0->unk_154 & 0x20) == 0)) {
@@ -3538,10 +3521,6 @@ HsfanimStruct00 lbl_1_data_1504;
 
 void fn_1_EB6C(UnkM450Struct3 *arg0, omObjData *arg1)
 {
-    s32 var_r29;
-    s16 var_r28;
-    u32 var_r27;
-
     fn_1_1D18(arg1->model[4], "g007i03-itemhook_M", &arg0->unk_00.unk_6C);
     Hu3DModelHookObjReset(arg1->model[4], "g007i03-itemhook_M");
     Hu3DModelAttrSet(arg1->model[4], HU3D_ATTR_DISPOFF);
@@ -4517,9 +4496,6 @@ void fn_1_12A1C(omObjData *object)
 
 void fn_1_12B80(omObjData *object)
 {
-    s32 var_r30;
-    s16 var_r29;
-
     object->work[0] = frandmod(3 * REFRESH_RATE);
     omSetTra(object, 0.0f, 0.0f, 0.0f);
     omSetRot(object, 0.0f, 0.0f, 0.0f);
@@ -4712,7 +4688,6 @@ void fn_1_13BC4(s32 arg0)
 {
     s32 var_r31;
     UnkData1380Struct *var_r30;
-    s16 var_r29;
 
     nMap = 0;
     lbl_1_bss_118 = arg0;
@@ -5625,12 +5600,7 @@ void fn_1_17BBC(omObjData *object)
 
 void fn_1_18424(s32 arg0, Vec *arg1)
 {
-    UnkBss358Struct *var_r27;
-    UnkBss358Struct *var_r28;
-    UnkBss358Struct *var_r29;
     omObjData *var_r31;
-    s16 var_r24;
-    s16 var_r25;
     s16 var_r26;
     UnkM450Struct4 *var_r30;
 
@@ -5905,12 +5875,9 @@ s32 fn_1_1964C(Vec *arg0, Vec *arg1)
 
 s32 fn_1_19798(void)
 {
-    float sp8;
     float var_f31;
     float var_f30;
-    float var_f29;
     float var_f28;
-    float var_f27;
 
     UnkM450Struct5 *var_r31 = lbl_1_bss_138->data;
     UnkM450Struct3 *var_r30 = lbl_1_bss_134->data;
@@ -6415,8 +6382,6 @@ s32 fn_1_1C39C(UnkM450Struct5 *arg0)
 
 void fn_1_1C434(UnkM450Struct5 *arg0, omObjData *arg1)
 {
-    s32 var_r30;
-
     arg0->unk_118++;
     lbl_1_bss_1A4->work[0] += 1;
     lbl_1_bss_128 = 0.0f;
@@ -6754,8 +6719,6 @@ void fn_1_1E150(omObjData *var_r29)
 
 void fn_1_200BC(UnkM450Struct5 *arg0, omObjData *object)
 {
-    s32 var_r31;
-
     arg0->unk_118++;
     arg0->unk_FC &= ~0x802;
     arg0->unk_FC &= ~0x70;

@@ -1,19 +1,18 @@
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-
-#include "game/audio.h"
 #include "game/gamework_data.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/sprite.h"
-#include "game/wipe.h"
 
 #include "REL/m431Dll.h"
 #include "ext_math.h"
 #include "version.h"
+
+s32 rand8(void);
 
 typedef struct bss_struct_62C {
     u8 unk0;

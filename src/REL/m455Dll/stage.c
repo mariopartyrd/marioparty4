@@ -5,14 +5,8 @@
 #include "game/hsfanim.h"
 
 #include "game/hsfmotion.h"
-#include "game/pad.h"
 
-#include "game/wipe.h"
 #include "game/frand.h"
-#include "game/audio.h"
-#include "game/minigame_seq.h"
-#include "game/gamework_data.h"
-#include "game/chrman.h"
 #include "game/sprite.h"
 
 #include "REL/m455Dll.h"

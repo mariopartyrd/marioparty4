@@ -416,12 +416,6 @@ s16 Hu3DModelLink(s16 arg0) {
     ModelData* var_r31;
     s16 var_r28;
     s16 i;
-    s32 temp_r0;
-    s32 temp_r3;
-    s32 temp_r5;
-    s32 var_ctr;
-    HsfData* var_r4;
-    HsfData* var_r5;
 
     temp_r30 = &Hu3DData[arg0];
     var_r31 = Hu3DData;
@@ -434,11 +428,11 @@ s16 Hu3DModelLink(s16 arg0) {
         return -1;
     }
     var_r31->unk_C8 = temp_r30->hsfData;
-    var_r31->hsfData = HuMemDirectMallocNum(HEAP_DATA, 0x80, var_r31->unk_4C);
-    var_r31->unk_4C = (u32)var_r31->hsfData;
+    var_r31->hsfData = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfData), var_r31->unk_4C);
+    var_r31->unk_4C = (uintptr_t)var_r31->hsfData;
     *var_r31->hsfData = *temp_r30->hsfData;
     temp_r3_2 = Hu3DObjDuplicate(var_r31->hsfData, var_r31->unk_4C);
-    var_r31->hsfData->root = (HsfObject*)((u32)temp_r3_2 + ((u32)var_r31->hsfData->root - (u32)var_r31->hsfData->object));
+    var_r31->hsfData->root = (HsfObject*)((uintptr_t)temp_r3_2 + ((uintptr_t)var_r31->hsfData->root - (uintptr_t)var_r31->hsfData->object));
     var_r31->hsfData->object = temp_r3_2;
     var_r31->unk_48 = temp_r30->unk_48;
     var_r31->attr = temp_r30->attr;

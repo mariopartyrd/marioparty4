@@ -2,20 +2,15 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/flag.h"
-#include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
-#include "game/hsfmotion.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
-#include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
-#include "game/window.h"
 #include "game/wipe.h"
 #include "string.h"
 
@@ -499,10 +494,6 @@ float fn_1_4130(void)
 void fn_1_41F0(Vec *arg0, Vec *arg1)
 {
     Vec sp10;
-    float var_f29;
-    float var_f28;
-    float var_f27;
-    float var_f26;
 
     sp10.x = arg1->x - arg0->x;
     sp10.y = arg1->y - arg0->y;

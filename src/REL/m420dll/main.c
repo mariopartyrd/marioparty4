@@ -1,10 +1,9 @@
 #include "ext_math.h"
 #include "game/flag.h"
+#include "game/frand.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
-#include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/wipe.h"
 
 #include "REL/m420dll.h"

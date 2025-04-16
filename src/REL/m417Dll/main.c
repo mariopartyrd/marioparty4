@@ -1,10 +1,13 @@
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/chrman.h"
 #include "game/hsfdraw.h"
 #include "game/minigame_seq.h"
+#include "game/objsub.h"
 #include "game/wipe.h"
 
 #include "REL/m417Dll.h"
+
 
 typedef struct UnkM417Struct {
     /* 0x00 */ u32 unk_00;
@@ -109,9 +112,9 @@ void fn_1_4D8(omObjData *object)
 {
     UnkM417Struct *var_r31;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x68, 268435456);
+    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM417Struct), 268435456);
     var_r31 = object->data;
-    memset(var_r31, 0, 0x68);
+    memset(var_r31, 0, sizeof(UnkM417Struct));
     var_r31->unk_00 = 0;
     var_r31->unk_04 = 0;
     var_r31->unk_0C = 0;

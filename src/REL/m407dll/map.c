@@ -64,10 +64,6 @@ void fn_1_15D8(void)
 
 void fn_1_162C(omObjData *arg0)
 {
-    s32 var_r30;
-    s32 var_r30_2;
-    s32 var_r30_3;
-    s32 var_r30_4;
     s32 i;
 
     arg0->func = fn_1_1A8C;

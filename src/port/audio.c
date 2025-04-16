@@ -259,7 +259,7 @@ s32 HuAudFXVolSet(int seNo, s16 vol)
 }
 
 s32 HuAudSeqPlay(s16 musId) {
-    s32 channel;
+    s32 channel = 0;
 
     if (musicOffF != 0 || omSysExitReq != 0) {
         return 0;

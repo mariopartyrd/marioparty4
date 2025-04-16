@@ -4,27 +4,19 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/flag.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
-#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
-#include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
-#include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "string.h"
 
 #include "REL/m430Dll.h"
 
 #ifndef __MWERKS__
-#include "game/esprite.h"
 #include "game/frand.h"
 
 void GXSetTevIndWarp(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXBool signed_offsets, GXBool replace_mode, GXIndTexMtxID matrix_sel);
@@ -733,7 +725,6 @@ void fn_1_732C(omObjData *object, M430DllUnkStruct2 *arg1)
     Vec sp8;
     float var_f31;
     float var_f30;
-    float var_f29;
     s32 var_r30;
     s32 var_r29;
     s32 var_r28;
@@ -1509,8 +1500,6 @@ void fn_1_A3A8(ModelData *model, Mtx matrix)
     Mtx sp18;
     float var_f31;
     float var_f30;
-    u8 *var_r30;
-    u8 *var_r29;
 
     GXColor sp14 = { 0xFF, 0xA5, 0x59, 0xB2 };
     GXColor sp10 = { 0x99, 0x72, 0x59, 0xB2 };

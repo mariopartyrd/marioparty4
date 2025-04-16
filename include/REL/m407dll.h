@@ -18,6 +18,9 @@ void fn_1_334(void);
 void fn_1_388(u8, s32);
 void fn_1_3C4(u8);
 void fn_1_404(void);
+#ifndef __MWERKS__
+s32 fn_1_4C0(u8 arg0);
+#endif
 s32 fn_1_508(u8);
 s32 fn_1_53C(u8);
 void fn_1_568(s16, s16, s16);
@@ -37,6 +40,7 @@ void fn_1_2564(void);
 void fn_1_25C0(void);
 s32 fn_1_2880(void);
 #ifndef __MWERKS__
+void fn_1_2770(u8 arg0);
 s16 fn_1_28B8(u8 arg0);
 s16 fn_1_28D4(void);
 #endif

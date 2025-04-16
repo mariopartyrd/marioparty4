@@ -1,4 +1,5 @@
-#include "dolphin.h"
+#ifndef M424DLL_H
+#define M424DLL_H
 
 #include "game/object.h"
 
@@ -31,6 +32,7 @@ extern M424DllBallStruct2 lbl_1_bss_60[9];
 extern u8 lbl_1_bss_58;
 extern s16 lbl_1_bss_24[4];
 
+s32 fn_1_FE0(void);
 float fn_1_1358(float, float);
 float fn_1_1470(float, float, float);
 omObjData *fn_1_1AB8(Process *);
@@ -42,9 +44,13 @@ void fn_1_2720(Process *);
 void fn_1_2880(void);
 Vec *fn_1_8A00(u8);
 s32 fn_1_8A2C(void);
+s32 fn_1_907C(Vec *arg0, Vec *arg1);
 omObjData *fn_1_93F0(Process *);
 void fn_1_94A4(void);
 s32 fn_1_B804(void);
 s32 fn_1_B888(void);
 s32 fn_1_B8AC(void);
 s32 fn_1_B924(void);
+void fn_1_C2E0(s32 arg0);
+
+#endif

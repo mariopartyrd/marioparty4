@@ -1,13 +1,20 @@
 #include "REL/m424Dll.h"
 
-#include "math.h"
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/EnvelopeExec.h"
 #include "game/gamework_data.h"
+#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+#include "game/memory.h"
 #include "game/pad.h"
+#include "math.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 // STRUCT
 typedef struct _M424DllClawStruct {
@@ -146,8 +153,8 @@ void fn_1_94D0(omObjData *arg0)
     s32 var_r29;
     M424DllClawStruct *var_r31;
 
-    var_r31 = arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1B0, 0x10000000);
-    memset(var_r31, 0, 0x1B0);
+    var_r31 = arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M424DllClawStruct), MEMORY_DEFAULT_NUM);
+    memset(var_r31, 0, sizeof(M424DllClawStruct));
     var_r31->unk0 = lbl_1_bss_24[3];
     var_r31->unk2 = GWPlayerCfg[var_r31->unk0].character;
     var_r31->unk4 = GWPlayerCfg[var_r31->unk0].pad_idx;

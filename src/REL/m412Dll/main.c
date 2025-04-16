@@ -11,7 +11,6 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
-#include "math.h"
 
 // bss
 s16 lbl_1_bss_7A0;

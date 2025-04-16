@@ -1,8 +1,6 @@
 #include "game/hsfman.h"
 #include "game/object.h"
 
-#include "game/window.h"
-
 #include "ext_math.h"
 
 void fn_1_D9F4(s16);

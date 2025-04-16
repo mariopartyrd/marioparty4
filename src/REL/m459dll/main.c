@@ -12,9 +12,7 @@
 #include "game/printfunc.h"
 #include "game/wipe.h"
 
-// #ifndef __MWERKS__
 #include "game/frand.h"
-// #endif
 
 typedef struct M459DllBss18Struct {
     /* 0x00 */ s32 unk_00;
@@ -526,7 +524,6 @@ void fn_1_73C(void)
 
 void fn_1_E78(void)
 {
-    float sp8;
     float var_f31;
     M459DllBss61CStruct *var_r31;
 
@@ -1154,10 +1151,6 @@ loop_1:
 
 void fn_1_338C(M459DllBssCCStruct *arg0, float arg8)
 {
-    float spC;
-    float var_f31;
-    float var_f30;
-    float var_f29;
     s16 var_r30;
 
     var_r30 = 0;

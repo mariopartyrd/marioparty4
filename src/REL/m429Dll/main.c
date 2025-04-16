@@ -1,27 +1,32 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
 #include "game/frand.h"
-#include "game/minigame_seq.h"
-#include "game/object.h"
-#include "game/objsub.h"
-#include "game/wipe.h"
-
-#include "game/gamework_data.h"
-
-#include "game/mapspace.h"
-#include "game/pad.h"
-#include "game/printfunc.h"
-
+#include "game/esprite.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-
-#include "game/esprite.h"
+#include "game/gamework.h"
+#include "game/gamework_data.h"
+#include "game/mapspace.h"
+#include "game/minigame_seq.h"
+#include "game/object.h"
+#include "game/objsub.h"
+#include "game/pad.h"
+#include "game/printfunc.h"
 #include "game/sprite.h"
+#include "game/wipe.h"
 
 #include "ext_math.h"
 #include "version.h"
+
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/hsfex.h"
+#endif
+
+void HuSysVWaitSet(s16 vcount);
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -1501,8 +1506,6 @@ void fn_1_50AC(Work8F68 *arg0, omObjData *arg1)
 void fn_1_54BC(Work8F68 *arg0, omObjData *arg1)
 {
     float temp_f31;
-    float temp_f30;
-    float temp_f29;
     Vec sp14;
     Vec sp8;
     omObjData *temp_r29;
@@ -1618,7 +1621,6 @@ void fn_1_595C(Work8F68 *arg0, Work8F68 *arg1)
 
 s32 fn_1_5CDC(Work8F68 *arg0)
 {
-    s32 temp_r30;
     s32 temp_r29;
     s32 temp_r28;
     Work3284 *temp_r27;

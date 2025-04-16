@@ -17,8 +17,6 @@
 #include "game/wipe.h"
 #include "string.h"
 
-#include "game/frand.h"
-
 extern s32 rand8(void);
 
 typedef struct UnkCameraStruct {

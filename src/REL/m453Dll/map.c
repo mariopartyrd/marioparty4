@@ -3,16 +3,12 @@
 #include "game/chrman.h"
 #include "game/flag.h"
 #include "game/frand.h"
-#include "game/gamework.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-#include "game/minigame_seq.h"
-#include "game/objsub.h"
-#include "game/pad.h"
+#include "game/memory.h"
 #include "game/sprite.h"
-#include "game/wipe.h"
 #include "math.h"
 #include "string.h"
 
@@ -464,7 +460,7 @@ void fn_1_6C74(omObjData *object)
     s32 var_r31;
     M453MapUnkStruct *var_r29;
 
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x54, 0x10000000);
+    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M453MapUnkStruct), MEMORY_DEFAULT_NUM);
     object->data = var_r29;
     memset(object->data, 0, 0x54);
     for (var_r31 = 0; var_r31 < 0xC; var_r31++) {

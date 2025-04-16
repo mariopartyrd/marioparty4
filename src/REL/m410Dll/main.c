@@ -1,14 +1,15 @@
-#include "ext_math.h"
+#include <game/audio.h>
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
+#include "game/objsub.h"
 #include "game/wipe.h"
+#include "ext_math.h"
 
 #include "REL/m410Dll.h"
 
-#include <game/audio.h>
 
 Process *lbl_1_bss_28;
 omObjData *lbl_1_bss_24;
