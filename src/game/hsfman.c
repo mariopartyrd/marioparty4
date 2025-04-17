@@ -293,10 +293,13 @@ void Hu3DAllKill(void) {
     Hu3DCameraAllKill();
     Hu3DLightAllKill();
     Hu3DAnimAllKill();
+#if __MWERKS__
+    // this causes anim to be reallocated, so we lose the old allocation
     if(reflectAnim[0] != (AnimData *)refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
     reflectAnim[0] = HuSprAnimRead(refMapData0);
+#endif
     if(Hu3DShadowData.unk_04) {
         HuMemDirectFree(Hu3DShadowData.unk_04);
         Hu3DShadowCamBit = 0;

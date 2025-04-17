@@ -225,6 +225,7 @@ AnimData *HuSprAnimRead(void *data)
     AnimData *anim = (AnimData *)data;
 #endif
     if((uintptr_t)anim->bank & ~0xFFFF) {
+        // TODO PC it's a problem if we get here, we need to find a way to not allocate again in that case
         anim->useNum++;
         return anim;
     }
@@ -649,6 +650,15 @@ AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     AnimBankData *bank;
     AnimData *new_anim;
 
+#ifdef TARGET_PC
+    // as these are allocated in HuSprAnimRead, we need to do so here too so we don't get issues when freeing
+    anim = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimData));
+    anim->bank = bank = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimBankData));
+    bank->frame = frame = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimFrameData));
+    anim->pat = pat = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimPatData));
+    pat->layer = layer = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimLayerData));
+    anim->bmp = bmp = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimBmpData));
+#else
     anim = new_anim = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimData)+sizeof(AnimBankData)+sizeof(AnimFrameData)
                                             +sizeof(AnimPatData)+sizeof(AnimLayerData)+sizeof(AnimBmpData));
 
@@ -662,6 +672,7 @@ AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     pat->layer = layer;
     bmp = temp = ((char *)temp+sizeof(AnimLayerData));
     anim->bmp = bmp;
+#endif
     anim->useNum = 0;
     anim->bankNum = 1;
     anim->patNum = 1;
