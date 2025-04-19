@@ -78,6 +78,13 @@ typedef struct anim_data {
 /* 0x08 */ AnimBankData *bank;
 /* 0x0C */ AnimPatData *pat;
 /* 0x10 */ AnimBmpData *bmp;
+#ifdef TARGET_PC
+    u32 valid;
+#endif
 } AnimData; //sizeof 0x14
+
+#ifdef TARGET_PC
+#define ANIM_DATA_ALLOCATION_VALID 0xD3D3D3D3
+#endif
 
 #endif

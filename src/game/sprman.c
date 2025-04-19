@@ -218,17 +218,21 @@ AnimData *HuSprAnimRead(void *data)
     AnimBankData *bank;
     AnimPatData *pat;
 
+    AnimData *anim = data;
 #ifdef TARGET_PC
-    AnimData *anim = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimData), MEMORY_DEFAULT_NUM);
-    byteswap_animdata(data, anim);
-#else
-    AnimData *anim = (AnimData *)data;
-#endif
-    if((uintptr_t)anim->bank & ~0xFFFF) {
-        // TODO PC it's a problem if we get here, we need to find a way to not allocate again in that case
+    if (anim->valid == ANIM_DATA_ALLOCATION_VALID) {
         anim->useNum++;
         return anim;
     }
+    anim = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimData), MEMORY_DEFAULT_NUM);
+    byteswap_animdata(data, anim);
+    anim->valid = ANIM_DATA_ALLOCATION_VALID;
+#else
+    if((uintptr_t)anim->bank & ~0xFFFF) {
+        anim->useNum++;
+        return anim;
+    }
+#endif
     bank = (void *)((uintptr_t)anim->bank+(uintptr_t)data);
 #ifdef TARGET_PC
     bank = HuMemDirectMallocNum(HEAP_DATA, anim->bankNum * sizeof(AnimBankData), MEMORY_DEFAULT_NUM);

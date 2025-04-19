@@ -4,6 +4,7 @@
 #include "game/armem.h"
 #include "game/chrman.h"
 #include "game/hsfdraw.h"
+#include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
@@ -14,6 +15,11 @@
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
+
+#ifndef __MWERKS__
+extern s32 rand8(void);
+#include "game/audio.h"
+#endif
 
 typedef struct MentDllUnkBssE4Struct {
     /* 0x00 */ s32 unk_00;

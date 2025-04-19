@@ -20,7 +20,7 @@ u32 ARGetSize()
     return sizeof(ARAM);
 }
 
-void ARStartDMA(u32 type, u32 mainmem_addr, u32 aram_addr, u32 length)
+void ARStartDMA(u32 type, uintptr_t mainmem_addr, u32 aram_addr, u32 length)
 {
     switch (type)
     {

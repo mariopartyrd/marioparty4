@@ -1896,43 +1896,62 @@ static char *GetMotionString(u16 *str_ofs)
 void KillHSF(HsfData *data)
 {
     s32 i, j;
-    HuMemDirectFree(data->attribute);
-    HuMemDirectFree(data->bitmap);
-    HuMemDirectFree(data->cenv);
-    HuMemDirectFree(data->skeleton);
-    for (i = 0; i < data->faceCnt; i++) { 
-        HuMemDirectFree(data->face[i].data);
-    }
-    HuMemDirectFree(data->face);
-    HuMemDirectFree(data->material);
-    for (i = 0; i < data->motionCnt; i++) {
-        HsfMotion *motion = &data->motion[i];
-        for (j = 0; j < motion->numTracks; j++) {
-            HsfTrack *track = motion->track;
-            if (track->type == HSF_TRACK_ATTRIBUTE && track->curveType == HSF_CURVE_BITMAP) {
-                // in this case we needed to allocate space for HsfBitmapKey structs
-                HuMemDirectFree(track->dataTop);
-            }
+    // if (data->attributeCnt)
+    //     HuMemDirectFree(data->attribute);
+    // if (data->bitmapCnt)
+    //     HuMemDirectFree(data->bitmap);
+    // if (data->skeletonCnt)
+    //     HuMemDirectFree(data->skeleton);
+    // if (data->faceCnt) {
+    //     for (i = 0; i < data->faceCnt; i++) {
+    //         HuMemDirectFree(data->face[i].data);
+    //     }
+    //     HuMemDirectFree(data->face);
+    // }
+    // if (data->materialCnt)
+    //     HuMemDirectFree(data->material);
+    // if (data->motionCnt) {
+    //     for (i = 0; i < data->motionCnt; i++) {
+    //         HsfMotion *motion = &data->motion[i];
+    //         for (j = 0; j < motion->numTracks; j++) {
+    //             // HsfTrack *track = motion->track;
+    //             // if (track->type == HSF_TRACK_ATTRIBUTE && track->curveType == HSF_CURVE_BITMAP) {
+    //             //     // in this case we needed to allocate space for HsfBitmapKey structs
+    //             //     HuMemDirectFree(track->dataTop);
+    //             // }
+    //         }
+    //         // HuMemDirectFree(motion->track);
+    //     }
+    //     // HuMemDirectFree(data->motion);
+    // }
+    // if (data->normalCnt)
+    //     HuMemDirectFree(data->normal);
+    // if (data->objectCnt)
+    //     HuMemDirectFree(data->object);
+    // if (data->matrixCnt)
+    //     HuMemDirectFree(data->matrix);
+    // if (data->paletteCnt)
+    //     HuMemDirectFree(data->palette);
+    // if (data->stCnt)
+    //     HuMemDirectFree(data->st);
+    // if (data->vertexCnt)
+    //     HuMemDirectFree(data->vertex);
+    if (data->cenvCnt) {
+        for (i = 0; i < data->cenvCnt; i++) {
+            HsfCenv *cenv = &data->cenv[i];
+            HuMemDirectFree(cenv->dualData);
+            HuMemDirectFree(cenv->multiData);
         }
-        HuMemDirectFree(motion->track);
+        HuMemDirectFree(data->cenv);
     }
-    HuMemDirectFree(data->motion);
-    HuMemDirectFree(data->normal);
-    HuMemDirectFree(data->object);
-    HuMemDirectFree(data->matrix);
-    HuMemDirectFree(data->palette);
-    HuMemDirectFree(data->st);
-    HuMemDirectFree(data->vertex);
-    for (i = 0; i < data->cenvCnt; i++) {
-        HsfCenv *cenv = &data->cenv[i];
-        HuMemDirectFree(cenv->dualData);
-        HuMemDirectFree(cenv->multiData);
-    }
-    HuMemDirectFree(data->cenv);
-    HuMemDirectFree(data->cluster);
-    HuMemDirectFree(data->part);
-    HuMemDirectFree(data->shape);
-    HuMemDirectFree(data->mapAttr);
-    HuMemDirectFree(data->symbol);
+    if (data->clusterCnt)
+        HuMemDirectFree(data->cluster);
+    if (data->partCnt)
+        HuMemDirectFree(data->part);
+    if (data->shapeCnt)
+        HuMemDirectFree(data->shape);
+    if (data->mapAttrCnt)
+        HuMemDirectFree(data->mapAttr);
+    // HuMemDirectFree(data->symbol);
 }
 #endif

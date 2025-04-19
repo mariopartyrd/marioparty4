@@ -9,6 +9,10 @@
 typedef struct model_data ModelData;
 typedef struct particle_data ParticleData;
 
+#ifdef TARGET_PC
+typedef void (*ParticleDLCallFunc)(ParticleData *particle);
+#endif
+
 typedef void (*ParticleHook)(ModelData *model, ParticleData *particle, Mtx matrix);
 
 typedef struct {
@@ -45,11 +49,11 @@ struct particle_data {
     /* 0x34 */ u32 unk_34;
     /* 0x38 */ s32 unk_38;
     /* 0x3C */ u32 unk_3C;
-    /* 0x40 */ s32 unk_40;
+    /* 0x40 */ s32 unk_40; // dlSize
     /* 0x44 */ AnimData *unk_44;
     /* 0x48 */ HsfanimStruct01 *unk_48;
     /* 0x4C */ Vec *unk_4C;
-    /* 0x50 */ void *unk_50;
+    /* 0x50 */ void *unk_50; // dlPtr
     /* 0x54 */ ParticleHook unk_54;
 }; // Size 0x58
 

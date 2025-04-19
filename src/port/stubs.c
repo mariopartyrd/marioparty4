@@ -624,18 +624,20 @@ void GXUnknownu16(const u16 x)
 
 void GXWaitDrawDone(void)
 {
-    puts("GXWaitDrawDone is a stub");
+    // puts("GXWaitDrawDone is a stub");
 }
 
 void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tilesize_s, u16 tilesize_t, u16 tilespacing_s, u16 tilespacing_t,
     GXIndTexFormat format, GXIndTexMtxID matrix_sel, GXIndTexBiasSel bias_sel, GXIndTexAlphaSel alpha_sel)
 {
-    puts("GXSetTevIndTile is a stub");
+    // TODO
+    // puts("GXSetTevIndTile is a stub");
 }
 
 void GXSetTexCoordScaleManually(GXTexCoordID coord, u8 enable, u16 ss, u16 ts)
 {
-    puts("GXSetTexCoordScaleManually is a stub");
+    // TODO
+    // puts("GXSetTexCoordScaleManually is a stub");
 }
 
 void GXResetWriteGatherPipe(void)
