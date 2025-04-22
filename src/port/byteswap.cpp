@@ -570,10 +570,13 @@ template <typename B> void bswap(B &base, HsfCenvMulti32b &obj, HsfCenvMulti &de
     bswap(base, obj.posCnt);
     bswap(base, obj.normal);
     bswap(base, obj.normalCnt);
+    bswap(base, obj.weight);
 
     dest.weightCnt = obj.weightCnt;
     dest.pos = obj.pos;
     dest.posCnt = obj.posCnt;
+    dest.normal = obj.normal;
+    dest.normalCnt = obj.normalCnt;
     dest.weight = reinterpret_cast<HsfCenvMultiWeight *>(static_cast<uintptr_t>(obj.weight));
 }
 
@@ -695,13 +698,13 @@ template <typename B> void bswap(B &base, HsfBitmapKey32b &obj, HsfBitmapKey &de
 
 template <typename B> void bswap(B &base, HsfTrack32b &obj, HsfTrack &dest)
 {
-    bswap(base, obj.type);
-    bswap(base, obj.start);
+    bswap(base, obj.target);
     bswap(base, obj.curveType);
     bswap(base, obj.numKeyframes);
 
     dest.type = obj.type;
     dest.start = obj.start;
+    dest.target = obj.target;
     dest.curveType = obj.curveType;
     dest.numKeyframes = obj.numKeyframes;
 

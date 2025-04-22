@@ -1901,7 +1901,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
         temp_r29 = &temp_r31->unk2C[temp_r31->unk28->unk38[0]];
         fn_1_7D60(temp_r29->unk80, temp_r29, 0);
         lbl_1_bss_2C = 1;
-        HuSprTexLoad(*hiliteAnim, 0, lbl_1_bss_2C, GX_CLAMP, GX_CLAMP, GX_LINEAR);
+        HuSprTexLoad(hiliteAnim[0], 0, lbl_1_bss_2C, GX_CLAMP, GX_CLAMP, GX_LINEAR);
         fn_1_8470(temp_r31->unk28, temp_r29);
     }
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);

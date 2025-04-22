@@ -218,19 +218,25 @@ AnimData *HuSprAnimRead(void *data)
     AnimBankData *bank;
     AnimPatData *pat;
 
+    AnimData *anim = data;
 #ifdef TARGET_PC
-    AnimData *anim = HuMemDirectMallocNum(HEAP_DATA, sizeof(AnimData), MEMORY_DEFAULT_NUM);
+    s16 j;
+    if (anim->valid == ANIM_DATA_ALLOCATION_VALID) {
+        anim->useNum++;
+        return anim;
+    }
+    anim = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimData));
     byteswap_animdata(data, anim);
+    anim->valid = ANIM_DATA_ALLOCATION_VALID;
 #else
-    AnimData *anim = (AnimData *)data;
-#endif
     if((uintptr_t)anim->bank & ~0xFFFF) {
         anim->useNum++;
         return anim;
     }
+#endif
     bank = (void *)((uintptr_t)anim->bank+(uintptr_t)data);
 #ifdef TARGET_PC
-    bank = HuMemDirectMallocNum(HEAP_DATA, anim->bankNum * sizeof(AnimBankData), MEMORY_DEFAULT_NUM);
+    bank = HuMemDirectMalloc(HEAP_DATA, anim->bankNum * sizeof(AnimBankData));
     for(i=0; i<anim->bankNum; i++) {
         byteswap_animbankdata(&((AnimBankData32b*)((uintptr_t)anim->bank+(uintptr_t)data))[i], &bank[i]);
     }
@@ -238,7 +244,7 @@ AnimData *HuSprAnimRead(void *data)
     anim->bank = bank;
     pat = (void *)((uintptr_t)anim->pat+(uintptr_t)data);
 #ifdef TARGET_PC
-    pat = HuMemDirectMallocNum(HEAP_DATA, anim->patNum * sizeof(AnimPatData), MEMORY_DEFAULT_NUM);
+    pat = HuMemDirectMalloc(HEAP_DATA, anim->patNum * sizeof(AnimPatData));
     for(i=0; i<anim->patNum; i++) {
         byteswap_animpatdata(&((AnimPatData32b*)((uintptr_t)anim->pat+(uintptr_t)data))[i], &pat[i]);
     }
@@ -246,7 +252,7 @@ AnimData *HuSprAnimRead(void *data)
     anim->pat = pat;
     bmp = (void *)((uintptr_t)anim->bmp+(uintptr_t)data);
 #ifdef TARGET_PC
-    bmp = HuMemDirectMallocNum(HEAP_DATA, anim->bmpNum * sizeof(AnimBmpData), MEMORY_DEFAULT_NUM);
+    bmp = HuMemDirectMalloc(HEAP_DATA, anim->bmpNum * sizeof(AnimBmpData));
     for(i=0; i<anim->bmpNum; i++) {
         byteswap_animbmpdata(&((AnimBmpData32b*)((uintptr_t)anim->bmp+(uintptr_t)data))[i], &bmp[i]);
     }
@@ -261,7 +267,9 @@ AnimData *HuSprAnimRead(void *data)
     for(i=0; i<anim->patNum; i++, pat++) {
         pat->layer = (AnimLayerData *)((uintptr_t)pat->layer+(uintptr_t)data);
 #ifdef TARGET_PC
-        byteswap_animlayerdata(pat->layer);
+        for (j = 0; j < pat->layerNum; j++) {
+            byteswap_animlayerdata(&pat->layer[j]);
+        }
 #endif
     }
     for(i=0; i<anim->bmpNum; i++, bmp++) {
@@ -649,6 +657,15 @@ AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     AnimBankData *bank;
     AnimData *new_anim;
 
+#ifdef TARGET_PC
+    // as these are allocated in HuSprAnimRead, we need to do so here too so we don't get issues when freeing
+    anim = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimData));
+    anim->bank = bank = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimBankData));
+    bank->frame = frame = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimFrameData));
+    anim->pat = pat = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimPatData));
+    pat->layer = layer = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimLayerData));
+    anim->bmp = bmp = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimBmpData));
+#else
     anim = new_anim = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimData)+sizeof(AnimBankData)+sizeof(AnimFrameData)
                                             +sizeof(AnimPatData)+sizeof(AnimLayerData)+sizeof(AnimBmpData));
 
@@ -662,6 +679,7 @@ AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     pat->layer = layer;
     bmp = temp = ((char *)temp+sizeof(AnimLayerData));
     anim->bmp = bmp;
+#endif
     anim->useNum = 0;
     anim->bankNum = 1;
     anim->patNum = 1;

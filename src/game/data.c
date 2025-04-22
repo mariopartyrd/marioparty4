@@ -337,7 +337,12 @@ void *HuDataReadNum(s32 data_num, s32 num)
     }
     read_stat = &ReadDataStat[status];
     GetFileInfo(read_stat, data_num & 0xFFFF);
+#ifdef TARGET_PC
+    // TODO PC why is the allocation invalid if we use HEAP_SYSTEM?
+    buf = HuMemDirectMallocNum(HEAP_DATA, DATA_EFF_SIZE(read_stat->raw_len), num);
+#else
     buf = HuMemDirectMallocNum(HEAP_SYSTEM, DATA_EFF_SIZE(read_stat->raw_len), num);
+#endif
     if(buf) {
         HuDecodeData(read_stat->file, buf, read_stat->raw_len, read_stat->comp_type);
     }

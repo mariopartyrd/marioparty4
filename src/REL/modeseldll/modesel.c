@@ -31,8 +31,6 @@ s16 lbl_1_bss_80;
 
 void fn_1_3668(void);
 
-// Scratch is at https://decomp.me/scratch/iirXp
-// Register allocation issues at line 180 with load of 1.0 double constant
 s32 fn_1_2490(void)
 {
     float sp10[2];

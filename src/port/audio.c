@@ -316,7 +316,7 @@ s32 HuAudSeqMidiCtrlGet(s32 musNo, s8 channel, s8 ctrl) {
 
 s32 HuAudSStreamPlay(s16 streamId) {
     MSM_STREAMPARAM param;
-    s32 result;
+    s32 result = 0;
 
     if (musicOffF != 0 || omSysExitReq != 0) {
         return 0;
@@ -502,12 +502,12 @@ void HuAudSndCommonGrpSet(s16 grpId, s32 groupCheck) {
     // while ((msmMusGetNumPlay(1) != 0 || msmSeGetNumPlay(1) != 0)
     //     && OSTicksToMilliseconds(OSGetTick() - osTick) < 500);
     OSReport("CommonGrpSet %d\n", grpId);
-    if (groupCheck != 0) {
-        // err = msmSysDelGroupBase(0);
-        if (err < 0) {
-            OSReport("Del Group Error %d\n", err);
-        }
-    }
+    // if (groupCheck != 0) {
+    //     // err = msmSysDelGroupBase(0);
+    //     if (err < 0) {
+    //         OSReport("Del Group Error %d\n", err);
+    //     }
+    // }
     // buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grpId));
     // msmSysLoadGroupBase(grpId, buf);
     // HuMemDirectFree(buf);

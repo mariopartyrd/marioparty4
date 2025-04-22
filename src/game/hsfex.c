@@ -2,8 +2,10 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/disp.h"
+#include "game/process.h"
 
 #include "ext_math.h"
+
 
 #define DISP_HALF_W (HU_DISP_WIDTH/2.0f)
 #define DISP_HALF_H (HU_DISP_HEIGHT/2.0f)

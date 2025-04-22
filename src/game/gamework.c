@@ -4,6 +4,10 @@
 #include "string.h"
 #include "version.h"
 
+#ifndef __MWERKS__
+#include "game/pad.h"
+#endif
+
 SHARED_SYM s16 GwLanguage = 1;
 SHARED_SYM s16 GwLanguageSave = -1;
 

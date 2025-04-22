@@ -90,7 +90,6 @@ static u16 *faceNumBuf;
 static s32 DLTotalNum;
 static u32 totalSize;
 static uintptr_t mallocNo;
-static uintptr_t mallocNo;
 static s32 curModelID;
 static s16 polySize;
 static s32 PGFinishF;
@@ -189,10 +188,6 @@ static void objCall(ModelData *arg0, HsfObject *arg1)
 
 static void objMesh(ModelData *arg0, HsfObject *arg1)
 {
-#ifdef TARGET_PC
-    // TODO PC
-    return;
-#endif
     HsfDrawObject *temp_r29;
     HsfConstData *temp_r25;
     HsfTransform *var_r30;
@@ -753,11 +748,11 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
             SetTevStageTex(arg0, temp_r30);
         }
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayList(sp28, DrawData[drawCnt].dlSize);
+        GXCALLDISPLAYLISTLE(sp28, DrawData[drawCnt].dlSize);
     }
     else {
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayList(sp28, DrawData[drawCnt].dlSize);
+        GXCALLDISPLAYLISTLE(sp28, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
@@ -1778,7 +1773,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
                 else {
                     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                     if (temp_r28->hsfData->cenvCnt == 0) {
-                        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_RGB8, 0);
+                        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
                         GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * 3, 3);
                     }
                     else {
@@ -1807,7 +1802,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayList(var_r26, DrawData[drawCnt].dlSize);
+        // GXCALLDISPLAYLISTLE(var_r26, DrawData[drawCnt].dlSize);
     }
     else {
         if (!(temp_r27->flags & 0x400)) {
@@ -1815,7 +1810,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
             return;
         }
         var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayList(var_r26, DrawData[drawCnt].dlSize);
+        // GXCALLDISPLAYLISTLE(var_r26, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
@@ -2514,12 +2509,9 @@ void MakeDisplayList(s16 arg0, uintptr_t arg1)
     var_r30 = &Hu3DData[arg0];
     curModelID = arg0;
     mallocNo = arg1;
-#ifdef __MWERKS__
-    // TODO PC
     faceNumBuf = HuMemDirectMallocNum(HEAP_DATA, 0x800 * sizeof(u16), mallocNo);
     MDObjCall(temp_r31, temp_r31->root);
     HuMemDirectFree(faceNumBuf);
-#endif
     if (var_r30->attr & HU3D_ATTR_SHADOW) {
         Hu3DShadowCamBit++;
     }
@@ -2629,7 +2621,7 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1)
     if (temp_r30 != materialBak || polyTypeBak != (arg1->type & 7) || (arg1->type & 7) == 4) {
         polyTypeBak = arg1->type & 7;
         materialBak = temp_r30;
-        DrawData[drawCnt].dlOfs = (u32)DLBufP - (u32)DLBufStartP;
+        DrawData[drawCnt].dlOfs = (uintptr_t)DLBufP - (uintptr_t)DLBufStartP;
         GXBeginDisplayList(DLBufP, 0x20000);
         GXResetWriteGatherPipe();
         if (temp_r30->numAttrs == 0) {
@@ -2729,9 +2721,6 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1)
                         GXTexCoord1x16(arg1->indices[1][3]);
                     }
                 }
-#ifdef TARGET_PC
-                GXEnd();
-#endif
                 faceCnt = faceNumBuf[drawCnt] / 3;
                 break;
             case 3:
@@ -2806,9 +2795,6 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1)
                         GXTexCoord1x16(arg1->indices[1][3]);
                     }
                 }
-#ifdef TARGET_PC
-                GXEnd();
-#endif
                 faceCnt = faceNumBuf[drawCnt] / 4;
                 break;
             case 4:
@@ -2884,9 +2870,6 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1)
                         GXTexCoord1x16(var_r24[3]);
                     }
                 }
-#ifdef TARGET_PC
-                GXEnd();
-#endif
                 faceCnt = arg1->strip.count + 1;
                 break;
         }

@@ -962,6 +962,7 @@ static void CenvLoad(void)
             dual_new = dual_file = cenv_new[i].dualData;
             for(j=0; j<cenv_new[i].dualCount; j++) {
 #ifdef TARGET_PC
+                s32 k;
                 byteswap_hsfcenv_dual(&dual_data_real[j], &dual_new[j]);
 #endif
                 dual_new[j].target1 = dual_file[j].target1;
@@ -969,12 +970,15 @@ static void CenvLoad(void)
                 dual_new[j].weightCnt = dual_file[j].weightCnt;
                 dual_new[j].weight = (HsfCenvDualWeight *)((uintptr_t)weight_base + (uintptr_t)dual_file[j].weight);
 #ifdef TARGET_PC
-                byteswap_hsfcenv_dual_weight(dual_new[j].weight);
+                for (k = 0; k < dual_new[j].weightCnt; k++) {
+                    byteswap_hsfcenv_dual_weight(&dual_new[j].weight[k]);
+                }
 #endif
             }
             multi_new = multi_file = cenv_new[i].multiData;
             for(j=0; j<cenv_new[i].multiCount; j++) {
 #ifdef TARGET_PC
+                s32 k;
                 byteswap_hsfcenv_multi(&multi_data_real[j], &multi_new[j]);
 #endif
                 multi_new[j].weightCnt = multi_file[j].weightCnt;
@@ -984,7 +988,9 @@ static void CenvLoad(void)
                 multi_new[j].normalCnt = multi_file[j].normalCnt;
                 multi_new[j].weight = (HsfCenvMultiWeight *)((uintptr_t)weight_base + (uintptr_t)multi_file[j].weight);
 #ifdef TARGET_PC
-                byteswap_hsfcenv_multi_weight(dual_new[j].weight);
+                for (k = 0; k < multi_new[j].weightCnt; k++) {
+                    byteswap_hsfcenv_multi_weight(&multi_new[j].weight[k]);
+                }
 #endif
             }
             dual_new = dual_file = cenv_new[i].dualData;
@@ -1896,17 +1902,22 @@ static char *GetMotionString(u16 *str_ofs)
 void KillHSF(HsfData *data)
 {
     s32 i, j;
-    HuMemDirectFree(data->attribute);
-    HuMemDirectFree(data->bitmap);
-    HuMemDirectFree(data->cenv);
-    HuMemDirectFree(data->skeleton);
-    for (i = 0; i < data->faceCnt; i++) { 
-        HuMemDirectFree(data->face[i].data);
+    if (data->attributeCnt)
+        HuMemDirectFree(data->attribute);
+    if (data->bitmapCnt)
+        HuMemDirectFree(data->bitmap);
+    if (data->skeletonCnt)
+        HuMemDirectFree(data->skeleton);
+    if (data->faceCnt) {
+        for (i = 0; i < data->faceCnt; i++) {
+            HuMemDirectFree(data->face[i].data);
+        }
+        HuMemDirectFree(data->face);
     }
-    HuMemDirectFree(data->face);
-    HuMemDirectFree(data->material);
-    for (i = 0; i < data->motionCnt; i++) {
-        HsfMotion *motion = &data->motion[i];
+    if (data->materialCnt)
+        HuMemDirectFree(data->material);
+    if (data->motionCnt) {
+        HsfMotion *motion = data->motion;
         for (j = 0; j < motion->numTracks; j++) {
             HsfTrack *track = motion->track;
             if (track->type == HSF_TRACK_ATTRIBUTE && track->curveType == HSF_CURVE_BITMAP) {
@@ -1915,24 +1926,36 @@ void KillHSF(HsfData *data)
             }
         }
         HuMemDirectFree(motion->track);
+        HuMemDirectFree(data->motion);
     }
-    HuMemDirectFree(data->motion);
-    HuMemDirectFree(data->normal);
-    HuMemDirectFree(data->object);
-    HuMemDirectFree(data->matrix);
-    HuMemDirectFree(data->palette);
-    HuMemDirectFree(data->st);
-    HuMemDirectFree(data->vertex);
-    for (i = 0; i < data->cenvCnt; i++) {
-        HsfCenv *cenv = &data->cenv[i];
-        HuMemDirectFree(cenv->dualData);
-        HuMemDirectFree(cenv->multiData);
+    if (data->normalCnt)
+        HuMemDirectFree(data->normal);
+    if (data->objectCnt)
+        HuMemDirectFree(data->object);
+    if (data->matrixCnt)
+        HuMemDirectFree(data->matrix);
+    if (data->paletteCnt)
+        HuMemDirectFree(data->palette);
+    if (data->stCnt)
+        HuMemDirectFree(data->st);
+    if (data->vertexCnt)
+        HuMemDirectFree(data->vertex);
+    if (data->cenvCnt) {
+        for (i = 0; i < data->cenvCnt; i++) {
+            HsfCenv *cenv = &data->cenv[i];
+            HuMemDirectFree(cenv->dualData);
+            HuMemDirectFree(cenv->multiData);
+        }
+        HuMemDirectFree(data->cenv);
     }
-    HuMemDirectFree(data->cenv);
-    HuMemDirectFree(data->cluster);
-    HuMemDirectFree(data->part);
-    HuMemDirectFree(data->shape);
-    HuMemDirectFree(data->mapAttr);
+    if (data->clusterCnt)
+        HuMemDirectFree(data->cluster);
+    if (data->partCnt)
+        HuMemDirectFree(data->part);
+    if (data->shapeCnt)
+        HuMemDirectFree(data->shape);
+    if (data->mapAttrCnt)
+        HuMemDirectFree(data->mapAttr);
     HuMemDirectFree(data->symbol);
 }
 #endif

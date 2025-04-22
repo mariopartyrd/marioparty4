@@ -293,10 +293,13 @@ void Hu3DAllKill(void) {
     Hu3DCameraAllKill();
     Hu3DLightAllKill();
     Hu3DAnimAllKill();
+#if __MWERKS__
+    // this causes anim to be reallocated, so we lose the old allocation
     if(reflectAnim[0] != (AnimData *)refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
     reflectAnim[0] = HuSprAnimRead(refMapData0);
+#endif
     if(Hu3DShadowData.unk_04) {
         HuMemDirectFree(Hu3DShadowData.unk_04);
         Hu3DShadowCamBit = 0;
@@ -2030,10 +2033,13 @@ void Hu3DShadowExec(void) {
     GXSetChanCtrl(GX_COLOR0A0, 0, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_NONE);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
-    GXColor3u8(0, 0, 0);
-    GXColor3u8(1, 0, 0);
-    GXColor3u8(1, 1, 0);
-    GXColor3u8(0, 1, 0);
+    GXPosition3u8(0, 0, 0);
+    GXPosition3u8(1, 0, 0);
+    GXPosition3u8(1, 1, 0);
+    GXPosition3u8(0, 1, 0);
+#ifdef TARGET_PC
+    GXEnd();
+#endif
 }
 
 s16 Hu3DProjectionCreate(void *arg0, f32 arg8, f32 arg9, f32 argA) {

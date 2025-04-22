@@ -9,6 +9,10 @@
 #include "ext_math.h"
 #include "string.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
+
 typedef struct {
     /* 0x00 */ s16 unk00;
     /* 0x02 */ s16 unk02;
@@ -824,13 +828,13 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         }
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
-        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
+        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
         GXSETARRAY(GX_VA_POS, temp_r31->unk_4C, temp_r31->unk_30 * 4 * sizeof(Vec), sizeof(Vec));
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
         GXSETARRAY(GX_VA_CLR0, &temp_r31->unk_48->unk40, temp_r31->unk_30 * sizeof(GXColor), 0x44);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
-        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
+        GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, baseST, sizeof(baseST), 8);
         GXCallDisplayList(temp_r31->unk_50, temp_r31->unk_40);
     }
