@@ -634,12 +634,6 @@ void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tile
     // puts("GXSetTevIndTile is a stub");
 }
 
-void GXSetTexCoordScaleManually(GXTexCoordID coord, u8 enable, u16 ss, u16 ts)
-{
-    // TODO
-    // puts("GXSetTexCoordScaleManually is a stub");
-}
-
 void GXResetWriteGatherPipe(void)
 {
     // puts("GXResetWriteGatherPipe is a stub");
@@ -678,11 +672,6 @@ void GXProject(f32 x, f32 y, f32 z, const f32 mtx[3][4], const f32 *pm, const f3
 }
 
 void GXGetViewportv(f32 *vp)
-{
-    // TODO
-}
-
-void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
 {
     // TODO
 }

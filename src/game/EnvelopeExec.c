@@ -126,10 +126,6 @@ static void SetEnvelopMtx(HsfObject *arg0, HsfObject *arg1, Mtx arg2) {
 }
 
 void EnvelopeProc(HsfData *arg0) {
-#ifdef TARGET_PC
-    // TODO PC still buggy
-    return;
-#endif
     HsfMatrix *temp_r31;
     HsfObject *temp_r29;
     Mtx sp8;

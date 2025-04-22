@@ -489,29 +489,6 @@ void Hu3DTexScrollPauseDisableSet(s16 arg0, s32 arg1) {
     }
 }
 
-#ifdef TARGET_PC
-static void Hu3DParticleCallDisplayList(ParticleData *particle)
-{
-    s32 i;
-    GXBegin(GX_QUADS, GX_VTXFMT0, particle->unk_30 * 4);
-    for (i = 0; i < particle->unk_30; i++) {
-        GXPosition1x16(i*4);
-        GXColor1x16(i);
-        GXTexCoord1x16(0);
-        GXPosition1x16((i*4)+1);
-        GXColor1x16(i);
-        GXTexCoord1x16(1);
-        GXPosition1x16((i*4)+2);
-        GXColor1x16(i);
-        GXTexCoord1x16(2);
-        GXPosition1x16((i*4)+3);
-        GXColor1x16(i);
-        GXTexCoord1x16(3);
-    }
-    GXEnd();
-}
-#endif
-
 s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     ModelData *temp_r28;
     ParticleData *temp_r31;
@@ -553,7 +530,6 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     for (i = 0; i < arg1 * 4; i++, var_r27++) {
         var_r27->x = var_r27->y = var_r27->z = 0.0f;
     }
-#ifndef TARGET_PC
     temp_r24 = HuMemDirectMallocNum(HEAP_DATA, arg1 * 0x60 + 0x80, temp_r28->unk_48);
     temp_r31->unk_50 = temp_r24;
     DCInvalidateRange(temp_r24, arg1 * 0x60 + 0x80);
@@ -574,7 +550,6 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
         GXTexCoord1x16(3);
     }
     temp_r31->unk_40 = GXEndDisplayList();
-#endif
     return temp_r25;
 }
 
@@ -861,11 +836,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, baseST, sizeof(baseST), 8);
-#ifdef TARGET_PC
-        Hu3DParticleCallDisplayList(temp_r31);
-#else
         GXCallDisplayList(temp_r31->unk_50, temp_r31->unk_40);
-#endif
     }
     if (shadowModelDrawF == 0) {
         if (!(temp_r31->unk_2D & 2) && Hu3DPauseF == 0) {
