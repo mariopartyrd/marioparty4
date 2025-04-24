@@ -8,9 +8,9 @@ extern "C" {
 #endif
 
 #ifdef AURORA
-#define GXCALLDISPLAYLISTLE GXCallDisplayListLE
+#define GXCallDisplayListNative GXCallDisplayListLE
 #else
-#define GXCALLDISPLAYLISTLE GXCallDisplayList
+#define GXCallDisplayListNative GXCallDisplayList
 #endif
 
 void GXBeginDisplayList(void* list, u32 size);

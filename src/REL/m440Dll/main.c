@@ -1908,7 +1908,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
     GXSetZCompLoc(GX_FALSE);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
-    GXCallDisplayList(temp_r31->unk30, temp_r31->unk34);
+    GXCallDisplayListNative(temp_r31->unk30, temp_r31->unk34);
 }
 
 void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
@@ -2512,7 +2512,7 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     }
     DCFlushRangeNoSync(temp_r30->unk1C, temp_r30->unk0 * sizeof(Vec) * 4);
     DCFlushRangeNoSync(temp_r30->unk20, temp_r30->unk0 * sizeof(Vec2f) * 4);
-    GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
+    GXCallDisplayListNative(temp_r30->unk28, temp_r30->unk4);
 }
 
 void fn_1_A1B8(HsfVector2f *arg0, s16 arg1, s16 arg2, f32 arg8, f32 arg9)

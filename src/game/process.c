@@ -1,20 +1,24 @@
 #include "game/process.h"
 #include "dolphin/os.h"
-#include "game/jmp.h"
 #include "game/memory.h"
 
-#define FAKE_RETADDR 0xA5A5A5A5
-
-#ifdef TARGET_PC
-#include <stdio.h>
+#ifdef __MWERKS__
+#include "game/jmp.h"
 #endif
+
+#define FAKE_RETADDR 0xA5A5A5A5
 
 #define EXEC_NORMAL 0
 #define EXEC_SLEEP 1
 #define EXEC_CHILDWATCH 2
 #define EXEC_KILLED 3
 
-static JMPBUF processjmpbuf;
+#ifdef TARGET_PC
+static cothread_t processthread;
+static u8 thread_arg;
+#else
+static jmp_buf processjmpbuf;
+#endif
 static Process *processtop;
 static Process *processcur;
 static u16 processcnt;
@@ -74,8 +78,10 @@ Process *HuPrcCreate(void (*func)(void), u16 prio, u32 stack_size, s32 extra_siz
     }
 #ifdef TARGET_PC
     stack_size *= 2;
-#endif
+    alloc_size = HuMemMemoryAllocSizeGet(sizeof(Process)) + HuMemMemoryAllocSizeGet(extra_size);
+#else
     alloc_size = HuMemMemoryAllocSizeGet(sizeof(Process)) + HuMemMemoryAllocSizeGet(stack_size) + HuMemMemoryAllocSizeGet(extra_size);
+#endif
     if (!(heap = HuMemDirectMalloc(HEAP_SYSTEM, alloc_size))) {
         OSReport("process> malloc error size %d\n", alloc_size);
         return NULL;
@@ -87,10 +93,14 @@ Process *HuPrcCreate(void (*func)(void), u16 prio, u32 stack_size, s32 extra_siz
     process->stat = 0;
     process->prio = prio;
     process->sleep_time = 0;
+#ifdef TARGET_PC
+    process->thread = co_create(stack_size, func);
+#else
     process->base_sp = ((uintptr_t)HuMemMemoryAlloc(heap, stack_size, FAKE_RETADDR)) + stack_size - 8;
-    SETJMP(process->jump);
-    SETJMP_SET_IP(process->jump, func);
-    SETJMP_SET_SP(process->jump, process->base_sp);
+    gcsetjmp(&process->jump);
+    process->jump.lr = (u32)func;
+    process->jump.sp = process->base_sp;
+#endif
     process->dtor = NULL;
     process->user_data = NULL;
     LinkProcess(&processtop, process);
@@ -140,10 +150,16 @@ void HuPrcChildWatch()
     Process *curr = HuPrcCurrentGet();
     if (curr->child) {
         curr->exec = EXEC_CHILDWATCH;
-        if (SETJMP(curr->jump) == 0)
+
+#ifdef TARGET_PC
+        thread_arg = 1;
+        co_switch(processthread);
+#else
+        if (gcsetjmp(&curr->jump) == 0)
         {
-            LONGJMP(processjmpbuf, 1);
+            gclongjmp(&processjmpbuf, 1);
         }
+#endif
     }
 }
 
@@ -194,7 +210,11 @@ static void gcTerminateProcess(Process *process)
     }
     UnlinkProcess(&processtop, process);
     processcnt--;
-    LONGJMP(processjmpbuf, 2);
+#ifdef TARGET_PC
+    thread_arg = 2;
+#else
+    gclongjmp(&processjmpbuf, 2);
+#endif
 }
 
 void HuPrcEnd()
@@ -212,9 +232,14 @@ void HuPrcSleep(s32 time)
         process->exec = EXEC_SLEEP;
         process->sleep_time = time;
     }
-    if (SETJMP(process->jump) == 0) {
-        LONGJMP(processjmpbuf, 1);
+#ifdef TARGET_PC
+    thread_arg = 1;
+    co_switch(processthread);
+#else
+    if (gcsetjmp(&process->jump) == 0) {
+        gclongjmp(&processjmpbuf, 1);
     }
+#endif
 }
 
 void HuPrcVSleep()
@@ -243,15 +268,29 @@ void HuPrcCall(s32 tick)
     Process *process;
     s32 ret;
     processcur = processtop;
-    ret = SETJMP(processjmpbuf);
+#ifdef TARGET_PC
+    thread_arg = ret = 0;
+    processthread = co_active();
+    while (1) {
+        ret = thread_arg;
+        switch (ret) {
+            case 2:
+                co_delete(processcur->thread);
+#else
+    ret = gcsetjmp(&processjmpbuf);
     while (1) {
         switch (ret) {
             case 2:
+#endif
                 HuMemDirectFree(processcur->heap);
             case 1:
-                #ifdef TARGET_PC
-                processcur = processcur->next;
-                #else
+                #ifdef NON_MATCHING
+                // avoid dereferencing NULL
+                if (!processcur) {
+                    break;
+                }
+                #endif
+                // memory_block->magic
                 if (((u8 *)(processcur->heap))[4] != 165) {
                     printf("stack overlap error.(process pointer %x)\n", processcur);
                     while (1)
@@ -260,7 +299,6 @@ void HuPrcCall(s32 tick)
                 else {
                     processcur = processcur->next;
                 }
-                #endif
                 break;
         }
         process = processcur;
@@ -272,6 +310,9 @@ void HuPrcCall(s32 tick)
         procfunc = process->jump.lr;
 #endif
         if ((process->stat & (PROCESS_STAT_PAUSE | PROCESS_STAT_UPAUSE)) && process->exec != EXEC_KILLED) {
+#ifdef TARGET_PC
+            thread_arg = 1;
+#endif
             ret = 1;
             continue;
         }
@@ -284,23 +325,41 @@ void HuPrcCall(s32 tick)
                         process->exec = EXEC_NORMAL;
                     }
                 }
+#ifdef TARGET_PC
+                thread_arg = 1;
+#endif
                 ret = 1;
                 break;
 
             case EXEC_CHILDWATCH:
                 if (process->child) {
-                    ret = 1;    
+#ifdef TARGET_PC
+                    thread_arg = 1;
+#endif
+                    ret = 1;
                 }
                 else {
                     process->exec = EXEC_NORMAL;
+#ifdef TARGET_PC
+                    thread_arg = 0;
+#endif
                     ret = 0;
                 }
                 break;
 
             case EXEC_KILLED:
-                SETJMP_SET_IP(process->jump, HuPrcEnd);
+#ifdef TARGET_PC
+                HuPrcEnd();
+                break;
+#else
+                process->jump.lr = (u32)HuPrcEnd;
+#endif
             case EXEC_NORMAL:
-                LONGJMP(process->jump, 1);
+#ifdef TARGET_PC
+                co_switch(process->thread);
+#else
+                gclongjmp(&process->jump, 1);
+#endif
                 break;
         }
     }

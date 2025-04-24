@@ -216,7 +216,7 @@ u32 HuAR_DVDtoARAM(u32 dir) {
     block = HuARInfoGet(amemptr);
     block->dir = (dir >> 16);
     arqCnt++;
-    ARQPostRequest(&arqReq, 0x1234, 0, 0, (u32) stat->dir, amemptr, DirDataSize, ArqCallBack);
+    ARQPostRequest(&arqReq, 0x1234, 0, 0, (uintptr_t) stat->dir, amemptr, DirDataSize, ArqCallBack);
     OSReport("ARAM Trans %x\n", amemptr);
     while (HuARDMACheck());
     HuDataDirClose(dir);
@@ -289,7 +289,7 @@ void *HuAR_ARAMtoMRAMNum(u32 src, s32 num) {
     return dst;
 }
 
-static void ArqCallBackAM(u32 pointerToARQRequest) {
+static void ArqCallBackAM(uintptr_t pointerToARQRequest) {
     ARQueReq *req_ptr = (ARQueReq*) pointerToARQRequest;
 
     arqCnt--;

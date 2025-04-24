@@ -8,7 +8,6 @@
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
-#include <game/hsfex.h>
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
@@ -20,10 +19,11 @@
 #include "game/process.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
+#include <game/hsfex.h>
+
 
 #include "dolphin.h"
 #include "ext_math.h"
-
 
 #ifndef __MWERKS__
 #include "game/audio.h"
@@ -1010,7 +1010,7 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
     GXSETARRAY(GX_VA_POS, lbl_1_bss_5AC.unk14, 900 * sizeof(Vec), sizeof(Vec));
     GXSetCullMode(GX_CULL_BACK);
-    GXCallDisplayList(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
+    GXCallDisplayListNative(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);

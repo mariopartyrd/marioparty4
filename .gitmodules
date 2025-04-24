@@ -4,6 +4,6 @@
 [submodule "extern/aurora"]
 	path = extern/aurora
 	url = https://github.com/dbalatoni13/aurora.git
-[submodule "extern/longjmp_win64"]
-	path = extern/longjmp_win64
-	url = https://github.com/GlinkieGamesInc/longjmp_win64.git
+[submodule "extern/libco"]
+	path = extern/libco
+	url = https://github.com/higan-emu/libco.git

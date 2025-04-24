@@ -17,7 +17,6 @@
 
 #include "ext_math.h"
 
-
 #ifndef __MWERKS__
 #include "game/frand.h"
 #endif
@@ -1262,7 +1261,7 @@ void fn_1_29BC(ModelData *arg0, Mtx arg1)
             PPCSync();
             GXSETARRAY(GX_VA_POS, temp_r31->unk14, temp_r31->unk00 * sizeof(*temp_r31->unk14), sizeof(*temp_r31->unk14));
             GXSETARRAY(GX_VA_CLR0, temp_r31->unk1C, temp_r31->unk00 * sizeof(*temp_r31->unk1C), sizeof(*temp_r31->unk1C));
-            GXCallDisplayList(temp_r31->unk38, temp_r31->unk34);
+            GXCallDisplayListNative(temp_r31->unk38, temp_r31->unk34);
         }
     }
 }
@@ -4498,7 +4497,7 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
         GXLoadTexMtxImm(spF4, GX_TEXMTX0, GX_MTX3x4);
         MTXRotRad(sp124, 'Z', MTXDegToRad(-var_r31->unk0C));
         GXLoadTexMtxImm(sp124, GX_TEXMTX1, GX_MTX2x4);
-        GXCallDisplayList(temp_r30->unk220, temp_r30->unk21C);
+        GXCallDisplayListNative(temp_r30->unk220, temp_r30->unk21C);
     }
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
@@ -5238,7 +5237,7 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSETARRAY(GX_VA_TEX0, temp_r31->unk44, temp_r31->unk26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
-    GXCallDisplayList(temp_r31->unk48, temp_r31->unk34);
+    GXCallDisplayListNative(temp_r31->unk48, temp_r31->unk34);
     if (shadowModelDrawF == 0) {
         if (!(temp_r31->unk21 & 2)) {
             temp_r31->unk28++;

@@ -2139,7 +2139,7 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     GXSETARRAY(GX_VA_TEX0, var_r31->unk_184, var_r31->unk_110 * sizeof(Vec2f), sizeof(Vec2f));
     for (var_r30 = 0; var_r30 < var_r31->unk_240; var_r30++) {
         if (var_r31->unk_2A8[var_r30] && var_r31->unk_244[var_r30] != 0 && var_r30 != 1) {
-            GXCallDisplayList(var_r31->unk_2A8[var_r30], var_r31->unk_244[var_r30]);
+            GXCallDisplayListNative(var_r31->unk_2A8[var_r30], var_r31->unk_244[var_r30]);
         }
     }
     GXSetNumTevStages(2);
@@ -2184,7 +2184,7 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSETARRAY(GX_VA_TEX0, var_r31->unk_184, var_r31->unk_110 * sizeof(Vec2f), sizeof(Vec2f));
     if (var_r31->unk_2A8[1] && (var_r31->unk_244[1] != 0)) {
-        GXCallDisplayList(var_r31->unk_2A8[1], var_r31->unk_244[1]);
+        GXCallDisplayListNative(var_r31->unk_2A8[1], var_r31->unk_244[1]);
     }
 }
 
@@ -2743,7 +2743,7 @@ void fn_1_11EE0(ModelData *var_r24, Mtx var_r21)
         DCFlushRangeNoSync(var_r31->unk_40, var_r31->unk_24 * sizeof(Vec) * 4);
         DCFlushRangeNoSync(var_r31->unk_44, var_r31->unk_24 * sizeof(Vec2f) * 4);
         PPCSync();
-        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
         if (shadowModelDrawF == 0) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;

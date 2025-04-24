@@ -836,7 +836,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, baseST, sizeof(baseST), 8);
-        GXCallDisplayList(temp_r31->unk_50, temp_r31->unk_40);
+        GXCallDisplayListNative(temp_r31->unk_50, temp_r31->unk_40);
     }
     if (shadowModelDrawF == 0) {
         if (!(temp_r31->unk_2D & 2) && Hu3DPauseF == 0) {

@@ -1653,7 +1653,7 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         }
         DCFlushRangeNoSync(var_r31->unk_14, var_r31->unk_64 * sizeof(Vec) * 4);
         DCFlushRangeNoSync(var_r31->unk_18, var_r31->unk_64 * sizeof(Vec2f) * 4);
-        GXCallDisplayList(var_r31->unk_24, var_r31->unk_58);
+        GXCallDisplayListNative(var_r31->unk_24, var_r31->unk_58);
     }
 }
 

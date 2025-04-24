@@ -14,7 +14,7 @@
 #define BLOCK_ALIGNMENT 64u
 #endif
 
-struct memory_block {
+struct  memory_block {
     s32 size;
     u8 magic;
     u8 flag;

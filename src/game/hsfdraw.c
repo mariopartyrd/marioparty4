@@ -512,16 +512,16 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
                 GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                 if (temp_r29->hsfData->cenvCnt == 0) {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.vertex->count * 3, 3);
+                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * 3, 3);
                 }
                 else {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.vertex->count * sizeof(Vec), sizeof(Vec));
+                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * sizeof(Vec), sizeof(Vec));
                 }
                 if (var_r22 & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSETARRAY(GX_VA_CLR0, temp_r28->data.color->data, temp_r28->data.vertex->count * sizeof(GXColor), sizeof(GXColor));
+                    GXSETARRAY(GX_VA_CLR0, temp_r28->data.color->data, temp_r28->data.color->count * sizeof(GXColor), sizeof(GXColor));
                 }
                 GXSetZCompLoc(1);
             }
@@ -748,11 +748,11 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
             SetTevStageTex(arg0, temp_r30);
         }
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCALLDISPLAYLISTLE(sp28, DrawData[drawCnt].dlSize);
+        GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
     }
     else {
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCALLDISPLAYLISTLE(sp28, DrawData[drawCnt].dlSize);
+        GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
@@ -1734,16 +1734,16 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
                 GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                 if (temp_r28->hsfData->cenvCnt == 0) {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * 3, 3);
+                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * 3, 3);
                 }
                 else {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec));
+                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * sizeof(Vec), sizeof(Vec));
                 }
                 if (var_r30 & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.vertex->count * sizeof(GXColor), sizeof(GXColor));
+                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.color->count * sizeof(GXColor), sizeof(GXColor));
                 }
                 GXSetZCompLoc(1);
             }
@@ -1774,20 +1774,20 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
                     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                     if (temp_r28->hsfData->cenvCnt == 0) {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * 3, 3);
+                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * 3, 3);
                     }
                     else {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec));
+                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * sizeof(Vec), sizeof(Vec));
                     }
                 }
                 GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-                GXSETARRAY(GX_VA_TEX0, temp_r31->data.st->data, temp_r31->data.vertex->count * sizeof(Vec2f), sizeof(Vec2f));
+                GXSETARRAY(GX_VA_TEX0, temp_r31->data.st->data, temp_r31->data.st->count * sizeof(Vec2f), sizeof(Vec2f));
                 if (var_r30 & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.vertex->count * sizeof(GXColor), sizeof(GXColor));
+                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.color->count * sizeof(GXColor), sizeof(GXColor));
                 }
                 GXSetZCompLoc(0);
             }
@@ -1802,7 +1802,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        // GXCALLDISPLAYLISTLE(var_r26, DrawData[drawCnt].dlSize);
+        //GXCallDisplayListNative(var_r26, DrawData[drawCnt].dlSize);
     }
     else {
         if (!(temp_r27->flags & 0x400)) {
@@ -1810,7 +1810,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
             return;
         }
         var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        // GXCALLDISPLAYLISTLE(var_r26, DrawData[drawCnt].dlSize);
+        //GXCallDisplayListNative(var_r26, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }

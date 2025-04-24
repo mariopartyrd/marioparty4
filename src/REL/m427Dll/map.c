@@ -1063,7 +1063,7 @@ void fn_1_618C(ModelData *arg0, Mtx arg1)
     GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
     GXSetZCompLoc(0);
     GXSetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
-    GXCallDisplayList(var_r31->unk20, var_r31->unk24);
+    GXCallDisplayListNative(var_r31->unk20, var_r31->unk24);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
@@ -2010,7 +2010,7 @@ void fn_1_9B88(ModelData *model, Mtx matrix)
         GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
         GXSetZCompLoc(0);
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_NOOP);
-        GXCallDisplayList(var_r31->unk80, var_r31->unk84);
+        GXCallDisplayListNative(var_r31->unk80, var_r31->unk84);
         GXSetNumIndStages(0);
         GXSetTevDirect(GX_TEVSTAGE0);
         GXSetTevDirect(GX_TEVSTAGE1);
@@ -2431,7 +2431,7 @@ void fn_1_B3CC(ModelData *model, Mtx matrix)
     GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
     GXSetZCompLoc(0);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_NOOP);
-    GXCallDisplayList(var_r31->unk_40, var_r31->unk_44);
+    GXCallDisplayListNative(var_r31->unk_40, var_r31->unk_44);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
@@ -3068,7 +3068,7 @@ void fn_1_DCD4(ModelData *model, Mtx matrix)
     DCFlushRangeNoSync(var_r30->unk_1C, var_r30->unk_00 * sizeof(Vec) * 4);
     DCFlushRangeNoSync(var_r30->unk_20, var_r30->unk_00 * sizeof(Vec2f) * 4);
     PPCSync();
-    GXCallDisplayList(var_r30->unk_28, var_r30->unk_04);
+    GXCallDisplayListNative(var_r30->unk_28, var_r30->unk_04);
 }
 
 void fn_1_E2B0(Vec2f *arg0, s16 arg1, s16 arg2, float arg8, float arg9)
