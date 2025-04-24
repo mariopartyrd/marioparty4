@@ -1270,7 +1270,7 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSETARRAY(GX_VA_POS, var_r31->unk_44[var_r31->unk_40], 0x1B8 * sizeof(Vec), sizeof(Vec));
     GXSETARRAY(GX_VA_CLR0, var_r31->unk_54[var_r31->unk_40], 0x1B8 * sizeof(GXColor), sizeof(GXColor));
     GXSetCullMode(GX_CULL_NONE);
-    GXCallDisplayList(var_r31->unk_60, var_r31->unk_64);
+    GXCallDisplayListNative(var_r31->unk_60, var_r31->unk_64);
     GXSetCullMode(GX_CULL_BACK);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);

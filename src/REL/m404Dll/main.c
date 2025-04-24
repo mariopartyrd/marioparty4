@@ -1300,7 +1300,7 @@ void fn_1_58E4(ModelData *modelData, Mtx arg1)
         GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSetCullMode(GX_CULL_BACK);
-        GXCallDisplayList(var_r31->unk_44, var_r31->unk_48);
+        GXCallDisplayListNative(var_r31->unk_44, var_r31->unk_48);
         GXInitTexObj(&sp3C, var_r31->unk_4C->bmp->data, var_r31->unk_4C->bmp->sizeX, var_r31->unk_4C->bmp->sizeY, 1, GX_CLAMP, GX_CLAMP, GX_FALSE);
         GXLoadTexObj(&sp3C, GX_TEXMAP0);
         GXSetNumTevStages(1);
@@ -1311,7 +1311,7 @@ void fn_1_58E4(ModelData *modelData, Mtx arg1)
         GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 
         GXSetTevColor(GX_TEVREG0, sp14);
-        GXCallDisplayList(var_r31->unk_44, var_r31->unk_48);
+        GXCallDisplayListNative(var_r31->unk_44, var_r31->unk_48);
     }
 #ifdef TARGET_PC
     GXDestroyTexObj(&sp3C);

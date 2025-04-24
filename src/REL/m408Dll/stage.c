@@ -1,3 +1,4 @@
+#include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/hsfanim.h"
@@ -8,7 +9,7 @@
 #include "game/objsub.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
-#include "ext_math.h"
+
 
 #include "REL/m408Dll.h"
 
@@ -1070,7 +1071,7 @@ void fn_1_10484(UnkFn10484 *arg0, HsfFace *arg1, HsfDrawData *arg2, GXColor *arg
     }
     fn_1_10B60(arg0, temp_r31);
     temp_r20 = (void *)(arg2->dlOfs + ((u32)lbl_1_bss_120[0]));
-    GXCallDisplayList(temp_r20, arg2->dlSize);
+    GXCallDisplayListNative(temp_r20, arg2->dlSize);
 }
 
 void fn_1_10830(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3)

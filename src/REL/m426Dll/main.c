@@ -3103,7 +3103,7 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
         DCFlushRangeNoSync(var_r31->unk_40, var_r31->unk_24 * sizeof(Vec) * 4);
         DCFlushRangeNoSync(var_r31->unk_44, var_r31->unk_24 * sizeof(Vec2f) * 4);
         PPCSync();
-        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
         if (!shadowModelDrawF) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;

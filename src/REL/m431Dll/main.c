@@ -2143,7 +2143,7 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
     DCFlushRangeNoSync(temp_r30->unk1C, (temp_r30->unk0 * sizeof(Vec)) * 4);
     DCFlushRangeNoSync(temp_r30->unk20, (temp_r30->unk0 * sizeof(HsfVector2f)) * 4);
     PPCSync();
-    GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
+    GXCallDisplayListNative(temp_r30->unk28, temp_r30->unk4);
 }
 
 void fn_1_7824(HsfVector2f *arg0, s16 arg1, s16 arg2, float arg3, float arg4)

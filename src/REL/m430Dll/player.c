@@ -1625,7 +1625,7 @@ void fn_1_10948(ModelData *var_r29, Mtx var_r30)
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSETARRAY(GX_VA_TEX0, var_r31->unk_54, 16 * sizeof(Vec2f), sizeof(Vec2f));
-    GXCallDisplayList(var_r31->unk_60, var_r31->unk_5C);
+    GXCallDisplayListNative(var_r31->unk_60, var_r31->unk_5C);
 }
 
 void fn_1_10B88(void)

@@ -1,3 +1,4 @@
+#include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/gamework_data.h"
@@ -8,7 +9,7 @@
 #include "game/object.h"
 #include "game/pad.h"
 #include "game/sprite.h"
-#include "ext_math.h"
+
 
 #include "REL/m410Dll.h"
 
@@ -1125,7 +1126,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
                 GXLoadTexMtxImm(spF4, 30, GX_MTX3x4);
                 MTXRotRad(sp124, 90, 0.017453292f * -var_r31->unk_08);
                 GXLoadTexMtxImm(sp124, 33, GX_MTX2x4);
-                GXCallDisplayList(var_r30->unk_120.unk_E5C, var_r30->unk_120.unk_E58);
+                GXCallDisplayListNative(var_r30->unk_120.unk_E5C, var_r30->unk_120.unk_E58);
             }
         }
         GXSetNumIndStages(0);

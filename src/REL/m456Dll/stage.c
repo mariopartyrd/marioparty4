@@ -1,10 +1,11 @@
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
-#include "game/hsfmotion.h"
 #include "game/hsfman.h"
+#include "game/hsfmotion.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/sprite.h"
+
 
 #include "REL/m456Dll.h"
 
@@ -425,7 +426,7 @@ void fn_1_3CB0(ModelData *model, Mtx matrix)
         mtxRotCat(modelview, 0, 0, workUnk74->unkC.y);
         mtxTransCat(modelview, 400 * (workUnk74->unk0.x + 1500) / 3000, 400 * (workUnk74->unk0.z - -2000) / 3000, 0);
         GXLoadPosMtxImm(modelview, GX_PNMTX0);
-        GXCallDisplayList(work2->unkA14, work2->unkA18);
+        GXCallDisplayListNative(work2->unkA14, work2->unkA18);
         if (!omPauseChk()) {
             workUnk74->unk1E--;
         }

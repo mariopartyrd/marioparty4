@@ -3183,7 +3183,7 @@ void fn_1_134C0(ModelData *var_r23, Mtx var_r22)
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
-        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
         if (shadowModelDrawF == 0) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;

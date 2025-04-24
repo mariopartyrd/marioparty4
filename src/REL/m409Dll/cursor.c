@@ -225,7 +225,7 @@ void fn_1_C164(unkStruct8 *arg0)
             GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
             GXSETARRAY(GX_VA_NRM, var_r31->unk48, sizeof(Vec), sizeof(Vec));
-            GXCallDisplayList(var_r31->unk3C, var_r31->unk38);
+            GXCallDisplayListNative(var_r31->unk3C, var_r31->unk38);
         }
     }
 }
