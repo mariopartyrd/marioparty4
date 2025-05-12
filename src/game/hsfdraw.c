@@ -2561,6 +2561,9 @@ static void MDObjMesh(HsfData *arg0, HsfObject *arg1)
     Hu3DObjInfoP->drawData = DrawData = HuMemDirectMallocNum(HEAP_DATA, matChgCnt * sizeof(HsfDrawData), mallocNo);
     memset(DrawData, 0, matChgCnt * sizeof(HsfDrawData));
     DLBufP = DLBufStartP = HuMemDirectMallocNum(HEAP_DATA, DLTotalNum, mallocNo);
+#ifdef TARGET_PC
+    memset(DLBufP, 0, DLTotalNum);
+#endif
     DCInvalidateRange(DLBufStartP, DLTotalNum);
     DLFirstF = 0;
     materialBak = (HsfMaterial *)-1;

@@ -3,7 +3,7 @@
 	url = https://github.com/AxioDL/musyx
 [submodule "extern/aurora"]
 	path = extern/aurora
-	url = https://github.com/dbalatoni13/aurora.git
+	url = https://github.com/encounter/aurora.git
 [submodule "extern/libco"]
 	path = extern/libco
 	url = https://github.com/higan-emu/libco.git
