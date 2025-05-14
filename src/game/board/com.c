@@ -47,7 +47,7 @@ static s8 itemUse = -1;
 #define BOARD_ITEM_ITEM_BAG 13
 #define BOARD_ITEMS_END BOARD_ITEM_ITEM_BAG
 
-static s8 comItemPreferTbl[GW_CHARACTER_MAX][SHOP_ITEMS_END] = {
+static s8 comItemPreferTbl[CHARNO_MAX ][SHOP_ITEMS_END] = {
     {   //Mario
         BOARD_ITEM_MAGIC_LAMP,
         BOARD_ITEM_BOOS_CRYSTAL_BALL,

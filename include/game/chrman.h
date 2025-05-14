@@ -44,6 +44,8 @@ s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 CharModelEffectNpcInitSilent(s16 arg0, s16 arg1, s16 arg2);
 void CharModelStepTypeSet(s16 character, s32 arg1);
 
-#define GW_CHARACTER_MAX 8
+#define CHARNO_MAX  8
+#define CHAR_NPC_MAX 7
+#define CHAR_EFFECT_AND_PARTICLE_MAX 8
 
 #endif

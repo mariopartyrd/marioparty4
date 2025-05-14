@@ -8,8 +8,6 @@
 #include "game/window.h"
 #include "game/object.h"
 
-#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
-
 enum {
     MAPOBJ_MAX = 12
 };

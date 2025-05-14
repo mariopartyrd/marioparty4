@@ -577,7 +577,7 @@ void fn_1_13A0(void)
 		s32 i;
 		for(i=1; i<4; i++) {
 			GWPlayerCfg[i].character = GWPlayerCfg[i-1].character+1;
-			if(GWPlayerCfg[i].character > GW_CHARACTER_MAX) {
+			if(GWPlayerCfg[i].character > CHARNO_MAX ) {
 				GWPlayerCfg[i].character = 0;
 			}				
 		}
