@@ -11,7 +11,9 @@ Mario Party 4
 [Discord Badge]: https://img.shields.io/discord/994839212618690590?color=%237289DA&logo=discord&logoColor=%23FFFFFF
 [discord]: https://discord.gg/T4faGveujK
 
-A work-in-progress decompilation of Mario Party 4.
+A work-in-progress decompilation of Mario Party 4. While the two USA versions are almost completely matching (the only non-matching function has a small difference which doesn't have an impact on further work), most non-game-engine code is not documented at all. Work on the PAL and JP version is currently stale, as it involves a lot of repetitive work, which could be done made much easier later when there is special tooling for porting splits and symbols between versions.
+
+There is **NO** working PC port yet, but it is in the making.
 
 This repository does **not** contain any game assets or assembly whatsoever. An existing copy of the game is required.
 
