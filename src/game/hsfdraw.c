@@ -10,17 +10,17 @@
 
 static void objCall(ModelData *arg0, HsfObject *arg1);
 static void objMesh(ModelData *arg0, HsfObject *arg1);
-static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1);
+static void SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1);
 static void SetTevStageTex(HsfDrawObject *arg0, HsfMaterial *arg1);
 static GXTevKColorSel SetKColor(GXTevStageID arg0, u8 arg1);
 static GXTevKColorSel SetKColorRGB(GXTevStageID arg0, GXColor *arg1);
 static void FlushKColor(void);
 static void SetReflect(HsfDrawObject *arg0, s16 arg1, s16 arg2, u8 arg3);
 static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXTexMapID arg4, u32 arg5);
-static s32 SetShadowTex(void);
+static void SetShadowTex(void);
 static void SetShadow(HsfDrawObject *arg0, s16 arg1, s16 arg2);
 static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1);
-static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3);
+static void LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3);
 static void objNull(ModelData *arg0, HsfObject *arg1);
 static void objRoot(ModelData *arg0, HsfObject *arg1);
 static void objJoint(ModelData *arg0, HsfObject *arg1);
@@ -397,34 +397,9 @@ s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2) {
     return 0;
 }
 
-// TODO: not matching (https://decomp.me/scratch/54Pjw)
-static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
-    GXColor sp2C;
-    void *sp28;
-    Hu3DTexAnimDataStruct *sp24;
-	s16 var_r31;
-	HsfMaterial *temp_r30;
-	ModelData *temp_r29;
-	HsfObject *temp_r28;
-	HsfBitmap *temp_r27;
-    HsfAttribute *temp_r26;
-    s16 var_r24;
-	HsfdrawStruct01 *temp_r23;
-    s16 var_r22;
-	s16 var_r21;
-	HsfConstData *temp_r20;
-    s16 var_r18;
-    u32 temp_r19;
-    s16 var_r17;
-
-    temp_r28 = arg0->object;
-    temp_r29 = arg0->model;
-    temp_r20 = temp_r28->constData;
-    kColorIdx = 0;
-    temp_r30 = &temp_r28->data.material[arg1->mat & 0xFFF];
-    temp_r19 = temp_r28->flags | temp_r30->flags;
-    if (temp_r19 & 0x30) {
-        if (temp_r19 & 0x10) {
+inline void SetBlendMode(u32 flags) {
+    if (flags & 0x30) {
+        if (flags & 0x10) {
             GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_NOOP);
         } else {
             GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVDSTCLR, GX_LO_NOOP);
@@ -432,213 +407,253 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
     } else {
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
     }
-    if (temp_r30 != materialBak) {
+}
+
+inline void SetupGX(const HsfMaterial* material, const HsfConstData* constData, const ModelData* modelData, u32 flags, s16 tevStage) {
+    if ((material->invAlpha != 0.0f || (material->pass & 0xF) || (constData->flags & 0x800)) && !((modelData->attr & HU3D_ATTR_ZWRITE_OFF) | (flags & 0x1200))) {
+        GXSetZMode(tevStage, GX_LEQUAL, GX_FALSE);
+    } else {
+        GXSetZMode(tevStage, GX_LEQUAL, GX_TRUE);
+    }
+
+    if (flags & 0x1200) {
+        GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_OR, GX_GEQUAL, 0x80);
+    } else {
+        GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
+    }
+
+    if (modelData->attr & HU3D_ATTR_CULL_FRONT) {
+        GXSetCullMode(GX_CULL_FRONT);
+    } else if (flags & 2) {
+        GXSetCullMode(GX_CULL_NONE);
+    } else {
+        GXSetCullMode(GX_CULL_BACK);
+    }
+}
+
+static void FaceDraw(HsfDrawObject *hsfDrawObject, HsfFace *hsfFace) {
+    GXColor tempColor;
+    void *displayListPtr;
+    Hu3DTexAnimDataStruct *texAnimData;
+	s16 tevStage;
+	HsfMaterial *faceMaterial;
+	ModelData *model;
+	HsfObject *object;
+	HsfBitmap *currentBitmap;
+    HsfAttribute *currentAttribute;
+	HsfdrawStruct01 *currentDrawData;
+	HsfConstData *constData;
+    s16 var_r24;
+    s16 vtxMode;
+	s16 textureIdx; // var_r21
+    u32 flags;
+    s16 hiliteAnimIdx;
+    s16 reflectAnimIdx;
+
+    object = hsfDrawObject->object;
+    model = hsfDrawObject->model;
+    constData = object->constData;
+    kColorIdx = 0;
+    faceMaterial = &object->data.material[hsfFace->mat & 0xFFF];
+    flags = object->flags | faceMaterial->flags;
+    SetBlendMode(flags);
+    
+    if (faceMaterial != materialBak) {
         totalMatCnt++;
-        materialBak = temp_r30;
-        sp2C.r = temp_r30->litColor[0] * temp_r29->unk_58.x;
-        sp2C.g = temp_r30->litColor[1] * temp_r29->unk_58.z;
-        sp2C.b = temp_r30->litColor[2] * temp_r29->unk_58.y;
-        sp2C.a = 0xFF;
-        GXSetChanAmbColor(GX_COLOR0A0, sp2C);
-        sp2C.r = temp_r30->color[0];
-        sp2C.g = temp_r30->color[1];
-        sp2C.b = temp_r30->color[2];
-        sp2C.a = 0xFF;
-        GXSetChanMatColor(GX_COLOR0A0, sp2C);
-        if (temp_r29->attr & HU3D_ATTR_ZCMP_OFF) {
-            var_r31 = GX_FALSE;
+        materialBak = faceMaterial;
+        tempColor.r = faceMaterial->litColor[0] * model->unk_58.x;
+        tempColor.g = faceMaterial->litColor[1] * model->unk_58.z;
+        tempColor.b = faceMaterial->litColor[2] * model->unk_58.y;
+        tempColor.a = 0xFF;
+        GXSetChanAmbColor(GX_COLOR0A0, tempColor);
+        tempColor.r = faceMaterial->color[0];
+        tempColor.g = faceMaterial->color[1];
+        tempColor.b = faceMaterial->color[2];
+        tempColor.a = 0xFF;
+        GXSetChanMatColor(GX_COLOR0A0, tempColor);
+        
+        if (model->attr & HU3D_ATTR_ZCMP_OFF) {
+            tevStage = GX_FALSE;
         } else {
-            var_r31 = GX_TRUE;
+            tevStage = GX_TRUE;
         }
-        if ((temp_r30->invAlpha != 0.0f || (temp_r30->pass & 0xF) || (temp_r20->flags & 0x800)) && !((temp_r29->attr & HU3D_ATTR_ZWRITE_OFF) | (temp_r19 & 0x1200))) {
-            GXSetZMode(var_r31, GX_LEQUAL, GX_FALSE);
-        } else {
-            GXSetZMode(var_r31, GX_LEQUAL, GX_TRUE);
-        }
-        if (temp_r19 & 0x1200) {
-            GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_OR, GX_GEQUAL, 0x80);
-        } else {
-            GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
-        }
-        if (temp_r29->attr & HU3D_ATTR_CULL_FRONT) {
-            GXSetCullMode(GX_CULL_FRONT);
-        } else if (temp_r19 & 2) {
-            GXSetCullMode(GX_CULL_NONE);
-        } else {
-            GXSetCullMode(GX_CULL_BACK);
-        }
+        
+        SetupGX(faceMaterial, constData, model, flags, tevStage);
+        
         if (TL32F != 0) {
-            for (var_r31 = GX_TEVSTAGE0; var_r31 < GX_MAX_TEVSTAGE; var_r31++) {
-                GXSetTevSwapMode(var_r31, GX_TEV_SWAP0, GX_TEV_SWAP0);
+            for (tevStage = GX_TEVSTAGE0; tevStage < GX_MAX_TEVSTAGE; tevStage++) {
+                GXSetTevSwapMode(tevStage, GX_TEV_SWAP0, GX_TEV_SWAP0);
             }
             TL32F = 0;
         }
-        for (var_r31 = GX_TEVSTAGE0; var_r31 < GX_MAX_TEVSTAGE; var_r31++) {
-            GXSetTevKAlphaSel(var_r31, GX_TEV_KASEL_1);
+        
+        for (tevStage = GX_TEVSTAGE0; tevStage < GX_MAX_TEVSTAGE; tevStage++) {
+            GXSetTevKAlphaSel(tevStage, GX_TEV_KASEL_1);
         }
-        if (temp_r30->numAttrs == 0) {
-            var_r22 = (temp_r30->vtxMode == 5) ? 4 : 0;
-            if (var_r22 != vtxModeBak) {
-                vtxModeBak = var_r22;
+        
+        if (faceMaterial->numAttrs == 0) {
+            vtxMode = (faceMaterial->vtxMode == 5) ? 4 : 0;
+            if (vtxMode != vtxModeBak) {
+                vtxModeBak = vtxMode;
                 GXClearVtxDesc();
                 GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-                GXSetArray(GX_VA_POS, temp_r28->data.vertex->data, 3 * sizeof(float));
+                GXSetArray(GX_VA_POS, object->data.vertex->data, 3 * sizeof(float));
                 GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
-                if (temp_r29->hsfData->cenvCnt == 0) {
+                if (model->hsfData->cenvCnt == 0) {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                    GXSetArray(GX_VA_NRM, temp_r28->data.normal->data, 3);
+                    GXSetArray(GX_VA_NRM, object->data.normal->data, 3);
                 } else {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                    GXSetArray(GX_VA_NRM, temp_r28->data.normal->data, 3 * sizeof(float));
+                    GXSetArray(GX_VA_NRM, object->data.normal->data, 3 * sizeof(float));
                 }
-                if (var_r22 & 4) {
+                if (vtxMode & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSetArray(GX_VA_CLR0, temp_r28->data.color->data, 4);
+                    GXSetArray(GX_VA_CLR0, object->data.color->data, 4);
                 }
                 GXSetZCompLoc(1);
             }
-            if (temp_r30->refAlpha != 0.0f) {
+            if (faceMaterial->refAlpha != 0.0f) {
                 reflectionMapNo = 0;
                 BmpPtrBak[0] = (HsfAttribute*) -1;
-                if (temp_r29->unk_04 != -1) {
-                    var_r17 = temp_r29->unk_04;
+                if (model->unk_04 != -1) {
+                    reflectAnimIdx = model->unk_04;
                 } else {
-                    var_r17 = reflectMapNo;
+                    reflectAnimIdx = reflectMapNo;
                 }
-                HuSprTexLoad(reflectAnim[var_r17], 0, reflectionMapNo, GX_REPEAT, GX_REPEAT, GX_LINEAR);
+                HuSprTexLoad(reflectAnim[reflectAnimIdx], 0, reflectionMapNo, GX_REPEAT, GX_REPEAT, GX_LINEAR);
             }
             if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
                 shadowMapNo = 1;
                 SetShadowTex();
                 BmpPtrBak[1] = (HsfAttribute*) -1;
             }
-            if (temp_r29->attr & HU3D_ATTR_TOON_MAP) {
+            if (model->attr & HU3D_ATTR_TOON_MAP) {
                 toonMapNo = 2;
                 HuSprTexLoad(toonAnim, 0, toonMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 BmpPtrBak[2] = (HsfAttribute*) -1;
             }
-            if (temp_r29->unk_02 != 0) {
+            if (model->unk_02 != 0) {
                 projectionMapNo = 3;
                 hiliteMapNo = projectionMapNo + 1;
-                for (var_r31 = 0, var_r24 = 1; var_r31 < 4; var_r31++, var_r24 <<= 1) {
-                    if (var_r24 & temp_r29->unk_02) {
-                        HuSprTexLoad(Hu3DProjection[var_r31].unk_04, 0, projectionMapNo + var_r31, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                        BmpPtrBak[projectionMapNo + var_r31] = (HsfAttribute*) -1;
+                for (tevStage = 0, var_r24 = 1; tevStage < 4; tevStage++, var_r24 <<= 1) {
+                    if (var_r24 & model->unk_02) {
+                        HuSprTexLoad(Hu3DProjection[tevStage].unk_04, 0, projectionMapNo + tevStage, GX_CLAMP, GX_CLAMP, GX_LINEAR);
+                        BmpPtrBak[projectionMapNo + tevStage] = (HsfAttribute*) -1;
                         hiliteMapNo++;
                     }
                 }
             } else {
                 hiliteMapNo = 3;
             }
-            if ((temp_r29->attr & HU3D_ATTR_HILITE) || (temp_r19 & 0x100)) {
-                if (temp_r20->hiliteMap == 0) {
-                    if (temp_r30->flags != 0) {
-                        var_r18 = (temp_r30->pass >> 4) & 0xF;
+            if ((model->attr & HU3D_ATTR_HILITE) || (flags & 0x100)) {
+                if (constData->hiliteMap == 0) {
+                    if (faceMaterial->flags != 0) {
+                        hiliteAnimIdx = (faceMaterial->pass >> 4) & 0xF;
                     } else {
-                        var_r18 = (temp_r28->data.unk123 >> 4) & 0xF;
+                        hiliteAnimIdx = (object->data.unk123 >> 4) & 0xF;
                     }
-                    HuSprTexLoad(hiliteAnim[var_r18], 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
+                    HuSprTexLoad(hiliteAnim[hiliteAnimIdx], 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 } else {
-                    HuSprTexLoad(temp_r20->hiliteMap, 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
+                    HuSprTexLoad(constData->hiliteMap, 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 }
                 BmpPtrBak[hiliteMapNo] = (HsfAttribute*) -1;
             }
-            SetTevStageNoTex(arg0, temp_r30);
+            SetTevStageNoTex(hsfDrawObject, faceMaterial);
         } else {
-            var_r22 = (temp_r30->vtxMode == 5) ? 5 : 1;
+            vtxMode = (faceMaterial->vtxMode == 5) ? 5 : 1;
             if (DrawData[drawCnt].flags & 2) {
-                var_r22 |= 2;
+                vtxMode |= 2;
             }
-            if (var_r22 != vtxModeBak) {
-                vtxModeBak = var_r22;
-                GXClearVtxDesc();
+            if (vtxMode != vtxModeBak) {
+                vtxModeBak = vtxMode;
+                    GXClearVtxDesc();
                 GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-                GXSetArray(GX_VA_POS, temp_r28->data.vertex->data, 3 * sizeof(float));
-                if (var_r22 & 2) {
+                GXSetArray(GX_VA_POS, object->data.vertex->data, 3 * sizeof(float));
+                if (vtxMode & 2) {
                     GXSetVtxDesc(GX_VA_NBT, GX_DIRECT);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_S16, 8);
                 } else {
                     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
-                    if (temp_r29->hsfData->cenvCnt == 0) {
+                    if (model->hsfData->cenvCnt == 0) {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                        GXSetArray(GX_VA_NRM, temp_r28->data.normal->data, 3);
+                        GXSetArray(GX_VA_NRM, object->data.normal->data, 3);
                     } else {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                        GXSetArray(GX_VA_NRM, temp_r28->data.normal->data, 3 * sizeof(float));
+                        GXSetArray(GX_VA_NRM, object->data.normal->data, 3 * sizeof(float));
                     }
                 }
                 GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-                GXSetArray(GX_VA_TEX0, temp_r28->data.st->data, 2 * sizeof(float));
-                if (var_r22 & 4) {
+                GXSetArray(GX_VA_TEX0, object->data.st->data, 2 * sizeof(float));
+                if (vtxMode & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSetArray(GX_VA_CLR0, temp_r28->data.color->data, 4);
+                    GXSetArray(GX_VA_CLR0, object->data.color->data, 4);
                 }
                 GXSetZCompLoc(0);
             }
-            var_r21 = temp_r30->numAttrs;
-            for (var_r31 = 0; var_r31 < temp_r30->numAttrs; var_r31++) {
-                temp_r26 = &temp_r28->data.attribute[temp_r30->attrs[var_r31]];
-                temp_r27 = temp_r26->bitmap;
-                if (temp_r26->unk04 != 0) {
-                    texCol[var_r31].a = 0;
-                    temp_r23 = temp_r26->unk04;
-                    sp24 = &Hu3DTexAnimData[temp_r23->unk02];
-                    if ((temp_r23->unk00 & 1) && !(sp24->unk00 & 4)) {
-                        if (Hu3DAnimSet(arg0->model, temp_r26, (s16) var_r31) != 0) {
-                            BmpPtrBak[var_r31] = (HsfAttribute*) -1;
+            textureIdx = faceMaterial->numAttrs;
+            for (tevStage = 0; tevStage < faceMaterial->numAttrs; tevStage++) {
+                currentAttribute = &object->data.attribute[faceMaterial->attrs[tevStage]];
+                currentBitmap = currentAttribute->bitmap;
+                if (currentAttribute->unk04 != 0) {
+                    texCol[tevStage].a = 0;
+                    currentDrawData = currentAttribute->unk04;
+                    texAnimData = &Hu3DTexAnimData[currentDrawData->unk02];
+                    if (((currentDrawData->unk00) & 1) && !(texAnimData->unk00 & 4)) {
+                        if (Hu3DAnimSet(hsfDrawObject->model, currentAttribute, (s32) tevStage) != 0) {
+                            BmpPtrBak[tevStage] = (HsfAttribute*) -1;
                             totalTexCnt++;
                             continue;
                         }
-                    } else if (temp_r23->unk00 & 8) {
-                        temp_r27 = temp_r23->unk3C;
-                        if (temp_r27->dataFmt != 0xB) {
-                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16) var_r31);
+                    } else if (currentDrawData->unk00 & 8) {
+                        currentBitmap = currentDrawData->unk3C;
+                        if (currentBitmap->dataFmt != 0xB) {
+                            LoadTexture(hsfDrawObject->model, currentBitmap, currentAttribute, (s32) tevStage); // or: tevStage | 0x0000?
                         } else {
-                            LoadTexture(arg0->model, temp_r23->unk3C, temp_r26, (s16) var_r31);
-                            LoadTexture(arg0->model, temp_r23->unk3C, temp_r26, var_r21 | 0x8000);
-                            texCol[var_r31].r = (s16) var_r21;
-                            texCol[var_r31].a = 2;
-                            var_r21++;
+                            LoadTexture(hsfDrawObject->model, currentDrawData->unk3C, currentAttribute, (s32) tevStage);
+                            LoadTexture(hsfDrawObject->model, currentDrawData->unk3C, currentAttribute, textureIdx | 0x8000);
+                            texCol[tevStage].r = (s16) textureIdx;
+                            texCol[tevStage].a = 2;
+                            textureIdx++;
                         }
-                        if (temp_r27->sizeX * temp_r27->sizeY * temp_r27->pixSize > 0x40000) {
+                        if (currentBitmap->sizeX * currentBitmap->sizeY * currentBitmap->pixSize > 0x40000) {
                             for (var_r24 = 0; var_r24 < 8; var_r24++) {
                                 BmpPtrBak[var_r24] = (HsfAttribute*) -1;
                             }
                         } else {
-                            BmpPtrBak[var_r31] = (HsfAttribute*) -1;
+                            BmpPtrBak[tevStage] = (HsfAttribute*) -1;
                         }
                         totalTexCnt++;
                         continue;
                     }
                 }
-                if (BmpPtrBak[var_r31] != temp_r26) {
-                    if (BmpPtrBak[var_r31] != (HsfAttribute*) -1 && BmpPtrBak[var_r31]->bitmap == temp_r27 && temp_r26->wrap_s == BmpPtrBak[var_r31]->wrap_s && temp_r26->wrap_t == BmpPtrBak[var_r31]->wrap_t) {
-                        if (temp_r27->dataFmt == 0xB) {
+                if (BmpPtrBak[tevStage] != currentAttribute) {
+                    if (BmpPtrBak[tevStage] != (HsfAttribute*) -1 && BmpPtrBak[tevStage]->bitmap == currentBitmap && currentAttribute->wrap_s == BmpPtrBak[tevStage]->wrap_s && currentAttribute->wrap_t == BmpPtrBak[tevStage]->wrap_t) {
+                        if (currentBitmap->dataFmt == 0xB) {
                             TL32F = 1;
                         }
                         totalTexCacheCnt++;
                     } else {
-                        texCol[var_r31].a = 0;
-                        if (temp_r27->dataFmt != 0xB) {
-                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16) var_r31);
+                        texCol[tevStage].a = 0;
+                        if (currentBitmap->dataFmt != 0xB) {
+                            LoadTexture(hsfDrawObject->model, currentBitmap, currentAttribute, (s32) tevStage);
                         } else {
-                            LoadTexture(arg0->model, temp_r27, temp_r26, (s16) var_r31);
-                            LoadTexture(arg0->model, temp_r27, temp_r26, var_r21 | 0x8000);
-                            texCol[var_r31].r = (s16) var_r21;
-                            texCol[var_r31].a = 2;
-                            var_r21++;
+                            LoadTexture(hsfDrawObject->model, currentBitmap, currentAttribute, (s32) tevStage);
+                            LoadTexture(hsfDrawObject->model, currentBitmap, currentAttribute, textureIdx | 0x8000);
+                            texCol[tevStage].r = (s16) textureIdx;
+                            texCol[tevStage].a = 2;
+                            textureIdx++;
                         }
-                        if (temp_r27->sizeX * temp_r27->sizeY * temp_r27->pixSize > 0x40000) {
+                        if (currentBitmap->sizeX * currentBitmap->sizeY * currentBitmap->pixSize > 0x40000) {
                             for (var_r24 = 0; var_r24 < 8; var_r24++) {
                                 BmpPtrBak[var_r24] = (HsfAttribute*) -1;
                             }
                         } else {
-                            BmpPtrBak[var_r31] = temp_r26;
+                            BmpPtrBak[tevStage] = currentAttribute;
                         }
                         totalTexCnt++;
                     }
@@ -646,18 +661,18 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
                     totalTexCacheCnt++;
                 }
             }
-            if (temp_r30->refAlpha != 0.0f) {
-                reflectionMapNo = (s16) var_r21;
+            if (faceMaterial->refAlpha != 0.0f) {
+                reflectionMapNo = (s16) textureIdx;
                 shadowMapNo = reflectionMapNo + 1;
-                if (temp_r29->unk_04 != -1) {
-                    var_r17 = temp_r29->unk_04;
+                if (model->unk_04 != -1) {
+                    reflectAnimIdx = model->unk_04;
                 } else {
-                    var_r17 = reflectMapNo;
+                    reflectAnimIdx = reflectMapNo;
                 }
-                HuSprTexLoad(reflectAnim[var_r17], 0, reflectionMapNo, GX_REPEAT, GX_REPEAT, GX_LINEAR);
+                HuSprTexLoad(reflectAnim[reflectAnimIdx], 0, reflectionMapNo, GX_REPEAT, GX_REPEAT, GX_LINEAR);
                 BmpPtrBak[reflectionMapNo] = (HsfAttribute*) -1;
             } else {
-                shadowMapNo = (s16) var_r21;
+                shadowMapNo = (s16) textureIdx;
             }
             if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
                 toonMapNo = shadowMapNo + 1;
@@ -666,49 +681,49 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1) {
             } else {
                 toonMapNo = shadowMapNo;
             }
-            if (temp_r29->attr & HU3D_ATTR_TOON_MAP) {
+            if (model->attr & HU3D_ATTR_TOON_MAP) {
                 HuSprTexLoad(toonAnim, 0, toonMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 BmpPtrBak[toonMapNo] = (HsfAttribute*) -1;
                 projectionMapNo = toonMapNo + 1;
             } else {
                 projectionMapNo = toonMapNo;
             }
-            if (temp_r29->unk_02 != 0) {
-                for (var_r31 = 0, var_r24 = 1; var_r31 < 4; var_r31++, var_r24 <<= 1) {
-                    if (var_r24 & temp_r29->unk_02) {
-                        HuSprTexLoad(Hu3DProjection[var_r31].unk_04, 0, projectionMapNo + var_r31, GX_CLAMP, GX_CLAMP, GX_LINEAR);
-                        BmpPtrBak[projectionMapNo + var_r31] = (HsfAttribute*) -1;
-                        hiliteMapNo = projectionMapNo + var_r31 + 1;
+            if (model->unk_02 != 0) {
+                for (tevStage = 0, var_r24 = 1; tevStage < 4; tevStage++, var_r24 <<= 1) {
+                    if (var_r24 & model->unk_02) {
+                        HuSprTexLoad(Hu3DProjection[tevStage].unk_04, 0, projectionMapNo + tevStage, GX_CLAMP, GX_CLAMP, GX_LINEAR);
+                        BmpPtrBak[projectionMapNo + tevStage] = (HsfAttribute*) -1;
+                        hiliteMapNo = projectionMapNo + tevStage + 1;
                     }
                 }
             } else {
                 hiliteMapNo = projectionMapNo;
             }
-            if ((temp_r29->attr & HU3D_ATTR_HILITE) || (temp_r19 & 0x100)) {
-                if (temp_r20->hiliteMap == 0) {
-                    if (temp_r30->flags != 0) {
-                        var_r18 = (temp_r30->pass >> 4) & 0xF;
+            if ((model->attr & HU3D_ATTR_HILITE) || (flags & 0x100)) {
+                if (constData->hiliteMap == 0) {
+                    if (faceMaterial->flags != 0) {
+                        hiliteAnimIdx = ((faceMaterial->pass >> 4) & 0xF);
                     } else {
-                        var_r18 = (temp_r28->data.unk123 >> 4) & 0xF;
+                        hiliteAnimIdx = ((object->data.unk123 >> 4) & 0xF);
                     }
-                    HuSprTexLoad(hiliteAnim[var_r18], 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
+                    HuSprTexLoad(hiliteAnim[hiliteAnimIdx], 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 } else {
-                    HuSprTexLoad(temp_r20->hiliteMap, 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
+                    HuSprTexLoad(constData->hiliteMap, 0, hiliteMapNo, GX_CLAMP, GX_CLAMP, GX_LINEAR);
                 }
                 BmpPtrBak[toonMapNo] = (HsfAttribute*) -1;
             }
-            SetTevStageTex(arg0, temp_r30);
+            SetTevStageTex(hsfDrawObject, faceMaterial);
         }
-        sp28 = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayList(sp28, DrawData[drawCnt].dlSize);
+        displayListPtr = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
+        GXCallDisplayList(displayListPtr, DrawData[drawCnt].dlSize);
     } else {
-        sp28 = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayList(sp28, DrawData[drawCnt].dlSize);
+        displayListPtr = (u8*) DLBufStartP + DrawData[drawCnt].dlOfs;
+        GXCallDisplayList(displayListPtr, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
 
-static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
+static void SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1) {
     GXColor sp1C;
     ModelData *temp_r28;
     HsfObject *var_r21;
@@ -1598,7 +1613,7 @@ static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXT
     GXSetTevAlphaOp(arg1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
 }
 
-static s32 SetShadowTex(void) {
+static void SetShadowTex(void) {
     GXTexObj sp8;
 
     GXInitTexObj(&sp8, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
@@ -1724,7 +1739,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1) {
     drawCnt++;
 }
 
-static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3) {
+static void LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3) {
     GXTexObj sp1C;
     GXTlutObj sp10;
     s16 var_r27;
