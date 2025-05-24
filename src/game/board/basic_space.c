@@ -140,7 +140,7 @@ void BoardLandBlueExec(s32 player, s32 space) {
  * does the following:
  * 
  *   * Focuses the camera on the player and puts them in a good state
- *   * Determines how many coins to award the player
+ *   * Determines how many coins to remove from the player
  *   * Displays the coin loss to the player
  *   * Removes coins to the player's inventory one at a time
  *   * Removes the coin loss display
@@ -202,16 +202,6 @@ void BoardLandRedExec(s32 player, s32 space) {
     BoardPlayerIdleSet(player);
 }
 
-/**
- * @brief Creates the coin change model that appears above a player's head
- * 
- * @param pos Vector position to create the model at 
- * (standard is player position.y + 250.0f).
- * @param value Numerical value that the model will represent. No logic in place
- * for numbers greater than 99 or less than -99.
- * 
- * @return s8 
- */
 s8 BoardCoinChgCreate(Vec *pos, s8 value) {
     omObjData *obj = NULL;
     coinChg *coin_chg;
