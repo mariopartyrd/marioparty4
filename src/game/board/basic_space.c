@@ -66,8 +66,6 @@ static s32 coinDigitMdl[10] = {
 };
 
 /**
- * @headerfile basic_space.h "game/board/basic_space.h"
- * 
  * @brief Handle what happens when a player lands on a blue space.
  * 
  * @details This function is called when a player lands on a blue space and
@@ -136,8 +134,6 @@ void BoardLandBlueExec(s32 player, s32 space) {
 }
 
 /**
- * @headerfile basic_space.h "game/board/basic_space.h"
- * 
  * @brief Handle what happens when a player lands on a red space.
  * 
  * @details This function is called when a player lands on a red space and
@@ -206,6 +202,16 @@ void BoardLandRedExec(s32 player, s32 space) {
     BoardPlayerIdleSet(player);
 }
 
+/**
+ * @brief Creates the coin change model that appears above a player's head
+ * 
+ * @param pos Vector position to create the model at 
+ * (standard is player position.y + 250.0f).
+ * @param value Numerical value that the model will represent. No logic in place
+ * for numbers greater than 99 or less than -99.
+ * 
+ * @return s8 
+ */
 s8 BoardCoinChgCreate(Vec *pos, s8 value) {
     omObjData *obj = NULL;
     coinChg *coin_chg;
