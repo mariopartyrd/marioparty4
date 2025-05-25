@@ -72,6 +72,7 @@ static s32 coinDigitMdl[10] = {
  * does the following:
  * 
  *   * Focuses the camera on the player and puts them in a good state
+ *   * Checks if the player is in tutorial mode and executes the tutorial hook
  *   * Determines how many coins to award the player
  *   * Displays the coin gain to the player
  *   * Adds coins to the player's inventory one at a time
@@ -94,7 +95,7 @@ void BoardLandBlueExec(s32 player, s32 space) {
         HuPrcVSleep();
     }
 
-    // ? TODOC What exactly is this checking for?
+    // Check if the player is in tutorial mode and execute the tutorial hook
     if (_CheckFlag(FLAG_ID_MAKE(1, 11)) != 0) {
         BoardCameraMotionWait();
         BoardTutorialHookExec(10, 0);
@@ -140,6 +141,7 @@ void BoardLandBlueExec(s32 player, s32 space) {
  * does the following:
  * 
  *   * Focuses the camera on the player and puts them in a good state
+ *   * Checks if the player is in tutorial mode and executes the tutorial hook
  *   * Determines how many coins to remove from the player
  *   * Displays the coin loss to the player
  *   * Removes coins to the player's inventory one at a time
@@ -163,7 +165,7 @@ void BoardLandRedExec(s32 player, s32 space) {
         HuPrcVSleep();
     }
 
-    // ? TODOC What exactly is this checking for?
+    // Check if the player is in tutorial mode and execute the tutorial hook
     if (_CheckFlag(FLAG_ID_MAKE(1, 11)) != 0) {
         BoardCameraMotionWait();
         BoardTutorialHookExec(11, 0);
