@@ -74,6 +74,55 @@ void HuPadInit(void)
     }
 }
 
+/**
+ * @brief Read each of the four gamepad states and updates the respective globals
+ * 
+ * @details Called once per frame, this function reads the state of each gamepad
+ * and updates the global HuPad variables accordingly. The available variables are:
+ * 
+ * - **HuPadBtn**: The current button state for each gamepad
+ * - **HuPadBtnDown**: The buttons that were pressed this frame for each gamepad. 
+ *                     This is reset to 0 after each frame.
+ * - **HuPadStkX**: The X-axis value of the main stick for each gamepad
+ * - **HuPadStkY**: The Y-axis value of the main stick for each gamepad
+ * - **HuPadSubStkX**: The X-axis value of the C-stick for each gamepad
+ * - **HuPadSubStkY**: The Y-axis value of the C-stick for each gamepad
+ * - **HuPadTrigL**: The analog left trigger value for each gamepad
+ * - **HuPadTrigR**: The analog right trigger value for each gamepad
+ * - **HuPadDStk**: The direction of the main stick for each gamepad
+ *                  (1 = left, 2 = right, 4 = down, 8 = up) and a combination of 
+ *                  these values if the stick is in a diagonal position
+ * - **HuPadDStkRep**: The direction of the main stick for each gamepad, 
+ *                     but only if it has changed since the last frame
+ * - **HuPadErr**: The error code for each gamepad, if any.
+ * 
+ * Each of these variables is an array of 4 elements, one for each gamepad. The values are
+ * updated based on the current state of the gamepads at the time this function is called.
+ * 
+ * Joystick and C-stick values are signed 8-bit integers, ranging from -128 to 127.
+ * 
+ * All other values are unsigned 8-bit integers, ranging from 0 to 255.
+ * 
+ * Button values are bitmasks, where each bit represents a different button. The available
+ * button masks are:
+ * 
+ * - **PAD_BUTTON_LEFT**: The left D-pad button
+ * - **PAD_BUTTON_RIGHT**: The right D-pad button
+ * - **PAD_BUTTON_DOWN**: The down D-pad button
+ * - **PAD_BUTTON_UP**: The up D-pad button
+ * - **PAD_TRIGGER_Z**: The Z trigger button
+ * - **PAD_TRIGGER_R**: The R trigger button
+ * - **PAD_TRIGGER_L**: The L trigger button
+ * - **PAD_BUTTON_A**: The A button
+ * - **PAD_BUTTON_B**: The B button
+ * - **PAD_BUTTON_X**: The X button
+ * - **PAD_BUTTON_Y**: The Y button
+ * - **PAD_BUTTON_START**: The start button
+ * - **PAD_BUTTON_MENU**: The menu button (same as start button)
+ * 
+ * **Note:** D-Pad values are not read or stored in this function.
+ * 
+ */
 void HuPadRead(void)
 {
     s16 i;
