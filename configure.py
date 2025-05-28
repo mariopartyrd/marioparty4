@@ -672,7 +672,7 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/runtime.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
             Object(NonMatching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/GCN_mem_alloc.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"),
         ],
     },
     {

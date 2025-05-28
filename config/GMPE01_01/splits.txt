@@ -980,7 +980,7 @@ Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp:
 	.bss        start:0x801A72D0 end:0x801A72E0
 	.sdata      start:0x801D39B8 end:0x801D39C8
 
-Runtime.PPCEABI.H/GCN_mem_alloc.c:
+Runtime.PPCEABI.H/GCN_Mem_Alloc.c:
 	.text       start:0x800E3F5C end:0x800E4014
 	.rodata     start:0x8011E5A0 end:0x8011E618
 
