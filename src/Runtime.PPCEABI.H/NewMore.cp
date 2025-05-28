@@ -1,15 +1,5 @@
-#include "PowerPC_EABI_Support/Runtime/New.h"
+#include "PowerPC_EABI_Support/Runtime/exception.h"
 
-namespace std {
-    class exception {
-        public:
-            virtual ~exception();
-            virtual const char *what() const;
-    };
+static void unused() {
+    throw std::exception();
 }
-
-const char *std::exception::what() const {
-    return "exception";
-};
-
-std::exception::~exception() {};
