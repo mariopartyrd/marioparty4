@@ -6,12 +6,51 @@ from pathlib import Path
 
 # List of C keywords to exclude
 C_KEYWORDS = {
-    "if", "else", "while", "for", "do", "switch", "case", "default", "break", "continue",
-    "return", "goto", "sizeof", "typedef", "struct", "union", "enum", "static", "extern",
-    "const", "volatile", "inline", "register", "restrict", "auto", "void", "int", "char",
-    "float", "double", "long", "short", "signed", "unsigned", "bool", "_Bool", "_Complex",
-    "_Imaginary", "alignas", "alignof", "atomic", "thread_local", "noexcept", "static_assert",
-    "constexpr"
+    "if",
+    "else",
+    "while",
+    "for",
+    "do",
+    "switch",
+    "case",
+    "default",
+    "break",
+    "continue",
+    "return",
+    "goto",
+    "sizeof",
+    "typedef",
+    "struct",
+    "union",
+    "enum",
+    "static",
+    "extern",
+    "const",
+    "volatile",
+    "inline",
+    "register",
+    "restrict",
+    "auto",
+    "void",
+    "int",
+    "char",
+    "float",
+    "double",
+    "long",
+    "short",
+    "signed",
+    "unsigned",
+    "bool",
+    "_Bool",
+    "_Complex",
+    "_Imaginary",
+    "alignas",
+    "alignof",
+    "atomic",
+    "thread_local",
+    "noexcept",
+    "static_assert",
+    "constexpr",
 }
 
 SKIP_FILES = [
@@ -31,6 +70,7 @@ DOXYGEN_COMMENT = re.compile(
     r"/\*\*.*?\*/\s*(?:[a-zA-Z_][\w\s\*\(\),]*\*?\s+)?\*?([a-zA-Z_]\w*)\s*\([^;{]*\)\s*\{",
     re.DOTALL,
 )
+
 # Unlabelled variables
 UNLABELLED_VARIABLE = re.compile(
     r"^\s+(?!return)[a-zA-Z0-9]+\s+\*?((var_|temp_|sp|unk)\S?\d*\S?);",
@@ -56,7 +96,9 @@ if __name__ == "__main__":
             # Find all function definitions
             all_funcs = set(match.group(1) for match in FUNC_DEF.finditer(content))
             # Find all documented functions
-            documented_funcs = set(match.group(1) for match in DOXYGEN_COMMENT.finditer(content))
+            documented_funcs = set(
+                match.group(1) for match in DOXYGEN_COMMENT.finditer(content)
+            )
             # Filter out C keywords
             all_funcs = {func for func in all_funcs if func not in C_KEYWORDS}
             # Find all unlabeled variables
@@ -76,5 +118,7 @@ if __name__ == "__main__":
     else:
         total_percent = 0
 
-    print(f"\nTotal: {total_documented}/{total_funcs} functions documented ({total_percent:.2f}%)")
+    print(
+        f"\nTotal: {total_documented}/{total_funcs} functions documented ({total_percent:.2f}%)"
+    )
     print(f"Total unlabelled variables: {total_unlabelled}")
