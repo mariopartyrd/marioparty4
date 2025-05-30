@@ -92,8 +92,11 @@ void HuPadInit(void)
  * - **HuPadDStk**: The direction of the main stick for each gamepad
  *                  (1 = left, 2 = right, 4 = down, 8 = up) and a combination of 
  *                  these values if the stick is in a diagonal position
- * - **HuPadDStkRep**: The direction of the main stick for each gamepad, 
- *                     but only if it has changed since the last frame
+ * - **HuPadDStkRep**: The direction of the main stick for each gamepad. Also
+ *                     known as the "repeated" stick value, this is used to
+ *                     detect when the stick is held in a certain direction
+ *                     for a period of 20 frames and repeats at an 
+ *                     interval of 2 frames. Typically used for menu navigation.
  * - **HuPadErr**: The error code for each gamepad, if any.
  * 
  * Each of these variables is an array of 4 elements, one for each gamepad. The values are
