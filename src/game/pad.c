@@ -99,15 +99,16 @@ void HuPadInit(void)
  *                     interval of 2 frames. Typically used for menu navigation.
  * - **HuPadErr**: The error code for each gamepad, if any.
  * 
- * Each of these variables is an array of 4 elements, one for each gamepad. The values are
- * updated based on the current state of the gamepads at the time this function is called.
+ * Each of these variables is an array of 4 elements, one for each gamepad. The 
+ * values are updated based on the current state of the gamepads at the time 
+ * this function is called.
  * 
  * Joystick and C-stick values are signed 8-bit integers, ranging from -128 to 127.
  * 
  * All other values are unsigned 8-bit integers, ranging from 0 to 255.
  * 
- * Button values are bitmasks, where each bit represents a different button. The available
- * button masks are:
+ * Button values are bitmasks, where each bit represents a different button. T
+ * he available button masks are:
  * 
  * - **PAD_BUTTON_LEFT**: The left D-pad button
  * - **PAD_BUTTON_RIGHT**: The right D-pad button
