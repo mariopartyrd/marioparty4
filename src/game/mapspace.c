@@ -368,7 +368,7 @@ static inline void compute_tri_normal(Vec *result, Vec *point1, Vec *point2, Vec
     vx = point3->x - point1->x;
     vy = point3->y - point1->y;
     vz = point3->z - point1->z;
-    
+
     result->x = uy * vz - uz * vy;
     result->y = uz * vx - ux * vz;
     result->z = ux * vy - uy * vx;
@@ -532,13 +532,13 @@ static inline float xz_scalar_cross_from_origin(float x_org, float z_org, Vec *v
 }
 
 static s32 MapIflnnerTriangle(float x_org, float y_org, u16 *arg2, Vec *arg3) {
-    Vec sp68;
+    Vec normal;
     float var_f29;
     s32 var_r21;
     s32 i;
 
-    compute_tri_normal(&sp68, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
-    if (sp68.y == 0.0f) {
+    compute_tri_normal(&normal, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
+    if (normal.y == 0.0f) {
         return 0;
     }
     arg2++;
@@ -634,26 +634,32 @@ static s32 MapIflnnerQuadrangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
     return 1;
 }
 
-static inline s32 MapspaceInlineFunc03(float *spE0, s16 *temp_r31, Vec *arg1) {
-    Vec spAC;
-    Vec *temp_r21;
-    float sp70;
-    float sp74;
-    float sp78;
-    float sp7C;
-    s16 sp8;
+// I havent fully understood the call-site code for this function, so I am not totally certain of its use.
+// However, it seems very likely this is checking for back-face culls. So I have named the function should_cull, and refered to the origin as camera.
+// This function could be used for other things (eg checking for flipped normals), but I have named it for what I see as the most likely case.
+static inline s32 should_cull(float *camera, s16 *tri_indices, Vec *vec) {
+    Vec normal;
+    Vec *plane_point;
+    float x;
+    float y;
+    float z;
+    float dot_prod;
+    s16 plane_point_idx;
 
-    compute_tri_normal(&spAC, &arg1[temp_r31[0]], &arg1[temp_r31[1]], &arg1[temp_r31[2]]);
-    sp8 = temp_r31[1];
-    temp_r21 = &arg1[sp8];
-    sp70 = temp_r21->x;
-    sp74 = temp_r21->y;
-    sp78 = temp_r21->z;
-    sp70 -= spE0[0];
-    sp74 -= spE0[1];
-    sp78 -= spE0[2];
-    sp7C = spAC.x * sp70 + spAC.y * sp74 + spAC.z * sp78;
-    return (sp7C < 0.0f) ? -1 : 1;
+    compute_tri_normal(&normal, &vec[tri_indices[0]], &vec[tri_indices[1]], &vec[tri_indices[2]]);
+    plane_point_idx = tri_indices[1];
+    plane_point = &vec[plane_point_idx];
+    x = plane_point->x;
+    y = plane_point->y;
+    z = plane_point->z;
+
+    // Subtract viewpoint to change basis from absolute -> camera relative coordinate system
+    x -= camera[0];
+    y -= camera[1];
+    z -= camera[2];
+
+    dot_prod = normal.x * x + normal.y * y + normal.z * z; 
+    return (dot_prod < 0.0f) ? -1 : 1;
 }
 
 static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) {
@@ -728,7 +734,7 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
             spE0[1] = OldXYZ.y;
             spE0[2] = OldXYZ.z;
             PSMTXMultVec(MapMTR, (Vec*) &spE0, (Vec*) &spE0);
-            if (MapspaceInlineFunc03(spE0, temp_r31, arg1) < 0) {
+            if (should_cull(spE0, temp_r31, arg1) < 0) {
                 spB8.x = spE0[0] - spD0[0];
                 spB8.y = spE0[1] - spD0[1];
                 spB8.z = spE0[2] - spD0[2];
