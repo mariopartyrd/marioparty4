@@ -352,24 +352,27 @@ static inline void normalize_vec(Vec *vec) {
     }
 }
 
-static inline void MapspaceInlineFunc01(Vec *arg0, Vec *arg1, Vec *arg2, Vec *arg3) {
-    float sp48;
-    float sp4C;
-    float sp50;
-    float temp_f18;
-    float temp_f19;
-    float temp_f20;
+static inline void compute_tri_normal(Vec *result, Vec *point1, Vec *point2, Vec *point3) {
+    float ux;
+    float uy;
+    float uz;
 
-    sp48 = arg2->x - arg1->x;
-    sp4C = arg2->y - arg1->y;
-    sp50 = arg2->z - arg1->z;
-    temp_f18 = arg3->x - arg1->x;
-    temp_f19 = arg3->y - arg1->y;
-    temp_f20 = arg3->z - arg1->z;
-    arg0->x = sp4C * temp_f20 - sp50 * temp_f19;
-    arg0->y = sp50 * temp_f18 - sp48 * temp_f20;
-    arg0->z = sp48 * temp_f19 - sp4C * temp_f18;
-    normalize_vec(arg0);
+    float vx;
+    float vy;
+    float vz;
+
+    ux = point2->x - point1->x;
+    uy = point2->y - point1->y;
+    uz = point2->z - point1->z;
+
+    vx = point3->x - point1->x;
+    vy = point3->y - point1->y;
+    vz = point3->z - point1->z;
+    
+    result->x = uy * vz - uz * vy;
+    result->y = uz * vx - ux * vz;
+    result->z = ux * vy - uy * vx;
+    normalize_vec(result);
 }
 
 static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
@@ -393,9 +396,9 @@ static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
         return 0;
     }
     if ((temp_r24 & 0xFF) == 4) {
-        MapspaceInlineFunc01(&sp68, &arg2[arg1[1]], &arg2[arg1[4]], &arg2[arg1[3]]);
+        compute_tri_normal(&sp68, &arg2[arg1[1]], &arg2[arg1[4]], &arg2[arg1[3]]);
     } else {
-        MapspaceInlineFunc01(&sp68, &arg2[arg1[1]], &arg2[arg1[2]], &arg2[arg1[3]]);
+        compute_tri_normal(&sp68, &arg2[arg1[1]], &arg2[arg1[2]], &arg2[arg1[3]]);
     }
     temp_r22 = arg1[1];
     temp_r29 = &arg2[temp_r22];
@@ -465,7 +468,7 @@ static float MapCalcPoint(float arg0, float arg1, float arg2, Vec *arg3, u16 *ar
     var_f26 = arg1;
     sp2C = arg2;
     sp28 = 1.0f;
-    MapspaceInlineFunc01(&sp40, &arg3[ColisionIdx[temp_r27][0]], &arg3[ColisionIdx[temp_r27][1]], &arg3[ColisionIdx[temp_r27][2]]);
+    compute_tri_normal(&sp40, &arg3[ColisionIdx[temp_r27][0]], &arg3[ColisionIdx[temp_r27][1]], &arg3[ColisionIdx[temp_r27][2]]);
     var_f25 = sp40.x;
     var_f27 = sp40.y;
     var_f24 = sp40.z;
@@ -534,7 +537,7 @@ static s32 MapIflnnerTriangle(float x_org, float y_org, u16 *arg2, Vec *arg3) {
     s32 var_r21;
     s32 i;
 
-    MapspaceInlineFunc01(&sp68, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
+    compute_tri_normal(&sp68, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
     if (sp68.y == 0.0f) {
         return 0;
     }
@@ -569,7 +572,7 @@ static s32 MapIflnnerQuadrangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
     float var_f31;
     s32 var_r28;
 
-    MapspaceInlineFunc01(&sp158, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
+    compute_tri_normal(&sp158, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
     if (sp158.y == 0.0f) {
         return 0;
     }
@@ -640,7 +643,7 @@ static inline s32 MapspaceInlineFunc03(float *spE0, s16 *temp_r31, Vec *arg1) {
     float sp7C;
     s16 sp8;
 
-    MapspaceInlineFunc01(&spAC, &arg1[temp_r31[0]], &arg1[temp_r31[1]], &arg1[temp_r31[2]]);
+    compute_tri_normal(&spAC, &arg1[temp_r31[0]], &arg1[temp_r31[1]], &arg1[temp_r31[2]]);
     sp8 = temp_r31[1];
     temp_r21 = &arg1[sp8];
     sp70 = temp_r21->x;
@@ -714,7 +717,7 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
         PSMTXMultVec(MapMT, &spC4, &spC4);
         DefSetHitFace(spC4.x, spC4.y, spC4.z);
         temp_r29 = &HitFaceVec[HitFaceCount];
-        MapspaceInlineFunc01(temp_r29, &arg1[arg0[0]], &arg1[arg0[1]], &arg1[arg0[2]]);
+        compute_tri_normal(temp_r29, &arg1[arg0[0]], &arg1[arg0[1]], &arg1[arg0[2]]);
         temp_f31 = spC4.x - spD0[0];
         spA4 = spC4.y - spD0[1];
         temp_f30 = spC4.z - spD0[2];
