@@ -377,7 +377,7 @@ static inline void compute_tri_normal(Vec *result, Vec *point1, Vec *point2, Vec
 
 static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
     Vec *temp_r29;
-    Vec sp68;
+    Vec normal;
     float temp_f25;
     float temp_f24;
     float temp_f23;
@@ -396,9 +396,9 @@ static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
         return 0;
     }
     if ((temp_r24 & 0xFF) == 4) {
-        compute_tri_normal(&sp68, &arg2[arg1[1]], &arg2[arg1[4]], &arg2[arg1[3]]);
+        compute_tri_normal(&normal, &arg2[arg1[1]], &arg2[arg1[4]], &arg2[arg1[3]]);
     } else {
-        compute_tri_normal(&sp68, &arg2[arg1[1]], &arg2[arg1[2]], &arg2[arg1[3]]);
+        compute_tri_normal(&normal, &arg2[arg1[1]], &arg2[arg1[2]], &arg2[arg1[3]]);
     }
     temp_r22 = arg1[1];
     temp_r29 = &arg2[temp_r22];
@@ -408,17 +408,17 @@ static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
     temp_f24 = sp5C - arg0[0];
     temp_f23 = sp58 - arg0[1];
     temp_f22 = sp54 - arg0[2];
-    temp_f21 = sp68.x * temp_f24 + sp68.y * temp_f23 + sp68.z * temp_f22;
+    temp_f21 = normal.x * temp_f24 + normal.y * temp_f23 + normal.z * temp_f22;
     if (temp_f21 >= 0.0f) {
         var_r23 = 1;
     }
     if (fabs(temp_f21) > arg0[3]) {
         return 0;
     }
-    temp_f25 = sp68.x * temp_f24 + sp68.y * temp_f23 + sp68.z * temp_f22;
-    arg0[0] += sp68.x * temp_f25;
-    arg0[1] += sp68.y * temp_f25;
-    arg0[2] += sp68.z * temp_f25;
+    temp_f25 = normal.x * temp_f24 + normal.y * temp_f23 + normal.z * temp_f22;
+    arg0[0] += normal.x * temp_f25;
+    arg0[1] += normal.y * temp_f25;
+    arg0[2] += normal.z * temp_f25;
     return var_r23;
 }
 
@@ -669,7 +669,7 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
     float spD0[4];
     float temp_f31;
     float temp_f30;
-    float var_f21;
+    float scale;
     Vec spC4;
     Vec spB8;
     s32 spA8;
@@ -727,7 +727,7 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
         temp_f31 = spC4.x - spD0[0];
         spA4 = spC4.y - spD0[1];
         temp_f30 = spC4.z - spD0[2];
-        var_f21 = spE0[3] - sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
+        scale = spE0[3] - sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
         HitFaceCount++;
         if (spA0 > 0) {
             spE0[0] = OldXYZ.x;
@@ -740,14 +740,14 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
                 spB8.z = spE0[2] - spD0[2];
                 normalize_vec(&spB8);
                 if (DefIfnnerMapCircle((Vec*) spD0, arg0 - 1, arg1, &spB8) == 1) {
-                    var_f21 = spE0[3] + sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
+                    scale = spE0[3] + sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
                 }
             } else {
-                var_f21 = 0.0f;
+                scale = 0.0f;
             }
         }
-        if (var_f21 > 0.0f) {
-            AppendAddXZ(-temp_f31, -temp_f30, var_f21);
+        if (scale > 0.0f) {
+            AppendAddXZ(-temp_f31, -temp_f30, scale);
             MTRAdd.x = AddX;
             MTRAdd.z = AddZ;
             MTRAdd.y = 0.0f;
@@ -812,26 +812,26 @@ static s32 PrecalcPntToTriangle(Vec *arg0, Vec *arg1, Vec *arg2, Vec* arg3, Vec 
     return 1;
 }
 
-BOOL Hitcheck_Triangle_with_Sphere(Vec *arg0, Vec *arg1, float arg2, Vec *arg3) {
-    Vec sp48;
-    Vec sp3C;
-    Vec sp30;
-    Vec sp24;
-    Vec sp18;
-    Vec spC;
-    float var_f31;
+BOOL Hitcheck_Triangle_with_Sphere(Vec *triangle, Vec *sphere_origin, float sphere_radius, Vec *closest_point) {
+    Vec tri_point;
+    Vec ux;
+    Vec vx;
+    Vec normal;
+    Vec triangle_to_sphere; // Distance between the (arbitrary?) point on triangle, and the origin of the sphere.
+    Vec offset_to_closest_point;
+    float dist;
 
-    sp48.x = arg0[0].x;
-    sp48.y = arg0[0].y;
-    sp48.z = arg0[0].z;
-    VECSubtract(&arg0[1], &arg0[0], &sp3C);
-    VECSubtract(&arg0[2], &arg0[0], &sp30);
-    VECCrossProduct(&sp3C, &sp30, &sp24);
-    VECSubtract(arg1, &arg0[0], &sp18);
-    PrecalcPntToTriangle(&sp48, &sp3C, &sp30, &sp24, &sp18, &spC);
-    VECAdd(&spC, &sp48, arg3);
-    var_f31 = VECDistance(arg3, arg1);
-    if (var_f31 > arg2) {
+    tri_point.x = triangle[0].x;
+    tri_point.y = triangle[0].y;
+    tri_point.z = triangle[0].z;
+    VECSubtract(&triangle[1], &triangle[0], &ux);
+    VECSubtract(&triangle[2], &triangle[0], &vx);
+    VECCrossProduct(&ux, &vx, &normal);
+    VECSubtract(sphere_origin, &triangle[0], &triangle_to_sphere);
+    PrecalcPntToTriangle(&tri_point, &ux, &vx, &normal, &triangle_to_sphere, &offset_to_closest_point);
+    VECAdd(&offset_to_closest_point, &tri_point, closest_point);
+    dist = VECDistance(closest_point, sphere_origin);
+    if (dist > sphere_radius) {
         return FALSE;
     } else {
         return TRUE;
@@ -888,15 +888,16 @@ static void DefSetHitFace(float arg0, float arg1, float arg2) {
     HitFace[HitFaceCount].z = arg2;
 }
 
-void AppendAddXZ(float arg0, float arg1, float arg2) {
-    Vec spC;
+// floats x_comp and z_comp are essentially a direction vector (x_comp, 0, z_comp)
+void AppendAddXZ(float x_comp, float z_comp, float scale) {
+    Vec dir_vec;
 
-    spC.x = arg0;
-    spC.y = 0.0f;
-    spC.z = arg1;
-    normalize_vec(&spC);
-    AddX += spC.x * arg2;
-    AddZ += spC.z * arg2;
+    dir_vec.x = x_comp;
+    dir_vec.y = 0.0f;
+    dir_vec.z = z_comp;
+    normalize_vec(&dir_vec);
+    AddX += dir_vec.x * scale;
+    AddZ += dir_vec.z * scale;
 }
 
 void CharRotInv(Mtx arg0, Mtx arg1, Vec *arg2, omObjData *arg3) {
