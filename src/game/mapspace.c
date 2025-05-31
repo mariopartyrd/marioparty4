@@ -513,19 +513,19 @@ static BOOL AreaCheck(float arg0, float arg1, u16 *arg2, Vec *arg3) {
     }
 }
 
-static inline float MapspaceInlineFunc02(float arg0, float arg1, Vec *arg2, Vec *arg3) {
-    float sp54;
-    float sp58;
-    float sp5C;
-    float sp60;
-    float sp64;
+static inline float MapspaceInlineFunc02(float x_org, float z_org, Vec *vec1, Vec *vec2) {
+    float vec1_dx;
+    float vec1_dz;
+    float vec2_dx;
+    float vec2_dz;
+    float cross_prod_2d;
 
-    sp54 = arg2->x - arg0;
-    sp58 = arg2->z - arg1;
-    sp5C = arg3->x - arg0;
-    sp60 = arg3->z - arg1;
-    sp64 = -(sp58 * sp5C - sp54 * sp60);
-    return sp64;
+    vec1_dx = vec1->x - x_org;
+    vec1_dz = vec1->z - z_org;
+    vec2_dx = vec2->x - x_org;
+    vec2_dz = vec2->z - z_org;
+    cross_prod_2d = -(vec1_dz * vec2_dx - vec1_dx * vec2_dz);
+    return cross_prod_2d;
 }
 
 static s32 MapIflnnerTriangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
