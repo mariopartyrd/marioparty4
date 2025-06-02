@@ -48,7 +48,7 @@ s32 _CheckFlag(u32 flag)
 }
 
 /**
- * @brief Sets the value of a flag.
+ * @brief Sets the value of a flag. Setting the bit to 1.
  * 
  * @param flag Address of the flag to set.
  */
@@ -60,7 +60,7 @@ void _SetFlag(u32 flag)
 }
 
 /**
- * @brief Clears the value of a flag.
+ * @brief Clears the value of a flag. Setting the bit to 0.
  * 
  * @param flag Address of the flag to clear.
  */
