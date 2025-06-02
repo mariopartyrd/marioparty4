@@ -553,9 +553,6 @@ game/board/tutorial.c:
 	.bss        start:0x801A52E8 end:0x801A5300
 	.sbss       start:0x801D4288 end:0x801D42B0
 
-dolphin/os/__start.c:
-	.init       start:0x80003100 end:0x80003354
-
 dolphin/PPCArch.c:
 	.text       start:0x800B42F4 end:0x800B439C
 
@@ -653,6 +650,9 @@ dolphin/os/OSThread.c:
 dolphin/os/OSTime.c:
 	.text       start:0x800BAE5C end:0x800BB280
 	.data       start:0x8013C368 end:0x8013C3C8
+
+dolphin/os/__start.c:
+	.init       start:0x80003100 end:0x80003354
 
 dolphin/os/__ppc_eabi_init.c:
 	.init       start:0x80003354 end:0x800033A8
@@ -939,9 +939,6 @@ Runtime.PPCEABI.H/global_destructor_chain.c:
 	.dtors      start:0x8011DCE8 end:0x8011DCEC
 	.sbss       start:0x801D4758 end:0x801D4760
 
-Runtime.PPCEABI.H/__mem.c:
-	.init       start:0x800033A8 end:0x800034E0
-
 Runtime.PPCEABI.H/New.cp:
 	extab       start:0x80005620 end:0x80005648
 	extabindex  start:0x80005700 end:0x8000570C
@@ -1210,6 +1207,9 @@ TRK_MINNOW_DOLPHIN/notify.c:
 
 TRK_MINNOW_DOLPHIN/flush_cache.c:
 	.text       start:0x800F0360 end:0x800F0398
+
+Runtime.PPCEABI.H/__mem.c:
+	.init       start:0x800033A8 end:0x800034E0
 
 TRK_MINNOW_DOLPHIN/mem_TRK.c:
 	.init       start:0x800034E0 end:0x80003534

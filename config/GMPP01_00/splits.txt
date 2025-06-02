@@ -554,9 +554,6 @@ game/board/tutorial.c:
 	.bss        start:0x801C2688 end:0x801C26A0
 	.sbss       start:0x801F1640 end:0x801F1668
 
-dolphin/os/__start.c:
-	.init       start:0x80003100 end:0x80003354
-
 dolphin/PPCArch.c:
 	.text       start:0x800B4214 end:0x800B42BC
 
@@ -652,3 +649,6 @@ musyx/runtime/Delay/delay_fx.c:
 
 musyx/runtime/Chorus/chorus_fx.c:
 	.text       start:0x80113F74 end:0x801147DC
+
+dolphin/os/__start.c:
+	.init       start:0x80003100 end:0x80003354
