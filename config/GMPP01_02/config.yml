@@ -6,10 +6,8 @@ splits: config/GMPP01_00/splits.txt
 quick_analysis: true # Faster re-runs after initial analysis
 mw_comment_version: 10 # GC 2.6 linker
 force_active: [__register_global_object, lbl_801D40D0]
+clean_extab: true # Scrub uninitialized data from extab
 
-detect_objects: true
-detect_strings: true
-fill_gaps: true
 modules:
 - object: files/dll/_minigameDll.rel
   hash: 7101a759bcd45edee5bbc00a36d347c1f787c2a1

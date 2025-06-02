@@ -6,6 +6,40 @@ splits: config/GMPE01_00/splits.txt
 quick_analysis: true # Faster re-runs after initial analysis
 mw_comment_version: 10 # GC 2.6 linker
 force_active: [__register_global_object, lbl_801D40D0, _kerent]
+clean_extab: true # Scrub uninitialized data from extab
+
+add_relocations:
+# GetMesMaxSizeSub
+- source: .text:0x800473f4
+  type: sda21
+  target: mesWInsert
+  addend: -1
+# ExecBattle
+- source: .text:0x8009b7fc
+  type: sda21
+  target: battleMGIdx
+  addend: -1
+# OrderPlayers
+- source: .text:0x800a9598
+  type: sda21
+  target: playerOrderNew
+  addend: -1
+- source: .text:0x800a95c4
+  type: sda21
+  target: playerOrderNew
+  addend: -1
+- source: .text:0x800a95d8
+  type: sda21
+  target: playerOrderNew
+  addend: -1
+- source: .text:0x800a95ec
+  type: sda21
+  target: playerOrderOld
+  addend: -1
+- source: .text:0x800a9600
+  type: sda21
+  target: playerOrderOld
+  addend: -1
 
 modules:
 - object: files/dll/_minigameDll.rel
