@@ -198,7 +198,7 @@ void BoardLandRedExec(s32 player, s32 space) {
         HuPrcVSleep();
     }
 
-    // Set player's colour to blue and finish the sequence
+    // Set player's colour to red and finish the sequence
     GWPlayer[player].color = 2;
     BoardPlayerMotionEndWait(player);
     BoardPlayerIdleSet(player);
