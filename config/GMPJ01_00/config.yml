@@ -6,7 +6,6 @@ splits: config/GMPJ01_00/splits.txt
 quick_analysis: true # Faster re-runs after initial analysis
 mw_comment_version: 10 # GC 2.6 linker
 force_active: [__register_global_object, _kerent]
-clean_extab: true # Scrub uninitialized data from extab
 
 # TODO add hashes
 modules:

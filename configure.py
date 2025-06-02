@@ -155,7 +155,7 @@ if not config.non_matching:
 # Tool versions
 config.binutils_tag = "2.42-1"
 config.compilers_tag = "20250520"
-config.dtk_tag = "v1.6.0"
+config.dtk_tag = "v1.6.1"
 config.objdiff_tag = "v3.0.0-beta.8"
 config.sjiswrap_tag = "v1.2.1"
 config.wibo_tag = "0.6.16"
@@ -687,7 +687,7 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/runtime.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", clean_extab=True, extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"], extab_padding=[0x25, 0x00]),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"),
         ],
     },
