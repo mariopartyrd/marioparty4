@@ -65,26 +65,49 @@ static s32 coinDigitMdl[10] = {
 	DATA_MAKE_NUM(DATADIR_BOARD, 21),
 };
 
+/**
+ * @brief Handle what happens when a player lands on a blue space.
+ * 
+ * @details This function is called when a player lands on a blue space and
+ * does the following:
+ * 
+ *   * Focuses the camera on the player and puts them in a good state
+ *   * Checks if the player is in tutorial mode and executes the tutorial hook
+ *   * Determines how many coins to award the player
+ *   * Displays the coin gain to the player
+ *   * Adds coins to the player's inventory one at a time
+ *   * Removes the coin gain display
+ *   * Sets the player's colour to blue (used for minigames)
+ * 
+ * @param [in] player The player who landed on the space.
+ * @param [in] space The space the player landed on.
+ */
 void BoardLandBlueExec(s32 player, s32 space) {
     Vec pos;
     s32 i;
     s8 coin_chg;
     s32 coins;
 	
-	
+    // Focus camera on the player and position player towards the camera
     BoardCameraViewSet(2);
     BoardPlayerMotBlendSet(player, 0, 15);
     while (BoardPlayerMotBlendCheck(player) == 0) {
         HuPrcVSleep();
     }
+
+    // Check if the player is in tutorial mode and execute the tutorial hook
     if (_CheckFlag(FLAG_ID_MAKE(1, 11)) != 0) {
         BoardCameraMotionWait();
         BoardTutorialHookExec(10, 0);
     }
+
+    // Set the value of the coins to receive, modifying as necessary
     coins = 3;
     if (GWSystem.last5_effect == 1) {
         coins *= 2;
     }
+
+    // Creates and displays the coin change model above the player
     BoardPlayerPosGet(player, &pos);
     pos.y += 250.0f;
     coin_chg = BoardCoinChgCreate(&pos, coins);
@@ -92,46 +115,77 @@ void BoardLandBlueExec(s32 player, s32 space) {
     BoardCameraMotionWait();
     BoardPlayerMotionShiftSet(player, 12, 0.0f, 4.0f, HU3D_MOTATTR_NONE);
     
+    // Add coins to the player's inventory one at a time
     for (i = 0; i < coins; i++) {
         BoardPlayerCoinsAdd(player, 1);
         HuAudFXPlay(7);
         HuPrcSleep(6);
     }
+
+    // Wait for the coin change model to disappear
     HuAudFXPlay(15);
     while (BoardCoinChgExist(coin_chg) == 0) {
         HuPrcVSleep();
     }
+
+    // Set player's colour to blue and finish the sequence
     GWPlayer[player].color = 1;
     BoardPlayerMotionEndWait(player);
     BoardPlayerIdleSet(player);
 }
 
+/**
+ * @brief Handle what happens when a player lands on a red space.
+ * 
+ * @details This function is called when a player lands on a red space and
+ * does the following:
+ * 
+ *   * Focuses the camera on the player and puts them in a good state
+ *   * Checks if the player is in tutorial mode and executes the tutorial hook
+ *   * Determines how many coins to remove from the player
+ *   * Displays the coin loss to the player
+ *   * Removes coins to the player's inventory one at a time
+ *   * Removes the coin loss display
+ *   * Sets the player's colour to red (used for minigames)
+ * 
+ * @param [in] player The player who landed on the space.
+ * @param [in] space The space the player landed on.
+ */
 void BoardLandRedExec(s32 player, s32 space) {
     Vec pos;
     s32 i;
     s8 coin_chg;
     s32 coins;
 
+    // Focus camera on the player and position player towards the camera
     BoardCameraViewSet(2);
     omVibrate(player, 12, 6, 6);
     BoardPlayerMotBlendSet(player, 0, 15);
     while (BoardPlayerMotBlendCheck(player) == 0) {
         HuPrcVSleep();
     }
+
+    // Check if the player is in tutorial mode and execute the tutorial hook
     if (_CheckFlag(FLAG_ID_MAKE(1, 11)) != 0) {
         BoardCameraMotionWait();
         BoardTutorialHookExec(11, 0);
     }
+
+    // Set the value of the coins to remove, modifying as necessary
     coins = 3;
     if (GWSystem.last5_effect == 1) {
         coins *= 2;
     }
+
+    // Creates and displays the coin change model above the player
     BoardPlayerPosGet(player, &pos);
     pos.y += 250.0f;
     coin_chg = BoardCoinChgCreate(&pos, -coins);
     HuAudFXPlay(840);
     BoardCameraMotionWait();
     BoardPlayerMotionShiftSet(player, 13, 0.0f, 4.0f, HU3D_MOTATTR_NONE);
+
+    // Remove coins to the player's inventory one at a time
     for (i = 0; i < coins; i++) {
         BoardPlayerCoinsAdd(player, -1);
         HuAudFXPlay(14);
@@ -139,9 +193,12 @@ void BoardLandRedExec(s32 player, s32 space) {
     }
     HuAudFXPlay(15);
     
+    // Wait for the coin change model to disappear
     while (BoardCoinChgExist(coin_chg) == 0) {
         HuPrcVSleep();
     }
+
+    // Set player's colour to blue and finish the sequence
     GWPlayer[player].color = 2;
     BoardPlayerMotionEndWait(player);
     BoardPlayerIdleSet(player);

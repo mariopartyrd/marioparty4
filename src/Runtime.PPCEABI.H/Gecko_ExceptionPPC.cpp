@@ -3,6 +3,8 @@
 #include "PowerPC_EABI_Support/Runtime/NMWException.h"
 #include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
 
+#pragma force_active on
+
 #define RETURN_ADDRESS 4
 
 union MWE_GeckoVector64 {

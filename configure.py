@@ -118,6 +118,13 @@ parser.add_argument(
     help="builds equivalent (but non-matching) or modded objects",
 )
 parser.add_argument(
+    "--warn",
+    dest="warn",
+    type=str,
+    choices=["all", "off", "error"],
+    help="how to handle warnings",
+)
+parser.add_argument(
     "--no-progress",
     dest="progress",
     action="store_false",
@@ -147,11 +154,11 @@ if not config.non_matching:
 
 # Tool versions
 config.binutils_tag = "2.42-1"
-config.compilers_tag = "20240706"
-config.dtk_tag = "v1.1.4"
-config.objdiff_tag = "v2.3.3"
-config.sjiswrap_tag = "v1.2.0"
-config.wibo_tag = "0.6.11"
+config.compilers_tag = "20250520"
+config.dtk_tag = "v1.5.1"
+config.objdiff_tag = "v3.0.0-beta.8"
+config.sjiswrap_tag = "v1.2.1"
+config.wibo_tag = "0.6.16"
 
 # Project
 config.config_path = Path("config") / config.version / "config.yml"
@@ -161,7 +168,7 @@ config.asflags = [
     "--strip-local-absolute",
     "-I include",
     f"-I build/{config.version}/include",
-    f"--defsym version={version_num}",
+    f"--defsym BUILD_VERSION={version_num}",
 ]
 config.ldflags = [
     "-fp hardware",
@@ -171,6 +178,13 @@ if args.debug:
     config.ldflags.append("-g")
 if args.map:
     config.ldflags.append("-mapunused")
+
+# Use for any additional files that should cause a re-configure when modified
+config.reconfig_deps = []
+
+# Optional numeric ID for decomp.me preset
+# Can be overridden in libraries or objects
+config.scratch_preset_id = 82  # Mario Party 4 (DOL)
 
 # Base flags, common to most GC/Wii games.
 # Generally leave untouched, with overrides added below.
@@ -207,6 +221,14 @@ if args.debug:
     cflags_base.extend(["-sym on", "-DDEBUG=1"])
 else:
     cflags_base.append("-DNDEBUG=1")
+
+# Warning flags
+if args.warn == "all":
+    cflags_base.append("-W all")
+elif args.warn == "off":
+    cflags_base.append("-W off")
+elif args.warn == "error":
+    cflags_base.append("-W error")
 
 # Metrowerks library flags
 cflags_runtime = [
@@ -343,7 +365,6 @@ def DolphinLib(lib_name, objects):
         "lib": lib_name,
         "mw_version": "GC/1.2.5n",
         "cflags": cflags_dolphin,
-        "host": False,
         "objects": objects,
     }
 
@@ -353,7 +374,6 @@ def DolphinLibUnpatched(lib_name, objects):
         "lib": lib_name,
         "mw_version": "GC/1.2.5",
         "cflags": cflags_dolphin,
-        "host": False,
         "objects": objects,
     }
 
@@ -364,7 +384,6 @@ def MusyX(objects, mw_version="GC/1.3.2", debug=False, major=1, minor=5, patch=4
         "lib": "musyx",
         "mw_version": mw_version,
         "src_dir": "extern/musyx/src",
-        "host": False,
         "cflags": [
             *cflags,
             f"-DMUSY_VERSION_MAJOR={major}",
@@ -381,7 +400,7 @@ def Rel(lib_name, objects):
         "lib": lib_name,
         "mw_version": "GC/1.3.2",
         "cflags": cflags_rel,
-        "host": True,
+        "scratch_preset_id": 115,  # Mario Party 4 (REL)
         "objects": objects,
     }
 
@@ -403,7 +422,6 @@ config.libs = [
         "lib": "Game",
         "mw_version": config.linker_version,
         "cflags": cflags_game,
-        "host": False,
         "objects": [
             Object(Matching, "game/main.c"),
             Object(Matching, "game/pad.c"),
@@ -651,7 +669,6 @@ config.libs = [
         "lib": "thp",
         "mw_version": "GC/1.2.5",
         "cflags": cflags_thp,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/thp/THPDec.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/thp/THPAudio.c"),
@@ -661,7 +678,6 @@ config.libs = [
         "lib": "Runtime.PPCEABI.H",
         "mw_version": config.linker_version,
         "cflags": cflags_runtime,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__va_arg.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/global_destructor_chain.c"),
@@ -672,14 +688,13 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/runtime.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
             Object(NonMatching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/GCN_mem_alloc.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"),
         ],
     },
     {
         "lib": "MSL_C.PPCEABI.bare.H",
         "mw_version": "GC/1.3",
         "cflags": cflags_msl,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/abort_exit.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/alloc.c"),
@@ -733,7 +748,6 @@ config.libs = [
         "lib": "TRK_MINNOW_DOLPHIN",
         "mw_version": "GC/1.3",
         "cflags": cflags_trk,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mainloop.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/nubevent.c"),
@@ -800,7 +814,6 @@ config.libs = [
         "lib": "OdemuExi2",
         "mw_version": "GC/1.2.5" if version_num == 0 else "GC/1.2.5n",
         "cflags": cflags_odemuexi,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "OdemuExi2/DebuggerDriver.c"),
         ],
@@ -809,7 +822,6 @@ config.libs = [
         "lib": "amcstubs",
         "mw_version": config.linker_version,
         "cflags": cflags_amcstub,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "amcstubs/AmcExi2Stubs.c"),
         ],
@@ -818,7 +830,6 @@ config.libs = [
         "lib": "odenotstub",
         "mw_version": config.linker_version,
         "cflags": cflags_odenotstub,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "odenotstub/odenotstub.c"),
         ],
@@ -827,7 +838,6 @@ config.libs = [
         "lib": "libhu",
         "mw_version": config.linker_version,
         "cflags": cflags_libhu,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "libhu/setvf.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "libhu/subvf.c"),
@@ -837,7 +847,6 @@ config.libs = [
         "lib": "msm",
         "mw_version": "GC/1.2.5",
         "cflags": cflags_msm,
-        "host": False,
         "objects": [
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmsys.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmmem.c"),
@@ -851,7 +860,6 @@ config.libs = [
         "lib": "REL",
         "mw_version": config.linker_version,
         "cflags": cflags_rel,
-        "host": False,
         "objects": [
             Object(Matching, "REL/executor.c"),
             Object(Matching, "REL/empty.c"),  # Must be marked as matching
@@ -1581,12 +1589,18 @@ config.libs = [
 # Optional extra categories for progress tracking
 config.progress_categories = []
 config.progress_each_module = args.verbose
+# Optional extra arguments to `objdiff-cli report generate`
+config.progress_report_args = [
+    # Marks relocations as mismatching if the target value is different
+    # Default is "functionRelocDiffs=none", which is most lenient
+    # "--config functionRelocDiffs=data_value",
+]
 
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
 elif args.mode == "progress":
-    # Print progress and write progress.json
+    # Print progress information
     calculate_progress(config)
 else:
     sys.exit("Unknown mode: " + args.mode)

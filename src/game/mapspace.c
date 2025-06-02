@@ -335,46 +335,49 @@ static s32 DefIfnnerMapCircle(Vec *arg0, s16 *arg1, Vec *arg2, Vec *arg3) {
     return 0;
 }
 
-static inline void MapspaceInlineFunc00(Vec *arg0) {
-    float sp24;
-    float sp28;
-    float sp2C;
-    float sp14;
+static inline void normalize_vec(Vec *vec) {
+    float x;
+    float y;
+    float z;
+    float magnitude;
 
-    sp24 = arg0->x;
-    sp28 = arg0->y;
-    sp2C = arg0->z;
-    sp14 = sqrtf(sp24 * sp24 + sp28 * sp28 + sp2C * sp2C);
-    if (sp14 != 0.0f) {
-        arg0->x /= sp14;
-        arg0->y /= sp14;
-        arg0->z /= sp14;
+    x = vec->x;
+    y = vec->y;
+    z = vec->z;
+    magnitude = sqrtf(x * x + y * y + z * z);
+    if (magnitude != 0.0f) {
+        vec->x /= magnitude;
+        vec->y /= magnitude;
+        vec->z /= magnitude;
     }
 }
 
-static inline void MapspaceInlineFunc01(Vec *arg0, Vec *arg1, Vec *arg2, Vec *arg3) {
-    float sp48;
-    float sp4C;
-    float sp50;
-    float temp_f18;
-    float temp_f19;
-    float temp_f20;
+static inline void compute_tri_normal(Vec *result, Vec *point1, Vec *point2, Vec *point3) {
+    float ux;
+    float uy;
+    float uz;
 
-    sp48 = arg2->x - arg1->x;
-    sp4C = arg2->y - arg1->y;
-    sp50 = arg2->z - arg1->z;
-    temp_f18 = arg3->x - arg1->x;
-    temp_f19 = arg3->y - arg1->y;
-    temp_f20 = arg3->z - arg1->z;
-    arg0->x = sp4C * temp_f20 - sp50 * temp_f19;
-    arg0->y = sp50 * temp_f18 - sp48 * temp_f20;
-    arg0->z = sp48 * temp_f19 - sp4C * temp_f18;
-    MapspaceInlineFunc00(arg0);
+    float vx;
+    float vy;
+    float vz;
+
+    ux = point2->x - point1->x;
+    uy = point2->y - point1->y;
+    uz = point2->z - point1->z;
+
+    vx = point3->x - point1->x;
+    vy = point3->y - point1->y;
+    vz = point3->z - point1->z;
+
+    result->x = uy * vz - uz * vy;
+    result->y = uz * vx - ux * vz;
+    result->z = ux * vy - uy * vx;
+    normalize_vec(result);
 }
 
 static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
     Vec *temp_r29;
-    Vec sp68;
+    Vec normal;
     float temp_f25;
     float temp_f24;
     float temp_f23;
@@ -393,9 +396,9 @@ static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
         return 0;
     }
     if ((temp_r24 & 0xFF) == 4) {
-        MapspaceInlineFunc01(&sp68, &arg2[arg1[1]], &arg2[arg1[4]], &arg2[arg1[3]]);
+        compute_tri_normal(&normal, &arg2[arg1[1]], &arg2[arg1[4]], &arg2[arg1[3]]);
     } else {
-        MapspaceInlineFunc01(&sp68, &arg2[arg1[1]], &arg2[arg1[2]], &arg2[arg1[3]]);
+        compute_tri_normal(&normal, &arg2[arg1[1]], &arg2[arg1[2]], &arg2[arg1[3]]);
     }
     temp_r22 = arg1[1];
     temp_r29 = &arg2[temp_r22];
@@ -405,17 +408,17 @@ static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2) {
     temp_f24 = sp5C - arg0[0];
     temp_f23 = sp58 - arg0[1];
     temp_f22 = sp54 - arg0[2];
-    temp_f21 = sp68.x * temp_f24 + sp68.y * temp_f23 + sp68.z * temp_f22;
+    temp_f21 = normal.x * temp_f24 + normal.y * temp_f23 + normal.z * temp_f22;
     if (temp_f21 >= 0.0f) {
         var_r23 = 1;
     }
     if (fabs(temp_f21) > arg0[3]) {
         return 0;
     }
-    temp_f25 = sp68.x * temp_f24 + sp68.y * temp_f23 + sp68.z * temp_f22;
-    arg0[0] += sp68.x * temp_f25;
-    arg0[1] += sp68.y * temp_f25;
-    arg0[2] += sp68.z * temp_f25;
+    temp_f25 = normal.x * temp_f24 + normal.y * temp_f23 + normal.z * temp_f22;
+    arg0[0] += normal.x * temp_f25;
+    arg0[1] += normal.y * temp_f25;
+    arg0[2] += normal.z * temp_f25;
     return var_r23;
 }
 
@@ -465,7 +468,7 @@ static float MapCalcPoint(float arg0, float arg1, float arg2, Vec *arg3, u16 *ar
     var_f26 = arg1;
     sp2C = arg2;
     sp28 = 1.0f;
-    MapspaceInlineFunc01(&sp40, &arg3[ColisionIdx[temp_r27][0]], &arg3[ColisionIdx[temp_r27][1]], &arg3[ColisionIdx[temp_r27][2]]);
+    compute_tri_normal(&sp40, &arg3[ColisionIdx[temp_r27][0]], &arg3[ColisionIdx[temp_r27][1]], &arg3[ColisionIdx[temp_r27][2]]);
     var_f25 = sp40.x;
     var_f27 = sp40.y;
     var_f24 = sp40.z;
@@ -513,37 +516,37 @@ static BOOL AreaCheck(float arg0, float arg1, u16 *arg2, Vec *arg3) {
     }
 }
 
-static inline float MapspaceInlineFunc02(float arg0, float arg1, Vec *arg2, Vec *arg3) {
-    float sp54;
-    float sp58;
-    float sp5C;
-    float sp60;
-    float sp64;
+static inline float xz_scalar_cross_from_origin(float x_org, float z_org, Vec *vec1, Vec *vec2) {
+    float vec1_dx;
+    float vec1_dz;
+    float vec2_dx;
+    float vec2_dz;
+    float cross_prod_2d;
 
-    sp54 = arg2->x - arg0;
-    sp58 = arg2->z - arg1;
-    sp5C = arg3->x - arg0;
-    sp60 = arg3->z - arg1;
-    sp64 = -(sp58 * sp5C - sp54 * sp60);
-    return sp64;
+    vec1_dx = vec1->x - x_org;
+    vec1_dz = vec1->z - z_org;
+    vec2_dx = vec2->x - x_org;
+    vec2_dz = vec2->z - z_org;
+    cross_prod_2d = -(vec1_dz * vec2_dx - vec1_dx * vec2_dz);
+    return cross_prod_2d;
 }
 
-static s32 MapIflnnerTriangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
-    Vec sp68;
+static s32 MapIflnnerTriangle(float x_org, float y_org, u16 *arg2, Vec *arg3) {
+    Vec normal;
     float var_f29;
     s32 var_r21;
     s32 i;
 
-    MapspaceInlineFunc01(&sp68, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
-    if (sp68.y == 0.0f) {
+    compute_tri_normal(&normal, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
+    if (normal.y == 0.0f) {
         return 0;
     }
     arg2++;
-    var_f29 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[0]], &arg3[arg2[1]]);
+    var_f29 = xz_scalar_cross_from_origin(x_org, y_org, &arg3[arg2[0]], &arg3[arg2[1]]);
     if (var_f29 > 0.0f) {
         for (i = 1; i < 3; i++) {
             var_r21 = (i + 1) % 3;
-            var_f29 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[i]], &arg3[arg2[var_r21]]);
+            var_f29 = xz_scalar_cross_from_origin(x_org, y_org, &arg3[arg2[i]], &arg3[arg2[var_r21]]);
             if (var_f29 < 0.0f) {
                 return 0;
             }
@@ -551,7 +554,7 @@ static s32 MapIflnnerTriangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
     } else {
         for (i = 1; i < 3; i++) {
             var_r21 = (i + 1) % 3;
-            var_f29 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[i]], &arg3[arg2[var_r21]]);
+            var_f29 = xz_scalar_cross_from_origin(x_org, y_org, &arg3[arg2[i]], &arg3[arg2[var_r21]]);
             if (var_f29 > 0.0f) {
                 return 0;
             }
@@ -569,29 +572,29 @@ static s32 MapIflnnerQuadrangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
     float var_f31;
     s32 var_r28;
 
-    MapspaceInlineFunc01(&sp158, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
+    compute_tri_normal(&sp158, &arg3[arg2[1]], &arg3[arg2[2]], &arg3[arg2[3]]);
     if (sp158.y == 0.0f) {
         return 0;
     }
     var_r28 = 0;
     arg2++;
-    var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[0]], &arg3[arg2[3]]);
+    var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[0]], &arg3[arg2[3]]);
     if (var_f31 > 0.0f) {
-        var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[2]]);
+        var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[2]]);
         if (var_f31 < 0.0f) {
             var_r28 = 1;
         } else {
-            var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[2]], &arg3[arg2[0]]);
+            var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[2]], &arg3[arg2[0]]);
             if (var_f31 < 0.0f) {
                 var_r28 = 1;
             }
         }
     } else {
-        var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[2]]);
+        var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[2]]);
         if (var_f31 > 0.0f) {
             var_r28 = 1;
         } else {
-            var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[2]], &arg3[arg2[0]]);
+            var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[2]], &arg3[arg2[0]]);
             if (var_f31 > 0.0f) {
                 var_r28 = 1;
             }
@@ -604,22 +607,22 @@ static s32 MapIflnnerQuadrangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
         ColisionCount++;
         return 1;
     }
-    var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[0]], &arg3[arg2[1]]);
+    var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[0]], &arg3[arg2[1]]);
     if (var_f31 > 0.0f) {
-        var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[1]], &arg3[arg2[3]]);
+        var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[1]], &arg3[arg2[3]]);
         if (var_f31 < 0.0f) {
             return 0;
         }
-        var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[0]]);
+        var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[0]]);
         if (var_f31 < 0.0f) {
             return 0;
         }
     } else {
-        var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[1]], &arg3[arg2[3]]);
+        var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[1]], &arg3[arg2[3]]);
         if (var_f31 > 0.0f) {
             return 0;
         }
-        var_f31 = MapspaceInlineFunc02(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[0]]);
+        var_f31 = xz_scalar_cross_from_origin(arg0, arg1, &arg3[arg2[3]], &arg3[arg2[0]]);
         if (var_f31 > 0.0f) {
             return 0;
         }
@@ -631,26 +634,32 @@ static s32 MapIflnnerQuadrangle(float arg0, float arg1, u16 *arg2, Vec *arg3) {
     return 1;
 }
 
-static inline s32 MapspaceInlineFunc03(float *spE0, s16 *temp_r31, Vec *arg1) {
-    Vec spAC;
-    Vec *temp_r21;
-    float sp70;
-    float sp74;
-    float sp78;
-    float sp7C;
-    s16 sp8;
+// I havent fully understood the call-site code for this function, so I am not totally certain of its use.
+// However, it seems very likely this is checking for back-face culls. So I have named the function should_cull, and refered to the origin as camera.
+// This function could be used for other things (eg checking for flipped normals), but I have named it for what I see as the most likely case.
+static inline s32 should_cull(float *camera, s16 *tri_indices, Vec *vec) {
+    Vec normal;
+    Vec *plane_point;
+    float x;
+    float y;
+    float z;
+    float dot_prod;
+    s16 plane_point_idx;
 
-    MapspaceInlineFunc01(&spAC, &arg1[temp_r31[0]], &arg1[temp_r31[1]], &arg1[temp_r31[2]]);
-    sp8 = temp_r31[1];
-    temp_r21 = &arg1[sp8];
-    sp70 = temp_r21->x;
-    sp74 = temp_r21->y;
-    sp78 = temp_r21->z;
-    sp70 -= spE0[0];
-    sp74 -= spE0[1];
-    sp78 -= spE0[2];
-    sp7C = spAC.x * sp70 + spAC.y * sp74 + spAC.z * sp78;
-    return (sp7C < 0.0f) ? -1 : 1;
+    compute_tri_normal(&normal, &vec[tri_indices[0]], &vec[tri_indices[1]], &vec[tri_indices[2]]);
+    plane_point_idx = tri_indices[1];
+    plane_point = &vec[plane_point_idx];
+    x = plane_point->x;
+    y = plane_point->y;
+    z = plane_point->z;
+
+    // Subtract viewpoint to change basis from absolute -> camera relative coordinate system
+    x -= camera[0];
+    y -= camera[1];
+    z -= camera[2];
+
+    dot_prod = normal.x * x + normal.y * y + normal.z * z; 
+    return (dot_prod < 0.0f) ? -1 : 1;
 }
 
 static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) {
@@ -660,7 +669,7 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
     float spD0[4];
     float temp_f31;
     float temp_f30;
-    float var_f21;
+    float scale;
     Vec spC4;
     Vec spB8;
     s32 spA8;
@@ -714,31 +723,31 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
         PSMTXMultVec(MapMT, &spC4, &spC4);
         DefSetHitFace(spC4.x, spC4.y, spC4.z);
         temp_r29 = &HitFaceVec[HitFaceCount];
-        MapspaceInlineFunc01(temp_r29, &arg1[arg0[0]], &arg1[arg0[1]], &arg1[arg0[2]]);
+        compute_tri_normal(temp_r29, &arg1[arg0[0]], &arg1[arg0[1]], &arg1[arg0[2]]);
         temp_f31 = spC4.x - spD0[0];
         spA4 = spC4.y - spD0[1];
         temp_f30 = spC4.z - spD0[2];
-        var_f21 = spE0[3] - sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
+        scale = spE0[3] - sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
         HitFaceCount++;
         if (spA0 > 0) {
             spE0[0] = OldXYZ.x;
             spE0[1] = OldXYZ.y;
             spE0[2] = OldXYZ.z;
             PSMTXMultVec(MapMTR, (Vec*) &spE0, (Vec*) &spE0);
-            if (MapspaceInlineFunc03(spE0, temp_r31, arg1) < 0) {
+            if (should_cull(spE0, temp_r31, arg1) < 0) {
                 spB8.x = spE0[0] - spD0[0];
                 spB8.y = spE0[1] - spD0[1];
                 spB8.z = spE0[2] - spD0[2];
-                MapspaceInlineFunc00(&spB8);
+                normalize_vec(&spB8);
                 if (DefIfnnerMapCircle((Vec*) spD0, arg0 - 1, arg1, &spB8) == 1) {
-                    var_f21 = spE0[3] + sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
+                    scale = spE0[3] + sqrtf(temp_f31 * temp_f31 + temp_f30 * temp_f30);
                 }
             } else {
-                var_f21 = 0.0f;
+                scale = 0.0f;
             }
         }
-        if (var_f21 > 0.0f) {
-            AppendAddXZ(-temp_f31, -temp_f30, var_f21);
+        if (scale > 0.0f) {
+            AppendAddXZ(-temp_f31, -temp_f30, scale);
             MTRAdd.x = AddX;
             MTRAdd.z = AddZ;
             MTRAdd.y = 0.0f;
@@ -803,26 +812,26 @@ static s32 PrecalcPntToTriangle(Vec *arg0, Vec *arg1, Vec *arg2, Vec* arg3, Vec 
     return 1;
 }
 
-BOOL Hitcheck_Triangle_with_Sphere(Vec *arg0, Vec *arg1, float arg2, Vec *arg3) {
-    Vec sp48;
-    Vec sp3C;
-    Vec sp30;
-    Vec sp24;
-    Vec sp18;
-    Vec spC;
-    float var_f31;
+BOOL Hitcheck_Triangle_with_Sphere(Vec *triangle, Vec *sphere_origin, float sphere_radius, Vec *closest_point) {
+    Vec tri_point;
+    Vec ux;
+    Vec vx;
+    Vec normal;
+    Vec triangle_to_sphere; // Distance between the (arbitrary?) point on triangle, and the origin of the sphere.
+    Vec offset_to_closest_point;
+    float dist;
 
-    sp48.x = arg0[0].x;
-    sp48.y = arg0[0].y;
-    sp48.z = arg0[0].z;
-    VECSubtract(&arg0[1], &arg0[0], &sp3C);
-    VECSubtract(&arg0[2], &arg0[0], &sp30);
-    VECCrossProduct(&sp3C, &sp30, &sp24);
-    VECSubtract(arg1, &arg0[0], &sp18);
-    PrecalcPntToTriangle(&sp48, &sp3C, &sp30, &sp24, &sp18, &spC);
-    VECAdd(&spC, &sp48, arg3);
-    var_f31 = VECDistance(arg3, arg1);
-    if (var_f31 > arg2) {
+    tri_point.x = triangle[0].x;
+    tri_point.y = triangle[0].y;
+    tri_point.z = triangle[0].z;
+    VECSubtract(&triangle[1], &triangle[0], &ux);
+    VECSubtract(&triangle[2], &triangle[0], &vx);
+    VECCrossProduct(&ux, &vx, &normal);
+    VECSubtract(sphere_origin, &triangle[0], &triangle_to_sphere);
+    PrecalcPntToTriangle(&tri_point, &ux, &vx, &normal, &triangle_to_sphere, &offset_to_closest_point);
+    VECAdd(&offset_to_closest_point, &tri_point, closest_point);
+    dist = VECDistance(closest_point, sphere_origin);
+    if (dist > sphere_radius) {
         return FALSE;
     } else {
         return TRUE;
@@ -879,15 +888,16 @@ static void DefSetHitFace(float arg0, float arg1, float arg2) {
     HitFace[HitFaceCount].z = arg2;
 }
 
-void AppendAddXZ(float arg0, float arg1, float arg2) {
-    Vec spC;
+// floats x_comp and z_comp are essentially a direction vector (x_comp, 0, z_comp)
+void AppendAddXZ(float x_comp, float z_comp, float scale) {
+    Vec dir_vec;
 
-    spC.x = arg0;
-    spC.y = 0.0f;
-    spC.z = arg1;
-    MapspaceInlineFunc00(&spC);
-    AddX += spC.x * arg2;
-    AddZ += spC.z * arg2;
+    dir_vec.x = x_comp;
+    dir_vec.y = 0.0f;
+    dir_vec.z = z_comp;
+    normalize_vec(&dir_vec);
+    AddX += dir_vec.x * scale;
+    AddZ += dir_vec.z * scale;
 }
 
 void CharRotInv(Mtx arg0, Mtx arg1, Vec *arg2, omObjData *arg3) {
