@@ -73,7 +73,7 @@ DOXYGEN_COMMENT = re.compile(
 
 # Unlabelled variables
 UNLABELLED_VARIABLE = re.compile(
-    r"^\s+(?!return)[a-zA-Z0-9]+\s+\*?((var_|temp_|sp|unk)\S?\d*(_field\d*\s*:\s*)?\S?\[?\d*\]?);",
+    r"^\s+(/\*.*\*/\s*)?(?!return)[a-zA-Z0-9]+\s+\*?\*?((var_|temp_|sp|unk)\S?\d*(_field\d*\s*:\s*)?\S?\[?\d*\]?)(\s*=\s*\S*)?;",
     re.MULTILINE,
 )
 
