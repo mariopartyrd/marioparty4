@@ -1,3 +1,11 @@
+/**
+ * @file start.c
+ * @brief Handles the start of the game board.
+ * 
+ * @details This file contains everything needed to start the game board,
+ * including the creation of the player start objects, the execution of the
+ * start roll, and the initialization of the camera and host. 
+ */
 #include "game/board/start.h"
 #include "game/audio.h"
 #include "game/gamework_data.h"
@@ -33,7 +41,7 @@ typedef struct {
     };
     u8 delay;
     u8 time;
-    s8 _unused;
+    s8 _unused;  // Seems to be totally unused. Maybe padding?
     s8 digit;
     s16 yRot;
     s16 diceMdl;
