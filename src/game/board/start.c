@@ -33,13 +33,13 @@ typedef struct {
     };
     u8 delay;
     u8 time;
-    s8 unk03;
+    s8 _unused;
     s8 digit;
     s16 yRot;
     s16 diceMdl;
     s16 model;
     s16 diceParManId;
-    s8 unk0E;
+    s8 tutJumpCountdown;
 } PlayerStartWork;
 
 static void DestroyStart(void);
@@ -311,7 +311,7 @@ static void CreatePlayerStart(void) {
         boardData = OM_GET_WORK_PTR(boardObj, PlayerStartWork);
         boardData->isBoardVisible = 0;
         boardData->index = i;
-        boardData->unk03 = -1;
+        boardData->_unused = -1;
         boardData->model = -1;
         boardData->diceParManId = -1;
         boardData->state = 1;
@@ -320,7 +320,7 @@ static void CreatePlayerStart(void) {
         boardData->hasRolled = 0;
         boardData->yRot = 2;
         boardData->digit = 1;
-        boardData->unk0E = 0x3C;
+        boardData->tutJumpCountdown = 0x3C;
         boardData->diceMdl = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x18), NULL, 0);
         BoardModelVisibilitySet(boardData->diceMdl, 0);
         BoardModelMotionSpeedSet(boardData->diceMdl, 0.0f);
@@ -382,7 +382,7 @@ static void ExecPlayerStart(omObjData *object) {
 }
 
 static void PlayerFall(omObjData *object, PlayerStartWork *data) {
-    float temp_f31;
+    float fall_duration;
 
     if (data->isActionable != 0) {
         SetPlayerStartState(playerOrderOld[data->index], 0);
@@ -395,8 +395,8 @@ static void PlayerFall(omObjData *object, PlayerStartWork *data) {
     if (data->time > 200) {
         data->time = -56;
     }
-    OSu8tof32(&data->time, &temp_f31);
-    object->trans.y += -0.08166667f * temp_f31 * temp_f31;
+    OSu8tof32(&data->time, &fall_duration);
+    object->trans.y += -0.08166667f * fall_duration * fall_duration;
     if (object->trans.y < spacePos.y) {
         object->trans.y = spacePos.y;
         data->time = 0;
@@ -491,8 +491,8 @@ static void PlayerDiceRoll(omObjData *object, PlayerStartWork *data) {
     if (data->hasRolled == 0) {
         if (GWPlayer[playerOrderOld[data->index]].com) {
             if (_CheckFlag(FLAG_ID_MAKE(1, 11))) {
-                if (data->unk0E != 0) {
-                    data->unk0E--;
+                if (data->tutJumpCountdown != 0) {
+                    data->tutJumpCountdown--;
                 } else {
                     jumpCheck = PAD_BUTTON_A;
                 }
