@@ -11,6 +11,7 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
+#include <string.h>
 
 #include "REL/m438Dll.h"
 
@@ -3073,7 +3074,7 @@ s32 fn_1_AE18(u32 arg0, f32 arg8, Vec *arg1, Vec *arg2)
             for (var_r28 = 0; var_r28 < 9; var_r28++) {
                 temp_r24 = var_r22 + lbl_1_data_5E8[var_r28];
                 VECAdd(&sp28, &lbl_1_data_60C[var_r28], &sp4C);
-                if ((lbl_1_bss_DBC->data <= temp_r24)
+                if (((u8*)lbl_1_bss_DBC->data <= temp_r24)
                     && (((u8 *)lbl_1_bss_DBC->data + 0x900 > temp_r24) && (fabs(sp4C.x) < 850.0) && (fabs(sp4C.z) < 850.0))) {
                     var_f31++;
                     temp_r27 = &var_r21[lbl_1_data_708[var_r28]];

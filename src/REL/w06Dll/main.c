@@ -150,11 +150,19 @@ void BoardDestroy(void) {
     s32 i;
 
     fn_1_B28();
+#ifdef __MWERKS__
     boardTurnFunc
         = (void*) boardStarShowNextHook
         = (void*) boardTurnStartFunc
         = (void*) boardStarGiveHook
         = (void*) boardBowserHook = NULL;
+#else
+    boardTurnFunc = NULL;
+    boardStarShowNextHook = NULL;
+    boardTurnStartFunc = NULL;
+    boardStarGiveHook = NULL;
+    boardBowserHook = NULL;
+#endif
     fn_1_91D8();
     fn_1_7F3C();
     fn_1_F6C();

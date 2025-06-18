@@ -5,7 +5,7 @@
 
 #define ALIGNMENT 32
 
-#define InRange(cell, arenaStart, arenaEnd) ((u32)arenaStart <= (u32)cell) && ((u32)cell < (u32)arenaEnd)
+#define InRange(cell, arenaStart, arenaEnd) ((uintptr_t)arenaStart <= (uintptr_t)cell) && ((uintptr_t)cell < (uintptr_t)arenaEnd)
 
 #define HEADERSIZE 32u
 #define MINOBJSIZE 64u
@@ -414,13 +414,13 @@ void OSAddToHeap(int heap, void *start, void *end)
 
     hd = &HeapArray[heap];
 
-    ASSERTMSG1(0x33F, (u32)start < (u32)end, "OSAddToHeap(): invalid range.");
+    ASSERTMSG1(0x33F, (uintptr_t)start < (uintptr_t)end, "OSAddToHeap(): invalid range.");
 
-    start = (void *)(((u32)start + 0x1F) & ~((32) - 1));
-    end = (void *)(((u32)end) & ~((32) - 1));
+    start = (void *)(((uintptr_t)start + 0x1F) & ~((32) - 1));
+    end = (void *)(((uintptr_t)end) & ~((32) - 1));
 
-    ASSERTMSG1(0x343, ((u32)end - (u32)start) >= 0x40U, "OSAddToHeap(): too small range.");
-    ASSERTMSG1(0x345, (u32)ArenaStart <= (u32)start && (u32)end <= (u32)ArenaEnd, "OSAddToHeap(): invalid range.");
+    ASSERTMSG1(0x343, ((uintptr_t)end - (uintptr_t)start) >= 0x40U, "OSAddToHeap(): too small range.");
+    ASSERTMSG1(0x345, (uintptr_t)ArenaStart <= (uintptr_t)start && (uintptr_t)end <= (uintptr_t)ArenaEnd, "OSAddToHeap(): invalid range.");
 
     cell = (struct Cell *)start;
     cell->size = ((char *)end - (char *)start);

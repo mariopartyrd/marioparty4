@@ -12,6 +12,7 @@
 #include "game/sprite.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/frand.h"

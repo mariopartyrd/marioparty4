@@ -18,7 +18,7 @@ typedef struct ar_que_req {
 } ARQueReq; // Size 0x28
 
 static void ArqCallBack(u32 pointerToARQRequest);
-static void ArqCallBackAM(u32 pointerToARQRequest);
+static void ArqCallBackAM(uintptr_t pointerToARQRequest);
 static void ArqCallBackAMFileRead(u32 pointerToARQRequest);
 
 static s32 ATTRIBUTE_ALIGN(32) preLoadBuf[16];

@@ -406,11 +406,11 @@ void fn_1_73C(void)
     lbl_1_bss_698[2] = HuPrcChildCreate(fn_1_E78, 0xFF, 0x1000, 0, HuPrcCurrentGet());
     for (var_r31 = 0; var_r31 < 5; var_r31++) {
         lbl_1_bss_698[var_r31 + 3] = HuPrcChildCreate(fn_1_14B8, 0x102, 0x3000, 0, HuPrcCurrentGet());
-        *((s32 *)&lbl_1_bss_698[var_r31 + 3]->user_data) = var_r31;
+        lbl_1_bss_698[var_r31 + 3]->user_data_u32 = var_r31;
     }
     for (var_r31 = 0; var_r31 < 5; var_r31++) {
         lbl_1_bss_698[var_r31 + 8] = HuPrcChildCreate(fn_1_5EAC, 0x105, 0x1000, 0, HuPrcCurrentGet());
-        *((s32 *)&lbl_1_bss_698[var_r31 + 8]->user_data) = var_r31;
+        lbl_1_bss_698[var_r31 + 8]->user_data_u32 = var_r31;
     }
     lbl_1_bss_698[0x11] = HuPrcChildCreate(fn_1_5490, 0x103, 0x2000, 0, HuPrcCurrentGet());
     for (var_r31 = 0; var_r31 < 5; var_r31++) {
@@ -613,7 +613,7 @@ void fn_1_14B8(void)
     s32 var_r30;
     s32 var_r29;
 
-    var_r29 = (s32)HuPrcCurrentGet()->user_data;
+    var_r29 = HuPrcCurrentGet()->user_data_u32;
     var_r31 = &lbl_1_bss_CC[var_r29];
     var_r31->unk_00 = var_r29;
     var_r31->unk_04 = 0;

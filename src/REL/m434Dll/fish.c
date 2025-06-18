@@ -6,6 +6,7 @@
 
 #include "REL/m434Dll.h"
 #include "ext_math.h"
+#include <string.h>
 #include "version.h"
 
 #ifndef __MWERKS__

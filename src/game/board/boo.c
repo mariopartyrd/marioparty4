@@ -18,6 +18,7 @@
 #include "game/board/window.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 typedef struct {
     struct {

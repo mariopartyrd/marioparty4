@@ -7,6 +7,7 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 s16 lbl_1_bss_352[2][7];
 s16 lbl_1_bss_34A[4];

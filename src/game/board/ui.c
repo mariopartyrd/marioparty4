@@ -20,6 +20,7 @@
 #include "game/window.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 typedef struct {
     /* 0x00 */ struct {

@@ -14,6 +14,7 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 #include "REL/m416Dll.h"
 

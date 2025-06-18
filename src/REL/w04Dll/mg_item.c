@@ -185,7 +185,7 @@ static void fn_1_A71C(void) {
     s16 temp_r31;
 
     var_f31 = 0.0f;
-    temp_r31 = (s16) HuPrcCurrentGet()->user_data;
+    temp_r31 = HuPrcCurrentGet()->user_data_u32;
     while (TRUE) {
         BoardModelPosGet(temp_r31, &sp8);
         sp8.y += 0.25 * sind(var_f31);
@@ -367,7 +367,7 @@ static void fn_1_A7E8(void) {
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_14[6]), lbl_1_data_51C[1], &sp24);
     BoardModelPosSetV(lbl_1_bss_298[temp_r29], &sp24);
     var_r20 = HuPrcChildCreate(fn_1_A71C, 0x2002, 0x800, 0, boardMainProc);
-    var_r20->user_data = (void*) lbl_1_bss_298[temp_r29];
+    var_r20->user_data_u32 = lbl_1_bss_298[temp_r29];
     var_r26 = Hu3DParticleCreate(lbl_1_bss_288, 100);
     spC = Hu3DData[var_r26].unk_120;
     spC->unk_02 = lbl_1_bss_298[temp_r29];

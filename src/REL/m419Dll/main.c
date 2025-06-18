@@ -822,7 +822,7 @@ void fn_1_32F8(void)
     s32 var_r29;
     s32 i;
 
-    var_r29 = (s32)HuPrcCurrentGet()->user_data;
+    var_r29 = HuPrcCurrentGet()->user_data_u32;
     temp_r31 = &lbl_1_bss_200[var_r29];
     for (i = 0, var_f31 = 1.0f; i < 30; i++, var_f31 -= 0.033333335f) {
         Hu3DModelAmbSet(temp_r31->unk00, 1.0f, var_f31, var_f31);
@@ -2519,7 +2519,7 @@ void fn_1_DF98(void)
         if (temp_r31->unk3C != 0) {
             if (temp_r31->unk48 == 300) {
                 sp8C = HuPrcChildCreate(fn_1_32F8, 0x2000, 0x1000, 0, HuPrcCurrentGet());
-                sp8C->user_data = (void *)temp_r31->unk28;
+                sp8C->user_data_u32 = temp_r31->unk28;
             }
             if (temp_r31->unk48-- == 0) {
                 temp_r31->unk3C = 0;

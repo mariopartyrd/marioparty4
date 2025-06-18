@@ -3,12 +3,13 @@
 #include "game/chrman.h"
 #include "game/frand.h"
 #include "game/hsfdraw.h"
+#include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 
 #include "ext_math.h"
 
-#include "game/minigame_seq.h"
+#include "game/board/audio.h"
 
 #if VERSION_JP
 #define MDL_ID_SHIFT 0
@@ -390,7 +391,7 @@ void fn_1_6D04(omObjData *object)
         HuAudFXPlay(784);
         lbl_1_bss_100 = HuPrcCreate(fn_1_85FC, 8196, 8192, 0);
         HuPrcDestructorSet2(lbl_1_bss_100, fn_1_8DAC);
-        *((u32 *)&lbl_1_bss_100->user_data) = (1 << object->work[0]) | 0x10000000;
+        lbl_1_bss_100->user_data_u32 = (1 << object->work[0]) | 0x10000000;
         lbl_1_bss_D8 = HuAudFXPlay(863);
         object->func = fn_1_6E34;
     }
@@ -402,7 +403,7 @@ void fn_1_6EA8(void);
 void fn_1_6E34(omObjData *object)
 {
     Process *temp_r31;
-    if ((u32)lbl_1_bss_100->user_data & 0x40000000) {
+    if (lbl_1_bss_100->user_data_u32 & 0x40000000) {
         temp_r31 = HuPrcCreate(fn_1_6EA8, 8196, 6144, 0);
         temp_r31->user_data = object;
         object->func = NULL;
@@ -719,9 +720,9 @@ void fn_1_79BC(s16 *arg0)
     }
     lbl_1_bss_100 = HuPrcCreate(fn_1_85FC, 8196, 8192, 0);
     HuPrcDestructorSet2(lbl_1_bss_100, fn_1_8DAC);
-    *((u32 *)&lbl_1_bss_100->user_data) = 7;
+    lbl_1_bss_100->user_data_u32 = 7;
     HuAudFXPlay(866);
-    while (((u32)lbl_1_bss_100->user_data & 0x40000000) == 0) {
+    while ((lbl_1_bss_100->user_data_u32 & 0x40000000) == 0) {
         HuPrcVSleep();
     }
 }
@@ -779,11 +780,10 @@ void fn_1_8244(u16 arg0)
 
 void fn_1_8570(void)
 {
-    u32 temp_r31;
-    temp_r31 = (u32)lbl_1_bss_100->user_data;
+    u32 temp_r31 = lbl_1_bss_100->user_data_u32;
     temp_r31 |= 0x20000000;
-    *(u32 *)&lbl_1_bss_100->user_data = temp_r31;
-    while (((u32)lbl_1_bss_100->user_data & 0x80000000) == 0) {
+    lbl_1_bss_100->user_data_u32 = temp_r31;
+    while ((lbl_1_bss_100->user_data_u32 & 0x80000000) == 0) {
         HuPrcVSleep();
     }
     HuPrcKill(lbl_1_bss_100);
@@ -807,7 +807,7 @@ void fn_1_85FC(void)
     u32 temp_r29;
     s32 temp_r28;
     ParticleData *temp_r27;
-    temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32;
     for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
         temp_r29 = 1 << temp_r31;
         if (temp_r30 & temp_r29) {
@@ -869,11 +869,11 @@ void fn_1_85FC(void)
         }
     }
     temp_r30 |= 0x40000000;
-    *((u32 *)&HuPrcCurrentGet()->user_data) = temp_r30;
+    HuPrcCurrentGet()->user_data_u32 = temp_r30;
     temp_f30 = 0;
     while (1) {
 
-        temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+        temp_r30 = HuPrcCurrentGet()->user_data_u32;
         if (temp_r30 & 0x20000000) {
             break;
         }
@@ -929,7 +929,7 @@ void fn_1_85FC(void)
         }
     }
     temp_r30 |= 0x80000000;
-    *((u32 *)&HuPrcCurrentGet()->user_data) = temp_r30;
+    HuPrcCurrentGet()->user_data_u32 = temp_r30;
     while (1) {
         HuPrcVSleep();
     }
@@ -938,7 +938,7 @@ void fn_1_85FC(void)
 void fn_1_8DAC(void)
 {
     s32 temp_r31;
-    u32 temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+    u32 temp_r30 = HuPrcCurrentGet()->user_data_u32;
     u32 temp_r29;
     if (temp_r30 & 0x10000000) {
         for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {

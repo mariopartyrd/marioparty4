@@ -6,7 +6,7 @@
 #include "version.h"
 
 #define MAKE_MESSID(bank, mess) (((bank) << 16)+(mess))
-#define MAKE_MESSID_PTR(ptr) ((u32)(ptr))
+#define MAKE_MESSID_PTR(ptr) ((uintptr_t)(ptr))
 
 typedef struct {
     /* 0x00 */ u8 color;

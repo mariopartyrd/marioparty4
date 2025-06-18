@@ -8,6 +8,7 @@
 #include "game/pad.h"
 
 #include "REL/m417Dll.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/frand.h"

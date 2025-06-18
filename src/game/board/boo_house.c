@@ -174,7 +174,7 @@ void BoardBooHouseExec(s32 arg0)
         BoardRollDispSet(0);
         houseProc = HuPrcChildCreate(&ExecBooHouse, 0x2003, 0x3800, 0, boardMainProc);
         HuPrcDestructorSet2(houseProc, &DestroyBooHouse);
-        while (houseProc != 0U) {
+        while (houseProc) {
             HuPrcVSleep();
         }
         BoardRollDispSet(1);
@@ -695,7 +695,7 @@ void ApplyCoinSteal(s16 arg0, s16 arg1)
     sprintf(&stealAmountStr, "%d", arg0);
     HuAudFXPlay(0x4B);
     BoardWinCreate(2, var_r31, 3);
-    BoardWinInsertMesSet((s32)&stealAmountStr, 0);
+    BoardWinInsertMesSet((u32)&stealAmountStr, 0);
     BoardWinWait();
     BoardWinKill();
     BoardStatusShowSetForce(currPlayer);

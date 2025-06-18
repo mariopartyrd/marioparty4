@@ -192,7 +192,7 @@ void fn_8004040C(void) {
     Process* process;
 
     process = HuPrcCurrentGet();
-    temp_r31 = (UnkUserData*)process->user_data;
+    temp_r31 = process->user_data;
     temp_r30 = &Hu3DData[temp_r31->unk4];
     temp_r29 = lbl_80130100[temp_r31->unk0];
 

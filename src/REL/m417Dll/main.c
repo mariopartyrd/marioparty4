@@ -7,7 +7,7 @@
 #include "game/wipe.h"
 
 #include "REL/m417Dll.h"
-
+#include <string.h>
 
 typedef struct UnkM417Struct {
     /* 0x00 */ u32 unk_00;

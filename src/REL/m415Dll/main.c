@@ -15,6 +15,10 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
+#ifndef __MWERKS__
+#include <string.h>
+#endif
+
 // bss
 unkStruct5 lbl_1_bss_36C;
 omObjData *lbl_1_bss_368;
@@ -1516,12 +1520,20 @@ void fn_1_6584(s16 arg0, char *arg1, u8 arg2, u8 arg3, u8 arg4)
 
     temp_r29 = Hu3DData[arg0].hsfData;
     var_r26 = temp_r29->object;
+#ifdef NON_MATCHING
+    strcpy(sp13, MakeObjectName(arg1));
+#else
     strcpy(&sp13, MakeObjectName(arg1));
+#endif
 
     for (var_r25 = 0; var_r25 < temp_r29->objectCnt; var_r25++, var_r26++) {
         var_r31 = var_r26;
         temp_r28 = var_r31->data.face;
+#ifdef NON_MATCHING
+        if (var_r31->constData && strcmp(sp13, var_r31->name) == 0) {
+#else
         if (var_r31->constData && strcmp(&sp13, var_r31->name) == 0) {
+#endif
 
             for (var_r27 = 0; var_r27 < temp_r28->count; var_r27++) {
                 temp_r30 = &var_r31->data.material[((HsfFace *)temp_r28->data)[var_r27].mat & 0xFFF];

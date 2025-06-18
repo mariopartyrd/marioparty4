@@ -23,6 +23,7 @@
 
 #include "REL/m439data.h"
 #include "version.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/ClusterExec.h"

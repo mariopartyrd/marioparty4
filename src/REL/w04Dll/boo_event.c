@@ -909,7 +909,7 @@ static void fn_1_4848(void)
     s32 temp_r30;
     s32 i;
 
-    temp_r30 = (s32)HuPrcCurrentGet()->user_data;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32;
     BoardPlayerPosGet(temp_r30, &sp20);
     BoardPlayerMotBlendSet(temp_r30, BoardModelRotYGet(lbl_1_bss_FA) - 180.0f, 0xA);
     while (!BoardPlayerMotBlendCheck(temp_r30)) {

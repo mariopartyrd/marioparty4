@@ -1108,7 +1108,7 @@ void fn_1_3F34(void)
         }
         HuPrcVSleep();
     }
-    HuPrcCurrentGet()->user_data = (void *)10000;
+    HuPrcCurrentGet()->user_data_u32 = 10000;
     HuPrcKill(HuPrcCurrentGet());
     while (TRUE) {
         HuPrcVSleep();
@@ -1158,7 +1158,7 @@ void fn_1_4218(void)
         Hu3DModelRotSet(temp_r31->unk00, temp_f25, var_f31, temp_f24);
         HuPrcVSleep();
     }
-    HuPrcCurrentGet()->user_data = (void *)10000;
+    HuPrcCurrentGet()->user_data_u32 = 10000;
     HuPrcKill(HuPrcCurrentGet());
     while (TRUE) {
         HuPrcVSleep();
@@ -1377,7 +1377,7 @@ void fn_1_4E8C(void)
     s32 temp_r29;
     s32 i;
 
-    temp_r29 = (s32)HuPrcCurrentGet()->user_data;
+    temp_r29 = HuPrcCurrentGet()->user_data_u32;
     temp_r31 = &lbl_1_bss_138.unkE4[temp_r29 - 1];
     temp_r31->unk10.y = 0.0f;
     temp_r31->unk10.z = 200.0f;
@@ -1503,9 +1503,9 @@ void fn_1_5384(void)
     }
     HuPrcSleep(0x122);
     var_r31 = HuPrcChildCreate(fn_1_4E8C, 0x2000, 0x2000, 0, HuPrcCurrentGet());
-    var_r31->user_data = (void *)1;
+    var_r31->user_data_u32 = 1;
     var_r31 = HuPrcChildCreate(fn_1_4E8C, 0x2000, 0x2000, 0, HuPrcCurrentGet());
-    var_r31->user_data = (void *)2;
+    var_r31->user_data_u32 = 2;
     while (TRUE) {
         HuPrcVSleep();
     }
@@ -1632,7 +1632,7 @@ void fn_1_5910(void)
     HuPrcChildCreate(fn_1_58BC, 0x2000, 0x2000, 0, HuPrcCurrentGet());
     for (i = 0; i < 3; i++) {
         var_r29 = HuPrcChildCreate(fn_1_544C, 0x2000, 0x2000, 0, HuPrcCurrentGet());
-        var_r29->user_data = (void *)i;
+        var_r29->user_data_u32 = i;
     }
     while (lbl_1_bss_E98 != 4) {
         HuPrcVSleep();
@@ -2380,10 +2380,10 @@ void fn_1_9490(void)
     float var_f28;
     float temp_f27;
     float temp_f26;
-    s32 temp_r30;
+    u32 temp_r30;
     s32 i;
 
-    temp_r30 = (s32)HuPrcCurrentGet()->user_data;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32;
     switch (temp_r30) {
         case 0:
             var_f31 = 645.0f;
@@ -2446,8 +2446,8 @@ void fn_1_9BC0(s32 arg0)
     Hu3DModelAttrReset(temp_r31->unk02, HU3D_ATTR_DISPOFF);
     Hu3DModelAttrSet(temp_r31->unk00, HU3D_ATTR_DISPOFF);
     var_r28 = HuPrcChildCreate(fn_1_9490, 0x2000, 0x1000, 0, HuPrcCurrentGet());
-    var_r28->user_data = (void *)arg0;
-    while (var_r28->user_data) {
+    var_r28->user_data_u32 = arg0;
+    while (var_r28->user_data_u32) {
         HuPrcVSleep();
     }
     temp_r31->unk48 = 500.0f;

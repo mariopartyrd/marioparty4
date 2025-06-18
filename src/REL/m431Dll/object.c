@@ -10,6 +10,7 @@
 
 #include "REL/m431Dll.h"
 #include "ext_math.h"
+#include <string.h>
 #include "version.h"
 
 s32 rand8(void);

@@ -3,8 +3,9 @@
 #include "game/audio.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-#include "math.h"
 
+#include "math.h"
+#include <string.h>
 
 // STRUCT
 typedef struct _M424DllMapStruct {

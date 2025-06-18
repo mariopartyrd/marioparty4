@@ -23,6 +23,7 @@
 
 #include "ext_math.h"
 #include "stdlib.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include <game/board/shop.h>

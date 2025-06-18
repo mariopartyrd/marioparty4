@@ -11,6 +11,7 @@
 #include "game/pad.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 // structs
 typedef struct someBits3 { // make sure this is defined correctly

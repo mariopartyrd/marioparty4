@@ -16,6 +16,7 @@
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
+#include <string.h>
 
 #include "ext_math.h"
 

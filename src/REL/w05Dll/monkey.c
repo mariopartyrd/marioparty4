@@ -1,10 +1,13 @@
 #include "REL/w05Dll.h"
 
+#include "game/audio.h"
 #include "game/hsfdraw.h"
 #include "game/frand.h"
+#include "game/objsub.h"
 
 #include "game/board/model.h"
 #include "game/board/player.h"
+#include "game/board/window.h"
 
 // data
 s32 lbl_1_data_1A8[3] = { DATA_MAKE_NUM(DATADIR_W05, 0x1F), DATA_MAKE_NUM(DATADIR_W05, 0x20), DATA_NUM_LISTEND };

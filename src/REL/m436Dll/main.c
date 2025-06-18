@@ -16,6 +16,7 @@
 
 #include "ext_math.h"
 #include "version.h"
+#include <string.h>
 
 s32 rand8(void);
 #ifndef __MWERKS__

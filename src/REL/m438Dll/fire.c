@@ -4,6 +4,7 @@
 #include "game/memory.h"
 #define HUSPR_USE_OLD_DEFS
 #include "game/sprite.h"
+#include <string.h>
 
 #include <ext_math.h>
 
@@ -354,6 +355,7 @@ void fn_1_F6C8(M438FireStruct **arg0, s16 arg1, f32 arg8, f32 arg9)
     }
 }
 
+#ifdef __MWERKS__
 void fn_1_F84C(M438FireStruct **arg0, s16 arg1, Vec *arg2)
 {
     Vec *var_r31;
@@ -376,9 +378,9 @@ void fn_1_F8EC(M438FireStruct2 **arg0, s16 arg1, GXColor *arg2)
     GXColor *var_r31;
     s32 var_r29;
     s32 var_r28;
-
+    
     var_r31 = (GXColor *)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct2), MEMORY_DEFAULT_NUM);
-
+    
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
             var_r31->r = arg2->r;
@@ -393,9 +395,9 @@ void fn_1_F994(Vec **arg0, s16 arg1, Vec *arg2)
 {
     s32 var_r29;
     Vec *var_r31;
-
+    
     var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-
+    
     for (var_r29 = 0; var_r29 < arg1; var_r31++, arg2++, var_r29++) {
         var_r31->x = arg2->x;
         var_r31->y = arg2->y;
@@ -408,9 +410,9 @@ void fn_1_FA20(M438FireStruct3 **arg0, s16 arg1, HsfVector2f *arg2)
     HsfVector2f *var_r31;
     s32 var_r29;
     s32 var_r28;
-
+    
     var_r31 = (HsfVector2f *)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct3), MEMORY_DEFAULT_NUM);
-
+    
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
             var_r31->x = arg2->x;
@@ -418,6 +420,7 @@ void fn_1_FA20(M438FireStruct3 **arg0, s16 arg1, HsfVector2f *arg2)
         }
     }
 }
+#endif
 
 void fn_1_FAB8(M438UnkStruct *arg0)
 {

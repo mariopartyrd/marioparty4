@@ -102,7 +102,7 @@ void fn_1_8410(omObjData *);
 void fn_1_850C(omObjData *);
 void fn_1_8668(omObjData *);
 void fn_1_8798(dataCopy *, s32 *, s32 *, s32 *);
-void *fn_1_8884(void);
+u32 fn_1_8884(void);
 void fn_1_88B8(void);
 void fn_1_896C(void);
 void fn_1_91DC(void);

@@ -9,7 +9,7 @@
 #include "ext_math.h"
 
 #include "REL/m410Dll.h"
-
+#include <string.h>
 
 Process *lbl_1_bss_28;
 omObjData *lbl_1_bss_24;

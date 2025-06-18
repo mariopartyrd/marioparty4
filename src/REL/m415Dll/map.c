@@ -5,6 +5,8 @@
 #include "game/hsfdraw.h"
 #include "game/sprite.h"
 
+#include <string.h>
+
 void fn_1_8780(s16 arg0, s16 arg1)
 {
     s32 var_r31;

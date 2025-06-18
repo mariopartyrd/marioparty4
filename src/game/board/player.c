@@ -12,6 +12,8 @@
 #include "game/board/tutorial.h"
 #include "game/board/ui.h"
 #include "game/board/view.h"
+#include "game/board/window.h"
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/disp.h"
 #include "game/hsfman.h"
@@ -20,8 +22,7 @@
 
 #include "ext_math.h"
 #include "stdlib.h"
-
-#include <game/audio.h>
+#include <string.h>
 
 static void InitJunction(s32, s32, f32);
 static void UpdateJunctionGfx(omObjData *);
@@ -815,7 +816,7 @@ void BoardPlayerTurnExec(s32 arg0)
         BoardYourTurnExec(arg0);
         megaDoubleDiceF = 0;
         SetPlayerSizeAuto(arg0);
-        if (preTurnHook[arg0] != 0U) {
+        if (preTurnHook[arg0]) {
             if (preTurnHook[arg0]() != 0) {
                 preTurnHook[arg0] = 0;
             }
@@ -979,7 +980,7 @@ void BoardPlayerTurnMoveExec(s32 arg0)
 
 void BoardPlayerPostTurnHookExec(s32 arg0)
 {
-    if (postTurnHook[arg0] != 0U) {
+    if (postTurnHook[arg0]) {
         if (postTurnHook[arg0]() != 0) {
             postTurnHook[arg0] = 0;
         }
@@ -1058,7 +1059,7 @@ static inline u32 BoardJunctionMaskGet(void)
     return junctionMask;
 }
 
-static inline GetLinkCount(s32 playerIdx, s32 boardIdx)
+static inline s32 GetLinkCount(s32 playerIdx, s32 boardIdx)
 {
     s32 i;
     s32 linkCount;

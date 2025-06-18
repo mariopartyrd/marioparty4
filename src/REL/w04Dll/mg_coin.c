@@ -484,7 +484,7 @@ static void fn_1_E004(void) {
     while (fn_1_1130(lbl_1_bss_14[9], 0.0f, 30.0f) == 0) {
         HuPrcVSleep();
     }
-    HuPrcCurrentGet()->user_data = (void*) 1;
+    HuPrcCurrentGet()->user_data_u32 = 1;
     while (TRUE) {
         HuPrcVSleep();
     }

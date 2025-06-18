@@ -28,8 +28,9 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
+#include "game/frand.h"
+#include <string.h>
 
 typedef struct {
     struct {
@@ -157,7 +158,7 @@ static void CoasterEffKill(void);
 static void CoasterEffUpdate(omObjData *obj);
 static void CoasterEffAdd(CoasterEffWork *work);
 static void CoasterEffModelUpdate(CoasterEffWork *work);
-extern void CoasterHostComKeySet(s32 playerNo);
+static void CoasterHostComKeySet(s32 playerNo);
 
 static BoardMapObject mapObjData[MAPOBJ_MAX]
     = { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, DATA_MAKE_NUM(DATADIR_W01, 8) },
