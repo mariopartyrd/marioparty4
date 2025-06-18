@@ -9,6 +9,10 @@
 #include "game/object.h"
 extern s32 rand8(void);
 
+struct _unkStruct5;
+struct _unkStruct6;
+struct _unkStruct14;
+
 ////// TYPES //////
 typedef void (*m440Func5)(ModelData *, struct _unkStruct5 *, Mtx);
 typedef void (*m440Func6)(struct _unkStruct6 *);

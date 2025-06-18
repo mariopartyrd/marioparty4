@@ -14,7 +14,7 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
-#include "math.h"
+#include <string.h>
 
 typedef struct unk_bss_a18 {
     u32 unk0;

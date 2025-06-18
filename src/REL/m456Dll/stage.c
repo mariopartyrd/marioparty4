@@ -11,6 +11,7 @@
 
 #include "ext_math.h"
 #include "version.h"
+#include <string.h>
 
 #if !VERSION_PAL
 #include "game/frand.h"

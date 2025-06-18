@@ -1,4 +1,5 @@
 #include "ext_math.h"
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"

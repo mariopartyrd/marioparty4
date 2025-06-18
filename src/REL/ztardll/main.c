@@ -1,4 +1,5 @@
 #include "ext_math.h"
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
@@ -12,6 +13,11 @@
 #include "game/wipe.h"
 
 #include "REL/ztardll.h"
+#include "game/frand.h"
+
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
 
 extern s32 charVoiceGroupStat[8];
 

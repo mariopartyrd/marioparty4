@@ -879,7 +879,7 @@ void fn_1_1E04(void)
     for (var_r28 = 0; var_r28 < 4; var_r28++) {
         for (var_r29 = 0; var_r29 < 16; var_r29++) {
             var_r26 = HuPrcChildCreate(fn_1_3ECC, 8192, 4096, 0, HuPrcCurrentGet());
-            var_r26->user_data = (void *)(var_r29 + (var_r28 << 16));
+            var_r26->user_data_u32 = var_r29 + (var_r28 << 16);
         }
     }
 
@@ -1032,7 +1032,7 @@ void fn_1_3ECC(void)
     s32 var_r28;
     s32 var_r27;
 
-    var_r30 = (s32)HuPrcCurrentGet()->user_data;
+    var_r30 = HuPrcCurrentGet()->user_data_u32;
     var_r27 = (var_r30 >> 16);
     var_r30 = (u16)var_r30;
 
@@ -2298,9 +2298,9 @@ void fn_1_8A70(void)
     MGSeqParamSet(var_r24, 2, -1);
     var_r28 = MGSeqCreate(3, 1);
     var_r25 = HuPrcChildCreate(fn_1_894C, 8192, 8192, 0, HuPrcCurrentGet());
-    var_r25->user_data = (void *)1;
+    var_r25->user_data_u32 = TRUE;
 
-    while (var_r25->user_data) {
+    while (var_r25->user_data_u32) {
         HuPrcVSleep();
     }
     for (var_r31 = 0, var_r30 = 0; var_r31 < 4; var_r31++) {

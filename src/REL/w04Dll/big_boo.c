@@ -463,8 +463,8 @@ static void fn_1_757C(void) {
     s16 temp_r31;
     s16 temp_r30;
 
-    temp_r31 = ((s32) HuPrcCurrentGet()->user_data) >> 16;
-    temp_r30 = (u16) HuPrcCurrentGet()->user_data;
+    temp_r31 = ((s32) HuPrcCurrentGet()->user_data_u32) >> 16;
+    temp_r30 = (u16) HuPrcCurrentGet()->user_data_u32;
     Hu3DGLightKill(temp_r31);
     Hu3DGLightKill(temp_r30);
 }
@@ -491,7 +491,7 @@ static void fn_1_75D8(void) {
     temp_r3_2 = Hu3DGLightCreateV(&sp1C, &sp10, &spC);
     Hu3DGLightInfinitytSet(temp_r3_2);
     Hu3DGLightStaticSet(temp_r3_2, 1);
-    HuPrcCurrentGet()->user_data = (void*) (((temp_r3 << 16) & 0xFFFF0000) | (temp_r3_2 & 0xFFFF));
+    HuPrcCurrentGet()->user_data_u32 = ((temp_r3 << 16) & 0xFFFF0000) | (temp_r3_2 & 0xFFFF);
     var_f31 = 0.0f;
     sp8 = var_f31;
     while (TRUE) {

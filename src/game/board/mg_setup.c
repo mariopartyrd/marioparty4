@@ -13,6 +13,7 @@
 #include "game/board/window.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 // structs
 typedef struct structActiveMG {

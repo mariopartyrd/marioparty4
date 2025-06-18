@@ -15,6 +15,7 @@
 #include "game/wipe.h"
 
 #include "REL/m442Dll.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/esprite.h"

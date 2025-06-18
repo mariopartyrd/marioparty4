@@ -23,6 +23,8 @@
 
 #include "game/animdata.h"
 
+struct hu_sprite;
+
 typedef void (*HuSprFunc)(struct hu_sprite *);
 
 typedef struct hu_sprite {

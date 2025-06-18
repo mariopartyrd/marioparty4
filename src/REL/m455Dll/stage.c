@@ -14,6 +14,7 @@
 
 #include "ext_math.h"
 #include "math.h"
+#include <string.h>
 
 Process *lbl_1_bss_70;
 omObjData *lbl_1_bss_6C;

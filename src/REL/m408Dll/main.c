@@ -12,11 +12,10 @@
 #include "game/wipe.h"
 #include "game/sprite.h"
 
-
 #include "REL/m408Dll.h"
 
 #include "ext_math.h"
-#include "math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/frand.h"

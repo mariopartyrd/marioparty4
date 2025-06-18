@@ -19,11 +19,10 @@
 #include "game/process.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
-#include <game/hsfex.h>
 
-
-#include "dolphin.h"
+#include "game/hsfex.h"
 #include "ext_math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/audio.h"

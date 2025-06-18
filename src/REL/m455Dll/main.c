@@ -16,6 +16,7 @@
 
 #include "ext_math.h"
 #include "math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/esprite.h"

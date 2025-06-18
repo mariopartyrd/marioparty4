@@ -34,7 +34,10 @@ typedef struct process {
     jmp_buf jump;
 #endif
     void (*dtor)(void);
-    void *user_data;
+    union {
+        void *user_data;
+        volatile u32 user_data_u32;
+    };
 } Process;
 
 void HuPrcInit(void);

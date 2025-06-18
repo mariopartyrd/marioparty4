@@ -14,7 +14,9 @@
 #include "game/pad.h"
 #include "game/printfunc.h"
 #include "game/wipe.h"
+
 #include "math.h"
+#include <string.h>
 
 #ifdef __MWERKS__
 // MSM Definitions

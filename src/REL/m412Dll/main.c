@@ -144,7 +144,7 @@ void fn_1_7BC(void)
     s32 temp_r30;
     s32 var_r31;
 
-    temp_r30 = (s32)HuPrcCurrentGet()->user_data;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32;
     sp14.x = 1465.0f;
     sp14.y = 770.0f;
     sp14.z = -2400.0f;
@@ -558,7 +558,7 @@ void fn_1_2014(void)
 {
     unkStruct2 *temp_r31; // could also be unkStruct3 `\_("/)_/`
 
-    temp_r31 = (unkStruct2 *)HuPrcCurrentGet()->user_data;
+    temp_r31 = HuPrcCurrentGet()->user_data;
     lbl_1_bss_278[temp_r31->unk6] = NULL;
     HuMemDirectFree(temp_r31);
 }
@@ -575,7 +575,7 @@ void fn_1_2064(void)
     unkStruct *temp_r31;
     unkStruct4 *var_r27;
 
-    temp_r31 = (unkStruct *)HuPrcCurrentGet()->user_data;
+    temp_r31 = HuPrcCurrentGet()->user_data;
     temp_r31->unk8 = 0;
     temp_r31->unkA = 0;
     HuPrcDestructorSet(fn_1_2014);

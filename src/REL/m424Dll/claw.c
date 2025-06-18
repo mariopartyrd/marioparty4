@@ -10,7 +10,9 @@
 #include "game/hsfmotion.h"
 #include "game/memory.h"
 #include "game/pad.h"
+
 #include "math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/frand.h"

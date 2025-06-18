@@ -9,8 +9,6 @@
 
 #include "ext_math.h"
 
-extern s32 sprintf(char *, const char *, s32);
-
 static void fn_1_2BC(omObjData *arg0);
 static void fn_1_300(omObjData *arg0);
 static void fn_1_E88(void);

@@ -17,8 +17,8 @@
 #include "game/board/space.h"
 #include "game/board/window.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
+#include <string.h>
 
 typedef struct {
     struct {
@@ -537,7 +537,11 @@ static s32 fn_1_5EBC(void) {
     Bss50Work *temp_r31;
 
     if (!lbl_1_bss_50) {
+#ifdef __MWERKS__
         return;
+#else
+        return 0;
+#endif
     }
     temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_50, Bss50Work);
     return temp_r31->unk00_field2;

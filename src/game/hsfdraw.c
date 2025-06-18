@@ -748,11 +748,11 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
             SetTevStageTex(arg0, temp_r30);
         }
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
+        //GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
     }
     else {
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
+        //GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }

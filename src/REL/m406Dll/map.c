@@ -10,6 +10,7 @@
 
 #ifndef __MWERKS__
 #include <game/frand.h>
+#include <string.h>
 #endif
 
 typedef struct UnkM406Struct {

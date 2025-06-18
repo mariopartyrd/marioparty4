@@ -2504,7 +2504,7 @@ static void ExecItemBagJump(void)
     float var_f31;
     s16 temp_r31;
 
-    temp_r31 = (s16)HuPrcCurrentGet()->user_data;
+    temp_r31 = HuPrcCurrentGet()->user_data_u32;
     BoardModelScaleGet(temp_r31, &sp20);
     BoardModelPosGet(temp_r31, &sp14);
     sp8 = sp14;
@@ -2653,7 +2653,7 @@ static void ExecItemBag(void)
             BoardModelScaleSetV(sp8[var_r30], &sp24);
             BoardModelVisibilitySet(sp8[var_r30], 1);
             temp_r29 = HuPrcChildCreate(ExecItemBagJump, 0x2004, 0x1000, 0, HuPrcCurrentGet());
-            temp_r29->user_data = (void *)sp8[var_r30];
+            temp_r29->user_data_u32 = sp8[var_r30];
             temp_r29 = HuPrcChildCreate(ExecItemBagShow, 0x2004, 0x1000, 0, HuPrcCurrentGet());
             temp_r29->user_data = temp_r24;
             while (GWPlayer[currItemRestore].jump) {

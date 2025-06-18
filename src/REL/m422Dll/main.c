@@ -16,6 +16,7 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 s32 rand8(void);

@@ -579,6 +579,7 @@ void __GXAbort();
 /* GXPerf.c */
 void __GXSetBWDials(u16 cpDial, u16 tcDial, u16 peDial, u16 cpuRdDial, u16 cpuWrDial);
 
+#ifdef __MWERKS__
 static inline u32 __GXReadCPCounterU32(u32 regAddrL, u32 regAddrH) {
     u32 ctrH0;
     u32 ctrH1;
@@ -626,6 +627,7 @@ static inline u32 __GXReadPECounterU32(u32 regAddrL, u32 regAddrH) {
 
     return (ctrH0 << 0x10) | ctrL;
 }
+#endif
 
 /* GXSave.c */
 

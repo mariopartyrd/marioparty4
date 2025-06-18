@@ -170,7 +170,7 @@ void fn_1_7400(void)
     BoardModelMotionTimeSet(lbl_1_bss_14[0], 30.0f);
     lbl_1_bss_98 = HuPrcCreate(fn_1_896C, 0x2004, 0x1000, 0);
     HuPrcDestructorSet2(lbl_1_bss_98, fn_1_91DC);
-    lbl_1_bss_98->user_data = (void *)7;
+    lbl_1_bss_98->user_data_u32 = 7;
     HuPrcEnd();
 }
 
@@ -273,7 +273,7 @@ void fn_1_78A0(omObjData *arg0)
 void fn_1_7928(omObjData *arg0)
 {
     Process *temp;
-    if (((u32)lbl_1_bss_98->user_data & 0x10) != 0) {
+    if ((lbl_1_bss_98->user_data_u32 & 0x10) != 0) {
         temp = HuPrcCreate(fn_1_799C, 0x2004, 0x1800, 0);
         temp->user_data = arg0;
         arg0->func = NULL;
@@ -484,7 +484,7 @@ void fn_1_80D8(omObjData *arg0)
 
 void fn_1_8410(omObjData *arg0)
 {
-    s32 temp_r30;
+    u32 temp_r30;
     dataCopy *temp_r31;
 
     temp_r31 = arg0->data;
@@ -496,7 +496,7 @@ void fn_1_8410(omObjData *arg0)
         temp_r30 |= 0x1C0;
         lbl_1_bss_98 = HuPrcCreate(fn_1_896C, 0x2004, 0x4000, 0);
         HuPrcDestructorSet2(lbl_1_bss_98, fn_1_91DC);
-        lbl_1_bss_98->user_data = (void *)temp_r30;
+        lbl_1_bss_98->user_data_u32 = temp_r30;
         lbl_1_bss_8C->work[0] = temp_r31->unk_08;
         arg0->func = fn_1_850C;
     }
@@ -561,21 +561,21 @@ void fn_1_8798(dataCopy *arg0, s32 *arg1, s32 *arg2, s32 *arg3)
     *arg2 = (frandBool() * 0x8C) - 0x46;
 }
 
-void *fn_1_8884(void)
+u32 fn_1_8884(void)
 {
     if (lbl_1_bss_98 == NULL) {
-        return NULL;
+        return 0;
     }
-    return lbl_1_bss_98->user_data;
+    return lbl_1_bss_98->user_data_u32;
 }
 
 void fn_1_88B8(void)
 {
-    s32 userData = (s32)lbl_1_bss_98->user_data;
+    u32 userData = lbl_1_bss_98->user_data_u32;
     userData |= 8;
-    lbl_1_bss_98->user_data = (void *)(userData);
+    lbl_1_bss_98->user_data_u32 = userData;
 
-    while (((u32)fn_1_8884() & 0x20) == 0) {
+    while ((fn_1_8884() & 0x20) == 0) {
         HuPrcVSleep();
     }
     HuPrcKill(lbl_1_bss_98);
@@ -596,7 +596,7 @@ void fn_1_896C(void)
     s32 var_r29;
     ParticleData *var_r27;
 
-    temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32;
 
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         var_r29 = (1 << var_r31);
@@ -686,12 +686,12 @@ void fn_1_896C(void)
             BoardModelScaleSetV(lbl_1_bss_A4[var_r31], &spC);
         }
     }
-    temp_r30 = (u32)HuPrcCurrentGet()->user_data | 0x10;
-    HuPrcCurrentGet()->user_data = (void *)temp_r30;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32 | 0x10;
+    HuPrcCurrentGet()->user_data_u32 = temp_r30;
     var_f30 = 0.0f;
 
     while (1) {
-        temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+        temp_r30 = HuPrcCurrentGet()->user_data_u32;
         if ((temp_r30 & 8) == 0) {
             for (var_r31 = 0; var_r31 < 3; var_r31++) {
                 var_r29 = (1 << var_r31);
@@ -755,9 +755,9 @@ void fn_1_896C(void)
             BoardModelVisibilitySet(lbl_1_bss_A4[var_r31], 0);
         }
     }
-    temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32;
     temp_r30 |= 0x20;
-    HuPrcCurrentGet()->user_data = (void *)temp_r30;
+    HuPrcCurrentGet()->user_data_u32 = temp_r30;
     while (1) {
         HuPrcVSleep();
     }
@@ -769,7 +769,7 @@ void fn_1_91DC(void)
     s32 var_r29;
     s32 var_r31;
 
-    temp_r30 = (u32)HuPrcCurrentGet()->user_data;
+    temp_r30 = HuPrcCurrentGet()->user_data_u32;
     if ((temp_r30 & 0x40) != 0) {
         for (var_r31 = 0; var_r31 < 3; var_r31++) {
             var_r29 = (1 << var_r31);

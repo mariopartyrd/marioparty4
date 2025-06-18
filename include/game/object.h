@@ -32,6 +32,8 @@ typedef enum {
 #define OM_GET_WORK_PTR(object, type) ((type *)(&((object)->work[0])))
 #define OM_GET_DATA_PTR(object, type) ((type *)(((object)->data)))
 
+struct om_obj_data;
+
 typedef void (*omObjFunc)(struct om_obj_data *);
 
 typedef struct om_ovl_his_data {
@@ -64,8 +66,10 @@ typedef struct om_obj_data {
 
 typedef struct om_dll_data {
 	char *name;
-#if _WIN32
-        HMODULE hModule;
+#ifdef _WIN32
+    HMODULE hModule;
+#elif defined (__linux__) || defined(__APPLE__)
+    void *handle;
 #else
 	OSModuleHeader *module;
 	void *bss;
