@@ -2,10 +2,15 @@
 #include "game/dvd.h"
 #include "game/memory.h"
 
+#if defined(__linux__) || defined(__APPLE__)
+#include <dlfcn.h>
+#endif
+
 typedef s32 (*DLLProlog)(void);
 typedef void (*DLLEpilog)(void);
 
 #ifdef TARGET_PC
+#include <string.h>
 typedef void (*DLLObjectSetup)(void);
 #endif
 
@@ -110,7 +115,15 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 	if (dll->hModule == NULL) {
 		OSReport("objdll>++++++++++++++++ DLL Link Failed\n");
 	}
-#else
+#elif defined(__linux__) || defined(__APPLE__)
+	{
+		// RPATH has to be set properly in CMake
+		dll->handle = dlopen(dllFile->name, RTLD_LAZY);
+		if (dll->handle == NULL) {
+			OSReport("objdll>++++++++++++++++ DLL Link Failed %s\n", dlerror());
+		}
+	}
+#elif defined(__MWERKS__)
 	dll->module = HuDvdDataReadDirect(dllFile->name, HEAP_SYSTEM);
 	dll->bss = HuMemDirectMalloc(HEAP_SYSTEM, dll->module->bssSize);
 	if(OSLink(&dll->module->info, dll->bss) != TRUE) {
@@ -119,6 +132,8 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 	omDLLInfoDump(&dll->module->info);
 	omDLLHeaderDump(dll->module);
 	OSReport("objdll>LinkOK %08x %08x\n", dll->module, dll->bss);
+#else
+	OSReport("DLL/so loading is not implemented for this platform");
 #endif
 	if(flag == 1) {
 		OSReport("objdll> %s prolog start\n", dllFile->name);
@@ -127,6 +142,9 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 		DLLObjectSetup objectSetup = (DLLObjectSetup)GetProcAddress(dll->hModule, "ObjectSetup");
 		objectSetup();
 		}
+#elif defined(__linux__) || defined(__APPLE__)
+		DLLObjectSetup objectSetup = (DLLObjectSetup)dlsym(dll->handle, "ObjectSetup");
+		objectSetup();
 #else
 		dll->ret = ((DLLProlog)dll->module->prolog)();
 #endif
@@ -139,7 +157,9 @@ void omDLLUnlink(omDllData *dll_ptr, s16 flag)
 {
 	OSReport("odjdll>Unlink DLL:%s\n", dll_ptr->name);
 #ifdef _WIN32
-        FreeLibrary(dll_ptr->hModule);
+    FreeLibrary(dll_ptr->hModule);
+#elif defined(__linux__) || defined(__APPLE__)
+	dlclose(dll_ptr->handle);
 #else
 	if(flag == 1) {
 		OSReport("objdll>Unlink DLL epilog\n");
