@@ -5,6 +5,8 @@
 #include "game/data.h"
 #include "game/memory.h"
 
+#include "version.h"
+
 #define HUSPR_MAX 384
 #define HUSPR_GRP_MAX 256
 
@@ -78,8 +80,8 @@ typedef struct hu_spr_grp {
     Mtx mtx;
 } HuSprGrp;
 
-extern HuSprite HuSprData[HUSPR_MAX];
-extern HuSprGrp HuSprGrpData[HUSPR_GRP_MAX];
+SHARED_SYM extern HuSprite HuSprData[HUSPR_MAX];
+SHARED_SYM extern HuSprGrp HuSprGrpData[HUSPR_GRP_MAX];
 
 #define HuSprAnimReadFile(data_id) (HuSprAnimRead(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
 
