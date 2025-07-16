@@ -20,8 +20,8 @@ typedef struct sprite_order {
     u16 next;
 } SpriteOrder;
 
-HuSprite HuSprData[HUSPR_MAX];
-HuSprGrp HuSprGrpData[HUSPR_GRP_MAX];
+SHARED_SYM HuSprite HuSprData[HUSPR_MAX];
+SHARED_SYM HuSprGrp HuSprGrpData[HUSPR_GRP_MAX];
 static SpriteOrder HuSprOrder[HUSPR_MAX*2];
 
 static s16 HuSprOrderNum;
