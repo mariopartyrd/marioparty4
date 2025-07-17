@@ -124,8 +124,7 @@ UnkBss28CStruct lbl_1_bss_28C[9];
 UnkBssCCStruct lbl_1_bss_CC[0x1C];
 omObjData *lbl_1_bss_C8;
 omObjData *lbl_1_bss_C4;
-omObjData *lbl_1_bss_C0;
-omObjData *lbl_1_bss_BC;
+omObjData *lbl_1_bss_BC[2];
 omObjData *lbl_1_bss_B8;
 s32 lbl_1_bss_B4;
 s32 lbl_1_bss_B0;
@@ -158,9 +157,9 @@ s32 lbl_1_bss_0;
 void fn_1_A0(void)
 {
     if ((HuPadBtnDown[0] & PAD_BUTTON_B) != 0) {
-        Center.x = lbl_1_bss_BC->trans.x;
-        Center.y = lbl_1_bss_BC->trans.y;
-        Center.z = lbl_1_bss_BC->trans.z;
+        Center.x = lbl_1_bss_BC[0]->trans.x;
+        Center.y = lbl_1_bss_BC[0]->trans.y;
+        Center.z = lbl_1_bss_BC[0]->trans.z;
     }
     Center.x += 10.0 * (((HuPadBtn[0] & PAD_BUTTON_RIGHT) != 0) - ((HuPadBtn[0] & PAD_BUTTON_LEFT) != 0));
     Center.z -= 10.0 * (((HuPadBtn[0] & PAD_BUTTON_UP) != 0) - ((HuPadBtn[0] & PAD_BUTTON_DOWN) != 0));
@@ -221,7 +220,7 @@ void fn_1_4C8(omObjData *object)
     s32 spA4;
 
     var_r31 = object->data;
-    var_r27 = (&lbl_1_bss_BC)[1 - object->work[0]]->data;
+    var_r27 = lbl_1_bss_BC[1 - object->work[0]]->data;
     var_f23 = 0.0f;
     var_f22 = 0.0f;
     var_f28 = 0.0f;
@@ -768,7 +767,7 @@ void fn_1_350C(omObjData *var_r27)
     s32 var_r25;
 
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
-        spC[var_r31] = (&lbl_1_bss_BC)[var_r31]->data;
+        spC[var_r31] = lbl_1_bss_BC[var_r31]->data;
     }
     lbl_1_bss_4++;
     switch (lbl_1_bss_B0) {
@@ -823,7 +822,7 @@ void fn_1_350C(omObjData *var_r27)
                     lbl_1_bss_28C[spC[0]->unk_38].unk_08 = 83.333336f;
                 }
                 var_r29->pos.y = (0.9 * var_r29->pos.y) + (0.1 * lbl_1_bss_28C[spC[0]->unk_38].unk_08);
-                lbl_1_bss_BC->trans.y = var_r29->pos.y - -16.666666666666668;
+                lbl_1_bss_BC[0]->trans.y = var_r29->pos.y - -16.666666666666668;
             }
             break;
         case 0x3F0:
@@ -843,9 +842,9 @@ void fn_1_350C(omObjData *var_r27)
                         (500.0 + (200.0f * var_f29)) * (lbl_1_bss_28C[var_r31].unk_04 - 1));
                     for (var_r30 = 0; var_r30 < 2; var_r30++) {
                         if (var_r31 == spC[var_r30]->unk_38) {
-                            (&lbl_1_bss_BC)[var_r30]->trans.x = (500.0 + (200.0f * var_f29)) * (lbl_1_bss_28C[var_r31].unk_00 - 1);
-                            (&lbl_1_bss_BC)[var_r30]->trans.y = var_r28->pos.y - -16.666666666666668;
-                            (&lbl_1_bss_BC)[var_r30]->trans.z = (500.0 + (200.0f * var_f29)) * (lbl_1_bss_28C[var_r31].unk_04 - 1);
+                            lbl_1_bss_BC[var_r30]->trans.x = (500.0 + (200.0f * var_f29)) * (lbl_1_bss_28C[var_r31].unk_00 - 1);
+                            lbl_1_bss_BC[var_r30]->trans.y = var_r28->pos.y - -16.666666666666668;
+                            lbl_1_bss_BC[var_r30]->trans.z = (500.0 + (200.0f * var_f29)) * (lbl_1_bss_28C[var_r31].unk_04 - 1);
                         }
                     }
                 }
@@ -864,12 +863,12 @@ void fn_1_350C(omObjData *var_r27)
         };
 
         if (lbl_1_bss_98 != -1) {
-            sp14[3].unk_04 = (&lbl_1_bss_BC)[1 - lbl_1_bss_98]->trans.x;
-            sp14[3].unk_0C = (&lbl_1_bss_BC)[1 - lbl_1_bss_98]->trans.z;
-            sp14[4].unk_04 = (&lbl_1_bss_BC)[1 - lbl_1_bss_98]->trans.x;
-            sp14[4].unk_0C = (&lbl_1_bss_BC)[1 - lbl_1_bss_98]->trans.z;
-            sp14[5].unk_04 = (&lbl_1_bss_BC)[lbl_1_bss_98]->trans.x;
-            sp14[5].unk_0C = (&lbl_1_bss_BC)[lbl_1_bss_98]->trans.z;
+            sp14[3].unk_04 = lbl_1_bss_BC[1 - lbl_1_bss_98]->trans.x;
+            sp14[3].unk_0C = lbl_1_bss_BC[1 - lbl_1_bss_98]->trans.z;
+            sp14[4].unk_04 = lbl_1_bss_BC[1 - lbl_1_bss_98]->trans.x;
+            sp14[4].unk_0C = lbl_1_bss_BC[1 - lbl_1_bss_98]->trans.z;
+            sp14[5].unk_04 = lbl_1_bss_BC[lbl_1_bss_98]->trans.x;
+            sp14[5].unk_0C = lbl_1_bss_BC[lbl_1_bss_98]->trans.z;
         }
         if (lbl_1_data_1A0 == -1) {
             lbl_1_data_1A0 = 0;
@@ -1014,7 +1013,7 @@ void fn_1_4D44(void)
 
     sp8 = 0;
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
-        spC[var_r30] = (&lbl_1_bss_BC)[var_r30]->data;
+        spC[var_r30] = lbl_1_bss_BC[var_r30]->data;
     }
     HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
     HuWinComKeyReset();
@@ -1110,7 +1109,7 @@ void fn_1_5014(omObjData *var_r30)
         }
     }
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
-        spC[var_r31] = (&lbl_1_bss_BC)[var_r31]->data;
+        spC[var_r31] = lbl_1_bss_BC[var_r31]->data;
     }
     if ((omSysExitReq != 0) && (WipeStatGet() == 0)) {
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
@@ -1283,7 +1282,7 @@ void fn_1_59DC(omObjData *object)
     s16 var_r23;
 
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
-        sp18[var_r30] = (&lbl_1_bss_BC)[var_r30]->data;
+        sp18[var_r30] = lbl_1_bss_BC[var_r30]->data;
     }
     object->model[1] = Hu3DModelCreateFile(0x3000E);
     Hu3DModelAttrSet(object->model[1], HU3D_MOTATTR_LOOP);
@@ -1375,7 +1374,7 @@ void fn_1_6314(omObjData *object)
     s32 var_r29;
 
     work = object->data;
-    spC = (&lbl_1_bss_BC)[1 - object->work[0]]->data;
+    spC = lbl_1_bss_BC[1 - object->work[0]]->data;
     memset(work, 0, sizeof(M458DllWork));
     work->unk_00 = object->work[0];
     work->unk_04 = GWPlayerCfg->group == work->unk_00
@@ -1500,7 +1499,7 @@ void ObjectSetup(void)
     HuWinInit(1);
     lbl_1_bss_B8 = omAddObjEx(lbl_1_bss_A0, 0x65, 0x18, 2, 1, fn_1_59DC);
     for (i = 0; i < 2; i++) {
-        object = (&lbl_1_bss_BC)[i] = omAddObjEx(lbl_1_bss_A0, 0x64, 0xB, 0xA, 0, fn_1_6314);
+        object = lbl_1_bss_BC[i] = omAddObjEx(lbl_1_bss_A0, 0x64, 0xB, 0xA, 0, fn_1_6314);
         object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M458DllWork), MEMORY_DEFAULT_NUM);
         object->work[0] = i;
     }
@@ -1517,7 +1516,7 @@ void fn_1_6D9C(omObjData *object)
     if (WipeStatGet() == 0) {
         s32 i;
         for (i = 0; i < 2; i++) {
-            void *sp8 = (&lbl_1_bss_BC)[i]->data;
+            void *sp8 = lbl_1_bss_BC[i]->data;
         }
         if (lbl_1_data_12C >= 0) {
             MGSeqKill(lbl_1_data_12C);

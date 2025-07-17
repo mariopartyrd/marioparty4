@@ -569,11 +569,11 @@ void HuAudVoiceInit(s16 ovl) {
         //     && OSTicksToMilliseconds(OSGetTick() - osTick) < 500);
         OSReport("############CharGrpSet\n");
         // temp_r25 = msmSysDelGroupBase(0);
-        if (temp_r25 < 0) {
-            OSReport("Del Group Error %d\n", temp_r25);
-        } else {
-            OSReport("Del Group OK\n");
-        }
+        // if (temp_r25 < 0) {
+        //     OSReport("Del Group Error %d\n", temp_r25);
+        // } else {
+        //     OSReport("Del Group OK\n");
+        // }
         for (i = 0; i < 4; i++) {
             character = GWPlayerCfg[i].character;
             if (character >= 0 && character < 8 && character != 0xFF) {

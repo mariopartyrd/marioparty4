@@ -26,6 +26,10 @@ static void msmMusSetMasterVolume(s32 value);
 #include "game/msm.h"
 #endif
 
+#ifndef __MWERKS__
+extern s32 rand8(void);
+#endif
+
 #define SM_PAGE_MAX 7
 #define SM_PAGE_SIZE 10
 

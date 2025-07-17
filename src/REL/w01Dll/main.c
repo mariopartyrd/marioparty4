@@ -284,6 +284,7 @@ void BoardCreate(void)
             else {
                 mapObjMotTbl = NULL;
             }
+            // TODO PC causes crash
             mapObjMdlId[i] = BoardModelCreate(mapObj->data_num, mapObjMotTbl, 0);
             BoardModelPosSetV(mapObjMdlId[i], &mapObj->pos);
             BoardModelRotSetV(mapObjMdlId[i], &mapObj->rot);
