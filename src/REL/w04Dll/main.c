@@ -20,6 +20,10 @@
 #include "dolphin.h"
 #include "math.h"
 
+#if TARGET_PC
+#include "game/frand.h"
+#endif
+
 static void fn_1_750(void);
 static void fn_1_794(void);
 static s32 fn_1_798(void);

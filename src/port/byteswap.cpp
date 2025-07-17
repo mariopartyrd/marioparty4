@@ -792,6 +792,18 @@ void byteswap_s32(s32 *src)
     sVisitedPtrs.clear();
 }
 
+void byteswap_vec(Vec *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_vec2f(Vec2f *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
 void byteswap_hsfvec3f(HsfVector3f *src)
 {
     bswap(*src, *src);
