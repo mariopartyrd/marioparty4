@@ -501,6 +501,6 @@ static void CreateMGInterface(omObjData *object)
     HuWinMesColSet(index, 0);
     HuWinBGTPLvlSet(index, 0.0f);
     HuWinMesSpeedSet(index, 0);
-    HuWinMesSet(index, MAKE_MESSID_PTR("\013\016\r PRESS START"));
+    HU_WIN_MES_SET_PTR(index, MAKE_MESSID_PTR("\013\016\r PRESS START"));
     object->func = UpdateMGInterface;
 }

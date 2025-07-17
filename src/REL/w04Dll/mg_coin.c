@@ -363,7 +363,7 @@ static void fn_1_D770(void) {
     lbl_1_bss_314 = lbl_1_data_62C[lbl_1_bss_314 - 1];
     sprintf(sp8, "%d", lbl_1_bss_314);
     BoardWinCreate(2, MAKE_MESSID(32, 20), 3);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(sp8), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp8), 0);
     BoardWinWait();
     BoardWinKill();
     BoardPlayerMotBlendSet(lbl_1_bss_324, 0, 0xF);

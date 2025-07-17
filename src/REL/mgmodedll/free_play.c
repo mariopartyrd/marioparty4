@@ -4,6 +4,7 @@
 #include "game/audio.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
+#include "game/window.h"
 #include "game/wipe.h"
 
 #include "ext_math.h"
@@ -948,10 +949,10 @@ s32 fn_1_BB24(void)
         return 1;
     }
     else {
-        HuWinInsertMesSizeGet(MAKE_MESSID_PTR(messInsertBase), 0);
-        HuWinInsertMesSizeGet(MAKE_MESSID_PTR(messInsertBase), 1);
-        HuWinInsertMesSizeGet(MAKE_MESSID_PTR(messInsertBase), 2);
-        HuWinInsertMesSizeGet(MAKE_MESSID_PTR(messInsertBase), 3);
+        HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(messInsertBase), 0);
+        HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(messInsertBase), 1);
+        HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(messInsertBase), 2);
+        HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(messInsertBase), 3);
         HuWinMesMaxSizeGet(3, winSize, MAKE_MESSID(0x28, 0x2B), MAKE_MESSID(0x28, 0x2C), MAKE_MESSID(0x28, 0x2D));
         window = HuWinExCreateStyled(-10000, -10000, winSize[0], winSize[1], -1, 1);
         windowP = &winData[window];
@@ -969,7 +970,7 @@ s32 fn_1_BB24(void)
             else {
                 messInsert[j][2] = (customMinNum[j] + '0' - customNum[j]);
             }
-            HuWinInsertMesSet(window, MAKE_MESSID_PTR(&messInsert[j][0]), (s16)j);
+            HU_WIN_INSERT_MES_SET_PTR(window, MAKE_MESSID_PTR(&messInsert[j][0]), (s16)j);
         }
         HuWinMesSet(window, MAKE_MESSID(0x28, 0x2C));
         HuWinMesWait(window);

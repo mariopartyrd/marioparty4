@@ -33,4 +33,11 @@ void BoardWinStartComKeySet(void);
 void BoardWinComKeyFuncSet(BoardWinComKeyFunc func);
 s16 BoardWinIDGet(void);
 
+#if TARGET_PC
+void BoardWinInsertMesSetPtr(uintptr_t value, s32 index);
+#define BOARD_WIN_MES_SET_PTR BoardWinInsertMesSetPtr
+#else
+#define BOARD_WIN_MES_SET_PTR BoardWinInsertMesSet
+#endif
+
 #endif

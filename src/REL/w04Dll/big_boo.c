@@ -739,7 +739,7 @@ static void fn_1_7888(void) {
     fn_1_7300();
     sprintf(sp30, "%d", var_r27);
     BoardWinCreate(2, MAKE_MESSID(32, 9), 9);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(sp30), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp30), 0);
     BoardWinWait();
     BoardWinKill();
     BoardPlayerMotBlendSet(lbl_1_bss_282, 0, 0xF);
@@ -916,7 +916,7 @@ static void fn_1_8A60(void) {
     #if VERSION_ENG
     sprintf(sp10, "%d", var_r29);
     BoardWinCreate(2, MAKE_MESSID(32, 11), 9);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(sp10), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp10), 0);
     #else
     BoardWinCreate(2, MAKE_MESSID(32, 11), 9);
     #endif

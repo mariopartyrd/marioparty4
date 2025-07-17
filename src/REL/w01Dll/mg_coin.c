@@ -663,7 +663,7 @@ static void SpaceAmidaCoinWin(void)
     BoardAudSeqFadeOut(1, 100);
     sprintf(&mess, "%d", spaceAmidaCoinNum);
     BoardWinCreate(2, MAKE_MESSID(11, 6), 0);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(mess), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(mess), 0);
     BoardWinWait();
     BoardWinKill();
     obj = HuPrcCurrentGet()->user_data;

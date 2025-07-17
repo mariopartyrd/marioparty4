@@ -742,7 +742,7 @@ s32 fn_1_16B30(void)
             for (temp_r31 = 0; temp_r31 < 2; temp_r31++) {
                 spE[temp_r31][0] = sp1A[temp_r31] + '0';
                 spE[temp_r31][1] = 0;
-                HuWinInsertMesSet(lbl_1_data_168, MAKE_MESSID_PTR(&spE[temp_r31][0]), (s32)temp_r31);
+                HU_WIN_INSERT_MES_SET_PTR(lbl_1_data_168, MAKE_MESSID_PTR(&spE[temp_r31][0]), (s32)temp_r31);
             }
             if (sp1A[0] > sp1A[1]) {
                 temp_r28 = 0;

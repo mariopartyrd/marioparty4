@@ -140,4 +140,21 @@ void HuWinExCleanup(s16 window);
 void HuWinExAnimPopIn(s16 window, s16 portrait);
 void *MessData_MesPtrGet(void *data, u32 index);
 
+#if TARGET_PC
+void HuWinMesSetPtr(s16 window, uintptr_t mess);
+void HuWinInsertMesSetPtr(s16 window, uintptr_t mess, s16 index);
+void HuWinInsertMesSizeGetPtr(uintptr_t mess, s16 index);
+s16 HuWinKeyWaitNumGetPtr(uintptr_t mess);
+
+#define HU_WIN_MES_SET_PTR HuWinMesSetPtr
+#define HU_WIN_INSERT_MES_SET_PTR HuWinInsertMesSetPtr
+#define HU_WIN_INSERT_MES_SIZE_GET_PTR HuWinInsertMesSizeGetPtr
+#define HU_WIN_KEY_WAIT_NUM_GET_PTR HuWinKeyWaitNumGetPtr
+#else
+#define HU_WIN_MES_SET_PTR HuWinMesSet
+#define HU_WIN_INSERT_MES_SET_PTR HuWinInsertMesSet
+#define HU_WIN_INSERT_MES_SIZE_GET_PTR HuWinInsertMesSizeGet
+#define HU_WIN_KEY_WAIT_NUM_GET_PTR HuWinKeyWaitNumGet
+#endif
+
 #endif

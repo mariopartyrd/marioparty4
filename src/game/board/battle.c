@@ -383,7 +383,7 @@ static void TakeCoins(void) {
         var_r24 = MAKE_MESSID(2, 2);
     }
     BoardWinCreate(2, var_r24, 1);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(totalCoinStr), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(totalCoinStr), 0);
     BoardWinWait();
     BoardWinKill();
 }

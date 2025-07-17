@@ -1523,7 +1523,7 @@ static void MiniBowserTake(void)
     }
     HuAudFXPlay(62);
     BoardWinCreate(2, mess, 6);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(coinStealStrAll), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(coinStealStrAll), 0);
     BoardWinWait();
     if(coin_inc > 0) {
         SetMiniBowserMotion(5, 10, 0);
@@ -1595,7 +1595,7 @@ static void MiniBowserTakeAll(void)
     }
     HuAudFXPlay(62);
     BoardWinCreate(2, mess, 6);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(coinStealStr), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(coinStealStr), 0);
     BoardWinWait();
     if(coin_inc > 0) {
         SetMiniBowserMotion(5, 10, 0);
