@@ -248,7 +248,7 @@ static void fn_1_4FB8(s32 arg0) {
     sprintf(lbl_1_bss_5B, "%d", lbl_1_bss_58);
     BoardAudSeqPause(0, 0, 1000);
     BoardWinCreate(2, MAKE_MESSID(48, 28), 6);
-    BoardWinInsertMesSet(MAKE_MESSID_PTR(lbl_1_bss_5B), 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(lbl_1_bss_5B), 0);
     BoardWinWait();
     BoardWinKill();
     fn_1_6C4C(arg0);

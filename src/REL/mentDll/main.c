@@ -1499,7 +1499,7 @@ loop_4:
                 break;
             case 1:
                 sprintf(sp8, "%d", lbl_1_bss_35BC[1].unk_1C[1]);
-                HuWinInsertMesSet(var_r31, MAKE_MESSID_PTR(sp8), 0);
+                HU_WIN_INSERT_MES_SET_PTR(var_r31, MAKE_MESSID_PTR(sp8), 0);
                 fn_1_1968(var_r31, 0x1B0017, -1, -0x3E7);
                 break;
             case 2:

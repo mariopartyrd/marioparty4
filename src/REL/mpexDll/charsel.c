@@ -2885,7 +2885,7 @@ void fn_1_1B834(void)
 void fn_1_1B9F4(void)
 {
     if (lbl_1_data_77C != -1) {
-        HuWinMesSet(lbl_1_data_77C, 0x250004);
+        HuWinMesSet(lbl_1_data_77C, MAKE_MESSID(0x25, 0x04));
         HuWinExAnimOut(lbl_1_data_77C);
         HuWinExCleanup(lbl_1_data_77C);
         lbl_1_data_77C = -1;
@@ -2943,7 +2943,7 @@ s32 fn_1_1BBA4(s32 arg0)
     HuWinMesSpeedSet(var_r31, 0);
     HuWinMesSet(var_r31, 0x1E0035);
     var_r28 = HuWinChoiceGet(var_r31, arg0);
-    HuWinMesSet(var_r31, 0x250004);
+    HuWinMesSet(var_r31, MAKE_MESSID(0x25, 0x4));
     HuWinExAnimOut(var_r31);
     HuWinExCleanup(var_r31);
     return var_r28;

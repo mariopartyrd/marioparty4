@@ -154,20 +154,20 @@ static void fn_1_E88(void)
     HuWinExAnimIn(temp_r3);
     HuWinAttrSet(temp_r3, 0x800);
     HuWinMesSpeedSet(temp_r3, 0);
-    HuWinMesSet(temp_r3, MAKE_MESSID_PTR(lbl_1_data_32C[0]));
+    HU_WIN_MES_SET_PTR(temp_r3, MAKE_MESSID_PTR(lbl_1_data_32C[0]));
     lbl_1_bss_0 = HuWinCreate(460.0f, 32.0f, 100, 40, 0);
     HuWinAttrSet(lbl_1_bss_0, 0x800);
     HuWinMesSpeedSet(lbl_1_bss_0, 0);
-    HuWinMesSet(lbl_1_bss_0, MAKE_MESSID_PTR("\x1F\x01_\x1F\x02"));
+    HU_WIN_MES_SET_PTR(lbl_1_bss_0, MAKE_MESSID_PTR("\x1F\x01_\x1F\x02"));
     var_r31 = 0;
     var_r30 = 0;
     while (1) {
         HuWinHomeClear(lbl_1_bss_0);
         sprintf(spC, "%03d", var_r30 + 1);
-        HuWinInsertMesSet(lbl_1_bss_0, MAKE_MESSID_PTR(spC), 0);
+        HU_WIN_INSERT_MES_SET_PTR(lbl_1_bss_0, MAKE_MESSID_PTR(spC), 0);
         sprintf(sp8, "%03d", sp10[var_r31]);
-        HuWinInsertMesSet(lbl_1_bss_0, MAKE_MESSID_PTR(sp8), 1);
-        HuWinMesSet(lbl_1_bss_0, MAKE_MESSID_PTR("\x1F\x01_\x1F\x02"));
+        HU_WIN_INSERT_MES_SET_PTR(lbl_1_bss_0, MAKE_MESSID_PTR(sp8), 1);
+        HU_WIN_MES_SET_PTR(lbl_1_bss_0, MAKE_MESSID_PTR("\x1F\x01_\x1F\x02"));
         temp_r3_2 = fn_1_11B0(var_r31, var_r30);
         if (temp_r3_2 & 0x20) {
             var_r31++;
@@ -222,14 +222,14 @@ static s32 fn_1_11B0(s16 arg0, s16 arg1)
     var_r27 = 0;
     var_r26 = 0;
     HuWinHomeClear(lbl_1_bss_2);
-    HuWinMesSet(lbl_1_bss_2, MAKE_MESSID_PTR(lbl_1_data_32C[arg0]));
+    HU_WIN_MES_SET_PTR(lbl_1_bss_2, MAKE_MESSID_PTR(lbl_1_data_32C[arg0]));
     HuPrcVSleep();
     if (lbl_1_data_410 != -1) {
         HuWinKill(lbl_1_data_410);
     }
     temp_r28 = MAKE_MESSID(arg0, arg1);
     for (i = 0; i < 8; i++) {
-        HuWinInsertMesSizeGet(MAKE_MESSID_PTR(lbl_1_data_440[i]), (s16)i);
+        HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(lbl_1_data_440[i]), (s16)i);
     }
     HuWinMesMaxSizeGet(1, &spC[0], temp_r28);
     if (spC[0] <= 16.0f) {
@@ -237,7 +237,7 @@ static s32 fn_1_11B0(s16 arg0, s16 arg1)
     }
     lbl_1_data_410 = HuWinCreate(-10000.0f, -10000.0f, spC[0], spC[1], 0);
     for (i = 0; i < 8; i++) {
-        HuWinInsertMesSet(lbl_1_data_410, MAKE_MESSID_PTR(lbl_1_data_440[i]), (s16)i);
+        HU_WIN_INSERT_MES_SET_PTR(lbl_1_data_410, MAKE_MESSID_PTR(lbl_1_data_440[i]), (s16)i);
     }
     temp_r30 = &winData[lbl_1_data_410];
     temp_r30->push_key |= 0x360;

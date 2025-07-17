@@ -21,7 +21,16 @@ f32 lbl_801D3F70[2];
 static BoardWinComKeyFunc comKeyFunc;
 static Process* winProc;
 static s32 choiceDisableTbl[0x10];
+#ifdef TARGET_PC
+typedef struct {
+    uintptr_t mess;
+    BOOL isPointer;
+} WinInsertMesTblEntry;
+
+static WinInsertMesTblEntry winInsertMesTbl[8];
+#else
 static u32 winInsertMesTbl[8];
+#endif
 
 static s32 PortraitTbl[] = {
     0,  4,  2,  3,
@@ -139,9 +148,21 @@ static void ExecBoardWindow(void) {
     HuWinMesSet(windowID, winMess);
     
     for (i = 0; i < 8; i++) {
+#ifdef TARGET_PC
+        WinInsertMesTblEntry *entry = &winInsertMesTbl[i];
+        if (entry->mess != -1) {
+            if (entry->isPointer) {
+                HuWinInsertMesSetPtr(windowID, entry->mess, i);
+            }
+            else {
+                HuWinInsertMesSet(windowID, entry->mess, i);
+            }
+        }
+#else
         if (winInsertMesTbl[i] != -1) {
             HuWinInsertMesSet(windowID, winInsertMesTbl[i], i);
         }
+#endif
     }
     HuWinAttrSet(windowID, winAttr);
     
@@ -208,7 +229,13 @@ void BoardWinCreateChoice(s32 pos, u32 mess, s32 portrait, s32 choice) {
     }
     
     for (i = 0; i < 8; i++) {
+#ifdef TARGET_PC
+        WinInsertMesTblEntry *entry = &winInsertMesTbl[i];
+        entry->mess = -1;
+        entry->isPointer = FALSE;
+#else
         winInsertMesTbl[i] = -1;
+#endif
     }
     if (winProc == 0) {
         winProc = HuPrcChildCreate(&ExecBoardWindow, 0x2009, 0x4000, 0, boardMainProc);
@@ -240,7 +267,13 @@ void BoardWinCreate(s32 pos, u32 mess, s32 portrait) {
     }
     
     for (i = 0; i < 8; i++) {
+#ifdef TARGET_PC
+        WinInsertMesTblEntry *entry = &winInsertMesTbl[i];
+        entry->mess = -1;
+        entry->isPointer = FALSE;
+#else
         winInsertMesTbl[i] = -1;
+#endif
     }
     if (winProc == 0) {
         winProc = HuPrcChildCreate(&ExecBoardWindow, 0x2009U, 0x4000U, 0, boardMainProc);
@@ -253,8 +286,22 @@ void BoardWinCreate(s32 pos, u32 mess, s32 portrait) {
 }
 
 void BoardWinInsertMesSet(u32 value, s32 index) {
+#ifdef TARGET_PC
+    WinInsertMesTblEntry *entry = &winInsertMesTbl[index];
+    entry->mess = value;
+    entry->isPointer = FALSE;
+#else
     winInsertMesTbl[index] = value;
+#endif
 }
+
+#ifdef TARGET_PC
+void BoardWinInsertMesSetPtr(uintptr_t value, s32 index) {
+    WinInsertMesTblEntry *entry = &winInsertMesTbl[index];
+    entry->mess = value;
+    entry->isPointer = TRUE;
+}
+#endif
 
 static inline BOOL BoardWinDone(void) {
     if(winProc != NULL) {

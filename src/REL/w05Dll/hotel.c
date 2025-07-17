@@ -122,10 +122,10 @@ void fn_1_155C(void) {
         }
         sprintf(sp8, "%d", var_r30);
         BoardWinCreate(2, var_r27, 7);
-        BoardWinInsertMesSet(MAKE_MESSID_PTR(sp8), 1);
+        BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp8), 1);
     } else {
         BoardWinCreate(2, MAKE_MESSID(39, 3), 7);
-        BoardWinInsertMesSet(MAKE_MESSID_PTR(sp18), 0);
+        BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp18), 0);
     }
     BoardWinWait();
     BoardWinKill();
@@ -139,7 +139,7 @@ void fn_1_155C(void) {
         lbl_1_bss_0->unk_00 += var_r30;
         sprintf(sp18, "%d", lbl_1_bss_0->unk_00);
         BoardWinCreate(2, MAKE_MESSID(39, 22), 7);
-        BoardWinInsertMesSet(MAKE_MESSID_PTR(sp18), 0);
+        BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp18), 0);
         BoardWinWait();
         BoardWinKill();
     }
@@ -309,8 +309,8 @@ void fn_1_1E44(void) {
         } else {
             BoardWinCreate(2, MAKE_MESSID(39, 23), 7);
         }
-        BoardWinInsertMesSet(MAKE_MESSID_PTR(sp84), 0);
-        BoardWinInsertMesSet(MAKE_MESSID_PTR(sp74), 1);
+        BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp84), 0);
+        BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sp74), 1);
         BoardWinWait();
         BoardWinKill();
         

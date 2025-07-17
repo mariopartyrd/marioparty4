@@ -42,6 +42,9 @@ static s16 HuWinSpcFontEntry(WindowData *window, s16 entry, s16 x, s16 y);
 static void HuWinSpcFontClear(WindowData *window);
 static void HuWinChoice(WindowData *window);
 static void GetMesMaxSizeSub(u32 mess);
+#ifdef TARGET_PC
+static void GetMesMaxSizeSubPtr(uintptr_t mess);
+#endif
 static s32 GetMesMaxSizeSub2(WindowData *window, u8 *mess_data);
 
 void mtxTransCat(Mtx, float, float, float);
@@ -1365,6 +1368,29 @@ void HuWinInsertMesSet(s16 window, u32 mess, s16 index)
     }
 }
 
+#ifdef TARGET_PC
+void HuWinMesSetPtr(s16 window, uintptr_t mess)
+{
+    WindowData *window_ptr = &winData[window];
+
+    window_ptr->stat = 1;
+    window_ptr->mess = (u8 *)mess;
+
+    if (!(window_ptr->attr & 0x80)) {
+        window_ptr->mess_color = 7;
+#if !VERSION_JP
+        window_ptr->mess_time = 0;
+#endif
+    }
+}
+
+void HuWinInsertMesSetPtr(s16 window, uintptr_t mess, s16 index)
+{
+    WindowData *window_ptr = &winData[window];
+    window_ptr->insert_mess[index] = (u8 *)mess;
+}
+#endif
+
 s16 HuWinChoiceGet(s16 window, s16 start_choice)
 {
     WindowData *window_ptr = &winData[window];
@@ -1637,6 +1663,16 @@ void HuWinInsertMesSizeGet(u32 mess, s16 index)
     mesWInsert[index] = winMaxWidth;
 }
 
+#ifdef TARGET_PC
+void HuWinInsertMesSizeGetPtr(uintptr_t mess, s16 index)
+{
+    winInsertF = 1;
+    winMaxWidth = winMaxHeight = 0;
+    GetMesMaxSizeSubPtr(mess);
+    mesWInsert[index] = winMaxWidth;
+}
+#endif
+
 void HuWinMesSizeCancelCRSet(s32 cancel_cr)
 {
     cancelCRF = cancel_cr;
@@ -1772,6 +1808,109 @@ static void GetMesMaxSizeSub(u32 mess)
     }
 }
 
+#ifdef TARGET_PC
+static void GetMesMaxSizeSubPtr(uintptr_t mess)
+{
+    s16 line_h;
+    s16 char_w;
+    s16 line_w;
+    u8 *mess_start;
+    s16 from_messdata;
+    s16 char_h;
+    s32 cr_flag;
+    u8 *mess_data;
+
+    mess_start = NULL;
+    cr_flag = 0;
+    from_messdata = 0;
+    mess_data = (u8 *)mess;
+    line_h = 26;
+    line_w = 0;
+    while (*mess_data != 0) {
+        char_h = 0;
+        char_w = fontWidthP[*mess_data] + 1;
+        switch (*mess_data) {
+            case 16:
+            case 32:
+                break;
+            case 30:
+                mess_data++;
+                char_w = 0;
+                break;
+            case 10:
+                if (cr_flag != 0) {
+                    if (cancelCRF == 0) {
+                        if (winMaxWidth < line_w) {
+                            winMaxWidth = line_w;
+                        }
+                        line_w = char_w = 0;
+                        if (mess_data[1] != 0) {
+                            char_h = 26;
+                        }
+                    }
+                    else {
+                        char_w = fontWidthP[16] + 1;
+                    }
+                }
+                break;
+            case 255:
+                line_w += char_w;
+                /* fallthrough */
+            case 11:
+                cr_flag = 0;
+                if (winInsertF == 0) {
+                    if (winMaxWidth < line_w) {
+                        winMaxWidth = line_w;
+                    }
+                    if (winMaxHeight < line_h) {
+                        winMaxHeight = line_h;
+                    }
+                    line_h = 26;
+                    char_h = 0;
+                    line_w = char_w = 0;
+                }
+                break;
+            case 28:
+                mess_data++;
+                /* fallthrough */
+            case 15:
+            case 29:
+                char_w = 0;
+                break;
+            case 12:
+                char_w = winTabSize * ((line_w + winTabSize) / winTabSize) - line_w;
+                break;
+            case 14:
+                mess_data++;
+                char_w = spcFontTbl[*mess_data - 1].w + 1;
+                break;
+            case 31:
+                mess_data++;
+                char_w = mesWInsert[*mess_data - 1];
+                break;
+        }
+#if VERSION_NTSC
+        if ((*mess_data != 255 && *mess_data >= 32) || *mess_data == 16) {
+            cr_flag = 1;
+        }
+#else
+        if ((*mess_data != 255 && *mess_data >= 32) || *mess_data == 16 || mess_data[-1] == 31) {
+            cr_flag = 1;
+        }
+#endif
+        line_w += char_w;
+        line_h += char_h;
+        mess_data++;
+    }
+    if (winMaxWidth < line_w) {
+        winMaxWidth = line_w;
+    }
+    if (winMaxHeight < line_h) {
+        winMaxHeight = line_h;
+    }
+}
+#endif
+
 static s32 GetMesMaxSizeSub2(WindowData *window, u8 *mess_data)
 {
     s32 sp8;
@@ -1846,6 +1985,7 @@ static s32 GetMesMaxSizeSub2(WindowData *window, u8 *mess_data)
     return mess_w;
 }
 
+
 s16 HuWinKeyWaitNumGet(u32 mess)
 {
     s16 wait_num;
@@ -1864,6 +2004,20 @@ s16 HuWinKeyWaitNumGet(u32 mess)
     }
     return wait_num;
 }
+
+#if TARGET_PC
+s16 HuWinKeyWaitNumGetPtr(uintptr_t mess)
+{
+    s16 wait_num;
+    u8 *mess_data = (u8 *)mess;
+    for (wait_num = 0; *mess_data != 0; mess_data++) {
+        if (*mess_data == 0xFF) {
+            wait_num++;
+        }
+    }
+    return wait_num;
+}
+#endif
 
 void HuWinPushKeySet(s16 window, s16 push_key)
 {

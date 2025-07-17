@@ -1087,3 +1087,8 @@ EXPORTS
     ClusterMotionExec
     InitVtxParm
     ShapeProc
+    HuWinMesSetPtr
+    HuWinInsertMesSetPtr
+    HuWinInsertMesSizeGetPtr
+    HuWinKeyWaitNumGetPtr
+    BoardWinInsertMesSetPtr

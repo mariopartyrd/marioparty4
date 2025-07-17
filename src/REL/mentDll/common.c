@@ -301,7 +301,7 @@ s32 fn_1_1434(s32 arg0, s32 arg1, s32 arg2)
 
 void fn_1_164C(s32 arg0, f32 arg8, f32 arg9)
 {
-    HuWinMesSet(arg0, 0x250004);
+    HuWinMesSet(arg0, MAKE_MESSID(0x25, 0x04));
     HuPrcVSleep();
     fn_1_6F4(arg0, arg8, arg9, 0);
     HuWinExCleanup(arg0);
@@ -309,7 +309,7 @@ void fn_1_164C(s32 arg0, f32 arg8, f32 arg9)
 
 void fn_1_16AC(s32 arg0)
 {
-    HuWinMesSet(arg0, 0x250004);
+    HuWinMesSet(arg0, MAKE_MESSID(0x25, 0x04));
     HuPrcVSleep();
     fn_1_6F4(arg0, 0.5f, 0.5f, 0);
     HuWinExCleanup(arg0);

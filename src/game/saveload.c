@@ -512,12 +512,12 @@ static s16 SLCreateSaveWin(void)
     s16 window;
 
     HuWinInit(1);
-    HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
+    HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
     HuWinMesMaxSizeGet(1, size, MAKE_MESSID(16, 68));
     window = HuWinExCreateStyled(-10000.0f, SAVEWIN_POS, size[0], size[1], -1, 2);
     saveMessWin = window;
     HuWinExAnimIn(window);
-    HuWinInsertMesSet(window, MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
+    HU_WIN_INSERT_MES_SET_PTR(window, MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
     HuWinMesSet(window, MAKE_MESSID(16, 68));
     HuWinMesWait(window);
     return window;
@@ -752,11 +752,11 @@ s32 SLFormat(s16 slotNo)
     OSTime time;
 
     HuWinInit(1);
-    HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
+    HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
     HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(16, 56));
     window1 = HuWinExCreateStyled(-10000.0f, SAVEWIN_POS, winSize[0], winSize[1], -1, 2);
     HuWinExAnimIn(window1);
-    HuWinInsertMesSet(window1, MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
+    HU_WIN_INSERT_MES_SET_PTR(window1, MAKE_MESSID_PTR(SAVEWIN_MESS[curSlotNo]), 0);
     HuWinMesSet(window1, MAKE_MESSID(16, 56));
     HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(16, 11));
     window2 = HuWinExCreateStyled(-10000.0f, 200.0f, winSize[0], winSize[1], -1, 2);
@@ -810,7 +810,7 @@ s16 SLMessOut(s16 mess)
 {
     WindowData *var_r26;
     float size[2];
-    u32 slot_mess;
+    uintptr_t slot_mess;
     s32 save_mess;
     s32 has_choice;
     s16 window;
@@ -828,12 +828,12 @@ s16 SLMessOut(s16 mess)
 
         case 1:
             save_mess = MAKE_MESSID(16, 83);
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             break;
 
         case 2:
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
 #if VERSION_ENG
             save_mess = MAKE_MESSID(16, 74);
@@ -852,18 +852,18 @@ s16 SLMessOut(s16 mess)
 #else
             save_mess = MAKE_MESSID(16, 6);
 #endif
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             break;
 
         case 4:
             save_mess = MAKE_MESSID(16, 74);
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             break;
 
         case 5:
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             save_mess = MAKE_MESSID(16, 4);
             has_choice = 1;
@@ -873,19 +873,19 @@ s16 SLMessOut(s16 mess)
             save_mess = MAKE_MESSID(16, 54);
             break;
         case 7:
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             save_mess = MAKE_MESSID(16, 55);
             break;
 
         case 8:
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             save_mess = MAKE_MESSID(16, 57);
             break;
 
         case 9:
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
             save_mess = MAKE_MESSID(16, 69);
             break;
@@ -896,7 +896,7 @@ s16 SLMessOut(s16 mess)
             break;
 
         case 11:
-            HuWinInsertMesSizeGet(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
+            HU_WIN_INSERT_MES_SIZE_GET_PTR(MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]), 0);
             slot_mess = MAKE_MESSID_PTR(SlotNameTbl[curSlotNo]);
 #if VERSION_ENG
             save_mess = MAKE_MESSID(16, 72);
@@ -919,7 +919,7 @@ s16 SLMessOut(s16 mess)
     var_r26 = &winData[window];
     var_r26->active_pad = 1;
     if (slot_mess != 0) {
-        HuWinInsertMesSet(window, slot_mess, 0);
+        HU_WIN_INSERT_MES_SET_PTR(window, slot_mess, 0);
     }
     HuWinAttrSet(window, 0x10);
     HuWinExAnimIn(window);

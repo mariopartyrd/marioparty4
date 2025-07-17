@@ -3,6 +3,7 @@
 #include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/saveload.h"
+#include "game/window.h"
 #include "game/wipe.h"
 
 #include "ext_math.h"
@@ -994,28 +995,28 @@ s32 fn_1_487C(void)
     else {
         str[0][2] = '4' - lbl_1_bss_20AC[0];
     }
-    HuWinInsertMesSet(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[0][0]), 0);
+    HU_WIN_INSERT_MES_SET_PTR(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[0][0]), 0);
     if (lbl_1_bss_20AC[1] >= 3) {
         str[1][1] = 5;
     }
     else {
         str[1][2] = '3' - lbl_1_bss_20AC[1];
     }
-    HuWinInsertMesSet(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[1][0]), 1);
+    HU_WIN_INSERT_MES_SET_PTR(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[1][0]), 1);
     if (lbl_1_bss_20AC[2] >= 3) {
         str[2][1] = 5;
     }
     else {
         str[2][2] = '3' - lbl_1_bss_20AC[2];
     }
-    HuWinInsertMesSet(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[2][0]), 2);
+    HU_WIN_INSERT_MES_SET_PTR(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[2][0]), 2);
     if (lbl_1_bss_20AC[4] >= 2) {
         str[3][1] = 5;
     }
     else {
         str[3][2] = '2' - lbl_1_bss_20AC[4];
     }
-    HuWinInsertMesSet(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[3][0]), 3);
+    HU_WIN_INSERT_MES_SET_PTR(lbl_1_bss_2CE, MAKE_MESSID_PTR(&str[3][0]), 3);
     fn_1_25838(lbl_1_bss_2CE, 0x28002A, -1, -1);
     fn_1_25838(lbl_1_bss_2CE, 0x28002B, -1, -1);
     fn_1_25838(lbl_1_bss_2CE, 0x280002 + lbl_1_bss_2A6, -1, -999);

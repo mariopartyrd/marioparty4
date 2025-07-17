@@ -284,8 +284,8 @@ void fn_1_19334(void)
     fn_1_BE8(60);
     lbl_1_bss_C0C.unk04 = fn_1_185C(1, 0, 21, 2, lbl_1_bss_C0C.unk0C);
     fn_1_1DFC(lbl_1_bss_B6C.unk00, 1, 3, 0, 1);
-    fn_1_6D78(lbl_1_bss_C0C.unk04, 0x1F0023, 0, -1);
-    fn_1_1D18(lbl_1_bss_C0C.unk04, 0x250004);
+    fn_1_6D78(lbl_1_bss_C0C.unk04, MAKE_MESSID(0x1F, 0x23), 0, -1);
+    fn_1_1D18(lbl_1_bss_C0C.unk04, MAKE_MESSID(0x25, 0x04));
     fn_1_1DFC(lbl_1_bss_B6C.unk00, 1, 1, 0, 1);
     HuAudFXPlay(lbl_1_data_0[0][3]);
     fn_1_1A94(lbl_1_bss_C0C.unk04);

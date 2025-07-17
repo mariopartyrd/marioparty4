@@ -1802,7 +1802,7 @@ static void ExecItemBooBall(void)
                     sprintf(booCoinStr, "%d", spC);
                     HuAudFXPlay(0x4C);
                     BoardWinCreate(2, var_r30, 3);
-                    BoardWinInsertMesSet(MAKE_MESSID_PTR(booCoinStr), 0);
+                    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(booCoinStr), 0);
                     BoardWinWait();
                     BoardWinKill();
                     BoardStatusShowSetAll(1);

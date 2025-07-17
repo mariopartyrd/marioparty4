@@ -429,11 +429,11 @@ void fn_1_4C8(omObjData *object)
                 if (lbl_1_bss_B4 == 0) {
                     lbl_1_bss_0 = 0x12C;
                     lbl_1_data_12E = MGSeqCreate(1, 0xA, -1, -1);
-                    HuWinMesMaxSizeGet(1, sp1A8, 0x280019);
+                    HuWinMesMaxSizeGet(1, sp1A8, MAKE_MESSID(0x28, 0x19));
                     lbl_1_bss_C = HuWinCreate(-10000.0f, 400.0f, sp1A8[0], sp1A8[1], 1);
                     HuWinBGTPLvlSet(lbl_1_bss_C, 0.0f);
                     HuWinMesSpeedSet(lbl_1_bss_C, 0);
-                    HuWinMesSet(lbl_1_bss_C, 0x280019);
+                    HuWinMesSet(lbl_1_bss_C, MAKE_MESSID(0x28, 0x19));
                 }
                 if (lbl_1_data_12E != -1) {
                     MGSeqParamSet(lbl_1_data_12E, 1, (lbl_1_bss_0 + 0x3A) / 60);
@@ -459,11 +459,11 @@ void fn_1_4C8(omObjData *object)
         case 0x3F1:
         case 0x3F2:
             if ((lbl_1_bss_B0 == (var_r31->unk_00 == 0 ? 0x3F1 : 0x3F2)) && (lbl_1_bss_B4 == 0) && (var_r31->unk_08 != -1)) {
-                HuWinMesMaxSizeGet(1, sp1A0, 0x300025);
+                HuWinMesMaxSizeGet(1, sp1A0, MAKE_MESSID(0x30, 0x25));
                 lbl_1_bss_C = HuWinCreate(-10000.0f, 400.0f, sp1A0[0], sp1A0[1], 1);
                 HuWinBGTPLvlSet(lbl_1_bss_C, 0.0f);
                 HuWinMesSpeedSet(lbl_1_bss_C, 0);
-                HuWinMesSet(lbl_1_bss_C, 0x300025);
+                HuWinMesSet(lbl_1_bss_C, MAKE_MESSID(0x30, 0x25));
             }
             break;
         case 0x3F3:
@@ -1048,7 +1048,7 @@ void fn_1_4D44(void)
     HuWinBGTPLvlSet(var_r31, 0.8f);
     HuWinMesSpeedSet(var_r31, 1);
     HuWinExAnimIn(var_r31);
-    HuWinMesSet(var_r31, 0x300024);
+    HuWinMesSet(var_r31, MAKE_MESSID(0x30, 0x24));
     if (((spC[0]->unk_0C == -1) || (spC[0]->unk_08 == -1)) && ((spC[1]->unk_0C == -1) || (spC[1]->unk_08 == -1))) {
         HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
         HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
