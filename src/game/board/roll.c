@@ -1,13 +1,16 @@
 #include "game/board/roll.h"
 #include "game/audio.h"
+#include "game/board/audio.h"
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/pause.h"
 #include "game/board/player.h"
 #include "game/board/tutorial.h"
+#include "game/board/window.h"
 #include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
+#include "game/hsfex.h"
 #include "game/object.h"
 #include "game/pad.h"
 #include "game/process.h"
@@ -147,7 +150,7 @@ static void RollWinCreate(s32 playerNo)
     s32 var_r29;
     s32 var_r27;
     s32 temp_r25;
-    
+
     if (!_CheckFlag(FLAG_ID_MAKE(1, 11))) {
         var_r27 = BoardPlayerItemCount(playerNo);
         if (GWTeamGet()) {
@@ -164,28 +167,25 @@ static void RollWinCreate(s32 playerNo)
             var_r29 = MAKE_MESSID(0x30, 0x25);
         }
         HuWinMesMaxSizeGet(1, sp8, var_r29);
-        #if VERSION_PAL
-        posY = HU_DISP_HEIGHT - 176; 
+#if VERSION_PAL
+        posY = HU_DISP_HEIGHT - 176;
         switch (GWGameStat.language) {
             case 0:
             case 4:
                 posX = -10000.0f;
                 break;
-            
             case 3:
                 posX = HU_DISP_CENTERX - (sp8[0] / 2 - 32.0f);
                 break;
-            
             case 5:
                 posX = HU_DISP_CENTERX - (sp8[0] / 2 - 16.0f);
-                posY = 258; 
+                posY = 258;
                 break;
-            
             default:
                 posX = HU_DISP_CENTERX - (sp8[0] / 2 - 16.0f);
                 break;
         }
-        #else
+#else
         switch (GWGameStat.language) {
             case 0:
                 posX = -10000.0f;
@@ -194,9 +194,9 @@ static void RollWinCreate(s32 playerNo)
                 posX = HU_DISP_CENTERX - (sp8[0] / 2 - 16.0f);
                 break;
         }
-        posY = HU_DISP_HEIGHT - 176; 
-        #endif
-        
+        posY = HU_DISP_HEIGHT - 176;
+#endif
+
         rollWin = HuWinCreate(posX, posY, sp8[0], sp8[1], 0);
         HuWinBGTPLvlSet(rollWin, 0.0f);
         HuWinMesSpeedSet(rollWin, 0);
@@ -242,11 +242,8 @@ void BoardRollWinDispSet(s32 arg0)
 
 static void RollMain(void)
 {
-    
     s32 var_r28;
-    
     s32 var_r30;
-    
     s32 i;
 
     diceValue[0] = diceValue[1] = diceValue[2] = 0;
@@ -911,7 +908,7 @@ static void SameRollExec(void)
     }
     BoardAudSeqPause(0, 0, 0x3E8);
     BoardWinCreate(0, MAKE_MESSID(9, 0), -1);
-    BoardWinInsertMesSet(sameRollCoinStr, 0);
+    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sameRollCoinStr), 0);
     BoardWinWait();
     BoardWinKill();
     if (var_r31 >= 0x32) {
