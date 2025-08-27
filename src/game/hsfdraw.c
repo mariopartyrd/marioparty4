@@ -158,7 +158,7 @@ static void objCall(ModelData *arg0, HsfObject *arg1)
 {
     modelObjNum++;
     switch (arg1->type) {
-        case 2:
+        case HSF_OBJ_MESH:
             objMesh(arg0, arg1);
             modelMeshNum++;
             break;
@@ -748,11 +748,11 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
             SetTevStageTex(arg0, temp_r30);
         }
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        //GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
+        GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
     }
     else {
         sp28 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        //GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
+        GXCallDisplayListNative(sp28, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
@@ -1802,7 +1802,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        //GXCallDisplayListNative(var_r26, DrawData[drawCnt].dlSize);
+        GXCallDisplayListNative(var_r26, DrawData[drawCnt].dlSize);
     }
     else {
         if (!(temp_r27->flags & 0x400)) {
@@ -1810,7 +1810,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
             return;
         }
         var_r26 = (u8 *)DLBufStartP + DrawData[drawCnt].dlOfs;
-        //GXCallDisplayListNative(var_r26, DrawData[drawCnt].dlSize);
+        GXCallDisplayListNative(var_r26, DrawData[drawCnt].dlSize);
     }
     drawCnt++;
 }
@@ -2533,7 +2533,7 @@ static void MDObjCall(HsfData *arg0, HsfObject *arg1)
                 MDObjCall(arg0, arg1->data.children[i]);
             }
             break;
-        case 2:
+        case HSF_OBJ_MESH:
             MDObjMesh(arg0, arg1);
             break;
     }
@@ -3262,7 +3262,7 @@ void PGObjCalc(ModelData *arg0, HsfObject *arg1)
             attachMotionF = var_r27;
         }
     }
-    if (*PGName == 0 && arg1->type == 2) {
+    if (*PGName == 0 && arg1->type == HSF_OBJ_MESH) {
         var_r23 = arg1;
         MTXMultVec(MTXBuf[MTXIdx - 1], (Vec *)&var_r23->data.mesh.min, &sp8);
         if (sp8.x < PGMinPos.x) {
@@ -3352,7 +3352,7 @@ HsfObject *Hu3DObjDuplicate(HsfData *arg0, uintptr_t arg1)
     var_r30 = arg0->object;
     memcpy(temp_r27, var_r30, arg0->objectCnt * sizeof(HsfObject));
     for (i = 0; i < arg0->objectCnt; i++, var_r31++, var_r30++) {
-        if (var_r31->type != 8 && var_r31->type != 7) {
+        if (var_r31->type != HSF_OBJ_LIGHT && var_r31->type != HSF_OBJ_CAMERA) {
             if (var_r31->data.parent) {
                 var_r31->data.parent = (HsfObject *)((u8 *)temp_r27 + ((uintptr_t)var_r30->data.parent - (uintptr_t)arg0->object));
             }

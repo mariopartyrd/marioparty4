@@ -1014,6 +1014,7 @@ EXPORTS
     _SetFlag
     byteswap_s32
     byteswap_u32
+    byteswap_float
     espAttrReset
     espAttrSet
     espBankSet

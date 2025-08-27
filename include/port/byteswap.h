@@ -226,7 +226,11 @@ typedef struct HsfObject32b {
     u32 type;
     u32 constData;
     u32 flags;
-    HsfObjectData32b data;
+    union {
+        HsfObjectData32b data;
+        HsfCamera camera;
+        HsfLight light;
+    };
 } HsfObject32b;
 
 typedef struct HsfTrack32b {
@@ -293,6 +297,7 @@ void byteswap_u16(u16 *src);
 void byteswap_s16(s16 *src);
 void byteswap_u32(u32 *src);
 void byteswap_s32(s32 *src);
+    void byteswap_float(float *src);
 void byteswap_vec(Vec *src);
 void byteswap_vec2f(Vec2f *src);
 void byteswap_hsfvec3f(HsfVector3f *src);

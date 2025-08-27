@@ -1,5 +1,4 @@
 #include "game/hsfformat.h"
-#include "game/hsfformat.h"
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
@@ -68,11 +67,9 @@ static std::unordered_set<void *> sVisitedPtrs;
 template <typename B, typename T> T *offset_ptr(B &base, T *ptr)
 {
     return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr));
-    return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr));
 }
 template <typename B, typename T> T *offset_ptr(B &base, T *ptr, void *extra)
 {
-    return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr) + reinterpret_cast<uintptr_t>(extra));
     return reinterpret_cast<T *>(reinterpret_cast<uintptr_t>(&base) + reinterpret_cast<uintptr_t>(ptr) + reinterpret_cast<uintptr_t>(extra));
 }
 
@@ -430,8 +427,9 @@ template <typename B> void bswap(B &base, HsfMatrix32b &obj, HsfMatrix &dest)
     dest.count = obj.count;
 
     dest.data = reinterpret_cast<Mtx *>(&obj + 1);
-    for (s32 i = 0; i < obj.count; i++) {
-        for (s32 j = 0; j < 3; j++) {
+    u32 matricesToByteSwap = dest.base_idx + dest.count + dest.base_idx * dest.count;
+    for (u32 i = 0; i < matricesToByteSwap; i++) {
+        for (u32 j = 0; j < 3; j++) {
             bswap_flat(base, dest.data[i][j], 4);
         }
     }
@@ -603,6 +601,27 @@ template <typename B> void bswap(B &base, HsfCenv32b &obj, HsfCenv &dest)
     dest.copyCount = obj.copyCount;
 }
 
+template <typename B> void bswap(B &base, HsfCamera &obj)
+{
+    bswap(base, obj.target);
+    bswap(base, obj.pos);
+    bswap(base, obj.aspect_dupe);
+    bswap(base, obj.fov);
+    bswap(base, obj.nnear);
+    bswap(base, obj.ffar);
+}
+
+template <typename B> void bswap(B &base, HsfLight &obj)
+{
+    bswap(base, obj.pos);
+    bswap(base, obj.target);
+    bswap(base, obj.type);
+    bswap(base, obj.unk2C);
+    bswap(base, obj.ref_distance);
+    bswap(base, obj.ref_brightness);
+    bswap(base, obj.cutoff);
+}
+
 template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &dest, u32 type)
 {
     bswap(base, obj.parent);
@@ -684,7 +703,19 @@ template <typename B> void bswap(B &base, HsfObject32b &obj, HsfObject &dest)
     dest.constData = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.constData));
     dest.flags = obj.flags;
 
-    bswap(base, obj.data, dest.data, obj.type);
+    switch (obj.type) {
+        case HSF_OBJ_CAMERA:
+            bswap(base, obj.camera);
+            memcpy(&dest.camera, &obj.camera, sizeof(dest.camera));
+            break;
+        case HSF_OBJ_LIGHT:
+            bswap(base, obj.light);
+            memcpy(&dest.light, &obj.light, sizeof(dest.light));
+            break;
+        default:
+            bswap(base, obj.data, dest.data, obj.type);
+            break;
+    }
 }
 
 template <typename B> void bswap(B &base, HsfBitmapKey32b &obj, HsfBitmapKey &dest)
@@ -717,6 +748,7 @@ template <typename B> void bswap(B &base, HsfTrack32b &obj, HsfTrack &dest)
         dest.data = reinterpret_cast<void *>(static_cast<uintptr_t>(obj.data));
     }
 
+    // TODO is this right?
     if (obj.type == HSF_TRACK_CLUSTER_WEIGHT) {
         bswap(base, obj.unk04);
         dest.unk04 = obj.unk04;
@@ -753,7 +785,8 @@ template <typename B> void bswap(B &base, HsfFace32b &obj, HsfFace &dest)
     dest.mat = obj.mat;
     dest.nbt = obj.nbt;
 
-    if (obj.type == 4) {
+    // TODO or obj.type == 4?
+    if ((obj.type & 7) == 4) {
         bswap(base, obj.strip.count);
         bswap(base, obj.strip.data);
         bswap_flat(base, obj.strip.indices[0], 3 * 4);
@@ -787,6 +820,12 @@ void byteswap_u32(u32 *src)
 }
 
 void byteswap_s32(s32 *src)
+{
+    bswap(*src, *src);
+    sVisitedPtrs.clear();
+}
+
+void byteswap_float(float *src)
 {
     bswap(*src, *src);
     sVisitedPtrs.clear();
