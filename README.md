@@ -71,7 +71,8 @@ sudo xattr -rd com.apple.quarantine '/Applications/Wine Crossover.app'
   git submodule update --init --recursive
   ```
 
-## Copy your game's disc image to `orig/[GAMEID]`. The supported game IDs are listed above.
+## Copy your game's disc image to `orig/[GAMEID]`.
+  - The supported game IDs are listed above.
   - Supported formats: ISO (GCM), RVZ, WIA, WBFS, CISO, NFS, GCZ, TGC
   - After the initial build, the disc image can be deleted to save space.
 
