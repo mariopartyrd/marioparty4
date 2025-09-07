@@ -43,7 +43,12 @@ def main():
     extraction_dir.mkdir(parents=True, exist_ok=True)
 
     iso = GamecubeISO.from_iso(args.iso_path)
+    
+    logger.info(f"Extracting assets from {args.iso_path} to {extraction_dir}")
+    
     iso.extract(extraction_dir)
+
+    logger.info(f"Finished extracting assets to {extraction_dir}")
 
 if __name__ == "__main__":
     main()
