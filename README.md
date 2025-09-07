@@ -136,13 +136,13 @@ uv run tools/extract_assets.py orig/GMPE01_00/<iso_name>
 Once you've generated the C# project and extracted the assets, move on
 
 1) Open `build\port\marioparty4.sln` in Visual Studio 2022
-2) Build the project
-3) Copy the extracted assets to `build/port/Debug`
+2) Build the project with the `RelWithDebInfo` preset
+3) Copy the extracted assets to `build/port/RelWithDebInfo`
 4) Run `marioparty.exe`
 
-Your `Debug` folder should look like this:
+Your `RelWithDebInfo` folder should look like this:
 ```
-/Debug
+/RelWithDebInfo
 ├── marioparty.exe
 ├── data/
 ├── dll/
