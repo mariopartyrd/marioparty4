@@ -23,11 +23,10 @@ Supported versions:
 - `GMPP01_02`: Rev 2 (PAL) 
 - `GMPJ01_00`: Rev 0 (JP)
 
-Dependencies
-============
+# Dependencies
 
-Windows
---------
+## Windows
+
 
 On Windows, it's **highly recommended** to use native tooling. WSL or msys2 are **not** required.  
 When running under WSL, [objdiff](#diffing) is unable to get filesystem notifications for automatic rebuilds.
@@ -37,8 +36,8 @@ When running under WSL, [objdiff](#diffing) is unable to get filesystem notifica
 - Download [ninja](https://github.com/ninja-build/ninja/releases) and add it to `%PATH%`.
   - Quick install via pip: `pip install ninja`
 
-macOS
-------
+## macOS
+
 - Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages):
   ```
   brew install ninja
@@ -53,49 +52,125 @@ After OS upgrades, if macOS complains about `Wine Crossover.app` being unverifie
 sudo xattr -rd com.apple.quarantine '/Applications/Wine Crossover.app'
 ```
 
-Linux
-------
+## Linux
+
 - Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages).
 - For non-x86(_64) platforms: Install wine from your package manager.
   - For x86(_64), [wibo](https://github.com/decompals/wibo), a minimal 32-bit Windows binary wrapper, will be automatically downloaded and used.
 
-Building the game for the GameCube
-========
+# Building the game for the GameCube
 
-- Clone the repository:
+##  Clone the repository:
   ```
   git clone https://github.com/mariopartyrd/marioparty4.git
   ```
 
-- Initialize and update submodules:
+## Initialize and update submodules:
 
   ```sh
   git submodule update --init --recursive
   ```
 
-- Copy your game's disc image to `orig/[GAMEID]`. The supported game IDs are listed above.
+## Copy your game's disc image to `orig/[GAMEID]`.
+  - The supported game IDs are listed above.
   - Supported formats: ISO (GCM), RVZ, WIA, WBFS, CISO, NFS, GCZ, TGC
   - After the initial build, the disc image can be deleted to save space.
 
-- Configure:
+## Configure:
   ```
   python configure.py
   ```
 
   To choose a version other than the USA Rev 0 one, add `--version [GAMEID]` to the command. 
 
-- Build:
+## Build C files:
   ```
   ninja
   ```
 
-Building the game for PC
-=====
-After you got the GameCube build up and running for `GMPE01_00`:
-- Generate project files using CMake:
-  ```
-  cmake -B build/port -G "Visual Studio 17 2022" -A Win32
-  ```
-Linux and MacOS, and x64 support is coming later.
+## Bundle into ISO:
 
-- Open the solution in Visual Studio and build.
+### Without uv
+
+```bash
+# Create venv and install dependencies
+python -m venv venv
+.\venv\Scripts\activate
+pip install pyisotools cutie
+
+# Run build_iso.py
+python tools/build_iso.py
+```
+
+### With uv
+
+```bash
+uv run tools/build_iso.py
+```
+  
+
+# Building the game for PC
+
+> [!NOTE]
+> The following has only been tested with `GMPE01_00`
+>
+> Linux, MacOS, and x64 support to come later.
+
+After you've built the files for GameCube, run the following command to generate
+the project for the port:
+
+```bash
+cmake -B build/port -G "Visual Studio 17 2022" -A Win32
+```
+
+If you haven't already, extract the assets from the ISO
+
+```bash
+# Extracts the assets to build/extract_data/<iso_name>
+python tools/extract_assets.py orig/GMPE01_00/<iso_name>
+
+# Or
+uv run tools/extract_assets.py orig/GMPE01_00/<iso_name>
+```
+
+Once you've generated the C# project and extracted the assets, move on
+
+1) Open `build\port\marioparty4.sln` in Visual Studio 2022
+2) Build the project with the `RelWithDebInfo` preset
+3) Copy the extracted assets to `build/port/RelWithDebInfo`
+4) Run `marioparty.exe`
+
+Your `RelWithDebInfo` folder should look like this:
+```
+/RelWithDebInfo
+├── marioparty.exe
+├── data/
+├── dll/
+├── mess/
+├── movie/
+├── sound/
+├── opening.bnr
+└── ...
+```
+
+## Common problems
+
+### Syntax error ")"
+
+There's currently a bug with the Math.h file where an extra bracket has been
+added, this can be fixed by removing the extra bracket.
+
+Open `dawn_common/Header Files/Math.h`
+
+Fix the error on line 215
+```cs
+__popcnt(static_cast<uint32_t>(bits)));
+```
+to 
+```cs
+__popcnt(static_cast<uint32_t>(bits));
+```
+
+### Cannot open file <file_name>
+
+Typically caused by the `Syntax error ")"` issue.
