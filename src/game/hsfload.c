@@ -834,14 +834,14 @@ static inline void FixupObject(HsfObject *object)
         case 8:
         {
             objdata_8 = &object->data;
-            object->type = HSF_OBJ_NONE2;
+            object->type = HSF_OBJ_LIGHT;
         }
         break;
         
         case 7:
         {
             objdata_7 = &object->data;
-            object->type = HSF_OBJ_NONE1;
+            object->type = HSF_OBJ_CAMERA;
         }
         break;
         
@@ -1402,6 +1402,40 @@ static inline s32 FindMotionAttributeName(char *name)
     return -1;
 }
 
+#ifdef TARGET_PC
+static void ByteSwapCurveStepOrLinearData(HsfTrack *track)
+{
+    int i;
+    float *data = track->data;
+    for (i = 0; i < track->numKeyframes; i++) {
+        byteswap_float(data++);
+        byteswap_float(data++);
+    }
+}
+
+static void ByteSwapCurveBitmapData(HsfTrack *track)
+{
+    int i;
+    float *data = track->data;
+    for (i = 0; i < track->numKeyframes; i++) {
+        byteswap_float(data++);
+        byteswap_s32((s32*) data++);
+    }
+}
+
+static void ByteSwapCurveBezierData(HsfTrack *track)
+{
+    int i;
+    float *data = track->data;
+    for (i = 0; i < track->numKeyframes; i++) {
+        byteswap_float(data++);
+        byteswap_float(data++);
+        byteswap_float(data++);
+        byteswap_float(data++);
+    }
+}
+#endif
+
 static inline void MotionLoadTransform(HsfTrack *track, void *data)
 {
     float *step_data;
@@ -1421,6 +1455,9 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
         {
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1428,6 +1465,9 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
         {
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1435,6 +1475,9 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
         {
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
+#ifdef TARGET_PC
+            ByteSwapCurveBezierData(out_track);
+#endif
         }
         break;
         
@@ -1466,6 +1509,9 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
         {
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1473,6 +1519,9 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
         {
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1480,6 +1529,9 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
         {
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
+#ifdef TARGET_PC
+            ByteSwapCurveBezierData(out_track);
+#endif
         }
         break;
         
@@ -1511,6 +1563,9 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
         {
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1518,6 +1573,9 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
         {
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1525,6 +1583,9 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
         {
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
+#ifdef TARGET_PC
+            ByteSwapCurveBezierData(out_track);
+#endif
         }
         break;
         
@@ -1547,6 +1608,9 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
         {
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1554,6 +1618,9 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
         {
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1561,6 +1628,9 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
         {
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
+#ifdef TARGET_PC
+            ByteSwapCurveBezierData(out_track);
+#endif
         }
         break;
         
@@ -1594,6 +1664,9 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
         {
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1601,6 +1674,9 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
         {
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
+#ifdef TARGET_PC
+            ByteSwapCurveStepOrLinearData(out_track);
+#endif
         }
         break;
         
@@ -1608,6 +1684,9 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
         {
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
+#ifdef TARGET_PC
+            ByteSwapCurveBezierData(out_track);
+#endif
         }
         break;
         
@@ -1728,9 +1807,12 @@ static void MotionLoad(void)
 static void MatrixLoad(void)
 {
     HsfMatrix *matrix_file;
-    
+
     if(head.matrix.count) {
 #ifdef TARGET_PC
+        if (head.matrix.count > 1) {
+            OSReport("MORE THAN ONE MATRIX, FIX PARSING!\n");
+        }
         matrix_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMatrix) * head.matrix.count, MEMORY_DEFAULT_NUM);
         byteswap_hsfmatrix((HsfMatrix32b *)((uintptr_t)fileptr + head.matrix.ofs), matrix_file);
 #else

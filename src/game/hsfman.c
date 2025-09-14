@@ -136,10 +136,10 @@ void Hu3DExec(void) {
     GXColor unusedColor = {0, 0, 0, 0};
     CameraData* camera;
     ModelData* data;
-    s16 temp_r22;
+    s16 cameraBit;
     s16 var_r23;
     s16 var_r25;
-    s16 var_r24;
+    s16 syncF;
     s16 j;
     s16 i;
     void (* temp)(s16);
@@ -152,19 +152,19 @@ void Hu3DExec(void) {
     camera = Hu3DCamera;
     shadowModelDrawF = 0;
     HuSprBegin();
-    var_r24 = 0;
+    syncF = FALSE;
     for (Hu3DCameraNo = 0; Hu3DCameraNo < HU3D_CAM_MAX; Hu3DCameraNo++, camera++) {
         if (-1.0f != camera->fov) {
             GXInvalidateVtxCache();
-            temp_r22 = (s16) (1 << Hu3DCameraNo);
-            Hu3DCameraBit = temp_r22;
+            cameraBit = (s16) (1 << Hu3DCameraNo);
+            Hu3DCameraBit = cameraBit;
             if (NoSyncF == 0) {
                 if (Hu3DCameraNo == 0 && Hu3DShadowF != 0 && Hu3DShadowCamBit != 0) {
                     Hu3DShadowExec();
-                    var_r24 = 1;
+                    syncF = TRUE;
                     GXSetDrawDone();
                 } else if (Hu3DCameraNo != 0) {
-                    var_r24 = 1;
+                    syncF = TRUE;
                     GXSetDrawDone();
                 }
             } else if (Hu3DCameraNo == 0 && Hu3DShadowF != 0 && Hu3DShadowCamBit != 0) {
@@ -203,7 +203,7 @@ void Hu3DExec(void) {
                                 if ((data->attr & HU3D_ATTR_CAMERA_UPDATE) == HU3D_ATTR_CAMERA_UPDATE && data->unk_08 != -1) {
                                     Hu3DMotionExec(i, data->unk_08, data->unk_64, 0);
                                 }
-                                if ((data->attr & (HU3D_ATTR_DISPOFF|HU3D_ATTR_MOTION_OFF)) == 0 && (data->camera & temp_r22) != 0 && data->layer == j) {
+                                if ((data->attr & (HU3D_ATTR_DISPOFF|HU3D_ATTR_MOTION_OFF)) == 0 && (data->camera & cameraBit) != 0 && data->layer == j) {
                                     if (((data->attr & HU3D_ATTR_MOT_EXEC) == 0 && (data->attr & HU3D_ATTR_MOT_SLOW) == 0) || ((data->attr & HU3D_ATTR_MOT_SLOW) != 0 && (data->unk_00 & 1) != 0)) {
                                         var_r25 = 0;
                                         data->motion_attr &= ~HU3D_MOTATTR;
@@ -247,9 +247,9 @@ void Hu3DExec(void) {
                                         }
                                         data->attr |= 0x800;
                                     }
-                                    if (var_r24 != 0 && (data->attr & HU3D_ATTR_HOOKFUNC) != 0) {
+                                    if (syncF && (data->attr & HU3D_ATTR_HOOKFUNC) != 0) {
                                         GXWaitDrawDone();
-                                        var_r24 = 0;
+                                        syncF = FALSE;
                                     }
                                     if ((data->attr & HU3D_ATTR_HOOK) == 0 && (0.0f != data->scale.x || 0.0f != data->scale.y || 0.0f != data->scale.z)) {
                                         mtxRot(sp40, data->rot.x, data->rot.y, data->rot.z);
@@ -293,6 +293,11 @@ void Hu3DAllKill(void) {
     Hu3DCameraAllKill();
     Hu3DLightAllKill();
     Hu3DAnimAllKill();
+#if TARGET_PC
+    if(reflectAnim[0] != (AnimData *)refMapData0) {
+        OSReport("Trying to free bitmap\n");
+    }
+#endif
 #if __MWERKS__
     // this causes anim to be reallocated, so we lose the old allocation
     if(reflectAnim[0] != (AnimData *)refMapData0) {
@@ -812,7 +817,7 @@ void Hu3DModelTPLvlSet(s16 arg0, f32 arg8) {
     var_r26 = temp_r30->object;
     for (i = 0; i < temp_r30->objectCnt; var_r26++, i++) {
         var_r27 = var_r26;
-        if (var_r27->type == 2) {
+        if (var_r27->type == HSF_OBJ_MESH) {
             temp_r25 = var_r27->constData;
             temp_r25->flags |= 1;
         } 
@@ -1284,7 +1289,7 @@ BOOL Hu3DModelCameraInfoSet(s16 arg0, u16 arg1) {
     
     for (i = 0; i < temp_r27->objectCnt; i++, var_r23++) {
         obj_copy = var_r23;
-        if (obj_copy->type == 7) {
+        if (obj_copy->type == HSF_OBJ_CAMERA) {
             temp_f31 = obj_copy->data.base.rot.x;
             cam->aspect_dupe = temp_f31;
             
@@ -1747,7 +1752,7 @@ s32 Hu3DModelLightInfoSet(s16 arg0, s16 arg1) {
     
     for (var_r17 = var_r25 = 0; var_r17 < temp_r21->objectCnt; var_r17++, var_r31++) {
         var_r18 = var_r31;
-        if (var_r18->type != 8) {
+        if (var_r18->type != HSF_OBJ_LIGHT) {
             continue;
         }
         sp48.x = var_r18->light.target.x - var_r18->light.pos.x;
@@ -1768,7 +1773,7 @@ s32 Hu3DModelLightInfoSet(s16 arg0, s16 arg1) {
                 Hu3DGLightSpotSet(sp12, var_r18->light.cutoff, 2);
                 break;
             case 1:
-                Hu3DGLightPointSet(sp12, var_r18->data.base.scale.x - var_r18->data.base.rot.z, 1.0f, 2);
+                Hu3DGLightPointSet(sp12, var_r18->light.ref_brightness - var_r18->light.ref_distance, 1.0f, GX_DA_MEDIUM);
                 Hu3DGLightPosSet(sp12, var_r18->light.pos.x, var_r18->light.pos.y, var_r18->light.pos.z, var_r18->light.target.x, var_r18->light.target.y, var_r18->light.target.z);
                 break;
             case 2:
@@ -1854,11 +1859,16 @@ void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
 }
 
 void Hu3DReflectMapSet(AnimData* arg0) {
-    
+#if TARGET_PC
+    OSReport("PC TODO: Hu3DReflectMapSet ran which tries to reallocate an anim\n");
+#endif
+#if __MWERKS__
+    // this causes anim to be reallocated, so we lose the old allocation
     if (reflectAnim[0] != (AnimData*) refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
     reflectAnim[0] = HuSprAnimRead(arg0);
+#endif
     reflectMapNo = 0;
 }
 

@@ -11,8 +11,8 @@
 #define HSF_OBJ_JOINT 4
 #define HSF_OBJ_NULL2 5
 #define HSF_OBJ_NULL3 6
-#define HSF_OBJ_NONE1 7
-#define HSF_OBJ_NONE2 8
+#define HSF_OBJ_CAMERA 7
+#define HSF_OBJ_LIGHT 8
 #define HSF_OBJ_MAP 9
 
 #define HSF_TRACK_TRANSFORM 2

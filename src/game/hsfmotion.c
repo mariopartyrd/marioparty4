@@ -755,12 +755,12 @@ void Hu3DMotionExec(s16 arg0, s16 arg1, float arg2, s32 arg3)
                     if (track->channel == 0x28) {
                         temp_r31->data.mesh.baseMorph = GetCurve(track, arg2);
                     }
-                    else if (temp_r31->type == 7) {
+                    else if (temp_r31->type == HSF_OBJ_CAMERA) {
                         if (temp_r27->attr & HU3D_ATTR_CAMERA_MOTON) {
                             SetObjCameraMotion(arg0, track, GetCurve(track, arg2));
                         }
                     }
-                    else if (temp_r31->type == 8) {
+                    else if (temp_r31->type == HSF_OBJ_LIGHT) {
                         SetObjLightMotion(arg0, track, GetCurve(track, arg2));
                     }
                     else if (track->channel == 0x18) {
@@ -1235,7 +1235,7 @@ void SetObjLightMotion(s16 arg0, HsfTrack *arg1, float arg2)
     var_r26 = temp_r28->object;
     for (i = var_r29 = 0; i < temp_r28->objectCnt; i++, var_r26++) {
         var_r24 = var_r26;
-        if (var_r24->type == HSF_OBJ_NONE2) {
+        if (var_r24->type == HSF_OBJ_LIGHT) {
             if (i != arg1->target) {
                 var_r29++;
             }
