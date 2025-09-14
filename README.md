@@ -174,3 +174,7 @@ __popcnt(static_cast<uint32_t>(bits));
 ### Cannot open file <file_name>
 
 Typically caused by the `Syntax error ")"` issue.
+
+### RenderDoc not working
+
+RenderDoc has some conflict with asan. To turn off asan, you should delete the two lines in `CMakeLists.txt` that enable ASAN for the DOL and the RELs: `set_source_files_properties(..., -fsanitize=address)`
