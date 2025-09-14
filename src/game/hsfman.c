@@ -293,9 +293,11 @@ void Hu3DAllKill(void) {
     Hu3DCameraAllKill();
     Hu3DLightAllKill();
     Hu3DAnimAllKill();
+#if TARGET_PC
     if(reflectAnim[0] != (AnimData *)refMapData0) {
         OSReport("Trying to free bitmap\n");
     }
+#endif
 #if __MWERKS__
     // this causes anim to be reallocated, so we lose the old allocation
     if(reflectAnim[0] != (AnimData *)refMapData0) {
@@ -1771,7 +1773,7 @@ s32 Hu3DModelLightInfoSet(s16 arg0, s16 arg1) {
                 Hu3DGLightSpotSet(sp12, var_r18->light.cutoff, 2);
                 break;
             case 1:
-                Hu3DGLightPointSet(sp12, var_r18->light.ref_brightness - var_r18->light.ref_brightness, 1.0f, GX_DA_MEDIUM);
+                Hu3DGLightPointSet(sp12, var_r18->light.ref_brightness - var_r18->light.ref_distance, 1.0f, GX_DA_MEDIUM);
                 Hu3DGLightPosSet(sp12, var_r18->light.pos.x, var_r18->light.pos.y, var_r18->light.pos.z, var_r18->light.target.x, var_r18->light.target.y, var_r18->light.target.z);
                 break;
             case 2:
@@ -1857,7 +1859,9 @@ void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
 }
 
 void Hu3DReflectMapSet(AnimData* arg0) {
+#if TARGET_PC
     OSReport("PC TODO: Hu3DReflectMapSet ran which tries to reallocate an anim\n");
+#endif
 #if __MWERKS__
     // this causes anim to be reallocated, so we lose the old allocation
     if (reflectAnim[0] != (AnimData*) refMapData0) {
