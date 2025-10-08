@@ -839,21 +839,21 @@ static void GetShopItems(s32 arg0) {
     }
 }
 
-static void GetDefaultShopItems(s32 arg0) {
-    s32 temp_r29;
-    s32 var_r31;
-    s32 var_r30;
+static void GetDefaultShopItems(s32 _unused) {
+    s32 rand;
+    s32 slot;
+    s32 table;
 
-    temp_r29 = BoardRandMod(100);
-    if (temp_r29 > 90) {
-        var_r30 = 3;
-    } else if (temp_r29 > 40) {
-        var_r30 = BoardRandMod(2) + 1;
+    rand = BoardRandMod(100);
+    if (rand > 90) {
+        table = 3;
+    } else if (rand > 40) {
+        table = BoardRandMod(2) + 1;
     } else {
-        var_r30 = 0;
+        table = 0;
     }
-    for (var_r31 = 0; var_r31 < 5; var_r31++) {
-        activeItemTbl[var_r31] = defaultItemTbl[var_r30];
+    for (slot = 0; slot < 5; slot++) {
+        activeItemTbl[slot] = defaultItemTbl[table];
     }
 }
 
@@ -880,45 +880,45 @@ static void SortShopItems(void) {
     }
 }
 
-static void DecideComEnter(s32 arg0) {
-    s32 temp_r27;
-    s32 temp_r30;
-    s32 temp_r29;
-    s32 temp_r26;
-    u32 var_r28;
+static void DecideComEnter(s32 player) {
+    s32 space;
+    s32 path_1;
+    s32 path_2;
+    s32 roll;
+    u32 skip_chance;
 
-    if (!GWPlayer[arg0].com) {
+    if (!GWPlayer[player].com) {
         return;
     }
-    temp_r26 = GWPlayer[arg0].roll;
-    switch (GWPlayer[arg0].diff) {
-        case 0:
-            var_r28 = 40;
+    roll = GWPlayer[player].roll;
+    switch (GWPlayer[player].diff) {
+        case 0: //Easy
+            skip_chance = 40;
             break;
-        case 1:
-            var_r28 = 20;
+        case 1: // Medium
+            skip_chance = 20;
             break;
-        case 2:
-            var_r28 = 4;
+        case 2: // Hard
+            skip_chance = 4;
             break;
-        case 3:
-            var_r28 = 0;
+        case 3: //Expert
+            skip_chance = 0;
             break;
     }
     if (GWBoardGet() == BOARD_ID_EXTRA1 || GWBoardGet() == BOARD_ID_EXTRA2) {
-        if (BoardPlayerCoinsGet(arg0) < 15) {
-            BoardComKeySetRight();
+        if (BoardPlayerCoinsGet(player) < 15) {
+            BoardComKeySetRight(); // ie select NO
             return;
         }
     } else {
-        temp_r27 = GWPlayer[arg0].space_curr;
-        temp_r30 = BoardComPathShortcutLenGet(temp_r27, 8, 0);
-        temp_r29 = BoardComPathShortcutLenGet(temp_r27, 8, 1);
-        if ((temp_r30 != 0 || temp_r29 != 0)
-            && (BoardPlayerCoinsGet(arg0) >= 17 || (temp_r29 >= temp_r26 && temp_r30 >= temp_r26))
-            && BoardPlayerCoinsGet(arg0) < 40
-            && ((temp_r30 < 20 && temp_r30 > 0) || (temp_r29 < 10 && temp_r29 > 0))
-            && BoardRandMod(100) > var_r28) {
+        space = GWPlayer[player].space_curr;
+        path_1 = BoardComPathShortcutLenGet(space, 8, 0);
+        path_2 = BoardComPathShortcutLenGet(space, 8, 1);
+        if ((path_1 != 0 || path_2 != 0)
+            && (BoardPlayerCoinsGet(player) >= 17 || (path_2 >= roll && path_1 >= roll))
+            && BoardPlayerCoinsGet(player) < 40
+            && ((path_1 < 20 && path_1 > 0) || (path_2 < 10 && path_2 > 0))
+            && BoardRandMod(100) > skip_chance) {
             BoardComKeySetRight();
             return;
         }
@@ -937,41 +937,44 @@ static void DecideComBuy(s32 arg0) {
     }
 }
 
-static s32 GetComItemChoice(s32 arg0) {
-    s16 sp8;
-    s32 temp_r26;
-    s32 var_r28 = 0;
-    s8 var_r25;
-    s8 var_r27;
-    s8 var_r30;
+// Return the index of the computer player's most desired item in the shop.
+// If called for a non-computer player, returns 0
+// If all items cannot be purchased (either because they cannot afford it, or because they already own it) then returns 5.
+static s32 GetComItemChoice(s32 player) {
+    s16 _space;
+    s32 num_coins;
+    s32 choice = 0;
+    s8 i_most_desired;
+    s8 max_desire;
+    s8 desire_for_item;
     s32 i;
 
-    if (!GWPlayer[arg0].com) {
+    if (!GWPlayer[player].com) {
         return 0;
     }
-    sp8 = GWPlayer[arg0].space_curr;
-    temp_r26 = BoardPlayerCoinsGet(arg0);
-    for (var_r27 = i = 0; i < 5; i++) {
-        if (temp_r26 >= itemPriceTbl[activeItemTbl[i]]) {
-            var_r30 = BoardComItemWeightGet(arg0, activeItemTbl[i]);
+    _space = GWPlayer[player].space_curr;
+    num_coins = BoardPlayerCoinsGet(player);
+    for (max_desire = i = 0; i < 5; i++) {
+        if (num_coins >= itemPriceTbl[activeItemTbl[i]]) {
+            desire_for_item = BoardComItemWeightGet(player, activeItemTbl[i]);
         } else {
-            var_r30 = 0;
+            desire_for_item = 0;
         }
-        if (BoardPlayerItemFind(arg0, activeItemTbl[i]) != -1) {
-            var_r30 = 0;
+        if (BoardPlayerItemFind(player, activeItemTbl[i]) != -1) { // If the player has the item already
+            desire_for_item = 0;
         }
-        if (var_r30 > var_r27) {
-            var_r27 = var_r30;
-            var_r25 = i;
+        if (desire_for_item > max_desire) {
+            max_desire = desire_for_item;
+            i_most_desired = i;
         }
     }
-    if (var_r27 == 0) {
+    if (max_desire == 0) {
         comF = 1;
-        var_r28 = 5;
+        choice = 5;
     } else {
-        var_r28 = var_r25;
+        choice = i_most_desired;
     }
-    return var_r28;
+    return choice;
 }
 
 static void WaitItemChoice(void) {

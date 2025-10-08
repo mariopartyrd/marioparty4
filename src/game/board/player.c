@@ -420,13 +420,15 @@ s32 BoardPlayerItemRemove(s32 arg0, s32 arg1)
     return temp_r29;
 }
 
-s32 BoardPlayerItemFind(s32 arg0, s32 arg1)
+// Return the inventory slot in a player's inventory that contains an item.
+// Returns -1 if the player does not have the item.
+s32 BoardPlayerItemFind(s32 player, s32 item)
 {
-    s32 var_r31;
+    s32 inv_slot;
 
-    for (var_r31 = 0; var_r31 < 3; var_r31++) {
-        if (arg1 == GWPlayer[arg0].items[var_r31]) {
-            return var_r31;
+    for (inv_slot = 0; inv_slot < 3; inv_slot++) {
+        if (item == GWPlayer[player].items[inv_slot]) {
+            return inv_slot;
         }
     }
 
