@@ -426,7 +426,7 @@ s32 BoardPlayerItemFind(s32 player, s32 item)
 {
     s32 inv_slot;
 
-    for (inv_slot = 0; inv_slot < 3; inv_slot++) {
+    for (inv_slot = 0; inv_slot < ARRAY_COUNT(GWPlayer[player].items); inv_slot++) {
         if (item == GWPlayer[player].items[inv_slot]) {
             return inv_slot;
         }

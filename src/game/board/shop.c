@@ -852,7 +852,7 @@ static void GetDefaultShopItems(s32 _unused) {
     } else {
         table = 0;
     }
-    for (slot = 0; slot < 5; slot++) {
+    for (slot = 0; slot < ARRAY_COUNT(activeItemTbl); slot++) {
         activeItemTbl[slot] = defaultItemTbl[table];
     }
 }
