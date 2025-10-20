@@ -1,6 +1,5 @@
-Mario Party 4  
+# Mario Party 4  
 [![Build Status]][actions] [![Progress]][progress site] [![DOL Progress]][progress site] [![RELs Progress]][progress site] [![Discord Badge]][discord]
-=============
 
 [Build Status]: https://github.com/mariopartyrd/marioparty4/actions/workflows/build.yml/badge.svg
 [actions]: https://github.com/mariopartyrd/marioparty4/actions/workflows/build.yml
@@ -60,7 +59,7 @@ sudo xattr -rd com.apple.quarantine '/Applications/Wine Crossover.app'
 
 # Building the game for the GameCube
 
-##  Clone the repository:
+## Clone the repository:
   ```
   git clone https://github.com/mariopartyrd/marioparty4.git
   ```
@@ -155,7 +154,7 @@ Your `RelWithDebInfo` folder should look like this:
 
 ## Common problems
 
-### Syntax error ")"
+### Syntax error "`)`"
 
 There's currently a bug with the Math.h file where an extra bracket has been
 added, this can be fixed by removing the extra bracket.
