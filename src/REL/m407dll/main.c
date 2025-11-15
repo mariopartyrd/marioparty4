@@ -214,8 +214,8 @@ void fn_1_4E8C(void) {
     if (MGSeqStatGet(temp_r31->unk_06) == 0) {
         MGSeqKill(temp_r31->unk_06);
         temp_r31->unk_06 = -1;
-        temp_r31->unk_10 = 0x258;
-        temp_r31->unk_08 = MGSeqTimerCreate(temp_r31->unk_10 / 60);
+        temp_r31->unk_10 = REFRESH_RATE*10;
+        temp_r31->unk_08 = MGSeqTimerCreate(temp_r31->unk_10 / REFRESH_RATE);
         fn_1_1E4();
         fn_1_4C3C(3);
     }
@@ -226,8 +226,8 @@ void fn_1_4FAC(void) {
     
     temp_r31 = lbl_1_bss_397C->data;
     if (temp_r31->unk_10 > 0) {
-        if ((--temp_r31->unk_10 % 60) == 0) {
-            MGSeqParamSet(temp_r31->unk_08, 1, (temp_r31->unk_10 / 60));
+        if ((--temp_r31->unk_10 % REFRESH_RATE) == 0) {
+            MGSeqParamSet(temp_r31->unk_08, 1, (temp_r31->unk_10 / REFRESH_RATE));
         }
         return;
     }

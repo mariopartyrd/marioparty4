@@ -184,6 +184,7 @@ Vec lbl_1_data_70 = { 200.0f, 15000.0f, -200.0f };
 
 Vec lbl_1_data_7C = { 0.0f, 1.0f, 0.0f };
 
+s32 lbl_1_bss_11F58;
 omObjData *lbl_1_bss_11F40;
 omObjData *lbl_1_bss_11F3C;
 omObjData *lbl_1_bss_11F38;

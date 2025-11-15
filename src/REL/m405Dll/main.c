@@ -1321,10 +1321,10 @@ u8 lbl_1_data_33C[][3] = { { 1, 0, 1 }, { 2, 3, 0 }, { 1, 0, 0 } };
 
 u16 lbl_1_data_346[] = { 0x0100, 0x0200, 0x0040, 0x0020, 0x0000 };
 
-UnkBssA4InnerStruct lbl_1_data_350 = { 3570.0f, 2 };
-UnkBssA4InnerStruct lbl_1_data_358 = { 3330.0f, 2 };
-UnkBssA4InnerStruct lbl_1_data_360 = { 3180.0f, 2 };
-UnkBssA4InnerStruct lbl_1_data_368 = { 3060.0f, 6 };
+UnkBssA4InnerStruct lbl_1_data_350 = { REFRESH_RATE*59.5f, 2 };
+UnkBssA4InnerStruct lbl_1_data_358 = { REFRESH_RATE*55.5f, 2 };
+UnkBssA4InnerStruct lbl_1_data_360 = { REFRESH_RATE*53, 2 };
+UnkBssA4InnerStruct lbl_1_data_368 = { REFRESH_RATE*51, 6 };
 
 HsfanimStruct00 lbl_1_data_370 = { 0x0014, { 0x00, 0x00 }, // padding?
     1.0f, 30.0f, 0.0f, { 0.0f, 0.05f, 0.0f }, 1.0f, 0.999f, 30.0f, 1.03f, 0x0004,
@@ -1535,8 +1535,8 @@ u16 fn_1_68CC(UnkBssA4Data *arg0)
         if (6.0f > arg0->unk3C) {
             arg0->unk3C = 6.0f;
         }
-        if (420.0f < arg0->unk34 && 60.0f > arg0->unk68 && arg0->unk88 < 10) {
-            arg0->unk40 = 20.0f;
+        if (REFRESH_RATE*7 < arg0->unk34 && 60.0f > arg0->unk68 && arg0->unk88 < 10) {
+            arg0->unk40 = REFRESH_RATE/3.0f;
         }
         if (arg0->unk44 >= 2 && 70.0f < arg0->unk68) {
             arg0->unk3C = 8.0f;
@@ -1564,7 +1564,7 @@ u16 fn_1_68CC(UnkBssA4Data *arg0)
         }
     }
     else if (10.0f > arg0->unk68) {
-        arg0->unk40 = 20.0f;
+        arg0->unk40 = REFRESH_RATE/3.0f;
     }
     return var_r29;
 }
@@ -1616,7 +1616,7 @@ void fn_1_6BFC(omObjData *arg0)
                 var_r24 = lbl_1_data_346[temp_r28[temp_r31->unk90 & 1]];
             }
             temp_r31->unk6C += 1.0f;
-            if (20.0f <= temp_r31->unk6C) {
+            if ((REFRESH_RATE/3.0f) <= temp_r31->unk6C) {
                 temp_r31->unk68 += temp_r31->unk74;
                 if (0.0f == temp_r31->unk70) {
                     if (5.0f < temp_r31->unk74) {
@@ -1663,7 +1663,7 @@ void fn_1_6BFC(omObjData *arg0)
                 temp_r31->unk88 = 0;
             }
             if (temp_r31->unk80 > 0) {
-                if (++temp_r31->unk80 > 60) {
+                if (++temp_r31->unk80 > REFRESH_RATE) {
                     temp_r31->unk80 = 0;
                     temp_r31->unk84 = 0;
                 }
@@ -1681,7 +1681,7 @@ void fn_1_6BFC(omObjData *arg0)
             }
             if (1.0f > ABS(temp_r31->unk5C - temp_r31->unk4C.z)) {
                 temp_r31->unk7C++;
-                if (30.0f == temp_r31->unk7C) {
+                if ((REFRESH_RATE/2.0f) == temp_r31->unk7C) {
                     var_r27 = 0;
                 }
             }
@@ -2151,14 +2151,14 @@ void fn_1_9288(omObjData *arg0)
         case 1005:
             lbl_1_bss_73C++;
             if (lbl_1_bss_734 >= 0) {
-                MGSeqParamSet(lbl_1_bss_734, 1, (18059 - lbl_1_bss_73C) / 60);
+                MGSeqParamSet(lbl_1_bss_734, 1, (((REFRESH_RATE*301)-1) - lbl_1_bss_73C) / REFRESH_RATE);
             }
-            else if (lbl_1_bss_73C > 16200) {
-                lbl_1_bss_734 = MGSeqTimerCreate((18059 - lbl_1_bss_73C) / 60);
+            else if (lbl_1_bss_73C > (REFRESH_RATE*270)) {
+                lbl_1_bss_734 = MGSeqTimerCreate((((REFRESH_RATE*301)-1) - lbl_1_bss_73C) / REFRESH_RATE);
                 MGSeqPosSet(lbl_1_bss_734, 288.0f, 400.0f);
             }
             fn_1_580(lbl_1_bss_6E8, 0, lbl_1_bss_73C);
-            if (lbl_1_bss_73C >= 18000 || lbl_1_bss_7C >= 0) {
+            if (lbl_1_bss_73C >= (REFRESH_RATE*300) || lbl_1_bss_7C >= 0) {
                 arg0->work[0]++;
                 lbl_1_bss_80 = 0.0f;
                 if (lbl_1_bss_7C >= 0) {
@@ -2207,7 +2207,7 @@ void fn_1_9288(omObjData *arg0)
                 }
                 if (60.0f < lbl_1_bss_80 && MGSeqStatGet(lbl_1_bss_736) == 0) {
                     arg0->work[0] = 1008;
-                    if (lbl_1_bss_7C >= 0 && !GWPlayerCfg[lbl_1_bss_7C].iscom && lbl_1_bss_73C < 3600) {
+                    if (lbl_1_bss_7C >= 0 && !GWPlayerCfg[lbl_1_bss_7C].iscom && lbl_1_bss_73C < (REFRESH_RATE*60)) {
                         GWGameStat.present[53] = 1;
                     }
                     if (lbl_1_bss_7C >= 0 && !GWPlayerCfg[lbl_1_bss_7C].iscom && lbl_1_bss_738 > lbl_1_bss_73C) {
@@ -2325,7 +2325,7 @@ void ObjectSetup(void)
     lbl_1_bss_728 = -1.0f;
     lbl_1_bss_738 = GWMGRecordGet(0);
     if (lbl_1_bss_738 == 0) {
-        lbl_1_bss_738 = 18000;
+        lbl_1_bss_738 = REFRESH_RATE*300;
     }
     Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 20000.0f, 1.2f);

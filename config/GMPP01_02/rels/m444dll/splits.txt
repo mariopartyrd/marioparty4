@@ -5,3 +5,28 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m444dll/main.c:
+	.text       start:0x000000A0 end:0x000084A0
+	.rodata     start:0x00000000 end:0x00000278
+	.data       start:0x00000000 end:0x00000258
+	.bss        start:0x00000000 end:0x00000310
+
+REL/m444dll/pinball.c:
+	.text       start:0x000084A0 end:0x0000D6E0
+	.rodata     start:0x00000278 end:0x00000430
+	.data       start:0x00000258 end:0x00000470
+	.bss        start:0x00000310 end:0x00019908
+
+REL/m444dll/datalist.c:
+	.text       start:0x0000D6E0 end:0x0000DB20
+	.rodata     start:0x00000430 end:0x00000440
+	.data       start:0x00000470 end:0x000016EC
+	.bss        start:0x00019908 end:0x00019A76
+
+REL/m444dll/shadow.c:
+	.text       start:0x0000DB20 end:0x0000DF78
+	.rodata     start:0x00000440 end:0x0000047C

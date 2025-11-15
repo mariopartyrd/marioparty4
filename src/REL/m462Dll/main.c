@@ -833,7 +833,7 @@ void fn_1_4BC4(void)
     temp_r31 = HuPrcCurrentGet()->user_data;
     temp_r31->unk10 = 0;
 loop_1:
-    temp_r27 = lbl_1_bss_3E0 / 60;
+    temp_r27 = lbl_1_bss_3E0 / REFRESH_RATE;
     var_r25 = 0;
     if (temp_r27 > 10) {
         var_r25 = 1;
@@ -1573,7 +1573,7 @@ void fn_1_69C0(void)
         }
         Hu3DModelAttrSet(temp_r31->unk00, HU3D_ATTR_DISPOFF);
         HuAudSStreamPlay(4);
-        HuPrcSleep(180);
+        HuPrcSleep(REFRESH_RATE*3);
     }
     else {
         var_f26 = temp_r31->unk90;
@@ -1601,7 +1601,7 @@ void fn_1_69C0(void)
         HuAudPlayerVoicePlay(temp_r31->unk20, 0x122);
         CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk20].character], temp_r31->unk16[2], 0.0f, 2.0f, HU3D_MOTATTR_NONE);
         temp_r31->unk2C = 10;
-        HuPrcSleep(180);
+        HuPrcSleep(REFRESH_RATE*3);
     }
     lbl_1_bss_3E4 = 6;
     while (TRUE) {
@@ -1647,14 +1647,14 @@ void fn_1_7DA0(void)
         HuPrcVSleep();
     }
     fn_1_16F8();
-    var_r30 = 1859;
-    temp_r26 = MGSeqTimerCreate(var_r30 / 60);
+    var_r30 = (REFRESH_RATE*31)-1;
+    temp_r26 = MGSeqTimerCreate(var_r30 / REFRESH_RATE);
     lbl_1_bss_3E4 = 3;
     while (TRUE) {
-        if (var_r30 < 59) {
+        if (var_r30 < REFRESH_RATE-1) {
             break;
         }
-        MGSeqParamSet(temp_r26, 1, var_r30-- / 60);
+        MGSeqParamSet(temp_r26, 1, var_r30-- / REFRESH_RATE);
         lbl_1_bss_3E0++;
         HuPrcVSleep();
     }
@@ -1685,7 +1685,7 @@ void fn_1_7DA0(void)
     while (lbl_1_bss_3E4 < 6) {
         HuPrcVSleep();
     }
-    HuPrcSleep(30);
+    HuPrcSleep(REFRESH_RATE/2);
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
     HuPrcSleep(60);
     HuAudFadeOut(1);

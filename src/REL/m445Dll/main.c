@@ -289,7 +289,7 @@ void fn_1_550(void)
     sp20.x = 0.0f;
     sp20.y = -0.5f;
     sp20.z = -1.0f;
-    HuAudFXListnerSetEX(&sp2C, &sp20, 10000.0f, 0.5666667f, 0.0f, 300.0f, 300.0f);
+    HuAudFXListnerSetEX(&sp2C, &sp20, 10000.0f, 34.0f/REFRESH_RATE, 0.0f, 300.0f, 300.0f);
     var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 24), MEMORY_DEFAULT_NUM, HEAP_DATA);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelLayerSet(var_r30, 0);
@@ -654,7 +654,7 @@ void fn_1_1B0C(void)
                 var_r28++;
             }
         }
-        if (var_r28 < fn_1_1AD0(lbl_1_bss_6D8 / 60)) {
+        if (var_r28 < fn_1_1AD0(lbl_1_bss_6D8 / REFRESH_RATE)) {
             var_r29 = frandmod(8) + 1;
             i = 0;
             while (TRUE) {
@@ -706,7 +706,7 @@ void fn_1_1C64(void)
         var_r25->unk34 = 0;
         temp_r31->unk3C = var_r25->unk2C;
         temp_r31->unk40 = -1;
-        if (lbl_1_bss_6CC[lbl_1_bss_6C8] < lbl_1_bss_6D8 / 60) {
+        if (lbl_1_bss_6CC[lbl_1_bss_6C8] < lbl_1_bss_6D8 / REFRESH_RATE) {
             temp_r31->unk38 = 1;
             if (lbl_1_data_260[temp_r31->unk14] == 1) {
                 lbl_1_bss_6C8++;
@@ -736,7 +736,7 @@ void fn_1_1C64(void)
             var_r29->unk30 = temp_r31->unk14;
             var_r29->unk34 = 0;
             temp_r31->unk40 = var_r29->unk2C;
-            if (lbl_1_bss_6CC[lbl_1_bss_6C8] < lbl_1_bss_6D8 / 60) {
+            if (lbl_1_bss_6CC[lbl_1_bss_6C8] < lbl_1_bss_6D8 / REFRESH_RATE) {
                 lbl_1_bss_6C8++;
                 if (temp_r31->unk14 == 5 || temp_r31->unk14 == 7) {
                     var_r29->unk28 = var_r29->unk04;
@@ -795,7 +795,7 @@ void fn_1_1C64(void)
         else {
             Hu3DMotionSet(temp_r31->unk00, temp_r31->unk02[2]);
         }
-        var_r23 = 150;
+        var_r23 = REFRESH_RATE*2.5f;
         Hu3DMotionSet(var_r25->unk28, var_r25->unk08[temp_r31->unk0C + 1]);
         Hu3DModelAttrSet(var_r25->unk28, HU3D_MOTATTR_PAUSE);
         if (temp_r31->unk14 == 6) {
@@ -2059,14 +2059,14 @@ void fn_1_8A18(void)
         HuPrcVSleep();
     }
     fn_1_557C();
-    var_r31 = 3659;
-    temp_r26 = MGSeqTimerCreate(var_r31 / 60);
+    var_r31 = (REFRESH_RATE*61)-1;
+    temp_r26 = MGSeqTimerCreate(var_r31 / REFRESH_RATE);
     lbl_1_bss_6DC = 3;
     while (TRUE) {
-        if (var_r31 < 59) {
+        if (var_r31 < (REFRESH_RATE-1)) {
             break;
         }
-        MGSeqParamSet(temp_r26, 1, var_r31-- / 60);
+        MGSeqParamSet(temp_r26, 1, var_r31-- / REFRESH_RATE);
         lbl_1_bss_6D8++;
         HuPrcVSleep();
     }

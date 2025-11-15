@@ -5,3 +5,53 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m407dll/player.c:
+	.text       start:0x000000A0 end:0x000014F0
+	.rodata     start:0x00000000 end:0x000000B8
+	.data       start:0x00000000 end:0x00000198
+	.bss        start:0x00000000 end:0x00000020
+
+REL/m407dll/map.c:
+	.text       start:0x000014F0 end:0x00001B1C
+	.rodata     start:0x000000B8 end:0x000000D8
+	.data       start:0x00000198 end:0x00000228
+	.bss        start:0x00000020 end:0x00000030
+
+REL/m407dll/camera.c:
+	.text       start:0x00001B1C end:0x00002354
+	.rodata     start:0x000000D8 end:0x00000120
+	.bss        start:0x00000030 end:0x00000038
+
+REL/m407dll/whomp.c:
+	.text       start:0x00002354 end:0x00003AC8
+	.rodata     start:0x00000120 end:0x00000168
+	.data       start:0x00000228 end:0x00000278
+	.bss        start:0x00000038 end:0x000037C8
+
+REL/m407dll/whomp_score.c:
+	.text       start:0x00003AC8 end:0x000041CC
+	.rodata     start:0x00000168 end:0x00000188
+	.data       start:0x00000278 end:0x00000288
+	.bss        start:0x000037C8 end:0x000037E0
+
+REL/m407dll/effect.c:
+	.text       start:0x000041CC end:0x00004980
+	.rodata     start:0x00000188 end:0x00000190
+	.data       start:0x00000288 end:0x000002A8
+	.bss        start:0x000037E0 end:0x00003978
+
+REL/m407dll/main.c:
+	.text       start:0x00004980 end:0x00005C50
+	.rodata     start:0x00000190 end:0x000001F0
+	.data       start:0x000002A8 end:0x00000360
+	.bss        start:0x00003978 end:0x00003988
+
+REL/m407dll/score.c:
+	.text       start:0x00005C50 end:0x000063F8
+	.rodata     start:0x000001F0 end:0x00000220
+	.data       start:0x00000360 end:0x0000036C
+	.bss        start:0x00003988 end:0x00003990

@@ -356,6 +356,9 @@ void fn_1_470(void)
         }
         HuPrcVSleep();
     }
+    #if VERSION_PAL
+    HuWinInsertMesSizeGet((GWPlayerCfg[lbl_1_bss_2D6].character+1)-1, 0);
+    #endif
     HuWinMesMaxSizeGet(1, sp8, MAKE_MESSID(0x1C, 0x02));
     temp_r30 = HuWinExCreateStyled(-10000, 340, sp8[0], sp8[1], -1, 1);
     HuWinExAnimIn(temp_r30);
@@ -439,6 +442,10 @@ void fn_1_470(void)
         }
         HuPrcVSleep();
     }
+    #if VERSION_PAL
+    HuWinInsertMesSizeGet((GWPlayerCfg[lbl_1_bss_2D6].character+1)-1, 0);
+    HuWinInsertMesSizeGet((GWPlayerCfg[lbl_1_bss_2D4].character+1)-1, 2);
+    #endif
     HuWinMesMaxSizeGet(1, sp8, MAKE_MESSID(0x1C, 0x03));
     temp_r30 = HuWinExCreateStyled(-10000, 340, sp8[0], sp8[1], -1, 1);
     HuWinExAnimIn(temp_r30);

@@ -922,7 +922,7 @@ config.libs = [
     Rel(
         "m405Dll",  # Mario Medley
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m405Dll/main.c"),
+            Object(Matching, "REL/m405Dll/main.c"),
         },
     ),
     Rel(
@@ -936,14 +936,14 @@ config.libs = [
     Rel(
         "m407dll",  # Domination
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/whomp.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/whomp_score.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/effect.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m407dll/score.c"),
+            Object(Matching, "REL/m407dll/player.c"),
+            Object(Matching, "REL/m407dll/map.c"),
+            Object(Matching, "REL/m407dll/camera.c"),
+            Object(Matching, "REL/m407dll/whomp.c"),
+            Object(Matching, "REL/m407dll/whomp_score.c"),
+            Object(Matching, "REL/m407dll/effect.c"),
+            Object(Matching, "REL/m407dll/main.c"),
+            Object(Matching, "REL/m407dll/score.c"),
         },
     ),
     Rel(
@@ -1196,7 +1196,7 @@ config.libs = [
         "m442Dll",  # Barrel Baron
         objects={
             Object(Matching, "REL/m442Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m442Dll/score.c"),
+            Object(Matching, "REL/m442Dll/score.c"),
         },
     ),
     Rel(
@@ -1210,16 +1210,16 @@ config.libs = [
     Rel(
         "m444dll",  # Reversal of Fortune
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m444dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m444dll/pinball.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m444dll/datalist.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m444dll/shadow.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/pinball.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/datalist.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/shadow.c"),
         },
     ),
     Rel(
         "m445Dll",  # Bowser Bop
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m445Dll/main.c"),
+            Object(Matching, "REL/m445Dll/main.c"),
         },
     ),
     Rel(
@@ -1328,13 +1328,13 @@ config.libs = [
     Rel(
         "m462Dll",  # Goomba Stomp
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m462Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m462Dll/main.c"),
         },
     ),
     Rel(
         "m463Dll",  # Panel Panic 9 Player
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m463Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m463Dll/main.c"),
         },
     ),
     Rel(
@@ -1487,7 +1487,7 @@ config.libs = [
     Rel(
         "subchrselDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/subchrselDll/main.c"),
+            Object(Matching, "REL/subchrselDll/main.c"),
         },
     ),
     Rel(
