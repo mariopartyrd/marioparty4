@@ -405,7 +405,7 @@ void fn_1_330(omObjData *object)
                 }
                 break;
             case 2:
-                var_f31 = (VERSION_NTSC ? 0.007246377f : 0.008695652f) * lbl_1_bss_58;
+                var_f31 = (1.0f/(REFRESH_RATE*2.3f)) * lbl_1_bss_58;
                 var_f31 = sind(90.0f * var_f31);
                 var_f31 *= var_f31;
                 for (var_r31 = 0; var_r31 < 7; var_r31++) {
@@ -418,7 +418,7 @@ void fn_1_330(omObjData *object)
                 Center.y = sp10[4];
                 Center.z = sp10[5];
                 CZoom = sp10[6];
-                if (++lbl_1_bss_58 >= (VERSION_NTSC ? 138.0f : 115.0f)) {
+                if (++lbl_1_bss_58 >= (REFRESH_RATE*2.3f)) {
                     CRot.x = lbl_1_data_4C[0][0];
                     CRot.y = lbl_1_data_4C[0][1];
                     CRot.z = lbl_1_data_4C[0][2];
@@ -1050,7 +1050,7 @@ void fn_1_16F8(omObjData *object)
                     var_r31->unk_28 = 7;
                     CharModelMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_28], 0.0f, 8.0f, HU3D_MOTATTR_NONE);
                 }
-                else if (var_r31->unk_2C >= (VERSION_NTSC ? 90.0f : 80.0f)) {
+                else if (var_r31->unk_2C >= ((REFRESH_RATE/7)+1)*10.0f) {
                     var_r31->unk_24 = 7;
                     var_r31->unk_28 = 8;
                     CharModelMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_28], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
@@ -1394,7 +1394,7 @@ void fn_1_2F5C(omObjData *object, float *arg1, float *arg2, s32 *arg3)
                             *arg3 |= 256;
                             var_r31->unk_B0 = -1;
                             var_r31->unk_B4 = 0;
-                            var_r31->unk_B8 = ((VERSION_NTSC ? 50.0f : 45.0f) + (frand() % 15)) - (var_r31->unk_18 * 10);
+                            var_r31->unk_B8 = ((((REFRESH_RATE/7)+2)*5.0f) + (frand() % 15)) - (var_r31->unk_18 * 10);
                             var_r31->unk_BC = 0;
                             return;
                         }
@@ -1975,7 +1975,7 @@ void fn_1_5134(omObjData *object)
                 }
                 break;
             case 1:
-                if ((var_r31->unk_40 -= (VERSION_NTSC ? 50.0f : 60.000004f)) <= 50.0f) {
+                if ((var_r31->unk_40 -= ((60.0f/REFRESH_RATE)*50)) <= 50.0f) {
                     if (lbl_1_bss_54 <= 4) {
                         fn_1_3654(0);
                         fn_1_3654(1);

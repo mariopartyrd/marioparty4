@@ -789,12 +789,12 @@ static void M457GameExec(omObjData *object)
             if (lbl_1_bss_60 == 0) {
                 lbl_1_bss_3C = 0;
             }
-            if (lbl_1_bss_60 == (VERSION_NTSC ? 20 : 15)) {
+            if (lbl_1_bss_60 == (REFRESH_RATE/15)*5) {
                 espAttrReset(sprIdTbl[16], HUSPR_ATTR_DISPOFF);
             }
-            if ((lbl_1_bss_60 >= (VERSION_NTSC ? 20 : 15) && lbl_1_bss_60 <= REFRESH_RATE - 10)
-                || (lbl_1_bss_60 >= 3 * REFRESH_RATE && lbl_1_bss_60 <= (s32)(3.5 * REFRESH_RATE))) {
-                spAC = (lbl_1_bss_60 <= 120) ? (lbl_1_bss_60 - (VERSION_NTSC ? 20 : 15)) / (0.5 * REFRESH_RATE)
+            if ((lbl_1_bss_60 >= (REFRESH_RATE/15)*5 && lbl_1_bss_60 <= REFRESH_RATE - 10)
+                || (lbl_1_bss_60 >= 3 * REFRESH_RATE && lbl_1_bss_60 <= ((7*REFRESH_RATE)/2))) {
+                spAC = (lbl_1_bss_60 <= 120) ? (lbl_1_bss_60 - ((REFRESH_RATE/15)*5)) / (0.5 * REFRESH_RATE)
                                              : (1.0 - (lbl_1_bss_60 - 3 * REFRESH_RATE) / (0.5 * REFRESH_RATE));
                 espTPLvlSet(sprIdTbl[16], spAC);
             }
@@ -1307,7 +1307,7 @@ static void M457Main(omObjData *object)
             break;
         case 1005:
             lbl_1_bss_60++;
-            if (lbl_1_bss_60 == (VERSION_NTSC ? 180 : 128)) {
+            if (lbl_1_bss_60 == (((REFRESH_RATE*REFRESH_RATE)+79)/80)*4) {
                 gameState++;
                 lbl_1_bss_60 = 0;
             }
@@ -1411,7 +1411,7 @@ static void M457Main(omObjData *object)
                     HuAudSStreamPlay(4);
                 }
             }
-            if ((VERSION_NTSC ? 225.0f : 190.0f) < lbl_1_bss_60) {
+            if (((((REFRESH_RATE*3)+2)/4)*5.0f) < lbl_1_bss_60) {
                 if (windSeNo != -1) {
                     HuAudFXStop(windSeNo);
                     windSeNo = -1;

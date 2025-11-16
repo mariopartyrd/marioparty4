@@ -276,7 +276,7 @@ void fn_1_6DBC(omObjData *object)
                         VECSubtract(&sp8, &temp_r31->unk1C, &sp8);
                         temp_r31->unk40.x = temp_r31->unk34.z = atan2d(sp8.x, sp8.z);
                         temp_r31->unk28.x = (1.0f / REFRESH_RATE) * sp8.x;
-                        temp_r31->unk28.y = VERSION_NTSC ? 6.666667f : 8.0f;
+                        temp_r31->unk28.y = 400*(1.0f/REFRESH_RATE);
                         temp_r31->unk28.z = (1.0f / REFRESH_RATE) * sp8.z;
                         temp_r31->unk8++;
                         HuAudFXPlay(1734);
@@ -285,7 +285,7 @@ void fn_1_6DBC(omObjData *object)
                     if (temp_r31->unk1C.y <= -15.000001f) {
                         temp_r29 = 1;
                     }
-                    temp_r31->unk28.y += VERSION_NTSC ? -0.27222225f : -0.392f;
+                    temp_r31->unk28.y += -980*(1.0f/REFRESH_RATE)*(1.0f/REFRESH_RATE);
                     VECAdd(&temp_r31->unk1C, &temp_r31->unk28, &temp_r31->unk1C);
                     if (!temp_r29 && temp_r31->unk1C.y <= -15.000001f) {
                         fn_1_43AC(&temp_r31->unk1C);
@@ -365,7 +365,7 @@ void fn_1_6DBC(omObjData *object)
                     VECSubtract(&sp8, &temp_r31->unk1C, &sp8);
                     temp_r31->unk40.x = temp_r31->unk34.z = atan2d(sp8.x, sp8.z);
                     temp_r31->unk28.x = (1.0f / REFRESH_RATE) * sp8.x;
-                    temp_r31->unk28.y = VERSION_NTSC ? 6.666667f : 8.0f;
+                    temp_r31->unk28.y = 400*(1.0f/REFRESH_RATE);
                     temp_r31->unk28.z = (1.0f / REFRESH_RATE) * sp8.z;
                     temp_r31->unk8++;
                 }
@@ -373,7 +373,7 @@ void fn_1_6DBC(omObjData *object)
                 if (temp_r31->unk1C.y <= -15.000001f) {
                     temp_r29 = 1;
                 }
-                temp_r31->unk28.y += VERSION_NTSC ? -0.27222225f : -0.392f;
+                temp_r31->unk28.y += -980*(1.0f/REFRESH_RATE)*(1.0f/REFRESH_RATE);
                 VECAdd(&temp_r31->unk1C, &temp_r31->unk28, &temp_r31->unk1C);
                 if (temp_r31->unk1C.y <= -15.000001f) {
                     temp_r25 = 1;

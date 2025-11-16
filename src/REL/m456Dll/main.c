@@ -627,7 +627,7 @@ void fn_1_1304(omObjData *var_r30)
                 }
                 if (var_r26 < lbl_1_bss_64) {
                     var_r31->unk_00_field3 = 1;
-                    var_r31->unk_28 -= VERSION_PAL ? 16.5f : 19.800001f;
+                    var_r31->unk_28 -= 0.33f*REFRESH_RATE;
                 }
                 else {
                     var_r31->unk_28 -= 0.8f * REFRESH_RATE;

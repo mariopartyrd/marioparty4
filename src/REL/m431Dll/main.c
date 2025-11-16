@@ -946,7 +946,7 @@ void fn_1_30E0(Work2110 *arg0)
             temp_r31 = &arg0[0].unk4[temp_r28];
             switch (temp_r22 = temp_r31->unk0 & 0x1C) {
                 case 4:
-                    if (sp8[temp_r27] > (VERSION_NTSC ? 15 : 12)) {
+                    if (sp8[temp_r27] > (REFRESH_RATE/4)) {
                         sp8[temp_r27] = 0;
                         temp_r25 = 1;
                         if (temp_r29 - 1 > -6) {
@@ -1272,9 +1272,9 @@ void fn_1_4028(Work2110 *arg0)
                 }
                 else {
                     temp_r31->unk18++;
-                    temp_f31 = temp_r31->unk18 / (VERSION_NTSC ? 54.0f : 45.0f);
+                    temp_f31 = temp_r31->unk18 / (REFRESH_RATE*0.9f);
                     if (temp_f31 >= 1.0f) {
-                        temp_r31->unk18 = VERSION_NTSC ? 54 : 45;
+                        temp_r31->unk18 = (REFRESH_RATE*0.9f);
                         temp_f31 = 1.0f;
                     }
                     temp_f31 = cosd(temp_f31 * 90.0f);

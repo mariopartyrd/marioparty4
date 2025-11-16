@@ -836,12 +836,6 @@ s32 lbl_1_bss_8;
 s32 lbl_1_bss_4;
 s32 lbl_1_bss_0;
 
-#if VERSION_NTSC
-#define _1606_BY_REFRESH_RATE 26.766666f
-#else
-#define _1606_BY_REFRESH_RATE 32.120003f
-#endif
-
 void fn_1_23B4(WorkPlayerOld *player)
 {
     s32 i;
@@ -1025,7 +1019,7 @@ void fn_1_2E34(WorkPlayerOld *player)
                     player->unk_3C |= 0x100;
                     player->unk_A4 = 0;
                     if (!(player2->unk_3C & 0x100)) {
-                        player->unk_84.y = _1606_BY_REFRESH_RATE;
+                        player->unk_84.y = (20.0f*(80.3f/REFRESH_RATE));
                     }
                 }
                 if (state == 3) {
@@ -1129,7 +1123,7 @@ void fn_1_3CE0(WorkPlayerOld *player, s32 *state, u32 *motAttr)
     }
 
     if (player->unk_14[3] >= 0 && (player->unk_28 & 0x100)) {
-        fn_1_2BD0(player, _1606_BY_REFRESH_RATE, 1.0f);
+        fn_1_2BD0(player, (20.0f*(80.3f/REFRESH_RATE)), 1.0f);
         *motAttr = HU3D_MOTATTR_NONE;
         *state = 3;
     }
@@ -6574,7 +6568,7 @@ s32 fn_1_1C898(UnkM450Struct5 *var_r31, omObjData *var_r30)
         HuAudCharVoicePlay(var_r31->unk_11C, 0x123);
         var_r31->unk_FC |= 0x10;
         var_r31->unk_00.unk_3C |= 0x210;
-        fn_1_2BD0(&var_r31->unk_00, VERSION_NTSC ? 48.179995f : 57.816f, 0.0f);
+        fn_1_2BD0(&var_r31->unk_00, (10.0f*(160.6f/REFRESH_RATE))*1.8f, 0.0f);
         Hu3DMotionShiftSet(var_r30->model[0], var_r30->motion[8], 0.0f, 8.0f, 0);
         if (fn_1_125C0(0, 1) <= 0) {
             var_r31->unk_FC |= 0x80000;
@@ -6622,7 +6616,7 @@ s32 fn_1_1C898(UnkM450Struct5 *var_r31, omObjData *var_r30)
         var_r31->unk_FC |= 0x100000;
         var_r31->unk_00.unk_3C |= 0x200;
         var_r31->unk_00.unk_3C &= ~0x10;
-        var_f31 = VERSION_NTSC ? 40.15f : 48.180005f;
+        var_f31 = (10.0f*(160.6f/REFRESH_RATE))*1.5f;
         if (var_r31->unk_FC & 4) {
             var_f31 = var_f31 / 2;
         }
@@ -6697,7 +6691,7 @@ void fn_1_1E150(omObjData *var_r29)
         HuAudCharVoicePlay(var_r31->unk_11C, 0x123);
         var_r31->unk_FC |= 0x800000;
         var_r31->unk_118 = 0x7EB;
-        fn_1_2BD0(&var_r31->unk_00, VERSION_NTSC ? 53.533333f : 64.240005f, 0.0f);
+        fn_1_2BD0(&var_r31->unk_00, (10.0f*(160.6f/REFRESH_RATE))*2.0f, 0.0f);
         Hu3DMotionSet(var_r29->model[0], var_r29->motion[8]);
         Hu3DModelAttrReset(var_r29->model[0], HU3D_ATTR_DISPOFF);
         fn_1_125C0(0, 0);
@@ -7081,7 +7075,7 @@ void fn_1_20170(omObjData *var_r30)
             break;
         case 0x7E9:
             if (lbl_1_bss_1A4->work[0] >= 0x417) {
-                if ((VERSION_NTSC ? 100.0f : 80.0f) < lbl_1_bss_128) {
+                if (((REFRESH_RATE/6)*10.0f) < lbl_1_bss_128) {
                     var_r31->unk_118++;
                     GWPlayerCoinWinSet(lbl_1_bss_120, 10);
                     Hu3DMotionShiftSet(var_r30->model[0], var_r30->motion[21], 0.0f, 8.0f, 0);
@@ -7105,7 +7099,7 @@ void fn_1_20170(omObjData *var_r30)
                 var_r29->unk_00.unk_A8 = MapPos(
                     var_r29->unk_00.unk_6C.x, var_r29->unk_00.unk_6C.y, var_r29->unk_00.unk_6C.z, var_r29->unk_00.unk_C0, &var_r29->unk_00.unk_AC);
                 if (var_r29->unk_00.unk_A8 > var_r29->unk_00.unk_6C.y) {
-                    fn_1_2BD0(&var_r31->unk_00, VERSION_NTSC ? 53.533333f : 64.240005f, 0.0f);
+                    fn_1_2BD0(&var_r31->unk_00, (10.0f*(160.6f/REFRESH_RATE))*2.0f, 0.0f);
                 }
                 var_f31 = var_r29->unk_00.unk_6C.x;
                 var_f30 = var_r29->unk_00.unk_6C.z;

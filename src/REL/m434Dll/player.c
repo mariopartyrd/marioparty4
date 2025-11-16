@@ -376,7 +376,7 @@ void fn_1_4E50(omObjData *object)
                 temp_r31->unk3C++;
             }
             if (temp_r31->unk3E) {
-                if (temp_r31->unk3A > (VERSION_NTSC ? 36.0f : 30.000002f)) {
+                if (temp_r31->unk3A > (0.6f*REFRESH_RATE)) {
                     for (temp_r29 = 0; temp_r29 < temp_r31->unk54; temp_r29++) {
                         fn_1_8B58(temp_r31->unk58[temp_r29]);
                     }

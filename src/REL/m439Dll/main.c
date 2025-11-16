@@ -29,12 +29,22 @@ typedef struct camera_params {
     Vec rot;
 } CameraViewParams;
 
+#if VERSION_NTSC
 CameraViewParams lbl_1_data_741C[] = {
-    { VERSION_NTSC ? 4775.0f : 4500.0f, -2800.0f, 0.0f, -7700.0f, 343.0f, 20.0f, 0.0f },
+    { 4775.0f, -2800.0f, 0.0f, -7700.0f, 343.0f, 20.0f, 0.0f },
     { 5000.0f, 0.f, 0.0f, 0.0f, 290.0f, 0.0f, 0.0f },
     { 2800.0f, 0.f, 0.0f, -7600.0f, 347.0f, 0.0f, 0.0f },
     { 2800.0f, 0.f, 0.0f, -7600.0f, 290.0f, 0.0f, 0.0f },
 };
+#else
+CameraViewParams lbl_1_data_741C[] = {
+    { 4500.0f, -2800.0f, 0.0f, -7700.0f, 343.0f, 20.0f, 0.0f },
+    { 5000.0f, 0.f, 0.0f, 0.0f, 290.0f, 0.0f, 0.0f },
+    { 2800.0f, 0.f, 0.0f, -7600.0f, 347.0f, 0.0f, 0.0f },
+    { 2800.0f, 0.f, 0.0f, -7600.0f, 290.0f, 0.0f, 0.0f },
+};
+#endif
+
 
 typedef struct struct_data_748C {
     s32 unk0;
@@ -1107,7 +1117,7 @@ void fn_1_4528(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_r28++;
         }
         else {
-            temp_r31->unk08.y += VERSION_NTSC ? -0.50000006f : -0.6f; // -3.0f / REFRESH_RATE
+            temp_r31->unk08.y += -(1.2f/REFRESH_RATE)*25; // -3.0f / REFRESH_RATE
             temp_r31->unk34.x += temp_r31->unk08.x;
             temp_r31->unk34.y += temp_r31->unk08.y;
             temp_r31->unk34.z += temp_r31->unk08.z;
@@ -1197,7 +1207,7 @@ void fn_1_4CC0(omObjData *object)
     Work4AA8 *work = object->data;
     float pan;
     Vec pos2D;
-    if ((VERSION_NTSC ? 42.0f : 35.0f) == work->unk24) {
+    if (REFRESH_RATE*0.7f == work->unk24) {
         HuAudFXPlay(1795);
     }
     if (work->unk24 == 0) {

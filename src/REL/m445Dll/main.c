@@ -260,13 +260,6 @@ BOOL fn_1_520(s32 arg0)
     return (GWPlayerCfg[arg0].character == 9);
 }
 
-#if VERSION_NTSC
-#define LISTENER_SPEED 0.5666667f
-#else
-#define LISTENER_SPEED 0.68f
-
-#endif
-
 void fn_1_550(void)
 {
     float var_f31;
@@ -296,7 +289,7 @@ void fn_1_550(void)
     sp20.x = 0.0f;
     sp20.y = -0.5f;
     sp20.z = -1.0f;
-    HuAudFXListnerSetEX(&sp2C, &sp20, 10000.0f, LISTENER_SPEED, 0.0f, 300.0f, 300.0f);
+    HuAudFXListnerSetEX(&sp2C, &sp20, 10000.0f, 34.0f*(1.0f/REFRESH_RATE), 0.0f, 300.0f, 300.0f);
     var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 24), MEMORY_DEFAULT_NUM, HEAP_DATA);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelLayerSet(var_r30, 0);

@@ -20,9 +20,6 @@
 #include "math.h"
 #include "version.h"
 
-#if !VERSION_PAL
-#include "game/frand.h"
-#endif
 
 Process *lbl_1_bss_B8;
 omObjData *lbl_1_bss_B4;
@@ -213,9 +210,9 @@ omObjData *fn_1_2FAC(void)
     Hu3DModelCameraSet(id, HU3D_CAM0);
     Hu3DModelLayerSet(id, 1);
     id = Hu3DTexScrollCreate(object->model[3], "S3TCsk");
-    Hu3DTexScrollPosMoveSet(id, VERSION_PAL ? -0.00010999999f : -0.00009166667f, 0, 0);
+    Hu3DTexScrollPosMoveSet(id, -0.0055f*(1.0f/REFRESH_RATE), 0, 0);
     id = Hu3DTexScrollCreate(object->model[3], "pa_sk3");
-    Hu3DTexScrollPosMoveSet(id, VERSION_PAL ? -0.00025f : -0.00020833335f, 0, 0);
+    Hu3DTexScrollPosMoveSet(id, -0.0125f*(1.0f/REFRESH_RATE), 0, 0);
 
     object->model[4] = id = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M456, 6));
     Hu3DModelPosSet(id, 0, 0, -3000);
@@ -283,12 +280,12 @@ void fn_1_390C(omObjData *object)
     for (i = 0; i < 4; i++) {
         Hu3DModelPosSet(object->model[i + 11], lbl_1_data_2E8[i].x, work->unkA44 + lbl_1_data_2E8[i].y, lbl_1_data_2E8[i].z);
     }
-    work->unkA54 += VERSION_PAL ? 0.0012f : 0.001f; // 0.06f / REFRESH_RATE
-    work->unkA58 += VERSION_PAL ? 0.0012f : 0.001f;
+    work->unkA54 += 0.3f*(0.2f/REFRESH_RATE); // 0.06f / REFRESH_RATE
+    work->unkA58 += 0.3f*(0.2f/REFRESH_RATE);
     work->unkA48++;
     work->unkA4C++;
-    if (work->unkA4C >= (float)REFRESH_RATE && work->unkA4C <= (VERSION_PAL ? 67.5f : 81.0f)) {
-        float time = 1 - ((work->unkA4C - (float)REFRESH_RATE) / (VERSION_PAL ? 17.5f : 21.0f));
+    if (work->unkA4C >= (float)REFRESH_RATE && work->unkA4C <= (REFRESH_RATE*1.35f)) {
+        float time = 1 - ((work->unkA4C - (float)REFRESH_RATE) / (REFRESH_RATE*0.35f));
         if (time < 0.0f) {
             time = 0.0f;
         }
@@ -1212,15 +1209,9 @@ s32 fn_1_74F8(Vec *pos, float scale)
         scale = 1.0f;
     }
     temp_r31->unk34 = *pos;
-#if VERSION_PAL
-    temp_r31->unk08.x = (1.2f * (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F))))) * 0.5f;
-    temp_r31->unk08.z = (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F)))) * 1.2f;
-    temp_r31->unk08.y = (1.2f * (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F))))) * 2.0f;
-#else
-    temp_r31->unk08.x = (1.5f + (0.2f * (0.007874016f * ((s32)frand() & 0x7F)))) * 0.5f;
-    temp_r31->unk08.z = (1.5f + (0.2f * (0.007874016f * ((s32)frand() & 0x7F))));
-    temp_r31->unk08.y = (1.5f + (0.2f * (0.007874016f * ((s32)frand() & 0x7F)))) * 2.0f;
-#endif
+    temp_r31->unk08.x = ((60.0f/REFRESH_RATE) * (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F))))) * 0.5f;
+    temp_r31->unk08.z = (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F)))) * (60.0f/REFRESH_RATE);
+    temp_r31->unk08.y = ((60.0f/REFRESH_RATE) * (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F))))) * 2.0f;
     temp_r31->unk00 = (s32)frand() % 360;
     temp_r31->unk2C = 20 * scale;
     return i;
@@ -1298,14 +1289,8 @@ void fn_1_7B50(omObjData *object)
         else {
             vel = 3;
         }
-        // TODO replace with 60.0 / REFRESH_RATE
-#if VERSION_PAL
-        workP->unk14.x += (1.2000000476837158 * (vel * (workP->unkC * sind(workP->unk10))));
-        workP->unk14.z += (1.2000000476837158 * (vel * (workP->unkC * cosd(workP->unk10))));
-#else
-        workP->unk14.x += vel * (workP->unkC * sind(workP->unk10));
-        workP->unk14.z += vel * (workP->unkC * cosd(workP->unk10));
-#endif
+        workP->unk14.x += ((60.0f/REFRESH_RATE) * (vel * (workP->unkC * sind(workP->unk10))));
+        workP->unk14.z += ((60.0f/REFRESH_RATE) * (vel * (workP->unkC * cosd(workP->unk10))));
         dx = workP->unk20.x - workP->unk14.x;
         dz = workP->unk20.z - workP->unk14.z;
         angle = atan2d(dx, dz);

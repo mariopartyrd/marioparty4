@@ -77,12 +77,6 @@ float lbl_1_bss_568;
 s32 lbl_1_bss_528[16];
 UnkBss428Struct lbl_1_bss_428[32];
 
-#if VERSION_NTSC
-#define _1606_BY_REFRESH_RATE 26.766666f
-#else
-#define _1606_BY_REFRESH_RATE 32.120003f
-#endif
-
 void fn_1_0(void)
 {
     lbl_1_bss_5D0.unk04 = NULL;
@@ -745,7 +739,7 @@ void fn_1_2E34(WorkPlayerOld *player)
                     player->unk_3C |= 0x100;
                     player->unk_A4 = 0;
                     if (!(player2->unk_3C & 0x100)) {
-                        player->unk_84.y = _1606_BY_REFRESH_RATE;
+                        player->unk_84.y = (20.0f*(80.3f/REFRESH_RATE));
                     }
                 }
                 if (state == 3) {
@@ -849,7 +843,7 @@ void fn_1_3CE0(WorkPlayerOld *player, s32 *state, u32 *motAttr)
     }
 
     if (player->unk_14[3] >= 0 && (player->unk_28 & 0x100)) {
-        fn_1_2BD0(player, _1606_BY_REFRESH_RATE, 1);
+        fn_1_2BD0(player, (20.0f*(80.3f/REFRESH_RATE)), 1);
         *motAttr = HU3D_MOTATTR_NONE;
         *state = 3;
     }
@@ -2712,7 +2706,7 @@ void fn_1_E9E4(UnkM432DllStruct *arg0)
             var_f28 = 100.0f;
         }
         if ((arg0->unk_C8->unk_2C.y + var_f28) > arg0->unk_00.unk_6C.y) {
-            arg0->unk_00.unk_84.y = _1606_BY_REFRESH_RATE;
+            arg0->unk_00.unk_84.y = (20.0f*(80.3f/REFRESH_RATE));
             arg0->unk_00.unk_A4 = 1.0f;
             return;
         }
@@ -2945,7 +2939,7 @@ void fn_1_10250(omObjData *object)
             var_r31->unk_00.unk_2C = 0x100;
             fn_1_40C0(&var_r31->unk_00);
             if (200.0f > var_r31->unk_00.unk_6C.y) {
-                var_r31->unk_00.unk_84.y = _1606_BY_REFRESH_RATE;
+                var_r31->unk_00.unk_84.y = (20.0f*(80.3f/REFRESH_RATE));
                 var_r31->unk_00.unk_A4 = 1.0f;
             }
             else {
@@ -3362,6 +3356,12 @@ void fn_1_12EA8(void)
     }
 }
 
+#if VERSION_NTSC
+#define PRESENT_RECORD 5400
+#else
+#define PRESENT_RECORD 5250
+#endif
+
 void fn_1_131A8(omObjData *var_r28)
 {
     Vec sp98;
@@ -3462,7 +3462,7 @@ void fn_1_131A8(omObjData *var_r28)
                 lbl_1_bss_3F0 += 1.0f;
                 if ((var_r17 >= 4) && (60.0f <= lbl_1_bss_3F0) && (MGSeqStatGet(lbl_1_bss_576) == 0)) {
                     var_r28->work[0] = 0x3EE;
-                    if ((lbl_1_bss_3FC >= 0) && (lbl_1_bss_57C < (VERSION_NTSC ? 5400 : 5250))) {
+                    if ((lbl_1_bss_3FC >= 0) && (lbl_1_bss_57C < PRESENT_RECORD)) {
                         if (GWPlayerCfg[fn_1_51A8(lbl_1_bss_3FC)->unk_188].iscom != 0) {
                             if (GWPlayerCfg[fn_1_51A8(lbl_1_bss_3FC + 1)->unk_188].iscom == 0) {
                                 goto block_81;
