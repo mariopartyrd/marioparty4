@@ -411,7 +411,11 @@ Vec lbl_1_data_7F8 = { 0.0f, 0.0f, 0.0f };
 
 Vec lbl_1_data_804 = { -1.0f, -2.0f, -1.0f };
 
-GXColor lbl_1_data_810 = { 0xFF, 0xFF, 0xFF, 0xFF };
+#if VERSION_NTSC
+GXColor lbl_1_data_810 = { 255, 255, 255, 255 };
+#else
+GXColor lbl_1_data_810 = { 186, 186, 186, 255 };
+#endif
 
 Vec lbl_1_data_814 = { 0.0f, 2500.0f, -500.0f };
 
@@ -1518,7 +1522,7 @@ void fn_1_67CC(ModelData *arg0)
             Hu3DModelPosSet(var_r31->unk_00, var_r31->unk_3C.x, var_r31->unk_3C.y, var_r31->unk_3C.z);
             Hu3DModelRotSet(var_r31->unk_00, var_r31->unk_20, var_r31->unk_24, 0.0f);
             Hu3DModelAttrReset(var_r31->unk_00, HU3D_ATTR_DISPOFF);
-            if (++var_r31->unk_08 >= 600.0f) {
+            if (++var_r31->unk_08 >= (REFRESH_RATE*10.0f)) {
                 Hu3DModelAttrSet(var_r31->unk_00, HU3D_ATTR_DISPOFF);
                 var_r31->unk_04 = 0;
                 var_r31->unk_08 = 0;

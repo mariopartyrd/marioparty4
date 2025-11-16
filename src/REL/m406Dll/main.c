@@ -125,7 +125,7 @@ void ObjectSetup(void)
     sp14.z = Center.z + (CZoom * (cosd(CRot.y) * cosd(CRot.x)));
     VECSubtract(&Center, &sp14, &sp8);
     VECNormalize(&sp8, &sp8);
-    HuAudFXListnerSetEX(&sp14, &sp8, 100000.0f, 4166.6665f, 0.0f, 300.0f, 300.0f);
+    HuAudFXListnerSetEX(&sp14, &sp8, 100000.0f, (34000.0f/REFRESH_RATE)+3600, 0.0f, 300.0f, 300.0f);
     Hu3DLightAllKill();
     Hu3DLighInit();
     lbl_1_bss_28 = omAddObjEx(var_r31, 255, 2, 0, -1, fn_1_3B8);
@@ -164,15 +164,15 @@ void fn_1_40C(omObjData *object)
             break;
         case 1:
             lbl_1_bss_18++;
-            if (lbl_1_bss_18 >= 48.0f) {
-                fn_1_696C(30.000002f);
+            if (lbl_1_bss_18 >= (REFRESH_RATE*0.8f)) {
+                fn_1_696C((1800.0001f/REFRESH_RATE));
             }
             break;
         case 2:
             lbl_1_bss_18++;
-            var_f31 = lbl_1_bss_18 / 45.0f;
+            var_f31 = lbl_1_bss_18 / (REFRESH_RATE*0.75f);
             fn_1_15D0(var_f31);
-            if (lbl_1_bss_18 >= 45.0f) {
+            if (lbl_1_bss_18 >= (REFRESH_RATE*0.75f)) {
                 lbl_1_bss_24 = MGSeqCreate(3, 0);
                 lbl_1_bss_1C = 3;
                 lbl_1_bss_18 = 0;
@@ -211,8 +211,12 @@ void fn_1_40C(omObjData *object)
                     lbl_1_bss_18 = 0;
                 }
                 else {
-                    WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 30);
-                    WipeColorSet(0xFF, 0xFF, 0xFF);
+                    WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, REFRESH_RATE/2);
+                    #if VERSION_NTSC
+                    WipeColorSet(255, 255, 255);
+                    #else
+                    WipeColorSet(160, 160, 160);
+                    #endif
                     lbl_1_bss_8 = 1;
                     lbl_1_bss_1C = 9;
                     lbl_1_bss_18 = 0;
@@ -222,7 +226,7 @@ void fn_1_40C(omObjData *object)
             break;
         case 5:
             lbl_1_bss_14++;
-            var_f31 = lbl_1_bss_14 / 90.0f;
+            var_f31 = lbl_1_bss_14 / (REFRESH_RATE*1.5f);
             if (var_f31 > 1.0f) {
                 var_f31 = 1.0f;
             }
@@ -231,28 +235,36 @@ void fn_1_40C(omObjData *object)
             break;
         case 6:
             lbl_1_bss_14++;
-            var_f31 = lbl_1_bss_14 / 90.0f;
+            var_f31 = lbl_1_bss_14 / (REFRESH_RATE*1.5f);
             if (var_f31 > 1.0f) {
                 var_f31 = 1.0f;
             }
             fn_1_183C(var_f31);
-            WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 30);
-            WipeColorSet(0xFF, 0xFF, 0xFF);
+            WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, REFRESH_RATE/2);
+            #if VERSION_NTSC
+            WipeColorSet(255, 255, 255);
+            #else
+            WipeColorSet(160, 160, 160);
+            #endif
             lbl_1_bss_8 = 1;
             lbl_1_bss_1C = 7;
             lbl_1_bss_18 = 0;
             break;
         case 7:
             lbl_1_bss_14++;
-            var_f31 = lbl_1_bss_14 / 90.0f;
+            var_f31 = lbl_1_bss_14 / (REFRESH_RATE*1.5f);
             if (var_f31 > 1.0f) {
                 var_f31 = 1.0f;
             }
             fn_1_183C(var_f31);
             if (!WipeStatGet() && (lbl_1_bss_24 == -1 || !MGSeqStatGet(lbl_1_bss_24))) {
                 lbl_1_bss_24 = -1;
-                WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 30);
-                WipeColorSet(0xFF, 0xFF, 0xFF);
+                WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, REFRESH_RATE/2);
+                #if VERSION_NTSC
+                WipeColorSet(255, 255, 255);
+                #else
+                WipeColorSet(160, 160, 160);
+                #endif
                 lbl_1_bss_8 = 0;
                 CRot.x = lbl_1_data_0.unk_54;
                 CRot.y = lbl_1_data_0.unk_58;
@@ -275,8 +287,12 @@ void fn_1_40C(omObjData *object)
         case 9:
             if (!WipeStatGet() && (lbl_1_bss_24 == -1 || !MGSeqStatGet(lbl_1_bss_24))) {
                 lbl_1_bss_24 = -1;
-                WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 30);
-                WipeColorSet(0xFF, 0xFF, 0xFF);
+                WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, REFRESH_RATE/2);
+                #if VERSION_NTSC
+                WipeColorSet(255, 255, 255);
+                #else
+                WipeColorSet(160, 160, 160);
+                #endif
                 lbl_1_bss_8 = 0;
                 CRot.x = lbl_1_data_0.unk_54;
                 CRot.y = lbl_1_data_0.unk_58;
@@ -321,7 +337,7 @@ void fn_1_40C(omObjData *object)
             }
             break;
         case 13:
-            if (++lbl_1_bss_18 >= 210.0f) {
+            if (++lbl_1_bss_18 >= (REFRESH_RATE*3.5f)) {
                 lbl_1_bss_24 = -1;
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
                 lbl_1_bss_8 = 1;

@@ -5,3 +5,24 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m406Dll/main.c:
+	.text       start:0x000000A0 end:0x00002308
+	.rodata     start:0x00000000 end:0x00000088
+	.data       start:0x00000000 end:0x000000F0
+	.bss        start:0x00000000 end:0x00000030
+
+REL/m406Dll/map.c:
+	.text       start:0x00002308 end:0x0000D65C
+	.rodata     start:0x00000088 end:0x000002C0
+	.data       start:0x000000F0 end:0x00000960
+	.bss        start:0x00000030 end:0x000000D8
+
+REL/m406Dll/player.c:
+	.text       start:0x0000D65C end:0x00014814
+	.rodata     start:0x000002C0 end:0x00000454
+	.data       start:0x00000960 end:0x00001230
+	.bss        start:0x000000D8 end:0x000001FC

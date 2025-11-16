@@ -909,8 +909,8 @@ config.libs = [
     Rel(
         "m403Dll",  # Booksquirm
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m403Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m403Dll/scene.c"),
+            Object(Matching, "REL/m403Dll/main.c"),
+            Object(Matching, "REL/m403Dll/scene.c"),
         },
     ),
     Rel(
@@ -928,9 +928,9 @@ config.libs = [
     Rel(
         "m406Dll",  # Avalanche!
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m406Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m406Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m406Dll/player.c"),
+            Object(Matching, "REL/m406Dll/main.c"),
+            Object(Matching, "REL/m406Dll/map.c"),
+            Object(Matching, "REL/m406Dll/player.c"),
         },
     ),
     Rel(
@@ -1353,14 +1353,14 @@ config.libs = [
     Rel(
         "mgmodedll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/mgmode.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/free_play.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/record.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/battle.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/tictactoe.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/datalist.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/mgmodedll/minigame.c"),
+            Object(Matching, "REL/mgmodedll/mgmode.c"),
+            Object(Matching, "REL/mgmodedll/free_play.c"),
+            Object(Matching, "REL/mgmodedll/record.c"),
+            Object(Matching, "REL/mgmodedll/battle.c"),
+            Object(Matching, "REL/mgmodedll/tictactoe.c"),
+            Object(Matching, "REL/mgmodedll/main.c"),
+            Object(Matching, "REL/mgmodedll/datalist.c"),
+            Object(Matching, "REL/mgmodedll/minigame.c"),
         },
     ),
     Rel(

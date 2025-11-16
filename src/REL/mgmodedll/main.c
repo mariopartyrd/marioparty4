@@ -1309,6 +1309,9 @@ void fn_1_1EB20(StructBss8_24 *arg0)
     HuSprAttrSet(temp_r30, 32 + arg0->unk58, HUSPR_ATTR_DISPOFF);
     HuSprAttrSet(temp_r30, 36 + arg0->unk58, HUSPR_ATTR_DISPOFF);
     HuSprAttrSet(temp_r30, 49 + arg0->unk58, HUSPR_ATTR_DISPOFF);
+    #if VERSION_PAL
+    HuSprAttrSet(temp_r30, 85, HUSPR_ATTR_DISPOFF);
+    #endif
 }
 
 void fn_1_1EBE8(void)

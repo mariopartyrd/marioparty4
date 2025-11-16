@@ -67,8 +67,12 @@ s32 fn_1_6D28(void)
     s16 temp_r27;
     s32 temp_r26;
     s32 temp_r25;
+    WindowData *winP;
     s32 temp_r24;
     s16 temp_r23;
+    s16 winId;
+    
+    float winSize[2];
     s16 spC[6];
     s16 spA;
     s16 sp8;
@@ -215,6 +219,7 @@ s32 fn_1_6D28(void)
         }
         fn_1_AE20(lbl_1_bss_264C[lbl_1_bss_318[mgTypeCurr][0]][0], 10, 450, 216);
     }
+    #if VERSION_NTSC
     espAttrReset(lbl_1_bss_2C2C[19], HUSPR_ATTR_DISPOFF);
     espPosSet(lbl_1_bss_2C2C[19], 204, (sp8 * 38) + 154);
     espPriSet(lbl_1_bss_2C2C[19], 7);
@@ -226,6 +231,15 @@ s32 fn_1_6D28(void)
     espPosSet(lbl_1_bss_2C2C[18], 204, 410);
     espPriSet(lbl_1_bss_2C2C[18], 8);
     espBankSet(lbl_1_bss_2C2C[18], 1);
+    #else
+    espAttrSet(lbl_1_bss_2C2C[17], HUSPR_ATTR_DISPOFF);
+    espPosSet(lbl_1_bss_2C2C[17], 204, 126);
+    espPriSet(lbl_1_bss_2C2C[17], 8);
+    espAttrSet(lbl_1_bss_2C2C[18], HUSPR_ATTR_DISPOFF);
+    espPosSet(lbl_1_bss_2C2C[18], 204, 410);
+    espPriSet(lbl_1_bss_2C2C[18], 8);
+    espBankSet(lbl_1_bss_2C2C[18], 1);
+    #endif
     fn_1_A364(0, 180, 270, 7);
     fn_1_9F64(0, lbl_1_bss_318[mgTypeCurr][0], spA);
     fn_1_A364(1, 180, 270, 100);
@@ -235,6 +249,25 @@ s32 fn_1_6D28(void)
     while (WipeStatGet()) {
         HuPrcVSleep();
     }
+    #if VERSION_PAL
+    if(lbl_1_bss_2A6 == 2) {
+        HuWinMesMaxSizeGet(1, winSize, MAKE_MESSID(57, 0));
+        winId = HuWinExCreateStyled(-10000, -10000, winSize[0], winSize[1], -1, 1);
+        winP = &winData[winId];
+        winP->active_pad = 1;
+        HuWinMesPalSet(winId, 7, 0, 0, 0);
+        HuWinPriSet(winId, 3);
+        HuWinExAnimIn(winId);
+        HuWinMesSet(winId, MAKE_MESSID(57, 0));
+        HuWinMesWait(winId);
+        HuWinExAnimOut(winId);
+        HuWinExCleanup(winId);
+    }
+    espAttrReset(lbl_1_bss_2C2C[19], HUSPR_ATTR_DISPOFF);
+    espPosSet(lbl_1_bss_2C2C[19], 204, (sp8*38)+154);
+    espPriSet(lbl_1_bss_2C2C[19], 7);
+    espTPLvlSet(lbl_1_bss_2C2C[19], 0.7f);
+    #endif
     while (1) {
         HuPrcVSleep();
         if (spA != 0) {

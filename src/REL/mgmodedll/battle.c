@@ -90,6 +90,13 @@ s32 fn_1_E72C(void)
             }
             HuPrcVSleep();
         }
+        #if VERSION_PAL
+        if(lbl_1_data_148 == -1) {
+            lbl_1_data_148 = fn_1_2530C(0, 0, 0);
+            HuWinMesSpeedSet(lbl_1_data_148, 1);
+            fn_1_25838(lbl_1_data_148, 0x390001, -1, -1);
+        }
+        #endif
         for (temp_r31 = 0; temp_r31 <= 5; temp_r31++) {
             for (temp_r30 = 0; temp_r30 < 4; temp_r30++) {
                 if (temp_r30 != temp_r29) {
@@ -109,11 +116,20 @@ s32 fn_1_E72C(void)
             lbl_1_bss_20AA = 1;
         }
         lbl_1_bss_3A4 = fn_1_25CA8(0x1A0020);
+        #if VERSION_NTSC
         if (lbl_1_data_148 == -1) {
             lbl_1_data_148 = fn_1_2530C(0, 0, 0);
         }
         HuWinMesSpeedSet(lbl_1_data_148, 1);
         fn_1_25838(lbl_1_data_148, 0x28000F, -1, -1);
+        #else
+        if(lbl_1_data_148 == -1) {
+            lbl_1_data_148 = fn_1_2530C(0, 0, 0);
+            HuWinMesSpeedSet(lbl_1_data_148, 1);
+            fn_1_25838(lbl_1_data_148, 0x390001, -1, -1);
+        }
+        fn_1_25838(lbl_1_data_148, 0x390002+temp_r29, -1, -999);
+        #endif
         while (1) {
             temp_r28 = 0;
             if ((HuPadDStkRep[0] & PAD_BUTTON_UP) && temp_r29 > 0) {
@@ -130,6 +146,9 @@ s32 fn_1_E72C(void)
                         HuAudFXPlay(0);
                         HuSprTPLvlSet(lbl_1_bss_388, ((temp_r29 + temp_r28) * 2) + 2, 1);
                         HuSprAttrReset(lbl_1_bss_388, ((temp_r29 + temp_r28) * 2) + 2, HUSPR_ATTR_DISPOFF);
+                        #if VERSION_PAL
+                        fn_1_25838(lbl_1_data_148, 0x390002+temp_r29+temp_r28, -1, -999);
+                        #endif
                     }
                     HuPrcVSleep();
                 }

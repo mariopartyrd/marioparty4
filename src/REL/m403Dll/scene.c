@@ -165,7 +165,7 @@ void fn_1_650C(Process *arg0)
     lbl_1_bss_94 = lbl_1_bss_90 = 2;
     lbl_1_bss_84 = 0;
     lbl_1_bss_88 = 0;
-    lbl_1_bss_80 = 0.75f;
+    lbl_1_bss_80 = 45.0f/REFRESH_RATE;
     lbl_1_bss_74 = 3;
     lbl_1_bss_70 = 0;
     lbl_1_bss_7C = 0;

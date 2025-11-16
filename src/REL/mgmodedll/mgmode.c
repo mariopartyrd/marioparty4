@@ -1136,7 +1136,11 @@ void fn_1_52DC(void)
     lbl_1_bss_8.unk18 = lbl_1_bss_2C66[6];
     fn_1_18DF8(objman, &lbl_1_bss_8);
     Hu3DModelShadowSet(lbl_1_bss_2C80[5]);
+    #if VERSION_NTSC
     Hu3DModelShadowMapSet(lbl_1_bss_2C80[0]);
+    #else
+    Hu3DModelShadowMapObjSet(lbl_1_bss_2C80[0], "base_fix9-base");
+    #endif
 }
 
 void fn_1_6C18(void);

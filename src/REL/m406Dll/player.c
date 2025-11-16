@@ -403,7 +403,11 @@ void fn_1_D90C(omObjData *object)
     fn_1_117BC(var_r31->unk_14.x, 50.0f, &var_r31->unk_44, &var_r31->unk_2C);
     object->rot.x = 30.0f;
     object->rot.y = 180.0f;
+    #if VERSION_NTSC
     object->work[3] = lbl_1_data_1140[var_r31->unk_02];
+    #else
+    object->work[3] = (lbl_1_data_1140[var_r31->unk_02]*REFRESH_RATE)/60;
+    #endif
     CharModelDataClose(var_r31->unk_0C);
     var_r31->unk_7C[0] = var_r31->unk_7C[1] = -1;
     var_r31->unk_78 = 600.0f * ((frand() & 0x1FF) - 256.0f) / 256.0f;
@@ -425,7 +429,7 @@ Vec lbl_1_data_1164[12] = {
     { -100.0f, 0.0f, -3000.0f },
 };
 
-s32 lbl_1_data_11F4 = 0xC0;
+s32 lbl_1_data_11F4 = (REFRESH_RATE*16)/5;
 
 UnkM406PlayerStruct lbl_1_data_11F8[4] = {
     { -300.0f, -600.0f },
@@ -613,8 +617,8 @@ void fn_1_E214(omObjData *object)
                     }
                     if (fn_1_122C() == 4) {
                         var_r31->unk_62++;
-                        if (var_r31->unk_62 > 240.0f) {
-                            var_r31->unk_62 = 240;
+                        if (var_r31->unk_62 > (REFRESH_RATE*4.0f)) {
+                            var_r31->unk_62 = REFRESH_RATE*4;
                         }
                     }
                 }
@@ -772,9 +776,9 @@ void fn_1_F194(omObjData *object)
     if (var_r31->unk_00_field1 && var_r31->unk_44.unk_00 != NULL) {
         var_f27 = !var_r31->unk_00_field3 ? 0.7f : 3.5f;
         sp44.x = 0.0f;
-        sp44.y = -0.27222222f;
+        sp44.y = -((980.0f/REFRESH_RATE)/REFRESH_RATE);
         sp44.z = 0.0f;
-        var_f28 = 0.27222222f * var_r31->unk_44.unk_00[3].y;
+        var_f28 = ((980.0f/REFRESH_RATE)/REFRESH_RATE) * var_r31->unk_44.unk_00[3].y;
         VECScale(&var_r31->unk_44.unk_00[3], &sp38, var_f28);
         VECAdd(&sp44, &sp38, &sp2C);
         VECAdd(&var_r31->unk_2C, &sp2C, &var_r31->unk_2C);
@@ -786,11 +790,11 @@ void fn_1_F194(omObjData *object)
             sp20.x = -sp8.x;
             sp20.y = -sp8.y;
             sp20.z = -sp8.z;
-            if (var_r31->unk_62 < 120.0f) {
+            if (var_r31->unk_62 < (REFRESH_RATE*2.0f)) {
                 VECScale(&sp20, &sp20, var_f28 * var_f27);
             }
             else {
-                VECScale(&sp20, &sp20, (0.15f * (var_r31->unk_62 / 240.0f)) + (var_f28 * var_f27));
+                VECScale(&sp20, &sp20, (0.15f * (var_r31->unk_62 / (REFRESH_RATE*4.0f))) + (var_f28 * var_f27));
             }
             if (!var_r31->unk_00_field3) {
                 fn_1_117BC(var_r31->unk_14.x, 1.0f, &var_r31->unk_44, &sp44);
@@ -824,7 +828,7 @@ void fn_1_F194(omObjData *object)
         VECAdd(&var_r31->unk_2C, &sp2C, &var_r31->unk_2C);
         return;
     }
-    var_r31->unk_2C.y += -0.27222222f;
+    var_r31->unk_2C.y += -((980.0f/REFRESH_RATE)/REFRESH_RATE);
 }
 
 void fn_1_F694(omObjData *object)
@@ -1061,10 +1065,10 @@ void fn_1_FA50(ModelData *model, Mtx mtx)
                 if (var_r27 != 0) {
                     var_f29 = fn_1_12194(&sp2C[0]->trans) - 1500.0f;
                     if (var_f29 >= 0.0f) {
-                        fn_1_696C(30.000002f + (0.005f * var_f29));
+                        fn_1_696C((1800.0001f/REFRESH_RATE) + (0.005f * var_f29));
                     }
                     else {
-                        fn_1_696C(30.000002f);
+                        fn_1_696C((1800.0001f/REFRESH_RATE));
                     }
                     lbl_1_bss_E0[0].x = sp2C[0]->trans.x;
                     lbl_1_bss_E0[0].y = sp2C[0]->trans.y;
@@ -1118,7 +1122,7 @@ void fn_1_FA50(ModelData *model, Mtx mtx)
             case 2:
                 if (fn_1_122C() == 8 || fn_1_122C() == 10) {
                     lbl_1_bss_D8++;
-                    lbl_1_data_11F4 = 210;
+                    lbl_1_data_11F4 = (REFRESH_RATE*7)/2;
                     return;
                 }
                 break;
@@ -1139,11 +1143,11 @@ void fn_1_1065C(omObjData *object)
     var_r31->unk_00 = 0;
     var_r31->unk_54 = 1.0f;
     var_r31->unk_14.x = 0.0f;
-    var_r31->unk_64 = 60;
+    var_r31->unk_64 = REFRESH_RATE;
     object->trans.z = -60000.0f;
     object->rot.x = object->rot.y = object->rot.z = 0.0f;
     var_r31->unk_2C.x = var_r31->unk_2C.y = 0.0f;
-    var_r31->unk_2C.z = -20.0f;
+    var_r31->unk_2C.z = (-1200.0f/REFRESH_RATE);
     Hu3DModelShadowReset(object->model[0]);
     fn_1_6BB4(&object->trans);
     Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
@@ -1170,7 +1174,7 @@ void fn_1_10744(omObjData *object)
                 fn_1_1284();
                 var_r31->unk_12++;
             }
-            if (var_r31->unk_64 == 54.0f) {
+            if (var_r31->unk_64 == (REFRESH_RATE*0.9f)) {
                 HuAudFXPlay(0x541);
             }
             mtxRot(sp48, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
@@ -1187,10 +1191,16 @@ void fn_1_10744(omObjData *object)
             if (fn_1_122C() == 8) {
                 var_r31->unk_12++;
                 var_r31->unk_14.x = 180.0f;
-                var_r31->unk_64 = 90;
-                var_r31->unk_2C.x = 100.0 * (0.10000000149011612 * sind(180.0f + var_r31->unk_14.x));
+                var_r31->unk_64 = (REFRESH_RATE*3)/2;
+                #if VERSION_NTSC
+                var_r31->unk_2C.x = 100.0 * (0.1f * sind(180.0f + var_r31->unk_14.x));
                 var_r31->unk_2C.y = 0.0f;
-                var_r31->unk_2C.z = 100.0 * (0.10000000149011612 * cosd(180.0f + var_r31->unk_14.x));
+                var_r31->unk_2C.z = 100.0 * (0.1f * cosd(180.0f + var_r31->unk_14.x));
+                #else
+                var_r31->unk_2C.x = 100.0 * (6.0f * sind(180.0f + var_r31->unk_14.x))*(1.0f/REFRESH_RATE);
+                var_r31->unk_2C.y = 0.0f;
+                var_r31->unk_2C.z = 100.0 * (6.0f * cosd(180.0f + var_r31->unk_14.x))*(1.0f/REFRESH_RATE);
+                #endif
                 object->trans.x = 300.0f;
                 object->trans.z = -1000.0f;
                 object->trans.y = 1000.0f;
@@ -1209,7 +1219,7 @@ void fn_1_10744(omObjData *object)
             }
             break;
         case 2:
-            var_r31->unk_2C.y += -2.0f;
+            var_r31->unk_2C.y += (-7200.0f/REFRESH_RATE)*(1.0f/REFRESH_RATE);
             if (object->trans.y < 0.0f) {
                 object->trans.y = 0.0f;
                 var_r31->unk_12++;
@@ -1220,21 +1230,33 @@ void fn_1_10744(omObjData *object)
             }
             break;
         case 3:
-            var_r31->unk_14.x -= 0.5f;
+            var_r31->unk_14.x -= (30.0f*(1.0f/REFRESH_RATE));
             var_r31->unk_54 = 1.0f;
+            #if VERSION_NTSC
             if (var_r31->unk_64 < 0x14) {
                 var_r31->unk_54 = var_r31->unk_64 / 20.0f;
             }
             if ((var_r31->unk_64 < 0x50) && (var_r31->unk_64 > 0x1E)) {
+            #else
+            if (var_r31->unk_64 < (REFRESH_RATE/3.0f)) {
+                var_r31->unk_54 = var_r31->unk_64 / (REFRESH_RATE/3.0f);
+            }
+            if ((var_r31->unk_64 < ((REFRESH_RATE*4.0f)/3.0f)) && (var_r31->unk_64 > (REFRESH_RATE*0.5f))) {
+            #endif
                 mtxRot(sp48, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
                 mtxTransCat(sp48, var_r29->pos.x, var_r29->pos.y, var_r29->pos.z);
                 MTXTrans(sp18, 10.0f, 0.0f, 0.0f);
                 MTXConcat(sp18, sp48, sp48);
                 fn_1_94C0(sp48, 10, 0);
             }
-            var_r31->unk_2C.x = var_r31->unk_54 * (100.0 * (0.10000000149011612 * sind(180.0f + var_r31->unk_14.x)));
-            var_r31->unk_2C.z = var_r31->unk_54 * (100.0 * (0.10000000149011612 * cosd(180.0f + var_r31->unk_14.x)));
-            if (var_r31->unk_64 == 48.0f) {
+            #if VERSION_NTSC
+            var_r31->unk_2C.x = var_r31->unk_54 * (100.0 * (0.1f * sind(180.0f + var_r31->unk_14.x)));
+            var_r31->unk_2C.z = var_r31->unk_54 * (100.0 * (0.1f * cosd(180.0f + var_r31->unk_14.x)));
+            #else
+            var_r31->unk_2C.x = ((1.0f/REFRESH_RATE)*(100.0 * (6.0f * sind(180.0f + var_r31->unk_14.x)))*var_r31->unk_54);
+            var_r31->unk_2C.z = ((1.0f/REFRESH_RATE)*(100.0 * (6.0f * cosd(180.0f + var_r31->unk_14.x)))*var_r31->unk_54);
+            #endif
+            if (var_r31->unk_64 == (REFRESH_RATE*0.8f)) {
                 fn_1_DD7C(object, 8, 1.0f, HU3D_MOTATTR_NONE);
             }
             if (--var_r31->unk_64 == 0) {
@@ -1263,12 +1285,12 @@ void fn_1_11058(omObjData *object)
     if (lbl_1_bss_1CC < 0) {
         object->trans.x = lbl_1_data_11F8[lbl_1_bss_1F4].unk_00;
         object->trans.z = lbl_1_data_11F8[lbl_1_bss_1F4].unk_04;
-        var_r30->unk_64 = 30.0f + (frand() & 0x1F);
+        var_r30->unk_64 = (REFRESH_RATE*0.5f) + (frand() & 0x1F);
     }
     else {
         object->trans.x = lbl_1_data_1218[lbl_1_bss_1F4].unk_00;
         object->trans.z = lbl_1_data_1218[lbl_1_bss_1F4].unk_04;
-        var_r30->unk_64 = 90.0f + (frand() & 0x1F);
+        var_r30->unk_64 = (REFRESH_RATE*1.5f) + (frand() & 0x1F);
     }
     for (var_r28 = 0; var_r28 < 8; var_r28++) {
         Hu3DModelAttrSet(object->model[var_r28], HU3D_ATTR_DISPOFF);
@@ -1326,7 +1348,7 @@ void fn_1_114A0(omObjData *object)
                 var_r31->unk_54 = 0.0f;
             }
             if (var_r31->unk_5A != 0) {
-                var_r31->unk_2C.y += -2.0f;
+                var_r31->unk_2C.y += (-7200.0f/REFRESH_RATE)*(1.0f/REFRESH_RATE);
                 object->trans.y += var_r31->unk_2C.y;
                 if (object->trans.y < 0.0f) {
                     object->trans.y = 0.0f;

@@ -177,29 +177,29 @@ void fn_1_E02C(float x, float y, s16 recordNo)
             memberNum = 0;
             HuSprAttrSet(sprGrpId, memberNum, HUSPR_ATTR_DISPOFF);
             memberNum++;
-            digitValue = value / 3600;
+            digitValue = value / (REFRESH_RATE*60);
             HuSprBankSet(sprGrpId, memberNum, digitValue);
-            value -= digitValue * 3600;
+            value -= digitValue * (REFRESH_RATE*60);
             memberNum++;
             HuSprBankSet(sprGrpId, memberNum, 11);
             yOfs[memberNum] = -2;
             memberNum++;
-            digitValue = value / 600;
+            digitValue = value / (REFRESH_RATE*10);
             HuSprBankSet(sprGrpId, memberNum, digitValue);
-            value -= digitValue * 600;
+            value -= digitValue * (REFRESH_RATE*10);
             memberNum++;
-            digitValue = value / 60;
+            digitValue = value / REFRESH_RATE;
             HuSprBankSet(sprGrpId, memberNum, digitValue);
-            value -= digitValue * 60;
+            value -= digitValue * REFRESH_RATE;
             memberNum++;
             HuSprBankSet(sprGrpId, memberNum, 12);
             yOfs[memberNum] = -2;
             memberNum++;
             if (mgRecordIdxTbl[recordNo][1] == 2) {
-                value = (float)value * (203.0 / 120.0);
+                value = (float)value * (203.0 / (REFRESH_RATE*2));
             }
             else {
-                value = (float)value * (200.0 / 120.0);
+                value = (float)value * (200.0 / (REFRESH_RATE*2));
             }
             digitValue = value / 10;
             HuSprBankSet(sprGrpId, memberNum, digitValue);
