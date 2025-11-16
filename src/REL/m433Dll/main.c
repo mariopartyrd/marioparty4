@@ -215,9 +215,9 @@ void fn_1_1040(omObjData *object)
     fn_1_584(object);
     switch (work->unk_14) {
         case 0:
-            HuAudFXFadeOut(lbl_1_bss_C, 0x1E);
+            HuAudFXFadeOut(lbl_1_bss_C, REFRESH_RATE/2);
             work->unk_1C = 0x1E;
-            work->unk_20 = 0x3C;
+            work->unk_20 = REFRESH_RATE;
             lbl_1_bss_14 = MGSeqCreate(3, 0);
             MGSeqPosSet(lbl_1_bss_14, 320.0f, 240.0f);
             Center.x = 0.0f;
@@ -251,7 +251,7 @@ void fn_1_13FC(omObjData *object)
     fn_1_584(object);
     work->unk_20++;
     if (--work->unk_20 == 0) {
-        work->unk_20 = 0x3C;
+        work->unk_20 = REFRESH_RATE;
         work->unk_1C--;
         if (work->unk_1C == 0) {
             var_r27 = 1;
@@ -336,8 +336,8 @@ void fn_1_1A48(omObjData *object)
         lbl_1_bss_10 = MGSeqCreate(5, var_r24, spC[0], spC[1], spC[2], spC[3]);
         return;
     }
-    if ((MGSeqStatGet(lbl_1_bss_10) == 0) && (work->unk_28 >= 210.0f)) {
-        HuAudFXFadeOut(lbl_1_bss_8, 0x1E);
+    if ((MGSeqStatGet(lbl_1_bss_10) == 0) && (work->unk_28 >= (REFRESH_RATE*3.5f))) {
+        HuAudFXFadeOut(lbl_1_bss_8, REFRESH_RATE/2);
         work->unk_24 = 2;
         fn_1_618(object);
     }

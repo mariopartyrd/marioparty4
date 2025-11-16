@@ -841,7 +841,7 @@ void fn_1_682C(omObjData *object)
                 work->unk_28 = atan2d(sp10.x, sp10.z);
                 work->unk_24 = var_f31;
                 fn_1_8BD0(object);
-                if ((work->unk_24 < 0.02f) || (work->unk_88 > 300.0f)) {
+                if ((work->unk_24 < 0.02f) || (work->unk_88 > (REFRESH_RATE*5.0f))) {
                     work->unk_A8 = 0.0f;
                     work->unk_AC = 0.15f;
                     work->unk_B0 = 0.0f;
@@ -898,14 +898,14 @@ char *lbl_1_data_450[6] = {
 s32 lbl_1_data_468[9] = { 0, 0, 1, 1, 1, 1, 1, 0, 1 };
 float lbl_1_data_48C[0x12] = {
     0.0f,
-    0.6666667f,
-    2.1666667f,
-    2.0f,
-    1.0f,
-    7.0000005f,
-    1.5000001f,
-    1.5000001f,
-    3.0000002f,
+    (40.0f*(1.0f/REFRESH_RATE)),
+    (130.0f*(1.0f/REFRESH_RATE)),
+    (120.0f*(1.0f/REFRESH_RATE)),
+    (60.0f*(1.0f/REFRESH_RATE)),
+    (420.0f*(1.0f/REFRESH_RATE)),
+    (90.0f*(1.0f/REFRESH_RATE)),
+    (90.0f*(1.0f/REFRESH_RATE)),
+    (180.0f*(1.0f/REFRESH_RATE)),
     0.0f,
     0.0f,
     1e-45f,
@@ -946,7 +946,7 @@ void fn_1_722C(omObjData *object)
     work->unk_A4 = fn_1_26C4(work->unk_A4, work->unk_A8, work->unk_AC);
     object->rot.y = work->unk_A4;
     Hu3DModelPosSet(object->model[1], work->unk_128.x, 11.0f, work->unk_128.z);
-    work->unk_BC += 3.0000002f;
+    work->unk_BC += (1.0f/REFRESH_RATE)*180.0f;
     if (work->unk_BC >= 360.0f) {
         work->unk_BC -= 360.0f;
     }
@@ -1017,7 +1017,7 @@ void fn_1_74D4(omObjData *object)
                 }
             }
             else if (work->unk_60 != 0) {
-                work->unk_CC = ((60.0f * (0.35f * work->unk_C0)) / 1000.0f) * frandmod(0x3E8);
+                work->unk_CC = ((REFRESH_RATE * (0.35f * work->unk_C0)) / 1000.0f) * frandmod(0x3E8);
                 work->unk_D0 = 0;
             }
             fn_1_873C(object);
@@ -1059,7 +1059,7 @@ void fn_1_74D4(omObjData *object)
                     work->unk_F8 = 0;
                 }
             }
-            if ((work->unk_14 == fn_1_107B0(&sp1C)) && (fn_1_10900() >= (60.0f * (0.8f - (0.4f * work->unk_C0)))) && (work->unk_6C != 0)) {
+            if ((work->unk_14 == fn_1_107B0(&sp1C)) && (fn_1_10900() >= (REFRESH_RATE * (0.8f - (0.4f * work->unk_C0)))) && (work->unk_6C != 0)) {
                 VECSubtract(&sp1C, &work->unk_128, &sp10);
                 sp10.y = 0.0f;
                 var_f31 = VECMag(&sp10);
@@ -1194,7 +1194,7 @@ void fn_1_74D4(omObjData *object)
                         }
                     }
                     else {
-                        work->unk_CC = ((60.0f * (0.35f * work->unk_C0)) / 1000.0f) * frandmod(0x3E8);
+                        work->unk_CC = ((REFRESH_RATE * (0.35f * work->unk_C0)) / 1000.0f) * frandmod(0x3E8);
                         work->unk_D0 = 0;
                     }
                 }
@@ -1216,7 +1216,7 @@ void fn_1_8408(omObjData *object)
     if (var_r30->unk_2C == 0) {
         var_r30->unk_C0 = work->unk_C0 - 0.1f;
     }
-    if ((work->unk_14 == fn_1_107B0(&sp14)) && (fn_1_108C4() >= 12.0f)) {
+    if ((work->unk_14 == fn_1_107B0(&sp14)) && (fn_1_108C4() >= (REFRESH_RATE/5.0f))) {
         if (((var_r30->unk_6C == 0) && (work->unk_6C == 0)) || (fn_1_108C4() < 0x3E8)) {
             if ((work->unk_30 == 0) || (var_r30->unk_30 == 0)) {
                 VECSubtract(&sp14, &work->unk_128, &sp8);
@@ -1281,7 +1281,7 @@ void fn_1_873C(omObjData *object)
     work->unk_F8 = 0;
     if ((work->unk_18 != fn_1_10F38(work->unk_14)) && (work->unk_74 != 0) && (frandmod(0x3E8) < (500.0f * work->unk_C0))) {
         work->unk_F4 = 1;
-        work->unk_D4 = ((60.0f * (0.5f * work->unk_C0)) / 1000.0f) * frandmod(0x3E8);
+        work->unk_D4 = ((REFRESH_RATE * (0.5f * work->unk_C0)) / 1000.0f) * frandmod(0x3E8);
         work->unk_D8 = 0;
     }
     if (work->unk_18 == fn_1_10F38(work->unk_14)) {
@@ -1366,8 +1366,8 @@ void fn_1_8BD0(omObjData *object)
             work->unk_A8 = work->unk_28;
         }
         if ((work->unk_24 > 0.05f) && (work->unk_34 == 0)) {
-            work->unk_134.x = 0.01666666753590107 * (550.0 * (work->unk_24 * sind(work->unk_28)));
-            work->unk_134.z = 0.01666666753590107 * (550.0 * (work->unk_24 * cosd(work->unk_28)));
+            work->unk_134.x = (1.0f/REFRESH_RATE) * (550.0 * (work->unk_24 * sind(work->unk_28)));
+            work->unk_134.z = (1.0f/REFRESH_RATE) * (550.0 * (work->unk_24 * cosd(work->unk_28)));
             if (work->unk_2C != 0) {
                 work->unk_AC = 0.1f;
             }
@@ -1461,7 +1461,7 @@ void fn_1_8F80(omObjData *object)
                 }
                 if (work->unk_34 == 0) {
                     work->unk_3C = 1;
-                    if ((work->unk_1C & 0x100) || (work->unk_88 > 300.0f)) {
+                    if ((work->unk_1C & 0x100) || (work->unk_88 > (REFRESH_RATE*5.0f))) {
                         fn_1_B4D4(object, 4);
                         work->unk_30 = 1;
                         work->unk_8C++;
@@ -1471,12 +1471,12 @@ void fn_1_8F80(omObjData *object)
                 break;
             case 2:
                 if (work->unk_60 == 0) {
-                    work->unk_134.x = 1.6666667461395264 * (2.0 * sind((10.0f + (4.285714f * work->unk_88))));
+                    work->unk_134.x = (100.0f*(1.0f/REFRESH_RATE)) * (2.0 * sind((10.0f + (((1800.0f/REFRESH_RATE)/7) * work->unk_88))));
                     if (work->unk_14 != 0) {
                         work->unk_134.x *= -1.0f;
                     }
                 }
-                if ((work->unk_88 >= 9.0f) && (work->unk_38 != 0)) {
+                if ((work->unk_88 >= (REFRESH_RATE*0.15f)) && (work->unk_38 != 0)) {
                     if (work->unk_14 != 0) {
                         var_f30 = -1.0f;
                     }
@@ -1489,10 +1489,10 @@ void fn_1_8F80(omObjData *object)
                     fn_1_FE8C(&sp1C, 1, work->unk_14, work->unk_18);
                     work->unk_38 = 0;
                 }
-                else if (work->unk_88 >= 28.0f) {
+                else if (work->unk_88 >= ((REFRESH_RATE*28.0f)/60.0f)) {
                     var_f31 = 0.5f;
                     work->unk_124 = (2.0f * -(350.0f - lbl_1_data_E0[work->unk_00])) / (var_f31 * var_f31);
-                    work->unk_134.y = 0.016666668f * (-work->unk_124 * var_f31);
+                    work->unk_134.y = (1.0f/REFRESH_RATE) * (-work->unk_124 * var_f31);
                     work->unk_60 = 1;
                     work->unk_8C++;
                     work->unk_88 = 0;
@@ -1505,8 +1505,8 @@ void fn_1_8F80(omObjData *object)
                 fn_1_FE8C(&sp10, 0, work->unk_14, work->unk_18);
                 break;
             case 3:
-                work->unk_134.y += 0.016666668f * (0.016666668f * work->unk_124);
-                if ((work->unk_88 > 27.0f) && (work->unk_88 < 51.0f)) {
+                work->unk_134.y += (1.0f/REFRESH_RATE) * ((1.0f/REFRESH_RATE) * work->unk_124);
+                if ((work->unk_88 > (REFRESH_RATE*0.45f)) && (work->unk_88 < (REFRESH_RATE*0.85f))) {
                     work->unk_40 = 1;
                 }
                 fn_1_10260(work->unk_28, work->unk_24, work->unk_14, work->unk_40, &sp1C);
@@ -1523,14 +1523,14 @@ void fn_1_8F80(omObjData *object)
                 }
                 break;
             case 4:
-                if (work->unk_88 >= 12.0f) {
+                if (work->unk_88 >= (REFRESH_RATE/5.0f)) {
                     work->unk_60 = 0;
                     work->unk_8C = 1;
                     work->unk_88 = 0;
                 }
                 break;
             case 5:
-                work->unk_134.y += 0.016666668f * (0.016666668f * work->unk_124);
+                work->unk_134.y += (1.0f/REFRESH_RATE) * ((1.0f/REFRESH_RATE) * work->unk_124);
                 if (work->unk_128.y <= 0.0f) {
                     work->unk_60 = 0;
                     fn_1_D888(&work->unk_128, 0.5f);
@@ -1624,7 +1624,7 @@ void fn_1_9688(omObjData *object)
                             if (var_f31 < 0.0f) {
                                 var_f31 = 0.0f;
                             }
-                            work->unk_90 = 60.0f * var_f31;
+                            work->unk_90 = REFRESH_RATE * var_f31;
                         }
                         VECSubtract(&sp2C, &work->unk_128, &sp20);
                         work->unk_A8 = atan2d(sp20.x, sp20.z);
@@ -1836,11 +1836,11 @@ void fn_1_A618(omObjData *object)
                         if (work->unk_5C != 0) {
                             var_f30 = 0.5f;
                             work->unk_124 = (2.0f * -sp20.y) / (var_f30 * var_f30);
-                            work->unk_134.y = 0.016666668f * (-work->unk_124 * var_f30);
+                            work->unk_134.y = (1.0f/REFRESH_RATE) * (-work->unk_124 * var_f30);
                             VECSubtract(&sp20, &work->unk_128, &sp14);
                             sp14.y = 0.0f;
-                            work->unk_134.x = 0.016666668f * (sp14.x / 0.5f);
-                            work->unk_134.z = 0.016666668f * (sp14.z / 0.5f);
+                            work->unk_134.x = (1.0f/REFRESH_RATE) * (sp14.x / 0.5f);
+                            work->unk_134.z = (1.0f/REFRESH_RATE) * (sp14.z / 0.5f);
                             if (work->unk_14 != 0) {
                                 var_f29 = -90.0f;
                             }
@@ -1853,7 +1853,7 @@ void fn_1_A618(omObjData *object)
                             work->unk_68 = 1;
                         }
                         else {
-                            work->unk_134.y = 14.833334f;
+                            work->unk_134.y = 890.0f*(1.0f/REFRESH_RATE);
                         }
                         work->unk_60 = 1;
                         fn_1_D888(&work->unk_128, 0.75f);
@@ -1862,9 +1862,9 @@ void fn_1_A618(omObjData *object)
             }
             break;
         case 1:
-            work->unk_134.y += 0.016666668f * (0.016666668f * work->unk_124);
+            work->unk_134.y += (1.0f/REFRESH_RATE) * ((1.0f/REFRESH_RATE) * work->unk_124);
             if (work->unk_68 != 0) {
-                var_f31 = (0.016666668f * work->unk_88) - 0.35f;
+                var_f31 = ((1.0f/REFRESH_RATE) * work->unk_88) - 0.35f;
                 if ((var_f31 >= 0.0f) && (var_f31 < 0.4)) {
                     work->unk_54 = 1;
                     if ((work->unk_1C & 0x100) != 0) {
@@ -1950,10 +1950,10 @@ void fn_1_AB88(omObjData *object)
                         fn_1_D888(&work->unk_128, 0.75f);
                         var_f30 = 0.5f;
                         work->unk_124 = (2.0f * -(350.0f - lbl_1_data_E0[work->unk_00])) / (var_f30 * var_f30);
-                        work->unk_134.y = 0.016666668f * (-work->unk_124 * var_f30);
-                        work->unk_134.x = 0.016666668f * (-work->unk_128.x / 0.75f);
+                        work->unk_134.y = (1.0f/REFRESH_RATE) * (-work->unk_124 * var_f30);
+                        work->unk_134.x = (1.0f/REFRESH_RATE) * (-work->unk_128.x / 0.75f);
                         if (var_r30 != 0) {
-                            work->unk_134.z = 0.016666668f * (var_f31 / 0.5f);
+                            work->unk_134.z = (1.0f/REFRESH_RATE) * (var_f31 / 0.5f);
                         }
                         work->unk_60 = 1;
                         work->unk_58 = 0;
@@ -1962,10 +1962,14 @@ void fn_1_AB88(omObjData *object)
             }
             break;
         case 1:
-            work->unk_134.y += 0.016666668f * (0.016666668f * work->unk_124);
+            work->unk_134.y += (1.0f/REFRESH_RATE) * ((1.0f/REFRESH_RATE) * work->unk_124);
             if ((work->unk_14 == fn_1_10740(&sp1C)) && (fn_1_10FDC() == 0)) {
                 fn_1_10B20(0.0f, &sp1C);
+                #if VERSION_NTSC
                 if ((sp1C.x * work->unk_128.x) > 0.0f) {
+                #else
+                if ((sp1C.x * work->unk_128.x) > 0.0f && sp1C.y > 100) {
+                #endif
                     sp1C.y = work->unk_128.y;
                     VECSubtract(&sp1C, &work->unk_128, &sp10);
                     if (VECMag(&sp10) < 60.000004f) {
@@ -2064,21 +2068,21 @@ void fn_1_B4D4(omObjData *object, u32 arg1)
 {
     M433PlayerWork *work = object->data;
     if ((work->unk_0C != arg1) && (arg1 < 0x15)) {
-        float var_f31 = 60.0f * lbl_1_data_24C[arg1].unk_04;
+        float var_f31 = REFRESH_RATE * lbl_1_data_24C[arg1].unk_04;
         if (work->unk_0C < 0) {
             var_f31 = 0.0f;
         }
         work->unk_0C = arg1;
         if (work->unk_04 < 0) {
             CharModelMotionShiftSet(
-                work->unk_00, object->motion[lbl_1_data_24C[arg1].unk_00], 60.0f * lbl_1_data_24C[arg1].unk_08, var_f31, lbl_1_data_24C[arg1].unk_10);
+                work->unk_00, object->motion[lbl_1_data_24C[arg1].unk_00], REFRESH_RATE * lbl_1_data_24C[arg1].unk_08, var_f31, lbl_1_data_24C[arg1].unk_10);
         }
         else {
-            Hu3DMotionShiftSet(object->model[0], object->motion[lbl_1_data_24C[arg1].unk_00], 60.0f * lbl_1_data_24C[arg1].unk_08, var_f31,
+            Hu3DMotionShiftSet(object->model[0], object->motion[lbl_1_data_24C[arg1].unk_00], REFRESH_RATE * lbl_1_data_24C[arg1].unk_08, var_f31,
                 lbl_1_data_24C[arg1].unk_10);
         }
         if (lbl_1_data_24C[arg1].unk_0C >= 0.0f) {
-            Hu3DMotionShiftStartEndSet(object->model[0], 60.0f * lbl_1_data_24C[arg1].unk_08, 60.0f * lbl_1_data_24C[arg1].unk_0C);
+            Hu3DMotionShiftStartEndSet(object->model[0], REFRESH_RATE * lbl_1_data_24C[arg1].unk_08, REFRESH_RATE * lbl_1_data_24C[arg1].unk_0C);
         }
         work->unk_10 = 0;
     }
@@ -2230,12 +2234,12 @@ void fn_1_C240(omObjData *object)
     if (work->unk_90 != 0) {
         work->unk_A0 = 1.0f;
         if (work->unk_94 == 2) {
-            work->unk_A4 += 12.000001f;
+            work->unk_A4 += 720.0f*(1.0f/REFRESH_RATE);
             if (work->unk_A4 >= 360.0f) {
                 work->unk_A4 -= 360.0f;
             }
             work->unk_A0 = 1.5f;
-            work->unk_A8 += 0.015000001f;
+            work->unk_A8 += 0.9f*(1.0f/REFRESH_RATE);
             Hu3DMotionSpeedSet(object->model[3], 2.5f);
         }
         else {
@@ -2315,7 +2319,11 @@ s32 fn_1_C6B0(omObjData *object)
             }
             Hu3DModelPosSet(object->model[var_r28 + 1], work->unk_F8.unk_38.x, 3.0f + work->unk_F8.unk_38.y, work->unk_F8.unk_38.z);
             if (work->unk_9C <= 0.0f) {
+                #if VERSION_NTSC
                 work->unk_8C = 9;
+                #else
+                work->unk_8C = 7;
+                #endif
             }
             if (lbl_1_data_468[work->unk_6C] != 0) {
                 work->unk_84[var_r28] = 1.0f;
@@ -2328,7 +2336,7 @@ s32 fn_1_C6B0(omObjData *object)
             MTXConcat(sp14, work->unk_C8, work->unk_C8);
             MTXCopy(work->unk_C8, Hu3DData[object->model[0]].unk_F0);
         }
-        work->unk_48 += 0.016666668f;
+        work->unk_48 += (1.0f/REFRESH_RATE);
         work->unk_08 = fn_1_D4E0(&work->unk_F8, &work->unk_30, &work->unk_4C, work->unk_48);
         if (work->unk_08 != 0) {
             work->unk_84[0] = work->unk_84[1] = 0.0f;
@@ -2358,6 +2366,11 @@ s32 fn_1_C6B0(omObjData *object)
                         }
                     }
                 }
+                #if VERSION_PAL
+                for(var_r28=0; var_r28<4; var_r28++) {
+                    OM_GET_DATA_PTR(lbl_1_bss_7D0[var_r28], M433PlayerWork)->unk_64 = 0;
+                }
+                #endif
             }
         }
     }
@@ -2384,7 +2397,7 @@ void fn_1_CB98(omObjData *object)
         Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
         var_f30 = work->unk_F8.unk_04;
         var_f29 = var_f30;
-        var_f31 = var_f29 - (0.020000001f * work->unk_A8);
+        var_f31 = var_f29 - ((1.2f/REFRESH_RATE) * work->unk_A8);
         if (var_f31 < 0.0f) {
             var_f31 = 0.0f;
         }
@@ -2585,10 +2598,10 @@ void fn_1_D6A8(ModelData *model, ParticleData *particle, Mtx matrix)
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.x *= 0.92f;
             var_r31->unk08.z *= 0.92f;
-            var_r31->unk08.y += -0.27222225f;
+            var_r31->unk08.y += -980.0f*(1.0f/REFRESH_RATE)*(1.0f/REFRESH_RATE);
             var_r31->unk2C += 2.0f;
             var_r31->unk40.a *= 0.99f;
-            if (var_r31->unk00 < 24.0f) {
+            if (var_r31->unk00 < (REFRESH_RATE*0.4f)) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
             if (--var_r31->unk00 == 0) {
@@ -2614,7 +2627,7 @@ void fn_1_D888(Vec *arg0, float arg8)
     var_r28 = 3.0f + (12.0f * arg8);
     for (var_r29 = 0; var_r29 < 0xC8; var_r29++, var_r31++) {
         if (var_r31->unk00 == 0) {
-            var_r31->unk00 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
+            var_r31->unk00 = REFRESH_RATE * (0.6f + (0.0006f * frandmod(0x3E8)));
             var_f30 = frandmod(0x168);
             sp8.x = sind(var_f30);
             sp8.y = 0.0f;
@@ -2623,11 +2636,11 @@ void fn_1_D888(Vec *arg0, float arg8)
             var_r31->unk34.x = arg0->x + (sp8.x * var_f31);
             var_r31->unk34.y = 10.0f + (arg0->y + (0.030000001f * frandmod(0x3E8)));
             var_r31->unk34.z = arg0->z + (sp8.z * var_f31);
-            var_f31 = 0.8333334f + (0.0016666667f * frandmod(0x3E8));
+            var_f31 = (50.0f*(1.0f/REFRESH_RATE)) + ((0.1f/REFRESH_RATE) * frandmod(0x3E8));
             var_f31 *= 1.0f + arg8;
             var_r31->unk08.x = sp8.x * var_f31;
             var_r31->unk08.z = sp8.z * var_f31;
-            var_r31->unk08.y = 0.50000006f + (0.0011666667f * frandmod(0x3E8));
+            var_r31->unk08.y = ((0.3f*100)*(1.0f/REFRESH_RATE)) + ((0.07f*(1.0f/REFRESH_RATE)) * frandmod(0x3E8));
             var_r31->unk08.y *= (1.0f + arg8);
             var_r31->unk30 = frandmod(0x168);
             var_r31->unk2C = 60.0f + frandmod(0x1E);
@@ -2651,7 +2664,7 @@ void fn_1_DD70(Vec *arg0)
     Hu3DModelAttrReset(lbl_1_bss_7CC->model[8], HU3D_ATTR_DISPOFF);
     var_r30 = var_r31->unk_48;
     var_r31->unk_00 = 0;
-    var_r31->unk_02 = 0x3C;
+    var_r31->unk_02 = REFRESH_RATE;
     var_r30->unk2C = 100.0f;
     var_r30->unk34 = *arg0;
 }
@@ -2668,7 +2681,7 @@ void fn_1_DE28(ModelData *var_r27, ParticleData *var_r31, Mtx matrix)
             var_r30->unk2C = 0.0f;
         }
     }
-    var_r28 = 0.016666668f * (var_r31->unk_02 * 0xFF);
+    var_r28 = (1.0f/REFRESH_RATE) * (var_r31->unk_02 * 0xFF);
     for (var_r30 = var_r31->unk_48, var_r29 = 0; var_r29 < var_r31->unk_30; var_r29++, var_r30++) {
         var_r30->unk40.a = var_r28;
     }
@@ -2734,10 +2747,10 @@ void fn_1_E11C(omObjData *object)
         case 0:
             work->uContactCnt = 0;
             work->uContactCel = -1;
-            if (work->unk_28 == 0xC) {
+            if (work->unk_28 == (REFRESH_RATE/5)) {
                 fn_1_58D8(1);
             }
-            if ((work->unk_28 >= 30.0f) && (fn_1_216C() >= 2)) {
+            if ((work->unk_28 >= (REFRESH_RATE/2.0f)) && (fn_1_216C() >= 2)) {
                 work->uGameEvent = 1;
                 work->unk_28 = 0;
                 work->auEvents[0] = work->auEvents[1] = 1;
@@ -2800,7 +2813,7 @@ void fn_1_E11C(omObjData *object)
             var_r28 = 1;
             break;
         case 6:
-            if (work->unk_28 >= 120.0f) {
+            if (work->unk_28 >= (REFRESH_RATE*2.0f)) {
                 work->uGameEvent = 0;
                 work->unk_28 = 0;
                 work->auEvents[0] = work->auEvents[1] = 0;
@@ -3021,7 +3034,7 @@ void fn_1_ECFC(M433PlayerWork3Sub *arg0, M433PlayerWork3Sub2 *arg1)
         espBankSet(arg0->unk_02[3], arg0->unk_00 / 10);
         espBankSet(arg0->unk_02[4], arg0->unk_00 % 10);
     }
-    var_f28 = 2.88f;
+    var_f28 = 864.0f/(REFRESH_RATE*5);
     if (arg1->unk_1C == 0) {
         var_r30 = arg1->unk_20;
     }
@@ -3046,7 +3059,7 @@ void fn_1_ECFC(M433PlayerWork3Sub *arg0, M433PlayerWork3Sub2 *arg1)
             arg1->unk_20[2].unk_0C = 288.0f;
             arg1->unk_20[2].unk_10 = 360.0f - var_f30;
             arg1->unk_20[0].unk_24 = arg1->unk_20[1].unk_24 = arg1->unk_20[2].unk_24 = 0.0f;
-            var_f30 = var_f30 / 19.199999f;
+            var_f30 = var_f30 / (REFRESH_RATE*(1.0f/3.125f));
             arg1->unk_20[0].unk_18 = var_f30;
             arg1->unk_20[1].unk_18 = var_f30;
             arg1->unk_20[2].unk_18 = var_f30;
@@ -3054,8 +3067,8 @@ void fn_1_ECFC(M433PlayerWork3Sub *arg0, M433PlayerWork3Sub2 *arg1)
             arg1->unk_20[3].unk_10 = 144.0f;
             arg1->unk_20[3].unk_1C += 0.5f;
             arg1->unk_20[3].unk_20 -= 0.5f;
-            arg1->unk_20[3].unk_14 = (403.19998f - arg1->unk_20[3].unk_0C) / 24.0f;
-            arg1->unk_20[3].unk_18 = (360.0f - arg1->unk_20[3].unk_10) / 24.0f;
+            arg1->unk_20[3].unk_14 = (403.19998f - arg1->unk_20[3].unk_0C) / (REFRESH_RATE*0.4f);
+            arg1->unk_20[3].unk_18 = (360.0f - arg1->unk_20[3].unk_10) / (REFRESH_RATE*0.4f);
             if (arg1->unk_1C == 0) {
                 arg1->unk_20[3].unk_0C = -230.40001f;
                 arg1->unk_20[3].unk_14 *= -1.0f;
@@ -3065,7 +3078,7 @@ void fn_1_ECFC(M433PlayerWork3Sub *arg0, M433PlayerWork3Sub2 *arg1)
             break;
         case 2:
             var_f31 = arg1->unk_20[0].unk_24;
-            var_f31 += 0.055555556f;
+            var_f31 += ((10.0f/3.0f)/REFRESH_RATE);
             if (var_f31 > 0.95f) {
                 var_f31 = 1.0f;
             }
@@ -3077,24 +3090,24 @@ void fn_1_ECFC(M433PlayerWork3Sub *arg0, M433PlayerWork3Sub2 *arg1)
             arg1->unk_20[2].unk_10 += arg1->unk_20[2].unk_18;
             arg1->unk_20[3].unk_0C += arg1->unk_20[3].unk_14;
             arg1->unk_20[3].unk_10 += arg1->unk_20[3].unk_18;
-            if (arg1->unk_04 >= 19.199999f) {
+            if (arg1->unk_04 >= (REFRESH_RATE*(1.0f/3.125f))) {
                 var_r30->unk_14 = var_f28;
-                var_r30->unk_18 = -16.0f;
+                var_r30->unk_18 = (-384.0f/REFRESH_RATE)*2.5f;
                 arg1->unk_00++;
                 arg1->unk_08 = 0;
             }
             break;
         case 3:
-            if (arg1->unk_04 <= 24.0f) {
+            if (arg1->unk_04 <= (REFRESH_RATE*0.4f)) {
                 arg1->unk_20[3].unk_0C += arg1->unk_20[3].unk_14;
                 arg1->unk_20[3].unk_10 += arg1->unk_20[3].unk_18;
             }
-            if (arg1->unk_08 < 24.0f) {
+            if (arg1->unk_08 < (REFRESH_RATE*0.4f)) {
                 arg1->unk_08++;
-                var_f31 = 33.75f * arg1->unk_08;
-                var_f29 = 0.041666668f * arg1->unk_08;
+                var_f31 = (2025.0f/REFRESH_RATE) * arg1->unk_08;
+                var_f29 = (2.5f/REFRESH_RATE) * arg1->unk_08;
                 var_f29 = 0.5f * (1.0f - (var_f29 * var_f29));
-                if (arg1->unk_08 == 24.0f) {
+                if (arg1->unk_08 == (REFRESH_RATE*0.4f)) {
                     var_f29 = 0.0f;
                 }
                 arg1->unk_20[3].unk_1C = 1.5 + (var_f29 * cosd(var_f31));
@@ -3104,9 +3117,9 @@ void fn_1_ECFC(M433PlayerWork3Sub *arg0, M433PlayerWork3Sub2 *arg1)
             var_r30->unk_20 = arg1->unk_20[3].unk_1C;
             var_r30->unk_0C += var_r30->unk_14;
             var_r30->unk_10 += var_r30->unk_18;
-            var_r30->unk_18 += 0.80000013f;
-            var_r30->unk_28 += 8.333334f;
-            var_r30->unk_24 -= 0.017833335f;
+            var_r30->unk_18 += 2880.0f*(1.0f/REFRESH_RATE)*(1.0f/REFRESH_RATE);
+            var_r30->unk_28 += 500.0f*(1.0f/REFRESH_RATE);
+            var_r30->unk_24 -= 1.07f*(1.0f/REFRESH_RATE);
             if (var_r30->unk_24 < 0.0f) {
                 var_r30->unk_24 = 0.0f;
             }
@@ -3117,7 +3130,7 @@ void fn_1_ECFC(M433PlayerWork3Sub *arg0, M433PlayerWork3Sub2 *arg1)
             break;
         case 4:
             var_f31 = arg1->unk_20[3].unk_24;
-            var_f31 -= 0.055555556f;
+            var_f31 -= ((10.0f/3.0f)/REFRESH_RATE);
             if (var_f31 < 0.05f) {
                 var_f31 = 0.0f;
                 arg1->unk_00++;
@@ -3276,8 +3289,8 @@ void fn_1_10260(float var_f29, float var_f30, u32 var_r30, u32 sp8, Vec *var_r29
         var_f30 *= 1.5f;
     }
     var_r31->unk_90 = 1;
-    var_r31->unk_AC.x += 0.01666666753590107 * (800.0 * (var_f30 * sind(var_f29)));
-    var_r31->unk_AC.z += 0.01666666753590107 * (800.0 * (var_f30 * cosd(var_f29)));
+    var_r31->unk_AC.x += (1.0f/REFRESH_RATE) * (800.0 * (var_f30 * sind(var_f29)));
+    var_r31->unk_AC.z += (1.0f/REFRESH_RATE) * (800.0 * (var_f30 * cosd(var_f29)));
     if (var_r30 != 0) {
         var_r31->unk_AC.x *= -1.0f;
     }

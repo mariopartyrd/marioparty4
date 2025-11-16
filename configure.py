@@ -1130,9 +1130,9 @@ config.libs = [
     Rel(
         "m433Dll",  # Beach Volley Folly
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m433Dll/player.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m433Dll/main.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m433Dll/map.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m433Dll/player.c"),
         },
     ),
     Rel(
