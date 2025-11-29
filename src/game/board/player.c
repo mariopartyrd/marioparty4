@@ -260,7 +260,7 @@ void BoardPlayerInit(void)
 void BoardPlayerModelInit(void)
 {
     s32 var_r31;
-    s32 var_r30;
+    s32 i;
     s32 temp_r29;
     s32 temp_r25;
     s32 temp_r24;
@@ -298,19 +298,18 @@ void BoardPlayerModelInit(void)
         GWPlayer[var_r31].character = temp_r29;
         GWPlayerCfg[var_r31].character = temp_r29;
 
-        for (var_r30 = 0; var_r30 < ARRAY_COUNT(ro2); var_r30++) {
-            sp64[var_r30] = ro1[temp_r29] | ro2[var_r30];
+        for (i = 0; i < ARRAY_COUNT(ro2); i++) {
+            sp64[i] = ro1[temp_r29] | ro2[i];
         }
-        sp64[var_r30] = -1;
+        sp64[i] = -1;
         temp_r3 = BoardModelCreateCharacter(temp_r29, ro0[temp_r29], sp64, 0);
         boardPlayerMdl[var_r31] = temp_r3;
         BoardPlayerCopyMat(var_r31);
         playerMot[var_r31] = 1;
         BoardModelMotionStart(temp_r3, playerMot[var_r31], 0x40000001);
         if (BoardStartCheck() == 0) {
-
-            for (var_r30 = 0; var_r30 < ARRAY_COUNT(temp_r27->items); var_r30++) {
-                temp_r27->items[var_r30] = -1;
+            for (i = 0; i < ARRAY_COUNT(temp_r27->items); i++) {
+                temp_r27->items[i] = BOARD_ITEM_NONE;
             }
             temp_r24 = GWPlayerCfg[var_r31].group;
             GWPlayer[var_r31].team = temp_r24;
@@ -335,21 +334,21 @@ void BoardPlayerModelInit(void)
 
 void BoardPlayerModelKill(void)
 {
-    s32 var_r31;
     PlayerState *temp_r30;
     PlayerState *temp_r29;
+    s32 i;
 
-    for (var_r31 = 0; var_r31 < 4; var_r31++) {
-        temp_r30 = BoardPlayerGet(var_r31);
+    for (i = 0; i < 4; i++) {
+        temp_r30 = BoardPlayerGet(i);
         if (boardPlayerMdl[temp_r30->player_idx] != -1) {
             BoardModelKill(boardPlayerMdl[temp_r30->player_idx]);
             boardPlayerMdl[temp_r30->player_idx] = -1;
         }
-        if (playerMatCopy[var_r31] != 0) {
-            HuMemDirectFree(playerMatCopy[var_r31]);
-            playerMatCopy[var_r31] = 0;
+        if (playerMatCopy[i] != 0) {
+            HuMemDirectFree(playerMatCopy[i]);
+            playerMatCopy[i] = 0;
         }
-        BoardBowserSuitKill(var_r31);
+        BoardBowserSuitKill(i);
     }
 }
 
@@ -386,8 +385,8 @@ s32 BoardPlayerItemAdd(s32 arg0, s32 arg1)
 
     var_r29 = -1;
     var_r30 = BoardPlayerGet(arg0);
-    for (var_r31 = 0; var_r31 < 3; var_r31++) {
-        if (GWPlayer[arg0].items[var_r31] == -1) {
+    for (var_r31 = 0; var_r31 < ARRAY_COUNT(GWPlayer[arg0].items); var_r31++) {
+        if (GWPlayer[arg0].items[var_r31] == BOARD_ITEM_NONE) {
             HuAudFXPlay(0x360);
             var_r30->items[var_r31] = arg1;
             BoardItemStatusKill(arg0);
@@ -405,7 +404,7 @@ s32 BoardPlayerItemRemove(s32 arg0, s32 arg1)
 
     temp_r28 = BoardPlayerGet(arg0);
     temp_r29 = temp_r28->items[arg1];
-    if (temp_r28->items[arg1] == -1) {
+    if (temp_r28->items[arg1] == BOARD_ITEM_NONE) {
         return temp_r29;
     }
     if (arg1 == 0) {
@@ -414,20 +413,25 @@ s32 BoardPlayerItemRemove(s32 arg0, s32 arg1)
     if ((arg1 == 1) || (arg1 == 0)) {
         temp_r28->items[1] = temp_r28->items[2];
     }
-    temp_r28->items[2] = -1;
+    temp_r28->items[2] = BOARD_ITEM_NONE;
     HuAudFXPlay(0x363);
     BoardItemStatusKill(arg0);
     return temp_r29;
 }
 
-// Return the inventory slot in a player's inventory that contains an item.
-// Returns -1 if the player does not have the item.
-s32 BoardPlayerItemFind(s32 player, s32 item)
+/**
+ * Finds the inventory slot containing an item for a player.
+ *
+ * @param playerNo Player index.
+ * @param item   Item ID to search for.
+ * @return Slot index if found, otherwise -1.
+ */
+s32 BoardPlayerItemFind(s32 playerNo, s32 item)
 {
     s32 inv_slot;
 
-    for (inv_slot = 0; inv_slot < ARRAY_COUNT(GWPlayer[player].items); inv_slot++) {
-        if (item == GWPlayer[player].items[inv_slot]) {
+    for (inv_slot = 0; inv_slot < ARRAY_COUNT(GWPlayer[playerNo].items); inv_slot++) {
+        if (item == GWPlayer[playerNo].items[inv_slot]) {
             return inv_slot;
         }
     }
@@ -435,18 +439,24 @@ s32 BoardPlayerItemFind(s32 player, s32 item)
     return -1;
 }
 
-s32 BoardPlayerItemCount(s32 arg0)
+/**
+ * Counts how many items a player has
+ *
+ * @param playerNo Player index.
+ * @return Total item count
+ */
+s32 BoardPlayerItemCount(s32 playerNo)
 {
-    s32 var_r30;
-    s32 var_r31;
+    s32 itemCount;
+    s32 i;
 
-    for (var_r31 = 0, var_r30 = var_r31; var_r31 < 3; var_r31++) {
-        if (GWPlayer[arg0].items[var_r31] != -1) {
-            var_r30++;
+    for (i = 0, itemCount = i; i < ARRAY_COUNT(GWPlayer[playerNo].items); i++) {
+        if (GWPlayer[playerNo].items[i] != BOARD_ITEM_NONE) {
+            itemCount++;
         }
     }
 
-    return var_r30;
+    return itemCount;
 }
 
 void BoardPlayerCornerPosSet(s32 arg0)

@@ -1837,7 +1837,7 @@ static void ExecPrize(void) {
     temp_r30 = GWSystem.player_curr;
     BoardStatusShowSetForce(temp_r30);
     BoardStatusShowSet(temp_r30, 1);
-    for (var_r24 = i = 0; i < 3; i++) {
+    for (var_r24 = i = 0; i < ARRAY_COUNT(GWPlayer->items); i++) {
         if (GWPlayer[GWSystem.player_curr].items[i] != -1) {
             var_r24++;
         }

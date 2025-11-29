@@ -321,11 +321,11 @@ static s8 lbl_1_data_27F[4][2] = {
 };
 
 static s32 fn_1_7944(s32 arg0) {
-    s8 spB[3];
-    s8 sp8[3];
+    s8 spB[ARRAY_COUNT(GWPlayer->items)];
+    s8 sp8[ARRAY_COUNT(GWPlayer->items)];
     s32 var_r25;
     s32 temp_r26;
-    s32 var_r30;
+    s32 itemCount;
     s32 temp_r27;
     s32 var_r31;
     s32 i;
@@ -334,18 +334,18 @@ static s32 fn_1_7944(s32 arg0) {
     if (var_r25 == 0) {
         return -1;
     }
-    for (var_r30 = i = 0; i < 3; i++) {
+    for (itemCount = i = 0; i < ARRAY_COUNT(GWPlayer->items); i++) {
         temp_r26 = GWPlayer[arg0].items[i];
-        if (temp_r26 != -1) {
-            spB[var_r30] = temp_r26;
-            sp8[var_r30] = i;
-            var_r30++;
+        if (temp_r26 != BOARD_ITEM_NONE) {
+            spB[itemCount] = temp_r26;
+            sp8[itemCount] = i;
+            itemCount++;
         }
     }
-    if (var_r30 == 0) {
+    if (itemCount == 0) {
         return -1;
     }
-    if (var_r30 == 1) {
+    if (itemCount == 1) {
         return 0;
     }
     temp_r27 = BoardRandMod(100);
@@ -360,13 +360,13 @@ static s32 fn_1_7944(s32 arg0) {
     } else {
         var_r31 = 1;
     }
-    if (var_r30 == 3) {
-        if (lbl_1_data_26D[spB[var_r31]] > lbl_1_data_26D[spB[2]]) {
+    if (itemCount == ARRAY_COUNT(GWPlayer->items)) {
+        if (lbl_1_data_26D[spB[var_r31]] > lbl_1_data_26D[spB[2]]) { //TODO: spB[ARRAY_COUNT(GWPlayer->items)-1] ?
             if (lbl_1_data_27F[GWPlayer[arg0].rank][1] > temp_r27) {
-                var_r31 = 2;
+                var_r31 = 2; //TODO: var_r31 = ARRAY_COUNT(GWPlayer->items)-1 ?
             }
         } else if (lbl_1_data_27F[GWPlayer[arg0].rank][1] < temp_r27) {
-            var_r31 = 2;
+            var_r31 = 2;  //TODO: var_r31 = ARRAY_COUNT(GWPlayer->items)-1 ?
         }
     }
     var_r31 = sp8[var_r31];

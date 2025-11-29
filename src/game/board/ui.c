@@ -135,7 +135,7 @@ static void UpdateItemWindow(omObjData *arg0);
 static void CreatePickerWindow(UnkUiWork01 *arg0, s32 arg1);
 static void KillPickerWindow(UnkUiWork01 *arg0);
 
-static s16 itemMdlId[4][3];
+static s16 itemMdlId[4][ARRAY_COUNT(GWPlayer->items)];
 static Vec pickerPos[4];
 static Vec itemPosTemp[6];
 
@@ -150,7 +150,7 @@ static s16 yourTurnSpr;
 static s8 itemPlayer;
 static s8 itemUsed;
 static s8 teamItemPlayer;
-static s16 itemRandTbl[3];
+static s16 itemRandTbl[ARRAY_COUNT(GWPlayer->items)];
 static float itemPickupPos;
 static omObjData *itemPickObj;
 static Process *itemUseProc;
@@ -225,9 +225,9 @@ static float statusSprPosTbl[17][2] = {
 static float statusItemPosTbl[6][2] = {
     { -56.0f,   0.0f },
     { -58.0f,  32.0f },
-    {  -2.0f,   4.0f },
-    {  34.0f,  -8.0f },
-    {  70.0f,   4.0f },
+    {  -2.0f,   4.0f }, //item 0 pos
+    {  34.0f,  -8.0f }, //item 1 pos
+    {  70.0f,   4.0f }, //item 2 pos
     { -56.0f, -16.0f }
 };
 
@@ -324,7 +324,7 @@ void BoardStatusItemSet(s32 arg0) {
         temp_r31->unk04.y = temp_r31->unk10.y;
         temp_r31->unk00_bit2 = 0;
         HuSprGrpPosSet(temp_r31->unk02, temp_r31->unk04.x, temp_r31->unk04.y);
-        for (j = 0; j < 3; j++) {
+        for (j = 0; j < ARRAY_COUNT(GWPlayer->items); j++) {
             if (itemMdlId[i][j] != -1) {
                 BoardModelVisibilitySet(itemMdlId[i][j], arg0);
             }
@@ -614,7 +614,7 @@ static s32 UpdateBoardStatus(void) {
         HuSprBankSet(temp_r31->unk02, 2, GWPlayer[i].rank);
         BoardSpriteDigitUpdate(temp_r31->unk02, 3, BoardPlayerCoinsGet(i));
         BoardSpriteDigitUpdate(temp_r31->unk02, 7, GWStarsGet(i));
-        for (j = 0; j < 3; j++) {
+        for (j = 0; j < ARRAY_COUNT(GWPlayer->items); j++) {
             temp_r27 = GWPlayer[i].items[j];
             if (temp_r27 != -1 && temp_r31->unk00_bit5) {
                 UpdateStatusItem(temp_r31, j, temp_r27);
@@ -1061,10 +1061,10 @@ static void ItemUseProc(void) {
     s32 var_r24;
     s16 temp_r23;
     s32 var_r25;
-    s32 var_r27;
+    s32 dataDir;
     s32 i;
 
-    var_r27 = -1;
+    dataDir = -1;
     itemTeam = GWPlayerTeamGet(itemPlayer);
     if (GWTeamGet()) {
         itemTeamF = 1;
@@ -1074,31 +1074,31 @@ static void ItemUseProc(void) {
     for (i = 0; i < 4; i++) {
         GWPlayer[i].show_next = 0;
     }
-    for (var_r25 = i = 0; i < 3; i++) {
-        if (GWPlayer[itemPlayer].items[i] == 8) {
+    for (var_r25 = i = 0; i < ARRAY_COUNT(GWPlayer->items); i++) {
+        if (GWPlayer[itemPlayer].items[i] == BOARD_ITEM_GADDLIGHT) {
             var_r25++;
         }
     }
     temp_r23 = GWPlayer[itemPlayer].space_curr;
     ItemUseTeamProc(1);
-    BoardFilterFadeInit(0x1E, 0xA0);
+    BoardFilterFadeInit(30, 0xA0);
     ExecItemPick();
     ItemUseTeamProc(0);
     itemTeamF = 0;
-    BoardFilterFadeOut(0x1E);
-    if (itemUsed == 0xA) {
-        var_r27 = DATADIR_BKOOPASUIT;
+    BoardFilterFadeOut(30);
+    if (itemUsed == BOARD_ITEM_BOWSER_SUIT) {
+        dataDir = DATADIR_BKOOPASUIT;
     }
-    if (itemUsed == 0xB) {
-        var_r27 = DATADIR_BYOKODORI;
+    if (itemUsed == BOARD_ITEM_BOOS_CRYSTAL_BALL) {
+        dataDir = DATADIR_BYOKODORI;
     }
-    if (var_r27 != -1) {
-        var_r24 = BoardDataDirReadAsync(var_r27);
+    if (dataDir != -1) {
+        var_r24 = BoardDataDirReadAsync(dataDir);
         BoardDataAsyncWait(var_r24);
     }
     HideItemWindow();
     BoardItemPrevSet(itemUsed);
-    if (itemUsed != -1) {
+    if (itemUsed != BOARD_ITEM_NONE) {
         switch (itemUsed) {
             case 13:
                 BoardMakeRandomItem();
@@ -1123,7 +1123,7 @@ static void ItemUseProc(void) {
         }
         FinishItemUse(temp_r23, var_r25);
     }
-    if (itemUsed != 0xB && itemUsed != 0xC) {
+    if (itemUsed != BOARD_ITEM_BOOS_CRYSTAL_BALL && itemUsed != BOARD_ITEM_MAGIC_LAMP) {
         SetItemUIStatus(3);
     }
     while (itemPickObj) {
@@ -1137,7 +1137,7 @@ static void ItemUseProc(void) {
 
 static void FinishItemUse(s16 arg0, s32 arg1) {
     s32 var_r30;
-    s32 var_r31;
+    s32 i;
     s16 temp_r29;
 
     switch (itemUsed) {
@@ -1159,13 +1159,13 @@ static void FinishItemUse(s16 arg0, s32 arg1) {
             BoardPlayerSparkSet(itemPlayer);
             break;
         case 8:
-            for (var_r30 = var_r31 = 0; var_r31 < 3; var_r31++) {
-                if (GWPlayer[itemPlayer].items[var_r31] == 8) {
+            for (var_r30 = i = 0; i < ARRAY_COUNT(GWPlayer->items); i++) {
+                if (GWPlayer[itemPlayer].items[i] == BOARD_ITEM_GADDLIGHT) {
                     var_r30++;
                 }
             }
             if (var_r30 == arg1) {
-                itemUsed = -1;
+                itemUsed = BOARD_ITEM_NONE;
             }
             break;
     }
@@ -1187,9 +1187,9 @@ void BoardMakeRandomItem(void) {
     s32 chosenItemIndex;
     s32 i;
 
-    for (i = 0; i < 3; i++) {
-        chosenItemIndex = BoardRandMod(0xE);
-        if (chosenItemIndex != 0xA && chosenItemIndex != 0xD) {
+    for (i = 0; i < ARRAY_COUNT(itemRandTbl); i++) {
+        chosenItemIndex = BoardRandMod(BOARD_ITEMS_END);
+        if (chosenItemIndex != BOARD_ITEM_BOWSER_SUIT && chosenItemIndex != BOARD_ITEM_ITEM_BAG) {
             itemRandTbl[i] = chosenItemIndex;
         }
     }
@@ -1229,9 +1229,9 @@ static inline void ExecItemPickInlineFunc01(Vec (*arg0)[6]) {
     s32 j;
 
     for (i = 0; i < 4; i++) {
-        for (j = 0; j < 3; j++) {
+        for (j = 0; j < ARRAY_COUNT(GWPlayer->items); j++) {
             sp14 = GWPlayer[i].items[j];
-            if (sp14 == -1) {
+            if (sp14 == BOARD_ITEM_NONE) {
                 itemMdlId[i][j] = -1;
             } else {
                 BoardCameraRotGet(&sp1C);
@@ -1312,7 +1312,7 @@ static void ExecItemPick(void) {
             sp40.x = statusPosTbl[i][0];
             sp40.y = statusPosTbl[i][1];
         }
-        for (j = 0; j < 6; j++) {
+        for (j = 0; j < ARRAY_COUNT(statusItemPosTbl); j++) {
             temp_r28[i][j].x = statusSprPosTbl[j + 0xB][0];
             temp_r28[i][j].y = statusSprPosTbl[j + 0xB][1];
             (temp_r28 + 4)[i][j].x = statusItemPosTbl[j][0];
@@ -1490,7 +1490,7 @@ static void SetItemUIStatus(s32 arg0) {
             for (i = 0; i < 4; i++) {
                 var_f31 = statusPosTbl[i][0];
                 var_f30 = statusPosTbl[i][1];
-                for (j = 0; j < 6; j++) {
+                for (j = 0; j < ARRAY_COUNT(statusItemPosTbl); j++) {
                     (temp_r28 + 4)[i][j].x = statusItemPosTbl[j][0];
                     (temp_r28 + 4)[i][j].y = statusItemPosTbl[j][1];
                     if ((j >= 2) && (j <= 4)) {
@@ -1565,7 +1565,7 @@ void BoardItemStatusKill(s32 arg0) {
             sp8.y = statusPosTbl[arg0][1];
         }
         sp8.z = 0.0f;
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < ARRAY_COUNT(GWPlayer->items); i++) {
             VECAdd((Vec*) statusItemPosTbl[i + 2], &sp8, &sp68[i]);
             if (itemMdlId[arg0][i] != -1) {
                 BoardModelRotGet(itemMdlId[arg0][i], &sp44[i]);
@@ -1574,9 +1574,9 @@ void BoardItemStatusKill(s32 arg0) {
                 itemMdlId[arg0][i] = -1;
             }
         }
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < ARRAY_COUNT(GWPlayer->items); i++) {
             temp_r25 = GWPlayer[arg0].items[i];
-            if (temp_r25 != -1) {
+            if (temp_r25 != BOARD_ITEM_NONE) {
                 temp_r28 = BoardModelCreate(itemMdlTbl[temp_r25], 0, 0);
                 itemMdlId[arg0][i] = temp_r28;
                 BoardCameraRotGet(&sp14);
@@ -1811,7 +1811,7 @@ static void CreateItemWindow(s32 arg0, s32 arg1) {
             var_r27 -= BoardPlayerItemCount(itemPlayer);
         }
         temp_r28 = GWPlayer[arg0].items[var_r27];
-        if (temp_r28 == -1) {
+        if (temp_r28 == BOARD_ITEM_NONE) {
             temp_r31->unk12[i] = temp_r31->unk1E[i]
                 = temp_r31->unk06[i] = temp_r31->unk00[i] = -1;
         } else {
