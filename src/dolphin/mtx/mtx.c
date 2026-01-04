@@ -3,9 +3,14 @@
 
 static f32 Unit01[] = { 0.0f, 1.0f };
 
+#ifdef TARGET_PC
+#include "math.h"
+#else
+// hack
 extern f32 sinf(f32);
 extern f32 cosf(f32);
 extern f32 tanf(f32);
+#endif
 
 void C_MTXIdentity(Mtx m)
 {
