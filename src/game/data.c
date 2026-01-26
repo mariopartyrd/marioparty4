@@ -3,7 +3,9 @@
 #include "game/process.h"
 #include "dolphin/dvd.h"
 
+#ifdef BYTESWAPPING
 #include "port/byteswap.h"
+#endif
 
 #define PTR_OFFSET(ptr, offset) (void *)(((u8 *)(ptr)+(u32)(offset)))
 #define DATA_EFF_SIZE(size) (((size)+1) & ~0x1)
@@ -287,7 +289,7 @@ BOOL HuDataGetAsyncStat(s32 status)
 static void GetFileInfo(DataReadStat *read_stat, s32 file_num)
 {
     u32 *temp_ptr = (u32 *)PTR_OFFSET(read_stat->dir, (file_num * 4))+1;
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     u32 ofs = *temp_ptr;
     byteswap_u32(&ofs);
     temp_ptr = &ofs;
@@ -297,7 +299,7 @@ static void GetFileInfo(DataReadStat *read_stat, s32 file_num)
     read_stat->raw_len = *temp_ptr++;
     read_stat->comp_type = *temp_ptr++;
     read_stat->file = temp_ptr;
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     byteswap_u32(&read_stat->raw_len);
     byteswap_u32(&read_stat->comp_type);
 #endif

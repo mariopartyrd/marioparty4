@@ -71,10 +71,17 @@ static void HuDecodeSlide(struct decode_data *decode)
     base_dst = decode->dst;
     while(decode->size) {
         if(num_bits == 0) {
+#if defined(__MWERKS__) || defined(BYTESWAPPING)
             flag = (*decode->src++) << 24;
             flag += (*decode->src++) << 16;
             flag += (*decode->src++) << 8;
             flag += *decode->src++;
+#else
+            flag = *decode->src++;
+            flag += (*decode->src++) << 8;
+            flag += (*decode->src++) << 16;
+            flag += (*decode->src++) << 24;
+#endif
             num_bits = 32;
         }
         if(flag >> 31) {
@@ -118,10 +125,17 @@ static void HuDecodeFslide(struct decode_data *decode)
     flag = 0;
     while(decode->size) {
         if(num_bits == 0) {
+#if defined(__MWERKS__) || defined(BYTESWAPPING)
             flag = (*decode->src++) << 24;
             flag += (*decode->src++) << 16;
             flag += (*decode->src++) << 8;
             flag += *decode->src++;
+#else
+            flag = *decode->src++;
+            flag += (*decode->src++) << 8;
+            flag += (*decode->src++) << 16;
+            flag += (*decode->src++) << 24;
+#endif
             num_bits = 32;
         }
         if(flag >> 31) {
