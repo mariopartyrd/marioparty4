@@ -1,7 +1,9 @@
 #include "game/armem.h"
 #include "game/data.h"
 
+#ifdef BYTESWAPPING
 #include <port/byteswap.h>
+#endif
 
 typedef struct armem_block {
     /* 0x00 */ u8 flag;
@@ -329,7 +331,7 @@ void HuARDirFree(u32 dir) {
     }
 }
 
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
 #define DIR_DATA (dir_data_pc)
 #else
 #define DIR_DATA (dir_data)
@@ -343,7 +345,7 @@ void *HuAR_ARAMtoMRAMFileRead(u32 dir, u32 num, HeapID heap) {
     s32 count;
     s32 size;
     u32 amemptr;
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     s32 dir_data_pc[2];
     s32 i;
 #endif
@@ -361,7 +363,7 @@ void *HuAR_ARAMtoMRAMFileRead(u32 dir, u32 num, HeapID heap) {
     arqIdx &= 0xF;
     while (HuARDMACheck());
     dir_data = &preLoadBuf[(dir + 1) & 7];
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     for (i = 0; i < 2; i++) {
         dir_data_pc[i] = dir_data[i];
         byteswap_s32(&dir_data_pc[i]);
@@ -386,7 +388,7 @@ void *HuAR_ARAMtoMRAMFileRead(u32 dir, u32 num, HeapID heap) {
     arqIdx &= 0xF;
     while (HuARDMACheck());
     dir_data = (s32*) ((u8*) dvd_data + (count & 0x1F));
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     for (i = 0; i < 2; i++) {
         dir_data_pc[i] = dir_data[i];
         byteswap_s32(&dir_data_pc[i]);
