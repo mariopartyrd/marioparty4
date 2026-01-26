@@ -212,6 +212,7 @@ static void gcTerminateProcess(Process *process)
     processcnt--;
 #ifdef TARGET_PC
     thread_arg = 2;
+    co_switch(processthread);
 #else
     gclongjmp(&processjmpbuf, 2);
 #endif
