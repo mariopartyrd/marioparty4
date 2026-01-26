@@ -114,7 +114,7 @@ uv run tools/build_iso.py
 > [!NOTE]
 > The following has only been tested with `GMPE01_00`
 >
-> Linux, MacOS, and x64 support to come later.
+> MacOS support to come later.
 
 After you've built the files for GameCube, run the following command to generate
 the project for the port:
@@ -133,7 +133,7 @@ python tools/extract_assets.py orig/GMPE01_00/<iso_name>
 uv run tools/extract_assets.py orig/GMPE01_00/<iso_name>
 ```
 
-Once you've generated the C# project and extracted the assets, move on
+Once you've generated the C++ project and extracted the assets, move on
 
 1) Open `build\port\marioparty4.sln` in Visual Studio 2022
 2) Build the project with the `RelWithDebInfo` preset
@@ -143,13 +143,16 @@ Once you've generated the C# project and extracted the assets, move on
 Your `RelWithDebInfo` folder should look like this:
 ```
 /RelWithDebInfo
+├── GMPE01_00
+    ├── sys
+    ├── files
+      ├── data/
+      ├── dll/
+      ├── mess/
+      ├── movie/
+      ├── sound/
+      ├── opening.bnr
 ├── marioparty.exe
-├── data/
-├── dll/
-├── mess/
-├── movie/
-├── sound/
-├── opening.bnr
 └── ...
 ```
 
