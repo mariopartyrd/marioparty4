@@ -16,6 +16,10 @@
 
 #include "ext_math.h"
 
+#ifdef TARGET_PC
+#include <assert.h>
+#endif
+
 #ifndef __MWERKS__
 #include "string.h"
 #endif
@@ -1859,15 +1863,15 @@ void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
 }
 
 void Hu3DReflectMapSet(AnimData* arg0) {
-#if TARGET_PC
-    OSReport("PC TODO: Hu3DReflectMapSet ran which tries to reallocate an anim\n");
-#endif
 #if __MWERKS__
     // this causes anim to be reallocated, so we lose the old allocation
     if (reflectAnim[0] != (AnimData*) refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
     reflectAnim[0] = HuSprAnimRead(arg0);
+#else
+    assert(0 == 1);
+    OSReport("PC TODO: Hu3DReflectMapSet ran which tries to reallocate an anim\n");
 #endif
     reflectMapNo = 0;
 }
