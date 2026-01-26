@@ -36,6 +36,12 @@ f32 frandf(void) {
 u32 frandmod(u32 arg0) {
     u32 ret;
     frand_seed = frandom(frand_seed);
+#ifdef TARGET_PC
+    if (arg0 == 0) {
+        ret = (frand_seed & 0x7FFFFFFF);
+        return ret;
+    }
+#endif
     ret = (frand_seed & 0x7FFFFFFF)%arg0;
     return ret;
 }
