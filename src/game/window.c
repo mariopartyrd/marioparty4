@@ -17,6 +17,10 @@
 
 #include "data_num/win.h"
 
+#ifdef TARGET_PC
+#include <assert.h>
+#endif
+
 typedef struct {
     /* 0x00 */ AnimData **anim;
     /* 0x04 */ s16 bank;
@@ -1324,6 +1328,9 @@ void HuWinMesSet(s16 window, u32 mess)
     WindowData *window_ptr = &winData[window];
 
     window_ptr->stat = 1;
+#ifdef TARGET_PC
+    assert(mess <= 0x10000000);
+#endif
     if ((mess & 0x80000000) == 0) {
         if (messDataPtr == 0) {
             OSReport("Error: No Message\n");
@@ -1353,6 +1360,9 @@ void HuWinInsertMesSet(s16 window, u32 mess, s16 index)
 {
     WindowData *window_ptr = &winData[window];
 
+#ifdef TARGET_PC
+    assert(mess <= 0x10000000);
+#endif
     if (!(mess & 0x80000000)) {
         if (messDataPtr == 0) {
             OSReport("Error: No Message\n");
@@ -1714,6 +1724,9 @@ static void GetMesMaxSizeSub(u32 mess)
 
     mess_start = NULL;
     cr_flag = 0;
+#ifdef TARGET_PC
+    assert(mess <= 0x10000000); // In this case we should be in GetMesMaxSizeSubPtr
+#endif
     if (mess > 0x80000000) {
         from_messdata = 0;
         mess_data = (u8 *)mess;
@@ -1990,7 +2003,9 @@ s16 HuWinKeyWaitNumGet(u32 mess)
 {
     s16 wait_num;
     u8 *mess_data;
-
+#ifdef TARGET_PC
+    assert(mess <= 0x10000000);
+#endif
     if (mess > 0x80000000) {
         mess_data = (u8 *)mess;
     }
