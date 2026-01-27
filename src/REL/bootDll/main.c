@@ -114,9 +114,12 @@ void ObjectSetup(void)
      }
      #endif
      group = HuSprGrpCreate(2);
+#if defined(__MWERKS__) || defined(BYTESWAPPING)
+     // TODO PC we need to either byteswap this manually or take it from title.bin
      data = HuSprAnimRead(NintendoDataDecode());
      sprite_nintendo = HuSprCreate(data, 0, 0);
      HuSprGrpMemberSet(group, 0, sprite_nintendo);
+#endif
      HuSprPosSet(group, 0, 288, 240);
      HuSprAttrSet(group, 0, HUSPR_ATTR_DISPOFF);
      if (omovlevtno != 0) {

@@ -913,6 +913,7 @@ void fn_1_2AAC(omObjData *arg0)
             GXPosition1x16(j + (i + 1) * 30);
             GXPosition1x16(j + i * 30);
         }
+        // TODO
         GXEnd();
     }
     lbl_1_bss_5AC.unk28 = GXEndDisplayList();
