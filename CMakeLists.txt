@@ -154,7 +154,7 @@ if (NOT MSVC)
 endif ()
 
 add_library(dol SHARED ${DOLPHIN_FILES} ${GAME_FILES} ${PORT_FILES} extern/libco/libco.c)
-target_compile_definitions(dol PRIVATE TARGET_PC NON_MATCHING TARGET_DOL BYTESWAPPING VERSION=${VERSION} MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
+target_compile_definitions(dol PRIVATE TARGET_PC NON_MATCHING TARGET_DOL VERSION=${VERSION} MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
 target_include_directories(dol PRIVATE include build/GMPE01_00/include extern/libco)
 target_link_libraries(dol PRIVATE aurora::core aurora::gx aurora::si aurora::vi aurora::pad musyx)
 # TODO it doesn't work on Linux yet
@@ -175,7 +175,7 @@ else ()
 endif ()
 
 add_executable(marioparty4 src/port/portmain.c)
-target_compile_definitions(marioparty4 PRIVATE TARGET_PC BYTESWAPPING NON_MATCHING VERSION=${VERSION})
+target_compile_definitions(marioparty4 PRIVATE TARGET_PC NON_MATCHING VERSION=${VERSION})
 target_include_directories(marioparty4 PRIVATE include)
 target_link_libraries(marioparty4 PRIVATE dol aurora::main)
 
