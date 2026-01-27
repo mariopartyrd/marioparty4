@@ -293,6 +293,7 @@ typedef struct HsfMatrix32b {
     u32 data;
 } HsfMatrix32b;
 
+    void byteswap_clear_visited_ptrs();
 void byteswap_u16(u16 *src);
 void byteswap_s16(s16 *src);
 void byteswap_u32(u32 *src);
