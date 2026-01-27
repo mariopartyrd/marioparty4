@@ -416,8 +416,10 @@ void fn_1_A90(Process *arg0)
 
     s32 sp8[4] = { 0x00490003, 0x00490006, 0x00490005, 0x00490004 };
 
+#ifdef __MWERKS__
     lbl_1_bss_11F2C[0] = lbl_1_bss_11F2C[1] = lbl_1_bss_11F2C[2] = lbl_1_bss_11F2C[3] = -1;
     lbl_1_bss_11F28[0] = lbl_1_bss_11F28[1] = lbl_1_bss_11F28[2] = lbl_1_bss_11F28[3] = -1;
+#endif
     lbl_1_bss_11F20 = 0;
 
 #if VERSION_PAL
@@ -534,6 +536,12 @@ void fn_1_E88(omObjData *object)
     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
     Hu3DMotionOverlaySet(object->model[0], object->motion[7]);
     CharModelVoiceEnableSet(var_r30->unk_10, object->motion[5], 0);
+#ifdef TARGET_PC
+    // TODO PC
+    if (var_r30->unk_02 > 3) {
+        var_r30->unk_02 = 3;
+    }
+#endif
     object->trans.x = lbl_1_data_120[var_r30->unk_02].x;
     object->trans.y = lbl_1_data_120[var_r30->unk_02].y;
     object->trans.z = lbl_1_data_120[var_r30->unk_02].z;
@@ -1459,15 +1467,20 @@ Vec lbl_1_data_1C0[4] = {
 
 void fn_1_485C(ModelData *model, Mtx mtx)
 {
+#ifdef NON_MATCHING
+    Mtx44 sp100;
+#else
     Mtx sp100;
+#endif
     Mtx spD0;
     Mtx spA0;
     ROMtx sp70;
+#ifdef NON_MATCHING
+    Mtx44 sp40;
+#else
     Mtx sp40;
-    Vec sp34; // ! - uninitialized
-    Vec sp28; // ! - uninitialized
-    Vec sp1C; // ! - uninitialized
-    Vec sp10;
+#endif
+    Vec sp10[4];
 
     float var_f31;
 
@@ -1521,7 +1534,7 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     MTXInverse(mtx, spA0);
     spA0[0][3] = spA0[1][3] = spA0[2][3] = 0.0f;
     MTXReorder(spA0, sp70);
-    MTXROMultVecArray(sp70, &lbl_1_data_1C0[0], &sp10, 4);
+    MTXROMultVecArray(sp70, &lbl_1_data_1C0[0], sp10, 4);
     GXLoadPosMtxImm(mtx, 0);
     var_r31 = lbl_1_bss_5C;
     for (var_r30 = 0; var_r30 < 1024; var_r30++, var_r31++) {
@@ -1530,16 +1543,16 @@ void fn_1_485C(ModelData *model, Mtx mtx)
         GXSetChanMatColor(GX_COLOR0A0, lbl_1_data_1B8);
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
         GXPosition3f32(
-            var_r31->unk_00 + (var_r31->unk_2C * (sp10.x * var_f31)), var_r31->unk_04 + (sp10.y * var_f31), var_r31->unk_08 + (sp10.z * var_f31));
+            var_r31->unk_00 + (var_r31->unk_2C * (sp10[0].x * var_f31)), var_r31->unk_04 + (sp10[0].y * var_f31), var_r31->unk_08 + (sp10[0].z * var_f31));
         GXTexCoord2f32(0.0f, 0.0f);
         GXPosition3f32(
-            var_r31->unk_00 + (var_r31->unk_2C * (sp1C.x * var_f31)), var_r31->unk_04 + (sp1C.y * var_f31), var_r31->unk_08 + (sp1C.z * var_f31));
+            var_r31->unk_00 + (var_r31->unk_2C * (sp10[1].x * var_f31)), var_r31->unk_04 + (sp10[1].y * var_f31), var_r31->unk_08 + (sp10[1].z * var_f31));
         GXTexCoord2f32(1.0f, 0.0f);
         GXPosition3f32(
-            var_r31->unk_00 + (var_r31->unk_2C * (sp28.x * var_f31)), var_r31->unk_04 + (sp28.y * var_f31), var_r31->unk_08 + (sp28.z * var_f31));
+            var_r31->unk_00 + (var_r31->unk_2C * (sp10[2].x * var_f31)), var_r31->unk_04 + (sp10[2].y * var_f31), var_r31->unk_08 + (sp10[2].z * var_f31));
         GXTexCoord2f32(1.0f, 1.0f);
         GXPosition3f32(
-            var_r31->unk_00 + (var_r31->unk_2C * (sp34.x * var_f31)), var_r31->unk_04 + (sp34.y * var_f31), var_r31->unk_08 + (sp34.z * var_f31));
+            var_r31->unk_00 + (var_r31->unk_2C * (sp10[3].x * var_f31)), var_r31->unk_04 + (sp10[3].y * var_f31), var_r31->unk_08 + (sp10[3].z * var_f31));
         GXTexCoord2f32(0.0f, 1.0f);
         var_r31->unk_20 += var_r31->unk_24;
         var_r31->unk_00 = var_r31->unk_0C + (var_r31->unk_28 * sind(var_r31->unk_20));
@@ -1567,7 +1580,11 @@ GXColor lbl_1_data_20C[3] = {
 
 void fn_1_54C8(ModelData *model, Mtx mtx)
 {
+#ifdef NON_MATCHING
+    Mtx44 sp5C;
+#else
     Mtx sp5C;
+#endif
     Mtx sp2C;
     GXTexObj spC;
 
