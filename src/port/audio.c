@@ -484,7 +484,7 @@ void HuAudSndGrpSet(s16 grpId) {
 
     // buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grpId));
     // msmSysLoadGroup(grpId, buf, 0);
-    HuMemDirectFree(buf);
+    //HuMemDirectFree(buf);
 }
 
 void HuAudSndCommonGrpSet(s16 grpId, s32 groupCheck) {

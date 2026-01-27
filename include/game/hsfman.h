@@ -106,7 +106,7 @@ struct model_data {
     u16 unk_28[8];
     s16 unk_38[8];
     uintptr_t unk_48;
-    u32 unk_4C;
+    uintptr_t unk_4C;
     u32 attr;
     u32 motion_attr;
     Vec unk_58;
