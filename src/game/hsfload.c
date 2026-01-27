@@ -558,7 +558,7 @@ static void FaceLoad(void)
         new_face = temp_face;
         Model.face = new_face;
         Model.faceCnt = head.face.count;
-#ifdef __MWERKS__
+#ifndef BYTESWAPPING
         file_face = (HsfBuffer *)((u32)fileptr+head.face.ofs);
         data = (HsfFace *)&file_face[head.face.count];
 #endif
@@ -922,7 +922,7 @@ static void CenvLoad(void)
         Model.cenv = cenv_file;
         for(i=0; i<head.cenv.count; i++) {
             cenv_new[i].singleData = (HsfCenvSingle *)((uintptr_t)cenv_file[i].singleData + (uintptr_t)data_base);
-#ifdef __MWERKS__
+#ifndef BYTESWAPPING
             cenv_new[i].dualData = (HsfCenvDual *)((uintptr_t)cenv_file[i].dualData + (uintptr_t)data_base);
             cenv_new[i].multiData = (HsfCenvMulti *)((uintptr_t)cenv_file[i].multiData + (uintptr_t)data_base);
 #endif
