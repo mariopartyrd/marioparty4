@@ -826,6 +826,7 @@ EXPORTS
     HuDataSelHeapRead
     HuDataSelHeapReadNum
     HuDecodeData
+    HuDvdDataRead
     HuMemDirectFree
     HuMemDirectFreeNum
     HuMemDirectMalloc
