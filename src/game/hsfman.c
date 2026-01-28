@@ -127,7 +127,6 @@ void Hu3DInit(void) {
 
         dvd_data = HuDvdDataRead("data/hiliteData2.anm");
         hiliteAnim[1] = HuSprAnimRead(dvd_data);
-        HuMemDirectFree(dvd_data);
 
         dvd_data = HuDvdDataRead("data/hiliteData3.anm");
         hiliteAnim[2] = HuSprAnimRead(dvd_data);
