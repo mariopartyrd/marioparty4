@@ -351,7 +351,7 @@ typedef struct hsf_track {
         float value;
         void *data;
     };
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     void *dataTop;
 #endif
 } HsfTrack;
@@ -400,7 +400,7 @@ typedef struct hsf_data {
     HsfObject *object;
     HsfMapAttr *mapAttr;
     HsfMatrix *matrix;
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     void **symbol;
 #endif
     s16 sceneCnt;

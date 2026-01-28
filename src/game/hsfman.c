@@ -89,6 +89,7 @@ void Hu3DInit(void) {
         layerNum[i] = 0;
         layerHook[i] = 0;
     }
+#if defined(__MWERKS__) || defined(BYTESWAPPING)
     reflectAnim[0] = HuSprAnimRead(refMapData0);
     reflectAnim[1] = HuSprAnimRead(refMapData1);
     reflectAnim[2] = HuSprAnimRead(refMapData2);
@@ -100,6 +101,41 @@ void Hu3DInit(void) {
     hiliteAnim[1] = HuSprAnimRead(hiliteData2);
     hiliteAnim[2] = HuSprAnimRead(hiliteData3);
     hiliteAnim[3] = HuSprAnimRead(hiliteData4);
+#else
+    {
+        void *dvd_data = HuDvdDataRead("data/refMapData0.anm");
+        reflectAnim[0] = HuSprAnimRead(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/refMapData1.anm");
+        reflectAnim[1] = HuSprAnimRead(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/refMapData2.anm");
+        reflectAnim[2] = HuSprAnimRead(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/refMapData3.anm");
+        reflectAnim[3] = HuSprAnimRead(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/refMapData4.anm");
+        reflectAnim[4] = HuSprAnimRead(dvd_data);
+
+        reflectMapNo = 0;
+        dvd_data = HuDvdDataRead("data/toonMapData.anm");
+        toonAnim = HuSprAnimRead(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/hiliteData.anm");
+        hiliteAnim[0] = HuSprAnimRead(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/hiliteData2.anm");
+        hiliteAnim[1] = HuSprAnimRead(dvd_data);
+        HuMemDirectFree(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/hiliteData3.anm");
+        hiliteAnim[2] = HuSprAnimRead(dvd_data);
+
+        dvd_data = HuDvdDataRead("data/hiliteData4.anm");
+        hiliteAnim[3] = HuSprAnimRead(dvd_data);
+    }
+#endif
     Hu3DFogClear();
     Hu3DAnimInit();
     Hu3DParManInit();
