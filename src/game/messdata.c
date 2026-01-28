@@ -1,6 +1,6 @@
 #include "dolphin.h"
 
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
 #include <port/byteswap.h>
 #endif
 
@@ -11,18 +11,18 @@ static void *MessData_MesDataGet(void *messdata, u32 id)
     u16 *banks;
     u16 bank;
     s32 *data;
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
     s32 ofs;
     u16 bank_pc;
 #endif
     bank = id >> 16;
     data = messdata;
     max_bank = *data;
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
     byteswap_s32(&max_bank);
 #endif
     data++;
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
     ofs = *data;
     byteswap_s32(&ofs);
     banks = (u16 *)(((u8 *)messdata) + ofs);
@@ -30,7 +30,7 @@ static void *MessData_MesDataGet(void *messdata, u32 id)
     banks = (u16 *)(((u8 *)messdata)+(*data));
 #endif
     for(i = max_bank; i != 0; i--, banks += 2) {
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
         bank_pc = *banks;
         byteswap_u16(&bank_pc);
         if(bank_pc == bank) {
@@ -45,7 +45,7 @@ static void *MessData_MesDataGet(void *messdata, u32 id)
     if (i == 0) {
         return NULL;
     }
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
     bank_pc = banks[1];
     byteswap_u16(&bank_pc);
     ofs = data[bank_pc];
@@ -62,14 +62,14 @@ static void *_MessData_MesPtrGet(void *messbank, u32 id)
     u16 index;
     s32 max_index;
     s32 *data;
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
     s32 ofs;
 #endif
 
     index = id & 0xFFFF;
     data = messbank;
     max_index = *data;
-#if BYTESWAPPING
+#if TARGET_PC
     byteswap_s32(&max_index);
 #endif
     data++;
@@ -77,7 +77,7 @@ static void *_MessData_MesPtrGet(void *messbank, u32 id)
         return NULL;
     } else {
         data =  data+index;
-#ifdef BYTESWAPPING
+#ifdef TARGET_PC
         ofs = *data;
         byteswap_s32(&ofs);
         return (((u8 *)messbank)+(ofs));
