@@ -1,6 +1,7 @@
 # Scan for undocumented functions in C files
 import re
 import glob
+import argparse
 
 from pathlib import Path
 
@@ -73,19 +74,56 @@ DOXYGEN_COMMENT = re.compile(
 
 # Unlabelled variables
 UNLABELLED_VARIABLE = re.compile(
-    r"^\s+(/\*.*\*/\s*)?(?!return)[a-zA-Z0-9]+\s+\*?\*?((var_|temp_|sp|unk)\S?\d*(_field\d*\s*:\s*)?\S?\[?\d*\]?)(\s*=\s*\S*)?;",
+    r"^\s+(/\*.*\*/\s*)?(?!return)[a-zA-Z0-9]+\s+\*?\*?((var_|temp_|sp|unk|lbl_\d+_\S+_\d+)\S?\d*(_field\d*\s*:\s*)?\S?\[?\d*\]?)(\s*=\s*\S*)?;",
     re.MULTILINE,
 )
 
 if __name__ == "__main__":
-    files = glob.glob("src/game/**/*.c", recursive=True)
+    parser = argparse.ArgumentParser(description="Scan for undocumented functions in C files")
+    parser.add_argument(
+        "directory",
+        nargs="?",
+        default="src/game",
+        help="Directory or file to scan for C files (default: src/game)"
+    )
+    parser.add_argument(
+        "-l", "--list",
+        action="store_true",
+        help="List all undocumented functions and unlabelled variables"
+    )
+    parser.add_argument(
+        "--list-functions",
+        action="store_true",
+        help="List only undocumented functions"
+    )
+    parser.add_argument(
+        "--list-variables",
+        action="store_true",
+        help="List only unlabelled variables"
+    )
+    args = parser.parse_args()
+    
+    # Check if the path is a file or directory
+    path = Path(args.directory)
+    if path.is_file():
+        files = [str(path)]
+    elif path.is_dir():
+        files = glob.glob(f"{args.directory}/**/*.c", recursive=True)
+    else:
+        print(f"Error: {args.directory} is not a valid file or directory")
+        exit(1)
 
     total_funcs = 0
     total_documented = 0
     total_unlabelled = 0
+    
+    # Determine what to list
+    list_funcs = args.list or args.list_functions
+    list_vars = args.list or args.list_variables
 
-    print("File".ljust(31), "Doc %", "Total".ljust(10), "Unlabelled Vars")
-    print("-" * 64)
+    if not (list_funcs or list_vars):
+        print("File".ljust(31), "Doc %", "Total".ljust(10), "Unlabelled Vars")
+        print("-" * 64)
 
     for file in files:
         file_path = Path(file)
@@ -108,7 +146,27 @@ if __name__ == "__main__":
             percent = (len(documented_funcs) / len(all_funcs)) * 100 if all_funcs else 0
             percent_str = f"{percent:05.2f}" if percent < 10 else f"{percent:05.2f}"
             total_count = f"({len(documented_funcs)}/{len(all_funcs)})".ljust(7)
-            print(f"{file:<30}: {percent_str}% {total_count} : {len(all_vars)}")
+            
+            if not (list_funcs or list_vars):
+                print(f"{file:<30}: {percent_str}% {total_count} : {len(all_vars)}")
+            else:
+                # Print file header with stats
+                print(f"\n{file}: {percent_str}% {total_count} : {len(all_vars)}")
+                
+                # List undocumented functions if requested
+                if list_funcs and undocumented:
+                    print(f"  Undocumented functions ({len(undocumented)}):")
+                    for func in sorted(undocumented):
+                        print(f"    - {func}")
+                
+                # List unlabelled variables if requested
+                if list_vars and all_vars:
+                    print(f"  Unlabelled variables ({len(all_vars)}):")
+                    for var in all_vars:
+                        # var is a tuple from findall, extract the variable name (index 1)
+                        var_name = var[1]
+                        print(f"    - {var_name}")
+            
             total_funcs += len(all_funcs)
             total_documented += len(documented_funcs)
             total_unlabelled += len(all_vars)

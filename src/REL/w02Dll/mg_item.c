@@ -488,7 +488,7 @@ void fn_1_6EA8(void)
     }
     BoardAudSeqPause(0, 0, 1000);
     HuAudFXPlay(68);
-    fn_1_121C(MAKE_MESSID(0x13, 0x19));
+    CreateBoardTextWindow(MAKE_MESSID(0x13, 0x19));
     lbl_1_bss_108->func = fn_1_72E4;
     HuPrcKill(NULL);
     while (1) {

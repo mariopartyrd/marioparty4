@@ -205,7 +205,7 @@ s32 fn_1_800(void)
 {
     BoardSpace *currSpace;
     s32 currPlayer;
-    s32 var_r29;
+    s32 gambleSpaceIndex;
 
     currPlayer = GWSystem.player_curr;
     currSpace = BoardSpaceGet(0, GWPlayer[currPlayer].space_curr);
@@ -221,15 +221,15 @@ s32 fn_1_800(void)
         }
 
         if ((currSpace->flag & 0x20) != 0 && (currSpace->flag & 0x10) != 0) {
-            var_r29 = 2;
+            gambleSpaceIndex = 2; // Southwest gamble
         }
         else if ((currSpace->flag & 0x20) != 0) {
-            var_r29 = 1;
+            gambleSpaceIndex = 1; // Northwest gamble
         }
         else {
-            var_r29 = 0;
+            gambleSpaceIndex = 0; // Northeast gamble
         }
-        fn_1_394C(var_r29);
+        BootstrapGamble(gambleSpaceIndex);
         return 1;
     }
     if ((currSpace->flag & 1) != 0) {
@@ -454,7 +454,15 @@ s32 fn_1_1128(void)
     BoardRollDispSet(1);
 }
 
-void fn_1_121C(u32 mesg)
+/**
+* @brief Display a message in a board window
+*
+* @details Handles the entire lifecycle of a text box displaying a message on 
+* the board. Creates the window, waits for user input, and then kills the window.
+*
+* @param mesg Message ID to display
+*/
+void CreateBoardTextWindow(u32 mesg)
 {
     BoardWinCreate(2, mesg, 4);
     BoardWinWait();
