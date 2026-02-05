@@ -5,8 +5,6 @@
 
 #include "game/board/basic_space.h"
 
-#include "game/printfunc.h"
-
 s32 lbl_1_bss_54;
 Process* lbl_1_bss_50;
 
