@@ -7,8 +7,8 @@
 
 #include "game/printfunc.h"
 
-s32 gambleSpace;
-Process* boardChildProcess;
+s32 lbl_1_bss_54;
+Process* lbl_1_bss_50;
 
 /**
  * @brief Starts the gamble minigame sequence
@@ -24,7 +24,7 @@ Process* boardChildProcess;
  * 
  * @return void
  */
-void StartGamble(void)
+void GambleExec(void)
 {
 	float temp_f31;
 	float temp_f30;
@@ -63,7 +63,7 @@ void StartGamble(void)
 	BoardModelVisibilitySet(temp_r28, 0);
 
 	// Determine which gamble space model to use
-	switch(gambleSpace) {
+	switch(lbl_1_bss_54) {
 		case 0:
 			temp_r30 = lbl_1_bss_30[0];
 			break;
@@ -97,7 +97,7 @@ void StartGamble(void)
 	BoardModelHookReset(temp_r30);
 	BoardModelPosGet(temp_r30, &sp18);
 	BoardModelPosSetV(lbl_1_data_286, &sp18);
-	CreateBoardTextWindow(MAKE_MESSID(0x13, 0x0A));
+	W02MesExec(MAKE_MESSID(0x13, 0x0A));
 	goombaDie.unk00 = 1;
 	goombaDie.unk04 = DATA_MAKE_NUM(DATADIR_W02, 0x1B);
 	goombaDie.unk08 = diceOptions;
@@ -173,9 +173,9 @@ void StartGamble(void)
 	// Announce Goomba's roll, if 10 then play player's disappointment sound
 	if(goombaDieResult == 10) {
 		HuAudPlayerVoicePlay(currPlayer, 302);
-		CreateBoardTextWindow(MAKE_MESSID(0x13, 0x10));
+		W02MesExec(MAKE_MESSID(0x13, 0x10));
 	} else {
-		CreateBoardTextWindow(MAKE_MESSID(0x13, 0x0C));
+		W02MesExec(MAKE_MESSID(0x13, 0x0C));
 	}
 
 	BoardPlayerMotBlendSet(currPlayer, 0, 15);
@@ -238,10 +238,10 @@ void StartGamble(void)
 
 		// Announce player's roll and outcome, extra voice line if player loses
 		if(playerDie.unk94 > goombaDieResult) {
-			CreateBoardTextWindow(MAKE_MESSID(0x13, 0x0D));
+			W02MesExec(MAKE_MESSID(0x13, 0x0D));
 		} else {
 			HuAudPlayerVoicePlay(currPlayer, 302);
-			CreateBoardTextWindow(MAKE_MESSID(0x13, 0x0F));
+			W02MesExec(MAKE_MESSID(0x13, 0x0F));
 		}
 	} else {
 		playerDie.unk94 = 0;
@@ -265,7 +265,7 @@ void StartGamble(void)
 			HuAudFXPlay(7);
 			HuPrcSleep(6);
 		}
-		CreateBoardTextWindow(MAKE_MESSID(0x13, 0x0E));
+		W02MesExec(MAKE_MESSID(0x13, 0x0E));
 	} 
 	// If the Goomba wins, send the player back to start
 	else {
@@ -360,8 +360,8 @@ void StartGamble(void)
 /**
  * @brief Removes the child process reference for the gamble minigame.
  */
-void RemoveChildProcess(void) {
-    boardChildProcess = NULL;
+void GambleDestroy(void) {
+    lbl_1_bss_50 = NULL;
 }
 
 /**
@@ -374,14 +374,14 @@ void RemoveChildProcess(void) {
  * 
  * @param actorIndex The index of the actor model (Gambling Goomba) to be used.
  */
-void BootstrapGamble(s32 actorIndex) {
+void GambleMain(s32 actorIndex) {
     s32 currPlayer;
     currPlayer = GWSystem.player_curr; // Unused?
 
-    gambleSpace = actorIndex;
-    boardChildProcess = HuPrcChildCreate(StartGamble, 0x2003U, 0x2000U, 0, boardMainProc);
-    HuPrcDestructorSet2(boardChildProcess, RemoveChildProcess);
-    while (boardChildProcess) {
+    lbl_1_bss_54 = actorIndex;
+    lbl_1_bss_50 = HuPrcChildCreate(GambleExec, 0x2003U, 0x2000U, 0, boardMainProc);
+    HuPrcDestructorSet2(lbl_1_bss_50, GambleDestroy);
+    while (lbl_1_bss_50) {
         HuPrcVSleep();
     }
 }

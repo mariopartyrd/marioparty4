@@ -229,7 +229,7 @@ s32 fn_1_800(void)
         else {
             gambleSpaceIndex = 0; // Northeast gamble
         }
-        BootstrapGamble(gambleSpaceIndex);
+        GambleMain(gambleSpaceIndex);
         return 1;
     }
     if ((currSpace->flag & 1) != 0) {
@@ -462,7 +462,7 @@ s32 fn_1_1128(void)
 *
 * @param mesg Message ID to display
 */
-void CreateBoardTextWindow(u32 mesg)
+void W02MesExec(u32 mesg)
 {
     BoardWinCreate(2, mesg, 4);
     BoardWinWait();

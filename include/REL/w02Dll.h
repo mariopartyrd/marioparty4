@@ -57,7 +57,7 @@ extern s32 fn_1_774();
 extern s32 fn_1_800();
 extern void fn_1_92C();
 extern s32 fn_1_1128();
-extern void CreateBoardTextWindow(u32);
+extern void W02MesExec(u32);
 
 void fn_1_1254(m02GenDice *arg0);
 void fn_1_1518(m02GenDice *arg0);
@@ -68,7 +68,7 @@ extern void fn_1_D3AC();
 extern s32 fn_1_D8C4();
 extern void fn_1_DF48();
 // unorganized
-extern void BootstrapGamble(s32);
+extern void GambleMain(s32);
 extern void fn_1_3BF4();
 extern void fn_1_39F4();
 extern void fn_1_5CF8();
