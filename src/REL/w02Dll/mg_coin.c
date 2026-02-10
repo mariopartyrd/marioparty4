@@ -427,7 +427,7 @@ void fn_1_46E8(void)
     while (!BoardPlayerMotionEndCheck(lbl_1_bss_86)) {
         HuPrcVSleep();
     }
-    fn_1_121C(MAKE_MESSID(0x13, 0x14));
+    W02MesExec(MAKE_MESSID(0x13, 0x14));
     temp_r27 = HuPrcCurrentGet()->user_data;
     temp_r27->func = fn_1_511C;
     HuPrcEnd();
