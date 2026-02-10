@@ -334,9 +334,9 @@ void espSpeedSet(void);
 void espBankSet(void);
 void espDrawNoSet(void);
 void espPriSet(void);
-void lbl_80192060(void);
-void lbl_80192160(void);
-void lbl_80192260(void);
+void modelTable(void);
+void motionTable(void);
+void spriteTable(void);
 void lbl_801D3DA0(void);
 void fn_8003FF68(void);
 void HuPrcInit(void);
@@ -1351,9 +1351,9 @@ extern void _kerjmp_espSpeedSet(void);
 extern void _kerjmp_espBankSet(void);
 extern void _kerjmp_espDrawNoSet(void);
 extern void _kerjmp_espPriSet(void);
-extern void _kerjmp_lbl_80192060(void);
-extern void _kerjmp_lbl_80192160(void);
-extern void _kerjmp_lbl_80192260(void);
+extern void _kerjmp_modelTable(void);
+extern void _kerjmp_motionTable(void);
+extern void _kerjmp_spriteTable(void);
 extern void _kerjmp_lbl_801D3DA0(void);
 extern void _kerjmp_fn_8003FF68(void);
 extern void _kerjmp_HuPrcInit(void);
@@ -2707,12 +2707,12 @@ asm void _kerent(void) {
     b espDrawNoSet
     entry _kerjmp_espPriSet
     b espPriSet
-    entry _kerjmp_lbl_80192060
-    b lbl_80192060
-    entry _kerjmp_lbl_80192160
-    b lbl_80192160
-    entry _kerjmp_lbl_80192260
-    b lbl_80192260
+    entry _kerjmp_modelTable
+    b modelTable
+    entry _kerjmp_motionTable
+    b motionTable
+    entry _kerjmp_spriteTable
+    b spriteTable
     entry _kerjmp_lbl_801D3DA0
     b lbl_801D3DA0
     entry _kerjmp_fn_8003FF68

@@ -210,7 +210,7 @@ game/esprite.c:
 	.bss        start:0x80190860 end:0x80192060
 	.sbss       start:0x801D3D98 end:0x801D3DA0
 
-game/code_8003FF68.c:
+game/objsetupd.c:
 	.text       start:0x8003FF68 end:0x80040500
 	.data       start:0x80130100 end:0x80130120
 	.bss        start:0x80192060 end:0x80192360
