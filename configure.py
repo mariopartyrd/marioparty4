@@ -535,22 +535,22 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSRtc.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSStopwatch.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSSync.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSThread.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSTime.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSThread.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSTime.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "dolphin/os/__start.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/__ppc_eabi_init.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/__ppc_eabi_init.c"),
         ],
     ),
     DolphinLib(
         "db",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/db.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/db.c"),
         ],
     ),
     DolphinLibUnpatched(
         "mtx",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtx.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/mtx/mtx.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtxvec.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/mtx44.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/mtx/vec.c"),
