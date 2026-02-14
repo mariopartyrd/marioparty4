@@ -586,6 +586,16 @@ dolphin/os/OSCache.c:
 	.text       start:0x800B5F70 end:0x800B6608
 	.data       start:0x80158EC0 end:0x801590F0
 
+dolphin/os/OSContext.c:
+	.text       start:0x800B6608 end:0x800B6E68
+	.data       start:0x801590F0 end:0x801592C8
+
+dolphin/os/OSError.c:
+	.text       start:0x800B6E68 end:0x800B7104
+	.data       start:0x801592C8 end:0x801595E8
+	.bss        start:0x801C26F0 end:0x801C2734
+	.sdata      start:0x801F0C70 end:0x801F0C74
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
