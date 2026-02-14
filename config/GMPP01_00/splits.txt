@@ -609,6 +609,25 @@ dolphin/os/OSLink.c:
 	.text       start:0x800B79C8 end:0x800B814C
 	.data       start:0x80159618 end:0x80159668
 
+dolphin/os/OSMessage.c:
+	.text       start:0x800B814C end:0x800B81AC
+
+dolphin/os/OSMemory.c:
+	.text       start:0x800B81AC end:0x800B84A4
+	.data       start:0x80159668 end:0x80159678
+
+dolphin/os/OSMutex.c:
+	.text       start:0x800B84A4 end:0x800B8514
+
+dolphin/os/OSReboot.c:
+	.text       start:0x800B8514 end:0x800B8720
+	.bss        start:0x801C2740 end:0x801C2760
+	.sbss       start:0x801F16D0 end:0x801F16E0
+
+dolphin/os/OSReset.c:
+	.text       start:0x800B8720 end:0x800B8B04
+	.sbss       start:0x801F16E0 end:0x801F16E8
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 

@@ -509,7 +509,7 @@ config.libs = [
     DolphinLib(
         "base",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/PPCArch.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/PPCArch.c"),
         ],
     ),
     DolphinLib(
@@ -526,11 +526,11 @@ config.libs = [
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSFont.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSInterrupt.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSLink.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSMessage.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSMemory.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSMutex.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSReboot.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSReset.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSMessage.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSMemory.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSMutex.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSReboot.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSReset.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSResetSW.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSRtc.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSStopwatch.c"),
