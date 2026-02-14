@@ -563,6 +563,10 @@ dolphin/os/OS.c:
 	.bss        start:0x801C26A0 end:0x801C26F0
 	.sbss       start:0x801F1668 end:0x801F1698
 
+dolphin/os/OSAlarm.c:
+	.text       start:0x800B4C18 end:0x800B52C4
+	.sbss       start:0x801F1698 end:0x801F16A0
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 

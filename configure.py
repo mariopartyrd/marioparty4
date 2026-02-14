@@ -15,11 +15,11 @@
 import argparse
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+# from typing import Any, Dict, List
 
 from tools.project import (
     Object,
-    ProgressCategory,
+    # ProgressCategory,
     ProjectConfig,
     calculate_progress,
     generate_build,
@@ -32,7 +32,8 @@ VERSIONS = [
     "GMPE01_00",  # USA 1.0
     "GMPE01_01",  # USA 1.1
     "GMPP01_00",  # PAL 1.0
-    "GMPP01_02",  # PAL 1.2 
+    "GMPP01_01",  # PAL 1.1
+    "GMPP01_02",  # PAL 1.2
     "GMPJ01_00",  # Japan 1.0
 ]
 
