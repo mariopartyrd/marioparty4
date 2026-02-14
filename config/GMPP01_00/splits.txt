@@ -667,7 +667,38 @@ dolphin/db.c:
 dolphin/mtx/mtx.c:
 	.text       start:0x800BB38C end:0x800BBC3C
 	.sdata      start:0x801F0C80 end:0x801F0C88
-	.sdata2     start:0x801F3720 end:0x801F3734
+	.sdata2     start:0x801F3720 end:0x801F3738
+
+dolphin/mtx/mtxvec.c:
+	.text       start:0x800BBC3C end:0x800BBD70
+
+dolphin/mtx/mtx44.c:
+	.text       start:0x800BBD70 end:0x800BBED8
+	.sdata2     start:0x801F3738 end:0x801F3750
+
+dolphin/mtx/vec.c:
+	.text       start:0x800BBED8 end:0x800BC250
+	.sdata2     start:0x801F3750 end:0x801F3760
+
+dolphin/mtx/quat.c:
+	.text       start:0x800BC250 end:0x800BC810
+	.rodata     start:0x8011E250 end:0x8011E260
+	.sdata2     start:0x801F3760 end:0x801F3788
+
+dolphin/mtx/psmtx.c:
+	.text       start:0x800BC810 end:0x800BC974
+
+dolphin/dvd/dvdlow.c:
+	.text       start:0x800BC974 end:0x800BD7C8
+	.bss        start:0x801C31A0 end:0x801C3270
+	.sdata      start:0x801F0C88 end:0x801F0C90
+	.sbss       start:0x801F1720 end:0x801F1768
+
+dolphin/dvd/dvdfs.c:
+	.text       start:0x800BD7C8 end:0x800BE0A4
+	.data       start:0x80159768 end:0x801598D0
+	.sdata      start:0x801F0C90 end:0x801F0C98
+	.sbss       start:0x801F1768 end:0x801F1788
 
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
