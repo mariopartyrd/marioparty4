@@ -1230,19 +1230,20 @@ void C_MTXLookAt(Mtx m, const Vec *camPos, const Vec *camUp, const Vec *target)
     m[2][3] = -(camPos->x * vLook.x + camPos->y * vLook.y + camPos->z * vLook.z);
 }
 
+
 void C_MTXLightFrustum(Mtx m, float t, float b, float l, float r, float n, float scaleS, float scaleT, float transS, float transT)
 {
     f32 tmp;
 
     tmp = 1.0f / (r - l);
-    m[0][0] = ((2 * n) * tmp) * scaleS;
+    m[0][0] = ((2.0f * n) * tmp) * scaleS;
     m[0][1] = 0.0f;
     m[0][2] = (((r + l) * tmp) * scaleS) - transS;
     m[0][3] = 0.0f;
 
     tmp = 1.0f / (t - b);
     m[1][0] = 0.0f;
-    m[1][1] = ((2 * n) * tmp) * scaleT;
+    m[1][1] = ((2.0f * n) * tmp) * scaleT;
     m[1][2] = (((t + b) * tmp) * scaleT) - transT;
     m[1][3] = 0.0f;
 
@@ -1251,6 +1252,7 @@ void C_MTXLightFrustum(Mtx m, float t, float b, float l, float r, float n, float
     m[2][2] = -1.0f;
     m[2][3] = 0.0f;
 }
+
 
 void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, float scaleS, float scaleT, float transS, float transT)
 {
