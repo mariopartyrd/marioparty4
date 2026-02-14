@@ -573,6 +573,11 @@ dolphin/os/OSAlloc.c:
 	.sdata      start:0x801F0C60 end:0x801F0C68
 	.sbss       start:0x801F16A0 end:0x801F16B0
 
+dolphin/os/OSArena.c:
+	.text       start:0x800B5CBC end:0x800B5CDC
+	.sdata      start:0x801F0C68 end:0x801F0C70
+	.sbss       start:0x801F16B0 end:0x801F16B8
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
