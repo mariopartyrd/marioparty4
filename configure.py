@@ -516,8 +516,8 @@ config.libs = [
         "os",
         [
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "dolphin/os/OS.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSAlarm.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSAlloc.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSAlarm.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSAlloc.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSArena.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSAudioSystem.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/os/OSCache.c"),

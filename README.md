@@ -17,13 +17,14 @@ There is **NO** working PC port yet, but it is in the making.
 
 This repository does **not** contain any game assets or assembly whatsoever. An existing copy of the game is required.
 
-Supported versions:
+Version Completion:
 
-- `GMPE01_00`: Rev 0 (USA)
-- `GMPE01_01`: Rev 1 (USA)
-- `GMPP01_00`: Rev 0 (PAL)
-- `GMPP01_02`: Rev 2 (PAL) 
-- `GMPJ01_00`: Rev 0 (JP)
+- `GMPE01_00`: Rev 0 (USA) ✅
+- `GMPE01_01`: Rev 1 (USA) ✅
+- `GMPP01_00`: Rev 0 (PAL) ❌
+- `GMPP01_01`: Rev 1 (PAL) ❌
+- `GMPP01_02`: Rev 2 (PAL) ❌
+- `GMPJ01_00`: Rev 0 (JP)  ❌
 
 Dependencies
 ============

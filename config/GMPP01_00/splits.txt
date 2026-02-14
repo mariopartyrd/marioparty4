@@ -570,6 +570,7 @@ dolphin/os/OSAlarm.c:
 dolphin/os/OSAlloc.c:
 	.text       start:0x800B52C4 end:0x800B5CBC
 	.data       start:0x80158AA8 end:0x80158E40
+	.sdata      start:0x801F0C60 end:0x801F0C68
 	.sbss       start:0x801F16A0 end:0x801F16B0
 
 musyx/runtime/seq.c:
