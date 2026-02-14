@@ -1046,8 +1046,6 @@ asm void PSMTXScaleApply(const register Mtx src, register Mtx dst, register f32 
 }
 #endif
 
-#if VERSION_NTSC
-
 void C_MTXQuat(Mtx m, const Quaternion *q)
 {
 
@@ -1082,8 +1080,6 @@ void C_MTXQuat(Mtx m, const Quaternion *q)
     m[2][2] = 1.0f - (xx + yy);
     m[2][3] = 0.0f;
 }
-
-#endif
 
 #ifdef GEKKO
 void PSMTXQuat(register Mtx m, const register Quaternion *q)
@@ -1140,8 +1136,6 @@ void PSMTXQuat(register Mtx m, const register Quaternion *q)
 }
 #endif
 
-#if VERSION_NTSC
-
 void C_MTXReflect(Mtx m, const Vec *p, const Vec *n)
 {
     f32 vxy, vxz, vyz, pdotn;
@@ -1166,8 +1160,6 @@ void C_MTXReflect(Mtx m, const Vec *p, const Vec *n)
     m[2][2] = 1.0f - 2.0f * n->z * n->z;
     m[2][3] = pdotn * n->z;
 }
-
-#endif
 
 #ifdef GEKKO
 void PSMTXReflect(register Mtx m, const register Vec *p, const register Vec *n)
@@ -1244,18 +1236,14 @@ void C_MTXLightFrustum(Mtx m, float t, float b, float l, float r, float n, float
     f32 tmp;
 
     tmp = 1.0f / (r - l);
-#if VERSION_NTSC // the 2.0f constant is messing up sdata2 for PAL, but removing the function messes with ordering
     m[0][0] = ((2.0f * n) * tmp) * scaleS;
-#endif
     m[0][1] = 0.0f;
     m[0][2] = (((r + l) * tmp) * scaleS) - transS;
     m[0][3] = 0.0f;
 
     tmp = 1.0f / (t - b);
     m[1][0] = 0.0f;
-#if VERSION_NTSC
     m[1][1] = ((2.0f * n) * tmp) * scaleT;
-#endif
     m[1][2] = (((t + b) * tmp) * scaleT) - transT;
     m[1][3] = 0.0f;
 
@@ -1292,8 +1280,6 @@ void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, float scaleS, float scal
     m[2][3] = 0.0f;
 }
 
-#if VERSION_NTSC
-
 void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, float scaleS, float scaleT, float transS, float transT)
 {
     f32 tmp;
@@ -1314,5 +1300,3 @@ void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, float scaleS, float scal
     m[2][2] = 0.0f;
     m[2][3] = 1.0f;
 }
-
-#endif
