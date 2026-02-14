@@ -628,6 +628,21 @@ dolphin/os/OSReset.c:
 	.text       start:0x800B8720 end:0x800B8B04
 	.sbss       start:0x801F16E0 end:0x801F16E8
 
+dolphin/os/OSResetSW.c:
+	.text       start:0x800B8B04 end:0x800B8E90
+	.sbss       start:0x801F16E8 end:0x801F1708
+
+dolphin/os/OSRtc.c:
+	.text       start:0x800B8E90 end:0x800B9928
+	.bss        start:0x801C2760 end:0x801C27B8
+
+dolphin/os/OSStopwatch.c:
+	.text       start:0x800B9928 end:0x800B9C98
+	.data       start:0x80159678 end:0x801596F0
+
+dolphin/os/OSSync.c:
+	.text       start:0x800B9C98 end:0x800B9D1C
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
