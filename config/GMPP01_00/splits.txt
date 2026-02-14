@@ -643,6 +643,32 @@ dolphin/os/OSStopwatch.c:
 dolphin/os/OSSync.c:
 	.text       start:0x800B9C98 end:0x800B9D1C
 
+dolphin/os/OSThread.c:
+	.text       start:0x800B9D1C end:0x800BADE8
+	.bss        start:0x801C27B8 end:0x801C31A0
+	.sbss       start:0x801F1708 end:0x801F1718
+
+dolphin/os/OSTime.c:
+	.text       start:0x800BADE8 end:0x800BB20C
+	.data       start:0x801596F0 end:0x80159750
+
+dolphin/os/__start.c:
+	.init       start:0x80003100 end:0x80003354
+
+dolphin/os/__ppc_eabi_init.c:
+	.init       start:0x80003354 end:0x800033A8
+	.text       start:0x800BB20C end:0x800BB2A0
+
+dolphin/db.c:
+	.text       start:0x800BB2A0 end:0x800BB38C
+	.data       start:0x80159750 end:0x80159768
+	.sbss       start:0x801F1718 end:0x801F1720
+
+dolphin/mtx/mtx.c:
+	.text       start:0x800BB38C end:0x800BBC3C
+	.sdata      start:0x801F0C80 end:0x801F0C88
+	.sdata2     start:0x801F3720 end:0x801F3734
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
@@ -729,6 +755,3 @@ musyx/runtime/Delay/delay_fx.c:
 
 musyx/runtime/Chorus/chorus_fx.c:
 	.text       start:0x80113F74 end:0x801147DC
-
-dolphin/os/__start.c:
-	.init       start:0x80003100 end:0x80003354
