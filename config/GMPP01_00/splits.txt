@@ -700,6 +700,13 @@ dolphin/dvd/dvdfs.c:
 	.sdata      start:0x801F0C90 end:0x801F0C98
 	.sbss       start:0x801F1768 end:0x801F1788
 
+dolphin/dvd/dvd.c:
+	.text       start:0x800BE0A4 end:0x800C0528
+	.data       start:0x801598D0 end:0x801599E8
+	.bss        start:0x801C3280 end:0x801C3358
+	.sdata      start:0x801F0C98 end:0x801F0CA0
+	.sbss       start:0x801F1788 end:0x801F17D0
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 

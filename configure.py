@@ -563,7 +563,7 @@ config.libs = [
         [
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/dvd/dvdlow.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/dvd/dvdfs.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dvd/dvd.c"),
+            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/dvd/dvd.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dvd/dvdqueue.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dvd/dvderror.c"),
             Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dvd/fstload.c"),
