@@ -181,7 +181,7 @@ asm void ICEnable() {
 #define LC_LINES    512
 #define CACHE_LINES 1024
 
-asm void __LCEnable() {
+static asm void __LCEnable() {
   nofralloc
   mfmsr   r5
   ori     r5, r5, 0x1000

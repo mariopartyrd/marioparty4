@@ -96,7 +96,7 @@ void __OSInterruptInit(void)
     __OSSetExceptionHandler(4, ExternalInterruptHandler);
 }
 
-u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
+static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 {
     u32 reg;
 
