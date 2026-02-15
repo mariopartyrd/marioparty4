@@ -410,6 +410,9 @@ Matching = True                   # Object matches and should be linked
 NonMatching = False               # Object does not match and should not be linked
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
 
+MATCH_USA = ["GMPE01_00", "GMPE01_01"]
+MATCH_PAL = ["GMPP01_00", "GMPP01_02"]
+
 
 # Object is only matching for specific versions
 def MatchingFor(*versions):
@@ -472,198 +475,198 @@ config.libs = [
             Object(Matching, "game/objsub.c"),
             Object(Matching, "game/flag.c"),
             Object(Matching, "game/saveload.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/sreset.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/sreset.c"),
             Object(Matching, "game/board/main.c"),
             Object(Matching, "game/board/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/model.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/window.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/audio.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/com.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/view.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/space.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/shop.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/lottery.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/basic_space.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/warp.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/char_wheel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/mushroom.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/star.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/roll.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/ui.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/block.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/item.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/bowser.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/battle.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/fortune.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/boo.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/mg_setup.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/boo_house.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/start.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/last5.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/pause.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/com_path.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "game/board/tutorial.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "game/kerent.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/model.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/window.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/audio.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/com.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/view.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/space.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/shop.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/lottery.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/basic_space.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/warp.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/char_wheel.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/mushroom.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/star.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/roll.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/ui.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/block.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/item.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/bowser.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/battle.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/fortune.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/boo.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/mg_setup.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/boo_house.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/start.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/last5.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/pause.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/com_path.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/tutorial.c"),
+            Object(MatchingFor(*MATCH_USA), "game/kerent.c"),
         ],
     },
     DolphinLib(
         "base",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/PPCArch.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/PPCArch.c"),
         ],
     ),
     DolphinLib(
         "os",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "dolphin/os/OS.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSAlarm.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSAlloc.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSArena.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSAudioSystem.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSCache.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSContext.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSError.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSFont.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSInterrupt.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSLink.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSMessage.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSMemory.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSMutex.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSReboot.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSReset.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSResetSW.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSRtc.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSStopwatch.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSSync.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSThread.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/OSTime.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "dolphin/os/__start.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/os/__ppc_eabi_init.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OS.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSAlarm.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSAlloc.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSArena.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSAudioSystem.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSCache.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSContext.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSError.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSFont.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSInterrupt.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSLink.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSMessage.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSMemory.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSMutex.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSReboot.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSReset.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSResetSW.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSRtc.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSStopwatch.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSSync.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSThread.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/OSTime.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/__start.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/os/__ppc_eabi_init.c"),
         ],
     ),
     DolphinLib(
         "db",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/db.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/db.c"),
         ],
     ),
     DolphinLibUnpatched(
         "mtx",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/mtx/mtx.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/mtx/mtxvec.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/mtx/mtx44.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/mtx/vec.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/mtx/quat.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/mtx/psmtx.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/mtx/mtx.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/mtx/mtxvec.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/mtx/mtx44.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/mtx/vec.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/mtx/quat.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/mtx/psmtx.c"),
         ],
     ),
     DolphinLib(
         "dvd",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/dvd/dvdlow.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/dvd/dvdfs.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00"), "dolphin/dvd/dvd.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dvd/dvdqueue.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dvd/dvderror.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dvd/fstload.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdlow.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdfs.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvd.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/dvdqueue.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/dvderror.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/fstload.c"),
         ],
     ),
     DolphinLib(
         "vi",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/vi.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/vi.c"),
         ],
     ),
     DolphinLib(
         "demo",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/demo/DEMOInit.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/demo/DEMOFont.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/demo/DEMOPuts.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/demo/DEMOStats.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOInit.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOFont.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOPuts.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOStats.c"),
         ],
     ),
     DolphinLib(
         "pad",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/pad/Padclamp.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/pad/Pad.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/pad/Padclamp.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/pad/Pad.c"),
         ],
     ),
     DolphinLib(
         "ai",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/ai.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/ai.c"),
         ],
     ),
     DolphinLib(
         "ar",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/ar/ar.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/ar/arq.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/ar/ar.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/ar/arq.c"),
         ],
     ),
     DolphinLib(
         "dsp",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dsp/dsp.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dsp/dsp_debug.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/dsp/dsp_task.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp_debug.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp_task.c"),
         ],
     ),
     DolphinLib(
         "gx",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXInit.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXFifo.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXAttr.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXMisc.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXGeometry.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXFrameBuf.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXLight.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXTexture.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXBump.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXTev.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXPixel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXStubs.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXDisplayList.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXTransform.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/gx/GXPerf.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXInit.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXFifo.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXAttr.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXMisc.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXGeometry.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXFrameBuf.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXLight.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXTexture.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXBump.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXTev.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXPixel.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXStubs.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXDisplayList.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXTransform.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXPerf.c"),
         ],
     ),
     DolphinLib(
         "card",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDBios.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDUnlock.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDRdwr.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDBlock.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDDir.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDCheck.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDMount.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDFormat.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDOpen.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDCreate.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDRead.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDWrite.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDDelete.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDStat.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/card/CARDNet.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDBios.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDUnlock.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDRdwr.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDBlock.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDDir.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDCheck.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDMount.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDFormat.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDOpen.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDCreate.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDRead.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDWrite.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDDelete.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDStat.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDNet.c"),
         ],
     ),
     DolphinLib(
         "exi",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/exi/EXIBios.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/exi/EXIUart.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/exi/EXIBios.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/exi/EXIUart.c"),
         ],
     ),
     DolphinLib(
         "si",
         [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/si/SIBios.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/si/SISamplingRate.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/si/SIBios.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/si/SISamplingRate.c"),
         ],
     ),
     {
@@ -671,8 +674,8 @@ config.libs = [
         "mw_version": "GC/1.2.5",
         "cflags": cflags_thp,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/thp/THPDec.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "dolphin/thp/THPAudio.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/thp/THPDec.c"),
+            Object(MatchingFor(*MATCH_USA), "dolphin/thp/THPAudio.c"),
         ],
     },
     {
@@ -680,16 +683,16 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_runtime,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__va_arg.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/global_destructor_chain.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__mem.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/New.cp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/NewMore.cp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/runtime.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"], extab_padding=[0x25, 0x00]),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/__va_arg.c"),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/global_destructor_chain.c"),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/__mem.c"),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/New.cp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/NewMore.cp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/runtime.c"),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"], extab_padding=[0x25, 0x00]),
+            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"),
         ],
     },
     {
@@ -697,52 +700,52 @@ config.libs = [
         "mw_version": "GC/1.3",
         "cflags": cflags_msl,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/abort_exit.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/alloc.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/errno.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/ansi_files.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/ansi_fp.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/arith.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/buffer_io.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/ctype.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/direct_io.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/file_io.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/FILE_POS.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/mbstring.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/mem.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/mem_funcs.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/misc_io.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/printf.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/float.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/signal.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/string.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/uart_console_io.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/wchar_io.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/e_acos.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/e_asin.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/e_atan2.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/e_fmod.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/e_pow.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/e_rem_pio2.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/k_cos.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/k_rem_pio2.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/k_sin.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/k_tan.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_atan.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_copysign.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_cos.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_floor.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_frexp.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_ldexp.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_modf.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_sin.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/s_tan.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/w_acos.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/w_asin.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/w_atan2.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/w_fmod.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/w_pow.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "MSL_C.PPCEABI.bare.H/math_ppc.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/abort_exit.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/alloc.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/errno.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/ansi_files.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/ansi_fp.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/arith.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/buffer_io.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/ctype.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/direct_io.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/file_io.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/FILE_POS.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/mbstring.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/mem.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/mem_funcs.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/misc_io.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/printf.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/float.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/signal.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/string.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/uart_console_io.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/wchar_io.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/e_acos.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/e_asin.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/e_atan2.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/e_fmod.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/e_pow.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/e_rem_pio2.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/k_cos.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/k_rem_pio2.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/k_sin.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/k_tan.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_atan.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_copysign.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_cos.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_floor.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_frexp.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_ldexp.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_modf.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_sin.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/s_tan.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/w_acos.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/w_asin.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/w_atan2.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/w_fmod.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/w_pow.c"),
+            Object(MatchingFor(*MATCH_USA), "MSL_C.PPCEABI.bare.H/math_ppc.c"),
         ],
     },
     {
@@ -750,65 +753,65 @@ config.libs = [
         "mw_version": "GC/1.3",
         "cflags": cflags_trk,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mainloop.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/nubevent.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/nubinit.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msg.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msgbuf.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/serpoll.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/usr_put.c", mw_version="GC/1.3.2"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/dispatch.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/msghndlr.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/support.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/notify.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/flush_cache.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/targimpl.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/targsupp.s"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/__exception.s"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/main_TRK.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/targcont.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/target_options.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "TRK_MINNOW_DOLPHIN/mslsupp.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/mainloop.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/nubevent.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/nubinit.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/msg.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/msgbuf.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/serpoll.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/usr_put.c", mw_version="GC/1.3.2"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/dispatch.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/msghndlr.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/support.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/notify.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/flush_cache.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/targimpl.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/targsupp.s"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/__exception.s"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/main_TRK.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/targcont.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/target_options.c"),
+            Object(MatchingFor(*MATCH_USA), "TRK_MINNOW_DOLPHIN/mslsupp.c"),
         ],
     },
     MusyX(
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/seq.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/seq_api.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_synthapi.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/stream.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synthdata.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synthmacros.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synthvoice.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_ac.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_dbtab.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_adsr.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/synth_vsamples.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/s_data.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_dspctrl.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_volconv.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd3d.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_init.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_math.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_midictrl.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/snd_service.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hardware.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/dsp_import.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_aramdma.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_dolphin.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/hw_memory.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/CheapReverb/creverb_fx.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/CheapReverb/creverb.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/StdReverb/reverb_fx.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/StdReverb/reverb.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/Delay/delay_fx.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "musyx/runtime/Chorus/chorus_fx.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/seq.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synth.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/seq_api.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/snd_synthapi.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/stream.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synthdata.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synthmacros.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synthvoice.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synth_ac.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synth_dbtab.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synth_adsr.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/synth_vsamples.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/s_data.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/hw_dspctrl.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/hw_volconv.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/snd3d.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/snd_init.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/snd_math.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/snd_midictrl.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/snd_service.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/hardware.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/dsp_import.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/hw_aramdma.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/hw_dolphin.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/hw_memory.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/CheapReverb/creverb_fx.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/CheapReverb/creverb.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/StdReverb/reverb_fx.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/StdReverb/reverb.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/Delay/delay_fx.c"),
+            Object(MatchingFor(*MATCH_USA), "musyx/runtime/Chorus/chorus_fx.c"),
         }
     ),
     {
@@ -816,7 +819,7 @@ config.libs = [
         "mw_version": "GC/1.2.5" if version_num == 0 else "GC/1.2.5n",
         "cflags": cflags_odemuexi,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "OdemuExi2/DebuggerDriver.c"),
+            Object(MatchingFor(*MATCH_USA), "OdemuExi2/DebuggerDriver.c"),
         ],
     },
     {
@@ -824,7 +827,7 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_amcstub,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "amcstubs/AmcExi2Stubs.c"),
+            Object(MatchingFor(*MATCH_USA), "amcstubs/AmcExi2Stubs.c"),
         ],
     },
     {
@@ -832,7 +835,7 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_odenotstub,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "odenotstub/odenotstub.c"),
+            Object(MatchingFor(*MATCH_USA), "odenotstub/odenotstub.c"),
         ],
     },
     {
@@ -840,8 +843,8 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_libhu,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "libhu/setvf.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "libhu/subvf.c"),
+            Object(MatchingFor(*MATCH_USA), "libhu/setvf.c"),
+            Object(MatchingFor(*MATCH_USA), "libhu/subvf.c"),
         ],
     },
     {
@@ -849,12 +852,12 @@ config.libs = [
         "mw_version": "GC/1.2.5",
         "cflags": cflags_msm,
         "objects": [
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmsys.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmmem.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmfio.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmmus.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmse.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "msm/msmstream.c"),
+            Object(MatchingFor(*MATCH_USA), "msm/msmsys.c"),
+            Object(MatchingFor(*MATCH_USA), "msm/msmmem.c"),
+            Object(MatchingFor(*MATCH_USA), "msm/msmfio.c"),
+            Object(MatchingFor(*MATCH_USA), "msm/msmmus.c"),
+            Object(MatchingFor(*MATCH_USA), "msm/msmse.c"),
+            Object(MatchingFor(*MATCH_USA), "msm/msmstream.c"),
         ],
     },
     {
@@ -876,8 +879,8 @@ config.libs = [
     Rel(
         "bootDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/bootDll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/bootDll/language.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/bootDll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/bootDll/language.c"),
         },
     ),
     Rel(
@@ -890,8 +893,8 @@ config.libs = [
     Rel(
         "instDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/instDll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/instDll/font.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/instDll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/instDll/font.c"),
         },
     ),
     Rel(
@@ -950,87 +953,87 @@ config.libs = [
     Rel(
         "m408Dll",  # Paratrooper Plunge
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m408Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m408Dll/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m408Dll/stage.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m408Dll/object.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/camera.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/stage.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/object.c"),
         },
     ),
     Rel(
         "m409Dll",  # Toad's Quick Draw
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m409Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m409Dll/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m409Dll/cursor.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/cursor.c"),
         },
     ),
     Rel(
         "m410Dll",  # Three Throw
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m410Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m410Dll/stage.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m410Dll/game.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m410Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/stage.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/game.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/player.c"),
         },
     ),
     Rel(
         "m411Dll",  # Photo Finish
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m411Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m411Dll/main.c"),
         },
     ),
     Rel(
         "m412Dll",  # Mr. Blizzard's Brigade
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m412Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m412Dll/main.c"),
         },
     ),
     Rel(
         "m413Dll",  # Bob-omb Breakers
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m413Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m413Dll/main.c"),
         },
     ),
     Rel(
         "m414Dll",  # Long Claw of the Law
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m414Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m414Dll/main.c"),
         },
     ),
     Rel(
         "m415Dll",  # Stamp Out!
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m415Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m415Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m415Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m415Dll/map.c"),
         },
     ),
     Rel(
         "m416Dll",  # Candlelight Flight
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m416Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m416Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m416Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m416Dll/map.c"),
         },
     ),
     Rel(
         "m417Dll",  # Makin' Waves
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m417Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m417Dll/water.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m417Dll/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m417Dll/sequence.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/water.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/sequence.c"),
         },
     ),
     Rel(
         "m418Dll",  # Hide and Go BOOM!
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m418Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m418Dll/sequence.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m418Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m418Dll/sequence.c"),
         },
     ),
     Rel(
         "m419Dll",  # Tree Stomp
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m419Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m419Dll/main.c"),
         },
     ),
     Rel(
@@ -1054,51 +1057,51 @@ config.libs = [
     Rel(
         "m422Dll",  # Money Belts
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m422Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m422Dll/main.c"),
         },
     ),
     Rel(
         "m423Dll",  # GOOOOOOOAL!!
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m423Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m423Dll/main.c"),
         },
     ),
     Rel(
         "m424Dll",  # Blame it on the Crane
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/ball.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m424Dll/claw.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/ball.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/claw.c"),
         },
     ),
     Rel(
         "m425Dll",  # The Great Deflate
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m425Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m425Dll/thwomp.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m425Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m425Dll/thwomp.c"),
         },
     ),
     Rel(
         "m426Dll",  # Revers-a-Bomb
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m426Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m426Dll/main.c"),
         },
     ),
     Rel(
         "m427Dll",  # Right Oar Left?
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m427Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m427Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m427Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m427Dll/player.c"),
         },
     ),
     Rel(
         "m428Dll",  # Cliffhangers
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m428Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m428Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m428Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m428Dll/player.c"),
         },
     ),
     Rel(
@@ -1110,9 +1113,9 @@ config.libs = [
     Rel(
         "m430Dll",  # Pair-a-sailing
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/water.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m430Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m430Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m430Dll/water.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m430Dll/player.c"),
         },
     ),
     Rel(
@@ -1131,9 +1134,9 @@ config.libs = [
     Rel(
         "m433Dll",  # Beach Volley Folly
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m433Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m433Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m433Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m433Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m433Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m433Dll/player.c"),
         },
     ),
     Rel(
@@ -1148,8 +1151,8 @@ config.libs = [
     Rel(
         "m435Dll",  # Darts of Doom
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m435Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m435Dll/sequence.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m435Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m435Dll/sequence.c"),
         },
     ),
     Rel(
@@ -1169,9 +1172,9 @@ config.libs = [
     Rel(
         "m438Dll",  # Chain Chomp Fever
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m438Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m438Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m438Dll/fire.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m438Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m438Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m438Dll/fire.c"),
         },
     ),
     Rel(
@@ -1203,18 +1206,18 @@ config.libs = [
     Rel(
         "m443Dll",  # Mario Speedwagons
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m443Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m443Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m443Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m443Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m443Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m443Dll/player.c"),
         },
     ),
     Rel(
         "m444dll",  # Reversal of Fortune
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/pinball.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/datalist.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00", "GMPP01_02"), "REL/m444dll/shadow.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/pinball.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/datalist.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/shadow.c"),
         },
     ),
     Rel(
@@ -1226,37 +1229,37 @@ config.libs = [
     Rel(
         "m446dll",  # Mystic Match 'Em
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/card.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/deck.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/table.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/cursor.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m446Dll/stage.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/card.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/deck.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/table.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/camera.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/cursor.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/stage.c"),
         },
     ),
     Rel(
         "m447dll",  # Archaeologuess
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m447dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m447dll/stage.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m447dll/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m447dll/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m447dll/player_col.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m447dll/block.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/stage.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/camera.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/player_col.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/block.c"),
         },
     ),
     Rel(
         "m448Dll",  # Goomba's Chip Flip
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m448Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m448Dll/main.c"),
         },
     ),
     Rel(
         "m449Dll",  # Kareening Koopa
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m449Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m449Dll/main.c"),
         },
     ),
     Rel(
@@ -1268,22 +1271,22 @@ config.libs = [
     Rel(
         "m451Dll",  # Jigsaw Jitters
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m451Dll/m451.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m451Dll/m451.c"),
         },
     ),
     Rel(
         "m453Dll",  # Challenge Booksquirm
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m453Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m453Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m453Dll/score.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m453Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m453Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m453Dll/score.c"),
         },
     ),
     Rel(
         "m455Dll",  # Rumble Fishing
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m455Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m455Dll/stage.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m455Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m455Dll/stage.c"),
         },
     ),
     Rel(
@@ -1302,53 +1305,53 @@ config.libs = [
     Rel(
         "m458Dll",  # Panels of Doom
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m458Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m458Dll/main.c"),
         },
     ),
     Rel(
         "m459dll",  # Mushroom Medic
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/m459dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/m459dll/main.c"),
         },
     ),
     Rel(
         "m460Dll",  # Doors of Doom
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m460Dll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m460Dll/player.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m460Dll/map.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m460Dll/score.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/score.c"),
         },
     ),
     Rel(
         "m461Dll",  # Bob-omb X-ing
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/m461Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m461Dll/main.c"),
         },
     ),
     Rel(
         "m462Dll",  # Goomba Stomp
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m462Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m462Dll/main.c"),
         },
     ),
     Rel(
         "m463Dll",  # Panel Panic 9 Player
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/m463Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m463Dll/main.c"),
         },
     ),
     Rel(
         "mentDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/mentDll/common.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/mentDll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mentDll/common.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mentDll/main.c"),
         },
     ),
     Rel(
         "messDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/messDll/main.c"),
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/messDll/main.c"),
         },
     ),
     Rel(
@@ -1375,19 +1378,19 @@ config.libs = [
     Rel(
         "modeseldll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/modesel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/filesel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/modeseldll/datalist.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/modeseldll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/modeseldll/modesel.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/modeseldll/filesel.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/modeseldll/datalist.c"),
         },
     ),
     Rel(
         "mpexDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/mpexDll/main.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/mpexDll/mpex.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/mpexDll/charsel.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/mpexDll/mgname.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mpexDll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mpexDll/mpex.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mpexDll/charsel.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/mpexDll/mgname.c"),
         },
     ),
     Rel(
@@ -1415,7 +1418,7 @@ config.libs = [
     Rel(
         "mstory4Dll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01"), "REL/mstory4Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA), "REL/mstory4Dll/main.c"),
         },
     ),
     Rel(
@@ -1432,21 +1435,21 @@ config.libs = [
     Rel(
         "nisDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPJ01_00"), "REL/nisDll/main.c")
+            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/nisDll/main.c")
         },
     ),
     Rel(
         "option",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/scene.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/camera.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/room.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/guide.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/state.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/rumble.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/sound.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/record.c"),
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/option/window.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/scene.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/camera.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/room.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/guide.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/state.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/rumble.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/sound.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/record.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/option/window.c"),
         },
     ),
     Rel(
@@ -1470,19 +1473,19 @@ config.libs = [
     Rel(
         "safDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/safDll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/safDll/main.c"),
         },
     ),
     Rel(
         "selmenuDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/selmenuDll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/selmenuDll/main.c"),
         },
     ),
     Rel(
         "staffDll",
         objects={
-            Object(MatchingFor("GMPE01_00", "GMPE01_01", "GMPP01_00", "GMPP01_02"), "REL/staffDll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/staffDll/main.c"),
         },
     ),
     Rel(
