@@ -590,8 +590,8 @@ config.libs = [
     DolphinLib(
         "pad",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/pad/Padclamp.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/pad/Pad.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/pad/Padclamp.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/pad/Pad.c"),
         ],
     ),
     DolphinLib(

@@ -748,6 +748,17 @@ dolphin/demo/DEMOStats.c:
 	.sbss       start:0x801F1840 end:0x801F18A0
 	.sdata2     start:0x801F37A8 end:0x801F37B8
 
+dolphin/pad/Padclamp.c:
+	.text       start:0x800C38D4 end:0x800C3B0C
+	.sdata      start:0x801F0CB8 end:0x801F0CC0
+
+dolphin/pad/Pad.c:
+	.text       start:0x800C3B0C end:0x800C55D4
+	.data       start:0x8015AAD8 end:0x8015AAE8
+	.bss        start:0x801C3550 end:0x801C35A0
+	.sdata      start:0x801F0CC0 end:0x801F0CE0
+	.sbss       start:0x801F18A0 end:0x801F18C8
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
