@@ -567,52 +567,52 @@ config.libs = [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdlow.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdfs.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvd.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/dvdqueue.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/dvderror.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/fstload.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdqueue.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvderror.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/fstload.c"),
         ],
     ),
     DolphinLib(
         "vi",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/vi.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/vi.c"),
         ],
     ),
     DolphinLib(
         "demo",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOInit.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOFont.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOPuts.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOStats.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOInit.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOFont.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOPuts.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOStats.c"),
         ],
     ),
     DolphinLib(
         "pad",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/pad/Padclamp.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/pad/Pad.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/pad/Padclamp.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/pad/Pad.c"),
         ],
     ),
     DolphinLib(
         "ai",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/ai.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/ai.c"),
         ],
     ),
     DolphinLib(
         "ar",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/ar/ar.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/ar/arq.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/ar/ar.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/ar/arq.c"),
         ],
     ),
     DolphinLib(
         "dsp",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp_debug.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp_task.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dsp/dsp.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dsp/dsp_debug.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dsp/dsp_task.c"),
         ],
     ),
     DolphinLib(

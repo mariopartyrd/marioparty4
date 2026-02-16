@@ -707,6 +707,83 @@ dolphin/dvd/dvd.c:
 	.sdata      start:0x801F0C98 end:0x801F0CA0
 	.sbss       start:0x801F1788 end:0x801F17D0
 
+dolphin/dvd/dvdqueue.c:
+	.text       start:0x800C0528 end:0x800C0720
+	.bss        start:0x801C3358 end:0x801C3378
+
+dolphin/dvd/dvderror.c:
+	.text       start:0x800C0720 end:0x800C08B8
+	.data       start:0x801599E8 end:0x80159A30
+
+dolphin/dvd/fstload.c:
+	.text       start:0x800C08B8 end:0x800C0AF8
+	.data       start:0x80159A30 end:0x80159AA0
+	.bss        start:0x801C3378 end:0x801C33E8
+	.sdata      start:0x801F0CA0 end:0x801F0CB0
+	.sbss       start:0x801F17D0 end:0x801F17E0
+
+dolphin/vi.c:
+	.text       start:0x800C0AF8 end:0x800C2578
+	.data       start:0x80159AA0 end:0x80159D68
+	.bss        start:0x801C33E8 end:0x801C3530
+	.sbss       start:0x801F17E0 end:0x801F1830
+
+dolphin/demo/DEMOFont.c:
+	.data       start:0x80159D80 end:0x8015A980
+
+dolphin/demo/DEMOInit.c:
+	.text       start:0x800C2578 end:0x800C2580
+	.sbss       start:0x801F1830 end:0x801F1838
+
+dolphin/demo/DEMOPuts.c:
+	.text       start:0x800C2580 end:0x800C2B7C
+	.bss        start:0x801C3530 end:0x801C3550
+	.sbss       start:0x801F1838 end:0x801F1840
+	.sdata2     start:0x801F3788 end:0x801F37A8
+
+dolphin/demo/DEMOStats.c:
+	.text       start:0x800C2B7C end:0x800C38D4
+	.data       start:0x8015A980 end:0x8015AAD8
+	.sdata      start:0x801F0CB0 end:0x801F0CB8
+	.sbss       start:0x801F1840 end:0x801F18A0
+	.sdata2     start:0x801F37A8 end:0x801F37B8
+
+dolphin/pad/Padclamp.c:
+	.text       start:0x800C38D4 end:0x800C3B0C
+	.sdata      start:0x801F0CB8 end:0x801F0CC0
+
+dolphin/pad/Pad.c:
+	.text       start:0x800C3B0C end:0x800C55D4
+	.data       start:0x8015AAD8 end:0x8015AAE8
+	.bss        start:0x801C3550 end:0x801C35A0
+	.sdata      start:0x801F0CC0 end:0x801F0CE0
+	.sbss       start:0x801F18A0 end:0x801F18C8
+
+dolphin/ai.c:
+	.text       start:0x800C55D4 end:0x800C5EB0
+	.sbss       start:0x801F18C8 end:0x801F1908
+
+dolphin/ar/ar.c:
+	.text       start:0x800C5EB0 end:0x800C6B60
+	.sbss       start:0x801F1908 end:0x801F1928
+
+dolphin/ar/arq.c:
+	.text       start:0x800C6B60 end:0x800C6EF4
+	.sbss       start:0x801F1928 end:0x801F1950
+
+dolphin/dsp/dsp.c:
+	.text       start:0x800C6EF4 end:0x800C7100
+	.data       start:0x8015AAE8 end:0x8015AB20
+	.sbss       start:0x801F1950 end:0x801F1958
+
+dolphin/dsp/dsp_debug.c:
+	.text       start:0x800C7100 end:0x800C7150
+
+dolphin/dsp/dsp_task.c:
+	.text       start:0x800C7150 end:0x800C79D4
+	.data       start:0x8015AB20 end:0x8015AC60
+	.sbss       start:0x801F1958 end:0x801F1970
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
