@@ -656,3 +656,31 @@ extract:
 - symbol: wrongdisc_sp
   binary: wrongdisc_sp.bin
   header: wrongdisc_sp.inc
+
+add_relocations:
+- source: .text:0x8009b71c
+  type: sda21
+  target: battleMGIdx
+  addend: -1
+
+- source: .text:0x800a94b8
+  type: sda21
+  target: playerOrderNew
+  addend: -1
+- source: .text:0x800a94e4
+  type: sda21
+  target: playerOrderNew
+  addend: -1
+- source: .text:0x800a94f8
+  type: sda21
+  target: playerOrderNew
+  addend: -1
+
+- source: .text:0x800a950c
+  type: sda21
+  target: playerOrderOld
+  addend: -1
+- source: .text:0x800a9520
+  type: sda21
+  target: playerOrderOld
+  addend: -1
