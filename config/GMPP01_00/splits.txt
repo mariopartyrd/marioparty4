@@ -800,6 +800,23 @@ dolphin/gx/GXAttr.c:
 	.data       start:0x8015AC60 end:0x8015AD80
 	.sdata      start:0x801F0CE8 end:0x801F0CF8
 
+dolphin/gx/GXMisc.c:
+	.text       start:0x800CA114 end:0x800CA838
+	.sbss       start:0x801F19A0 end:0x801F19B8
+
+dolphin/gx/GXGeometry.c:
+	.text       start:0x800CA838 end:0x800CAC18
+
+dolphin/gx/GXFrameBuf.c:
+	.text       start:0x800CAC18 end:0x800CBA04
+	.data       start:0x8015AD80 end:0x8015AEB0
+	.sdata2     start:0x801F37D8 end:0x801F37E8
+
+dolphin/gx/GXLight.c:
+	.text       start:0x800CBA04 end:0x800CC3F0
+	.data       start:0x8015AEB0 end:0x8015AED0
+	.sdata2     start:0x801F37E8 end:0x801F3838
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
