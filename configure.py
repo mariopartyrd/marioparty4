@@ -638,10 +638,10 @@ config.libs = [
     DolphinLib(
         "card",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDBios.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDUnlock.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDRdwr.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDBlock.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/card/CARDBios.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/card/CARDUnlock.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/card/CARDRdwr.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/card/CARDBlock.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDDir.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDCheck.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/card/CARDMount.c"),
