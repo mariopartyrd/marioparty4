@@ -852,6 +852,57 @@ dolphin/gx/GXPerf.c:
 	.text       start:0x800CF808 end:0x800D07D4
 	.data       start:0x8015B140 end:0x8015B288
 
+dolphin/card/CARDBios.c:
+	.text       start:0x800D07D4 end:0x800D1AF4
+	.data       start:0x8015B288 end:0x8015B298
+	.bss        start:0x801C4038 end:0x801C4278
+
+dolphin/card/CARDUnlock.c:
+	.text       start:0x800D1AF4 end:0x800D2D54
+	.data       start:0x8015B2A0 end:0x8015B400
+	.sdata      start:0x801F0D38 end:0x801F0D40
+
+dolphin/card/CARDRdwr.c:
+	.text       start:0x800D2D54 end:0x800D2FD4
+
+dolphin/card/CARDBlock.c:
+	.text       start:0x800D2FD4 end:0x800D33D8
+
+dolphin/card/CARDDir.c:
+	.text       start:0x800D33D8 end:0x800D363C
+
+dolphin/card/CARDCheck.c:
+	.text       start:0x800D363C end:0x800D45A4
+
+dolphin/card/CARDMount.c:
+	.text       start:0x800D45A4 end:0x800D5064
+	.data       start:0x8015B400 end:0x8015B440
+
+dolphin/card/CARDFormat.c:
+	.text       start:0x800D5064 end:0x800D5854
+
+dolphin/card/CARDOpen.c:
+	.text       start:0x800D5854 end:0x800D5CA8
+
+dolphin/card/CARDCreate.c:
+	.text       start:0x800D5CA8 end:0x800D6040
+
+dolphin/card/CARDRead.c:
+	.text       start:0x800D6040 end:0x800D64B8
+
+dolphin/card/CARDWrite.c:
+	.text       start:0x800D64B8 end:0x800D6834
+
+dolphin/card/CARDDelete.c:
+	.text       start:0x800D6834 end:0x800D6A30
+
+dolphin/card/CARDStat.c:
+	.text       start:0x800D6A30 end:0x800D6F10
+
+dolphin/card/CARDNet.c:
+	.text       start:0x800D6F10 end:0x800D6FD4
+	.sdata      start:0x801F0D40 end:0x801F0D48
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
