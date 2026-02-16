@@ -610,9 +610,9 @@ config.libs = [
     DolphinLib(
         "dsp",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp_debug.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dsp/dsp_task.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dsp/dsp.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dsp/dsp_debug.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dsp/dsp_task.c"),
         ],
     ),
     DolphinLib(
