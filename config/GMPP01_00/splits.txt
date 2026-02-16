@@ -903,6 +903,66 @@ dolphin/card/CARDNet.c:
 	.text       start:0x800D6F10 end:0x800D6FD4
 	.sdata      start:0x801F0D40 end:0x801F0D48
 
+dolphin/exi/EXIBios.c:
+	.text       start:0x800D6FD4 end:0x800D88A8
+	.bss        start:0x801C4278 end:0x801C4338
+
+dolphin/exi/EXIUart.c:
+	.text       start:0x800D88A8 end:0x800D8B18
+	.sbss       start:0x801F19C0 end:0x801F19D0
+
+dolphin/si/SIBios.c:
+	.text       start:0x800D8B18 end:0x800DA1F8
+	.data       start:0x8015B440 end:0x8015B510
+	.bss        start:0x801C4338 end:0x801C4538
+	.sbss       start:0x801F19D0 end:0x801F19E0
+
+dolphin/si/SISamplingRate.c:
+	.text       start:0x800DA1F8 end:0x800DA300
+	.data       start:0x8015B510 end:0x8015B5A8
+	.sbss       start:0x801F19E0 end:0x801F19E8
+
+dolphin/thp/THPDec.c:
+	.text       start:0x800DA300 end:0x800E1840
+	.rodata     start:0x8011E260 end:0x8011E2F0
+	.bss        start:0x801C4540 end:0x801C4670
+	.sbss       start:0x801F19E8 end:0x801F1B18
+	.sdata2     start:0x801F38C8 end:0x801F38E8
+
+dolphin/thp/THPAudio.c:
+	.text       start:0x800E1840 end:0x800E1D70
+
+Runtime.PPCEABI.H/__va_arg.c:
+	.text       start:0x800E1D70 end:0x800E1E38
+
+Runtime.PPCEABI.H/global_destructor_chain.c:
+	.text       start:0x800E1E38 end:0x800E1E98
+	.dtors      start:0x8011DB08 end:0x8011DB0C
+	.sbss       start:0x801F1B18 end:0x801F1B20
+
+Runtime.PPCEABI.H/New.cp:
+	extab       start:0x80005620 end:0x80005648
+	extabindex  start:0x80005700 end:0x8000570C
+	.text       start:0x800E1E98 end:0x800E1EE4
+
+Runtime.PPCEABI.H/NewMore.cp:
+	extab       start:0x80005648 end:0x80005650
+	extabindex  start:0x8000570C end:0x80005718
+	.text       start:0x800E1EE4 end:0x800E1F38
+	.rodata     start:0x8011E2F0 end:0x8011E310
+	.data       start:0x8015B5A8 end:0x8015B5B8
+	.sdata      start:0x801F0D48 end:0x801F0D50
+
+Runtime.PPCEABI.H/NMWException.cpp:
+	extab       start:0x80005650 end:0x80005670
+	extabindex  start:0x80005718 end:0x80005748
+	.text       start:0x800E1F38 end:0x800E21FC
+	.sdata      start:0x801F0D50 end:0x801F0D58
+
+Runtime.PPCEABI.H/runtime.c:
+	.text       start:0x800E21FC end:0x800E28D8
+	.rodata     start:0x8011E310 end:0x8011E328
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
@@ -989,3 +1049,6 @@ musyx/runtime/Delay/delay_fx.c:
 
 musyx/runtime/Chorus/chorus_fx.c:
 	.text       start:0x80113F74 end:0x801147DC
+
+Runtime.PPCEABI.H/__mem.c:
+	.init       start:0x800033A8 end:0x800034E0

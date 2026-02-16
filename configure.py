@@ -658,15 +658,15 @@ config.libs = [
     DolphinLib(
         "exi",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/exi/EXIBios.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/exi/EXIUart.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/exi/EXIBios.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/exi/EXIUart.c"),
         ],
     ),
     DolphinLib(
         "si",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/si/SIBios.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/si/SISamplingRate.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/si/SIBios.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/si/SISamplingRate.c"),
         ],
     ),
     {
@@ -674,8 +674,8 @@ config.libs = [
         "mw_version": "GC/1.2.5",
         "cflags": cflags_thp,
         "objects": [
-            Object(MatchingFor(*MATCH_USA), "dolphin/thp/THPDec.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/thp/THPAudio.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/thp/THPDec.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/thp/THPAudio.c"),
         ],
     },
     {
@@ -683,13 +683,13 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_runtime,
         "objects": [
-            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/__va_arg.c"),
-            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/global_destructor_chain.c"),
-            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/__mem.c"),
-            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/New.cp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/NewMore.cp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
-            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/runtime.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/__va_arg.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/global_destructor_chain.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/__mem.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/New.cp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/NewMore.cp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/runtime.c"),
             Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
             Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"], extab_padding=[0x25, 0x00]),
             Object(MatchingFor(*MATCH_USA), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"),
