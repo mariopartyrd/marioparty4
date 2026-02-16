@@ -817,6 +817,41 @@ dolphin/gx/GXLight.c:
 	.data       start:0x8015AEB0 end:0x8015AED0
 	.sdata2     start:0x801F37E8 end:0x801F3838
 
+dolphin/gx/GXTexture.c:
+	.text       start:0x800CC3F0 end:0x800CD448
+	.data       start:0x8015AED0 end:0x8015B0F8
+	.sdata      start:0x801F0CF8 end:0x801F0D38
+	.sdata2     start:0x801F3838 end:0x801F3860
+
+dolphin/gx/GXBump.c:
+	.text       start:0x800CD448 end:0x800CDCC4
+	.sdata2     start:0x801F3860 end:0x801F3878
+
+dolphin/gx/GXTev.c:
+	.text       start:0x800CDCC4 end:0x800CE6FC
+	.data       start:0x8015B0F8 end:0x8015B120
+
+dolphin/gx/GXPixel.c:
+	.text       start:0x800CE6FC end:0x800CEE44
+	.data       start:0x8015B120 end:0x8015B140
+	.sdata2     start:0x801F3878 end:0x801F38A8
+
+dolphin/gx/GXStubs.c:
+	.text       start:0x800CEE44 end:0x800CEE48
+
+dolphin/gx/GXDisplayList.c:
+	.text       start:0x800CEE48 end:0x800CF054
+	.bss        start:0x801C3B18 end:0x801C4038
+	.sbss       start:0x801F19B8 end:0x801F19C0
+
+dolphin/gx/GXTransform.c:
+	.text       start:0x800CF054 end:0x800CF808
+	.sdata2     start:0x801F38A8 end:0x801F38C8
+
+dolphin/gx/GXPerf.c:
+	.text       start:0x800CF808 end:0x800D07D4
+	.data       start:0x8015B140 end:0x8015B288
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
