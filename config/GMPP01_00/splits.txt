@@ -784,6 +784,22 @@ dolphin/dsp/dsp_task.c:
 	.data       start:0x8015AB20 end:0x8015AC60
 	.sbss       start:0x801F1958 end:0x801F1970
 
+dolphin/gx/GXInit.c:
+	.text       start:0x800C79D4 end:0x800C8AC4
+	.bss        start:0x801C35A0 end:0x801C3B18
+	.sdata      start:0x801F0CE0 end:0x801F0CE8
+	.sbss       start:0x801F1970 end:0x801F1980
+	.sdata2     start:0x801F37B8 end:0x801F37D8
+
+dolphin/gx/GXFifo.c:
+	.text       start:0x800C8AC4 end:0x800C92EC
+	.sbss       start:0x801F1980 end:0x801F19A0
+
+dolphin/gx/GXAttr.c:
+	.text       start:0x800C92EC end:0x800CA114
+	.data       start:0x8015AC60 end:0x8015AD80
+	.sdata      start:0x801F0CE8 end:0x801F0CF8
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 

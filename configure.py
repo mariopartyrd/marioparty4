@@ -618,9 +618,9 @@ config.libs = [
     DolphinLib(
         "gx",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXInit.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXFifo.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXAttr.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/gx/GXInit.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/gx/GXFifo.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/gx/GXAttr.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXMisc.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXGeometry.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/gx/GXFrameBuf.c"),
