@@ -583,8 +583,8 @@ config.libs = [
         [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOInit.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOFont.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOPuts.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOStats.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOPuts.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOStats.c"),
         ],
     ),
     DolphinLib(

@@ -728,6 +728,9 @@ dolphin/vi.c:
 	.bss        start:0x801C33E8 end:0x801C3530
 	.sbss       start:0x801F17E0 end:0x801F1830
 
+dolphin/demo/DEMOFont.c:
+	.data       start:0x80159D80 end:0x8015A980
+
 dolphin/demo/DEMOInit.c:
 	.text       start:0x800C2578 end:0x800C2580
 	.sbss       start:0x801F1830 end:0x801F1838
@@ -737,6 +740,13 @@ dolphin/demo/DEMOPuts.c:
 	.bss        start:0x801C3530 end:0x801C3550
 	.sbss       start:0x801F1838 end:0x801F1840
 	.sdata2     start:0x801F3788 end:0x801F37A8
+
+dolphin/demo/DEMOStats.c:
+	.text       start:0x800C2B7C end:0x800C38D4
+	.data       start:0x8015A980 end:0x8015AAD8
+	.sdata      start:0x801F0CB0 end:0x801F0CB8
+	.sbss       start:0x801F1840 end:0x801F18A0
+	.sdata2     start:0x801F37A8 end:0x801F37B8
 
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
