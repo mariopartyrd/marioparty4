@@ -597,14 +597,14 @@ config.libs = [
     DolphinLib(
         "ai",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/ai.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/ai.c"),
         ],
     ),
     DolphinLib(
         "ar",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/ar/ar.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/ar/arq.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/ar/ar.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/ar/arq.c"),
         ],
     ),
     DolphinLib(
