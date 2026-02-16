@@ -707,6 +707,37 @@ dolphin/dvd/dvd.c:
 	.sdata      start:0x801F0C98 end:0x801F0CA0
 	.sbss       start:0x801F1788 end:0x801F17D0
 
+dolphin/dvd/dvdqueue.c:
+	.text       start:0x800C0528 end:0x800C0720
+	.bss        start:0x801C3358 end:0x801C3378
+
+dolphin/dvd/dvderror.c:
+	.text       start:0x800C0720 end:0x800C08B8
+	.data       start:0x801599E8 end:0x80159A30
+
+dolphin/dvd/fstload.c:
+	.text       start:0x800C08B8 end:0x800C0AF8
+	.data       start:0x80159A30 end:0x80159AA0
+	.bss        start:0x801C3378 end:0x801C33E8
+	.sdata      start:0x801F0CA0 end:0x801F0CB0
+	.sbss       start:0x801F17D0 end:0x801F17E0
+
+dolphin/vi.c:
+	.text       start:0x800C0AF8 end:0x800C2578
+	.data       start:0x80159AA0 end:0x80159D68
+	.bss        start:0x801C33E8 end:0x801C3530
+	.sbss       start:0x801F17E0 end:0x801F1830
+
+dolphin/demo/DEMOInit.c:
+	.text       start:0x800C2578 end:0x800C2580
+	.sbss       start:0x801F1830 end:0x801F1838
+
+dolphin/demo/DEMOPuts.c:
+	.text       start:0x800C2580 end:0x800C2B7C
+	.bss        start:0x801C3530 end:0x801C3550
+	.sbss       start:0x801F1838 end:0x801F1840
+	.sdata2     start:0x801F3788 end:0x801F37A8
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 

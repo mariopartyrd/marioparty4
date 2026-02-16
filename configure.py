@@ -567,22 +567,22 @@ config.libs = [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdlow.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdfs.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvd.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/dvdqueue.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/dvderror.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/dvd/fstload.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvdqueue.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/dvderror.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/dvd/fstload.c"),
         ],
     ),
     DolphinLib(
         "vi",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/vi.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/vi.c"),
         ],
     ),
     DolphinLib(
         "demo",
         [
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOInit.c"),
-            Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOFont.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOInit.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "dolphin/demo/DEMOFont.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOPuts.c"),
             Object(MatchingFor(*MATCH_USA), "dolphin/demo/DEMOStats.c"),
         ],
