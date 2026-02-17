@@ -903,6 +903,263 @@ dolphin/card/CARDNet.c:
 	.text       start:0x800D6F10 end:0x800D6FD4
 	.sdata      start:0x801F0D40 end:0x801F0D48
 
+dolphin/exi/EXIBios.c:
+	.text       start:0x800D6FD4 end:0x800D88A8
+	.bss        start:0x801C4278 end:0x801C4338
+
+dolphin/exi/EXIUart.c:
+	.text       start:0x800D88A8 end:0x800D8B18
+	.sbss       start:0x801F19C0 end:0x801F19D0
+
+dolphin/si/SIBios.c:
+	.text       start:0x800D8B18 end:0x800DA1F8
+	.data       start:0x8015B440 end:0x8015B510
+	.bss        start:0x801C4338 end:0x801C4538
+	.sbss       start:0x801F19D0 end:0x801F19E0
+
+dolphin/si/SISamplingRate.c:
+	.text       start:0x800DA1F8 end:0x800DA300
+	.data       start:0x8015B510 end:0x8015B5A8
+	.sbss       start:0x801F19E0 end:0x801F19E8
+
+dolphin/thp/THPDec.c:
+	.text       start:0x800DA300 end:0x800E1840
+	.rodata     start:0x8011E260 end:0x8011E2F0
+	.bss        start:0x801C4540 end:0x801C4670
+	.sbss       start:0x801F19E8 end:0x801F1B18
+	.sdata2     start:0x801F38C8 end:0x801F38E8
+
+dolphin/thp/THPAudio.c:
+	.text       start:0x800E1840 end:0x800E1D70
+
+Runtime.PPCEABI.H/__va_arg.c:
+	.text       start:0x800E1D70 end:0x800E1E38
+
+Runtime.PPCEABI.H/global_destructor_chain.c:
+	.text       start:0x800E1E38 end:0x800E1E98
+	.dtors      start:0x8011DB08 end:0x8011DB0C
+	.sbss       start:0x801F1B18 end:0x801F1B20
+
+Runtime.PPCEABI.H/New.cp:
+	extab       start:0x80005620 end:0x80005648
+	extabindex  start:0x80005700 end:0x8000570C
+	.text       start:0x800E1E98 end:0x800E1EE4
+
+Runtime.PPCEABI.H/NewMore.cp:
+	extab       start:0x80005648 end:0x80005650
+	extabindex  start:0x8000570C end:0x80005718
+	.text       start:0x800E1EE4 end:0x800E1F38
+	.rodata     start:0x8011E2F0 end:0x8011E310
+	.data       start:0x8015B5A8 end:0x8015B5B8
+	.sdata      start:0x801F0D48 end:0x801F0D50
+
+Runtime.PPCEABI.H/NMWException.cpp:
+	extab       start:0x80005650 end:0x80005670
+	extabindex  start:0x80005718 end:0x80005748
+	.text       start:0x800E1F38 end:0x800E21FC
+	.sdata      start:0x801F0D50 end:0x801F0D58
+
+Runtime.PPCEABI.H/runtime.c:
+	.text       start:0x800E21FC end:0x800E28D8
+	.rodata     start:0x8011E310 end:0x8011E328
+
+Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
+	.text       start:0x800E28D8 end:0x800E2954
+	.ctors      start:0x8011DAE0 end:0x8011DAE4
+	.dtors      start:0x8011DB00 end:0x8011DB08
+	.sdata      start:0x801F0D58 end:0x801F0D60
+
+Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp:
+	extab       start:0x80005670 end:0x800056E4
+	extabindex  start:0x80005748 end:0x8000579C
+	.text       start:0x800E2954 end:0x800E3D8C
+	.rodata     start:0x8011E328 end:0x8011E3C0
+	.data       start:0x8015B5B8 end:0x8015B6A0
+	.bss        start:0x801C4670 end:0x801C4680
+	.sdata      start:0x801F0D60 end:0x801F0D70
+
+Runtime.PPCEABI.H/GCN_Mem_Alloc.c:
+	.text       start:0x800E3D8C end:0x800E3E44
+	.rodata     start:0x8011E3C0 end:0x8011E438
+
+MSL_C.PPCEABI.bare.H/abort_exit.c:
+	.text       start:0x800E3E44 end:0x800E3F98
+	.bss        start:0x801C4680 end:0x801C4780
+	.sbss       start:0x801F1B20 end:0x801F1B30
+
+MSL_C.PPCEABI.bare.H/alloc.c:
+	.text       start:0x800E3F98 end:0x800E4500
+	.rodata     start:0x8011E438 end:0x8011E450
+	.bss        start:0x801C4780 end:0x801C47B8
+	.sbss       start:0x801F1B30 end:0x801F1B38
+
+MSL_C.PPCEABI.bare.H/errno.c:
+	.sbss       start:0x801F1B38 end:0x801F1B40
+
+MSL_C.PPCEABI.bare.H/ansi_files.c:
+	.text       start:0x800E4500 end:0x800E4608
+	.data       start:0x8015B6A0 end:0x8015B7E0
+	.bss        start:0x801C47B8 end:0x801C4AB8
+
+MSL_C.PPCEABI.bare.H/ansi_fp.c:
+	.text       start:0x800E4608 end:0x800E5220
+	.rodata     start:0x8011E450 end:0x8011E530
+	.data       start:0x8015B7E0 end:0x8015B908
+	.sdata2     start:0x801F38E8 end:0x801F38F0
+
+MSL_C.PPCEABI.bare.H/arith.c:
+	.text       start:0x800E5220 end:0x800E5230
+
+MSL_C.PPCEABI.bare.H/buffer_io.c:
+	.text       start:0x800E5230 end:0x800E5328
+
+MSL_C.PPCEABI.bare.H/ctype.c:
+	.text       start:0x800E5328 end:0x800E5364
+	.data       start:0x8015B908 end:0x8015BB08
+
+MSL_C.PPCEABI.bare.H/direct_io.c:
+	.text       start:0x800E5364 end:0x800E5690
+
+MSL_C.PPCEABI.bare.H/file_io.c:
+	.text       start:0x800E5690 end:0x800E5888
+
+MSL_C.PPCEABI.bare.H/FILE_POS.c:
+	.text       start:0x800E5888 end:0x800E5B54
+
+MSL_C.PPCEABI.bare.H/mbstring.c:
+	.text       start:0x800E5B54 end:0x800E5C98
+	.sdata2     start:0x801F38F0 end:0x801F38F8
+
+MSL_C.PPCEABI.bare.H/mem.c:
+	.text       start:0x800E5C98 end:0x800E5E08
+
+MSL_C.PPCEABI.bare.H/mem_funcs.c:
+	.text       start:0x800E5E08 end:0x800E60E8
+
+MSL_C.PPCEABI.bare.H/misc_io.c:
+	.text       start:0x800E60E8 end:0x800E60F8
+
+MSL_C.PPCEABI.bare.H/printf.c:
+	.text       start:0x800E60F8 end:0x800E8194
+	.rodata     start:0x8011E530 end:0x8011E558
+	.data       start:0x8015BB08 end:0x8015BD38
+	.sdata      start:0x801F0D70 end:0x801F0D78
+	.sdata2     start:0x801F38F8 end:0x801F3900
+
+MSL_C.PPCEABI.bare.H/float.c:
+	.sdata      start:0x801F0D78 end:0x801F0D80
+
+MSL_C.PPCEABI.bare.H/signal.c:
+	.text       start:0x800E8194 end:0x800E8244
+	.bss        start:0x801C4AB8 end:0x801C4AD0
+
+MSL_C.PPCEABI.bare.H/string.c:
+	.text       start:0x800E8244 end:0x800E84F4
+
+MSL_C.PPCEABI.bare.H/uart_console_io.c:
+	.text       start:0x800E84F4 end:0x800E85C0
+	.sbss       start:0x801F1B40 end:0x801F1B48
+
+MSL_C.PPCEABI.bare.H/wchar_io.c:
+	.text       start:0x800E85C0 end:0x800E8648
+
+MSL_C.PPCEABI.bare.H/e_acos.c:
+	.text       start:0x800E8648 end:0x800E8958
+	.sdata2     start:0x801F3900 end:0x801F3990
+
+MSL_C.PPCEABI.bare.H/e_asin.c:
+	.text       start:0x800E8958 end:0x800E8BBC
+	.sdata2     start:0x801F3990 end:0x801F3A28
+
+MSL_C.PPCEABI.bare.H/e_atan2.c:
+	.text       start:0x800E8BBC end:0x800E8E4C
+	.sdata2     start:0x801F3A28 end:0x801F3A80
+
+MSL_C.PPCEABI.bare.H/e_fmod.c:
+	.text       start:0x800E8E4C end:0x800E9188
+	.rodata     start:0x8011E558 end:0x8011E568
+
+MSL_C.PPCEABI.bare.H/e_pow.c:
+	.text       start:0x800E9188 end:0x800E9A14
+	.rodata     start:0x8011E568 end:0x8011E598
+	.sdata2     start:0x801F3A80 end:0x801F3B90
+
+MSL_C.PPCEABI.bare.H/e_rem_pio2.c:
+	.text       start:0x800E9A14 end:0x800E9DB4
+	.rodata     start:0x8011E598 end:0x8011E720
+	.sdata2     start:0x801F3B90 end:0x801F3BE8
+
+MSL_C.PPCEABI.bare.H/k_cos.c:
+	.text       start:0x800E9DB4 end:0x800E9EA8
+	.sdata2     start:0x801F3BE8 end:0x801F3C30
+
+MSL_C.PPCEABI.bare.H/k_rem_pio2.c:
+	.text       start:0x800E9EA8 end:0x800EACFC
+	.rodata     start:0x8011E720 end:0x8011E770
+	.sdata2     start:0x801F3C30 end:0x801F3C70
+
+MSL_C.PPCEABI.bare.H/k_sin.c:
+	.text       start:0x800EACFC end:0x800EAD9C
+	.sdata2     start:0x801F3C70 end:0x801F3CA8
+
+MSL_C.PPCEABI.bare.H/k_tan.c:
+	.text       start:0x800EAD9C end:0x800EAFB0
+	.rodata     start:0x8011E770 end:0x8011E7D8
+	.sdata2     start:0x801F3CA8 end:0x801F3CE0
+
+MSL_C.PPCEABI.bare.H/s_atan.c:
+	.text       start:0x800EAFB0 end:0x800EB1B0
+	.rodata     start:0x8011E7D8 end:0x8011E870
+	.sdata2     start:0x801F3CE0 end:0x801F3D08
+
+MSL_C.PPCEABI.bare.H/s_copysign.c:
+	.text       start:0x800EB1B0 end:0x800EB1D8
+
+MSL_C.PPCEABI.bare.H/s_cos.c:
+	.text       start:0x800EB1D8 end:0x800EB2AC
+	.sdata2     start:0x801F3D08 end:0x801F3D10
+
+MSL_C.PPCEABI.bare.H/s_floor.c:
+	.text       start:0x800EB2AC end:0x800EB3F4
+	.sdata2     start:0x801F3D10 end:0x801F3D20
+
+MSL_C.PPCEABI.bare.H/s_frexp.c:
+	.text       start:0x800EB3F4 end:0x800EB480
+	.sdata2     start:0x801F3D20 end:0x801F3D28
+
+MSL_C.PPCEABI.bare.H/s_ldexp.c:
+	.text       start:0x800EB480 end:0x800EB644
+	.sdata2     start:0x801F3D28 end:0x801F3D50
+
+MSL_C.PPCEABI.bare.H/s_modf.c:
+	.text       start:0x800EB644 end:0x800EB740
+
+MSL_C.PPCEABI.bare.H/s_sin.c:
+	.text       start:0x800EB740 end:0x800EB818
+	.sdata2     start:0x801F3D50 end:0x801F3D58
+
+MSL_C.PPCEABI.bare.H/s_tan.c:
+	.text       start:0x800EB818 end:0x800EB890
+	.sdata2     start:0x801F3D58 end:0x801F3D60
+
+MSL_C.PPCEABI.bare.H/w_acos.c:
+	.text       start:0x800EB890 end:0x800EB8B0
+
+MSL_C.PPCEABI.bare.H/w_asin.c:
+	.text       start:0x800EB8B0 end:0x800EB8D0
+
+MSL_C.PPCEABI.bare.H/w_atan2.c:
+	.text       start:0x800EB8D0 end:0x800EB8F0
+
+MSL_C.PPCEABI.bare.H/w_fmod.c:
+	.text       start:0x800EB8F0 end:0x800EB910
+
+MSL_C.PPCEABI.bare.H/w_pow.c:
+	.text       start:0x800EB910 end:0x800EB930
+
+MSL_C.PPCEABI.bare.H/math_ppc.c:
+	.text       start:0x800EB930 end:0x800EB9E4
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
@@ -989,3 +1246,6 @@ musyx/runtime/Delay/delay_fx.c:
 
 musyx/runtime/Chorus/chorus_fx.c:
 	.text       start:0x80113F74 end:0x801147DC
+
+Runtime.PPCEABI.H/__mem.c:
+	.init       start:0x800033A8 end:0x800034E0
