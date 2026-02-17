@@ -993,6 +993,9 @@ MSL_C.PPCEABI.bare.H/alloc.c:
 	.bss        start:0x801C4780 end:0x801C47B8
 	.sbss       start:0x801F1B30 end:0x801F1B38
 
+MSL_C.PPCEABI.bare.H/errno.c:
+	.sbss       start:0x801F1B38 end:0x801F1B40
+
 MSL_C.PPCEABI.bare.H/ansi_files.c:
 	.text       start:0x800E4500 end:0x800E4608
 	.data       start:0x8015B6A0 end:0x8015B7E0
@@ -1019,6 +1022,46 @@ MSL_C.PPCEABI.bare.H/direct_io.c:
 
 MSL_C.PPCEABI.bare.H/file_io.c:
 	.text       start:0x800E5690 end:0x800E5888
+
+MSL_C.PPCEABI.bare.H/FILE_POS.c:
+	.text       start:0x800E5888 end:0x800E5B54
+
+MSL_C.PPCEABI.bare.H/mbstring.c:
+	.text       start:0x800E5B54 end:0x800E5C98
+	.sdata2     start:0x801F38F0 end:0x801F38F8
+
+MSL_C.PPCEABI.bare.H/mem.c:
+	.text       start:0x800E5C98 end:0x800E5E08
+
+MSL_C.PPCEABI.bare.H/mem_funcs.c:
+	.text       start:0x800E5E08 end:0x800E60E8
+
+MSL_C.PPCEABI.bare.H/misc_io.c:
+	.text       start:0x800E60E8 end:0x800E60F8
+
+MSL_C.PPCEABI.bare.H/printf.c:
+	.text       start:0x800E60F8 end:0x800E8194
+	.rodata     start:0x8011E530 end:0x8011E558
+	.data       start:0x8015BB08 end:0x8015BD38
+	.sdata      start:0x801F0D70 end:0x801F0D78
+	.sdata2     start:0x801F38F8 end:0x801F3900
+
+MSL_C.PPCEABI.bare.H/float.c:
+	.sdata      start:0x801F0D78 end:0x801F0D80
+
+MSL_C.PPCEABI.bare.H/signal.c:
+	.text       start:0x800E8194 end:0x800E8244
+	.bss        start:0x801C4AB8 end:0x801C4AD0
+
+MSL_C.PPCEABI.bare.H/string.c:
+	.text       start:0x800E8244 end:0x800E84F4
+
+MSL_C.PPCEABI.bare.H/uart_console_io.c:
+	.text       start:0x800E84F4 end:0x800E85C0
+	.sbss       start:0x801F1B40 end:0x801F1B48
+
+MSL_C.PPCEABI.bare.H/wchar_io.c:
+	.text       start:0x800E85C0 end:0x800E8648
 
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
