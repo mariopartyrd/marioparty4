@@ -1063,6 +1063,36 @@ MSL_C.PPCEABI.bare.H/uart_console_io.c:
 MSL_C.PPCEABI.bare.H/wchar_io.c:
 	.text       start:0x800E85C0 end:0x800E8648
 
+MSL_C.PPCEABI.bare.H/e_acos.c:
+	.text       start:0x800E8648 end:0x800E8958
+	.sdata2     start:0x801F3900 end:0x801F3990
+
+MSL_C.PPCEABI.bare.H/e_asin.c:
+	.text       start:0x800E8958 end:0x800E8BBC
+	.sdata2     start:0x801F3990 end:0x801F3A28
+
+MSL_C.PPCEABI.bare.H/e_atan2.c:
+	.text       start:0x800E8BBC end:0x800E8E4C
+	.sdata2     start:0x801F3A28 end:0x801F3A80
+
+MSL_C.PPCEABI.bare.H/e_fmod.c:
+	.text       start:0x800E8E4C end:0x800E9188
+	.rodata     start:0x8011E558 end:0x8011E568
+
+MSL_C.PPCEABI.bare.H/e_pow.c:
+	.text       start:0x800E9188 end:0x800E9A14
+	.rodata     start:0x8011E568 end:0x8011E598
+	.sdata2     start:0x801F3A80 end:0x801F3B90
+
+MSL_C.PPCEABI.bare.H/e_rem_pio2.c:
+	.text       start:0x800E9A14 end:0x800E9DB4
+	.rodata     start:0x8011E598 end:0x8011E720
+	.sdata2     start:0x801F3B90 end:0x801F3BE8
+
+MSL_C.PPCEABI.bare.H/k_cos.c:
+	.text       start:0x800E9DB4 end:0x800E9EA8
+	.sdata2     start:0x801F3BE8 end:0x801F3C30
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
