@@ -1093,6 +1093,73 @@ MSL_C.PPCEABI.bare.H/k_cos.c:
 	.text       start:0x800E9DB4 end:0x800E9EA8
 	.sdata2     start:0x801F3BE8 end:0x801F3C30
 
+MSL_C.PPCEABI.bare.H/k_rem_pio2.c:
+	.text       start:0x800E9EA8 end:0x800EACFC
+	.rodata     start:0x8011E720 end:0x8011E770
+	.sdata2     start:0x801F3C30 end:0x801F3C70
+
+MSL_C.PPCEABI.bare.H/k_sin.c:
+	.text       start:0x800EACFC end:0x800EAD9C
+	.sdata2     start:0x801F3C70 end:0x801F3CA8
+
+MSL_C.PPCEABI.bare.H/k_tan.c:
+	.text       start:0x800EAD9C end:0x800EAFB0
+	.rodata     start:0x8011E770 end:0x8011E7D8
+	.sdata2     start:0x801F3CA8 end:0x801F3CE0
+
+MSL_C.PPCEABI.bare.H/s_atan.c:
+	.text       start:0x800EAFB0 end:0x800EB1B0
+	.rodata     start:0x8011E7D8 end:0x8011E870
+	.sdata2     start:0x801F3CE0 end:0x801F3D08
+
+MSL_C.PPCEABI.bare.H/s_copysign.c:
+	.text       start:0x800EB1B0 end:0x800EB1D8
+
+MSL_C.PPCEABI.bare.H/s_cos.c:
+	.text       start:0x800EB1D8 end:0x800EB2AC
+	.sdata2     start:0x801F3D08 end:0x801F3D10
+
+MSL_C.PPCEABI.bare.H/s_floor.c:
+	.text       start:0x800EB2AC end:0x800EB3F4
+	.sdata2     start:0x801F3D10 end:0x801F3D20
+
+MSL_C.PPCEABI.bare.H/s_frexp.c:
+	.text       start:0x800EB3F4 end:0x800EB480
+	.sdata2     start:0x801F3D20 end:0x801F3D28
+
+MSL_C.PPCEABI.bare.H/s_ldexp.c:
+	.text       start:0x800EB480 end:0x800EB644
+	.sdata2     start:0x801F3D28 end:0x801F3D50
+
+MSL_C.PPCEABI.bare.H/s_modf.c:
+	.text       start:0x800EB644 end:0x800EB740
+
+MSL_C.PPCEABI.bare.H/s_sin.c:
+	.text       start:0x800EB740 end:0x800EB818
+	.sdata2     start:0x801F3D50 end:0x801F3D58
+
+MSL_C.PPCEABI.bare.H/s_tan.c:
+	.text       start:0x800EB818 end:0x800EB890
+	.sdata2     start:0x801F3D58 end:0x801F3D60
+
+MSL_C.PPCEABI.bare.H/w_acos.c:
+	.text       start:0x800EB890 end:0x800EB8B0
+
+MSL_C.PPCEABI.bare.H/w_asin.c:
+	.text       start:0x800EB8B0 end:0x800EB8D0
+
+MSL_C.PPCEABI.bare.H/w_atan2.c:
+	.text       start:0x800EB8D0 end:0x800EB8F0
+
+MSL_C.PPCEABI.bare.H/w_fmod.c:
+	.text       start:0x800EB8F0 end:0x800EB910
+
+MSL_C.PPCEABI.bare.H/w_pow.c:
+	.text       start:0x800EB910 end:0x800EB930
+
+MSL_C.PPCEABI.bare.H/math_ppc.c:
+	.text       start:0x800EB930 end:0x800EB9E4
+
 musyx/runtime/seq.c:
 	.text       start:0x800F26B0 end:0x800F6620
 
