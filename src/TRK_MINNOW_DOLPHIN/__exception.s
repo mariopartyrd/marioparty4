@@ -152,8 +152,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x200
 	rfi
@@ -210,8 +210,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x300
 	rfi
@@ -278,8 +278,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x400
 	rfi
@@ -342,8 +342,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x500
 	rfi
@@ -406,8 +406,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x600
 	rfi
@@ -470,8 +470,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x700
 	rfi
@@ -534,8 +534,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x800
 	rfi
@@ -598,8 +598,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x900
 	rfi
@@ -790,8 +790,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0xc00
 	rfi
@@ -854,8 +854,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0xd00
 	rfi
@@ -918,8 +918,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0xe00
 	rfi
@@ -990,8 +990,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0xf20
 	rfi
@@ -1004,8 +1004,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0xf00
 	rfi
@@ -1063,8 +1063,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1000
 	rfi
@@ -1128,8 +1128,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1100
 	rfi
@@ -1193,8 +1193,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1200
 	rfi
@@ -1242,8 +1242,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1300
 	rfi
@@ -1306,8 +1306,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1400
 	rfi
@@ -1434,8 +1434,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1600
 	rfi
@@ -1498,8 +1498,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1700
 	rfi
@@ -1818,8 +1818,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1c00
 	rfi
@@ -1882,8 +1882,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1d00
 	rfi
@@ -1946,8 +1946,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1e00
 	rfi
@@ -2010,8 +2010,8 @@ andis. r5, r27, 0x7250
 	mfmsr r3
 	ori r3, r3, 0x30
 	mtsrr1 r3
-	lis r3, 0x800f
-	ori r3, r3, 0x4a0
+	lis  r3, TRKInterruptHandler@ha
+	ori  r3, r3, TRKInterruptHandler@l
 	mtsrr0 r3
 	li r3, 0x1f00
 	rfi
