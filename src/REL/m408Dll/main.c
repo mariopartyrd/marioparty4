@@ -1360,7 +1360,11 @@ void fn_1_6540(omObjData *object)
 
             case 3:
                 temp_f31 = temp_r31->unk38[5];
+#if VERSION_PAL
                 temp_f31 -= 0.12f;
+#else
+                temp_f31 -= 0.10000001f;
+#endif
                 if (temp_f31 <= 1.0f) {
                     temp_f31 = 1.0f;
                     temp_r31->unk14++;

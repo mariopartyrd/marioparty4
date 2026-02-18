@@ -22,6 +22,7 @@
 #else
 #define REFRESH_RATE 60
 #define REFRESH_RATE_F 60.0f
+#define REFRESH_RATE_OFF_BY_1 (REFRESH_RATE_F - 0.000005f)
 #endif
 #define REFRESH_FREQ (1.0f / REFRESH_RATE)
 

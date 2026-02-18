@@ -144,12 +144,12 @@ void fn_1_8FAC(omObjData *object)
 
         case 3:
 #if VERSION_PAL
-            lbl_1_bss_F4.y += -8.0f;
-            lbl_1_bss_F4.z += -0.7f;
+            lbl_1_bss_F4.y += -400.0f / REFRESH_RATE_F;
+            lbl_1_bss_F4.z += -35.0f / REFRESH_RATE_F;
             lbl_1_bss_100.y += 20.0f / 50.000005f;
 #else
-            lbl_1_bss_F4.y += -6.666667f;
-            lbl_1_bss_F4.z += -0.5833334f;
+            lbl_1_bss_F4.y += -400.0f / REFRESH_RATE_OFF_BY_1;
+            lbl_1_bss_F4.z += -35.0f / REFRESH_RATE_OFF_BY_1;
             lbl_1_bss_100.y += 20.0f / 60.0f;
 #endif
             fn_1_817C(&lbl_1_bss_100, &lbl_1_bss_F4);
@@ -308,10 +308,18 @@ void fn_1_99C8(omObjData *object)
                 }
                 temp_f31 = temp_r31->unk18.z;
                 temp_r31->unk30.z -= (175.0f / REFRESH_RATE) * temp_f30;
+#if VERSION_PAL
                 temp_r31->unk30.y += (70.0f / REFRESH_RATE) * temp_f30;
+#else
+                temp_r31->unk30.y += (70.0f / REFRESH_RATE_OFF_BY_1) * temp_f30;
+#endif
                 temp_r31->unk18.x = object->trans.x + (temp_r31->unk30.z * sind(temp_r31->unk30.y));
                 temp_r31->unk18.z = object->trans.z + (temp_r31->unk30.z * cosd(temp_r31->unk30.y));
+#if VERSION_PAL
                 temp_r31->unk18.y -= (500.0f / REFRESH_RATE) * temp_f30;
+#else
+                temp_r31->unk18.y -= (500.0f / REFRESH_RATE_OFF_BY_1) * temp_f30;
+#endif
                 temp_r31->unk24.x = 0;
                 temp_r31->unk24.y = 0;
                 temp_r31->unk24.z = 0.96f * temp_r31->unk0.z;
@@ -353,7 +361,11 @@ void fn_1_99C8(omObjData *object)
             break;
 
         case 2:
-            temp_r31->unk3C.x += (90.0f / REFRESH_RATE);
+#if VERSION_PAL
+            temp_r31->unk3C.x += (90.0f / REFRESH_RATE_F);
+#else
+            temp_r31->unk3C.x += (90.0f / REFRESH_RATE_OFF_BY_1);
+#endif
             temp_r31->unk0.z = 1000.0 * cosd(temp_r31->unk3C.x);
             temp_r31->unk0.y = 1000.0 * sind(temp_r31->unk3C.x);
             temp_r31->unkC.x = object->trans.x;
@@ -368,7 +380,11 @@ void fn_1_99C8(omObjData *object)
             break;
 
         case 3:
-            temp_r31->unk3C.z += (180.0f / REFRESH_RATE);
+#if VERSION_PAL
+            temp_r31->unk3C.z += (180.0f / REFRESH_RATE_F);
+#else
+            temp_r31->unk3C.z += (180.0f / REFRESH_RATE_OFF_BY_1);
+#endif
             temp_f31 = REFRESH_FREQ * object->work[1];
             temp_f31 = 1.0f - (temp_f31 * temp_f31);
             temp_r31->unkC.x += temp_f31 * (object->trans.x - temp_r31->unkC.x);
@@ -388,7 +404,11 @@ void fn_1_99C8(omObjData *object)
             break;
 
         case 4:
-            temp_r31->unk3C.z += (180.0f / REFRESH_RATE);
+#if VERSION_PAL
+            temp_r31->unk3C.z += (180.0f / REFRESH_RATE_F);
+#else
+            temp_r31->unk3C.z += (180.0f / REFRESH_RATE_OFF_BY_1);
+#endif
             if (object->work[1] > REFRESH_RATE_F * 0.7f) {
                 if (temp_r31->unk48[0] >= 0) {
                     HuAudFXStop(temp_r31->unk48[0]);
@@ -523,6 +543,16 @@ void fn_1_A4E8(s32 arg0, Vec *arg1, u32 arg2)
     }
 }
 
+#if VERSION_PAL
+#define MIN_PARTICLE_00_VALUE 282.5f
+#define MAX_PARTICLE_00_VALUE 500.0f
+#define PARTICLE_00_CAP 501
+#else
+#define MIN_PARTICLE_00_VALUE 339.0f
+#define MAX_PARTICLE_00_VALUE 600.0f
+#define PARTICLE_00_CAP 601
+#endif
+
 void fn_1_A894(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     float temp_f31;
@@ -554,11 +584,11 @@ void fn_1_A894(ModelData *model, ParticleData *particle, Mtx matrix)
     }
     else {
         particle->unk_00++;
-        if (particle->unk_00 < 339.0f) {
+        if (particle->unk_00 < MIN_PARTICLE_00_VALUE) {
             return;
         }
-        if (particle->unk_00 >= 600.0f) {
-            particle->unk_00 = 601;
+        if (particle->unk_00 >= MAX_PARTICLE_00_VALUE) {
+            particle->unk_00 = PARTICLE_00_CAP;
             temp_r31 = particle->unk_48;
             for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
                 temp_r31->unk00 = 0;
@@ -642,11 +672,11 @@ void fn_1_AFF4(ModelData *model, ParticleData *particle, Mtx matrix)
     }
     else {
         particle->unk_00++;
-        if (particle->unk_00 < 339.0f) {
+        if (particle->unk_00 < MIN_PARTICLE_00_VALUE) {
             return;
         }
-        if (particle->unk_00 >= 600.0f) {
-            particle->unk_00 = 601;
+        if (particle->unk_00 >= MAX_PARTICLE_00_VALUE) {
+            particle->unk_00 = PARTICLE_00_CAP;
             temp_r30 = particle->unk_48;
             for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r30++) {
                 temp_r30->unk00 = 0;
@@ -772,11 +802,11 @@ void fn_1_BDE0(void)
     Vec sp8;
     temp_r31 = lbl_1_bss_A4[0];
     temp_r31->unk00++;
-    if (temp_r31->unk00 < 339.0f) {
+    if (temp_r31->unk00 < MIN_PARTICLE_00_VALUE) {
         return;
     }
-    if (temp_r31->unk00 >= 600.0f) {
-        temp_r31->unk00 = 601;
+    if (temp_r31->unk00 >= MAX_PARTICLE_00_VALUE) {
+        temp_r31->unk00 = PARTICLE_00_CAP;
         for (temp_r30 = 0; temp_r30 < lbl_1_bss_A0; temp_r30++) {
             temp_r31 = lbl_1_bss_A4[temp_r30];
             temp_r31->unk00 = 0;

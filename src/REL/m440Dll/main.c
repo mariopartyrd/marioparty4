@@ -16,6 +16,13 @@
 #include "string.h"
 #include "version.h"
 
+#undef REFRESH_RATE_F
+#if VERSION_NTSC
+#define REFRESH_RATE_F 60.0f
+#else
+#define REFRESH_RATE_F 49.998f
+#endif
+
 // bss
 omObjData *lbl_1_bss_6C;
 omObjData *lbl_1_bss_68;

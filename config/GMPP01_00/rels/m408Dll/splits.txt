@@ -17,5 +17,5 @@ REL/m408Dll/main.c:
 
 REL/m408Dll/camera.c:
 	.text       start:0x00008958 end:0x0000C44C
-	.rodata     start:0x000002C0 end:0x000004C0
+	.rodata     start:0x000002C0 end:0x000004A8
 	.bss        start:0x00000080 end:0x00000118
