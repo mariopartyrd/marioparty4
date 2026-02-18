@@ -1,3 +1,5 @@
+#include <version.h>
+
 //fake function signatures
 void OSDumpStopwatch(void);
 void PSVECDotProduct(void);
@@ -25,6 +27,7 @@ void PSQUATMultiply(void);
 void PSQUATInverse(void);
 void PSQUATNormalize(void);
 void OSTicksToCalendarTime(void);
+void OSGetLanguage(void);
 void GXWaitDrawDone(void);
 void GXProject(void);
 void GXGetProjectionv(void);
@@ -633,13 +636,14 @@ void GWMGCustomReset(void);
 void GWMGCustomSet(void);
 void GWMGCustomGet(void);
 void GWMGAvailGet(void);
+void GwLanguage(void);
 void fmod(void);
 void _savegpr_15(void);
 void _restgpr_15(void);
 void _savegpr_16(void);
 void _restgpr_16(void);
-void __save_gpr(void);
-void __restore_gpr(void);
+void _savegpr_14(void);
+void _restgpr_14(void);
 void omDBGMenuButton(void);
 void msmSeSetListener(void);
 void msmSeUpdataListener(void);
@@ -1042,6 +1046,7 @@ extern void _kerjmp_PSQUATMultiply(void);
 extern void _kerjmp_PSQUATInverse(void);
 extern void _kerjmp_PSQUATNormalize(void);
 extern void _kerjmp_OSTicksToCalendarTime(void);
+extern void _kerjmp_OSGetLanguage(void);
 extern void _kerjmp_GXWaitDrawDone(void);
 extern void _kerjmp_GXProject(void);
 extern void _kerjmp_GXGetProjectionv(void);
@@ -1650,13 +1655,14 @@ extern void _kerjmp_GWMGCustomReset(void);
 extern void _kerjmp_GWMGCustomSet(void);
 extern void _kerjmp_GWMGCustomGet(void);
 extern void _kerjmp_GWMGAvailGet(void);
+extern void _kerjmp_GwLanguage(void);
 extern void _kerjmp_fmod(void);
 extern void _kerjmp__savegpr_15(void);
 extern void _kerjmp__restgpr_15(void);
 extern void _kerjmp__savegpr_16(void);
 extern void _kerjmp__restgpr_16(void);
-extern void _kerjmp___save_gpr(void);
-extern void _kerjmp___restore_gpr(void);
+extern void _kerjmp__savegpr_14(void);
+extern void _kerjmp__restgpr_14(void);
 extern void _kerjmp_omDBGMenuButton(void);
 extern void _kerjmp_msmSeSetListener(void);
 extern void _kerjmp_msmSeUpdataListener(void);
@@ -2089,6 +2095,10 @@ asm void _kerent(void) {
     b PSQUATNormalize
     entry _kerjmp_OSTicksToCalendarTime
     b OSTicksToCalendarTime
+#if VERSION_PAL
+    entry _kerjmp_OSGetLanguage
+    b OSGetLanguage
+#endif
     entry _kerjmp_GXWaitDrawDone
     b GXWaitDrawDone
     entry _kerjmp_GXProject
@@ -3305,6 +3315,10 @@ asm void _kerent(void) {
     b GWMGCustomGet
     entry _kerjmp_GWMGAvailGet
     b GWMGAvailGet
+#if VERSION_PAL
+    entry _kerjmp_GwLanguage
+    b GwLanguage
+#endif
     entry _kerjmp_fmod
     b fmod
     entry _kerjmp__savegpr_15
@@ -3315,10 +3329,10 @@ asm void _kerent(void) {
     b _savegpr_16
     entry _kerjmp__restgpr_16
     b _restgpr_16
-    entry _kerjmp___save_gpr
-    b __save_gpr
-    entry _kerjmp___restore_gpr
-    b __restore_gpr
+    entry _kerjmp__savegpr_14
+    b _savegpr_14
+    entry _kerjmp__restgpr_14
+    b _restgpr_14
     entry _kerjmp_omDBGMenuButton
     b omDBGMenuButton
     entry _kerjmp_msmSeSetListener
