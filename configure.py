@@ -506,7 +506,7 @@ config.libs = [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/pause.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/com_path.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/tutorial.c"),
-            Object(MatchingFor(*MATCH_USA), "game/kerent.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/kerent.c"),
         ],
     },
     DolphinLib(
