@@ -593,7 +593,7 @@ dolphin/os/OSContext.c:
 dolphin/os/OSError.c:
 	.text       start:0x800B6E68 end:0x800B7104
 	.data       start:0x801592C8 end:0x801595E8
-	.bss        start:0x801C26F0 end:0x801C2734
+	.bss        start:0x801C26F0 end:0x801C2738
 	.sdata      start:0x801F0C70 end:0x801F0C78
 
 dolphin/os/OSFont.c:
@@ -621,7 +621,7 @@ dolphin/os/OSMutex.c:
 
 dolphin/os/OSReboot.c:
 	.text       start:0x800B8514 end:0x800B8720
-	.bss        start:0x801C2740 end:0x801C2760
+	.bss        start:0x801C2738 end:0x801C2760
 	.sbss       start:0x801F16D0 end:0x801F16E0
 
 dolphin/os/OSReset.c:
@@ -703,7 +703,7 @@ dolphin/dvd/dvdfs.c:
 dolphin/dvd/dvd.c:
 	.text       start:0x800BE0A4 end:0x800C0528
 	.data       start:0x801598D0 end:0x801599E8
-	.bss        start:0x801C3280 end:0x801C3358
+	.bss        start:0x801C3270 end:0x801C3358
 	.sdata      start:0x801F0C98 end:0x801F0CA0
 	.sbss       start:0x801F1788 end:0x801F17D0
 
@@ -724,7 +724,7 @@ dolphin/dvd/fstload.c:
 
 dolphin/vi.c:
 	.text       start:0x800C0AF8 end:0x800C2578
-	.data       start:0x80159AA0 end:0x80159D68
+	.data       start:0x80159AA0 end:0x80159D80
 	.bss        start:0x801C33E8 end:0x801C3530
 	.sbss       start:0x801F17E0 end:0x801F1830
 
@@ -854,7 +854,7 @@ dolphin/gx/GXPerf.c:
 
 dolphin/card/CARDBios.c:
 	.text       start:0x800D07D4 end:0x800D1AF4
-	.data       start:0x8015B288 end:0x8015B298
+	.data       start:0x8015B288 end:0x8015B2A0
 	.bss        start:0x801C4038 end:0x801C4278
 
 dolphin/card/CARDUnlock.c:
@@ -925,7 +925,7 @@ dolphin/si/SISamplingRate.c:
 dolphin/thp/THPDec.c:
 	.text       start:0x800DA300 end:0x800E1840
 	.rodata     start:0x8011E260 end:0x8011E2F0
-	.bss        start:0x801C4540 end:0x801C4670
+	.bss        start:0x801C4538 end:0x801C4670
 	.sbss       start:0x801F19E8 end:0x801F1B18
 	.sdata2     start:0x801F38C8 end:0x801F38E8
 
@@ -1403,3 +1403,49 @@ musyx/runtime/Chorus/chorus_fx.c:
 	.text       start:0x80113F74 end:0x801147DC
 	.data       start:0x8015F390 end:0x8015FB90
 	.sdata2     start:0x801F3F88 end:0x801F3F90
+
+OdemuExi2/DebuggerDriver.c:
+	.text       start:0x801147DC end:0x8011525C
+	.sdata      start:0x801F0DA0 end:0x801F0DA1
+	.sbss       start:0x801F1CF8 end:0x801F1D0D
+
+amcstubs/AmcExi2Stubs.c:
+	.text       start:0x8011525C end:0x8011528C
+
+odenotstub/odenotstub.c:
+	.text       start:0x8011528C end:0x80115294
+
+libhu/setvf.c:
+	.text       start:0x80115294 end:0x801152A4
+
+libhu/subvf.c:
+	.text       start:0x801152A4 end:0x801152D8
+
+msm/msmsys.c:
+	.text       start:0x801152D8 end:0x801174F8
+	.bss        start:0x801EFFC0 end:0x801F04C0
+	.sdata2     start:0x801F3F90 end:0x801F3F98
+
+msm/msmmem.c:
+	.text       start:0x801174F8 end:0x80117728
+	.bss        start:0x801F04C0 end:0x801F04F0
+
+msm/msmfio.c:
+	.text       start:0x80117728 end:0x80117818
+	.bss        start:0x801F04F0 end:0x801F0500
+
+msm/msmmus.c:
+	.text       start:0x80117818 end:0x801188B0
+	.bss        start:0x801F0500 end:0x801F0678
+
+msm/msmse.c:
+	.text       start:0x801188B0 end:0x80119E74
+	.bss        start:0x801F0678 end:0x801F0760
+	.sdata2     start:0x801F3F98 end:0x801F3FB0
+
+msm/msmstream.c:
+	.text       start:0x80119E74 end:0x8011CAF4
+	.bss        start:0x801F0760 end:0x801F07C0
+
+game/kerent.c:
+	.text       start:0x8011CAF4 end:0x8011DAE0

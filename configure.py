@@ -819,7 +819,7 @@ config.libs = [
         "mw_version": "GC/1.2.5" if version_num == 0 else "GC/1.2.5n",
         "cflags": cflags_odemuexi,
         "objects": [
-            Object(MatchingFor(*MATCH_USA), "OdemuExi2/DebuggerDriver.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "OdemuExi2/DebuggerDriver.c"),
         ],
     },
     {
@@ -827,7 +827,7 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_amcstub,
         "objects": [
-            Object(MatchingFor(*MATCH_USA), "amcstubs/AmcExi2Stubs.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "amcstubs/AmcExi2Stubs.c"),
         ],
     },
     {
@@ -835,7 +835,7 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_odenotstub,
         "objects": [
-            Object(MatchingFor(*MATCH_USA), "odenotstub/odenotstub.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "odenotstub/odenotstub.c"),
         ],
     },
     {
@@ -843,8 +843,8 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_libhu,
         "objects": [
-            Object(MatchingFor(*MATCH_USA), "libhu/setvf.c"),
-            Object(MatchingFor(*MATCH_USA), "libhu/subvf.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "libhu/setvf.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "libhu/subvf.c"),
         ],
     },
     {
@@ -852,12 +852,12 @@ config.libs = [
         "mw_version": "GC/1.2.5",
         "cflags": cflags_msm,
         "objects": [
-            Object(MatchingFor(*MATCH_USA), "msm/msmsys.c"),
-            Object(MatchingFor(*MATCH_USA), "msm/msmmem.c"),
-            Object(MatchingFor(*MATCH_USA), "msm/msmfio.c"),
-            Object(MatchingFor(*MATCH_USA), "msm/msmmus.c"),
-            Object(MatchingFor(*MATCH_USA), "msm/msmse.c"),
-            Object(MatchingFor(*MATCH_USA), "msm/msmstream.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "msm/msmsys.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "msm/msmmem.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "msm/msmfio.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "msm/msmmus.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "msm/msmse.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "msm/msmstream.c"),
         ],
     },
     {
