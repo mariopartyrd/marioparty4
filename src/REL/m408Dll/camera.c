@@ -18,6 +18,7 @@
 
 #include "ext_math.h"
 #include "math.h"
+#include "version.h"
 
 omObjData *lbl_1_bss_110;
 u32 lbl_1_bss_10C;
@@ -142,9 +143,15 @@ void fn_1_8FAC(omObjData *object)
             break;
 
         case 3:
+#if VERSION_PAL
+            lbl_1_bss_F4.y += -8.0f;
+            lbl_1_bss_F4.z += -0.7f;
+            lbl_1_bss_100.y += 20.0f / 50.000005f;
+#else
             lbl_1_bss_F4.y += -6.666667f;
             lbl_1_bss_F4.z += -0.5833334f;
             lbl_1_bss_100.y += 20.0f / 60.0f;
+#endif
             fn_1_817C(&lbl_1_bss_100, &lbl_1_bss_F4);
             if (lbl_1_bss_F4.y > 12010) {
                 break;
@@ -162,8 +169,13 @@ void fn_1_8FAC(omObjData *object)
             break;
 
         case 4:
+#if VERSION_PAL
+            if (object->work[1] < 20.0f) {
+                lbl_1_bss_100.y += 0.39999998f;
+#else
             if (object->work[1] < 24.0f) {
                 lbl_1_bss_100.y += 4.0f / 12.0f;
+#endif
                 fn_1_817C(&lbl_1_bss_100, &lbl_1_bss_F4);
             }
             else {
@@ -174,8 +186,16 @@ void fn_1_8FAC(omObjData *object)
                     }
                     object->work[2]++;
                 }
+#if VERSION_PAL
+                CZoom -= 3.0f;
+#else
                 CZoom -= 2.5000002f;
+#endif
+#if VERSION_PAL
+                if (object->work[1] < 75.0f) {
+#else
                 if (object->work[1] < 90.0f) {
+#endif
                     break;
                 }
                 lbl_1_bss_10C = 5;
@@ -275,29 +295,29 @@ void fn_1_99C8(omObjData *object)
 
     Work99C8 *temp_r31;
     temp_r31 = object->data;
-    object->trans.x += temp_r31->unk0.x * (1.0f / 60.0f);
-    object->trans.y += temp_r31->unk0.y * (1.0f / 60.0f);
-    object->trans.z += temp_r31->unk0.z * (1.0f / 60.0f);
+    object->trans.x += temp_r31->unk0.x * REFRESH_FREQ;
+    object->trans.y += temp_r31->unk0.y * REFRESH_FREQ;
+    object->trans.z += temp_r31->unk0.z * REFRESH_FREQ;
     object->work[1]++;
     switch (object->work[0]) {
         case 0:
-            if (object->work[1] < 120.0f) {
-                temp_f30 = (1.0f / 60.0f) * (1.5f * (120.0f - object->work[1]));
+            if (object->work[1] < REFRESH_RATE_F * 2) {
+                temp_f30 = REFRESH_FREQ * (1.5f * (REFRESH_RATE_F * 2 - object->work[1]));
                 if (temp_f30 > 1.0f) {
                     temp_f30 = 1.0f;
                 }
                 temp_f31 = temp_r31->unk18.z;
-                temp_r31->unk30.z -= (175.0f / 60.0f) * temp_f30;
-                temp_r31->unk30.y += 1.1666667f * temp_f30;
+                temp_r31->unk30.z -= (175.0f / REFRESH_RATE) * temp_f30;
+                temp_r31->unk30.y += (70.0f / REFRESH_RATE) * temp_f30;
                 temp_r31->unk18.x = object->trans.x + (temp_r31->unk30.z * sind(temp_r31->unk30.y));
                 temp_r31->unk18.z = object->trans.z + (temp_r31->unk30.z * cosd(temp_r31->unk30.y));
-                temp_r31->unk18.y -= 8.333334f * temp_f30;
+                temp_r31->unk18.y -= (500.0f / REFRESH_RATE) * temp_f30;
                 temp_r31->unk24.x = 0;
                 temp_r31->unk24.y = 0;
                 temp_r31->unk24.z = 0.96f * temp_r31->unk0.z;
             }
             else {
-                temp_r31->unk18.z += temp_r31->unk24.z * (1.0f / 60.0f);
+                temp_r31->unk18.z += temp_r31->unk24.z * REFRESH_FREQ;
             }
             temp_r31->unkC.x = object->trans.x;
             temp_r31->unkC.y = object->trans.y;
@@ -311,7 +331,7 @@ void fn_1_99C8(omObjData *object)
             if (temp_r31->unk48[1] < 0) {
                 temp_r31->unk48[1] = HuAudFXEmiterPlay(1356, &sp2C);
             }
-            if (object->work[1] < 180.0f) {
+            if (object->work[1] < REFRESH_RATE_F * 3) {
                 break;
             }
             object->work[0] = 1;
@@ -320,12 +340,12 @@ void fn_1_99C8(omObjData *object)
 
         case 1:
             temp_r31->unk24.z *= 0.6f;
-            temp_r31->unk18.z += (temp_r31->unk24.z * (1.0f / 60.0f));
-            temp_r31->unk18.x += (temp_r31->unk24.z * (1.0f / 60.0f));
+            temp_r31->unk18.z += (temp_r31->unk24.z * REFRESH_FREQ);
+            temp_r31->unk18.x += (temp_r31->unk24.z * REFRESH_FREQ);
             temp_r31->unkC.x = object->trans.x;
             temp_r31->unkC.y = object->trans.y;
             temp_r31->unkC.z = object->trans.z;
-            if (object->work[1] < 60.0f) {
+            if (object->work[1] < REFRESH_RATE_F) {
                 break;
             }
             object->work[0] = 2;
@@ -333,13 +353,13 @@ void fn_1_99C8(omObjData *object)
             break;
 
         case 2:
-            temp_r31->unk3C.x += 1.5000001f;
+            temp_r31->unk3C.x += (90.0f / REFRESH_RATE);
             temp_r31->unk0.z = 1000.0 * cosd(temp_r31->unk3C.x);
             temp_r31->unk0.y = 1000.0 * sind(temp_r31->unk3C.x);
             temp_r31->unkC.x = object->trans.x;
             temp_r31->unkC.y = object->trans.y;
             temp_r31->unkC.z = object->trans.z;
-            if (object->work[1] < 120.0f) {
+            if (object->work[1] < REFRESH_RATE_F * 2) {
                 break;
             }
             object->work[0] = 3;
@@ -348,13 +368,13 @@ void fn_1_99C8(omObjData *object)
             break;
 
         case 3:
-            temp_r31->unk3C.z += 3.0000002f;
-            temp_f31 = (1.0f / 60.0f) * object->work[1];
+            temp_r31->unk3C.z += (180.0f / REFRESH_RATE);
+            temp_f31 = REFRESH_FREQ * object->work[1];
             temp_f31 = 1.0f - (temp_f31 * temp_f31);
             temp_r31->unkC.x += temp_f31 * (object->trans.x - temp_r31->unkC.x);
             temp_r31->unkC.y += temp_f31 * (object->trans.y - temp_r31->unkC.y);
             temp_r31->unkC.z += temp_f31 * (object->trans.z - temp_r31->unkC.z);
-            if (object->work[1] < 60.0f) {
+            if (object->work[1] < REFRESH_RATE_F) {
                 break;
             }
             lbl_1_bss_F4.x = temp_r31->unkC.x;
@@ -368,8 +388,8 @@ void fn_1_99C8(omObjData *object)
             break;
 
         case 4:
-            temp_r31->unk3C.z += 3.0000002f;
-            if (object->work[1] > 42.0f) {
+            temp_r31->unk3C.z += (180.0f / REFRESH_RATE);
+            if (object->work[1] > REFRESH_RATE_F * 0.7f) {
                 if (temp_r31->unk48[0] >= 0) {
                     HuAudFXStop(temp_r31->unk48[0]);
                     temp_r31->unk48[0] = -1;
@@ -379,7 +399,7 @@ void fn_1_99C8(omObjData *object)
                     temp_r31->unk48[1] = -1;
                 }
             }
-            if (object->work[1] < 240.0f) {
+            if (object->work[1] < REFRESH_RATE_F * 4) {
                 break;
             }
             object->work[0] = 5;
@@ -480,12 +500,12 @@ void fn_1_A4E8(s32 arg0, Vec *arg1, u32 arg2)
             if (temp_r31->unk00 != 0) {
                 continue;
             }
-            temp_r31->unk00 = 60.0f * (((1.5f / 1000.0f) * frandmod(1000)) + 1.0f);
+            temp_r31->unk00 = REFRESH_RATE_F * (((1.5f / 1000.0f) * frandmod(1000)) + 1.0f);
             temp_r31->unk34.x = arg1->x;
             temp_r31->unk34.y = 12000;
             temp_r31->unk34.z = arg1->z;
-            temp_r31->unk08.x = (1.0f / 60.0f) * ((0.6f * frandmod(1000)) - 300.0f);
-            temp_r31->unk08.y = (1.0f / 60.0f) * ((0.04f * frandmod(1000)) + 10.0f);
+            temp_r31->unk08.x = REFRESH_FREQ * ((0.6f * frandmod(1000)) - 300.0f);
+            temp_r31->unk08.y = REFRESH_FREQ * ((0.04f * frandmod(1000)) + 10.0f);
             temp_r31->unk08.z = 0;
             temp_r31->unk14.x = 0.3f + ((3.0f / 1000.0f) * frandmod(1000));
             temp_r31->unk2C = 10;

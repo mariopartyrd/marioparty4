@@ -953,7 +953,7 @@ config.libs = [
     Rel(
         "m408Dll",  # Paratrooper Plunge
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL, "GMPJ01_00"), "REL/m408Dll/main.c"),
             Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/camera.c"),
             Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/stage.c"),
             Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/object.c"),
