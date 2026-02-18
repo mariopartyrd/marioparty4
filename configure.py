@@ -894,7 +894,7 @@ config.libs = [
         "instDll",
         objects={
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/instDll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/instDll/font.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/instDll/font.c"),
         },
     ),
     Rel(
