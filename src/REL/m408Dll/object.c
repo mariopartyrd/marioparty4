@@ -18,6 +18,7 @@
 
 #include "ext_math.h"
 #include "math.h"
+#include "version.h"
 
 typedef struct struct_data_20C {
     s32 unk0;
@@ -553,7 +554,11 @@ void fn_1_12C6C(StructBssDA4 *arg0)
                 arg0->unk34.y = fn_1_883C(arg0->unk34.y, temp_f31, 0.1f);
             }
             arg0->unk34.x = fn_1_883C(arg0->unk34.x, 0, 0.1f);
+#if VERSION_PAL
+            if (arg0->unk60 < 75.0f) {
+#else
             if (arg0->unk60 < 90.0f) {
+#endif
                 arg0->unk60++;
             }
             else {
@@ -633,7 +638,7 @@ void fn_1_1305C(StructBssDA4 *arg0)
             arg0->unk24.x = arg0->unkC.x;
             arg0->unk24.y = arg0->unkC.y + 5;
             arg0->unk24.z = arg0->unkC.z;
-            if (arg0->unk60 < 120.0f) {
+            if (arg0->unk60 < REFRESH_RATE_F * 2) {
                 arg0->unk60++;
             }
             else {
@@ -696,7 +701,7 @@ void fn_1_134D8(StructBssDA4 *arg0)
             if (arg0->unk34.y > 360.0f) {
                 arg0->unk34.y -= 360.0f;
             }
-            if (arg0->unk60 < 120.0f) {
+            if (arg0->unk60 < REFRESH_RATE_F * 2) {
                 arg0->unk60++;
             }
             else {
@@ -954,7 +959,11 @@ void fn_1_144D0(StructBssDA4 *arg0)
             arg0->unkC.z = 15.0f * temp_f30;
             arg0->unk34.y = -arg0->unk30 + 90.0f;
             temp_f24 = fn_1_6888();
+#if VERSION_PAL
+            temp_f21 = -680.0f + temp_f24;
+#else
             temp_f21 = -680.00006f + temp_f24;
+#endif
             if (arg0->unkC.y > temp_f21) {
                 arg0->unk54 = 1;
                 arg0->unk60 = 0;
@@ -962,9 +971,15 @@ void fn_1_144D0(StructBssDA4 *arg0)
             break;
 
         case 1:
+#if VERSION_PAL
+            if (arg0->unk60 < 85.0f) {
+                arg0->unk60++;
+                temp_f27 = arg0->unk60 / 85.0f;
+#else
             if (arg0->unk60 < 102.0f) {
                 arg0->unk60++;
                 temp_f27 = arg0->unk60 / 102.0f;
+#endif
                 temp_f29 = 15 + (35 * temp_f27);
                 temp_f22 = 90 * temp_f27;
                 temp_f31 = cosd(arg0->unk30);
@@ -997,7 +1012,7 @@ void fn_1_144D0(StructBssDA4 *arg0)
                 arg0->unk34.x = 30.0f;
             }
             arg0->unk34.y = (-arg0->unk30 + 90.0f) - 90.0f;
-            if (arg0->unk60 < 180.0f) {
+            if (arg0->unk60 < REFRESH_RATE_F * 3) {
                 arg0->unk60++;
             }
             else {
@@ -1013,7 +1028,11 @@ void fn_1_144D0(StructBssDA4 *arg0)
             break;
 
         case 3:
+#if VERSION_PAL
+            if (arg0->unk60 < 125.0f) {
+#else
             if (arg0->unk60 < 150.0f) {
+#endif
                 arg0->unk60++;
             }
             else {
@@ -1093,7 +1112,11 @@ void fn_1_14DB4(StructBssDA4 *arg0)
                 HuAudFXPlay(7);
             }
             else {
+#if VERSION_PAL
+                if (arg0->unk60 < 60.000004f) {
+#else
                 if (arg0->unk60 < 72.0f) {
+#endif
                     arg0->unk60++;
                     arg0->unkC.y = temp_f31;
                 }
@@ -1111,7 +1134,7 @@ void fn_1_14DB4(StructBssDA4 *arg0)
             break;
 
         case 4:
-            if (arg0->unk60 < 30.0f) {
+            if (arg0->unk60 < REFRESH_RATE_F / 2) {
                 arg0->unk34.x = 90;
                 arg0->unk34.y += 32.0f;
                 if (arg0->unk60 > 5) {
@@ -1144,7 +1167,11 @@ void fn_1_151A4(StructBssDA4 *arg0)
     float temp_f30;
     float temp_f29;
 
+#if VERSION_PAL
+    arg0->unk48 += 7.2f;
+#else
     arg0->unk48 += 6.0000005f;
+#endif
     if (arg0->unk48 >= 360.0f) {
         arg0->unk48 -= 360.0f;
     }
@@ -1179,7 +1206,11 @@ void fn_1_151A4(StructBssDA4 *arg0)
                 HuAudFXPlay(19);
             }
             else {
+#if VERSION_PAL
+                if (arg0->unk60 < 60.000004f) {
+#else
                 if (arg0->unk60 < 72.0f) {
+#endif
                     arg0->unk60++;
                     arg0->unkC.y = temp_f31;
                 }
@@ -1194,7 +1225,7 @@ void fn_1_151A4(StructBssDA4 *arg0)
             break;
 
         case 4:
-            if (arg0->unk60 < 30.0f) {
+            if (arg0->unk60 < REFRESH_RATE_F / 2) {
                 arg0->unk34.x = 90;
                 arg0->unk34.y += 32.0f;
                 if (arg0->unk60 > 5) {
