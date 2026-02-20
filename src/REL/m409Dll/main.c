@@ -100,8 +100,10 @@ void fn_1_434(omObjData *object)
 {
     if ((omSysExitReq != 0) || (lbl_1_bss_0 != 0)) {
         HuAudFXListnerKill();
+#if VERSION_NTSC
         fn_1_5F5C(lbl_1_bss_E0->model[0]);
         fn_1_5F5C(lbl_1_bss_E0->model[1]);
+#endif
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 0x3C);
         MGSeqKillAll();
         object->func = fn_1_4DC;
@@ -112,6 +114,10 @@ void fn_1_4DC(omObjData *object)
 {
     if ((WipeStatGet() == 0) && (MGSeqDoneCheck() != 0)) {
         fn_1_6900();
+#if VERSION_PAL
+        fn_1_5F5C(lbl_1_bss_E0->model[0]);
+        fn_1_5F5C(lbl_1_bss_E0->model[1]);
+#endif
         omOvlReturnEx(1, 1);
     }
 }
@@ -430,7 +436,11 @@ s8 fn_1_1B74(omObjData *object)
             break;
         case 5:
             lbl_1_bss_16++;
+#if VERSION_PAL
+            if (lbl_1_bss_16 > 175.0f) {
+#else
             if (lbl_1_bss_16 > 210.0f) {
+#endif
                 return 1;
             }
             break;

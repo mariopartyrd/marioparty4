@@ -1104,9 +1104,9 @@ config.libs = [
     Rel(
         "m409Dll",  # Toad's Quick Draw
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/player.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/cursor.c"),
+            Object(Matching, "REL/m409Dll/main.c"),
+            Object(Matching, "REL/m409Dll/player.c"),
+            Object(Matching, "REL/m409Dll/cursor.c"),
         },
     ),
     Rel(
