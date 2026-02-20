@@ -14,6 +14,13 @@
 #include "game/audio.h"
 #endif
 
+#undef REFRESH_RATE_F
+#if VERSION_NTSC
+#define REFRESH_RATE_F 60.0f
+#else
+#define REFRESH_RATE_F 49.998f
+#endif
+
 // bss
 omObjData *lbl_1_bss_C0[4];
 s16 lbl_1_bss_B8[4];

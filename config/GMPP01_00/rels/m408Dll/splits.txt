@@ -5,3 +5,29 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m408Dll/main.c:
+	.text       start:0x000000A0 end:0x00008958
+	.rodata     start:0x00000000 end:0x000002C0
+	.data       start:0x00000000 end:0x00000198
+	.bss        start:0x00000000 end:0x00000080
+
+REL/m408Dll/camera.c:
+	.text       start:0x00008958 end:0x0000C44C
+	.rodata     start:0x000002C0 end:0x000004A8
+	.bss        start:0x00000080 end:0x00000118
+
+REL/m408Dll/stage.c:
+	.text       start:0x0000C44C end:0x000118D0
+	.rodata     start:0x000004A8 end:0x000006A8
+	.data       start:0x00000198 end:0x000001A0
+	.bss        start:0x00000118 end:0x00000168
+
+REL/m408Dll/object.c:
+	.text       start:0x000118D0 end:0x000163C8
+	.rodata     start:0x000006A8 end:0x000007F0
+	.data       start:0x000001A0 end:0x00000574
+	.bss        start:0x00000168 end:0x000075AC

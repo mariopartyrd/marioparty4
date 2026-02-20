@@ -15,8 +15,8 @@
 import argparse
 import sys
 from pathlib import Path
-# from typing import Any, Dict, List
 
+# from typing import Any, Dict, List
 from tools.project import (
     Object,
     # ProgressCategory,
@@ -270,13 +270,10 @@ cflags_trk = [
     "-sdata2 0",
     "-inline auto,deferred",
     "-enum min",
-    "-sdatathreshold 0"
+    "-sdatathreshold 0",
 ]
 
-cflags_odemuexi = [
-    *cflags_base,
-    "-inline deferred"
-]
+cflags_odemuexi = [*cflags_base, "-inline deferred"]
 
 cflags_amcstub = [
     *cflags_base,
@@ -302,7 +299,7 @@ cflags_musyx = [
     "-str reuse,pool,readonly",
     "-fp_contract off",
     "-DMUSY_TARGET=MUSY_TARGET_DOLPHIN",
-    "-sym on"
+    "-sym on",
 ]
 
 cflags_musyx_debug = [
@@ -406,9 +403,11 @@ def Rel(lib_name, objects):
     }
 
 
-Matching = True                   # Object matches and should be linked
-NonMatching = False               # Object does not match and should not be linked
-Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
+Matching = True  # Object matches and should be linked
+NonMatching = False  # Object does not match and should not be linked
+Equivalent = (
+    config.non_matching
+)  # Object should be linked when configured with --non-matching
 
 MATCH_USA = ["GMPE01_00", "GMPE01_01"]
 MATCH_PAL = ["GMPP01_00", "GMPP01_02"]
@@ -684,15 +683,40 @@ config.libs = [
         "cflags": cflags_runtime,
         "objects": [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/__va_arg.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/global_destructor_chain.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "Runtime.PPCEABI.H/global_destructor_chain.c",
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/__mem.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/New.cp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/NewMore.cp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"]),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "Runtime.PPCEABI.H/New.cp",
+                extra_cflags=["-Cpp_exceptions on"],
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "Runtime.PPCEABI.H/NewMore.cp",
+                extra_cflags=["-Cpp_exceptions on", "-RTTI on"],
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "Runtime.PPCEABI.H/NMWException.cpp",
+                extra_cflags=["-Cpp_exceptions on"],
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/runtime.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on", "-RTTI on"], extab_padding=[0x25, 0x00]),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp",
+                extra_cflags=["-Cpp_exceptions on", "-RTTI on"],
+                extab_padding=[0x25, 0x00],
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "Runtime.PPCEABI.H/GCN_Mem_Alloc.c"
+            ),
         ],
     },
     {
@@ -700,52 +724,117 @@ config.libs = [
         "mw_version": "GC/1.3",
         "cflags": cflags_msl,
         "objects": [
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/abort_exit.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/abort_exit.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/alloc.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/errno.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/ansi_files.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/ansi_fp.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/ansi_files.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/ansi_fp.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/arith.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/buffer_io.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/buffer_io.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/ctype.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/direct_io.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/file_io.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/FILE_POS.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/mbstring.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/direct_io.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/file_io.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/FILE_POS.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/mbstring.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/mem.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/mem_funcs.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/misc_io.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/printf.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/mem_funcs.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/misc_io.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/printf.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/float.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/signal.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/string.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/uart_console_io.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/wchar_io.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_acos.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_asin.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_atan2.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_fmod.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/signal.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/string.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "MSL_C.PPCEABI.bare.H/uart_console_io.c",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/wchar_io.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_acos.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_asin.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_atan2.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_fmod.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_pow.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_rem_pio2.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/e_rem_pio2.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/k_cos.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/k_rem_pio2.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/k_rem_pio2.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/k_sin.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/k_tan.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_atan.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_copysign.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_atan.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_copysign.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_cos.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_floor.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_frexp.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_ldexp.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_modf.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_floor.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_frexp.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_ldexp.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_modf.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_sin.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/s_tan.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_acos.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_asin.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_atan2.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_fmod.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_acos.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_asin.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_atan2.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_fmod.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/w_pow.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/math_ppc.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "MSL_C.PPCEABI.bare.H/math_ppc.c"
+            ),
         ],
     },
     {
@@ -753,29 +842,65 @@ config.libs = [
         "mw_version": "GC/1.3",
         "cflags": cflags_trk,
         "objects": [
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mainloop.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/nubevent.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mainloop.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/nubevent.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/nubinit.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/msg.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/msgbuf.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/serpoll.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/usr_put.c", mw_version="GC/1.3.2"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/dispatch.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/msghndlr.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "TRK_MINNOW_DOLPHIN/usr_put.c",
+                mw_version="GC/1.3.2",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/dispatch.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/msghndlr.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/support.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mutex_TRK.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/notify.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/flush_cache.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/flush_cache.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/targimpl.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/targsupp.s"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/__exception.s"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/main_TRK.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/targcont.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/target_options.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/targimpl.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/targsupp.s"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/__exception.s"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/dolphin_trk.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/main_TRK.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/targcont.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "TRK_MINNOW_DOLPHIN/target_options.c",
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "TRK_MINNOW_DOLPHIN/mslsupp.c"),
         ],
     },
@@ -792,7 +917,9 @@ config.libs = [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/synth_ac.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/synth_dbtab.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/synth_adsr.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/synth_vsamples.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/synth_vsamples.c"
+            ),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/s_data.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/hw_dspctrl.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/hw_volconv.c"),
@@ -806,12 +933,27 @@ config.libs = [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/hw_aramdma.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/hw_dolphin.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/hw_memory.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/CheapReverb/creverb_fx.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/CheapReverb/creverb.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/StdReverb/reverb_fx.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/StdReverb/reverb.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/Delay/delay_fx.c"),
-            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/Chorus/chorus_fx.c"),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "musyx/runtime/CheapReverb/creverb_fx.c",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "musyx/runtime/CheapReverb/creverb.c",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL),
+                "musyx/runtime/StdReverb/reverb_fx.c",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/StdReverb/reverb.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/Delay/delay_fx.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, *MATCH_PAL), "musyx/runtime/Chorus/chorus_fx.c"
+            ),
         }
     ),
     {
@@ -894,7 +1036,7 @@ config.libs = [
         "instDll",
         objects={
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/instDll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/instDll/font.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/instDll/font.c"),
         },
     ),
     Rel(
@@ -953,10 +1095,10 @@ config.libs = [
     Rel(
         "m408Dll",  # Paratrooper Plunge
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/camera.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/stage.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m408Dll/object.c"),
+            Object(Matching, "REL/m408Dll/main.c"),
+            Object(Matching, "REL/m408Dll/camera.c"),
+            Object(Matching, "REL/m408Dll/stage.c"),
+            Object(Matching, "REL/m408Dll/object.c"),
         },
     ),
     Rel(
@@ -1214,10 +1356,21 @@ config.libs = [
     Rel(
         "m444dll",  # Reversal of Fortune
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/pinball.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/datalist.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/shadow.c"),
+            Object(
+                MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"), "REL/m444dll/main.c"
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"),
+                "REL/m444dll/pinball.c",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"),
+                "REL/m444dll/datalist.c",
+            ),
+            Object(
+                MatchingFor(*MATCH_USA, "GMPJ01_00", "GMPP01_02"),
+                "REL/m444dll/shadow.c",
+            ),
         },
     ),
     Rel(
@@ -1434,9 +1587,7 @@ config.libs = [
     ),
     Rel(
         "nisDll",
-        objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/nisDll/main.c")
-        },
+        objects={Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/nisDll/main.c")},
     ),
     Rel(
         "option",
