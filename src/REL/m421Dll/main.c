@@ -11,6 +11,7 @@
 #include "string.h"
 
 #include "REL/m421Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/frand.h"
@@ -78,7 +79,7 @@ Vec lbl_1_data_70[3] = {
     { -37.5f, 0.0f, 1500.0f },
     { -37.5f, 0.0f, 2300.0f },
 };
-s32 lbl_1_data_94[3] = { 0xF0, 0x1E, 0 };
+s32 lbl_1_data_94[3] = { REFRESH_RATE * 4, REFRESH_RATE / 2, 0 };
 GXColor lbl_1_data_A0 = { 0, 0, 0, 0 };
 
 Process *lbl_1_bss_28;
@@ -106,7 +107,11 @@ void ObjectSetup(void)
 
     lbl_1_bss_8 = 0;
     HuAudSndGrpSet(0x2E);
-    HuAudFXListnerSetEX(&sp20, &sp14, 11200.0f, 4166.6665f, 0.0f, 300.0f, 0.0f);
+    HuAudFXListnerSetEX(
+        &sp20, &sp14,
+        11200.0f, (VERSION_PAL ? 4280.0f : 4166.6665f),
+        0.0f, 300.0f, 0.0f
+    );
     lbl_1_bss_4 = lbl_1_bss_0 = -1;
     lbl_1_bss_18 = -1;
     lbl_1_data_28.x = 200.0f;
@@ -265,7 +270,7 @@ void fn_1_142C(omObjData *object)
     switch (work->unk_14) {
         case 0:
             work->unk_1C = 0x2D;
-            work->unk_20 = 0x3C;
+            work->unk_20 = REFRESH_RATE;
             lbl_1_bss_10 = MGSeqCreate(3, 0);
             MGSeqPosSet(lbl_1_bss_10, 320.0f, 240.0f);
             lbl_1_bss_18 = -1;
@@ -291,7 +296,7 @@ void fn_1_1850(omObjData *object)
     s32 var_r26 = 0;
     fn_1_578(object);
     if (--work->unk_20 == 0) {
-        work->unk_20 = 0x3C;
+        work->unk_20 = REFRESH_RATE;
         work->unk_1C--;
         if ((work->unk_1C == 0) && (work->unk_64 == 2)) {
             work->unk_64 = 1;
@@ -382,8 +387,8 @@ void fn_1_21AC(omObjData *object)
     var_r30->unk_28 = CRot;
     var_r30->unk_34 = CZoom;
     var_r30->unk_94++;
-    if (var_r30->unk_94 > 180.0f) {
-        var_r30->unk_84 -= 0.025000002f;
+    if (var_r30->unk_94 > REFRESH_RATE_F * 3) {
+        var_r30->unk_84 -= 1.5f * REFRESH_FREQ;
         if (var_r30->unk_84 < 0.0f) {
             var_r30->unk_84 = 0.0f;
         }
@@ -443,7 +448,7 @@ void fn_1_2BB8(omObjData *var_r29)
     var_r28 = var_r29->data;
     var_r31 = fn_1_3CB0(0);
     fn_1_578(var_r29);
-    var_r31->unk_84 += 0.0016666668f;
+    var_r31->unk_84 += REFRESH_FREQ * 0.1f;
     if (var_r31->unk_84 > 0.1f) {
         var_r31->unk_84 = 0.1f;
     }
@@ -460,7 +465,7 @@ void fn_1_2BB8(omObjData *var_r29)
             lbl_1_bss_C = MGSeqCreate(5, 3, var_r28->unk_50[0], var_r28->unk_50[1], var_r28->unk_50[2], var_r28->unk_50[3]);
             return;
         }
-        if ((MGSeqStatGet(lbl_1_bss_C) == 0) && (var_r28->unk_2C >= 210.0f)) {
+        if ((MGSeqStatGet(lbl_1_bss_C) == 0) && (var_r28->unk_2C >= REFRESH_RATE_F * 3.5f)) {
             var_r28->unk_28 = 2;
             fn_1_784(var_r29);
         }

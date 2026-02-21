@@ -8,6 +8,7 @@
 #include "math.h"
 
 #include "REL/m418Dll.h"
+#include "version.h"
 
 // types
 typedef struct M418DllUnkStruct2 {
@@ -190,7 +191,7 @@ void fn_1_6DC(s32 arg0)
 {
     if (lbl_1_bss_8 == 0) {
         lbl_1_bss_8 = 1;
-        lbl_1_bss_4 = arg0 * 0x3C;
+        lbl_1_bss_4 = arg0 * REFRESH_RATE;
     }
 }
 
@@ -217,14 +218,14 @@ void fn_1_780(omObjData *object)
     switch (lbl_1_bss_8) {
         case 1:
             if (lbl_1_data_8 == -1) {
-                lbl_1_data_8 = MGSeqCreate(1, lbl_1_bss_4 / 60, -1, -1);
+                lbl_1_data_8 = MGSeqCreate(1, lbl_1_bss_4 / REFRESH_RATE, -1, -1);
             }
             lbl_1_bss_8 = 2;
             break;
         case 2:
             lbl_1_bss_4--;
             if (lbl_1_data_8 != -1) {
-                MGSeqParamSet(lbl_1_data_8, 1, ((lbl_1_bss_4 + 0x3B) / 60));
+                MGSeqParamSet(lbl_1_data_8, 1, ((lbl_1_bss_4 + REFRESH_RATE - 1) / REFRESH_RATE));
             }
             if (lbl_1_bss_4 <= 0) {
                 lbl_1_bss_4 = 30;
@@ -1666,7 +1667,7 @@ void fn_1_6808(s32 arg0)
     }
     if (lbl_1_bss_8 == 0) {
         lbl_1_bss_8 = 1;
-        lbl_1_bss_4 = 0x12C;
+        lbl_1_bss_4 = REFRESH_RATE * 5;
     }
 
     fn_1_6740(0);
@@ -1702,7 +1703,7 @@ s32 fn_1_6914(s32 arg0)
             if (temp_r31->unk0->trans.z >= -480.0f) {
                 temp_r31->unk0->trans.z = -480.0f;
             }
-            if (fn_1_B0C8(&lbl_1_bss_38, 0) >= 0xF0) {
+            if (fn_1_B0C8(&lbl_1_bss_38, 0) >= REFRESH_RATE * 4) {
                 temp_r31->unk0->trans.x = temp_r31->unk0->trans.y = -5000.0f;
                 fn_1_ABC4(temp_r31->unk0, 0, 0, 0xA, 1);
             }
@@ -1711,9 +1712,13 @@ s32 fn_1_6914(s32 arg0)
 
     for (var_r29 = 0; var_r29 < 3; var_r29++) {
         var_r25 = &lbl_1_bss_11C[var_r29];
+#if VERSION_PAL
+        var_r25->unk0->rot.y += 1.44f;
+#else
         var_r25->unk0->rot.y += 1.2f;
+#endif
     }
-    if (fn_1_B0C8(&lbl_1_bss_38, 0) == 0x3C) {
+    if (fn_1_B0C8(&lbl_1_bss_38, 0) == REFRESH_RATE) {
         fn_1_6740(1);
     }
     if (fn_1_B0C8(&lbl_1_bss_38, 1) != 0) {
@@ -1880,7 +1885,7 @@ void fn_1_7570(s32 arg0)
     var_r30->unk4C = -1;
     if (lbl_1_bss_8 == 0) {
         lbl_1_bss_8 = 1;
-        lbl_1_bss_4 = 0x12C;
+        lbl_1_bss_4 = REFRESH_RATE * 5;
     }
 }
 
@@ -2211,8 +2216,8 @@ s32 fn_1_81A4(s32 arg0)
     }
 }
 
-M418DllUnkStruct8 lbl_1_data_348[11] = { { fn_1_6808, fn_1_6914, 300 }, { fn_1_6DCC, fn_1_6E6C, 60 }, { fn_1_6EB4, fn_1_6F38, 180 },
-    { fn_1_7294, fn_1_7298, 300 }, { fn_1_7570, fn_1_75E4, 300 }, { fn_1_77F8, fn_1_7860, 60 }, { fn_1_7A68, fn_1_7B68, 180 },
+M418DllUnkStruct8 lbl_1_data_348[11] = { { fn_1_6808, fn_1_6914, VERSION_PAL ? 250 : 300 }, { fn_1_6DCC, fn_1_6E6C, 60 }, { fn_1_6EB4, fn_1_6F38, 180 },
+    { fn_1_7294, fn_1_7298, 300 }, { fn_1_7570, fn_1_75E4, VERSION_PAL ? 250 : 300 }, { fn_1_77F8, fn_1_7860, 60 }, { fn_1_7A68, fn_1_7B68, 180 },
     { fn_1_7D80, fn_1_7E24, -1 }, { fn_1_7F1C, fn_1_7FD4, 300 }, { fn_1_81A0, fn_1_81A4, 240 }, { NULL, NULL, -1 } };
 
 void fn_1_8480(void)

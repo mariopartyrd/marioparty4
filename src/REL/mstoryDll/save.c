@@ -74,7 +74,7 @@ void fn_1_13C34(void)
         HuWinExAnimOut(var_r31);
         HuWinExCleanup(var_r31);
         if (SLSaveFlagGet() == 1 && temp_r30 == 0) {
-#if VERSION_REV1
+#if VERSION_REV1 || VERSION_REV2
             GWGameStat.story_continue = 1;
 #endif
             SLCommonSet();

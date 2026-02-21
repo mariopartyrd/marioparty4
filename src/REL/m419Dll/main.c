@@ -15,6 +15,7 @@
 
 #include "dolphin.h"
 #include "ext_math.h"
+#include "version.h"
 
 typedef struct {
     /* 0x00 */ omObjData *unk00;
@@ -538,9 +539,9 @@ void fn_1_F58(void)
     Hu3DParticleHookSet(var_r30, fn_1_2744);
     HuDataDirClose(DATADIR_EFFECT);
     lbl_1_bss_580 = 0;
-    lbl_1_bss_584[0] = frandmod(5) * 60 + 600;
-    lbl_1_bss_584[1] = frandmod(5) * 60 + 1380;
-    lbl_1_bss_584[2] = 2760;
+    lbl_1_bss_584[0] = frandmod(5) * REFRESH_RATE + REFRESH_RATE * 10;
+    lbl_1_bss_584[1] = frandmod(5) * REFRESH_RATE + REFRESH_RATE * 23;
+    lbl_1_bss_584[2] = REFRESH_RATE * 46;
     Hu3DModelLayerSet(Hu3DHookFuncCreate(fn_1_848), 1);
     HuPrcChildCreate(fn_1_104A0, 0x1000, 0x1000, 0, HuPrcCurrentGet());
 }
@@ -956,7 +957,7 @@ void fn_1_344C(void)
         Hu3DModelAttrReset(temp_r31->unk02, HU3D_MOTATTR_LOOP);
         Hu3DModelTPLvlSet(temp_r31->unk02, 1.0f);
     }
-    for (var_r28 = 300, var_r24 = 0; var_r28 != 0; var_r28--) {
+    for (var_r28 = REFRESH_RATE * 5, var_r24 = 0; var_r28 != 0; var_r28--) {
         if (temp_r31->unk08 != 0 && 0.0f != temp_r31->unk20) {
             temp_r31->unk20 += 10.0f;
             if (temp_r31->unk20 > 360.0f) {
@@ -999,7 +1000,7 @@ void fn_1_344C(void)
             }
             break;
         }
-        if (var_r28 < 60) {
+        if (var_r28 < REFRESH_RATE) {
             var_r22 = temp_r31->unk00;
             if (temp_r31->unk08 == 0) {
                 var_r22 = temp_r31->unk02;
@@ -2221,7 +2222,7 @@ void fn_1_B054(StructBss200 *arg0)
     }
     if (arg0->unkAC != 3 && arg0->unkD0 > 180) {
         arg0->unkAC = 3;
-        arg0->unkD4 = frandmod(120) + 120;
+        arg0->unkD4 = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
     }
     switch (arg0->unkAC) {
         case 0:
@@ -2416,7 +2417,7 @@ void fn_1_B054(StructBss200 *arg0)
             arg0->unkA0 = 30;
             arg0->unkA4 = 0;
             arg0->unkAC = 2;
-            arg0->unkA8 = 300;
+            arg0->unkA8 = REFRESH_RATE * 5;
             if (arg0->unkB8 == 0) {
                 arg0->unkB8 = 60;
             }
@@ -3034,18 +3035,18 @@ void fn_1_10500(void)
     while (MGSeqStatGet(temp_r30) != 0) {
         HuPrcVSleep();
     }
-    var_r29 = 0xAC7;
-    temp_r28 = MGSeqTimerCreate(var_r29 / 60);
+    var_r29 = 45 * REFRESH_RATE + REFRESH_RATE - 1;
+    temp_r28 = MGSeqTimerCreate(var_r29 / REFRESH_RATE);
     lbl_1_bss_5B4 = 3;
     while (TRUE) {
         if (lbl_1_bss_200[lbl_1_bss_5AC].unk24 == 1) {
             break;
         }
-        if (var_r29 < 59) {
+        if (var_r29 < REFRESH_RATE - 1) {
             lbl_1_bss_5A8 = lbl_1_bss_5AC;
             break;
         }
-        MGSeqParamSet(temp_r28, 1, var_r29-- / 60);
+        MGSeqParamSet(temp_r28, 1, var_r29-- / REFRESH_RATE);
         lbl_1_bss_5B0++;
         HuPrcVSleep();
     }

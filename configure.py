@@ -1145,37 +1145,37 @@ config.libs = [
     Rel(
         "m415Dll",  # Stamp Out!
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m415Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m415Dll/map.c"),
+            Object(Matching, "REL/m415Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m415Dll/map.c"),
         },
     ),
     Rel(
         "m416Dll",  # Candlelight Flight
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m416Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m416Dll/map.c"),
+            Object(Matching, "REL/m416Dll/main.c"),
+            Object(Matching, "REL/m416Dll/map.c"),
         },
     ),
     Rel(
         "m417Dll",  # Makin' Waves
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/water.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/player.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/sequence.c"),
+            Object(Matching, "REL/m417Dll/main.c"),
+            Object(Matching, "REL/m417Dll/water.c"),
+            Object(Matching, "REL/m417Dll/player.c"),
+            Object(Matching, "REL/m417Dll/sequence.c"),
         },
     ),
     Rel(
         "m418Dll",  # Hide and Go BOOM!
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m418Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m418Dll/sequence.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m418Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m418Dll/sequence.c"),
         },
     ),
     Rel(
         "m419Dll",  # Tree Stomp
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m419Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m419Dll/main.c"),
         },
     ),
     Rel(

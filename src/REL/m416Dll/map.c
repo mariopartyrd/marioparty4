@@ -186,7 +186,7 @@ void fn_1_83B4(omObjData *object)
     MTXIdentity(sp70);
     MTXIdentity(sp40);
     MTXIdentity(sp10);
-    lbl_1_bss_117C = fmod(1 + lbl_1_bss_117C, 360);
+    lbl_1_bss_117C = fmod(60.0f / REFRESH_RATE + lbl_1_bss_117C, 360);
     sp8[0] = 20 * sind(lbl_1_bss_117C);
     sp8[1] = 20 * cosd(lbl_1_bss_117C);
     if (fn_1_1240() == 6) {

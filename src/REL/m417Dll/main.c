@@ -5,6 +5,7 @@
 #include "game/wipe.h"
 
 #include "REL/m417Dll.h"
+#include "version.h"
 
 typedef struct UnkM417Struct {
     /* 0x00 */ u32 unk_00;
@@ -241,7 +242,7 @@ void fn_1_17C0(omObjData *object)
     switch (var_r30->unk_14) {
         case 0:
             var_r30->unk_1C = 30;
-            var_r30->unk_20 = 60;
+            var_r30->unk_20 = REFRESH_RATE;
             lbl_1_bss_12 = MGSeqCreate(3, 0);
             MGSeqPosSet(sp8, 320.0f, 240.0f);
             var_r30->unk_14 = 1;
@@ -273,7 +274,7 @@ void fn_1_1CA8(omObjData *object)
     fn_1_5B0(object);
 
     if (--var_r30->unk_20 == 0) {
-        var_r30->unk_20 = 60;
+        var_r30->unk_20 = REFRESH_RATE;
         var_r30->unk_1C--;
         if (var_r30->unk_1C == 0) {
             var_r27 = 1;
