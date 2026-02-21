@@ -410,7 +410,7 @@ Equivalent = (
 )  # Object should be linked when configured with --non-matching
 
 MATCH_USA = ["GMPE01_00", "GMPE01_01"]
-MATCH_PAL = ["GMPP01_00", "GMPP01_02"]
+MATCH_PAL = ["GMPP01_00", "GMPP01_01", "GMPP01_02"]
 
 
 # Object is only matching for specific versions
