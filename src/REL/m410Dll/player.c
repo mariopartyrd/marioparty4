@@ -10,6 +10,7 @@
 #include "game/sprite.h"
 
 #include "REL/m410Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
@@ -49,16 +50,16 @@ u32 lbl_1_data_1AC[] = {
 };
 
 UnkM410Struct10 lbl_1_data_1D4[] = {
-    { 0.0f, 0.0f, 12.0f, HU3D_MOTATTR_LOOP },
-    { 0.0f, 0.0f, 1.1999999f, HU3D_MOTATTR_NONE },
-    { 0.0f, 0.0f, 12.0f, HU3D_MOTATTR_LOOP },
-    { 0.0f, 0.0f, 6.0f, HU3D_MOTATTR_NONE },
-    { 6.0f, 0.0f, 4.7999997f, HU3D_MOTATTR_NONE },
-    { 0.0f, 0.0f, 1.1999999f, HU3D_MOTATTR_NONE },
-    { 0.0f, 0.0f, 1.1999999f, HU3D_MOTATTR_NONE },
-    { 0.0f, 0.0f, 1.1999999f, HU3D_MOTATTR_NONE },
-    { 0.0f, 0.0f, 12.0f, HU3D_MOTATTR_NONE },
-    { 0.0f, 0.0f, 12.0f, HU3D_MOTATTR_NONE },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.2f, HU3D_MOTATTR_LOOP },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.02f, HU3D_MOTATTR_NONE },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.2f, HU3D_MOTATTR_LOOP },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.1f, HU3D_MOTATTR_NONE },
+    { REFRESH_RATE_F * 0.1f, 0.0f, REFRESH_RATE_F * 0.08f, HU3D_MOTATTR_NONE },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.02f, HU3D_MOTATTR_NONE },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.02f, HU3D_MOTATTR_NONE },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.02f, HU3D_MOTATTR_NONE },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.2f, HU3D_MOTATTR_NONE },
+    { 0.0f, 0.0f, REFRESH_RATE_F * 0.2f, HU3D_MOTATTR_NONE },
 };
 
 s32 lbl_1_data_274[] = {
@@ -209,7 +210,12 @@ void fn_1_8414(omObjData *object)
 
     var_r31 = object->data;
     {
-        UnkM410Struct7 sp8 = { { 42, 78, 108, 125 } };
+        UnkM410Struct7 sp8 = { {
+            7 * REFRESH_RATE / 10,
+            13 * REFRESH_RATE / 10,
+            18 * REFRESH_RATE / 10,
+            25 * REFRESH_RATE / 12,
+        } };
 
         switch (var_r31->unk_34) {
             case 0:
@@ -227,7 +233,7 @@ void fn_1_8414(omObjData *object)
                 break;
             case 2:
                 fn_1_96F4(object);
-                if (var_r31->unk_38 >= (2.8f + 0.00040000002f * frandmod(1000)) * 60.0f) {
+                if (var_r31->unk_38 >= (2.8f + 0.00040000002f * frandmod(1000)) * REFRESH_RATE_F) {
                     var_r31->unk_2C = 1;
                     var_r31->unk_38 = 0;
                     var_r31->unk_34++;
@@ -235,7 +241,7 @@ void fn_1_8414(omObjData *object)
                 break;
             case 3:
                 if (var_r31->unk_24) {
-                    if (var_r31->unk_38 >= 27.0f) {
+                    if (var_r31->unk_38 >=  9 * REFRESH_RATE_F / 20) {
                         var_r31->unk_30 = 1;
                     }
                 }
@@ -393,14 +399,14 @@ void fn_1_8ABC(omObjData *object)
                 return;
             }
             if (frandmod(1000) <= 1000.0f * var_r31->unk_4C) {
-                var_f28 = 42.0f;
+                var_f28 = 7 * REFRESH_RATE_F / 10;
                 if (frandmod(1000) <= 1000.0f * var_r31->unk_4C) {
                     var_f29 = 280.0f;
-                    var_r31->unk_54 = 31.8f + frandmod(6);
+                    var_r31->unk_54 = REFRESH_RATE_F * 0.53f + frandmod(REFRESH_RATE / 10);
                 }
                 else {
                     var_f29 = 419.99997f;
-                    var_r31->unk_54 = 9.0f + frandmod(15);
+                    var_r31->unk_54 = REFRESH_RATE_F * 0.15f + frandmod(REFRESH_RATE / 4);
                 }
                 var_f27 = var_f28 + var_r31->unk_54;
                 var_r29 = -1;
@@ -411,7 +417,7 @@ void fn_1_8ABC(omObjData *object)
                         continue;
                     }
                     fn_1_7840(var_r30, &sp34);
-                    if (fabs(sp34.x) < 1.9166667461395264) {
+                    if (fabs(sp34.x) < 115 * REFRESH_FREQ) {
                         continue;
                     }
                     var_f30 = sp28.x - var_r31->unk_88.x;
@@ -438,8 +444,8 @@ void fn_1_8ABC(omObjData *object)
                 var_r31->unk_52 = var_f27 + var_f31 - var_f28 - var_r31->unk_54;
             }
             else {
-                var_r31->unk_52 = 24.0f + frandmod(36);
-                var_r31->unk_54 = 12.0f + frandmod(18);
+                var_r31->unk_52 = (2 * REFRESH_RATE_F / 5) + frandmod(6 * REFRESH_RATE / 10);
+                var_r31->unk_54 = (1 * REFRESH_RATE_F / 5) + frandmod(3 * REFRESH_RATE / 10);
             }
             var_r31->unk_50++;
             return;
@@ -515,11 +521,15 @@ void fn_1_9040(omObjData *object)
         fn_1_77F8(var_r28, &sp20);
         var_f29 = 5.0f + sp20.y;
         var_f31 = 0.65f + 0.000100000005f * frandmod(1000);
+#if VERSION_PAL
+        var_f26 = -3430.0f;
+#else
         var_f26 = -3430.0002f;
+#endif
         var_f27 = (var_f29 - var_r31->unk_70.y - (var_f31 * var_f31 * var_f26 * 0.5f)) / var_f31;
-        sp2C.x = (0.016666668f * (sp20.x - var_r31->unk_70.x)) / var_f31;
-        sp2C.y = 0.016666668f * var_f27;
-        sp2C.z = (0.016666668f * (sp20.z - var_r31->unk_70.z)) / var_f31;
+        sp2C.x = (REFRESH_FREQ * (sp20.x - var_r31->unk_70.x)) / var_f31;
+        sp2C.y = REFRESH_FREQ * var_f27;
+        sp2C.z = (REFRESH_FREQ * (sp20.z - var_r31->unk_70.z)) / var_f31;
     }
     else {
         if (var_r31->unk_20 != 0) {
@@ -537,7 +547,7 @@ void fn_1_9040(omObjData *object)
                 var_f29 = 280.0f;
             }
             var_f31 = 0.65f + (0.000100000005f * frandmod(1000));
-            var_r27 = 60.0f * var_f31;
+            var_r27 = REFRESH_RATE * var_f31;
             var_r28 = -1;
             var_f30 = 10000.0f;
 
@@ -565,11 +575,15 @@ void fn_1_9040(omObjData *object)
                 sp20.z = -700.0f;
             }
         }
+#if VERSION_PAL
+        var_f26 = -3430.0f;
+#else
         var_f26 = -3430.0002f;
+#endif
         var_f27 = ((sp20.y - var_r31->unk_70.y) - var_f31 * var_f31 * var_f26 * 0.5f) / var_f31;
-        sp2C.x = (sp20.x - var_r31->unk_70.x) * 0.016666668f / var_f31;
-        sp2C.y = 0.016666668f * var_f27;
-        sp2C.z = (sp20.z - var_r31->unk_70.z) * 0.016666668f / var_f31;
+        sp2C.x = (sp20.x - var_r31->unk_70.x) * REFRESH_FREQ / var_f31;
+        sp2C.y = REFRESH_FREQ * var_f27;
+        sp2C.z = (sp20.z - var_r31->unk_70.z) * REFRESH_FREQ / var_f31;
     }
     fn_1_76B8(var_r31->unk_70, sp2C, object->work[0]);
     var_r31->unk_18 = 0;
@@ -593,7 +607,11 @@ void fn_1_96F4(omObjData *object)
 
     var_r31 = object->data;
     if (!var_r31->unk_18 && (!var_r31->unk_14 || var_r31->unk_28)) {
+#if VERSION_PAL
+        var_f29 = -3430.0f;
+#else
         var_f29 = -3430.0002f;
+#endif
         var_f30 = 70.0f + object->trans.y;
         var_f31 = 0.3f;
         if (var_r31->unk_14 && var_r31->unk_28) {
@@ -607,14 +625,14 @@ void fn_1_96F4(omObjData *object)
             var_f28 = ((var_f30 - var_r31->unk_70.y) - (var_f31 * var_f31 * var_f29 * 0.5f)) / var_f31;
             var_f27 = 70.0f + object->trans.z;
             var_r31->unk_7C.x = 0.0f;
-            var_r31->unk_7C.y = 0.016666668f * var_f28;
-            var_r31->unk_7C.z = (0.016666668f * (var_f27 - var_r31->unk_70.z)) / var_f31;
+            var_r31->unk_7C.y = REFRESH_FREQ * var_f28;
+            var_r31->unk_7C.z = (REFRESH_FREQ * (var_f27 - var_r31->unk_70.z)) / var_f31;
             var_r31->unk_40 = 0.0f;
             var_r31->unk_44 = 0.0f;
             var_r31->unk_48 = 0.04f;
         }
         VECAdd(&var_r31->unk_70, &var_r31->unk_7C, &var_r31->unk_70);
-        var_r31->unk_7C.y = var_r31->unk_7C.y + (0.0002777778f * var_f29);
+        var_r31->unk_7C.y = var_r31->unk_7C.y + ((REFRESH_FREQ * REFRESH_FREQ) * var_f29);
         if ((var_r31->unk_7C.y < 0.0f) && (var_r31->unk_70.y <= var_f30)) {
             var_r31->unk_18 = 1;
             var_r31->unk_14 = 1;
@@ -632,7 +650,7 @@ void fn_1_96F4(omObjData *object)
         else {
             Hu3DModelPosSet(object->model[1], var_r31->unk_70.x, var_r31->unk_70.y, var_r31->unk_70.z);
         }
-        if (var_r31->unk_36 >= (60.0f * (var_f31 - 0.17f))) {
+        if (var_r31->unk_36 >= (REFRESH_RATE_F * (var_f31 - 0.17f))) {
             fn_1_9E0C(object, 1);
         }
     }
@@ -659,8 +677,12 @@ s32 fn_1_9A90(omObjData *object)
         var_r31->unk_68 = 1300.0f;
     }
     if (var_r31->unk_1C) {
-        var_r31->unk_58.y = var_r31->unk_58.y + (0.016666668f * var_r31->unk_68);
+        var_r31->unk_58.y = var_r31->unk_58.y + (REFRESH_FREQ * var_r31->unk_68);
+#if VERSION_PAL
+        var_r31->unk_68 += -79.99999821186066;
+#else
         var_r31->unk_68 += -66.66667014360428;
+#endif
         if (var_r31->unk_58.y <= 0.0f) {
             var_r31->unk_1C = 0;
             if (var_r31->unk_18) {
@@ -707,11 +729,11 @@ s32 fn_1_9C84(omObjData *object)
     }
     else if (var_r31->unk_20) {
         if (var_r31->unk_18) {
-            if (var_r31->unk_36 >= 18.0f) {
+            if (var_r31->unk_36 >= REFRESH_RATE_F * 0.3f) {
                 fn_1_9040(object);
             }
         }
-        else if (var_r31->unk_36 >= 30.0f && fn_1_9EFC(object)) {
+        else if (var_r31->unk_36 >= REFRESH_RATE_F / 2 && fn_1_9EFC(object)) {
             var_r31->unk_30 = 0;
             var_r31->unk_2C = 0;
             var_r31->unk_20 = 0;
@@ -863,7 +885,7 @@ void fn_1_A3C0(omObjData *object)
                 }
             case 2:
                 var_f31 = var_r31->unk_2C[0];
-                var_f31 += 0.10000001f;
+                var_f31 += REFRESH_FREQ * 6;
                 if (var_f31 >= 1.5f) {
                     var_r31->unk_14++;
                 }
@@ -871,7 +893,7 @@ void fn_1_A3C0(omObjData *object)
                 break;
             case 3:
                 var_f31 = var_r31->unk_2C[0];
-                var_f31 -= 0.10000001f;
+                var_f31 -= REFRESH_FREQ * 6;
                 if (var_f31 <= 1.0f) {
                     var_f31 = 1.0f;
                     var_r31->unk_14 = var_r31->unk_14 + 1;
@@ -892,12 +914,12 @@ void fn_1_A3C0(omObjData *object)
     for (var_r29 = 0; var_r29 < 16; var_r29++, var_r30++) {
         if (var_r30->unk_00) {
             var_r30->unk_00++;
-            if (var_r30->unk_00 < 12.0f) {
-                var_r30->unk_04 += 0.058333337f;
+            if (var_r30->unk_00 < REFRESH_RATE_F / 5) {
+                var_r30->unk_04 += 3.5f * REFRESH_FREQ;
             }
             else {
-                var_r30->unk_04 += 0.025000002f;
-                var_r30->unk_0C -= 0.050000004f;
+                var_r30->unk_04 += 1.5f * REFRESH_FREQ;
+                var_r30->unk_0C -= 3.0f * REFRESH_FREQ;
             }
             if (var_r30->unk_0C < 0.0f) {
                 var_r30->unk_00 = 0;

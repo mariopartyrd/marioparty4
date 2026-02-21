@@ -7,6 +7,7 @@
 #include "game/wipe.h"
 
 #include "REL/m410Dll.h"
+#include "version.h"
 
 Process *lbl_1_bss_28;
 omObjData *lbl_1_bss_24;
@@ -43,7 +44,14 @@ Vec lbl_1_data_88[] = {
     { 15.0f, 15.0f, 1100.0f },
     { -11.2f, 0.0f, 592.0f },
 };
-s32 lbl_1_data_C4[] = { 60, 90, 108, 30, 0 };
+
+s32 lbl_1_data_C4[] = {
+    REFRESH_RATE,
+    REFRESH_RATE * 3 / 2,
+    REFRESH_RATE * 9 / 5,
+    REFRESH_RATE / 2,
+    0
+};
 
 void fn_1_4E4(omObjData *object);
 void fn_1_63C(omObjData *object);
@@ -233,7 +241,7 @@ void fn_1_FF0(omObjData *object)
     switch (var_r29->unk_14) {
         case 0:
             var_r29->unk_1C = 30;
-            var_r29->unk_20 = 60;
+            var_r29->unk_20 = REFRESH_RATE;
             lbl_1_bss_14 = MGSeqCreate(3, 0);
             MGSeqPosSet(lbl_1_bss_14, 320.0f, 240.0f);
             CRot.x = -11.2f;
@@ -273,7 +281,7 @@ void fn_1_139C(omObjData *object)
     fn_1_5A8(object);
 
     if (!--var_r29->unk_20) {
-        var_r29->unk_20 = 60;
+        var_r29->unk_20 = REFRESH_RATE;
         var_r29->unk_1C--;
         if (!var_r29->unk_1C) {
             var_r27 = 1;
@@ -333,7 +341,7 @@ void fn_1_1A7C(omObjData *object)
     var_r27->unk_0C = 1;
     object->work[0]++;
 
-    if (!object->work[1] && object->work[0] > 12.0f) {
+    if (!object->work[1] && object->work[0] > REFRESH_RATE_F / 5.0f) {
         if (lbl_1_bss_C < 0) {
             lbl_1_bss_C = HuAudFXPlay(1382);
         }
@@ -388,8 +396,12 @@ void fn_1_2188(omObjData *object)
     fn_1_5A8(object);
 
     var_r27->unk_24 = 1;
-    if (var_r27->unk_28 < 60.0f) {
-        Center.y -= 1.6666667f;
+    if (var_r27->unk_28 < REFRESH_RATE_F) {
+#if VERSION_PAL
+        Center.y -= 100.0f / REFRESH_RATE_F;
+#else
+        Center.y -= 100.0f / REFRESH_RATE_OFF_BY_1;
+#endif
     }
     if (lbl_1_bss_10 < 0) {
         for (var_r24 = 0, var_r25 = 1, var_r26 = 0; var_r26 < 4; var_r25 *= 2, var_r26++) {
@@ -415,7 +427,7 @@ void fn_1_2188(omObjData *object)
         return;
     }
     if (!MGSeqStatGet(lbl_1_bss_10)) {
-        if (var_r27->unk_28 >= 210.0f) {
+        if (var_r27->unk_28 >= 3.5f * REFRESH_RATE_F) {
             var_r27->unk_24 = 2;
             fn_1_63C(object);
         }

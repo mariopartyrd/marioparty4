@@ -1112,10 +1112,10 @@ config.libs = [
     Rel(
         "m410Dll",  # Three Throw
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/stage.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/game.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/player.c"),
+            Object(Matching, "REL/m410Dll/main.c"),
+            Object(Matching, "REL/m410Dll/stage.c"),
+            Object(Matching, "REL/m410Dll/game.c"),
+            Object(Matching, "REL/m410Dll/player.c"),
         },
     ),
     Rel(
