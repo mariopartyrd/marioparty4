@@ -1152,8 +1152,8 @@ config.libs = [
     Rel(
         "m416Dll",  # Candlelight Flight
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m416Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m416Dll/map.c"),
+            Object(Matching, "REL/m416Dll/main.c"),
+            Object(Matching, "REL/m416Dll/map.c"),
         },
     ),
     Rel(
