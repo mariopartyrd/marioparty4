@@ -1104,42 +1104,42 @@ config.libs = [
     Rel(
         "m409Dll",  # Toad's Quick Draw
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/player.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m409Dll/cursor.c"),
+            Object(Matching, "REL/m409Dll/main.c"),
+            Object(Matching, "REL/m409Dll/player.c"),
+            Object(Matching, "REL/m409Dll/cursor.c"),
         },
     ),
     Rel(
         "m410Dll",  # Three Throw
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/stage.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/game.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m410Dll/player.c"),
+            Object(Matching, "REL/m410Dll/main.c"),
+            Object(Matching, "REL/m410Dll/stage.c"),
+            Object(Matching, "REL/m410Dll/game.c"),
+            Object(Matching, "REL/m410Dll/player.c"),
         },
     ),
     Rel(
         "m411Dll",  # Photo Finish
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m411Dll/main.c"),
+            Object(Matching, "REL/m411Dll/main.c"),
         },
     ),
     Rel(
         "m412Dll",  # Mr. Blizzard's Brigade
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m412Dll/main.c"),
+            Object(Matching, "REL/m412Dll/main.c"),
         },
     ),
     Rel(
         "m413Dll",  # Bob-omb Breakers
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m413Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m413Dll/main.c"),
         },
     ),
     Rel(
         "m414Dll",  # Long Claw of the Law
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m414Dll/main.c"),
+            Object(Matching, "REL/m414Dll/main.c"),
         },
     ),
     Rel(

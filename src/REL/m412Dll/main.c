@@ -12,6 +12,7 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 #include "math.h"
+#include "version.h"
 
 // bss
 s16 lbl_1_bss_7A0;
@@ -206,7 +207,7 @@ void fn_1_8BC(void)
     sp14.x = 0.0f;
     sp14.y = 0.0f;
     sp14.z = -1.0f;
-    HuAudFXListnerSetEX(&sp20, &sp14, 10000.0f, 0.5666667f, 0.0f, 300.0f, 300.0f);
+    HuAudFXListnerSetEX(&sp20, &sp14, 10000.0f, 34 * REFRESH_FREQ, 0.0f, 300.0f, 300.0f);
     var_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M412, 0x00), MEMORY_DEFAULT_NUM, HEAP_DATA);
     var_r29 = Hu3DModelCreate(var_r27);
     Hu3DModelLayerSet(var_r29, 1);
@@ -777,7 +778,7 @@ void fn_1_2A1C(void)
     }
 
 loop_10:
-    var_r29 = lbl_1_bss_790 / 60;
+    var_r29 = lbl_1_bss_790 / REFRESH_RATE;
     if (var_r29 >= 0x3C) {
         var_r29 = 0x3C;
     }
@@ -946,7 +947,7 @@ void fn_1_3950(void)
 
     temp_r31 = HuPrcCurrentGet()->user_data;
 loop_1:
-    var_r29 = lbl_1_bss_790 / 60;
+    var_r29 = lbl_1_bss_790 / REFRESH_RATE;
     if (var_r29 >= 0x3C) {
         var_r29 = 0x3C;
     }
@@ -2126,8 +2127,8 @@ void fn_1_B1C0(void)
     while (MGSeqStatGet(temp_r30) != 0) {
         HuPrcVSleep();
     }
-    var_r29 = 0xE4B;
-    temp_r27 = MGSeqCreate(1, var_r29 / 60, -1, -1);
+    var_r29 = REFRESH_RATE * 60 + REFRESH_RATE - 1;
+    temp_r27 = MGSeqCreate(1, var_r29 / REFRESH_RATE, -1, -1);
     lbl_1_bss_794 = 3;
 
     while (1) {
@@ -2136,9 +2137,9 @@ void fn_1_B1C0(void)
                 var_r28++;
             }
         }
-        if ((var_r28 <= 1) || (var_r29 < 0x3B))
+        if ((var_r28 <= 1) || (var_r29 < REFRESH_RATE - 1))
             break;
-        MGSeqParamSet(temp_r27, 1, var_r29-- / 60);
+        MGSeqParamSet(temp_r27, 1, var_r29-- / REFRESH_RATE);
         lbl_1_bss_790++;
         HuPrcVSleep();
     }

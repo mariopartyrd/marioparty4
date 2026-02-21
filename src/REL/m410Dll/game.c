@@ -9,6 +9,7 @@
 #include "game/sprite.h"
 
 #include "REL/m410Dll.h"
+#include "version.h"
 
 typedef void (*lbl_1_bss_44_type)(u16, u16, u16);
 
@@ -25,7 +26,7 @@ s32 lbl_1_bss_38;
 s32 lbl_1_bss_34;
 s32 lbl_1_bss_30;
 
-s16 lbl_1_data_D8 = 0x0384;
+s16 lbl_1_data_D8 = 15 * REFRESH_RATE;
 s32 lbl_1_data_DC[]
     = { DATA_MAKE_NUM(DATADIR_M410, 0), DATA_MAKE_NUM(DATADIR_M410, 1), DATA_MAKE_NUM(DATADIR_M410, 2), DATA_MAKE_NUM(DATADIR_M410, 3),
           DATA_MAKE_NUM(DATADIR_M410, 4), DATA_MAKE_NUM(DATADIR_M410, 5), DATA_MAKE_NUM(DATADIR_M410, 6), DATA_MAKE_NUM(DATADIR_M410, 7) };
@@ -60,7 +61,7 @@ void fn_1_33A8(Process *objman)
     lbl_1_bss_58 = omAddObjEx(objman, 7, 60, 0, -1, fn_1_67D4);
     lbl_1_bss_44 = NULL;
     lbl_1_bss_40 = objman;
-    lbl_1_bss_3C = 300;
+    lbl_1_bss_3C = 5 * REFRESH_RATE;
     fn_1_7494();
 }
 
@@ -102,16 +103,25 @@ void fn_1_3614(omObjData *object)
         case 0:
             if (fn_1_2804() == 1) {
                 object->work[0]++;
+#if VERSION_PAL
+                object->work[1] = 213;
+#else
                 object->work[1] = 256;
+#endif
             }
             break;
         case 1:
             if (!--object->work[1]) {
                 object->work[0]++;
-                object->work[1] = 90;
+                object->work[1] = REFRESH_RATE * 3 / 2;
                 lbl_1_bss_50 = 0.0f;
+#if VERSION_PAL
+                lbl_1_bss_4C = -12.0f;
+                lbl_1_bss_48 = 2.4f;
+#else
                 lbl_1_bss_4C = -10.000001f;
                 lbl_1_bss_48 = 2.0000002f;
+#endif
                 lbl_1_bss_34 = HuAudFXPlay(1381);
             }
             break;
@@ -119,21 +129,30 @@ void fn_1_3614(omObjData *object)
             if (!--object->work[1]) {
                 object->work[0]++;
                 lbl_1_bss_4C = 0.0f;
+#if VERSION_PAL
+                lbl_1_bss_48 = 0.576f;
+#else
                 lbl_1_bss_48 = 0.40000007f;
+#endif
             }
             break;
         case 3:
             if (fn_1_281C() == 2) {
                 object->work[0]++;
+#if VERSION_PAL
+                lbl_1_bss_4C = -2.4f;
+                lbl_1_bss_48 = 0.072f;
+#else
                 lbl_1_bss_4C = -2.0000002f;
                 lbl_1_bss_48 = 0.05000001f;
+#endif
             }
             break;
     }
     if (fn_1_281C() == 2) {
         if (!--lbl_1_data_D8) {
             lbl_1_bss_4C = -lbl_1_bss_4C;
-            lbl_1_data_D8 = 900;
+            lbl_1_data_D8 = 15 * REFRESH_RATE;
         }
     }
     else if (fn_1_281C() > 2) {
@@ -265,7 +284,7 @@ void fn_1_3BE0(s16 arg0) // what happens with the argument?
                         var_f29 = var_f31;
                         if (!var_r30->unk_00_field3 && (sp8 & 2) && var_r30->unk_1C.y < 0.0f) {
                             var_r30->unk_00_field3 = 1;
-                            var_r30->unk_36 = 240;
+                            var_r30->unk_36 = 4 * REFRESH_RATE;
                         }
                     }
                 }
@@ -411,7 +430,7 @@ void fn_1_3BE0(s16 arg0) // what happens with the argument?
                 && !var_r30->unk_00_field1 && var_r28->unk_38 == NULL) {
                 var_r30->unk_00_field1 = 1;
                 var_r30->unk_38 = var_r28;
-                var_r30->unk_36 = 10;
+                var_r30->unk_36 = REFRESH_RATE / 6;
                 var_r28->unk_00_field4 = 1;
                 var_r28->unk_38 = var_r30;
                 if (lbl_1_bss_44 != NULL) {
@@ -929,7 +948,7 @@ void fn_1_6968(omObjData *object)
             Hu3DModelObjPosGet(var_r31->unk_38->unk_30, "i_hook", &sp8);
             VECSubtract(&sp8, &var_r31->unk_04, &sp8);
             if (var_r31->unk_36 != 0) {
-                var_f31 = cosd(90.0f * var_r31->unk_36 / 10.0f);
+                var_f31 = cosd(90.0f * var_r31->unk_36 / (REFRESH_RATE / 6));
                 var_r31->unk_1C.x = var_f31 * sp8.x;
                 var_r31->unk_1C.y = var_f31 * sp8.y;
                 var_r31->unk_1C.z = var_f31 * sp8.z;
@@ -940,12 +959,16 @@ void fn_1_6968(omObjData *object)
             }
         }
         else {
+#if VERSION_PAL
+            var_r31->unk_1C.y += -1.372f;
+#else
             var_r31->unk_1C.y += -0.95277786f;
-            if (var_r31->unk_00_field3 && (fn_1_281C() != 4 || (fn_1_281C() == 4 && var_r31->unk_36 < 15))) {
+#endif
+            if (var_r31->unk_00_field3 && (fn_1_281C() != 4 || (fn_1_281C() == 4 && var_r31->unk_36 < REFRESH_RATE / 4))) {
                 if (--var_r31->unk_36 == 0) {
                     var_r31->unk_00_field0 = 0;
                 }
-                if (var_r31->unk_36 < 15) {
+                if (var_r31->unk_36 < REFRESH_RATE / 4) {
                     var_r31->unk_00_field2 ^= 1;
                 }
             }
@@ -1124,7 +1147,7 @@ void fn_1_7520(Vec *arg0)
     var_r31->unk34.z = arg0->z;
 }
 
-s32 lbl_1_data_110 = 60;
+s32 lbl_1_data_110 = REFRESH_RATE;
 
 void fn_1_75A0(ModelData *model, ParticleData *particle, Mtx matrix)
 {
@@ -1139,7 +1162,7 @@ void fn_1_75A0(ModelData *model, ParticleData *particle, Mtx matrix)
             var_r30->unk2C = 0.0f;
         }
     }
-    var_r28 = (lbl_1_data_110 * 0xFF) / 60;
+    var_r28 = (lbl_1_data_110 * 0xFF) / REFRESH_RATE;
     var_r30 = particle->unk_48;
 
     for (var_r29 = 0; var_r29 < particle->unk_02; var_r29++, var_r30++) {

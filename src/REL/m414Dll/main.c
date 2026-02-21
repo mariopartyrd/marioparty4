@@ -869,7 +869,7 @@ void fn_1_1E04(void)
     }
     for (var_r28 = 0; var_r28 < 16; var_r28++) {
         for (var_r29 = 0; var_r29 < 4; var_r29++) {
-            lbl_1_bss_990[var_r28][var_r29] = frandmod(120) + 60;
+            lbl_1_bss_990[var_r28][var_r29] = frandmod(REFRESH_RATE * 2) + REFRESH_RATE;
         }
     }
     for (var_r28 = 0; var_r28 < 4; var_r28++) {
@@ -1990,7 +1990,7 @@ void fn_1_79A8(void)
     Process *var_r27;
 
     HuAudFXPlay(lbl_1_data_8C[lbl_1_bss_978]);
-    HuPrcSleep(60);
+    HuPrcSleep(REFRESH_RATE);
     HuAudFXPlay(1449);
     var_f31 = var_f30 = 0.0f;
     var_f29 = 640.0f;
@@ -2268,8 +2268,8 @@ void fn_1_8A70(void)
     while (MGSeqStatGet(var_r28)) {
         HuPrcVSleep();
     }
-    var_r27 = 3659;
-    var_r24 = MGSeqCreate(1, var_r27 / 60, -1, -1);
+    var_r27 = REFRESH_RATE * 60 + REFRESH_RATE - 1;
+    var_r24 = MGSeqCreate(1, var_r27 / REFRESH_RATE, -1, -1);
     lbl_1_bss_98C = 3;
     while (TRUE) {
         for (var_r31 = 0, var_r30 = 0; var_r31 < 4; var_r31++) {
@@ -2282,11 +2282,11 @@ void fn_1_8A70(void)
         if (var_r30 > 0) {
             break;
         }
-        if (var_r27 < 59) {
+        if (var_r27 < REFRESH_RATE - 1) {
             var_r29 = -1;
             break;
         }
-        MGSeqParamSet(var_r24, 1, var_r27-- / 60);
+        MGSeqParamSet(var_r24, 1, var_r27-- / REFRESH_RATE);
         HuPrcVSleep();
     }
     lbl_1_bss_98C = 4;

@@ -801,10 +801,15 @@ void fn_1_19C8(omObjData *object)
                     temp_r31->unk94 = (rand8() % sp1F0[temp_r31->unk20]) - (sp1F0[temp_r31->unk20] / 2);
                 }
             }
+#if VERSION_PAL
+#define _VALUE -0.34375f
+#else
+#define _VALUE -0.26875f
+#endif
             if (lbl_1_bss_18 == -1) {
                 if (temp_r31->unk1C != -1) {
                     temp_r31->unk48[0]->unk1C.z = temp_r31->unk48[1]->unk1C.z
-                        = -0.03125f + ((HuPadStkY[temp_r31->unk1C] < -36) ? (-0.26875f * ((-HuPadStkY[temp_r31->unk1C] - 36) / 36.0f)) : 0);
+                        = -0.03125f + ((HuPadStkY[temp_r31->unk1C] < -36) ? (_VALUE * ((-HuPadStkY[temp_r31->unk1C] - 36) / 36.0f)) : 0);
                     temp_r31->unk4 = (HuPadStkY[temp_r31->unk1C] < -36) ? 1 : 0;
                 }
                 else {
@@ -816,9 +821,10 @@ void fn_1_19C8(omObjData *object)
                               && (temp_r31->unk88 > temp_r31->unk94 + sp1E4[temp_r31->unk20 - 1] || temp_r31->unk90 > sp1D8[temp_r31->unk20 - 1])))
                         ? 1
                         : 0;
-                    temp_r31->unk48[0]->unk1C.z = temp_r31->unk48[1]->unk1C.z = -0.03125f + (temp_r31->unk4 ? -0.26875f : 0.0f);
+                    temp_r31->unk48[0]->unk1C.z = temp_r31->unk48[1]->unk1C.z = -0.03125f + (temp_r31->unk4 ? _VALUE : 0.0f);
                 }
             }
+#undef _VALUE
             else {
                 temp_r31->unk48[0]->unk1C.z = temp_r31->unk48[1]->unk1C.z = 0;
             }
@@ -1686,7 +1692,7 @@ void fn_1_8C10(omObjData *object)
             float temp_f30;
             s32 temp_r20;
             lbl_1_bss_10++;
-            temp_f30 = 1.0f - ((lbl_1_bss_10 > 180) ? 1.0f : (lbl_1_bss_10 / 180.0f));
+            temp_f30 = 1.0f - ((lbl_1_bss_10 > REFRESH_RATE * 3) ? 1.0f : (lbl_1_bss_10 / (REFRESH_RATE_F * 3)));
             Hu3DMotionSpeedSet(lbl_1_bss_30->model[0], 0.5 * temp_f30);
             for (temp_r20 = 0; temp_r20 < 4; temp_r20++) {
                 Hu3DMotionSpeedSet(lbl_1_bss_34[temp_r20]->model[5], 0.5 * temp_f30);
@@ -1741,7 +1747,11 @@ void fn_1_A53C(omObjData *object)
                 s32 temp_r26;
                 lbl_1_bss_2C++;
                 if (lbl_1_bss_2C == 10.0f) {
+#if VERSION_PAL
+                    lbl_1_bss_2C = 59.0f;
+#else
                     lbl_1_bss_2C = 50.0f;
+#endif
                 }
                 temp_r29 = (lbl_1_bss_2C > 180.0f) ? 255.0 : ((lbl_1_bss_2C > 120.0f) ? (255.0 * ((lbl_1_bss_2C - 120.0f) / 60.0)) : 0.0);
                 temp_r29 = (lbl_1_bss_2C >= 235.0f)
@@ -1831,7 +1841,7 @@ void fn_1_A53C(omObjData *object)
             }
             else if (!MGSeqStatGet(lbl_1_bss_20)) {
                 lbl_1_bss_2C++;
-                if (lbl_1_bss_2C >= 30.0f) {
+                if (lbl_1_bss_2C >= REFRESH_RATE_F / 2) {
                     object->work[0]++;
                     lbl_1_bss_2C = 0;
                     if (lbl_1_bss_18 != 4) {
@@ -1852,7 +1862,7 @@ void fn_1_A53C(omObjData *object)
 
         case 1004:
             lbl_1_bss_2C++;
-            if (210.0f < lbl_1_bss_2C) {
+            if (REFRESH_RATE_F * 3.5f < lbl_1_bss_2C) {
                 lbl_1_bss_20 = -1;
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
                 object->func = fn_1_D700;
