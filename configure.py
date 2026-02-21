@@ -1133,13 +1133,13 @@ config.libs = [
     Rel(
         "m413Dll",  # Bob-omb Breakers
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m413Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m413Dll/main.c"),
         },
     ),
     Rel(
         "m414Dll",  # Long Claw of the Law
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m414Dll/main.c"),
+            Object(Matching, "REL/m414Dll/main.c"),
         },
     ),
     Rel(
