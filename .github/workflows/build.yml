@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [GMPE01_00, GMPE01_01, GMPP01_00, GMPP01_02, GMPJ01_00]
+        version: [GMPE01_00, GMPE01_01, GMPP01_00, GMPP01_01, GMPP01_02, GMPJ01_00]
 
     steps:
     # Checkout the repository
