@@ -1159,10 +1159,10 @@ config.libs = [
     Rel(
         "m417Dll",  # Makin' Waves
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/water.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/player.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m417Dll/sequence.c"),
+            Object(Matching, "REL/m417Dll/main.c"),
+            Object(Matching, "REL/m417Dll/water.c"),
+            Object(Matching, "REL/m417Dll/player.c"),
+            Object(Matching, "REL/m417Dll/sequence.c"),
         },
     ),
     Rel(

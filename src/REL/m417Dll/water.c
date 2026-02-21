@@ -5,6 +5,7 @@
 #include "game/sprite.h"
 
 #include "REL/m417Dll.h"
+#include "version.h"
 
 typedef struct UnkM417Struct3 {
     /* 0x00 */ s16 unk_00;
@@ -219,9 +220,9 @@ void fn_1_37A0(omObjData *object, UnkM417Struct3 *arg1)
         arg1->unk_28 = fn_1_2F08(arg1->unk_28, arg1->unk_2C, 0.05f);
         arg1->unk_24 += (0.05f * (300.0f - arg1->unk_24));
         arg1->unk_20 += (0.2f * (arg1->unk_24 - arg1->unk_20));
-        arg1->unk_08.x += (((1.0f / 60.0f) * arg1->unk_20) * sind(arg1->unk_28));
-        arg1->unk_08.z += (((1.0f / 60.0f) * arg1->unk_20) * cosd(arg1->unk_28));
-        arg1->unk_30 += (1.0f / 60.0f) * arg1->unk_20;
+        arg1->unk_08.x += ((REFRESH_FREQ * arg1->unk_20) * sind(arg1->unk_28));
+        arg1->unk_08.z += ((REFRESH_FREQ * arg1->unk_20) * cosd(arg1->unk_28));
+        arg1->unk_30 += REFRESH_FREQ * arg1->unk_20;
     }
 }
 
@@ -280,7 +281,7 @@ void fn_1_3D58(omObjData *object)
     s32 var_r26;
 
     Vec sp3C[3] = { { 0.0f, 0.0f, 700.0f }, { -609.0f, 0.0f, -350.0f }, { 609.0f, 0.0f, -350.0f } };
-    Vec sp18[3] = { { 0.006f, -0.013333335f, 10.8f }, { 0.0045f, -0.010000001f, 9.6f }, { 0.0033f, -0.0066666673f, 12.0f } };
+    Vec sp18[3] = { { 0.006f, -0.8f * REFRESH_FREQ, 10.8f }, { 0.0045f, -0.6f * REFRESH_FREQ, 9.6f }, { 0.0033f, -0.4f * REFRESH_FREQ, 12.0f } };
 
     lbl_1_bss_178.unk_00 = 0.0f;
     lbl_1_bss_178.unk_04 = 0.0f;
@@ -468,7 +469,7 @@ void fn_1_4BC8(float arg8, float arg9)
             var_r31->unk_04.z = 700.0 * cosd(180.0f + arg8);
             var_r31->unk_10 = arg8;
             var_r31->unk_14 = 520.0f + (80.0f * var_f28);
-            var_r31->unk_14 *= 1.0f / 60.0f;
+            var_r31->unk_14 *= REFRESH_FREQ;
             var_r31->unk_18 = 800.0f * arg9;
             var_r31->unk_1C = 0.05f;
             var_r31->unk_20 = arg9;
@@ -523,7 +524,7 @@ void fn_1_4E64(omObjData *object)
             if (var_r31->unk_2C >= 0) {
                 HuAudFXEmiterUpDate(var_r31->unk_2C, &var_r31->unk_04);
             }
-            if (VECMag(&var_r31->unk_04) > 800.0f && var_r31->unk_00 >= 2 && (var_r31->unk_1C -= 0.033333335f, var_r31->unk_1C < 0.0f)) {
+            if (VECMag(&var_r31->unk_04) > 800.0f && var_r31->unk_00 >= 2 && (var_r31->unk_1C -= REFRESH_FREQ * 2, var_r31->unk_1C < 0.0f)) {
                 var_r31->unk_00 = 0;
             }
             else {
@@ -557,12 +558,12 @@ void fn_1_4E64(omObjData *object)
                         var_r31->unk_2C = -1;
                     }
                 }
-                var_r31->unk_1C += 0.016666668f;
+                var_r31->unk_1C += REFRESH_FREQ;
                 if (var_r31->unk_1C > 1.0f) {
                     var_r31->unk_1C = 1.0f;
                 }
                 if (var_r31->unk_00 >= 2) {
-                    var_r31->unk_24 += 0.016666668f;
+                    var_r31->unk_24 += REFRESH_FREQ;
                     if (var_r31->unk_24 > 1.0f) {
                         var_r31->unk_24 = 1.0f;
                     }
@@ -629,7 +630,7 @@ void fn_1_57B0(omObjData *object)
 
     lbl_1_bss_178.unk_6B4 = 1 - lbl_1_bss_178.unk_6B4;
     fn_1_4E64(object);
-    lbl_1_bss_178.unk_6B8 += 0.083333336f;
+    lbl_1_bss_178.unk_6B8 += 5 * REFRESH_FREQ;
     if (lbl_1_bss_178.unk_6B8 >= 360.0f) {
         lbl_1_bss_178.unk_6B8 -= 360.0f;
     }
@@ -904,8 +905,12 @@ void fn_1_6B94(ModelData *model, ParticleData *particle, float (*matrix)[4])
             var_r31->unk34.x += var_r31->unk08.x;
             var_r31->unk34.y += var_r31->unk08.y;
             var_r31->unk34.z += var_r31->unk08.z;
+#if VERSION_PAL
+            var_r31->unk08.y += -0.392f;
+#else
             var_r31->unk08.y += -0.27222225f;
-            if (var_r31->unk00 < 12.0f) {
+#endif
+            if (var_r31->unk00 < REFRESH_RATE_F / 5) {
                 var_r31->unk40.a = 0.88f * var_r31->unk40.a;
             }
             if (!(--var_r31->unk00)) {
@@ -954,7 +959,7 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
             if (var_r31->unk00) {
                 continue;
             }
-            var_r31->unk00 = 60.0f * (1.0f + (0.0005f * frandmod(1000)));
+            var_r31->unk00 = REFRESH_RATE_F * (1.0f + (0.0005f * frandmod(1000)));
             var_f30 = 0.001f * frandmod(1000);
             var_f28 = var_f30;
             if (frandmod(1000) < 500) {
@@ -968,9 +973,9 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
             var_r31->unk34.x = sp14.x * spC[arg1];
             var_r31->unk34.y = (var_f27 + (0.15f * frandmod(1000))) - 100.0f;
             var_r31->unk34.z = sp14.z * spC[arg1];
-            var_r31->unk08.x = 0.016666668f * (((100.0f * (1.5f * sp14.x)) + (0.1f * frandmod(1000))) - 50.0f);
-            var_r31->unk08.y = 0.016666668f * (450.0f + (0.5f * frandmod(1000)));
-            var_r31->unk08.z = 0.016666668f * (((100.0f * (1.5f * sp14.z)) + (0.1f * frandmod(1000))) - 50.0f);
+            var_r31->unk08.x = REFRESH_FREQ * (((100.0f * (1.5f * sp14.x)) + (0.1f * frandmod(1000))) - 50.0f);
+            var_r31->unk08.y = REFRESH_FREQ * (450.0f + (0.5f * frandmod(1000)));
+            var_r31->unk08.z = REFRESH_FREQ * (((100.0f * (1.5f * sp14.z)) + (0.1f * frandmod(1000))) - 50.0f);
             var_r31->unk08.x *= var_f30;
             var_r31->unk08.y *= 0.2f + (0.8f * var_f30);
             var_r31->unk08.z *= var_f30;

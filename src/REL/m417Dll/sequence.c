@@ -5,6 +5,7 @@
 #include "game/objsub.h"
 
 #include "REL/m417Dll.h"
+#include "version.h"
 
 typedef struct UnkM417Struct7 {
     /* 0x00 */ char unk00[0x10];
@@ -53,12 +54,12 @@ void fn_1_BD9C(omObjData *object)
         Vec sp2C[2] = { { -400.0f, 0.0f, -200.0f }, { 0.0f, 150.0f, 0.0f } };
         Vec sp14[2] = { { -50.0f, 30.0f, 1500.0f }, { -50.0f, 0.0f, 2700.0f } };
 
-        var_r29 = 60;
+        var_r29 = REFRESH_RATE;
         fn_1_5B0(object);
         if (var_r31->unk_10 < var_r29) {
             var_f31 = 0.0f;
         } else {
-            var_f31 = 0.0055555557f * (var_r31->unk_10 - var_r29);
+            var_f31 = (0.33333333f) / REFRESH_RATE_F * (var_r31->unk_10 - var_r29);
         }
         VECSubtract(&sp2C[1], &sp2C[0], &sp8);
         VECScale(&sp8, &sp8, var_f31);
@@ -105,29 +106,29 @@ void fn_1_C050(omObjData *object)
             }
             break;
         case 1:
-            if (object->work[0] == 60.0f) {
+            if (object->work[0] == REFRESH_RATE_F) {
                 omVibrate(0, 12, 6, 6);
                 omVibrate(1, 12, 6, 6);
                 omVibrate(2, 12, 6, 6);
                 omVibrate(3, 12, 6, 6);
             }
-            if (object->work[0] > 96.0f) {
+            if (object->work[0] > 1.6f * REFRESH_RATE_F) {
                 object->work[0] = 0;
                 object->work[1] += 1;
             }
             break;
         case 2:
-            var_f31 = 3.0f * object->work[0];
+            var_f31 = (VERSION_PAL ? 3.6f : 3.0f) * object->work[0];
             object->rot.z = var_f31;
             var_f30 = 0.5 + (0.5 * -cosd(var_f31));
             object->trans.x = -300.0f - (200.0f * var_f30);
             object->trans.z = -200.0f - (50.0f * var_f30);
-            var_f31 = 6.0f * object->work[0];
+            var_f31 = (VERSION_PAL ? 7.2f : 6.0f) * object->work[0];
             if (var_f31 >= 180.0f) {
                 var_f30 = 0.5 + (0.5 * cosd(var_f31));
                 object->trans.y += -5.0f * var_f30;
             }
-            if (object->work[0] > 60.0f) {
+            if (object->work[0] > REFRESH_RATE_F) {
                 object->work[0] = 0;
                 object->work[1] += 1;
             }
@@ -144,15 +145,15 @@ void fn_1_C434(omObjData *object)
 {
     float var_f31;
 
-    object->work[0] = (object->work[0] + 1) % 120;
-    var_f31 = 6.0f * object->work[0];
+    object->work[0] = (object->work[0] + 1) % (REFRESH_RATE * 2);
+    var_f31 = (VERSION_PAL ? 7.2f : 6.0f) * object->work[0];
     object->rot.z = 180.0 + (10.0 * sind(var_f31));
-    var_f31 = 3.0f * object->work[0];
+    var_f31 = (VERSION_PAL ? 3.6f : 3.0f) * object->work[0];
     object->rot.x = 5.0 * sind(var_f31);
-    if (object->work[2] < 120.0f) {
+    if (object->work[2] < REFRESH_RATE_F * 2) {
         object->work[2] += 1;
     }
-    var_f31 = 100.0f * (-2.0f * (0.008333334f * object->work[2]));
+    var_f31 = 100.0f * (-2.0f * (REFRESH_FREQ / 2 * object->work[2]));
     object->trans.y += 0.1f * ((var_f31 + fn_1_78BC(object->trans.x, 0.0f, object->trans.z)) - object->trans.y);
 }
 
@@ -196,7 +197,7 @@ void fn_1_C78C(omObjData *object)
         lbl_1_bss_8A8 = MGSeqCreate(5, 3, var_r31->unk_4C[0], var_r31->unk_4C[1], var_r31->unk_4C[2], var_r31->unk_4C[3]);
         return;
     }
-    if (!MGSeqStatGet(lbl_1_bss_8A8) && var_r31->unk_28 >= 210.0f) {
+    if (!MGSeqStatGet(lbl_1_bss_8A8) && var_r31->unk_28 >= REFRESH_RATE_F * 3.5f) {
         var_r31->unk_24 = 2;
         fn_1_800(object);
     }
