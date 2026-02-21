@@ -1121,7 +1121,7 @@ config.libs = [
     Rel(
         "m411Dll",  # Photo Finish
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m411Dll/main.c"),
+            Object(Matching, "REL/m411Dll/main.c"),
         },
     ),
     Rel(
