@@ -913,13 +913,11 @@ void fn_1_9FF0(omObjData *object)
         if (var_f31 > var_r31->unk_F8.y || (!var_r31->unk_30 && fn_1_26F8() != 2)) {
 #if VERSION_PAL
             var_r31->unk_F8.y = var_r31->unk_F8.y + (0.16666667f * (var_f31 - var_r31->unk_F8.y));
-            var_r31->unk_98 = var_r31->unk_F8.y - var_r31->unk_104.y;
-            var_r31->unk_98 += -0.392f;
 #else
             var_r31->unk_F8.y = var_r31->unk_F8.y + (0.1388889f * (var_f31 - var_r31->unk_F8.y));
-            var_r31->unk_98 = var_r31->unk_F8.y - var_r31->unk_104.y;
-            var_r31->unk_98 += -0.27222225f;
 #endif
+            var_r31->unk_98 = var_r31->unk_F8.y - var_r31->unk_104.y;
+            var_r31->unk_98 += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
             var_r31->unk_30 = 0;
         }
         else {

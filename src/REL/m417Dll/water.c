@@ -905,11 +905,7 @@ void fn_1_6B94(ModelData *model, ParticleData *particle, float (*matrix)[4])
             var_r31->unk34.x += var_r31->unk08.x;
             var_r31->unk34.y += var_r31->unk08.y;
             var_r31->unk34.z += var_r31->unk08.z;
-#if VERSION_PAL
-            var_r31->unk08.y += -0.392f;
-#else
-            var_r31->unk08.y += -0.27222225f;
-#endif
+            var_r31->unk08.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
             if (var_r31->unk00 < REFRESH_RATE_F / 5) {
                 var_r31->unk40.a = 0.88f * var_r31->unk40.a;
             }

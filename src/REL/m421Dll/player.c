@@ -14,6 +14,7 @@
 #include "string.h"
 
 #include "REL/m421Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
@@ -181,12 +182,18 @@ Vec lbl_1_data_264[4] = {
     { 200.0f, 0.0f, -50.0f },
 };
 Vec2f lbl_1_data_294[3] = { { 300.0f, 0.4f }, { 450.0f, 0.7f }, { 600.0f, 1.0f } };
-u32 lbl_1_data_2AC[3] = { 6, 0xC, 0xC };
-float lbl_1_data_2B8[3] = { 8.000001f, 8.5f, 9.166667f };
+u32 lbl_1_data_2AC[3] = { REFRESH_RATE / 10, REFRESH_RATE / 5, REFRESH_RATE / 5 };
+float lbl_1_data_2B8[3] = {
+
+    (VERSION_PAL) ? 480.0f / REFRESH_RATE_F : 480.0f / REFRESH_RATE_OFF_BY_1,
+    510.0f / REFRESH_RATE,
+    550.0f / REFRESH_RATE
+};
 float lbl_1_data_2C4[3] = { 0.9f, 0.8f, 0.5f };
-float lbl_1_data_2D0[3] = { 19.800001f, 20.400002f, 20.400002f };
+float lbl_1_data_2D0[3] = { 1188.0f * REFRESH_FREQ, 1224.0f * REFRESH_FREQ, 1224.0f * REFRESH_FREQ };
 float lbl_1_data_2DC[3] = { -70.0f, -60.000004f, -70.0f };
-float lbl_1_data_2E8[3] = { 192.00003f, 357.0f, 550.0f };
+
+float lbl_1_data_2E8[3] = { VERSION_PAL ? 192.0f : 192.00003f, 357.0f, 550.0f };
 
 // M421DllPlayerWork
 omObjData *lbl_1_bss_48[4];
@@ -353,7 +360,7 @@ void fn_1_4F00(omObjData *object)
     work->unk_1C = 0.0f;
     switch (work->unk_44) {
         case 0:
-            if (work->unk_48 > 108.0f) {
+            if (work->unk_48 > REFRESH_RATE_F * 1.8f) {
                 HuAudFXPlay(0x601);
                 Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
                 Hu3DModelAttrReset(object->model[2], HU3D_ATTR_DISPOFF);
@@ -394,19 +401,19 @@ void fn_1_5060(omObjData *object)
         work->unk_1C = 0.0f;
         switch (work->unk_44) {
             case 0:
-                if ((work->unk_48 > 30.0f) && ((work->unk_48 & 0xF) == 0) && (frandmod(0x3E8) < 0x12C)) {
+                if ((work->unk_48 > REFRESH_RATE_F / 2) && ((work->unk_48 & 0xF) == 0) && (frandmod(0x3E8) < 0x12C)) {
                     work->unk_10 = 0x100;
                     work->unk_44++;
                 }
-                else if (work->unk_48 > 120.0f) {
+                else if (work->unk_48 > REFRESH_RATE_F * 2) {
                     work->unk_44++;
                 }
                 break;
             case 1:
-                if (work->unk_48 > 120.0f) {
+                if (work->unk_48 > REFRESH_RATE_F * 2) {
                     work->unk_18 = atan2d(-work->unk_CC.x, 300.0f - work->unk_CC.z);
                     work->unk_1C = 0.01f;
-                    if (work->unk_48 < 156.0f) {
+                    if (work->unk_48 < REFRESH_RATE_F * 2.6f) {
                         espPosSet(work->unk_C8, sp8[work->unk_0C].x, sp8[work->unk_0C].y);
                         espScaleSet(work->unk_C8, 0.6000000238418579, 0.6000000238418579);
                         espDispOn(work->unk_C8);
@@ -415,7 +422,7 @@ void fn_1_5060(omObjData *object)
                         espDispOff(work->unk_C8);
                     }
                 }
-                if (work->unk_48 >= 180.0f) {
+                if (work->unk_48 >= REFRESH_RATE_F * 3) {
                     work->unk_10 = 0x100;
                     work->unk_C0 = 1;
                     work->unk_44++;
@@ -572,14 +579,14 @@ void fn_1_5B9C(omObjData *object)
                 VECAdd(&var_r29->unk_1C, &sp1C, &sp28);
                 fn_1_9BFC(sp28.y - work->unk_CC.y, 0.9f, work->unk_108);
                 VECSubtract(&sp28, &work->unk_CC, &sp1C);
-                work->unk_D8.y = 0.016666668f * work->unk_108[2];
-                work->unk_D8.x = 0.01851852f * sp1C.x;
-                work->unk_D8.z = 0.01851852f * sp1C.z;
+                work->unk_D8.y = REFRESH_FREQ * work->unk_108[2];
+                work->unk_D8.x = (10.0f / 9.0f) * REFRESH_FREQ * sp1C.x;
+                work->unk_D8.z = (10.0f / 9.0f) * REFRESH_FREQ * sp1C.z;
                 work->unk_44 = 1;
                 work->unk_48 = 0;
                 break;
             case 1:
-                work->unk_D8.y += 0.016666668f * (0.016666668f * work->unk_108[3]);
+                work->unk_D8.y += REFRESH_FREQ * (REFRESH_FREQ * work->unk_108[3]);
                 var_f29 = sqrtf((work->unk_D8.x * work->unk_D8.x) + (work->unk_D8.z * work->unk_D8.z));
                 var_f29 = atan2d(var_f29, work->unk_D8.y);
                 var_f29 = var_f29;
@@ -587,13 +594,13 @@ void fn_1_5B9C(omObjData *object)
                 sp1C.y = 0.0f;
                 sp1C.z = -work->unk_D8.x;
                 VECNormalize(&sp1C, &sp1C);
-                MTXRotAxisRad(work->unk_118, &sp1C, 0.017453292f * var_f29);
+                MTXRotAxisRad(work->unk_118, &sp1C, MTXDegToRad(var_f29));
                 sp1C.x = sp1C.z = 0.0f;
                 sp1C.y = 1.0f;
-                MTXRotAxisRad(sp34, &sp1C, 0.017453292f * (22.5f * work->unk_48));
+                MTXRotAxisRad(sp34, &sp1C, MTXDegToRad(22.5f * work->unk_48));
                 MTXConcat(work->unk_118, sp34, work->unk_118);
                 HuAudFXEmiterUpDate(work->unk_78, &work->unk_CC);
-                if (work->unk_48 >= 72.0f) {
+                if (work->unk_48 >= REFRESH_RATE_F * 1.2f) {
                     MTXIdentity(work->unk_118);
                     work->unk_D8.x = work->unk_D8.y = work->unk_D8.z = 0.0f;
                     work->unk_44 = 2;
@@ -604,8 +611,8 @@ void fn_1_5B9C(omObjData *object)
                 }
                 break;
             case 2:
-                work->unk_D8.y += -0.27222225f;
-                if (work->unk_48 > 120.0f) {
+                work->unk_D8.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
+                if (work->unk_48 > REFRESH_RATE_F * 2) {
                     work->unk_44 = 7;
                     work->unk_48 = 0;
                     work->unk_D8.x = work->unk_D8.y = work->unk_D8.z = 0.0f;
@@ -652,7 +659,7 @@ void fn_1_6184(omObjData *object)
             break;
         case 3:
             Hu3DModelShadowSet(object->model[0]);
-            work->unk_D8.y += -0.27222225f;
+            work->unk_D8.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
             if (work->unk_CC.y <= 0.0f) {
                 work->unk_CC.y = 0.0f;
                 work->unk_D8.y = 0.0f;
@@ -707,7 +714,7 @@ void fn_1_6400(omObjData *object)
             work->unk_18 = atan2d(sp8.x, sp8.z);
             work->unk_1C = var_f31;
             fn_1_7478(object);
-            if ((work->unk_1C == 0.0f) || (work->unk_48 > 0x12C)) {
+            if ((work->unk_1C == 0.0f) || (work->unk_48 > REFRESH_RATE * 5)) {
                 work->unk_5C = 0.0f;
                 work->unk_60 = 0.15f;
                 work->unk_64 = 0.0f;
@@ -790,22 +797,22 @@ void fn_1_676C(omObjData *object)
             }
             CharModelMotionSpeedSet(work->unk_00, var_f29);
         }
-        sp8.x = 0.01666666753590107 * (1.6666667461395264 * (2.0 * (work->unk_1C * sind(work->unk_18))));
+        sp8.x = 1.0 * REFRESH_FREQ * (REFRESH_FREQ * 100.0f * (2.0 * (work->unk_1C * sind(work->unk_18))));
         sp8.y = 0.0f;
-        sp8.z = 0.01666666753590107 * (1.6666667461395264 * (2.0 * (work->unk_1C * cosd(work->unk_18))));
+        sp8.z = 1.0 * REFRESH_FREQ * (REFRESH_FREQ * 100.0f * (2.0 * (work->unk_1C * cosd(work->unk_18))));
         VECAdd(&sp8, &work->unk_D8, &work->unk_D8);
         if (work->unk_24 == 0) {
             if ((work->unk_10 & 0x100) != 0) {
                 work->unk_24 = 1;
                 fn_1_9BFC(400.0f - (2.0f * work->unk_88), 0.25f, work->unk_108);
-                work->unk_D8.y = 0.016666668f * work->unk_108[2];
+                work->unk_D8.y = REFRESH_FREQ * work->unk_108[2];
                 if (fn_1_3E34() == 2) {
                     HuAudFXEmiterPlay(0x5FE, &work->unk_F0);
                 }
             }
         }
         else {
-            work->unk_D8.y += 0.016666668f * (0.016666668f * work->unk_108[3]);
+            work->unk_D8.y += REFRESH_FREQ * (REFRESH_FREQ * work->unk_108[3]);
             if ((work->unk_D8.y < 0.0f) && (work->unk_CC.y <= 0.0f)) {
                 work->unk_D8.y = 0.0f;
                 work->unk_24 = 0;
@@ -836,7 +843,7 @@ void fn_1_676C(omObjData *object)
         sp8.y = 0.0f;
         sp8.z = cosd((90.0f + work->unk_18));
         if (work->unk_1C > 0.0f) {
-            var_f31 = 1.6666667f * work->unk_1C * (360.0f / (3.14159f * (2.0f * work->unk_88)));
+            var_f31 = REFRESH_FREQ * 100.0f * work->unk_1C * (360.0f / (3.14159f * (2.0f * work->unk_88)));
             if (work->unk_24 != 0) {
                 var_f31 *= 2.0f;
             }
@@ -853,7 +860,7 @@ void fn_1_6D48(omObjData *object)
     M421DllPlayerWork *work = object->data;
     if (work->unk_20 != 0) {
         if (work->unk_D8.y > 0.0f) {
-            work->unk_9C = work->unk_CC.y - (1.7999998f * work->unk_D8.y);
+            work->unk_9C = work->unk_CC.y - (0.03f / REFRESH_FREQ * work->unk_D8.y);
             if (work->unk_9C < 0.0f) {
                 work->unk_9C = 0.0f;
             }
@@ -880,7 +887,7 @@ void fn_1_6D48(omObjData *object)
             if (work->unk_BC != 0) {
                 work->unk_AC = work->unk_AC + work->unk_B0;
                 work->unk_98 = work->unk_CC.y + (2.0f * work->unk_88);
-                work->unk_98 = work->unk_98 + ((work->unk_BC / 18.0f) * (work->unk_B4 * sind(work->unk_AC)));
+                work->unk_98 = work->unk_98 + ((work->unk_BC / (0.3f / REFRESH_FREQ)) * (work->unk_B4 * sind(work->unk_AC)));
             }
         }
         work->unk_F0 = work->unk_CC;
@@ -892,7 +899,7 @@ void fn_1_6D48(omObjData *object)
             work->unk_64 = 0.0f;
         }
         if ((work->unk_10 & 0x100) != 0) {
-            work->unk_C4 = 0xC;
+            work->unk_C4 = REFRESH_RATE / 5;
         }
         if (work->unk_C4 != 0) {
             work->unk_C4--;
@@ -927,8 +934,8 @@ void fn_1_6D48(omObjData *object)
                         HuAudFXEmiterPlay(0x5FA, &work->unk_F0);
                     }
                     fn_1_9BFC(lbl_1_data_294[work->unk_C0].x - (2.0f * work->unk_88), 0.5f * lbl_1_data_294[work->unk_C0].y, work->unk_108);
-                    work->unk_D8.y = 0.016666668f * work->unk_108[2];
-                    work->unk_B8 = 9;
+                    work->unk_D8.y = REFRESH_FREQ * work->unk_108[2];
+                    work->unk_B8 = (VERSION_PAL) ? 7 : 9;
                     work->unk_BC = lbl_1_data_2AC[work->unk_C0];
                     work->unk_C0++;
                 }
@@ -938,7 +945,7 @@ void fn_1_6D48(omObjData *object)
             work->unk_AC = 0.0f;
             work->unk_B0 = lbl_1_data_2D0[work->unk_C0 - 1];
             work->unk_B4 = lbl_1_data_2DC[work->unk_C0 - 1];
-            work->unk_D8.y += 0.016666668f * (0.016666668f * work->unk_108[3]);
+            work->unk_D8.y += REFRESH_FREQ * (REFRESH_FREQ * work->unk_108[3]);
             if ((work->unk_D8.y < 0.0f) && (work->unk_CC.y <= 0.0f)) {
                 work->unk_D8.x = work->unk_D8.y = work->unk_D8.z = 0.0f;
                 work->unk_24 = 0;
@@ -958,8 +965,8 @@ void fn_1_7478(omObjData *object)
         work->unk_5C = work->unk_18;
     }
     if ((work->unk_1C > 0.05f) && (work->unk_34 == 0)) {
-        work->unk_D8.x = 0.01666666753590107 * (550.0 * (work->unk_1C * sind(work->unk_18)));
-        work->unk_D8.z = 0.01666666753590107 * (550.0 * (work->unk_1C * cosd(work->unk_18)));
+        work->unk_D8.x = REFRESH_FREQ * (550.0 * (work->unk_1C * sind(work->unk_18)));
+        work->unk_D8.z = REFRESH_FREQ * (550.0 * (work->unk_1C * cosd(work->unk_18)));
         work->unk_60 = 0.2f;
         work->unk_64 = 0.0f;
         var_f31 = 0.5f;
@@ -1037,7 +1044,7 @@ void fn_1_7AA0(omObjData *object)
     M421DllPlayerWork *work = object->data;
     sp38 = work->unk_CC;
     sp38.y = 0.0f;
-    VECScale(&work->unk_D8, &sp14, 7.5f);
+    VECScale(&work->unk_D8, &sp14, (VERSION_PAL) ? 6.25f : 7.5f);
     sp2C = sp38;
     for (var_r30 = 0; var_r30 < 0x10; var_r30++) {
         VECAdd(&sp2C, &sp14, &sp2C);
@@ -1166,7 +1173,7 @@ void fn_1_80C0(omObjData *var_r28)
                         return;
                     }
                     var_r31->unk_6C = 2;
-                    var_r31->unk_70 = 60.0f * (0.3f + (0.00040000002f * frandmod(0x3E8)));
+                    var_r31->unk_70 = REFRESH_RATE_F * (0.3f + (0.00040000002f * frandmod(0x3E8)));
                     if ((frandmod(0x410) < (1000.0f * (0.5f + (0.5f * var_r31->unk_68)))) || (var_r31->unk_3C != 0)) {
                         var_r31->unk_3C = 0;
                         var_r31->unk_6C = 1;
@@ -1198,7 +1205,7 @@ void fn_1_80C0(omObjData *var_r28)
                 case 3:
                     if (var_r31->unk_C0 != 3) {
                         var_r31->unk_6C = 2;
-                        var_r31->unk_70 = 60.0f * (0.0003f * frandmod(0x3E8));
+                        var_r31->unk_70 = REFRESH_RATE_F * (0.0003f * frandmod(0x3E8));
                         return;
                     }
                     break;
@@ -1216,7 +1223,7 @@ void fn_1_80C0(omObjData *var_r28)
                     var_r30 = lbl_1_bss_48[var_r29]->data;
                     if (var_r30->unk_38 == 0) {
                         if (var_r30->unk_24 != 0) {
-                            VECScale(&var_r30->unk_D8, &sp20, 60.0f);
+                            VECScale(&var_r30->unk_D8, &sp20, REFRESH_RATE_F);
                             VECAdd(&var_r30->unk_CC, &sp20, &sp20);
                         }
                         else {
@@ -1240,7 +1247,7 @@ void fn_1_80C0(omObjData *var_r28)
                     }
                 }
             }
-            var_r31->unk_74 = 60.0f * ((1.5f - var_r31->unk_68) + (0.0015f * frandmod(0x3E8)));
+            var_r31->unk_74 = REFRESH_RATE_F * ((1.5f - var_r31->unk_68) + (0.0015f * frandmod(0x3E8)));
         }
         VECSubtract(&var_r31->unk_FC, &var_r31->unk_CC, &sp14);
         sp8 = var_r31->unk_D8;
@@ -1251,7 +1258,7 @@ void fn_1_80C0(omObjData *var_r28)
             VECNormalize(&sp8, &sp8);
         }
         var_f31 = (0.5f + (0.5f * var_r31->unk_68)) * (1.0f - VECDotProduct(&sp14, &sp8));
-        VECScale(&var_r31->unk_D8, &sp14, 60.0f * (2.0f * var_f31));
+        VECScale(&var_r31->unk_D8, &sp14, REFRESH_RATE_F * (2.0f * var_f31));
         VECAdd(&var_r31->unk_CC, &sp14, &sp14);
         VECSubtract(&var_r31->unk_FC, &sp14, &sp20);
         var_f30 = VECMag(&sp20);
@@ -1556,15 +1563,15 @@ void fn_1_982C(omObjData *object, u32 arg1)
 
     M421DllPlayerWork *work = object->data;
     if ((work->unk_08 != arg1) && (arg1 < 6)) {
-        float var_f31 = 60.0f * lbl_1_data_1BC[arg1].unk_04;
+        float var_f31 = REFRESH_RATE_F * lbl_1_data_1BC[arg1].unk_04;
         if (work->unk_08 < 0) {
             var_f31 = 0.0f;
         }
         work->unk_08 = arg1;
         CharModelMotionShiftSet(
-            work->unk_00, object->motion[lbl_1_data_1BC[arg1].unk_00], 60.0f * lbl_1_data_1BC[arg1].unk_08, var_f31, lbl_1_data_1BC[arg1].unk_10);
+            work->unk_00, object->motion[lbl_1_data_1BC[arg1].unk_00], REFRESH_RATE_F * lbl_1_data_1BC[arg1].unk_08, var_f31, lbl_1_data_1BC[arg1].unk_10);
         if (lbl_1_data_1BC[arg1].unk_0C >= 0.0f) {
-            Hu3DMotionShiftStartEndSet(object->model[0], 60.0f * lbl_1_data_1BC[arg1].unk_08, 60.0f * lbl_1_data_1BC[arg1].unk_0C);
+            Hu3DMotionShiftStartEndSet(object->model[0], REFRESH_RATE_F * lbl_1_data_1BC[arg1].unk_08, REFRESH_RATE_F * lbl_1_data_1BC[arg1].unk_0C);
         }
     }
 }
@@ -1610,7 +1617,7 @@ void fn_1_9C38(ModelData *model, ParticleData *particle, Mtx matrix)
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk2C += 2.0f;
             var_r31->unk40.a *= 0.98f;
-            if (var_r31->unk00 < 24.0f) {
+            if (var_r31->unk00 < REFRESH_RATE_F / 2.5f) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
             if (--var_r31->unk00 == 0) {
@@ -1652,7 +1659,7 @@ void fn_1_9DD0(omObjData *object, Vec *arg1)
         if (var_r31->unk00 != 0) {
             continue;
         }
-        var_r31->unk00 = 60.0f * (0.6f + (0.0005f * frandmod(0x3E8)));
+        var_r31->unk00 = REFRESH_RATE_F * (0.6f + (0.0005f * frandmod(0x3E8)));
         var_f31 = frandmod(0x168);
         var_f30 = frandmod(0x168);
         sp18.y = sind(var_f31);
@@ -1662,9 +1669,9 @@ void fn_1_9DD0(omObjData *object, Vec *arg1)
         var_f31 = 120.00001f;
         VECScale(&sp18, &sp18, var_f31);
         VECAdd(&sp18, arg1, &var_r31->unk34);
-        var_r31->unk08.x = 0.016666668f * (0.5f * sp18.x);
-        var_r31->unk08.y = 5.0f + (0.016666668f * (0.5f * sp18.y));
-        var_r31->unk08.z = 0.016666668f * (0.5f * sp18.z);
+        var_r31->unk08.x = REFRESH_FREQ * (0.5f * sp18.x);
+        var_r31->unk08.y = ((VERSION_PAL) ? 6.0f : 5.0f) + (REFRESH_FREQ * (0.5f * sp18.y));
+        var_r31->unk08.z = REFRESH_FREQ * (0.5f * sp18.z);
         var_r31->unk30 = 0.0031415902f * frandmod(0x3E8);
         var_f31 = 0.001f * frandmod(0x3E8);
         var_r31->unk2C = 80.0f + (220.0f * var_f31);

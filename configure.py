@@ -1168,14 +1168,14 @@ config.libs = [
     Rel(
         "m418Dll",  # Hide and Go BOOM!
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m418Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m418Dll/sequence.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m418Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m418Dll/sequence.c"),
         },
     ),
     Rel(
         "m419Dll",  # Tree Stomp
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m419Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m419Dll/main.c"),
         },
     ),
     Rel(
