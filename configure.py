@@ -1127,7 +1127,7 @@ config.libs = [
     Rel(
         "m412Dll",  # Mr. Blizzard's Brigade
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m412Dll/main.c"),
+            Object(Matching, "REL/m412Dll/main.c"),
         },
     ),
     Rel(
