@@ -1145,8 +1145,8 @@ config.libs = [
     Rel(
         "m415Dll",  # Stamp Out!
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m415Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m415Dll/map.c"),
+            Object(Matching, "REL/m415Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m415Dll/map.c"),
         },
     ),
     Rel(
