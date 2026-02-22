@@ -149,7 +149,7 @@ typedef struct hsf_palette {
 
 typedef struct hsf_attribute {
     char *name;
-    struct hsfdraw_struct_01 *unk04;
+    struct hsfdraw_struct_01 *animWorkP;
     u8 unk8[4];
     float unk0C;
     u8 unk10[4];
@@ -157,10 +157,8 @@ typedef struct hsf_attribute {
     u8 unk18[8];
     float unk20;
     u8 unk24[4];
-    float unk28;
-    float unk2C;
-    float unk30;
-    float unk34;
+    HsfVector2f scale;
+    HsfVector2f trans;
     u8 unk38[44];
     u32 wrap_s;
     u32 wrap_t;

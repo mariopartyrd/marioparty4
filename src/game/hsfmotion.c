@@ -1063,22 +1063,22 @@ void SetObjAttrMotion(s16 arg0, HsfTrack *arg1, float arg2)
         case 0x20:
         case 0x21:
         case 0x43:
-            if (temp_r30->unk04 == 0) {
+            if (temp_r30->animWorkP == 0) {
                 var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfdrawStruct01), (u32)Hu3DData[arg0].unk_48);
-                temp_r30->unk04 = var_r31;
-                var_r31->unk00 = 0;
+                temp_r30->animWorkP = var_r31;
+                var_r31->attr = 0;
                 var_r31->unk08 = var_r31->unk0C = var_r31->unk10 = 0.0f;
-                var_r31->unk14 = var_r31->unk18 = var_r31->unk1C = 0.0f;
-                var_r31->unk20 = var_r31->unk24 = var_r31->unk28 = 1.0f;
+                var_r31->rot.x = var_r31->rot.y = var_r31->rot.z = 0.0f;
+                var_r31->trans3D.x = var_r31->trans3D.y = var_r31->trans3D.z = 1.0f;
             }
             else {
-                var_r31 = temp_r30->unk04;
+                var_r31 = temp_r30->animWorkP;
             }
             if (arg1->channel != 0x43) {
-                var_r31->unk00 |= 4;
+                var_r31->attr |= 4;
             }
             else {
-                var_r31->unk00 |= 8;
+                var_r31->attr |= 8;
             }
             break;
     }
@@ -1093,22 +1093,22 @@ void SetObjAttrMotion(s16 arg0, HsfTrack *arg1, float arg2)
             var_r31->unk10 = arg2;
             break;
         case 28:
-            var_r31->unk14 = arg2;
+            var_r31->rot.x = arg2;
             break;
         case 29:
-            var_r31->unk18 = arg2;
+            var_r31->rot.y = arg2;
             break;
         case 30:
-            var_r31->unk1C = arg2;
+            var_r31->rot.z = arg2;
             break;
         case 31:
-            var_r31->unk20 = arg2;
+            var_r31->trans3D.x = arg2;
             break;
         case 32:
-            var_r31->unk24 = arg2;
+            var_r31->trans3D.y = arg2;
             break;
         case 33:
-            var_r31->unk28 = arg2;
+            var_r31->trans3D.z = arg2;
             break;
         case 64:
             temp_r30->unk20 = var_f30;

@@ -1058,10 +1058,10 @@ void fn_1_10484(UnkFn10484 *arg0, HsfFace *arg1, HsfDrawData *arg2, GXColor *arg
     GXSetZCompLoc(GX_FALSE);
     for (temp_r27 = 0; temp_r27 < temp_r31->numAttrs; temp_r27++) {
         temp_r29 = &temp_r30->data.attribute[temp_r31->attrs[temp_r27]];
-        if (temp_r29->unk04) {
-            temp_r24 = temp_r29->unk04;
+        if (temp_r29->animWorkP) {
+            temp_r24 = temp_r29->animWorkP;
             temp_r22 = &Hu3DTexAnimData[temp_r24->unk02];
-            if ((temp_r24->unk00 & 0x1) && !(temp_r22->unk00 & 0x4)) {
+            if ((temp_r24->attr & 0x1) && !(temp_r22->unk00 & 0x4)) {
                 if (Hu3DAnimSet(arg0->unk0, temp_r29, (s16)temp_r27)) {
                     continue;
                 }
@@ -1179,9 +1179,9 @@ void fn_1_10B60(UnkFn10484 *arg0, HsfMaterial *arg1)
         temp_r28 = temp_r31 = 1;
         temp_r29 = &temp_r27->data.attribute[arg1->attrs[0]];
         GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY);
-        if (temp_r29->unk04) {
-            temp_r26 = temp_r29->unk04;
-            if (temp_r26->unk00 & 0x2) {
+        if (temp_r29->animWorkP) {
+            temp_r26 = temp_r29->animWorkP;
+            if (temp_r26->attr & 0x2) {
                 GXLoadTexMtxImm(Hu3DTexScrData[temp_r26->unk04].unk3C, GX_TEXMTX0, GX_MTX2x4);
                 GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0);
             }
@@ -1246,9 +1246,9 @@ void fn_1_10B60(UnkFn10484 *arg0, HsfMaterial *arg1)
                 temp_r22 = 1;
             }
             else {
-                if (temp_r29->unk04) {
-                    temp_r26 = temp_r29->unk04;
-                    if (temp_r26->unk00 & 0x2) {
+                if (temp_r29->animWorkP) {
+                    temp_r26 = temp_r29->animWorkP;
+                    if (temp_r26->attr & 0x2) {
                         GXLoadTexMtxImm(Hu3DTexScrData[temp_r26->unk04].unk3C, texMtxTbl[temp_r28], GX_MTX2x4);
                         GXSetTexCoordGen(temp_r28, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[temp_r28]);
                         temp_r20 = (u16)temp_r28;

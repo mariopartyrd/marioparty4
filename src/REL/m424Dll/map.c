@@ -232,7 +232,7 @@ void fn_1_2438(f32 arg0)
                 break;
         }
         if (var_r28 < temp_r29->attributeCnt) {
-            var_r31->unk30 += arg0;
+            var_r31->trans.x += arg0;
         }
     }
 }

@@ -7,23 +7,17 @@
 typedef struct model_data ModelData;
 
 typedef struct hsfdraw_struct_01 {
-    /* 0x00 */ u16 unk00;
+    /* 0x00 */ u16 attr;
     /* 0x02 */ s16 unk02;
     /* 0x04 */ s16 unk04;
     /* 0x06 */ char unk06[2];
     /* 0x08 */ float unk08;
     /* 0x0C */ float unk0C;
     /* 0x10 */ float unk10;
-    /* 0x14 */ float unk14;
-    /* 0x18 */ float unk18;
-    /* 0x1C */ float unk1C;
-    /* 0x20 */ float unk20;
-    /* 0x24 */ float unk24;
-    /* 0x28 */ float unk28; 
-    /* 0x2C */ float unk2C;
-    /* 0x30 */ float unk30;
-    /* 0x34 */ float unk34;
-    /* 0x38 */ float unk38;
+    /* 0x14 */ Vec rot;
+    /* 0x20 */ Vec trans3D;
+    /* 0x2C */ HsfVector2f scale;
+    /* 0x34 */ HsfVector2f trans;
     /* 0x3C */ HsfBitmap *unk3C;
     /* 0x40 */ char unk40[4];
 } HsfdrawStruct01; // Size 0x44

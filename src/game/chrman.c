@@ -1213,10 +1213,10 @@ void CharModelTexAnimSet(s16 character)
         for (i = 0; i < temp_r26->hsfData->attributeCnt; i++, var_r31++) {
             if ((var_r31->bitmap->name[0] == temp_r28[0][0] && strcmp(var_r31->bitmap->name, temp_r28[0]) == 0)
                 || (var_r31->bitmap->name[0] == temp_r28[1][0] && strcmp(var_r31->bitmap->name, temp_r28[1]) == 0)) {
-                if (var_r31->unk04) {
-                    temp_r30 = var_r31->unk04;
+                if (var_r31->animWorkP) {
+                    temp_r30 = var_r31->animWorkP;
                     temp_r30->unk08 = temp_r30->unk0C = temp_r30->unk10 = 0.0f;
-                    temp_r30->unk14 = temp_r30->unk18 = temp_r30->unk1C = 0.0f;
+                    temp_r30->rot.x = temp_r30->rot.y = temp_r30->rot.z = 0.0f;
                 }
             }
         }

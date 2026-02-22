@@ -446,10 +446,10 @@ void fn_1_69C8(s16 arg0, s16 arg1, s16 arg2)
     temp_r30 = temp_r29->hsfData->attribute;
     temp_r27 = MakeObjectName(lbl_1_data_6F4[arg2 + (arg0 * 3)]);
     for (temp_r28 = 0; temp_r28 < temp_r29->hsfData->attributeCnt; temp_r28++, temp_r30++) {
-        if (temp_r30->bitmap->name[0] == temp_r27[0] && strcmp(temp_r30->bitmap->name, temp_r27) == 0 && temp_r30->unk04) {
-            temp_r31 = temp_r30->unk04;
+        if (temp_r30->bitmap->name[0] == temp_r27[0] && strcmp(temp_r30->bitmap->name, temp_r27) == 0 && temp_r30->animWorkP) {
+            temp_r31 = temp_r30->animWorkP;
             temp_r31->unk08 = temp_r31->unk0C = temp_r31->unk10 = 0;
-            temp_r31->unk14 = temp_r31->unk18 = temp_r31->unk1C = 0;
+            temp_r31->rot.x = temp_r31->rot.y = temp_r31->rot.z = 0;
         }
     }
 }

@@ -215,8 +215,8 @@ void fn_1_26A4(omObjData *object)
 
     temp_r27 = fn_1_2608(object->model[1], "sora");
     if (temp_r27 != NULL) {
-        temp_r27->unk30 += 0.0001f;
-        temp_r27->unk34 -= 0.00005f;
+        temp_r27->trans.x += 0.0001f;
+        temp_r27->trans.y -= 0.00005f;
     }
     temp_r30 = lbl_1_bss_2468;
     temp_r22 = 0;

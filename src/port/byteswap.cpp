@@ -406,7 +406,7 @@ template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &de
     }
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
-    dest.unk04 = reinterpret_cast<struct hsfdraw_struct_01 *>(static_cast<uintptr_t>(obj.unk04));
+    dest.animWorkP = reinterpret_cast<struct hsfdraw_struct_01 *>(static_cast<uintptr_t>(obj.unk04));
     std::copy(std::begin(obj.unk8), std::end(obj.unk8), dest.unk8);
     dest.unk0C = obj.unk0C;
     std::copy(std::begin(obj.unk10), std::end(obj.unk10), dest.unk10);
@@ -414,10 +414,10 @@ template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &de
     std::copy(std::begin(obj.unk18), std::end(obj.unk18), dest.unk18);
     dest.unk20 = obj.unk20;
     std::copy(std::begin(obj.unk24), std::end(obj.unk24), dest.unk24);
-    dest.unk28 = obj.unk28;
-    dest.unk2C = obj.unk2C;
-    dest.unk30 = obj.unk30;
-    dest.unk34 = obj.unk34;
+    dest.scaleX = obj.unk28;
+    dest.scaleY = obj.unk2C;
+    dest.transX = obj.unk30;
+    dest.transY = obj.unk34;
     std::copy(std::begin(obj.unk38), std::end(obj.unk38), dest.unk38);
     dest.wrap_s = obj.wrap_s;
     dest.wrap_t = obj.wrap_t;
