@@ -2229,7 +2229,11 @@ s32 fn_1_109EC(s32 arg0, s32 arg1, Vec *arg2, Vec *arg3, Vec *arg4, s32 arg5)
         }
         if ((var_f31 > 0.0f) && (arg5 != 0)) {
             var_f31 = (var_f31 - 10.0f) / 40.0f;
+#if VERSION_PAL
+            var_r31->unk_20 += var_f31 * 0.8333333f;
+#else
             var_r31->unk_20 += var_f31;
+#endif
         }
         var_f31 = -arg3->y;
         var_f31 = var_f31 * 0.02f;

@@ -1220,8 +1220,8 @@ config.libs = [
     Rel(
         "m425Dll",  # The Great Deflate
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m425Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m425Dll/thwomp.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m425Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m425Dll/thwomp.c"),
         },
     ),
     Rel(

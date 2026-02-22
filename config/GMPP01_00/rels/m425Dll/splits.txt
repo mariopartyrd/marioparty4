@@ -5,3 +5,18 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m425Dll/main.c:
+	.text       start:0x000000A0 end:0x00006A04
+	.rodata     start:0x00000000 end:0x000003B0
+	.data       start:0x00000000 end:0x00000118
+	.bss        start:0x00000000 end:0x00000670
+
+REL/m425Dll/thwomp.c:
+	.text       start:0x00006A04 end:0x0001269C
+	.rodata     start:0x000003B0 end:0x00000504
+	.data       start:0x00000118 end:0x000001EC
+	.bss        start:0x00000670 end:0x000006F4
