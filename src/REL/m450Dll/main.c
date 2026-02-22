@@ -710,6 +710,7 @@ typedef struct UnkM450Struct2 {
     s16 unk_3E;
 } UnkM450Struct2; /* size = 0x40 */
 
+struct UnkM450Struct;
 typedef void (*UnkM450ModelFunc)(ModelData *, struct UnkM450Struct *, Mtx);
 
 typedef struct UnkM450Struct {
@@ -887,7 +888,11 @@ s32 fn_1_2824(WorkPlayerOld *player, WorkPlayerOld *player2)
     player->unk_90.x = player->unk_20 / 4.0f;
     player->unk_90.z = -(float)player->unk_24 / 4.0f;
     if (player->unk_90.x != 0.0f || player->unk_90.z != 0.0f) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)player;
+#else
         return;
+#endif
     }
     VECSubtract(&player->unk_6C, &player2->unk_6C, &dir);
     dist = VECMagXZ(&dir);

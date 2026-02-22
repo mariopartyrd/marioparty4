@@ -1,4 +1,7 @@
 #include "REL/mgmodedll.h"
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 #include "game/gamework.h"
 
 #include "game/audio.h"

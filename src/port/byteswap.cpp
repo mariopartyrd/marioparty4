@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <dolphin.h>
 #include <ext_math.h>
 #include <unordered_set>

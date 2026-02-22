@@ -24,6 +24,10 @@
 #include "dolphin.h"
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include <stdlib.h>
+#endif
+
 typedef struct {
     /* 0x00 */ char unk00[0x50];
     /* 0x50 */ u32 unk50; // pointer?

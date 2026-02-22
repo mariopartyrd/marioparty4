@@ -148,6 +148,7 @@ typedef struct UnkM426Struct9 {
     /* 0x14 */ s32 unk_14;
 } UnkM426Struct9; /* size = unknown */
 
+struct UnkModelDataUnk120Struct;
 typedef void (*UnkModelDataUnk120Hook)(struct model_data *, struct UnkModelDataUnk120Struct *, Mtx);
 
 typedef struct UnkModelDataUnk120Struct {
@@ -2331,7 +2332,11 @@ s32 fn_1_6248(Vec *arg0)
     }
     var_r31 = lbl_1_bss_70->data;
     if (!var_r31) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)arg0;
+#else
         return;
+#endif
     }
     for (var_r30 = 0; var_r30 < 4; var_r30++, var_r31++) {
         if (!var_r31->unk_0C) {
@@ -2504,11 +2509,19 @@ s32 fn_1_6888(Vec *arg0)
     s32 var_r30;
 
     if (!lbl_1_bss_6C) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)arg0;
+#else
         return;
+#endif
     }
     var_r31 = lbl_1_bss_6C->data;
     if (!var_r31) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)arg0;
+#else
         return;
+#endif
     }
     for (var_r30 = 0; var_r30 < 16; var_r30++, var_r31++) {
         if (!var_r31->unk_04) {

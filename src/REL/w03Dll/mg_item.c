@@ -7,6 +7,13 @@
 #include "game/board/model.h"
 #include "game/board/player.h"
 #include "game/board/space.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#include "game/board/window.h"
+#endif
 #include "game/data.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"

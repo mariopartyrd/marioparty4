@@ -10,6 +10,15 @@
 #include "game/object.h"
 #include "game/pad.h"
 
+#include "game/board/window.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#include "game/objsub.h"
+#endif
+
 #include "ext_math.h"
 #include <string.h>
 
@@ -656,7 +665,7 @@ void fn_1_9474(s32 arg0)
 {
     sprintf(lbl_1_bss_150, "%d", lbl_1_bss_14C);
     BoardWinCreate(2, MAKE_MESSID(22, 23), 2);
-    BoardWinInsertMesSet((u32)lbl_1_bss_150, 4);
+    BOARD_WIN_MES_SET_PTR((uintptr_t)lbl_1_bss_150, 4);
     BoardWinWait();
     BoardWinKill();
     BoardPlayerMotBlendSet(arg0, 0, 0xF);

@@ -1078,11 +1078,19 @@ s32 fn_1_EFA4(s16 arg0, s16 arg1, s32 arg2)
     unkStruct8 *temp_r31;
 
     if (arg0 == 0)
+#ifdef NON_MATCHING
+        return arg0;
+#else
         return;
+#endif
 
     temp_r31 = &lbl_1_bss_F0.unk10[arg0];
     if (temp_r31->unk2 <= arg1)
+#ifdef NON_MATCHING
+        return arg0;
+#else
         return;
+#endif
 
     var_r30 = &temp_r31->unk3C[arg1];
     if ((var_r30->unk34 & arg2) != 0) {

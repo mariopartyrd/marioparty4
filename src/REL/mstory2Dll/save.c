@@ -1,4 +1,4 @@
-#include "REL/mstoryDll.h"
+#include "REL/mstory2Dll.h"
 #include "game/data.h"
 #include "game/esprite.h"
 #include "game/flag.h"

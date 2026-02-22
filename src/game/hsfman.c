@@ -810,11 +810,11 @@ HsfObject* Hu3DModelObjPtrGet(s16 arg0, char *arg1) {
 
     temp_r31 = Hu3DData[arg0].hsfData;
     var_r29 = temp_r31->object;
-    strcpy(&name, MakeObjectName(arg1));
+    strcpy(name, MakeObjectName(arg1));
     
     for (var_r30 = 0; var_r30 < temp_r31->objectCnt; var_r29++, var_r30++) {
         var_r28 = var_r29;
-        if (strcmp(&name, var_r28->name) == 0) {
+        if (strcmp(name, var_r28->name) == 0) {
             return var_r29;
         }
     }
@@ -982,11 +982,11 @@ void Hu3DModelShadowMapObjSet(s16 arg0, char *arg1) {
 
     temp_r30 = Hu3DData[arg0].hsfData;
     var_r28 = temp_r30->object;
-    strcpy(&name, MakeObjectName(arg1));
+    strcpy(name, MakeObjectName(arg1));
     
     for (i = 0; i < temp_r30->objectCnt; i++, var_r28++) {
         copy = var_r28;
-        if (copy->constData != 0x0 && strcmp(&name, copy->name) == 0) {
+        if (copy->constData != 0x0 && strcmp(name, copy->name) == 0) {
             temp_r27 = copy->constData;
             temp_r27->flags |= 8;
             break;
@@ -1014,12 +1014,12 @@ void Hu3DModelHookSet(s16 arg0, char *arg1, s16 arg2) {
 
     temp_r30 = Hu3DData[arg0].hsfData;
     var_r27 = temp_r30->object;
-    strcpy(&name, MakeObjectName(arg1));
+    strcpy(name, MakeObjectName(arg1));
     
     for (i = 0; i < temp_r30->objectCnt; i++, var_r27++) {
         copy = var_r27;
         if (copy->constData != 0) {
-            if (strcmp(&name, copy->name) == 0) {
+            if (strcmp(name, copy->name) == 0) {
                 constData = copy->constData;
                 constData->hook = arg2;
                 data = &Hu3DData[arg2];
@@ -1070,12 +1070,12 @@ void Hu3DModelHookObjReset(s16 arg0, char *arg1) {
 
     temp_r30 = Hu3DData[arg0].hsfData;
     var_r26 = temp_r30->object;
-    strcpy(&name, MakeObjectName(arg1));
+    strcpy(name, MakeObjectName(arg1));
     
     for (i = 0; i < temp_r30->objectCnt; i++, var_r26++) {
         copy = var_r26;
         if (copy->constData != 0) {
-            if (strcmp(&name, copy->name) == 0) {
+            if (strcmp(name, copy->name) == 0) {
                 temp_r29 = copy->constData;
                 temp_r0 = temp_r29->hook;
                 temp_r28 = &Hu3DData[temp_r0];
@@ -2154,12 +2154,12 @@ void Hu3DMipMapSet(char* arg0, s16 arg1, s32 arg2, f32 arg8) {
     temp_r27 = temp_r25->hsfData;
     var_r26 = temp_r27->attribute;
     for (i = 0; i < temp_r27->attributeCnt; i++, var_r26++) {
-        if (strcmp(arg2, var_r26->bitmap->name) == 0) {
+        if (strcmp((char *)arg2, var_r26->bitmap->name) == 0) {
             break;
         }
     }
     if (i == temp_r27->attributeCnt) {
-        OSReport("Error: Not Found %s for MipMapSet\n", arg2);
+        OSReport("Error: Not Found %s for MipMapSet\n", (char *)arg2);
         return;
     }
     temp_r31 = var_r26->bitmap;

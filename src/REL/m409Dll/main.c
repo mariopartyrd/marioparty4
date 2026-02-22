@@ -799,7 +799,11 @@ s32 fn_1_3AD8(s32 arg0, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 ar
 
     var_r30 = lbl_1_bss_24.unk4;
     if (!var_r30)
+#ifdef NON_MATCHING
+        return arg0;
+#else
         return;
+#endif
 
     for (var_r29 = 0; var_r29 < 2; var_r29++) {
         temp_r31 = &Hu3DData[var_r30->unk6];

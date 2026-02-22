@@ -11,6 +11,11 @@
 #include "game/board/boo_house.h"
 #include "game/board/mg_setup.h"
 
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#include "game/board/player.h"
+#endif
+
 void TutorialStartExec(void) {
     HostWinExec(0x2E0001);
 }

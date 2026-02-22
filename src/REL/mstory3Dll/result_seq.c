@@ -6,6 +6,11 @@
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
+
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
@@ -18,6 +23,13 @@
 #include "msm/msmse.h"
 
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+extern s32 rand8(void);
+
+void fn_1_1DED8(s32 arg0, Vec* arg1, Vec* arg2, s16 arg3);
+void fn_1_1E0F4(void);
+#endif
 
 typedef struct {
     /* 0x00 */ s32 unk00;

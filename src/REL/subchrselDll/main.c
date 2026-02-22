@@ -5,6 +5,11 @@
 #include "game/pad.h"
 #include "game/wipe.h"
 
+#ifndef __MWERKS__
+#include "game/hsfman.h"
+#include "game/minigame_seq.h"
+#endif
+
 #include "math.h"
 
 static void SubchrMain(void);

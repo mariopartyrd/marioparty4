@@ -601,7 +601,11 @@ s32 fn_1_2824(WorkPlayerOld *player, WorkPlayerOld *player2)
     player->unk90.x = player->unk20 / 4.0f;
     player->unk90.z = -(float)player->unk24 / 4.0f;
     if (player->unk90.x != 0.0f || player->unk90.z != 0.0f) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)player;
+#else
         return;
+#endif
     }
     VECSubtract(&player->unk6C, &player2->unk6C, &dir);
     dist = VECMagXZ(&dir);

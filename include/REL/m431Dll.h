@@ -78,6 +78,9 @@ typedef struct bss_61C_work {
     s8 unkB5;
 } Bss61CWork;
 
+struct unk_72B4_data_18;
+struct work_72B4;
+
 typedef void (*unkHook72B4Data18)(struct unk_72B4_data_18 *);
 typedef void (*unkHook72B4)(ModelData *, struct work_72B4 *, Mtx);
 

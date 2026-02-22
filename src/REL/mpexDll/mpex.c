@@ -17,6 +17,7 @@
 #include "string.h"
 
 #ifndef __MWERKS__
+#include "game/audio.h"
 #include "game/hsfex.h"
 #include "stdio.h"
 #endif

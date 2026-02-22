@@ -164,7 +164,11 @@ s32 fn_1_78C(void)
     temp_r3 = BoardSpaceFlagGet(0, var_r29);
     if ((temp_r3 & 2) != 0) {
         fn_1_1E44();
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     if ((temp_r3 & 0x40) != 0) {
         var_r28 = (temp_r3 & 0x38) >> 3;

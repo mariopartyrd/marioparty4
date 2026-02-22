@@ -15,6 +15,8 @@
 
 #ifndef __MWERKS__
 #include <game/audio.h>
+#include "game/frand.h"
+#include "game/sprite.h"
 #endif
 
 typedef struct {

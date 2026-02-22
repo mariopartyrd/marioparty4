@@ -17,6 +17,9 @@
 #include "game/board/player.h"
 #include "game/board/space.h"
 #include "game/board/ui.h"
+#ifndef __MWERKS__
+#include "game/board/view.h"
+#endif
 #include "game/board/window.h"
 
 #include "dolphin.h"

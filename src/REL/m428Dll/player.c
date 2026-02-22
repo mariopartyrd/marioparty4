@@ -170,6 +170,7 @@ typedef struct M428DllPlayerUnkStruct2 {
     s32 unk_48;
 } M428DllPlayerUnkStruct2; /* size = 0x4C */
 
+struct M428DllPlayerUnk120Struct2;
 typedef void (*M428DllPlayerHook)(ModelData *model, struct M428DllPlayerUnk120Struct2 *arg1, Mtx matrix);
 
 typedef struct M428DllPlayerUnk120Struct2 {

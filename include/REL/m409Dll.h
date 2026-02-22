@@ -10,6 +10,8 @@
 extern s32 rand8(void);
 
 // types
+struct _unkStruct6;
+struct _unkStruct8;
 typedef void (*m409Func6)(ModelData *, struct _unkStruct6 *, Mtx);
 typedef void (*m409PlayerFunc8)(struct _unkStruct8 *);
 

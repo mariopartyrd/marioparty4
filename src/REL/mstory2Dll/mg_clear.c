@@ -16,6 +16,13 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/hsfdraw.h"
+#include "game/msm.h"
+#include "game/saveload.h"
+#endif
+
 
 typedef struct struct_data850 {
     s32 unk0;

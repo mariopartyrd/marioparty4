@@ -7,6 +7,10 @@
 
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#endif
+
 
 Process *lbl_1_bss_378;
 Process *lbl_1_bss_374;

@@ -14,6 +14,7 @@
 
 #ifndef __MWERKS__
 #include "game/frand.h"
+#include <string.h>
 #endif
 
 typedef struct data_224_struct {

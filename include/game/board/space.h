@@ -56,6 +56,7 @@ s32 BoardSpaceBlockExec(s32 player, s32 space);
 void BoardSpaceBlockPosSet(void);
 void BoardSpaceInit(s32 data_num);
 void BoardSpaceDestroy(void);
+s32 BoardSpaceRead(s32 layer, s32 data_num);
 
 extern s16 boardSpaceStarTbl[8];
 

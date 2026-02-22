@@ -123,6 +123,11 @@ the project for the port:
 cmake -B build/port -G "Visual Studio 17 2022" -A Win32
 ```
 
+Or, for Linux:
+```bash
+cmake -B build/port -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/i686-linux-gcc.cmake
+```
+
 If you haven't already, extract the assets from the ISO
 
 ```bash

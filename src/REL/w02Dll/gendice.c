@@ -1,4 +1,9 @@
 #include "REL/w02Dll.h"
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/hsfex.h"
+#include "game/board/pause.h"
+#endif
 #include "ext_math.h"
 
 typedef struct {

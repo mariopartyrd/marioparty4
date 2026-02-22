@@ -3461,7 +3461,11 @@ s32 fn_1_B304(StructBssA8Data **arg0)
     StructBssA8Data *var_r27;
 
     if (lbl_1_bss_A8 == NULL) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)arg0;
+#else
         return;
+#endif
     }
     var_r30 = lbl_1_bss_A8->data;
     var_r28 = var_r30;

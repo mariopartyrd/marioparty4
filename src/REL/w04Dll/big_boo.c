@@ -27,6 +27,11 @@
 #include "dolphin.h"
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#include <stdlib.h>
+#endif
+
 // Remove this and include frand.h header once we decide what to do with frandmod.
 #define frand8() (((s32)frand() & 0xFF))
 

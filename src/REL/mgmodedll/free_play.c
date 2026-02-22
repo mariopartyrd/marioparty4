@@ -10,6 +10,10 @@
 #include "ext_math.h"
 #include <string.h>
 
+#ifndef __MWERKS__
+void fn_1_2783C(s16 evtno);
+#endif
+
 s16 lbl_1_bss_352[2][7];
 s16 lbl_1_bss_34A[4];
 s16 lbl_1_bss_348;

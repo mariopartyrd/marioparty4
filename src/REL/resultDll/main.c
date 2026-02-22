@@ -5,6 +5,9 @@
 #include "game/data.h"
 #include "game/frand.h"
 #include "game/gamework.h"
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
 #include "game/hsfman.h"
 #include "game/object.h"
 #include "game/objsub.h"

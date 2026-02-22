@@ -7,6 +7,13 @@
 #include "game/board/player.h"
 #include "game/board/space.h"
 #include "game/board/ui.h"
+
+#include "game/board/window.h"
+
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#endif
 #include "game/data.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
@@ -14,6 +21,10 @@
 #include "game/process.h"
 
 #include "ext_math.h"
+
+// forward declarations from main.c
+void fn_1_B5C(s32 arg0);
+void fn_1_CF4(void);
 
 void fn_1_1358(void);
 void fn_1_152C(void);
@@ -93,7 +104,7 @@ void fn_1_1358(void)
         if (lbl_1_bss_2C) {
             sprintf(lbl_1_bss_44, "%d", lbl_1_bss_2C);
             BoardWinCreate(0, MAKE_MESSID(22, 6), -1);
-            BoardWinInsertMesSet((s32)lbl_1_bss_44, 0);
+            BOARD_WIN_MES_SET_PTR((uintptr_t)lbl_1_bss_44, 0);
             BoardWinWait();
             BoardWinKill();
             lbl_1_bss_0->unk2 = 1 << cur_player_index;
@@ -589,7 +600,7 @@ s32 fn_1_2930(s32 arg0)
 
     sprintf(lbl_1_bss_38, "%d", lbl_1_bss_0->unk0);
     BoardWinCreate(0, MAKE_MESSID(22, 7), -1);
-    BoardWinInsertMesSet((s32)lbl_1_bss_38, 1);
+    BOARD_WIN_MES_SET_PTR((uintptr_t)lbl_1_bss_38, 1);
     BoardWinWait();
     BoardWinKill();
     fn_1_CF4();

@@ -1,6 +1,7 @@
 #include "game/board/roll.h"
 #include "game/audio.h"
 #include "game/board/audio.h"
+#include "game/board/com.h"
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/pause.h"

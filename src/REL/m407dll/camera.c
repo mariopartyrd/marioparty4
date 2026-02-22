@@ -3,6 +3,10 @@
 #include "game/object.h"
 #include "game/process.h"
 
+#ifndef __MWERKS__
+#include <stdlib.h>
+#endif
+
 
 typedef struct unkDominationData2 {
     /* 0x00 */ s32 unk_00;

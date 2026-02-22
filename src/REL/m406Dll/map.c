@@ -116,6 +116,7 @@ typedef struct UnkM406Struct9 {
     /* 0x06 */ char unk06[2];
 } UnkM406Struct9; /* size = 0x08 */
 
+struct UnkM406Unk120Struct2;
 typedef void (*UnkM406Unk120Struct2Hook)(struct model_data *, struct UnkM406Unk120Struct2 *, Mtx);
 
 typedef struct UnkM406Unk120Struct2 {

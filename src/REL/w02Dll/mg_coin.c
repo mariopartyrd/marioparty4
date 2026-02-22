@@ -2,11 +2,17 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/frand.h"
+#ifndef __MWERKS__
+#include "game/msm.h"
+#endif
 #include "game/objsub.h"
 #include "game/pad.h"
 
 #include "ext_math.h"
 
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#endif
 #include "game/minigame_seq.h"
 
 s16 lbl_1_bss_C2[3];

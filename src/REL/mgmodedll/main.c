@@ -4,6 +4,8 @@
 
 #include "ext_math.h"
 
+extern s32 rand8(void);
+
 typedef struct {
     /* 0x00 */ omObjData *unk00;
     /* 0x04 */ void (*unk04)(omObjData *, ...);

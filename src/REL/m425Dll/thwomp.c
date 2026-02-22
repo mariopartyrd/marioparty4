@@ -94,6 +94,7 @@ typedef struct M425DllUnkStruct5 {
     s32 unk_40;
 } M425DllUnkStruct5; /* size = 0x44 */
 
+struct M425DllUnkStruct6;
 typedef void (*UnkHook)(ModelData *model, struct M425DllUnkStruct6 *particle, Mtx matrix);
 
 typedef struct M425DllUnkStruct6 {
@@ -2197,7 +2198,11 @@ s32 fn_1_109EC(s32 arg0, s32 arg1, Vec *arg2, Vec *arg3, Vec *arg4, s32 arg5)
     ModelData *var_r26;
 
     if (!lbl_1_bss_6EC) {
+#ifdef NON_MATCHING
+        return arg0;
+#else
         return;
+#endif
     }
     var_r26 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
     var_r31 = var_r26->unk_120;
@@ -2261,7 +2266,11 @@ float fn_1_10CF4(s32 arg0)
     M425DllUnkStruct4 *var_r30;
 
     if (!lbl_1_bss_6EC) {
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     var_r31 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
     var_r30 = var_r31->unk_120;

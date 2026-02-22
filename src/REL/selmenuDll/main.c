@@ -1,6 +1,9 @@
 #include "game/board/main.h"
 #include "game/armem.h"
 #include "game/audio.h"
+#ifndef __MWERKS__
+#include "game/chrman.h"
+#endif
 #include "game/data.h"
 #include "game/flag.h"
 #include "game/frand.h"
@@ -508,7 +511,11 @@ static s16 SMChangeChar(s16 player, s16 offset)
         charSelProhibitF[smPlayerCfg[i].character] = 1;
     }
     if (!offset) {
+#ifdef NON_MATCHING
+        return player;
+#else
         return;
+#endif
     }
     character = smPlayerCfg[player].character;
     do {
@@ -978,7 +985,7 @@ static void SMSound3DUpdate(omObjData *object)
                 if (emiCompDataNo < 0) {
                     emiCompDataNo = 0;
                 }
-                data = msmSeGetIndexPtr(emiCompDataNo);
+                data = (s8 *)msmSeGetIndexPtr(emiCompDataNo);
                 emiCompVal = data[12];
                 break;
 
@@ -990,7 +997,7 @@ static void SMSound3DUpdate(omObjData *object)
                 if (emiCompVal < -127) {
                     emiCompVal = -127;
                 }
-                data = msmSeGetIndexPtr(emiCompDataNo);
+                data = (s8 *)msmSeGetIndexPtr(emiCompDataNo);
                 data[12] = emiCompVal;
                 break;
 

@@ -1,5 +1,12 @@
 #include "game/board/model.h"
 #include "game/data.h"
+#ifndef __MWERKS__
+#include "game/board/lottery.h"
+#include "game/board/main.h"
+#include "game/board/shop.h"
+#include "game/board/space.h"
+#include "game/board/star.h"
+#endif
 #include "game/gamework_data.h"
 #include "math.h"
 
@@ -31,11 +38,19 @@ s32 unkMotTbl[] = { DATA_MAKE_NUM(DATADIR_BGUEST, 42), -1 };
 
 void fn_1_44C(void);
 void fn_1_490(void);
+#ifdef NON_MATCHING
+s32 fn_1_494(void);
+#else
 void fn_1_494(void);
+#endif
 s32 fn_1_498(void);
 void fn_1_4A0(void);
 void fn_1_4A4(void);
+#ifdef NON_MATCHING
+s32 fn_1_4A8(void);
+#else
 void fn_1_4A8(void);
+#endif
 s32 fn_1_4AC(s16 arg0, float arg8, float arg9);
 
 void BoardCreate(void)
@@ -99,7 +114,11 @@ void fn_1_44C(void)
 
 void fn_1_490(void) { }
 
+#ifdef NON_MATCHING
+s32 fn_1_494(void) { return 0; }
+#else
 void fn_1_494(void) { }
+#endif
 
 s32 fn_1_498(void) { return 0; }
 
@@ -107,7 +126,11 @@ void fn_1_4A0(void) { }
 
 void fn_1_4A4(void) { }
 
+#ifdef NON_MATCHING
+s32 fn_1_4A8(void) { return 0; }
+#else
 void fn_1_4A8(void) { }
+#endif
 
 s32 fn_1_4AC(s16 arg0, float arg8, float arg9)
 {

@@ -1,6 +1,8 @@
 #include "REL/mstory2Dll.h"
 #include "game/armem.h"
 #include "game/audio.h"
+
+extern s32 rand8(void);
 #include "game/board/main.h"
 #include "game/chrman.h"
 #include "game/data.h"

@@ -24,6 +24,8 @@
 #include "dolphin.h"
 #include "ext_math.h"
 
+extern s32 rand8(void);
+
 typedef struct {
     /* 0x00 */ Vec pos;
     /* 0x0C */ float len;
@@ -661,7 +663,7 @@ static void SpaceAmidaCoinWin(void)
     SpaceAmidaGameWork *work;
 
     BoardAudSeqFadeOut(1, 100);
-    sprintf(&mess, "%d", spaceAmidaCoinNum);
+    sprintf(mess, "%d", spaceAmidaCoinNum);
     BoardWinCreate(2, MAKE_MESSID(11, 6), 0);
     BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(mess), 0);
     BoardWinWait();

@@ -5,6 +5,10 @@
 #include "game/pad.h"
 #include "game/process.h"
 #include "game/wipe.h"
+
+#ifndef __MWERKS__
+#include "game/window.h"
+#endif
 #include "math.h"
 
 #include "REL/present.h"

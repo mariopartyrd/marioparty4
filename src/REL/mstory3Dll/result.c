@@ -2,6 +2,12 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+
+#ifndef __MWERKS__
+#include "game/hsfdraw.h"
+#include "game/hsfex.h"
+#endif
+
 #include "game/esprite.h"
 #include "game/flag.h"
 #include "game/gamework.h"
@@ -14,6 +20,8 @@
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
+
+extern s32 rand8(void);
 
 typedef struct {
     /* 0x00 */ s32 unk00;

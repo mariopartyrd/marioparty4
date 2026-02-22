@@ -10,6 +10,7 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 
+#include <string.h>
 
 #include "REL/m410Dll.h"
 

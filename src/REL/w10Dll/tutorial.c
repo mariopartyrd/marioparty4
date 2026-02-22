@@ -5,6 +5,13 @@
 #include "game/wipe.h"
 #include "game/board/ui.h"
 
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#include "game/board/main.h"
+#include "game/board/roll.h"
+#include "game/board/tutorial.h"
+#endif
+
 static s16 sprList[11];
 static s16 sprCurr;
 
@@ -102,7 +109,11 @@ static TutorialScene sceneTbl[42] = {
 int TutorialHookExec(s16 arg0, s32 arg1) {
     if (arg0 == 30) {
         CloseTutorial();
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
     if (arg0 != 29) {
         OSReport("Tutorial Hook P0:%d P1:%d P2:%d P3:%d  SCEN:%d  CUE:%d  PRM:%d DICE:%d  MSG:%d\n",

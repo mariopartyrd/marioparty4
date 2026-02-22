@@ -627,7 +627,7 @@ void fn_1_4220(omObjData *object)
     object->func = fn_1_469C;
 }
 
-fn_1_4698(void) { }
+void fn_1_4698(void) { }
 
 void fn_1_469C(omObjData *object)
 {

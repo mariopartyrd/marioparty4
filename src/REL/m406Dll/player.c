@@ -1900,13 +1900,21 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     var_r20 = omGetGroupMemberListEx(lbl_1_bss_1C8, 2);
     var_r21 = arg0->z / -10000.0f;
     if (var_r21 >= 6) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)var_r20;
+#else
         return;
+#endif
     }
     var_r19 = &Hu3DData[(*var_r20)->model[var_r21]];
     var_f29 = 100000.0f;
     var_r27 = var_r19->hsfData->root;
     if (var_r27->type != 2) {
+#ifdef NON_MATCHING
+        return (s32)(uintptr_t)var_r20;
+#else
         return;
+#endif
     }
     var_r24 = var_r27->data.face;
     var_r26 = var_r27->data.vertex;

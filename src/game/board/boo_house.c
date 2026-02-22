@@ -103,7 +103,7 @@ static s8 currPlayer;
 static s8 stealTarget;
 static s8 comStarStealTarget;
 static s32 comCoinStealTarget;
-static s8 stealAmountStr[8];
+static char stealAmountStr[8];
 static Process *houseProc;
 
 // sdata
@@ -692,7 +692,7 @@ void ApplyCoinSteal(s16 arg0, s16 arg1)
     else {
         var_r31 = MAKE_MESSID(7, 5);
     }
-    sprintf(&stealAmountStr, "%d", arg0);
+    sprintf(stealAmountStr, "%d", arg0);
     HuAudFXPlay(0x4B);
     BoardWinCreate(2, var_r31, 3);
     BoardWinInsertMesSet((u32)&stealAmountStr, 0);

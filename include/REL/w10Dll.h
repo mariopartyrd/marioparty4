@@ -34,6 +34,8 @@ void fn_1_1E3C(s16, s16, s16);
 void HostWinExec(s32);
 void fn_1_6D8(void);
 void fn_1_E0(void);
+void TutorialSpaceShow(s16, s16, s16);
+void TutorialSpaceHide(void);
 void TutorialSprCreate(void);
 void TutorialSprKill(void);
 void HostCreate(void);

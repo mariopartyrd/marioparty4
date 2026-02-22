@@ -77,6 +77,8 @@ void GXTexCoord1s8(s8 s, s8 t);
 void GXTexCoord1x16(u16 index);
 void GXTexCoord1x8(u8 index);
 
+void GXUnknownu16(u16 x);
+
 extern void GXEnd(void);
 
 #else

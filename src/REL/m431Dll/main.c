@@ -16,6 +16,7 @@
 
 #include "REL/m431Dll.h"
 #include "version.h"
+#include <string.h>
 
 s32 rand8(void);
 

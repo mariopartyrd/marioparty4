@@ -1,6 +1,11 @@
 #include "REL/mstory2Dll.h"
 #include "game/armem.h"
 #include "game/board/main.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
+
 #include "game/chrman.h"
 #include "game/data.h"
 #include "game/gamework.h"

@@ -22,6 +22,7 @@
 #include <aurora/aurora.h>
 #include <aurora/event.h>
 #include <aurora/main.h>
+#include <stdlib.h>
 
 const char *__asan_default_options()
 {

@@ -2353,7 +2353,11 @@ void fn_2_91AC(omObjData *object, Vec *pos)
     temp_r30->unk34.z = (1.0f / 255.0f) * (360.0f * frandu8());
     Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
     omSetTra(object, pos->x, pos->y, pos->z);
+#ifdef NON_MATCHING
+    object->work[2] = HuAudFXEmiterPlay(1284, pos);
+#else
     object->work[2] = HuAudFXEmiterPlay(1284, &pos);
+#endif
     object->func = fn_2_9298;
 }
 

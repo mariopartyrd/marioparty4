@@ -16,6 +16,7 @@
 #include "ext_math.h"
 
 #include <string.h>
+#include <stdlib.h>
 #include "stdarg.h"
 #include "version.h"
 

@@ -19,9 +19,9 @@ typedef struct ar_que_req {
     /* 0x24 */ void *dst;
 } ARQueReq; // Size 0x28
 
-static void ArqCallBack(u32 pointerToARQRequest);
+static void ArqCallBack(uintptr_t pointerToARQRequest);
 static void ArqCallBackAM(uintptr_t pointerToARQRequest);
-static void ArqCallBackAMFileRead(u32 pointerToARQRequest);
+static void ArqCallBackAMFileRead(uintptr_t pointerToARQRequest);
 
 static s32 ATTRIBUTE_ALIGN(32) preLoadBuf[16];
 static ARQueReq ARQueBuf[16];
@@ -225,7 +225,7 @@ u32 HuAR_DVDtoARAM(u32 dir) {
     return amemptr;
 }
 
-static void ArqCallBack(u32 pointerToARQRequest) {
+static void ArqCallBack(uintptr_t pointerToARQRequest) {
     arqCnt--;
     (void)pointerToARQRequest; // required to match (return?)
 }
@@ -266,15 +266,21 @@ void *HuAR_ARAMtoMRAMNum(u32 src, s32 num) {
     ARMemBlock *block;
     s32 size;
     void *dst;
+#ifdef NON_MATCHING
+    s32 ret;
+#endif
 
     block = HuARInfoGet(src);
-    if (HuDataReadChk(block->dir << 16) >= 0) {
 #ifdef NON_MATCHING
-        return 0;
-#else
-        return;
-#endif
+    ret = HuDataReadChk(block->dir << 16);
+    if (ret >= 0) {
+        return (void *)(uintptr_t)ret;
     }
+#else
+    if (HuDataReadChk(block->dir << 16) >= 0) {
+        return;
+    }
+#endif
     size = HuARSizeGet(src);
     dst = HuMemDirectMallocNum(HEAP_DVD, size, num);
     if (!dst) {
@@ -405,7 +411,7 @@ void *HuAR_ARAMtoMRAMFileRead(u32 dir, u32 num, HeapID heap) {
 
 #undef DIR_DATA
 
-static void ArqCallBackAMFileRead(u32 pointerToARQRequest) {
+static void ArqCallBackAMFileRead(uintptr_t pointerToARQRequest) {
     arqCnt--;
     (void)pointerToARQRequest; // required to match (return?)
 }

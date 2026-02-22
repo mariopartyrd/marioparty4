@@ -8,6 +8,10 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
+#ifndef __MWERKS__
+#include "game/objsub.h"
+#endif
+
 #include "ext_math.h"
 
 u8 lbl_1_bss_48[0x10]; // unused

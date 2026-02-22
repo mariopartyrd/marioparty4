@@ -32,6 +32,10 @@
 #include "game/frand.h"
 #include <string.h>
 
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
+
 typedef struct {
     struct {
         u8 killF : 1;
@@ -1746,7 +1750,7 @@ static void CupObjInit(CupObjWork *work, omObjData *obj)
         }
     }
     Hu3DModelObjMtxGet(BoardModelIDGet(work->dishMdlId), cupHookTbl[cupHookNo], objMtx);
-    Hu3DMtxRotGet(&objMtx, &objRot);
+    Hu3DMtxRotGet(objMtx, &objRot);
     objRot.y = 180.0f;
     VECSubtract(&objPosPrev, &playerPos, &objPos);
     obj->trans.x = objPos.x / 25.0f;

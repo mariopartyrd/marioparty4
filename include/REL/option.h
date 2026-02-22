@@ -75,6 +75,7 @@ void OptionWinInsertMesSet(OptionWindow *work, s32 mess, s16 index);
 void OptionWinPosSet(OptionWindow *work, float x, float y);
 void OptionWinDispOn(OptionWindow *work);
 void OptionWinDispOff(OptionWindow *work);
+void OptionWinChoiceSet(OptionWindow *work, s32 choice);
 void fn_1_A860(OptionWindow *work);
 void fn_1_A880(OptionWindow *work, s32 choice);
 

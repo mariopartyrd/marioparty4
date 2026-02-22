@@ -273,6 +273,7 @@ typedef struct M427DllMapSubstruct6 {
     /* 0x63 */ char pad_63[1];
 } M427DllMapSubstruct6; // sizeof 0x64
 
+struct M427DllMapStruct7;
 typedef void (*M427DllHook)(ModelData *model, struct M427DllMapStruct7 *particle, Mtx matrix);
 
 typedef struct M427DllMapStruct7 {

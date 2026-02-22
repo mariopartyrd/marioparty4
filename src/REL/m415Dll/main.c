@@ -7,6 +7,7 @@
 #include "game/esprite.h"
 #include "game/frand.h"
 #include "game/hsfdraw.h"
+#include "game/hsfload.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"

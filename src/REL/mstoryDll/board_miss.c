@@ -14,6 +14,8 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
+extern s32 rand8(void);
+
 typedef struct {
     /* 0x000 */ s32 unk00;
     /* 0x004 */ s32 unk04;

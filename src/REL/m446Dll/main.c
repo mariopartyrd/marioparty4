@@ -45,8 +45,7 @@ void fn_1_13C(omObjData *arg0)
         case 0:
             HuWinInit(1);
             Hu3DLighInit();
-            frand();
-            fn_1_38E0();
+            fn_1_38E0(frand());
             fn_1_6778();
             fn_1_7BF0();
             fn_1_2064();

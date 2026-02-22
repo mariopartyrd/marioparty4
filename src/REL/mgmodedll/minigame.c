@@ -134,7 +134,11 @@ s16 fn_1_271B4(s16 mgNo, s16 x, s16 y)
     s32 mgpic;
     if (mgNo == -1) {
         if (lbl_1_data_A00 == -1) {
+#ifdef NON_MATCHING
+            return mgNo;
+#else
             return;
+#endif
         }
         for (time = 0; time <= 10; time++) {
             HuSprGrpTPLvlSet(lbl_1_data_A00, 1.0 - (time / 10.0));
@@ -142,7 +146,11 @@ s16 fn_1_271B4(s16 mgNo, s16 x, s16 y)
         }
         HuSprGrpKill(lbl_1_data_A00);
         lbl_1_data_A00 = -1;
+#ifdef NON_MATCHING
+        return 0;
+#else
         return;
+#endif
     }
 
     if (lbl_1_data_A00 != -1) {
