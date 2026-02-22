@@ -18,6 +18,7 @@
 #include "string.h"
 
 #include "game/frand.h"
+#include "version.h"
 
 extern s32 rand8(void);
 
@@ -430,7 +431,7 @@ void fn_1_4C8(omObjData *object)
         case 0x3EF:
             if (lbl_1_bss_B0 == (var_r31->unk_00 == 0 ? 0x3ED : 0x3EF)) {
                 if (lbl_1_bss_B4 == 0) {
-                    lbl_1_bss_0 = 0x12C;
+                    lbl_1_bss_0 = REFRESH_RATE * 5;
                     lbl_1_data_12E = MGSeqCreate(1, 0xA, -1, -1);
                     HuWinMesMaxSizeGet(1, sp1A8, 0x280019);
                     lbl_1_bss_C = HuWinCreate(-10000.0f, 400.0f, sp1A8[0], sp1A8[1], 1);
@@ -439,7 +440,7 @@ void fn_1_4C8(omObjData *object)
                     HuWinMesSet(lbl_1_bss_C, 0x280019);
                 }
                 if (lbl_1_data_12E != -1) {
-                    MGSeqParamSet(lbl_1_data_12E, 1, (lbl_1_bss_0 + 0x3A) / 60);
+                    MGSeqParamSet(lbl_1_data_12E, 1, (lbl_1_bss_0 + REFRESH_RATE - 2) / REFRESH_RATE);
                 }
                 lbl_1_bss_0--;
                 if ((var_r22 != 0) || (lbl_1_bss_0 == 0)) {
@@ -787,14 +788,23 @@ void fn_1_350C(omObjData *var_r27)
             if (lbl_1_bss_B4 == 0) {
                 lbl_1_bss_8C = 0;
             }
+#if VERSION_PAL
+            if (lbl_1_bss_B4 == 0xF) {
+#else
             if (lbl_1_bss_B4 == 0x14) {
+#endif
                 espAttrReset(lbl_1_data_8[0], HUSPR_ATTR_DISPOFF);
             }
+#if VERSION_PAL
+            if (((lbl_1_bss_B4 >= 0xF) && (lbl_1_bss_B4 <= 0x28)) || ((lbl_1_bss_B4 >= 0x96) && (lbl_1_bss_B4 <= 0xAF))) {
+                var_f19 = lbl_1_bss_B4 <= 0x78 ? ((lbl_1_bss_B4 - 0xF) / (REFRESH_RATE_F / 2.0)) : (1.0 - ((lbl_1_bss_B4 - 0x96) / (REFRESH_RATE_F / 2.0)));
+#else
             if (((lbl_1_bss_B4 >= 0x14) && (lbl_1_bss_B4 <= 0x32)) || ((lbl_1_bss_B4 >= 0xB4) && (lbl_1_bss_B4 <= 0xD2))) {
-                var_f19 = lbl_1_bss_B4 <= 0x78 ? ((lbl_1_bss_B4 - 0x14) / 30.0) : (1.0 - ((lbl_1_bss_B4 - 0xB4) / 30.0));
+                var_f19 = lbl_1_bss_B4 <= 0x78 ? ((lbl_1_bss_B4 - 0x14) / (REFRESH_RATE_F / 2.0)) : (1.0 - ((lbl_1_bss_B4 - 0xB4) / (REFRESH_RATE_F / 2.0)));
+#endif
                 espTPLvlSet(lbl_1_data_8[0], var_f19);
             }
-            if (lbl_1_bss_B4 == 0xD2) {
+            if (lbl_1_bss_B4 == (VERSION_PAL ? 0xAF : 0xD2)) {
                 espAttrSet(lbl_1_data_8[0], HUSPR_ATTR_DISPOFF);
             }
         case 0x3EC:
@@ -1018,7 +1028,7 @@ void fn_1_4D44(void)
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
         spC[var_r30] = (&lbl_1_bss_BC)[var_r30]->data;
     }
-    HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
+    HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
     HuWinComKeyReset();
     var_r31 = HuWinExCreateStyled(36.0f, 344.0f, 0x1F8, 0x60, 6, 0);
     var_r29 = &winData[var_r31];
@@ -1053,11 +1063,11 @@ void fn_1_4D44(void)
     HuWinExAnimIn(var_r31);
     HuWinMesSet(var_r31, 0x300024);
     if (((spC[0]->unk_0C == -1) || (spC[0]->unk_08 == -1)) && ((spC[1]->unk_0C == -1) || (spC[1]->unk_08 == -1))) {
-        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
-        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
-        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
-        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
-        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
+        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
+        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
+        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
+        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
+        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
     }
     HuWinMesWait(var_r31);
     HuWinExAnimOut(var_r31);
@@ -1146,7 +1156,7 @@ void fn_1_5014(omObjData *var_r30)
             break;
         case 0x3EB:
             lbl_1_bss_B4++;
-            if (lbl_1_bss_B4 > 0xD2) {
+            if (lbl_1_bss_B4 > (s32)(REFRESH_RATE * 3.5)) {
                 lbl_1_bss_B0++;
                 lbl_1_bss_B4 = 0.0f;
             }
@@ -1216,7 +1226,11 @@ void fn_1_5014(omObjData *var_r30)
             break;
         case 0x3F3:
             lbl_1_bss_B4++;
+#if VERSION_PAL
+            if (lbl_1_bss_B4 >= 0x1C4) {
+#else
             if (lbl_1_bss_B4 >= 0x1E0) {
+#endif
                 lbl_1_bss_B0++;
                 lbl_1_bss_B4 = 0.0f;
             }
@@ -1244,7 +1258,7 @@ void fn_1_5014(omObjData *var_r30)
                     lbl_1_bss_98 == 4;
                 }
             }
-            if (210.0f < lbl_1_bss_B4) {
+            if (REFRESH_RATE_F * 3.5f < lbl_1_bss_B4) {
                 if (lbl_1_data_134 != -1) {
                     HuAudFXStop(lbl_1_data_134);
                     lbl_1_data_134 = -1;
