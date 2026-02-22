@@ -1458,7 +1458,7 @@ config.libs = [
     Rel(
         "m458Dll",  # Panels of Doom
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m458Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m458Dll/main.c"),
         },
     ),
     Rel(
