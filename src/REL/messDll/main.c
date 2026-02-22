@@ -15,14 +15,24 @@ extern s32 sprintf(char *, const char *, s32);
 static void fn_1_2BC(omObjData *arg0);
 static void fn_1_300(omObjData *arg0);
 static void fn_1_E88(void);
+#if VERSION_PAL
+static void fn_1_1174();
+#endif
 static s32 fn_1_11B0(s16 arg0, s16 arg1);
 
 static Process *lbl_1_bss_34;
 static omObjData *lbl_1_bss_30;
 static omObjData *lbl_1_bss_2C;
-static u8 lbl_1_bss_C_pad[0x20];
+static u8 lbl_1_bss_pad[0x20];
+#if VERSION_PAL
+static Process *lbl_1_bss_C;
+#endif
 static Process *lbl_1_bss_8;
+#if VERSION_PAL
+static s16 lbl_1_bss_4;
+#else
 static u8 lbl_1_bss_4_pad[4];
+#endif
 static s16 lbl_1_bss_2;
 static s16 lbl_1_bss_0;
 
@@ -42,8 +52,16 @@ void ObjectSetup(void)
     Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
     lbl_1_bss_30 = omAddObjEx(lbl_1_bss_34, 0, 0x40, 0, -1, fn_1_2BC);
     lbl_1_bss_2C = omAddObjEx(lbl_1_bss_34, 0x7FDA, 0, 0, -1, omOutView);
+#if VERSION_PAL
+    GWGameStat.language = 1;
+#endif
     HuWinInit(1);
-    lbl_1_bss_8 = HuPrcChildCreate(fn_1_E88, 100, 0x3000, 0, lbl_1_bss_34);
+#if VERSION_PAL
+    lbl_1_bss_C
+#else
+    lbl_1_bss_8
+#endif
+        = HuPrcChildCreate(fn_1_E88, 100, 0x3000, 0, lbl_1_bss_34);
 }
 
 static void fn_1_2BC(omObjData *arg0)
@@ -115,6 +133,12 @@ static char *lbl_1_data_32C[]
           "042_mg_445", "043_mg_447", "044_mg_448", "045_mg_449", "046_mg_450", "047_tutorial", "048_Option_Rooml", "049_Map6_event", "050_charley",
           "051_Present_Room", "052_Extra_Room", "053_Staff_Post", "054_Staff_Name", "055_Opening_Demo", "056_mgex_inst", NULL };
 
+#if VERSION_PAL
+char *lbl_1_data_438[] = {
+    "ENGLISH", "GERMANY", "FRENCH", "ITALY", "SPANISH"
+};
+#endif
+
 static s16 lbl_1_data_410 = -1;
 
 static void fn_1_E88(void)
@@ -125,6 +149,9 @@ static void fn_1_E88(void)
     s16 temp_r3;
     s16 var_r25;
     s16 var_r27;
+#if VERSION_PAL
+    s16 var_r26 = 0;
+#endif
     s16 var_r28;
     s32 var_r30;
     s32 var_r31;
@@ -153,6 +180,7 @@ static void fn_1_E88(void)
         var_r27++;
         var_r28++;
     }
+#if VERSION_NTSC
     temp_r3 = HuWinExCreateStyled(-10000.0f, 32.0f, 316, 40, -1, 0);
     HuWinExAnimIn(temp_r3);
     HuWinAttrSet(temp_r3, 0x800);
@@ -162,16 +190,43 @@ static void fn_1_E88(void)
     HuWinAttrSet(lbl_1_bss_0, 0x800);
     HuWinMesSpeedSet(lbl_1_bss_0, 0);
     HuWinMesSet(lbl_1_bss_0, MAKE_MESSID_PTR("\x1F\x01_\x1F\x02"));
+#else
+    MAKE_MESSID_PTR("\x1F\x01_\x1F\x02");
+    fn_1_1174();
+    HuWinMesSet(lbl_1_bss_0, (u32)lbl_1_data_438[0]);
+#endif
     var_r31 = 0;
     var_r30 = 0;
     while (1) {
-        HuWinHomeClear(lbl_1_bss_0);
+#if VERSION_PAL
+#define _WINDOW lbl_1_bss_2
+#else
+#define _WINDOW lbl_1_bss_0
+#endif
+        HuWinHomeClear(_WINDOW);
         sprintf(spC, "%03d", var_r30 + 1);
-        HuWinInsertMesSet(lbl_1_bss_0, MAKE_MESSID_PTR(spC), 0);
+        HuWinInsertMesSet(_WINDOW, MAKE_MESSID_PTR(spC), 0);
         sprintf(sp8, "%03d", sp10[var_r31]);
-        HuWinInsertMesSet(lbl_1_bss_0, MAKE_MESSID_PTR(sp8), 1);
-        HuWinMesSet(lbl_1_bss_0, MAKE_MESSID_PTR("\x1F\x01_\x1F\x02"));
+        HuWinInsertMesSet(_WINDOW, MAKE_MESSID_PTR(sp8), 1);
+        HuWinMesSet(_WINDOW, MAKE_MESSID_PTR("\x1F\x01_\x1F\x02"));
         temp_r3_2 = fn_1_11B0(var_r31, var_r30);
+#undef _WINDOW
+#if VERSION_PAL
+        if (temp_r3_2 & 0x400) {
+            HuWinAllKill();
+            HuPrcVSleep();
+            var_r26++;
+            if (var_r26 >= 5) {
+                var_r26 = 0;
+            }
+            GWGameStat.language = var_r26 + 1;
+            HuWinInit(1);
+            HuPrcVSleep();
+            fn_1_1174();
+            HuWinMesSet(lbl_1_bss_0, (u32)lbl_1_data_438[var_r26]);
+        }
+        else
+#endif
         if (temp_r3_2 & 0x20) {
             var_r31++;
             if (var_r31 >= var_r27) {
@@ -212,6 +267,25 @@ static void fn_1_E88(void)
 
 static char *lbl_1_data_440[] = { "]1^", "]2^", "]3^", "]4^", "]5^", "]6^", "]7^", "]8^" };
 
+#if VERSION_PAL
+static void fn_1_1174()
+{
+    lbl_1_bss_4 = HuWinExCreateStyled(-10000.0f, 32.0f, 316, 40, -1, 0);
+    HuWinExAnimIn(lbl_1_bss_4);
+    HuWinAttrSet(lbl_1_bss_4, 0x800);
+    HuWinMesSpeedSet(lbl_1_bss_4, 0x0);
+    
+    lbl_1_bss_2 = HuWinCreate(460.0f, 32.0f, 100, 40, 0);
+    HuWinAttrSet(lbl_1_bss_2, 0x800);
+    HuWinMesSpeedSet(lbl_1_bss_2, 0x0);
+
+    lbl_1_bss_0 = HuWinExCreateStyled(16.0f, 32.0f, 100, 40, -1, 0);
+    HuWinExAnimIn(lbl_1_bss_0);
+    HuWinAttrSet(lbl_1_bss_0, 0x800);
+    HuWinMesSpeedSet(lbl_1_bss_0, 0x0);
+}
+#endif
+
 static s32 fn_1_11B0(s16 arg0, s16 arg1)
 {
     WindowData *temp_r30;
@@ -224,8 +298,13 @@ static s32 fn_1_11B0(s16 arg0, s16 arg1)
 
     var_r27 = 0;
     var_r26 = 0;
+#if VERSION_PAL
+    HuWinHomeClear(lbl_1_bss_4);
+    HuWinMesSet(lbl_1_bss_4, MAKE_MESSID_PTR(lbl_1_data_32C[arg0]));
+#else
     HuWinHomeClear(lbl_1_bss_2);
     HuWinMesSet(lbl_1_bss_2, MAKE_MESSID_PTR(lbl_1_data_32C[arg0]));
+#endif
     HuPrcVSleep();
     if (lbl_1_data_410 != -1) {
         HuWinKill(lbl_1_data_410);
@@ -238,20 +317,28 @@ static s32 fn_1_11B0(s16 arg0, s16 arg1)
     if (spC[0] <= 16.0f) {
         spC[0] = 32.0f;
     }
-    lbl_1_data_410 = HuWinCreate(-10000.0f, -10000.0f, spC[0], spC[1], 0);
+    lbl_1_data_410 = HuWinCreate(-10000.0f, -10000.0f, spC[0], spC[1], (VERSION_PAL) ? 1 : 0);
+#if VERSION_PAL
+    HuWinMesPalSet(lbl_1_data_410, 7, 0, 0, 0);
+#endif
     for (i = 0; i < 8; i++) {
         HuWinInsertMesSet(lbl_1_data_410, MAKE_MESSID_PTR(lbl_1_data_440[i]), (s16)i);
     }
     temp_r30 = &winData[lbl_1_data_410];
-    temp_r30->push_key |= 0x360;
-    temp_r30->key_auto = 0x60;
+    temp_r30->push_key |= (VERSION_PAL) ? 0x760 : 0x360;
+    temp_r30->key_auto = (VERSION_PAL) ? 0x460 : 0x60;
     HuWinMesSet(lbl_1_data_410, temp_r28);
     var_r29 = MessData_MesPtrGet(messDataPtr, temp_r28);
     while (*var_r29 != 0) {
         if (*var_r29 == 0xF) {
             var_r27 = 1;
         }
+
+#if VERSION_PAL
+        if (*var_r29 == 0xFF) {
+#else
         if (*var_r29 == 0) {
+#endif
             var_r26 = 1;
         }
         var_r29++;
@@ -262,13 +349,13 @@ static s32 fn_1_11B0(s16 arg0, s16 arg1)
         return temp_r30->key_down;
     }
     if (var_r26 == 0) {
-        while (!(HuPadBtnRep[0] & 0x360)) {
+        while (!(HuPadBtnRep[0] & ((VERSION_PAL) ? 0x760 : 0x360))) {
             HuPrcVSleep();
         }
         return HuPadBtnRep[0];
     }
     while (temp_r30->stat != 0) {
-        if (HuPadBtnRep[0] & 0x60) {
+        if (HuPadBtnRep[0] & ((VERSION_PAL) ? 0x460 : 0x60)) {
             return HuPadBtnDown[0];
         }
         HuPrcVSleep();

@@ -1504,7 +1504,7 @@ config.libs = [
     Rel(
         "messDll",
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/messDll/main.c"),
+            Object(Matching, "REL/messDll/main.c"),
         },
     ),
     Rel(

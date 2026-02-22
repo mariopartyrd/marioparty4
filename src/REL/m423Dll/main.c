@@ -3145,7 +3145,11 @@ void fn_1_98A0(omObjData *arg0)
                     var_r31->unk38.y = 20.0f;
                     var_r31->unk50.y = 0.0f;
                 }
-                if (var_r31->unk14 < REFRESH_RATE_F * 1.22f) {
+#if VERSION_PAL
+                if (var_r31->unk14 < 1.22f * REFRESH_RATE_F) {
+#else
+                if (var_r31->unk14 < 1.22f * REFRESH_RATE_OFF_BY_1) {
+#endif
                     spAC.x = var_r31->unk50.z;
                     spAC.z = -var_r31->unk50.x;
                     spAC.y = 0.0f;
@@ -4368,11 +4372,11 @@ void fn_1_E4EC(omObjData *arg0)
         }
         var_r31->unk00++;
         if (var_r31->unk00 < REFRESH_RATE_F / 5) {
-            var_r31->unk04 += 3.5f / REFRESH_RATE_F;
+            var_r31->unk04 += 3.5f * REFRESH_FREQ;
         }
         else {
-            var_r31->unk04 += 1.5f / REFRESH_RATE_F;
-            var_r31->unk10 -= 3.0f / REFRESH_RATE_F;
+            var_r31->unk04 += 1.5f * REFRESH_FREQ;
+            var_r31->unk10 -= 3.0f * REFRESH_FREQ;
         }
         if (var_r31->unk10 < 0.0f) {
             var_r31->unk00 = 0;
