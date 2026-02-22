@@ -1153,12 +1153,12 @@ static void ShadowDraw(ModelData *model, Mtx mtx)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXInitTexObj(&tex, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&tex, Hu3DShadowData.buf, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&tex, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&tex, 0);
     MTXInverse(Hu3DCameraMtx, invCamera);
     MTXConcat(invCamera, mtx, final);
-    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, shadow);
+    MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, shadow);
     MTXConcat(shadow, final, final);
     GXLoadTexMtxImm(final, GX_TEXMTX9, GX_MTX3x4);
     GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, GX_TEXMTX9);

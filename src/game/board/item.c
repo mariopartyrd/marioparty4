@@ -2049,7 +2049,7 @@ static void GenieCameraProc(void)
         Hu3DCameraPerspectiveSet(2, genieFov, 10.0f, 20000.0f, 1.2f);
         Hu3DCameraPosSetV(2, &booCamPos, &booCamTarget, &booCamUp);
         Hu3DShadowData.unk_08.x = genieFov;
-        C_MTXLightPerspective(Hu3DShadowData.unk_68, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+        C_MTXLightPerspective(Hu3DShadowData.projMtx, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
         GenieCameraProcInlineFunc();
         Hu3DShadowTPLvlSet(0.8f);
         HuPrcVSleep();
@@ -2221,7 +2221,7 @@ static void GenieSceneExec(void)
     booCamUp.z = 600.0f;
     genieFov = 15.0f;
     Hu3DShadowData.unk_08.x = genieFov;
-    C_MTXLightPerspective(Hu3DShadowData.unk_68, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+    C_MTXLightPerspective(Hu3DShadowData.projMtx, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
     temp_r21 = HuPrcChildCreate(GenieCameraProc, 0x2005, 0x1000, 0, HuPrcCurrentGet());
     Hu3DBGColorSet(0xFF, 0xFF, 0xFF);
     temp_r27 = Hu3DParticleCreate(genieParticleAnim, 0x32);

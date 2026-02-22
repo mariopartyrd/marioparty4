@@ -340,7 +340,7 @@ void ObjectSetup(void)
     lbl_1_bss_2C = var_r29;
     Hu3DGLightInfinitytSet(var_r29);
     var_r30 = Hu3DGlobalLight;
-    var_r30->unk_00 |= 32768;
+    var_r30->type |= 32768;
     lbl_1_bss_28 = 0.0f;
     var_r31 = omInitObjMan(50, 8192);
     lbl_1_bss_98 = var_r31;

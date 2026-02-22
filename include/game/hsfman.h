@@ -102,9 +102,9 @@ struct model_data {
     s16 unk_20;
     u16 camera;
     s16 unk_24;
-    u16 unk_26;
+    u16 lightNum;
     u16 unk_28[8];
-    s16 unk_38[8];
+    s16 lLightId[8];
     uintptr_t unk_48;
     uintptr_t unk_4C;
     u32 attr;
@@ -174,23 +174,23 @@ typedef struct shadow_data {
     u8 unk_00;
     u8 unk_01;
     u16 unk_02;
-    void *unk_04;
+    void *buf;
     Vec unk_08;
-    Vec unk_14;
-    Vec unk_20;
-    Vec unk_2C;
-    Mtx unk_38;
-    Mtx unk_68;
+    Vec camPos;
+    Vec camTarget;
+    Vec camUp;
+    Mtx lookAtMtx;
+    Mtx projMtx;
 } ShadowData; // sizeof 0x98
 typedef struct light_data {
-    s16 unk_00;
-    s16 unk_02;
-    float unk_04;
-    float unk_08;
+    s16 type;
+    s16 func;
+    float cutoff;
+    float brightness;
     char unk_0C[0x10];
-    Vec unk_1C;
-    Vec unk_28;
-    Vec unk_34;
+    Vec pos;
+    Vec dir;
+    Vec offset;
     GXColor color;
 } LightData;
 

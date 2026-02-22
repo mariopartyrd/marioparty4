@@ -1866,10 +1866,10 @@ void fn_1_AD34(void)
     }
     #else
     if (((mgRecordExtra == 0) && (lbl_1_bss_1B0 != 4)) || ((mgRecordExtra >= 500*REFRESH_RATE) && (lbl_1_bss_1B0 == 4))) {
-        fn_1_25C4(lbl_1_bss_1B8[0].unk_00, 1, 5, 0xF, 0);
+        fn_1_25C4(lbl_1_bss_1B8[0].type, 1, 5, 0xF, 0);
     }
     else {
-        fn_1_25C4(lbl_1_bss_1B8[0].unk_00, 1, 4, 0xF, 0);
+        fn_1_25C4(lbl_1_bss_1B8[0].type, 1, 4, 0xF, 0);
     } 
     #endif
     fn_1_BC18();

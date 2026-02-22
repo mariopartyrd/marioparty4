@@ -142,7 +142,7 @@ void Hu3DInit(void) {
         Hu3DProjection[i].unk_04 = NULL;
     }
     Hu3DShadowCamBit = 0;
-    Hu3DShadowData.unk_04 = 0;
+    Hu3DShadowData.buf = 0;
     Hu3DShadowF = 0;
     Hu3DProjectionNum = 0;
     Hu3DCameraExistF = 0;
@@ -337,17 +337,17 @@ void Hu3DAllKill(void) {
         OSReport("Trying to free bitmap\n");
     }
 #endif
-#if __MWERKS__
+#ifndef BYTESWAPPING
     // this causes anim to be reallocated, so we lose the old allocation
     if(reflectAnim[0] != (AnimData *)refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
     reflectAnim[0] = HuSprAnimRead(refMapData0);
 #endif
-    if(Hu3DShadowData.unk_04) {
-        HuMemDirectFree(Hu3DShadowData.unk_04);
+    if(Hu3DShadowData.buf) {
+        HuMemDirectFree(Hu3DShadowData.buf);
         Hu3DShadowCamBit = 0;
-        Hu3DShadowData.unk_04 = NULL;
+        Hu3DShadowData.buf = NULL;
         Hu3DShadowF = 0;
     }
     Hu3DFogClear();
@@ -437,14 +437,14 @@ s16 Hu3DModelCreate(void *arg0) {
     var_r31->camera = -1;
     var_r31->layer = 0;
     var_r31->unk_120 = 0;
-    var_r31->unk_26 = 0;
+    var_r31->lightNum = 0;
     var_r31->unk_03 = 0;
     var_r31->unk_58.x = var_r31->unk_58.z = var_r31->unk_58.y = 1.0f;
     var_r31->unk_04 = -1;
     var_r31->unk_24 = -1;
     
     for (i = 0; i < 8; i++) {
-        var_r31->unk_38[i] = -1;
+        var_r31->lLightId[i] = -1;
     }
     var_r31->unk_01 = 0;
     var_r31->unk_00 = (u8) var_r30;
@@ -507,14 +507,14 @@ s16 Hu3DModelLink(s16 arg0) {
     var_r31->camera = -1;
     var_r31->layer = 0;
     var_r31->unk_120 = 0;
-    var_r31->unk_26 = 0;
+    var_r31->lightNum = 0;
     var_r31->unk_03 = 0;
     var_r31->unk_02 = 0;
     var_r31->unk_58.x = var_r31->unk_58.z = var_r31->unk_58.y = 1.0f;
     var_r31->unk_04 = -1;
     var_r31->unk_24 = arg0;
     for (i = 0; i < 8; i++) {
-        var_r31->unk_38[i] = -1;
+        var_r31->lLightId[i] = -1;
     }
     var_r31->unk_01 = 0;
     MTXIdentity(var_r31->unk_F0);
@@ -555,14 +555,14 @@ s16 Hu3DHookFuncCreate(ModelHookFunc hook) {
     var_r31->camera = -1;
     var_r31->layer = 0;
     var_r31->unk_120 = 0;
-    var_r31->unk_26 = 0;
+    var_r31->lightNum = 0;
     var_r31->unk_03 = 0;
     var_r31->unk_24 = -1;
     var_r31->unk_02 = 0;
     var_r31->unk_04 = -1;
     
     for (i = 0; i < 8; i++) {
-        var_r31->unk_38[i] = -1;
+        var_r31->lLightId[i] = -1;
     }
     var_r31->unk_01 = 0;
     MTXIdentity(var_r31->unk_F0);
@@ -652,11 +652,11 @@ void Hu3DModelKill(s16 arg0) {
 #endif
         HuMemDirectFree(temp_r31->hsfData);
         HuMemDirectFreeNum(HEAP_DATA, temp_r31->unk_48);
-        for (i = 0; i < temp_r31->unk_26; i++) {
+        for (i = 0; i < temp_r31->lightNum; i++) {
             Hu3DGLightKill(temp_r31->unk_28[i]);
         }
         for (i = 0; i < 8; i++) {
-            if (temp_r31->unk_38[i] != -1) {
+            if (temp_r31->lLightId[i] != -1) {
                 Hu3DLLightKill(arg0, i);
             }
         }
@@ -1378,148 +1378,148 @@ void Hu3DCameraMotionOn(s16 arg0, s8 arg1) {
     copy->attr |= HU3D_ATTR_CAMERA_MOTON;
 }
 
-void Hu3DCameraMotionStart(s16 arg0, u16 arg1) {
+void Hu3DCameraMotionStart(s16 modelId, u16 cameraBit) {
     ModelData* temp_r30;
     ModelData* temp_r29;
     ModelData* temp_r28;
     ModelData* temp_r27;
 
-    temp_r28 = &Hu3DData[arg0];
-    temp_r27 = &Hu3DData[arg0];
-    temp_r27->unk_01 = arg1;
-    temp_r29 = &Hu3DData[arg0];
+    temp_r28 = &Hu3DData[modelId];
+    temp_r27 = &Hu3DData[modelId];
+    temp_r27->unk_01 = cameraBit;
+    temp_r29 = &Hu3DData[modelId];
     temp_r29->attr |= HU3D_ATTR_CAMERA_MOTON;
-    temp_r30 = &Hu3DData[arg0];
+    temp_r30 = &Hu3DData[modelId];
     temp_r30->motion_attr &= ~HU3D_MOTATTR_PAUSE;
-    Hu3DMotionStartEndSet(arg0, 0.0f, Hu3DMotionMotionMaxTimeGet(temp_r28->unk_08));
-    Hu3DMotionTimeSet(arg0, 0.0f);
+    Hu3DMotionStartEndSet(modelId, 0.0f, Hu3DMotionMotionMaxTimeGet(temp_r28->unk_08));
+    Hu3DMotionTimeSet(modelId, 0.0f);
 }
 
-void Hu3DCameraMotionOff(s16 arg0) {
-    ModelData* temp_r31;
+void Hu3DCameraMotionOff(s16 modelId) {
+    ModelData* modelP;
 
-    temp_r31 = &Hu3DData[arg0];
-    temp_r31->attr &= ~HU3D_ATTR_CAMERA_MOTON;
+    modelP = &Hu3DData[modelId];
+    modelP->attr &= ~HU3D_ATTR_CAMERA_MOTON;
 }
 
 void Hu3DLighInit(void) {
-    LightData* var_r31;
-    s16 var_r30;
+    LightData* lightP;
+    s16 i;
 
-    var_r31 = Hu3DGlobalLight;
-    for (var_r30 = 0; var_r30 < 8; var_r30++, var_r31++) {
-        var_r31->unk_00 = -1;
+    lightP = Hu3DGlobalLight;
+    for (i = 0; i < 8; i++, lightP++) {
+        lightP->type = -1;
     }
-    var_r31 = Hu3DLocalLight;
-    for (var_r30 = 0; var_r30 < 0x20; var_r30++, var_r31++) {
-        var_r31->unk_00 = -1;
+    lightP = Hu3DLocalLight;
+    for (i = 0; i < 0x20; i++, lightP++) {
+        lightP->type = -1;
     }
 }
 
 
-s16 Hu3DGLightCreate(f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD, u8 arg0, u8 arg1, u8 arg2) {
-    Vec vec1;
-    Vec vec2;
+s16 Hu3DGLightCreate(f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ, u8 colorR, u8 colorG, u8 colorB) {
+    Vec pos;
+    Vec dir;
     GXColor color;
 
-    vec1.x = arg8;
-    vec1.y = arg9;
-    vec1.z = argA;
-    vec2.x = argB;
-    vec2.y = argC;
-    vec2.z = argD;
-    color.r = arg0;
-    color.g = arg1;
-    color.b = arg2;
+    pos.x = posX;
+    pos.y = posY;
+    pos.z = posZ;
+    dir.x = dirX;
+    dir.y = dirY;
+    dir.z = dirZ;
+    color.r = colorR;
+    color.g = colorG;
+    color.b = colorB;
     color.a = 0xFF;
-    return Hu3DGLightCreateV(&vec1, &vec2, &color);
+    return Hu3DGLightCreateV(&pos, &dir, &color);
 }
 
 inline s16 Hu3DLightCreateV(LightData *light, Vec *arg0, Vec *arg1, GXColor *arg2) {
-    light->unk_00 = 0;
-    light->unk_1C = *arg0;
-    light->unk_28 = *arg1;
-    light->unk_34.x = light->unk_34.y = light->unk_34.z = 0.0f;
-    light->unk_04 = 30.0f;
-    light->unk_02 = 2;
-    VECNormalize(&light->unk_28, &light->unk_28);
+    light->type = 0;
+    light->pos = *arg0;
+    light->dir = *arg1;
+    light->offset.x = light->offset.y = light->offset.z = 0.0f;
+    light->cutoff = 30.0f;
+    light->func = 2;
+    VECNormalize(&light->dir, &light->dir);
     light->color = *arg2;
 }
 
 s16 Hu3DGLightCreateV(Vec* pos, Vec* dir, GXColor* color) {
-    s16 var_r30;
-    LightData* var_r31;
+    s16 lightId;
+    LightData* lightP;
 
-    var_r31 = Hu3DGlobalLight;
-    
-    for (var_r30 = 0; var_r30 < 8; var_r30++, var_r31++) {
-        if (var_r31->unk_00 == -1) {
+    lightP = Hu3DGlobalLight;
+
+    for (lightId = 0; lightId < 8; lightId++, lightP++) {
+        if (lightP->type == -1) {
             break;
         }
     }
-    if (var_r30 == 8) {
+    if (lightId == 8) {
         return -1;
     }
 
-    Hu3DLightCreateV(var_r31, pos, dir, color);
+    Hu3DLightCreateV(lightP, pos, dir, color);
 
-    return var_r30;
+    return lightId;
 }
 
-s16 Hu3DLLightCreate(s16 arg0, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD, u8 arg1, u8 arg2, u8 arg3) {
-    Vec vec1;
-    Vec vec2;
+s16 Hu3DLLightCreate(s16 modelId, f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ, u8 colorR, u8 colorG, u8 colorB) {
+    Vec pos;
+    Vec dir;
     GXColor color;
 
-    vec1.x = arg8;
-    vec1.y = arg9;
-    vec1.z = argA;
-    vec2.x = argB;
-    vec2.y = argC;
-    vec2.z = argD;
-    color.r = arg1;
-    color.g = arg2;
-    color.b = arg3;
+    pos.x = posX;
+    pos.y = posY;
+    pos.z = posZ;
+    dir.x = dirX;
+    dir.y = dirY;
+    dir.z = dirZ;
+    color.r = colorR;
+    color.g = colorG;
+    color.b = colorB;
     color.a = 0xFF;
-    return Hu3DLLightCreateV(arg0, &vec1, &vec2, &color);
+    return Hu3DLLightCreateV(modelId, &pos, &dir, &color);
 }
 
-s16 Hu3DLLightCreateV(s16 arg0, Vec* arg1, Vec* arg2, GXColor* arg3) {
-    ModelData* temp_r29;
-    s16 var_r28;
-    s16 var_r30;
-    LightData* var_r31;
+s16 Hu3DLLightCreateV(s16 modelId, Vec* pos, Vec* dir, GXColor* color) {
+    ModelData* modelP;
+    s16 lightId;
+    s16 lLightId;
+    LightData* lightP;
 
-    temp_r29 = &Hu3DData[arg0];
-    var_r31 = Hu3DLocalLight;
-    for (var_r28 = 0; var_r28 < 0x20; var_r28++, var_r31++) {
-        if (var_r31->unk_00 == -1) {
+    modelP = &Hu3DData[modelId];
+    lightP = Hu3DLocalLight;
+    for (lightId = 0; lightId < 0x20; lightId++, lightP++) {
+        if (lightP->type == -1) {
             break;
         }
     }
-    if (var_r28 == 0x20) {
+    if (lightId == 0x20) {
         return -1;
     }
 
-    Hu3DLightCreateV(var_r31, arg1, arg2, arg3);
-    
-    for (var_r30 = 0; var_r30 < 8; var_r30++) {
-        if (temp_r29->unk_38[var_r30] == -1) {
+    Hu3DLightCreateV(lightP, pos, dir, color);
+
+    for (lLightId = 0; lLightId < 8; lLightId++) {
+        if (modelP->lLightId[lLightId] == -1) {
             break;
         }
     }
-    if (var_r30 == 8) {
+    if (lLightId == 8) {
         return -1;
     }
-    temp_r29->unk_38[var_r30] = var_r28;
-    temp_r29->attr |= HU3D_ATTR_LLIGHT;
-    return var_r30;
+    modelP->lLightId[lLightId] = lightId;
+    modelP->attr |= HU3D_ATTR_LLIGHT;
+    return lLightId;
 }
 
 inline void Hu3DLightSpotSet(LightData *light, u16 arg1, f32 arg8) {
-    light->unk_00 &= 0xFF00;
-    light->unk_04 = arg8;
-    light->unk_02 = arg1;
+    light->type &= 0xFF00;
+    light->cutoff = arg8;
+    light->func = arg1;
 }
 
 void Hu3DGLightSpotSet(s16 arg0, f32 arg8, u16 arg1) {
@@ -1533,13 +1533,13 @@ void Hu3DLLightSpotSet(s16 arg0, s16 arg1, f32 arg8, u16 arg2) {
     LightData* light;
 
     data = &Hu3DData[arg0];
-    light = &Hu3DLocalLight[data->unk_38[arg1]];
+    light = &Hu3DLocalLight[data->lLightId[arg1]];
     Hu3DLightSpotSet(light, arg2, arg8);
 }
 
 inline void Hu3DLightInfinitytSet(LightData *light) {
-    light->unk_00 &= 0xFF00;
-    light->unk_00 |= 1;
+    light->type &= 0xFF00;
+    light->type |= 1;
 }
 
 void Hu3DGLightInfinitytSet(s16 lightIndex) {
@@ -1553,54 +1553,54 @@ void Hu3DLLightInfinitytSet(s16 dataIndex, s16 lightIndex) {
     LightData* light;
 
     data = &Hu3DData[dataIndex];
-    light = &Hu3DLocalLight[data->unk_38[lightIndex]];
+    light = &Hu3DLocalLight[data->lLightId[lightIndex]];
     Hu3DLightInfinitytSet(light);
 }
 
-inline void Hu3DLightPointSet(LightData *light, f32 arg8, f32 arg9, u16 arg1) {
-    light->unk_00 &= 0xFF00;
-    light->unk_00 |= 2;
-    light->unk_04 = arg8;
-    light->unk_08 = arg9;
-    light->unk_02 = arg1;
+inline void Hu3DLightPointSet(LightData *lightP, f32 refDistance, f32 refBrightness, u16 distFunc) {
+    lightP->type &= 0xFF00;
+    lightP->type |= 2;
+    lightP->cutoff = refDistance;
+    lightP->brightness = refBrightness;
+    lightP->func = distFunc;
 }
 
-void Hu3DGLightPointSet(s16 arg0, f32 arg8, f32 arg9, u16 arg1) {
-    LightData* light = &Hu3DGlobalLight[arg0];
+void Hu3DGLightPointSet(s16 lightId, f32 refDistance, f32 refBrightness, u16 distFunc) {
+    LightData* light = &Hu3DGlobalLight[lightId];
     
-    Hu3DLightPointSet(light, arg8, arg9, arg1);
+    Hu3DLightPointSet(light, refDistance, refBrightness, distFunc);
 }
 
-void Hu3DLLightPointSet(s16 arg0, s16 arg1, f32 arg8, f32 arg9, u16 arg2) {
+void Hu3DLLightPointSet(s16 modelId, s16 lightId, f32 refDistance, f32 refBrightness, u16 distFunc) {
     ModelData* data;
     LightData* light;
 
-    data = &Hu3DData[arg0];
-    light = &Hu3DLocalLight[data->unk_38[arg1]];
-    Hu3DLightPointSet(light, arg8, arg9, arg2);
+    data = &Hu3DData[modelId];
+    light = &Hu3DLocalLight[data->lLightId[lightId]];
+    Hu3DLightPointSet(light, refDistance, refBrightness, distFunc);
 }
 
-void Hu3DGLightKill(s16 index) {
-    Hu3DGlobalLight[index].unk_00 = -1;
+void Hu3DGLightKill(s16 lightId) {
+    Hu3DGlobalLight[lightId].type = -1;
 }
 
-void Hu3DLLightKill(s16 dataIndex, s16 lightIndex) {
-    ModelData* temp_r31;
-    LightData* light;
-    s16 var_r30;
+void Hu3DLLightKill(s16 modelId, s16 lightId) {
+    ModelData* modelP;
+    LightData* lightP;
+    s16 i;
 
-    temp_r31 = &Hu3DData[dataIndex];
-    light = &Hu3DLocalLight[temp_r31->unk_38[lightIndex]];
-    light->unk_00 = -1;
-    temp_r31->unk_38[lightIndex] = -1;
-    
-    for (var_r30 = 0; var_r30 < 8; var_r30++) {
-        if (temp_r31->unk_38[var_r30] == -1) {
+    modelP = &Hu3DData[modelId];
+    lightP = &Hu3DLocalLight[modelP->lLightId[lightId]];
+    lightP->type = -1;
+    modelP->lLightId[lightId] = -1;
+
+    for (i = 0; i < 8; i++) {
+        if (modelP->lLightId[i] == -1) {
             break;
         }
     }
-    if (var_r30 == 8) {
-        temp_r31->attr &= ~HU3D_ATTR_LLIGHT;
+    if (i == 8) {
+        modelP->attr &= ~HU3D_ATTR_LLIGHT;
     }
 }
 
@@ -1610,8 +1610,8 @@ void Hu3DLightAllKill(void) {
 
     light = Hu3DGlobalLight;
     for (i = 0; i < 8; i++, light++) {
-        if (light->unk_00 != -1) {
-            Hu3DGlobalLight[i].unk_00 = -1;
+        if (light->type != -1) {
+            Hu3DGlobalLight[i].type = -1;
         }
     }
 }
@@ -1634,60 +1634,60 @@ void Hu3DLLightColorSet(s16 dataIndex, s16 lightIndex, u8 r, u8 g, u8 b, u8 a) {
     LightData* light;
 
     data = &Hu3DData[dataIndex];
-    light = &Hu3DLocalLight[data->unk_38[lightIndex]];
+    light = &Hu3DLocalLight[data->lLightId[lightIndex]];
     Hu3DLightColorSet(light, r, g, b, a);
 }
 
 inline void Hu3DLightPosSetV(LightData *light, Vec* pos, Vec* aim) {
-    light->unk_1C = *pos;
-    VECNormalize(aim, &light->unk_28);
+    light->pos = *pos;
+    VECNormalize(aim, &light->dir);
 }
 
-void Hu3DGLightPosSetV(s16 index, Vec* pos, Vec* aim) {
-    LightData* light = &Hu3DGlobalLight[index];
+void Hu3DGLightPosSetV(s16 lightId, Vec* pos, Vec* dir) {
+    LightData* light = &Hu3DGlobalLight[lightId];
     
-    Hu3DLightPosSetV(light, pos, aim);
+    Hu3DLightPosSetV(light, pos, dir);
 }
 
-void Hu3DLLightPosSetV(s16 dataIndex, s16 lightIndex, Vec* pos, Vec* aim) {
+void Hu3DLLightPosSetV(s16 modelId, s16 lightId, Vec* pos, Vec* dir) {
     ModelData* data;
     LightData* light;
 
-    data = &Hu3DData[dataIndex];
-    light = &Hu3DLocalLight[data->unk_38[lightIndex]];
-    Hu3DLightPosSetV(light, pos, aim);
+    data = &Hu3DData[modelId];
+    light = &Hu3DLocalLight[data->lLightId[lightId]];
+    Hu3DLightPosSetV(light, pos, dir);
 }
 
-inline void Hu3DLightPosSet(LightData *light, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD) {
-    light->unk_1C.x = arg8;
-    light->unk_1C.y = arg9;
-    light->unk_1C.z = argA;
-    light->unk_28.x = argB;
-    light->unk_28.y = argC;
-    light->unk_28.z = argD;
-    VECNormalize(&light->unk_28, &light->unk_28);
+inline void Hu3DLightPosSet(LightData *lightP, f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ) {
+    lightP->pos.x = posX;
+    lightP->pos.y = posY;
+    lightP->pos.z = posZ;
+    lightP->dir.x = dirX;
+    lightP->dir.y = dirY;
+    lightP->dir.z = dirZ;
+    VECNormalize(&lightP->dir, &lightP->dir);
 }
 
-void Hu3DGLightPosSet(s16 arg0, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD) {
+void Hu3DGLightPosSet(s16 lightId, f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ) {
     LightData* light;
 
-    light = &Hu3DGlobalLight[arg0];
-    Hu3DLightPosSet(light, arg8, arg9, argA, argB, argC, argD);
+    light = &Hu3DGlobalLight[lightId];
+    Hu3DLightPosSet(light, posX, posY, posZ, dirX, dirY, dirZ);
 }
 
-void Hu3DLLightPosSet(s16 arg0, s16 arg1, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD) {
+void Hu3DLLightPosSet(s16 modelId, s16 lightId, f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ) {
     ModelData* data;
     LightData* light;
 
-    data = &Hu3DData[arg0];
-    light = &Hu3DLocalLight[data->unk_38[arg1]];
-    Hu3DLightPosSet(light, arg8, arg9, argA, argB, argC, argD);
+    data = &Hu3DData[modelId];
+    light = &Hu3DLocalLight[data->lLightId[lightId]];
+    Hu3DLightPosSet(light, posX, posY, posZ, dirX, dirY, dirZ);
 }
 
-inline void Hu3DLightPosAimSetV(LightData *light, Vec* pos, Vec* aim) {
-    light->unk_1C = *pos;
-    VECSubtract(aim, pos, &light->unk_28);
-    VECNormalize(&light->unk_28, &light->unk_28);
+inline void Hu3DLightPosAimSetV(LightData *lightP, Vec* pos, Vec* aim) {
+    lightP->pos = *pos;
+    VECSubtract(aim, pos, &lightP->dir);
+    VECNormalize(&lightP->dir, &lightP->dir);
 }
 
 void Hu3DGLightPosAimSetV(s16 index, Vec* pos, Vec* aim) {
@@ -1701,131 +1701,131 @@ void Hu3DLLightPosAimSetV(s16 dataIndex, s16 lightIndex, Vec* pos, Vec* aim) {
     LightData* light;
 
     data = &Hu3DData[dataIndex];
-    light = &Hu3DLocalLight[data->unk_38[lightIndex]];
+    light = &Hu3DLocalLight[data->lLightId[lightIndex]];
     Hu3DLightPosAimSetV(light, pos, aim);
 }
 
-void Hu3DGLightPosAimSet(s16 arg0, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD) {
+void Hu3DGLightPosAimSet(s16 lightId, f32 posX, f32 posY, f32 posZ, f32 aimX, f32 aimY, f32 aimZ) {
     Vec pos;
     Vec aim;
     LightData *light;
     LightData *light2;
 
-    pos.x = arg8;
-    pos.y = arg9;
-    pos.z = argA;
-    aim.x = argB;
-    aim.y = argC;
-    aim.z = argD;
+    pos.x = posX;
+    pos.y = posY;
+    pos.z = posZ;
+    aim.x = aimX;
+    aim.y = aimY;
+    aim.z = aimZ;
 
-    light = &Hu3DGlobalLight[arg0];
+    light = &Hu3DGlobalLight[lightId];
     light2 = light;
     Hu3DLightPosAimSetV(light2, &pos, &aim);
 }
 
-void Hu3DLLightPosAimSet(s16 arg0, s16 arg1, f32 arg8, f32 arg9, f32 argA, f32 argB, f32 argC, f32 argD) {
+void Hu3DLLightPosAimSet(s16 modelId, s16 lightId, f32 posX, f32 posY, f32 posZ, f32 aimX, f32 aimY, f32 aimZ) {
     Vec pos;
     Vec aim;
     ModelData* data;
     LightData* light;
     LightData* light2;
 
-    pos.x = arg8;
-    pos.y = arg9;
-    pos.z = argA;
-    aim.x = argB;
-    aim.y = argC;
-    aim.z = argD;
+    pos.x = posX;
+    pos.y = posY;
+    pos.z = posZ;
+    aim.x = aimX;
+    aim.y = aimY;
+    aim.z = aimZ;
 
-    data = &Hu3DData[arg0];
-    light = &Hu3DLocalLight[data->unk_38[arg1]];
+    data = &Hu3DData[modelId];
+    light = &Hu3DLocalLight[data->lLightId[lightId]];
     light2 = light;
     Hu3DLightPosAimSetV(light2, &pos, &aim);
 }
 
-inline void Hu3DLightStaticSet(LightData *light, s32 arg1) {
-    if (arg1 != 0) {
-        light->unk_00 |= 0x8000;
+inline void Hu3DLightStaticSet(LightData *lightP, s32 staticF) {
+    if (staticF) {
+        lightP->type |= 0x8000;
     } else {
-        light->unk_00 &= ~0x8000;
+        lightP->type &= ~0x8000;
     }
 }
 
-void Hu3DGLightStaticSet(s16 index, s32 arg1) {
-    LightData* light = &Hu3DGlobalLight[index];
-    
-    Hu3DLightStaticSet(light, arg1);
+void Hu3DGLightStaticSet(s16 lightId, s32 staticF) {
+    LightData* lightP = &Hu3DGlobalLight[lightId];
+
+    Hu3DLightStaticSet(lightP, staticF);
 }
 
-void Hu3DLLightStaticSet(s16 dataIndex, s16 lightIndex, s32 arg2) {
+void Hu3DLLightStaticSet(s16 modelId, s16 lightId, s32 staticF) {
     ModelData* data;
     LightData* light;
 
-    data = &Hu3DData[dataIndex];
-    light = &Hu3DLocalLight[data->unk_38[lightIndex]];
-    Hu3DLightStaticSet(light, arg2);
+    data = &Hu3DData[modelId];
+    light = &Hu3DLocalLight[data->lLightId[lightId]];
+    Hu3DLightStaticSet(light, staticF);
 }
 
-s32 Hu3DModelLightInfoSet(s16 arg0, s16 arg1) {
-    Vec sp48;
+s32 Hu3DModelLightInfoSet(s16 modelId, s16 staticF) {
+    Vec lightDir;
     Vec sp3C;
     Vec sp30;
-    LightData* sp1C;
-    s16 sp12;
+    LightData* lightP;
+    s16 lightId;
     u8 spE;
     u8 spD;
     u8 spC;
-    HsfData* temp_r21;
-    HsfObject* var_r18;
-    HsfObject* var_r31;
-    ModelData* temp_r28;
-    s16 var_r17;
-    s16 var_r25;
+    HsfData* hsf;
+    HsfObject* obj;
+    HsfObject* objPtr;
+    ModelData* modelP;
+    s16 i;
+    s16 lightNum;
 
-    temp_r28 = &Hu3DData[arg0];
-    temp_r21 = temp_r28->hsfData;
-    if (temp_r28->unk_26 != 0) {
-        return temp_r28->unk_26;
+    modelP = &Hu3DData[modelId];
+    hsf = modelP->hsfData;
+    if (modelP->lightNum != 0) {
+        return modelP->lightNum;
     }
-    var_r31 = temp_r21->object;
-    
-    for (var_r17 = var_r25 = 0; var_r17 < temp_r21->objectCnt; var_r17++, var_r31++) {
-        var_r18 = var_r31;
-        if (var_r18->type != HSF_OBJ_LIGHT) {
+    objPtr = hsf->object;
+
+    for (i = lightNum = 0; i < hsf->objectCnt; i++, objPtr++) {
+        obj = objPtr;
+        if (obj->type != HSF_OBJ_LIGHT) {
             continue;
         }
-        sp48.x = var_r18->light.target.x - var_r18->light.pos.x;
-        sp48.y = var_r18->light.target.y - var_r18->light.pos.y;
-        sp48.z = var_r18->light.target.z - var_r18->light.pos.z;
-        spC = var_r18->light.b;
-        spD = var_r18->light.g;
-        spE = var_r18->light.r;
-        sp12 = Hu3DGLightCreate(var_r18->light.pos.x, var_r18->light.pos.y, var_r18->light.pos.z,
-                                sp48.x, sp48.y, sp48.z, spE, spD, spC);
-        
-        
-        temp_r28->unk_28[var_r25] = sp12;
-        sp1C = &Hu3DGlobalLight[sp12];
-        Hu3DGLightStaticSet(sp12, arg1);
-        switch (var_r18->light.type) {
+        lightDir.x = obj->light.target.x - obj->light.pos.x;
+        lightDir.y = obj->light.target.y - obj->light.pos.y;
+        lightDir.z = obj->light.target.z - obj->light.pos.z;
+        spC = obj->light.b;
+        spD = obj->light.g;
+        spE = obj->light.r;
+        lightId = Hu3DGLightCreate(obj->light.pos.x, obj->light.pos.y, obj->light.pos.z,
+                                lightDir.x, lightDir.y, lightDir.z, spE, spD, spC);
+
+
+        modelP->unk_28[lightNum] = lightId;
+        lightP = &Hu3DGlobalLight[lightId];
+        Hu3DGLightStaticSet(lightId, staticF);
+        switch (obj->light.type) {
             case 0:
-                Hu3DGLightSpotSet(sp12, var_r18->light.cutoff, 2);
+                Hu3DGLightSpotSet(lightId, obj->light.cutoff, 2);
                 break;
             case 1:
-                Hu3DGLightPointSet(sp12, var_r18->light.ref_brightness - var_r18->light.ref_distance, 1.0f, GX_DA_MEDIUM);
-                Hu3DGLightPosSet(sp12, var_r18->light.pos.x, var_r18->light.pos.y, var_r18->light.pos.z, var_r18->light.target.x, var_r18->light.target.y, var_r18->light.target.z);
+                Hu3DGLightPointSet(lightId, obj->light.ref_brightness - obj->light.ref_distance, 1.0f, GX_DA_MEDIUM);
+                Hu3DGLightPosSet(lightId, obj->light.pos.x, obj->light.pos.y, obj->light.pos.z, obj->light.target.x, obj->light.target.y, obj->light.target.z);
                 break;
             case 2:
-                Hu3DGLightInfinitytSet(sp12);
+                Hu3DGLightInfinitytSet(lightId);
                 break;
         }
-        var_r25++;
-        if (var_r25 >= 8) {
+        lightNum++;
+        if (lightNum >= 8) {
             break;
         }
     }
-    temp_r28->unk_26 = var_r25;
-    return var_r25;
+    modelP->lightNum = lightNum;
+    return lightNum;
 }
 
 s16 Hu3DLightSet(ModelData* arg0, Mtx *arg1, Mtx *arg2, f32 arg8) {
@@ -1839,7 +1839,7 @@ s16 Hu3DLightSet(ModelData* arg0, Mtx *arg1, Mtx *arg2, f32 arg8) {
     var_r29 = Hu3DGlobalLight;
     
     for (i = 0; i < 8; i++, var_r29++) {
-        if (var_r29->unk_00 != -1) {
+        if (var_r29->type != -1) {
             lightSet(var_r29, var_r30, arg2, arg1, arg8);
             var_r28 |= var_r30;
             var_r30 <<= 1;
@@ -1847,8 +1847,8 @@ s16 Hu3DLightSet(ModelData* arg0, Mtx *arg1, Mtx *arg2, f32 arg8) {
     }
     if ((arg0->attr & HU3D_ATTR_LLIGHT) != 0) {
         for (i = 0; i < 8; i++) {
-            if (arg0->unk_38[i] != -1) {
-                var_r29 = &Hu3DLocalLight[arg0->unk_38[i]];
+            if (arg0->lLightId[i] != -1) {
+                var_r29 = &Hu3DLocalLight[arg0->lLightId[i]];
                 lightSet(var_r29, var_r30, arg2, arg1, arg8);
                 var_r28 |= var_r30;
                 var_r30 <<= 1;
@@ -1863,29 +1863,29 @@ void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
     Point3d sp24;
     Point3d sp18;
 
-    switch ((u8)arg0->unk_00) {
+    switch ((u8)arg0->type) {
     case 0:
         GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-        GXInitLightSpot(&sp30, arg0->unk_04, arg0->unk_02);
+        GXInitLightSpot(&sp30, arg0->cutoff, arg0->func);
         break;
     case 1:
         GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
         GXInitLightSpot(&sp30, 20.0f, GX_SP_COS);
         GXInitLightAttnK(&sp30, 1.0f, 0.0f, 0.0f);
-        VECScale(&arg0->unk_28, &arg0->unk_1C, -1000000.0f);
+        VECScale(&arg0->dir, &arg0->pos, -1000000.0f);
         break;
     case 2:
         GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        GXInitLightDistAttn(&sp30, arg0->unk_04, arg0->unk_08, arg0->unk_02);
+        GXInitLightDistAttn(&sp30, arg0->cutoff, arg0->brightness, arg0->func);
         break;
     }
-    if ((arg0->unk_00 & 0x8000) != 0) {
-        MTXMultVec(*arg2, &arg0->unk_28, &sp24);
-        MTXMultVec(*arg3, &arg0->unk_1C, &sp18);
+    if ((arg0->type & 0x8000) != 0) {
+        MTXMultVec(*arg2, &arg0->dir, &sp24);
+        MTXMultVec(*arg3, &arg0->pos, &sp18);
         GXInitLightPos(&sp30, sp18.x, sp18.y, sp18.z);
     } else {
-        GXInitLightPos(&sp30, arg0->unk_1C.x, arg0->unk_1C.y, arg0->unk_1C.z);
-        sp24 = arg0->unk_28;
+        GXInitLightPos(&sp30, arg0->pos.x, arg0->pos.y, arg0->pos.z);
+        sp24 = arg0->dir;
     }
     if (0.0f == arg8) {
         GXInitLightDir(&sp30, sp24.x, sp24.y, sp24.z);
@@ -1898,7 +1898,7 @@ void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
 }
 
 void Hu3DReflectMapSet(AnimData* arg0) {
-#if __MWERKS__
+#ifndef BYTESWAPPING
     // this causes anim to be reallocated, so we lose the old allocation
     if (reflectAnim[0] != (AnimData*) refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
@@ -1932,29 +1932,29 @@ void Hu3DFogClear(void) {
 
 void Hu3DShadowCreate(f32 arg8, f32 arg9, f32 argA) {
     Hu3DShadowData.unk_02 = 0xC0;
-    if (Hu3DShadowData.unk_04 == 0) {
-        Hu3DShadowData.unk_04 = HuMemDirectMalloc(HEAP_DATA, SHADOW_HEAP_SIZE);
+    if (Hu3DShadowData.buf == 0) {
+        Hu3DShadowData.buf = HuMemDirectMalloc(HEAP_DATA, SHADOW_HEAP_SIZE);
     }
     Hu3DShadowData.unk_08.x = arg8;
     Hu3DShadowData.unk_08.y = arg9;
     Hu3DShadowData.unk_08.z = argA;
-    Hu3DShadowData.unk_14.x = 300.0f;
-    Hu3DShadowData.unk_14.y = 300.0f;
-    Hu3DShadowData.unk_14.z = 0.0f;
-    Hu3DShadowData.unk_20.x = Hu3DShadowData.unk_20.y = Hu3DShadowData.unk_20.z = 0.0f;
-    Hu3DShadowData.unk_2C.x = -1.0f;
-    Hu3DShadowData.unk_2C.y = 1.0f;
-    Hu3DShadowData.unk_2C.z = 0.0f;
-    C_MTXLightPerspective(Hu3DShadowData.unk_68, arg8, HU_DISP_ASPECT, 0.5f, -0.5f, 0.5f, 0.5f);
-    VECNormalize(&Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_2C);
+    Hu3DShadowData.camPos.x = 300.0f;
+    Hu3DShadowData.camPos.y = 300.0f;
+    Hu3DShadowData.camPos.z = 0.0f;
+    Hu3DShadowData.camTarget.x = Hu3DShadowData.camTarget.y = Hu3DShadowData.camTarget.z = 0.0f;
+    Hu3DShadowData.camUp.x = -1.0f;
+    Hu3DShadowData.camUp.y = 1.0f;
+    Hu3DShadowData.camUp.z = 0.0f;
+    C_MTXLightPerspective(Hu3DShadowData.projMtx, arg8, HU_DISP_ASPECT, 0.5f, -0.5f, 0.5f, 0.5f);
+    VECNormalize(&Hu3DShadowData.camUp, &Hu3DShadowData.camUp);
     Hu3DShadowData.unk_00 = 0x80;
     Hu3DShadowF = 1;
 }
 
 void Hu3DShadowPosSet(Vec* camPos, Vec* camUp, Vec* camTarget) {
-    Hu3DShadowData.unk_14 = *camPos;
-    Hu3DShadowData.unk_20 = *camTarget;
-    Hu3DShadowData.unk_2C = *camUp;
+    Hu3DShadowData.camPos = *camPos;
+    Hu3DShadowData.camTarget = *camTarget;
+    Hu3DShadowData.camUp = *camUp;
 }
 
 void Hu3DShadowTPLvlSet(f32 arg8) {
@@ -1963,10 +1963,10 @@ void Hu3DShadowTPLvlSet(f32 arg8) {
 
 void Hu3DShadowSizeSet(u16 arg0) {
     Hu3DShadowData.unk_02 = arg0;
-    if (Hu3DShadowData.unk_04 != 0) {
-        HuMemDirectFree(Hu3DShadowData.unk_04);
+    if (Hu3DShadowData.buf != 0) {
+        HuMemDirectFree(Hu3DShadowData.buf);
     }
-    Hu3DShadowData.unk_04 = HuMemDirectMalloc(HEAP_DATA, arg0 * arg0);
+    Hu3DShadowData.buf = HuMemDirectMalloc(HEAP_DATA, arg0 * arg0);
 }
 
 void Hu3DShadowExec(void) {
@@ -1993,8 +1993,8 @@ void Hu3DShadowExec(void) {
         GXSetViewport(0.0f, 0.0f, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, 0.0f, 1.0f);
         test = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
     }
-    C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.unk_14, &Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_20);
-    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.unk_38);
+    C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.camPos, &Hu3DShadowData.camUp, &Hu3DShadowData.camTarget);
+    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.lookAtMtx);
     var_r31 = Hu3DData;
     shadowModelDrawF = 1;
     GXInvalidateTexAll();
@@ -2058,7 +2058,7 @@ void Hu3DShadowExec(void) {
         GXSetTexCopySrc(0, 0, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02);
         GXSetTexCopyDst(Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_CTF_R8, 0);
     }
-    GXCopyTex(Hu3DShadowData.unk_04, 1);
+    GXCopyTex(Hu3DShadowData.buf, 1);
     GXSetViewport(0.0f, 0.0f, RenderMode->fbWidth, RenderMode->xfbHeight, 0.0f, 1.0f);
     GXSetScissor(0, 0, RenderMode->fbWidth, RenderMode->efbHeight);
     C_MTXOrtho(sp18, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f);

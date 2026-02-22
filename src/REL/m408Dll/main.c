@@ -94,7 +94,7 @@ void ObjectSetup(void)
     temp_r29 = Hu3DGLightCreateV(&lbl_1_data_20, &lbl_1_data_2C, &lbl_1_data_38);
     Hu3DGLightInfinitytSet(temp_r29);
     temp_r28 = &Hu3DGlobalLight[temp_r29];
-    temp_r28->unk_00 |= 0x8000;
+    temp_r28->type |= 0x8000;
     Hu3DShadowCreate(30, 100, 25000);
     Hu3DShadowTPLvlSet(0.3f);
     Hu3DShadowPosSet(&lbl_1_data_58, &lbl_1_data_64, &lbl_1_data_70);

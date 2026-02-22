@@ -102,7 +102,7 @@ HsfData *LoadHSF(void *data)
     MapAttrLoad();
     MotionLoad();
     MatrixLoad();
-#if BYTESWAPPING
+#ifdef BYTESWAPPING
     // to properly set pointers
     ObjectLoad();
 #endif
@@ -218,6 +218,7 @@ static HsfData *SetHsfModel(void)
     data->mapAttr = Model.mapAttr;
     data->mapAttrCnt = Model.mapAttrCnt;
 #ifdef BYTESWAPPING
+    // TODO PC was this created solely for the sake of being able to free it later?
     data->symbol = NSymIndex;
 #endif
     return data;

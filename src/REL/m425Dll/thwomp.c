@@ -1798,13 +1798,13 @@ void fn_1_E210(s32 arg0)
             sp8.z = cosd(var_r31->unk_E4) * cosd(var_r31->unk_E0);
             sp8.y = sind(var_r31->unk_E0);
             VECNormalize(&sp8, &sp8);
-            var_r28 = &Hu3DLocalLight[var_r27->unk_38[0]];
-            var_r28->unk_1C.x = 1000.0f * sp8.x;
-            var_r28->unk_1C.y = 1000.0f * sp8.y;
-            var_r28->unk_1C.z = 1000.0f * sp8.z;
-            var_r28->unk_28.x = sp8.x;
-            var_r28->unk_28.y = sp8.y;
-            var_r28->unk_28.z = sp8.z;
+            var_r28 = &Hu3DLocalLight[var_r27->lLightId[0]];
+            var_r28->pos.x = 1000.0f * sp8.x;
+            var_r28->pos.y = 1000.0f * sp8.y;
+            var_r28->pos.z = 1000.0f * sp8.z;
+            var_r28->dir.x = sp8.x;
+            var_r28->dir.y = sp8.y;
+            var_r28->dir.z = sp8.z;
             var_r31->unk_E8 = var_r31->unk_E0;
             var_r31->unk_EC = var_r31->unk_E4;
         }
@@ -2479,14 +2479,14 @@ s16 fn_1_115D4(ModelData *arg0, Mtx arg1, Mtx arg2, float arg8)
     var_r27 = 0;
     var_r30 = 1;
     for (var_r29 = Hu3DGlobalLight, var_r31 = 0; var_r31 < 8; var_r31++, var_r29++) {
-        if (var_r29->unk_00 != -1) {
+        if (var_r29->type != -1) {
             var_r30 <<= 1;
         }
     }
     if ((arg0->attr & 0x1000) != 0) {
         for (var_r31 = 0; var_r31 < 8; var_r31++) {
-            if (arg0->unk_38[var_r31] != -1) {
-                var_r29 = &Hu3DLocalLight[arg0->unk_38[var_r31]];
+            if (arg0->lLightId[var_r31] != -1) {
+                var_r29 = &Hu3DLocalLight[arg0->lLightId[var_r31]];
                 fn_1_116E4(arg0, var_r29, var_r30, arg2, arg1, arg8);
                 var_r27 |= var_r30;
                 var_r30 <<= 1;
@@ -2498,28 +2498,28 @@ s16 fn_1_115D4(ModelData *arg0, Mtx arg1, Mtx arg2, float arg8)
 
 void fn_1_116E4(ModelData *arg1, LightData *var_r31, s16 sp8, Mtx spC, Mtx sp10, float var_f31)
 {
-    switch ((u8)var_r31->unk_00) {
+    switch ((u8)var_r31->type) {
         case 0:
             GXInitLightAttn(&lbl_1_bss_688, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-            GXInitLightSpot(&lbl_1_bss_688, var_r31->unk_04, var_r31->unk_02);
+            GXInitLightSpot(&lbl_1_bss_688, var_r31->cutoff, var_r31->func);
             break;
         case 1:
             GXInitLightAttn(&lbl_1_bss_688, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-            VECScale(&var_r31->unk_28, &var_r31->unk_1C, -100000.0f);
+            VECScale(&var_r31->dir, &var_r31->pos, -100000.0f);
             break;
         case 2:
             GXInitLightAttn(&lbl_1_bss_688, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-            GXInitLightDistAttn(&lbl_1_bss_688, var_r31->unk_04, var_r31->unk_08, var_r31->unk_02);
+            GXInitLightDistAttn(&lbl_1_bss_688, var_r31->cutoff, var_r31->brightness, var_r31->func);
             break;
     }
-    if ((var_r31->unk_00 & 0x8000) != 0) {
-        MTXMultVec(spC, &var_r31->unk_28, &lbl_1_bss_67C);
-        MTXMultVec(sp10, &var_r31->unk_1C, &lbl_1_bss_670);
+    if ((var_r31->type & 0x8000) != 0) {
+        MTXMultVec(spC, &var_r31->dir, &lbl_1_bss_67C);
+        MTXMultVec(sp10, &var_r31->pos, &lbl_1_bss_670);
         GXInitLightPos(&lbl_1_bss_688, lbl_1_bss_670.x, lbl_1_bss_670.y, lbl_1_bss_670.z);
     }
     else {
-        GXInitLightPos(&lbl_1_bss_688, var_r31->unk_1C.x, var_r31->unk_1C.y, var_r31->unk_1C.z);
-        lbl_1_bss_67C = var_r31->unk_28;
+        GXInitLightPos(&lbl_1_bss_688, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
+        lbl_1_bss_67C = var_r31->dir;
     }
     if (var_f31 == 0.0f) {
         GXInitLightDir(&lbl_1_bss_688, lbl_1_bss_67C.x, lbl_1_bss_67C.y, lbl_1_bss_67C.z);

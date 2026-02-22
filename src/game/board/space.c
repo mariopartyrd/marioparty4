@@ -1043,12 +1043,12 @@ void BoardSpaceInit(s32 data_num)
         AnimData *data;
         void *data_base;
         s32 size;
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
         AnimData anim;
         AnimBmpData bmp_pc;
 #endif
         data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 29), MEMORY_DEFAULT_NUM, HEAP_DATA);
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
         byteswap_animdata(data_base, &anim);
         data = &anim;
 #endif
@@ -1056,7 +1056,7 @@ void BoardSpaceInit(s32 data_num)
         // ignored, we don't need to byteswap these
         data->pat = (void *)((uintptr_t)data_base + (uintptr_t)data->pat);
         data->bank = (void *)((uintptr_t)data_base + (uintptr_t)data->bank);
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
         byteswap_animbmpdata((AnimBmpData32b*)data->bmp, &bmp_pc);
         data->bmp = &bmp_pc;
         bmp = &bmp_pc;
@@ -1090,12 +1090,12 @@ void BoardSpaceInit(s32 data_num)
         AnimData *data;
         void *data_base;
         s32 size;
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
         AnimData anim;
         AnimBmpData bmp_pc;
 #endif
         data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 28), MEMORY_DEFAULT_NUM, HEAP_DATA);
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
         byteswap_animdata(data_base, &anim);
         data = &anim;
 #endif
@@ -1103,7 +1103,7 @@ void BoardSpaceInit(s32 data_num)
         // ignored
         data->pat = (void *)((uintptr_t)data_base + (uintptr_t)data->pat);
         data->bank = (void *)((uintptr_t)data_base + (uintptr_t)data->bank);
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
         byteswap_animbmpdata((AnimBmpData32b*)data->bmp, &bmp_pc);
         data->bmp = &bmp_pc;
         bmp = &bmp_pc;

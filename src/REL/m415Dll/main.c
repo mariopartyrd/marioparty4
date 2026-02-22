@@ -63,7 +63,7 @@ void ObjectSetup(void)
     var_r26 = Hu3DGLightCreateV(&lbl_1_data_0, &lbl_1_data_C, &lbl_1_data_18);
     Hu3DGLightInfinitytSet(var_r26);
     var_r28 = &Hu3DGlobalLight[0];
-    var_r28->unk_00 |= 0x8000;
+    var_r28->type |= 0x8000;
     temp_r30 = omInitObjMan(0x32, 0x2000);
     temp_r27 = frand() & 0x1F;
 
@@ -427,7 +427,7 @@ void fn_1_1960(omObjData *object)
             temp_r29 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
 #ifdef __MWERKS__
             // TODO PC
-            memcpy((*temp_r3)->bmp->data, OSCachedToUncached(Hu3DShadowData.unk_04), temp_r29);
+            memcpy((*temp_r3)->bmp->data, OSCachedToUncached(Hu3DShadowData.buf), temp_r29);
 #endif
         DCStoreRangeNoSync((*temp_r3)->bmp->data, temp_r29);
             break;
@@ -1564,7 +1564,7 @@ s16 fn_1_66AC(void)
     var_r29 = fn_1_9734(var_r30);
     temp_r31 = (*var_r29)->bmp;
     var_r28 = temp_r31->sizeX * temp_r31->sizeY;
-    memcpy(temp_r31->data, Hu3DShadowData.unk_04, var_r28);
+    memcpy(temp_r31->data, Hu3DShadowData.buf, var_r28);
     return var_r30;
 }
 

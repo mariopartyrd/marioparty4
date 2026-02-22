@@ -232,7 +232,7 @@ void fn_1_4FC(omObjData *object)
                 Hu3DGLightColorSet(lbl_1_bss_91A[1], lbl_1_data_3C.r, lbl_1_data_3C.g, lbl_1_data_3C.b, lbl_1_data_3C.a);
                 fn_1_8FF4(0.0625f);
                 Hu3DShadowData.unk_08.x = 135;
-                MTXLightPerspective(Hu3DShadowData.unk_68, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+                MTXLightPerspective(Hu3DShadowData.projMtx, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
                 lbl_1_bss_918 = 1;
                 HuAudFXEmiterPlay(1464, &lbl_1_bss_930[0][0]->trans);
             }
@@ -283,7 +283,7 @@ void fn_1_4FC(omObjData *object)
             if (lbl_1_bss_95C) {
                 if (--lbl_1_bss_95C == 0) {
                     Hu3DShadowData.unk_08.x = 30;
-                    MTXLightPerspective(Hu3DShadowData.unk_68, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+                    MTXLightPerspective(Hu3DShadowData.projMtx, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
                     lbl_1_bss_918 = 0;
                     sp1C.x = 0;
                     sp1C.y = 3000;
@@ -291,7 +291,7 @@ void fn_1_4FC(omObjData *object)
                     sp10.x = 0;
                     sp10.y = 0;
                     sp10.z = 0;
-                    Hu3DShadowPosSet(&sp1C, &Hu3DShadowData.unk_2C, &sp10);
+                    Hu3DShadowPosSet(&sp1C, &Hu3DShadowData.camUp, &sp10);
                     HuAudFXPlay(1470);
                 }
             }
@@ -859,7 +859,7 @@ void fn_1_29DC(omObjData *object)
         sp14.z += 1;
         Hu3DGLightPosSet(lbl_1_bss_91A[1], temp_r29->pos.x, 140, temp_r29->pos.z, 0, 1, 0);
         if (lbl_1_bss_918) {
-            Hu3DShadowPosSet(&sp14, &Hu3DShadowData.unk_2C, &sp8);
+            Hu3DShadowPosSet(&sp14, &Hu3DShadowData.camUp, &sp8);
         }
         object->work[0] += 10.0f;
         Hu3DModelAttrReset(object->model[2], HU3D_ATTR_DISPOFF);

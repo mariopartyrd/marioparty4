@@ -25,7 +25,7 @@
 
 typedef struct M428DllBss13CStruct {
     /* 0x00 */ float unk_00;
-    /* 0x04 */ char pad_04[0x3C]; /* maybe part of unk_00[0x10]? */
+    /* 0x04 */ char pad_04[0x3C]; /* maybe part of type[0x10]? */
 } M428DllBss13CStruct; /* size = 0x40 */
 
 typedef struct M428DllData4B0Struct {

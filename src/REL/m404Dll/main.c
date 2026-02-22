@@ -1491,8 +1491,8 @@ void fn_1_66DC(omObjData *object)
             break;
         case 3:
             Center.x += VERSION_NTSC ? 2.0000002f : 2.4f;
-            Hu3DShadowData.unk_14.x = 1000.0f + var_r31->pos.x;
-            Hu3DShadowData.unk_20.x = Hu3DShadowData.unk_14.x - 1500.0f;
+            Hu3DShadowData.camPos.x = 1000.0f + var_r31->pos.x;
+            Hu3DShadowData.camTarget.x = Hu3DShadowData.camPos.x - 1500.0f;
             break;
         case 6:
             fn_1_648C(1, 1, 0.0f);

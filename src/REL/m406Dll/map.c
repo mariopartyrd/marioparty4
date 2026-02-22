@@ -3244,14 +3244,14 @@ s32 fn_1_CD34(s32 arg0, s32 arg1, s32 arg2)
     var_r29 = &Hu3DData[arg0];
     var_r30 = &Hu3DData[arg2];
     for (var_r31 = 0; var_r31 < 8; var_r31++) {
-        if (var_r30->unk_38[var_r31] == -1) {
+        if (var_r30->lLightId[var_r31] == -1) {
             break;
         }
     }
     if (var_r31 == 8) {
         return -1;
     }
-    var_r30->unk_38[var_r31] = var_r29->unk_38[arg1];
+    var_r30->lLightId[var_r31] = var_r29->lLightId[arg1];
     var_r30->attr |= 0x1000;
     return var_r31;
 }
@@ -3340,8 +3340,8 @@ s16 fn_1_D06C(ModelData *arg0, Mtx arg1, Mtx arg2, float arg8)
     var_r29 = 1;
     if (arg0->attr & 0x1000) {
         for (var_r31 = 0; var_r31 < 8; var_r31++) {
-            if (arg0->unk_38[var_r31] != -1) {
-                var_r27 = &Hu3DLocalLight[arg0->unk_38[var_r31]];
+            if (arg0->lLightId[var_r31] != -1) {
+                var_r27 = &Hu3DLocalLight[arg0->lLightId[var_r31]];
                 fn_1_D13C(var_r27, var_r29, arg2, arg1, arg8);
                 var_r28 |= var_r29;
                 var_r29 <<= 1;
@@ -3357,32 +3357,32 @@ void fn_1_D13C(LightData *arg0, s16 arg1, Mtx arg2, Mtx arg3, float arg8)
     Vec sp24;
     Vec sp18;
 
-    switch ((u8)arg0->unk_00) {
+    switch ((u8)arg0->type) {
         case 0:
             GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-            GXInitLightSpot(&sp30, arg0->unk_04, arg0->unk_02);
+            GXInitLightSpot(&sp30, arg0->cutoff, arg0->func);
             break;
         case 1:
             GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
             GXInitLightSpot(&sp30, 20.0f, GX_SP_COS);
             GXInitLightAttnK(&sp30, 1.0f, 0.0f, 0.0f);
-            VECScale(&arg0->unk_28, &arg0->unk_1C, -1000000.0f);
+            VECScale(&arg0->dir, &arg0->pos, -1000000.0f);
             break;
         case 2:
             GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-            GXInitLightDistAttn(&sp30, arg0->unk_04, arg0->unk_08, arg0->unk_02);
+            GXInitLightDistAttn(&sp30, arg0->cutoff, arg0->brightness, arg0->func);
             break;
         default:
             break;
     }
-    if (arg0->unk_00 & 0x8000) {
-        MTXMultVec(arg2, &arg0->unk_28, &sp24);
-        MTXMultVec(arg3, &arg0->unk_1C, &sp18);
+    if (arg0->type & 0x8000) {
+        MTXMultVec(arg2, &arg0->dir, &sp24);
+        MTXMultVec(arg3, &arg0->pos, &sp18);
         GXInitLightPos(&sp30, sp18.x, sp18.y, sp18.z);
     }
     else {
-        GXInitLightPos(&sp30, arg0->unk_1C.x, arg0->unk_1C.y, arg0->unk_1C.z);
-        sp24 = arg0->unk_28;
+        GXInitLightPos(&sp30, arg0->pos.x, arg0->pos.y, arg0->pos.z);
+        sp24 = arg0->dir;
     }
     if (arg8 == 0.0f) {
         GXInitLightDir(&sp30, sp24.x, sp24.y, sp24.z);

@@ -1682,7 +1682,7 @@ static s32 SetShadowTex(void)
 {
     GXTexObj sp8;
 
-    GXInitTexObj(&sp8, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp8, Hu3DShadowData.buf, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&sp8, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp8, shadowMapNo);
 #ifdef TARGET_PC
@@ -2243,7 +2243,7 @@ void Hu3DDrawPost(void)
                 if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
                     MTXInverse(Hu3DCameraMtx, spF0);
                     MTXConcat(spF0, temp_r28->matrix, sp120);
-                    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp150);
+                    MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, sp150);
                     MTXConcat(sp150, sp120, sp120);
                     GXLoadTexMtxImm(sp120, GX_TEXMTX9, GX_MTX3x4);
                     var_r19 = 1;
@@ -2267,8 +2267,8 @@ void Hu3DDrawPost(void)
                 if ((temp_r28->model->attr & HU3D_ATTR_HILITE) || (Hu3DObjInfoP->flags & 0x8000)) {
                     sp54 = lbl_8011DD20;
                     temp_r22 = &Hu3DGlobalLight[temp_r28->model->unk_03];
-                    sp30 = temp_r22->unk_28;
-                    if (temp_r22->unk_00 & 0x8000) {
+                    sp30 = temp_r22->dir;
+                    if (temp_r22->type & 0x8000) {
                         MTXMultVecSR(Hu3DCameraMtx, &sp30, &sp30);
                     }
                     temp_f30 = VECDotProduct(&sp30, &sp54);
@@ -2389,7 +2389,7 @@ static void ObjDraw(HsfDrawObject *arg0)
     if (Hu3DShadowF != 0 && Hu3DShadowCamBit != 0 && (Hu3DObjInfoP->flags & 8)) {
         MTXInverse(Hu3DCameraMtx, spE0);
         MTXConcat(spE0, arg0->matrix, sp110);
-        MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp140);
+        MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, sp140);
         MTXConcat(sp140, sp110, sp110);
         GXLoadTexMtxImm(sp110, GX_TEXMTX9, GX_MTX3x4);
         var_r22 = 1;
@@ -2413,8 +2413,8 @@ static void ObjDraw(HsfDrawObject *arg0)
     if ((arg0->model->attr & HU3D_ATTR_HILITE) || (Hu3DObjInfoP->flags & 0x8000)) {
         sp44 = lbl_8011DD20;
         temp_r24 = &Hu3DGlobalLight[arg0->model->unk_03];
-        sp20 = temp_r24->unk_28;
-        if (temp_r24->unk_00 & 0x8000) {
+        sp20 = temp_r24->dir;
+        if (temp_r24->type & 0x8000) {
             MTXMultVecSR(Hu3DCameraMtx, &sp20, &sp20);
         }
         temp_f30 = VECDotProduct(&sp20, &sp44);

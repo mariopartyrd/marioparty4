@@ -701,15 +701,15 @@ void fn_1_2ACC(s32 arg0)
         var_r29->unk_60 = 0;
         if ((var_r23 & arg0) != 0) {
             if (var_r30 == 0) {
-                var_r31->unk_04 = Hu3DShadowData.unk_04;
+                var_r31->buf = Hu3DShadowData.buf;
             }
             else {
                 var_r25 = var_r31->unk_02;
-                var_r31->unk_04 = HuMemDirectMallocNum(HEAP_DATA, var_r25 * var_r25, var_r28->unk_48);
+                var_r31->buf = HuMemDirectMallocNum(HEAP_DATA, var_r25 * var_r25, var_r28->unk_48);
             }
         }
         else {
-            var_r31->unk_04 = NULL;
+            var_r31->buf = NULL;
         }
     }
     Hu3DShadowCamBit++;
@@ -727,7 +727,7 @@ void fn_1_2C90(ModelData *model, Mtx matrix)
         for (var_r30 = 0; var_r30 < 0x10; var_r30++) {
             var_r28 = &var_r29->unk_00[var_r30];
             var_r31 = &var_r29->unk_640[var_r30];
-            if ((var_r31->unk_04 != NULL) && !(var_r31->unk_08.x <= 0.0f) && (var_r28->unk_60 > 0)) {
+            if ((var_r31->buf != NULL) && !(var_r31->unk_08.x <= 0.0f) && (var_r28->unk_60 > 0)) {
                 Hu3DShadowData = *var_r31;
                 fn_1_2E2C(var_r30);
                 *var_r31 = Hu3DShadowData;
@@ -738,7 +738,7 @@ void fn_1_2C90(ModelData *model, Mtx matrix)
     }
     var_r28 = &var_r29->unk_00[Hu3DCameraNo];
     var_r31 = &var_r29->unk_640[Hu3DCameraNo];
-    if ((var_r31->unk_04 == NULL) || (var_r31->unk_08.x <= 0.0f)) {
+    if ((var_r31->buf == NULL) || (var_r31->unk_08.x <= 0.0f)) {
         return;
     }
     Hu3DShadowData = *var_r31;
@@ -817,8 +817,8 @@ void fn_1_2E2C(s32 var_r26)
         GXSetViewport(0.0f, 0.0f, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, 0.0f, 1.0f);
         var_r25 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
     }
-    C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.unk_14, &Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_20);
-    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.unk_38);
+    C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.camPos, &Hu3DShadowData.camUp, &Hu3DShadowData.camTarget);
+    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.lookAtMtx);
     shadowModelDrawF = 1;
     GXInvalidateTexAll();
     GXSetFog(GX_FOG_NONE, 0.0f, 0.0f, 0.0f, 0.0f, BGColor);
@@ -889,7 +889,7 @@ void fn_1_2E2C(s32 var_r26)
         GXSetTexCopySrc(0, 0, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02);
         GXSetTexCopyDst(Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_CTF_R8, 0);
     }
-    GXCopyTex(Hu3DShadowData.unk_04, 1);
+    GXCopyTex(Hu3DShadowData.buf, 1);
     GXSetViewport(0.0f, 0.0f, RenderMode->fbWidth, RenderMode->xfbHeight, 0.0f, 1.0f);
     GXSetScissor(0, 0, RenderMode->fbWidth, RenderMode->efbHeight);
     C_MTXOrtho(sp1C, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -945,7 +945,7 @@ void fn_1_3B64(void)
         var_r30 = &var_r31->unk_00[Hu3DCameraNo];
         sp10 = &var_r31->unk_640[Hu3DCameraNo];
         if (var_r30->unk_60 > 0) {
-            GXInitTexObj(&sp14, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, 0);
+            GXInitTexObj(&sp14, Hu3DShadowData.buf, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, 0);
             GXInitTexObjLOD(&sp14, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
             GXLoadTexObj(&sp14, GX_TEXMAP0);
             C_MTXOrtho(sp64, 0.0f, 480.0f, 0.0f, 320.0f, 0.0f, 10.0f);
@@ -1091,7 +1091,7 @@ void fn_1_4324(s32 arg0, Vec *arg1, Vec *arg2, Vec *arg3)
     var_r30 = var_r29->unk_120;
     sp8 = &var_r30->unk_00[arg0];
     var_r31 = &var_r30->unk_640[arg0];
-    var_r31->unk_14 = *arg1;
-    var_r31->unk_20 = *arg3;
-    var_r31->unk_2C = *arg2;
+    var_r31->camPos = *arg1;
+    var_r31->camTarget = *arg3;
+    var_r31->camUp = *arg2;
 }

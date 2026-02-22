@@ -1255,25 +1255,25 @@ void SetObjLightMotion(s16 arg0, HsfTrack *arg1, float arg2)
         }
         switch (arg1->channel) {
             case 8:
-                temp_r31->unk_1C.x = arg2;
+                temp_r31->pos.x = arg2;
                 break;
             case 9:
-                temp_r31->unk_1C.y = arg2;
+                temp_r31->pos.y = arg2;
                 break;
             case 10:
-                temp_r31->unk_1C.z = arg2;
+                temp_r31->pos.z = arg2;
                 break;
             case 11:
-                temp_r31->unk_34.x = arg2;
-                Hu3DGLightPosAimSetV(temp_r30->unk_28[var_r29], &temp_r31->unk_1C, &temp_r31->unk_34);
+                temp_r31->offset.x = arg2;
+                Hu3DGLightPosAimSetV(temp_r30->unk_28[var_r29], &temp_r31->pos, &temp_r31->offset);
                 break;
             case 12:
-                temp_r31->unk_34.y = arg2;
-                Hu3DGLightPosAimSetV(temp_r30->unk_28[var_r29], &temp_r31->unk_1C, &temp_r31->unk_34);
+                temp_r31->offset.y = arg2;
+                Hu3DGLightPosAimSetV(temp_r30->unk_28[var_r29], &temp_r31->pos, &temp_r31->offset);
                 break;
             case 13:
-                temp_r31->unk_34.z = arg2;
-                Hu3DGLightPosAimSetV(temp_r30->unk_28[var_r29], &temp_r31->unk_1C, &temp_r31->unk_34);
+                temp_r31->offset.z = arg2;
+                Hu3DGLightPosAimSetV(temp_r30->unk_28[var_r29], &temp_r31->pos, &temp_r31->offset);
                 break;
         }
     }

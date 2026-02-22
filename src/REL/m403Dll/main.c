@@ -183,7 +183,7 @@ void ObjectSetup(void)
     var_r26 = Hu3DGLightCreateV(&lbl_1_data_4, &lbl_1_data_10, &lbl_1_data_1C);
     Hu3DGLightInfinitytSet(var_r26);
     var_r28 = &Hu3DGlobalLight[0];
-    var_r28->unk_00 |= 0x8000;
+    var_r28->type |= 0x8000;
     temp_r31 = omInitObjMan(50, 0x2000);
     temp_r27 = frand() & 0x1F;
     for (i = 0; i < temp_r27; i++) {

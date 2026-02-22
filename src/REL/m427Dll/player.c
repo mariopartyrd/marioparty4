@@ -2332,14 +2332,14 @@ s32 fn_1_17430(s32 arg0, s32 arg1, s32 arg2)
     var_r29 = &Hu3DData[arg0];
     var_r30 = &Hu3DData[arg2];
     for (var_r31 = 0; var_r31 < 8; var_r31++) {
-        if (var_r30->unk_38[var_r31] == -1) {
+        if (var_r30->lLightId[var_r31] == -1) {
             break;
         }
     }
     if (var_r31 == 8) {
         return -1;
     }
-    var_r30->unk_38[var_r31] = var_r29->unk_38[arg1];
+    var_r30->lLightId[var_r31] = var_r29->lLightId[arg1];
     var_r30->attr |= 0x1000;
     return var_r31;
 }

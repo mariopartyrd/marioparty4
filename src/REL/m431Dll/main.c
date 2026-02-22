@@ -92,7 +92,7 @@ void ObjectSetup(void)
     lbl_1_bss_28 = Hu3DGLightCreateV(&lbl_1_data_0, &lbl_1_data_C, &lbl_1_data_18);
     Hu3DGLightInfinitytSet(lbl_1_bss_28);
     temp_r30 = &Hu3DGlobalLight[lbl_1_bss_28];
-    temp_r30->unk_00 |= 0x8000;
+    temp_r30->type |= 0x8000;
     sp2C.x = sp2C.y = sp2C.z = 0;
     Hu3DGLightPosAimSetV(lbl_1_bss_28, &lbl_1_data_0, &sp2C);
     Hu3DShadowCreate(45, 20, 10000);

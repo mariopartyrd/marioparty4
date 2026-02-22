@@ -122,7 +122,7 @@ void ObjectSetup(void)
     lbl_2_bss_A8 = Hu3DGLightCreateV(&lbl_2_data_14, &lbl_2_data_20, &lbl_2_data_2C);
     Hu3DGLightInfinitytSet(lbl_2_bss_A8);
     light = &Hu3DGlobalLight[lbl_2_bss_A8];
-    light->unk_00 |= 0x8000;
+    light->type |= 0x8000;
     Hu3DCameraCreate(1);
     camera = &Hu3DCamera[0];
     Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
@@ -751,7 +751,7 @@ void fn_2_26E0(omObjData *object)
     Hu3DCameraPosSetV(1, &sp2C, &sp14, &sp20);
     lbl_2_bss_12C = 45;
     Hu3DShadowData.unk_08.x = lbl_2_bss_12C;
-    MTXLightPerspective(Hu3DShadowData.unk_68, lbl_2_bss_12C, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+    MTXLightPerspective(Hu3DShadowData.projMtx, lbl_2_bss_12C, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
     Hu3DCameraPerspectiveSet(1, lbl_2_bss_12C, lbl_2_bss_128, lbl_2_bss_124, 1.2f);
     VECSubtract(&sp20, &sp2C, &sp8);
     VECNormalize(&sp8, &sp8);

@@ -851,7 +851,7 @@ void fn_1_F8A0(ModelData *arg0, Mtx arg1)
     GXLoadNrmMtxImm(sp40, GX_PNMTX0);
     if (Hu3DShadowF && (lbl_1_bss_128[0]->flags & 0x8)) {
         MTXConcat(sp10, spA0.unkC, sp40);
-        MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp70);
+        MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, sp70);
         MTXConcat(sp70, sp40, sp40);
         GXLoadTexMtxImm(sp40, GX_TEXMTX9, GX_MTX3x4);
     }
@@ -915,7 +915,7 @@ void fn_1_FB98(ModelData *arg0, Mtx arg1)
     GXLoadNrmMtxImm(spC0, GX_PNMTX0);
     if (Hu3DShadowF && (lbl_1_bss_128[0]->flags & 0x8)) {
         MTXConcat(sp90, sp120.unkC, spC0);
-        MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, spF0);
+        MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, spF0);
         MTXConcat(spF0, spC0, spC0);
         GXLoadTexMtxImm(spC0, GX_TEXMTX9, GX_MTX3x4);
     }

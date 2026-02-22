@@ -63,7 +63,7 @@ void ObjectSetup(void)
     lbl_1_bss_E = Hu3DGLightCreateV(&lbl_1_data_2C, &lbl_1_data_38, &lbl_1_data_44.unk0);
     Hu3DGLightInfinitytSet(lbl_1_bss_E);
     var_r30 = &Hu3DGlobalLight[lbl_1_bss_E];
-    var_r30->unk_00 |= 0x8000;
+    var_r30->type |= 0x8000;
     sp8.x = sp8.y = sp8.z = 0.0f;
     Hu3DGLightPosAimSetV(lbl_1_bss_E, &lbl_1_data_2C, &sp8);
     Hu3DShadowCreate(45.0f, 20.0f, 10000.0f);
@@ -2052,8 +2052,8 @@ void fn_1_8AC4(Mtx arg0)
     s16 temp_r31;
 
     var_r29 = &Hu3DGlobalLight[0];
-    sp34 = var_r29->unk_28;
-    if ((var_r29->unk_00 & 0x8000) != 0) {
+    sp34 = var_r29->dir;
+    if ((var_r29->type & 0x8000) != 0) {
         MTXMultVecSR(Hu3DCameraMtx, &sp34, &sp34);
     }
     var_f30 = VECDotProduct(&sp34, &sp10);

@@ -24,6 +24,7 @@ static RGBColor XFB_Colors[5] = {
 };
 
 #ifdef TARGET_PC
+// TODO PC?
 u8 Ascii8x8_1bpp[0x800];
 #else
 #include "Ascii8x8_1bpp.inc"

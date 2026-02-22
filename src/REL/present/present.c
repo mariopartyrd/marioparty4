@@ -390,7 +390,7 @@ omObjData *PresentCreate(void)
     Hu3DGLightInfinitytSet(lightId);
     Hu3DGLightStaticSet(lightId, 1);
     lightData = &Hu3DGlobalLight[lightId];
-    lightData->unk_00 |= 0x8000;
+    lightData->type |= 0x8000;
 
     for (i = 0; i < PRESENT_MDL_MAX; i++) {
         work->object[i] = omAddObjEx(presentObjMan, 1003, 1, 0, 1, NULL);

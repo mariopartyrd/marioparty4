@@ -794,7 +794,7 @@ void fn_1_6D5C(void)
     lbl_1_bss_9EC = Hu3DGLightCreateV(&lbl_1_data_138.unk_00, &lbl_1_data_138.unk_0C, &lbl_1_data_138.unk_18);
     Hu3DGLightInfinitytSet(lbl_1_bss_9EC);
     var_r31 = &Hu3DGlobalLight[lbl_1_bss_9EC];
-    var_r31->unk_00 |= 0x8000;
+    var_r31->type |= 0x8000;
 }
 
 void fn_1_6DF0(M420DllUnkMapStruct2 *arg0)

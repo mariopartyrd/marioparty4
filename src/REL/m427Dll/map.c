@@ -566,7 +566,7 @@ void fn_1_3E58(omObjData *arg0)
 
         for (var_r30 = 0; var_r30 < var_r27; var_r30++) {
             temp_r25 = &Hu3DData[sp8[var_r30]];
-            temp_r25->unk_38[4] = temp_r25->unk_38[5] = temp_r25->unk_38[6] = temp_r25->unk_38[7] = -1;
+            temp_r25->lLightId[4] = temp_r25->lLightId[5] = temp_r25->lLightId[6] = temp_r25->lLightId[7] = -1;
         }
 
         for (var_r30 = 0; var_r30 < 2; var_r30++) {
@@ -1321,13 +1321,13 @@ void fn_1_73BC(void)
                     if (var_r30) {
                         var_r30->unk_62 = 0;
                     }
-                    var_r28->unk_38[1] = -1;
+                    var_r28->lLightId[1] = -1;
                     var_r31->unk24[var_r31->unk44[var_r29]] = -1.0f;
                     var_r31->unk44[var_r29] = -1;
                     if (var_r29 == 0) {
                         var_r30 = fn_1_DC0C(lbl_1_bss_E8[var_r31->unk0], var_r31->unk5A);
                         var_r30->unk_62 = 0;
-                        var_r28->unk_38[2] = -1;
+                        var_r28->lLightId[2] = -1;
                         var_r31->unk24[1] = -1.0f;
                     }
                 }
@@ -1368,10 +1368,10 @@ void fn_1_794C(M427DllMapSubstruct3 *arg0, s16 arg1)
                 }
             }
             if (var_r30 != 4) {
-                var_r28->unk_38[1] = arg0->unk34[var_r30];
+                var_r28->lLightId[1] = arg0->unk34[var_r30];
                 arg0->unk24[var_r30] = 0.0f;
                 arg0->unk44[arg1] = var_r30;
-                if (var_r28->unk_38[1] != -1) {
+                if (var_r28->lLightId[1] != -1) {
                     sp14.x = lbl_1_data_144[arg1 + 1].x;
                     sp14.y = lbl_1_data_144[arg1 + 1].y;
                     sp14.z = lbl_1_data_144[arg1 + 1].z;
@@ -1381,7 +1381,7 @@ void fn_1_794C(M427DllMapSubstruct3 *arg0, s16 arg1)
                 arg0->unk3C[var_r30] = fn_1_D430(sp14.x, sp14.y, sp14.z, lbl_1_bss_E8[arg0->unk0]);
                 if (arg1 == 0) {
                     var_r30 = 1;
-                    var_r28->unk_38[2] = arg0->unk34[var_r30];
+                    var_r28->lLightId[2] = arg0->unk34[var_r30];
                     arg0->unk24[var_r30] = 0.0f;
                     sp14.x = lbl_1_data_144[0].x;
                     sp14.y = lbl_1_data_144[0].y;
@@ -1696,7 +1696,7 @@ void fn_1_8E1C(u8 arg0, M427DllMapSubstruct3 *arg1, M427DllMapUNKB8 *arg2)
     var_r27 = &lbl_1_bss_158.unk34C[arg2->unk0];
     var_r25 = &Hu3DData[arg2->unk2];
     if (arg0 == 0) {
-        var_r26 = var_r25->unk_38[arg2->unk4];
+        var_r26 = var_r25->lLightId[arg2->unk4];
     }
     else {
         var_r26 = -1;
@@ -1704,14 +1704,14 @@ void fn_1_8E1C(u8 arg0, M427DllMapSubstruct3 *arg1, M427DllMapUNKB8 *arg2)
     var_r24 = fn_1_10FE8(arg1->unk0, spC);
     for (var_r30 = 0; var_r30 < var_r24; var_r30++) {
         var_r29 = &Hu3DData[spC[var_r30]];
-        var_r29->unk_38[arg2->unk4] = var_r26;
+        var_r29->lLightId[arg2->unk4] = var_r26;
     }
     var_r29 = &Hu3DData[arg1->unk1A];
-    var_r29->unk_38[arg2->unk4] = var_r26;
+    var_r29->lLightId[arg2->unk4] = var_r26;
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
         if (var_r27->unk10[var_r30] != -1) {
             var_r29 = &Hu3DData[arg1->unk2[var_r27->unk10[var_r30]]];
-            var_r29->unk_38[arg2->unk4] = var_r26;
+            var_r29->lLightId[arg2->unk4] = var_r26;
         }
     }
 }
@@ -1790,8 +1790,8 @@ void fn_1_9318(s16 *arg0, s16 arg1)
     for (var_r28 = 1; var_r28 < arg1; var_r28++) {
         var_r29 = &Hu3DData[arg0[var_r28]];
         for (var_r31 = 0; var_r31 < 8; var_r31++) {
-            if (var_r30->unk_38[var_r31] != -1) {
-                var_r29->unk_38[var_r31] = var_r30->unk_38[var_r31];
+            if (var_r30->lLightId[var_r31] != -1) {
+                var_r29->lLightId[var_r31] = var_r30->lLightId[var_r31];
             }
         }
         var_r29->attr |= 0x1000;
@@ -2562,7 +2562,7 @@ s16 fn_1_C41C(float x1, float y1, float z1, float x2, float y2, float z2, u8 r, 
     sp23.b = b;
     sp23.a = 0xFF;
     for (var_r31 = Hu3DLocalLight, var_r30 = 0; var_r30 < 0x20; var_r30++, var_r31++) {
-        if (var_r31->unk_00 == -1) {
+        if (var_r31->type == -1) {
             break;
         }
     }
@@ -2570,7 +2570,7 @@ s16 fn_1_C41C(float x1, float y1, float z1, float x2, float y2, float z2, u8 r, 
         return -1;
     }
     fn_1_C68C(var_r31, &sp34, &sp28, &sp23);
-    var_r31->unk_00 |= 0x8000;
+    var_r31->type |= 0x8000;
     return var_r30;
 }
 
@@ -2595,7 +2595,7 @@ void fn_1_C528(s16 sp8, s16 var_r28, float x1, float y1, float z1, float x2, flo
     sp27.b = b;
     sp27.a = 0xFF;
     for (var_r30 = Hu3DLocalLight, var_r29 = 0; var_r29 < 0x20; var_r29++, var_r30++) {
-        if (var_r30->unk_00 == -1) {
+        if (var_r30->type == -1) {
             break;
         }
     }
@@ -2604,21 +2604,21 @@ void fn_1_C528(s16 sp8, s16 var_r28, float x1, float y1, float z1, float x2, flo
         return;
     }
     fn_1_C68C(var_r30, &sp38, &sp2C, &sp27);
-    if (var_r31->unk_38[var_r28] == -1) {
-        var_r31->unk_38[var_r28] = var_r29;
+    if (var_r31->lLightId[var_r28] == -1) {
+        var_r31->lLightId[var_r28] = var_r29;
         var_r31->attr |= 0x1000;
     }
 }
 
 void fn_1_C68C(LightData *arg0, Vec *arg1, Vec *arg2, GXColor *arg3)
 {
-    arg0->unk_00 = 0;
-    arg0->unk_1C = *arg1;
-    arg0->unk_28 = *arg2;
-    arg0->unk_34.x = arg0->unk_34.y = arg0->unk_34.z = 0.0f;
-    arg0->unk_04 = 30.0f;
-    arg0->unk_02 = 2;
-    VECNormalize(&arg0->unk_28, &arg0->unk_28);
+    arg0->type = 0;
+    arg0->pos = *arg1;
+    arg0->dir = *arg2;
+    arg0->offset.x = arg0->offset.y = arg0->offset.z = 0.0f;
+    arg0->cutoff = 30.0f;
+    arg0->func = 2;
+    VECNormalize(&arg0->dir, &arg0->dir);
     arg0->color.r = arg3->r;
     arg0->color.g = arg3->g;
     arg0->color.b = arg3->b;

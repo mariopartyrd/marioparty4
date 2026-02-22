@@ -123,7 +123,7 @@ void ObjectSetup(void)
     lbl_1_bss_5C[0] = Hu3DGLightCreateV(&lbl_1_data_0, &lbl_1_data_C, &lbl_1_data_24);
     Hu3DGLightInfinitytSet(lbl_1_bss_5C[0]);
     var_r30 = &Hu3DGlobalLight[lbl_1_bss_5C[0]];
-    var_r30->unk_00 |= 0x8000;
+    var_r30->type |= 0x8000;
 
     lbl_1_data_18.x = 55.74f;
     lbl_1_data_18.y = 0.0f;

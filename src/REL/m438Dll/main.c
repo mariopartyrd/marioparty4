@@ -237,7 +237,7 @@ void ObjectSetup(void)
     Hu3DGLightSpotSet(var_r28, 80.0f, 2);
     Hu3DGLightInfinitytSet(var_r28);
     var_r27 = Hu3DGlobalLight;
-    var_r27->unk_00 |= 0x8000;
+    var_r27->type |= 0x8000;
     var_r31 = omInitObjMan(0x32, 0x2000);
     var_r26 = frand() & 0x1F;
     for (var_r30 = 0; var_r30 < var_r26; var_r30++) {

@@ -151,7 +151,7 @@ void fn_1_E790(M438UnkStruct2 *arg0)
                     MTXConcat(Hu3DCameraMtx, sp90, sp30);
                     MTXInverse(Hu3DCameraMtx, sp60);
                     MTXConcat(sp60, sp30, sp60);
-                    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp90);
+                    MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, sp90);
                     MTXConcat(sp90, sp60, sp30);
                     GXLoadTexMtxImm(sp30, texMtxTbl[var_r28], GX_MTX3x4);
                     var_r19 = texMtxTbl[var_r28];
