@@ -1199,13 +1199,13 @@ config.libs = [
     Rel(
         "m422Dll",  # Money Belts
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m422Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m422Dll/main.c"),
         },
     ),
     Rel(
         "m423Dll",  # GOOOOOOOAL!!
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m423Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m423Dll/main.c"),
         },
     ),
     Rel(
