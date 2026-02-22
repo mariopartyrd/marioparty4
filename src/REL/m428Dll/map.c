@@ -21,6 +21,7 @@
 #include "string.h"
 
 #include "REL/m428Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/frand.h"
@@ -596,7 +597,7 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
                 var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = var_r31->unk40.a = 0xFF;
                 var_r31->unk2C = 26.0f + (10.0f * (fn_1_7500() / 65536.0f));
                 var_r31->unk08.x = 0.0f;
-                var_r31->unk08.y = -1.6333333f * (fn_1_7500() / 65536.0f);
+                var_r31->unk08.y = (-98.0f / REFRESH_RATE_F) * (fn_1_7500() / 65536.0f);
                 var_r31->unk08.z = 0.0f;
                 var_r31->unk14.x = var_r31->unk14.y = var_r31->unk14.z = 0.0f;
                 var_r31->unk30 = 360.0f * (fn_1_7500() / 65536.0f);
@@ -606,7 +607,7 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
                 var_r31->unk00 = 0;
                 var_r31->unk40.a = 0;
                 var_r31->unk08.x = 0.0f;
-                var_r31->unk08.y = -1.6333333f * (fn_1_7500() / 65536.0f);
+                var_r31->unk08.y = (-98.0f / REFRESH_RATE_F) * (fn_1_7500() / 65536.0f);
                 var_r31->unk08.z = 0.0f;
                 var_r31->unk14.x = var_r31->unk14.y = var_r31->unk14.z = 0.0f;
             }
@@ -655,7 +656,7 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
                     var_r31->unk34.z = var_r30->unk_1C + (var_f28 * (fn_1_7500() / 65536.0f));
                     var_r31->unk2C = 28.0f + (10.0f * (fn_1_7500() / 65536.0f));
                     var_r31->unk08.x = 0.0f;
-                    var_r31->unk08.y = -1.6333333f * (fn_1_7500() / 65536.0f);
+                    var_r31->unk08.y = (-98.0f / REFRESH_RATE_F) * (fn_1_7500() / 65536.0f);
                     var_r31->unk08.z = 0.0f;
                     var_r31->unk08.x = 0.25f * var_r31->unk08.y * ((fn_1_7500() - 0x8000) / 32768.0f);
                     var_r31->unk14.x = var_r31->unk14.y = var_r31->unk14.z = 0.0f;
@@ -666,12 +667,12 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
                 }
                 break;
             case 1:
-                var_r31->unk08.y += -1.6333333f;
-                var_r31->unk08.y += 0.19998f * (1.6333333f * (4.81f + (0.005f * var_r31->unk2C)));
+                var_r31->unk08.y += (-98.0f / REFRESH_RATE_F);
+                var_r31->unk08.y += 0.19998f * ((98.0f / REFRESH_RATE_F) * (4.81f + (0.005f * var_r31->unk2C)));
                 if (var_r31->unk02 != 0) {
                     var_r31->unk02--;
                     var_r31->unk08.y *= 0.8f;
-                    var_r31->unk08.y += 0.0025f * (-1.6333333f * var_r31->unk2C);
+                    var_r31->unk08.y += 0.0025f * ((-98.0f / REFRESH_RATE_F) * var_r31->unk2C);
                 }
                 else if ((fn_1_7500() & 0x7F) == 0) {
                     var_r31->unk02 = (s32)(30.0f * (fn_1_7500() / 65536.0f));
@@ -683,7 +684,7 @@ void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix)
                     var_f26 = var_r31->unk08.x;
                 }
                 if (var_f26 < 0.02f) {
-                    var_r31->unk14.x = 0.025f * (var_r31->unk2C * (-1.6333333f * ((fn_1_7500() - 0x8000) / 32768.0f)));
+                    var_r31->unk14.x = 0.025f * (var_r31->unk2C * ((-98.0f / REFRESH_RATE_F) * ((fn_1_7500() - 0x8000) / 32768.0f)));
                     if (var_r31->unk14.x > 0.0f) {
                         var_r31->unk08.x = 0.02f + (0.04f * var_r31->unk14.x);
                     }

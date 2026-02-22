@@ -19,6 +19,7 @@
 #include "string.h"
 
 #include "REL/m428Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/ClusterExec.h"
@@ -79,6 +80,9 @@ s32 lbl_1_bss_60;
 float lbl_1_bss_58[2];
 s16 lbl_1_bss_50[4];
 s16 lbl_1_bss_48[4];
+#if VERSION_PAL
+s32 lbl_1_bss_pal[2];
+#endif
 s32 lbl_1_bss_38[4];
 float lbl_1_bss_28[4];
 s32 lbl_1_bss_24;
@@ -224,25 +228,25 @@ void fn_1_478(omObjData *object)
             }
             break;
         case 2:
-            if (++lbl_1_bss_78 == 0x78) {
+            if (++lbl_1_bss_78 == REFRESH_RATE * 2) {
                 sp2C.x = lbl_1_data_0[2].unk_00.x;
                 sp2C.y = lbl_1_data_0[2].unk_00.y;
                 sp2C.z = lbl_1_data_0[2].unk_00.z;
                 sp38.x = lbl_1_data_0[2].unk_0C.x;
                 sp38.y = lbl_1_data_0[2].unk_0C.y;
                 sp38.z = lbl_1_data_0[2].unk_0C.z;
-                fn_1_9A30(0, 300.0f, &sp38, &sp2C, lbl_1_data_0[2].unk_18);
-                fn_1_9A30(1, 300.0f, &sp38, &sp2C, lbl_1_data_0[2].unk_18);
+                fn_1_9A30(0, (REFRESH_RATE_F * 5), &sp38, &sp2C, lbl_1_data_0[2].unk_18);
+                fn_1_9A30(1, (REFRESH_RATE_F * 5), &sp38, &sp2C, lbl_1_data_0[2].unk_18);
             }
-            if ((fn_1_F354() != 0) && (lbl_1_bss_78 >= 0x78)) {
+            if ((fn_1_F354() != 0) && (lbl_1_bss_78 >= REFRESH_RATE * 2)) {
                 sp2C.x = lbl_1_data_0[1].unk_00.x;
                 sp2C.y = lbl_1_data_0[1].unk_00.y;
                 sp2C.z = lbl_1_data_0[1].unk_00.z;
                 sp38.x = lbl_1_data_0[1].unk_0C.x;
                 sp38.y = lbl_1_data_0[1].unk_0C.y;
                 sp38.z = lbl_1_data_0[1].unk_0C.z;
-                fn_1_9A30(0, 42.0f, &sp38, &sp2C, lbl_1_data_0[1].unk_18);
-                fn_1_9A30(1, 42.0f, &sp38, &sp2C, lbl_1_data_0[1].unk_18);
+                fn_1_9A30(0, (0.7f * REFRESH_RATE_F), &sp38, &sp2C, lbl_1_data_0[1].unk_18);
+                fn_1_9A30(1, (0.7f * REFRESH_RATE_F), &sp38, &sp2C, lbl_1_data_0[1].unk_18);
                 lbl_1_bss_84 = MGSeqCreate(3, 0);
                 lbl_1_bss_7C = 3;
                 lbl_1_bss_78 = 0;
@@ -263,12 +267,16 @@ void fn_1_478(omObjData *object)
                 lbl_1_bss_84 = -1;
                 lbl_1_bss_7C = 4;
                 lbl_1_bss_78 = 0;
-                lbl_1_bss_74 = 180.0f + 120.0f * (0.007874016f * (frand() & 0x7F));
-                lbl_1_bss_70 = 90.0f + 60.0f * (0.007874016f * (frand() & 0x7F));
-                lbl_1_bss_6C = 45.0f + (120.0f * (0.007874016f * (frand() & 0x7F)));
+                lbl_1_bss_74 = (REFRESH_RATE_F * 3) + (REFRESH_RATE_F * 2) * (0.007874016f * (frand() & 0x7F));
+                lbl_1_bss_70 = (REFRESH_RATE_F * 1.5f) + (REFRESH_RATE_F) * (0.007874016f * (frand() & 0x7F));
+                lbl_1_bss_6C = (0.75f * REFRESH_RATE_F) + ((REFRESH_RATE_F * 2) * (0.007874016f * (frand() & 0x7F)));
+#if VERSION_PAL
+                lbl_1_bss_pal[0] = 0;
+                lbl_1_bss_pal[1] = 0;
+#endif
                 lbl_1_bss_58[0] = 15.0f;
                 lbl_1_bss_58[1] = 15.0f;
-                lbl_1_bss_68 = 0x4650;
+                lbl_1_bss_68 = REFRESH_RATE_F * 300.0f;
             }
             break;
         case 4:
@@ -281,7 +289,12 @@ void fn_1_478(omObjData *object)
                     else {
                         var_r30 = 1;
                     }
-                    if (var_r29 <= (15.0f + (21.0f + lbl_1_bss_6C))) {
+#if VERSION_PAL
+#define _VALUE 20.0f
+#else
+#define _VALUE 15.0f
+#endif
+                    if (var_r29 <= (_VALUE + ((0.35f * REFRESH_RATE_F) + lbl_1_bss_6C))) {
                         fn_1_9DE8(var_r31, 15.0f, 1);
                         fn_1_11754(var_r31, 0.05f);
                         if (var_r29 == 0) {
@@ -297,8 +310,14 @@ void fn_1_478(omObjData *object)
                             if (var_r30 == 1) {
                                 fn_1_F46C(var_r31, var_r30);
                             }
+#if VERSION_PAL
+                            lbl_1_bss_pal[var_r31] = 0;
                         }
-                        else if (var_r29 == (21.0f + lbl_1_bss_6C)) {
+                        else if (lbl_1_bss_pal[var_r31] == 0 && var_r29 >= (s32)(lbl_1_bss_6C + 17.5f)) {
+                            lbl_1_bss_pal[var_r31] = 1;
+#else
+                        } else if (var_r29 == (21.0f + lbl_1_bss_6C)) {
+#endif
                             if (var_r30 == 0) {
                                 fn_1_F454(var_r31, 2);
                             }
@@ -315,7 +334,7 @@ void fn_1_478(omObjData *object)
                     }
                     else {
                         fn_1_9DE8(var_r31, lbl_1_bss_58[var_r31], 1);
-                        if ((var_r29 < ((15.0f + lbl_1_bss_6C + lbl_1_bss_70) - 6.0f)) && (var_r30 == 1)) {
+                        if ((var_r29 < ((_VALUE + lbl_1_bss_6C + lbl_1_bss_70) - (REFRESH_RATE_F / 10))) && (var_r30 == 1)) {
                             var_f31 = 0.10000000149011612 * sind((20.0f * var_r29));
                             fn_1_11754(var_r31, 0.3f + var_f31);
                         }
@@ -327,11 +346,11 @@ void fn_1_478(omObjData *object)
                         }
                     }
                 }
-                if (var_r29 == (15.0f + lbl_1_bss_6C + lbl_1_bss_70)) {
+                if (var_r29 == (_VALUE + lbl_1_bss_6C + lbl_1_bss_70)) {
                     fn_1_F454(0, 6);
                     fn_1_F454(1, 6);
                 }
-                else if (var_r29 > (15.0f + lbl_1_bss_6C + lbl_1_bss_70)) {
+                else if (var_r29 > (_VALUE + lbl_1_bss_6C + lbl_1_bss_70)) {
                     fn_1_9EA8(0);
                     fn_1_9EA8(1);
                     fn_1_11754(0, 0.0f);
@@ -347,9 +366,9 @@ void fn_1_478(omObjData *object)
                         lbl_1_bss_58[0] = lbl_1_bss_58[1] = 60.0f;
                     }
                     lbl_1_bss_78 = 0;
-                    lbl_1_bss_74 = 180.0f + 120.0f * (0.007874016f * (frand() & 0x7F));
-                    lbl_1_bss_70 = 90.0f + 60.0f * (0.007874016f * (frand() & 0x7F));
-                    lbl_1_bss_6C = 45.0f + (120.0f * (0.007874016f * (frand() & 0x7F)));
+                    lbl_1_bss_74 = (REFRESH_RATE_F * 3) + (REFRESH_RATE_F * 2) * (0.007874016f * (frand() & 0x7F));
+                    lbl_1_bss_70 = (REFRESH_RATE_F * 1.5f) + (REFRESH_RATE_F) * (0.007874016f * (frand() & 0x7F));
+                    lbl_1_bss_6C = (REFRESH_RATE_F * 0.75f) + ((REFRESH_RATE_F * 2) * (0.007874016f * (frand() & 0x7F)));
                 }
                 for (var_r31 = 0; var_r31 < 2; var_r31++) {
                     if (lbl_1_bss_58[var_r31] < 60.0f) {
@@ -358,7 +377,7 @@ void fn_1_478(omObjData *object)
                     else {
                         var_r30 = 1;
                     }
-                    if ((var_r29 <= (15.0f + (21.0f + lbl_1_bss_6C))) || (var_r30 < 1)) {
+                    if ((var_r29 <= (_VALUE + ((0.35f * REFRESH_RATE_F) + lbl_1_bss_6C))) || (var_r30 < 1)) {
                         if (lbl_1_bss_28[var_r31 + 1] < 0.5f) {
                             lbl_1_bss_28[var_r31 + 1] += 0.1f;
                         }
@@ -376,6 +395,7 @@ void fn_1_478(omObjData *object)
                     }
                 }
             }
+#undef _VALUE
             else {
                 if (lbl_1_bss_28[1] > 0.0f) {
                     lbl_1_bss_28[1] -= 0.01f;
@@ -398,11 +418,11 @@ void fn_1_478(omObjData *object)
                 HuAudFXVolSet(lbl_1_bss_38[2], (s32)(127.0f * lbl_1_bss_28[2]));
                 HuAudFXPitchSet(lbl_1_bss_38[2], (s32)(8191.0f * lbl_1_bss_28[2]));
             }
-            if ((lbl_1_bss_68 <= 1800.0f) && (lbl_1_bss_80 == -1)) {
-                lbl_1_bss_80 = MGSeqCreate(1, lbl_1_bss_68 / 60, -1, -1);
+            if ((lbl_1_bss_68 <= (REFRESH_RATE_F * 30)) && (lbl_1_bss_80 == -1)) {
+                lbl_1_bss_80 = MGSeqCreate(1, lbl_1_bss_68 / REFRESH_RATE, -1, -1);
             }
             if (lbl_1_bss_80 != -1) {
-                var_r28 = (lbl_1_bss_68 + 0x3B) / 60;
+                var_r28 = (lbl_1_bss_68 + REFRESH_RATE - 1) / REFRESH_RATE;
                 if (var_r28 < 0) {
                     var_r28 = 0;
                 }
@@ -458,7 +478,7 @@ void fn_1_478(omObjData *object)
             if ((lbl_1_bss_64 == -1) || (lbl_1_bss_84 == -1) || (MGSeqStatGet(lbl_1_bss_84) == 0)) {
                 if (lbl_1_bss_64 != -1) {
                     lbl_1_bss_84 = -1;
-                    WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 0x1E);
+                    WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, REFRESH_RATE / 2);
                     WipeColorSet(0xFF, 0xFF, 0xFF);
                     lbl_1_bss_20 = 1;
                 }
@@ -496,7 +516,7 @@ void fn_1_478(omObjData *object)
                 }
             }
             else if (lbl_1_bss_78 >= 0xA) {
-                WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 0x3C);
+                WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, REFRESH_RATE);
                 WipeColorSet(0xFF, 0xFF, 0xFF);
                 lbl_1_bss_20 = 0;
                 lbl_1_bss_38[3] = HuAudFXPlay(0x662);
@@ -506,19 +526,19 @@ void fn_1_478(omObjData *object)
             break;
         case 8:
             if (lbl_1_bss_64 == 0) {
-                if (++lbl_1_bss_78 >= 120.0f) {
+                if (++lbl_1_bss_78 >= REFRESH_RATE_F * 2) {
                     lbl_1_bss_7C = 9;
                     lbl_1_bss_78 = 0;
                 }
             }
             else if (lbl_1_bss_64 == 1) {
-                if (++lbl_1_bss_78 >= 120.0f) {
+                if (++lbl_1_bss_78 >= REFRESH_RATE_F * 2) {
                     lbl_1_bss_7C = 9;
                     lbl_1_bss_78 = 0;
                 }
             }
             else {
-                if (++lbl_1_bss_78 >= 60.0f) {
+                if (++lbl_1_bss_78 >= REFRESH_RATE_F) {
                     lbl_1_bss_7C = 9;
                     lbl_1_bss_78 = 0;
                 }
@@ -549,7 +569,7 @@ void fn_1_478(omObjData *object)
             }
             break;
         case 10:
-            if (++lbl_1_bss_68 >= 210.0f) {
+            if (++lbl_1_bss_68 >= REFRESH_RATE_F * 3.5f) {
                 lbl_1_bss_84 = -1;
                 lbl_1_bss_7C = 0xB;
                 lbl_1_bss_68 = 0;

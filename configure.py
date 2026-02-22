@@ -1241,9 +1241,9 @@ config.libs = [
     Rel(
         "m428Dll",  # Cliffhangers
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m428Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m428Dll/map.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m428Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m428Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m428Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m428Dll/player.c"),
         },
     ),
     Rel(
