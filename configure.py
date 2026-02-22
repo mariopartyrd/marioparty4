@@ -1571,7 +1571,7 @@ config.libs = [
     Rel(
         "mstory4Dll",
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/mstory4Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mstory4Dll/main.c"),
         },
     ),
     Rel(
@@ -1587,7 +1587,7 @@ config.libs = [
     ),
     Rel(
         "nisDll",
-        objects={Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/nisDll/main.c")},
+        objects={Object(Matching, "REL/nisDll/main.c")},
     ),
     Rel(
         "option",
