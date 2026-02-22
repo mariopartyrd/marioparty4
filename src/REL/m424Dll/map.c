@@ -111,8 +111,8 @@ void fn_1_1E1C(omObjData *arg0)
         case 3:
         case 4:
             temp_r31->unk0 += 0.001f;
-            if (temp_r31->unk0 > 2.4f * REFRESH_FREQ) {
-                temp_r31->unk0 = 2.4f * REFRESH_FREQ;
+            if (temp_r31->unk0 > 12.0f / (REFRESH_RATE_F * 5.0f)) {
+                temp_r31->unk0 = 12.0f / (REFRESH_RATE_F * 5.0f);
             }
             if (temp_r31->unk38 != -1)
                 break;
@@ -125,7 +125,7 @@ void fn_1_1E1C(omObjData *arg0)
                 if (temp_r31->unk0 < 0.01f) {
                     temp_r31->unk0 = 0.0f;
                 }
-                temp_f31 = temp_r31->unk0 / (2.4f * REFRESH_FREQ);
+                temp_f31 = temp_r31->unk0 / (12.0f / (REFRESH_RATE_F * 5.0f));
                 if (temp_r31->unk38 != -1) {
                     HuAudFXVolSet(temp_r31->unk38, (s16)(-8191.0f * (1.0f - temp_f31)));
                     HuAudFXPitchSet(temp_r31->unk38, (s16)(127.0f * temp_f31));
