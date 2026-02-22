@@ -653,7 +653,7 @@ void Hu3DModelKill(s16 arg0) {
         HuMemDirectFree(temp_r31->hsfData);
         HuMemDirectFreeNum(HEAP_DATA, temp_r31->unk_48);
         for (i = 0; i < temp_r31->lightNum; i++) {
-            Hu3DGLightKill(temp_r31->unk_28[i]);
+            Hu3DGLightKill(temp_r31->lightId[i]);
         }
         for (i = 0; i < 8; i++) {
             if (temp_r31->lLightId[i] != -1) {
@@ -1804,7 +1804,7 @@ s32 Hu3DModelLightInfoSet(s16 modelId, s16 staticF) {
                                 lightDir.x, lightDir.y, lightDir.z, spE, spD, spC);
 
 
-        modelP->unk_28[lightNum] = lightId;
+        modelP->lightId[lightNum] = lightId;
         lightP = &Hu3DGlobalLight[lightId];
         Hu3DGLightStaticSet(lightId, staticF);
         switch (obj->light.type) {
@@ -1828,73 +1828,73 @@ s32 Hu3DModelLightInfoSet(s16 modelId, s16 staticF) {
     return lightNum;
 }
 
-s16 Hu3DLightSet(ModelData* arg0, Mtx *arg1, Mtx *arg2, f32 arg8) {
-    s16 var_r30;
-    LightData* var_r29;
-    s16 var_r28;
+s16 Hu3DLightSet(ModelData* modelP, Mtx *cameraMtx, Mtx *cameraMtxPose, f32 hilitePower) {
+    s16 bit;
+    LightData* lightP;
+    s16 lightBit;
     s16 i;
 
-    var_r28 = 0;
-    var_r30 = 1;
-    var_r29 = Hu3DGlobalLight;
-    
-    for (i = 0; i < 8; i++, var_r29++) {
-        if (var_r29->type != -1) {
-            lightSet(var_r29, var_r30, arg2, arg1, arg8);
-            var_r28 |= var_r30;
-            var_r30 <<= 1;
+    lightBit = 0;
+    bit = 1;
+    lightP = Hu3DGlobalLight;
+
+    for (i = 0; i < 8; i++, lightP++) {
+        if (lightP->type != -1) {
+            lightSet(lightP, bit, cameraMtxPose, cameraMtx, hilitePower);
+            lightBit |= bit;
+            bit <<= 1;
         }
     }
-    if ((arg0->attr & HU3D_ATTR_LLIGHT) != 0) {
+    if ((modelP->attr & HU3D_ATTR_LLIGHT) != 0) {
         for (i = 0; i < 8; i++) {
-            if (arg0->lLightId[i] != -1) {
-                var_r29 = &Hu3DLocalLight[arg0->lLightId[i]];
-                lightSet(var_r29, var_r30, arg2, arg1, arg8);
-                var_r28 |= var_r30;
-                var_r30 <<= 1;
+            if (modelP->lLightId[i] != -1) {
+                lightP = &Hu3DLocalLight[modelP->lLightId[i]];
+                lightSet(lightP, bit, cameraMtxPose, cameraMtx, hilitePower);
+                lightBit |= bit;
+                bit <<= 1;
             }
         }
     }
-    return var_r28;
+    return lightBit;
 }
 
-void lightSet(LightData* arg0, s16 arg1, Mtx *arg2, Mtx *arg3, f32 arg8) {
-    GXLightObj sp30;
-    Point3d sp24;
-    Point3d sp18;
+void lightSet(LightData* lightP, s16 lightBit, Mtx *cameraMtx, Mtx *cameraMtxXPose, f32 hilitePower) {
+    GXLightObj lightObj;
+    Point3d dir;
+    Point3d pos;
 
-    switch ((u8)arg0->type) {
+    switch ((u8)lightP->type) {
     case 0:
-        GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-        GXInitLightSpot(&sp30, arg0->cutoff, arg0->func);
+        GXInitLightAttn(&lightObj, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
+        GXInitLightSpot(&lightObj, lightP->cutoff, lightP->func);
         break;
     case 1:
-        GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-        GXInitLightSpot(&sp30, 20.0f, GX_SP_COS);
-        GXInitLightAttnK(&sp30, 1.0f, 0.0f, 0.0f);
-        VECScale(&arg0->dir, &arg0->pos, -1000000.0f);
+        GXInitLightAttn(&lightObj, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
+        GXInitLightSpot(&lightObj, 20.0f, GX_SP_COS);
+        GXInitLightAttnK(&lightObj, 1.0f, 0.0f, 0.0f);
+        VECScale(&lightP->dir, &lightP->pos, -1000000.0f);
         break;
     case 2:
-        GXInitLightAttn(&sp30, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        GXInitLightDistAttn(&sp30, arg0->cutoff, arg0->brightness, arg0->func);
+        GXInitLightAttn(&lightObj, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        GXInitLightDistAttn(&lightObj, lightP->cutoff, lightP->brightness, lightP->func);
         break;
     }
-    if ((arg0->type & 0x8000) != 0) {
-        MTXMultVec(*arg2, &arg0->dir, &sp24);
-        MTXMultVec(*arg3, &arg0->pos, &sp18);
-        GXInitLightPos(&sp30, sp18.x, sp18.y, sp18.z);
+    if ((lightP->type & 0x8000) != 0) {
+        MTXMultVec(*cameraMtx, &lightP->dir, &dir);
+        MTXMultVec(*cameraMtxXPose, &lightP->pos, &pos);
+        GXInitLightPos(&lightObj, pos.x, pos.y, pos.z);
     } else {
-        GXInitLightPos(&sp30, arg0->pos.x, arg0->pos.y, arg0->pos.z);
-        sp24 = arg0->dir;
+        GXInitLightPos(&lightObj, lightP->pos.x, lightP->pos.y, lightP->pos.z);
+        dir = lightP->dir;
     }
-    if (0.0f == arg8) {
-        GXInitLightDir(&sp30, sp24.x, sp24.y, sp24.z);
+    if (0.0f == hilitePower) {
+        GXInitLightDir(&lightObj, dir.x, dir.y, dir.z);
     } else {
-        GXInitSpecularDir(&sp30, sp24.x, sp24.y, sp24.z);
-        GXInitLightAttn(&sp30, 0.0f, 0.0f, 1.0f, arg8 / 2, 0.0f, 1.0f - (arg8 / 2));
+        GXInitSpecularDir(&lightObj, dir.x, dir.y, dir.z);
+        GXInitLightAttn(&lightObj, 0.0f, 0.0f, 1.0f, hilitePower / 2, 0.0f, 1.0f - (hilitePower / 2));
     }
-    GXInitLightColor(&sp30, arg0->color);
-    GXLoadLightObjImm(&sp30, arg1);
+    GXInitLightColor(&lightObj, lightP->color);
+    GXLoadLightObjImm(&lightObj, lightBit);
 }
 
 void Hu3DReflectMapSet(AnimData* arg0) {

@@ -103,7 +103,7 @@ struct model_data {
     u16 camera;
     s16 unk_24;
     u16 lightNum;
-    u16 unk_28[8];
+    u16 lightId[8];
     s16 lLightId[8];
     uintptr_t unk_48;
     uintptr_t unk_4C;
@@ -283,7 +283,7 @@ void Hu3DGLightStaticSet(s16, s32);
 void Hu3DLLightStaticSet(s16, s16, s32);
 s32 Hu3DModelLightInfoSet(s16, s16);
 s16 Hu3DLightSet(ModelData *, Mtx *, Mtx *, float);
-void lightSet(LightData *arg0, s16 arg1, Mtx *arg2, Mtx *arg3, float arg8);
+void lightSet(LightData *lightP, s16 lightBit, Mtx *cameraMtx, Mtx *cameraMtxXPose, float hilitePower);
 #ifndef __MWERKS__
 void Hu3DReflectMapSet(AnimData* arg0);
 #endif
