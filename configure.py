@@ -1543,7 +1543,7 @@ config.libs = [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mpexDll/main.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mpexDll/mpex.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mpexDll/charsel.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/mpexDll/mgname.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/mpexDll/mgname.c"),
         },
     ),
     Rel(
