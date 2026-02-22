@@ -11,6 +11,7 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "string.h"
+#include "version.h"
 
 // STRUCT
 typedef struct _M424DllBallStruct {
@@ -291,8 +292,8 @@ void fn_1_2E3C(omObjData *object)
                 }
                 else {
                     temp_r31->unkC = 0;
-                    temp_r31->unk20 += 3.0f;
-                    temp_r31->unk4C.y += -1.46f;
+                    temp_r31->unk20 += VERSION_PAL ? 3.6000001f : 3.0f; // 180.0f * REFRESH_FREQ, doesn't match PAL
+                    temp_r31->unk4C.y += VERSION_PAL ? -1.7520001f : -1.46f; // −87.6f * REFRESH_FREQ, doesn't match PAL
                     if (temp_r31->unk1 != 5) {
                         temp_r31->unk18 = 6;
                     }
@@ -436,16 +437,16 @@ void fn_1_37FC(omObjData *object)
                 var_r27 = 1;
             }
             if (temp_r31->unkC != 0) {
-                temp_r31->unk4C.y = -2.4333334f;
+                temp_r31->unk4C.y = -146.0f / REFRESH_RATE_F;
             }
             else {
-                temp_r31->unk4C.y += -2.4333334f;
+                temp_r31->unk4C.y += -146.0f / REFRESH_RATE_F;
             }
             break;
         case 3:
             var_r27 = 0;
             if ((Hu3DData[temp_r25].unk_0C == -1) && (CharModelMotionEndCheck(temp_r31->unk1) != 0)) {
-                temp_r31->unk4C.y += -2.4333334f;
+                temp_r31->unk4C.y += -146.0f / REFRESH_RATE_F;
             }
             else {
                 temp_r31->unk4C.y = 0.0f;
@@ -466,7 +467,7 @@ void fn_1_37FC(omObjData *object)
             }
             break;
         case 4:
-            temp_r31->unk4C.y += -2.4333334f;
+            temp_r31->unk4C.y += -146.0f / REFRESH_RATE_F;
             if ((temp_r31->unkC != 0) && (CharModelMotionEndCheck(temp_r31->unk1) != 0)) {
                 var_r28 = 5;
                 var_r27 = 0;
@@ -492,7 +493,7 @@ void fn_1_37FC(omObjData *object)
             if (temp_r31->unkE8 == 1) {
                 temp_r31->unkEC = HuAudCharVoicePlay(temp_r31->unk1, 0x11A);
             }
-            else if ((temp_r31->unkE8 > 90.0f) && (temp_r31->unkEC != -1)) {
+            else if ((temp_r31->unkE8 > REFRESH_RATE_F * 1.5f) && (temp_r31->unkEC != -1)) {
                 HuAudFXStop(temp_r31->unkEC);
                 temp_r31->unkEC = -1;
             }
@@ -501,7 +502,7 @@ void fn_1_37FC(omObjData *object)
         case 8:
         case 9:
             var_r27 = 0;
-            temp_r31->unk4C.y = -2.4333334f;
+            temp_r31->unk4C.y = -146.0f / REFRESH_RATE_F;
             break;
         case 10:
             var_r28 = 10;
@@ -644,7 +645,7 @@ void fn_1_469C(omObjData *object)
         case 3:
             var_r30 = 2;
             var_r28 = 1;
-            temp_r31->unk4C.y = -2.4333334f;
+            temp_r31->unk4C.y = -146.0f / REFRESH_RATE_F;
             if ((fn_1_627C() & 0xF) == 0) {
                 temp_r31->unk24 = (180.0f * ((fn_1_627C() - 0x8000) / 32768.0f));
             }
@@ -652,7 +653,7 @@ void fn_1_469C(omObjData *object)
         case 1:
             var_r30 = 1;
             var_r28 = 1;
-            temp_r31->unk4C.y = -2.4333334f;
+            temp_r31->unk4C.y = -146.0f / REFRESH_RATE_F;
             if ((fn_1_627C() & 0x3F) == 0) {
                 temp_r31->unk24 = (180.0f * ((fn_1_627C() - 0x8000) / 32768.0f));
             }
@@ -662,7 +663,7 @@ void fn_1_469C(omObjData *object)
             var_r28 = 1;
 
             temp_r31->unk4C.x = temp_r31->unk4C.z = 0.0f;
-            temp_r31->unk4C.y += -0.97333336f;
+            temp_r31->unk4C.y += VERSION_PAL ? -1.1680001f : -0.97333336f; // −58.4f * REFRESH_FREQ, doesn't match PAL
             break;
     }
     temp_r31->unk40.y = fn_1_640C(temp_r31->unk40.y, temp_r31->unk24, 0.95f);
@@ -754,7 +755,7 @@ void fn_1_4A90(s16 arg0)
                     var_r31->unk84 = var_r31->unk6C;
                     break;
                 case 4:
-                    var_r31->unk6C.y += -2.4333334f;
+                    var_r31->unk6C.y += -146.0f / REFRESH_RATE_F;
                     var_r31->unk6C.x = var_r31->unk6C.z = 0.0f;
                     var_r31->unk84 = var_r31->unk6C;
                     break;

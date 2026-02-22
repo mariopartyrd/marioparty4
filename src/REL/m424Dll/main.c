@@ -6,6 +6,7 @@
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/wipe.h"
+#include "version.h"
 
 // BSS
 Process* lbl_1_bss_4C;
@@ -156,7 +157,7 @@ void fn_1_41C(omObjData* object) {
             }
             break;
         case 2:
-            if (++lbl_1_bss_3C >= 120.0f) {
+            if (++lbl_1_bss_3C >= REFRESH_RATE_F * 2) {
                 lbl_1_bss_48 = MGSeqCreate(3, 0);
                 lbl_1_bss_40 = 3;
                 lbl_1_bss_3C = 0;
@@ -165,7 +166,7 @@ void fn_1_41C(omObjData* object) {
             break;
         case 3:
             lbl_1_bss_34++;
-            var_f31 = lbl_1_bss_34 / 60.0f;
+            var_f31 = lbl_1_bss_34 / REFRESH_RATE_F;
             if (var_f31 > 1.0f) {
                 var_f31 = 1.0f;
             }
@@ -180,17 +181,17 @@ void fn_1_41C(omObjData* object) {
                 var_r31 = 0;
             }
             if ((lbl_1_bss_48 == -1) || (var_r31 == 0)) {
-                if (lbl_1_bss_34 >= 60.0f) {
+                if (lbl_1_bss_34 >= REFRESH_RATE_F) {
                     lbl_1_bss_48 = -1;
                     lbl_1_bss_40 = 4;
                     lbl_1_bss_3C = 0;
-                    lbl_1_bss_34 = 0xE10;
-                    lbl_1_bss_44 = MGSeqCreate(1, lbl_1_bss_34 / 60, -1, -1);
+                    lbl_1_bss_34 = REFRESH_RATE_F * 60;
+                    lbl_1_bss_44 = MGSeqCreate(1, lbl_1_bss_34 / REFRESH_RATE, -1, -1);
                 }
             }
             break;
         case 4:
-            var_r30 = (lbl_1_bss_34 + 0x3B) / 60;
+            var_r30 = (lbl_1_bss_34 + REFRESH_RATE - 1) / REFRESH_RATE;
             if (var_r30 < 0) {
                 var_r30 = 0;
             }
@@ -225,7 +226,7 @@ void fn_1_41C(omObjData* object) {
                     lbl_1_bss_3C = 0;
                 }
             } else {
-                if (++lbl_1_bss_3C >= 120.0f) {
+                if (++lbl_1_bss_3C >= REFRESH_RATE_F * 2) {
                     lbl_1_bss_40 = 7;
                     lbl_1_bss_3C = 0;
                 }
@@ -250,14 +251,14 @@ void fn_1_41C(omObjData* object) {
             break;
         case 8:
             if (lbl_1_bss_30 == 0) {
-                var_f31 = lbl_1_bss_34 / 60.0f;
+                var_f31 = lbl_1_bss_34 / REFRESH_RATE_F;
                 if (var_f31 > 1.0f) {
                     var_f31 = 1.0f;
                 }
                 var_f31 = sind(90.0f * (var_f31 * var_f31));
                 fn_1_1204(0, 1, var_f31);
             }
-            if (++lbl_1_bss_34 >= 210.0f) {
+            if (++lbl_1_bss_34 >= REFRESH_RATE_F * 3.5f) {
                 lbl_1_bss_48 = -1;
                 lbl_1_bss_40 = 9;
                 lbl_1_bss_34 = 0;

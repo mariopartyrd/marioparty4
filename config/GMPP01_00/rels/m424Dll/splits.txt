@@ -5,3 +5,30 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m424Dll/main.c:
+	.text       start:0x000000A0 end:0x00001AAC
+	.rodata     start:0x00000000 end:0x00000088
+	.data       start:0x00000000 end:0x000000E0
+	.bss        start:0x00000000 end:0x00000050
+
+REL/m424Dll/map.c:
+	.text       start:0x00001AAC end:0x00002714
+	.rodata     start:0x00000088 end:0x000000F0
+	.data       start:0x000000E0 end:0x00000150
+	.bss        start:0x00000050 end:0x00000058
+
+REL/m424Dll/ball.c:
+	.text       start:0x00002714 end:0x000093E4
+	.rodata     start:0x000000F0 end:0x00000210
+	.data       start:0x00000150 end:0x000001E0
+	.bss        start:0x00000058 end:0x00000640
+
+REL/m424Dll/claw.c:
+	.text       start:0x000093E4 end:0x0000D068
+	.rodata     start:0x00000210 end:0x00000304
+	.data       start:0x000001E0 end:0x000003CA
+	.bss        start:0x00000640 end:0x000006E0

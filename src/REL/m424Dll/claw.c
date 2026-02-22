@@ -8,6 +8,7 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/pad.h"
+#include "version.h"
 
 // STRUCT
 typedef struct _M424DllClawStruct {
@@ -283,7 +284,7 @@ void fn_1_9A64(omObjData *arg0)
             break;
         case 2:
             temp_r31->unk12++;
-            temp_r31->unk24 += ((1.0f / 60.0f) * temp_r31->unk20);
+            temp_r31->unk24 += (REFRESH_FREQ * temp_r31->unk20);
             if (temp_r31->unk24 >= 1.0f) {
                 temp_r31->unk24 = 1.0f;
                 temp_r31->unk20 = -1.0f;
@@ -303,7 +304,7 @@ void fn_1_9A64(omObjData *arg0)
                 temp_r31->unk10 = 10;
                 temp_r31->unk12 = 0;
             }
-            else if (((temp_r31->unkC & 0x100) == 0) || (temp_r31->unk12 >= 360.0f)) {
+            else if (((temp_r31->unkC & 0x100) == 0) || (temp_r31->unk12 >= REFRESH_RATE_F * 6)) {
                 if (temp_r31->unk184 != -1) {
                     HuAudFXStop(temp_r31->unk184);
                     temp_r31->unk184 = -1;
@@ -319,12 +320,12 @@ void fn_1_9A64(omObjData *arg0)
         case 3:
             temp_r31->unk12++;
             if (temp_r31->unk15C == 0) {
-                temp_r31->unk28 += (1.0f / 60.0f);
+                temp_r31->unk28 += REFRESH_FREQ;
             }
             if (temp_r31->unk28 > 1.0f) {
                 temp_r31->unk28 = 1.0f;
             }
-            if (temp_r31->unk12 >= 0x3C) {
+            if (temp_r31->unk12 >= REFRESH_RATE) {
                 if (temp_r31->unk184 != -1) {
                     HuAudFXStop(temp_r31->unk184);
                     temp_r31->unk184 = -1;
@@ -339,12 +340,12 @@ void fn_1_9A64(omObjData *arg0)
         case 4:
             temp_r31->unk12++;
             if (temp_r31->unk160 == 0) {
-                temp_r31->unk2C -= (1.0f / 60.0f);
+                temp_r31->unk2C -= REFRESH_FREQ;
             }
             if (temp_r31->unk2C < 0.0f) {
                 temp_r31->unk2C = 0.0f;
             }
-            if (temp_r31->unk12 >= 0x3C) {
+            if (temp_r31->unk12 >= REFRESH_RATE) {
                 temp_r31->unk10 = 5;
                 temp_r31->unk12 = 0;
             }
@@ -352,7 +353,7 @@ void fn_1_9A64(omObjData *arg0)
             break;
         case 5:
             temp_r31->unk12++;
-            if (temp_r31->unk12 >= 6.0f) {
+            if (temp_r31->unk12 >= REFRESH_RATE_F / 10) {
                 temp_r31->unk184 = HuAudFXPlay(0x62C);
                 if ((temp_r31->unk168 != -1)) {
                     var_r27 = fn_1_897C(temp_r31->unk168);
@@ -367,7 +368,7 @@ void fn_1_9A64(omObjData *arg0)
             break;
         case 6:
             temp_r31->unk12++;
-            temp_r31->unk28 -= (1.0f / 45.0f);
+            temp_r31->unk28 -= 2.0f / (REFRESH_RATE_F * 1.5f); // thanks GPT
             if (temp_r31->unk28 <= 0.0f) {
                 if (temp_r31->unk184 != -1) {
                     HuAudFXStop(temp_r31->unk184);
@@ -399,8 +400,8 @@ void fn_1_9A64(omObjData *arg0)
                 }
                 else {
                     if (temp_r31->unk168 != -1) {
-                        fn_1_252C(-0.01f, 0x3C);
-                        fn_1_2670(0x75, 0);
+                        fn_1_252C(-6.0f / (REFRESH_RATE_F * 10.0f), REFRESH_RATE);
+                        fn_1_2670(REFRESH_RATE * 2 - 3, 0);
                     }
                     HuAudFXPlay(0x62B);
                     temp_r31->unk184 = HuAudFXPlay(0x623);
@@ -443,7 +444,7 @@ void fn_1_9A64(omObjData *arg0)
                     fn_1_8924(temp_r31->unk168, 4);
                     var_r26 = fn_1_89A8(temp_r31->unk168);
                     HuAudCharVoicePlay(var_r26, 0x123);
-                    fn_1_D010(0x628, 30);
+                    fn_1_D010(0x628, REFRESH_RATE / 2);
                 }
                 else {
                     fn_1_8924(temp_r31->unk168, 2);
@@ -452,7 +453,7 @@ void fn_1_9A64(omObjData *arg0)
                 temp_r31->unk168 = -1;
             }
             temp_r31->unk12++;
-            temp_r31->unk2C += 0.033333335f;
+            temp_r31->unk2C += 2.0f * REFRESH_FREQ;
             if (temp_r31->unk2C > 1.0f) {
                 temp_r31->unk2C = 1.0f;
             }
@@ -526,7 +527,7 @@ void fn_1_9A64(omObjData *arg0)
                 arg0->trans.x = sp14.x + (var_f31 * (sp8.x - sp14.x));
                 arg0->trans.z = sp14.z + (var_f31 * (sp8.z - sp14.z));
                 arg0->trans.y += temp_r31->unk1C;
-                temp_r31->unk1C -= 0.65333337f;
+                temp_r31->unk1C -= 39.2f / REFRESH_RATE_F;
                 if (temp_r31->unk14 == 2) {
                     if ((temp_r31->unk12 >= (0.4f * temp_r31->unk18)) && (temp_r31->unkE != 6) && (CharModelMotionShiftIDGet(temp_r31->unk2) == -1)) {
                         temp_r31->unkE = 6;
@@ -643,7 +644,12 @@ void fn_1_AE58(omObjData *arg0)
     arg0->func = NULL;
 }
 
-f32 lbl_1_data_36C[4][2] = { 30.0f, 24.0f, 24.0f, 18.0f, 12.0f, 6.0f, 6.0f, 0.0f };
+f32 lbl_1_data_36C[4][2] = {
+    REFRESH_RATE_F * 0.5f, REFRESH_RATE_F * 0.4f,
+    REFRESH_RATE_F * 0.4f, REFRESH_RATE_F * 0.3f,
+    REFRESH_RATE_F * 0.2f, REFRESH_RATE_F * 0.1f,
+    REFRESH_RATE_F * 0.1f, 0.0f
+};
 
 f32 lbl_1_data_38C[4][2] = { 0.2f, 0.15f, 0.15f, 0.1f, 0.1f, 0.05f, 0.05f, 0.0f };
 
@@ -752,15 +758,15 @@ void fn_1_AE64(omObjData *arg0)
                             else if (var_f29 > 1.0f) {
                                 var_f29 = 1.0f;
                             }
-                            temp_r31->unk194 = (60.0f * (1.0f - var_f29));
+                            temp_r31->unk194 = (REFRESH_RATE_F * (1.0f - var_f29));
                             var_f25 = (1.5f + (-1.5f * var_f29));
-                            temp_r31->unk190 -= (s32)(60.0f * var_f25);
+                            temp_r31->unk190 -= (s32)(REFRESH_RATE_F * var_f25);
                             var_f25 = (1.0f + (-1.1f * var_f29));
-                            temp_r31->unk198 = (60.0f * var_f25);
+                            temp_r31->unk198 = (REFRESH_RATE_F * var_f25);
                             temp_r31->unk19C = 0;
                             temp_r31->unk1A0 = 0;
                             temp_r31->unk1AC = 0;
-                            temp_r31->unk1AC = (temp_r31->unk1AC + (60.0f * (1.0f - var_f29)));
+                            temp_r31->unk1AC = (temp_r31->unk1AC + (REFRESH_RATE_F * (1.0f - var_f29)));
                         }
                         if (++temp_r31->unk1AC >= (temp_r31->unk190 - temp_r31->unk198)) {
                             temp_r31->unkA |= 0x100;
@@ -809,7 +815,7 @@ u16 fn_1_B79C(f32 arg0, f32 arg1, f32 arg2)
     var_r31 = 0;
     for (var_f31 = arg0; arg2 > 0.0f || var_f31 > arg1; var_r31++) {
         var_f31 += arg2;
-        arg2 -= 0.65333337f;
+        arg2 -= 39.2f / REFRESH_RATE_F;
     }
     return var_r31;
 }

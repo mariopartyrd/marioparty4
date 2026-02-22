@@ -4,6 +4,7 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "math.h"
+#include "version.h"
 
 
 // STRUCT
@@ -101,7 +102,7 @@ void fn_1_1E1C(omObjData *arg0)
     }
     switch (fn_1_FE0()) {
         case 0:
-            temp_r31->unk0 = 0.5f;
+            temp_r31->unk0 = VERSION_PAL ? 0.6f : 0.5f;
             break;
         case 1:
         case 2:
@@ -110,8 +111,8 @@ void fn_1_1E1C(omObjData *arg0)
         case 3:
         case 4:
             temp_r31->unk0 += 0.001f;
-            if (temp_r31->unk0 > 0.04f) {
-                temp_r31->unk0 = 0.04f;
+            if (temp_r31->unk0 > 2.4f * REFRESH_FREQ) {
+                temp_r31->unk0 = 2.4f * REFRESH_FREQ;
             }
             if (temp_r31->unk38 != -1)
                 break;
@@ -124,7 +125,7 @@ void fn_1_1E1C(omObjData *arg0)
                 if (temp_r31->unk0 < 0.01f) {
                     temp_r31->unk0 = 0.0f;
                 }
-                temp_f31 = temp_r31->unk0 / 0.04f;
+                temp_f31 = temp_r31->unk0 / (2.4f * REFRESH_FREQ);
                 if (temp_r31->unk38 != -1) {
                     HuAudFXVolSet(temp_r31->unk38, (s16)(-8191.0f * (1.0f - temp_f31)));
                     HuAudFXPitchSet(temp_r31->unk38, (s16)(127.0f * temp_f31));

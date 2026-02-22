@@ -1211,10 +1211,10 @@ config.libs = [
     Rel(
         "m424Dll",  # Blame it on the Crane
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/map.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/ball.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m424Dll/claw.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m424Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m424Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m424Dll/ball.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m424Dll/claw.c"),
         },
     ),
     Rel(
