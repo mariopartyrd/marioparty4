@@ -17,6 +17,7 @@ void OSReport(const char *msg, ...)
     va_list args;
     va_start(args, msg);
     vprintf(msg, args);
+    fflush(stdout);
     va_end(args);
 }
 
@@ -502,21 +503,6 @@ s32 __CARDFormatRegionAsync(int a, int b)
 void __GXSetSUTexSize()
 {
     puts("__GXSetSUTexSize is a stub");
-}
-
-void __GXSetVAT()
-{
-    puts("__GXSetVAT is a stub");
-}
-
-void __GXSetVCD()
-{
-    puts("__GXSetVCD is a stub");
-}
-
-void __GXUpdateBPMask()
-{
-    puts("__GXUpdateBPMask is a stub");
 }
 
 u32 __OSGetDIConfig()
