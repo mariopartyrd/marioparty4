@@ -14,6 +14,7 @@
 
 // #ifndef __MWERKS__
 #include "game/frand.h"
+#include "version.h"
 // #endif
 
 typedef struct M459DllBss18Struct {
@@ -462,7 +463,7 @@ void fn_1_73C(void)
                 HuPrcVSleep();
             }
         }
-        var_r28 = lbl_1_rodata_124[fn_1_52F0()] * 0x3C;
+        var_r28 = lbl_1_rodata_124[fn_1_52F0()] * REFRESH_RATE;
         fn_1_4E64(var_r28);
         lbl_1_bss_18.unk_00 = 1;
         while (TRUE) {
@@ -1311,7 +1312,11 @@ void fn_1_45EC(void)
     s32 var_r28;
 
     HuAudSeqFadeOut(lbl_1_bss_0, 0x64);
+#if VERSION_PAL
+    HuAudFXPlay(0x815);
+#else
     HuAudFXPlay(0x814);
+#endif
     var_r28 = fn_1_5300();
     if (fn_1_52F0() > var_r28) {
         fn_1_4F8C(1);
@@ -1499,7 +1504,7 @@ void fn_1_4CD0(void)
                 break;
             case 1:
                 if (var_r31->unk_04 == -1) {
-                    var_r31->unk_04 = MGSeqCreate(1, var_r31->unk_08 / 60, -1, -1);
+                    var_r31->unk_04 = MGSeqCreate(1, var_r31->unk_08 / REFRESH_RATE, -1, -1);
                 }
                 var_r31->unk_00 = 2;
                 break;
@@ -1516,8 +1521,8 @@ void fn_1_4CD0(void)
                         var_r31->unk_08 = 0;
                         var_r31->unk_00 = 3;
                     }
-                    if ((var_r31->unk_08 % 60) == 0) {
-                        MGSeqParamSet(var_r31->unk_04, 1, var_r31->unk_08 / 60);
+                    if ((var_r31->unk_08 % REFRESH_RATE) == 0) {
+                        MGSeqParamSet(var_r31->unk_04, 1, var_r31->unk_08 / REFRESH_RATE);
                     }
                 }
                 break;
@@ -1779,7 +1784,7 @@ void fn_1_55B0(M459DllBss18Struct *var_r31)
         if (var_r31->unk_28 != 0) {
             if (var_r31->unk_2C <= 0) {
                 var_r20 = lbl_1_bss_70.unk_08;
-                if ((var_r20 > 0xB4) && (var_r23 == 0)) {
+                if ((var_r20 > REFRESH_RATE * 3) && (var_r23 == 0)) {
                     var_r24 = frandmod(0xA);
                     if (var_r24 >= 5) {
                         var_r30 |= 1;
