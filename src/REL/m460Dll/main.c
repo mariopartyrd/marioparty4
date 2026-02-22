@@ -13,6 +13,7 @@
 #include "string.h"
 
 #include "REL/m460Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/frand.h"
@@ -93,8 +94,8 @@ Vec lbl_1_data_70[3] = {
     { 9.75f, 0.0f, 1275.0f },
 };
 float lbl_1_data_94[3] = { 70.0f, 70.0f, 41.5f };
-float lbl_1_data_A0[3] = { 0.0f, 0.016666668f, 0.0f };
-s32 lbl_1_data_AC[3] = { -0x3C, 0x3C, 0 };
+float lbl_1_data_A0[3] = { 0.0f, REFRESH_FREQ, 0.0f };
+s32 lbl_1_data_AC[3] = { -REFRESH_RATE, REFRESH_RATE, 0 };
 GXColor lbl_1_data_B8 = { 0, 0, 0, 0 };
 
 Process *lbl_1_bss_30;
@@ -127,7 +128,7 @@ void ObjectSetup(void)
 
     lbl_1_bss_C = 0;
     HuAudSndGrpSet(0x53);
-    HuAudFXListnerSetEX(&sp20, &sp14, 10000.0f, 566.6667f, 0.0f, 300.0f, 300.0f);
+    HuAudFXListnerSetEX(&sp20, &sp14, 10000.0f, 34000.0f * REFRESH_FREQ, 0.0f, 300.0f, 300.0f);
     lbl_1_bss_8 = lbl_1_bss_4 = -1;
     lbl_1_bss_20 = -1;
     lbl_1_bss_0 = 1;
@@ -298,7 +299,7 @@ void fn_1_1548(omObjData *object)
     switch (work->unk_14) {
         case 0:
             work->unk_1C = 0x3C;
-            work->unk_20 = 0x3C;
+            work->unk_20 = REFRESH_RATE;
             lbl_1_bss_18 = MGSeqCreate(3, 0);
             MGSeqPosSet(lbl_1_bss_18, 320.0f, 240.0f);
             work->unk_14 = 1;
@@ -333,7 +334,7 @@ void fn_1_197C(omObjData *object)
                 work->unk_3C = 0;
                 work->unk_40 = 0;
                 work->unk_1C = 0x3C;
-                work->unk_20 = 0x3C;
+                work->unk_20 = REFRESH_RATE;
                 work->unk_14 = 2;
                 work->unk_18 = 0;
             }
@@ -341,7 +342,7 @@ void fn_1_197C(omObjData *object)
         case 2:
             if (work->unk_38 == 3) {
                 if ((--work->unk_20) == 0) {
-                    work->unk_20 = 0x3C;
+                    work->unk_20 = REFRESH_RATE;
                     work->unk_1C--;
                     if (work->unk_1C == 0) {
                         work->unk_44 = 1;
@@ -377,9 +378,9 @@ void fn_1_197C(omObjData *object)
                 if (work->unk_44 != 0) {
                     var_r26 = 1;
                 }
-                else if (work->unk_18 > 60.0f) {
+                else if (work->unk_18 > REFRESH_RATE_F) {
                     if (work->unk_08 == 0) {
-                        WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 0x1E);
+                        WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, REFRESH_RATE / 2);
                         WipeColorSet(0, 0, 0);
                     }
                     work->unk_14 = 4;
@@ -394,7 +395,7 @@ void fn_1_197C(omObjData *object)
             if (WipeStatGet() == 0) {
                 work->unk_2C++;
                 if (work->unk_08 == 0) {
-                    WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 0x1E);
+                    WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, REFRESH_RATE / 2);
                 }
                 work->unk_14 = 1;
                 work->unk_18 = 0;
@@ -534,7 +535,7 @@ void fn_1_2D70(omObjData *object)
         if (lbl_1_bss_4 < 0) {
             lbl_1_bss_4 = HuAudSStreamPlay(4);
         }
-        if (work->unk_50 >= 210.0f) {
+        if (work->unk_50 >= REFRESH_RATE_F * 3.5f) {
             work->unk_4C = 2;
             fn_1_7FC(object);
         }

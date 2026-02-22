@@ -15,6 +15,7 @@
 #include "string.h"
 
 #include "REL/m460Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/frand.h"
@@ -197,13 +198,13 @@ void fn_1_6C00(omObjData *object)
             }
             else if (var_r31->unk_28 != 0) {
                 fn_1_433C();
-                var_r30->unk_10 -= 0.116666675f;
+                var_r30->unk_10 -= 7.0f * REFRESH_FREQ;
             }
             if (var_r31->unk_1C == 0) {
                 var_r31->unk_24++;
-                if (var_r31->unk_24 > 102.0f) {
+                if (var_r31->unk_24 > 1.7f * REFRESH_RATE_F) {
                     var_r31->unk_1C = 1;
-                    fn_1_8BA0(0.041666668f);
+                    fn_1_8BA0(2.5f * REFRESH_FREQ);
                     var_r30->unk_1C.x = lbl_1_data_2E8[var_r27][0];
                     var_r30->unk_1C.y = lbl_1_data_2E8[var_r27][1];
                     var_r30->unk_1C.z = lbl_1_data_2E8[var_r27][2];
@@ -216,7 +217,7 @@ void fn_1_6C00(omObjData *object)
             }
             break;
         case 4:
-            var_r30->unk_10 -= 0.116666675f;
+            var_r30->unk_10 -= 7.0f * REFRESH_FREQ;
             var_r31->unk_00 = 1;
             break;
     }
@@ -226,7 +227,7 @@ void fn_1_6C00(omObjData *object)
             var_r31->unk_38 = 0.0f;
             var_r31->unk_3C.x = var_r31->unk_3C.y = var_r31->unk_3C.z = 0.0f;
             var_r31->unk_48 = var_r31->unk_3C;
-            var_r31->unk_38 = 2.9166667f;
+            var_r31->unk_38 = 175.0f * REFRESH_FREQ;
             if (var_r31->unk_54) {
                 sp14.x = var_r31->unk_54->data.base.pos.x;
                 sp14.y = 10.0f + var_r31->unk_54->data.base.pos.y;
@@ -235,12 +236,12 @@ void fn_1_6C00(omObjData *object)
             }
             HuAudFXPlay(0x818);
         }
-        if (var_r31->unk_30 < 24.0f) {
+        if (var_r31->unk_30 < REFRESH_RATE_F / 2.5f) {
             var_r31->unk_38 *= 0.93f;
         }
         else {
-            var_f31 = 3.888889f;
-            var_r31->unk_38 = var_r31->unk_38 + (0.033333335f * var_f31);
+            var_f31 = 233.33333f * REFRESH_FREQ;
+            var_r31->unk_38 = var_r31->unk_38 + (2.0f * REFRESH_FREQ * var_f31);
             if (var_r31->unk_38 > var_f31) {
                 var_r31->unk_38 = var_f31;
             }
@@ -414,7 +415,7 @@ void fn_1_7B94(s32 arg0)
                 case 0:
                     var_r31->unk2C += 1.0f;
                     var_r31->unk20 *= 0.99f;
-                    var_r31->unk08.y += 0.019444447f;
+                    var_r31->unk08.y += 70.0f * REFRESH_FREQ * REFRESH_FREQ;
                     break;
                 case 1:
                     var_r31->unk2C += 2.0f;
@@ -425,7 +426,7 @@ void fn_1_7B94(s32 arg0)
                     var_r31->unk20 *= 0.995f;
                     break;
             }
-            if (var_r31->unk00 < 12.0f) {
+            if (var_r31->unk00 < REFRESH_RATE_F / 5) {
                 var_r31->unk20 = 0.9f * var_r31->unk20;
             }
             var_r31->unk40.a = var_r31->unk20;
@@ -468,10 +469,10 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
             var_r31->unk30 = 0.0031415902f * frandmod(0x3E8);
             switch (arg2) {
                 case 0:
-                    var_r31->unk00 = 60.0f * (0.8f + (0.0007f * frandmod(0x3E8)));
-                    var_r31->unk08.x = 1.6666667f * (0.000100000005f * frandmod(0x3E8) - 0.05f);
-                    var_r31->unk08.y = 1.6666667f * (0.05f + (0.00020000001f * frandmod(0x3E8)));
-                    var_r31->unk08.z = 1.6666667f * (0.1f + (0.0006f * frandmod(0x3E8)));
+                    var_r31->unk00 = REFRESH_RATE_F * (0.8f + (0.0007f * frandmod(0x3E8)));
+                    var_r31->unk08.x = 100.0f * REFRESH_FREQ * (0.000100000005f * frandmod(0x3E8) - 0.05f);
+                    var_r31->unk08.y = 100.0f * REFRESH_FREQ * (0.05f + (0.00020000001f * frandmod(0x3E8)));
+                    var_r31->unk08.z = 100.0f * REFRESH_FREQ * (0.1f + (0.0006f * frandmod(0x3E8)));
                     var_f31 = 0.001f * frandmod(0x3E8);
                     var_r31->unk2C = 30.0f + (30.0f * var_f31);
                     var_r31->unk40.a = 40.0f + (40.0f * (1.0f - var_f31));
@@ -486,10 +487,10 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
                         sp1C.x *= -1.0f;
                     }
                     VECAdd(&sp1C, arg1, &var_r31->unk34);
-                    var_r31->unk00 = 60.0f * (0.2f + (0.0005f * frandmod(0x3E8)));
-                    var_r31->unk08.x = 1.6666667f * ((0.000100000005f * frandmod(0x3E8)) - 0.05f);
-                    var_r31->unk08.y = -1.6666667f * (0.2f + (0.0003f * frandmod(0x3E8)));
-                    var_r31->unk08.z = 1.6666667f * (0.05f + (0.000100000005f * frandmod(0x3E8)));
+                    var_r31->unk00 = REFRESH_RATE_F * (0.2f + (0.0005f * frandmod(0x3E8)));
+                    var_r31->unk08.x = 100.0f * REFRESH_FREQ * ((0.000100000005f * frandmod(0x3E8)) - 0.05f);
+                    var_r31->unk08.y = -100.0f * REFRESH_FREQ * (0.2f + (0.0003f * frandmod(0x3E8)));
+                    var_r31->unk08.z = 100.0f * REFRESH_FREQ * (0.05f + (0.000100000005f * frandmod(0x3E8)));
                     var_f31 = 0.001f * frandmod(0x3E8);
                     var_r31->unk2C = 20.0f + (30.0f * var_f31);
                     var_r31->unk40.a = 8.0f + (13.0f * (1.0f - var_f31));
@@ -498,10 +499,10 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
                     var_r31->unk40.b = spC.b + (var_f31 * (sp8.b - spC.b));
                     break;
                 case 2:
-                    var_r31->unk00 = 60.0f * (0.9f + (0.00080000004f * frandmod(0x3E8)));
-                    var_r31->unk08.x = 1.6666667f * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
-                    var_r31->unk08.y = -1.6666667f * (0.1f + (0.0007f * frandmod(0x3E8)));
-                    var_r31->unk08.z = 1.6666667f * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
+                    var_r31->unk00 = REFRESH_RATE_F * (0.9f + (0.00080000004f * frandmod(0x3E8)));
+                    var_r31->unk08.x = 100.0f * REFRESH_FREQ * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
+                    var_r31->unk08.y = -100.0f * REFRESH_FREQ * (0.1f + (0.0007f * frandmod(0x3E8)));
+                    var_r31->unk08.z = 100.0f * REFRESH_FREQ * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
                     var_f31 = 0.001f * frandmod(0x3E8);
                     var_r31->unk2C = 40.0f + (60.0f * var_f31);
                     var_r31->unk40.a = 8.0f + (10.0f * (1.0f - var_f31));

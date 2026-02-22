@@ -1458,28 +1458,28 @@ config.libs = [
     Rel(
         "m458Dll",  # Panels of Doom
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m458Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m458Dll/main.c"),
         },
     ),
     Rel(
         "m459dll",  # Mushroom Medic
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m459dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m459dll/main.c"),
         },
     ),
     Rel(
         "m460Dll",  # Doors of Doom
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/player.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/map.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m460Dll/score.c"),
+            Object(Matching, "REL/m460Dll/main.c"),
+            Object(Matching, "REL/m460Dll/player.c"),
+            Object(Matching, "REL/m460Dll/map.c"),
+            Object(Matching, "REL/m460Dll/score.c"),
         },
     ),
     Rel(
         "m461Dll",  # Bob-omb X-ing
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m461Dll/main.c"),
+            Object(Matching, "REL/m461Dll/main.c"),
         },
     ),
     Rel(

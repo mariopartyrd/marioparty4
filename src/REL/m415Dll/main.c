@@ -859,11 +859,8 @@ void fn_1_3764(omObjData *object)
                     if (temp_r31->unkC != 0) {
                         temp_r31->unkC = 0;
                         temp_r31->unkB = 1;
-    #if VERSION_PAL // technically 1606.0f / REFRESH_RATE_F, but i can't get the float errors
-                        temp_r31->unk44.y = 32.120003f;
-    #else
-                        temp_r31->unk44.y = 26.766666f;
-    #endif
+                        // technically 1606.0f / REFRESH_RATE_F, but i can't get the float errors
+                        temp_r31->unk44.y = (VERSION_PAL) ? 32.120003f : 26.766666f;
                     }
                     temp_r31->unk18 = 2;
                     temp_r31->unk2C.y += 100.65;

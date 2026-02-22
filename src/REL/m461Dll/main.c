@@ -22,6 +22,7 @@
 #include "game/sprite.h"
 
 #include "ext_math.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/audio.h"
@@ -739,7 +740,7 @@ void fn_1_2E34(WorkPlayerOld *player)
                     player->unk3C |= 0x100;
                     player->unkA4 = 0;
                     if (!(player2->unk3C & 0x100)) {
-                        player->unk84.y = 26.766666f;
+                        player->unk84.y = (VERSION_PAL) ? 32.120003f : 26.766666f;
                     }
                 }
                 if (state == 3) {
@@ -840,7 +841,7 @@ void fn_1_3C74(WorkPlayerOld *player, s32 *state, u32 *motAttr)
     }
 
     if (player->unk14[3] >= 0 && (player->unk28 & 0x100)) {
-        fn_1_2BD0(player, 26.766666f, 1.0f);
+        fn_1_2BD0(player, (VERSION_PAL) ? 32.120003f : 26.766666f, 1.0f);
         *motAttr = HU3D_MOTATTR_NONE;
         *state = 3;
     }
@@ -855,14 +856,14 @@ void fn_1_3D4C(WorkPlayerOld *player, s32 *state, u32 *motAttr)
                 player->unkA4 = 0;
             }
             else {
-                player->unk84.y += 3.65f;
+                player->unk84.y += 219.0f / REFRESH_RATE_F;
             }
         }
         else {
             player->unkA4 = 0;
         }
     }
-    player->unk84.y += -2.4333334f;
+    player->unk84.y += -146.0f / REFRESH_RATE_F;
     if (player->unk14[5] >= 0 && (player->unk28 & 0x140)) {
         player->unk38 = 3;
         player->unk84.y = 0.0f;
@@ -1195,7 +1196,18 @@ s32 lbl_1_data_1D4[4]
 
 float lbl_1_data_1E4[3] = { 0.3f, 0.5f, 0.9f };
 
-float lbl_1_data_1F0[10][2] = { 0, 60, 1860, 60, 3660, 50, 5460, 50, 7260, 40, 9060, 40, 10860, 30, 12660, 20, 14460, 10, -1, 10 };
+float lbl_1_data_1F0[10][2] = {
+    0, 60,
+    31 * REFRESH_RATE_F, 60,
+    61 * REFRESH_RATE_F, 50,
+    91 * REFRESH_RATE_F, 50,
+    121 * REFRESH_RATE_F, 40,
+    151 * REFRESH_RATE_F, 40,
+    181 * REFRESH_RATE_F, 30,
+    211 * REFRESH_RATE_F, 20,
+    241 * REFRESH_RATE_F, 10,
+    -1, 10
+};
 
 Vec lbl_1_data_240[3] = { { 0, 0, 2800 }, { 2800, 0, 0 }, { -2800, 0, 0 } };
 
@@ -1214,7 +1226,7 @@ Vec lbl_1_data_2F0[4] = { { 600, 0, 600 }, { 600, 0, -600 }, { -600, 0, 600 }, {
 void fn_1_512C(void)
 {
     if (HuPadBtn[0] & PAD_BUTTON_X) {
-        lbl_1_bss_200 = 35999;
+        lbl_1_bss_200 = REFRESH_RATE * 600 - 1;
     }
     print8(24, 32, 1.5f, "COUNT:%d MODE:%d MES:%d %d/%d %02x", lbl_1_bss_204, lbl_1_bss_A0->work[0], lbl_1_bss_1FA, lbl_1_bss_20, lbl_1_bss_24,
         lbl_1_bss_28);
@@ -1581,14 +1593,14 @@ void fn_1_7AD8(WorkBomhei *bomhei, omObjData *obj)
                 if (0.0f > bomhei->unk18.x) {
                     radius = 0;
                     if (-bomhei->unk18.y > bomhei->unk18.x) {
-                        bomhei->unk18.y = frandmod(120) + 120;
-                        bomhei->unk18.x = frandmod(120) + 120;
+                        bomhei->unk18.y = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
+                        bomhei->unk18.x = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
                     }
                 }
                 else {
                     bomhei->unk18.z--;
                     if (0.0f > bomhei->unk18.z) {
-                        bomhei->unk18.z = frandmod(120) + 120;
+                        bomhei->unk18.z = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
                         bomhei->unkC.z = frandf() * 360;
                     }
                 }
@@ -1644,7 +1656,7 @@ void fn_1_7AD8(WorkBomhei *bomhei, omObjData *obj)
         float radius = frandf() * 350;
         float angle2 = frandf() * 360;
         bomhei->unkC.z = atan2d((radius * sind(angle2)) - bomhei->unk0.x, (radius * cosd(angle2)) - bomhei->unk0.z);
-        bomhei->unk18.z = frandmod(120) + 120;
+        bomhei->unk18.z = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
     }
     if (bomhei->unk2C != state) {
         bomhei->unk2C = state;
@@ -1788,10 +1800,10 @@ void fn_1_956C(Vec *pos, float rotY, s32 type, s32 mode, s32 time)
     bomhei->unk28 = time;
     bomhei->unkC.y = bomhei->unkC.x;
     bomhei->unkC.z = bomhei->unkC.x;
-    bomhei->unk18.x = frandmod(120) + 120;
-    bomhei->unk18.y = frandmod(120) + 120;
-    bomhei->unk18.z = frandmod(120) + 120;
-    bomhei->unk24 = frandmod(300) + 180;
+    bomhei->unk18.x = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
+    bomhei->unk18.y = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
+    bomhei->unk18.z = frandmod(REFRESH_RATE * 2) + REFRESH_RATE * 2;
+    bomhei->unk24 = frandmod(REFRESH_RATE * 5) + REFRESH_RATE * 3;
     bomhei->unk2C = 0;
 }
 
@@ -1830,12 +1842,12 @@ typedef struct work_bomhei2 {
 
 void fn_1_9854(void)
 {
-    if (lbl_1_bss_200 % 900 == 0) {
+    if (lbl_1_bss_200 % (REFRESH_RATE * 15) == 0) {
         if (++lbl_1_bss_24 >= 20) {
             lbl_1_bss_24 = 20;
         }
     }
-    if (lbl_1_bss_200 % 1800 == 0) {
+    if (lbl_1_bss_200 % (REFRESH_RATE * 30) == 0) {
         if (lbl_1_data_264[2] < 40) {
             lbl_1_data_264[2] += 10;
             if (lbl_1_data_264[2] > 100) {
@@ -1974,7 +1986,7 @@ void fn_1_9EF4(omObjData *obj)
             parent->unk2C = fn_1_1E20(parent->unk2C, atan2d(bomhei->unk8.x - parent->unk8.x, bomhei->unk8.z - parent->unk8.z), 0.05f);
             parent->unk30 = parent->unk2C;
             bomhei->unk34++;
-            if (180.0f < bomhei->unk34) {
+            if (REFRESH_RATE_F * 3 < bomhei->unk34) {
                 bomhei->unk44 = 3;
                 if (bomhei->unk40 == 2) {
                     bomhei->unk44 = 2;
@@ -2075,7 +2087,7 @@ void fn_1_B234(omObjData *obj)
         bomhei->unk48--;
         if (0.0f > bomhei->unk48) {
             WorkBomhei2 *bomheiNew;
-            bomhei->unk48 = frandmod(1200) + 300;
+            bomhei->unk48 = frandmod(REFRESH_RATE * 20) + REFRESH_RATE * 5;
             bomheiNew = fn_1_9CAC(fn_1_9EF4, 102);
             fn_1_ADDC(bomhei, bomheiNew);
         }
@@ -2124,8 +2136,8 @@ void fn_1_BA2C(omObjData *obj)
 
         case 1002:
             lbl_1_bss_1C++;
-            fn_1_13DC(lbl_1_bss_1C / 120, &lbl_1_data_D0);
-            if (120.0f <= lbl_1_bss_1C) {
+            fn_1_13DC(lbl_1_bss_1C / (REFRESH_RATE_F * 2), &lbl_1_data_D0);
+            if ((REFRESH_RATE_F * 2) <= lbl_1_bss_1C) {
                 obj->work[0]++;
                 lbl_1_bss_1C = 0;
                 fn_1_1350(&lbl_1_data_C4, &lbl_1_data_D0, &lbl_1_data_DC);
@@ -2150,7 +2162,7 @@ void fn_1_BA2C(omObjData *obj)
         case 1004:
             lbl_1_bss_200++;
             fn_1_580(lbl_1_bss_1AC, 0, lbl_1_bss_200);
-            if (lbl_1_bss_14 || 35999 <= lbl_1_bss_200) {
+            if (lbl_1_bss_14 || (REFRESH_RATE * 600 - 1) <= lbl_1_bss_200) {
                 obj->work[0] = 1005;
                 lbl_1_bss_1C = 0;
             }
@@ -2306,7 +2318,7 @@ void ObjectSetup(void)
         WorkBomhei2 *bomhei2 = fn_1_9CAC(fn_1_B234, 103);
         bomhei2->unk8 = lbl_1_data_2F0[i];
         bomhei2->unk2C = atan2d(-bomhei2->unk8.x, -bomhei2->unk8.z);
-        bomhei2->unk48 = frandmod(1200) + 300;
+        bomhei2->unk48 = frandmod(REFRESH_RATE * 20) + REFRESH_RATE * 5;
     }
     lbl_1_bss_9C = omAddObjEx(lbl_1_bss_238, 100, 1, 5, -1, fn_1_7328);
     lbl_1_bss_A0 = omAddObjEx(lbl_1_bss_238, 104, 2, 0, -1, fn_1_C970);

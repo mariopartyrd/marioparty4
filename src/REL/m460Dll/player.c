@@ -11,6 +11,7 @@
 #include "string.h"
 
 #include "REL/m460Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/frand.h"
@@ -458,8 +459,8 @@ void fn_1_5A14(omObjData *object)
     }
     if (var_r31->unk_20 > 0.05f) {
         // 1 / REFRESH_RATE?
-        var_r31->unk_6C.x = 0.01666666753590107 * (550.0 * (var_r31->unk_20 * sind(var_r31->unk_1C)));
-        var_r31->unk_6C.z = 0.01666666753590107 * (550.0 * (var_r31->unk_20 * cosd(var_r31->unk_1C)));
+        var_r31->unk_6C.x = REFRESH_FREQ * (550.0 * (var_r31->unk_20 * sind(var_r31->unk_1C)));
+        var_r31->unk_6C.z = REFRESH_FREQ * (550.0 * (var_r31->unk_20 * cosd(var_r31->unk_1C)));
         if (var_r31->unk_28 != 0) {
             var_r31->unk_6C.x *= 1.5f;
             var_r31->unk_6C.z *= 1.5f;
@@ -509,15 +510,15 @@ void fn_1_5CE0(omObjData *object, u32 arg1)
 {
     UnkM460DllPlayerWork *var_r30 = object->data;
     if ((var_r30->unk_04 != arg1) && (arg1 < 8)) {
-        float var_f31 = 60.0f * lbl_1_data_110[arg1].unk_04;
+        float var_f31 = REFRESH_RATE_F * lbl_1_data_110[arg1].unk_04;
         if (var_r30->unk_04 < 0) {
             var_f31 = 0.0f;
         }
         var_r30->unk_04 = arg1;
         CharModelMotionShiftSet(
-            var_r30->unk_00, object->motion[lbl_1_data_110[arg1].unk_00], 60.0f * lbl_1_data_110[arg1].unk_08, var_f31, lbl_1_data_110[arg1].unk_10);
+            var_r30->unk_00, object->motion[lbl_1_data_110[arg1].unk_00], REFRESH_RATE_F * lbl_1_data_110[arg1].unk_08, var_f31, lbl_1_data_110[arg1].unk_10);
         if (lbl_1_data_110[arg1].unk_0C >= 0.0f) {
-            Hu3DMotionShiftStartEndSet(object->model[0], 60.0f * lbl_1_data_110[arg1].unk_08, 60.0f * lbl_1_data_110[arg1].unk_0C);
+            Hu3DMotionShiftStartEndSet(object->model[0], REFRESH_RATE_F * lbl_1_data_110[arg1].unk_08, REFRESH_RATE_F * lbl_1_data_110[arg1].unk_0C);
         }
     }
 }
@@ -600,8 +601,8 @@ void fn_1_61F4(omObjData *object)
             break;
         case 1:
             object->work[2]++;
-            if (object->work[2] > 18.0f) {
-                Hu3DMotionShiftSet(object->model[0], object->motion[2], 0.0f, 30.0f, HU3D_MOTATTR_LOOP);
+            if (object->work[2] > 0.3f * REFRESH_RATE_F) {
+                Hu3DMotionShiftSet(object->model[0], object->motion[2], 0.0f, REFRESH_RATE_F / 2, HU3D_MOTATTR_LOOP);
                 object->work[1] = 2;
             }
             break;
@@ -610,12 +611,12 @@ void fn_1_61F4(omObjData *object)
             sp10.y = 0.0f;
             sp10.z = (*lbl_1_bss_40)->trans.z - object->trans.z;
             object->rot.y = fn_1_47D0(object->rot.y, atan2d(sp10.x, sp10.z), 0.1f);
-            object->trans.z += 6.666667f;
+            object->trans.z += 400.0f * REFRESH_FREQ;
             if (fn_1_4358() != 0) {
                 HuAudFXPlay(0x3C);
-                Hu3DMotionShiftSet(object->model[0], object->motion[3], 0.0f, 30.0f, HU3D_MOTATTR_LOOP);
+                Hu3DMotionShiftSet(object->model[0], object->motion[3], 0.0f, REFRESH_RATE_F / 2, HU3D_MOTATTR_LOOP);
                 object->work[1] = 3;
-                object->work[3] = 0x3C;
+                object->work[3] = REFRESH_RATE;
             }
             break;
         case 3:
@@ -623,7 +624,7 @@ void fn_1_61F4(omObjData *object)
             var_r29 = Hu3DMotionTimeGet(object->model[0]);
             for (var_r30 = 0; var_r30 < 2; var_r30++) {
                 if (var_r29 == sp8[var_r30]) {
-                    var_f30 = 2.1166666f * object->work[3];
+                    var_f30 = 127.0f / REFRESH_RATE_F * object->work[3];
                     HuAudFXPlayVol(0x6B, var_f30);
                 }
             }
@@ -632,8 +633,7 @@ void fn_1_61F4(omObjData *object)
             sp10.z = (*lbl_1_bss_40)->trans.z - object->trans.z;
             object->rot.y = fn_1_47D0(object->rot.y, atan2d(sp10.x, sp10.z), 0.1f);
             if (object->trans.z < -900.0f) {
-                // depending on refresh rate?
-                object->trans.z += 11.666667f;
+                object->trans.z += 700.0f / REFRESH_RATE_F;
             }
             else {
                 var_f31 = VECMag(&sp10);
@@ -645,7 +645,7 @@ void fn_1_61F4(omObjData *object)
                         var_f31 = 100.0f;
                     }
                     var_f31 = 0.2f + (0.008f * var_f31);
-                    var_f31 *= 11.666667f;
+                    var_f31 *= 700.0f / REFRESH_RATE_F;
                 }
                 object->trans.x = object->trans.x + (var_f31 * sind(object->rot.y));
                 object->trans.z = object->trans.z + (var_f31 * cosd(object->rot.y));
