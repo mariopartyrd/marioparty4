@@ -332,17 +332,17 @@ void Hu3DAllKill(void) {
     Hu3DCameraAllKill();
     Hu3DLightAllKill();
     Hu3DAnimAllKill();
-#if TARGET_PC
-    if(reflectAnim[0] != (AnimData *)refMapData0) {
-        OSReport("Trying to free bitmap\n");
-    }
-#endif
 #ifndef BYTESWAPPING
-    // this causes anim to be reallocated, so we lose the old allocation
+    // this causes anim to be reallocated, so we lose the old allocation, but the game expects this to be executed, so hmm
     if(reflectAnim[0] != (AnimData *)refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
+#ifdef TARGET_PC
+    void *dvd_data = HuDvdDataRead("data/refMapData0.anm");
+    reflectAnim[0] = HuSprAnimRead(dvd_data);
+#else
     reflectAnim[0] = HuSprAnimRead(refMapData0);
+#endif
 #endif
     if(Hu3DShadowData.buf) {
         HuMemDirectFree(Hu3DShadowData.buf);
@@ -1903,7 +1903,12 @@ void Hu3DReflectMapSet(AnimData* arg0) {
     if (reflectAnim[0] != (AnimData*) refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
+#ifdef TARGET_PC
+    void *dvd_data = HuDvdDataRead("data/refMapData0.anm");
+    reflectAnim[0] = HuSprAnimRead(dvd_data);
+#else
     reflectAnim[0] = HuSprAnimRead(arg0);
+#endif
 #else
     assert(0 == 1);
     OSReport("PC TODO: Hu3DReflectMapSet ran which tries to reallocate an anim\n");
