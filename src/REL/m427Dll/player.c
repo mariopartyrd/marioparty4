@@ -19,6 +19,7 @@
 #include "game/pad.h"
 #include "game/wipe.h"
 #include "string.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/frand.h"
@@ -441,7 +442,7 @@ void fn_1_F0E0(omObjData *object)
                 }
             }
             if (sp2C.z != object->trans.z) {
-                work->unk_60 = 2;
+                work->unk_60 = (VERSION_PAL) ? 3 : 2;
             }
             else {
                 work->unk_60 = 0;
@@ -452,7 +453,7 @@ void fn_1_F0E0(omObjData *object)
             break;
         case 1:
             if (sp2C.z != object->trans.z) {
-                work->unk_60 = 2;
+                work->unk_60 = (VERSION_PAL) ? 3 : 2;
             }
             else {
                 work->unk_60 = 0;
@@ -464,7 +465,7 @@ void fn_1_F0E0(omObjData *object)
         case 2:
             for (var_r29 = 0; var_r29 < 2; var_r29++) {
                 if (work->unk_08[var_r29]->unk_30 != 0) {
-                    work->unk_58 += 0.1f;
+                    work->unk_58 += 0.6f / (REFRESH_RATE_F * 0.1f);
                     if (Hu3DMotionEndCheck(object->model[lbl_1_data_5C8[var_r29]]) != 0) {
                         fn_1_3B20(var_r29 * 2, work->unk_10);
                         Hu3DMotionTimeSet(object->model[lbl_1_data_5C8[var_r29]], 0.0f);
@@ -477,7 +478,7 @@ void fn_1_F0E0(omObjData *object)
                     }
                 }
                 if (work->unk_08[var_r29]->unk_34 != 0) {
-                    work->unk_5C += 0.1f;
+                    work->unk_5C += 0.6f / (REFRESH_RATE_F * 0.1f);
                     if (Hu3DMotionEndCheck(object->model[lbl_1_data_5D0[var_r29]]) != 0) {
                         fn_1_3B20((var_r29 * 2) + 1, work->unk_10);
                         Hu3DMotionTimeSet(object->model[lbl_1_data_5D0[var_r29]], 0.0f);
@@ -491,25 +492,41 @@ void fn_1_F0E0(omObjData *object)
                 }
             }
             fn_1_158D8(object->trans.x, object->trans.z, &sp8);
-            work->unk_4C += 0.15f * sp8.x;
-            work->unk_54 += 0.15f * sp8.z;
+            work->unk_4C += (9.0f / REFRESH_RATE_F) * sp8.x;
+            work->unk_54 += (9.0f / REFRESH_RATE_F) * sp8.z;
+#if VERSION_PAL
+            work->unk_58 *= 0.989f;
+            work->unk_5C *= 0.989f;
+            work->unk_4C *= 0.989f;
+            work->unk_54 *= 0.989f;
+#else
             work->unk_58 *= 0.995f;
             work->unk_5C *= 0.995f;
             work->unk_4C *= 0.99f;
             work->unk_54 *= 0.99f;
+#endif
             work->unk_60 = work->unk_58 + work->unk_5C;
+#if VERSION_PAL
+            if (work->unk_60 < -6.0f) {
+                work->unk_60 = -6;
+            }
+            else if (work->unk_60 > 6.0f) {
+                work->unk_60 = 6;
+            }
+#else
             if (work->unk_60 < -5.0f) {
                 work->unk_60 = -5;
             }
             else if (work->unk_60 > 5.0f) {
                 work->unk_60 = 5;
             }
-            var_f30 = 0.25f * (work->unk_58 - work->unk_5C);
-            if (var_f30 > 20.0f) {
-                var_f30 = 20.0f;
+#endif
+            var_f30 = (15.0f / REFRESH_RATE_F) * (work->unk_58 - work->unk_5C);
+            if (var_f30 > 1200.0f / REFRESH_RATE_F) {
+                var_f30 = 1200.0f / REFRESH_RATE_F;
             }
-            else if (var_f30 < -20.0f) {
-                var_f30 = -20.0f;
+            else if (var_f30 < -1200.0f / REFRESH_RATE_F) {
+                var_f30 = -1200.0f / REFRESH_RATE_F;
             }
             work->unk_64 += var_f30;
             if (work->unk_64 > 360.0f) {
@@ -526,8 +543,13 @@ void fn_1_F0E0(omObjData *object)
             }
             object->rot.y = work->unk_64;
             var_f31 = work->unk_60;
+#if VERSION_PAL
+            object->trans.x = object->trans.x + (2.4000000953674316 * (var_f31 * sind(work->unk_64)));
+            object->trans.z = object->trans.z + (2.4000000953674316 * (var_f31 * cosd(work->unk_64)));
+#else
             object->trans.x = object->trans.x + (2.0 * (var_f31 * sind(work->unk_64)));
             object->trans.z = object->trans.z + (2.0 * (var_f31 * cosd(work->unk_64)));
+#endif
             object->trans.x += work->unk_4C;
             object->trans.z += work->unk_54;
             if (work->unk_68 > 0) {
@@ -574,7 +596,7 @@ void fn_1_F0E0(omObjData *object)
                     omVibrate(work->unk_08[1]->unk_00, 0xC, 6, 6);
                     HuAudCharVoicePlay(work->unk_08[0]->unk_0C, 0x123);
                     HuAudCharVoicePlay(work->unk_08[1]->unk_0C, 0x123);
-                    work->unk_24 = 0x78;
+                    work->unk_24 = REFRESH_RATE * 2;
                     work->unk_1C = 3;
                     work->unk_28 = 5.0f;
                     work->unk_2C = 360.0f * ((frand() & 0x7F) / 127.0f);
@@ -595,16 +617,30 @@ void fn_1_F0E0(omObjData *object)
             work->unk_4C = 0.0f;
             work->unk_54 = 0.0f;
             work->unk_60 = work->unk_58 + work->unk_5C;
+#if VERSION_PAL
+            if (work->unk_60 < -6.0f) {
+                work->unk_60 = -6;
+            }
+            else if (work->unk_60 > 6.0f) {
+                work->unk_60 = 6;
+            }
+#else
             if (work->unk_60 < -5.0f) {
                 work->unk_60 = -5;
             }
             else if (work->unk_60 > 5.0f) {
                 work->unk_60 = 5;
             }
-            var_f31 = work->unk_60 / 5.0f;
-            var_f31 = 5.0f * (var_f31 * var_f31);
+#endif
+            var_f31 = work->unk_60 / (300.0f / REFRESH_RATE_F);
+            var_f31 = (300.0f / REFRESH_RATE_F) * (var_f31 * var_f31);
+#if VERSION_PAL
+            object->trans.x = object->trans.x + (2.4000000953674316 * (var_f31 * sind(work->unk_64)));
+            object->trans.z = object->trans.z + (2.4000000953674316 * (var_f31 * cosd(work->unk_64)));
+#else
             object->trans.x = object->trans.x + (2.0 * (var_f31 * sind(work->unk_64)));
             object->trans.z = object->trans.z + (2.0 * (var_f31 * cosd(work->unk_64)));
+#endif
             object->trans.x += work->unk_4C;
             object->trans.z += work->unk_54;
             for (var_r29 = 0, var_r28 = 1; (var_r28 == 1) && (var_r29 < 6); var_r29++) {
@@ -634,9 +670,9 @@ void fn_1_F0E0(omObjData *object)
                 omVibrate(work->unk_08[0]->unk_00, 0xC, 6, 6);
                 omVibrate(work->unk_08[1]->unk_00, 0xC, 6, 6);
             }
-            if (work->unk_18 >= 120.0f) {
+            if (work->unk_18 >= REFRESH_RATE_F * 2) {
                 work->unk_1C = 2;
-                work->unk_20 = 0xB4;
+                work->unk_20 = REFRESH_RATE * 3;
                 work->unk_18 = 0;
             }
             fn_1_119C0(object);
@@ -653,16 +689,30 @@ void fn_1_F0E0(omObjData *object)
             work->unk_4C *= 0.993f;
             work->unk_54 *= 0.993f;
             work->unk_60 = work->unk_58 + work->unk_5C;
+#if VERSION_PAL
+            if (work->unk_60 < -6.0f) {
+                work->unk_60 = -6;
+            }
+            else if (work->unk_60 > 6.0f) {
+                work->unk_60 = 6;
+            }
+#else
             if (work->unk_60 < -5.0f) {
                 work->unk_60 = -5;
             }
             else if (work->unk_60 > 5.0f) {
                 work->unk_60 = 5;
             }
-            var_f31 = work->unk_60 / 5.0f;
-            var_f31 = 5.0f * (var_f31 * var_f31);
+#endif
+            var_f31 = work->unk_60 / (300.0f / REFRESH_RATE_F);
+            var_f31 = (300.0f / REFRESH_RATE_F) * (var_f31 * var_f31);
+#if VERSION_PAL
+            object->trans.x = object->trans.x + (2.4000000953674316 * (var_f31 * sind(work->unk_64)));
+            object->trans.z = object->trans.z + (2.4000000953674316 * (var_f31 * cosd(work->unk_64)));
+#else
             object->trans.x = object->trans.x + (2.0 * (var_f31 * sind(work->unk_64)));
             object->trans.z = object->trans.z + (2.0 * (var_f31 * cosd(work->unk_64)));
+#endif
             object->trans.x += work->unk_4C;
             object->trans.z += work->unk_54;
             for (var_r29 = 0, var_r28 = 1; (var_r28 == 1) && (var_r29 < 6); var_r29++) {
@@ -697,7 +747,7 @@ void fn_1_F0E0(omObjData *object)
             break;
         case 5:
             if (sp2C.z != object->trans.z) {
-                work->unk_60 = 2;
+                work->unk_60 = (VERSION_PAL) ? 3 : 2;
             }
             else {
                 work->unk_60 = 0;
@@ -708,13 +758,13 @@ void fn_1_F0E0(omObjData *object)
         case 7:
             break;
     }
-    var_f31 = work->unk_60 / 5.0f;
+    var_f31 = work->unk_60 / (300.0f / REFRESH_RATE_F);
     Hu3DMotionSpeedSet(object->model[0], 2.0f * var_f31);
     if (work->unk_1C == 3) {
         work->unk_2C += (frand() & 3) + 2;
         object->rot.x = 0.0f;
         object->rot.z = 0.0f;
-        work->unk_28 = 5.0f - (5.0f * (0.008333334f * work->unk_18));
+        work->unk_28 = 5.0f - (5.0f * (0.5f * REFRESH_FREQ * work->unk_18));
         var_f29 = 7.0 * (work->unk_28 * sind((10.0f * work->unk_18)));
         object->rot.x = object->rot.x + (var_f29 * sind(work->unk_2C));
         object->rot.z = object->rot.z + (var_f29 * cosd(work->unk_2C));
@@ -779,7 +829,7 @@ void fn_1_F0E0(omObjData *object)
 s32 lbl_1_data_5F8[2] = { 1, 3 };
 s32 lbl_1_data_600[2] = { 2, 4 };
 s32 lbl_1_data_608[4] = { 0x3A002F, 0x3A0037, 0x3A003F, 0x3A0047 };
-s32 lbl_1_data_618[4] = { 15, 10, 6, 5 };
+s32 lbl_1_data_618[4] = { REFRESH_RATE / 4, REFRESH_RATE / 6, REFRESH_RATE / 10, REFRESH_RATE / 12 };
 
 void fn_1_10830(omObjData *object)
 {
@@ -1283,7 +1333,7 @@ void fn_1_11ED8(omObjData *object)
                 var_r31->unk_28 = 0;
             }
             if (var_r31->unk_2C == 2) {
-                if (++var_r31->unk_28 >= 240.0f) {
+                if (++var_r31->unk_28 >= REFRESH_RATE_F * 4) {
                     Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_LOOP);
                 }
             }
@@ -1376,7 +1426,7 @@ void fn_1_12580(omObjData *var_r24)
     var_r31->unk_40 = 0;
     var_r31->unk_44 = 0;
     var_r26 = fn_1_155E0(var_r29->trans.x, var_r29->trans.y, var_r29->trans.z, NULL);
-    if ((var_r31->unk_64 != var_r26) || (var_r31->unk_54 > 180.0f)) {
+    if ((var_r31->unk_64 != var_r26) || (var_r31->unk_54 > REFRESH_RATE_F * 3)) {
         var_r31->unk_64 = var_r26;
         switch (var_r31->unk_1C) {
             case 0:
@@ -1421,7 +1471,7 @@ void fn_1_12580(omObjData *var_r24)
     }
     var_r25 = var_r31->unk_60 + var_r31->unk_5C;
     if (var_r28->unk_20 != 0) {
-        var_r25 = 5;
+        var_r25 = (VERSION_PAL) ? 4 : 5;
     }
     if (++var_r31->unk_58 > var_r25) {
         var_r31->unk_58 = 0;
@@ -1431,11 +1481,11 @@ void fn_1_12580(omObjData *var_r24)
         var_f31 = fn_1_16594(atan2d(var_f28, var_f27), var_r28->unk_64);
         if (fabs(var_f31) < (30.0f - (5.0f * var_r31->unk_1C))) {
             if (var_r31->unk_1C > 2) {
-                var_f29 = 0.25f * (var_r28->unk_58 - var_r28->unk_5C);
-                if (var_f29 > 10.0f) {
+                var_f29 = (15.0f / REFRESH_RATE_F) * (var_r28->unk_58 - var_r28->unk_5C);
+                if (var_f29 > 600.0f / REFRESH_RATE_F) {
                     var_r31->unk_44 |= 0x100;
                 }
-                else if (var_f29 < -10.0f) {
+                else if (var_f29 < -600.0f / REFRESH_RATE_F) {
                     var_r31->unk_44 |= 0x200;
                 }
                 else {

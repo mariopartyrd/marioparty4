@@ -16,6 +16,7 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "string.h"
+#include "version.h"
 
 extern s32 rand8(void);
 extern LightData Hu3DLocalLight[0x20];
@@ -443,7 +444,11 @@ void fn_1_372C(void)
         { 825.0f, -450.0f, -15000.0f } };
     s16 sp8[3] = { 1, 1, 0 };
     s16 spE[3][2] = { { 4, 5 }, { 8, -1 }, { 9, -1 } };
-    s16 sp24[3][4] = { { 180, 120, 60, 60 }, { 90, 180, 60, 60 }, { 90, 180, 60, 60 } };
+    s16 sp24[3][4] = {
+        { REFRESH_RATE * 3,   REFRESH_RATE * 2, REFRESH_RATE, REFRESH_RATE },
+        { REFRESH_RATE * 1.5, REFRESH_RATE * 3, REFRESH_RATE, REFRESH_RATE },
+        { REFRESH_RATE * 1.5, REFRESH_RATE * 3, REFRESH_RATE, REFRESH_RATE },
+    };
     Vec sp3C[3] = { -350.0f, -300.0f, -10000.0f, -700.0f, -600.0f, -17000.0f, 700.0f, -600.0f, -19000.0f };
     s16 var_r28;
     s16 var_r31;
@@ -1529,7 +1534,7 @@ void fn_1_7F38(void)
                                     }
                                     var_r23 = var_r27 * 4 + var_r28 * 2 + var_r25;
                                     lbl_1_bss_0[var_r23].unk0 = var_r24;
-                                    lbl_1_bss_0[var_r23].unk4 = 0x78;
+                                    lbl_1_bss_0[var_r23].unk4 = REFRESH_RATE * 2;
                                 }
                             }
                             var_r31->unk_14 = 0.1f;

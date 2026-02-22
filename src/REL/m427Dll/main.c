@@ -9,6 +9,7 @@
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/wipe.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
@@ -120,7 +121,7 @@ void ObjectSetup(void) {
     lbl_1_bss_7C = 0;
     lbl_1_bss_78 = lbl_1_bss_74 = GWMGRecordGet(2);
     if (lbl_1_bss_78 <= 0) {
-        lbl_1_bss_78 = lbl_1_bss_74 = 0xE10;
+        lbl_1_bss_78 = lbl_1_bss_74 = REFRESH_RATE_F * 60;
     }
     
     lbl_1_bss_68 = lbl_1_bss_64 = 0;
@@ -176,26 +177,26 @@ void fn_1_300(omObjData* arg0) {
             break;
         case 1:
             lbl_1_bss_80++;
-            var_f31 = lbl_1_bss_80 / 300.0f;
+            var_f31 = lbl_1_bss_80 / (REFRESH_RATE_F * 5.0f);
             if (var_f31 > 1.0f) {
                 var_f31 = 1.0f;
             }
             fn_1_11298(sind(90.0f * var_f31));
-            if (++lbl_1_bss_7C >= 60.0f) {
+            if (++lbl_1_bss_7C >= REFRESH_RATE_F) {
                 lbl_1_bss_84 = 2;
                 lbl_1_bss_7C = 0;
             }
             break;
         case 2:
             lbl_1_bss_80++;
-            var_f31 = lbl_1_bss_80 / 300.0f;
+            var_f31 = lbl_1_bss_80 / (REFRESH_RATE_F * 5);
             if (var_f31 > 1.0f) {
                 var_f31 = 1.0f;
             }
             fn_1_11298(sind(90.0f * var_f31));
-            var_f30 = sind(90.0f * (lbl_1_bss_7C / 240.0f));
+            var_f30 = sind(90.0f * (lbl_1_bss_7C / (REFRESH_RATE_F * 4)));
             fn_1_2CE8(var_f30 * var_f30);
-            if (++lbl_1_bss_7C >= 240.0f) {
+            if (++lbl_1_bss_7C >= (REFRESH_RATE_F * 4)) {
                 lbl_1_bss_60 = MGSeqCreate(3, 0);
                 fn_1_2EE0();
                 lbl_1_bss_84 = 3;
@@ -221,8 +222,8 @@ void fn_1_300(omObjData* arg0) {
         case 4:
             lbl_1_bss_80++;
             var_r30 = lbl_1_bss_80;
-            if (var_r30 > 0x4650) {
-                var_r30 = 0x4650;
+            if (var_r30 > REFRESH_RATE * 300) {
+                var_r30 = REFRESH_RATE * 300;
             }
             
             fn_1_2518(var_r30);
@@ -234,12 +235,12 @@ void fn_1_300(omObjData* arg0) {
                     }
                 }
             }
-            if (lbl_1_bss_80 == 0x3F48) {
-                lbl_1_bss_5C = MGSeqCreate(1, 0x708, -1, -1);
+            if (lbl_1_bss_80 == REFRESH_RATE * 270) {
+                lbl_1_bss_5C = MGSeqCreate(1, REFRESH_RATE * 30, -1, -1);
             }
             if (lbl_1_bss_5C != -1) {
-                var_r26 = (0x4650 - lbl_1_bss_80);
-                var_r30 = (var_r26 + 0x3A) / 60;
+                var_r26 = (REFRESH_RATE * 300 - lbl_1_bss_80);
+                var_r30 = (var_r26 + REFRESH_RATE - 2) / REFRESH_RATE;
                 if (var_r30 < 0) {
                     var_r30 = 0;
                 }
@@ -279,7 +280,7 @@ void fn_1_300(omObjData* arg0) {
                         lbl_1_bss_74 = lbl_1_bss_80;
                     }
                 }
-                if ((lbl_1_bss_68 != 0) && (lbl_1_bss_80 <= 0xA8C)) {
+                if ((lbl_1_bss_68 != 0) && (lbl_1_bss_80 <= 45 * REFRESH_RATE)) {
                     if (lbl_1_bss_68 == 1) {
                         var_r29 = 0;
                     } else {
@@ -293,7 +294,7 @@ void fn_1_300(omObjData* arg0) {
                 lbl_1_bss_80 = 0;
                 lbl_1_bss_7C = 0;
             } else {
-                if (lbl_1_bss_80 >= 0x4651) {
+                if (lbl_1_bss_80 >= REFRESH_RATE * 300 + 1) {
                     MGSeqParamSet(lbl_1_bss_5C, 1, 0);
                     MGSeqParamSet(lbl_1_bss_5C, 2, -1);
                     lbl_1_bss_5C = -1;
@@ -318,8 +319,12 @@ void fn_1_300(omObjData* arg0) {
             break;
         case 5:
             if (lbl_1_bss_68 != 0) {
-                WipeCreate(2, 0, 0x3C);
+                WipeCreate(2, 0, REFRESH_RATE);
+#if VERSION_PAL
+                WipeColorSet(0xA0, 0xA0, 0xA0);
+#else
                 WipeColorSet(0xFF, 0xFF, 0xFF);
+#endif
                 lbl_1_bss_4C = 1;
                 lbl_1_bss_84 = 6;
                 lbl_1_bss_80 = 0;
@@ -344,8 +349,12 @@ void fn_1_300(omObjData* arg0) {
             break;
         case 7:
             if (++lbl_1_bss_80 > 5) {
-                WipeCreate(1, 0, 0x1E);
+                WipeCreate(1, 0, REFRESH_RATE / 2);
+#if VERSION_PAL
+                WipeColorSet(0xA0, 0xA0, 0xA0);
+#else
                 WipeColorSet(0xFF, 0xFF, 0xFF);
+#endif
                 lbl_1_bss_4C = 0;
                 HuAudAUXVolSet(-1, -1);
                 fn_1_272C();
@@ -363,13 +372,13 @@ void fn_1_300(omObjData* arg0) {
             break;
         case 10:
             if (lbl_1_bss_68 != 0) {
-                var_f31 = sind((90.0f * (lbl_1_bss_80 / 180.0f)));
+                var_f31 = sind((90.0f * (lbl_1_bss_80 / (REFRESH_RATE_F * 3))));
                 if (var_f31 >= 1.0f) {
                     var_f31 = 1.0f;
                 }
                 fn_1_11298(var_f31);
-                if (lbl_1_bss_80 > 30.0f) {
-                    var_f30 = lbl_1_bss_7C / 150.0f;
+                if (lbl_1_bss_80 > REFRESH_RATE_F / 2) {
+                    var_f30 = lbl_1_bss_7C / (REFRESH_RATE_F * 2.5f);
                     lbl_1_bss_7C++;
                     if (var_f30 >= 1.0f) {
                         var_f30 = 1.0f;
@@ -377,7 +386,7 @@ void fn_1_300(omObjData* arg0) {
                     var_f30 = sind(90.0f * var_f30);
                     fn_1_2F6C(var_f30);
                 }
-                if (++lbl_1_bss_80 > 180.0f) {
+                if (++lbl_1_bss_80 > REFRESH_RATE_F * 3) {
                     if (lbl_1_bss_68 == 1) {
                         fn_1_110E8(0, sp10);
                         fn_1_111C0(0, sp8);
@@ -393,13 +402,13 @@ void fn_1_300(omObjData* arg0) {
                         GWMGRecordSet(2, lbl_1_bss_78);
                         fn_1_2704();
                         lbl_1_bss_60 = MGSeqCreate(0xE, lbl_1_bss_78);
-                        lbl_1_bss_7C = 0xB4;
+                        lbl_1_bss_7C = REFRESH_RATE * 3;
                         lbl_1_bss_84 = 0xB;
                         lbl_1_bss_80 = 0;
                     } else {
                         lbl_1_bss_60 = MGSeqCreate(5, 3, sp10[0], sp10[1], -1, -1);
                         HuAudSStreamPlay(1);
-                        lbl_1_bss_7C = 0xB4;
+                        lbl_1_bss_7C = REFRESH_RATE * 3;
                         lbl_1_bss_84 = 0xC;
                         lbl_1_bss_80 = 0;
                     }
@@ -407,7 +416,7 @@ void fn_1_300(omObjData* arg0) {
             } else {
                 lbl_1_bss_60 = MGSeqCreate(3, 2);
                 HuAudSStreamPlay(4);
-                lbl_1_bss_7C = 0xB4;
+                lbl_1_bss_7C = REFRESH_RATE * 3;
                 lbl_1_bss_84 = 0xC;
                 lbl_1_bss_80 = 0;
             }
@@ -421,13 +430,13 @@ void fn_1_300(omObjData* arg0) {
                 }
                 lbl_1_bss_60 = MGSeqCreate(5, 3, sp10[0], sp10[1], -1, -1);
                 HuAudSStreamPlay(1);
-                lbl_1_bss_7C = 0xB4;
+                lbl_1_bss_7C = REFRESH_RATE * 3;
                 lbl_1_bss_84 = 0xC;
                 lbl_1_bss_80 = 0;
             }
             break;
         case 12:
-            if (++lbl_1_bss_80 >= 210.0f) {
+            if (++lbl_1_bss_80 >= REFRESH_RATE_F * 3.5f) {
                 WipeCreate(2, 0, 0x3C);
                 lbl_1_bss_4C = 1;
                 lbl_1_bss_84 = 0xD;
@@ -741,31 +750,31 @@ void fn_1_232C(s32 arg0) {
 
     temp_r29 = lbl_1_bss_40;
     temp_r29->unk9C = arg0;
-    var_r31 = arg0 / 3600;
-    arg0 -= var_r31 * 3600;
+    var_r31 = arg0 / (REFRESH_RATE * 60);
+    arg0 -= var_r31 * (REFRESH_RATE * 60);
     if (var_r31 > 9) {
         var_r31 = 9;
     } else if (var_r31 < 0) {
         var_r31 = 0;
     }
     espBankSet(temp_r29->unk14[0], var_r31);
-    var_r31 = (arg0 / 600);
-    arg0 -= var_r31 * 600;
+    var_r31 = (arg0 / (REFRESH_RATE * 10));
+    arg0 -= var_r31 * (REFRESH_RATE * 10);
     if (var_r31 > 9) {
         var_r31 = 9;
     } else if (var_r31 < 0) {
         var_r31 = 0;
     }
     espBankSet(temp_r29->unk14[2], var_r31);
-    var_r31 = arg0 / 60;
-    arg0 -= var_r31 * 60;
+    var_r31 = arg0 / REFRESH_RATE;
+    arg0 -= var_r31 * REFRESH_RATE;
     if (var_r31 > 9) {
         var_r31 = 9;
     } else if (var_r31 < 0) {
         var_r31 = 0;
     }
     espBankSet(temp_r29->unk14[3], var_r31);
-    arg0 = 100.0f * (arg0 / 60.0f);
+    arg0 = 100.0f * (arg0 / REFRESH_RATE_F);
     var_r31 = arg0 / 10;
     arg0 -= var_r31 * 10;
     if (var_r31 > 9) {
@@ -790,31 +799,31 @@ void fn_1_2518(s32 arg0) {
 
     temp_r29 = lbl_1_bss_40;
     temp_r29->unkA0 = arg0;
-    var_r31 = arg0 / 3600;
-    arg0 -= var_r31 * 3600;
+    var_r31 = arg0 / (REFRESH_RATE * 60);
+    arg0 -= var_r31 * (REFRESH_RATE * 60);
     if (var_r31 > 9) {
         var_r31 = 9;
     } else if (var_r31 < 0) {
         var_r31 = 0;
     }
     espBankSet(temp_r29->unk30[0], var_r31);
-    var_r31 = (arg0 / 600);
-    arg0 -= var_r31 * 600;
+    var_r31 = (arg0 / (REFRESH_RATE * 10));
+    arg0 -= var_r31 * (REFRESH_RATE * 10);
     if (var_r31 > 9) {
         var_r31 = 9;
     } else if (var_r31 < 0) {
         var_r31 = 0;
     }
     espBankSet(temp_r29->unk30[2], var_r31);
-    var_r31 = arg0 / 60;
-    arg0 -= var_r31 * 60;
+    var_r31 = arg0 / REFRESH_RATE;
+    arg0 -= var_r31 * REFRESH_RATE;
     if (var_r31 > 9) {
         var_r31 = 9;
     } else if (var_r31 < 0) {
         var_r31 = 0;
     }
     espBankSet(temp_r29->unk30[3], var_r31);
-    arg0 = 100.0f * (arg0 / 60.0f);
+    arg0 = 100.0f * (arg0 / REFRESH_RATE_F);
     var_r31 = arg0 / 10;
     arg0 -= var_r31 * 10;
     if (var_r31 > 9) {

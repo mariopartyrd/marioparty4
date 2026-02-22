@@ -1233,9 +1233,9 @@ config.libs = [
     Rel(
         "m427Dll",  # Right Oar Left?
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m427Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m427Dll/map.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m427Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m427Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m427Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m427Dll/player.c"),
         },
     ),
     Rel(
