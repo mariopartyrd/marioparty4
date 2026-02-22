@@ -16,6 +16,7 @@
 
 #include "dolphin.h"
 #include "ext_math.h"
+#include "version.h"
 
 
 typedef struct {
@@ -746,12 +747,12 @@ void fn_1_3B74(omObjData *arg0)
         + (sp354[3]->unk20 == 3 && (lbl_1_data_F0[9][3].unk04 == 0 || lbl_1_bss_34 != 1003));
     var_r19 = (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 0) ? (rand8() % 2 + 1 + var_r20) : var_r20;
     var_r18 = (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 120 == 0) ? (rand8() % 2 + 1) : 0;
-    var_r17 = sp22C + (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 0 && lbl_1_bss_28 > 120);
+    var_r17 = sp22C + (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 0 && lbl_1_bss_28 > REFRESH_RATE * 2);
     sp228 = (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 0) ? (rand8() % 2 + 2) : 0;
     sp224 = 0;
     var_r19 = (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 0) ? ((rand8() % 4 < 3) + 1 + var_r20) : var_r20;
     var_r18 = (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 120 == 1) ? (rand8() % 2 + 1) : 0;
-    var_r17 = sp22C + (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 38 && lbl_1_bss_28 > 120);
+    var_r17 = sp22C + (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 38 && lbl_1_bss_28 > REFRESH_RATE * 2);
     sp228 = (lbl_1_bss_34 == 1003 && lbl_1_bss_C % 60 == 0) ? (rand8() % 2 + 2) : 0;
     while (var_r19 > 0 || var_r18 > 0 || var_r17 > 0 || sp228 > 0) {
         var_r27 = (rand8() % 2 == 0) ? ((var_r17 != 0) ? 3
@@ -791,8 +792,8 @@ void fn_1_3B74(omObjData *arg0)
                     : 0;
             }
             else {
-                if (var_r28 == 10 && (lbl_1_bss_28 / 60) / 15 + 1 <= 2 - lbl_1_bss_14
-                    && rand8() % (((lbl_1_bss_28 / 60 - (1 - lbl_1_bss_14) * 15) * 3) + 1) == 0) {
+                if (var_r28 == 10 && (lbl_1_bss_28 / REFRESH_RATE) / 15 + 1 <= 2 - lbl_1_bss_14
+                    && rand8() % (((lbl_1_bss_28 / REFRESH_RATE - (1 - lbl_1_bss_14) * 15) * 3) + 1) == 0) {
                     var_r28 = 11;
                 }
                 for (i = 0; i < (var_r27 != 4 ? 4 : 10); i++) {
@@ -866,7 +867,7 @@ void fn_1_3B74(omObjData *arg0)
             if (var_r28 == 11) {
                 lbl_1_bss_14++;
             }
-            if ((lbl_1_bss_28 / 60) / 15 == 0 && lbl_1_bss_14 == 0) {
+            if ((lbl_1_bss_28 / REFRESH_RATE) / 15 == 0 && lbl_1_bss_14 == 0) {
                 lbl_1_bss_14++;
             }
             lbl_1_data_F0[var_r28][i].unk00 = var_r28;
@@ -1314,8 +1315,8 @@ void fn_1_89E0(omObjData *arg0)
             }
             if (lbl_1_bss_8 >= 5.0f && MGSeqStatGet(lbl_1_bss_2E) == 0 && lbl_1_bss_2E >= 0) {
                 lbl_1_bss_34++;
-                lbl_1_bss_28 = 1800;
-                lbl_1_bss_2C = MGSeqTimerCreate(lbl_1_bss_28 / 60);
+                lbl_1_bss_28 = REFRESH_RATE * 30;
+                lbl_1_bss_2C = MGSeqTimerCreate(lbl_1_bss_28 / REFRESH_RATE);
                 lbl_1_bss_2E = -1;
                 lbl_1_bss_8 = 0.0f;
                 for (i = 0; i < 16; i++) {
@@ -1328,7 +1329,7 @@ void fn_1_89E0(omObjData *arg0)
             break;
         case 1003:
             lbl_1_bss_8 += 1.0f;
-            MGSeqParamSet(lbl_1_bss_2C, 1, (lbl_1_bss_28 + 58) / 60);
+            MGSeqParamSet(lbl_1_bss_2C, 1, (lbl_1_bss_28 + REFRESH_RATE - 2) / REFRESH_RATE);
             lbl_1_bss_28--;
             if (lbl_1_bss_28 <= 0) {
                 lbl_1_bss_34 = 1004;
@@ -1358,9 +1359,10 @@ void fn_1_89E0(omObjData *arg0)
                         var_r30++;
                     }
                 }
-                if (MGSeqStatGet(lbl_1_bss_2E) == 0
-                    && ((lbl_1_bss_8 >= 150.0f && var_r29 == 0 && var_r30 == 0) || (lbl_1_bss_8 >= 240.0f && var_r30 == 0)
-                        || lbl_1_bss_8 >= 360.0f)) {
+                if (MGSeqStatGet(lbl_1_bss_2E) == 0 &&
+                      ((lbl_1_bss_8 >= (VERSION_PAL ? 125.0f : 150.0f) && var_r29 == 0 && var_r30 == 0)
+                    || (lbl_1_bss_8 >= REFRESH_RATE_F * 4 && var_r30 == 0)
+                    || (lbl_1_bss_8 >= REFRESH_RATE_F * 6))) {
                     lbl_1_bss_34++;
                     lbl_1_bss_8 = 0.0f;
                     GWPlayerCoinCollectSet(spC[0]->unk04, lbl_1_data_18F4[0]);
@@ -1379,7 +1381,7 @@ void fn_1_89E0(omObjData *arg0)
             break;
         case 1005:
             lbl_1_bss_8 += 1.0f;
-            if (210.0f < lbl_1_bss_8) {
+            if (REFRESH_RATE_F * 3.5f < lbl_1_bss_8) {
                 HuAudFXStop(lbl_1_data_18B0);
                 lbl_1_bss_2E = -1;
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);

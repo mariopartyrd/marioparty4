@@ -81,7 +81,11 @@ char *lbl_1_data_430[] = {
 };
 
 char *lbl_1_data_538[] = {
+#if VERSION_PAL
+	"(Map1-Map6) >>>> not event <<<<",
+#else
 	"(Map1-Map6) Board Game",
+#endif
 	"(Map1-Map6) Story:Board Clear Event",
 	"(Map1-Map6) Story:Board Miss Event",
 	"(Map1-Map6) Story:MiniGame Clear Event", 
@@ -90,11 +94,24 @@ char *lbl_1_data_538[] = {
 	"(Map6)      Story:Ending"
 };
 
-s32 lbl_1_data_554[] = {
-	0, 0, 0, 0, 0, 0
+#if VERSION_PAL
+char *lbl_1_data_57C[] = {
+	"GERMANY",
+	"FRENCH",
+	"ITALY",
+	"SPANISH"
+};
+#endif
+
+#if VERSION_PAL
+s32 lbl_1_data_58C = 1;
+#endif
+
+s32 lbl_1_data_590[] = {
+	0, 0, 0, 0, 0, 0,
 };
 
-s32 lbl_1_data_56C[] = {
+s32 lbl_1_data_5A8[] = {
 	DATADIR_W01,
 	DATADIR_W02,
 	DATADIR_W03,
@@ -104,13 +121,19 @@ s32 lbl_1_data_56C[] = {
 	DATADIR_W10
 };
 
+#if VERSION_PAL
+
+#endif
+
 void fn_1_EC(void);
 void fn_1_12E8(void);
 void fn_1_13A0(void);
 
 s32 lbl_1_bss_14;
 s32 lbl_1_bss_10;
+#if VERSION_NTSC
 s32 lbl_1_bss_C;
+#endif
 s32 lbl_1_bss_8;
 s32 lbl_1_bss_4;
 Process *lbl_1_bss_0;
@@ -131,7 +154,7 @@ void fn_1_0(void)
 	if(_CheckFlag(0x1000B)) {
 		status = HuDataDirReadAsync(DATADIR_W10);
 	} else {
-		status = HuDataDirReadAsync(lbl_1_data_56C[GWSystem.board]);
+		status = HuDataDirReadAsync(lbl_1_data_5A8[GWSystem.board]);
 	}
 	if(status != -1) {
 		while(!HuDataGetAsyncStat(status)) {
@@ -186,8 +209,13 @@ void fn_1_EC(void)
 				print8(x, y+(row_h*(i+2)), scale, "%s", lbl_1_data_430[i]);
 			}
 		}
+#if VERSION_PAL
+#define _VALUE lbl_1_data_58C
+#else
+#define _VALUE lbl_1_bss_C
+#endif
 		if(lbl_1_bss_4 == 1) {
-			printWin(x, y+(row_h*(lbl_1_bss_C+12))-2, 400, 10*scale, &hilite);
+			printWin(x, y+(row_h*(_VALUE+12))-2, 400, 10*scale, &hilite);
 		}
 		print8(x, y+(row_h*10), scale, "EVENT NO");
 		print8(x, y+(row_h*11), scale, "--------------------------------------------------");
@@ -195,7 +223,7 @@ void fn_1_EC(void)
 			for(i=0; i<7; i++) {
 				if(lbl_1_bss_4 <= 1) {
 					print8(x, y+(row_h*(i+12)), scale, "%s", lbl_1_data_538[i]);
-				} else if(lbl_1_bss_C == i) {
+				} else if(_VALUE == i) {
 					print8(x, y+(row_h*(i+12)), scale, "%s", lbl_1_data_538[i]);
 				}
 			}
@@ -203,7 +231,7 @@ void fn_1_EC(void)
 			for(i=0; i<5; i++) {
 				if(lbl_1_bss_4 <= 1) {
 					print8(x, y+(row_h*(i+12)), scale, "%s", lbl_1_data_538[i]);
-				} else if(lbl_1_bss_C == i) {
+				} else if(_VALUE == i) {
 					print8(x, y+(row_h*(i+12)), scale, "%s", lbl_1_data_538[i]);
 				}
 			}
@@ -211,15 +239,24 @@ void fn_1_EC(void)
 		if(lbl_1_bss_4 == 2) {
 			printWin(x, y+(row_h*(lbl_1_bss_10+23))-2, 400, 10*scale, &hilite);
 		}
+#if VERSION_PAL
+		print8(x, y+(row_h*21), scale, "LANGUAGE SELECT");
+		print8(x, y+(row_h*22), scale, "--------------------------------------------------");
+		for(i=0; i<4; i++) {
+			print8(x, y+(row_h*(i+23)), scale, "%s", lbl_1_data_57C[i]);
+		}
+#endif
+#if VERSION_NTSC
 		print8(x, y+(row_h*21), scale, "CLEAR FLAG");
 		print8(x, y+(row_h*22), scale, "--------------------------------------------------");
 		for(i=0; i<6; i++) {
-			if(!lbl_1_data_554[i]) {
+			if(!lbl_1_data_590[i]) {
 				print8(x, y+(row_h*(i+23)), scale, "FALSE - %s", lbl_1_data_430[i]);
 			} else {
 				print8(x, y+(row_h*(i+23)), scale, "TRUE  - %s", lbl_1_data_430[i]);
 			}
 		}
+#endif
 		if(delay <= 0) {
 			switch(lbl_1_bss_4) {
 				case 0:
@@ -241,68 +278,93 @@ void fn_1_EC(void)
 				case 1:
 					if(lbl_1_bss_8 == 5) {
 						if(HuPadStkY[0] >= 30) {
-							lbl_1_bss_C--;
-							if(lbl_1_bss_C < 0) {
-								lbl_1_bss_C = 6;
+							_VALUE--;
+#if VERSION_PAL
+							if(_VALUE < 1) {
+#else
+							if(_VALUE < 0) {
+#endif
+								_VALUE = 6;
 							}
 							delay = 10;
 						} else if(HuPadStkY[0] <= -30) {
-							lbl_1_bss_C++;
-							if(lbl_1_bss_C > 6) {
-								lbl_1_bss_C = 0;
+							_VALUE++;
+							if(_VALUE > 6) {
+#if VERSION_PAL
+								_VALUE = 1;
+#else
+								_VALUE = 0;
+#endif
 							}
 							delay = 10;
 						}
 					} else {
 						if(HuPadStkY[0] >= 30) {
-							lbl_1_bss_C--;
-							if(lbl_1_bss_C < 0) {
-								lbl_1_bss_C = 4;
+							_VALUE--;
+#if VERSION_PAL
+							if(_VALUE < 1) {
+#else
+							if(_VALUE < 0) {
+#endif
+								_VALUE = 4;
 							}
 							delay = 10;
 						} else if(HuPadStkY[0] <= -30) {
-							lbl_1_bss_C++;
-							if(lbl_1_bss_C > 4) {
-								lbl_1_bss_C = 0;
+							_VALUE++;
+							if(_VALUE > 4) {
+#if VERSION_PAL
+								_VALUE = 1;
+#else
+								_VALUE = 0;
+#endif
 							}
 							delay = 10;
 						}
 					}
 					break;
-					
 				case 2:
 					if(HuPadStkY[0] >= 30) {
 						lbl_1_bss_10--;
 						if(lbl_1_bss_10 < 0) {
+#if VERSION_PAL
+							lbl_1_bss_10 = 3;
+#else
 							lbl_1_bss_10 = 5;
+#endif
 						}
 						delay = 10;
 					} else if(HuPadStkY[0] <= -30) {
 						lbl_1_bss_10++;
+#if VERSION_PAL
+						if(lbl_1_bss_10 > 3) {
+#else
 						if(lbl_1_bss_10 > 5) {
+#endif
 							lbl_1_bss_10 = 0;
 						}
 						delay = 10;
+#if VERSION_NTSC
 					} else if(HuPadStkX[0] <= -30) {
-						lbl_1_data_554[lbl_1_bss_10]++;
-						if(lbl_1_data_554[lbl_1_bss_10] > 1) {
-							lbl_1_data_554[lbl_1_bss_10] = 0;
+						lbl_1_data_590[lbl_1_bss_10]++;
+						if(lbl_1_data_590[lbl_1_bss_10] > 1) {
+							lbl_1_data_590[lbl_1_bss_10] = 0;
 						}
 						delay = 10;
 					} else if(HuPadStkX[0] >= 30) {
-						lbl_1_data_554[lbl_1_bss_10]--;
-						if(lbl_1_data_554[lbl_1_bss_10] < 0) {
-							lbl_1_data_554[lbl_1_bss_10] = 1;
+						lbl_1_data_590[lbl_1_bss_10]--;
+						if(lbl_1_data_590[lbl_1_bss_10] < 0) {
+							lbl_1_data_590[lbl_1_bss_10] = 1;
 						}
 						delay = 10;
+#endif
 					}
 					break;
 					
 				default:
 					break;
 			}
-			if(lbl_1_bss_8 != 5 && lbl_1_bss_C > 4) {
-				lbl_1_bss_C = 4;
+			if(lbl_1_bss_8 != 5 && _VALUE > 4) {
+				_VALUE = 4;
 			}
 			if(HuPadBtnDown[0] & PAD_BUTTON_A) {
 				lbl_1_bss_4++;
@@ -330,43 +392,60 @@ void fn_1_EC(void)
 		HuPrcVSleep();
 	}
 	GWSystem.board = lbl_1_bss_8;
-	if(lbl_1_data_554[0] == 1 || lbl_1_bss_8 == 0 && lbl_1_bss_C == 1) {
+#if VERSION_NTSC
+	if(lbl_1_data_590[0] == 1 || lbl_1_bss_8 == 0 && lbl_1_bss_C == 1) {
 		_SetFlag(FLAG_ID_MAKE(0, 2));
 	} else {
 		_ClearFlag(FLAG_ID_MAKE(0, 2));
 	}
-	if(lbl_1_data_554[1] == 1 || lbl_1_bss_8 == 1 && lbl_1_bss_C == 1) {
+	if(lbl_1_data_590[1] == 1 || lbl_1_bss_8 == 1 && lbl_1_bss_C == 1) {
 		_SetFlag(FLAG_ID_MAKE(0, 3));
 	} else {
 		_ClearFlag(FLAG_ID_MAKE(0, 3));
 	}
-	if(lbl_1_data_554[2] == 1 || lbl_1_bss_8 == 2 && lbl_1_bss_C == 1) {
+	if(lbl_1_data_590[2] == 1 || lbl_1_bss_8 == 2 && lbl_1_bss_C == 1) {
 		_SetFlag(FLAG_ID_MAKE(0, 4));
 	} else {
 		_ClearFlag(FLAG_ID_MAKE(0, 4));
 	}
-	if(lbl_1_data_554[3] == 1 || lbl_1_bss_8 == 3 && lbl_1_bss_C == 1) {
+	if(lbl_1_data_590[3] == 1 || lbl_1_bss_8 == 3 && lbl_1_bss_C == 1) {
 		_SetFlag(FLAG_ID_MAKE(0, 5));
 	} else {
 		_ClearFlag(FLAG_ID_MAKE(0, 5));
 	}
-	if(lbl_1_data_554[4] == 1 || lbl_1_bss_8 == 4 && lbl_1_bss_C == 1) {
+	if(lbl_1_data_590[4] == 1 || lbl_1_bss_8 == 4 && lbl_1_bss_C == 1) {
 		_SetFlag(FLAG_ID_MAKE(0, 6));
 	} else {
 		_ClearFlag(FLAG_ID_MAKE(0, 6));
 	}
-	if(lbl_1_data_554[5] == 1 || lbl_1_bss_8 == 5 && lbl_1_bss_C == 1) {
+	if(lbl_1_data_590[5] == 1 || lbl_1_bss_8 == 5 && lbl_1_bss_C == 1) {
 		_SetFlag(FLAG_ID_MAKE(0, 7));
 	} else {
 		_ClearFlag(FLAG_ID_MAKE(0, 7));
 	}
+#endif
+#if VERSION_PAL
+	switch (lbl_1_bss_10) {
+		case 0:
+			GWGameStat.language = 2;
+			break;
+		case 1:
+			GWGameStat.language = 3;
+			break;
+		case 2:
+			GWGameStat.language = 4;
+			break;
+		case 3:
+			GWGameStat.language = 5;
+	}
+#endif
 	if(GWSystem.board == BOARD_ID_MAIN6) {
 		_SetFlag(FLAG_ID_MAKE(0, 2));
 		_SetFlag(FLAG_ID_MAKE(0, 3));
 		_SetFlag(FLAG_ID_MAKE(0, 4));
 		_SetFlag(FLAG_ID_MAKE(0, 5));
 		_SetFlag(FLAG_ID_MAKE(0, 6));
-		switch(lbl_1_bss_C) {
+		switch(_VALUE) {
 			case 0:
 				HuPrcChildCreate(fn_1_0, 100, 12288, 0, lbl_1_bss_0);
 				do {
@@ -411,7 +490,7 @@ void fn_1_EC(void)
 				break;
 		}
 	} else {
-		switch(lbl_1_bss_C) {
+		switch(_VALUE) {
 			case 0:
 				HuPrcChildCreate(fn_1_0, 100, 12288, 0, lbl_1_bss_0);
 				do {
