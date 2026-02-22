@@ -1809,6 +1809,7 @@ void fn_1_ABDC(ModelData *model, Mtx matrix)
             GXColor1x8(var_r29);
             GXColor1x8(1);
         }
+        GXEnd();
         MTXTrans(spE8, work->unk_00[var_r30].x, 0.0f, work->unk_00[var_r30].z);
         MTXConcat(Hu3DCameraMtx, spE8, sp88);
         GXLoadPosMtxImm(sp88, 0);
@@ -1824,6 +1825,7 @@ void fn_1_ABDC(ModelData *model, Mtx matrix)
             GXColor1x8(var_r29);
             GXColor1x8(1);
         }
+        GXEnd();
     }
 #ifdef TARGET_PC
     GXDestroyTexObj(&sp8);

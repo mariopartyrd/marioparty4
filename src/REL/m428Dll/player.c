@@ -2185,6 +2185,7 @@ void fn_1_102A8(ModelData *model, Mtx matrix)
         GXPosition1x16(var_r30);
         GXColor1x16(0);
     }
+    GXEnd();
 }
 
 void fn_1_10530(s32 arg0, Vec *arg1, Vec *arg2)
@@ -2949,6 +2950,7 @@ s16 fn_1_12CD4(AnimData *sp8, s16 var_r26)
         GXUnknownu16(var_r30);
         GXUnknownu16(var_r30 * 4 + 3);
     }
+    GXEnd();
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r27->unk_48);
     memcpy(var_r31->unk_48, var_r24, var_r31->unk_34);
@@ -3184,7 +3186,7 @@ void fn_1_134C0(ModelData *var_r23, Mtx var_r22)
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
-        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (shadowModelDrawF == 0) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;

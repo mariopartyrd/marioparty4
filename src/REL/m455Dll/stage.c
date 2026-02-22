@@ -191,6 +191,7 @@ omObjData *fn_1_347C(void)
     GXTexCoord2f32(1, 1);
     GXPosition2f32(-0.5f, 0.5f);
     GXTexCoord2f32(0, 1);
+    GXEnd();
     work2->unkA18 = GXEndDisplayList();
     for (i = 0; i < 26; i++) {
         work2->unk874[i][0] = 0;
@@ -426,7 +427,7 @@ void fn_1_4180(ModelData *model, Mtx matrix)
         mtxRotCat(modelview, 0, 0, workUnk74->unkC.y);
         mtxTransCat(modelview, 400 * (workUnk74->unk0.x + 1500) / 3000, 400 * (workUnk74->unk0.z - -2000) / 3000, 0);
         GXLoadPosMtxImm(modelview, GX_PNMTX0);
-        GXCallDisplayListNative(work2->unkA14, work2->unkA18);
+        GXCallDisplayList(work2->unkA14, work2->unkA18);
         if (!omPauseChk()) {
             workUnk74->unk1E--;
         }

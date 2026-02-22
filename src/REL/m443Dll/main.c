@@ -941,6 +941,7 @@ void fn_1_3D78(ModelData *arg0, Mtx arg1)
     GXPosition3f32(45000.0f, 30000.0f, -59900.0f);
     GXPosition3f32(45000.0f, -30000.0f, -59900.0f);
     GXPosition3f32(-45000.0f, -30000.0f, -59900.0f);
+    GXEnd();
 }
 
 void fn_1_3FE8(u32 arg0)

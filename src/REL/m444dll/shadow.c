@@ -54,4 +54,5 @@ void fn_1_D9F4(s16 arg0)
     GXPosition3f32(sp28.x, -sp28.y, -10000.0f);
     GXPosition3f32(sp28.x, sp28.y, -10000.0f);
     GXPosition3f32(-sp28.x, sp28.y, -10000.0f);
+    GXEnd();
 }

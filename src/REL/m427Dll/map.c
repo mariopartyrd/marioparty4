@@ -860,6 +860,7 @@ void fn_1_510C(s32 arg0, s16 arg1, s16 arg2)
             fn_1_C2C8(&var_r31->unk4[var_r30->unk0], &var_r31->unk4[var_r30->unk2], &var_r31->unk4[var_r30->unk4], &var_r30->unk8);
         }
     }
+    GXEnd();
     var_r31->unk24 = GXEndDisplayList();
     var_r31->unk20 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk24, temp_r28->unk_48);
     memcpy(var_r31->unk20, var_r26, var_r31->unk24);
@@ -1064,7 +1065,7 @@ void fn_1_618C(ModelData *arg0, Mtx arg1)
     GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
     GXSetZCompLoc(0);
     GXSetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
-    GXCallDisplayListNative(var_r31->unk20, var_r31->unk24);
+    GXCallDisplayList(var_r31->unk20, var_r31->unk24);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
@@ -1880,6 +1881,7 @@ s16 fn_1_95E8(s32 arg0, s16 arg1, s16 arg2, float arg8, float arg9, float argA, 
         GXPosition1x16(var_r30);
         GXPosition1x16(var_r30);
     }
+    GXEnd();
     var_r31->unk84 = GXEndDisplayList();
     var_r31->unk80 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r31->unk84, MEMORY_DEFAULT_NUM);
     memcpy(var_r31->unk80, var_r28, var_r31->unk84);
@@ -2011,7 +2013,7 @@ void fn_1_9B88(ModelData *model, Mtx matrix)
         GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
         GXSetZCompLoc(0);
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_NOOP);
-        GXCallDisplayListNative(var_r31->unk80, var_r31->unk84);
+        GXCallDisplayList(var_r31->unk80, var_r31->unk84);
         GXSetNumIndStages(0);
         GXSetTevDirect(GX_TEVSTAGE0);
         GXSetTevDirect(GX_TEVSTAGE1);
@@ -2110,6 +2112,7 @@ s16 fn_1_A1F4(s32 arg0, s16 arg1, s16 arg2, s16 arg3, float arg8, Vec *arg4, Vec
             var_r30++;
         }
     }
+    GXEnd();
     var_r31->unk_44 = GXEndDisplayList();
     var_r31->unk_40 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_44, var_r29->unk_48);
     memcpy(var_r31->unk_40, var_r25, var_r31->unk_44);
@@ -2432,7 +2435,7 @@ void fn_1_B3CC(ModelData *model, Mtx matrix)
     GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
     GXSetZCompLoc(0);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_ONE, GX_LO_NOOP);
-    GXCallDisplayListNative(var_r31->unk_40, var_r31->unk_44);
+    GXCallDisplayList(var_r31->unk_40, var_r31->unk_44);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
@@ -2477,6 +2480,7 @@ void fn_1_BD2C(ModelData *model, Mtx matrix)
 
     GXPosition3f32(-1000.0f, -1000.0f, -24000.0f);
     GXTexCoord2f32(0.0f, 1.0f);
+    GXEnd();
 
     GXSetFog(GX_FOG_EXP, 3500.0f, 20000.0f, 300.0f, 50000.0f, sp14);
 }
@@ -2880,6 +2884,7 @@ s16 fn_1_D63C(AnimData *arg0, s16 arg1, float arg8, s16 arg2, s16 arg3)
         GXPosition1x16(var_r30);
         GXPosition1x16(var_r30 * 4 + 3);
     }
+    GXEnd();
     var_r31->unk_04 = GXEndDisplayList();
     var_r31->unk_28 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_04, var_r28->unk_48);
     memcpy(var_r31->unk_28, var_r21, var_r31->unk_04);
@@ -3069,7 +3074,7 @@ void fn_1_DCD4(ModelData *model, Mtx matrix)
     DCFlushRangeNoSync(var_r30->unk_1C, var_r30->unk_00 * sizeof(Vec) * 4);
     DCFlushRangeNoSync(var_r30->unk_20, var_r30->unk_00 * sizeof(Vec2f) * 4);
     PPCSync();
-    GXCallDisplayListNative(var_r30->unk_28, var_r30->unk_04);
+    GXCallDisplayList(var_r30->unk_28, var_r30->unk_04);
 }
 
 void fn_1_E2B0(Vec2f *arg0, s16 arg1, s16 arg2, float arg8, float arg9)

@@ -340,7 +340,7 @@ void fn_1_2978(ModelData *model, Mtx mtx)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSETARRAY(GX_VA_POS, lbl_1_bss_2868, sizeof(lbl_1_bss_2868), sizeof(Vec));
     GXSetCullMode(GX_CULL_BACK);
-    GXCallDisplayListNative(lbl_1_bss_450.unk0, lbl_1_bss_450.unk4);
+    GXCallDisplayList(lbl_1_bss_450.unk0, lbl_1_bss_450.unk4);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);
@@ -370,6 +370,7 @@ void fn_1_3004(void)
                 GXPosition1x16(temp_r29 + temp_r31 + 32);
             }
         }
+        GXEnd();
     }
     lbl_1_bss_450.unk4 = GXEndDisplayList();
     DCFlushRangeNoSync(lbl_1_bss_450.unk0, lbl_1_bss_450.unk4);
@@ -540,7 +541,7 @@ void fn_1_3CC8(ModelData *model, Mtx mtx)
         MTXScale(sp14, 0.5f * temp_f31, 0.5f * temp_f31, 1.0f);
         mtxTransCat(sp14, (200.0f * (600.0f + temp_r31->unk0.x)) / 1200.0f, (200.0f * (600.0f + temp_r31->unk0.z)) / 1200.0f, 0);
         GXLoadPosMtxImm(sp14, GX_PNMTX0);
-        GXCallDisplayListNative(lbl_1_bss_440.unk0, lbl_1_bss_440.unk4);
+        GXCallDisplayList(lbl_1_bss_440.unk0, lbl_1_bss_440.unk4);
     }
     fn_1_32DC(&lbl_1_bss_3F0[0], GX_TRUE);
 }

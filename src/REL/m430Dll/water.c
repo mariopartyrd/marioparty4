@@ -1145,6 +1145,7 @@ void fn_1_8B5C(omObjData *object, M430DllBss60Struct *var_r30)
             GXUnknownu16(var_r25);
             var_r27 = 1 - var_r27;
         }
+        GXEnd();
         var_r31++;
         if (var_r31 >= 4) {
             var_r31 = 0;
@@ -1270,7 +1271,7 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSETARRAY(GX_VA_POS, var_r31->unk_44[var_r31->unk_40], 0x1B8 * sizeof(Vec), sizeof(Vec));
     GXSETARRAY(GX_VA_CLR0, var_r31->unk_54[var_r31->unk_40], 0x1B8 * sizeof(GXColor), sizeof(GXColor));
     GXSetCullMode(GX_CULL_NONE);
-    GXCallDisplayListNative(var_r31->unk_60, var_r31->unk_64);
+    GXCallDisplayList(var_r31->unk_60, var_r31->unk_64);
     GXSetCullMode(GX_CULL_BACK);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
@@ -1378,6 +1379,7 @@ void fn_1_963C(ModelData *model, Mtx matrix, u32 var_r31)
     GXColor1x8(5);
     GXPosition1x8(5);
     GXColor1x8(5);
+    GXEnd();
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
 }
@@ -1488,6 +1490,7 @@ void fn_1_9C90(ModelData *model, Mtx matrix)
         GXPosition1x8(var_r30);
         GXColor1x8(var_r30 >> 1);
     }
+    GXEnd();
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
 }
@@ -1583,6 +1586,7 @@ void fn_1_A3A8(ModelData *model, Mtx matrix)
     GXColor1x8(1);
     GXPosition1x8(5);
     GXColor1x8(1);
+    GXEnd();
 }
 
 void fn_1_AB98(ModelData *model, Mtx matrix)

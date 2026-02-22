@@ -925,6 +925,7 @@ void fn_1_3158(void)
         GXUnknownu16(var_r29);
         GXUnknownu16(var_r29);
     }
+    GXEnd();
     var_r31->unk_A0 = GXEndDisplayList();
     if (var_r31->unk_A0 >= 0x10000) {
         OSReport("ERROR! GList test size over! \n");
@@ -1124,13 +1125,13 @@ void fn_1_45BC(ModelData *arg0, Mtx arg1)
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
         GXSETARRAY(GX_VA_CLR0, var_r31->unk_90, var_r31->unk_80 * sizeof(GXColor), sizeof(GXColor));
-        GXCallDisplayListNative(var_r31->unk_A4, var_r31->unk_A0);
+        GXCallDisplayList(var_r31->unk_A4, var_r31->unk_A0);
         for (var_r30 = 1; var_r30 < 29; var_r30++) {
             var_r29 = var_r30 * 35;
             GXSETARRAY(GX_VA_POS, &var_r31->unk_84[var_r29], 35 * sizeof(Vec), sizeof(Vec));
             GXSETARRAY(GX_VA_NRM, &var_r31->unk_88[var_r29], 35 * sizeof(Vec), sizeof(Vec));
             GXSETARRAY(GX_VA_CLR0, &var_r31->unk_90[var_r29], 35 * sizeof(GXColor), sizeof(GXColor));
-            GXCallDisplayListNative(var_r31->unk_A4, var_r31->unk_A0);
+            GXCallDisplayList(var_r31->unk_A4, var_r31->unk_A0);
         }
     }
 }
@@ -2653,6 +2654,7 @@ void fn_1_ADB4(ModelData *arg0, float (*arg1)[4])
     GXPosition3u8(1, 0, 0);
     GXPosition3u8(1, 1, 0);
     GXPosition3u8(0, 1, 0);
+    GXEnd();
 }
 
 void fn_1_B104(float arg8)
@@ -2802,6 +2804,7 @@ s16 fn_1_B474(AnimData *arg0, s16 arg1)
         GXUnknownu16(var_r30);
         GXUnknownu16(var_r30 * 4 + 3);
     }
+    GXEnd();
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r27->unk_48);
     memcpy(var_r31->unk_48, var_r24, var_r31->unk_34);
@@ -3036,7 +3039,7 @@ void fn_1_BC18(ModelData *arg0, float (*arg1)[4])
         DCFlushRangeNoSync(var_r31->unk_44, var_r31->unk_26 * 8 * 4);
         DCFlushRangeNoSync(var_r31->unk_3C, var_r31->unk_26 * 0x44);
         PPCSync();
-        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (!shadowModelDrawF) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;
@@ -3113,6 +3116,7 @@ s16 fn_1_C4F4(s16 arg0)
         GXUnknownu16(var_r29 * 4 + 3);
         GXUnknownu16(var_r29);
     }
+    GXEnd();
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r28->unk_48);
     memcpy(var_r31->unk_48, var_r25, var_r31->unk_34);
@@ -3215,7 +3219,7 @@ void fn_1_C86C(ModelData *arg0, Mtx arg1)
         DCFlushRangeNoSync(var_r31->unk_40, var_r31->unk_26 * 0xC * 4);
         DCFlushRangeNoSync(var_r31->unk_3C, var_r31->unk_26 * 0x44);
         PPCSync();
-        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (!shadowModelDrawF) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;

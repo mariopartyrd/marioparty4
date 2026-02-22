@@ -488,6 +488,7 @@ void fn_1_6AE0(ModelData *model, Mtx mtx)
         GXPosition3f32((lbl_1_data_754 / 2) * 100, 0, (temp_r31 * 100) - ((lbl_1_data_754 / 2) * 100));
         GXColor3u8(temp_r30, temp_r29, temp_r28);
     }
+    GXEnd();
     GXBegin(GX_LINES, GX_VTXFMT0, (lbl_1_data_754 + 1) * 4);
     for (temp_r31 = 0; temp_r31 <= lbl_1_data_754; temp_r31++) {
         temp_r30 = temp_r29 = temp_r28 = 255;
@@ -500,6 +501,7 @@ void fn_1_6AE0(ModelData *model, Mtx mtx)
         GXPosition3f32((lbl_1_data_754 / 2) * 100, temp_r31 * 100, -(lbl_1_data_754 / 2) * 100);
         GXColor3u8(temp_r30, temp_r29, temp_r28);
     }
+    GXEnd();
     GXBegin(GX_LINES, GX_VTXFMT0, (lbl_1_data_754 + 1) * 4);
     for (temp_r31 = 0; temp_r31 <= lbl_1_data_754; temp_r31++) {
         temp_r30 = temp_r29 = temp_r28 = 255;
@@ -512,6 +514,7 @@ void fn_1_6AE0(ModelData *model, Mtx mtx)
         GXPosition3f32((lbl_1_data_754 / 2) * 100, temp_r31 * 100, (lbl_1_data_754 / 2) * 100);
         GXColor3u8(temp_r30, temp_r29, temp_r28);
     }
+    GXEnd();
     GXBegin(GX_LINES, GX_VTXFMT0, (lbl_1_data_754 + 1) * 4);
     for (temp_r31 = 0; temp_r31 <= lbl_1_data_754; temp_r31++) {
         temp_r30 = temp_r29 = temp_r28 = 255;
@@ -524,6 +527,7 @@ void fn_1_6AE0(ModelData *model, Mtx mtx)
         GXPosition3f32((lbl_1_data_754 / 2) * 100, temp_r31 * 100, (lbl_1_data_754 / 2) * 100);
         GXColor3u8(temp_r30, temp_r29, temp_r28);
     }
+    GXEnd();
     GXBegin(GX_LINES, GX_VTXFMT0, (lbl_1_data_754 + 1) * 4);
     for (temp_r31 = 0; temp_r31 <= lbl_1_data_754; temp_r31++) {
         temp_r30 = temp_r29 = temp_r28 = 255;
@@ -536,6 +540,7 @@ void fn_1_6AE0(ModelData *model, Mtx mtx)
         GXPosition3f32(-(lbl_1_data_754 / 2) * 100, temp_r31 * 100, (lbl_1_data_754 / 2) * 100);
         GXColor3u8(temp_r30, temp_r29, temp_r28);
     }
+    GXEnd();
 }
 
 s16 lbl_1_data_758[] = { 1, 3, 2, 13, 14, 15, 16, 68, -1 };

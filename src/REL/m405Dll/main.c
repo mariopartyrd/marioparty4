@@ -1010,7 +1010,7 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
     GXSETARRAY(GX_VA_POS, lbl_1_bss_5AC.unk14, 900 * sizeof(Vec), sizeof(Vec));
     GXSetCullMode(GX_CULL_BACK);
-    GXCallDisplayListNative(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
+    GXCallDisplayList(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);

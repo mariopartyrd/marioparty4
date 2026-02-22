@@ -1526,6 +1526,7 @@ s32 fn_1_6EC4(float var_f24, float sp8, s16 var_r22, s16 var_r24)
                 }
                 var_r20 += 5;
             }
+            GXEnd();
             var_r31->unk_244[var_r21] = GXEndDisplayList();
             if (var_r31->unk_244[var_r21] >= 0x4000) {
                 OSReport("ERROR! GList test size over! \n");
@@ -2140,7 +2141,7 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     GXSETARRAY(GX_VA_TEX0, var_r31->unk_184, var_r31->unk_110 * sizeof(Vec2f), sizeof(Vec2f));
     for (var_r30 = 0; var_r30 < var_r31->unk_240; var_r30++) {
         if (var_r31->unk_2A8[var_r30] && var_r31->unk_244[var_r30] != 0 && var_r30 != 1) {
-            GXCallDisplayListNative(var_r31->unk_2A8[var_r30], var_r31->unk_244[var_r30]);
+            GXCallDisplayList(var_r31->unk_2A8[var_r30], var_r31->unk_244[var_r30]);
         }
     }
     GXSetNumTevStages(2);
@@ -2185,7 +2186,7 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSETARRAY(GX_VA_TEX0, var_r31->unk_184, var_r31->unk_110 * sizeof(Vec2f), sizeof(Vec2f));
     if (var_r31->unk_2A8[1] && (var_r31->unk_244[1] != 0)) {
-        GXCallDisplayListNative(var_r31->unk_2A8[1], var_r31->unk_244[1]);
+        GXCallDisplayList(var_r31->unk_2A8[1], var_r31->unk_244[1]);
     }
 }
 
@@ -2607,6 +2608,7 @@ s16 fn_1_11A74(AnimData *arg0, s16 arg1)
         GXUnknownu16(var_r30);
         GXUnknownu16(var_r30 * 4 + 3);
     }
+    GXEnd();
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r27->unk_48);
     memcpy(var_r31->unk_48, var_r24, var_r31->unk_34);
@@ -2752,7 +2754,7 @@ void fn_1_11EE0(ModelData *var_r24, Mtx var_r21)
         DCFlushRangeNoSync(var_r31->unk_40, var_r31->unk_24 * sizeof(Vec) * 4);
         DCFlushRangeNoSync(var_r31->unk_44, var_r31->unk_24 * sizeof(Vec2f) * 4);
         PPCSync();
-        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (shadowModelDrawF == 0) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;

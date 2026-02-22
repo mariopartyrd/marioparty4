@@ -801,6 +801,7 @@ void fn_1_2E2C(s32 var_r26)
         GXPosition1x8(0);
         GXPosition1x8(1);
         GXPosition1x8(0);
+        GXEnd();
     }
     Hu3DDrawPreInit();
     GXSetCopyClear(lbl_1_data_E8, 0xFFFFFF);
@@ -923,6 +924,7 @@ void fn_1_2E2C(s32 var_r26)
     GXPosition1x8(0);
     GXPosition1x8(1);
     GXPosition1x8(0);
+    GXEnd();
 }
 
 void fn_1_3B64(void)
@@ -975,6 +977,7 @@ void fn_1_3B64(void)
             GXTexCoord2f32(1.0f, 1.0f);
             GXPosition3f32(0.0f, Hu3DShadowData.unk_02, 0.0f);
             GXTexCoord2f32(0.0f, 1.0f);
+            GXEnd();
         }
     }
 #ifdef TARGET_PC

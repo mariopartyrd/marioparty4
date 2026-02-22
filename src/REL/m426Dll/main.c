@@ -2898,6 +2898,7 @@ s16 fn_1_795C(AnimData *arg0, s16 arg1)
         GXColor1x16(var_r30);
         GXTexCoord1x16(var_r30 * 4 + 3);
     }
+    GXEnd();
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r27->unk_48);
     memcpy(var_r31->unk_48, var_r24, var_r31->unk_34);
@@ -3116,7 +3117,7 @@ void fn_1_80DC(ModelData *arg0, Mtx arg1)
         DCFlushRangeNoSync(var_r31->unk_40, var_r31->unk_24 * sizeof(Vec) * 4);
         DCFlushRangeNoSync(var_r31->unk_44, var_r31->unk_24 * sizeof(Vec2f) * 4);
         PPCSync();
-        GXCallDisplayListNative(var_r31->unk_48, var_r31->unk_34);
+        GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (!shadowModelDrawF) {
             if ((var_r31->unk_21 & 2) == 0) {
                 var_r31->unk_28++;
@@ -3206,6 +3207,8 @@ void fn_1_88B4(ModelData *arg0, Mtx arg1)
     GXPosition1x16(3);
     GXColor1x16(0);
     GXTexCoord1x16(3);
+
+    GXEnd();
 }
 
 void fn_1_8E10(AnimData *arg0)
@@ -3248,6 +3251,7 @@ void fn_1_8E48(ModelData *arg0, Mtx arg1)
     GXPosition3u8(1, 0, 0);
     GXPosition3u8(1, 1, 0);
     GXPosition3u8(0, 1, 0);
+    GXEnd();
 }
 #pragma dont_inline on
 void fn_1_9130(s32 arg0, UnkM426Struct10 *arg1, s32 arg2)

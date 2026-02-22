@@ -725,6 +725,7 @@ void fn_1_5E3C(omObjData *object)
                 GXColor1x16(var_r31);
                 GXTexCoord1x16(var_r31);
             }
+            GXEnd();
         }
         else {
             GXBegin(GX_TRIANGLESTRIP, GX_VTXFMT0, 59);
@@ -743,6 +744,7 @@ void fn_1_5E3C(omObjData *object)
                 GXColor1x16(var_r31);
                 GXTexCoord1x16(var_r31);
             }
+            GXEnd();
         }
     }
     lbl_1_bss_178.unk_6E8[0] = GXEndDisplayList();
@@ -860,7 +862,7 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
     GXSETARRAY(GX_VA_NRM, lbl_1_bss_178.unk_6C4[lbl_1_bss_178.unk_6B4], 30 * 36 * sizeof(Vec), sizeof(Vec));
     GXSETARRAY(GX_VA_CLR0, lbl_1_bss_178.unk_6CC[lbl_1_bss_178.unk_6B4], 30 * 36 * sizeof(GXColor), sizeof(GXColor));
     GXSETARRAY(GX_VA_TEX0, lbl_1_bss_178.unk_6D4[lbl_1_bss_178.unk_6B4], 30 * 36 * sizeof(Vec2f), sizeof(Vec2f));
-    GXCallDisplayListNative(lbl_1_bss_178.unk_6E0[0], lbl_1_bss_178.unk_6E8[0]);
+    GXCallDisplayList(lbl_1_bss_178.unk_6E0[0], lbl_1_bss_178.unk_6E8[0]);
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
     GXSetTevDirect(GX_TEVSTAGE1);

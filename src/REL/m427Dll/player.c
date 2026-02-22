@@ -1652,6 +1652,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
         GXPosition1x16(var_r29);
         GXColor1x16(0);
     }
+    GXEnd();
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
@@ -1664,6 +1665,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
         GXPosition1x16(var_r29);
         GXColor1x16(0);
     }
+    GXEnd();
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
@@ -1676,6 +1678,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
         GXPosition1x16(var_r29);
         GXColor1x16(0);
     }
+    GXEnd();
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
@@ -1692,6 +1695,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
         GXPosition3f32(var_r30->unk_80->x, var_r30->unk_80->y, var_r30->unk_80->z);
         GXColor4u8(lbl_1_data_64C.r, lbl_1_data_64C.g, lbl_1_data_64C.b, lbl_1_data_64C.a);
     }
+    GXEnd();
     for (var_r29 = 0, var_r31 = lbl_1_bss_57C; var_r29 < 0x40; var_r29++, var_r31++) {
         if ((var_r31->unk_04 >= 0) && (var_r31->unk_08 >= 0) && (var_r31->unk_10 == *var_r25) && (var_r31->unk_04 == 1)) {
             switch (var_r31->unk_08) {
@@ -1708,6 +1712,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
                     GXColor4u8(0, 0xFF, 0, 0xFF);
                     GXPosition3f32(var_r31->unk_1C.x, var_f31, var_r31->unk_1C.z);
                     GXColor4u8(0, 0xFF, 0, 0xFF);
+                    GXEnd();
                     break;
                 case 1:
                     GXBegin(GX_LINESTRIP, GX_VTXFMT0, 0xA);
@@ -1718,6 +1723,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
                         GXPosition3f32(var_f30, var_f31, var_f29);
                         GXColor4u8(0, 0xFF, 0, 0xFF);
                     }
+                    GXEnd();
                     break;
             }
         }
@@ -1738,6 +1744,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
                     GXColor4u8(0, 0, 0xFF, 0xFF);
                     GXPosition3f32(var_r31->unk_1C.x, var_f31, var_r31->unk_1C.z);
                     GXColor4u8(0, 0, 0xFF, 0xFF);
+                    GXEnd();
                     break;
                 case 1:
                     GXBegin(GX_LINESTRIP, GX_VTXFMT0, 0xA);
@@ -1748,6 +1755,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
                         GXPosition3f32(var_f30, var_f31, var_f29);
                         GXColor4u8(0, 0, 0xFF, 0xFF);
                     }
+                    GXEnd();
                     break;
             }
         }
@@ -1768,6 +1776,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
         GXPosition3f32(var_f30, var_f31, var_f29);
         GXColor4u8(0xFF, 0, 0xFF, 0xFF);
     }
+    GXEnd();
     GXBegin(GX_LINESTRIP, GX_VTXFMT0, 4);
     var_r26 = var_r27->unk_08[0];
     var_f30 = var_r26->unk_68;
@@ -1781,6 +1790,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
     GXColor4u8(0xFF, 0x80, 0, 0xFF);
     GXPosition3f32(var_f30, var_f31, var_f29);
     GXColor4u8(0xFF, 0x80, 0, 0xFF);
+    GXEnd();
     GXBegin(GX_LINESTRIP, GX_VTXFMT0, 4);
     var_r26 = var_r27->unk_08[1];
     var_f30 = var_r26->unk_68;
@@ -1794,6 +1804,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
     GXColor4u8(0, 0x80, 0xFF, 0xFF);
     GXPosition3f32(var_f30, var_f31, var_f29);
     GXColor4u8(0, 0x80, 0xFF, 0xFF);
+    GXEnd();
 }
 
 void fn_1_154B8(void) { }

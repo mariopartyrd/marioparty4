@@ -1895,4 +1895,5 @@ void fn_1_77E4(s32 shadowNo)
     GXPosition3u8(1, 0, 0);
     GXPosition3u8(1, 1, 0);
     GXPosition3u8(0, 1, 0);
+    GXEnd();
 }

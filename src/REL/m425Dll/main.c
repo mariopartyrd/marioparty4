@@ -1425,6 +1425,7 @@ void fn_1_5044(s16 sp8)
             }
         }
     }
+    GXEnd();
     var_r31->unk_0C = GXEndDisplayList();
 }
 
@@ -1636,7 +1637,7 @@ void fn_1_5C20(ModelData *var_r27, Mtx sp8)
     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
     GXSETARRAY(GX_VA_NRM, var_r31->unk_1C, var_r31->unk_2A * (4 * sizeof(Vec)), sizeof(Vec));
-    GXCallDisplayListNative(var_r31->unk_10, var_r31->unk_0C);
+    GXCallDisplayList(var_r31->unk_10, var_r31->unk_0C);
 }
 
 u32 lbl_1_data_114 = 0x41C64E6D;

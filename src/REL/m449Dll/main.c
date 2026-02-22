@@ -248,6 +248,7 @@ void fn_1_3F8(s32 arg0, Mtx sp8)
             GXPosition3f32(var_f31, var_r30 * 10, var_f30);
             GXColor4u8(0xFF, 0xFF, 0x00, 0xFF);
         }
+        GXEnd();
     }
 }
 

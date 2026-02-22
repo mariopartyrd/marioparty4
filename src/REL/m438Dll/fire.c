@@ -281,7 +281,7 @@ void fn_1_E790(M438UnkStruct2 *arg0)
             GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0U);
             GXSETARRAY(GX_VA_NRM, var_r31->unk_4C, sizeof(Vec), sizeof(Vec));
-            GXCallDisplayListNative(var_r31->unk_40, var_r31->unk_3C);
+            GXCallDisplayList(var_r31->unk_40, var_r31->unk_3C);
         }
     }
 }
@@ -455,6 +455,7 @@ void fn_1_FAB8(M438UnkStruct *arg0)
             GXTexCoord1x16(var_r31);
         }
     }
+    GXEnd();
     arg0->unk_3C = GXEndDisplayList();
 }
 

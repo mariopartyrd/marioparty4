@@ -756,6 +756,7 @@ void fn_1_3BC0(ModelData *model, Mtx mtx)
     GXPosition3f32(var_f31, var_f30, -var_f29);
     GXPosition3f32(var_f31, -var_f30, -var_f29);
     GXPosition3f32(-var_f31, -var_f30, -var_f29);
+    GXEnd();
 }
 
 void fn_1_3E68(u32 arg0)

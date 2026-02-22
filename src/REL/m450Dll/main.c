@@ -1658,7 +1658,7 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         }
         DCFlushRangeNoSync(var_r31->unk_14, var_r31->unk_64 * sizeof(Vec) * 4);
         DCFlushRangeNoSync(var_r31->unk_18, var_r31->unk_64 * sizeof(Vec2f) * 4);
-        GXCallDisplayListNative(var_r31->unk_24, var_r31->unk_58);
+        GXCallDisplayList(var_r31->unk_24, var_r31->unk_58);
     }
 }
 
@@ -1789,6 +1789,7 @@ s16 fn_1_5ED8(AnimData *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
         GXPosition1x16(var_r30);
         GXPosition1x16(var_r30 * 4 + 3);
     }
+    GXEnd();
     var_r31->unk_58 = GXEndDisplayList();
     DCFlushRangeNoSync(var_r19, var_r31->unk_58);
     var_r31->unk_24 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_58, var_r28->unk_48);

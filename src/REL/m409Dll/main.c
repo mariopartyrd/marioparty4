@@ -1260,6 +1260,7 @@ s16 fn_1_5A18(AnimData *arg0, s16 arg1, f32 arg8, s16 arg2, s16 arg3)
         GXColor1x16(var_r30);
         GXTexCoord1x16((var_r30 * 4) + 3);
     }
+    GXEnd();
     var_r31->unk4 = GXEndDisplayList();
     var_r31->unk28 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk4, temp_r28->unk_48);
     memcpy(var_r31->unk28, var_r18, var_r31->unk4);
@@ -1418,7 +1419,7 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
     DCFlushRangeNoSync(temp_r30->unk1C, temp_r30->unk0 * 0xC * 4);
     DCFlushRangeNoSync(temp_r30->unk20, temp_r30->unk0 * 8 * 4);
     PPCSync();
-    GXCallDisplayListNative(temp_r30->unk28, temp_r30->unk4);
+    GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
 }
 
 void fn_1_6608(HsfVector2f *arg0, s16 arg1, s16 arg2, f32 arg3, f32 arg4)

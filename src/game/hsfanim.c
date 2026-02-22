@@ -1,5 +1,6 @@
 #include "game/hsfanim.h"
 #include "dolphin/gx/GXStruct.h"
+#include "dolphin/gx/GXVert.h"
 #include "game/hsfdraw.h"
 #include "game/init.h"
 #include "game/memory.h"
@@ -549,6 +550,7 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
         GXColor1x16(i);
         GXTexCoord1x16(3);
     }
+    GXEnd();
     temp_r31->unk_40 = GXEndDisplayList();
     return temp_r25;
 }
@@ -836,7 +838,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, baseST, sizeof(baseST), 8);
-        GXCallDisplayListNative(temp_r31->unk_50, temp_r31->unk_40);
+        GXCallDisplayList(temp_r31->unk_50, temp_r31->unk_40);
     }
     if (shadowModelDrawF == 0) {
         if (!(temp_r31->unk_2D & 2) && Hu3DPauseF == 0) {

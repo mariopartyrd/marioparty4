@@ -1514,6 +1514,7 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     GXPosition2u16(lbl_1_bss_C05C[0].unk_08, 0);
     GXPosition2u16(lbl_1_bss_C05C[0].unk_08, lbl_1_bss_C05C[0].unk_0A);
     GXPosition2u16(0, lbl_1_bss_C05C[0].unk_0A);
+    GXEnd();
     GXDrawDone();
     GXSetNumTexGens(1);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, 60, GX_FALSE, 125);
@@ -1554,6 +1555,7 @@ void fn_1_485C(ModelData *model, Mtx mtx)
         GXPosition3f32(
             var_r31->unk_00 + (var_r31->unk_2C * (sp10[3].x * var_f31)), var_r31->unk_04 + (sp10[3].y * var_f31), var_r31->unk_08 + (sp10[3].z * var_f31));
         GXTexCoord2f32(0.0f, 1.0f);
+        GXEnd();
         var_r31->unk_20 += var_r31->unk_24;
         var_r31->unk_00 = var_r31->unk_0C + (var_r31->unk_28 * sind(var_r31->unk_20));
         var_r31->unk_04 += var_r31->unk_10;
@@ -1632,6 +1634,7 @@ void fn_1_54C8(ModelData *model, Mtx mtx)
     GXTexCoord2f32(1.0f, 1.0f);
     GXPosition2u16(0, 480);
     GXTexCoord2f32(0.0f, 1.0f);
+    GXEnd();
 
     GXSetNumIndStages(0);
     GXSetTevDirect(GX_TEVSTAGE0);
@@ -1713,6 +1716,7 @@ void fn_1_5A48(ModelData *arg0, Mtx arg1)
 
         GXPosition3f32(var_r31->unk_00.x - 50.0f, 1.0f, 50.0f + var_r31->unk_00.z);
         GXTexCoord2f32(0.0f, 1.0f);
+        GXEnd();
 
         if (var_r31->unk_0E != 0) {
             if (--var_r31->unk_0E == 0) {
@@ -1771,6 +1775,7 @@ void fn_1_5EDC(ModelData *model, float (*mtx)[4])
 
     GXPosition3f32(-80.0f, -80.0f, 0.0f);
     GXTexCoord2f32(0.0f, 1.0f);
+    GXEnd();
 
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, var_r31->unk_40 + 1, GX_COLOR0A0);
@@ -1790,6 +1795,7 @@ void fn_1_5EDC(ModelData *model, float (*mtx)[4])
 
     GXPosition3f32(-80.0f, -80.0f, 0.0f);
     GXTexCoord2f32(0.0f, 1.0f);
+    GXEnd();
 }
 
 void fn_1_64B4(ModelData *model, ParticleData *particle, Mtx matrix)

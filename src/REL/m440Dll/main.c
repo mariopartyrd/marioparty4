@@ -1410,7 +1410,6 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
         GXBeginDisplayList(var_r19, 0x20000);
         if ((arg2->unk2 & 2) != 0) {
             GXBegin(GX_TRIANGLES, GX_VTXFMT0, (arg2->unk20 * 0xC));
-
             for (var_r30 = 0; var_r30 < arg2->unk20; var_r30++) {
 
                 for (var_r28 = 0; var_r28 < 3; var_r28++) {
@@ -1438,6 +1437,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
                     }
                 }
             }
+            GXEnd();
         }
         else {
             GXBegin(GX_TRIANGLES, GX_VTXFMT0, (arg2->unk20 * 3));
@@ -1456,6 +1456,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
                     }
                 }
             }
+            GXEnd();
         }
         arg2->unk34 = GXEndDisplayList();
         DCFlushRangeNoSync(var_r21, arg2->unk34);
@@ -1908,7 +1909,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
     GXSetZCompLoc(GX_FALSE);
     GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
-    GXCallDisplayListNative(temp_r31->unk30, temp_r31->unk34);
+    GXCallDisplayList(temp_r31->unk30, temp_r31->unk34);
 }
 
 void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
@@ -2130,6 +2131,7 @@ void fn_1_8D1C(void)
         GXTexCoord2f32(1.0f, 1.0f);
         GXPosition3f32(0.0f, 480.0f, 0.0f);
         GXTexCoord2f32(0.0f, 1.0f);
+        GXEnd();
     }
     GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
     GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGBA8, GX_FALSE);
@@ -2335,6 +2337,7 @@ s16 fn_1_956C(AnimData *arg0, s16 arg1, f32 arg2, s16 arg3, s16 arg4)
         GXColor1x16(var_r30);
         GXTexCoord1x16((var_r30 * 4) + 3);
     }
+    GXEnd();
     var_r31->unk4 = GXEndDisplayList();
     DCFlushRangeNoSync(var_r21, var_r31->unk4);
     var_r31->unk28 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk4, temp_r28->unk_48);
@@ -2512,7 +2515,7 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     }
     DCFlushRangeNoSync(temp_r30->unk1C, temp_r30->unk0 * sizeof(Vec) * 4);
     DCFlushRangeNoSync(temp_r30->unk20, temp_r30->unk0 * sizeof(Vec2f) * 4);
-    GXCallDisplayListNative(temp_r30->unk28, temp_r30->unk4);
+    GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
 }
 
 void fn_1_A1B8(HsfVector2f *arg0, s16 arg1, s16 arg2, f32 arg8, f32 arg9)
@@ -2621,6 +2624,7 @@ void fn_1_A390(ModelData *arg0, Mtx arg1)
     GXColor4u8(0xFF, 0xFF, 0xFF, 0xFF);
     GXPosition3f32(lbl_1_data_2C.x, lbl_1_data_2C.y, lbl_1_data_2C.z);
     GXColor4u8(0xFF, 0x00, 0x00, 0xFF);
+    GXEnd();
 }
 
 void fn_1_AA94(void)

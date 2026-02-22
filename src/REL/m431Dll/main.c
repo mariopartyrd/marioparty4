@@ -1983,6 +1983,7 @@ s16 fn_1_6C74(AnimData *arg0, s16 arg1, float arg2, s16 arg3, s16 arg4)
         GXColor1x16(temp_r30);
         GXTexCoord1x16((temp_r30 * 4) + 3);
     }
+    GXEnd();
     temp_r31->unk4 = GXEndDisplayList();
     temp_r31->unk28 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk4, temp_r28->unk_48);
     memcpy(temp_r31->unk28, temp_r21, temp_r31->unk4);
@@ -2144,7 +2145,7 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
     DCFlushRangeNoSync(temp_r30->unk1C, (temp_r30->unk0 * sizeof(Vec)) * 4);
     DCFlushRangeNoSync(temp_r30->unk20, (temp_r30->unk0 * sizeof(HsfVector2f)) * 4);
     PPCSync();
-    GXCallDisplayListNative(temp_r30->unk28, temp_r30->unk4);
+    GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
 }
 
 void fn_1_7824(HsfVector2f *arg0, s16 arg1, s16 arg2, float arg3, float arg4)

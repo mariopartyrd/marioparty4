@@ -1488,6 +1488,7 @@ void fn_1_100A0(void)
             GXUnknownu16(0);
             GXUnknownu16(var_r29);
         }
+        GXEnd();
         var_r31->unk_5C = GXEndDisplayList();
         var_r31->unk_60 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_5C, var_r30->unk_48);
         memcpy(var_r31->unk_60, var_r27, var_r31->unk_5C);
@@ -1625,7 +1626,7 @@ void fn_1_10948(ModelData *var_r29, Mtx var_r30)
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSETARRAY(GX_VA_TEX0, var_r31->unk_54, 16 * sizeof(Vec2f), sizeof(Vec2f));
-    GXCallDisplayListNative(var_r31->unk_60, var_r31->unk_5C);
+    GXCallDisplayList(var_r31->unk_60, var_r31->unk_5C);
 }
 
 void fn_1_10B88(void)

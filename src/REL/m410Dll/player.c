@@ -1037,6 +1037,8 @@ void fn_1_A9A4(UnkM410Struct13 *arg0)
         GXPosition1x16(var_r31 * 5 + 1);
         GXColor1x16(1);
         GXTexCoord1x16(var_r31 * 5 + 1);
+
+        GXEnd();
     }
     arg0->unk_E58 = GXEndDisplayList();
     DCStoreRange(arg0, sizeof(UnkM410Struct13));
@@ -1127,7 +1129,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
                 GXLoadTexMtxImm(spF4, 30, GX_MTX3x4);
                 MTXRotRad(sp124, 90, 0.017453292f * -var_r31->unk_08);
                 GXLoadTexMtxImm(sp124, 33, GX_MTX2x4);
-                GXCallDisplayListNative(var_r30->unk_120.unk_E5C, var_r30->unk_120.unk_E58);
+                GXCallDisplayList(var_r30->unk_120.unk_E5C, var_r30->unk_120.unk_E58);
             }
         }
         GXSetNumIndStages(0);

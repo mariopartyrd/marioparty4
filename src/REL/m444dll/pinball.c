@@ -1041,6 +1041,7 @@ void fn_1_C73C(ModelData *model, Mtx matrix)
         GXColor3u8(temp_r30, temp_r29, temp_r28);
         GXPosition3f32(lbl_1_bss_18F0[temp_r31].x, 150, lbl_1_bss_18F0[temp_r31].y);
         GXColor3u8(temp_r30, temp_r29, temp_r28);
+        GXEnd();
     }
 }
 
