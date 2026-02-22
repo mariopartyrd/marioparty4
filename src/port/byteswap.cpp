@@ -414,10 +414,10 @@ template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &de
     std::copy(std::begin(obj.unk18), std::end(obj.unk18), dest.unk18);
     dest.unk20 = obj.unk20;
     std::copy(std::begin(obj.unk24), std::end(obj.unk24), dest.unk24);
-    dest.scaleX = obj.unk28;
-    dest.scaleY = obj.unk2C;
-    dest.transX = obj.unk30;
-    dest.transY = obj.unk34;
+    dest.scale.x = obj.unk28;
+    dest.scale.y = obj.unk2C;
+    dest.trans.x = obj.unk30;
+    dest.trans.y = obj.unk34;
     std::copy(std::begin(obj.unk38), std::end(obj.unk38), dest.unk38);
     dest.wrap_s = obj.wrap_s;
     dest.wrap_t = obj.wrap_t;
