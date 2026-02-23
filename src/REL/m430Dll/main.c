@@ -20,6 +20,7 @@
 #include "string.h"
 
 #include "REL/m430Dll.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
@@ -77,10 +78,19 @@ s32 lbl_1_bss_1C;
 s32 lbl_1_bss_18;
 s32 lbl_1_bss_14;
 s16 lbl_1_bss_10;
+s16 lbl_1_bss_pal;
 s32 lbl_1_bss_C;
 s32 lbl_1_bss_8;
 s32 lbl_1_bss_4;
 s32 lbl_1_bss_0;
+
+#if VERSION_PAL
+#define CAMERA_Y 0x10
+#define CAMERA_H 0x1D0
+#else
+#define CAMERA_Y 0x0
+#define CAMERA_H 0x1E0
+#endif
 
 void ObjectSetup(void)
 {
@@ -132,8 +142,8 @@ void ObjectSetup(void)
     Hu3DCameraPerspectiveSet(2, -1.0f, 5.0f, 25000.0f, 0.6f);
     Hu3DCameraViewportSet(1, 0.0f, 0.0f, 320.0f, 480.0f, 0.0f, 1.0f);
     Hu3DCameraViewportSet(2, 320.0f, 0.0f, 320.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(1, 0, 0, 0x140, 0x1E0);
-    Hu3DCameraScissorSet(2, 0x140, 0, 0x140, 0x1E0);
+    Hu3DCameraScissorSet(1, 0, CAMERA_Y, 0x140, CAMERA_H);
+    Hu3DCameraScissorSet(2, 0x140, CAMERA_Y, 0x140, CAMERA_H);
     lbl_1_bss_30 = omAddObjEx(var_r31, 0x7FDA, 0, 0, -1, omOutViewMulti);
     lbl_1_bss_30->work[0] = 2;
     lbl_1_bss_34 = omAddObjEx(var_r31, 0xA, 0, 0, -1, fn_1_65C);
@@ -143,6 +153,11 @@ void ObjectSetup(void)
     espPosSet(lbl_1_bss_10, 288.0, 240.0);
     espScaleSet(lbl_1_bss_10, 0.22499999403953552, 60.0);
     espDispOff(lbl_1_bss_10);
+#if VERSION_PAL
+    lbl_1_bss_pal = espEntry(DATA_MAKE_NUM(DATADIR_M430, 0x1B), 100, 0);
+    espPosSet(lbl_1_bss_pal, 288.0, 475.20001220703125);
+    espScaleSet(lbl_1_bss_pal, 72.0, 4.0);
+#endif
 }
 
 void fn_1_65C(omObjData *object)
@@ -185,15 +200,15 @@ void fn_1_720(omObjData *object)
                 Hu3DCameraPerspectiveSet(2, 41.5f, 5.0f, 25000.0f, 0.6f);
                 Hu3DCameraViewportSet(1, 0.0f, 0.0f, 320.0f, 480.0f, 0.0f, 1.0f);
                 Hu3DCameraViewportSet(2, 320.0f, 0.0f, 320.0f, 480.0f, 0.0f, 1.0f);
-                Hu3DCameraScissorSet(1, 0, 0, 0x140, 0x1E0);
-                Hu3DCameraScissorSet(2, 0x140, 0, 0x140, 0x1E0);
+                Hu3DCameraScissorSet(1, 0, CAMERA_Y, 0x140, CAMERA_H);
+                Hu3DCameraScissorSet(2, 0x140, CAMERA_Y, 0x140, CAMERA_H);
             }
         }
         else if ((Hu3DCamera->fov < 0.0f) || (Hu3DCamera[1].fov >= 0.0f)) {
             Hu3DCamera[1].fov = -1.0f;
             Hu3DCameraPerspectiveSet(1, 41.5f, 5.0f, 25000.0f, 1.2f);
             Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-            Hu3DCameraScissorSet(1, 0, 0, 0x280, 0x1E0);
+            Hu3DCameraScissorSet(1, 0, CAMERA_Y, 0x280, CAMERA_H);
         }
     }
 }
@@ -278,7 +293,7 @@ void fn_1_1B04(omObjData *object)
             lbl_1_bss_14 = 0;
             espDispOn(lbl_1_bss_10);
             work->unk_1C = 0x2D;
-            work->unk_20 = 0x3C;
+            work->unk_20 = REFRESH_RATE;
             CenterM->x = -450.0f;
             CenterM[1].x = 450.0f;
             CenterM->y = CenterM[1].y = 300.0f;
@@ -319,7 +334,7 @@ void fn_1_21E4(omObjData *object)
     s32 var_r27 = 0;
     fn_1_720(object);
     if (--work->unk_20 == 0) {
-        work->unk_20 = 0x3C;
+        work->unk_20 = REFRESH_RATE;
         work->unk_1C--;
         if (work->unk_1C <= 0) {
             var_r27 = 1;
@@ -354,7 +369,7 @@ void fn_1_2710(omObjData *object)
                 lbl_1_bss_14 = 1;
             }
             object->work[1]++;
-            HuAudFXFadeOut(lbl_1_bss_C, 0x1E);
+            HuAudFXFadeOut(lbl_1_bss_C, REFRESH_RATE / 2);
         }
     }
     else if ((WipeStatGet() == 0) && (work->unk_30 == 0x1111)) {
@@ -386,7 +401,7 @@ void fn_1_2E80(omObjData *object)
     object->work[0]++;
     switch (object->work[1]) {
         case 0:
-            if (object->work[0] > 180.0f) {
+            if (object->work[0] > REFRESH_RATE_F * 3) {
                 if (work->unk_08 == 0) {
                     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);
                     lbl_1_bss_14 = 1;
@@ -429,7 +444,7 @@ void fn_1_3768(omObjData *object)
     fn_1_720(object);
     if (WipeStatGet() == 0) {
         work->unk_24 = 1;
-        if (work->unk_28 >= 210.0f) {
+        if (work->unk_28 >= REFRESH_RATE_F * 3.5f) {
             work->unk_24 = 2;
             fn_1_A54(object);
         }
@@ -492,7 +507,7 @@ float fn_1_4130(void)
     if (var_f31 < 0.0f) {
         var_f31 = 0.0f;
     }
-    var_f31 += 0.016666668f * work->unk_20;
+    var_f31 += REFRESH_FREQ * work->unk_20;
     return var_f31;
 }
 

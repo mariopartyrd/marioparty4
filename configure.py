@@ -1255,9 +1255,9 @@ config.libs = [
     Rel(
         "m430Dll",  # Pair-a-sailing
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m430Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m430Dll/water.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m430Dll/player.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m430Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m430Dll/water.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m430Dll/player.c"),
         },
     ),
     Rel(
