@@ -397,11 +397,11 @@ void fn_1_1338(omObjData *arg0)
             sp118 = (lbl_1_bss_1C < 90) ? 0 : 0x48;
             if (arg0->trans.z < 250.0f) {
                 temp_r31->unk34 = 2;
-                lbl_1_bss_0 = 600;
+                lbl_1_bss_0 = REFRESH_RATE * 10;
                 if (lbl_1_data_19A != -1) {
                     MGSeqKill(lbl_1_data_19A);
                 }
-                lbl_1_data_19A = MGSeqCreate(1, lbl_1_bss_0 / 60, -1, -1);
+                lbl_1_data_19A = MGSeqCreate(1, lbl_1_bss_0 / REFRESH_RATE, -1, -1);
                 for (var_r17 = 0; var_r17 < 10; var_r17++) {
                     espDispOn(lbl_1_data_28[var_r17]);
                 }
@@ -445,7 +445,7 @@ void fn_1_1338(omObjData *arg0)
             if (lbl_1_bss_14 != temp_r31->unk00) {
                 OSReport("m448 player turn error!\n");
             }
-            if (lbl_1_bss_0 > 0 && lbl_1_bss_18 < 18000) {
+            if (lbl_1_bss_0 > 0 && lbl_1_bss_18 < REFRESH_RATE * 300) {
                 if (temp_r31->unk0C != -1) {
                     var_f20 = HuPadStkX[temp_r31->unk0C];
                     sp118 = HuPadStkY[temp_r31->unk0C];
@@ -497,11 +497,11 @@ void fn_1_1338(omObjData *arg0)
             }
             arg0->trans.x = (arg0->trans.x < -450.0f) ? -450.0f : (arg0->trans.x > 450.0f) ? 450.0f : arg0->trans.x;
             arg0->trans.z = (arg0->trans.z < -350.0f) ? -350.0f : (arg0->trans.z > 350.0f) ? 350.0f : arg0->trans.z;
-            if ((lbl_1_bss_0 <= 0 || lbl_1_bss_18 >= 18000) && temp_r31->unk20 == 0) {
+            if ((lbl_1_bss_0 <= 0 || lbl_1_bss_18 >= REFRESH_RATE * 300) && temp_r31->unk20 == 0) {
                 temp_r31->unk34 = 5;
                 temp_r31->unk38 = 0;
                 lbl_1_bss_1C = 0;
-                if (lbl_1_bss_18 >= 18000) {
+                if (lbl_1_bss_18 >= REFRESH_RATE * 300) {
                     temp_r23 = lbl_1_bss_8C[1 - temp_r31->unk00]->data;
                     lbl_1_bss_68 = (temp_r31->unk08 == -1) ? temp_r31->unk00 : (temp_r23->unk08 == -1) ? temp_r23->unk00 : 4;
                     temp_r23->unk34 = 7;
@@ -879,12 +879,12 @@ void fn_1_4310(omObjData *arg0)
     lbl_1_bss_1C++;
     if (lbl_1_bss_80 == 1005) {
         lbl_1_bss_18++;
-        if (lbl_1_bss_18 == 16200) {
-            lbl_1_data_19C = MGSeqCreate(1, (18060 - lbl_1_bss_18) / 60, -1, -1);
+        if (lbl_1_bss_18 == 270 * REFRESH_RATE) {
+            lbl_1_data_19C = MGSeqCreate(1, ((REFRESH_RATE * 300 + REFRESH_RATE) - lbl_1_bss_18) / REFRESH_RATE, -1, -1);
             MGSeqPosSet(lbl_1_data_19C, 288.0f, 400.0f);
         }
         if (lbl_1_data_19C != -1) {
-            MGSeqParamSet(lbl_1_data_19C, 1, (18060 - lbl_1_bss_18) / 60);
+            MGSeqParamSet(lbl_1_data_19C, 1, ((REFRESH_RATE * 300 + REFRESH_RATE) - lbl_1_bss_18) / REFRESH_RATE);
         }
     }
     lbl_1_data_1DC[0] = lbl_1_data_1DC[1] = lbl_1_data_1DC[2] = 0.0f;
@@ -1265,13 +1265,17 @@ void fn_1_6DAC(void)
     s16 var_r29;
     s16 temp_r31;
     u32 temp_r26;
+    s32 var_r24;
+    s32 var_r28;
     s32 i;
+    s32 i2;
+    s32 i3;
 
     var_r29 = 0;
     for (i = 0; i < 2; i++) {
         sp8[i] = lbl_1_bss_8C[i]->data;
     }
-    HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 60);
+    HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
     HuWinComKeyReset();
     temp_r31 = HuWinExCreateStyled(-10000.0f, 60.0f, 280, 120, -1, 1);
     HuWinExAnimIn(temp_r31);
@@ -1282,14 +1286,21 @@ void fn_1_6DAC(void)
     HuWinMesColSet(temp_r31, 0);
     HuWinMesSet(temp_r31, MAKE_MESSID(43, 1));
     if (((sp8[0]->unk0C == -1) || (sp8[0]->unk08 == -1)) && ((sp8[1]->unk0C == -1) || (sp8[1]->unk08 == -1))) {
-        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 60);
-    }
+#if VERSION_PAL
+        var_r24 = HuWinKeyWaitNumGet(DATA_MAKE_NUM(DATADIR_M412, 1));
+        for (i2 = 0; i2 < var_r24; i2++) {
+#endif
+            HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
+#if VERSION_PAL
+        }
+#endif
+        }
     HuWinMesWait(temp_r31);
     if (sp8[0]->unk0C != -1 || sp8[1]->unk0C != -1) {
         HuWinMesColSet(temp_r31, 0);
         HuWinMesSet(temp_r31, MAKE_MESSID(43, 2));
         if (sp8[0]->unk0C == -1 && sp8[1]->unk0C == -1) {
-            HuPrcSleep(60);
+            HuPrcSleep(REFRESH_RATE);
             var_r29 = 1;
         }
         else {
@@ -1305,7 +1316,7 @@ void fn_1_6DAC(void)
             HuWinMesColSet(temp_r31, 0);
             HuWinMesSet(temp_r31, temp_r26);
             if ((sp8[0]->unk0C == -1 || sp8[0]->unk08 == -1) && (sp8[1]->unk0C == -1 || sp8[1]->unk08 == -1)) {
-                HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 60);
+                HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
             }
             HuWinMesWait(temp_r31);
         }
@@ -1314,7 +1325,14 @@ void fn_1_6DAC(void)
         HuWinMesColSet(temp_r31, 0);
         HuWinMesSet(temp_r31, MAKE_MESSID(43, 10));
         if ((sp8[0]->unk0C == -1 || sp8[0]->unk08 == -1) && (sp8[1]->unk0C == -1 || sp8[1]->unk08 == -1)) {
-            HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 60);
+#if VERSION_PAL
+            var_r28 = HuWinKeyWaitNumGet(DATA_MAKE_NUM(DATADIR_M412, 10));
+            for (i3 = 0; i3 < var_r28; i3++) {
+#endif
+                HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
+#if VERSION_PAL
+            }
+#endif
         }
         HuWinMesWait(temp_r31);
     }
@@ -1434,7 +1452,7 @@ void fn_1_7148(omObjData *arg0)
             if (lbl_1_data_19A != -1) {
                 MGSeqParamSet(lbl_1_data_19A, 1, ((lbl_1_bss_0 < 0 ? 0 : lbl_1_bss_0) + REFRESH_RATE - 1) / REFRESH_RATE);
                 lbl_1_bss_0--;
-                if (lbl_1_bss_0 <= -30) {
+                if (lbl_1_bss_0 <= -REFRESH_RATE / 2) {
                     MGSeqParamSet(lbl_1_data_19A, 2, -1);
                     lbl_1_data_19A = -1;
                 }
@@ -1481,7 +1499,7 @@ void fn_1_7148(omObjData *arg0)
                     HuAudSStreamPlay(4);
                 }
             }
-            if (210.0f < lbl_1_bss_84) {
+            if (REFRESH_RATE_F * 3.5f < lbl_1_bss_84) {
                 lbl_1_data_198 = -1;
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
                 arg0->func = fn_1_9B00;
