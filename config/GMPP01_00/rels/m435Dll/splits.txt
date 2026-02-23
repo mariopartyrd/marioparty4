@@ -5,3 +5,13 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/m435Dll/main.c:
+	.text       start:0x00000000 end:0x00015264
+	.rodata     start:0x00000000 end:0x000004C0
+	.data       start:0x00000000 end:0x0000055C
+	.bss        start:0x00000000 end:0x00004F48
+
+REL/m435Dll/sequence.c:
+	.text       start:0x00015264 end:0x0001A444
+	.rodata     start:0x000004C0 end:0x00000530

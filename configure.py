@@ -1293,8 +1293,8 @@ config.libs = [
     Rel(
         "m435Dll",  # Darts of Doom
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m435Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m435Dll/sequence.c"),
+            Object(Matching, "REL/m435Dll/main.c"),
+            Object(Matching, "REL/m435Dll/sequence.c"),
         },
     ),
     Rel(
