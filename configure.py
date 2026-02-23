@@ -1371,14 +1371,14 @@ config.libs = [
     Rel(
         "m446dll",  # Mystic Match 'Em
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/card.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/deck.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/table.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/player.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/camera.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/cursor.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m446Dll/stage.c"),
+            Object(Matching, "REL/m446Dll/main.c"),
+            Object(Matching, "REL/m446Dll/card.c"),
+            Object(Matching, "REL/m446Dll/deck.c"),
+            Object(Matching, "REL/m446Dll/table.c"),
+            Object(Matching, "REL/m446Dll/player.c"),
+            Object(Matching, "REL/m446Dll/camera.c"),
+            Object(Matching, "REL/m446Dll/cursor.c"),
+            Object(Matching, "REL/m446Dll/stage.c"),
         },
     ),
     Rel(

@@ -9,6 +9,7 @@
 #include "game/minigame_seq.h"
 #include "game/window.h"
 #include "game/wipe.h"
+#include "version.h"
 
 // bss
 s32 lbl_1_bss_14;
@@ -400,14 +401,14 @@ void fn_1_CA0(unkStruct *arg0)
             arg0->unk10 = 1;
             break;
         case 1:
-            arg0->unkC = 300;
-            arg0->unk6 = MGSeqCreate(1, arg0->unkC / 60, -1, -1);
+            arg0->unkC = REFRESH_RATE * 5;
+            arg0->unk6 = MGSeqCreate(1, arg0->unkC / REFRESH_RATE, -1, -1);
             MGSeqPosSet(arg0->unk6, lbl_1_data_70[arg0->unk1C][0], lbl_1_data_70[arg0->unk1C][1]);
             arg0->unk10 = 2;
         case 2:
             if (fn_1_5678(var_r30, &arg0->unk34, 0) == 0) {
-                if ((--arg0->unkC % 60) == 0) {
-                    MGSeqParamSet(arg0->unk6, 1, arg0->unkC / 60);
+                if ((--arg0->unkC % REFRESH_RATE) == 0) {
+                    MGSeqParamSet(arg0->unk6, 1, arg0->unkC / REFRESH_RATE);
                 }
                 if (arg0->unkC == 0) {
                     arg0->unk10 = 3;
@@ -439,8 +440,8 @@ void fn_1_CA0(unkStruct *arg0)
         case 6:
             if (arg0->unk34->unk70 == 0 && arg0->unk34->unk78 == 0 && arg0->unk34->unk74 == 0 && arg0->unk34->unk4 == 0) {
                 fn_1_2EC0(arg0->unk34, 1);
-                arg0->unkC = 300;
-                arg0->unk6 = MGSeqCreate(1, arg0->unkC / 60, -1, -1);
+                arg0->unkC = REFRESH_RATE * 5;;
+                arg0->unk6 = MGSeqCreate(1, arg0->unkC / REFRESH_RATE, -1, -1);
                 MGSeqPosSet(arg0->unk6, lbl_1_data_70[arg0->unk1C][0], lbl_1_data_70[arg0->unk1C][1]);
                 fn_1_4000(arg0->unk20, arg0->unk1C == 1 >> 5);
                 arg0->unk10 = 7;
@@ -449,8 +450,8 @@ void fn_1_CA0(unkStruct *arg0)
                 break;
         case 7:
             if (fn_1_4088(arg0->unk20, var_r30->unk64, var_r30->unk66, arg0->unk1C == 1, &arg0->unk34, 0) == 0) {
-                if ((--arg0->unkC % 60) == 0) {
-                    MGSeqParamSet(arg0->unk6, 1, arg0->unkC / 60);
+                if ((--arg0->unkC % REFRESH_RATE) == 0) {
+                    MGSeqParamSet(arg0->unk6, 1, arg0->unkC / REFRESH_RATE);
                 }
                 if (arg0->unkC <= 0) {
                     if (fn_1_4088(arg0->unk20, var_r30->unk64, var_r30->unk66, arg0->unk1C == 1, &arg0->unk34, 2) == 0) {
