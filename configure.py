@@ -1427,8 +1427,8 @@ config.libs = [
     Rel(
         "m455Dll",  # Rumble Fishing
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m455Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m455Dll/stage.c"),
+            Object(Matching, "REL/m455Dll/main.c"),
+            Object(Matching, "REL/m455Dll/stage.c"),
         },
     ),
     Rel(

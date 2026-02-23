@@ -16,6 +16,7 @@
 
 #include "ext_math.h"
 #include "math.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
@@ -48,6 +49,9 @@ s16 lbl_1_bss_20;
 s16 lbl_1_bss_18[4];
 s16 lbl_1_bss_16;
 s16 lbl_1_bss_14;
+#if VERSION_PAL
+s32 lbl_1_bss_pal;
+#endif
 Vec lbl_1_bss_8;
 s16 lbl_1_bss_4;
 s32 lbl_1_bss_0;
@@ -55,6 +59,7 @@ s32 lbl_1_bss_0;
 void fn_1_330(omObjData *object);
 void fn_1_B94(Process *objman);
 void fn_1_2A90(Process *objman);
+s32 fn_1_3214(void);
 
 void ObjectSetup(void)
 {
@@ -101,13 +106,13 @@ void fn_1_330(omObjData *object)
 {
     CameraData *camera = &Hu3DCamera[0];
     lbl_1_bss_34 = 0;
-    lbl_1_bss_2C = 60;
+    lbl_1_bss_2C = REFRESH_RATE;
     lbl_1_bss_30 = -1;
     lbl_1_bss_26 = 30;
-    lbl_1_bss_24 = 60;
+    lbl_1_bss_24 = REFRESH_RATE;
     lbl_1_bss_22 = -1;
     lbl_1_bss_20 = 0;
-    lbl_1_bss_16 = ((frand16() * 270.0f) / 65536.0f) + 30.0f;
+    lbl_1_bss_16 = ((frand16() * (REFRESH_RATE_F * 4.5f)) / 65536.0f) + (REFRESH_RATE_F / 2);
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
     camera->fov = 30.0f;
     object->func = fn_1_478;
@@ -165,7 +170,7 @@ void fn_1_478(omObjData *object)
             }
             if (--lbl_1_bss_2C == 0) {
                 fn_1_310(1);
-                lbl_1_bss_2C = 120;
+                lbl_1_bss_2C = REFRESH_RATE * 2;
             }
             break;
 
@@ -191,7 +196,7 @@ void fn_1_478(omObjData *object)
                 if (lbl_1_data_90 >= 0) {
                     MGSeqParamSet(lbl_1_data_90, 1, lbl_1_bss_26);
                 }
-                lbl_1_bss_24 = 60;
+                lbl_1_bss_24 = REFRESH_RATE;
                 if (lbl_1_bss_26 == 10) {
                     lbl_1_data_90 = MGSeqTimerCreate(10);
                 }
@@ -213,7 +218,7 @@ void fn_1_478(omObjData *object)
             }
             if (!MGSeqStatGet(lbl_1_bss_4)) {
                 fn_1_310(7);
-                lbl_1_bss_2C = 120;
+                lbl_1_bss_2C = REFRESH_RATE * 2;
             }
             break;
 
@@ -236,7 +241,7 @@ void fn_1_478(omObjData *object)
                         GWPlayerCoinWinSet(i, 3);
                     }
                 }
-                lbl_1_bss_2C = 210;
+                lbl_1_bss_2C = REFRESH_RATE * 3.5;
             }
             break;
 
@@ -293,6 +298,9 @@ void fn_1_B94(Process *objman)
     s32 i;
     lbl_1_bss_28 = 0;
     lbl_1_bss_14 = 3;
+#if VERSION_PAL
+    lbl_1_bss_pal = fn_1_3214();
+#endif
     omMakeGroupEx(objman, 0, 4);
     for (i = 0; i < 4; i++) {
         omAddObjEx(objman, 5, 10, 50, 0, fn_1_D14);
@@ -328,8 +336,6 @@ s32 fn_1_C90(void)
     return 1;
 }
 
-s32 fn_1_3214(void);
-
 u32 lbl_1_data_E0[5][2] = {
     DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00),
     0,
@@ -364,7 +370,11 @@ void fn_1_D14(omObjData *object)
     memset(player, 0, sizeof(M455Player));
     player->unk2 = lbl_1_bss_28++;
     player->unk4 = GWPlayerCfg[player->unk2].pad_idx;
+#if VERSION_PAL
+    player->unkC = lbl_1_bss_pal;
+#else
     player->unkC = fn_1_3214();
+#endif
     charNo = GWPlayerCfg[player->unk2].character;
     player->unk10 = charNo;
     player->unk12 = GWPlayerCfg[player->unk2].diff;
@@ -418,13 +428,13 @@ void fn_1_D14(omObjData *object)
     CharModelDataClose(player->unk10);
     object->rot.y = 180;
     if (((s32)frand() & 0x1F) < 4 - player->unk12) {
-        player->unk58 = lbl_1_bss_16 - (60.0f * (0.05f * (4 - player->unk12))) - ((frand8() / 256.0f) * 6.0f);
+        player->unk58 = lbl_1_bss_16 - (REFRESH_RATE_F * (0.05f * (4 - player->unk12))) - ((frand8() / 256.0f) * (REFRESH_RATE_F / 10));
         if (player->unk58 < 0) {
             player->unk58 = 0;
         }
     }
     else {
-        player->unk58 = lbl_1_bss_16 + (60.0f * (0.1f * (4 - player->unk12))) + ((frand8() / 256.0f) * 30.0f) + 6.0f;
+        player->unk58 = lbl_1_bss_16 + (REFRESH_RATE_F * (0.1f * (4 - player->unk12))) + ((frand8() / 256.0f) * (REFRESH_RATE_F / 2)) + (REFRESH_RATE_F / 10);
     }
     player->unk28 = -1;
     object->func = fn_1_1444;
@@ -497,12 +507,12 @@ void fn_1_1444(omObjData *object)
                     espDispOn(temp_r31->unk2A);
                     temp_r31->unk30 = 0;
                 }
-                temp_r31->unk2C = temp_r31->unk2E = 30;
+                temp_r31->unk2C = temp_r31->unk2E = REFRESH_RATE / 2;
             }
 
             if (temp_r31->unkA & PAD_BUTTON_A) {
                 temp_r31->unk16 = 1;
-                temp_r31->unk24 = temp_r31->unk26 = 90;
+                temp_r31->unk24 = temp_r31->unk26 = REFRESH_RATE * 1.5;
                 temp_r31->unk2C = -1;
                 if (lbl_1_bss_16 <= 0) {
                     lbl_1_bss_18[lbl_1_bss_20++] = temp_r31->unk2;
@@ -609,7 +619,7 @@ void fn_1_1444(omObjData *object)
             temp_r31->unk30++;
         }
         else {
-            if (temp_r31->unk30 > 30.0f) {
+            if (temp_r31->unk30 > REFRESH_RATE_F / 2) {
                 espDispOff(temp_r31->unk2A);
                 temp_r31->unk2C = 0;
             }
@@ -773,7 +783,7 @@ void fn_1_2D44(omObjData *object)
         case 1:
             fn_1_2AF4(0, 1, sind(lbl_1_data_184[0] * 90.0f));
             if (lbl_1_data_184[0] < 1.0f) {
-                lbl_1_data_184[0] += 1.0f / 60.0f;
+                lbl_1_data_184[0] += REFRESH_FREQ;
                 if (lbl_1_data_184[0] > 1.0f) {
                     lbl_1_data_184[0] = 1.0f;
                 }
