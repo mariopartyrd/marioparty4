@@ -17,6 +17,7 @@
 #include "string.h"
 
 #include "REL/m453Dll.h"
+#include "version.h"
 
 typedef struct M453MapUnkStruct {
     struct {
@@ -372,7 +373,7 @@ void fn_1_64E8(Process *process)
     lbl_1_bss_9C = lbl_1_bss_98 = 2;
     lbl_1_bss_8C = 0;
     lbl_1_bss_90 = 0;
-    lbl_1_bss_88 = 0.75f;
+    lbl_1_bss_88 = 45.0f / REFRESH_RATE_F;
     lbl_1_bss_7C = 3;
     lbl_1_bss_78 = 0;
     lbl_1_bss_84 = 0;

@@ -16,6 +16,7 @@
 #include "string.h"
 
 #include "REL/m453Dll.h"
+#include "version.h"
 
 typedef struct M453DllWork {
     /* 0x00 */ u8 unk_00;
@@ -238,7 +239,7 @@ void fn_1_460(omObjData *object)
             sp20.z = 0.0f;
             var_f31 = 2200.0f;
             fn_1_1870(1.0f, &sp2C, &sp20, var_f31);
-            lbl_1_bss_32 = 0x3C;
+            lbl_1_bss_32 = REFRESH_RATE;
             lbl_1_bss_3A += 1;
             break;
         case 1:
@@ -249,7 +250,7 @@ void fn_1_460(omObjData *object)
         case 2:
             if (lbl_1_bss_32 == 0) {
                 fn_1_7C3C();
-                lbl_1_bss_32 = 0x5A;
+                lbl_1_bss_32 = REFRESH_RATE * 1.5;
                 sp2C.x = 200.0f;
                 sp2C.y = 100.0f;
                 sp2C.z = -50.0f;
@@ -264,7 +265,7 @@ void fn_1_460(omObjData *object)
                 sp8.y = 0.0f;
                 sp8.z = 0.0f;
                 var_f30 = 1720.0f;
-                fn_1_1910(180.0f, &sp14, &sp8, var_f30, &sp2C, &sp20, var_f31);
+                fn_1_1910(REFRESH_RATE_F * 3, &sp14, &sp8, var_f30, &sp2C, &sp20, var_f31);
             }
             if (--lbl_1_bss_32 == 0) {
                 lbl_1_bss_3A += 1;
@@ -272,7 +273,7 @@ void fn_1_460(omObjData *object)
             break;
         case 3:
             if (lbl_1_bss_32 == 0) {
-                lbl_1_bss_32 = 0x5A;
+                lbl_1_bss_32 = REFRESH_RATE * 1.5;
             }
             if (--lbl_1_bss_32 == 0) {
                 lbl_1_bss_3A += 1;
@@ -282,7 +283,7 @@ void fn_1_460(omObjData *object)
             lbl_1_bss_3A = 5;
             lbl_1_bss_38 = lbl_1_bss_36 = -1;
             object->func = fn_1_848;
-            HuSprAnimRead(HuDataReadNum(0x220013, 0x10000000));
+            HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M403, 19), 0x10000000));
             break;
     }
     if ((omSysExitReq != 0) && (WipeStatGet() == 0)) {
@@ -317,7 +318,7 @@ void fn_1_848(omObjData *object)
     switch (lbl_1_bss_3A) {
         case 5:
             if (lbl_1_bss_36 == -1) {
-                lbl_1_bss_34 = 0x708;
+                lbl_1_bss_34 = REFRESH_RATE * 30;
                 lbl_1_bss_36 = MGSeqCreate(3, 0);
                 MGSeqPosSet(lbl_1_bss_36, 320.0f, 240.0f);
             }
@@ -363,10 +364,10 @@ void fn_1_848(omObjData *object)
                         sp10.y = 0.0f;
                         sp10.z = 0.0f;
                         var_f31 = 600.0f;
-                        fn_1_1870(45.0f, &sp1C, &sp10, var_f31);
+                        fn_1_1870(REFRESH_RATE_F * 0.75f, &sp1C, &sp10, var_f31);
                     }
                     lbl_1_bss_3A = 9;
-                    lbl_1_bss_32 = 0x5A;
+                    lbl_1_bss_32 = REFRESH_RATE * 1.5;
                 }
                 else {
                     if ((lbl_1_bss_14 != 0) && (lbl_1_bss_0 >= 0xF)) {
@@ -380,7 +381,7 @@ void fn_1_848(omObjData *object)
                     else {
                         lbl_1_bss_36 = -1;
                         lbl_1_bss_3A = 9;
-                        lbl_1_bss_32 = 0x5A;
+                        lbl_1_bss_32 = REFRESH_RATE * 1.5;
                     }
                     fn_1_6448();
                 }
@@ -392,7 +393,7 @@ void fn_1_848(omObjData *object)
             }
             else if (MGSeqStatGet(lbl_1_bss_36) == 0) {
                 lbl_1_bss_36 = -1;
-                lbl_1_bss_32 = 0x5A;
+                lbl_1_bss_32 = REFRESH_RATE * 1.5;
                 lbl_1_bss_3A = 9;
             }
             break;
@@ -422,7 +423,7 @@ void fn_1_848(omObjData *object)
                     }
                 }
                 lbl_1_bss_36 = -1;
-                lbl_1_bss_32 = 0xD2;
+                lbl_1_bss_32 = REFRESH_RATE * 3.5;
                 lbl_1_bss_3A += 1;
             }
             else {
@@ -433,7 +434,7 @@ void fn_1_848(omObjData *object)
                     HuAudSStreamPlay(4);
                 }
                 lbl_1_bss_36 = -1;
-                lbl_1_bss_32 = 0xD2;
+                lbl_1_bss_32 = REFRESH_RATE * 3.5;
                 lbl_1_bss_3A += 1;
             }
             break;
@@ -502,7 +503,7 @@ void fn_1_1248(omObjData *object)
         case 6:
             if (fn_1_8240() == 0) {
                 if (lbl_1_bss_8[0] == 0) {
-                    lbl_1_bss_8[0] = 0x1E;
+                    lbl_1_bss_8[0] = REFRESH_RATE / 2;
                     lbl_1_bss_0++;
                     lbl_1_bss_14 = fn_1_63AC();
                     if (lbl_1_bss_0 == 0x63) {
@@ -518,7 +519,11 @@ void fn_1_1248(omObjData *object)
                     }
                     fn_1_864C(sp11[var_r30]);
                     fn_1_7C2C(sp8[var_r30]);
+#if VERSION_PAL
+                    fn_1_7C0C(0.02f * (object->work[0] * 0.6f));
+#else
                     fn_1_7C0C(0.01f * object->work[0]);
+#endif
                     object->work[0] += 5;
                     if (object->work[1] > 2) {
                         object->work[1] -= 1;
@@ -732,7 +737,7 @@ void fn_1_1FA0(omObjData *object)
         case 3:
             break;
         case 2:
-            if (!(lbl_1_bss_32 < 60.0f)) {
+            if (!(lbl_1_bss_32 < REFRESH_RATE_F)) {
                 case 1:
                     var_r31->unk_18 = 3;
                     var_r31->unk_48 = 0.0f;
@@ -865,7 +870,7 @@ void fn_1_23E0(omObjData *object)
             break;
         case 1:
             var_r31->unk_5C.unk_00 = 2;
-            var_r31->unk_5C.unk_02 = (s32)(60.0f * (1.2f - (0.2f * var_r28)) * (fn_1_43B8() / 65536.0f));
+            var_r31->unk_5C.unk_02 = (s32)(REFRESH_RATE_F * (1.2f - (0.2f * var_r28)) * (fn_1_43B8() / 65536.0f));
             var_r31->unk_5C.unk_04 = 500.0f * ((fn_1_43B8() - 0x8000) / 32768.0f);
             var_r31->unk_5C.unk_08 = 200.0f * ((fn_1_43B8() - 0x8000) / 32768.0f);
             var_r27 = var_r31->unk_10;
@@ -1029,12 +1034,12 @@ void fn_1_2E24(omObjData *object)
                 var_r28 = 0;
                 var_r27 = 1;
             }
-            var_r31->unk_48 = -2.4333334f;
+            var_r31->unk_48 = -146.0f / REFRESH_RATE_F;
             break;
         case 3:
             var_r27 = 0;
             if ((Hu3DData[var_r25].unk_0C == -1) && (CharModelMotionEndCheck(var_r31->unk_01) != 0)) {
-                var_r31->unk_48 += -2.4333334f;
+                var_r31->unk_48 += -146.0f / REFRESH_RATE_F;
             }
             else {
                 var_r31->unk_48 = 0.0f;
@@ -1055,7 +1060,7 @@ void fn_1_2E24(omObjData *object)
             }
             break;
         case 4:
-            var_r31->unk_48 += -2.4333334f;
+            var_r31->unk_48 += -146.0f / REFRESH_RATE_F;
             if ((var_r31->unk_0C != 0) && (CharModelMotionEndCheck(var_r31->unk_01) != 0)) {
                 var_r28 = 5;
                 var_r27 = 0;
@@ -1070,7 +1075,7 @@ void fn_1_2E24(omObjData *object)
         case 6:
         case 7:
             var_r27 = 0;
-            var_r31->unk_48 = -2.4333334f;
+            var_r31->unk_48 = -146.0f / REFRESH_RATE_F;
             break;
     }
     if (var_r31->unk_07 & 4) {
@@ -1331,12 +1336,12 @@ void fn_1_3F38(ModelData *model, ParticleData *particle, Mtx matrix)
                 var_r31->unk34.y = 0.0f;
                 var_r31->unk34.z = 0.0f;
             }
-            particle->unk_02 = 0x1E;
+            particle->unk_02 = REFRESH_RATE / 2;
             particle->unk_00++;
         case 1:
             particle->unk_02--;
-            var_f31 = (30.0f - particle->unk_02) / 30.0f;
-            var_f30 = particle->unk_02 / 30.0f;
+            var_f31 = ((REFRESH_RATE_F / 2) - particle->unk_02) / (REFRESH_RATE_F / 2);
+            var_f30 = particle->unk_02 / (REFRESH_RATE_F / 2);
             for (var_r31 = particle->unk_48, var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
                 var_r31->unk34.x += 5.0f * var_f30 * var_r31->unk08.x;
                 var_r31->unk34.y = 20.0f;

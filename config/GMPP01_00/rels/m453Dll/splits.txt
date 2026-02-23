@@ -5,3 +5,24 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m453Dll/main.c:
+	.text       start:0x000000A0 end:0x000064F8
+	.rodata     start:0x00000000 end:0x000001A0
+	.data       start:0x00000000 end:0x00000158
+	.bss        start:0x00000000 end:0x00000060
+
+REL/m453Dll/map.c:
+	.text       start:0x000064F8 end:0x00008F58
+	.rodata     start:0x000001A0 end:0x00000248
+	.data       start:0x00000158 end:0x00000BC0
+	.bss        start:0x00000060 end:0x000000C0
+
+REL/m453Dll/score.c:
+	.text       start:0x00008F58 end:0x00009684
+	.rodata     start:0x00000248 end:0x00000280
+	.data       start:0x00000BC0 end:0x00000BCC
+	.bss        start:0x000000C0 end:0x000000C8
