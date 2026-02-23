@@ -21,6 +21,7 @@
 #include "game/window.h"
 #include "game/wipe.h"
 #include "string.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/hsfex.h"
@@ -1383,7 +1384,7 @@ void fn_1_6850(omObjData *object)
     var_r29 = var_r23;
     lbl_1_bss_30 = lbl_1_bss_30 == -1 ? ((var_r30 != 0) && (var_r29 != 0) ? (rand8() % 2) : (var_r30 != 0 ? 0 : (var_r29 != 0 ? 1 : lbl_1_bss_30)))
                                       : lbl_1_bss_30;
-    lbl_1_bss_30 = ((lbl_1_bss_30 == -1) && (lbl_1_bss_14 >= 0x4650)) != 0
+    lbl_1_bss_30 = ((lbl_1_bss_30 == -1) && (lbl_1_bss_14 >= REFRESH_RATE * 300)) != 0
         ? (sp20[0]->unk_190 > sp20[1]->unk_190 ? 0 : (sp20[0]->unk_190 < sp20[1]->unk_190 ? 1 : 4))
         : lbl_1_bss_30;
     var_r28 = lbl_1_data_284;
@@ -1458,7 +1459,7 @@ void fn_1_71A8(void)
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
         sp8[var_r30] = (&lbl_1_bss_54)[var_r30]->data;
     }
-    HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
+    HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
     HuWinComKeyReset();
     var_r31 = HuWinExCreateStyled(-10000.0f, 60.0f, 0x118, 0x78, -1, 1);
     HuWinExAnimIn(var_r31);
@@ -1469,14 +1470,14 @@ void fn_1_71A8(void)
     HuWinMesColSet(var_r31, 0);
     HuWinMesSet(var_r31, 0x2C0001);
     if (((sp8[0]->unk_0C == -1) || (sp8[0]->unk_08 == -1)) && ((sp8[1]->unk_0C == -1) || (sp8[1]->unk_08 == -1))) {
-        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 0x3C);
+        HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
     }
     HuWinMesWait(var_r31);
     if ((sp8[0]->unk_0C != -1) || (sp8[1]->unk_0C != -1)) {
         HuWinMesColSet(var_r31, 0);
         HuWinMesSet(var_r31, 0x2C0002);
         if ((sp8[0]->unk_0C == -1) && (sp8[1]->unk_0C == -1)) {
-            HuPrcSleep(0x3C);
+            HuPrcSleep(REFRESH_RATE);
             var_r29 = 1;
         }
         else {
@@ -1492,7 +1493,7 @@ void fn_1_71A8(void)
             HuWinMesColSet(var_r31, 0);
             HuWinMesSet(var_r31, var_r26);
             if ((sp8[0]->unk_0C == -1 || sp8[0]->unk_08 == -1) && (sp8[1]->unk_0C == -1 || sp8[1]->unk_08 == -1)) {
-                HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 60);
+                HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
             }
             HuWinMesWait(var_r31);
         }
@@ -1501,7 +1502,7 @@ void fn_1_71A8(void)
         HuWinMesColSet(var_r31, 0);
         HuWinMesSet(var_r31, 0x2C0008);
         if (((sp8[0]->unk_0C == -1) || (sp8[0]->unk_08 == -1)) && ((sp8[1]->unk_0C == -1) || (sp8[1]->unk_08 == -1))) {
-            HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, 60);
+            HuWinComKeyWait(0x100, 0x100, 0x100, 0x100, REFRESH_RATE);
         }
         HuWinMesWait(var_r31);
     }
@@ -1598,11 +1599,11 @@ void fn_1_7544(omObjData *var_r29)
             break;
         case 0x3EC:
             lbl_1_bss_4C++;
-            if (lbl_1_bss_14 == 0x3F48) {
+            if (lbl_1_bss_14 == REFRESH_RATE * 270) {
                 lbl_1_data_22A = MGSeqCreate(1, 0x1E, -1, -1);
             }
             if (lbl_1_data_22A != -1) {
-                MGSeqParamSet(lbl_1_data_22A, 1, (0x468B - lbl_1_bss_14) / 60);
+                MGSeqParamSet(lbl_1_data_22A, 1, ((REFRESH_RATE * 300 + REFRESH_RATE - 1) - lbl_1_bss_14) / REFRESH_RATE);
             }
             if (lbl_1_bss_30 != -1) {
                 lbl_1_bss_48 = 0x3ED;
@@ -1648,7 +1649,7 @@ void fn_1_7544(omObjData *var_r29)
                     HuAudSStreamPlay(4);
                 }
             }
-            if ((210.0f + (lbl_1_bss_30 == 4 ? 0x1E : 0)) < lbl_1_bss_4C) {
+            if ((REFRESH_RATE_F * 3.5f + (lbl_1_bss_30 == 4 ? 0x1E : 0)) < lbl_1_bss_4C) {
                 lbl_1_data_228 = -1;
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 0x3C);
                 var_r29->func = fn_1_9A38;

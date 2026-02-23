@@ -1395,13 +1395,13 @@ config.libs = [
     Rel(
         "m448Dll",  # Goomba's Chip Flip
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m448Dll/main.c"),
+            Object(Matching, "REL/m448Dll/main.c"),
         },
     ),
     Rel(
         "m449Dll",  # Kareening Koopa
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m449Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m449Dll/main.c"),
         },
     ),
     Rel(
