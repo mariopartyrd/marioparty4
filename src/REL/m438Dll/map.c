@@ -6,6 +6,7 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 #include "string.h"
+#include "version.h"
 
 
 // STRUCT
@@ -108,9 +109,9 @@ void fn_1_B54C(omObjData *arg0)
     Hu3DModelAttrSet(arg0->model[2], 0x40000001);
     Hu3DMotionSpeedSet(arg0->model[2], 0.1f);
     var_r29 = Hu3DTexScrollCreate(arg0->model[1], "lavafall");
-    Hu3DTexScrollPosMoveSet(var_r29, 0.0f, -0.025000002f, 0.0f);
+    Hu3DTexScrollPosMoveSet(var_r29, 0.0f, -1.5f * REFRESH_FREQ, 0.0f);
     var_r29 = Hu3DTexScrollCreate(arg0->model[1], "lafall");
-    Hu3DTexScrollPosMoveSet(var_r29, 0.0f, -(1.0f / 60.0f), 0.0f);
+    Hu3DTexScrollPosMoveSet(var_r29, 0.0f, -REFRESH_FREQ, 0.0f);
     var_r29 = 0;
   
     var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x45000C), 0x32);
@@ -275,7 +276,7 @@ void fn_1_BF20(omObjData *arg0)
             VECAdd(&var_r31->unk30, &var_r31->unk3C, &var_r31->unk30);
             var_r31->unk3C.x *= 0.92f;
             var_r31->unk3C.z *= 0.92f;
-            var_r31->unk3C.y += -0.27222225f;
+            var_r31->unk3C.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
             if (temp_f29 > 0.0) {
                 if (var_r31->unk30.y <= 0.0) {
                     HuAudFXEmiterPlay(0x6FF, &var_r31->unk30);
@@ -381,8 +382,8 @@ void fn_1_C764(ModelData *model, ParticleData *particle, Mtx matrix)
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
             var_r31->unk08.x *= 0.95f;
             var_r31->unk08.z *= 0.95f;
-            var_r31->unk08.y += -0.27222225f;
-            if (var_r31->unk00 < 24.0f) {
+            var_r31->unk08.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
+            if (var_r31->unk00 < REFRESH_RATE_F / 2.5f) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
             if (--var_r31->unk00 == 0) {
@@ -410,7 +411,7 @@ void fn_1_C8E8(ModelData *model, ParticleData *particle, Mtx matrix)
             var_r31->unk08.z *= 0.92f;
             var_r31->unk2C += 5.0f;
             var_r31->unk40.a *= 0.99f;
-            if (var_r31->unk00 < 24.0f) {
+            if (var_r31->unk00 < REFRESH_RATE_F / 2.5f) {
                 var_r31->unk40.a = 0.9f * var_r31->unk40.a;
             }
             if (--var_r31->unk00 == 0) {
@@ -441,7 +442,7 @@ void fn_1_CAB0(f32 arg8)
     for (var_r30 = 0; var_r30 < 0x96; var_r30++) {
         var_r31 = lbl_1_bss_E34[var_r30];
         if (var_r31->unk00 == 0) {
-            var_r31->unk00 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
+            var_r31->unk00 = REFRESH_RATE_F * (0.6f + (0.0006f * frandmod(0x3E8)));
             temp_f31 = ((0.002f * frandmod(0x3E8)) - 1.0f);
             temp_f31 = arg8 + (temp_f31 * temp_f28);
             sp8.x = sind(temp_f31);
@@ -453,7 +454,7 @@ void fn_1_CAB0(f32 arg8)
             var_r31->unk34.y = 0.2f * frandmod(0x3E8);
             var_r31->unk34.z = 7.5 * cosd(temp_f31) * 100.0;
           
-            temp_f30 = 1.6666667f * (4.0f + (0.014f * frandmod(0x3E8)));
+            temp_f30 = REFRESH_FREQ * 100.0f * (4.0f + (0.014f * frandmod(0x3E8)));
             var_r31->unk08.x = sp8.x * temp_f30;
             var_r31->unk08.z = sp8.z * temp_f30;
             var_r31->unk08.y = temp_f30 * ((0.0006f * frandmod(0x3E8)) - 0.2f);
@@ -472,7 +473,7 @@ void fn_1_CAB0(f32 arg8)
     var_r29 = 0xF;
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r31++) {
         if (var_r31->unk00 == 0) {
-            var_r31->unk00 = 60.0f * (0.6f + (0.0006f * frandmod(0x3E8)));
+            var_r31->unk00 = REFRESH_RATE_F * (0.6f + (0.0006f * frandmod(0x3E8)));
             temp_f31 = ((0.002f * frandmod(0x3E8)) - 1.0f);
             temp_f31 = arg8 + (temp_f31 * temp_f28);
             sp8.x = sind(temp_f31);
@@ -484,7 +485,7 @@ void fn_1_CAB0(f32 arg8)
             var_r31->unk34.y = 0.2f * frandmod(0x3E8);
             var_r31->unk34.z = 7.5 * cosd(temp_f31) * 100.0;
           
-            temp_f30 = 1.6666667f * -(0.01f * frandmod(0x3E8));
+            temp_f30 = REFRESH_FREQ * 100.0f * -(0.01f * frandmod(0x3E8));
             var_r31->unk08.x = sp8.x * temp_f30;
             var_r31->unk08.z = sp8.z * temp_f30;
             var_r31->unk08.y = temp_f30 * -((0.00020000001f * frandmod(0x3E8)) + 0.05f);
@@ -515,8 +516,8 @@ void fn_1_D3FC(ModelData *model, ParticleData *particle, Mtx matrix)
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
         if (var_r31->unk00 != 0) {
             VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-            var_r31->unk08.y += -0.27222225f;
-            if (var_r31->unk00 < 12.0f) {
+            var_r31->unk08.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
+            if (var_r31->unk00 < REFRESH_RATE_F / 5.0f) {
                 var_r31->unk40.a = (0.8f * var_r31->unk40.a);
             }
             if (--var_r31->unk00 == 0) {
@@ -544,7 +545,7 @@ void fn_1_D57C(Vec *arg0, f32 arg1)
 
     for (var_r30 = 0; var_r30 < 0x1F4; var_r30++, var_r31++) {
         if (var_r31->unk00 == 0) {
-            var_r31->unk00 = 60.0f * (0.3f + (0.0003f * frandmod(0x3E8)));
+            var_r31->unk00 = REFRESH_RATE_F * (0.3f + (0.0003f * frandmod(0x3E8)));
             var_r31->unk34 = *arg0;
             var_r31->unk34.x += arg1 * (0.07f * (frandmod(0x3E8) - 0x1F4));
             var_r31->unk34.z += arg1 * (0.07f * (frandmod(0x3E8) - 0x1F4));
@@ -554,10 +555,10 @@ void fn_1_D57C(Vec *arg0, f32 arg1)
             sp8.y = 0.0f;
             sp8.z = cosd(temp_f31);
 
-            temp_f29 = 1.6666667f * (0.5f + (0.001f * frandmod(0x3E8)));
+            temp_f29 = REFRESH_FREQ * 100.0f * (0.5f + (0.001f * frandmod(0x3E8)));
             var_r31->unk08.x = sp8.x * temp_f29;
             var_r31->unk08.z = sp8.z * temp_f29;
-            var_r31->unk08.y = 1.6666667f * ((2.0f * arg1) + (1.0f + (0.002f * frandmod(0x3E8))));
+            var_r31->unk08.y = REFRESH_FREQ * 100.0f * ((2.0f * arg1) + (1.0f + (0.002f * frandmod(0x3E8))));
             var_r31->unk30 = frandmod(0x168);
             var_r31->unk2C = (20.0f + frandmod(0x14));
             var_r31->unk40.a = (frandmod(0x46) + 0x64);
@@ -593,13 +594,13 @@ s32 fn_1_DA64(f32 arg8)
             var_r31->unk0 = 0;
             var_r31->unk4 = 1;
             var_r31->unk30 = var_r31->unk24;
-            var_r31->unk3C.y = (1.6666667f * (2.0f + (0.002f * frandmod(0x3E8))));
-            var_r31->unk3C.x = (1.6666667461395264f * (sind(var_r31->unk8) * (10.0f + (0.006f * frandmod(0x3E8)))));
-            var_r31->unk3C.z = (1.6666667461395264f * (cosd(var_r31->unk8) * (10.0f + (0.006f * frandmod(0x3E8)))));
+            var_r31->unk3C.y = (REFRESH_FREQ * 100.0f * (2.0f + (0.002f * frandmod(0x3E8))));
+            var_r31->unk3C.x = (REFRESH_FREQ * 100.0f * (sind(var_r31->unk8) * (10.0f + (0.006f * frandmod(0x3E8)))));
+            var_r31->unk3C.z = (REFRESH_FREQ * 100.0f * (cosd(var_r31->unk8) * (10.0f + (0.006f * frandmod(0x3E8)))));
             var_r31->unkC = var_r31->unk14 = var_r31->unk1C = 0.0f;
-            var_r31->unk10 = (0.016666668f * (10.0f + (0.05f * frandmod(0x3E8))));
-            var_r31->unk18 = (0.016666668f * (30.0f + (0.05f * frandmod(0x3E8))));
-            var_r31->unk20 = (0.016666668f * (10.0f + (0.02f * frandmod(0x3E8))));
+            var_r31->unk10 = (REFRESH_FREQ * (10.0f + (0.05f * frandmod(0x3E8))));
+            var_r31->unk18 = (REFRESH_FREQ * (30.0f + (0.05f * frandmod(0x3E8))));
+            var_r31->unk20 = (REFRESH_FREQ * (10.0f + (0.02f * frandmod(0x3E8))));
             if (frandmod(0x64) < 0x50) {
                 var_r31->unk10 *= -1.0f;
             }
