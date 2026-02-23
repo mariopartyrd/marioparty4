@@ -1413,7 +1413,7 @@ config.libs = [
     Rel(
         "m451Dll",  # Jigsaw Jitters
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m451Dll/m451.c"),
+            Object(Matching, "REL/m451Dll/m451.c"),
         },
     ),
     Rel(

@@ -5,3 +5,12 @@ Sections:
 	.rodata     type:rodata align:8
 	.data       type:data align:8
 	.bss        type:bss align:8
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+REL/m451Dll/m451.c:
+	.text       start:0x000000A0 end:0x000051B4
+	.rodata     start:0x00000000 end:0x00000174
+	.data       start:0x00000000 end:0x000007B5
+	.bss        start:0x00000000 end:0x00000CB6
