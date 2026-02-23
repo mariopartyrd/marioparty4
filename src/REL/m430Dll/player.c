@@ -389,7 +389,7 @@ void fn_1_C1E4(omObjData *object)
         work->unk_18 = -450.0f;
     }
     work->unk_34 = 1;
-    work->unk_24 = 750.0f / REFRESH_RATE_F;
+    work->unk_24 = 750.0f * REFRESH_FREQ;
     work->unk_28 = 0.0f;
     work->unk_1C = 180.0f;
     work->unk_2C = 0.0f;
@@ -541,7 +541,7 @@ void fn_1_CA3C(omObjData *object)
     work->unk_4C = 0.0f;
     if (work->unk_0C == 0) {
         work->unk_34 = 3;
-        work->unk_24 = -2460.0f / REFRESH_RATE_F;
+        work->unk_24 = -2460.0f * REFRESH_FREQ;
         object->rot.y = 0.0f;
         object->rot.z = 0.0f;
         object->trans.z -= work->unk_30;
@@ -617,7 +617,7 @@ void fn_1_CA3C(omObjData *object)
     if (fn_1_4058() == 2) {
         if (work->unk_0C == 0) {
             work->unk_34 = 1;
-            work->unk_24 = 750.0f / REFRESH_RATE_F;
+            work->unk_24 = 750.0f * REFRESH_FREQ;
             work->unk_28 = 0.0f;
             work->unk_68 = 0x50;
             object->trans.y = 0.0f;
@@ -714,7 +714,7 @@ void fn_1_D2D0(omObjData *object)
     }
     if (work->unk_0C == 0) {
         fn_1_D828(object);
-        var_f31 = (work->unk_24 - (750.0f / REFRESH_RATE_F)) / (1710.0f / REFRESH_RATE_F);
+        var_f31 = (work->unk_24 - (750.0f * REFRESH_FREQ)) / (1710.0001f * REFRESH_FREQ);
         work->unk_68 = 80.0f + (47.0f * var_f31);
         if (work->unk_60 != -1) {
             HuAudFXVolSet(work->unk_60, work->unk_68);
@@ -725,7 +725,7 @@ void fn_1_D2D0(omObjData *object)
     }
     else {
         fn_1_E8FC(object);
-        var_f31 = (var_r28->unk_1C - (750.0f / REFRESH_RATE_F)) / (1710.0f / REFRESH_RATE_F);
+        var_f31 = (var_r28->unk_1C - (750.0f * REFRESH_FREQ)) / (1710.0001f * REFRESH_FREQ);
         var_f31 = 8192.0f + (-16384.0f * (1.0f - var_f31));
         if (work->unk_6C != -1) {
             HuAudFXPitchSet(work->unk_6C, var_f31);
