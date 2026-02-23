@@ -1384,12 +1384,12 @@ config.libs = [
     Rel(
         "m447dll",  # Archaeologuess
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/stage.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/camera.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/player.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/player_col.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m447dll/block.c"),
+            Object(Matching, "REL/m447dll/main.c"),
+            Object(Matching, "REL/m447dll/stage.c"),
+            Object(Matching, "REL/m447dll/camera.c"),
+            Object(Matching, "REL/m447dll/player.c"),
+            Object(Matching, "REL/m447dll/player_col.c"),
+            Object(Matching, "REL/m447dll/block.c"),
         },
     ),
     Rel(

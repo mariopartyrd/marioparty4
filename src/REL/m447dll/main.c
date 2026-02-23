@@ -12,6 +12,7 @@
 #include "game/wipe.h"
 
 #include "math.h"
+#include "version.h"
 
 typedef struct {
     /* 0x00 */ s16 unk00;
@@ -350,8 +351,8 @@ void fn_1_B5C(UnkM447Struct_00* arg0) {
     switch (arg0->unk1C) {
         case 0:
             fn_1_1884(arg0);
-            arg0->unk24 = 900;
-            arg0->unk32 = MGSeqCreate(1, arg0->unk24 / 60, -1, -1);
+            arg0->unk24 = REFRESH_RATE * 15;
+            arg0->unk32 = MGSeqCreate(1, arg0->unk24 / REFRESH_RATE, -1, -1);
             for (i = 0; i < 2; i++) {
                 fn_1_43CC(lbl_1_bss_98[i], 1);
                 lbl_1_bss_98[i]->unk04 = 1;
@@ -360,8 +361,8 @@ void fn_1_B5C(UnkM447Struct_00* arg0) {
             /* fallthrough */
         case 1:
             temp_r26 = fn_1_1F9C(lbl_1_bss_10);
-            if (arg0->unk24 > 0 && temp_r26 > 0 && --arg0->unk24 % 60 == 0) {
-                MGSeqParamSet(arg0->unk32, 1, arg0->unk24 / 60);
+            if (arg0->unk24 > 0 && temp_r26 > 0 && --arg0->unk24 % REFRESH_RATE == 0) {
+                MGSeqParamSet(arg0->unk32, 1, arg0->unk24 / REFRESH_RATE);
             }
             if (arg0->unk24 > 0 && temp_r26 > 0) {
                 break;
