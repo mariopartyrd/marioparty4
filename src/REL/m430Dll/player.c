@@ -806,11 +806,11 @@ void fn_1_D828(omObjData *var_r30)
     sp20[1][0] *= var_r30->scale.y;
     sp20[1][1] *= var_r30->scale.y;
     sp20[1][2] *= var_r30->scale.z;
-    var_r30->trans.y = 0.3f * (100.0f * (var_r31->unk_24 / (2460.0f / REFRESH_RATE_F)));
+    var_r30->trans.y = 0.3f * (100.0f * (var_r31->unk_24 / (2460.0f * REFRESH_FREQ)));
     if (var_r30->trans.y < 0.0f) {
         var_r30->trans.y *= -0.5f;
     }
-    var_f27 = 15.0f * (var_r31->unk_24 / (2460.0f / REFRESH_RATE_F));
+    var_f27 = 15.0f * (var_r31->unk_24 / (2460.0f * REFRESH_FREQ));
     if (var_r31->unk_24 < 0.0f) {
         var_f27 *= -0.5f;
     }
@@ -937,15 +937,15 @@ void fn_1_D828(omObjData *var_r30)
     }
     switch (var_r31->unk_34) {
         case 1:
-            var_f30 = 750.0f / REFRESH_RATE_F;
+            var_f30 = 750.0f * REFRESH_FREQ;
             (void)var_f30;
             break;
         case 2:
-            var_f30 = 1675.0f / REFRESH_RATE_F;
+            var_f30 = 1675.0f * REFRESH_FREQ;
             (void)var_f30;
             break;
         default:
-            var_f30 = 2460.0f / REFRESH_RATE_F;
+            var_f30 = 2460.0f * REFRESH_FREQ;
             break;
     }
     if (fabs(var_f30 - var_r31->unk_24) < REFRESH_FREQ * 100.0f) {
@@ -1007,7 +1007,7 @@ void fn_1_D828(omObjData *var_r30)
     sp14.y += var_r30->trans.y;
     sp14.z += var_r29->unk_18;
     fn_1_10540(var_r31->unk_04, 0, sp14.x, sp14.y, sp14.z);
-    var_f28 = var_r31->unk_24 / (2460.0f / REFRESH_RATE_F);
+    var_f28 = var_r31->unk_24 / (2460.0f * REFRESH_FREQ);
     if (var_f28 < 0.0) {
         var_f28 *= -1.0f;
     }
@@ -1107,7 +1107,7 @@ void fn_1_E8FC(omObjData *object)
     if (var_r29->unk_1C < 1125.0f / REFRESH_RATE_F) {
         var_f29 = 200.0f;
     }
-    else if (var_r29->unk_1C < 2000.0f / REFRESH_RATE_F) {
+    else if (var_r29->unk_1C < 2000.0f * REFRESH_FREQ) {
         var_f29 = 350.0f;
     }
     else {
