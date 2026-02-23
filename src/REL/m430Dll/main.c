@@ -78,7 +78,9 @@ s32 lbl_1_bss_1C;
 s32 lbl_1_bss_18;
 s32 lbl_1_bss_14;
 s16 lbl_1_bss_10;
+#if VERSION_PAL
 s16 lbl_1_bss_pal;
+#endif
 s32 lbl_1_bss_C;
 s32 lbl_1_bss_8;
 s32 lbl_1_bss_4;
