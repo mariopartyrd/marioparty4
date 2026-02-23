@@ -1778,7 +1778,7 @@ void fn_1_B570(s32 arg0, Vec *arg1, float arg8, float arg9, Vec *arg2)
                         var_r31->unk34.x = var_r31->unk34.x + ((0.05f * frandmod(0x3E8)) - 25.0f);
                         var_r31->unk34.z = var_r31->unk34.z + ((0.05f * frandmod(0x3E8)) - 25.0f);
                         var_r31->unk34.y = 40.0f;
-                        var_f31 = (REFRESH_FREQ * 100.0f) + (arg9 * (REFRESH_FREQ * 0.1f * frandmod(0x3E8)));
+                        var_f31 = (REFRESH_FREQ * 100.0f) + (arg9 * (0.1f / REFRESH_RATE_F * frandmod(0x3E8)));
                         var_r31->unk08.x = sp28.x * var_f31;
                         var_r31->unk08.z = sp28.z * var_f31;
                         var_r31->unk08.y = 0.0f;
