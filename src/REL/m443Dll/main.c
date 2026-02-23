@@ -13,6 +13,7 @@
 #include "math.h"
 
 #include "string.h"
+#include "version.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
@@ -283,7 +284,7 @@ void fn_1_ECC(omObjData *object)
     switch (var_r29->unk_14) {
         case 0:
             var_r29->unk_1C = 0x12C;
-            var_r29->unk_20 = 0x3C;
+            var_r29->unk_20 = REFRESH_RATE;
             lbl_1_bss_5A = MGSeqCreate(3, 0);
             MGSeqPosSet(lbl_1_bss_5A, 320.0f, 240.0f);
             lbl_1_bss_64 = -1;
@@ -299,8 +300,8 @@ void fn_1_ECC(omObjData *object)
             var_r29->unk_18 = 0;
             break;
         case 1:
-            if ((var_r29->unk_18 > 60.0f) && (lbl_1_bss_C >= 0)) {
-                HuAudFXFadeOut(lbl_1_bss_C, 0x1E);
+            if ((var_r29->unk_18 > REFRESH_RATE_F) && (lbl_1_bss_C >= 0)) {
+                HuAudFXFadeOut(lbl_1_bss_C, REFRESH_RATE / 2);
                 lbl_1_bss_C = -1;
             }
             if ((MGSeqStatGet(lbl_1_bss_5A) == 0) && (var_r29->unk_08 == 0)) {
@@ -329,7 +330,7 @@ void fn_1_1294(omObjData *object)
     fn_1_4E4(object);
     lbl_1_bss_14.unk_14++;
     if (--var_r31->unk_20 == 0) {
-        var_r31->unk_20 = 0x3C;
+        var_r31->unk_20 = REFRESH_RATE;
         var_r31->unk_1C--;
         if (var_r31->unk_1C == 0) {
             var_r31->unk_54 = 0;
@@ -382,7 +383,7 @@ void fn_1_1294(omObjData *object)
                 GWMGRecordSet(5, lbl_1_bss_14.unk_14);
                 lbl_1_bss_50 = 1;
             }
-            if (lbl_1_bss_14.unk_14 <= 0x258) {
+            if (lbl_1_bss_14.unk_14 <= REFRESH_RATE * 10) {
                 GWGameStat.present[0x39] = 1;
                 OSReport("Present For You!!!\n");
             }
@@ -416,8 +417,8 @@ void fn_1_17D8(omObjData *object)
                 var_r31->unk_80 = var_r31->unk_40;
                 var_r31->unk_04 = 0x3E8;
             }
-            if (var_r31->unk_A0 <= 0x3C) {
-                float var_f31 = 0.016666668f * var_r31->unk_A0;
+            if (var_r31->unk_A0 <= REFRESH_RATE) {
+                float var_f31 = REFRESH_FREQ * var_r31->unk_A0;
                 var_r31->unk_44 = var_r31->unk_78 + ((320.0f - var_r31->unk_78) * var_f31);
                 var_r31->unk_48 = var_r31->unk_7C + ((240.0f - var_r31->unk_7C) * var_f31);
                 var_r31->unk_40 = var_r31->unk_80 + ((2.0f - var_r31->unk_80) * var_f31);
@@ -432,7 +433,7 @@ void fn_1_17D8(omObjData *object)
         }
         if ((MGSeqStatGet(lbl_1_bss_58) == 0) && (var_r27->unk_58 == 0x1111) && (var_r25 != 0)) {
             if (var_r27->unk_08 == 0) {
-                WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
+                WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, REFRESH_RATE);
             }
             var_r27->unk_14 = 4;
             var_r27->unk_18 = 0;
@@ -478,7 +479,11 @@ Vec lbl_1_data_A8[6] = {
     { -40.0f, 180.0f, 1500.0f },
 };
 
-s32 lbl_1_data_F0[6] = { 0x3C, 0x5A, 0x6C, 0x96, 0x6C, 0 };
+s32 lbl_1_data_F0[6] = {
+    REFRESH_RATE, REFRESH_RATE * 1.5,
+    REFRESH_RATE * 1.8, REFRESH_RATE * 2.5,
+    REFRESH_RATE * 1.8, 0
+};
 
 void fn_1_1D8C(omObjData *object)
 {
@@ -531,7 +536,7 @@ omObjFunc fn_1_2490(Process *process, omObjData *object)
     M443DllWork *var_r30 = object->data;
 
     if (var_r30->unk_08 == 0) {
-        WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
+        WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, REFRESH_RATE);
     }
     fn_1_3FE8(1);
     var_r31 = fn_1_4148(0);
@@ -591,7 +596,7 @@ void fn_1_25A4(omObjData *object)
             lbl_1_bss_54 = MGSeqCreate(5, 2);
         }
     }
-    else if ((MGSeqStatGet(lbl_1_bss_54) == 0) && (var_r28->unk_2C >= 210.0f)) {
+    else if ((MGSeqStatGet(lbl_1_bss_54) == 0) && (var_r28->unk_2C >= REFRESH_RATE_F * 3.5f)) {
         var_r28->unk_28 = 2;
         fn_1_584(object);
     }
@@ -623,7 +628,7 @@ void fn_1_2DD8(M443DllUnkStruct *arg0)
     memset(arg0, 0, sizeof(M443DllUnkStruct));
     arg0->unk_10 = GWMGRecordGet(5);
     if (arg0->unk_10 == 0) {
-        arg0->unk_10 = 0xE10;
+        arg0->unk_10 = REFRESH_RATE * 60;
     }
     arg0->unk_08 = 320.0f;
     arg0->unk_0C = 64.0f;
@@ -705,9 +710,13 @@ void fn_1_2F54(M443DllUnkStruct *arg0)
             var_r29 = arg0->unk_10;
             var_r27 = 2;
         }
-        sp8[0] = var_r29 % 60;
-        var_r29 = (var_r29 - sp8[0]) / 60;
-        sp8[0] = 100.0f * (0.016666668f * sp8[0]);
+        sp8[0] = var_r29 % REFRESH_RATE;
+        var_r29 = (var_r29 - sp8[0]) / REFRESH_RATE;
+#if VERSION_PAL
+        sp8[0] = (100.0f * (sp8[0] / REFRESH_RATE_F));
+#else
+        sp8[0] = 100.0f * (REFRESH_FREQ * sp8[0]);
+#endif
         sp8[1] = var_r29 % 60;
         var_r29 = (var_r29 - sp8[1]) / 60;
         sp8[2] = var_r29;

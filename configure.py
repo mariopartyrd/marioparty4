@@ -1314,9 +1314,9 @@ config.libs = [
     Rel(
         "m438Dll",  # Chain Chomp Fever
         objects={
-            Object(MatchingFor(*MATCH_USA), "REL/m438Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m438Dll/map.c"),
-            Object(MatchingFor(*MATCH_USA), "REL/m438Dll/fire.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m438Dll/main.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m438Dll/map.c"),
+            Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "REL/m438Dll/fire.c"),
         },
     ),
     Rel(
@@ -1348,9 +1348,9 @@ config.libs = [
     Rel(
         "m443Dll",  # Mario Speedwagons
         objects={
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m443Dll/main.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m443Dll/map.c"),
-            Object(MatchingFor(*MATCH_USA, "GMPJ01_00"), "REL/m443Dll/player.c"),
+            Object(Matching, "REL/m443Dll/main.c"),
+            Object(Matching, "REL/m443Dll/map.c"),
+            Object(Matching, "REL/m443Dll/player.c"),
         },
     ),
     Rel(

@@ -6,6 +6,7 @@
 #include "game/hsfmotion.h"
 
 #include "REL/m443Dll.h"
+#include "version.h"
 
 void fn_1_4AB4(omObjData *object);
 void fn_1_4D14(omObjData *object);
@@ -97,7 +98,7 @@ void fn_1_4D14(omObjData *object)
                 }
                 break;
             case 1:
-                var_f30 = 1.0f - (0.016666668f * object->work[1]);
+                var_f30 = 1.0f - (REFRESH_FREQ * object->work[1]);
                 if (var_f30 <= 0.0f) {
                     object->work[0] += 1;
                     object->work[1] = 0;
@@ -110,13 +111,13 @@ void fn_1_4D14(omObjData *object)
                 if (fn_1_42E4() < 2) {
                     object->work[1] = 0;
                 }
-                if (object->work[1] >= 60.0f) {
+                if (object->work[1] >= REFRESH_RATE_F) {
                     object->work[0] += 1;
                     object->work[1] = 0;
                 }
                 break;
             case 3:
-                var_f30 = 0.016666668f * object->work[1];
+                var_f30 = REFRESH_FREQ * object->work[1];
                 if (var_f30 > 1.0f) {
                     object->work[0] += 1;
                     object->work[1] = 0;
