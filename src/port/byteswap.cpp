@@ -43,7 +43,6 @@ template <typename T> [[nodiscard]] constexpr T bswap32(T val) noexcept
     v.u = _byteswap_ulong(v.u);
 #else
     v.u = ((v.u & 0x0000FFFF) << 16) | ((v.u & 0xFFFF0000) >> 16) | ((v.u & 0x00FF00FF) << 8) | ((v.u & 0xFF00FF00) >> 8);
-    v.u = ((v.u & 0x0000FFFF) << 16) | ((v.u & 0xFFFF0000) >> 16) | ((v.u & 0x00FF00FF) << 8) | ((v.u & 0xFF00FF00) >> 8);
 #endif
     return v.t;
 }
@@ -201,7 +200,7 @@ template <typename B> void bswap(B &base, HsfVector3f &vec)
     bswap(base, vec.x);
     bswap(base, vec.y);
     bswap(base, vec.z);
-    //sVisitedPtrs.insert(offset_ptr(base));
+    // sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, AnimData32b &obj, AnimData &dest)
@@ -583,7 +582,8 @@ template <typename B> void bswap(B &base, HsfMapAttr32b &obj, HsfMapAttr &dest)
 
     dest.minX = obj.minX;
     dest.minZ = obj.minZ;
-    dest.maxX = obj.maxZ;
+    dest.maxX = obj.maxX;
+    dest.maxZ = obj.maxZ;
     dest.data = reinterpret_cast<u16 *>(static_cast<uintptr_t>(obj.data));
     dest.dataLen = obj.dataLen;
 
@@ -617,11 +617,15 @@ template <typename B> void bswap(B &base, HsfShape32b &obj, HsfShape &dest)
 {
     if (!sVisitedPtrs.contains(offset_ptr(base))) {
         bswap(base, obj.name);
+        bswap(base, obj.count16[0]);
+        bswap(base, obj.count16[1]);
         bswap(base, obj.vertex);
         // sVisitedPtrs.insert(offset_ptr(base));
     }
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
+    dest.count16[0] = obj.count16[0];
+    dest.count16[1] = obj.count16[1];
     dest.vertex = reinterpret_cast<HsfBuffer **>(static_cast<uintptr_t>(obj.vertex));
 }
 

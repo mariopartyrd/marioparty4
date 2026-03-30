@@ -103,35 +103,35 @@ void Hu3DInit(void) {
     hiliteAnim[3] = HuSprAnimRead(hiliteData4);
 #else
     {
-        void *dvd_data = HuDvdDataRead("data/refMapData0.anm");
+        void *dvd_data = HuDvdDataRead(DATADIR_PREFIX"/refMapData0.anm");
         reflectAnim[0] = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/refMapData1.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/refMapData1.anm");
         reflectAnim[1] = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/refMapData2.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/refMapData2.anm");
         reflectAnim[2] = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/refMapData3.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/refMapData3.anm");
         reflectAnim[3] = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/refMapData4.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/refMapData4.anm");
         reflectAnim[4] = HuSprAnimRead(dvd_data);
 
         reflectMapNo = 0;
-        dvd_data = HuDvdDataRead("data/toonMapData.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/toonMapData.anm");
         toonAnim = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/hiliteData.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/hiliteData.anm");
         hiliteAnim[0] = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/hiliteData2.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/hiliteData2.anm");
         hiliteAnim[1] = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/hiliteData3.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/hiliteData3.anm");
         hiliteAnim[2] = HuSprAnimRead(dvd_data);
 
-        dvd_data = HuDvdDataRead("data/hiliteData4.anm");
+        dvd_data = HuDvdDataRead(DATADIR_PREFIX"/hiliteData4.anm");
         hiliteAnim[3] = HuSprAnimRead(dvd_data);
     }
 #endif
@@ -332,13 +332,14 @@ void Hu3DAllKill(void) {
     Hu3DCameraAllKill();
     Hu3DLightAllKill();
     Hu3DAnimAllKill();
+    // TODO
 #ifndef BYTESWAPPING
     // this causes anim to be reallocated, so we lose the old allocation, but the game expects this to be executed, so hmm
     if(reflectAnim[0] != (AnimData *)refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
 #ifdef TARGET_PC
-    void *dvd_data = HuDvdDataRead("data/refMapData0.anm");
+    void *dvd_data = HuDvdDataRead(DATADIR_PREFIX"/refMapData0.anm");
     reflectAnim[0] = HuSprAnimRead(dvd_data);
 #else
     reflectAnim[0] = HuSprAnimRead(refMapData0);
@@ -1904,7 +1905,7 @@ void Hu3DReflectMapSet(AnimData* arg0) {
         HuMemDirectFree(reflectAnim[0]);
     }
 #ifdef TARGET_PC
-    void *dvd_data = HuDvdDataRead("data/refMapData0.anm");
+    void *dvd_data = HuDvdDataRead(DATADIR_PREFIX"/refMapData0.anm");
     reflectAnim[0] = HuSprAnimRead(dvd_data);
 #else
     reflectAnim[0] = HuSprAnimRead(arg0);

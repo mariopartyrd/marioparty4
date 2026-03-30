@@ -3,6 +3,9 @@
 #include "ctype.h"
 #include "string.h"
 
+#ifdef TARGET_PC
+#include <stdio.h>
+#endif
 
 #ifdef BYTESWAPPING
 #include "game/memory.h"
@@ -37,6 +40,10 @@ HsfBuffer *FaceTop;
 HsfCenv *CenvTop;
 HsfPart *PartTop;
 HsfBitmap *BitmapTop;
+#endif
+
+#ifdef TARGET_PC
+static BOOL DoDump = FALSE;
 #endif
 
 static void FileLoad(void *data);
@@ -75,8 +82,546 @@ static HsfBitmap *SearchBitmapPtr(s32 id);
 static char *GetString(u32 *str_ofs);
 static char *GetMotionString(u16 *str_ofs);
 
+#ifdef TARGET_PC
+static FILE *g_dump_file = NULL;
+
+static void DumpVec3f(const char *label, HsfVector3f *v) {
+    fprintf(g_dump_file, "    %s: (%.4f, %.4f, %.4f)\n", label, v->x, v->y, v->z);
+}
+
+static void DumpVec2f(const char *label, HsfVector2f *v) {
+    fprintf(g_dump_file, "    %s: (%.4f, %.4f)\n", label, v->x, v->y);
+}
+
+static void DumpTransform(const char *label, HsfTransform *t) {
+    fprintf(g_dump_file, "  %s:\n", label);
+    DumpVec3f("pos",   &t->pos);
+    DumpVec3f("rot",   &t->rot);
+    DumpVec3f("scale", &t->scale);
+}
+
+static void DumpScene(HsfData *hsf) {
+    s32 i;
+    fprintf(g_dump_file, "=== SCENES (%d) ===\n", hsf->sceneCnt);
+    for (i = 0; i < hsf->sceneCnt; i++) {
+        HsfScene *s = &hsf->scene[i];
+        fprintf(g_dump_file, "[%d] fogType=%d start=%.4f end=%.4f color=(%u,%u,%u,%u)\n",
+            i, s->fogType, s->start, s->end,
+            s->color.r, s->color.g, s->color.b, s->color.a);
+    }
+}
+
+static void DumpPalettes(HsfData *hsf) {
+    s32 i;
+    fprintf(g_dump_file, "=== PALETTES (%d) ===\n", hsf->paletteCnt);
+    for (i = 0; i < hsf->paletteCnt; i++) {
+        HsfPalette *p = &hsf->palette[i];
+        fprintf(g_dump_file, "[%d] name=%s palSize=%u\n", i, p->name ? p->name : "(null)", p->palSize);
+    }
+}
+
+static void DumpBitmaps(HsfData *hsf) {
+    s32 i;
+    fprintf(g_dump_file, "=== BITMAPS (%d) ===\n", hsf->bitmapCnt);
+    for (i = 0; i < hsf->bitmapCnt; i++) {
+        HsfBitmap *b = &hsf->bitmap[i];
+        fprintf(g_dump_file, "[%d] name=%s dataFmt=%u pixSize=%u sizeX=%d sizeY=%d palSize=%d maxLod=%u\n",
+            i, b->name ? b->name : "(null)",
+            b->dataFmt, b->pixSize, b->sizeX, b->sizeY, b->palSize, b->maxLod);
+        fprintf(g_dump_file, "     tint=(%u,%u,%u,%u) data=%p palData=%p\n",
+            b->tint.r, b->tint.g, b->tint.b, b->tint.a, b->data, b->palData);
+    }
+}
+
+static void DumpMaterials(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== MATERIALS (%d) ===\n", hsf->materialCnt);
+    for (i = 0; i < hsf->materialCnt; i++) {
+        HsfMaterial *m = &hsf->material[i];
+        fprintf(g_dump_file, "[%d] name=%s pass=%u vtxMode=%u\n",
+            i, m->name ? m->name : "(null)", m->pass, m->vtxMode);
+        fprintf(g_dump_file, "     litColor=(%u,%u,%u) color=(%u,%u,%u) shadowColor=(%u,%u,%u)\n",
+            m->litColor[0], m->litColor[1], m->litColor[2],
+            m->color[0],    m->color[1],    m->color[2],
+            m->shadowColor[0], m->shadowColor[1], m->shadowColor[2]);
+        fprintf(g_dump_file, "     hilite_scale=%.4f unk18=%.4f invAlpha=%.4f refAlpha=%.4f unk2C=%.4f\n",
+            m->hilite_scale, m->unk18, m->invAlpha, m->refAlpha, m->unk2C);
+        fprintf(g_dump_file, "     unk20=(%.4f,%.4f) flags=%u numAttrs=%u\n",
+            m->unk20[0], m->unk20[1], m->flags, m->numAttrs);
+        for (j = 0; j < (s32)m->numAttrs; j++) {
+            fprintf(g_dump_file, "     attr[%d]=%d\n", j, m->attrs[j]);
+        }
+    }
+}
+
+static void DumpAttributes(HsfData *hsf) {
+    s32 i;
+    fprintf(g_dump_file, "=== ATTRIBUTES (%d) ===\n", hsf->attributeCnt);
+    for (i = 0; i < hsf->attributeCnt; i++) {
+        HsfAttribute *a = &hsf->attribute[i];
+        fprintf(g_dump_file, "[%d] name=%s\n", i, a->name ? a->name : "(null)");
+        fprintf(g_dump_file, "     unk0C=%.4f unk14=%.4f unk20=%.4f\n", a->unk0C, a->unk14, a->unk20);
+        fprintf(g_dump_file, "     scale=(%.4f,%.4f) trans=(%.4f,%.4f)\n",
+            a->scale.x, a->scale.y, a->trans.x, a->trans.y);
+        fprintf(g_dump_file, "     wrap_s=%u wrap_t=%u unk78=%u flag=%u\n",
+            a->wrap_s, a->wrap_t, a->unk78, a->flag);
+        fprintf(g_dump_file, "     bitmap=%s\n",
+            (a->bitmap && a->bitmap->name) ? a->bitmap->name : "(null)");
+    }
+}
+
+static void DumpVertexBuffers(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== VERTEX BUFFERS (%d) ===\n", hsf->vertexCnt);
+    for (i = 0; i < hsf->vertexCnt; i++) {
+        HsfBuffer *buf = &hsf->vertex[i];
+        fprintf(g_dump_file, "[%d] name=%s count=%d\n",
+            i, buf->name ? buf->name : "(null)", buf->count);
+        HsfVector3f *verts = (HsfVector3f *)buf->data;
+        for (j = 0; j < buf->count; j++) {
+            fprintf(g_dump_file, "  [%d] (%.6f, %.6f, %.6f)\n",
+                j, verts[j].x, verts[j].y, verts[j].z);
+        }
+    }
+}
+
+static void DumpNormalBuffers(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== NORMAL BUFFERS (%d) ===\n", hsf->normalCnt);
+    for (i = 0; i < hsf->normalCnt; i++) {
+        HsfBuffer *buf = &hsf->normal[i];
+        fprintf(g_dump_file, "[%d] name=%s count=%d\n",
+            i, buf->name ? buf->name : "(null)", buf->count);
+        HsfVector3f *normals = (HsfVector3f *)buf->data;
+        for (j = 0; j < buf->count; j++) {
+            fprintf(g_dump_file, "  [%d] (%.6f, %.6f, %.6f)\n",
+                j, normals[j].x, normals[j].y, normals[j].z);
+        }
+    }
+}
+
+static void DumpStBuffers(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== ST BUFFERS (%d) ===\n", hsf->stCnt);
+    for (i = 0; i < hsf->stCnt; i++) {
+        HsfBuffer *buf = &hsf->st[i];
+        fprintf(g_dump_file, "[%d] name=%s count=%d\n",
+            i, buf->name ? buf->name : "(null)", buf->count);
+        HsfVector2f *st = (HsfVector2f *)buf->data;
+        for (j = 0; j < buf->count; j++) {
+            fprintf(g_dump_file, "  [%d] (%.6f, %.6f)\n",
+                j, st[j].x, st[j].y);
+        }
+    }
+}
+
+static void DumpColorBuffers(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== COLOR BUFFERS (%d) ===\n", hsf->colorCnt);
+    for (i = 0; i < hsf->colorCnt; i++) {
+        HsfBuffer *buf = &hsf->color[i];
+        fprintf(g_dump_file, "[%d] name=%s count=%d\n",
+            i, buf->name ? buf->name : "(null)", buf->count);
+        GXColor *colors = (GXColor *)buf->data;
+        for (j = 0; j < buf->count; j++) {
+            fprintf(g_dump_file, "  [%d] (%u, %u, %u, %u)\n",
+                j, colors[j].r, colors[j].g, colors[j].b, colors[j].a);
+        }
+    }
+}
+
+static void DumpFaces(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== FACES (%d) ===\n", hsf->faceCnt);
+    for (i = 0; i < hsf->faceCnt; i++) {
+        HsfBuffer *fb = &hsf->face[i];
+        HsfFace *faces = (HsfFace *)fb->data;
+        fprintf(g_dump_file, "[%d] name=%s count=%d\n",
+            i, fb->name ? fb->name : "(null)", fb->count);
+        for (j = 0; j < fb->count; j++) {
+            HsfFace *f = &faces[j];
+            u16 ftype = *((u16 *)&f->type);
+            fprintf(g_dump_file, "  face[%d] type=%u mat=%d nbt=(%.4f,%.4f,%.4f)\n",
+                j, ftype, f->mat, f->nbt.x, f->nbt.y, f->nbt.z);
+            if (ftype == HSF_FACE_TRISTRIP) {
+                fprintf(g_dump_file, "    strip.count=%u\n", f->strip.count);
+            } else {
+                s32 verts = (ftype == HSF_FACE_TRI) ? 3 : 4;
+                s32 k, l;
+                for (k = 0; k < verts; k++) {
+                    fprintf(g_dump_file, "    idx[%d]: %d %d %d %d\n",
+                        k, f->indices[k][0], f->indices[k][1], f->indices[k][2], f->indices[k][3]);
+                }
+            }
+        }
+    }
+}
+
+static void DumpObjectData(HsfObject *obj, s32 depth) {
+    s32 i;
+    char indent[64];
+    for (i = 0; i < depth * 2 && i < 62; i++) indent[i] = ' ';
+    indent[i] = '\0';
+
+    fprintf(g_dump_file, "%s[OBJ] name=%s type=%u flags=%u\n",
+        indent, obj->name ? obj->name : "(null)", obj->type, obj->flags);
+
+    switch (obj->type) {
+        case HSF_OBJ_MESH:
+        case HSF_OBJ_NULL1:
+        case HSF_OBJ_NULL2:
+        case HSF_OBJ_ROOT:
+        case HSF_OBJ_JOINT:
+        case HSF_OBJ_MAP:
+        {
+            HsfObjectData *d = &obj->data;
+            DumpTransform("base", &d->base);
+            DumpTransform("curr", &d->curr);
+            fprintf(g_dump_file, "%s  childrenCount=%u clusterCnt=%u cenvCnt=%u vertexShapeCnt=%u\n",
+                indent, d->childrenCount, d->clusterCnt, d->cenvCnt, d->vertexShapeCnt);
+            fprintf(g_dump_file, "%s  shapeType=%u unk123=%u\n", indent, d->shapeType, d->unk123);
+            if (obj->type == HSF_OBJ_MESH) {
+                fprintf(g_dump_file, "%s  mesh.min=(%.4f,%.4f,%.4f) mesh.max=(%.4f,%.4f,%.4f)\n",
+                    indent,
+                    d->mesh.min.x, d->mesh.min.y, d->mesh.min.z,
+                    d->mesh.max.x, d->mesh.max.y, d->mesh.max.z);
+                fprintf(g_dump_file, "%s  baseMorph=%.4f\n", indent, d->mesh.baseMorph);
+                fprintf(g_dump_file, "%s  vertex=%s normal=%s st=%s color=%s face=%s\n",
+                    indent,
+                    (d->vertex   && d->vertex->name)  ? d->vertex->name  : "(null)",
+                    (d->normal   && d->normal->name)  ? d->normal->name  : "(null)",
+                    (d->st       && d->st->name)      ? d->st->name      : "(null)",
+                    (d->color    && d->color->name)   ? d->color->name   : "(null)",
+                    (d->face     && d->face->name)    ? d->face->name    : "(null)");
+                fprintf(g_dump_file, "%s  material=%s attribute=%s\n",
+                    indent,
+                    (d->material  && d->material->name)  ? d->material->name  : "(null)",
+                    (d->attribute && d->attribute->name) ? d->attribute->name : "(null)");
+            }
+            for (i = 0; i < (s32)d->childrenCount; i++) {
+                DumpObjectData(d->children[i], depth + 1);
+            }
+            break;
+        }
+        case HSF_OBJ_REPLICA:
+            fprintf(g_dump_file, "%s  replica=%s\n", indent,
+                (obj->data.replica && obj->data.replica->name) ? obj->data.replica->name : "(null)");
+            break;
+        case HSF_OBJ_CAMERA:
+        {
+            HsfCamera *c = &obj->camera;
+            fprintf(g_dump_file, "%s  pos=(%.4f,%.4f,%.4f) target=(%.4f,%.4f,%.4f)\n",
+                indent, c->pos.x, c->pos.y, c->pos.z, c->target.x, c->target.y, c->target.z);
+            fprintf(g_dump_file, "%s  fov=%.4f near=%.4f far=%.4f aspect=%.4f\n",
+                indent, c->fov, c->nnear, c->ffar, c->aspect_dupe);
+            break;
+        }
+        case HSF_OBJ_LIGHT:
+        {
+            HsfLight *l = &obj->light;
+            fprintf(g_dump_file, "%s  pos=(%.4f,%.4f,%.4f) target=(%.4f,%.4f,%.4f)\n",
+                indent, l->pos.x, l->pos.y, l->pos.z, l->target.x, l->target.y, l->target.z);
+            fprintf(g_dump_file, "%s  type=%u color=(%u,%u,%u)\n",
+                indent, l->type, l->r, l->g, l->b);
+            fprintf(g_dump_file, "%s  ref_distance=%.4f ref_brightness=%.4f cutoff=%.4f unk2C=%.4f\n",
+                indent, l->ref_distance, l->ref_brightness, l->cutoff, l->unk2C);
+            break;
+        }
+    }
+}
+
+static void DumpSkeletons(HsfData *hsf) {
+    s32 i;
+    fprintf(g_dump_file, "=== SKELETONS (%d) ===\n", hsf->skeletonCnt);
+    for (i = 0; i < hsf->skeletonCnt; i++) {
+        HsfSkeleton *s = &hsf->skeleton[i];
+        fprintf(g_dump_file, "[%d] name=%s\n", i, s->name ? s->name : "(null)");
+        DumpTransform("transform", &s->transform);
+    }
+}
+
+static void DumpParts(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== PARTS (%d) ===\n", hsf->partCnt);
+    for (i = 0; i < hsf->partCnt; i++) {
+        HsfPart *p = &hsf->part[i];
+        fprintf(g_dump_file, "[%d] name=%s count=%u\n",
+            i, p->name ? p->name : "(null)", p->count);
+        for (j = 0; j < (s32)p->count; j++) {
+            fprintf(g_dump_file, "  vertex[%d]=%u\n", j, p->vertex[j]);
+        }
+    }
+}
+
+static void DumpClusters(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== CLUSTERS (%d) ===\n", hsf->clusterCnt);
+    for (i = 0; i < hsf->clusterCnt; i++) {
+        HsfCluster *c = &hsf->cluster[i];
+        fprintf(g_dump_file, "[%d] name[0]=%s name[1]=%s target=%d type=%u\n",
+            i,
+            c->name[0] ? c->name[0] : "(null)",
+            c->name[1] ? c->name[1] : "(null)",
+            c->target, c->type);
+        fprintf(g_dump_file, "     index=%.4f adjusted=%u unk95=%u vertexCnt=%u\n",
+            c->index, c->adjusted, c->unk95, c->vertexCnt);
+        for (j = 0; j < (s32)c->vertexCnt; j++) {
+            fprintf(g_dump_file, "  vertex[%d]=%s\n", j,
+                (c->vertex[j] && c->vertex[j]->name) ? c->vertex[j]->name : "(null)");
+        }
+    }
+}
+
+static void DumpCenvs(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== CENVS (%d) ===\n", hsf->cenvCnt);
+    for (i = 0; i < hsf->cenvCnt; i++) {
+        HsfCenv *c = &hsf->cenv[i];
+        fprintf(g_dump_file, "[%d] singleCount=%u dualCount=%u multiCount=%u vtxCount=%u copyCount=%u\n",
+            i, c->singleCount, c->dualCount, c->multiCount, c->vtxCount, c->copyCount);
+        for (j = 0; j < (s32)c->singleCount; j++) {
+            HsfCenvSingle *s = &c->singleData[j];
+            fprintf(g_dump_file, "  single[%d] target=%u pos=%u posCnt=%u normal=%u normalCnt=%u\n",
+                j, s->target, s->pos, s->posCnt, s->normal, s->normalCnt);
+        }
+        for (j = 0; j < (s32)c->dualCount; j++) {
+            HsfCenvDual *d = &c->dualData[j];
+            s32 k;
+            fprintf(g_dump_file, "  dual[%d] target1=%u target2=%u weightCnt=%u\n",
+                j, d->target1, d->target2, d->weightCnt);
+            for (k = 0; k < (s32)d->weightCnt; k++) {
+                HsfCenvDualWeight *w = &d->weight[k];
+                fprintf(g_dump_file, "    weight[%d] weight=%.4f pos=%u posCnt=%u normal=%u normalCnt=%u\n",
+                    k, w->weight, w->pos, w->posCnt, w->normal, w->normalCnt);
+            }
+        }
+        for (j = 0; j < (s32)c->multiCount; j++) {
+            HsfCenvMulti *m = &c->multiData[j];
+            s32 k;
+            fprintf(g_dump_file, "  multi[%d] weightCnt=%u pos=%u posCnt=%u normal=%u normalCnt=%u\n",
+                j, m->weightCnt, m->pos, m->posCnt, m->normal, m->normalCnt);
+            for (k = 0; k < (s32)m->weightCnt; k++) {
+                HsfCenvMultiWeight *w = &m->weight[k];
+                fprintf(g_dump_file, "    weight[%d] target=%u value=%.4f\n", k, w->target, w->value);
+            }
+        }
+    }
+}
+
+static void DumpShapes(HsfData *hsf) {
+    s32 i, j;
+    fprintf(g_dump_file, "=== SHAPES (%d) ===\n", hsf->shapeCnt);
+    for (i = 0; i < hsf->shapeCnt; i++) {
+        HsfShape *s = &hsf->shape[i];
+        fprintf(g_dump_file, "[%d] name=%s count16[0]=%u count16[1]=%u\n",
+            i, s->name ? s->name : "(null)", s->count16[0], s->count16[1]);
+        for (j = 0; j < s->count16[1]; j++) {
+            fprintf(g_dump_file, "  vertex[%d]=%s\n", j,
+                (s->vertex[j] && s->vertex[j]->name) ? s->vertex[j]->name : "(null)");
+        }
+    }
+}
+
+static void DumpMapAttrs(HsfData *hsf) {
+    s32 i;
+    fprintf(g_dump_file, "=== MAP ATTRS (%d) ===\n", hsf->mapAttrCnt);
+    for (i = 0; i < hsf->mapAttrCnt; i++) {
+        HsfMapAttr *m = &hsf->mapAttr[i];
+        fprintf(g_dump_file, "[%d] minX=%.4f minZ=%.4f maxX=%.4f maxZ=%.4f dataLen=%u data=%p\n",
+            i, m->minX, m->minZ, m->maxX, m->maxZ, m->dataLen, m->data);
+    }
+}
+
+static void DumpTrackData(HsfTrack *t) {
+    s32 j;
+    float *data = (float *)t->data;
+    if (!data) {
+        fprintf(g_dump_file, "    (no data)\n");
+        return;
+    }
+
+    switch (t->curveType) {
+        case HSF_CURVE_STEP:
+        case HSF_CURVE_LINEAR:
+            for (j = 0; j < t->numKeyframes; j++) {
+                fprintf(g_dump_file, "    [%d] time=%.4f value=%.4f\n",
+                    j, data[j*2], data[j*2+1]);
+            }
+            break;
+
+        case HSF_CURVE_BEZIER:
+            for (j = 0; j < t->numKeyframes; j++) {
+                fprintf(g_dump_file, "    [%d] time=%.4f value=%.4f tan_in=%.4f tan_out=%.4f\n",
+                    j, data[j*4], data[j*4+1], data[j*4+2], data[j*4+3]);
+            }
+            break;
+
+        case HSF_CURVE_BITMAP:
+        {
+            HsfBitmapKey *keys = (HsfBitmapKey *)t->data;
+            for (j = 0; j < t->numKeyframes; j++) {
+                fprintf(g_dump_file, "    [%d] time=%.4f bitmap=%s\n",
+                    j, keys[j].time,
+                    (keys[j].data && keys[j].data->name) ? keys[j].data->name : "(null)");
+            }
+            break;
+        }
+
+        case HSF_CURVE_CONST:
+            fprintf(g_dump_file, "    const value=%.4f\n", t->value);
+            break;
+    }
+}
+
+static const char *TrackTypeName(u8 type) {
+    switch (type) {
+        case HSF_TRACK_TRANSFORM:       return "TRANSFORM";
+        case HSF_TRACK_MORPH:           return "MORPH";
+        case HSF_TRACK_CLUSTER:         return "CLUSTER";
+        case HSF_TRACK_CLUSTER_WEIGHT:  return "CLUSTER_WEIGHT";
+        case HSF_TRACK_MATERIAL:        return "MATERIAL";
+        case HSF_TRACK_ATTRIBUTE:       return "ATTRIBUTE";
+        default:                        return "UNKNOWN";
+    }
+}
+
+static const char *CurveTypeName(u16 type) {
+    switch (type) {
+        case HSF_CURVE_STEP:    return "STEP";
+        case HSF_CURVE_LINEAR:  return "LINEAR";
+        case HSF_CURVE_BEZIER:  return "BEZIER";
+        case HSF_CURVE_BITMAP:  return "BITMAP";
+        case HSF_CURVE_CONST:   return "CONST";
+        default:                return "UNKNOWN";
+    }
+}
+
+static const char *ChannelName(u16 channel) {
+    switch (channel) {
+        case HSF_CHANNEL_LITCOLOR_R:    return "LITCOLOR_R";
+        case HSF_CHANNEL_LITCOLOR_G:    return "LITCOLOR_G";
+        case HSF_CHANNEL_LITCOLOR_B:    return "LITCOLOR_B";
+        case HSF_CHANNEL_POSX:          return "POSX";
+        case HSF_CHANNEL_POSY:          return "POSY";
+        case HSF_CHANNEL_POSZ:          return "POSZ";
+        case HSF_CHANNEL_TARGETX:       return "TARGETX";
+        case HSF_CHANNEL_TARGETY:       return "TARGETY";
+        case HSF_CHANNEL_TARGETZ:       return "TARGETZ";
+        case HSF_CHANNEL_UPROT:         return "UPROT";
+        case HSF_CHANNEL_FOV:           return "FOV";
+        case HSF_CHANNEL_NEAR:          return "NEAR";
+        case HSF_CHANNEL_FAR:           return "FAR";
+        case HSF_CHANNEL_LOCK:          return "LOCK";
+        case HSF_CHANNEL_DISPOFF:       return "DISPOFF";
+        case HSF_CHANNEL_ROTX:          return "ROTX";
+        case HSF_CHANNEL_ROTY:          return "ROTY";
+        case HSF_CHANNEL_ROTZ:          return "ROTZ";
+        case HSF_CHANNEL_SCALEX:        return "SCALEX";
+        case HSF_CHANNEL_SCALEY:        return "SCALEY";
+        case HSF_CHANNEL_SCALEZ:        return "SCALEZ";
+        case HSF_CHANNEL_MORPH:         return "MORPH";
+        case HSF_CHANNEL_LIGHTCOLOR_R:  return "LIGHTCOLOR_R";
+        case HSF_CHANNEL_LIGHTCOLOR_G:  return "LIGHTCOLOR_G";
+        case HSF_CHANNEL_LIGHTCOLOR_B:  return "LIGHTCOLOR_B";
+        case HSF_CHANNEL_COLOR_R:       return "COLOR_R";
+        case HSF_CHANNEL_COLOR_G:       return "COLOR_G";
+        case HSF_CHANNEL_COLOR_B:       return "COLOR_B";
+        case HSF_CHANNEL_SHADOWCOLOR_R: return "SHADOWCOLOR_R";
+        case HSF_CHANNEL_SHADOWCOLOR_G: return "SHADOWCOLOR_G";
+        case HSF_CHANNEL_SHADOWCOLOR_B: return "SHADOWCOLOR_B";
+        case HSF_CHANNEL_INVALPHA:      return "INVALPHA";
+        case HSF_CHANNEL_REFALPHA:      return "REFALPHA";
+        case HSF_CHANNEL_KCOLOR:        return "KCOLOR";
+        case HSF_CHANNEL_NBT_TPLVL:     return "NBT_TPLVL";
+        case HSF_CHANNEL_64:            return "CHANNEL_64";
+        case HSF_CHANNEL_BITMAP:        return "BITMAP";
+        default:                        return "UNKNOWN";
+    }
+}
+
+static void DumpMotions(HsfData *hsf) {
+    s32 i;
+    HsfMotion *m = hsf->motion;
+    fprintf(g_dump_file, "=== MOTIONS (%d) ===\n", 1);
+        fprintf(g_dump_file, "numTracks=%d len=%.4f\n",
+            m->numTracks, m->len);
+    for (i = 0; i < m->numTracks; i++) {
+        HsfTrack *t = &m->track[i];
+        fprintf(g_dump_file, "  track[%d] type=%s target=%u start=%u\n",
+            i, TrackTypeName(t->type), t->target, t->start);
+        fprintf(g_dump_file, "    curve=%s channel=%s numKeyframes=%u\n",
+            CurveTypeName(t->curveType), ChannelName(t->channel), t->numKeyframes);
+        DumpTrackData(t);
+    }
+}
+
+static void DumpMatrices(HsfData *hsf) {
+    s32 i, j, k;
+    fprintf(g_dump_file, "=== MATRICES (%d) ===\n", hsf->matrixCnt);
+    for (i = 0; i < hsf->matrixCnt; i++) {
+        HsfMatrix *m = &hsf->matrix[i];
+        u32 totalMatrices = m->base_idx + m->count + m->base_idx * m->count;
+        fprintf(g_dump_file, "[%d] base_idx=%u count=%u totalMatrices=%u\n",
+            i, m->base_idx, m->count, totalMatrices);
+        for (j = 0; j < (s32)totalMatrices; j++) {
+            fprintf(g_dump_file, "  mtx[%d]:\n", j);
+            for (k = 0; k < 3; k++) {
+                fprintf(g_dump_file, "    [%.6f %.6f %.6f %.6f]\n",
+                    m->data[j][k][0], m->data[j][k][1],
+                    m->data[j][k][2], m->data[j][k][3]);
+            }
+        }
+    }
+}
+
+#ifdef BYTESWAPPING
+#define DUMP_NAME "hsf_dump_non_swapped.txt"
+#else
+#define DUMP_NAME "hsf_dump_preswaped.txt"
+#endif
+
+static void DumpHSF(HsfData *hsf) {
+    g_dump_file = fopen(DUMP_NAME, "w");
+    if (!g_dump_file) return;
+
+    fprintf(g_dump_file, "=== HSF DUMP ===\n");
+    fprintf(g_dump_file, "magic: %.8s\n\n", (const char*)hsf->magic);
+
+    DumpScene(hsf);
+    DumpPalettes(hsf);
+    // DumpBitmaps(hsf);
+    // DumpMaterials(hsf);
+    // DumpAttributes(hsf);
+    // DumpVertexBuffers(hsf);
+    // DumpNormalBuffers(hsf); // check with CENV stuff later
+    // DumpStBuffers(hsf);
+    // DumpColorBuffers(hsf);
+    // DumpFaces(hsf);
+    DumpSkeletons(hsf);
+    DumpParts(hsf);
+    DumpClusters(hsf);
+    DumpCenvs(hsf);
+    DumpShapes(hsf);
+    DumpMapAttrs(hsf);
+    // DumpMotions(hsf);
+    DumpMatrices(hsf);
+
+    // fprintf(g_dump_file, "\n=== OBJECT TREE ===\n");
+    // if (hsf->root) {
+    //     DumpObjectData(hsf->root, 0);
+    // }
+
+    fclose(g_dump_file);
+    g_dump_file = NULL;
+    DoDump = FALSE;
+}
+#endif
+
 HsfData *LoadHSF(void *data)
 {
+#ifdef BYTESWAPPING
+    byteswap_clear_visited_ptrs();
+#endif
     HsfData *hsf;
     Model.root = NULL;
     objtop = NULL;
@@ -100,15 +645,20 @@ HsfData *LoadHSF(void *data)
     ClusterLoad();
     ShapeLoad();
     MapAttrLoad();
-    MotionLoad();
-    MatrixLoad();
 #ifdef BYTESWAPPING
     // to properly set pointers
     ObjectLoad();
 #endif
+    MotionLoad();
+    MatrixLoad();
     hsf = SetHsfModel();
     InitEnvelope(hsf);
     objtop = NULL;
+#ifdef TARGET_PC
+    if (DoDump) {
+        DumpHSF(hsf);
+    }
+#endif
     return hsf;
     
 }
@@ -217,6 +767,11 @@ static HsfData *SetHsfModel(void)
     data->shapeCnt = Model.shapeCnt;
     data->mapAttr = Model.mapAttr;
     data->mapAttrCnt = Model.mapAttrCnt;
+#ifdef TARGET_PC
+    // for debugging, why doesn't the original set it?...
+    data->color = Model.color;
+    data->colorCnt = Model.colorCnt;
+#endif
 #ifdef BYTESWAPPING
     // TODO PC was this created solely for the sake of being able to free it later?
     data->symbol = NSymIndex;
@@ -421,6 +976,7 @@ static void VertexLoad(void)
             for(j=0; j<new_vertex->count; j++) {
                 data_elem = (HsfVector3f *)((uintptr_t)data + (uintptr_t)temp_data + (j * sizeof(HsfVector3f)));
 #ifdef BYTESWAPPING
+                // TODO we should do extra allocations for these elements and don't swap the dvd data directly to avoid double byteswaps
                 byteswap_hsfvec3f(data_elem);
 #endif
                 ((HsfVector3f *)new_vertex->data)[j].x = data_elem->x;
@@ -658,14 +1214,6 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             }
             new_object->data.vtxtop = (void *)((uintptr_t)fileptr + (uintptr_t)data->vtxtop);
             new_object->data.normtop = (void *)((uintptr_t)fileptr + (uintptr_t)data->normtop);
-#ifdef BYTESWAPPING
-            for (i = 0; i < new_object->data.vertex->count; i++) {
-                byteswap_hsfvec3f(&new_object->data.vtxtop[i]);
-            }
-            for (i = 0; i < new_object->data.normal->count; i++) {
-                byteswap_hsfvec3f(&new_object->data.normtop[i]);
-            }
-#endif
             new_object->data.base.pos.x = data->base.pos.x;
             new_object->data.base.pos.y = data->base.pos.y;
             new_object->data.base.pos.z = data->base.pos.z;
@@ -1172,7 +1720,7 @@ static void MapAttrLoad(void)
         Model.mapAttrCnt = head.mapAttr.count;
         Model.mapAttr = mapattr_base;
 #ifdef BYTESWAPPING
-        data = (u16 *)&file_mapattr_real[head.part.count];
+        data = (u16 *)&file_mapattr_real[head.mapAttr.count];
 #else
         data = (u16 *)&mapattr_base[head.mapAttr.count];
 #endif
@@ -1207,7 +1755,7 @@ static void BitmapLoad(void)
         Model.bitmap = bitmap_file;
         Model.bitmapCnt = head.bitmap.count;
 #ifdef BYTESWAPPING
-        data = (void *)&file_bitmap_real[head.st.count];
+        data = (void *)&file_bitmap_real[head.bitmap.count];
 #else
         bitmap_file = (HsfBitmap *)((u32)fileptr+head.bitmap.ofs);
         data = &bitmap_file[head.bitmap.count];
@@ -1698,8 +2246,8 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             new_frame = file_frame = track->dataTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBitmapKey) * track->numKeyframes, MEMORY_DEFAULT_NUM);
 #else
             new_frame = file_frame = (HsfBitmapKey *)((uintptr_t)data + (uintptr_t)track->data);
-            out_track->data = file_frame;
 #endif
+            out_track->data = file_frame;
             for(i=0; i<out_track->numKeyframes; i++, file_frame++, new_frame++) {
 #ifdef BYTESWAPPING
                 byteswap_hsfbitmapkey(&file_frame_real[i], new_frame);
