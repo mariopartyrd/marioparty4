@@ -2,6 +2,7 @@
 
 #include <array>
 #include <atomic>
+#include <aurora/gfx.h>
 #include <chrono>
 #include <cmath>
 #include <fmt/format.h>
@@ -140,27 +141,28 @@ void imgui_main(const AuroraInfo *info)
                 ImGui::Separator();
             }
             hasPrevious = true;
+            auto stats = aurora_get_stats();
 
             ImGuiStringViewText(
-                fmt::format(FMT_STRING("Queued pipelines:  {}\n"), aurora::gfx::queuedPipelines.load()));
+                fmt::format(FMT_STRING("Queued pipelines:  {}\n"), stats->queuedPipelines));
             ImGuiStringViewText(
-                fmt::format(FMT_STRING("Done pipelines:    {}\n"), aurora::gfx::createdPipelines.load()));
+                fmt::format(FMT_STRING("Created pipelines:    {}\n"), stats->createdPipelines));
             ImGuiStringViewText(
-                fmt::format(FMT_STRING("Draw call count:   {}\n"), aurora::gfx::g_drawCallCount));
+                fmt::format(FMT_STRING("Draw call count:   {}\n"), stats->drawCallCount));
             ImGuiStringViewText(fmt::format(FMT_STRING("Merged draw calls: {}\n"),
-                                            aurora::gfx::g_mergedDrawCallCount));
+                                            stats->mergedDrawCallCount));
             ImGuiStringViewText(fmt::format(FMT_STRING("Vertex size:       {}\n"),
-                                            BytesToString(aurora::gfx::g_lastVertSize)));
+                                            BytesToString(stats->lastVertSize)));
             ImGuiStringViewText(fmt::format(FMT_STRING("Uniform size:      {}\n"),
-                                            BytesToString(aurora::gfx::g_lastUniformSize)));
+                                            BytesToString(stats->lastUniformSize)));
             ImGuiStringViewText(fmt::format(FMT_STRING("Index size:        {}\n"),
-                                            BytesToString(aurora::gfx::g_lastIndexSize)));
+                                            BytesToString(stats->lastIndexSize)));
             ImGuiStringViewText(fmt::format(FMT_STRING("Storage size:      {}\n"),
-                                            BytesToString(aurora::gfx::g_lastStorageSize)));
+                                            BytesToString(stats->lastStorageSize)));
             ImGuiStringViewText(fmt::format(
                 FMT_STRING("Total:             {}\n"),
-                BytesToString(aurora::gfx::g_lastVertSize + aurora::gfx::g_lastUniformSize +
-                              aurora::gfx::g_lastIndexSize + aurora::gfx::g_lastStorageSize)));
+                BytesToString(stats->lastVertSize + stats->lastUniformSize +
+                              stats->lastIndexSize + stats->lastStorageSize)));
         }
     }
     ImGui::End();
@@ -263,6 +265,6 @@ class Limiter
 static Limiter g_frameLimiter;
 void frame_limiter()
 {
-    g_frameLimiter.Sleep(
-        std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds{1}) / 60);
+    // g_frameLimiter.Sleep(
+    //     std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds{1}) / 60);
 }
