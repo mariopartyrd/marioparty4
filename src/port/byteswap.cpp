@@ -823,10 +823,12 @@ template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &
             bswap(base, obj.mesh.max);
             bswap(base, obj.mesh.baseMorph);
             bswap_flat(base, obj.mesh.morphWeight, std::size(obj.mesh.morphWeight));
+            bswap(base, obj.mesh.unkF0);
 
             dest.mesh.min = obj.mesh.min;
             dest.mesh.max = obj.mesh.max;
             dest.mesh.baseMorph = obj.mesh.baseMorph;
+            std::fill(std::begin(dest.mesh.morphWeight), std::end(dest.mesh.morphWeight), 0.0f);
             std::copy(std::begin(obj.mesh.morphWeight), std::end(obj.mesh.morphWeight), dest.mesh.morphWeight);
             break;
         case HSF_OBJ_REPLICA:

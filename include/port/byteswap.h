@@ -196,7 +196,8 @@ typedef struct HsfObjectData32b {
             HsfVector3f min;
             HsfVector3f max;
             float baseMorph;
-            float morphWeight[33];
+            float morphWeight[32];
+            u32 unkF0;
         } mesh;
         u32 replica;
     };
