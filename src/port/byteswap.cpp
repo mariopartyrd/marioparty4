@@ -374,6 +374,7 @@ template <typename B> void bswap(B &base, HsfCluster32b &obj, HsfCluster &dest)
     dest.name[1] = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name[1]));
 
     dest.targetName = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.targetName));
+    dest.part = reinterpret_cast<HsfPart *>(static_cast<uintptr_t>(obj.part));
     dest.index = obj.index;
     std::copy(std::begin(obj.weight), std::end(obj.weight), dest.weight);
 
