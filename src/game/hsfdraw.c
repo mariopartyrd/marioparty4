@@ -3359,7 +3359,8 @@ HsfObject *Hu3DObjDuplicate(HsfData *arg0, uintptr_t arg1)
             if (var_r31->data.parent) {
                 var_r31->data.parent = (HsfObject *)((u8 *)temp_r27 + ((uintptr_t)var_r30->data.parent - (uintptr_t)arg0->object));
             }
-            var_r31->data.children = HuMemDirectMallocNum(HEAP_DATA, var_r30->data.childrenCount * 4, arg1);
+            var_r31->data.children = HuMemDirectMallocNum(HEAP_DATA,
+                var_r30->data.childrenCount * sizeof(HsfObject *), arg1);
             if (var_r30->constData) {
                 var_r31->constData = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfConstData), arg1);
                 memcpy(var_r31->constData, var_r30->constData, sizeof(HsfConstData));
