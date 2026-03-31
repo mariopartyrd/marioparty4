@@ -613,13 +613,6 @@ void GXWaitDrawDone(void)
     // puts("GXWaitDrawDone is a stub");
 }
 
-void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tilesize_s, u16 tilesize_t, u16 tilespacing_s, u16 tilespacing_t,
-    GXIndTexFormat format, GXIndTexMtxID matrix_sel, GXIndTexBiasSel bias_sel, GXIndTexAlphaSel alpha_sel)
-{
-    // TODO
-    // puts("GXSetTevIndTile is a stub");
-}
-
 void GXResetWriteGatherPipe(void)
 {
     // puts("GXResetWriteGatherPipe is a stub");
