@@ -1365,7 +1365,7 @@ static void FaceLoad(void)
 #ifdef BYTESWAPPING
                     new_face_strip->strip.data = CopyByteSwappedS16Data(
                         (s16 *)(strip_base + (uintptr_t)file_face_strip->strip.data * (sizeof(s16) * 4)),
-                        new_face_strip->strip.count);
+                        new_face_strip->strip.count * 4);
 #else
                     new_face_strip->strip.data = (s16 *)(strip+(uintptr_t)file_face_strip->strip.data*(sizeof(s16)*4));
 #endif
