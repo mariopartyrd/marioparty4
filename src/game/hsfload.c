@@ -2292,7 +2292,10 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(step_data, numKeyframes * 2);
+            // We can't really copy this over to a custom allocation because they hsfmotion.c reads from it backwards
+            for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&step_data[i]);
+            }
 #endif
         }
         break;
@@ -2302,7 +2305,9 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(linear_data, numKeyframes * 2);
+            for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&linear_data[i]);
+            }
 #endif
         }
         break;
@@ -2312,7 +2317,9 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(bezier_data, numKeyframes * 4);
+            for (int i = 0; i < numKeyframes * 4; i++) {
+                byteswap_float(&bezier_data[i]);
+            }
 #endif
         }
         break;
@@ -2350,7 +2357,9 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(step_data, numKeyframes * 2);
+            for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&step_data[i]);
+            }
 #endif
         }
         break;
@@ -2360,7 +2369,9 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(linear_data, numKeyframes * 2);
+            for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&linear_data[i]);
+            }
 #endif
         }
         break;
@@ -2370,7 +2381,9 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(bezier_data, numKeyframes * 4);
+            for (int i = 0; i < numKeyframes * 4; i++) {
+                byteswap_float(&bezier_data[i]);
+            }
 #endif
         }
         break;
@@ -2404,7 +2417,9 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(step_data, numKeyframes * 2);
+            for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&step_data[i]);
+            }
 #endif
         }
         break;
@@ -2414,7 +2429,9 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(linear_data, numKeyframes * 2);
+             for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&bezier_data[i]);
+            }
 #endif
         }
         break;
@@ -2424,7 +2441,9 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(bezier_data, numKeyframes * 4);
+            for (int i = 0; i < numKeyframes * 4; i++) {
+                byteswap_float(&bezier_data[i]);
+            }
 #endif
         }
         break;
@@ -2449,7 +2468,9 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(step_data, numKeyframes * 2);
+            for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&step_data[i]);
+            }
 #endif
         }
         break;
@@ -2459,7 +2480,9 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(linear_data, numKeyframes * 2);
+            for (int i = 0; i < numKeyframes * 2; i++) {
+                byteswap_float(&linear_data[i]);
+            }
 #endif
         }
         break;
@@ -2469,7 +2492,9 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(bezier_data, numKeyframes * 4);
+            for (int i = 0; i < numKeyframes * 4; i++) {
+                byteswap_float(&bezier_data[i]);
+            }
 #endif
         }
         break;
@@ -2505,7 +2530,9 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(step_data, track->numKeyframes * 2);
+            for (i = 0; i < track->numKeyframes * 2; i++) {
+                byteswap_float(&step_data[i]);
+            }
 #endif
         }
         break;
@@ -2515,7 +2542,9 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(linear_data, track->numKeyframes * 2);
+            for (i = 0; i < track->numKeyframes * 2; i++) {
+                byteswap_float(&linear_data[i]);
+            }
 #endif
         }
         break;
@@ -2525,7 +2554,9 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            out_track->data = CopyByteSwappedFloatData(bezier_data, track->numKeyframes * 4);
+            for (i = 0; i < track->numKeyframes * 24; i++) {
+                byteswap_float(&bezier_data[i]);
+            }
 #endif
         }
         break;
