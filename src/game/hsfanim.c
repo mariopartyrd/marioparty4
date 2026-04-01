@@ -42,7 +42,8 @@ SHARED_SYM Hu3DTexAnimDataStruct Hu3DTexAnimData[HU3D_TEXANIM_MAX];
 SHARED_SYM Hu3DTexScrDataStruct Hu3DTexScrData[16];
 static Process *parManProc[64];
 
-void Hu3DAnimInit(void) {
+void Hu3DAnimInit(void)
+{
     Hu3DTexAnimDataStruct *var_r30;
     Hu3DTexScrDataStruct *var_r29;
     s16 i;
@@ -57,7 +58,8 @@ void Hu3DAnimInit(void) {
     }
 }
 
-s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
+s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2)
+{
     Hu3DTexAnimDataStruct *var_r31;
     HsfAttribute *var_r29;
     HsfData *temp_r27;
@@ -81,10 +83,11 @@ s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
     for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
         if (strcmp(arg2, var_r29->bitmap->name) == 0) {
             if (!var_r29->animWorkP) {
-                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg1].unk_48);
+                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32)Hu3DData[arg1].unk_48);
                 var_r29->animWorkP = var_r30;
                 var_r30->attr = 0;
-            } else {
+            }
+            else {
                 var_r30 = var_r29->animWorkP;
             }
             var_r30->attr |= 1;
@@ -100,7 +103,8 @@ s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
     }
     if (!arg0) {
         var_r31->unk10 = NULL;
-    } else {
+    }
+    else {
         var_r31->unk10 = HuSprAnimRead(arg0);
     }
     var_r31->unk06 = arg1;
@@ -112,7 +116,8 @@ s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
     return var_r28;
 }
 
-s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
+s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2)
+{
     Hu3DTexAnimDataStruct *var_r24 = &Hu3DTexAnimData[arg0];
     Hu3DTexAnimDataStruct *var_r31;
     AnimData *temp_r4;
@@ -138,9 +143,10 @@ s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
     for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
         if (strcmp(arg2, var_r29->bitmap->name) == 0) {
             if (!var_r29->animWorkP) {
-                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg1].unk_48);
+                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32)Hu3DData[arg1].unk_48);
                 var_r29->animWorkP = var_r30;
-            } else {
+            }
+            else {
                 var_r30 = var_r29->animWorkP;
             }
             var_r30->unk02 = var_r28;
@@ -164,7 +170,8 @@ s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
     return var_r28;
 }
 
-void Hu3DAnimKill(s16 arg0) {
+void Hu3DAnimKill(s16 arg0)
+{
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
     HsfData *temp_r28 = Hu3DData[temp_r31->unk06].hsfData;
     HsfAttribute *var_r30;
@@ -192,7 +199,8 @@ void Hu3DAnimKill(s16 arg0) {
     }
 }
 
-void Hu3DAnimModelKill(s16 arg0) {
+void Hu3DAnimModelKill(s16 arg0)
+{
     Hu3DTexAnimDataStruct *var_r26 = &Hu3DTexAnimData[0];
     s16 i;
 
@@ -203,7 +211,8 @@ void Hu3DAnimModelKill(s16 arg0) {
     }
 }
 
-void Hu3DAnimAllKill(void) {
+void Hu3DAnimAllKill(void)
+{
     Hu3DTexAnimDataStruct *var_r26 = &Hu3DTexAnimData[0];
     s16 i;
 
@@ -215,39 +224,45 @@ void Hu3DAnimAllKill(void) {
     Hu3DTexScrollAllKill();
 }
 
-void Hu3DAnimAttrSet(s16 arg0, u16 arg1) {
+void Hu3DAnimAttrSet(s16 arg0, u16 arg1)
+{
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
 
     temp_r31->unk00 |= arg1;
 }
 
-void Hu3DAnimAttrReset(s16 arg0, s32 arg1) {
+void Hu3DAnimAttrReset(s16 arg0, s32 arg1)
+{
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
 
     temp_r31->unk00 &= ~arg1;
 }
 
-void Hu3DAnimSpeedSet(s16 arg0, float arg1) {
+void Hu3DAnimSpeedSet(s16 arg0, float arg1)
+{
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
 
     temp_r31->unk0C = arg1;
 }
 
-void Hu3DAnimBankSet(s16 arg0, s32 arg1) {
+void Hu3DAnimBankSet(s16 arg0, s32 arg1)
+{
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
 
     temp_r31->unk02 = arg1;
     temp_r31->unk04 = temp_r31->unk08 = 0.0f;
 }
 
-void Hu3DAnmNoSet(s16 arg0, u16 arg1) {
+void Hu3DAnmNoSet(s16 arg0, u16 arg1)
+{
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
 
     temp_r31->unk04 = arg1;
     temp_r31->unk08 = 0.0f;
 }
 
-s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2) {
+s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2)
+{
     HsfdrawStruct01 *temp_r30;
     Hu3DTexAnimDataStruct *temp_r29;
     AnimData *temp_r27;
@@ -270,16 +285,16 @@ s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2) {
     temp_r25 = &temp_r27->pat[temp_r24];
     temp_r31 = temp_r25->layer;
     temp_r28 = &temp_r27->bmp[temp_r31->bmpNo];
-    HuSprTexLoad(temp_r29->unk10, temp_r31->bmpNo, arg2, var_r23, var_r22,
-        (arg0->attr & HU3D_ATTR_TEX_NEAR) ? GX_NEAR : GX_LINEAR);
-    temp_r30->scale.x = (float) temp_r31->sizeX / temp_r28->sizeX;
-    temp_r30->scale.y = (float) temp_r31->sizeY / temp_r28->sizeY;
-    temp_r30->trans.x = (float) temp_r31->startX / temp_r28->sizeX;
-    temp_r30->trans.y = (float) temp_r31->startY / temp_r28->sizeY;
+    HuSprTexLoad(temp_r29->unk10, temp_r31->bmpNo, arg2, var_r23, var_r22, (arg0->attr & HU3D_ATTR_TEX_NEAR) ? GX_NEAR : GX_LINEAR);
+    temp_r30->scale.x = (float)temp_r31->sizeX / temp_r28->sizeX;
+    temp_r30->scale.y = (float)temp_r31->sizeY / temp_r28->sizeY;
+    temp_r30->trans.x = (float)temp_r31->startX / temp_r28->sizeX;
+    temp_r30->trans.y = (float)temp_r31->startY / temp_r28->sizeY;
     return 1;
 }
 
-void Hu3DAnimExec(void) {
+void Hu3DAnimExec(void)
+{
     Hu3DTexAnimDataStruct *var_r30;
     Hu3DTexScrDataStruct *var_r31;
     AnimData *var_r25;
@@ -295,7 +310,7 @@ void Hu3DAnimExec(void) {
             temp_r28 = &var_r25->bank[var_r30->unk02];
             var_r29 = &temp_r28->frame[var_r30->unk04];
             if (!(var_r30->unk00 & 1) || (var_r29->time == -1 && (var_r30->unk00 & 2))) {
-                for (var_r26 = 0; var_r26 < (s32) var_r30->unk0C * minimumVcount; var_r26++) {
+                for (var_r26 = 0; var_r26 < (s32)var_r30->unk0C * minimumVcount; var_r26++) {
                     var_r30->unk08 += 1.0f;
                     if (var_r30->unk08 >= var_r29->time) {
                         var_r30->unk04++;
@@ -323,7 +338,8 @@ void Hu3DAnimExec(void) {
             if (Hu3DPauseF != 0 && !(var_r31->unk00 & 8)) {
                 MTXRotRad(var_r31->unk3C, 'Z', MTXDegToRad(var_r31->unk34));
                 mtxTransCat(var_r31->unk3C, var_r31->unk04.x, var_r31->unk04.y, var_r31->unk04.z);
-            } else {
+            }
+            else {
                 if (var_r31->unk00 & 1) {
                     VECAdd(&var_r31->unk04, &var_r31->unk1C, &var_r31->unk04);
                     if (var_r31->unk04.x > 1.0f) {
@@ -361,7 +377,8 @@ void Hu3DAnimExec(void) {
     }
 }
 
-s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
+s16 Hu3DTexScrollCreate(s16 arg0, char *arg1)
+{
     Hu3DTexScrDataStruct *var_r31;
     HsfData *temp_r27;
     HsfAttribute *var_r29;
@@ -385,10 +402,11 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
     for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
         if (strcmp(arg1, var_r29->bitmap->name) == 0) {
             if (!var_r29->animWorkP) {
-                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg0].unk_48);
+                var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32)Hu3DData[arg0].unk_48);
                 var_r29->animWorkP = var_r30;
                 var_r30->attr = 0;
-            } else {
+            }
+            else {
                 var_r30 = var_r29->animWorkP;
             }
             var_r30->attr |= 2;
@@ -410,7 +428,8 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
     return var_r28;
 }
 
-void Hu3DTexScrollKill(s16 arg0) {
+void Hu3DTexScrollKill(s16 arg0)
+{
     Hu3DTexScrDataStruct *temp_r28 = &Hu3DTexScrData[arg0];
     HsfData *temp_r29 = Hu3DData[temp_r28->unk02].hsfData;
     HsfAttribute *var_r31;
@@ -435,7 +454,8 @@ void Hu3DTexScrollKill(s16 arg0) {
     temp_r28->unk02 = -1;
 }
 
-void Hu3DTexScrollAllKill(void) {
+void Hu3DTexScrollAllKill(void)
+{
     Hu3DTexScrDataStruct *var_r27;
     s16 i;
 
@@ -447,7 +467,8 @@ void Hu3DTexScrollAllKill(void) {
     }
 }
 
-void Hu3DTexScrollPosSet(s16 arg0, float arg1, float arg2, float arg3) {
+void Hu3DTexScrollPosSet(s16 arg0, float arg1, float arg2, float arg3)
+{
     Hu3DTexScrDataStruct *temp_r31 = &Hu3DTexScrData[arg0];
 
     temp_r31->unk00 &= ~1;
@@ -456,7 +477,8 @@ void Hu3DTexScrollPosSet(s16 arg0, float arg1, float arg2, float arg3) {
     temp_r31->unk04.z = arg3;
 }
 
-void Hu3DTexScrollPosMoveSet(s16 arg0, float arg1, float arg2, float arg3) {
+void Hu3DTexScrollPosMoveSet(s16 arg0, float arg1, float arg2, float arg3)
+{
     Hu3DTexScrDataStruct *temp_r31 = &Hu3DTexScrData[arg0];
 
     temp_r31->unk00 |= 1;
@@ -465,32 +487,37 @@ void Hu3DTexScrollPosMoveSet(s16 arg0, float arg1, float arg2, float arg3) {
     temp_r31->unk1C.z = arg3 * minimumVcount;
 }
 
-void Hu3DTexScrollRotSet(s16 arg0, float arg1) {
+void Hu3DTexScrollRotSet(s16 arg0, float arg1)
+{
     Hu3DTexScrDataStruct *temp_r31 = &Hu3DTexScrData[arg0];
 
     temp_r31->unk00 &= ~2;
     temp_r31->unk34 = arg1;
 }
 
-void Hu3DTexScrollRotMoveSet(s16 arg0, float arg1) {
+void Hu3DTexScrollRotMoveSet(s16 arg0, float arg1)
+{
     Hu3DTexScrDataStruct *temp_r31 = &Hu3DTexScrData[arg0];
 
     temp_r31->unk00 |= 2;
     temp_r31->unk38 = arg1 * minimumVcount;
 }
 
-void Hu3DTexScrollPauseDisableSet(s16 arg0, s32 arg1) {
+void Hu3DTexScrollPauseDisableSet(s16 arg0, s32 arg1)
+{
     Hu3DTexScrDataStruct *temp_r31 = &Hu3DTexScrData[arg0];
 
     if (arg1 != 0) {
         temp_r31->unk00 |= 8;
         return;
-    } else {
+    }
+    else {
         temp_r31->unk00 &= ~8;
     }
 }
 
-s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
+s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1)
+{
     ModelData *temp_r28;
     ParticleData *temp_r31;
     HsfanimStruct01 *var_r30;
@@ -499,7 +526,7 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     s16 i;
     void *temp_r24;
 
-    temp_r25 = Hu3DHookFuncCreate((void*) &particleFunc);
+    temp_r25 = Hu3DHookFuncCreate((void *)&particleFunc);
     temp_r28 = &Hu3DData[temp_r25];
     Hu3DModelAttrSet(temp_r25, HU3D_ATTR_PARTICLE_KILL);
     temp_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(ParticleData), temp_r28->unk_48);
@@ -521,9 +548,9 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
         var_r30->unk04 = 0;
         var_r30->unk06 = -1;
         var_r30->unk30 = 0.0f;
-        var_r30->unk34.x = ((s32) (frand() & 0x7F) - 0x40) * 0x14;
-        var_r30->unk34.y = ((s32) (frand() & 0x7F) - 0x40) * 0x1E;
-        var_r30->unk34.z = ((s32) (frand() & 0x7F) - 0x40) * 0x14;
+        var_r30->unk34.x = ((s32)(frand() & 0x7F) - 0x40) * 0x14;
+        var_r30->unk34.y = ((s32)(frand() & 0x7F) - 0x40) * 0x1E;
+        var_r30->unk34.z = ((s32)(frand() & 0x7F) - 0x40) * 0x14;
         var_r30->unk40.r = var_r30->unk40.g = var_r30->unk40.b = var_r30->unk40.a = 0xFF;
     }
     var_r27 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(Vec) * 4, temp_r28->unk_48);
@@ -537,16 +564,16 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     GXBeginDisplayList(temp_r24, 0x20000);
     GXBegin(GX_QUADS, GX_VTXFMT0, arg1 * 4);
     for (i = 0; i < arg1; i++) {
-        GXPosition1x16(i*4);
+        GXPosition1x16(i * 4);
         GXColor1x16(i);
         GXTexCoord1x16(0);
-        GXPosition1x16((i*4)+1);
+        GXPosition1x16((i * 4) + 1);
         GXColor1x16(i);
         GXTexCoord1x16(1);
-        GXPosition1x16((i*4)+2);
+        GXPosition1x16((i * 4) + 2);
         GXColor1x16(i);
         GXTexCoord1x16(2);
-        GXPosition1x16((i*4)+3);
+        GXPosition1x16((i * 4) + 3);
         GXColor1x16(i);
         GXTexCoord1x16(3);
     }
@@ -555,7 +582,8 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     return temp_r25;
 }
 
-void Hu3DParticleScaleSet(s16 arg0, float arg1) {
+void Hu3DParticleScaleSet(s16 arg0, float arg1)
+{
     ModelData *temp_r25 = &Hu3DData[arg0];
     ParticleData *temp_r31 = temp_r25->unk_120;
     HsfanimStruct01 *var_r30;
@@ -567,7 +595,8 @@ void Hu3DParticleScaleSet(s16 arg0, float arg1) {
     }
 }
 
-void Hu3DParticleZRotSet(s16 arg0, float arg1) {
+void Hu3DParticleZRotSet(s16 arg0, float arg1)
+{
     ModelData *temp_r28 = &Hu3DData[arg0];
     ParticleData *temp_r31 = temp_r28->unk_120;
     HsfanimStruct01 *var_r30;
@@ -579,7 +608,8 @@ void Hu3DParticleZRotSet(s16 arg0, float arg1) {
     }
 }
 
-void Hu3DParticleColSet(s16 arg0, u8 arg1, u8 arg2, u8 arg3) {
+void Hu3DParticleColSet(s16 arg0, u8 arg1, u8 arg2, u8 arg3)
+{
     ModelData *temp_r28 = &Hu3DData[arg0];
     ParticleData *temp_r30 = temp_r28->unk_120;
     HsfanimStruct01 *var_r31;
@@ -593,7 +623,8 @@ void Hu3DParticleColSet(s16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     }
 }
 
-void Hu3DParticleTPLvlSet(s16 arg0, float arg1) {
+void Hu3DParticleTPLvlSet(s16 arg0, float arg1)
+{
     ModelData *temp_r28 = &Hu3DData[arg0];
     ParticleData *temp_r31 = temp_r28->unk_120;
     HsfanimStruct01 *var_r30;
@@ -607,42 +638,48 @@ void Hu3DParticleTPLvlSet(s16 arg0, float arg1) {
     }
 }
 
-void Hu3DParticleBlendModeSet(s16 arg0, u8 arg1) {
+void Hu3DParticleBlendModeSet(s16 arg0, u8 arg1)
+{
     ModelData *temp_r31 = &Hu3DData[arg0];
     ParticleData *temp_r30 = temp_r31->unk_120;
 
     temp_r30->unk_2C = arg1;
 }
 
-void Hu3DParticleHookSet(s16 arg0, ParticleHook arg1) {
+void Hu3DParticleHookSet(s16 arg0, ParticleHook arg1)
+{
     ModelData *temp_r31 = &Hu3DData[arg0];
     ParticleData *temp_r30 = temp_r31->unk_120;
 
     temp_r30->unk_54 = arg1;
 }
 
-void Hu3DParticleAttrSet(s16 arg0, u8 arg1) {
+void Hu3DParticleAttrSet(s16 arg0, u8 arg1)
+{
     ModelData *temp_r31 = &Hu3DData[arg0];
     ParticleData *temp_r30 = temp_r31->unk_120;
 
     temp_r30->unk_2D |= arg1;
 }
 
-void Hu3DParticleAttrReset(s16 arg0, u8 arg1) {
+void Hu3DParticleAttrReset(s16 arg0, u8 arg1)
+{
     ModelData *temp_r31 = &Hu3DData[arg0];
     ParticleData *temp_r30 = temp_r31->unk_120;
 
     temp_r30->unk_2D &= ~arg1;
 }
 
-void Hu3DParticleCntSet(s16 arg0, s16 arg1) {
+void Hu3DParticleCntSet(s16 arg0, s16 arg1)
+{
     ModelData *temp_r31 = &Hu3DData[arg0];
     ParticleData *temp_r30 = temp_r31->unk_120;
 
     temp_r30->unk_34 = arg1;
 }
 
-void Hu3DParticleAnimModeSet(s16 arg0, s16 arg1) {
+void Hu3DParticleAnimModeSet(s16 arg0, s16 arg1)
+{
     ModelData *temp_r30 = &Hu3DData[arg0];
     ParticleData *temp_r31 = temp_r30->unk_120;
 
@@ -653,19 +690,12 @@ void Hu3DParticleAnimModeSet(s16 arg0, s16 arg1) {
     temp_r31->unk_24 = 1.0f;
 }
 
-static Vec basePos[] = {
-    { -0.5f,  0.5f, 0.0f },
-    {  0.5f,  0.5f, 0.0f },
-    {  0.5f, -0.5f, 0.0f },
-    { -0.5f, -0.5f, 0.0f }
-};
+static Vec basePos[] = { { -0.5f, 0.5f, 0.0f }, { 0.5f, 0.5f, 0.0f }, { 0.5f, -0.5f, 0.0f }, { -0.5f, -0.5f, 0.0f } };
 
-static float baseST[] = {
-    0.0f, 0.0f, 1.0f, 0.0f,
-    1.0f, 1.0f, 0.0f, 1.0f
-};
+static float baseST[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f };
 
-static void particleFunc(ModelData *arg0, Mtx arg1) {
+static void particleFunc(ModelData *arg0, Mtx arg1)
+{
     Vec *var_r30;
     float temp_f31;
     float temp_f29;
@@ -723,7 +753,8 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
                 var_r30->y = sp38[3].y * temp_f31 + var_r29->unk34.y;
                 var_r30->z = sp38[3].z * temp_f31 + var_r29->unk34.z;
                 var_r30++;
-            } else {
+            }
+            else {
                 VECScale(&basePos[0], &sp98[0], var_r29->unk2C);
                 VECScale(&basePos[1], &sp98[1], var_r29->unk2C);
                 VECScale(&basePos[2], &sp98[2], var_r29->unk2C);
@@ -737,7 +768,8 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
                 VECAdd(&sp68[3], &var_r29->unk34, var_r30++);
             }
             var_r19 = 1;
-        } else {
+        }
+        else {
             var_r30->x = var_r30->y = var_r30->z = 0.0f;
             var_r30++;
             var_r30->x = var_r30->y = var_r30->z = 0.0f;
@@ -758,16 +790,19 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         if (shadowModelDrawF != 0) {
             GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ONE, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO);
             GXSetZMode(0, GX_LEQUAL, 0);
-        } else {
+        }
+        else {
             temp_r20 = (temp_r31->unk_44->bmp->dataFmt & 0xF);
             if (temp_r20 == 7 || temp_r20 == 8) {
                 GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ONE, GX_CC_RASC, GX_CC_ZERO);
-            } else {
+            }
+            else {
                 GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_TEXC, GX_CC_RASC, GX_CC_ZERO);
             }
             if (arg0->attr & HU3D_ATTR_ZWRITE_OFF) {
                 GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-            } else {
+            }
+            else {
                 GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
             }
         }
@@ -782,7 +817,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
             temp_r21 = &temp_r22->pat[var_r28->pat];
             HuSprTexLoad(temp_r31->unk_44, temp_r21->layer->bmpNo, 0, GX_CLAMP, GX_CLAMP, GX_LINEAR);
             if (Hu3DPauseF == 0 || (arg0->attr & HU3D_ATTR_NOPAUSE)) {
-                for (i = 0; i < (s32) temp_r31->unk_24 * minimumVcount; i++) {
+                for (i = 0; i < (s32)temp_r31->unk_24 * minimumVcount; i++) {
                     temp_r31->unk_28 += 1.0f;
                     if (temp_r31->unk_28 >= var_r28->time) {
                         temp_r31->unk_22++;
@@ -804,15 +839,16 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
             }
             temp_r27 = temp_r21->layer;
             temp_r24 = &temp_r22->bmp[temp_r27->bmpNo];
-            temp_f29 = (float) temp_r27->sizeX / temp_r24->sizeX;
-            temp_f30 = (float) temp_r27->sizeY / temp_r24->sizeY;
+            temp_f29 = (float)temp_r27->sizeX / temp_r24->sizeX;
+            temp_f30 = (float)temp_r27->sizeY / temp_r24->sizeY;
             MTXScale(sp128, temp_f29, temp_f30, 1.0f);
-            temp_f29 = (float) temp_r27->startX / temp_r24->sizeX;
-            temp_f30 = (float) temp_r27->startY / temp_r24->sizeY;
+            temp_f29 = (float)temp_r27->startX / temp_r24->sizeX;
+            temp_f30 = (float)temp_r27->startY / temp_r24->sizeY;
             mtxTransCat(sp128, temp_f29, temp_f30, 0.0f);
             GXLoadTexMtxImm(sp128, GX_TEXMTX0, GX_MTX2x4);
             GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0, GX_FALSE, GX_PTIDENTITY);
-        } else {
+        }
+        else {
             HuSprTexLoad(temp_r31->unk_44, 0, 0, GX_CLAMP, GX_CLAMP, GX_LINEAR);
         }
         GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
@@ -831,13 +867,13 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSETARRAY(GX_VA_POS, temp_r31->unk_4C, temp_r31->unk_30 * 4 * sizeof(Vec), sizeof(Vec));
+        GXSETARRAY(GX_VA_POS, temp_r31->unk_4C, temp_r31->unk_30 * 4 * sizeof(Vec), sizeof(Vec), TRUE);
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSETARRAY(GX_VA_CLR0, &temp_r31->unk_48->unk40, temp_r31->unk_30 * sizeof(GXColor), 0x44);
+        GXSETARRAY(GX_VA_CLR0, &temp_r31->unk_48->unk40, temp_r31->unk_30 * sizeof(GXColor), 0x44, TRUE);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(GX_VA_TEX0, baseST, sizeof(baseST), 8);
+        GXSETARRAY(GX_VA_TEX0, baseST, sizeof(baseST), 8, TRUE);
         GXCallDisplayList(temp_r31->unk_50, temp_r31->unk_40);
     }
     if (shadowModelDrawF == 0) {
@@ -854,7 +890,8 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
     }
 }
 
-void Hu3DParManInit(void) {
+void Hu3DParManInit(void)
+{
     s16 i;
 
     for (i = 0; i < 64; i++) {
@@ -862,7 +899,8 @@ void Hu3DParManInit(void) {
     }
 }
 
-s16 Hu3DParManCreate(AnimData *arg0, s16 arg1, HsfanimStruct00 *arg2) {
+s16 Hu3DParManCreate(AnimData *arg0, s16 arg1, HsfanimStruct00 *arg2)
+{
     ModelData *temp_r25;
     ParticleData *temp_r29;
     ParManProcUserData *temp_r3_2;
@@ -908,7 +946,8 @@ s16 Hu3DParManCreate(AnimData *arg0, s16 arg1, HsfanimStruct00 *arg2) {
     return var_r30;
 }
 
-s16 Hu3DParManLink(s16 arg0, HsfanimStruct00 *arg1) {
+s16 Hu3DParManLink(s16 arg0, HsfanimStruct00 *arg1)
+{
     ParManProcUserData *temp_r29;
     ParManProcUserData *temp_r3;
     s16 var_r30;
@@ -942,7 +981,8 @@ s16 Hu3DParManLink(s16 arg0, HsfanimStruct00 *arg1) {
     return var_r30;
 }
 
-void Hu3DParManKill(s16 arg0) {
+void Hu3DParManKill(s16 arg0)
+{
     ParManProcUserData *temp_r26;
     ParManProcUserData *temp_r30;
     HsfanimStruct01 *var_r29;
@@ -977,7 +1017,8 @@ void Hu3DParManKill(s16 arg0) {
     }
 }
 
-void Hu3DParManAllKill(void) {
+void Hu3DParManAllKill(void)
+{
     s16 i;
 
     for (i = 0; i < 64; i++) {
@@ -987,11 +1028,13 @@ void Hu3DParManAllKill(void) {
     }
 }
 
-void *Hu3DParManPtrGet(s16 arg0) {
+void *Hu3DParManPtrGet(s16 arg0)
+{
     return parManProc[arg0]->user_data;
 }
 
-void Hu3DParManPosSet(s16 arg0, float arg1, float arg2, float arg3) {
+void Hu3DParManPosSet(s16 arg0, float arg1, float arg2, float arg3)
+{
     ParManProcUserData *temp_r31 = parManProc[arg0]->user_data;
 
     temp_r31->unk0C.x = arg1;
@@ -999,7 +1042,8 @@ void Hu3DParManPosSet(s16 arg0, float arg1, float arg2, float arg3) {
     temp_r31->unk0C.z = arg3;
 }
 
-void Hu3DParManVecSet(s16 arg0, float arg1, float arg2, float arg3) {
+void Hu3DParManVecSet(s16 arg0, float arg1, float arg2, float arg3)
+{
     ParManProcUserData *temp_r31 = parManProc[arg0]->user_data;
 
     temp_r31->unk18.x = arg1;
@@ -1007,7 +1051,8 @@ void Hu3DParManVecSet(s16 arg0, float arg1, float arg2, float arg3) {
     temp_r31->unk18.z = arg3;
 }
 
-void Hu3DParManRotSet(s16 arg0, float arg1, float arg2, float arg3) {
+void Hu3DParManRotSet(s16 arg0, float arg1, float arg2, float arg3)
+{
     ParManProcUserData *temp_r31 = parManProc[arg0]->user_data;
     Mtx sp18;
 
@@ -1017,31 +1062,36 @@ void Hu3DParManRotSet(s16 arg0, float arg1, float arg2, float arg3) {
     temp_r31->unk18.z = sp18[2][2];
 }
 
-void Hu3DParManAttrSet(s16 arg0, s32 arg1) {
+void Hu3DParManAttrSet(s16 arg0, s32 arg1)
+{
     ParManProcUserData *temp_r31 = parManProc[arg0]->user_data;
 
     temp_r31->unk02 |= arg1;
 }
 
-void Hu3DParManAttrReset(s16 arg0, s32 arg1) {
+void Hu3DParManAttrReset(s16 arg0, s32 arg1)
+{
     ParManProcUserData *temp_r31 = parManProc[arg0]->user_data;
 
     temp_r31->unk02 &= ~arg1;
 }
 
-s16 Hu3DParManModelIDGet(s16 arg0) {
+s16 Hu3DParManModelIDGet(s16 arg0)
+{
     ParManProcUserData *temp_r31 = parManProc[arg0]->user_data;
 
     return temp_r31->unk00;
 }
 
-void Hu3DParManTimeLimitSet(s16 arg0, s32 arg1) {
+void Hu3DParManTimeLimitSet(s16 arg0, s32 arg1)
+{
     ParManProcUserData *temp_r31 = parManProc[arg0]->user_data;
 
     temp_r31->unk04 = arg1;
 }
 
-void Hu3DParManVacumeSet(s16 arg0, float arg1, float arg2, float arg3, float arg4) {
+void Hu3DParManVacumeSet(s16 arg0, float arg1, float arg2, float arg3, float arg4)
+{
     ParManProcUserData *temp_r31;
 
     Hu3DParManAttrSet(arg0, 0x200);
@@ -1052,7 +1102,8 @@ void Hu3DParManVacumeSet(s16 arg0, float arg1, float arg2, float arg3, float arg
     temp_r31->unk30 = arg4;
 }
 
-void Hu3DParManColorSet(s16 arg0, s16 arg1) {
+void Hu3DParManColorSet(s16 arg0, s16 arg1)
+{
     ParManProcUserData *temp_r31;
 
     Hu3DParManAttrSet(arg0, 0x1000);
@@ -1060,7 +1111,8 @@ void Hu3DParManColorSet(s16 arg0, s16 arg1) {
     temp_r31->unk08 = arg1;
 }
 
-static void ParManFunc(void) {
+static void ParManFunc(void)
+{
     Process *temp_r25;
     ParManProcUserData *temp_r31;
     HsfanimStruct00 *temp_r30;
@@ -1094,36 +1146,40 @@ static void ParManFunc(void) {
         var_r29 = temp_r28->unk_48;
         if (temp_r31->unk02 & 0x400) {
             // Bug? Likely to be (u32) (temp_r30->unk04 * 0.1 * 1000.0)
-            var_f27 = temp_r30->unk04 * 0.9 + (s32) frandmod((u32) temp_r30->unk04 * 0.1 * 1000.0) / 1000.0f;
-        } else if (temp_r31->unk02 & 0x800) {
-            var_f27 = temp_r30->unk04 * 0.7 + (s32) frandmod((u32) temp_r30->unk04 * 0.3 * 1000.0) / 1000.0f;
-        } else {
+            var_f27 = temp_r30->unk04 * 0.9 + (s32)frandmod((u32)temp_r30->unk04 * 0.1 * 1000.0) / 1000.0f;
+        }
+        else if (temp_r31->unk02 & 0x800) {
+            var_f27 = temp_r30->unk04 * 0.7 + (s32)frandmod((u32)temp_r30->unk04 * 0.3 * 1000.0) / 1000.0f;
+        }
+        else {
             var_f27 = temp_r30->unk04;
         }
         temp_r31->unk34 += var_f27;
         var_r26 = 0;
-        temp_r23 = &((HsfanimStruct01*) temp_r28->unk_48)[temp_r28->unk_30];
+        temp_r23 = &((HsfanimStruct01 *)temp_r28->unk_48)[temp_r28->unk_30];
         if (temp_r31->unk02 & 0x100) {
-            var_f26 = (s32) frandmod((u32) (360.0f / temp_r30->unk04) * 100) / 100;
+            var_f26 = (s32)frandmod((u32)(360.0f / temp_r30->unk04) * 100) / 100;
         }
         while (temp_r31->unk34 >= 1.0f) {
             if (temp_r31->unk02 & 1) {
                 temp_r31->unk34 -= 1.0f;
-            } else {
+            }
+            else {
                 while (var_r29 < temp_r23) {
                     if (!var_r29->unk2C) {
                         temp_f31 = temp_r30->unk24;
                         if (temp_r31->unk02 & 0x10) {
-                            temp_f31 = temp_f31 * 0.9 + (s32) frandmod((u32) (temp_f31 * 0.1 * 1000.0)) / 1000.0f;
-                        } else if (temp_r31->unk02 & 0x20) {
-                            temp_f31 = temp_f31 * 0.7 + (s32) frandmod((u32) (temp_f31 * 0.3 * 1000.0)) / 1000.0f;
+                            temp_f31 = temp_f31 * 0.9 + (s32)frandmod((u32)(temp_f31 * 0.1 * 1000.0)) / 1000.0f;
+                        }
+                        else if (temp_r31->unk02 & 0x20) {
+                            temp_f31 = temp_f31 * 0.7 + (s32)frandmod((u32)(temp_f31 * 0.3 * 1000.0)) / 1000.0f;
                         }
                         var_r29->unk28 = temp_f31;
                         var_r29->unk2C = temp_f31;
                         var_r29->unk34 = temp_r31->unk0C;
-                        sp20.x = (s32) frandmod((u32) (temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
-                        sp20.y = (s32) frandmod((u32) (temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
-                        sp20.z = (s32) frandmod((u32) (temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
+                        sp20.x = (s32)frandmod((u32)(temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
+                        sp20.y = (s32)frandmod((u32)(temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
+                        sp20.z = (s32)frandmod((u32)(temp_r30->unk08 * 2.0f)) - temp_r30->unk08;
                         VECNormalize(&sp20, &sp20);
                         VECScale(&sp20, &sp20, temp_r30->unk08);
                         VECAdd(&sp20, &var_r29->unk34, &var_r29->unk34);
@@ -1131,23 +1187,27 @@ static void ParManFunc(void) {
                         if (temp_r31->unk02 & 0x100) {
                             var_f28 = var_f26 + (360.0f / temp_r30->unk04) * var_r26;
                             var_f29 = temp_r30->unk0C;
-                        } else {
-                            var_f28 = (s32) frandmod(360);
+                        }
+                        else {
+                            var_f28 = (s32)frandmod(360);
                             if (temp_r30->unk0C) {
-                                var_f29 = (s32) frandmod((u32) temp_r30->unk0C);
-                            } else {
+                                var_f29 = (s32)frandmod((u32)temp_r30->unk0C);
+                            }
+                            else {
                                 var_f29 = 0.0f;
                             }
                         }
                         if (sp2C.x * sp2C.x < 0.000001 && sp2C.z * sp2C.z < 0.000001) {
                             sp8.x = 1.0f;
                             sp8.y = sp8.z = 0.0f;
-                        } else {
+                        }
+                        else {
                             if (sp2C.y * sp2C.y > 0.000001) {
                                 sp14.x = sp2C.x;
                                 sp14.y = 0.0f;
                                 sp14.z = sp2C.z;
-                            } else {
+                            }
+                            else {
                                 sp14.x = sp2C.x;
                                 sp14.y = 1.0f;
                                 sp14.z = sp2C.z;
@@ -1181,25 +1241,29 @@ static void ParManFunc(void) {
                         VECNormalize(&sp14, &sp14);
                         temp_f31 = temp_r30->unk1C;
                         if (temp_r31->unk02 & 2) {
-                            temp_f31 = temp_f31 * 0.9 + (s32) frandmod((u32) (temp_f31 * 0.1 * 1000.0)) / 1000.0f;
-                        } else if (temp_r31->unk02 & 4) {
-                            temp_f31 = temp_f31 * 0.7 + (s32) frandmod((u32) (temp_f31 * 0.3 * 1000.0)) / 1000.0f;
-                        } else if (temp_r31->unk02 & 8) {
-                            temp_f31 = (s32) frandmod((u32) (temp_f31 * 1000.0f)) / 1000.0f;
+                            temp_f31 = temp_f31 * 0.9 + (s32)frandmod((u32)(temp_f31 * 0.1 * 1000.0)) / 1000.0f;
+                        }
+                        else if (temp_r31->unk02 & 4) {
+                            temp_f31 = temp_f31 * 0.7 + (s32)frandmod((u32)(temp_f31 * 0.3 * 1000.0)) / 1000.0f;
+                        }
+                        else if (temp_r31->unk02 & 8) {
+                            temp_f31 = (s32)frandmod((u32)(temp_f31 * 1000.0f)) / 1000.0f;
                         }
                         VECScale(&sp14, &var_r29->unk08, temp_f31);
                         var_r29->unk14 = temp_r30->unk10;
                         var_r29->unk20 = temp_r30->unk20;
                         if (temp_r31->unk02 & 0x1000) {
                             var_r29->unk24 = var_r24 = temp_r31->unk08;
-                        } else {
+                        }
+                        else {
                             var_r29->unk24 = var_r24 = frandmod(temp_r30->unk2C);
                         }
                         var_r29->unk40 = temp_r30->unk2E[var_r24];
                         var_r29->unk00 = 0;
                         var_r29->unk02 = temp_r31->unk06;
                         break;
-                    } else {
+                    }
+                    else {
                         var_r29++;
                     }
                 }
@@ -1217,12 +1281,10 @@ static void ParManFunc(void) {
     }
 }
 
-static float jitterTbl[] = {
-    1.0f, 0.9f, 0.7f, 0.5f,
-    0.5f, 0.7f, 0.9f, 1.0f
-};
+static float jitterTbl[] = { 1.0f, 0.9f, 0.7f, 0.5f, 0.5f, 0.7f, 0.9f, 1.0f };
 
-static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
+static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix)
+{
     HsfanimStruct00 *temp_r26;
     ParManProcUserData *temp_r28;
     HsfanimStruct01 *var_r29;
@@ -1244,7 +1306,8 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                 temp_r26 = temp_r28->unk3C;
                 if (temp_r28->unk02 & 0x40) {
                     var_r29->unk2C = var_r29->unk28 * jitterTbl[(temp_r28->unk38 + i) & 7];
-                } else {
+                }
+                else {
                     var_r29->unk2C = var_r29->unk28;
                 }
                 if (!(temp_r28->unk02 & 0x80)) {
@@ -1268,7 +1331,7 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                         }
                     }
                     var_r29->unk28 *= temp_r26->unk28;
-                    var_f30 = (float) var_r29->unk00 / temp_r26->unk00;
+                    var_f30 = (float)var_r29->unk00 / temp_r26->unk00;
                     if (var_f30 > 1.0f) {
                         var_f30 = 1.0f;
                     }

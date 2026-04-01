@@ -1619,13 +1619,13 @@ void fn_1_10948(ModelData *var_r29, Mtx var_r30)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSETARRAY(GX_VA_POS, var_r31->unk_50, 16 * sizeof(Vec), sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, var_r31->unk_50, 16 * sizeof(Vec), sizeof(Vec), TRUE);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_308, sizeof(lbl_1_data_308), sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_308, sizeof(lbl_1_data_308), sizeof(GXColor), TRUE);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSETARRAY(GX_VA_TEX0, var_r31->unk_54, 16 * sizeof(Vec2f), sizeof(Vec2f));
+    GXSETARRAY(GX_VA_TEX0, var_r31->unk_54, 16 * sizeof(Vec2f), sizeof(Vec2f), TRUE);
     GXCallDisplayList(var_r31->unk_60, var_r31->unk_5C);
 }
 

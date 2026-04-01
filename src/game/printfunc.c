@@ -141,7 +141,7 @@ void pfDrawFonts(void)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_S16, 0);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSETARRAY(GX_VA_CLR0, fcoltbl, sizeof(fcoltbl), sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, fcoltbl, sizeof(fcoltbl), sizeof(GXColor), TRUE);
     GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);
     GXInvalidateTexAll();
     GXInitTexObj(&font_tex, ank8x8_4b, 128, 128, GX_TF_I4, GX_CLAMP, GX_CLAMP, GX_FALSE);
@@ -188,7 +188,7 @@ void pfDrawFonts(void)
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_S16, 0);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-            GXSETARRAY(GX_VA_CLR0, fcoltbl, sizeof(fcoltbl), sizeof(GXColor));
+            GXSETARRAY(GX_VA_CLR0, fcoltbl, sizeof(fcoltbl), sizeof(GXColor), TRUE);
             GXSetNumTevStages(1);
             GXSetNumTexGens(1);
             GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);

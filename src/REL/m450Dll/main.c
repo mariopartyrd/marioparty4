@@ -1594,13 +1594,13 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSETARRAY(GX_VA_POS, var_r31->unk_14, var_r31->unk_64 * sizeof(Vec) * 4, sizeof(Vec));
+        GXSETARRAY(GX_VA_POS, var_r31->unk_14, var_r31->unk_64 * sizeof(Vec) * 4, sizeof(Vec), TRUE);
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSETARRAY(GX_VA_CLR0, var_r31->unk_20, var_r31->unk_64 * sizeof(GXColor), sizeof(GXColor));
+        GXSETARRAY(GX_VA_CLR0, var_r31->unk_20, var_r31->unk_64 * sizeof(GXColor), sizeof(GXColor), TRUE);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(GX_VA_TEX0, var_r31->unk_18, var_r31->unk_64 * sizeof(Vec2f) * 4, sizeof(Vec2f));
+        GXSETARRAY(GX_VA_TEX0, var_r31->unk_18, var_r31->unk_64 * sizeof(Vec2f) * 4, sizeof(Vec2f), TRUE);
         sp130[0][0] = arg1[0][0];
         sp130[1][0] = arg1[0][1];
         sp130[2][0] = arg1[0][2];
@@ -5029,7 +5029,7 @@ void fn_1_15BAC(Vec *arg0, Vec *arg1, float arg8, s32 arg2, float *arg3, float *
     else if (0.0f > arg8) {
         arg8 += 360.0f;
     }
-    *arg3 = (atan2d(sp14.z, sp14.x))-90.0;
+    *arg3 = (atan2d(sp14.z, sp14.x)) - 90.0;
     *arg4 = atan2d(sp14.y, sqrtf((sp14.x * sp14.x) + (sp14.z * sp14.z)));
     if (arg2 == 0) {
         *arg3 *= -1.0f;

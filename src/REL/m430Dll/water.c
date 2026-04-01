@@ -1243,12 +1243,12 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(0, 0, GX_TRUE, GX_FALSE, 1);
     MTXScale(sp164, -0.25f, -0.5f, 0.5f);
-    GXSetIndTexMtx(GX_ITM_0, (float(*)[3])sp164, -4);
+    GXSetIndTexMtx(GX_ITM_0, (float (*)[3])sp164, -4);
     GXSetIndTexOrder(GX_INDTEXSTAGE1, GX_TEXCOORD1, GX_TEXMAP1);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE1, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(1, 1, GX_TRUE, GX_FALSE, 2);
     MTXScale(sp164, 0.4f, 0.5f, 0.5f);
-    GXSetIndTexMtx(GX_ITM_1, (float(*)[3])sp164, -1);
+    GXSetIndTexMtx(GX_ITM_1, (float (*)[3])sp164, -1);
     GXSetNumTevStages(2);
     GXSetTevColor(GX_TEVREG0, sp14);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
@@ -1268,8 +1268,8 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_POS, var_r31->unk_44[var_r31->unk_40], 0x1B8 * sizeof(Vec), sizeof(Vec));
-    GXSETARRAY(GX_VA_CLR0, var_r31->unk_54[var_r31->unk_40], 0x1B8 * sizeof(GXColor), sizeof(GXColor));
+    GXSETARRAY(GX_VA_POS, var_r31->unk_44[var_r31->unk_40], 0x1B8 * sizeof(Vec), sizeof(Vec), TRUE);
+    GXSETARRAY(GX_VA_CLR0, var_r31->unk_54[var_r31->unk_40], 0x1B8 * sizeof(GXColor), sizeof(GXColor), TRUE);
     GXSetCullMode(GX_CULL_NONE);
     GXCallDisplayList(var_r31->unk_60, var_r31->unk_64);
     GXSetCullMode(GX_CULL_BACK);
@@ -1349,7 +1349,7 @@ void fn_1_963C(ModelData *model, Mtx matrix, u32 var_r31)
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(0, 0, GX_TRUE, GX_FALSE, 1);
     MTXScale(spD0, 0.5f, 0.6f, 0.6f);
-    GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spD0, -1);
+    GXSetIndTexMtx(GX_ITM_0, (float (*)[3])spD0, -1);
     GXSetNumTevStages(1);
     GXSetTevColor(GX_TEVREG0, spC);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD1, GX_TEXMAP1, GX_COLOR0A0);
@@ -1364,8 +1364,8 @@ void fn_1_963C(ModelData *model, Mtx matrix, u32 var_r31)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX8);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_POS, lbl_1_data_60, sizeof(lbl_1_data_60), sizeof(Vec));
-    GXSETARRAY(GX_VA_CLR0, lbl_1_data_A8, sizeof(lbl_1_data_A8), sizeof(GXColor));
+    GXSETARRAY(GX_VA_POS, lbl_1_data_60, sizeof(lbl_1_data_60), sizeof(Vec), TRUE);
+    GXSETARRAY(GX_VA_CLR0, lbl_1_data_A8, sizeof(lbl_1_data_A8), sizeof(GXColor), TRUE);
     GXBegin(GX_TRIANGLESTRIP, GX_VTXFMT0, 6);
     GXPosition1x8(0);
     GXColor1x8(3);
@@ -1468,7 +1468,7 @@ void fn_1_9C90(ModelData *model, Mtx matrix)
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     GXSetTevIndWarp(0, 0, GX_TRUE, GX_FALSE, 1);
     MTXScale(spF4, 0.5f, 0.6f, 0.6f);
-    GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spF4, -1);
+    GXSetIndTexMtx(GX_ITM_0, (float (*)[3])spF4, -1);
     GXSetNumTevStages(1);
     GXSetTevColor(GX_TEVREG0, spC);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD1, GX_TEXMAP1, GX_COLOR0A0);
@@ -1483,8 +1483,8 @@ void fn_1_9C90(ModelData *model, Mtx matrix)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX8);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_POS, lbl_1_data_C0, sizeof(lbl_1_data_C0), sizeof(Vec));
-    GXSETARRAY(GX_VA_CLR0, lbl_1_data_A8, sizeof(lbl_1_data_A8), sizeof(GXColor));
+    GXSETARRAY(GX_VA_POS, lbl_1_data_C0, sizeof(lbl_1_data_C0), sizeof(Vec), TRUE);
+    GXSETARRAY(GX_VA_CLR0, lbl_1_data_A8, sizeof(lbl_1_data_A8), sizeof(GXColor), TRUE);
     GXBegin(GX_TRIANGLESTRIP, GX_VTXFMT0, 8);
     for (var_r30 = 0; var_r30 < 8; var_r30++) {
         GXPosition1x8(var_r30);
@@ -1571,8 +1571,8 @@ void fn_1_A3A8(ModelData *model, Mtx matrix)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX8);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_POS, lbl_1_data_120, sizeof(lbl_1_data_120), sizeof(Vec));
-    GXSETARRAY(GX_VA_CLR0, lbl_1_data_168, sizeof(lbl_1_data_168), sizeof(GXColor));
+    GXSETARRAY(GX_VA_POS, lbl_1_data_120, sizeof(lbl_1_data_120), sizeof(Vec), TRUE);
+    GXSETARRAY(GX_VA_CLR0, lbl_1_data_168, sizeof(lbl_1_data_168), sizeof(GXColor), TRUE);
     GXBegin(GX_TRIANGLESTRIP, GX_VTXFMT0, 6);
     GXPosition1x8(0);
     GXColor1x8(0);

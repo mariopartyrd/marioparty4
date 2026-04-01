@@ -269,18 +269,18 @@ void fn_1_E790(M438UnkStruct2 *arg0)
             GXClearVtxDesc();
             GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-            GXSETARRAY(GX_VA_POS, var_r31->unk_44, 4 * sizeof(Vec), sizeof(Vec));
+            GXSETARRAY(GX_VA_POS, var_r31->unk_44, 4 * sizeof(Vec), sizeof(Vec), TRUE);
             GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-            GXSETARRAY(GX_VA_CLR0, var_r31->unk_48, 4 * sizeof(GXColor), sizeof(GXColor));
+            GXSETARRAY(GX_VA_CLR0, var_r31->unk_48, 4 * sizeof(GXColor), sizeof(GXColor), TRUE);
             for (var_r27 = 0; var_r27 < var_r31->unk_34; var_r27++) {
                 GXSetVtxDesc(var_r27 + GX_VA_TEX0, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, var_r27 + GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-                GXSETARRAY(var_r27 + GX_VA_TEX0, &var_r31->unk_58[var_r27].unk_04, 4 * sizeof(Vec2f), sizeof(Vec2f));
+                GXSETARRAY(var_r27 + GX_VA_TEX0, &var_r31->unk_58[var_r27].unk_04, 4 * sizeof(Vec2f), sizeof(Vec2f), TRUE);
             }
             GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
             GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0U);
-            GXSETARRAY(GX_VA_NRM, var_r31->unk_4C, sizeof(Vec), sizeof(Vec));
+            GXSETARRAY(GX_VA_NRM, var_r31->unk_4C, sizeof(Vec), sizeof(Vec), TRUE);
             GXCallDisplayList(var_r31->unk_40, var_r31->unk_3C);
         }
     }
@@ -378,9 +378,9 @@ void fn_1_F8EC(M438FireStruct2 **arg0, s16 arg1, GXColor *arg2)
     GXColor *var_r31;
     s32 var_r29;
     s32 var_r28;
-    
+
     var_r31 = (GXColor *)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct2), MEMORY_DEFAULT_NUM);
-    
+
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
             var_r31->r = arg2->r;
@@ -395,9 +395,9 @@ void fn_1_F994(Vec **arg0, s16 arg1, Vec *arg2)
 {
     s32 var_r29;
     Vec *var_r31;
-    
+
     var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-    
+
     for (var_r29 = 0; var_r29 < arg1; var_r31++, arg2++, var_r29++) {
         var_r31->x = arg2->x;
         var_r31->y = arg2->y;
@@ -410,9 +410,9 @@ void fn_1_FA20(M438FireStruct3 **arg0, s16 arg1, HsfVector2f *arg2)
     HsfVector2f *var_r31;
     s32 var_r29;
     s32 var_r28;
-    
+
     var_r31 = (HsfVector2f *)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct3), MEMORY_DEFAULT_NUM);
-    
+
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {
             var_r31->x = arg2->x;

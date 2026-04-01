@@ -20,9 +20,10 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-#include "game/hsfex.h"
 #include "ext_math.h"
+#include "game/hsfex.h"
 #include <string.h>
+
 
 #ifndef __MWERKS__
 #include "game/audio.h"
@@ -981,12 +982,12 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXSetIndTexOrder(GX_INDTEXSTAGE0, GX_TEXCOORD2, GX_TEXMAP2);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     MTXScale(spBC, -0.2f, -0.2f, 0.2f);
-    GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spBC, -2);
+    GXSetIndTexMtx(GX_ITM_0, (float (*)[3])spBC, -2);
     GXSetTevIndWarp(GX_TEVSTAGE0, GX_INDTEXSTAGE0, GX_TRUE, GX_FALSE, GX_ITM_0);
     GXSetIndTexOrder(GX_INDTEXSTAGE1, GX_TEXCOORD3, GX_TEXMAP3);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE1, GX_ITS_1, GX_ITS_1);
     MTXScale(spBC, 0.5f, 0.5f, 0.5f);
-    GXSetIndTexMtx(GX_ITM_1, (float(*)[3])spBC, 0);
+    GXSetIndTexMtx(GX_ITM_1, (float (*)[3])spBC, 0);
     GXSetTevIndWarp(GX_TEVSTAGE1, GX_INDTEXSTAGE1, GX_TRUE, GX_FALSE, GX_ITM_1);
     GXSetNumTevStages(2);
     lbl_1_data_E8.a = lbl_1_bss_A8;
@@ -1008,7 +1009,7 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);
-    GXSETARRAY(GX_VA_POS, lbl_1_bss_5AC.unk14, 900 * sizeof(Vec), sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, lbl_1_bss_5AC.unk14, 900 * sizeof(Vec), sizeof(Vec), TRUE);
     GXSetCullMode(GX_CULL_BACK);
     GXCallDisplayList(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
     GXSetNumIndStages(0);

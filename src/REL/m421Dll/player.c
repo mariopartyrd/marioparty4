@@ -1800,8 +1800,8 @@ void fn_1_ABDC(ModelData *model, Mtx matrix)
         MTXConcat(sp58, sp88, sp118);
         MTXConcat(spB8, sp118, spE8);
         GXLoadTexMtxImm(spE8, 0x1E, GX_MTX3x4);
-        GXSETARRAY(GX_VA_POS, work->unk_50[var_r28], 14 * sizeof(Vec), sizeof(Vec));
-        GXSETARRAY(GX_VA_CLR0, &work->unk_40[var_r28], sizeof(GXColor), sizeof(GXColor));
+        GXSETARRAY(GX_VA_POS, work->unk_50[var_r28], 14 * sizeof(Vec), sizeof(Vec), TRUE);
+        GXSETARRAY(GX_VA_CLR0, &work->unk_40[var_r28], sizeof(GXColor), sizeof(GXColor), TRUE);
         GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, 0xE);
         GXPosition1x8(0);
         GXPosition1x8(0);
@@ -1816,8 +1816,8 @@ void fn_1_ABDC(ModelData *model, Mtx matrix)
         MTXConcat(sp58, sp88, sp118);
         MTXConcat(spB8, sp118, spE8);
         GXLoadTexMtxImm(spE8, 0x1E, GX_MTX3x4);
-        GXSETARRAY(GX_VA_POS, work->unk_50[var_r28 + 1], 14 * sizeof(Vec), sizeof(Vec));
-        GXSETARRAY(GX_VA_CLR0, &work->unk_40[var_r28], sizeof(GXColor), sizeof(GXColor));
+        GXSETARRAY(GX_VA_POS, work->unk_50[var_r28 + 1], 14 * sizeof(Vec), sizeof(Vec), TRUE);
+        GXSETARRAY(GX_VA_CLR0, &work->unk_40[var_r28], sizeof(GXColor), sizeof(GXColor), TRUE);
         GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, 0xE);
         GXPosition1x8(0);
         GXPosition1x8(0);

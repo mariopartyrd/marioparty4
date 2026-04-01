@@ -2176,10 +2176,10 @@ void fn_1_102A8(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSETARRAY(GX_VA_POS, var_r31->unk_54->unk_08, sizeof(var_r31->unk_54->unk_08), sizeof(M428DllPlayerUnkStruct));
+    GXSETARRAY(GX_VA_POS, var_r31->unk_54->unk_08, sizeof(var_r31->unk_54->unk_08), sizeof(M428DllPlayerUnkStruct), TRUE);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_694[var_r31->unk_10], sizeof(GXColor), sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, &lbl_1_data_694[var_r31->unk_10], sizeof(GXColor), sizeof(GXColor), TRUE);
     GXBegin(GX_LINESTRIP, GX_VTXFMT0, var_r31->unk_02);
     for (var_r30 = 0; var_r30 < var_r31->unk_02; var_r30++) {
         GXPosition1x16(var_r30);
@@ -3179,13 +3179,13 @@ void fn_1_134C0(ModelData *var_r23, Mtx var_r22)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_26 * sizeof(Vec) * 4, sizeof(Vec));
+        GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_26 * sizeof(Vec) * 4, sizeof(Vec), TRUE);
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_44, sizeof(GXColor), sizeof(M428DllPlayerUnkStruct2)); // bug?
+        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_44, sizeof(GXColor), sizeof(M428DllPlayerUnkStruct2), TRUE); // bug?
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
+        GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_26 * sizeof(Vec2f) * 4, sizeof(Vec2f), TRUE);
         GXCallDisplayList(var_r31->unk_48, var_r31->unk_34);
         if (shadowModelDrawF == 0) {
             if ((var_r31->unk_21 & 2) == 0) {

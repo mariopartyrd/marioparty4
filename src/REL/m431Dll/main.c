@@ -2091,13 +2091,13 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSETARRAY(GX_VA_POS, temp_r30->unk1C, temp_r30->unk0 * sizeof(Vec) * 4, sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, temp_r30->unk1C, temp_r30->unk0 * sizeof(Vec) * 4, sizeof(Vec), TRUE);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_CLR0, temp_r30->unk24, temp_r30->unk0 * sizeof(GXColor), sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, temp_r30->unk24, temp_r30->unk0 * sizeof(GXColor), sizeof(GXColor), TRUE);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSETARRAY(GX_VA_TEX0, temp_r30->unk20, temp_r30->unk0 * sizeof(HsfVector2f) * 4, sizeof(HsfVector2f));
+    GXSETARRAY(GX_VA_TEX0, temp_r30->unk20, temp_r30->unk0 * sizeof(HsfVector2f) * 4, sizeof(HsfVector2f), TRUE);
     fn_1_79FC(mtx, sp128);
     MTXReorder(sp128, spF8);
     if (!omPauseChk() && temp_r30->unkC) {

@@ -4,7 +4,6 @@
 #include "game/object.h"
 #include "game/objsub.h"
 
-
 #include "game/hsfmotion.h"
 
 #include "game/frand.h"
@@ -511,7 +510,7 @@ void fn_1_4B1C(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
-    GXSETARRAY(GX_VA_POS, lbl_1_data_278, sizeof(lbl_1_data_278), sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, lbl_1_data_278, sizeof(lbl_1_data_278), sizeof(Vec), TRUE);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
     for (i = 0; i < 4; i++) {
         GXPosition1x16(i);
@@ -602,16 +601,16 @@ void fn_1_4E64(ModelData *model, Mtx matrix)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
 
-    GXSETARRAY(GX_VA_POS, lbl_1_data_2A8, sizeof(lbl_1_data_2A8), sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, lbl_1_data_2A8, sizeof(lbl_1_data_2A8), sizeof(Vec), TRUE);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_CLR0, lbl_1_data_3E0, sizeof(lbl_1_data_3E0), sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, lbl_1_data_3E0, sizeof(lbl_1_data_3E0), sizeof(GXColor), TRUE);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSETARRAY(GX_VA_TEX0, lbl_1_data_448, sizeof(lbl_1_data_448), sizeof(float) * 2);
+    GXSETARRAY(GX_VA_TEX0, lbl_1_data_448, sizeof(lbl_1_data_448), sizeof(float) * 2, TRUE);
     GXSetVtxDesc(GX_VA_TEX1, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX1, GX_TEX_ST, GX_F32, 0);
-    GXSETARRAY(GX_VA_TEX1, &work2->unk874[0][0], sizeof(work2->unk874), sizeof(float) * 2);
+    GXSETARRAY(GX_VA_TEX1, &work2->unk874[0][0], sizeof(work2->unk874), sizeof(float) * 2, TRUE);
     GXBegin(GX_QUADS, GX_VTXFMT0, 48);
     for (i = 0; i < 12; i++) {
         s16 index;
@@ -769,8 +768,8 @@ void fn_1_59A0(ModelData *model, Mtx matrix)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX8);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_POS, lbl_1_data_604, sizeof(lbl_1_data_604), sizeof(Vec));
-    GXSETARRAY(GX_VA_CLR0, lbl_1_data_670, sizeof(lbl_1_data_670), sizeof(GXColor));
+    GXSETARRAY(GX_VA_POS, lbl_1_data_604, sizeof(lbl_1_data_604), sizeof(Vec), TRUE);
+    GXSETARRAY(GX_VA_CLR0, lbl_1_data_670, sizeof(lbl_1_data_670), sizeof(GXColor), TRUE);
     GXBegin(GX_TRIANGLESTRIP, GX_VTXFMT0, 6);
     GXPosition1x8(0);
     GXColor1x8(0);

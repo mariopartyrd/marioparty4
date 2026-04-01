@@ -879,16 +879,16 @@ void fn_1_14A0(ModelData *arg0, Mtx arg1)
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-        GXSETARRAY(GX_VA_POS, lbl_1_data_29C, sizeof(lbl_1_data_29C), sizeof(Vec));
+        GXSETARRAY(GX_VA_POS, lbl_1_data_29C, sizeof(lbl_1_data_29C), sizeof(Vec), TRUE);
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSETARRAY(GX_VA_CLR0, lbl_1_data_30C, sizeof(lbl_1_data_30C), sizeof(GXColor));
+        GXSETARRAY(GX_VA_CLR0, lbl_1_data_30C, sizeof(lbl_1_data_30C), sizeof(GXColor), TRUE);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(GX_VA_TEX0, lbl_1_data_2CC, sizeof(lbl_1_data_2CC), sizeof(Vec2f));
+        GXSETARRAY(GX_VA_TEX0, lbl_1_data_2CC, sizeof(lbl_1_data_2CC), sizeof(Vec2f), TRUE);
         GXSetVtxDesc(GX_VA_TEX1, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX1, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(GX_VA_TEX1, lbl_1_data_2EC, sizeof(lbl_1_data_2EC), sizeof(Vec2f));
+        GXSETARRAY(GX_VA_TEX1, lbl_1_data_2EC, sizeof(lbl_1_data_2EC), sizeof(Vec2f), TRUE);
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
         for (i = 0; i < 4; i++) {
             GXPosition1x16(i);
@@ -1260,8 +1260,8 @@ void fn_1_29BC(ModelData *arg0, Mtx arg1)
             DCFlushRangeNoSync(temp_r31->unk14, temp_r31->unk00 * sizeof(*temp_r31->unk14));
             DCFlushRangeNoSync(temp_r31->unk1C, temp_r31->unk00 * sizeof(*temp_r31->unk1C));
             PPCSync();
-            GXSETARRAY(GX_VA_POS, temp_r31->unk14, temp_r31->unk00 * sizeof(*temp_r31->unk14), sizeof(*temp_r31->unk14));
-            GXSETARRAY(GX_VA_CLR0, temp_r31->unk1C, temp_r31->unk00 * sizeof(*temp_r31->unk1C), sizeof(*temp_r31->unk1C));
+            GXSETARRAY(GX_VA_POS, temp_r31->unk14, temp_r31->unk00 * sizeof(*temp_r31->unk14), sizeof(*temp_r31->unk14), TRUE);
+            GXSETARRAY(GX_VA_CLR0, temp_r31->unk1C, temp_r31->unk00 * sizeof(*temp_r31->unk1C), sizeof(*temp_r31->unk1C), TRUE);
             GXCallDisplayList(temp_r31->unk38, temp_r31->unk34);
         }
     }
@@ -4463,7 +4463,7 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     GXSetTevIndWarp(GX_TEVSTAGE0, GX_INDTEXSTAGE0, GX_TRUE, GX_FALSE, GX_ITM_0);
     GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
     MTXScale(spF4, -0.5f, -0.5f, 0.5f);
-    GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spF4, -1);
+    GXSetIndTexMtx(GX_ITM_0, (float (*)[3])spF4, -1);
     GXSetNumTevStages(1);
     GXSetTevColor(GX_TEVREG1, sp10);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
@@ -4480,9 +4480,9 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSETARRAY(GX_VA_POS, temp_r30->unk20C, 32 * sizeof(*temp_r30->unk20C), sizeof(Vec));
-    GXSETARRAY(GX_VA_CLR0, temp_r30->unk214, 5 * sizeof(*temp_r30->unk214), sizeof(GXColor));
-    GXSETARRAY(GX_VA_TEX0, temp_r30->unk210, 32 * sizeof(*temp_r30->unk210), sizeof(Vec2f));
+    GXSETARRAY(GX_VA_POS, temp_r30->unk20C, 32 * sizeof(*temp_r30->unk20C), sizeof(Vec), TRUE);
+    GXSETARRAY(GX_VA_CLR0, temp_r30->unk214, 5 * sizeof(*temp_r30->unk214), sizeof(GXColor), TRUE);
+    GXSETARRAY(GX_VA_TEX0, temp_r30->unk210, 32 * sizeof(*temp_r30->unk210), sizeof(Vec2f), TRUE);
     var_r31 = temp_r30->unk00;
     for (i = 0; i < 16; i++, var_r31++) {
         if (var_r31->unk00 == 0) {
@@ -4935,7 +4935,7 @@ s16 fn_1_11114(AnimData *arg0, s16 arg1)
     StructM423_05 *var_r31;
     StructM423_04 *var_r29;
     Vec *var_r25;
-    float(*var_r28)[2];
+    float (*var_r28)[2];
     void *var_r24;
     void *var_r22;
 
@@ -5026,7 +5026,7 @@ s16 fn_1_115C4(s16 arg0)
     StructM423_05 *var_r31;
     StructM423_04 *var_r30;
     Vec *var_r25;
-    float(*var_r29)[2];
+    float (*var_r29)[2];
 
     temp_r23 = &Hu3DData[arg0];
     temp_r26 = temp_r23->unk_120;
@@ -5096,7 +5096,7 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     StructM423_05 *temp_r31;
     StructM423_04 *var_r29;
     Vec *var_r30;
-    float(*var_r28)[2];
+    float (*var_r28)[2];
     Vec *temp_r27;
     Vec *temp_r24;
     s16 var_r21;
@@ -5235,13 +5235,13 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSETARRAY(GX_VA_POS, temp_r31->unk40, temp_r31->unk26 * sizeof(Vec) * 4, sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, temp_r31->unk40, temp_r31->unk26 * sizeof(Vec) * 4, sizeof(Vec), TRUE);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_CLR0, &temp_r31->unk3C->unk44, sizeof(GXColor), 76);
+    GXSETARRAY(GX_VA_CLR0, &temp_r31->unk3C->unk44, sizeof(GXColor), 76, TRUE);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSETARRAY(GX_VA_TEX0, temp_r31->unk44, temp_r31->unk26 * sizeof(Vec2f) * 4, sizeof(Vec2f));
+    GXSETARRAY(GX_VA_TEX0, temp_r31->unk44, temp_r31->unk26 * sizeof(Vec2f) * 4, sizeof(Vec2f), TRUE);
     GXCallDisplayList(temp_r31->unk48, temp_r31->unk34);
     if (shadowModelDrawF == 0) {
         if (!(temp_r31->unk21 & 2)) {

@@ -1091,7 +1091,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXSetIndTexCoordScale(GX_INDTEXSTAGE0, GX_ITS_1, GX_ITS_1);
         GXSetTevIndWarp(GX_TEVSTAGE0, GX_INDTEXSTAGE0, GX_TRUE, GX_FALSE, GX_ITM_0);
         MTXScale(spF4, -0.5f, -0.5f, 0.5f);
-        GXSetIndTexMtx(GX_ITM_0, (float(*)[3])spF4, -1);
+        GXSetIndTexMtx(GX_ITM_0, (float (*)[3])spF4, -1);
         GXSetNumTevStages(1);
         GXSetTevColor(GX_TEVREG1, sp10);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
@@ -1108,9 +1108,9 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(GX_VA_POS, var_r30->unk_120.unk_1C0, sizeof(var_r30->unk_120.unk_1C0), sizeof(Vec));
-        GXSETARRAY(GX_VA_CLR0, var_r30->unk_120.unk_E40, sizeof(var_r30->unk_120.unk_E40), sizeof(GXColor));
-        GXSETARRAY(GX_VA_TEX0, var_r30->unk_120.unk_940, sizeof(var_r30->unk_120.unk_940), sizeof(Vec2f));
+        GXSETARRAY(GX_VA_POS, var_r30->unk_120.unk_1C0, sizeof(var_r30->unk_120.unk_1C0), sizeof(Vec), TRUE);
+        GXSETARRAY(GX_VA_CLR0, var_r30->unk_120.unk_E40, sizeof(var_r30->unk_120.unk_E40), sizeof(GXColor), TRUE);
+        GXSETARRAY(GX_VA_TEX0, var_r30->unk_120.unk_940, sizeof(var_r30->unk_120.unk_940), sizeof(Vec2f), TRUE);
         var_r31 = var_r30->unk_120.unk_00;
 
         for (var_r29 = 0; var_r29 < 16; var_r29++, var_r31++) {

@@ -1625,18 +1625,18 @@ void fn_1_5C20(ModelData *var_r27, Mtx sp8)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSETARRAY(GX_VA_POS, var_r31->unk_14, var_r31->unk_2A * (4 * sizeof(Vec)), sizeof(Vec));
+    GXSETARRAY(GX_VA_POS, var_r31->unk_14, var_r31->unk_2A * (4 * sizeof(Vec)), sizeof(Vec), TRUE);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-    GXSETARRAY(GX_VA_CLR0, var_r31->unk_18, var_r31->unk_2A * (4 * sizeof(GXColor)), sizeof(GXColor));
+    GXSETARRAY(GX_VA_CLR0, var_r31->unk_18, var_r31->unk_2A * (4 * sizeof(GXColor)), sizeof(GXColor), TRUE);
     for (var_r29 = GX_TEXMAP0; var_r29 < (var_r31->unk_28 * var_r31->unk_2A); var_r29++) {
         GXSetVtxDesc(var_r29 + 0xD, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, var_r29 + 0xD, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(var_r29 + 0xD, var_r31->unk_2C[var_r29].unk_44, var_r31->unk_2A * (4 * sizeof(Vec2f)), sizeof(Vec2f));
+        GXSETARRAY(var_r29 + 0xD, var_r31->unk_2C[var_r29].unk_44, var_r31->unk_2A * (4 * sizeof(Vec2f)), sizeof(Vec2f), TRUE);
     }
     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-    GXSETARRAY(GX_VA_NRM, var_r31->unk_1C, var_r31->unk_2A * (4 * sizeof(Vec)), sizeof(Vec));
+    GXSETARRAY(GX_VA_NRM, var_r31->unk_1C, var_r31->unk_2A * (4 * sizeof(Vec)), sizeof(Vec), TRUE);
     GXCallDisplayList(var_r31->unk_10, var_r31->unk_0C);
 }
 

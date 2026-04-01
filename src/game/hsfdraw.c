@@ -97,7 +97,8 @@ static u8 *PGName;
 static s32 TL32F;
 static s32 CancelTRXF;
 
-SHARED_SYM u8 texMtxTbl[] = { GX_TEXMTX0, GX_TEXMTX1, GX_TEXMTX2, GX_TEXMTX3, GX_TEXMTX4, GX_TEXMTX5, GX_TEXMTX6, GX_TEXMTX7, GX_TEXMTX8, GX_TEXMTX9 };
+SHARED_SYM u8 texMtxTbl[]
+    = { GX_TEXMTX0, GX_TEXMTX1, GX_TEXMTX2, GX_TEXMTX3, GX_TEXMTX4, GX_TEXMTX5, GX_TEXMTX6, GX_TEXMTX7, GX_TEXMTX8, GX_TEXMTX9 };
 
 static s16 oneceF = 1;
 static GXColor firstTev = { 0xFF, 0xFF, 0x00, 0x00 };
@@ -508,20 +509,20 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
                 GXClearVtxDesc();
                 GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-                GXSETARRAY(GX_VA_POS, temp_r28->data.vertex->data, temp_r28->data.vertex->count * sizeof(Vec), sizeof(Vec));
+                GXSETARRAY(GX_VA_POS, temp_r28->data.vertex->data, temp_r28->data.vertex->count * sizeof(Vec), sizeof(Vec), TRUE);
                 GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                 if (temp_r29->hsfData->cenvCnt == 0) {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * 3, 3);
+                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * 3, 3, TRUE);
                 }
                 else {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * sizeof(Vec), sizeof(Vec));
+                    GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * sizeof(Vec), sizeof(Vec), TRUE);
                 }
                 if (var_r22 & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSETARRAY(GX_VA_CLR0, temp_r28->data.color->data, temp_r28->data.color->count * sizeof(GXColor), sizeof(GXColor));
+                    GXSETARRAY(GX_VA_CLR0, temp_r28->data.color->data, temp_r28->data.color->count * sizeof(GXColor), sizeof(GXColor), TRUE);
                 }
                 GXSetZCompLoc(1);
             }
@@ -587,7 +588,7 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
                 GXClearVtxDesc();
                 GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-                GXSETARRAY(GX_VA_POS, temp_r28->data.vertex->data, temp_r28->data.vertex->count * sizeof(Vec), sizeof(Vec));
+                GXSETARRAY(GX_VA_POS, temp_r28->data.vertex->data, temp_r28->data.vertex->count * sizeof(Vec), sizeof(Vec), TRUE);
                 if (var_r22 & 2) {
                     GXSetVtxDesc(GX_VA_NBT, GX_DIRECT);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_S16, 8);
@@ -596,20 +597,20 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
                     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                     if (temp_r29->hsfData->cenvCnt == 0) {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                        GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * 3, 3);
+                        GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * 3, 3, TRUE);
                     }
                     else {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                        GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * sizeof(Vec), sizeof(Vec));
+                        GXSETARRAY(GX_VA_NRM, temp_r28->data.normal->data, temp_r28->data.normal->count * sizeof(Vec), sizeof(Vec), TRUE);
                     }
                 }
                 GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-                GXSETARRAY(GX_VA_TEX0, temp_r28->data.st->data, temp_r28->data.st->count * sizeof(Vec2f), sizeof(Vec2f));
+                GXSETARRAY(GX_VA_TEX0, temp_r28->data.st->data, temp_r28->data.st->count * sizeof(Vec2f), sizeof(Vec2f), TRUE);
                 if (var_r22 & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSETARRAY(GX_VA_CLR0, temp_r28->data.color->data, temp_r28->data.color->count * sizeof(GXColor), sizeof(GXColor));
+                    GXSETARRAY(GX_VA_CLR0, temp_r28->data.color->data, temp_r28->data.color->count * sizeof(GXColor), sizeof(GXColor), TRUE);
                 }
                 GXSetZCompLoc(0);
             }
@@ -1730,20 +1731,20 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
                 GXClearVtxDesc();
                 GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-                GXSETARRAY(GX_VA_POS, temp_r31->data.vertex->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec));
+                GXSETARRAY(GX_VA_POS, temp_r31->data.vertex->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec), TRUE);
                 GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                 if (temp_r28->hsfData->cenvCnt == 0) {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * 3, 3);
+                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * 3, 3, TRUE);
                 }
                 else {
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * sizeof(Vec), sizeof(Vec));
+                    GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * sizeof(Vec), sizeof(Vec), TRUE);
                 }
                 if (var_r30 & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.color->count * sizeof(GXColor), sizeof(GXColor));
+                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.color->count * sizeof(GXColor), sizeof(GXColor), TRUE);
                 }
                 GXSetZCompLoc(1);
             }
@@ -1765,7 +1766,7 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
                 GXClearVtxDesc();
                 GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-                GXSETARRAY(GX_VA_POS, temp_r31->data.vertex->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec));
+                GXSETARRAY(GX_VA_POS, temp_r31->data.vertex->data, temp_r31->data.vertex->count * sizeof(Vec), sizeof(Vec), TRUE);
                 if (var_r30 & 2) {
                     GXSetVtxDesc(GX_VA_NBT, GX_DIRECT);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_S16, 8);
@@ -1774,20 +1775,20 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
                     GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
                     if (temp_r28->hsfData->cenvCnt == 0) {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_S8, 0);
-                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * 3, 3);
+                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * 3, 3, TRUE);
                     }
                     else {
                         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * sizeof(Vec), sizeof(Vec));
+                        GXSETARRAY(GX_VA_NRM, temp_r31->data.normal->data, temp_r31->data.normal->count * sizeof(Vec), sizeof(Vec), TRUE);
                     }
                 }
                 GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
                 GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-                GXSETARRAY(GX_VA_TEX0, temp_r31->data.st->data, temp_r31->data.st->count * sizeof(Vec2f), sizeof(Vec2f));
+                GXSETARRAY(GX_VA_TEX0, temp_r31->data.st->data, temp_r31->data.st->count * sizeof(Vec2f), sizeof(Vec2f), TRUE);
                 if (var_r30 & 4) {
                     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
                     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.color->count * sizeof(GXColor), sizeof(GXColor));
+                    GXSETARRAY(GX_VA_CLR0, temp_r31->data.color->data, temp_r31->data.color->count * sizeof(GXColor), sizeof(GXColor), TRUE);
                 }
                 GXSetZCompLoc(0);
             }
@@ -3359,8 +3360,7 @@ HsfObject *Hu3DObjDuplicate(HsfData *arg0, uintptr_t arg1)
             if (var_r31->data.parent) {
                 var_r31->data.parent = (HsfObject *)((u8 *)temp_r27 + ((uintptr_t)var_r30->data.parent - (uintptr_t)arg0->object));
             }
-            var_r31->data.children = HuMemDirectMallocNum(HEAP_DATA,
-                var_r30->data.childrenCount * sizeof(HsfObject *), arg1);
+            var_r31->data.children = HuMemDirectMallocNum(HEAP_DATA, var_r30->data.childrenCount * sizeof(HsfObject *), arg1);
             if (var_r30->constData) {
                 var_r31->constData = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfConstData), arg1);
                 memcpy(var_r31->constData, var_r30->constData, sizeof(HsfConstData));
