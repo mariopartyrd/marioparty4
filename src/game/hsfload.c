@@ -844,32 +844,24 @@ static void FileLoad(void *data)
     NSymIndex = HuMemDirectMallocNum(HEAP_DATA, sizeof(void*) * head.symbol.count, MEMORY_DEFAULT_NUM);
     for (i = 0; i < head.symbol.count; i++) {
         u32 *file_symbol_real = (u32 *)((uintptr_t)fileptr + head.symbol.ofs);
-        u32 symbol = file_symbol_real[i];
-
-        byteswap_u32(&symbol);
-        NSymIndex[i] = (void *)(uintptr_t)symbol;
+        byteswap_u32(&file_symbol_real[i]);
+        NSymIndex[i] = (void *)file_symbol_real[i];
     }
     StringTable = (char *)((uintptr_t)fileptr+head.string.ofs);
     ClusterTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfCluster) * head.cluster.count, MEMORY_DEFAULT_NUM);
     for (i = 0; i < head.cluster.count; i++) {
         HsfCluster32b *file_cluster_real = (HsfCluster32b *)((uintptr_t)fileptr + head.cluster.ofs);
-        HsfCluster32b cluster = file_cluster_real[i];
-
-        byteswap_hsfcluster(&cluster, &ClusterTop[i]);
+        byteswap_hsfcluster(&file_cluster_real[i], &ClusterTop[i]);
     }
     AttributeTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfAttribute) * head.attribute.count, MEMORY_DEFAULT_NUM);
     for (i = 0; i < head.attribute.count; i++) {
         HsfAttribute32b *file_attribute_real = (HsfAttribute32b *)((uintptr_t)fileptr + head.attribute.ofs);
-        HsfAttribute32b attribute = file_attribute_real[i];
-
-        byteswap_hsfattribute(&attribute, &AttributeTop[i]);
+        byteswap_hsfattribute(&file_attribute_real[i], &AttributeTop[i]);
     }
     MaterialTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMaterial) * head.material.count, MEMORY_DEFAULT_NUM);
     for (i = 0; i < head.material.count; i++) {
         HsfMaterial32b *file_material_real = (HsfMaterial32b *)((uintptr_t)fileptr + head.material.ofs);
-        HsfMaterial32b material = file_material_real[i];
-
-        byteswap_hsfmaterial(&material, &MaterialTop[i]);
+        byteswap_hsfmaterial(&file_material_real[i], &MaterialTop[i]);
     }
 #else
     NSymIndex = (void **)((uintptr_t)fileptr+head.symbol.ofs);
@@ -1037,18 +1029,11 @@ static void SceneLoad(void)
     HsfScene *file_scene;
     HsfScene *new_scene;
     if(head.scene.count) {
-#ifdef BYTESWAPPING
-        HsfScene *scene_copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfScene) * head.scene.count, MEMORY_DEFAULT_NUM);
-#endif
         file_scene = (HsfScene *)((uintptr_t)fileptr+head.scene.ofs);
 #ifdef BYTESWAPPING
         for (i = 0; i < head.scene.count; i++) {
-            HsfScene scene = file_scene[i];
-
-            byteswap_hsfscene(&scene);
-            scene_copy[i] = scene;
+            byteswap_hsfscene(&file_scene[i]);
         }
-        file_scene = scene_copy;
 #endif
         new_scene = file_scene;
         new_scene->end = file_scene->end;
@@ -1072,9 +1057,7 @@ static void ColorLoad(void)
         HsfBuffer32b * file_color_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.color.ofs);
         temp_color = file_color = ColorTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.color.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.color.count; i++) {
-            HsfBuffer32b color = file_color_real[i];
-
-            byteswap_hsfbuffer(&color, &file_color[i]);
+            byteswap_hsfbuffer(&file_color_real[i], &file_color[i]);
         }
 #else
         temp_color = file_color = (HsfBuffer *)((u32)fileptr+head.color.ofs);
@@ -1092,14 +1075,8 @@ static void ColorLoad(void)
 #endif
         for(i=0; i<head.color.count; i++, new_color++, file_color++) {
             color_data = file_color->data;
-            new_color->count = file_color->count;
             new_color->name = SetName((u32 *)&file_color->name);
-#ifdef BYTESWAPPING
-            new_color->data = CopyRawData((void *)((uintptr_t)data + (uintptr_t)color_data),
-                file_color->count * sizeof(GXColor));
-#else
             new_color->data = (void *)((uintptr_t)data+(uintptr_t)color_data);
-#endif
         }
     }
 }
@@ -1118,9 +1095,7 @@ static void VertexLoad(void)
         HsfBuffer32b *file_vertex_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.vertex.ofs);
         vtxtop = file_vertex = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.vertex.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.vertex.count; i++) {
-            HsfBuffer32b vertex = file_vertex_real[i];
-
-            byteswap_hsfbuffer(&vertex, &file_vertex[i]);
+            byteswap_hsfbuffer(&file_vertex_real[i], &file_vertex[i]);
         }
 #else
         vtxtop = file_vertex = (HsfBuffer *)((u32)fileptr+head.vertex.ofs);
@@ -1141,30 +1116,19 @@ static void VertexLoad(void)
         VertexDataTop = data = (void *)&file_vertex[head.vertex.count];
 #endif
         for(i=0; i<head.vertex.count; i++, new_vertex++, file_vertex++) {
-            HsfVector3f *vertex_data;
-            HsfVector3f *vertex_src;
-
             temp_data = file_vertex->data;
             new_vertex->count = file_vertex->count;
             new_vertex->name = SetName((u32 *)&file_vertex->name);
-            vertex_src = (HsfVector3f *)((uintptr_t)data + (uintptr_t)temp_data);
-#ifdef BYTESWAPPING
-            vertex_data = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector3f) * new_vertex->count, MEMORY_DEFAULT_NUM);
-            new_vertex->data = vertex_data;
-#else
-            new_vertex->data = vertex_src;
-            vertex_data = new_vertex->data;
-#endif
+            new_vertex->data = (void *)((uintptr_t)data + (uintptr_t)temp_data);
             for(j=0; j<new_vertex->count; j++) {
-                data_elem = &vertex_src[j];
+                data_elem = (HsfVector3f *)((uintptr_t)data + (uintptr_t)temp_data + (j * sizeof(HsfVector3f)));
 #ifdef BYTESWAPPING
-                HsfVector3f vertex = *data_elem;
-
-                byteswap_hsfvec3f(&vertex);
-                vertex_data[j] = vertex;
-#else
-                vertex_data[j] = *data_elem;
+                // TODO we should do extra allocations for these elements and don't swap the dvd data directly to avoid double byteswaps
+                byteswap_hsfvec3f(data_elem);
 #endif
+                ((HsfVector3f *)new_vertex->data)[j].x = data_elem->x;
+                ((HsfVector3f *)new_vertex->data)[j].y = data_elem->y;
+                ((HsfVector3f *)new_vertex->data)[j].z = data_elem->z;
             }
         }
     }
@@ -1186,9 +1150,7 @@ static void NormalLoad(void)
         HsfBuffer32b *file_normal_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.normal.ofs);
         temp_normal = file_normal = NormalTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.normal.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.normal.count; i++) {
-            HsfBuffer32b normal = file_normal_real[i];
-
-            byteswap_hsfbuffer(&normal, &file_normal[i]);
+            byteswap_hsfbuffer(&file_normal_real[i], &file_normal[i]);
         }
 #else
         temp_normal = file_normal = (HsfBuffer *)((u32)fileptr+head.normal.ofs);
@@ -1204,29 +1166,17 @@ static void NormalLoad(void)
         NormalDataTop = data = (void *)&file_normal[head.normal.count];
 #endif
         for(i=0; i<head.normal.count; i++, new_normal++, file_normal++) {
-            HsfVector3f *normal_data;
-            HsfVector3f *normal_src;
-
             temp_data = file_normal->data;
             new_normal->count = file_normal->count;
             new_normal->name = SetName((u32 *)&file_normal->name);
-            normal_src = (HsfVector3f *)((uintptr_t)data + (uintptr_t)temp_data);
+            new_normal->data = (void *)((uintptr_t)data+(uintptr_t)temp_data);
 #ifdef BYTESWAPPING
-            normal_data = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector3f) * new_normal->count, MEMORY_DEFAULT_NUM);
-            new_normal->data = normal_data;
-#else
-            new_normal->data = normal_src;
-            normal_data = new_normal->data;
-#endif
-#ifdef BYTESWAPPING
-            for (j = 0; j < new_normal->count; j++) {
-                HsfVector3f normal = normal_src[j];
-
-                byteswap_hsfvec3f(&normal);
-                normal_data[j] = normal;
+            if (cenv_count != 0) {
+                for (j = 0; j < new_normal->count; j++) {
+                    HsfVector3f *normalData = &((HsfVector3f *)new_normal->data)[j];
+                    byteswap_hsfvec3f(normalData);
+                }
             }
-#else
-            (void)cenv_count;
 #endif
         }
     }
@@ -1247,9 +1197,7 @@ static void STLoad(void)
         HsfBuffer32b *file_st_real = (HsfBuffer32b *)((uintptr_t)fileptr + head.st.ofs);
         temp_st = file_st = StTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.st.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.st.count; i++) {
-            HsfBuffer32b st = file_st_real[i];
-
-            byteswap_hsfbuffer(&st, &file_st[i]);
+            byteswap_hsfbuffer(&file_st_real[i], &file_st[i]);
         }
 #else
         temp_st = file_st = (HsfBuffer *)((u32)fileptr+head.st.ofs);
@@ -1270,28 +1218,17 @@ static void STLoad(void)
         data = (void *)&file_st[head.st.count];
 #endif
         for(i=0; i<head.st.count; i++, new_st++, file_st++) {
-            HsfVector2f *st_data;
-            HsfVector2f *st_src;
-
             temp_data = file_st->data;
             new_st->count = file_st->count;
             new_st->name = SetName((u32 *)&file_st->name);
-            st_src = (HsfVector2f *)((uintptr_t)data + (uintptr_t)temp_data);
-#ifdef BYTESWAPPING
-            st_data = CopyByteSwappedVec2Data(st_src, new_st->count);
-            new_st->data = st_data;
-#else
-            new_st->data = st_src;
-            st_data = new_st->data;
-#endif
+            new_st->data = (void *)((uintptr_t)data + (uintptr_t)temp_data);
             for(j=0; j<new_st->count; j++) {
-                data_elem = &st_src[j];
+                data_elem = (HsfVector2f *)((uintptr_t)data + (uintptr_t)temp_data + (j*sizeof(HsfVector2f)));
 #ifdef BYTESWAPPING
-                (void)data_elem;
-#else
-                st_data[j].x = data_elem->x;
-                st_data[j].y = data_elem->y;
+                byteswap_hsfvec2f(data_elem);
 #endif
+                ((HsfVector2f *)new_st->data)[j].x = data_elem->x;
+                ((HsfVector2f *)new_st->data)[j].y = data_elem->y;
             }
         }
     }
@@ -1307,7 +1244,6 @@ static void FaceLoad(void)
     HsfFace *file_face_strip;
     HsfFace *new_face_strip;
     u8 *strip;
-    u8 *strip_base;
     s32 i;
     s32 j;
 
@@ -1317,18 +1253,11 @@ static void FaceLoad(void)
         HsfFace32b *file_facedata_real = (HsfFace32b *)&file_face_real[head.face.count];
         temp_face = file_face = FaceTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfBuffer) * head.face.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.face.count; i++) {
-            HsfBuffer32b face = file_face_real[i];
-
-            byteswap_hsfbuffer(&face, &file_face[i]);
-        }
-        strip_base = (u8 *)file_facedata_real;
-        for (i = 0; i < head.face.count; i++) {
-            strip_base += file_face[i].count * sizeof(HsfFace32b);
+            byteswap_hsfbuffer(&file_face_real[i], &file_face[i]);
         }
 #else
         temp_face = file_face = (HsfBuffer *)((u32)fileptr+head.face.ofs);
         data = (HsfFace *)&file_face[head.face.count];
-        strip_base = NULL;
 #endif
         new_face = temp_face;
         Model.face = new_face;
@@ -1346,11 +1275,10 @@ static void FaceLoad(void)
                 HsfFace32b *facedata_start = (HsfFace32b *)((uintptr_t)file_facedata_real + (uintptr_t)temp_data);
                 data = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfFace) * new_face->count, MEMORY_DEFAULT_NUM);
                 for (j = 0; j < new_face->count; j++) {
-                    HsfFace32b face = facedata_start[j];
-
-                    byteswap_hsfface(&face, &data[j]);
+                    byteswap_hsfface(&facedata_start[j], &data[j]);
                 }
                 new_face->data = data;
+                strip = (u8 *)(&facedata_start[new_face->count]);
             }
 #else
             new_face->data = (void *)((uintptr_t)data+(uintptr_t)temp_data);
@@ -1362,12 +1290,14 @@ static void FaceLoad(void)
             file_face_strip = new_face_strip = new_face->data;
             for(j=0; j<new_face->count; j++, new_face_strip++, file_face_strip++) {
                 if(AS_U16(file_face_strip->type) == 4) {
-#ifdef BYTESWAPPING
-                    new_face_strip->strip.data = CopyByteSwappedS16Data(
-                        (s16 *)(strip_base + (uintptr_t)file_face_strip->strip.data * (sizeof(s16) * 4)),
-                        new_face_strip->strip.count * 4);
-#else
                     new_face_strip->strip.data = (s16 *)(strip+(uintptr_t)file_face_strip->strip.data*(sizeof(s16)*4));
+#ifdef BYTESWAPPING
+                    {
+                        s32 k;
+                        for (k = 0; k < new_face_strip->strip.count * 4; k++) {
+                            byteswap_s16(&new_face_strip->strip.data[k]);
+                        }
+                    }
 #endif
                 }
             }
@@ -1691,8 +1621,8 @@ static void CenvLoad(void)
         Model.cenvCnt = head.cenv.count;
         Model.cenv = cenv_file;
         for(i=0; i<head.cenv.count; i++) {
-#ifndef BYTESWAPPING
             cenv_new[i].singleData = (HsfCenvSingle *)((uintptr_t)cenv_file[i].singleData + (uintptr_t)data_base);
+#ifndef BYTESWAPPING
             cenv_new[i].dualData = (HsfCenvDual *)((uintptr_t)cenv_file[i].dualData + (uintptr_t)data_base);
             cenv_new[i].multiData = (HsfCenvMulti *)((uintptr_t)cenv_file[i].multiData + (uintptr_t)data_base);
 #endif
@@ -1713,26 +1643,15 @@ static void CenvLoad(void)
         }
         for(i=0; i<head.cenv.count; i++) {
 #ifdef BYTESWAPPING
-            HsfCenvSingle *single_src = (HsfCenvSingle *)((uintptr_t)cenv_file[i].singleData + (uintptr_t)data_base);
             HsfCenvDual32b *dual_data_real = (HsfCenvDual32b *)((uintptr_t)cenv_file[i].dualData + (uintptr_t)data_base);
             HsfCenvMulti32b *multi_data_real = (HsfCenvMulti32b *)((uintptr_t)cenv_file[i].multiData + (uintptr_t)data_base);
-            cenv_new[i].singleData = cenv_file[i].singleCount != 0
-                ? HuMemDirectMallocNum(HEAP_DATA, cenv_file[i].singleCount * sizeof(HsfCenvSingle), MEMORY_DEFAULT_NUM)
-                : NULL;
-            cenv_new[i].dualData = cenv_file[i].dualCount != 0
-                ? HuMemDirectMallocNum(HEAP_DATA, cenv_file[i].dualCount * sizeof(HsfCenvDual), MEMORY_DEFAULT_NUM)
-                : NULL;
-            cenv_new[i].multiData = cenv_file[i].multiCount != 0
-                ? HuMemDirectMallocNum(HEAP_DATA, cenv_file[i].multiCount * sizeof(HsfCenvMulti), MEMORY_DEFAULT_NUM)
-                : NULL;
+            cenv_new[i].dualData = HuMemDirectMallocNum(HEAP_DATA, cenv_file[i].dualCount * sizeof(HsfCenvDual), MEMORY_DEFAULT_NUM);
+            cenv_new[i].multiData = HuMemDirectMallocNum(HEAP_DATA, cenv_file[i].multiCount * sizeof(HsfCenvMulti), MEMORY_DEFAULT_NUM);
 #endif
             single_new = single_file = cenv_new[i].singleData;
             for(j=0; j<cenv_new[i].singleCount; j++) {
 #ifdef BYTESWAPPING
-                HsfCenvSingle single = single_src[j];
-
-                byteswap_hsfcenv_single(&single);
-                single_new[j] = single;
+                byteswap_hsfcenv_single(&single_new[j]);
 #endif
                 single_new[j].target = single_file[j].target;
                 single_new[j].posCnt = single_file[j].posCnt;
@@ -1744,54 +1663,34 @@ static void CenvLoad(void)
             for(j=0; j<cenv_new[i].dualCount; j++) {
 #ifdef BYTESWAPPING
                 s32 k;
-                HsfCenvDual32b dual = dual_data_real[j];
-                uintptr_t weight_ofs;
-
-                byteswap_hsfcenv_dual(&dual, &dual_new[j]);
-                weight_ofs = (uintptr_t)dual_new[j].weight;
-                dual_new[j].weight = dual_new[j].weightCnt != 0
-                    ? HuMemDirectMallocNum(HEAP_DATA, dual_new[j].weightCnt * sizeof(HsfCenvDualWeight), MEMORY_DEFAULT_NUM)
-                    : NULL;
-                for (k = 0; k < dual_new[j].weightCnt; k++) {
-                    HsfCenvDualWeight weight = ((HsfCenvDualWeight *)((uintptr_t)weight_base + weight_ofs))[k];
-
-                    byteswap_hsfcenv_dual_weight(&weight);
-                    dual_new[j].weight[k] = weight;
-                }
+                byteswap_hsfcenv_dual(&dual_data_real[j], &dual_new[j]);
 #endif
                 dual_new[j].target1 = dual_file[j].target1;
                 dual_new[j].target2 = dual_file[j].target2;
                 dual_new[j].weightCnt = dual_file[j].weightCnt;
-#ifndef BYTESWAPPING
                 dual_new[j].weight = (HsfCenvDualWeight *)((uintptr_t)weight_base + (uintptr_t)dual_file[j].weight);
+#ifdef BYTESWAPPING
+                for (k = 0; k < dual_new[j].weightCnt; k++) {
+                    byteswap_hsfcenv_dual_weight(&dual_new[j].weight[k]);
+                }
 #endif
             }
             multi_new = multi_file = cenv_new[i].multiData;
             for(j=0; j<cenv_new[i].multiCount; j++) {
 #ifdef BYTESWAPPING
                 s32 k;
-                HsfCenvMulti32b multi = multi_data_real[j];
-                uintptr_t weight_ofs;
-
-                byteswap_hsfcenv_multi(&multi, &multi_new[j]);
-                weight_ofs = (uintptr_t)multi_new[j].weight;
-                multi_new[j].weight = multi_new[j].weightCnt != 0
-                    ? HuMemDirectMallocNum(HEAP_DATA, multi_new[j].weightCnt * sizeof(HsfCenvMultiWeight), MEMORY_DEFAULT_NUM)
-                    : NULL;
-                for (k = 0; k < multi_new[j].weightCnt; k++) {
-                    HsfCenvMultiWeight weight = ((HsfCenvMultiWeight *)((uintptr_t)weight_base + weight_ofs))[k];
-
-                    byteswap_hsfcenv_multi_weight(&weight);
-                    multi_new[j].weight[k] = weight;
-                }
+                byteswap_hsfcenv_multi(&multi_data_real[j], &multi_new[j]);
 #endif
                 multi_new[j].weightCnt = multi_file[j].weightCnt;
                 multi_new[j].pos = multi_file[j].pos;
                 multi_new[j].posCnt = multi_file[j].posCnt;
                 multi_new[j].normal = multi_file[j].normal;
                 multi_new[j].normalCnt = multi_file[j].normalCnt;
-#ifndef BYTESWAPPING
                 multi_new[j].weight = (HsfCenvMultiWeight *)((uintptr_t)weight_base + (uintptr_t)multi_file[j].weight);
+#ifdef BYTESWAPPING
+                for (k = 0; k < multi_new[j].weightCnt; k++) {
+                    byteswap_hsfcenv_multi_weight(&multi_new[j].weight[k]);
+                }
 #endif
             }
             dual_new = dual_file = cenv_new[i].dualData;
@@ -1852,20 +1751,9 @@ static void PartLoad(void)
     if(head.part.count) {
 #ifdef BYTESWAPPING
         HsfPart32b *file_part_real = (HsfPart32b *)((uintptr_t)fileptr + head.part.ofs);
-        u32 part_vertex_count = 0;
-
+        part_new = part_file = PartTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfPart) * head.part.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.part.count; i++) {
-            u32 count = file_part_real[i].count;
-
-            byteswap_u32(&count);
-            part_vertex_count += count;
-        }
-        part_new = part_file = PartTop = HuMemDirectMallocNum(HEAP_DATA,
-            (sizeof(HsfPart) * head.part.count) + (sizeof(u16) * part_vertex_count), MEMORY_DEFAULT_NUM);
-        for (i = 0; i < head.part.count; i++) {
-            HsfPart32b part = file_part_real[i];
-
-            byteswap_hsfpart(&part, &part_file[i]);
+            byteswap_hsfpart(&file_part_real[i], &part_file[i]);
         }
 #else
         part_new = part_file = (HsfPart *)((u32)fileptr+head.part.ofs);
@@ -1873,33 +1761,20 @@ static void PartLoad(void)
         Model.partCnt = head.part.count;
         Model.part = part_file;
 #ifdef BYTESWAPPING
-        data = (u16 *)&part_file[head.part.count];
+        data = (u16 *)&file_part_real[head.part.count];
 #else
         data = (u16 *)&part_file[head.part.count];
 #endif
         for(i=0; i<head.part.count; i++, part_new++) {
             part_new->name = SetName((u32 *)&part_file[i].name);
             part_new->count = part_file[i].count;
-#ifdef BYTESWAPPING
-            {
-                uintptr_t vertex_ofs = (uintptr_t)part_file[i].vertex;
-                u16 *src_data = (u16 *)&file_part_real[head.part.count];
-
-                part_new->vertex = data;
-                for(j=0; j<part_new->count; j++) {
-                    u16 vertex = src_data[vertex_ofs + j];
-
-                    byteswap_u16(&vertex);
-                    part_new->vertex[j] = vertex;
-                }
-                data += part_new->count;
-            }
-#else
             part_new->vertex = &data[(uintptr_t)part_file[i].vertex];
             for(j=0; j<part_new->count; j++) {
                 part_new->vertex[j] = part_new->vertex[j];
-            }
+#ifdef BYTESWAPPING
+                byteswap_u16(&part_new->vertex[j]);
 #endif
+            }
         }
     }
 }
@@ -1950,9 +1825,7 @@ static void ShapeLoad(void)
         HsfShape32b *file_shape_real = (HsfShape32b *)((uintptr_t)fileptr + head.shape.ofs);
         shape_new = shape_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfShape) * head.shape.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.shape.count; i++) {
-            HsfShape32b shape = file_shape_real[i];
-
-            byteswap_hsfshape(&shape, &shape_file[i]);
+            byteswap_hsfshape(&file_shape_real[i], &shape_file[i]);
         }
 #else
         shape_new = shape_file = (HsfShape *)((u32)fileptr+head.shape.ofs);
@@ -1989,9 +1862,7 @@ static void MapAttrLoad(void)
         HsfMapAttr32b *file_mapattr_real = (HsfMapAttr32b *)((uintptr_t)fileptr + head.mapAttr.ofs);
         mapattr_file = mapattr_base = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMapAttr) * head.mapAttr.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.mapAttr.count; i++) {
-            HsfMapAttr32b mapattr = file_mapattr_real[i];
-
-            byteswap_hsfmapattr(&mapattr, &mapattr_base[i]);
+            byteswap_hsfmapattr(&file_mapattr_real[i], &mapattr_base[i]);
         }
 #else
         mapattr_file = mapattr_base = (HsfMapAttr *)((u32)fileptr+head.mapAttr.ofs);
@@ -2006,9 +1877,6 @@ static void MapAttrLoad(void)
 #endif
         for(i=0; i<head.mapAttr.count; i++, mapattr_file++, mapattr_new++) {
             mapattr_new->data = &data[(u32)mapattr_file->data];
-#ifdef BYTESWAPPING
-            mapattr_new->data = CopyByteSwappedU16Data(mapattr_new->data, mapattr_new->dataLen);
-#endif
         }
     }
 }
@@ -2277,13 +2145,9 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
     char *name;
     s32 numKeyframes;
     out_track = track;
+    name = MotionGetName(track);
     if(objtop) {
-        if (AS_S16(track->target) == -1) {
-            AS_S16(out_track->target) = track->param;
-        } else {
-            name = MotionGetName(track);
-            out_track->target = FindObjectName(name);
-        }
+        out_track->target = FindObjectName(name);
     }
     numKeyframes = AS_S16(track->numKeyframes);
     switch(track->curveType) {
@@ -2292,10 +2156,7 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            // We can't really copy this over to a custom allocation because they hsfmotion.c reads from it backwards
-            for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&step_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2305,9 +2166,7 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&linear_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2317,9 +2176,7 @@ static inline void MotionLoadTransform(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 4; i++) {
-                byteswap_float(&bezier_data[i]);
-            }
+            ByteSwapCurveBezierData(out_track);
 #endif
         }
         break;
@@ -2339,15 +2196,11 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
     char *name;
 
     out_track = track;
-    if (AS_S16(track->target) == -1) {
-        AS_S16(out_track->target) = track->param;
+    name = SetMotionName(&track->target);
+    if(!MotionOnly) {
+        AS_S16(out_track->target) = FindClusterName(name);
     } else {
-        name = SetMotionName(&track->target);
-        if(!MotionOnly) {
-            AS_S16(out_track->target) = FindClusterName(name);
-        } else {
-            AS_S16(out_track->target) = FindMotionClusterName(name);
-        }
+        AS_S16(out_track->target) = FindMotionClusterName(name);
     }
     numKeyframes = AS_S16(track->numKeyframes);
     (void)out_track;
@@ -2357,9 +2210,7 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&step_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2369,9 +2220,7 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&linear_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2381,9 +2230,7 @@ static inline void MotionLoadCluster(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 4; i++) {
-                byteswap_float(&bezier_data[i]);
-            }
+            ByteSwapCurveBezierData(out_track);
 #endif
         }
         break;
@@ -2417,9 +2264,7 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&step_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2429,9 +2274,7 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-             for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&bezier_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2441,9 +2284,7 @@ static inline void MotionLoadClusterWeight(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 4; i++) {
-                byteswap_float(&bezier_data[i]);
-            }
+            ByteSwapCurveBezierData(out_track);
 #endif
         }
         break;
@@ -2468,9 +2309,7 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&step_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2480,9 +2319,7 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 2; i++) {
-                byteswap_float(&linear_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2492,9 +2329,7 @@ static inline void MotionLoadMaterial(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            for (int i = 0; i < numKeyframes * 4; i++) {
-                byteswap_float(&bezier_data[i]);
-            }
+            ByteSwapCurveBezierData(out_track);
 #endif
         }
         break;
@@ -2530,9 +2365,7 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             step_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = step_data;
 #ifdef BYTESWAPPING
-            for (i = 0; i < track->numKeyframes * 2; i++) {
-                byteswap_float(&step_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2542,9 +2375,7 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             linear_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = linear_data;
 #ifdef BYTESWAPPING
-            for (i = 0; i < track->numKeyframes * 2; i++) {
-                byteswap_float(&linear_data[i]);
-            }
+            ByteSwapCurveStepOrLinearData(out_track);
 #endif
         }
         break;
@@ -2554,9 +2385,7 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             bezier_data = (float *)((uintptr_t)data + (uintptr_t)track->data);
             out_track->data = bezier_data;
 #ifdef BYTESWAPPING
-            for (i = 0; i < track->numKeyframes * 24; i++) {
-                byteswap_float(&bezier_data[i]);
-            }
+            ByteSwapCurveBezierData(out_track);
 #endif
         }
         break;
@@ -2572,9 +2401,7 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
             out_track->data = file_frame;
             for(i=0; i<out_track->numKeyframes; i++, file_frame++, new_frame++) {
 #ifdef BYTESWAPPING
-                HsfBitmapKey32b frame = file_frame_real[i];
-
-                byteswap_hsfbitmapkey(&frame, new_frame);
+                byteswap_hsfbitmapkey(&file_frame_real[i], new_frame);
 #endif
                 new_frame->data = SearchBitmapPtr((s32)file_frame->data);
             }
@@ -2590,10 +2417,9 @@ static void MotionLoad(void)
     HsfMotion *file_motion;
     HsfMotion *temp_motion;
     HsfMotion *new_motion;
-    void *track_base;
-    void *track_data_base;
-    uintptr_t track_data_ofs;
-    s32 i, j;
+    HsfTrack *track_base;
+    void *track_data;
+    s32 i;
 
     MotionOnly = FALSE;
     MotionModel = NULL;
@@ -2602,83 +2428,53 @@ static void MotionLoad(void)
         HsfMotion32b *file_motion_real = (HsfMotion32b *)((uintptr_t)fileptr + head.motion.ofs);
         temp_motion = file_motion = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMotion) * head.motion.count, MEMORY_DEFAULT_NUM);
         for (i = 0; i < head.motion.count; i++) {
-            HsfMotion32b motion = file_motion_real[i];
-
-            byteswap_hsfmotion(&motion, &file_motion[i]);
+            byteswap_hsfmotion(&file_motion_real[i], &file_motion[i]);
         }
 #else
         temp_motion = file_motion = (HsfMotion *)((uintptr_t)fileptr+head.motion.ofs);
 #endif
         new_motion = temp_motion;
         Model.motion = new_motion;
-        Model.motionCnt = head.motion.count;
+        Model.motionCnt = file_motion->numTracks;
 #ifdef BYTESWAPPING
-        track_base = &file_motion_real[head.motion.count];
-        track_data_base = track_base;
-        track_data_ofs = 0;
-        for (i = 0; i < head.motion.count; i++) {
-            uintptr_t motion_track_end = (uintptr_t)file_motion[i].track + (file_motion[i].numTracks * sizeof(HsfTrack32b));
-
-            if (motion_track_end > track_data_ofs) {
-                track_data_ofs = motion_track_end;
+        {
+            HsfTrack32b *track_base_real = (HsfTrack32b *)&file_motion_real[head.motion.count];
+            track_base = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfTrack) * file_motion->numTracks, MEMORY_DEFAULT_NUM);
+            track_data = &track_base_real[file_motion->numTracks];
+            for (i = 0; i < file_motion->numTracks; i++) {
+                byteswap_hsftrack(&track_base_real[i], &track_base[i]);
             }
         }
-        track_data_base = (void *)((uintptr_t)track_base + track_data_ofs);
 #else
-        track_base = &file_motion[head.motion.count];
-        track_data_base = track_base;
-        track_data_ofs = 0;
-        for (i = 0; i < head.motion.count; i++) {
-            uintptr_t motion_track_end = (uintptr_t)file_motion[i].track + (file_motion[i].numTracks * sizeof(HsfTrack));
-
-            if (motion_track_end > track_data_ofs) {
-                track_data_ofs = motion_track_end;
-            }
-        }
-        track_data_base = (void *)((uintptr_t)track_base + track_data_ofs);
+        track_base = (HsfTrack *)&file_motion[head.motion.count];
+        track_data = &track_base[file_motion->numTracks];
 #endif
-        for (i = 0; i < head.motion.count; i++) {
-#ifdef BYTESWAPPING
-            HsfTrack32b *track_base_real = (HsfTrack32b *)((uintptr_t)track_base + (uintptr_t)file_motion[i].track);
-            HsfTrack *track_list = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfTrack) * file_motion[i].numTracks, MEMORY_DEFAULT_NUM);
-            for (j = 0; j < file_motion[i].numTracks; j++) {
-                HsfTrack32b track = track_base_real[j];
-
-                byteswap_hsftrack(&track, &track_list[j]);
-            }
-#else
-            HsfTrack *track_list = (HsfTrack *)((uintptr_t)track_base + (uintptr_t)file_motion[i].track);
-#endif
-            new_motion[i].name = SetName((u32 *)&file_motion[i].name);
-            new_motion[i].numTracks = file_motion[i].numTracks;
-            new_motion[i].len = file_motion[i].len;
-            new_motion[i].track = track_list;
-            for (j = 0; j < (s32)new_motion[i].numTracks; j++) {
-                switch(track_list[j].type) {
+        new_motion->track = track_base;
+        for(i=0; i<(s32)file_motion->numTracks; i++) {
+            switch(track_base[i].type) {
                 case HSF_TRACK_TRANSFORM:
                 case HSF_TRACK_MORPH:
-                    MotionLoadTransform(&track_list[j], track_data_base);
+                    MotionLoadTransform(&track_base[i], track_data);
                     break;
 
                 case HSF_TRACK_CLUSTER:
-                    MotionLoadCluster(&track_list[j], track_data_base);
+                    MotionLoadCluster(&track_base[i], track_data);
                     break;
 
                 case HSF_TRACK_CLUSTER_WEIGHT:
-                    MotionLoadClusterWeight(&track_list[j], track_data_base);
+                    MotionLoadClusterWeight(&track_base[i], track_data);
                     break;
 
                 case HSF_TRACK_MATERIAL:
-                    MotionLoadMaterial(&track_list[j], track_data_base);
+                    MotionLoadMaterial(&track_base[i], track_data);
                     break;
 
                 case HSF_TRACK_ATTRIBUTE:
-                    MotionLoadAttribute(&track_list[j], track_data_base);
+                    MotionLoadAttribute(&track_base[i], track_data);
                     break;
 
                 default:
                     break;
-                }
             }
         }
     }
@@ -2714,39 +2510,11 @@ static void MatrixLoad(void)
 
     if(head.matrix.count) {
 #ifdef BYTESWAPPING
-        u8 *matrix_section = (u8 *)((uintptr_t)fileptr + head.matrix.ofs);
-        HsfMatrix32b *file_matrix_real = (HsfMatrix32b *)matrix_section;
-        s32 i;
-
-        matrix_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMatrix) * head.matrix.count, MEMORY_DEFAULT_NUM);
-        for (i = 0; i < head.matrix.count; i++) {
-            HsfMatrix32b matrix = file_matrix_real[i];
-            u32 total_matrices;
-            Mtx *matrix_src;
-            s32 j;
-            s32 k;
-            s32 l;
-
-            byteswap_u32(&matrix.base_idx);
-            byteswap_u32(&matrix.count);
-            byteswap_u32(&matrix.data);
-
-            matrix_file[i].base_idx = matrix.base_idx;
-            matrix_file[i].count = matrix.count;
-            total_matrices = matrix.base_idx + matrix.count + (matrix.base_idx * matrix.count);
-            matrix_src = (Mtx *)(matrix_section + matrix.data);
-            matrix_file[i].data = HuMemDirectMallocNum(HEAP_DATA, sizeof(Mtx) * total_matrices, MEMORY_DEFAULT_NUM);
-            for (j = 0; j < (s32)total_matrices; j++) {
-                for (k = 0; k < 3; k++) {
-                    for (l = 0; l < 4; l++) {
-                        float value = matrix_src[j][k][l];
-
-                        byteswap_float(&value);
-                        matrix_file[i].data[j][k][l] = value;
-                    }
-                }
-            }
+        if (head.matrix.count > 1) {
+            OSReport("MORE THAN ONE MATRIX, FIX PARSING!\n");
         }
+        matrix_file = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfMatrix) * head.matrix.count, MEMORY_DEFAULT_NUM);
+        byteswap_hsfmatrix((HsfMatrix32b *)((uintptr_t)fileptr + head.matrix.ofs), matrix_file);
 #else
         matrix_file = (HsfMatrix *)((uintptr_t)fileptr+head.matrix.ofs);
         matrix_file->data = (Mtx *)((u32)fileptr+head.matrix.ofs+sizeof(HsfMatrix));
