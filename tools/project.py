@@ -51,6 +51,7 @@ class Object:
             "shift_jis": None,
             "source": name,
             "src_dir": None,
+            "strip_prefix": None,
         }
         self.options.update(options)
 
@@ -98,15 +99,17 @@ class Object:
 
         # Resolve paths
         build_dir = config.out_path()
-        obj.src_path = Path(obj.options["src_dir"]) / obj.options["source"]
+        source = obj.options["source"]
+        if obj.options["strip_prefix"]:
+            source = source.removeprefix(obj.options["strip_prefix"])
+        obj.src_path = Path(obj.options["src_dir"]) / source
         if obj.options["asm_dir"] is not None:
             obj.asm_path = (
-                Path(obj.options["asm_dir"]) / obj.options["source"]
+                    Path(obj.options["asm_dir"]) / source
             ).with_suffix(".s")
         base_name = Path(self.name).with_suffix("")
         obj.src_obj_path = build_dir / "src" / f"{base_name}.o"
         obj.asm_obj_path = build_dir / "mod" / f"{base_name}.o"
-        obj.host_obj_path = build_dir / "host" / f"{base_name}.o"
         obj.ctx_path = build_dir / "src" / f"{base_name}.ctx"
         return obj
 
@@ -1269,6 +1272,11 @@ def generate_objdiff_config(
             "*.yml",
             "*.txt",
             "*.json",
+        ],
+        "ignore_patterns": [
+            "build/debugx86/*",
+            "build/releasex64/*",
+            "build/releasex86/*"
         ],
         "units": [],
         "progress_categories": [],

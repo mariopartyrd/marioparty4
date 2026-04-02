@@ -196,6 +196,8 @@ cflags_base = [
     "-i libc",
     "-i extern/musyx/include",
     f"-i build/{config.version}/include",
+    "-i libs/dolphin/include",
+    "-i libs/dolphin/include/dolphin",  # for types.h includes
     "-multibyte",
     f"-DVERSION={version_num}",
     "-DMUSY_TARGET=MUSY_TARGET_DOLPHIN",
@@ -282,7 +284,9 @@ cflags_musyx = [
     "-str reuse,pool,readonly",
     "-fp_contract off",
     "-DMUSY_TARGET=MUSY_TARGET_DOLPHIN",
-    "-sym on"
+    "-sym on",
+    "-i libs/dolphin/include",
+    "-i libs/dolphin/include/dolphin",  # for types.h includes
 ]
 
 cflags_musyx_debug = [
@@ -344,6 +348,8 @@ config.rel_empty_file = "REL/empty.c"
 def DolphinLib(lib_name, objects):
     return {
         "lib": lib_name,
+        "src_dir": "libs/dolphin/src",
+        "strip_prefix": "dolphin/",
         "mw_version": "GC/1.2.5n",
         "cflags": cflags_dolphin,
         "host": False,
@@ -354,6 +360,8 @@ def DolphinLib(lib_name, objects):
 def DolphinLibUnpatched(lib_name, objects):
     return {
         "lib": lib_name,
+        "src_dir": "libs/dolphin/src",
+        "strip_prefix": "dolphin/",
         "mw_version": "GC/1.2.5",
         "cflags": cflags_dolphin,
         "host": False,
@@ -652,6 +660,8 @@ config.libs = [
     ),
     {
         "lib": "thp",
+        "src_dir": "libs/dolphin/src",
+        "strip_prefix": "dolphin/",
         "mw_version": "GC/1.2.5",
         "cflags": cflags_thp,
         "host": False,
