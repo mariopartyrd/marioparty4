@@ -1457,7 +1457,7 @@ void JointModel_Motion(s16 arg0, s16 arg1)
             case HSF_TRACK_ATTRIBUTE:
                 var_r31 = track;
                 if (var_r31->param == -1) {
-                    temp_r21 = SearchAttributeIndex(temp_r26, var_r31->target);
+                    temp_r21 = SearchAttributeIndex(temp_r26, var_r31->target_s16);
                     if (temp_r21 != -1) {
                         var_r31->param = temp_r21;
                     }

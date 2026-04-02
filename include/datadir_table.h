@@ -1,4 +1,4 @@
-#ifdef BYTESWAPPING
+#if defined(BYTESWAPPING) || !defined(TARGET_PC)
 #define DATADIR_PREFIX "data"
 #else
 #define DATADIR_PREFIX "data_byteswapped"
