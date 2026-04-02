@@ -166,6 +166,14 @@ typedef struct hsf_attribute {
     u32 unk78;
     u32 flag;
     HsfBitmap *bitmap;
+#ifdef TARGET_PC
+    bool tex_initialized;
+    GXTexObj tex_obj;
+    bool tlut_initialized;
+    GXTlutObj tlut_obj;
+    bool tlut8000_initialized;
+    GXTlutObj tlut8000_obj;
+#endif
 } HsfAttribute;
 
 typedef struct hsf_material {

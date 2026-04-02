@@ -1023,6 +1023,14 @@ static void AttributeLoad(void)
                 new_attr->name = NULL;
             }
             new_attr->bitmap = SearchBitmapPtr((s32)file_attr[i].bitmap);
+#ifdef TARGET_PC
+            new_attr->tex_initialized = FALSE;
+            new_attr->tlut_initialized = FALSE;
+            new_attr->tlut8000_initialized = FALSE;
+            memset(&new_attr->tex_obj, 0, sizeof(new_attr->tex_obj));
+            memset(&new_attr->tlut_obj, 0, sizeof(new_attr->tlut_obj));
+            memset(&new_attr->tlut8000_obj, 0, sizeof(new_attr->tlut8000_obj));
+#endif
         }
     }
 }
@@ -2746,5 +2754,17 @@ void KillHSF(HsfData *data)
     // if (data->mapAttrCnt)
     //     HuMemDirectFree(data->mapAttr);
     // HuMemDirectFree(data->symbol);
+    for (i = 0; i < data->attributeCnt; i++) {
+        HsfAttribute *attr = &data->attribute[i];
+        if (attr->tex_initialized) {
+            GXDestroyTexObj(&attr->tex_obj);
+        }
+        if (attr->tlut_initialized) {
+            GXDestroyTlutObj(&attr->tlut_obj);
+        }
+        if (attr->tlut8000_initialized) {
+            GXDestroyTlutObj(&attr->tlut8000_obj);
+        }
+    }
 }
 #endif

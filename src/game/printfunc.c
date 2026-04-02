@@ -6,6 +6,10 @@
 #include "stdarg.h"
 #include "stdio.h"
 
+#ifdef TARGET_PC
+#include <string.h>
+#endif
+
 extern u8 ank8x8_4b[];
 
 struct strline_data {
@@ -117,7 +121,12 @@ s16 printWin(s16 x, s16 y, s16 w, s16 h, GXColor *color)
 
 void pfDrawFonts(void)
 {
+#ifdef TARGET_PC
+    static bool tex_initialized = FALSE;
+    static GXTexObj font_tex;
+#else
     GXTexObj font_tex;
+#endif
     Mtx44 proj;
     Mtx modelview;
     int i;
@@ -144,8 +153,12 @@ void pfDrawFonts(void)
     GXSETARRAY(GX_VA_CLR0, fcoltbl, sizeof(fcoltbl), sizeof(GXColor), TRUE);
     GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);
     GXInvalidateTexAll();
-    GXInitTexObj(&font_tex, ank8x8_4b, 128, 128, GX_TF_I4, GX_CLAMP, GX_CLAMP, GX_FALSE);
-    GXInitTexObjLOD(&font_tex, GX_NEAR, GX_NEAR, 0, 0, 0, GX_FALSE, GX_FALSE, GX_ANISO_1);
+    if (!tex_initialized) {
+        memset(&font_tex, 0, sizeof(font_tex));
+        GXInitTexObj(&font_tex, ank8x8_4b, 128, 128, GX_TF_I4, GX_CLAMP, GX_CLAMP, GX_FALSE);
+        GXInitTexObjLOD(&font_tex, GX_NEAR, GX_NEAR, 0, 0, 0, GX_FALSE, GX_FALSE, GX_ANISO_1);
+        tex_initialized = TRUE;
+    }
     GXLoadTexObj(&font_tex, GX_TEXMAP0);
     GXSetNumTevStages(1);
     GXSetNumTexGens(1);
@@ -289,7 +302,8 @@ void pfDrawFonts(void)
         }
     }
 #ifdef TARGET_PC
-    GXDestroyTexObj(&font_tex);
+    // TODO PC though maybe it's fine to never destroy it?
+    // GXDestroyTexObj(&font_tex);
 #endif
 }
 
