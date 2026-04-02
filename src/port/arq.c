@@ -7,8 +7,8 @@ extern u8 ARAM[16 * 1024 * 1024];
 void ARQPostRequest(ARQRequest *task, u32 owner, u32 type, u32 priority,
     uintptr_t source, uintptr_t dest, u32 length, ARQCallback callback)
 {
-    printf("ARQPostRequest: 0x%X, 0x%X, 0x%X\n",
-        (unsigned int)source, (unsigned int)dest, (unsigned int)length);
+    printf("ARQPostRequest: source: 0x%X, dest: 0x%X, length: 0x%X, type: 0x%X\n",
+        (unsigned int)source, (unsigned int)dest, (unsigned int)length, (unsigned int)type);
     switch (type)
     {
     case ARQ_TYPE_MRAM_TO_ARAM:

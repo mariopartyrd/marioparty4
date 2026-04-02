@@ -7,15 +7,6 @@
 
 u8 LC_CACHE_BASE[4096];
 
-void OSInit()
-{
-    puts("OSInit is a stub");
-    u8 *arena = malloc(MEM_SIZE);
-
-    OSSetArenaLo(arena);
-    OSSetArenaHi(arena + MEM_SIZE);
-}
-
 u32 OSGetConsoleSimulatedMemSize(void)
 {
     puts("OSGetSimulatedMemSize is a stub");

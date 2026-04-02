@@ -103,6 +103,8 @@ void main(void)
             .windowPosY = 100,
             .windowWidth = 640,
             .windowHeight = 480,
+            .mem1Size = 64 * 1024 * 1024,
+            .mem2Size =  16 * 1024 * 1024,
         });
 #endif
     u32 met0;
