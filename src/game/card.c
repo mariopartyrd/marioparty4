@@ -10,7 +10,11 @@ static void MountCallBack(s32 chan, s32 result);
 
 void HuCardInit(void)
 {
+#ifdef TARGET_PC
+        CARDInit("Party Board", "mariopartyrd");
+#else
 	CARDInit();
+#endif
 	cardWork = HuMemDirectMalloc(HEAP_SYSTEM, CARD_WORKAREA_SIZE);
 }
 

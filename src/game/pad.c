@@ -58,7 +58,9 @@ void HuPadInit(void)
     BOOL int_level;
     PADSetSpec(PAD_SPEC_5);
     PADInit();
+#ifndef TARGET_PC
     SISetSamplingRate(0);
+#endif
     int_level = OSDisableInterrupts();
     VISetPostRetraceCallback(PadReadVSync);
     OSRestoreInterrupts(int_level);
@@ -121,10 +123,10 @@ static void PadReadVSync(u32 retraceCount)
                 _PadBtnDown[i] = _PadBtn[i] = _PadStkX[i] = _PadStkY[i] = _PadSubStkX[i] = _PadSubStkY[i] = _PadTrigL[i] = _PadTrigR[i] =  _PadDStkRep[i] = _PadDStk[i] =  HuPadBtnRep[i] = 0;
             } else {
                 u16 button = curr_status->button;
-                if(curr_status->triggerL & 0xC0) {
+                if(curr_status->triggerLeft & 0xC0) {
                     button |= PAD_BUTTON_TRIGGER_L;
                 }
-                if(curr_status->triggerR & 0xC0) {
+                if(curr_status->triggerRight & 0xC0) {
                     button |= PAD_BUTTON_TRIGGER_R;
                 }
                 if(button && _PadBtn[i] == button) {
@@ -145,8 +147,8 @@ static void PadReadVSync(u32 retraceCount)
                 _PadStkY[i] = curr_status->stickY;
                 _PadSubStkX[i] = curr_status->substickX;
                 _PadSubStkY[i] = curr_status->substickY;
-                _PadTrigL[i] = curr_status->triggerL;
-                _PadTrigR[i] = curr_status->triggerR;
+                _PadTrigL[i] = curr_status->triggerLeft;
+                _PadTrigR[i] = curr_status->triggerRight;
                 _PadErr[i] = curr_status->err;
                 if(rumble->duration) {
                     s16 time = rumble->time%(rumble->off+rumble->on);

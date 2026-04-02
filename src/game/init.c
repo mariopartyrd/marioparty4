@@ -2,12 +2,15 @@
 #include "game/memory.h"
 #include "game/fault.h"
 #include "game/sreset.h"
-#include "dolphin/demo/DEMOStats.h"
 #include "dolphin/os.h"
 #include "dolphin/gx.h"
 #include "dolphin/dvd.h"
 #include "dolphin/vi.h"
 #include "dolphin/pad.h"
+
+#ifndef TARGET_PC
+#include "dolphin/demo/DEMOStats.h"
+#endif
 
 struct memory_info {
     void *start;
@@ -200,6 +203,7 @@ void HuSysBeforeRender()
 void HuSysDoneRender(s32 retrace_count)
 {
     s32 retrace_dist;
+#ifndef TARGET_PC
     if(DemoStatEnable) {
         GXDrawDone();
         DEMOUpdateStats(1);
@@ -207,6 +211,7 @@ void HuSysDoneRender(s32 retrace_count)
         GXDrawDone();
         DEMOUpdateStats(0);
     }
+#endif
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
     GXSetColorUpdate(GX_TRUE);
     GXDrawDone();
@@ -288,7 +293,7 @@ static void LoadMemInfo()
         while(size) {
             OSReport("loop\n");
             copy_size = (size < 32) ? size : 32;
-            if(DVDRead(&file, buf_ptr, OSRoundUp32B(copy_size), offset) < 0) {
+            if(DVDReadPrio(&file, buf_ptr, OSRoundUp32B(copy_size), offset, 2) < 0) {
                 OSPanic("init.c", ASSERT_LINE(576, 586), "An error occurred when issuing read to /meminfo.bin\n");
             }
             entries = copy_size/sizeof(struct memory_info);

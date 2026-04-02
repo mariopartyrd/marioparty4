@@ -265,6 +265,6 @@ class Limiter
 static Limiter g_frameLimiter;
 void frame_limiter()
 {
-    // g_frameLimiter.Sleep(
-    //     std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds{1}) / 60);
+    g_frameLimiter.Sleep(
+        std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds{1}) / 60);
 }

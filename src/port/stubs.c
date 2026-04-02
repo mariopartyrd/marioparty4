@@ -1,4 +1,3 @@
-#include "dolphin/gx/GXVert.h"
 #include <dolphin.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -29,183 +28,6 @@ u32 OSGetConsoleType()
 u32 OSGetSoundMode()
 {
     return 2;
-}
-
-s32 CARDCancel(CARDFileInfo *fileInfo)
-{
-    puts("CARDCancel is a stub");
-    return 0;
-}
-
-s32 CARDCheck(s32 chan)
-{
-    puts("CARDCheck is a stub");
-    return 0;
-}
-
-s32 CARDCheckAsync(s32 chan, CARDCallback callback)
-{
-    puts("CARDCheckAsync is a stub");
-    return 0;
-}
-
-s32 CARDClose(CARDFileInfo *fileInfo)
-{
-    puts("CARDClose is a stub");
-    return 0;
-}
-
-s32 CARDCreate(s32 chan, const char *fileName, u32 size, CARDFileInfo *fileInfo)
-{
-    puts("CARDCreate is a stub");
-    return 0;
-}
-
-s32 CARDCreateAsync(s32 chan, const char *fileName, u32 size, CARDFileInfo *fileInfo, CARDCallback callback)
-{
-    puts("CARDCreateAsync is a stub");
-    return 0;
-}
-
-s32 CARDDelete(s32 chan, const char *fileName)
-{
-    puts("CARDDelete is a stub");
-    return 0;
-}
-
-s32 CARDDeleteAsync(s32 chan, const char *fileName, CARDCallback callback)
-{
-    puts("CARDDeleteAsync is a stub");
-    return 0;
-}
-
-s32 CARDFastDeleteAsync(s32 chan, s32 fileNo, CARDCallback callback)
-{
-    puts("CARDFastDeleteAsync is a stub");
-    return 0;
-}
-
-s32 CARDFastOpen(s32 chan, s32 fileNo, CARDFileInfo *fileInfo)
-{
-    puts("CARDFastOpen is a stub");
-    return 0;
-}
-
-s32 CARDFormat(s32 chan)
-{
-    puts("CARDFormat is a stub");
-    return 0;
-}
-
-s32 CARDFreeBlocks(s32 chan, s32 *byteNotUsed, s32 *filesNotUsed)
-{
-    puts("CARDFreeBlocks is a stub");
-    return 0;
-}
-
-s32 CARDGetResultCode(s32 chan)
-{
-    puts("CARDGetResultCode is a stub");
-    return 0;
-}
-
-s32 CARDGetStatus(s32 chan, s32 fileNo, CARDStat *stat)
-{
-    puts("CARDGetStatus is a stub");
-    return 0;
-}
-
-s32 CARDGetSectorSize(s32 chan, u32 *size)
-{
-    puts("CARDGetSectorSize is a stub");
-    return 0;
-}
-
-void CARDInit()
-{
-    puts("CARDInit is a stub");
-}
-
-s32 CARDMount(s32 chan, void *workArea, CARDCallback detachCallback)
-{
-    puts("CARDMount is a stub");
-    return 0;
-}
-
-s32 CARDMountAsync(s32 chan, void *workArea, CARDCallback detachCallback, CARDCallback attachCallback)
-{
-    puts("CARDMountAsync is a stub");
-    return 0;
-}
-
-s32 CARDOpen(s32 chan, const char *fileName, CARDFileInfo *fileInfo)
-{
-    puts("CARDOpen is a stub");
-    return 0;
-}
-
-s32 CARDProbeEx(s32 chan, s32 *memSize, s32 *sectorSize)
-{
-    puts("CARDProbeEx is a stub");
-    return 0;
-}
-
-s32 CARDRead(CARDFileInfo *fileInfo, void *addr, s32 length, s32 offset)
-{
-    puts("CARDRead is a stub");
-    return 0;
-}
-
-s32 CARDReadAsync(CARDFileInfo *fileInfo, void *addr, s32 length, s32 offset, CARDCallback callback)
-{
-    puts("CARDReadAsync is a stub");
-    return 0;
-}
-
-s32 CARDRename(s32 chan, const char *oldName, const char *newName)
-{
-    puts("CARDRename is a stub");
-    return 0;
-}
-
-s32 CARDRenameAsync(s32 chan, const char *oldName, const char *newName, CARDCallback callback)
-{
-    puts("CARDRenameAsync is a stub");
-    return 0;
-}
-
-s32 CARDSetStatusAsync(s32 chan, s32 fileNo, CARDStat *stat, CARDCallback callback)
-{
-    puts("CARDSetStatusAsync is a stub");
-    return 0;
-}
-
-s32 CARDUnmount(s32 chan)
-{
-    puts("CARDUnmount is a stub");
-    return 0;
-}
-
-s32 CARDWrite(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 offset)
-{
-    puts("CARDWrite is a stub");
-    return 0;
-}
-
-s32 CARDWriteAsync(CARDFileInfo *fileInfo, const void *addr, s32 length, s32 offset, CARDCallback callback)
-{
-    puts("CARDWriteAsync is a stub");
-    return 0;
-}
-
-s32 CARDGetSerialNo(s32 chan, u64* serialNo)
-{
-    return 0;
-}
-
-s32 CARDSetStatus(s32 chan, s32 fileNo, CARDStat* stat)
-{
-    return 0;
 }
 
 void DCFlushRange(void *addr, u32 nBytes)
@@ -249,14 +71,15 @@ s32 DVDCancel(DVDCommandBlock *block)
     return 0;
 }
 
-void DVDReadAbsAsyncForBS(void *a, struct bb2struct *b, int c, int d, void (*e)())
+int DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback)
 {
     puts("DVDReadAbsAsyncForBS is a stub");
 }
 
-void DVDReadDiskID(void *a, DVDDiskID *b, void (*c)())
+int DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback callback)
 {
     puts("DVDReadDiskID is a stub");
+    return 0;
 }
 
 void DVDReset()
@@ -413,11 +236,6 @@ s32 OSSuspendThread(OSThread *thread)
     return 0;
 }
 
-void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime *td)
-{
-    puts("OSTicksToCalendarTime is a stub");
-}
-
 BOOL OSUnlink(OSModuleInfo *oldModule)
 {
     puts("OSUnlink is a stub");
@@ -492,12 +310,6 @@ if (sVIRetraceCallback)
 {
     sVIRetraceCallback(0);
 }
-}
-
-s32 __CARDFormatRegionAsync(int a, int b)
-{
-    puts("__CARDFormatRegionAsync is a stub");
-    return 0;
 }
 
 void __GXSetSUTexSize()
@@ -617,43 +429,6 @@ void GXResetWriteGatherPipe(void)
 {
     // puts("GXResetWriteGatherPipe is a stub");
 }
-
-void ARQInit(void) {
-    puts("ARQInit is a stub");
-}
-
-// void GXProject(f32 x, f32 y, f32 z, const f32 mtx[3][4], const f32 *pm, const f32 *vp, f32 *sx, f32 *sy, f32 *sz)
-// {
-//     Vec peye;
-//     f32 xc;
-//     f32 yc;
-//     f32 zc;
-//     f32 wc;
-//
-//     peye.x = mtx[0][3] + ((mtx[0][2] * z) + ((mtx[0][0] * x) + (mtx[0][1] * y)));
-//     peye.y = mtx[1][3] + ((mtx[1][2] * z) + ((mtx[1][0] * x) + (mtx[1][1] * y)));
-//     peye.z = mtx[2][3] + ((mtx[2][2] * z) + ((mtx[2][0] * x) + (mtx[2][1] * y)));
-//     if (pm[0] == 0.0f) {
-//         xc = (peye.x * pm[1]) + (peye.z * pm[2]);
-//         yc = (peye.y * pm[3]) + (peye.z * pm[4]);
-//         zc = pm[6] + (peye.z * pm[5]);
-//         wc = 1.0f / -peye.z;
-//     }
-//     else {
-//         xc = pm[2] + (peye.x * pm[1]);
-//         yc = pm[4] + (peye.y * pm[3]);
-//         zc = pm[6] + (peye.z * pm[5]);
-//         wc = 1.0f;
-//     }
-//     *sx = (vp[2] / 2.0f) + (vp[0] + (wc * (xc * vp[2] / 2.0f)));
-//     *sy = (vp[3] / 2.0f) + (vp[1] + (wc * (-yc * vp[3] / 2.0f)));
-//     *sz = vp[5] + (wc * (zc * (vp[5] - vp[4])));
-// }
-
-// void GXGetViewportv(f32 *vp)
-// {
-//     // TODO
-// }
 
 // Hudson
 void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2) { }

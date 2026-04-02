@@ -23,15 +23,7 @@ endif ()
 add_subdirectory(extern/aurora EXCLUDE_FROM_ALL)
 add_subdirectory(extern/musyx EXCLUDE_FROM_ALL)
 
-set(DOLPHIN_FILES
-        src/dolphin/mtx/mtx.c
-        src/dolphin/mtx/mtx44.c
-        src/dolphin/mtx/vec.c
-        src/dolphin/mtx/quat.c
-        src/dolphin/os/OSAlloc.c
-        src/dolphin/os/OSArena.c
-        src/dolphin/os/OSStopwatch.c
-)
+include(extern/aurora/cmake/AuroraCopyRuntimeDLLs.cmake)
 
 set(GAME_FILES
         src/game/board/audio.c
@@ -113,8 +105,6 @@ set(GAME_FILES
 )
 
 set(PORT_FILES
-        src/port/ar.c
-        src/port/arq.c
         src/port/audio.c
         src/port/byteswap.cpp
         src/port/dvd.c
@@ -138,8 +128,8 @@ endif ()
 
 add_library(dol SHARED ${DOLPHIN_FILES} ${GAME_FILES} ${PORT_FILES} extern/libco/libco.c)
 target_compile_definitions(dol PRIVATE TARGET_PC NON_MATCHING BYTESWAPPING TARGET_DOL VERSION=${VERSION} MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
-target_include_directories(dol PRIVATE include build/GMPE01_00/include extern/libco)
-target_link_libraries(dol PRIVATE aurora::core aurora::gx aurora::si aurora::vi aurora::pad musyx)
+target_include_directories(dol PRIVATE include extern/aurora/include extern/aurora/include/dolphin build/GMPE01_00/include extern/libco)
+target_link_libraries(dol PRIVATE aurora::core aurora::card aurora::gx aurora::mtx aurora::os aurora::si aurora::vi aurora::pad musyx)
 # TODO it doesn't work on Linux yet
 if (CMAKE_SYSTEM_NAME STREQUAL Windows)
  # set_source_files_properties(${DOLPHIN_FILES} ${GAME_FILES} PROPERTIES COMPILE_OPTIONS "-fsanitize=address")
@@ -161,6 +151,7 @@ add_executable(marioparty4 src/port/portmain.c)
 target_compile_definitions(marioparty4 PRIVATE TARGET_PC NON_MATCHING VERSION=${VERSION})
 target_include_directories(marioparty4 PRIVATE include)
 target_link_libraries(marioparty4 PRIVATE dol aurora::main)
+aurora_copy_runtime_dlls(marioparty4)
 
 file(GLOB REL_DIRS RELATIVE ${CMAKE_SOURCE_DIR}/src/REL ${CMAKE_SOURCE_DIR}/src/REL/*)
 set(EXCLUDED_RELS "nisDll" "safDll")
@@ -181,7 +172,7 @@ foreach (dir ${REL_DIRS})
                 target_sources(${dir} PRIVATE src/REL/board_executor.c)
             endif()
             target_compile_definitions(${dir} PRIVATE TARGET_PC BYTESWAPPING NON_MATCHING VERSION=${VERSION})
-            target_include_directories(${dir} PRIVATE include build/GMPE01_00/include extern/libco)
+            target_include_directories(${dir} PRIVATE include extern/aurora/include extern/aurora/include/dolphin build/GMPE01_00/include extern/libco)
             if (MSVC)
                 set_target_properties(${dir} PROPERTIES LINK_FLAGS "/EXPORT:ObjectSetup")
                 target_compile_options(${dir} PRIVATE "/Zi")
