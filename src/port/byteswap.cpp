@@ -459,7 +459,7 @@ template <typename B> void bswap(B &base, HsfMaterial32b &obj, HsfMaterial &dest
     dest.unk2C = obj.unk2C;
     dest.flags = obj.flags;
     dest.numAttrs = obj.numAttrs;
-    dest.attrs = reinterpret_cast<s32 *>(static_cast<uintptr_t>(obj.attrs));
+    dest.attrs = reinterpret_cast<intptr_t *>(static_cast<uintptr_t>(obj.attrs));
 }
 
 template <typename B> void bswap(B &base, HsfScene &obj)

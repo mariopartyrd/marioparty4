@@ -736,27 +736,27 @@ static void DumpHSF(HsfData *hsf) {
 
     DumpScene(hsf);
     DumpPalettes(hsf);
-    // DumpBitmaps(hsf);
-    // DumpMaterials(hsf);
-    // DumpAttributes(hsf);
-    // DumpVertexBuffers(hsf);
-    // DumpNormalBuffers(hsf); // check with CENV stuff later
-    // DumpStBuffers(hsf);
-    // DumpColorBuffers(hsf);
-    // DumpFaces(hsf);
+    DumpBitmaps(hsf);
+    DumpMaterials(hsf);
+    DumpAttributes(hsf);
+    DumpVertexBuffers(hsf);
+    DumpNormalBuffers(hsf); // check with CENV stuff later
+    DumpStBuffers(hsf);
+    DumpColorBuffers(hsf);
+    DumpFaces(hsf);
     DumpSkeletons(hsf);
     DumpParts(hsf);
     DumpClusters(hsf);
     DumpCenvs(hsf);
     DumpShapes(hsf);
     DumpMapAttrs(hsf);
-    // DumpMotions(hsf);
+    DumpMotions(hsf);
     DumpMatrices(hsf);
 
-    // fprintf(g_dump_file, "\n=== OBJECT TREE ===\n");
-    // if (hsf->root) {
-    //     DumpObjectData(hsf->root, 0);
-    // }
+    fprintf(g_dump_file, "\n=== OBJECT TREE ===\n");
+    if (hsf->root) {
+        DumpObjectData(hsf->root, 0);
+    }
 
     fclose(g_dump_file);
     g_dump_file = NULL;
@@ -874,7 +874,12 @@ static void FileLoad(void *data)
 
 static HsfData *SetHsfModel(void)
 {
+#ifdef TARGET_PC
+    // TODO free
+    HsfData *data = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfData), MEMORY_DEFAULT_NUM);
+#else
     HsfData *data = fileptr;
+#endif
     data->scene = Model.scene;
     data->sceneCnt = Model.sceneCnt;
     data->attribute = Model.attribute;
@@ -983,7 +988,8 @@ static void MaterialLoad(void)
             new_mat->refAlpha = curr_mat->refAlpha;
             new_mat->unk2C = curr_mat->unk2C;
             new_mat->numAttrs = curr_mat->numAttrs;
-            new_mat->attrs = (s32 *)(NSymIndex+((u32)curr_mat->attrs));
+            // the pointers are being treated as values
+            new_mat->attrs = (intptr_t *)(NSymIndex+((u32)curr_mat->attrs));
             rgba[i].r = new_mat->litColor[0];
             rgba[i].g = new_mat->litColor[1];
             rgba[i].b = new_mat->litColor[2];
@@ -1918,7 +1924,7 @@ static void BitmapLoad(void)
             bitmap_new->sizeX = bitmap_file->sizeX;
             bitmap_new->sizeY = bitmap_file->sizeY;
             bitmap_new->palSize = bitmap_file->palSize;
-            palette = SearchPalettePtr((uintptr_t)bitmap_file->palData);
+            palette = SearchPalettePtr((s32)bitmap_file->palData);
             if(palette) {
                 bitmap_new->palData = palette->data;
             }

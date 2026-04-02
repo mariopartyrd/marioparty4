@@ -184,7 +184,7 @@ typedef struct hsf_material {
     float unk2C;
     u32 flags;
     u32 numAttrs;
-    s32 *attrs;
+    intptr_t *attrs;
 } HsfMaterial;
 
 typedef struct hsf_vertex_buf {
