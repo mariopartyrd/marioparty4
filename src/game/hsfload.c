@@ -874,7 +874,7 @@ static void FileLoad(void *data)
 
 static HsfData *SetHsfModel(void)
 {
-#ifdef TARGET_PC
+#ifdef BYTESWAPPING
     // TODO free
     HsfData *data = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfData), MEMORY_DEFAULT_NUM);
 #else
@@ -1976,9 +1976,9 @@ static void PaletteLoad(void)
             palette_new->palSize = palette_file->palSize;
             for(j=0; j<palette_file->palSize; j++) {
                 data[j] = data[j];
-#ifdef BYTESWAPPING
-                byteswap_u16(&data[j]);
-#endif
+// #ifdef BYTESWAPPING
+                // byteswap_u16(&data[j]);
+// #endif
             }
         }
     }

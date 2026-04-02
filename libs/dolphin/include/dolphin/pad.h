@@ -62,8 +62,8 @@ typedef struct PADStatus {
   s8 stickY;
   s8 substickX;
   s8 substickY;
-  u8 triggerL;
-  u8 triggerR;
+  u8 triggerLeft;
+  u8 triggerRight;
   u8 analogA;
   u8 analogB;
   s8 err;

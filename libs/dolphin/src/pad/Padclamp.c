@@ -116,21 +116,21 @@ void PADClamp(PADStatus* status)
         ClampStick(&status->substickX, &status->substickY,
                    ClampRegion.maxSubstick, ClampRegion.xySubstick,
                    ClampRegion.minSubstick);
-        if (status->triggerL <= ClampRegion.minTrigger) {
-            status->triggerL = 0;
+        if (status->triggerLeft <= ClampRegion.minTrigger) {
+            status->triggerLeft = 0;
         } else {
-            if (ClampRegion.maxTrigger < status->triggerL) {
-                status->triggerL = ClampRegion.maxTrigger;
+            if (ClampRegion.maxTrigger < status->triggerLeft) {
+                status->triggerLeft = ClampRegion.maxTrigger;
             }
-            status->triggerL -= ClampRegion.minTrigger;
+            status->triggerLeft -= ClampRegion.minTrigger;
         }
-        if (status->triggerR <= ClampRegion.minTrigger) {
-            status->triggerR = 0;
+        if (status->triggerRight <= ClampRegion.minTrigger) {
+            status->triggerRight = 0;
         } else {
-            if (ClampRegion.maxTrigger < status->triggerR) {
-                status->triggerR = ClampRegion.maxTrigger;
+            if (ClampRegion.maxTrigger < status->triggerRight) {
+                status->triggerRight = ClampRegion.maxTrigger;
             }
-            status->triggerR -= ClampRegion.minTrigger;
+            status->triggerRight -= ClampRegion.minTrigger;
         }
     }
 }
