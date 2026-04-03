@@ -12,6 +12,9 @@
 #include "stddef.h"
 #include "string.h"
 
+#ifdef TARGET_PC
+#include <port/byteswap.h>
+#endif
 
 #if VERSION_ENG
 #define SAVE_WRITE_BEGIN _SetFlag(FLAG_ID_MAKE(3, 0));
@@ -381,6 +384,9 @@ void SLCommonSet(void)
     create_time = OSGetTime();
     GWGameStat.create_time = create_time;
     memcpy(&saveBuf.data.stat, &GWGameStat, sizeof(GameStat));
+#ifdef TARGET_PC
+    byteswap_gamestat(&saveBuf.data.stat);
+#endif
     SLSaveDataInfoSet(&create_time);
 }
 
@@ -389,8 +395,14 @@ void SLSaveBoard(void)
     s16 i;
 
     memcpy(&saveBuf.data.system, &GWSystem, sizeof(SystemState));
+#ifdef TARGET_PC
+    byteswap_systemstate(&saveBuf.data.system);
+#endif
     for (i = 0; i < 4; i++) {
         memcpy(SAVE_GET_PLAYER(i), &GWPlayer[i], sizeof(PlayerState));
+#ifdef TARGET_PC
+        byteswap_playerstate((PlayerState*)SAVE_GET_PLAYER(i));
+#endif
     }
 }
 
@@ -399,8 +411,14 @@ void SLSaveBoardStory(void)
     s16 i;
 
     memcpy(&saveBuf.data.systemStory, &GWSystem, sizeof(SystemState));
+#ifdef TARGET_PC
+    byteswap_systemstate(&saveBuf.data.systemStory);
+#endif
     for (i = 0; i < 4; i++) {
         memcpy(SAVE_GET_PLAYER_STORY(i), &GWPlayer[i], sizeof(PlayerState));
+#ifdef TARGET_PC
+        byteswap_playerstate((PlayerState*)SAVE_GET_PLAYER_STORY(i));
+#endif
     }
 }
 
@@ -555,6 +573,9 @@ s32 SLLoad(void)
 void SLLoadGameStat(void)
 {
     memcpy(&GWGameStat, &saveBuf.data.stat, sizeof(GameStat));
+#ifdef TARGET_PC
+    byteswap_gamestat(&GWGameStat);
+#endif
 }
 
 void SLLoadBoard(void)
@@ -562,8 +583,14 @@ void SLLoadBoard(void)
     s16 i;
 
     memcpy(&GWSystem, &saveBuf.data.system, sizeof(SystemState));
+#ifdef TARGET_PC
+    byteswap_systemstate(&GWSystem);
+#endif
     for (i = 0; i < 4; i++) {
         memcpy(&GWPlayer[i], SAVE_GET_PLAYER(i), sizeof(PlayerState));
+#ifdef TARGET_PC
+        byteswap_playerstate(&GWPlayer[i]);
+#endif
         GWPlayerCfg[i].character = GWPlayer[i].character;
         GWPlayerCfg[i].pad_idx = GWPlayer[i].port;
         GWPlayerCfg[i].diff = GWPlayer[i].diff;
@@ -576,9 +603,15 @@ void SLLoadBoardStory(void)
 {
     s16 i;
 
-    memcpy(&GWSystem, &saveBuf.data.systemStory, 0xDC);
+    memcpy(&GWSystem, &saveBuf.data.systemStory, sizeof(SystemState));
+#ifdef TARGET_PC
+    byteswap_systemstate(&GWSystem);
+#endif
     for (i = 0; i < 4; i++) {
         memcpy(&GWPlayer[i], SAVE_GET_PLAYER_STORY(i), sizeof(PlayerState));
+#ifdef TARGET_PC
+        byteswap_playerstate(&GWPlayer[i]);
+#endif
         GWPlayerCfg[i].character = GWPlayer[i].character;
         GWPlayerCfg[i].pad_idx = GWPlayer[i].port;
         GWPlayerCfg[i].diff = GWPlayer[i].diff;
@@ -614,7 +647,9 @@ BOOL SLCheckSumCheck(void)
 {
     u16 *save_checksum = (u16 *)&saveBuf.buf[sizeof(SaveBufData)];
     u16 checksum = SLCheckSumGet();
-
+#ifdef TARGET_PC
+    byteswap_u16(&checksum);
+#endif
     if (*save_checksum == checksum) {
         return TRUE;
     }

@@ -457,11 +457,6 @@ void HuSprAnimKill(AnimData *anim)
                 HuMemDirectFree(anim->bmp->palData);
             }
         }
-#ifdef BYTESWAPPING
-        HuMemDirectFree(anim->bank);
-        HuMemDirectFree(anim->pat);
-        HuMemDirectFree(anim->bmp);
-#endif
 #ifdef OPTIMIZED_TEXTURE_LOADING
         int i;
         int j;
@@ -476,6 +471,11 @@ void HuSprAnimKill(AnimData *anim)
                 }
             }
         }
+#endif
+#ifdef BYTESWAPPING
+        HuMemDirectFree(anim->bank);
+        HuMemDirectFree(anim->pat);
+        HuMemDirectFree(anim->bmp);
 #endif
         HuMemDirectFree(anim);
     }

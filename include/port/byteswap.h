@@ -1,5 +1,6 @@
 #ifndef _SRC_BYTESWAP_H_
 #define _SRC_BYTESWAP_H_
+#include <game/gamework_data.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -294,12 +295,12 @@ typedef struct HsfMatrix32b {
     u32 data;
 } HsfMatrix32b;
 
-    void byteswap_clear_visited_ptrs();
+void byteswap_clear_visited_ptrs();
 void byteswap_u16(u16 *src);
 void byteswap_s16(s16 *src);
 void byteswap_u32(u32 *src);
 void byteswap_s32(s32 *src);
-    void byteswap_float(float *src);
+void byteswap_float(float *src);
 void byteswap_vec(Vec *src);
 void byteswap_vec2f(Vec2f *src);
 void byteswap_hsfvec3f(HsfVector3f *src);
@@ -354,6 +355,10 @@ void byteswap_hsfbitmapkey(HsfBitmapKey32b *src, HsfBitmapKey *dest);
 void byteswap_hsftrack(HsfTrack32b *src, HsfTrack *dest);
 void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest);
 void byteswap_hsfface(HsfFace32b *src, HsfFace *dest);
+
+void byteswap_gamestat(GameStat *src);
+void byteswap_systemstate(SystemState *src);
+void byteswap_playerstate(PlayerState *src);
 
 #ifdef __cplusplus
 }

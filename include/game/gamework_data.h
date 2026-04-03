@@ -22,13 +22,16 @@ typedef struct system_state {
         u8 team : 1;
     };
     /* 0x01 */ u8 diff_story;
-    /* 0x02 */ struct {
-        u16 bonus_star : 1;
-        u16 explain_mg : 1;
-        u16 show_com_mg : 1;
-        u16 mg_list : 2;
-        u16 mess_speed : 2;
-        u16 save_mode : 2;
+    /* 0x02 */ union {
+        struct {
+            u16 bonus_star : 1;
+            u16 explain_mg : 1;
+            u16 show_com_mg : 1;
+            u16 mg_list : 2;
+            u16 mess_speed : 2;
+            u16 save_mode : 2;
+        };
+        u16 bitfield2;
     };
     /* 0x04 */ u8 turn;
     /* 0x05 */ u8 max_turn;
@@ -58,13 +61,16 @@ typedef struct system_state {
 } SystemState; // 8018fcf8, sizeof 0xDC
 
 typedef struct player_state {
-    /* 0x00 */ struct {
-        u16 diff : 2;
-        u16 com : 1;
-        u16 character : 4;
-        u16 auto_size : 2;
-        u16 draw_ticket : 1;
-        u16 ticket_player : 6;
+    /* 0x00 */ union {
+        struct {
+            u16 diff : 2;
+            u16 com : 1;
+            u16 character : 4;
+            u16 auto_size : 2;
+            u16 draw_ticket : 1;
+            u16 ticket_player : 6;
+        };
+        u16 bitfield1;
     };
     /* 0x02 */ struct {
         u8 team : 1;
@@ -74,16 +80,19 @@ typedef struct player_state {
     /* 0x03 */ s8 handicap;
     /* 0x04 */ s8 port;
     /* 0x05 */ s8 items[3];
-    /* 0x08 */ struct {
-        u16 color : 2;
-        u16 moving : 1;
-        u16 jump : 1;
-        u16 show_next : 1;
-        u16 size : 2;
-        u16 num_dice : 2;
-        u16 rank : 2;
-        u16 bowser_suit : 1;
-        u16 team_backup : 1;
+    /* 0x08 */ union {
+        struct {
+            u16 color : 2;
+            u16 moving : 1;
+            u16 jump : 1;
+            u16 show_next : 1;
+            u16 size : 2;
+            u16 num_dice : 2;
+            u16 rank : 2;
+            u16 bowser_suit : 1;
+            u16 team_backup : 1;
+        };
+        u16 bitfield3;
     };
     /* 0x0A */ s8 roll;
     /* 0x0C */ s16 space_curr;

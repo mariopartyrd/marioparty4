@@ -47,6 +47,23 @@ template <typename T> [[nodiscard]] constexpr T bswap32(T val) noexcept
     return v.t;
 }
 
+template <typename T> [[nodiscard]] constexpr T bswap64(T val) noexcept
+{
+    static_assert(sizeof(T) == sizeof(u64));
+    union {
+        u64 u;
+        T t;
+    } v { .t = val };
+#if __GNUC__
+    v.u = __builtin_bswap64(v.u);
+#elif _WIN32
+    v.u = _byteswap_uint64(v.u);
+#else
+    static_assert(false, "bswap 64bit not implemented on this target");
+#endif
+    return v.t;
+}
+
 static void bswap16_unaligned(u8 *ptr)
 {
     u8 temp = ptr[0];
@@ -121,9 +138,9 @@ template <typename B, typename T> T *offset_ptr(B &base, T *ptr, void *extra)
 // }
 template <typename B, typename T> static void bswap_flat(B &base, T *start, s32 count)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
+    // if (sVisitedPtrs.contains(offset_ptr(base))) {
+    //     return;
+    // }
     T *objBase = start;
     for (s32 i = 0; i < count; ++i) {
         bswap(base, objBase[i]);
@@ -133,6 +150,10 @@ template <typename B, typename T> static void bswap_flat(B &base, T *start, s32 
 template <typename B> void bswap(B &base, f32 &v)
 {
     v = bswap32(v);
+}
+template <typename B> void bswap(B &base, s64 &v)
+{
+    v = bswap64(v);
 }
 template <typename B> void bswap(B &base, s32 &v)
 {
@@ -979,6 +1000,46 @@ template <typename B> void bswap(B &base, HsfFace32b &obj, HsfFace &dest)
     //sVisitedPtrs.insert(offset_ptr(base));
 }
 
+template <typename B> void bswap(B &base, GameStat &obj)
+{
+    bswap(base, obj.unk_00);
+    bswap(base, obj.total_stars);
+    bswap(base, obj.create_time);
+    bswap_flat(base, obj.mg_custom, 2);
+    bswap_flat(base, obj.mg_avail, 2);
+    bswap_flat(base, obj.mg_record, 15);
+    bswap_flat(base, obj.board_max_stars, 9);
+    bswap_flat(base, obj.board_max_coins, 9);
+}
+
+template <typename B> void bswap(B &base, SystemState &obj)
+{
+    bswap(base, obj.bitfield2);
+    bswap(base, obj.block_pos);
+    bswap(base, obj.mg_next);
+    bswap(base, obj.mg_type);
+    bswap(base, obj.unk_38);
+}
+
+template <typename B> void bswap(B &base, PlayerState &obj)
+{
+    bswap(base, obj.bitfield1);
+    bswap(base, obj.bitfield3);
+    bswap(base, obj.space_curr);
+    bswap(base, obj.space_prev);
+    bswap(base, obj.space_next);
+    bswap(base, obj.space_shock);
+    bswap(base, obj.coins);
+    bswap(base, obj.coins_mg);
+    bswap(base, obj.coins_total);
+    bswap(base, obj.coins_max);
+    bswap(base, obj.coins_battle);
+    bswap(base, obj.coin_collect);
+    bswap(base, obj.coin_win);
+    bswap(base, obj.stars);
+    bswap(base, obj.stars_max);
+}
+
 void byteswap_clear_visited_ptrs()
 {
     sVisitedPtrs.clear();
@@ -1179,4 +1240,19 @@ void byteswap_hsfmotion(HsfMotion32b *src, HsfMotion *dest)
 void byteswap_hsfface(HsfFace32b *src, HsfFace *dest)
 {
     bswap(*src, *src, *dest);
+}
+
+void byteswap_gamestat(GameStat *src)
+{
+    bswap(*src, *src);
+}
+
+void byteswap_systemstate(SystemState *src)
+{
+    bswap(*src, *src);
+}
+
+void byteswap_playerstate(PlayerState *src)
+{
+    bswap(*src, *src);
 }
