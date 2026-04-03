@@ -5,8 +5,13 @@
 #include "dolphin/mtx.h"
 
 #include "port/byteswap.h"
+
 #ifndef __MWERKS__
 #include "game/hsfdraw.h"
+#endif
+
+#ifdef TARGET_PC
+#include <string.h>
 #endif
 
 #define SPRITE_DIRTY_ATTR 0x1
@@ -255,6 +260,15 @@ AnimData *HuSprAnimRead(void *data)
     bmp = HuMemDirectMalloc(HEAP_DATA, anim->bmpNum * sizeof(AnimBmpData));
     for(i=0; i<anim->bmpNum; i++) {
         byteswap_animbmpdata(&((AnimBmpData32b*)((uintptr_t)anim->bmp+(uintptr_t)data))[i], &bmp[i]);
+#ifdef OPTIMIZED_TEXTURE_LOADING
+        for (j = 0; j < sizeof(anim->bmp[0].texData) / sizeof(anim->bmp[0].texData[0]); j++) {
+            AnimTexData *tex = &bmp[i].texData[j];
+            tex->tex_initialized = FALSE;
+            tex->tlut_initialized = FALSE;
+            memset(&tex->tex_obj, 0, sizeof(tex->tex_obj));
+            memset(&tex->tlut_obj, 0, sizeof(tex->tlut_obj));
+        }
+#endif
     }
 #endif
     anim->bmp = bmp;
@@ -447,6 +461,21 @@ void HuSprAnimKill(AnimData *anim)
         HuMemDirectFree(anim->bank);
         HuMemDirectFree(anim->pat);
         HuMemDirectFree(anim->bmp);
+#endif
+#ifdef OPTIMIZED_TEXTURE_LOADING
+        int i;
+        int j;
+        for(i=0; i<anim->bmpNum; i++) {
+            for (j = 0; j < sizeof(anim->bmp[0].texData) / sizeof(anim->bmp[0].texData[0]); j++) {
+                AnimTexData *tex = &anim->bmp[i].texData[j];
+                if (tex->tex_initialized) {
+                    GXDestroyTexObj(&tex->tex_obj);
+                }
+                if (tex->tlut_initialized) {
+                    GXDestroyTlutObj(&tex->tlut_obj);
+                }
+            }
+        }
 #endif
         HuMemDirectFree(anim);
     }
@@ -716,6 +745,16 @@ AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     bmp->dataSize = sizeX*sizeY*bitSizeTbl[dataFmt]/8;
     bmp->palData = NULL;
     bmp->data = NULL;
+#ifdef OPTIMIZED_TEXTURE_LOADING
+    int i;
+    for (i = 0; i < sizeof(bmp->texData) / sizeof(bmp->texData[0]); i++) {
+        AnimTexData *tex = &bmp->texData[i];
+        tex->tex_initialized = FALSE;
+        tex->tlut_initialized = FALSE;
+        memset(&tex->tex_obj, 0, sizeof(tex->tex_obj));
+        memset(&tex->tlut_obj, 0, sizeof(tex->tlut_obj));
+    }
+#endif
     return anim;
 }
 

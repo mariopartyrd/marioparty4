@@ -166,13 +166,15 @@ typedef struct hsf_attribute {
     u32 unk78;
     u32 flag;
     HsfBitmap *bitmap;
-#ifdef TARGET_PC
+#ifdef OPTIMIZED_TEXTURE_LOADING
     bool tex_initialized;
-    GXTexObj tex_obj;
+    bool tex8000_initialized;
     bool tlut_initialized;
-    GXTlutObj tlut_obj;
     bool tlut8000_initialized;
-    GXTlutObj tlut8000_obj;
+    GXTexObj tex_obj;
+    GXTexObj tex8000_obj;
+    GXTlutObj tlut_obj;
+    GXTlutObj tlut8000_obj; // used in dataFmt 11
 #endif
 } HsfAttribute;
 

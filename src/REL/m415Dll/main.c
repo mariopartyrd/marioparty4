@@ -425,7 +425,7 @@ void fn_1_1960(omObjData *object)
             GXDrawDone();
             temp_r3 = fn_1_9734(object->model[2]);
             temp_r29 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
-#ifdef __MWERKS__
+#ifndef TARGET_PC
             // TODO PC
             memcpy((*temp_r3)->bmp->data, OSCachedToUncached(Hu3DShadowData.buf), temp_r29);
 #endif

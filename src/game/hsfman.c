@@ -332,7 +332,7 @@ void Hu3DAllKill(void) {
     Hu3DCameraAllKill();
     Hu3DLightAllKill();
     Hu3DAnimAllKill();
-    // TODO
+    // TODO PC
 #ifndef BYTESWAPPING
     // this causes anim to be reallocated, so we lose the old allocation, but the game expects this to be executed, so hmm
     if(reflectAnim[0] != (AnimData *)refMapData0) {

@@ -1682,7 +1682,7 @@ static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXT
 static s32 SetShadowTex(void)
 {
     GXTexObj sp8;
-
+    // TODO cache, but remember that buf and maybe unk_02 too can be reassigned
     GXInitTexObj(&sp8, Hu3DShadowData.buf, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&sp8, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp8, shadowMapNo);
@@ -1816,10 +1816,8 @@ static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1)
     drawCnt++;
 }
 
-#define OPTIMIZED_TEXTURE_LOADING TRUE
-
 static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3)
-#if OPTIMIZED_TEXTURE_LOADING
+#ifdef OPTIMIZED_TEXTURE_LOADING
 {
     // Optimized PC version
     // The texture is saved onto the attribute on PC and destroyed later in KillHSF
@@ -1842,6 +1840,7 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
     var_r22 = (arg2->wrap_s == 1) ? GX_REPEAT : GX_CLAMP;
     var_r21 = (arg2->wrap_t == 1) ? GX_REPEAT : GX_CLAMP;
     var_r20 = (arg2->flag & 0x80) ? GX_TRUE : GX_FALSE;
+    // OSReport("Loading texture for model %p, bitmap %p, fmt %d, attribute %p, index %d\n", arg0, arg1, arg1->dataFmt, arg2, arg3);
     switch (arg1->dataFmt) {
         case 6:
             if (!arg2->tex_initialized) {
@@ -1860,25 +1859,25 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
             break;
         case 9:
             fmt = arg1->pixSize < 8 ? GX_TF_C4 : GX_TF_C8;
-            if (!arg2->tex_initialized) {
-                GXInitTexObjCI(tex_obj, arg1->data, var_r27, var_r26, fmt, var_r22, var_r21, var_r20, arg3);
-            }
             if (!arg2->tlut_initialized) {
                 GXInitTlutObj(tlut_obj, arg1->palData, GX_TL_RGB565, arg1->palSize);
                 arg2->tlut_initialized = TRUE;
             }
             GXLoadTlut(tlut_obj, arg3);
-            break;
-        case 10:
-            fmt = arg1->pixSize < 8 ? GX_TF_C4 : GX_TF_C8;
             if (!arg2->tex_initialized) {
                 GXInitTexObjCI(tex_obj, arg1->data, var_r27, var_r26, fmt, var_r22, var_r21, var_r20, arg3);
             }
+            break;
+        case 10:
+            fmt = arg1->pixSize < 8 ? GX_TF_C4 : GX_TF_C8;
             if (!arg2->tlut_initialized) {
                 GXInitTlutObj(tlut_obj, arg1->palData, GX_TL_RGB5A3, arg1->palSize);
                 arg2->tlut_initialized = TRUE;
             }
             GXLoadTlut(tlut_obj, arg3);
+            if (!arg2->tex_initialized) {
+                GXInitTexObjCI(tex_obj, arg1->data, var_r27, var_r26, fmt, var_r22, var_r21, var_r20, arg3);
+            }
             break;
         case 0:
             var_r30 = (s16)arg3;
@@ -1926,41 +1925,46 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
             }
             break;
         case 11:
+            fmt = arg1->pixSize < 8 ? GX_TF_C4 : GX_TF_C8;
             if (arg3 & 0x8000) {
+                tlut_obj = &arg2->tlut8000_obj;
+                tex_obj = &arg2->tex8000_obj;
                 if (!arg2->tlut8000_initialized) {
-                    GXInitTlutObj(&arg2->tlut8000_obj, &((s16 *)arg1->palData)[(arg1->palSize + 0xF) & 0xFFF0], GX_TL_IA8, arg1->palSize);
-                    GXLoadTlut(&arg2->tlut8000_obj, arg3);
+                    GXInitTlutObj(tlut_obj, &((s16 *)arg1->palData)[(arg1->palSize + 0xF) & 0xFFF0], GX_TL_IA8, arg1->palSize);
                     arg2->tlut8000_initialized = TRUE;
+                }
+                GXLoadTlut(tlut_obj, arg3 & 0x7FFF);
+                if (!arg2->tex8000_initialized) {
+                    GXInitTexObjCI(tex_obj, arg1->data, var_r27, var_r26, fmt, var_r22, var_r21, var_r20, arg3 & 0x7FFF);
+                    arg2->tex8000_initialized = TRUE;
                 }
             }
             else {
                 if (!arg2->tlut_initialized) {
                     GXInitTlutObj(tlut_obj, arg1->palData, GX_TL_IA8, arg1->palSize);
-                    GXLoadTlut(tlut_obj, arg3);
                     arg2->tlut_initialized = TRUE;
+                }
+                GXLoadTlut(tlut_obj, arg3);
+                if (!arg2->tex_initialized) {
+                    GXInitTexObjCI(tex_obj, arg1->data, var_r27, var_r26, fmt, var_r22, var_r21, var_r20, arg3);
+                    arg2->tex_initialized = TRUE;
                 }
             }
             arg3 &= 0x7FFF;
-            fmt = arg1->pixSize < 8 ? GX_TF_C4 : GX_TF_C8;
-            if (!arg2->tex_initialized) {
-                GXInitTexObjCI(tex_obj, arg1->data, var_r27, var_r26, fmt, var_r22, var_r21, var_r20, arg3);
-            }
             TL32F = 1;
             break;
     }
-    if (!arg2->tex_initialized) {
-        if ((arg0->attr & HU3D_ATTR_TEX_NEAR) || (arg2->flag & 0x40)) {
-            GXInitTexObjLOD(tex_obj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-        }
-        else if (var_r20) {
-            GXInitTexObjLOD(tex_obj, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, arg2->unk78, 0.0f, GX_FALSE, GX_TRUE, GX_ANISO_2);
-        }
-        else if (arg1->maxLod == 0) {
-            GXInitTexObjLOD(tex_obj, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-        }
-        else {
-            GXInitTexObjLOD(tex_obj, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, arg1->maxLod - 1, 0.0f, GX_TRUE, GX_TRUE, GX_ANISO_1);
-        }
+    if ((arg0->attr & HU3D_ATTR_TEX_NEAR) || (arg2->flag & 0x40)) {
+        GXInitTexObjLOD(tex_obj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+    }
+    else if (var_r20) {
+        GXInitTexObjLOD(tex_obj, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, arg2->unk78, 0.0f, GX_FALSE, GX_TRUE, GX_ANISO_2);
+    }
+    else if (arg1->maxLod == 0) {
+        GXInitTexObjLOD(tex_obj, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+    }
+    else {
+        GXInitTexObjLOD(tex_obj, GX_LIN_MIP_LIN, GX_LINEAR, 0.0f, arg1->maxLod - 1, 0.0f, GX_TRUE, GX_TRUE, GX_ANISO_1);
     }
     arg2->tex_initialized = TRUE;
     GXLoadTexObj(tex_obj, arg3);

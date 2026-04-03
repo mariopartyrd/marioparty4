@@ -1,10 +1,14 @@
-#include "game/sprite.h"
+#include "dolphin/gx.h"
+#include "dolphin/mtx.h"
+#include "dolphin/vi.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/init.h"
-#include "game/disp.h"
-#include "dolphin/mtx.h"
-#include "dolphin/gx.h"
-#include "dolphin/vi.h"
+#include "game/sprite.h"
+
+#ifdef TARGET_PC
+#include <assert.h>
+#endif
 
 static void *bmpNoCC[8];
 static short HuSprLayerDrawNo[8];
@@ -183,6 +187,95 @@ void HuSprDisp(HuSprite *sprite)
 }
 
 void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter)
+#ifdef OPTIMIZED_TEXTURE_LOADIN
+{
+    AnimBmpData *bmp_ptr = &anim->bmp[bmp];
+    AnimTexData *tex_data = &bmp_ptr->texData[slot];
+    GXTexObj *tex_obj = &tex_data->tex_obj;
+    GXTlutObj *tlut_obj = &tex_data->tlut_obj;
+    short sizeX = bmp_ptr->sizeX;
+    short sizeY = bmp_ptr->sizeY;
+    switch(bmp_ptr->dataFmt & ANIM_BMP_FMTMASK) {
+        case ANIM_BMP_RGBA8:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_TF_RGBA8, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        case ANIM_BMP_RGB5A3:
+        case ANIM_BMP_RGB5A3_DUPE:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_TF_RGB5A3, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        case ANIM_BMP_C8:
+            if (!tex_data->tlut_initialized) {
+                GXInitTlutObj(tlut_obj, bmp_ptr->palData, GX_TL_RGB5A3, bmp_ptr->palNum);
+                tex_data->tlut_initialized = TRUE;
+            }
+            GXLoadTlut(tlut_obj, slot);
+            if (!tex_data->tex_initialized) {
+                GXInitTexObjCI(tex_obj,bmp_ptr->data, sizeX, sizeY, GX_TF_C8, wrap_s, wrap_t, GX_FALSE, slot);
+            }
+            break;
+
+        case ANIM_BMP_C4:
+            if (!tex_data->tlut_initialized) {
+                GXInitTlutObj(tlut_obj, bmp_ptr->palData, GX_TL_RGB5A3, bmp_ptr->palNum);
+                tex_data->tlut_initialized = TRUE;
+            }
+            GXLoadTlut(tlut_obj, slot);
+            if (!tex_data->tex_initialized) {
+                GXInitTexObjCI(tex_obj,bmp_ptr->data, sizeX, sizeY, GX_TF_C4, wrap_s, wrap_t, GX_FALSE, slot);
+                tex_data->tlut_initialized = TRUE;
+            }
+            break;
+
+        case ANIM_BMP_IA8:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_TF_IA8, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        case ANIM_BMP_IA4:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_TF_IA4, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        case ANIM_BMP_I8:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_TF_I8, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        case ANIM_BMP_I4:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_TF_I4, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        case ANIM_BMP_A8:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_CTF_A8, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        case ANIM_BMP_CMPR:
+            if (!tex_data->tex_initialized) {
+                GXInitTexObj(tex_obj, bmp_ptr->data, sizeX, sizeY, GX_TF_CMPR, wrap_s, wrap_t, GX_FALSE);
+            }
+            break;
+
+        default:
+            break;
+    }
+    GXInitTexObjLOD(tex_obj, filter, filter, 0, 0, 0, GX_FALSE, GX_FALSE, GX_ANISO_1);
+    GXLoadTexObj(tex_obj, slot);
+    tex_data->tex_initialized = TRUE;
+}
+#else
 {
     GXTexObj tex_obj;
     GXTlutObj tlut_obj;
@@ -250,6 +343,7 @@ void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, G
     GXDestroyTexObj(&tex_obj);
 #endif
 }
+#endif
 
 void HuSprExecLayerSet(short draw_no, short layer)
 {
