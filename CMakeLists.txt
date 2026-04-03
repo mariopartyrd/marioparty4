@@ -136,6 +136,17 @@ if (CMAKE_SYSTEM_NAME STREQUAL Windows)
 endif()
 if (MSVC)
     target_link_options(dol PRIVATE "/DEF:${CMAKE_SOURCE_DIR}/dol.def")
+    target_compile_options(dol PRIVATE "/WX")
+    target_compile_options(dol PRIVATE "/wd4244") # implicit narrowing conversion
+    target_compile_options(dol PRIVATE "/wd4101") # unreferenced local variable
+    target_compile_options(dol PRIVATE "/wd4102") # unreferenced label
+    target_compile_options(dol PRIVATE "/wd4305") # truncation
+    target_compile_options(dol PRIVATE "/wd4018") # signed/unsigned mismatch
+    target_compile_options(dol PRIVATE "/wd4996") # unsafe sprintf, etc
+    target_compile_options(dol PRIVATE "/wd4146") # unary minus operator applied to unsigned type, result still unsigned
+    target_compile_options(dol PRIVATE "/wd4552") # result of expression not used
+    target_compile_options(dol PRIVATE "/wd4553") # result of expression not used: == vs =
+    target_compile_options(dol PRIVATE "/wd4113") # function pointer parameter list mismatch
     target_compile_options(dol PRIVATE "/Zi")
     target_compile_options(dol PRIVATE "/Ob0")
     target_compile_options(dol PRIVATE "/Od")
@@ -175,6 +186,17 @@ foreach (dir ${REL_DIRS})
             target_include_directories(${dir} PRIVATE include extern/aurora/include extern/aurora/include/dolphin build/GMPE01_00/include extern/libco)
             if (MSVC)
                 set_target_properties(${dir} PROPERTIES LINK_FLAGS "/EXPORT:ObjectSetup")
+#                target_compile_options(${dir} PRIVATE "/WX")
+                target_compile_options(${dir} PRIVATE "/wd4244") # implicit narrowing conversion
+                target_compile_options(${dir} PRIVATE "/wd4101") # unreferenced local variable
+                target_compile_options(${dir} PRIVATE "/wd4102") # unreferenced label
+                target_compile_options(${dir} PRIVATE "/wd4305") # truncation
+                target_compile_options(${dir} PRIVATE "/wd4018") # signed/unsigned mismatch
+                target_compile_options(${dir} PRIVATE "/wd4996") # unsafe sprintf, etc
+                target_compile_options(${dir} PRIVATE "/wd4146") # unary minus operator applied to unsigned type, result still unsigned
+                target_compile_options(${dir} PRIVATE "/wd4552") # result of expression not used
+                target_compile_options(${dir} PRIVATE "/wd4553") # result of expression not used: == vs =
+                target_compile_options(${dir} PRIVATE "/wd4113") # function pointer parameter list mismatch
                 target_compile_options(${dir} PRIVATE "/Zi")
                 target_compile_options(${dir} PRIVATE "/Ob0")
                 target_compile_options(${dir} PRIVATE "/Od")

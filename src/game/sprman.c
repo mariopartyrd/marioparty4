@@ -811,7 +811,11 @@ void AnimDebug(AnimData *anim)
         bank++;
     }
     bmp = anim->bmp;
-    for(i = 0; i < anim->bmpNum & ANIM_BMP_NUM_MASK; i++) {
+#ifdef NON_MATCHING
+    for(i = 0; i < (anim->bmpNum & ANIM_BMP_NUM_MASK); i++) {
+#else
+    for(i = 0; (i < anim->bmpNum) & ANIM_BMP_NUM_MASK; i++) {
+#endif
         OSReport("BMP%d:\n", i);
         OSReport("\tpixSize %d,palNum %d,size (%d,%d)\n", bmp->pixSize, bmp->palNum, bmp->sizeX, bmp->sizeY);
         bmp++;

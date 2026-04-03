@@ -22,8 +22,8 @@ typedef struct {
     /* 0x48 */ char unk48[0xC];
     /* 0x54 */ float time;
     /* 0x58 */ float speed;
-    /* 0x5C */ s32 unk_5C;
-    /* 0x60 */ s32 unk_60;
+    /* 0x5C */ Process *unk_5C;
+    /* 0x60 */ Process *unk_60;
 } GuideWork; // Size 0x64
 
 #define MODE_DISABLED 0

@@ -213,6 +213,7 @@ void main(void)
 
 #ifdef TARGET_PC
     aurora_shutdown();
+    return 0;
 #endif
 }
 

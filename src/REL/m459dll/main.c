@@ -58,8 +58,8 @@ typedef struct M459DllBssCCStruct {
     /* 0x01C */ float unk_1C;
     /* 0x020 */ float unk_20;
     /* 0x024 */ char pad_24[0x4];
-    /* 0x028 */ s32 unk_28[5];
-    /* 0x03C */ s32 unk_3C[5];
+    /* 0x028 */ Process *unk_28[5];
+    /* 0x03C */ Process *unk_3C[5];
     /* 0x050 */ float unk_50;
     /* 0x054 */ float unk_54;
     /* 0x058 */ float unk_58;

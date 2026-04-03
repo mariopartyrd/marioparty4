@@ -253,9 +253,9 @@ static void DumpVec2f(const char *label, HsfVector2f *v) {
 
 static void DumpTransform(const char *label, HsfTransform *t) {
     fprintf(g_dump_file, "  %s:\n", label);
-    DumpVec3f("pos",   &t->pos);
-    DumpVec3f("rot",   &t->rot);
-    DumpVec3f("scale", &t->scale);
+    DumpVec3f("pos",   (HsfVector3f*)&t->pos);
+    DumpVec3f("rot",   (HsfVector3f*)&t->rot);
+    DumpVec3f("scale", (HsfVector3f*)&t->scale);
 }
 
 static void DumpScene(HsfData *hsf) {

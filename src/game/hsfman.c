@@ -1436,7 +1436,7 @@ s16 Hu3DGLightCreate(f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ,
     return Hu3DGLightCreateV(&pos, &dir, &color);
 }
 
-inline s16 Hu3DLightCreateV(LightData *light, Vec *arg0, Vec *arg1, GXColor *arg2) {
+inline void Hu3DLightCreateV(LightData *light, Vec *arg0, Vec *arg1, GXColor *arg2) {
     light->type = 0;
     light->pos = *arg0;
     light->dir = *arg1;

@@ -266,7 +266,11 @@ static s32 XFB_putcProgressive(u8 c, s32 x, s32 y) {
                     var_r30 = 0;
                     var_r26 = 0;
                     while (var_r26 < 0x10) {
-                        if (var_r22 & 0xF != 0) {
+#ifdef NON_MATCHING
+                        if ((var_r22 & 0xF) != 0) {
+#else
+                        if (var_r22 & (0xF != 0)) {
+#endif
                             var_r30 |= 3 << var_r26;
                         }
                         var_r26 += 2;

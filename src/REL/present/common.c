@@ -17,8 +17,8 @@ typedef struct GuideWork {
     /* 0x3C */ char unk3C[0xC];
     /* 0x48 */ float time;
     /* 0x4C */ float speed;
-    /* 0x50 */ s32 unk_50;
-    /* 0x54 */ s32 unk_54;
+    /* 0x50 */ Process *unk_50;
+    /* 0x54 */ Process *unk_54;
 } GuideWork; /* size = 0x58 */
 
 static void ExecGuideEnter(omObjData *object);

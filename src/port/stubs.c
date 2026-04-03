@@ -65,7 +65,7 @@ void DEMOPrintStats(void)
     puts("DEMOPrintStats is a stub");
 }
 
-s32 DVDCancel(DVDCommandBlock *block)
+s32 DVDCancel(volatile DVDCommandBlock *block)
 {
     puts("DVDCancel is a stub");
     return 0;
@@ -74,6 +74,7 @@ s32 DVDCancel(DVDCommandBlock *block)
 int DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback)
 {
     puts("DVDReadAbsAsyncForBS is a stub");
+    return 0;
 }
 
 int DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback callback)
@@ -87,43 +88,43 @@ void DVDReset()
     puts("DVDReset is a stub");
 }
 
-BOOL EXIDeselect(int chan)
+BOOL EXIDeselect(s32 chan)
 {
     puts("EXIDeselect is a stub");
     return FALSE;
 }
 
-BOOL EXIDma(int chan, void *buffer, s32 size, int d, int e)
+BOOL EXIDma(s32 chan, void *buffer, s32 size, u32 d, EXICallback e)
 {
     puts("EXIDma is a stub");
     return FALSE;
 }
 
-BOOL EXIImm(int chan, u32 *b, int c, int d, int e)
+BOOL EXIImm(s32 chan, u32 *b, s32 c, u32 d, EXICallback e)
 {
     puts("EXIImm is a stub");
     return FALSE;
 }
 
-BOOL EXILock(int chan, int b, int c)
+BOOL EXILock(s32 chan, u32 b, EXICallback c)
 {
     puts("EXILock is a stub");
     return FALSE;
 }
 
-BOOL EXISelect(int chan, int b, int c)
+BOOL EXISelect(s32 chan, u32 b, u32 c)
 {
     puts("EXISelect is a stub");
     return FALSE;
 }
 
-BOOL EXISync(int chan)
+BOOL EXISync(s32 chan)
 {
     puts("EXISync is a stub");
     return FALSE;
 }
 
-BOOL EXIUnlock(int chan)
+BOOL EXIUnlock(s32 chan)
 {
     puts("EXIUnlock is a stub");
     return FALSE;
@@ -162,13 +163,13 @@ u16 OSGetFontEncode()
     return 0;
 }
 
-char *OSGetFontTexture(char *string, void **image, s32 *x, s32 *y, s32 *width)
+char *OSGetFontTexture(const char *string, void **image, s32 *x, s32 *y, s32 *width)
 {
     puts("OSGetFontTexture is a stub");
     return 0;
 }
 
-char *OSGetFontWidth(char *string, s32 *width)
+char *OSGetFontWidth(const char *string, s32 *width)
 {
     puts("OSGetFontWidth is a stub");
     return 0;

@@ -126,6 +126,9 @@ s32 BoardBowserExec(s32 player, s32 space)
         }
         GWPlayer[player].color = 2;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 typedef struct bowser_work {

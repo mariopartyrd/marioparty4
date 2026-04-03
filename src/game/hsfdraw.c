@@ -10,14 +10,14 @@
 
 static void objCall(ModelData *arg0, HsfObject *arg1);
 static void objMesh(ModelData *arg0, HsfObject *arg1);
-static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1);
+static void SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1);
 static void SetTevStageTex(HsfDrawObject *drawObj, HsfMaterial *matP);
 static GXTevKColorSel SetKColor(GXTevStageID arg0, u8 arg1);
 static GXTevKColorSel SetKColorRGB(GXTevStageID arg0, GXColor *arg1);
 static void FlushKColor(void);
 static void SetReflect(HsfDrawObject *arg0, s16 arg1, s16 arg2, u8 arg3);
 static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXTexMapID arg4, u32 arg5);
-static s32 SetShadowTex(void);
+static void SetShadowTex(void);
 static void SetShadow(HsfDrawObject *arg0, s16 arg1, s16 arg2);
 static void FaceDrawShadow(HsfDrawObject *arg0, HsfFace *arg1);
 static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16 arg3);
@@ -30,8 +30,8 @@ static void ObjDraw(HsfDrawObject *arg0);
 static void MDObjCall(HsfData *arg0, HsfObject *arg1);
 static void MDObjMesh(HsfData *arg0, HsfObject *arg1);
 static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1);
-static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3);
-static s32 MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3);
+static void MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3);
+static void MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3);
 static void MDFaceCnt(HsfObject *arg0, HsfFace *arg1);
 
 void GXResetWriteGatherPipe(void);
@@ -758,7 +758,7 @@ static void FaceDraw(HsfDrawObject *arg0, HsfFace *arg1)
     drawCnt++;
 }
 
-static s32 SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1)
+static void SetTevStageNoTex(HsfDrawObject *arg0, HsfMaterial *arg1)
 {
     GXColor sp1C;
     ModelData *temp_r28;
@@ -1679,7 +1679,7 @@ static void SetProjection(HsfDrawObject *arg0, s16 arg1, s16 arg2, s16 arg3, GXT
     GXSetTevAlphaOp(arg1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
 }
 
-static s32 SetShadowTex(void)
+static void SetShadowTex(void)
 {
     GXTexObj sp8;
     // TODO cache, but remember that buf and maybe unk_02 too can be reassigned
@@ -3044,7 +3044,7 @@ static void MDFaceDraw(HsfObject *arg0, HsfFace *arg1)
     }
 }
 
-static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3)
+static void MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3)
 {
     Vec sp10;
     Vec *temp_r29;
@@ -3081,7 +3081,7 @@ static s32 MakeCalcNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3)
     GXNormal3s16(NBTT.x * 256.0f, NBTT.y * 256.0f, NBTT.z * 256.0f);
 }
 
-static s32 MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3)
+static void MakeNBT(HsfObject *arg0, HsfFace *arg1, s16 arg2, s16 arg3)
 {
     Vec sp10;
     Vec *temp_r30;

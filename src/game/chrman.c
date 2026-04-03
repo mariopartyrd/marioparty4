@@ -1753,7 +1753,7 @@ void CharModelEffectEnableSet(s16 character, s32 arg1)
     }
 }
 
-s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+Process *CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
     Process *var_r24;
     Process *var_r27;
@@ -1770,11 +1770,17 @@ s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
         var_r29[3] = arg3;
         InitEffect();
     }
+#ifdef NON_MATCHING
+    return var_r27;
+#endif
 }
 
 s32 CharModelEffectNpcInitSilent(s16 arg0, s16 arg1, s16 arg2)
 {
     s32 sp10; // ! - uninitialized
+#ifdef NON_MATCHING
+    sp10 = 0;
+#endif
 
     CharModelEffectNpcInit(arg0, arg1, arg2, -1);
     return sp10;

@@ -123,7 +123,7 @@ static int DLOverlap(struct Cell *list, void *start, void *end)
     struct Cell *cell = list;
 
     while (cell) {
-        if (((start <= cell) && (cell < end)) || ((start < (void *)((u8 *)cell + cell->size)) && ((void *)((u8 *)cell + cell->size) <= end))) {
+        if ((((struct Cell*)start <= cell) && (cell < (struct Cell*)end)) || ((start < (void *)((u8 *)cell + cell->size)) && ((void *)((u8 *)cell + cell->size) <= end))) {
             return 1;
         }
         cell = cell->next;
@@ -147,7 +147,7 @@ static long DLSize(struct Cell *list)
     return size;
 }
 
-void *OSAllocFromHeap(int heap, unsigned long size)
+void *OSAllocFromHeap(int heap, u32 size)
 {
 #ifdef TARGET_PC
     return malloc(size);
@@ -227,11 +227,11 @@ void *OSAllocFixed(void **rstart, void **rend)
             for (cell = hd->free; cell; cell = cell->next) {
                 cellEnd = ((u8 *)cell + cell->size);
                 if (cellEnd > start) {
-                    if (end <= cell) {
+                    if (end <= (void*)cell) {
                         break;
                     }
-                    if ((char *)start - 0x20 <= (char *)cell && cell < end && (start <= cellEnd) && (cellEnd < ((char *)end + 0x40))) {
-                        if (cell < start) {
+                    if ((char *)start - 0x20 <= (char *)cell && (void*)cell < end && (start <= cellEnd) && ((char*)cellEnd < ((char *)end + 0x40))) {
+                        if ((void*)cell < start) {
                             start = cell;
                         }
                         if (end < cellEnd) {
@@ -240,8 +240,8 @@ void *OSAllocFixed(void **rstart, void **rend)
                         hd->free = DLExtract(hd->free, cell);
                         hd->size -= cell->size;
                     }
-                    else if ((char *)start - 0x20 <= (char *)cell && cell < end) {
-                        if (cell < start) {
+                    else if ((char *)start - 0x20 <= (char *)cell && (void*)cell < end) {
+                        if ((void*)cell < start) {
                             start = cell;
                         }
                         newCell = (struct Cell *)end;
@@ -262,7 +262,7 @@ void *OSAllocFixed(void **rstart, void **rend)
                         break;
                     }
                     else {
-                        if ((start <= cellEnd) && (cellEnd < ((char *)end + 0x40U))) {
+                        if ((start <= cellEnd) && ((char*)cellEnd < ((char *)end + 0x40U))) {
                             if (end < cellEnd) {
                                 end = cellEnd;
                             }
@@ -462,7 +462,7 @@ void OSDumpHeap(int heap)
     }
 }
 
-void OSVisitAllocated(void (*visitor)(void *, unsigned long))
+void OSVisitAllocated(void (*visitor)(void *, u32))
 {
     unsigned long heap;
     struct Cell *cell;

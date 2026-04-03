@@ -28,7 +28,7 @@ void DVDInit(void)
         exit(1);
 }
 
-BOOL DVDChangeDir(char *dir)
+BOOL DVDChangeDir(const char *dir)
 {
     printf("DVDChangeDir: %s\n", dir);
     if (dir[0] == '/') {
@@ -41,7 +41,7 @@ BOOL DVDChangeDir(char *dir)
         return chdir(dir) == 0;
 }
 
-s32 DVDConvertPathToEntrynum(char *pathPtr)
+s32 DVDConvertPathToEntrynum(const char *pathPtr)
 {
     int i;
     FILE *f;
@@ -76,7 +76,7 @@ s32 DVDConvertPathToEntrynum(char *pathPtr)
     return s_pathEntriesCount++;
 }
 
-BOOL DVDOpen(char *fileName, DVDFileInfo *fileInfo)
+BOOL DVDOpen(const char *fileName, DVDFileInfo *fileInfo)
 {
     FILE *f;
 
@@ -137,7 +137,7 @@ BOOL DVDReadAsyncPrio(DVDFileInfo *fileInfo, void *addr, s32 length, s32 offset,
     return TRUE;
 }
 
-BOOL DVDOpenDir(char *dirName, DVDDir *dir)
+BOOL DVDOpenDir(const char *dirName, DVDDir *dir)
 {
     puts("DVDOpenDir is a stub");
     return FALSE;

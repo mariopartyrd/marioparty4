@@ -613,9 +613,9 @@ template <typename B> void bswap(B &base, HsfMapAttr32b &obj, HsfMapAttr &dest)
 
 template <typename B> void bswap(B &base, HsfTransform &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
+    // if (sVisitedPtrs.contains(offset_ptr(base))) {
+    //     return;
+    // }
     bswap(base, obj.pos);
     bswap(base, obj.rot);
     bswap(base, obj.scale);

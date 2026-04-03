@@ -103,6 +103,9 @@ s32 BoardCharWheelInit(s32 arg0, s32 arg1) {
     } else {
         temp_r31->unk04 = 3600;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 BOOL BoardCharWheelCheck(void) {

@@ -302,6 +302,10 @@ s32 BoardBooStealTypeSet(s32 arg0) {
     BoardWinKill();
     CreateBallView();
     SetBallView(1);
+#ifdef NON_MATCHING
+    // TODO PC does 1 make sense?
+    return 1;
+#endif
 }
 
 static void ComSetupStealPlayer(s32 arg0) {

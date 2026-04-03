@@ -2913,6 +2913,9 @@ static s32 MegaPlayerPassFunc(s32 player, s32 space)
     omVibrate(3, 12, 4, 2);
     BoardPlayerIdleSet(player);
     HuPrcSleep(30);
+#ifdef NON_MATCHING
+    return 1;
+#endif
 }
 
 static s32 MegaExecJump(s32 player, s32 space)
@@ -3024,6 +3027,9 @@ static s32 MegaExecJump(s32 player, s32 space)
     omVibrate(3, 12, 4, 2);
     BoardPlayerIdleSet(player);
     HuPrcSleep(30);
+#ifdef NON_MATCHING
+    return 1;
+#endif
 }
 
 void BoardPlayerCopyEyeMat(s32 arg0, s32 arg1)
