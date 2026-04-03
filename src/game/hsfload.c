@@ -83,127 +83,128 @@ static char *GetString(u32 *str_ofs);
 static char *GetMotionString(u16 *str_ofs);
 
 #ifdef BYTESWAPPING
-static HsfVector3f *CopyByteSwappedVec3Data(HsfVector3f *source, s32 count)
-{
-    HsfVector3f *copy;
-    s32 i;
-
-    if (source == NULL || count <= 0) {
-        return source;
-    }
-    copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector3f) * count, MEMORY_DEFAULT_NUM);
-    for (i = 0; i < count; i++) {
-        HsfVector3f value = source[i];
-
-        byteswap_hsfvec3f(&value);
-        copy[i] = value;
-    }
-    return copy;
-}
-
-static HsfVector2f *CopyByteSwappedVec2Data(HsfVector2f *source, s32 count)
-{
-    HsfVector2f *copy;
-    s32 i;
-
-    if (source == NULL || count <= 0) {
-        return source;
-    }
-    copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector2f) * count, MEMORY_DEFAULT_NUM);
-    for (i = 0; i < count; i++) {
-        HsfVector2f value = source[i];
-
-        byteswap_hsfvec2f(&value);
-        copy[i] = value;
-    }
-    return copy;
-}
-
-static u16 *CopyByteSwappedU16Data(u16 *source, s32 count)
-{
-    u16 *copy;
-    s32 i;
-
-    if (source == NULL || count <= 0) {
-        return source;
-    }
-    copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(u16) * count, MEMORY_DEFAULT_NUM);
-    for (i = 0; i < count; i++) {
-        u16 value = source[i];
-
-        byteswap_u16(&value);
-        copy[i] = value;
-    }
-    return copy;
-}
-
-static s16 *CopyByteSwappedS16Data(s16 *source, s32 count)
-{
-    s16 *copy;
-    s32 i;
-
-    if (source == NULL || count <= 0) {
-        return source;
-    }
-    copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(s16) * count, MEMORY_DEFAULT_NUM);
-    for (i = 0; i < count; i++) {
-        s16 value = source[i];
-
-        byteswap_s16(&value);
-        copy[i] = value;
-    }
-    return copy;
-}
-
-static float *CopyByteSwappedFloatData(float *source, s32 count)
-{
-    float *copy;
-    s32 i;
-
-    if (source == NULL || count <= 0) {
-        return source;
-    }
-    copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(float) * count, MEMORY_DEFAULT_NUM);
-    for (i = 0; i < count; i++) {
-        float value = source[i];
-
-        byteswap_float(&value);
-        copy[i] = value;
-    }
-    return copy;
-}
-
-static void *CopyRawData(void *source, s32 size)
-{
-    void *copy;
-
-    if (source == NULL || size <= 0) {
-        return NULL;
-    }
-    copy = HuMemDirectMallocNum(HEAP_DATA, size, MEMORY_DEFAULT_NUM);
-    memcpy(copy, source, size);
-    return copy;
-}
-
-static s32 GetBitmapDataSize(HsfBitmap *bitmap)
-{
-    s32 total_size = 0;
-    s32 width = bitmap->sizeX;
-    s32 height = bitmap->sizeY;
-    s32 mip_count = bitmap->maxLod > 1 ? bitmap->maxLod : 1;
-    s32 i;
-
-    for (i = 0; i < mip_count; i++) {
-        total_size += (bitmap->pixSize * (width * height)) / 8;
-        if (width > 1) {
-            width >>= 1;
-        }
-        if (height > 1) {
-            height >>= 1;
-        }
-    }
-    return total_size;
-}
+// TODO PC remove
+// static HsfVector3f *CopyByteSwappedVec3Data(HsfVector3f *source, s32 count)
+// {
+//     HsfVector3f *copy;
+//     s32 i;
+//
+//     if (source == NULL || count <= 0) {
+//         return source;
+//     }
+//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector3f) * count, MEMORY_DEFAULT_NUM);
+//     for (i = 0; i < count; i++) {
+//         HsfVector3f value = source[i];
+//
+//         byteswap_hsfvec3f(&value);
+//         copy[i] = value;
+//     }
+//     return copy;
+// }
+//
+// static HsfVector2f *CopyByteSwappedVec2Data(HsfVector2f *source, s32 count)
+// {
+//     HsfVector2f *copy;
+//     s32 i;
+//
+//     if (source == NULL || count <= 0) {
+//         return source;
+//     }
+//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector2f) * count, MEMORY_DEFAULT_NUM);
+//     for (i = 0; i < count; i++) {
+//         HsfVector2f value = source[i];
+//
+//         byteswap_hsfvec2f(&value);
+//         copy[i] = value;
+//     }
+//     return copy;
+// }
+//
+// static u16 *CopyByteSwappedU16Data(u16 *source, s32 count)
+// {
+//     u16 *copy;
+//     s32 i;
+//
+//     if (source == NULL || count <= 0) {
+//         return source;
+//     }
+//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(u16) * count, MEMORY_DEFAULT_NUM);
+//     for (i = 0; i < count; i++) {
+//         u16 value = source[i];
+//
+//         byteswap_u16(&value);
+//         copy[i] = value;
+//     }
+//     return copy;
+// }
+//
+// static s16 *CopyByteSwappedS16Data(s16 *source, s32 count)
+// {
+//     s16 *copy;
+//     s32 i;
+//
+//     if (source == NULL || count <= 0) {
+//         return source;
+//     }
+//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(s16) * count, MEMORY_DEFAULT_NUM);
+//     for (i = 0; i < count; i++) {
+//         s16 value = source[i];
+//
+//         byteswap_s16(&value);
+//         copy[i] = value;
+//     }
+//     return copy;
+// }
+//
+// static float *CopyByteSwappedFloatData(float *source, s32 count)
+// {
+//     float *copy;
+//     s32 i;
+//
+//     if (source == NULL || count <= 0) {
+//         return source;
+//     }
+//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(float) * count, MEMORY_DEFAULT_NUM);
+//     for (i = 0; i < count; i++) {
+//         float value = source[i];
+//
+//         byteswap_float(&value);
+//         copy[i] = value;
+//     }
+//     return copy;
+// }
+//
+// static void *CopyRawData(void *source, s32 size)
+// {
+//     void *copy;
+//
+//     if (source == NULL || size <= 0) {
+//         return NULL;
+//     }
+//     copy = HuMemDirectMallocNum(HEAP_DATA, size, MEMORY_DEFAULT_NUM);
+//     memcpy(copy, source, size);
+//     return copy;
+// }
+//
+// static s32 GetBitmapDataSize(HsfBitmap *bitmap)
+// {
+//     s32 total_size = 0;
+//     s32 width = bitmap->sizeX;
+//     s32 height = bitmap->sizeY;
+//     s32 mip_count = bitmap->maxLod > 1 ? bitmap->maxLod : 1;
+//     s32 i;
+//
+//     for (i = 0; i < mip_count; i++) {
+//         total_size += (bitmap->pixSize * (width * height)) / 8;
+//         if (width > 1) {
+//             width >>= 1;
+//         }
+//         if (height > 1) {
+//             height >>= 1;
+//         }
+//     }
+//     return total_size;
+// }
 
 static void LoadEnvelopeSourceData(HsfObject *object, HsfObjectData *data)
 {
@@ -213,16 +214,26 @@ static void LoadEnvelopeSourceData(HsfObject *object, HsfObjectData *data)
         return;
     }
     if (data->vtxtop != NULL && object->data.vertex != NULL) {
-        object->data.vtxtop = CopyByteSwappedVec3Data(
-            (HsfVector3f *)((uintptr_t)fileptr + (uintptr_t)data->vtxtop),
-            object->data.vertex->count);
+        HsfVector3f *vtx = (HsfVector3f *)((uintptr_t)fileptr + (uintptr_t)data->vtxtop);
+        for (int i = 0; i < object->data.vertex->count; i++) {
+            byteswap_hsfvec3f(&vtx[i]);
+        }
+        object->data.vtxtop = vtx;
+        // object->data.vtxtop = CopyByteSwappedVec3Data(
+        //     (HsfVector3f *)((uintptr_t)fileptr + (uintptr_t)data->vtxtop),
+        //     object->data.vertex->count);
     } else {
         object->data.vtxtop = NULL;
     }
     if (data->normtop != NULL && object->data.normal != NULL) {
-        object->data.normtop = CopyByteSwappedVec3Data(
-            (HsfVector3f *)((uintptr_t)fileptr + (uintptr_t)data->normtop),
-            object->data.normal->count);
+        HsfVector3f *norm = (HsfVector3f *)((uintptr_t)fileptr + (uintptr_t)data->normtop);
+        for (int i = 0; i < object->data.normal->count; i++) {
+            byteswap_hsfvec3f(&norm[i]);
+        }
+        object->data.normtop = norm;
+        // object->data.normtop = CopyByteSwappedVec3Data(
+        //     (HsfVector3f *)((uintptr_t)fileptr + (uintptr_t)data->normtop),
+        //     object->data.normal->count);
     } else {
         object->data.normtop = NULL;
     }
@@ -802,7 +813,8 @@ HsfData *LoadHSF(void *data)
     InitEnvelope(hsf);
     objtop = NULL;
 #ifdef TARGET_PC
-    if (DoDump) {
+    // this dumps noko
+    if (DoDump && hsf->skeletonCnt > 0 && hsf->skeletonCnt != 9 && hsf->skeletonCnt != 10) {
         DumpHSF(hsf);
     }
 #endif
@@ -1855,7 +1867,7 @@ static void ShapeLoad(void)
             shape_new[i].name = SetName((u32 *)&shape_file[i].name);
             shape_new[i].count16[0] = shape_file[i].count16[0];
             shape_new[i].count16[1] = shape_file[i].count16[1];
-            vertexSym = (uintptr_t)shape_file[i].vertex;
+            vertexSym = (u32)shape_file[i].vertex;
             shape_new[i].vertex = (HsfBuffer **)&NSymIndex[vertexSym];
             for(j=0; j<shape_new[i].count16[1]; j++) {
                 vertex = &vtxtop[(u32)shape_new[i].vertex[j]];
