@@ -1484,9 +1484,9 @@ void fn_1_100A0(void)
         GXBeginDisplayList(var_r26, 0x200);
         GXBegin(GX_LINESTRIP, GX_VTXFMT0, 0x10);
         for (var_r29 = 0; var_r29 < 0x10; var_r29++) {
-            GXUnknownu16(var_r29);
-            GXUnknownu16(0);
-            GXUnknownu16(var_r29);
+            GXPosition1x16(var_r29);
+            GXColor1x16(0);
+            GXTexCoord1x16(var_r29);
         }
         GXEnd();
         var_r31->unk_5C = GXEndDisplayList();

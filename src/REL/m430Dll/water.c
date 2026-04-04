@@ -1141,8 +1141,8 @@ void fn_1_8B5C(omObjData *object, M430DllBss60Struct *var_r30)
         GXBegin(GX_TRIANGLESTRIP, GX_VTXFMT0, var_r24);
         for (var_r28 = 0; var_r28 < var_r24; var_r28++) {
             var_r25 = (var_r28 >> 1) + ((var_r29 + var_r27) * 0x16) + (var_r26 + sp28[var_r31 + var_r27]);
-            GXUnknownu16(var_r25);
-            GXUnknownu16(var_r25);
+            GXPosition1x16(var_r25);
+            GXColor1x16(var_r25);
             var_r27 = 1 - var_r27;
         }
         GXEnd();

@@ -1539,6 +1539,7 @@ static s32 SearchAttributeIndex(HsfData *arg0, u32 arg1)
     var_r31 = arg0->attribute;
     temp_r27 = SetName(&arg1);
     for (i = 0; i < arg0->attributeCnt; i++, var_r31++) {
+        // TODO PC 64 bit: var_r31->name is garbage in m404
         if (var_r31->name) {
             temp_r28 = strlen(var_r31->name);
             if (strncmp(var_r31->name, temp_r27, temp_r28) == 0) {

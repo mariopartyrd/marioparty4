@@ -28,6 +28,8 @@ const char *__asan_default_options()
 {
     return "new_delete_type_mismatch=0,sleep_before_dying=5,allocator_may_return_null=1";
 }
+
+bool disableFrameLimiter = FALSE;
 #endif
 
 extern FileListEntry _ovltbl[];
@@ -155,6 +157,17 @@ void main(void)
                 exiting = true;
                 break;
             }
+            if (event->type == AURORA_SDL_EVENT) {
+                if (event->sdl.type == SDL_EVENT_KEY_DOWN) {
+                    if (event->sdl.key.scancode == SDL_SCANCODE_SPACE) {
+                        disableFrameLimiter = TRUE;
+                    }
+                } else if (event->sdl.type == SDL_EVENT_KEY_UP) {
+                    if (event->sdl.key.scancode == SDL_SCANCODE_SPACE) {
+                        disableFrameLimiter = FALSE;
+                    }
+                }
+            }
             ++event;
         }
         if (exiting) {
@@ -207,7 +220,9 @@ void main(void)
 #ifdef TARGET_PC
         imgui_main(&auroraInfo);
         aurora_end_frame();
-        frame_limiter();
+        if (!disableFrameLimiter) {
+            frame_limiter();
+        }
 #endif
     }
 

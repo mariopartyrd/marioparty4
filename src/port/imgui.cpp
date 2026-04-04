@@ -15,25 +15,12 @@
 #endif
 
 static bool m_frameRate = true;
-static bool m_pipelineInfo = true;
+static bool m_pipelineInfo = false;
 static bool m_graphicsBackend = true;
 static int m_debugOverlayCorner = 0; // top-left
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
-
-namespace aurora::gfx
-{
-extern std::atomic_uint32_t queuedPipelines;
-extern std::atomic_uint32_t createdPipelines;
-
-extern size_t g_drawCallCount;
-extern size_t g_mergedDrawCallCount;
-extern size_t g_lastVertSize;
-extern size_t g_lastUniformSize;
-extern size_t g_lastIndexSize;
-extern size_t g_lastStorageSize;
-} // namespace aurora::gfx
 
 static void SetOverlayWindowLocation(int corner)
 {
