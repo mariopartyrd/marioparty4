@@ -2595,18 +2595,21 @@ s16 fn_1_11A74(AnimData *arg0, s16 arg1)
     GXBeginDisplayList(var_r21, 0x4000);
     GXBegin(GX_QUADS, GX_VTXFMT0, arg1 * 4);
     for (var_r30 = 0; var_r30 < arg1; var_r30++) {
-        GXUnknownu16(var_r30 * 4);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4);
-        GXUnknownu16(var_r30 * 4 + 1);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 1);
-        GXUnknownu16(var_r30 * 4 + 2);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 2);
-        GXUnknownu16(var_r30 * 4 + 3);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 3);
+        GXPosition1x16(var_r30 * 4);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4);
+
+        GXPosition1x16(var_r30 * 4 + 1);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 1);
+
+        GXPosition1x16(var_r30 * 4 + 2);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 2);
+
+        GXPosition1x16(var_r30 * 4 + 3);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 3);
     }
     GXEnd();
     var_r31->unk_34 = GXEndDisplayList();
