@@ -1419,11 +1419,11 @@ void fn_1_5044(s16 sp8)
     GXBegin(GX_QUADS, GX_VTXFMT0, var_r31->unk_2A * 4);
     for (var_r30 = 0; var_r30 < var_r31->unk_2A; var_r30++) {
         for (var_r29 = 0; var_r29 < 4; var_r29++) {
-            GXUnknownu16(var_r29 + (var_r30 * 4));
-            GXUnknownu16(var_r30);
-            GXUnknownu16(var_r29 + (var_r30 * 4));
+            GXPosition1x16(var_r29 + (var_r30 * 4));
+            GXColor1x16(var_r30);
+            GXTexCoord1x16(var_r29 + (var_r30 * 4));
             for (var_r28 = 0; var_r28 < var_r31->unk_28; var_r28++) {
-                GXUnknownu16(var_r29 + (var_r30 * 4));
+                GXNormal1x16(var_r29 + (var_r30 * 4));
             }
         }
     }
