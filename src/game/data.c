@@ -598,42 +598,46 @@ static s32 HuDataDVDdirDirectRead(DVDFileInfo *fileInfo, void *dest, s32 len, s3
 
 static void *HuDataDecodeIt(void *buf_start, s32 buf_ofs, s32 num, HeapID heap)
 {
-	void *data_start;
-	s32 *buf;
-	s32 raw_len, comp_type;
-	
-	void *dest;
-	buf =  (s32 *)((u8 *)buf_start+buf_ofs);
-	if((uintptr_t)buf & 0x3) {
-		u8 *data = (u8 *)buf;
-		raw_len = *data++ << 24;
-		raw_len += *data++ << 16;
-		raw_len += *data++ << 8;
-		raw_len += *data++;
-		comp_type = *data++ << 24;
-		comp_type += *data++ << 16;
-		comp_type += *data++ << 8;
-		comp_type += *data++;
-		data_start = data;
-	} else {
-		s32 *data = buf;
-		raw_len = *data++;
-		comp_type = *data++;
-		data_start = data;
-	}
-	switch(heap) {
+    void *data_start;
+    s32 *buf;
+    s32 raw_len, comp_type;
+
+    void *dest;
+    buf =  (s32 *)((u8 *)buf_start+buf_ofs);
+    if((uintptr_t)buf & 0x3) {
+	u8 *data = (u8 *)buf;
+	raw_len = *data++ << 24;
+	raw_len += *data++ << 16;
+	raw_len += *data++ << 8;
+	raw_len += *data++;
+	comp_type = *data++ << 24;
+	comp_type += *data++ << 16;
+	comp_type += *data++ << 8;
+	comp_type += *data++;
+	data_start = data;
+    } else {
+	s32 *data = buf;
+	raw_len = *data++;
+	comp_type = *data++;
+	data_start = data;
+#ifdef TARGET_PC
+        byteswap_s32(&raw_len);
+        byteswap_s32(&comp_type);
+#endif
+    }
+    switch(heap) {
         case HEAP_MUSIC:
             dest = HuMemDirectMalloc(HEAP_MUSIC, DATA_EFF_SIZE(raw_len));
             break;
-            
+
         case HEAP_DATA:
             dest = HuMemDirectMallocNum(HEAP_DATA, DATA_EFF_SIZE(raw_len), num);
             break;
-            
+
         case HEAP_DVD:
             dest = HuMemDirectMallocNum(HEAP_DVD, DATA_EFF_SIZE(raw_len), num);
             break;
-            
+
         default:
             dest = HuMemDirectMallocNum(HEAP_SYSTEM, DATA_EFF_SIZE(raw_len), num);
             break;
@@ -644,73 +648,83 @@ static void *HuDataDecodeIt(void *buf_start, s32 buf_ofs, s32 num, HeapID heap)
     return dest;
 }
 
-
-//Still to be decompiled
 void *HuDataReadNumHeapShortForce(s32 data_id, s32 num, HeapID heap)
 {
-	DVDFileInfo fileInfo;
-	s32 *data_hdr;
-	s32 *file_data;
-	void *file_raw_buf;
-	s32 read_len;
-	s32 file_id;
-	s32 file_ofs;
-	s32 read_ofs;
-	s32 data_ofs;
-	void *ret;
-	s32 dir;
-	s32 data_len;
-	s32 file_max;
+    DVDFileInfo fileInfo;
+    s32 *data_hdr;
+    s32 *file_data;
+    void *file_raw_buf;
+    s32 read_len;
+    s32 file_id;
+    s32 file_ofs;
+    s32 read_ofs;
+    s32 data_ofs;
+    void *ret;
+    s32 dir;
+    s32 data_len;
+    s32 file_max;
 
-	if(!HuDataDVDdirDirectOpen(data_id, &fileInfo)) {
-		return NULL;
-	}
-	dir = (data_id >> 16) & 0xFFFF0000;
-	file_id = data_id & 0xFFFF;
-	file_ofs = (file_id*4)+4;
-	data_len = OSRoundUp32B(file_ofs+8);
-	file_data = HuMemDirectMalloc(HEAP_SYSTEM, data_len);
-	if(!HuDataDVDdirDirectRead(&fileInfo, file_data, data_len, 0)) {
-		HuMemDirectFree(file_data);
-		DVDClose(&fileInfo);
-		return NULL;
-	}
-	file_max = *file_data;
-	if(file_max <= file_id) {
-		HuMemDirectFree(file_data);
-		OSReport("data.c%d: Data Number Error(0x%08x)\n", 1005, data_id);
-		DVDClose(&fileInfo);
-		return NULL;
-	}
-	data_hdr = file_data;
-	data_hdr += file_id+1;
-	file_ofs = *data_hdr;
-	read_ofs = OSRoundDown32B(file_ofs);
-	if(file_max <= file_id+1) {
-		read_len = fileInfo.length;
-		data_ofs = read_len-read_ofs;
-	} else {
-		data_hdr++;
-		data_ofs = (*data_hdr)-read_ofs;
-		read_len = fileInfo.length;
-	}
-	read_len = OSRoundUp32B(data_ofs);
+    if(!HuDataDVDdirDirectOpen(data_id, &fileInfo)) {
+	return NULL;
+    }
+    dir = (data_id >> 16) & 0xFFFF0000;
+    file_id = data_id & 0xFFFF;
+    file_ofs = (file_id*4)+4;
+    data_len = OSRoundUp32B(file_ofs+8);
+    file_data = HuMemDirectMalloc(HEAP_SYSTEM, data_len);
+    if(!HuDataDVDdirDirectRead(&fileInfo, file_data, data_len, 0)) {
 	HuMemDirectFree(file_data);
-	file_raw_buf = HuMemDirectMalloc(HEAP_SYSTEM, (read_len+4) & ~0x3);
-	if(file_raw_buf == NULL) {
-		OSReport("data.c: couldn't allocate read buffer(0x%08x)\n", data_id);
-		DVDClose(&fileInfo);
-		return NULL;
-	}
-	if(!HuDataDVDdirDirectRead(&fileInfo, file_raw_buf, read_len, read_ofs)) {
-		HuMemDirectFree(file_raw_buf);
-		DVDClose(&fileInfo);
-		return NULL;
-	}
 	DVDClose(&fileInfo);
-	data_ofs = file_ofs-read_ofs;
-	ret = HuDataDecodeIt(file_raw_buf, data_ofs, num, heap);
+	return NULL;
+    }
+    file_max = *file_data;
+#ifdef TARGET_PC
+    byteswap_s32(&file_max);
+#endif
+    if(file_max <= file_id) {
+	HuMemDirectFree(file_data);
+	OSReport("data.c%d: Data Number Error(0x%08x)\n", 1005, data_id);
+	DVDClose(&fileInfo);
+	return NULL;
+    }
+    data_hdr = file_data;
+    data_hdr += file_id+1;
+    file_ofs = *data_hdr;
+#ifdef TARGET_PC
+    byteswap_s32(&file_ofs);
+#endif
+    read_ofs = OSRoundDown32B(file_ofs);
+    if(file_max <= file_id+1) {
+        read_len = fileInfo.length;
+        data_ofs = read_len-read_ofs;
+    } else {
+        data_hdr++;
+#ifdef TARGET_PC
+        data_ofs = *data_hdr;
+        byteswap_s32(&data_ofs);
+        data_ofs -= read_ofs;
+#else
+        data_ofs = (*data_hdr)-read_ofs;
+#endif
+        read_len = fileInfo.length;
+    }
+    read_len = OSRoundUp32B(data_ofs);
+    HuMemDirectFree(file_data);
+    file_raw_buf = HuMemDirectMalloc(HEAP_SYSTEM, (read_len+4) & ~0x3);
+    if(file_raw_buf == NULL) {
+	OSReport("data.c: couldn't allocate read buffer(0x%08x)\n", data_id);
+	DVDClose(&fileInfo);
+	return NULL;
+    }
+    if(!HuDataDVDdirDirectRead(&fileInfo, file_raw_buf, read_len, read_ofs)) {
 	HuMemDirectFree(file_raw_buf);
+	DVDClose(&fileInfo);
+	return NULL;
+    }
+    DVDClose(&fileInfo);
+    data_ofs = file_ofs-read_ofs;
+    ret = HuDataDecodeIt(file_raw_buf, data_ofs, num, heap);
+    HuMemDirectFree(file_raw_buf);
     return ret;
 }
 

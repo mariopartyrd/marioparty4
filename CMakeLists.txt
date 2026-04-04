@@ -10,7 +10,7 @@ option(USE_ASAN "Enable address sanitization" OFF)
 option(SKIP_HU_ALLOC "Skip the game's built in allocator" ON)
 
 set(USE_ASAN OFF CACHE BOOL "Disable ASan" FORCE)
-set(SKIP_HU_ALLOC ON CACHE BOOL "Skip the built in allocator" FORCE)
+set(SKIP_HU_ALLOC OFF CACHE BOOL "Skip the built in allocator" FORCE)
 
 # Set build type to Debug if not specified
 if (NOT CMAKE_BUILD_TYPE)
@@ -163,8 +163,8 @@ if (MSVC)
     target_compile_options(dol PRIVATE "/Ob0")
     target_compile_options(dol PRIVATE "/Od")
     if(NOT USE_ASAN)
-        target_compile_options(dol PRIVATE "/GS")
-        target_compile_options(dol PRIVATE "/RTC1")  # incompatible with asan
+        # target_compile_options(dol PRIVATE "/GS")
+        # target_compile_options(dol PRIVATE "/RTC1")  # incompatible with asan
     endif()
 else ()
     # target_compile_options(dol PRIVATE "-fvisibility=hidden")
@@ -215,8 +215,8 @@ foreach (dir ${REL_DIRS})
                 target_compile_options(${dir} PRIVATE "/Ob0")
                 target_compile_options(${dir} PRIVATE "/Od")
                 if(NOT USE_ASAN)
-                    target_compile_options(${dir} PRIVATE "/GS")
-                    target_compile_options(${dir} PRIVATE "/RTC1")  # incompatible with asan
+#                    target_compile_options(${dir} PRIVATE "/GS")
+#                    target_compile_options(${dir} PRIVATE "/RTC1")  # incompatible with asan
                 endif()
             elseif (NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
                 # target_compile_options(${dir} PRIVATE "-fvisibility=hidden")

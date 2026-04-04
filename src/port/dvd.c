@@ -133,7 +133,9 @@ BOOL DVDReadAsyncPrio(DVDFileInfo *fileInfo, void *addr, s32 length, s32 offset,
     success = (fread(addr, length, 1, f) == 1) || feof(f);
     if (!success)
         puts("read failed");
-    callback(success ? 0 : -1, fileInfo);
+    if (callback) {
+        callback(success ? 0 : -1, fileInfo);
+    }
     return TRUE;
 }
 

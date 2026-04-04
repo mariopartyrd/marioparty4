@@ -517,7 +517,11 @@ static void InstPlayerMain(void)
             }
             if (time == 0) {
                 Hu3DModelAttrReset(playerMdlId[j], HU3D_MOTATTR_LOOP);
+#ifdef NON_MATCHING
+                CharModelVoiceEnableSet(charNo[j], motId[j][1], 1);
+#else
                 CharModelVoiceEnableSet(charNo[i], motId[i][1], 1);
+#endif
                 CharModelMotionSet(charNo[j], motId[j][1]);
             }
             if (time <= 30) {
