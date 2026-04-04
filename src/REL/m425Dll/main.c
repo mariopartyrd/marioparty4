@@ -850,7 +850,9 @@ void fn_1_2B2C(omObjData *object)
     omSetTra(object, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
     Hu3DModelPosSet(var_r28, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
     Hu3DModelRotSet(var_r28, 0.0f, 30.0f, 0.0f);
+#ifndef NON_MATCHING
     HuDataDirClose(sp8);
+#endif
     object->func = fn_1_2E78;
 }
 
