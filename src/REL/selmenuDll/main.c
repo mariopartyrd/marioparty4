@@ -662,7 +662,7 @@ static void SMCharUpdate(omObjData *object)
             return;
         }
         if (!smPlayerCfg[i].iscom) {
-            w = strlen(smCharTbl[smPlayerCfg[i].character]);
+            w = (s16)strlen(smCharTbl[smPlayerCfg[i].character]);
             w *= 16;
             x = ((320 - w) / 2) + ((i % 2) * 320);
             y = 176 + ((i / 2) * 240);

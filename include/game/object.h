@@ -51,7 +51,7 @@ typedef struct om_obj_data {
 /* 0x0A */ s16 next_idx;
 /* 0x0C */ s16 group;
 /* 0x0E */ u16 group_idx;
-/* 0x10 */ u32 unk10;
+/* 0x10 */ uintptr_t unk10;
 /* 0x14 */ omObjFunc func;
 /* 0x18 */ Vec trans;
 /* 0x24 */ Vec rot;

@@ -212,7 +212,7 @@ s32 fn_1_6898(s32 arg0)
     j = 0;
     while (j == 0) {
         BoardWinCreateChoice(2, MAKE_MESSID(22, 11), 2, 0);
-        BOARD_WIN_MES_SET_PTR((uintptr_t)lbl_1_bss_130, 2);
+        BOARD_WIN_INSERT_MES_SET_PTR((uintptr_t)lbl_1_bss_130, 2);
         BoardWinAttrSet(0x10);
 
         if (GWPlayer[arg0].com != 0) {

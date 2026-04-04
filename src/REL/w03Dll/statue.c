@@ -104,7 +104,7 @@ void fn_1_1358(void)
         if (lbl_1_bss_2C) {
             sprintf(lbl_1_bss_44, "%d", lbl_1_bss_2C);
             BoardWinCreate(0, MAKE_MESSID(22, 6), -1);
-            BOARD_WIN_MES_SET_PTR((uintptr_t)lbl_1_bss_44, 0);
+            BOARD_WIN_INSERT_MES_SET_PTR((uintptr_t)lbl_1_bss_44, 0);
             BoardWinWait();
             BoardWinKill();
             lbl_1_bss_0->unk2 = 1 << cur_player_index;
@@ -600,7 +600,7 @@ s32 fn_1_2930(s32 arg0)
 
     sprintf(lbl_1_bss_38, "%d", lbl_1_bss_0->unk0);
     BoardWinCreate(0, MAKE_MESSID(22, 7), -1);
-    BOARD_WIN_MES_SET_PTR((uintptr_t)lbl_1_bss_38, 1);
+    BOARD_WIN_INSERT_MES_SET_PTR((uintptr_t)lbl_1_bss_38, 1);
     BoardWinWait();
     BoardWinKill();
     fn_1_CF4();

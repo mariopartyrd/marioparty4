@@ -32,7 +32,7 @@ void HuMemInitAll(void)
     HeapSizeTbl[4] = free_size;
 }
 
-void *HuMemInit(void *ptr, s32 size)
+void *HuMemInit(void *ptr, size_t size)
 {
     return HuMemHeapInit(ptr, size);
 }
@@ -48,7 +48,7 @@ void HuMemDCFlush(HeapID heap)
     DCFlushRangeNoSync(HeapTbl[heap], HeapSizeTbl[heap]);
 }
 
-void *HuMemDirectMalloc(HeapID heap, s32 size)
+void *HuMemDirectMalloc(HeapID heap, size_t size)
 {
 #ifdef TARGET_PC
     u32 retaddr = 0;
@@ -62,7 +62,7 @@ void *HuMemDirectMalloc(HeapID heap, s32 size)
     return HuMemMemoryAlloc(HeapTbl[heap], size, retaddr);
 }
 
-void *HuMemDirectMallocNum(HeapID heap, s32 size, uintptr_t num)
+void *HuMemDirectMallocNum(HeapID heap, size_t size, uintptr_t num)
 {
 #ifdef TARGET_PC
     u32 retaddr = 0;
@@ -102,17 +102,17 @@ void HuMemDirectFreeNum(HeapID heap, uintptr_t num)
     HuMemMemoryFreeNum(HeapTbl[heap], num, retaddr);
 }
 
-s32 HuMemUsedMallocSizeGet(HeapID heap)
+size_t HuMemUsedMallocSizeGet(HeapID heap)
 {
     return HuMemUsedMemorySizeGet(HeapTbl[heap]);
 }
 
-s32 HuMemUsedMallocBlockGet(HeapID heap)
+size_t HuMemUsedMallocBlockGet(HeapID heap)
 {
     return HuMemUsedMemoryBlockGet(HeapTbl[heap]);
 }
 
-u32 HuMemHeapSizeGet(HeapID heap)
+size_t HuMemHeapSizeGet(HeapID heap)
 {
     return HeapSizeTbl[heap];
 }

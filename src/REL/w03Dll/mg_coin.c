@@ -665,7 +665,7 @@ void fn_1_9474(s32 arg0)
 {
     sprintf(lbl_1_bss_150, "%d", lbl_1_bss_14C);
     BoardWinCreate(2, MAKE_MESSID(22, 23), 2);
-    BOARD_WIN_MES_SET_PTR((uintptr_t)lbl_1_bss_150, 4);
+    BOARD_WIN_INSERT_MES_SET_PTR((uintptr_t)lbl_1_bss_150, 4);
     BoardWinWait();
     BoardWinKill();
     BoardPlayerMotBlendSet(arg0, 0, 0xF);

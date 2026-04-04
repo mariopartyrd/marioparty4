@@ -695,7 +695,7 @@ void ApplyCoinSteal(s16 arg0, s16 arg1)
     sprintf(stealAmountStr, "%d", arg0);
     HuAudFXPlay(0x4B);
     BoardWinCreate(2, var_r31, 3);
-    BoardWinInsertMesSet((u32)&stealAmountStr, 0);
+    BOARD_WIN_INSERT_MES_SET_PTR((uintptr_t)stealAmountStr, 0);
     BoardWinWait();
     BoardWinKill();
     BoardStatusShowSetForce(currPlayer);

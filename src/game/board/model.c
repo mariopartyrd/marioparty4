@@ -1194,7 +1194,7 @@ static s32 CreateBoardModel(BoardModel *model, s32 data_num, s32 link)
     if (model->character == -1) {
         model->data = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
         if (!model->data) {
-            s32 size_data, size_dvd;
+            size_t size_data, size_dvd;
             size_data = HuMemHeapSizeGet(HEAP_DATA) - HuMemUsedMallocSizeGet(HEAP_DATA);
             size_dvd = HuMemHeapSizeGet(HEAP_DVD) - HuMemUsedMallocSizeGet(HEAP_DVD);
             return -1;

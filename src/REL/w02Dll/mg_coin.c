@@ -331,7 +331,7 @@ void fn_1_46E8(void)
     }
     sprintf(sp8, "%d", lbl_1_bss_84);
     BoardWinCreate(2, MAKE_MESSID(19, 19), 4);
-    BoardWinInsertMesSet((u32)sp8, 0);
+    BOARD_WIN_INSERT_MES_SET_PTR((uintptr_t)sp8, 0);
     BoardWinWait();
     BoardWinKill();
     BoardCameraTargetModelSet(-1);

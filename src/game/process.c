@@ -71,7 +71,7 @@ static void UnlinkProcess(Process **root, Process *process)
 Process *HuPrcCreate(void (*func)(void), u16 prio, u32 stack_size, s32 extra_size)
 {
     Process *process;
-    s32 alloc_size;
+    size_t alloc_size;
     void *heap;
     if (stack_size == 0) {
         stack_size = 2048;
@@ -291,6 +291,9 @@ void HuPrcCall(s32 tick)
                     break;
                 }
                 #endif
+#ifdef TARGET_PC
+                processcur = processcur->next;
+#else
                 // memory_block->magic
                 if (((u8 *)(processcur->heap))[4] != 165) {
                     printf("stack overlap error.(process pointer %x)\n", processcur);
@@ -300,6 +303,7 @@ void HuPrcCall(s32 tick)
                 else {
                     processcur = processcur->next;
                 }
+#endif
                 break;
         }
         process = processcur;

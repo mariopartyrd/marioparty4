@@ -1345,9 +1345,11 @@ void HuWinMesSet(s16 window, u32 mess)
 #endif
         }
     }
+#ifndef TARGET_PC
     else {
         window_ptr->mess = (u8 *)mess;
     }
+#endif
     if (!(window_ptr->attr & 0x80)) {
         window_ptr->mess_color = 7;
 #if !VERSION_JP
@@ -1373,9 +1375,11 @@ void HuWinInsertMesSet(s16 window, u32 mess, s16 index)
             OSReport("Error: No Message data\n");
         }
     }
+#ifndef TARGET_PC
     else {
         window_ptr->insert_mess[index] = (u8 *)mess;
     }
+#endif
 }
 
 #ifdef TARGET_PC
@@ -1728,8 +1732,10 @@ static void GetMesMaxSizeSub(u32 mess)
     assert(mess <= 0x10000000); // In this case we should be in GetMesMaxSizeSubPtr
 #endif
     if (mess > 0x80000000) {
+#ifndef TARGET_PC
         from_messdata = 0;
         mess_data = (u8 *)mess;
+#endif
     }
     else {
         from_messdata = 1;
@@ -2007,7 +2013,9 @@ s16 HuWinKeyWaitNumGet(u32 mess)
     assert(mess <= 0x10000000);
 #endif
     if (mess > 0x80000000) {
+#ifndef TARGET_PC
         mess_data = (u8 *)mess;
+#endif
     }
     else {
         mess_data = MessData_MesPtrGet(messDataPtr, mess);

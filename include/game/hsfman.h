@@ -299,7 +299,7 @@ s16 Hu3DProjectionCreate(void *, float, float, float);
 void Hu3DProjectionKill(s16);
 void Hu3DProjectionPosSet(s16, Vec *, Vec *, Vec *);
 void Hu3DProjectionTPLvlSet(s16, float);
-void Hu3DMipMapSet(char *, s16, s32, float);
+void Hu3DMipMapSet(char *, s16, char *, float);
 
 SHARED_SYM extern ModelData Hu3DData[0x200];
 SHARED_SYM extern CameraData Hu3DCamera[0x10];

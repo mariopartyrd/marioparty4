@@ -306,9 +306,9 @@ static void DumpMaterials(HsfData *hsf) {
             m->hilite_scale, m->unk18, m->invAlpha, m->refAlpha, m->unk2C);
         fprintf(g_dump_file, "     unk20=(%.4f,%.4f) flags=%u numAttrs=%u\n",
             m->unk20[0], m->unk20[1], m->flags, m->numAttrs);
-        for (j = 0; j < (s32)m->numAttrs; j++) {
-            fprintf(g_dump_file, "     attr[%d]=%d\n", j, m->attrs[j]);
-        }
+        // for (j = 0; j < (s32)m->numAttrs; j++) {
+            // fprintf(g_dump_file, "     attr[%d]=%d\n", j, m->attrs[j]);
+        // }
     }
 }
 
@@ -857,7 +857,7 @@ static void FileLoad(void *data)
     for (i = 0; i < head.symbol.count; i++) {
         u32 *file_symbol_real = (u32 *)((uintptr_t)fileptr + head.symbol.ofs);
         byteswap_u32(&file_symbol_real[i]);
-        NSymIndex[i] = (void *)file_symbol_real[i];
+        NSymIndex[i] = (void *)(uintptr_t)file_symbol_real[i]; // TODO is this uintptr_t cast right?
     }
     StringTable = (char *)((uintptr_t)fileptr+head.string.ofs);
     ClusterTop = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfCluster) * head.cluster.count, MEMORY_DEFAULT_NUM);
@@ -1001,7 +1001,7 @@ static void MaterialLoad(void)
             new_mat->unk2C = curr_mat->unk2C;
             new_mat->numAttrs = curr_mat->numAttrs;
             // the pointers are being treated as values
-            new_mat->attrs = (intptr_t *)(NSymIndex+((u32)curr_mat->attrs));
+            new_mat->attrs = (intptr_t *)(NSymIndex+((uintptr_t)curr_mat->attrs));
             rgba[i].r = new_mat->litColor[0];
             rgba[i].g = new_mat->litColor[1];
             rgba[i].b = new_mat->litColor[2];
@@ -1029,12 +1029,12 @@ static void AttributeLoad(void)
         Model.attribute = new_attr;
         Model.attributeCnt = head.attribute.count;
         for(i=0; i<head.attribute.count; i++, new_attr++) {
-            if((u32)file_attr[i].name != -1) {
+            if((uintptr_t)file_attr[i].name != -1) {
                 new_attr->name = SetName((u32 *)&file_attr[i].name);
             } else {
                 new_attr->name = NULL;
             }
-            new_attr->bitmap = SearchBitmapPtr((s32)file_attr[i].bitmap);
+            new_attr->bitmap = SearchBitmapPtr((s32)(intptr_t)file_attr[i].bitmap);
 #ifdef OPTIMIZED_TEXTURE_LOADING
             new_attr->tex_initialized = FALSE;
             new_attr->tex8000_initialized = FALSE;
@@ -1365,11 +1365,11 @@ static void DispObject(HsfObject *parent, HsfObject *object)
                 Model.root = temp_object;
             }
             new_object->type = HSF_OBJ_MESH;
-            new_object->data.vertex = SearchVertexPtr((s32)data->vertex);
-            new_object->data.normal = SearchNormalPtr((s32)data->normal);
-            new_object->data.st = SearchStPtr((s32)data->st);
-            new_object->data.color = SearchColorPtr((s32)data->color);
-            new_object->data.face = SearchFacePtr((s32)data->face);
+            new_object->data.vertex = SearchVertexPtr((s32)(intptr_t)data->vertex);
+            new_object->data.normal = SearchNormalPtr((s32)(intptr_t)data->normal);
+            new_object->data.st = SearchStPtr((s32)(intptr_t)data->st);
+            new_object->data.color = SearchColorPtr((s32)(intptr_t)data->color);
+            new_object->data.face = SearchFacePtr((s32)(intptr_t)data->face);
             new_object->data.vertexShape = (HsfBuffer **)&NSymIndex[(uintptr_t)data->vertexShape];
             for(i=0; i<new_object->data.vertexShapeCnt; i++) {
                 temp.shape = &vtxtop[(uintptr_t)new_object->data.vertexShape[i]];
@@ -1380,9 +1380,9 @@ static void DispObject(HsfObject *parent, HsfObject *object)
                 temp.cluster = &ClusterTop[(uintptr_t)new_object->data.cluster[i]];
                 new_object->data.cluster[i] = temp.cluster;
             }
-            new_object->data.cenv = SearchCenvPtr((s32)data->cenv);
+            new_object->data.cenv = SearchCenvPtr((s32)(intptr_t)data->cenv);
             new_object->data.material = Model.material;
-            if((s32)data->attribute >= 0) {
+            if((intptr_t)data->attribute >= 0) {
                 new_object->data.attribute = Model.attribute;
             } else {
                 new_object->data.attribute = NULL;
@@ -1467,9 +1467,9 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             new_object = temp_object = object;
             new_object->data.parent = parent;
             new_object->data.childrenCount = data->childrenCount;
-            new_object->data.children = (HsfObject **)&NSymIndex[(u32)data->children];
+            new_object->data.children = (HsfObject **)&NSymIndex[(uintptr_t)data->children];
             for(i=0; i<new_object->data.childrenCount; i++) {
-                child_obj = &objtop[(u32)new_object->data.children[i]];
+                child_obj = &objtop[(uintptr_t)new_object->data.children[i]];
                 new_object->data.children[i] = child_obj;
             }
             if(Model.root == NULL) {
@@ -1489,9 +1489,9 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             new_object = temp_object = object;
             new_object->data.parent = parent;
             new_object->data.childrenCount = data->childrenCount;
-            new_object->data.children = (HsfObject **)&NSymIndex[(u32)data->children];
+            new_object->data.children = (HsfObject **)&NSymIndex[(uintptr_t)data->children];
             for(i=0; i<new_object->data.childrenCount; i++) {
-                child_obj = &objtop[(u32)new_object->data.children[i]];
+                child_obj = &objtop[(uintptr_t)new_object->data.children[i]];
                 new_object->data.children[i] = child_obj;
             }
             if(Model.root == NULL) {
@@ -1511,9 +1511,9 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             new_object = temp_object = object;
             new_object->data.parent = parent;
             new_object->data.childrenCount = data->childrenCount;
-            new_object->data.children = (HsfObject **)&NSymIndex[(u32)data->children];
+            new_object->data.children = (HsfObject **)&NSymIndex[(uintptr_t)data->children];
             for(i=0; i<new_object->data.childrenCount; i++) {
-                child_obj = &objtop[(u32)new_object->data.children[i]];
+                child_obj = &objtop[(uintptr_t)new_object->data.children[i]];
                 new_object->data.children[i] = child_obj;
             }
             if(Model.root == NULL) {
@@ -1533,9 +1533,9 @@ static void DispObject(HsfObject *parent, HsfObject *object)
             new_object = temp_object = object;
             new_object->data.parent = parent;
             new_object->data.childrenCount = data->childrenCount;
-            new_object->data.children = (HsfObject **)&NSymIndex[(u32)data->children];
+            new_object->data.children = (HsfObject **)&NSymIndex[(uintptr_t)data->children];
             for(i=0; i<new_object->data.childrenCount; i++) {
-                child_obj = &objtop[(u32)new_object->data.children[i]];
+                child_obj = &objtop[(uintptr_t)new_object->data.children[i]];
                 new_object->data.children[i] = child_obj;
             }
             if(Model.root == NULL) {
@@ -1602,7 +1602,7 @@ static void ObjectLoad(void)
         }
         object = objtop;
         for(i=0; i<head.object.count; i++, object++) {
-            if((s32)object->data.parent == -1) {
+            if((s32)(intptr_t)object->data.parent == -1) {
                 break;
             }
         }
@@ -1828,14 +1828,14 @@ static void ClusterLoad(void)
             cluster_new[i].name[0] = SetName((u32 *)&cluster_file[i].name[0]);
             cluster_new[i].name[1] = SetName((u32 *)&cluster_file[i].name[1]);
             cluster_new[i].targetName = SetName((u32 *)&cluster_file[i].targetName);
-            cluster_new[i].part = SearchPartPtr((s32)cluster_file[i].part);
+            cluster_new[i].part = SearchPartPtr((s32)(intptr_t)cluster_file[i].part);
             cluster_new[i].unk95 = cluster_file[i].unk95;
             cluster_new[i].type = cluster_file[i].type;
             cluster_new[i].vertexCnt = cluster_file[i].vertexCnt;
             vertexSym = (uintptr_t)cluster_file[i].vertex;
             cluster_new[i].vertex = (HsfBuffer **)&NSymIndex[vertexSym];
             for(j=0; j<cluster_new[i].vertexCnt; j++) {
-                vertex = SearchVertexPtr((s32)cluster_new[i].vertex[j]);
+                vertex = SearchVertexPtr((s32)(intptr_t)cluster_new[i].vertex[j]);
                 cluster_new[i].vertex[j] = vertex;
             }
         }
@@ -1867,10 +1867,10 @@ static void ShapeLoad(void)
             shape_new[i].name = SetName((u32 *)&shape_file[i].name);
             shape_new[i].count16[0] = shape_file[i].count16[0];
             shape_new[i].count16[1] = shape_file[i].count16[1];
-            vertexSym = (u32)shape_file[i].vertex;
+            vertexSym = (uintptr_t)shape_file[i].vertex;
             shape_new[i].vertex = (HsfBuffer **)&NSymIndex[vertexSym];
             for(j=0; j<shape_new[i].count16[1]; j++) {
-                vertex = &vtxtop[(u32)shape_new[i].vertex[j]];
+                vertex = &vtxtop[(uintptr_t)shape_new[i].vertex[j]];
                 shape_new[i].vertex[j] = vertex;
             }
         }
@@ -1904,7 +1904,7 @@ static void MapAttrLoad(void)
         data = (u16 *)&mapattr_base[head.mapAttr.count];
 #endif
         for(i=0; i<head.mapAttr.count; i++, mapattr_file++, mapattr_new++) {
-            mapattr_new->data = &data[(u32)mapattr_file->data];
+            mapattr_new->data = &data[(uintptr_t)mapattr_file->data];
         }
     }
 }
@@ -1946,7 +1946,7 @@ static void BitmapLoad(void)
             bitmap_new->sizeX = bitmap_file->sizeX;
             bitmap_new->sizeY = bitmap_file->sizeY;
             bitmap_new->palSize = bitmap_file->palSize;
-            palette = SearchPalettePtr((s32)bitmap_file->palData);
+            palette = SearchPalettePtr((s32)(intptr_t)bitmap_file->palData);
             if(palette) {
                 bitmap_new->palData = palette->data;
             }
@@ -2431,7 +2431,7 @@ static inline void MotionLoadAttribute(HsfTrack *track, void *data)
 #ifdef BYTESWAPPING
                 byteswap_hsfbitmapkey(&file_frame_real[i], new_frame);
 #endif
-                new_frame->data = SearchBitmapPtr((s32)file_frame->data);
+                new_frame->data = SearchBitmapPtr((s32)(intptr_t)file_frame->data);
             }
         }
         break;

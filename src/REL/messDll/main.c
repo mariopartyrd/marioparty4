@@ -141,7 +141,7 @@ static void fn_1_E88(void)
         var_r30 = (var_r28 << 16);
         var_r25 = 0;
         while (1) {
-            if ((s32)MessData_MesPtrGet(messDataPtr, var_r30 + var_r25) == 0) {
+            if ((intptr_t)MessData_MesPtrGet(messDataPtr, var_r30 + var_r25) == 0) {
                 break;
             }
             sp10[var_r28]++;

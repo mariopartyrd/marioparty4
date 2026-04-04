@@ -401,7 +401,7 @@ void fn_1_AB24(void)
     BoardAudSeqPause(0, 0, 1000);
     sprintf(&sp8, "%d", lbl_1_bss_C6);
     BoardWinCreate(2, MAKE_MESSID(39, 17), 7);
-    BoardWinInsertMesSet((u32)&sp8, 0);
+    BOARD_WIN_INSERT_MES_SET_PTR((uintptr_t)&sp8, 0);
     BoardWinInsertMesSet(lbl_1_data_4B8[lbl_1_bss_C2], 1);
     BoardWinWait();
     BoardWinKill();

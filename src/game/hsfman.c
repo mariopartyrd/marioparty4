@@ -2142,7 +2142,7 @@ void Hu3DProjectionTPLvlSet(s16 arg0, f32 arg8) {
     Hu3DProjection[arg0].unk_00 = 255.0f * arg8;
 }
 
-void Hu3DMipMapSet(char* arg0, s16 arg1, s32 arg2, f32 arg8) {
+void Hu3DMipMapSet(char* arg0, s16 arg1, char* arg2, f32 arg8) {
     HsfBitmap* temp_r31;
     AnimBmpData* var_r30;
     s16 i;
@@ -2158,12 +2158,12 @@ void Hu3DMipMapSet(char* arg0, s16 arg1, s32 arg2, f32 arg8) {
     temp_r27 = temp_r25->hsfData;
     var_r26 = temp_r27->attribute;
     for (i = 0; i < temp_r27->attributeCnt; i++, var_r26++) {
-        if (strcmp((char *)arg2, var_r26->bitmap->name) == 0) {
+        if (strcmp(arg2, var_r26->bitmap->name) == 0) {
             break;
         }
     }
     if (i == temp_r27->attributeCnt) {
-        OSReport("Error: Not Found %s for MipMapSet\n", (char *)arg2);
+        OSReport("Error: Not Found %s for MipMapSet\n", arg2);
         return;
     }
     temp_r31 = var_r26->bitmap;
@@ -2200,7 +2200,7 @@ void Hu3DMipMapSet(char* arg0, s16 arg1, s32 arg2, f32 arg8) {
 
     for (i = 0; i < temp_r3->bmpNum; i++, var_r30++) {
         memcpy(var_r23, var_r30->data, var_r30->dataSize);
-        var_r23 = (void*) ((int) var_r23 + var_r30->dataSize);
+        var_r23 = (void*) ((uintptr_t) var_r23 + var_r30->dataSize);
     }
     DCFlushRange(temp_r22, var_r24);
 }

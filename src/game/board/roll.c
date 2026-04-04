@@ -909,7 +909,7 @@ static void SameRollExec(void)
     }
     BoardAudSeqPause(0, 0, 0x3E8);
     BoardWinCreate(0, MAKE_MESSID(9, 0), -1);
-    BOARD_WIN_MES_SET_PTR(MAKE_MESSID_PTR(sameRollCoinStr), 0);
+    BOARD_WIN_INSERT_MES_SET_PTR(MAKE_MESSID_PTR(sameRollCoinStr), 0);
     BoardWinWait();
     BoardWinKill();
     if (var_r31 >= 0x32) {

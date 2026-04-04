@@ -15,27 +15,27 @@ typedef enum {
 } HeapID;
 
 void HuMemInitAll(void);
-void *HuMemInit(void *ptr, s32 size);
+void *HuMemInit(void *ptr, size_t size);
 void HuMemDCFlushAll();
 void HuMemDCFlush(HeapID heap);
-void *HuMemDirectMalloc(HeapID heap, s32 size);
-void *HuMemDirectMallocNum(HeapID heap, s32 size, uintptr_t num);
+void *HuMemDirectMalloc(HeapID heap, size_t size);
+void *HuMemDirectMallocNum(HeapID heap, size_t size, uintptr_t num);
 void HuMemDirectFree(void *ptr);
 void HuMemDirectFreeNum(HeapID heap, uintptr_t num);
-s32 HuMemUsedMallocSizeGet(HeapID heap);
-s32 HuMemUsedMallocBlockGet(HeapID heap);
-u32 HuMemHeapSizeGet(HeapID heap);
+size_t HuMemUsedMallocSizeGet(HeapID heap);
+size_t HuMemUsedMallocBlockGet(HeapID heap);
+size_t HuMemHeapSizeGet(HeapID heap);
 void *HuMemHeapPtrGet(HeapID heap);
 
-void *HuMemHeapInit(void *ptr, s32 size);
-void *HuMemMemoryAlloc(void *heap_ptr, s32 size, uintptr_t retaddr);
-void *HuMemMemoryAllocNum(void *heap_ptr, s32 size, uintptr_t num, uintptr_t retaddr);
+void *HuMemHeapInit(void *ptr, size_t size);
+void *HuMemMemoryAlloc(void *heap_ptr, size_t size, uintptr_t retaddr);
+void *HuMemMemoryAllocNum(void *heap_ptr, size_t size, uintptr_t num, uintptr_t retaddr);
 void HuMemMemoryFree(void *ptr, uintptr_t retaddr);
 void HuMemMemoryFreeNum(void *heap_ptr, uintptr_t num, uintptr_t retaddr);
-s32 HuMemUsedMemorySizeGet(void *heap_ptr);
+size_t HuMemUsedMemorySizeGet(void *heap_ptr);
 s32 HuMemUsedMemoryBlockGet(void *heap_ptr);
-s32 HuMemMemorySizeGet(void *ptr);
-s32 HuMemMemoryAllocSizeGet(s32 size);
+size_t HuMemMemorySizeGet(void *ptr);
+size_t HuMemMemoryAllocSizeGet(size_t size);
 void HuMemHeapDump(void *heap_ptr, s16 status);
 
 #endif

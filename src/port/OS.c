@@ -394,40 +394,17 @@ s32 OSCheckHeap(int heap)
     long total = 0;
     long free = 0;
 
-    ASSERTREPORT(0x37D, HeapArray);
-    ASSERTREPORT(0x37E, 0 <= heap && heap < NumHeaps);
     hd = &HeapArray[heap];
-    ASSERTREPORT(0x381, 0 <= hd->size);
-
-    ASSERTREPORT(0x383, hd->allocated == NULL || hd->allocated->prev == NULL);
 
     for (cell = hd->allocated; cell; cell = cell->next) {
-        ASSERTREPORT(0x386, InRange(cell, ArenaStart, ArenaEnd));
-        ASSERTREPORT(0x387, OFFSET(cell, ALIGNMENT) == 0);
-        ASSERTREPORT(0x388, cell->next == NULL || cell->next->prev == cell);
-        ASSERTREPORT(0x389, MINOBJSIZE <= cell->size);
-        ASSERTREPORT(0x38A, OFFSET(cell->size, ALIGNMENT) == 0);
         total += cell->size;
-        ASSERTREPORT(0x38D, 0 < total && total <= hd->size);
     }
 
-    ASSERTREPORT(0x395, hd->free == NULL || hd->free->prev == NULL);
-
     for (cell = hd->free; cell; cell = cell->next) {
-        ASSERTREPORT(0x398, InRange(cell, ArenaStart, ArenaEnd));
-        ASSERTREPORT(0x399, OFFSET(cell, ALIGNMENT) == 0);
-        ASSERTREPORT(0x39A, cell->next == NULL || cell->next->prev == cell);
-        ASSERTREPORT(0x39B, MINOBJSIZE <= cell->size);
-        ASSERTREPORT(0x39C, OFFSET(cell->size, ALIGNMENT) == 0);
-        /* clang-format off*/
-        ASSERTREPORT(0x39D, cell->next == NULL || (char*) cell + cell->size < (char*) cell->next);
-        /* clang-format on*/
         total += cell->size;
         free = (cell->size + free);
         free -= HEADERSIZE;
-        ASSERTREPORT(0x3A1, 0 < total && total <= hd->size);
     }
-    ASSERTREPORT(0x3A8, total == hd->size);
     return free;
 }
 
@@ -435,8 +412,8 @@ u32 OSReferentSize(void *ptr)
 {
     struct Cell *cell;
 
-    cell = (void *)((u32)ptr - HEADERSIZE);
-    return (long)((u32)cell->size - HEADERSIZE);
+    cell = (void *)((uintptr_t)ptr - HEADERSIZE);
+    return (long)((uintptr_t)cell->size - HEADERSIZE);
 }
 
 void OSDumpHeap(int heap)

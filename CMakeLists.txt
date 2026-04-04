@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(VERSION 0)
 
+option(USE_ASAN "Enable address sanitization" OFF)
+
+set(USE_ASAN OFF CACHE BOOL "Disable ASan" FORCE)
+
 # Set build type to Debug if not specified
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -132,11 +136,14 @@ target_include_directories(dol PRIVATE include extern/aurora/include extern/auro
 target_link_libraries(dol PRIVATE aurora::core aurora::card aurora::gx aurora::mtx aurora::os aurora::si aurora::vi aurora::pad musyx)
 # TODO it doesn't work on Linux yet
 if (CMAKE_SYSTEM_NAME STREQUAL Windows)
- # set_source_files_properties(${DOLPHIN_FILES} ${GAME_FILES} PROPERTIES COMPILE_OPTIONS "-fsanitize=address")
+    if(USE_ASAN)
+        target_compile_definitions(dol PRIVATE USE_ASAN)
+        set_source_files_properties(${DOLPHIN_FILES} ${GAME_FILES} PROPERTIES COMPILE_OPTIONS "-fsanitize=address")
+    endif()
 endif()
 if (MSVC)
     target_link_options(dol PRIVATE "/DEF:${CMAKE_SOURCE_DIR}/dol.def")
-    target_compile_options(dol PRIVATE "/WX")
+    # target_compile_options(dol PRIVATE "/WX")
     target_compile_options(dol PRIVATE "/wd4244") # implicit narrowing conversion
     target_compile_options(dol PRIVATE "/wd4101") # unreferenced local variable
     target_compile_options(dol PRIVATE "/wd4102") # unreferenced label
@@ -150,9 +157,10 @@ if (MSVC)
     target_compile_options(dol PRIVATE "/Zi")
     target_compile_options(dol PRIVATE "/Ob0")
     target_compile_options(dol PRIVATE "/Od")
-    target_compile_options(dol PRIVATE "/RTC1")
-    target_compile_options(dol PRIVATE "/GS")
-    target_compile_options(dol PRIVATE "/GZ")
+    if(NOT USE_ASAN)
+        target_compile_options(dol PRIVATE "/GS")
+        target_compile_options(dol PRIVATE "/RTC1")  # incompatible with asan
+    endif()
 else ()
     # target_compile_options(dol PRIVATE "-fvisibility=hidden")
     # target_link_options(dol PRIVATE "LINKER:--version-script=${CMAKE_CURRENT_SOURCE_DIR}/dol.map")
@@ -176,8 +184,9 @@ foreach (dir ${REL_DIRS})
 
         if (REL_FILES)
             add_library(${dir} SHARED ${REL_FILES})
-            if (CMAKE_SYSTEM_NAME STREQUAL Windows)
-              # set_source_files_properties(${REL_FILES} PROPERTIES COMPILE_OPTIONS "-fsanitize=address")
+            if (USE_ASAN)
+               set_source_files_properties(${REL_FILES} PROPERTIES COMPILE_OPTIONS "-fsanitize=address")
+               target_compile_definitions(${dir} PRIVATE USE_ASAN)
             endif()
             if (dir MATCHES "^w..Dll")
                 target_sources(${dir} PRIVATE src/REL/board_executor.c)
@@ -200,9 +209,10 @@ foreach (dir ${REL_DIRS})
                 target_compile_options(${dir} PRIVATE "/Zi")
                 target_compile_options(${dir} PRIVATE "/Ob0")
                 target_compile_options(${dir} PRIVATE "/Od")
-                target_compile_options(${dir} PRIVATE "/RTC1")
-                target_compile_options(${dir} PRIVATE "/GS")
-                target_compile_options(${dir} PRIVATE "/GZ")
+                if(NOT USE_ASAN)
+                    target_compile_options(${dir} PRIVATE "/GS")
+                    target_compile_options(${dir} PRIVATE "/RTC1")  # incompatible with asan
+                endif()
             elseif (NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
                 # target_compile_options(${dir} PRIVATE "-fvisibility=hidden")
                 target_link_options(${dir} PRIVATE "LINKER:--version-script=${CMAKE_CURRENT_SOURCE_DIR}/rel.map")

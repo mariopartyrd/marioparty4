@@ -200,7 +200,7 @@ void CharARAMClose(s16 character)
 
     temp_r31 = &charInstance[character];
     if (temp_r31->unkC0) {
-        HuARFree((u32)temp_r31->unkC0);
+        HuARFree((uintptr_t)temp_r31->unkC0);
         temp_r31->unkC0 = NULL;
     }
 }
@@ -226,7 +226,7 @@ void CharKillAll(void)
 {
     CharModelKill(-1);
     CharKill(-1);
-    HuARFree((u32)effectAMemP);
+    HuARFree((uintptr_t)effectAMemP);
     effectAMemP = NULL;
 }
 

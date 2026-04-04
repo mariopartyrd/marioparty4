@@ -8,7 +8,7 @@
 typedef struct armem_block {
     /* 0x00 */ u8 flag;
     /* 0x02 */ u16 dir;
-    /* 0x04 */ u32 amemptr;
+    /* 0x04 */ uintptr_t amemptr;
     /* 0x08 */ u32 size;
     /* 0x0C */ struct armem_block *next;
 } ARMemBlock; // Size 0x10
@@ -63,7 +63,7 @@ void HuARInit(void) {
     arqCnt = 0;
 }
 
-u32 HuARMalloc(u32 size) {
+uintptr_t HuARMalloc(u32 size) {
     ARMemBlock *prev;
     ARMemBlock *next;
     ARMemBlock *curr;
@@ -108,7 +108,7 @@ u32 HuARMalloc(u32 size) {
     return curr->amemptr;
 }
 
-void HuARFree(u32 amemptr) {
+void HuARFree(uintptr_t amemptr) {
     ARMemBlock *prev;
     ARMemBlock *next;
     ARMemBlock *curr;
@@ -148,7 +148,7 @@ void HuARFree(u32 amemptr) {
     }
 }
 
-static u32 HuARSizeGet(u32 amemptr) {
+static u32 HuARSizeGet(uintptr_t amemptr) {
     ARMemBlock *curr;
     ARMemBlock *prev;
 
@@ -168,7 +168,7 @@ static u32 HuARSizeGet(u32 amemptr) {
     }
 }
 
-static ARMemBlock *HuARInfoGet(u32 amemptr) {
+static ARMemBlock *HuARInfoGet(uintptr_t amemptr) {
     ARMemBlock *curr;
     ARMemBlock *prev;
 
@@ -200,10 +200,10 @@ void HuAMemDump(void) {
     OSReport("================================\n");
 }
 
-u32 HuAR_DVDtoARAM(u32 dir) {
+uintptr_t HuAR_DVDtoARAM(u32 dir) {
     DataReadStat *stat;
     ARMemBlock *block;
-    u32 amemptr;
+    size_t amemptr;
 
     amemptr = HuARDirCheck(dir);
     if (amemptr) {
@@ -230,22 +230,22 @@ static void ArqCallBack(uintptr_t pointerToARQRequest) {
     (void)pointerToARQRequest; // required to match (return?)
 }
 
-u32 HuAR_MRAMtoARAM(s32 dir) {
+uintptr_t HuAR_MRAMtoARAM(s32 dir) {
     return HuAR_MRAMtoARAM2(HuDataGetDirPtr(dir));
 }
 
-u32 HuAR_MRAMtoARAM2(void *dir_ptr) {
+uintptr_t HuAR_MRAMtoARAM2(void *dir_ptr) {
     ARMemBlock *block;
     DataReadStat *status;
     u32 size;
-    u32 amemptr;
+    uintptr_t amemptr;
 
     status = HuDataGetStatus(dir_ptr);
     amemptr = HuARDirCheck(status->dir_id << 16);
     if (amemptr) {
         return amemptr;
     }
-    size = HuMemMemorySizeGet(dir_ptr);
+    size = (u32)HuMemMemorySizeGet(dir_ptr);
     size = OSRoundUp32B(size);
     amemptr = HuARMalloc(size);
     if (!amemptr) {
@@ -254,17 +254,17 @@ u32 HuAR_MRAMtoARAM2(void *dir_ptr) {
     block = HuARInfoGet(amemptr);
     block->dir = status->dir_id;
     arqCnt++;
-    ARQPostRequest(&arqReq, 0x1234, 0, 0, (u32)dir_ptr, amemptr, size, ArqCallBack);
+    ARQPostRequest(&arqReq, 0x1234, 0, 0, (uintptr_t)dir_ptr, amemptr, size, ArqCallBack);
     return amemptr;
 }
 
-void HuAR_ARAMtoMRAM(u32 src) {
+void HuAR_ARAMtoMRAM(uintptr_t src) {
     HuAR_ARAMtoMRAMNum(src, 0);
 }
 
-void *HuAR_ARAMtoMRAMNum(u32 src, s32 num) {
+void *HuAR_ARAMtoMRAMNum(uintptr_t src, s32 num) {
     ARMemBlock *block;
-    s32 size;
+    u32 size;
     void *dst;
 #ifdef NON_MATCHING
     s32 ret;
@@ -308,7 +308,7 @@ s32 HuARDMACheck(void) {
     return arqCnt;
 }
 
-u32 HuARDirCheck(u32 dir) {
+uintptr_t HuARDirCheck(u32 dir) {
     ARMemBlock *curr;
 
     curr = ARInfo;
@@ -349,8 +349,8 @@ void *HuAR_ARAMtoMRAMFileRead(u32 dir, u32 num, HeapID heap) {
     void *dvd_data;
     u32 amem_src;
     s32 count;
-    s32 size;
-    u32 amemptr;
+    u32 size;
+    uintptr_t amemptr;
 #ifdef BYTESWAPPING
     s32 dir_data_pc[2];
     s32 i;
@@ -378,7 +378,7 @@ void *HuAR_ARAMtoMRAMFileRead(u32 dir, u32 num, HeapID heap) {
     count = DIR_DATA[0];
     amem_src = amemptr + (u32)(count & 0xFFFFFFFE0);
     if (DIR_DATA[1] - count < 0) {
-        size = (HuARSizeGet(amemptr) - count + 0x3F) & 0xFFFFFFFE0;
+        size = (u32)((HuARSizeGet(amemptr) - count + 0x3F) & 0xFFFFFFFE0);
     } else {
         size = (DIR_DATA[1] - count + 0x3F) & 0xFFFFFFFE0;
     }

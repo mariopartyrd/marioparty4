@@ -2363,7 +2363,7 @@ void fn_1_CA98(s32 arg0, u32 arg1)
             #else
             sprintf(lbl_1_bss_FC, " %d", var_r31);
             #endif
-            HuWinInsertMesSet(arg0, (u32)lbl_1_bss_FC, 0);
+            HU_WIN_INSERT_MES_SET_PTR(arg0, (uintptr_t)lbl_1_bss_FC, 0);
             break;
         case 8:
             OSReport("#################### HI-SCORE(%d) : %d\n", arg1, GWGameStat.mg_record[sp8[arg1]]);
@@ -2373,13 +2373,13 @@ void fn_1_CA98(s32 arg0, u32 arg1)
             var_r28 = var_r31 / (60 *REFRESH_RATE);
             var_r31 -= var_r28 * (60 *REFRESH_RATE);
             sprintf(lbl_1_bss_F4, " %d", var_r28);
-            HuWinInsertMesSet(arg0, (u32)lbl_1_bss_F4, 0);
+            HU_WIN_INSERT_MES_SET_PTR(arg0, (uintptr_t)lbl_1_bss_F4, 0);
             var_r29 = var_r31 / (10 *REFRESH_RATE);
             var_r31 -= var_r29 * (10 *REFRESH_RATE);
             var_r28 = var_r31 / REFRESH_RATE;
             var_r31 -= var_r28 * REFRESH_RATE;
             sprintf(lbl_1_bss_EC, "%d%d", var_r29, var_r28);
-            HuWinInsertMesSet(arg0, (u32)lbl_1_bss_EC, 1);
+            HU_WIN_INSERT_MES_SET_PTR(arg0, (uintptr_t)lbl_1_bss_EC, 1);
             var_r31 = (101.5/REFRESH_RATE) * (float)var_r31;
             var_r29 = var_r31 / 10;
             var_r31 -= var_r29 * 0xA;
@@ -2390,7 +2390,7 @@ void fn_1_CA98(s32 arg0, u32 arg1)
             else {
                 sprintf(lbl_1_bss_E4, "%d%d", var_r29, var_r28);
             }
-            HuWinInsertMesSet(arg0, (u32)lbl_1_bss_E4, 2);
+            HU_WIN_INSERT_MES_SET_PTR(arg0, (uintptr_t)lbl_1_bss_E4, 2);
             var_r31 = fn_1_C898(GWGameStat.mg_record[sp8[arg1]], arg1, 0, 0);
             HuWinInsertMesSet(arg0, ((arg1 - 4) * 0xA) + 0x330000 + var_r31 + 0x51, 3);
             break;

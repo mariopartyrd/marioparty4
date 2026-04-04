@@ -148,7 +148,7 @@ void fn_1_1574(m02GenDice *arg0)
     temp_r29->unk04 = 0;
     temp_r29->unk01 = 3;
     temp_r29->unk02 = 0;
-    temp_r3->unk10 = (u32)arg0;
+    temp_r3->unk10 = (uintptr_t)arg0;
     arg0->unk3C[temp_r28] = temp_r3;
     sp8 = arg0->unk0C;
     sp8.y += (250.0f * arg0->unk24);
@@ -430,7 +430,7 @@ void fn_1_23FC(m02GenDice *arg0, s32 arg1)
     spC = arg0->unk0C;
     spC.y += 300.0f;
     temp_r28 = omAddObjEx(boardObjMan, 258, 0, 0, -1, fn_1_25D0);
-    temp_r28->unk10 = (u32)arg0;
+    temp_r28->unk10 = (uintptr_t)arg0;
     temp_r31 = OM_GET_WORK_PTR(temp_r28, WorkGenDiceNum);
     temp_r31->field0_bit0 = 0;
     temp_r31->field0_bit1 = 0;

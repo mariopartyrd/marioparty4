@@ -268,22 +268,22 @@ static void LoadMemInfo()
         arena_hi = OSGetArenaHi();
         arena_lo = OSInitAlloc(arena_lo, arena_hi, 1);
         OSSetArenaLo(arena_lo);
-        arena_lo = (void *)OSRoundUp32B((u32)arena_lo);
-        arena_hi = (void *)OSRoundDown32B((u32)arena_hi);
+        arena_lo = (void *)OSRoundUp32B((uintptr_t)arena_lo);
+        arena_hi = (void *)OSRoundDown32B((uintptr_t)arena_hi);
         OSSetCurrentHeap(OSCreateHeap(arena_lo, arena_hi));
         arena_lo = arena_hi;
         OSSetArenaLo(arena_lo);
     } else {
-        buf_ptr = (struct memory_info *)OSRoundUp32B((u32)buf);
+        buf_ptr = (struct memory_info *)OSRoundUp32B((uintptr_t)buf);
         alloc_max = OSGetArenaHi();
-        alloc_min = (void *)(OSGetConsoleSimulatedMemSize()+0x80000000);
-        OSSetArenaHi((void *)(OSGetPhysicalMemSize()+0x80000000));
+        alloc_min = (void *)(uintptr_t)(OSGetConsoleSimulatedMemSize()+0x80000000);
+        OSSetArenaHi((void *)(uintptr_t)(OSGetPhysicalMemSize()+0x80000000));
         arena_lo = OSGetArenaLo();
         arena_hi = OSGetArenaHi();
         arena_lo = OSInitAlloc(arena_lo, arena_hi, 1);
         OSSetArenaLo(arena_lo);
-        arena_lo = (void *)OSRoundUp32B((u32)arena_lo);
-        arena_hi = (void *)OSRoundDown32B((u32)arena_hi);
+        arena_lo = (void *)OSRoundUp32B((uintptr_t)arena_lo);
+        arena_hi = (void *)OSRoundDown32B((uintptr_t)arena_hi);
         OSSetCurrentHeap(OSCreateHeap(arena_lo, arena_hi));
         arena_lo = arena_hi;
         OSSetArenaLo(arena_lo);
@@ -300,7 +300,7 @@ static void LoadMemInfo()
             for(i=0; i<entries; i++) {
                 OSReport("start: 0x%08x, end: 0x%08x\n", buf_ptr[i].start, buf_ptr[i].end);
                 OSAllocFixed(&buf_ptr[i].start, &buf_ptr[i].end);
-                OSReport("Removed 0x%08x - 0x%08x from the current heap\n", buf_ptr[i].start, (u32)buf_ptr[i].end-1);
+                OSReport("Removed 0x%08x - 0x%08x from the current heap\n", buf_ptr[i].start, (uintptr_t)buf_ptr[i].end-1);
             }
             size -= copy_size;
             offset += copy_size;

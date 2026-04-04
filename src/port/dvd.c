@@ -70,7 +70,7 @@ s32 DVDConvertPathToEntrynum(const char *pathPtr)
     fclose(f);
 
     // add new entry
-    printf("size = %i\n", sizeof(*s_pathEntries));
+    printf("size = %i\n", (int)sizeof(*s_pathEntries));
     s_pathEntries = realloc(s_pathEntries, (s_pathEntriesCount + 1) * sizeof(*s_pathEntries));
     strcpy(s_pathEntries[s_pathEntriesCount], absolute);
     return s_pathEntriesCount++;

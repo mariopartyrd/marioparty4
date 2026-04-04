@@ -1,6 +1,9 @@
 #include "game/memory.h"
 #include "dolphin/os.h"
 
+#ifdef TARGET_PC
+#include <stdlib.h>
+#endif
 
 #if INTPTR_MAX == INT32_MAX
 #define MEM_ALLOC_SIZE(size) (((size) + 63) & ~0x1F)
@@ -24,12 +27,12 @@ struct  memory_block {
     uintptr_t retaddr;
 };
 
-static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, uintptr_t num, uintptr_t retaddr);
+static void *HuMemMemoryAlloc2(void *heap_ptr, size_t size, uintptr_t num, uintptr_t retaddr);
 
-void *HuMemHeapInit(void *ptr, s32 size)
+void *HuMemHeapInit(void *ptr, size_t size)
 {
     struct memory_block *block = ptr;
-    block->size = size;
+    block->size = (s32)size;
     block->magic = 205;
     block->flag = 0;
     block->prev = block;
@@ -39,19 +42,22 @@ void *HuMemHeapInit(void *ptr, s32 size)
     return block;
 }
 
-void *HuMemMemoryAllocNum(void *heap_ptr, s32 size, uintptr_t num, uintptr_t retaddr)
+void *HuMemMemoryAllocNum(void *heap_ptr, size_t size, uintptr_t num, uintptr_t retaddr)
 {
     return HuMemMemoryAlloc2(heap_ptr, size, num, retaddr);
 }
 
-void *HuMemMemoryAlloc(void *heap_ptr, s32 size, uintptr_t retaddr)
+void *HuMemMemoryAlloc(void *heap_ptr, size_t size, uintptr_t retaddr)
 {
     return HuMemMemoryAlloc2(heap_ptr, size, -256, retaddr);
 }
 
-static void *HuMemMemoryAlloc2(void *heap_ptr, s32 size, uintptr_t num, uintptr_t retaddr)
+static void *HuMemMemoryAlloc2(void *heap_ptr, size_t size, uintptr_t num, uintptr_t retaddr)
 {
-    s32 alloc_size = MEM_ALLOC_SIZE(size);
+    s32 alloc_size = (s32)MEM_ALLOC_SIZE(size);
+#ifdef TARGET_PC
+    return malloc(alloc_size);
+#endif
     struct memory_block *block = heap_ptr;
     do {
         if (!block->flag && block->size >= alloc_size) {
@@ -103,6 +109,10 @@ static void HuMemTailMemoryAlloc2() // Required for string literal
 
 void HuMemMemoryFree(void *ptr, uintptr_t retaddr)
 {
+#ifdef TARGET_PC
+    free(ptr);
+    return;
+#endif
     struct memory_block *block;
     if (!ptr) {
         return;
@@ -130,10 +140,10 @@ void HuMemMemoryFree(void *ptr, uintptr_t retaddr)
     block->retaddr = retaddr;
 }
 
-s32 HuMemUsedMemorySizeGet(void *heap_ptr)
+size_t HuMemUsedMemorySizeGet(void *heap_ptr)
 {
     struct memory_block *block = heap_ptr;
-    s32 size = 0;
+    size_t size = 0;
     do {
         if (block->flag == 1) {
             size += block->size;
@@ -156,7 +166,7 @@ s32 HuMemUsedMemoryBlockGet(void *heap_ptr)
     return num_blocks;
 }
 
-s32 HuMemMemoryAllocSizeGet(s32 size)
+size_t HuMemMemoryAllocSizeGet(size_t size)
 {
     return MEM_ALLOC_SIZE(size);
 }
@@ -164,8 +174,8 @@ s32 HuMemMemoryAllocSizeGet(s32 size)
 void HuMemHeapDump(void *heap_ptr, s16 status)
 {
     struct memory_block *block = heap_ptr;
-    s32 size = 0;
-    s32 inactive_size = 0;
+    size_t size = 0;
+    size_t inactive_size = 0;
     s32 num_blocks = 0;
     s32 num_unused_blocks = 0;
     u8 dump_type;
@@ -202,7 +212,7 @@ void HuMemHeapDump(void *heap_ptr, s16 status)
     OSReport("======== HuMem heap dump %08x end =====\n", heap_ptr);
 }
 
-s32 HuMemMemorySizeGet(void *ptr)
+size_t HuMemMemorySizeGet(void *ptr)
 {
     struct memory_block *block;
     if (!ptr) {
