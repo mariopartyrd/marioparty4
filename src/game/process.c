@@ -291,7 +291,7 @@ void HuPrcCall(s32 tick)
                     break;
                 }
                 #endif
-#ifdef TARGET_PC
+#ifdef SKIP_HU_ALLOC
                 processcur = processcur->next;
 #else
                 // memory_block->magic

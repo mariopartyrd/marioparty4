@@ -1,7 +1,7 @@
 #include "game/memory.h"
 #include "dolphin/os.h"
 
-#ifdef TARGET_PC
+#ifdef SKIP_HU_ALLOC
 #include <stdlib.h>
 #endif
 
@@ -55,7 +55,7 @@ void *HuMemMemoryAlloc(void *heap_ptr, size_t size, uintptr_t retaddr)
 static void *HuMemMemoryAlloc2(void *heap_ptr, size_t size, uintptr_t num, uintptr_t retaddr)
 {
     s32 alloc_size = (s32)MEM_ALLOC_SIZE(size);
-#ifdef TARGET_PC
+#ifdef SKIP_HU_ALLOC
     return malloc(alloc_size);
 #endif
     struct memory_block *block = heap_ptr;
@@ -109,7 +109,7 @@ static void HuMemTailMemoryAlloc2() // Required for string literal
 
 void HuMemMemoryFree(void *ptr, uintptr_t retaddr)
 {
-#ifdef TARGET_PC
+#ifdef SKIP_HU_ALLOC
     free(ptr);
     return;
 #endif

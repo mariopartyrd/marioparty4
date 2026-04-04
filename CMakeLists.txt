@@ -7,8 +7,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(VERSION 0)
 
 option(USE_ASAN "Enable address sanitization" OFF)
+option(SKIP_HU_ALLOC "Skip the game's built in allocator" ON)
 
 set(USE_ASAN OFF CACHE BOOL "Disable ASan" FORCE)
+set(SKIP_HU_ALLOC ON CACHE BOOL "Skip the built in allocator" FORCE)
 
 # Set build type to Debug if not specified
 if (NOT CMAKE_BUILD_TYPE)
@@ -139,6 +141,9 @@ if (CMAKE_SYSTEM_NAME STREQUAL Windows)
     if(USE_ASAN)
         target_compile_definitions(dol PRIVATE USE_ASAN)
         set_source_files_properties(${DOLPHIN_FILES} ${GAME_FILES} PROPERTIES COMPILE_OPTIONS "-fsanitize=address")
+    endif()
+    if(SKIP_HU_ALLOC)
+        target_compile_definitions(dol PRIVATE SKIP_HU_ALLOC)
     endif()
 endif()
 if (MSVC)
