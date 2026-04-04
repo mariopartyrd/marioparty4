@@ -275,7 +275,9 @@ AnimData *HuSprAnimRead(void *data)
     for(i=0; i<anim->bankNum; i++, bank++) {
         bank->frame = (AnimFrameData *)((uintptr_t)bank->frame+(uintptr_t)data);
 #ifdef BYTESWAPPING
-        byteswap_animframedata(bank->frame);
+        for (j = 0; j < bank->timeNum; j++) {
+            byteswap_animframedata(&bank->frame[j]);
+        }
 #endif
     }
     for(i=0; i<anim->patNum; i++, pat++) {
