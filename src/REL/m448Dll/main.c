@@ -180,7 +180,11 @@ void fn_1_478(void)
 void fn_1_4FC(ModelData *model, Mtx matrix)
 {
     Mtx spC8;
+#ifdef NON_MATCHING
+    Mtx44 sp98;
+#else
     Mtx sp98;
+#endif
     float temp_f31;
     float temp_f29;
     float temp_f30;

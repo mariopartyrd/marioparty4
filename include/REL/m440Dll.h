@@ -167,18 +167,6 @@ typedef struct _unkStruct12 {
     s32 *unk38;
 } unkStruct12;
 
-typedef struct _unkStruct13 {
-    char unk0[0xA];
-    u8 unkA;
-    char unkB[0x15];
-    float unk20;
-    char unk24[0x40];
-    u32 unk64;
-    u32 unk68;
-    char unk6C[0x14];
-    struct _unkStruct15 *unk80;
-} unkStruct13; // sizeof 0x84
-
 typedef struct _unkStruct14 {
     s16 unk0;
     s16 unk2;
@@ -192,25 +180,12 @@ typedef struct _unkStruct14 {
     char unk20[0x4];
     GXColor *unk24;
     unkStruct12 *unk28;
-    unkStruct13 *unk2C;
+    HsfAttribute *unk2C;
     void *unk30;
     u32 unk34;
     m440Func14 unk38;
     s16 unk3C;
 } unkStruct14;
-
-typedef struct _unkStruct15 {
-    char unk0[0x8];
-    u8 unk8;
-    u8 unk9;
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-    char unk10[0x4];
-    void *unk14;
-    char unk18[0x4];
-    void *unk1C;
-} unkStruct15;
 
 // object.c
 typedef struct _unkObjStruct {
@@ -316,9 +291,9 @@ void fn_1_6554(unkStruct6 *, HsfObject *);
 void fn_1_6B58(unkStruct6 *, HsfObject *);
 void fn_1_71FC(unkStruct6 *, Vec *, s16, Vec);
 void fn_1_7934(unkStruct6 *, unkStruct8 *, Vec *);
-void fn_1_7D60(unkStruct15 *, unkStruct13 *, s16);
+void fn_1_7D60(HsfBitmap *, HsfAttribute *, s16);
 void fn_1_806C(ModelData *, Mtx);
-void fn_1_8470(unkStruct12 *, unkStruct13 *);
+void fn_1_8470(unkStruct12 *, HsfAttribute *);
 void fn_1_8AC4(Mtx);
 void fn_1_8D1C(void);
 void fn_1_91A4(Vec *, Vec *, Vec *, float[5]);

@@ -696,6 +696,7 @@ AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     anim->pat = pat = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimPatData));
     pat->layer = layer = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimLayerData));
     anim->bmp = bmp = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimBmpData));
+    anim->valid = ANIM_DATA_ALLOCATION_VALID;
 #else
     anim = new_anim = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimData)+sizeof(AnimBankData)+sizeof(AnimFrameData)
                                             +sizeof(AnimPatData)+sizeof(AnimLayerData)+sizeof(AnimBmpData));

@@ -524,7 +524,7 @@ void omMain(void)
         while (obj_index != -1) {
             object = &obj_all[obj_index];
             obj_index = object->prev;
-#ifdef TARGET_PC
+#ifdef NON_MATCHING
             // TODO PC is this the right fix?
             if (obj_index == -1) {
                 break;

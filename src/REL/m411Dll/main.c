@@ -1572,6 +1572,9 @@ void fn_1_5554(void)
     Hu3DModelScaleSet(var_r31->unk00, temp_f27, temp_f27, temp_f27);
     var_f31 = 0.0f;
     var_f30 = 0.0f;
+#if NON_MATCHING
+    var_f29 = 0.0f; // TODO PC is this right?
+#endif
     while (TRUE) {
         var_r31->unk10.x += var_f28;
         var_f29 += 10.0f;

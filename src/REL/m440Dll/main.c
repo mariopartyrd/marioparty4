@@ -1786,7 +1786,7 @@ void fn_1_7934(unkStruct6 *arg0, unkStruct8 *arg1, Vec *arg2)
     }
 }
 
-void fn_1_7D60(unkStruct15 *arg0, unkStruct13 *arg1, s16 arg2)
+void fn_1_7D60(HsfBitmap *arg0, HsfAttribute *arg1, s16 arg2)
 {
     GXTexObj sp1C;
     GXTlutObj sp10;
@@ -1800,42 +1800,42 @@ void fn_1_7D60(unkStruct15 *arg0, unkStruct13 *arg1, s16 arg2)
         OSReport("Error: No Texture\n");
         return;
     }
-    temp_r29 = arg0->unkA;
-    temp_r28 = arg0->unkC;
-    var_r27 = (arg1->unk64 == 1) ? 1 : 0;
-    var_r26 = (arg1->unk68 == 1) ? 1 : 0;
-    switch (arg0->unk8) {
+    temp_r29 = arg0->sizeX;
+    temp_r28 = arg0->sizeY;
+    var_r27 = (arg1->wrap_s == 1) ? GX_REPEAT : GX_CLAMP;
+    var_r26 = (arg1->wrap_t == 1) ? GX_REPEAT : GX_CLAMP;
+    switch (arg0->dataFmt) {
         case 6:
-            GXInitTexObj(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_RGBA8, var_r27, var_r26, GX_FALSE);
+            GXInitTexObj(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_RGBA8, var_r27, var_r26, GX_FALSE);
             break;
         case 4:
-            GXInitTexObj(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_RGB565, var_r27, var_r26, GX_FALSE);
+            GXInitTexObj(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_RGB565, var_r27, var_r26, GX_FALSE);
             break;
         case 5:
-            GXInitTexObj(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_RGB5A3, var_r27, var_r26, GX_FALSE);
+            GXInitTexObj(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_RGB5A3, var_r27, var_r26, GX_FALSE);
             break;
         case 9:
-            if (arg0->unk9 < 8) {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB565, arg0->unkE);
+            if (arg0->pixSize < 8) {
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB565, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
             }
             else {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB565, arg0->unkE);
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB565, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
             }
             break;
         case 10:
-            if (arg0->unk9 < 8) {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB5A3, arg0->unkE);
+            if (arg0->pixSize < 8) {
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB5A3, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
             }
             else {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB5A3, arg0->unkE);
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB5A3, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
             }
             break;
         default:
@@ -1854,7 +1854,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
 {
     Mtx sp14;
     GXColor sp10;
-    unkStruct13 *temp_r29;
+    HsfAttribute *temp_r29;
     unkStruct14 *temp_r31;
     m440Func14 temp_r27;
 
@@ -1900,7 +1900,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, temp_r31->unk1C, sizeof(Vec2f), sizeof(Vec2f), TRUE); // TODO PC
         temp_r29 = &temp_r31->unk2C[temp_r31->unk28->unk38[0]];
-        fn_1_7D60(temp_r29->unk80, temp_r29, 0);
+        fn_1_7D60(temp_r29->bitmap, temp_r29, 0);
         lbl_1_bss_2C = 1;
         HuSprTexLoad(hiliteAnim[0], 0, lbl_1_bss_2C, GX_CLAMP, GX_CLAMP, GX_LINEAR);
         fn_1_8470(temp_r31->unk28, temp_r29);
@@ -1912,7 +1912,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXCallDisplayList(temp_r31->unk30, temp_r31->unk34);
 }
 
-void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
+void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
 {
     ModelData sp40;
     Mtx sp10;
@@ -1944,7 +1944,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
     var_r28 = var_r31 = 1;
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
     if (1.0f == arg1->unk20) {
-        if (arg1->unkA == 0) {
+        if (arg1->unk8[2] == 0) {
             GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
             GXSetTevOrder(var_r31, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
             GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_TEXC, GX_CC_TEXA, GX_CC_ZERO);
