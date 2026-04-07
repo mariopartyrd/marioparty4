@@ -187,7 +187,7 @@ void HuSprDisp(HuSprite *sprite)
 }
 
 void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter)
-#ifdef OPTIMIZED_TEXTURE_LOADIN
+#ifdef OPTIMIZED_TEXTURE_LOADING
 {
     AnimBmpData *bmp_ptr = &anim->bmp[bmp];
     AnimTexData *tex_data = &bmp_ptr->texData[slot];
@@ -228,7 +228,6 @@ void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, G
             GXLoadTlut(tlut_obj, slot);
             if (!tex_data->tex_initialized) {
                 GXInitTexObjCI(tex_obj,bmp_ptr->data, sizeX, sizeY, GX_TF_C4, wrap_s, wrap_t, GX_FALSE, slot);
-                tex_data->tlut_initialized = TRUE;
             }
             break;
 
