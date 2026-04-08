@@ -98,9 +98,9 @@ void main(void)
 #ifdef TARGET_PC
     const AuroraInfo auroraInfo = aurora_initialize(argc, argv,
         &(AuroraConfig) {
-            .appName = "Mario Party 4",
+            .appName = "Party Board",
             .logCallback = &aurora_log_callback,
-            .desiredBackend = BACKEND_VULKAN,
+            .desiredBackend = BACKEND_AUTO,
             .windowPosX = 100,
             .windowPosY = 100,
             .windowWidth = 640,

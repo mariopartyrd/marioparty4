@@ -54,7 +54,7 @@ void HuSysInit(GXRenderModeObj *mode)
     DVDInit();
     VIInit();
     #ifdef TARGET_PC
-    VISetWindowTitle("Mario Party 4");
+    VISetWindowTitle("Party Board");
     #endif
     PADInit();
     #ifdef __MWERKS__
