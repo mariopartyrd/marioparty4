@@ -8,8 +8,9 @@ extern "C"
 {
 #endif
 
-    void imgui_main(const AuroraInfo* info);
-    void frame_limiter();
+void imgui_main(const AuroraInfo* info);
+void frame_limiter();
+const char* imgui_get_image_path_from_popup();
 
 #ifdef __cplusplus
 }

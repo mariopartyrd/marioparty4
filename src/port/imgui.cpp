@@ -2,6 +2,7 @@
 
 #include <array>
 #include <atomic>
+#include <filesystem>
 #include <aurora/gfx.h>
 #include <chrono>
 #include <cmath>
@@ -9,6 +10,7 @@
 #include <imgui.h>
 #include <numeric>
 #include <thread>
+#include <SDL3/SDL_dialog.h>
 
 #if _WIN32
 #include "Windows.h"
@@ -58,6 +60,115 @@ static std::string BytesToString(size_t bytes)
         return fmt::format(FMT_STRING("{}{}"), static_cast<size_t>(count), suffixes[s]);
     }
     return fmt::format(FMT_STRING("{:.1f}{}"), count, suffixes[s]);
+}
+
+const char* imgui_get_image_path_from_popup()
+{
+    char exePath[MAX_PATH];
+    GetModuleFileNameA(nullptr, exePath, MAX_PATH);
+    const std::filesystem::path exeDir = std::filesystem::path(exePath).parent_path();
+
+    const char* filesToCheck[] = { "GMPE01_00.iso", "GMPE01_00.rvz" };
+
+    static std::string foundPath;
+
+    for (const char* file : filesToCheck) {
+        std::filesystem::path filePath = exeDir / file;
+        if (exists(filePath)) {
+            foundPath = filePath.string();
+            return foundPath.c_str();
+        }
+    }
+
+    // --- Not found: ask the user ---
+
+    struct DialogState {
+        std::string selectedPath;
+        bool        hasResult = false;
+        bool        cancelled = false;
+    } dlg;
+
+    auto fileDialogCallback = [](void* userdata, const char* const* filelist, int /*filter*/) {
+        auto* state = static_cast<DialogState*>(userdata);
+        if (filelist && *filelist) {
+            state->selectedPath = *filelist;
+            state->cancelled    = false;
+        } else {
+            state->cancelled = true;
+        }
+        state->hasResult = true;
+    };
+
+    static constexpr SDL_DialogFileFilter filters[] = {
+        { "GameCube Images", "iso;rvz" },
+    };
+
+    ImGui::GetIO().FontGlobalScale = 1.5f;
+
+    bool dialogOpen = false;
+
+    while (true) {
+        aurora_update();
+        aurora_begin_frame();
+
+        ImGui::OpenPopup("Missing game image");
+        if (ImGui::BeginPopupModal("Missing game image", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+            ImGui::Text("GMPE01_00.iso or GMPE01_00.rvz not found next to the exe.");
+            ImGui::Text("Please select the file manually.");
+            ImGui::Spacing();
+
+            // Show result / error from a previous attempt
+            if (dlg.hasResult && dlg.cancelled) {
+                ImGui::TextColored({1, 0.4f, 0.4f, 1}, "No file selected. Please try again.");
+            }
+            if (dlg.hasResult && !dlg.cancelled) {
+                // Validate the chosen file name
+                std::filesystem::path chosen(dlg.selectedPath);
+                std::string name = chosen.filename().string();
+                foundPath = dlg.selectedPath;
+                ImGui::CloseCurrentPopup();
+                ImGui::EndPopup();
+                aurora_end_frame();
+                return foundPath.c_str();
+            }
+
+            ImGui::Spacing();
+
+            if (dialogOpen) {
+                ImGui::BeginDisabled();
+                ImGui::Button("Browse...");
+                ImGui::EndDisabled();
+                ImGui::SameLine();
+                ImGui::TextDisabled("(dialog open)");
+            } else {
+                if (ImGui::Button("Browse...")) {
+                    dlg.hasResult = false;
+                    dlg.cancelled = false;
+                    dialogOpen    = true;
+                    SDL_ShowOpenFileDialog(
+                        fileDialogCallback,
+                        &dlg,
+                        nullptr,
+                        filters,
+                        std::size(filters),
+                        nullptr,
+                        false
+                    );
+                }
+            }
+
+            // Check if the async callback has fired
+            if (dialogOpen && dlg.hasResult) {
+                dialogOpen = false;
+            }
+
+            ImGui::EndPopup();
+        }
+
+        aurora_end_frame();
+    }
+
+    return nullptr;
 }
 
 void imgui_main(const AuroraInfo *info)

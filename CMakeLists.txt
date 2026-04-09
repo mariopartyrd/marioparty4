@@ -10,6 +10,7 @@ option(USE_ASAN "Enable address sanitization" OFF)
 option(SKIP_HU_ALLOC "Skip the game's built in allocator" ON)
 
 set(USE_ASAN OFF CACHE BOOL "Disable ASan" FORCE)
+set(AURORA_ENABLE_DVD ON)
 set(SKIP_HU_ALLOC OFF CACHE BOOL "Skip the built in allocator" FORCE)
 
 # Set build type to Debug if not specified
@@ -113,7 +114,7 @@ set(GAME_FILES
 set(PORT_FILES
         src/port/audio.c
         src/port/byteswap.cpp
-        src/port/dvd.c
+#        src/port/dvd.c
         src/port/imgui.cpp
         src/port/OS.c
         src/port/stubs.c
@@ -135,7 +136,7 @@ endif ()
 add_library(dol SHARED ${DOLPHIN_FILES} ${GAME_FILES} ${PORT_FILES} extern/libco/libco.c)
 target_compile_definitions(dol PRIVATE TARGET_PC NON_MATCHING OPTIMIZED_TEXTURE_LOADING BYTESWAPPING TARGET_DOL VERSION=${VERSION} MUSY_VERSION_MAJOR=1 MUSY_VERSION_MINOR=5 MUSY_VERSION_PATCH=4)
 target_include_directories(dol PRIVATE include extern/aurora/include extern/aurora/include/dolphin build/GMPE01_00/include extern/libco)
-target_link_libraries(dol PRIVATE aurora::core aurora::card aurora::gx aurora::mtx aurora::os aurora::si aurora::vi aurora::pad musyx)
+target_link_libraries(dol PRIVATE aurora::core aurora::card aurora::dvd aurora::gx aurora::mtx aurora::os aurora::si aurora::vi aurora::pad musyx)
 # TODO it doesn't work on Linux yet
 if (CMAKE_SYSTEM_NAME STREQUAL Windows)
     if(USE_ASAN)
@@ -160,11 +161,11 @@ if (MSVC)
     target_compile_options(dol PRIVATE "/wd4553") # result of expression not used: == vs =
     target_compile_options(dol PRIVATE "/wd4113") # function pointer parameter list mismatch
     target_compile_options(dol PRIVATE "/Zi")
-    target_compile_options(dol PRIVATE "/Ob0")
+#    target_compile_options(dol PRIVATE "/Ob0")
     target_compile_options(dol PRIVATE "/Od")
     if(NOT USE_ASAN)
-        # target_compile_options(dol PRIVATE "/GS")
-        # target_compile_options(dol PRIVATE "/RTC1")  # incompatible with asan
+#         target_compile_options(dol PRIVATE "/GS")
+#         target_compile_options(dol PRIVATE "/RTC1")  # incompatible with asan
     endif()
 else ()
     # target_compile_options(dol PRIVATE "-fvisibility=hidden")
@@ -212,7 +213,7 @@ foreach (dir ${REL_DIRS})
                 target_compile_options(${dir} PRIVATE "/wd4553") # result of expression not used: == vs =
                 target_compile_options(${dir} PRIVATE "/wd4113") # function pointer parameter list mismatch
                 target_compile_options(${dir} PRIVATE "/Zi")
-                target_compile_options(${dir} PRIVATE "/Ob0")
+#                target_compile_options(${dir} PRIVATE "/Ob0")
                 target_compile_options(${dir} PRIVATE "/Od")
                 if(NOT USE_ASAN)
 #                    target_compile_options(${dir} PRIVATE "/GS")

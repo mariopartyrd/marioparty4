@@ -65,28 +65,28 @@ void DEMOPrintStats(void)
     puts("DEMOPrintStats is a stub");
 }
 
-s32 DVDCancel(volatile DVDCommandBlock *block)
-{
-    puts("DVDCancel is a stub");
-    return 0;
-}
+// s32 DVDCancel(volatile DVDCommandBlock *block)
+// {
+//     puts("DVDCancel is a stub");
+//     return 0;
+// }
 
-int DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback)
-{
-    puts("DVDReadAbsAsyncForBS is a stub");
-    return 0;
-}
+// int DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback)
+// {
+//     puts("DVDReadAbsAsyncForBS is a stub");
+//     return 0;
+// }
 
-int DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback callback)
-{
-    puts("DVDReadDiskID is a stub");
-    return 0;
-}
-
-void DVDReset()
-{
-    puts("DVDReset is a stub");
-}
+// int DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback callback)
+// {
+//     puts("DVDReadDiskID is a stub");
+//     return 0;
+// }
+//
+// void DVDReset()
+// {
+//     puts("DVDReset is a stub");
+// }
 
 BOOL EXIDeselect(s32 chan)
 {

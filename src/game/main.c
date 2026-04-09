@@ -19,6 +19,7 @@
 
 #ifdef TARGET_PC
 #include "port/imgui.h"
+#include "aurora/dvd.h"
 #include <aurora/aurora.h>
 #include <aurora/event.h>
 #include <aurora/main.h>
@@ -108,6 +109,7 @@ void main(void)
             .mem1Size = 64 * 1024 * 1024,
             .mem2Size =  16 * 1024 * 1024,
         });
+    aurora_dvd_open(imgui_get_image_path_from_popup());
 #endif
     u32 met0;
     u32 met1;
