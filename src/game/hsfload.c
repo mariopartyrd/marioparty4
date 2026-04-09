@@ -83,128 +83,6 @@ static char *GetString(u32 *str_ofs);
 static char *GetMotionString(u16 *str_ofs);
 
 #ifdef BYTESWAPPING
-// TODO PC remove
-// static HsfVector3f *CopyByteSwappedVec3Data(HsfVector3f *source, s32 count)
-// {
-//     HsfVector3f *copy;
-//     s32 i;
-//
-//     if (source == NULL || count <= 0) {
-//         return source;
-//     }
-//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector3f) * count, MEMORY_DEFAULT_NUM);
-//     for (i = 0; i < count; i++) {
-//         HsfVector3f value = source[i];
-//
-//         byteswap_hsfvec3f(&value);
-//         copy[i] = value;
-//     }
-//     return copy;
-// }
-//
-// static HsfVector2f *CopyByteSwappedVec2Data(HsfVector2f *source, s32 count)
-// {
-//     HsfVector2f *copy;
-//     s32 i;
-//
-//     if (source == NULL || count <= 0) {
-//         return source;
-//     }
-//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfVector2f) * count, MEMORY_DEFAULT_NUM);
-//     for (i = 0; i < count; i++) {
-//         HsfVector2f value = source[i];
-//
-//         byteswap_hsfvec2f(&value);
-//         copy[i] = value;
-//     }
-//     return copy;
-// }
-//
-// static u16 *CopyByteSwappedU16Data(u16 *source, s32 count)
-// {
-//     u16 *copy;
-//     s32 i;
-//
-//     if (source == NULL || count <= 0) {
-//         return source;
-//     }
-//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(u16) * count, MEMORY_DEFAULT_NUM);
-//     for (i = 0; i < count; i++) {
-//         u16 value = source[i];
-//
-//         byteswap_u16(&value);
-//         copy[i] = value;
-//     }
-//     return copy;
-// }
-//
-// static s16 *CopyByteSwappedS16Data(s16 *source, s32 count)
-// {
-//     s16 *copy;
-//     s32 i;
-//
-//     if (source == NULL || count <= 0) {
-//         return source;
-//     }
-//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(s16) * count, MEMORY_DEFAULT_NUM);
-//     for (i = 0; i < count; i++) {
-//         s16 value = source[i];
-//
-//         byteswap_s16(&value);
-//         copy[i] = value;
-//     }
-//     return copy;
-// }
-//
-// static float *CopyByteSwappedFloatData(float *source, s32 count)
-// {
-//     float *copy;
-//     s32 i;
-//
-//     if (source == NULL || count <= 0) {
-//         return source;
-//     }
-//     copy = HuMemDirectMallocNum(HEAP_DATA, sizeof(float) * count, MEMORY_DEFAULT_NUM);
-//     for (i = 0; i < count; i++) {
-//         float value = source[i];
-//
-//         byteswap_float(&value);
-//         copy[i] = value;
-//     }
-//     return copy;
-// }
-//
-// static void *CopyRawData(void *source, s32 size)
-// {
-//     void *copy;
-//
-//     if (source == NULL || size <= 0) {
-//         return NULL;
-//     }
-//     copy = HuMemDirectMallocNum(HEAP_DATA, size, MEMORY_DEFAULT_NUM);
-//     memcpy(copy, source, size);
-//     return copy;
-// }
-//
-// static s32 GetBitmapDataSize(HsfBitmap *bitmap)
-// {
-//     s32 total_size = 0;
-//     s32 width = bitmap->sizeX;
-//     s32 height = bitmap->sizeY;
-//     s32 mip_count = bitmap->maxLod > 1 ? bitmap->maxLod : 1;
-//     s32 i;
-//
-//     for (i = 0; i < mip_count; i++) {
-//         total_size += (bitmap->pixSize * (width * height)) / 8;
-//         if (width > 1) {
-//             width >>= 1;
-//         }
-//         if (height > 1) {
-//             height >>= 1;
-//         }
-//     }
-//     return total_size;
-// }
 
 static void LoadEnvelopeSourceData(HsfObject *object, HsfObjectData *data)
 {
@@ -1029,7 +907,7 @@ static void AttributeLoad(void)
         Model.attribute = new_attr;
         Model.attributeCnt = head.attribute.count;
         for(i=0; i<head.attribute.count; i++, new_attr++) {
-            if((uintptr_t)file_attr[i].name != -1) {
+            if((u32)(uintptr_t)file_attr[i].name != -1) {
                 new_attr->name = SetName((u32 *)&file_attr[i].name);
             } else {
                 new_attr->name = NULL;
