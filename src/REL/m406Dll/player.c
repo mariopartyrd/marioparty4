@@ -1901,6 +1901,7 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     var_r21 = arg0->z / -10000.0f;
     if (var_r21 >= 6) {
 #ifdef NON_MATCHING
+        // TODO PC is this right?
         return (s32)(uintptr_t)var_r20;
 #else
         return;
