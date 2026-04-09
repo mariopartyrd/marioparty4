@@ -1363,7 +1363,7 @@ void fn_1_5E74(AnimData *arg0, u16 arg1, u16 arg2, u16 arg3)
     }
 
     var_r31 = (void *)(((arg1 / var_r30) * 32) + (((arg1 % 8) * arg0->bmp->pixSize) / 8)
-        + (((arg0->bmp->sizeX / var_r30) * ((arg2 / var_r29) << 5)) + ((u32)arg0->bmp->data) + ((arg0->bmp->pixSize * ((arg2 % var_r29) * 8)) / 8)));
+        + (((arg0->bmp->sizeX / var_r30) * ((arg2 / var_r29) << 5)) + ((uintptr_t)arg0->bmp->data) + ((arg0->bmp->pixSize * ((arg2 % var_r29) * 8)) / 8)));
 
     switch (arg0->bmp->pixSize) {
         case 4:
@@ -1410,7 +1410,7 @@ u16 fn_1_607C(AnimData *arg0, u16 arg1, u16 arg2)
             break;
     }
     var_r29 = (void *)(((arg1 / var_r31) * 32) + (((arg1 % 8) * arg0->bmp->pixSize) / 8)
-        + (((arg0->bmp->sizeX / var_r31) * ((arg2 / var_r30) << 5)) + ((u32)arg0->bmp->data) + ((arg0->bmp->pixSize * ((arg2 % var_r30) * 8)) / 8)));
+        + (((arg0->bmp->sizeX / var_r31) * ((arg2 / var_r30) << 5)) + ((uintptr_t)arg0->bmp->data) + ((arg0->bmp->pixSize * ((arg2 % var_r30) * 8)) / 8)));
 
     (void)var_r31;
     (void)var_r31;
