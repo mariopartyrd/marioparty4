@@ -129,6 +129,8 @@ const char* imgui_get_image_path_from_popup()
                 ImGui::CloseCurrentPopup();
                 ImGui::EndPopup();
                 aurora_end_frame();
+
+                ImGui::GetIO().FontGlobalScale = 1.0f;
                 return foundPath.c_str();
             }
 

@@ -18,18 +18,34 @@ typedef struct player_config {
 
 typedef struct system_state {
     /* 0x00 */ struct {
+#ifdef TARGET_PC
+        u8 PC_PADDING_00: 6;
+        u8 team : 1;
+        u8 party : 1;
+#else
         u8 party : 1;
         u8 team : 1;
+#endif
     };
     /* 0x01 */ u8 diff_story;
     /* 0x02 */ union {
         struct {
+#ifdef TARGET_PC
+            u16 PC_PADDING_02: 7;
+            u16 save_mode : 2;
+            u16 mess_speed : 2;
+            u16 mg_list : 2;
+            u16 show_com_mg : 1;
+            u16 explain_mg : 1;
+            u16 bonus_star : 1;
+#else
             u16 bonus_star : 1;
             u16 explain_mg : 1;
             u16 show_com_mg : 1;
             u16 mg_list : 2;
             u16 mess_speed : 2;
             u16 save_mode : 2;
+#endif
         };
         u16 bitfield2;
     };
@@ -38,8 +54,13 @@ typedef struct system_state {
     /* 0x06 */ u8 star_flag;
     /* 0x07 */ u8 star_total;
     /* 0x08 */ struct {
+#ifdef TARGET_PC
+        u8 board : 5;
+        u8 star_pos : 3;
+#else
         u8 star_pos : 3;
         u8 board : 5;
+#endif
     };
     /* 0x09 */ s8 last5_effect;
     /* 0x0A */ s8 player_curr;
@@ -49,8 +70,13 @@ typedef struct system_state {
     /* 0x10 */ u8 ATTRIBUTE_ALIGN(4) board_data[32];
     /* 0x30 */ u8 mess_delay;
     /* 0x31 */ struct {
+#ifdef TARGET_PC
+        u8 bowser_event : 4;
+        u8 bowser_loss : 4;
+#else
         u8 bowser_loss : 4;
         u8 bowser_event : 4;
+#endif
     };
     /* 0x32 */ s8 lucky_value;
     /* 0x34 */ u16 mg_next;
@@ -63,25 +89,53 @@ typedef struct system_state {
 typedef struct player_state {
     /* 0x00 */ union {
         struct {
+#ifdef TARGET_PC
+            u16 ticket_player : 6;
+            u16 draw_ticket : 1;
+            u16 auto_size : 2;
+            u16 character : 4;
+            u16 com : 1;
+            u16 diff : 2;
+#else
             u16 diff : 2;
             u16 com : 1;
             u16 character : 4;
             u16 auto_size : 2;
             u16 draw_ticket : 1;
             u16 ticket_player : 6;
+#endif
         };
         u16 bitfield1;
     };
     /* 0x02 */ struct {
+#ifdef TARGET_PC
+        u8 PC_PADDING_02: 4;
+        u8 player_idx : 2;
+        u8 spark : 1;
+        u8 team : 1;
+#else
         u8 team : 1;
         u8 spark : 1;
         u8 player_idx : 2;
+#endif
     };
     /* 0x03 */ s8 handicap;
     /* 0x04 */ s8 port;
     /* 0x05 */ s8 items[3];
     /* 0x08 */ union {
         struct {
+#ifdef TARGET_PC
+            u16 PC_PADDING_08: 3;
+            u16 team_backup : 1;
+            u16 bowser_suit : 1;
+            u16 rank : 2;
+            u16 num_dice : 2;
+            u16 size : 2;
+            u16 show_next : 1;
+            u16 jump : 1;
+            u16 moving : 1;
+            u16 color : 2;
+#else
             u16 color : 2;
             u16 moving : 1;
             u16 jump : 1;
@@ -91,6 +145,7 @@ typedef struct player_state {
             u16 rank : 2;
             u16 bowser_suit : 1;
             u16 team_backup : 1;
+#endif
         };
         u16 bitfield3;
     };
@@ -120,11 +175,19 @@ typedef struct player_state {
 } PlayerState; // size of 0x30
 
 typedef struct pause_backup_config {
+#ifdef TARGET_PC
+    u8 save_mode : 2;
+    u8 mess_speed : 2;
+    u8 mg_list : 2;
+    u8 show_com_mg : 1;
+    u8 explain_mg : 1;
+#else
     u8 explain_mg : 1;
     u8 show_com_mg : 1;
     u8 mg_list : 2;
     u8 mess_speed : 2;
     u8 save_mode : 2;
+#endif
 } PauseBackupConfig;
 
 typedef struct game_stat {
@@ -143,12 +206,22 @@ typedef struct game_stat {
     /* 0xC0 */ u16 board_max_coins[9];
     /* 0xD2 */ u8 present[60];
     /* 0x10E */ struct {
+#ifdef TARGET_PC
+        u8 PC_PADDING_10E: 2;
+        u8 musicAllF : 1;
+        u8 customPackEnable : 1;
+        u8 veryHardUnlock : 1;
+        u8 open_w06 : 1;
+        u8 party_continue : 1;
+        u8 story_continue : 1;
+#else
         u8 story_continue : 1;
         u8 party_continue : 1;
         u8 open_w06 : 1;
         u8 veryHardUnlock : 1;
         u8 customPackEnable : 1;
         u8 musicAllF : 1;
+#endif
     };
     /* 0x10F */ PauseBackupConfig story_pause;
     /* 0x110 */ PauseBackupConfig party_pause;
