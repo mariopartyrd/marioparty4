@@ -524,12 +524,13 @@ void omMain(void)
         while (obj_index != -1) {
             object = &obj_all[obj_index];
             obj_index = object->prev;
-#ifdef NON_MATCHING
-            // TODO PC is this the right fix?
-            if (obj_index == -1) {
-                break;
-            }
-#endif
+
+// TODO PC I tried this to avoid an issue in the if logic, but it wasn't the right fix, it borked the minigame room completely
+// #ifdef NON_MATCHING
+//             if (obj_index == -1) {
+//                 break;
+//             }
+// #endif
             if ((object->stat & (OM_STAT_DELETED | OM_STAT_DISABLED)) == 0) {
                 if (object->func != NULL && (object->stat & (0x40 | 0x8 | OM_STAT_PAUSED)) == 0) {
                     object->func(object);

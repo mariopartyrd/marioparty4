@@ -2200,7 +2200,7 @@ void Hu3DMipMapSet(char* arg0, s16 arg1, char* arg2, f32 arg8) {
 
     for (i = 0; i < temp_r3->bmpNum; i++, var_r30++) {
         memcpy(var_r23, var_r30->data, var_r30->dataSize);
-        var_r23 = (void*) ((uintptr_t) var_r23 + var_r30->dataSize);
+        var_r23 = (void*) ((intptr_t) var_r23 + var_r30->dataSize);
     }
     DCFlushRange(temp_r22, var_r24);
 }
