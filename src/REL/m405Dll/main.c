@@ -89,11 +89,11 @@ typedef struct {
 } UnkBss5ACStruct; // Size unknown
 
 typedef struct {
-    /* 0x00 */ void *unk00;
+    /* 0x00 */ void *bmpData;
     /* 0x04 */ s32 unk04;
-    /* 0x08 */ u16 unk08;
-    /* 0x0A */ u16 unk0A;
-    /* 0x0C */ GXBool unk0C;
+    /* 0x08 */ u16 sizeX;
+    /* 0x0A */ u16 sizeY;
+    /* 0x0C */ GXBool mipmap;
     /* 0x0D */ char unk0D[3]; // padding?
 } UnkBss10Struct; // Size 0x10
 
@@ -746,10 +746,10 @@ void fn_1_2714(u8 arg0, s32 arg1)
     temp_r31 = &lbl_1_data_10[arg0];
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_TRUE);
     GXSetTexCopySrc(0, 0, 640, 480);
-    GXSetTexCopyDst(temp_r31->unk08, temp_r31->unk0A, GX_TF_RGB565, temp_r31->unk0C);
+    GXSetTexCopyDst(temp_r31->sizeX, temp_r31->sizeY, GX_TF_RGB565, temp_r31->mipmap);
     GXSetCopyClear(sp14, 0xFFFFFF);
-    GXCopyTex(temp_r31->unk00, arg1);
-    DCFlushRange(temp_r31->unk00, temp_r31->unk04);
+    GXCopyTex(temp_r31->bmpData, arg1);
+    DCFlushRange(temp_r31->bmpData, temp_r31->unk04);
 }
 
 void fn_1_280C(omObjData *arg0)
@@ -903,8 +903,8 @@ void fn_1_2AAC(omObjData *arg0)
     }
     for (i = 0; i < 3; i++) {
         temp_r26 = &lbl_1_data_10[i];
-        temp_r26->unk04 = GXGetTexBufferSize(temp_r26->unk08, temp_r26->unk0A, GX_TF_RGB565, GX_FALSE, 0);
-        temp_r26->unk00 = HuMemDirectMallocNum(HEAP_DATA, temp_r26->unk04, MEMORY_DEFAULT_NUM);
+        temp_r26->unk04 = GXGetTexBufferSize(temp_r26->sizeX, temp_r26->sizeY, GX_TF_RGB565, GX_FALSE, 0);
+        temp_r26->bmpData = HuMemDirectMallocNum(HEAP_DATA, temp_r26->unk04, MEMORY_DEFAULT_NUM);
     }
     fn_1_280C(arg0);
     GXBeginDisplayList(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
@@ -938,13 +938,13 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     MTXInvXpose(arg1, spEC);
     GXLoadNrmMtxImm(spEC, GX_PNMTX0);
     temp_r31 = &lbl_1_data_10[2];
-    GXInitTexObj(&spC, temp_r31->unk00, temp_r31->unk08, temp_r31->unk0A, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, temp_r31->bmpData, temp_r31->sizeX, temp_r31->sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&spC, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&spC, GX_TEXMAP0);
     HuSprTexLoad(lbl_1_bss_5D8, 0, 1, GX_REPEAT, GX_REPEAT, GX_LINEAR);
     HuSprTexLoad(lbl_1_bss_5E0, 0, 2, GX_CLAMP, GX_CLAMP, GX_LINEAR);
     temp_r31 = &lbl_1_data_10[0];
-    GXInitTexObj(&spC, temp_r31->unk00, temp_r31->unk08, temp_r31->unk0A, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, temp_r31->bmpData, temp_r31->sizeX, temp_r31->sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&spC, GX_TEXMAP3);
     GXSetNumTexGens(4);
     C_MTXLightPerspective(sp2C, 30.0f, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
@@ -1057,7 +1057,7 @@ void fn_1_4024(ModelData *arg0, Mtx arg1)
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_REPLACE);
     temp_r31 = &lbl_1_data_10[2];
-    GXInitTexObj(&sp18, temp_r31->unk00, temp_r31->unk08, temp_r31->unk0A, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp18, temp_r31->bmpData, temp_r31->sizeX, temp_r31->sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&sp18, GX_TEXMAP0);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -1078,7 +1078,7 @@ void fn_1_4024(ModelData *arg0, Mtx arg1)
     GXEnd();
     fn_1_2714(2, GX_FALSE);
     temp_r31 = &lbl_1_data_10[1];
-    GXInitTexObj(&sp18, temp_r31->unk00, temp_r31->unk08, temp_r31->unk0A, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp18, temp_r31->bmpData, temp_r31->sizeX, temp_r31->sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&sp18, GX_TEXMAP0);
     GXSetZMode(GX_TRUE, GX_GREATER, GX_FALSE);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
@@ -1122,15 +1122,15 @@ void fn_1_4700(ModelData *arg0, Mtx arg1)
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
-    GXSetScissor(0, 0, lbl_1_data_10->unk08, lbl_1_data_10->unk0A);
+    GXSetScissor(0, 0, lbl_1_data_10->sizeX, lbl_1_data_10->sizeY);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_RGBX8, 0);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
     GXPosition2u16(0, 0);
-    GXPosition2u16(lbl_1_data_10->unk08, 0);
-    GXPosition2u16(lbl_1_data_10->unk08, lbl_1_data_10->unk0A);
-    GXPosition2u16(0, lbl_1_data_10->unk0A);
+    GXPosition2u16(lbl_1_data_10->sizeX, 0);
+    GXPosition2u16(lbl_1_data_10->sizeX, lbl_1_data_10->sizeY);
+    GXPosition2u16(0, lbl_1_data_10->sizeY);
     GXEnd();
     GXSetNumTexGens(1);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
@@ -1156,10 +1156,10 @@ void fn_1_4700(ModelData *arg0, Mtx arg1)
         temp_f31 = 200.0f * (1.0f - var_r31->unk0C);
         sp18.a = 255.0f * var_r31->unk0C;
         GXSetChanMatColor(GX_COLOR0A0, sp18);
-        temp_r28 = lbl_1_data_10->unk08 * (1250.0f + var_r31->unk00.x - temp_f31) / 2500.0f;
-        temp_r27 = lbl_1_data_10->unk0A * (1250.0f + var_r31->unk00.z - temp_f31) / 2500.0f;
-        temp_r26 = lbl_1_data_10->unk08 * (1250.0f + var_r31->unk00.x + temp_f31) / 2500.0f;
-        temp_r25 = lbl_1_data_10->unk0A * (1250.0f + var_r31->unk00.z + temp_f31) / 2500.0f;
+        temp_r28 = lbl_1_data_10->sizeX * (1250.0f + var_r31->unk00.x - temp_f31) / 2500.0f;
+        temp_r27 = lbl_1_data_10->sizeY * (1250.0f + var_r31->unk00.z - temp_f31) / 2500.0f;
+        temp_r26 = lbl_1_data_10->sizeX * (1250.0f + var_r31->unk00.x + temp_f31) / 2500.0f;
+        temp_r25 = lbl_1_data_10->sizeY * (1250.0f + var_r31->unk00.z + temp_f31) / 2500.0f;
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
         GXPosition2s16(temp_r28, temp_r27);
         GXTexCoord2f32(0.0f, 0.0f);

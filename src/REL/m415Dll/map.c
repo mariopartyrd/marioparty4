@@ -31,6 +31,7 @@ void fn_1_8780(s16 arg0, s16 arg1)
     lbl_1_bss_36C.unk36 = lbl_1_bss_36C.unk38 = lbl_1_bss_36C.unk3A = 0;
 }
 
+// This function draws the carpet, why is it so complicated?
 void fn_1_88B8(unkSubStruct2 *arg0)
 {
     ModelData sp120;
@@ -726,7 +727,7 @@ s16 fn_1_A94C(u32 arg0, s16 arg1, s16 arg2)
         arg1 = arg2 = 0;
     }
     else {
-        var_r30 = HuSprAnimRead(HuDataReadNum(arg0, 0x10000000));
+        var_r30 = HuSprAnimRead(HuDataReadNum(arg0, MEMORY_DEFAULT_NUM));
     }
     if ((arg1 == 0) || (arg2 == 0)) {
         arg1 = var_r30->bmp->sizeX;

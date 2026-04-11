@@ -138,14 +138,10 @@ template <typename B, typename T> T *offset_ptr(B &base, T *ptr, void *extra)
 // }
 template <typename B, typename T> static void bswap_flat(B &base, T *start, s32 count)
 {
-    // if (sVisitedPtrs.contains(offset_ptr(base))) {
-    //     return;
-    // }
     T *objBase = start;
     for (s32 i = 0; i < count; ++i) {
         bswap(base, objBase[i]);
     }
-    // sVisitedPtrs.insert(offset_ptr(base));
 }
 template <typename B> void bswap(B &base, f32 &v)
 {
@@ -185,57 +181,38 @@ template <typename B> void bswap(B &base, char &v)
 }
 template <typename B> void bswap(B &base, Vec &vec)
 {
-    // if (sVisitedPtrs.contains(offset_ptr(base))) {
-    //     return;
-    // }
     bswap(base, vec.x);
     bswap(base, vec.y);
     bswap(base, vec.z);
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 template <typename B> void bswap(B &base, S16Vec &vec)
 {
-    // if (sVisitedPtrs.contains(offset_ptr(base))) {
-    //     return;
-    // }
     bswap(base, vec.x);
     bswap(base, vec.y);
     bswap(base, vec.z);
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 template <typename B> void bswap(B &base, Vec2f &vec)
 {
-    // if (sVisitedPtrs.contains(offset_ptr(base))) {
-    //     return;
-    // }
     bswap(base, vec.x);
     bswap(base, vec.y);
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfVector3f &vec)
 {
-    // if (sVisitedPtrs.contains(offset_ptr(base))) {
-    //     return;
-    // }
     bswap(base, vec.x);
     bswap(base, vec.y);
     bswap(base, vec.z);
-    // sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, AnimData32b &obj, AnimData &dest)
 {
-    // if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.bankNum);
-        bswap(base, obj.patNum);
-        bswap(base, obj.bmpNum);
-        bswap(base, obj.useNum);
-        bswap(base, obj.bank);
-        bswap(base, obj.pat);
-        bswap(base, obj.bmp);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    // }
+    bswap(base, obj.bankNum);
+    bswap(base, obj.patNum);
+    bswap(base, obj.bmpNum);
+    bswap(base, obj.useNum);
+    bswap(base, obj.bank);
+    bswap(base, obj.pat);
+    bswap(base, obj.bmp);
 
     dest.bankNum = obj.bankNum;
     dest.patNum = obj.patNum;
@@ -248,12 +225,9 @@ template <typename B> void bswap(B &base, AnimData32b &obj, AnimData &dest)
 
 template <typename B> void bswap(B &base, AnimBankData32b &obj, AnimBankData &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.timeNum);
-        bswap(base, obj.unk);
-        bswap(base, obj.frame);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.timeNum);
+    bswap(base, obj.unk);
+    bswap(base, obj.frame);
 
     dest.timeNum = obj.timeNum;
     dest.unk = obj.unk;
@@ -262,15 +236,12 @@ template <typename B> void bswap(B &base, AnimBankData32b &obj, AnimBankData &de
 
 template <typename B> void bswap(B &base, AnimPatData32b &obj, AnimPatData &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.layerNum);
-        bswap(base, obj.centerX);
-        bswap(base, obj.centerY);
-        bswap(base, obj.sizeX);
-        bswap(base, obj.sizeY);
-        bswap(base, obj.layer);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.layerNum);
+    bswap(base, obj.centerX);
+    bswap(base, obj.centerY);
+    bswap(base, obj.sizeX);
+    bswap(base, obj.sizeY);
+    bswap(base, obj.layer);
 
     dest.layerNum = obj.layerNum;
     dest.centerX = obj.centerX;
@@ -282,17 +253,14 @@ template <typename B> void bswap(B &base, AnimPatData32b &obj, AnimPatData &dest
 
 template <typename B> void bswap(B &base, AnimBmpData32b &obj, AnimBmpData &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.pixSize);
-        bswap(base, obj.dataFmt);
-        bswap(base, obj.palNum);
-        bswap(base, obj.sizeX);
-        bswap(base, obj.sizeY);
-        bswap(base, obj.dataSize);
-        bswap(base, obj.palData);
-        bswap(base, obj.data);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.pixSize);
+    bswap(base, obj.dataFmt);
+    bswap(base, obj.palNum);
+    bswap(base, obj.sizeX);
+    bswap(base, obj.sizeY);
+    bswap(base, obj.dataSize);
+    bswap(base, obj.palData);
+    bswap(base, obj.data);
 
     dest.pixSize = obj.pixSize;
     dest.dataFmt = obj.dataFmt;
@@ -306,24 +274,16 @@ template <typename B> void bswap(B &base, AnimBmpData32b &obj, AnimBmpData &dest
 
 template <typename B> void bswap(B &base, AnimFrameData &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.pat);
     bswap(base, obj.time);
     bswap(base, obj.shiftX);
     bswap(base, obj.shiftY);
     bswap(base, obj.flip);
     bswap(base, obj.pad);
-
-    // sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, AnimLayerData &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.alpha);
     bswap(base, obj.flip);
     bswap(base, obj.bmpNo);
@@ -334,22 +294,16 @@ template <typename B> void bswap(B &base, AnimLayerData &obj)
     bswap(base, obj.shiftX);
     bswap(base, obj.shiftY);
     bswap_flat(base, obj.vtx, sizeof(obj.vtx) / sizeof(s16));
-
-    // sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfSection &obj)
 {
-    // don't guard
     bswap(base, obj.ofs);
     bswap(base, obj.count);
 }
 
 template <typename B> void bswap(B &base, HsfHeader &obj)
 {
-    // if (sVisitedPtrs.contains(offset_ptr(base))) {
-    //     return;
-    // }
     bswap(base, obj.scene);
     bswap(base, obj.color);
     bswap(base, obj.material);
@@ -371,25 +325,19 @@ template <typename B> void bswap(B &base, HsfHeader &obj)
     bswap(base, obj.matrix);
     bswap(base, obj.symbol);
     bswap(base, obj.string);
-
-    // TODO
-    // sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfCluster32b &obj, HsfCluster &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name[0]);
-        bswap(base, obj.name[1]);
-        bswap(base, obj.targetName);
-        bswap(base, obj.part);
-        bswap(base, obj.index);
-        bswap_flat(base, obj.weight, sizeof(obj.weight) / sizeof(float));
-        bswap(base, obj.type);
-        bswap(base, obj.vertexCnt);
-        bswap(base, obj.vertex);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name[0]);
+    bswap(base, obj.name[1]);
+    bswap(base, obj.targetName);
+    bswap(base, obj.part);
+    bswap(base, obj.index);
+    bswap_flat(base, obj.weight, sizeof(obj.weight) / sizeof(float));
+    bswap(base, obj.type);
+    bswap(base, obj.vertexCnt);
+    bswap(base, obj.vertex);
 
     dest.name[0] = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name[0]));
     dest.name[1] = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name[1]));
@@ -408,23 +356,20 @@ template <typename B> void bswap(B &base, HsfCluster32b &obj, HsfCluster &dest)
 
 template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.unk04);
-        bswap(base, obj.unk0C);
-        bswap(base, obj.unk14);
-        bswap(base, obj.unk20);
-        bswap(base, obj.unk28);
-        bswap(base, obj.unk2C);
-        bswap(base, obj.unk30);
-        bswap(base, obj.unk34);
-        bswap(base, obj.wrap_s);
-        bswap(base, obj.wrap_t);
-        bswap(base, obj.unk78);
-        bswap(base, obj.flag);
-        bswap(base, obj.bitmap);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.unk04);
+    bswap(base, obj.unk0C);
+    bswap(base, obj.unk14);
+    bswap(base, obj.unk20);
+    bswap(base, obj.unk28);
+    bswap(base, obj.unk2C);
+    bswap(base, obj.unk30);
+    bswap(base, obj.unk34);
+    bswap(base, obj.wrap_s);
+    bswap(base, obj.wrap_t);
+    bswap(base, obj.unk78);
+    bswap(base, obj.flag);
+    bswap(base, obj.bitmap);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.animWorkP = reinterpret_cast<struct hsfdraw_struct_01 *>(static_cast<uintptr_t>(obj.unk04));
@@ -450,20 +395,17 @@ template <typename B> void bswap(B &base, HsfAttribute32b &obj, HsfAttribute &de
 
 template <typename B> void bswap(B &base, HsfMaterial32b &obj, HsfMaterial &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.pass);
-        bswap(base, obj.hilite_scale);
-        bswap(base, obj.unk18);
-        bswap(base, obj.invAlpha);
-        bswap_flat(base, obj.unk20, sizeof(obj.unk20) / sizeof(float));
-        bswap(base, obj.refAlpha);
-        bswap(base, obj.unk2C);
-        bswap(base, obj.flags);
-        bswap(base, obj.numAttrs);
-        bswap(base, obj.attrs);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.pass);
+    bswap(base, obj.hilite_scale);
+    bswap(base, obj.unk18);
+    bswap(base, obj.invAlpha);
+    bswap_flat(base, obj.unk20, sizeof(obj.unk20) / sizeof(float));
+    bswap(base, obj.refAlpha);
+    bswap(base, obj.unk2C);
+    bswap(base, obj.flags);
+    bswap(base, obj.numAttrs);
+    bswap(base, obj.attrs);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     std::copy(std::begin(obj.unk4), std::end(obj.unk4), dest.unk4);
@@ -485,26 +427,18 @@ template <typename B> void bswap(B &base, HsfMaterial32b &obj, HsfMaterial &dest
 
 template <typename B> void bswap(B &base, HsfScene &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     u32 fogType = static_cast<u32>(obj.fogType);
     fogType = bswap32(fogType);
     obj.fogType = static_cast<GXFogType>(fogType);
     bswap(base, obj.start);
     bswap(base, obj.end);
-    // TODO
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfBuffer32b &obj, HsfBuffer &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.count);
-        bswap(base, obj.data);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.count);
+    bswap(base, obj.data);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.count = obj.count;
@@ -513,11 +447,8 @@ template <typename B> void bswap(B &base, HsfBuffer32b &obj, HsfBuffer &dest)
 
 template <typename B> void bswap(B &base, HsfMatrix32b &obj, HsfMatrix &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.base_idx);
-        bswap(base, obj.count);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.base_idx);
+    bswap(base, obj.count);
 
     dest.base_idx = obj.base_idx;
     dest.count = obj.count;
@@ -533,49 +464,38 @@ template <typename B> void bswap(B &base, HsfMatrix32b &obj, HsfMatrix &dest)
 
 template <typename B> void bswap(B &base, HsfPalette32b &obj, HsfPalette &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.unk);
-        bswap(base, obj.palSize);
-        bswap(base, obj.data);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.unk);
+    bswap(base, obj.palSize);
+    bswap(base, obj.data);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.unk = obj.unk;
     dest.palSize = obj.palSize;
     dest.data = reinterpret_cast<u16 *>(static_cast<uintptr_t>(obj.data));
-
 }
 
 template <typename B> void bswap(B &base, HsfPart32b &obj, HsfPart &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.count);
-        bswap(base, obj.vertex);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.count);
+    bswap(base, obj.vertex);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.count = obj.count;
     dest.vertex = reinterpret_cast<u16 *>(static_cast<uintptr_t>(obj.vertex));
-
 }
 
 template <typename B> void bswap(B &base, HsfBitmap32b &obj, HsfBitmap &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.maxLod);
-        bswap(base, obj.sizeX);
-        bswap(base, obj.sizeY);
-        bswap(base, obj.palSize);
-        bswap(base, obj.palData);
-        bswap(base, obj.unk);
-        bswap(base, obj.data);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.maxLod);
+    bswap(base, obj.sizeX);
+    bswap(base, obj.sizeY);
+    bswap(base, obj.palSize);
+    bswap(base, obj.palData);
+    bswap(base, obj.unk);
+    bswap(base, obj.data);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.maxLod = obj.maxLod;
@@ -592,15 +512,12 @@ template <typename B> void bswap(B &base, HsfBitmap32b &obj, HsfBitmap &dest)
 
 template <typename B> void bswap(B &base, HsfMapAttr32b &obj, HsfMapAttr &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.minX);
-        bswap(base, obj.minZ);
-        bswap(base, obj.maxX);
-        bswap(base, obj.maxZ);
-        bswap(base, obj.data);
-        bswap(base, obj.dataLen);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.minX);
+    bswap(base, obj.minZ);
+    bswap(base, obj.maxX);
+    bswap(base, obj.maxZ);
+    bswap(base, obj.data);
+    bswap(base, obj.dataLen);
 
     dest.minX = obj.minX;
     dest.minZ = obj.minZ;
@@ -613,23 +530,15 @@ template <typename B> void bswap(B &base, HsfMapAttr32b &obj, HsfMapAttr &dest)
 
 template <typename B> void bswap(B &base, HsfTransform &obj)
 {
-    // if (sVisitedPtrs.contains(offset_ptr(base))) {
-    //     return;
-    // }
     bswap(base, obj.pos);
     bswap(base, obj.rot);
     bswap(base, obj.scale);
-
-    // sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfSkeleton32b &obj, HsfSkeleton &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.transform);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.transform);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.transform = obj.transform;
@@ -637,13 +546,10 @@ template <typename B> void bswap(B &base, HsfSkeleton32b &obj, HsfSkeleton &dest
 
 template <typename B> void bswap(B &base, HsfShape32b &obj, HsfShape &dest)
 {
-    if (!sVisitedPtrs.contains(offset_ptr(base))) {
-        bswap(base, obj.name);
-        bswap(base, obj.count16[0]);
-        bswap(base, obj.count16[1]);
-        bswap(base, obj.vertex);
-        // sVisitedPtrs.insert(offset_ptr(base));
-    }
+    bswap(base, obj.name);
+    bswap(base, obj.count16[0]);
+    bswap(base, obj.count16[1]);
+    bswap(base, obj.vertex);
 
     dest.name = reinterpret_cast<char *>(static_cast<uintptr_t>(obj.name));
     dest.count16[0] = obj.count16[0];
@@ -653,37 +559,24 @@ template <typename B> void bswap(B &base, HsfShape32b &obj, HsfShape &dest)
 
 template <typename B> void bswap(B &base, HsfCenvSingle &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.target);
     bswap(base, obj.pos);
     bswap(base, obj.posCnt);
     bswap(base, obj.normal);
     bswap(base, obj.normalCnt);
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfCenvDualWeight &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.weight);
     bswap(base, obj.pos);
     bswap(base, obj.posCnt);
     bswap(base, obj.normal);
     bswap(base, obj.normalCnt);
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfCenvDual32b &obj, HsfCenvDual &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.target1);
     bswap(base, obj.target2);
     bswap(base, obj.weightCnt);
@@ -693,26 +586,16 @@ template <typename B> void bswap(B &base, HsfCenvDual32b &obj, HsfCenvDual &dest
     dest.target2 = obj.target2;
     dest.weightCnt = obj.weightCnt;
     dest.weight = reinterpret_cast<HsfCenvDualWeight *>(static_cast<uintptr_t>(obj.weight));
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfCenvMultiWeight &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.target);
     bswap(base, obj.value);
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfCenvMulti32b &obj, HsfCenvMulti &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.weightCnt);
     bswap(base, obj.pos);
     bswap(base, obj.posCnt);
@@ -726,15 +609,10 @@ template <typename B> void bswap(B &base, HsfCenvMulti32b &obj, HsfCenvMulti &de
     dest.normal = obj.normal;
     dest.normalCnt = obj.normalCnt;
     dest.weight = reinterpret_cast<HsfCenvMultiWeight *>(static_cast<uintptr_t>(obj.weight));
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfCenv32b &obj, HsfCenv &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.name);
     bswap(base, obj.singleData);
     bswap(base, obj.dualData);
@@ -754,30 +632,20 @@ template <typename B> void bswap(B &base, HsfCenv32b &obj, HsfCenv &dest)
     dest.multiCount = obj.multiCount;
     dest.vtxCount = obj.vtxCount;
     dest.copyCount = obj.copyCount;
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfCamera &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.target);
     bswap(base, obj.pos);
     bswap(base, obj.aspect_dupe);
     bswap(base, obj.fov);
     bswap(base, obj.nnear);
     bswap(base, obj.ffar);
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfLight &obj)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.pos);
     bswap(base, obj.target);
     bswap(base, obj.type);
@@ -785,15 +653,10 @@ template <typename B> void bswap(B &base, HsfLight &obj)
     bswap(base, obj.ref_distance);
     bswap(base, obj.ref_brightness);
     bswap(base, obj.cutoff);
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &dest, u32 type)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.parent);
     bswap(base, obj.childrenCount);
     bswap(base, obj.children);
@@ -861,15 +724,10 @@ template <typename B> void bswap(B &base, HsfObjectData32b &obj, HsfObjectData &
         default:
             break;
     }
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfObject32b &obj, HsfObject &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.name);
     bswap(base, obj.type);
     bswap(base, obj.constData);
@@ -893,29 +751,19 @@ template <typename B> void bswap(B &base, HsfObject32b &obj, HsfObject &dest)
             bswap(base, obj.data, dest.data, obj.type);
             break;
     }
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfBitmapKey32b &obj, HsfBitmapKey &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.time);
     bswap(base, obj.data);
 
     dest.time = obj.time;
     dest.data = reinterpret_cast<HsfBitmap *>(static_cast<uintptr_t>(obj.data));
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfTrack32b &obj, HsfTrack &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.target);
     bswap(base, obj.curveType);
     bswap(base, obj.numKeyframes);
@@ -947,15 +795,10 @@ template <typename B> void bswap(B &base, HsfTrack32b &obj, HsfTrack &dest)
         dest.param = obj.param;
         dest.channel = obj.channel;
     }
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfMotion32b &obj, HsfMotion &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.name);
     bswap(base, obj.numTracks);
     bswap(base, obj.track);
@@ -965,15 +808,10 @@ template <typename B> void bswap(B &base, HsfMotion32b &obj, HsfMotion &dest)
     dest.numTracks = obj.numTracks;
     dest.track = reinterpret_cast<HsfTrack *>(static_cast<uintptr_t>(obj.track));
     dest.len = obj.len;
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, HsfFace32b &obj, HsfFace &dest)
 {
-    if (sVisitedPtrs.contains(offset_ptr(base))) {
-        return;
-    }
     bswap(base, obj.type);
     bswap(base, obj.mat);
     bswap(base, obj.nbt);
@@ -996,8 +834,6 @@ template <typename B> void bswap(B &base, HsfFace32b &obj, HsfFace &dest)
         bswap_flat(base, obj.indices[0], 4 * 4);
         std::copy(&obj.indices[0][0], &obj.indices[0][0] + 4 * 4, &dest.indices[0][0]);
     }
-
-    //sVisitedPtrs.insert(offset_ptr(base));
 }
 
 template <typename B> void bswap(B &base, GameStat &obj)

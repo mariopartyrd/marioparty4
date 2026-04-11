@@ -108,7 +108,7 @@ typedef struct M430DllBss60Struct {
     /* 0x60 */ void *unk_60;
     /* 0x64 */ u32 unk_64;
     /* 0x68 */ u32 unk_68;
-    /* 0x6C */ void *unk_6C;
+    /* 0x6C */ void *bmpData;
 } M430DllBss60Struct; /* size = 0x70 */
 
 void fn_1_4CB4(omObjData *object);
@@ -977,8 +977,8 @@ void fn_1_82F4(omObjData *object, M430DllBss60Struct *var_r31)
     if (var_r31->unk_00 == 0) {
         var_r31->unk_68 *= 2;
     }
-    var_r31->unk_6C = HuMemDirectMallocNum(HEAP_SYSTEM, var_r31->unk_68, MEMORY_DEFAULT_NUM);
-    DCFlushRange(var_r31->unk_6C, var_r31->unk_68);
+    var_r31->bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, var_r31->unk_68, MEMORY_DEFAULT_NUM);
+    DCFlushRange(var_r31->bmpData, var_r31->unk_68);
     var_r31->unk_1C = 0;
     var_r31->unk_20 = 0;
     var_r31->unk_24 = 0.0f;
@@ -1200,10 +1200,10 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, 0, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
     if ((fn_1_4030() == 0) && (var_r31->unk_00 == 0)) {
-        GXInitTexObj(&sp24, var_r31->unk_6C, 0x280, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+        GXInitTexObj(&sp24, var_r31->bmpData, 0x280, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     }
     else {
-        GXInitTexObj(&sp24, var_r31->unk_6C, 0x140, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+        GXInitTexObj(&sp24, var_r31->bmpData, 0x140, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     }
     GXInitTexObjLOD(&sp24, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp24, GX_TEXMAP0);
@@ -1603,7 +1603,7 @@ void fn_1_AB98(ModelData *model, Mtx matrix)
         GXSetTexCopySrc(var_r31 * 0x140, 0, 0x140, 0x1E0);
         GXSetTexCopyDst(0x140, 0x1E0, GX_TF_RGB5A3, 0);
     }
-    GXCopyTex(lbl_1_bss_60[var_r31].unk_6C, 0);
+    GXCopyTex(lbl_1_bss_60[var_r31].bmpData, 0);
     GXPixModeSync();
     lbl_1_bss_60[var_r31].unk_08 = 1;
 }

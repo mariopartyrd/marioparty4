@@ -39,11 +39,11 @@ typedef struct M442StructBss5C {
 } M442StructBss5C; /* size = 0x30 */
 
 typedef struct M442StructBssC05C {
-    /* 0x00 */ void *unk_00;
+    /* 0x00 */ void *bmpData;
     /* 0x04 */ u16 unk_04;
     /* 0x06 */ u16 unk_06;
-    /* 0x08 */ u16 unk_08;
-    /* 0x0A */ u16 unk_0A;
+    /* 0x08 */ u16 sizeX;
+    /* 0x0A */ u16 sizeY;
     /* 0x0C */ u32 unk_0C;
     /* 0x10 */ s32 unk_10;
 } M442StructBssC05C; /* size = 0x14 */
@@ -1404,12 +1404,12 @@ void fn_1_3EC0(omObjData *object)
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
         lbl_1_bss_C05C[var_r31].unk_04 = lbl_1_data_18A[var_r31][0];
         lbl_1_bss_C05C[var_r31].unk_06 = lbl_1_data_18A[var_r31][1];
-        lbl_1_bss_C05C[var_r31].unk_08 = lbl_1_data_18A[var_r31][2];
-        lbl_1_bss_C05C[var_r31].unk_0A = lbl_1_data_18A[var_r31][3];
+        lbl_1_bss_C05C[var_r31].sizeX = lbl_1_data_18A[var_r31][2];
+        lbl_1_bss_C05C[var_r31].sizeY = lbl_1_data_18A[var_r31][3];
         lbl_1_bss_C05C[var_r31].unk_10 = lbl_1_data_18A[var_r31][4];
-        lbl_1_bss_C05C[var_r31].unk_0C = GXGetTexBufferSize(lbl_1_bss_C05C[var_r31].unk_08, lbl_1_bss_C05C[var_r31].unk_0A, 4, GX_FALSE, 0);
-        lbl_1_bss_C05C[var_r31].unk_00 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_C05C[var_r31].unk_0C, MEMORY_DEFAULT_NUM);
-        memset(lbl_1_bss_C05C[var_r31].unk_00, 0, lbl_1_bss_C05C[var_r31].unk_0C);
+        lbl_1_bss_C05C[var_r31].unk_0C = GXGetTexBufferSize(lbl_1_bss_C05C[var_r31].sizeX, lbl_1_bss_C05C[var_r31].sizeY, 4, GX_FALSE, 0);
+        lbl_1_bss_C05C[var_r31].bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_C05C[var_r31].unk_0C, MEMORY_DEFAULT_NUM);
+        memset(lbl_1_bss_C05C[var_r31].bmpData, 0, lbl_1_bss_C05C[var_r31].unk_0C);
     }
     for (var_r31 = 0; var_r31 < 1024; var_r31++) {
         fn_1_4444(var_r31);
@@ -1505,15 +1505,15 @@ void fn_1_485C(ModelData *model, Mtx mtx)
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
-    GXSetScissor(0, 0, lbl_1_bss_C05C[0].unk_08, lbl_1_bss_C05C[0].unk_0A);
+    GXSetScissor(0, 0, lbl_1_bss_C05C[0].sizeX, lbl_1_bss_C05C[0].sizeY);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_U16, 0);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
     GXPosition2u16(0, 0);
-    GXPosition2u16(lbl_1_bss_C05C[0].unk_08, 0);
-    GXPosition2u16(lbl_1_bss_C05C[0].unk_08, lbl_1_bss_C05C[0].unk_0A);
-    GXPosition2u16(0, lbl_1_bss_C05C[0].unk_0A);
+    GXPosition2u16(lbl_1_bss_C05C[0].sizeX, 0);
+    GXPosition2u16(lbl_1_bss_C05C[0].sizeX, lbl_1_bss_C05C[0].sizeY);
+    GXPosition2u16(0, lbl_1_bss_C05C[0].sizeY);
     GXEnd();
     GXDrawDone();
     GXSetNumTexGens(1);
@@ -1597,7 +1597,7 @@ void fn_1_54C8(ModelData *model, Mtx mtx)
     GXLoadPosMtxImm(sp2C, 0);
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_FALSE);
     GXSetNumTexGens(2);
-    GXInitTexObj(&spC, lbl_1_bss_C05C[1].unk_00, lbl_1_bss_C05C[1].unk_08, lbl_1_bss_C05C[1].unk_0A, 4, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, lbl_1_bss_C05C[1].bmpData, lbl_1_bss_C05C[1].sizeX, lbl_1_bss_C05C[1].sizeY, 4, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&spC, GX_TEXMAP0);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, 60, GX_FALSE, 125);
     GXSetNumTevStages(1);
@@ -1609,7 +1609,7 @@ void fn_1_54C8(ModelData *model, Mtx mtx)
     GXSetTevColor(GX_TEVREG0, lbl_1_data_1F0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_NONE);
-    GXInitTexObj(&spC, lbl_1_bss_C05C->unk_00, lbl_1_bss_C05C->unk_08, lbl_1_bss_C05C->unk_0A, 4, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, lbl_1_bss_C05C->bmpData, lbl_1_bss_C05C->sizeX, lbl_1_bss_C05C->sizeY, 4, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&spC, GX_TEXMAP1);
     GXSetNumIndStages(1);
     GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX2x4, GX_TG_TEX0, 60, GX_FALSE, 125);
@@ -2178,11 +2178,11 @@ void fn_1_8520(M442StructBssC05C *arg0, u8 arg1)
 {
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_TRUE);
     GXSetTexCopySrc(0, 0, arg0->unk_04, arg0->unk_06);
-    GXSetTexCopyDst(arg0->unk_08, arg0->unk_0A, GX_TF_RGB565, arg0->unk_10);
+    GXSetTexCopyDst(arg0->sizeX, arg0->sizeY, GX_TF_RGB565, arg0->unk_10);
     GXSetCopyClear(BGColor, 0xFFFFFF);
-    GXCopyTex(arg0->unk_00, arg1);
+    GXCopyTex(arg0->bmpData, arg1);
     GXPixModeSync();
-    DCFlushRange(arg0->unk_00, arg0->unk_0C);
+    DCFlushRange(arg0->bmpData, arg0->unk_0C);
 }
 
 float fn_1_85E8(float arg8, float arg9, float argA)

@@ -103,7 +103,11 @@ void fn_1_1E13C(s32 arg0, s32 arg1, StructBss1CF8* arg2, Vec* arg3) {
     for (var_r28 = var_r26 = 0; var_r28 < temp_r31->sizeY; var_r28 += 2) {
         for (var_r29 = 0; var_r29 < temp_r31->sizeX; var_r29 += 2) {
             var_r25 = (u16*) temp_r31->data + ((var_r28 % 4) * 4 + (var_r28 / 4) * temp_r31->sizeX * 4 + (var_r29 / 4) * 16 + var_r29 % 4);
+#ifdef TARGET_PC
+            if (*var_r25 != 0x0080) {
+#else
             if (*var_r25 != 0x8000) {
+#endif
                 var_r26++;
             }
         }
@@ -116,7 +120,11 @@ void fn_1_1E13C(s32 arg0, s32 arg1, StructBss1CF8* arg2, Vec* arg3) {
     for (var_r28 = 0; var_r28 < temp_r31->sizeY; var_r28 += 2) {
         for (var_r29 = 0; var_r29 < temp_r31->sizeX; var_r29 += 2) {
             var_r25 = (u16*) temp_r31->data + ((var_r28 % 4) * 4 + (var_r28 / 4) * temp_r31->sizeX * 4 + (var_r29 / 4) * 16 + var_r29 % 4);
+#ifdef TARGET_PC
+            if (*var_r25 != 0x0080) {
+#else
             if (*var_r25 != 0x8000) {
+#endif
                 sp14 = *arg3;
                 sp14.x = sp14.x + var_r29 - temp_r31->sizeX / 2;
                 sp14.y = sp14.y + var_r28 - temp_r31->sizeY / 2;

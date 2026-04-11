@@ -98,13 +98,13 @@ void fn_1_340C(void)
 }
 
 typedef struct work_347C_unk4 {
-    void *unk0;
+    void *bmpData;
     u32 unk4;
     BOOL unk8;
     s32 unkC;
     s32 unk10;
-    s32 unk14;
-    s32 unk18;
+    s32 sizeX;
+    s32 sizeY;
 } Work347CUnk4;
 
 typedef struct work_347C_unk74 {
@@ -240,13 +240,13 @@ omObjData *fn_1_347C(void)
     for (i = 0; i < 4; i++, workUnk4++) {
         workUnk4->unkC = lbl_1_data_20C[i].unk0;
         workUnk4->unk10 = lbl_1_data_20C[i].unk4;
-        workUnk4->unk14 = lbl_1_data_20C[i].unk8;
-        workUnk4->unk18 = lbl_1_data_20C[i].unkC;
+        workUnk4->sizeX = lbl_1_data_20C[i].unk8;
+        workUnk4->sizeY = lbl_1_data_20C[i].unkC;
         workUnk4->unk8 = lbl_1_data_20C[i].unk10;
-        workUnk4->unk4 = GXGetTexBufferSize(workUnk4->unk14, workUnk4->unk18, GX_TF_RGB565, GX_FALSE, GX_FALSE);
-        workUnk4->unk0 = HuMemDirectMallocNum(HEAP_DATA, workUnk4->unk4, modelP->unk_48);
-        memset(workUnk4->unk0, 0, workUnk4->unk4);
-        DCFlushRange(workUnk4->unk0, workUnk4->unk4);
+        workUnk4->unk4 = GXGetTexBufferSize(workUnk4->sizeX, workUnk4->sizeY, GX_TF_RGB565, GX_FALSE, GX_FALSE);
+        workUnk4->bmpData = HuMemDirectMallocNum(HEAP_DATA, workUnk4->unk4, modelP->unk_48);
+        memset(workUnk4->bmpData, 0, workUnk4->unk4);
+        DCFlushRange(workUnk4->bmpData, workUnk4->unk4);
     }
     for (i = 0; i < 64; i++, workUnk74++) {
         workUnk74->unk0.x = workUnk74->unk0.y = workUnk74->unk0.z = 0;
@@ -803,20 +803,20 @@ void fn_1_59A0(ModelData *model, Mtx matrix)
 void fn_1_6088(Work347CUnk4 *arg0, s32 arg1)
 {
     GXSetTexCopySrc(0, 0, arg0->unkC, arg0->unk10);
-    GXSetTexCopyDst(arg0->unk14, arg0->unk18, GX_TF_RGB565, arg0->unk8);
+    GXSetTexCopyDst(arg0->sizeX, arg0->sizeY, GX_TF_RGB565, arg0->unk8);
     GXSetCopyClear(lbl_1_data_69C, GX_MAX_Z24);
-    GXCopyTex(arg0->unk0, arg1);
+    GXCopyTex(arg0->bmpData, arg1);
 }
 
 void fn_1_6144(Work347CUnk4 *fbWork, float x1, float y1, float scale)
 {
-    float x2 = x1 + (fbWork->unk14 * scale);
-    float y2 = y1 + (fbWork->unk18 * scale);
+    float x2 = x1 + (fbWork->sizeX * scale);
+    float y2 = y1 + (fbWork->sizeY * scale);
     Mtx44 proj;
     Mtx modelview;
     GXTexObj texObj;
     GXColor color;
-    GXInitTexObj(&texObj, fbWork->unk0, fbWork->unk14, fbWork->unk18, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&texObj, fbWork->bmpData, fbWork->sizeX, fbWork->sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&texObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&texObj, GX_TEXMAP0);
     MTXOrtho(proj, 0, 480, 0, 640, 0, 10);
@@ -857,7 +857,7 @@ void fn_1_6144(Work347CUnk4 *fbWork, float x1, float y1, float scale)
 void fn_1_6594(s16 arg0, Work347CUnk4 *arg1, GXTexWrapMode arg2, s32 arg3, BOOL arg4)
 {
     GXTexObj texObj;
-    GXInitTexObj(&texObj, arg1->unk0, arg1->unk14, arg1->unk18, GX_TF_RGB565, arg2, arg2, FALSE);
+    GXInitTexObj(&texObj, arg1->bmpData, arg1->sizeX, arg1->sizeY, GX_TF_RGB565, arg2, arg2, FALSE);
     if (arg4) {
         GXInitTexObjLOD(&texObj, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     }

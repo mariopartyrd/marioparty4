@@ -16,7 +16,11 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-#ifndef __MWERKS__
+#ifdef TARGET_PC
+#include <port/byteswap.h>
+#endif
+
+#ifdef NON_MATCHING
 #include <string.h>
 #endif
 
@@ -131,10 +135,10 @@ void fn_1_4B0(omObjData *object)
             sp8.z = 0.0f;
             var_f31 = 1500.0f;
             fn_1_2E88(1.0f, &sp14, &sp8, var_f31);
-            fn_1_A94C(0x2E000D, 0, 0);
-            HuDataDirClose(0x2E000D);
-            fn_1_A94C(0x2E000C, 0x40, 0x40);
-            HuDataDirClose(0x2E000C);
+            fn_1_A94C(DATA_MAKE_NUM(DATADIR_M415, 0x0D), 0, 0);
+            HuDataDirClose(DATA_MAKE_NUM(DATADIR_M415, 0x0D));
+            fn_1_A94C(DATA_MAKE_NUM(DATADIR_M415, 0x0C), 0x40, 0x40);
+            HuDataDirClose(DATA_MAKE_NUM(DATADIR_M415, 0x0C));
             lbl_1_bss_342 = 0x78;
             HuAudFXPlay(0x5AE);
             lbl_1_bss_34A++;
@@ -162,7 +166,7 @@ void fn_1_4B0(omObjData *object)
             lbl_1_bss_34A = 4;
             lbl_1_bss_348 = lbl_1_bss_346 = -1;
             object->func = fn_1_7D8;
-            HuSprAnimRead(HuDataReadNum(0x2E000D, 0x10000000));
+            HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M415, 0x0D), MEMORY_DEFAULT_NUM));
             break;
     }
     if ((omSysExitReq != 0) && (WipeStatGet() == 0)) {
@@ -233,16 +237,16 @@ void fn_1_7D8(omObjData *object)
         case 7:
             if (lbl_1_bss_342 == 0) {
                 for (var_r31 = 0; var_r31 < 4; var_r31++) {
-                    lbl_1_bss_4[var_r31].unk8 = espEntry(0x2E0010, 10, 0);
+                    lbl_1_bss_4[var_r31].unk8 = espEntry(DATA_MAKE_NUM(DATADIR_M415, 0x10), 10, 0);
                     espColorSet(lbl_1_bss_4[var_r31].unk8, 0, 0, 0);
                     espTPLvlSet(lbl_1_bss_4[var_r31].unk8, 0.5f);
                     espPosSet(
                         lbl_1_bss_4[var_r31].unk8, 144.0f * (((var_r31 & 1) * 2) + 1), 120.0f * (((s16)(((var_r31 < 0) + var_r31) >> 1) << 1) + 1));
-                    lbl_1_bss_4[var_r31].unk6 = espEntry(0x2E000F, 10, 0);
+                    lbl_1_bss_4[var_r31].unk6 = espEntry(DATA_MAKE_NUM(DATADIR_M415, 0x0F), 10, 0);
                     espPosSet(
                         lbl_1_bss_4[var_r31].unk6, 144.0f * (((var_r31 & 1) * 2) + 1), 120.0f * (((s16)(((var_r31 < 0) + var_r31) >> 1) << 1) + 1));
                     for (var_r30 = 0; var_r30 < 3; var_r30++) {
-                        lbl_1_bss_4[var_r31].unk0[var_r30] = espEntry(0x2E0011, 10, 0);
+                        lbl_1_bss_4[var_r31].unk0[var_r30] = espEntry(DATA_MAKE_NUM(DATADIR_M415, 0x11), 10, 0);
                         espPosSet(lbl_1_bss_4[var_r31].unk0[var_r30], (32.0f * var_r30) + ((144.0f * (((var_r31 & 1) * 2) + 1)) - 32.0f),
                             (120.0f * (((s16)(((var_r31 < 0) + var_r31) >> 1) << 1) + 1)));
                         espColorSet(lbl_1_bss_4[var_r31].unk0[var_r30], sp18[var_r31].r, sp18[var_r31].g, sp18[var_r31].b);
@@ -372,7 +376,7 @@ void fn_1_15D0(omObjData *object)
     f32 temp_f31;
     s32 var_r31;
 
-    object->model[0] = var_r31 = Hu3DModelCreateFile(0x2E0000);
+    object->model[0] = var_r31 = Hu3DModelCreateFile(DATADIR_M415);
     Hu3DModelShadowSet(var_r31);
     temp_f31 = Hu3DMotionMaxTimeGet(var_r31);
     fn_1_1524(var_r31, "oekaki", temp_f31, sp20);
@@ -389,7 +393,7 @@ void fn_1_15D0(omObjData *object)
     omSetRot(object, sp8.x, sp8.y, sp8.z);
     Hu3DModelPosSetV(var_r31, &sp14);
     Hu3DModelRotSetV(var_r31, &sp8);
-    lbl_1_bss_338 = Hu3DAnimCreate(HuDataReadNum(0x2E000A, 0x10000000), var_r31, "dummy");
+    lbl_1_bss_338 = Hu3DAnimCreate(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M415, 0x0A), MEMORY_DEFAULT_NUM), var_r31, "dummy");
     var_r28 = 0x57E40;
     lbl_1_bss_334 = HuMemDirectMallocNum(HEAP_DATA, var_r28, MEMORY_DEFAULT_NUM);
     memset(lbl_1_bss_334, 0, var_r28);
@@ -397,7 +401,7 @@ void fn_1_15D0(omObjData *object)
     memset(&lbl_1_bss_234, 0, 0x100);
     var_r31 = fn_1_A2D0(1, 2);
     object->model[1] = var_r31;
-    fn_1_AFC8(var_r31, 0, 0x2E000B, 0x200, 0x200);
+    fn_1_AFC8(var_r31, 0, DATA_MAKE_NUM(DATADIR_M415, 0x0B), 0x200, 0x200);
     fn_1_B864(var_r31, 0.0f, -50.0f, 0.0f);
     fn_1_BB4C(var_r31, -90.0f, 0.0f, 0.0f);
     fn_1_BC9C(var_r31, 5.0f, 5.0f, 1.0f);
@@ -406,7 +410,7 @@ void fn_1_15D0(omObjData *object)
     object->model[2] = var_r27;
     fn_1_C81C(var_r27, 4);
     fn_1_B0B8(var_r31, 1, var_r27);
-    var_r31 = Hu3DModelCreateFile(0x2E0002);
+    var_r31 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M415, 0x02));
     object->model[3] = var_r31;
     Hu3DModelShadowSet(var_r31);
     Hu3DMotionSpeedSet(var_r31, 2.0f);
@@ -425,11 +429,8 @@ void fn_1_1960(omObjData *object)
             GXDrawDone();
             temp_r3 = fn_1_9734(object->model[2]);
             temp_r29 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
-#ifndef TARGET_PC
-            // TODO PC
             memcpy((*temp_r3)->bmp->data, OSCachedToUncached(Hu3DShadowData.buf), temp_r29);
-#endif
-        DCStoreRangeNoSync((*temp_r3)->bmp->data, temp_r29);
+            DCStoreRangeNoSync((*temp_r3)->bmp->data, temp_r29);
             break;
         case 2:
             Hu3DModelShadowMapObjSet(object->model[0], "kyanbasu");
@@ -444,6 +445,7 @@ void fn_1_1960(omObjData *object)
     return;
 }
 
+// This function draws the stamps onto the canvas texture
 void fn_1_1A60(unkStruct3 *arg0)
 {
     Mtx sp118;
@@ -477,9 +479,9 @@ void fn_1_1A60(unkStruct3 *arg0)
     s32 temp_r26;
     s16 var_r24;
     s16 var_r23;
-    u16 *temp_r22;
+    u16 *canvas_bmp_data;
     u8 temp_r21;
-    AnimBmpData *var_r20;
+    AnimBmpData *canvas_bmp;
     s16 temp_r19;
     s16 temp_r18;
     s32 temp_r17;
@@ -490,8 +492,8 @@ void fn_1_1A60(unkStruct3 *arg0)
     temp_r28 = arg0->unk0;
     sp14 = 0.5f * (600.0f + sp1C.x);
     sp12 = 0.5f * (600.0f + sp1C.z);
-    var_r20 = fn_1_668C(lbl_1_bss_338);
-    temp_r22 = (u16 *)var_r20->data;
+    canvas_bmp = fn_1_668C(lbl_1_bss_338);
+    canvas_bmp_data = (u16 *)canvas_bmp->data;
     var_r27 = 0x32;
     var_r30 = var_r27 >> 1;
     spC = 0x96;
@@ -580,11 +582,17 @@ void fn_1_1A60(unkStruct3 *arg0)
                     sp18 = ((fn_1_679C() / 65536.0f) * (1.0f + ((6.0f * (temp_r17 - ((var_r31 * var_r31) + (var_r29 * var_r29)))) / temp_r17)));
                     if (sp18 == 0) {
                         if (temp_r21 != (temp_r28 + 1)) {
-                            temp_r22[temp_r26] = ((sp28[temp_r28].r >> 3) << 10) | ((sp28[temp_r28].g >> 3) << 5) | (sp28[temp_r28].b >> 3) | 0x8000;
+                            canvas_bmp_data[temp_r26] = ((sp28[temp_r28].r >> 3) << 10) | ((sp28[temp_r28].g >> 3) << 5) | (sp28[temp_r28].b >> 3) | 0x8000;
+#ifdef TARGET_PC
+                            byteswap_u16(&canvas_bmp_data[temp_r26]);
+#endif
                         }
                     }
                     else {
-                        temp_r22[temp_r26] = ((sp38[temp_r28].r >> 3) << 10) | ((sp38[temp_r28].g >> 3) << 5) | (sp38[temp_r28].b >> 3) | 0x8000;
+                        canvas_bmp_data[temp_r26] = ((sp38[temp_r28].r >> 3) << 10) | ((sp38[temp_r28].g >> 3) << 5) | (sp38[temp_r28].b >> 3) | 0x8000;
+#ifdef TARGET_PC
+                        byteswap_u16(&canvas_bmp_data[temp_r26]);
+#endif
                     }
                     if (temp_r21 != (temp_r28 + 1)) {
                         lbl_1_bss_234[temp_r28][temp_r19][temp_r18]++;
@@ -596,7 +604,15 @@ void fn_1_1A60(unkStruct3 *arg0)
             }
         }
     }
-    DCStoreRange(temp_r22, 0xAFC80);
+    DCStoreRange(canvas_bmp_data, 0xAFC80);
+#ifdef TARGET_PC
+    AnimTexData *tex_data = canvas_bmp->texData;
+    if (tex_data->tex_initialized) {
+        OSReport("Canvas texture cleared\n");
+        GXDestroyTexObj(&tex_data->tex_obj);
+        tex_data->tex_initialized = FALSE;
+    }
+#endif
 }
 
 void fn_1_2B18(omObjData *object)
@@ -720,7 +736,7 @@ void fn_1_31E0(f32 arg8)
     data->unk140 = arg8;
 }
 
-s32 lbl_1_data_80[10] = { 0, 3, 5, 6, 0x2E0012, 0x2E001A, 0x2E0022, 0x2E001A, 0x17, 0x72 };
+s32 lbl_1_data_80[10] = { 0, 3, 5, 6, DATA_MAKE_NUM(DATADIR_M415, 0x12), DATA_MAKE_NUM(DATADIR_M415, 0x1A), DATA_MAKE_NUM(DATADIR_M415, 0x22), DATA_MAKE_NUM(DATADIR_M415, 0x1A), 0x17, 0x72 };
 
 Vec lbl_1_data_A8[4] = { { -200.0f, 1600.0f, -200.0f }, { 200.0f, 1600.0f, -200.0f }, { -200.0f, 1600.0f, 200.0f }, { 200.0f, 1600.0f, 200.0f } };
 
@@ -776,10 +792,10 @@ void fn_1_3208(omObjData *object)
     CharModelMotionSet(var_r31->unk1, object->motion[var_r31->unk18]);
     CharModelStepTypeSet(var_r31->unk1, 1);
     CharModelVoiceEnableSet(var_r31->unk1, object->motion[2], 0);
-    object->model[2] = var_r29 = Hu3DModelCreateFile(var_r31->unk0 + 0x2E0003);
-    object->model[3] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0007, 0x10000000, HEAP_DATA));
-    object->model[4] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0008, 0x10000000, HEAP_DATA));
-    object->model[5] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0009, 0x10000000, HEAP_DATA));
+    object->model[2] = var_r29 = Hu3DModelCreateFile(var_r31->unk0 + DATA_MAKE_NUM(DATADIR_M415, 0x03));
+    object->model[3] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M415, 0x07), MEMORY_DEFAULT_NUM, HEAP_DATA));
+    object->model[4] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M415, 0x08), MEMORY_DEFAULT_NUM, HEAP_DATA));
+    object->model[5] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M415, 0x09), MEMORY_DEFAULT_NUM, HEAP_DATA));
     Hu3DModelPosSet(var_r29, var_r31->unk2C.x, var_r31->unk2C.y, var_r31->unk2C.z);
     Hu3DModelHookSet(var_r29, "stamp00", object->model[0]);
     Hu3DMotionSet(object->model[2], object->model[4]);
@@ -855,7 +871,7 @@ void fn_1_3764(omObjData *object)
                     omSetTra(object, temp_r31->unk2C.x, temp_r31->unk2C.y, temp_r31->unk2C.z);
                     omSetRot(object, temp_r31->unk38.x, temp_r31->unk38.y, temp_r31->unk38.z);
                     sp8 = fn_1_A2D0(1, 1);
-                    fn_1_B038(lbl_1_bss_36C.unk36, 0, 0x2E000C);
+                    fn_1_B038(lbl_1_bss_36C.unk36, 0, DATA_MAKE_NUM(DATADIR_M415, 0x0C));
                     fn_1_B8D0(lbl_1_bss_36C.unk36, lbl_1_bss_36C.unk38, temp_r31->unk2C.x, 50.0f + temp_r31->unk2C.y, temp_r31->unk2C.z);
                     fn_1_BD08(lbl_1_bss_36C.unk36, lbl_1_bss_36C.unk38, 3.0f, 3.0f, 1.0f);
                     fn_1_BE30(lbl_1_bss_36C.unk36, lbl_1_bss_36C.unk38, 0x80000000);
@@ -1016,7 +1032,7 @@ void fn_1_3B44(omObjData *object)
                     var_r25 = 5;
                     fn_1_1A60(temp_r31);
                     var_r22 = fn_1_A2D0(0x28, 1);
-                    fn_1_B038(var_r22, 0, 0x2E000D);
+                    fn_1_B038(var_r22, 0, DATA_MAKE_NUM(DATADIR_M415, 0x0D));
                     lbl_1_bss_36C.unk40[var_r22].unk30 = &fn_1_5B20;
                     fn_1_B864(var_r22, temp_r31->unk2C.x, temp_r31->unk2C.y, temp_r31->unk2C.z);
                     fn_1_C264(var_r22, 1);

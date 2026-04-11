@@ -39,7 +39,7 @@ typedef struct UnkM460MapWork {
     Vec unk_48;
     HsfObject *unk_54;
     u32 unk_58;
-    void *unk_5C;
+    void *bmpData;
 } UnkM460MapWork; /* size = 0x60 */
 
 void fn_1_6818(omObjData *object);
@@ -134,8 +134,8 @@ void fn_1_6818(omObjData *object)
     Hu3DModelCameraSet(var_r30, 2);
     Hu3DModelLayerSet(var_r30, 7);
     var_r28->unk_58 = GXGetTexBufferSize(0x280, 0x1E0, 5, 0, 0);
-    var_r28->unk_5C = HuMemDirectMallocNum(HEAP_SYSTEM, var_r28->unk_58, MEMORY_DEFAULT_NUM);
-    DCFlushRange(var_r28->unk_5C, var_r28->unk_58);
+    var_r28->bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, var_r28->unk_58, MEMORY_DEFAULT_NUM);
+    DCFlushRange(var_r28->bmpData, var_r28->unk_58);
     var_r30 = Hu3DParticleCreate(HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M460, 0x23)), 0x100);
     object->model[15] = var_r30;
     Hu3DModelLayerSet(var_r30, 4);
@@ -344,7 +344,7 @@ void fn_1_7724(ModelData *model, Mtx mtx)
     UnkM460MapWork *var_r31 = lbl_1_bss_48->data;
     GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
     GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGB5A3, 0);
-    GXCopyTex(var_r31->unk_5C, 0);
+    GXCopyTex(var_r31->bmpData, 0);
     GXPixModeSync();
 }
 
@@ -369,7 +369,7 @@ void fn_1_7790(ModelData *model, Mtx mtx)
     GXLoadPosMtxImm(sp5C, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, 0, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
-    GXInitTexObj(&spC, var_r31->unk_5C, 0x280, 0x1E0, 5, GX_CLAMP, GX_CLAMP, 0);
+    GXInitTexObj(&spC, var_r31->bmpData, 0x280, 0x1E0, 5, GX_CLAMP, GX_CLAMP, 0);
     GXInitTexObjLOD(&spC, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&spC, GX_TEXMAP0);
     C_MTXLightPerspective(sp2C, 41.5f, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);

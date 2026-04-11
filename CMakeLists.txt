@@ -212,6 +212,7 @@ foreach (dir ${REL_DIRS})
                 target_compile_options(${dir} PRIVATE "/wd4552") # result of expression not used
                 target_compile_options(${dir} PRIVATE "/wd4553") # result of expression not used: == vs =
                 target_compile_options(${dir} PRIVATE "/wd4113") # function pointer parameter list mismatch
+                target_compile_options(${dir} PRIVATE "/wd4068") # unknown pragma
                 target_compile_options(${dir} PRIVATE "/Zi")
 #                target_compile_options(${dir} PRIVATE "/Ob0")
                 target_compile_options(${dir} PRIVATE "/Od")

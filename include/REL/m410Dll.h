@@ -190,7 +190,7 @@ typedef struct UnkM410Struct14 {
     UnkM410Struct9 unk_00[4];
     UnkM410Struct13 unk_120;
     u32 unk_F80;
-    void *unk_F84;
+    void *bmpData;
     char unkF88[0x2E98];
 } UnkM410Struct14; // size 0x3E20
 

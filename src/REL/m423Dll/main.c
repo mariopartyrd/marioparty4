@@ -27,11 +27,11 @@
 SHARED_SYM extern u32 GlobalCounter;
 
 typedef struct {
-    /* 0x00 */ s32 unk00;
-    /* 0x04 */ s32 unk04;
+    /* 0x00 */ s32 sizeX;
+    /* 0x04 */ s32 sizeY;
     /* 0x08 */ s32 unk08;
     /* 0x0C */ s32 unk0C;
-    /* 0x10 */ void *unk10;
+    /* 0x10 */ void *bmpData;
 } StructBssD0Data; // Size 0x14
 
 typedef struct {
@@ -158,7 +158,7 @@ typedef struct {
     /* 0x000 */ StructM423_0A unk00[16];
     /* 0x200 */ AnimData *unk200;
     /* 0x204 */ s32 unk204;
-    /* 0x208 */ void *unk208;
+    /* 0x208 */ void *bmpData;
     /* 0x20C */ StructM423_08 *unk20C;
     /* 0x210 */ StructM423_09 *unk210;
     /* 0x214 */ GXColor *unk214;
@@ -735,10 +735,10 @@ void fn_1_F60(omObjData *arg0)
     Hu3DModelCameraSet(arg0->model[3], 2);
     temp_r29 = &Hu3DData[arg0->model[3]];
     temp_r29->unk_120 = temp_r30;
-    temp_r30->unk00 = 160;
-    temp_r30->unk04 = 160;
-    temp_r30->unk08 = GXGetTexBufferSize(temp_r30->unk00, temp_r30->unk04, 5, 0, 0);
-    temp_r30->unk10 = HuMemDirectMallocNum(HEAP_DATA, temp_r30->unk08, (u32)temp_r29->unk_48);
+    temp_r30->sizeX = 160;
+    temp_r30->sizeY = 160;
+    temp_r30->unk08 = GXGetTexBufferSize(temp_r30->sizeX, temp_r30->sizeY, 5, 0, 0);
+    temp_r30->bmpData = HuMemDirectMallocNum(HEAP_DATA, temp_r30->unk08, (u32)temp_r29->unk_48);
     temp_r30->unk0C = 0.0f;
     arg0->model[4] = fn_1_13A0(temp_r30);
     Hu3DModelCameraSet(arg0->model[4], 5);
@@ -780,10 +780,10 @@ void fn_1_12A0(ModelData *arg0, Mtx arg1)
         return;
     }
     GXSetTexCopySrc(0, 0, 320, 240);
-    GXSetTexCopyDst(temp_r31->unk00, temp_r31->unk04, GX_TF_RGB5A3, GX_TRUE);
+    GXSetTexCopyDst(temp_r31->sizeX, temp_r31->sizeY, GX_TF_RGB5A3, GX_TRUE);
     GXSetCopyClear(lbl_1_data_298, 0xFFFFFF);
-    GXCopyTex(temp_r31->unk10, GX_TRUE);
-    DCFlushRange(temp_r31->unk10, temp_r31->unk08);
+    GXCopyTex(temp_r31->bmpData, GX_TRUE);
+    DCFlushRange(temp_r31->bmpData, temp_r31->unk08);
     GXPixModeSync();
     temp_r31->unk0C = 1;
     fn_1_10BC8();
@@ -871,7 +871,7 @@ void fn_1_14A0(ModelData *arg0, Mtx arg1)
         GXSetTevAlphaOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
         GXSetNumChans(1);
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_CLAMP, GX_AF_NONE);
-        fn_1_11008(temp_r30, temp_r30->unk10, GX_TEXMAP0, GX_CLAMP, 0, 1);
+        fn_1_11008(temp_r30, temp_r30->bmpData, GX_TEXMAP0, GX_CLAMP, 0, 1);
         HuSprTexLoad(temp_r29->unk04, 0, 1, GX_REPEAT, GX_REPEAT, GX_LINEAR);
         GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
         GXSetZCompLoc(GX_FALSE);
@@ -4348,8 +4348,8 @@ s32 fn_1_E678(void)
     var_r30->unk214 = HuMemDirectMallocNum(HEAP_DATA, 5 * sizeof(*var_r30->unk214), temp_r27->unk_48);
     memset(var_r30->unk214, 0, 5 * sizeof(*var_r30->unk214));
     var_r30->unk204 = GXGetTexBufferSize(640, 480, GX_TF_RGB5A3, GX_FALSE, 0);
-    var_r30->unk208 = HuMemDirectMallocNum(HEAP_DATA, var_r30->unk204, temp_r27->unk_48);
-    DCFlushRange(var_r30->unk208, var_r30->unk204);
+    var_r30->bmpData = HuMemDirectMallocNum(HEAP_DATA, var_r30->unk204, temp_r27->unk_48);
+    DCFlushRange(var_r30->bmpData, var_r30->unk204);
     var_r30->unk200 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M423, 23), MEMORY_DEFAULT_NUM));
     var_f31 = 0.0f;
     for (i = 0; i < 32; i++) {
@@ -4455,14 +4455,14 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     temp_r30 = arg0->unk_120;
     GXSetTexCopySrc(0, 0, 640, 480);
     GXSetTexCopyDst(640, 480, GX_TF_RGB5A3, GX_FALSE);
-    GXCopyTex(temp_r30->unk208, GX_FALSE);
+    GXCopyTex(temp_r30->bmpData, GX_FALSE);
     GXPixModeSync();
     MTXTrans(spF4, -400.0f, 400.0f, -700.0f);
     MTXConcat(Hu3DCameraMtx, spF4, sp64);
     GXLoadPosMtxImm(sp64, GX_PNMTX0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_CLAMP, GX_AF_NONE);
-    GXInitTexObj(&sp14, temp_r30->unk208, 640, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp14, temp_r30->bmpData, 640, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&sp14, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp14, GX_TEXMAP0);
     HuSprTexLoad(temp_r30->unk200, 0, 1, GX_REPEAT, GX_REPEAT, GX_LINEAR);
@@ -4934,7 +4934,7 @@ void fn_1_11008(StructBssD0Data *arg0, void *arg1, s16 arg2, GXTexWrapMode arg3,
     StructBssD0Data *var_r31;
 
     var_r31 = arg0;
-    GXInitTexObj(&sp18, arg1, var_r31->unk00, var_r31->unk04, GX_TF_RGB5A3, arg3, arg3, GX_FALSE);
+    GXInitTexObj(&sp18, arg1, var_r31->sizeX, var_r31->sizeY, GX_TF_RGB5A3, arg3, arg3, GX_FALSE);
     if (arg5 != 0) {
         GXInitTexObjLOD(&sp18, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     }

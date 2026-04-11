@@ -773,8 +773,8 @@ void fn_1_A0A4(omObjData *object)
     var_r30 = object->data;
     memset(var_r30, 0, sizeof(UnkM410Struct14));
     var_r30->unk_F80 = GXGetTexBufferSize(640, 480, GX_TF_RGB5A3, GX_FALSE, 0);
-    var_r30->unk_F84 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r30->unk_F80, MEMORY_DEFAULT_NUM);
-    DCFlushRange(var_r30->unk_F84, var_r30->unk_F80);
+    var_r30->bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, var_r30->unk_F80, MEMORY_DEFAULT_NUM);
+    DCFlushRange(var_r30->bmpData, var_r30->unk_F80);
     fn_1_A9A4(&var_r30->unk_120);
     var_r31 = var_r30->unk_00;
 
@@ -1063,7 +1063,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXColor sp10 = { 204, 204, 204, 204 };
         GXSetTexCopySrc(0, 0, 640, 480);
         GXSetTexCopyDst(640, 480, GX_TF_RGB5A3, GX_FALSE);
-        GXCopyTex(var_r30->unk_F84, GX_FALSE);
+        GXCopyTex(var_r30->bmpData, GX_FALSE);
         GXPixModeSync();
         DCStoreRange(&sp10, 4);
 
@@ -1073,7 +1073,7 @@ void fn_1_B140(ModelData *arg0, Mtx arg1)
         GXLoadPosMtxImm(sp64, 0);
         GXSetNumChans(1);
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
-        GXInitTexObj(&sp14, var_r30->unk_F84, 640, 480, 5, GX_CLAMP, GX_CLAMP, GX_FALSE);
+        GXInitTexObj(&sp14, var_r30->bmpData, 640, 480, 5, GX_CLAMP, GX_CLAMP, GX_FALSE);
         GXInitTexObjLOD(&sp14, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
         GXLoadTexObj(&sp14, GX_TEXMAP0);
         HuSprTexLoad(lbl_1_bss_70, 0, 1, GX_REPEAT, GX_REPEAT, GX_LINEAR);

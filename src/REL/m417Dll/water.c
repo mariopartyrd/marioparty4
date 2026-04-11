@@ -76,7 +76,7 @@ typedef struct UnkM417Struct4 {
     /* 0x6E0 */ void *unk_6E0[2];
     /* 0x6E8 */ s32 unk_6E8[2];
     /* 0x6F0 */ u32 unk_6F0;
-    /* 0x6F4 */ void *unk_6F4;
+    /* 0x6F4 */ void *bmpData;
     /* 0x6F8 */ char unk6F8[8];
 } UnkM417Struct4; /* size = 0x700 */
 
@@ -315,8 +315,8 @@ void fn_1_3D58(omObjData *object)
         lbl_1_bss_178.unk_6E8[var_r31] = 0;
     }
     lbl_1_bss_178.unk_6F0 = GXGetTexBufferSize(640, 480, 5, GX_FALSE, 0);
-    lbl_1_bss_178.unk_6F4 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_178.unk_6F0, MEMORY_DEFAULT_NUM);
-    DCFlushRange(lbl_1_bss_178.unk_6F4, lbl_1_bss_178.unk_6F0);
+    lbl_1_bss_178.bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_178.unk_6F0, MEMORY_DEFAULT_NUM);
+    DCFlushRange(lbl_1_bss_178.bmpData, lbl_1_bss_178.unk_6F0);
     lbl_1_bss_178.unk_6B8 = 30.0f;
     var_r28 = lbl_1_bss_178.unk_2C;
     var_f31 = 0.0f;
@@ -767,7 +767,7 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
     GXLoadNrmMtxImm(sp98, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
-    GXInitTexObj(&sp18, lbl_1_bss_178.unk_6F4, 640, 480, 5, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp18, lbl_1_bss_178.bmpData, 640, 480, 5, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&sp18, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp18, GX_TEXMAP0);
     HuSprTexLoad(lbl_1_bss_64, 0, 1, GX_CLAMP, GX_CLAMP, GX_LINEAR);
@@ -877,7 +877,7 @@ void fn_1_6B04(ModelData *model, Mtx arg1)
 {
     GXSetTexCopySrc(0, 0, 640, 480);
     GXSetTexCopyDst(640, 480, GX_TF_RGB5A3, GX_FALSE);
-    GXCopyTex(lbl_1_bss_178.unk_6F4, GX_FALSE);
+    GXCopyTex(lbl_1_bss_178.bmpData, GX_FALSE);
     GXPixModeSync();
 }
 

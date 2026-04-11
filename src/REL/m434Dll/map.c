@@ -24,11 +24,11 @@ typedef struct bss_450_data {
 } Bss450Data;
 
 typedef struct bss_3F0_data {
-    void *unk0;
+    void *bmpData;
     u16 unk4;
     u16 unk6;
-    u16 unk8;
-    u16 unkA;
+    u16 sizeX;
+    u16 sizeY;
     u32 unkC;
     s32 unk10;
 } Bss3F0Data;
@@ -156,12 +156,12 @@ void fn_1_1E64(omObjData *object)
     for (temp_r30 = 0; temp_r30 < 4; temp_r30++) {
         lbl_1_bss_3F0[temp_r30].unk4 = lbl_1_data_100[temp_r30].unk0;
         lbl_1_bss_3F0[temp_r30].unk6 = lbl_1_data_100[temp_r30].unk2;
-        lbl_1_bss_3F0[temp_r30].unk8 = lbl_1_data_100[temp_r30].unk4;
-        lbl_1_bss_3F0[temp_r30].unkA = lbl_1_data_100[temp_r30].unk6;
+        lbl_1_bss_3F0[temp_r30].sizeX = lbl_1_data_100[temp_r30].unk4;
+        lbl_1_bss_3F0[temp_r30].sizeY = lbl_1_data_100[temp_r30].unk6;
         lbl_1_bss_3F0[temp_r30].unk10 = lbl_1_data_100[temp_r30].unk8;
-        lbl_1_bss_3F0[temp_r30].unkC = GXGetTexBufferSize(lbl_1_bss_3F0[temp_r30].unk8, lbl_1_bss_3F0[temp_r30].unkA, GX_TF_RGB565, GX_FALSE, 0);
-        lbl_1_bss_3F0[temp_r30].unk0 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_3F0[temp_r30].unkC, MEMORY_DEFAULT_NUM);
-        memset(lbl_1_bss_3F0[temp_r30].unk0, 0, lbl_1_bss_3F0[temp_r30].unkC);
+        lbl_1_bss_3F0[temp_r30].unkC = GXGetTexBufferSize(lbl_1_bss_3F0[temp_r30].sizeX, lbl_1_bss_3F0[temp_r30].sizeY, GX_TF_RGB565, GX_FALSE, 0);
+        lbl_1_bss_3F0[temp_r30].bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_3F0[temp_r30].unkC, MEMORY_DEFAULT_NUM);
+        memset(lbl_1_bss_3F0[temp_r30].bmpData, 0, lbl_1_bss_3F0[temp_r30].unkC);
     }
     object->model[5] = Hu3DHookFuncCreate(fn_1_33A4);
     Hu3DModelLayerSet(object->model[5], 3);
@@ -247,9 +247,9 @@ void fn_1_28F0(void)
 {
     s32 temp_r31;
     for (temp_r31 = 0; temp_r31 < 4; temp_r31++) {
-        if (lbl_1_bss_3F0[temp_r31].unk0 != NULL) {
-            HuMemDirectFree(lbl_1_bss_3F0[temp_r31].unk0);
-            lbl_1_bss_3F0[temp_r31].unk0 = NULL;
+        if (lbl_1_bss_3F0[temp_r31].bmpData != NULL) {
+            HuMemDirectFree(lbl_1_bss_3F0[temp_r31].bmpData);
+            lbl_1_bss_3F0[temp_r31].bmpData = NULL;
         }
     }
 }
@@ -277,9 +277,9 @@ void fn_1_2978(ModelData *model, Mtx mtx)
     GXLoadPosMtxImm(mtx, GX_PNMTX0);
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
     GXSetNumTexGens(4);
-    GXInitTexObj(&spC, lbl_1_bss_3F0[2].unk0, lbl_1_bss_3F0[2].unk8, lbl_1_bss_3F0[2].unkA, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, lbl_1_bss_3F0[2].bmpData, lbl_1_bss_3F0[2].sizeX, lbl_1_bss_3F0[2].sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&spC, GX_TEXMAP0);
-    GXInitTexObj(&spC, lbl_1_bss_3F0[1].unk0, lbl_1_bss_3F0[1].unk8, lbl_1_bss_3F0[1].unkA, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, lbl_1_bss_3F0[1].bmpData, lbl_1_bss_3F0[1].sizeX, lbl_1_bss_3F0[1].sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&spC, GX_TEXMAP1);
     MTXLightPerspective(sp1AC, 30.0f, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
     MTXInverse(Hu3DCameraMtx, spBC);
@@ -310,7 +310,7 @@ void fn_1_2978(ModelData *model, Mtx mtx)
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_NONE);
     HuSprTexLoad(lbl_1_bss_45C, 0, GX_TEXMAP2, GX_REPEAT, GX_REPEAT, GX_LINEAR);
-    GXInitTexObj(&spC, lbl_1_bss_3F0[0].unk0, lbl_1_bss_3F0[0].unk8, lbl_1_bss_3F0[0].unkA, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, lbl_1_bss_3F0[0].bmpData, lbl_1_bss_3F0[0].sizeX, lbl_1_bss_3F0[0].sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&spC, GX_TEXMAP3);
     GXSetNumIndStages(2);
     MTXRotDeg(sp11C, 'X', -90.0f);
@@ -398,11 +398,11 @@ void fn_1_32DC(Bss3F0Data *arg0, GXBool arg1)
 {
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_TRUE);
     GXSetTexCopySrc(0, 0, arg0->unk4, arg0->unk6);
-    GXSetTexCopyDst(arg0->unk8, arg0->unkA, GX_TF_RGB565, arg0->unk10);
+    GXSetTexCopyDst(arg0->sizeX, arg0->sizeY, GX_TF_RGB565, arg0->unk10);
     GXSetCopyClear(BGColor, 0xFFFFFF);
-    GXCopyTex(arg0->unk0, arg1);
+    GXCopyTex(arg0->bmpData, arg1);
     GXPixModeSync();
-    DCFlushRange(arg0->unk0, arg0->unkC);
+    DCFlushRange(arg0->bmpData, arg0->unkC);
 }
 
 void fn_1_33A4(ModelData *model, Mtx mtx)
@@ -441,7 +441,7 @@ void fn_1_3594(ModelData *model, Mtx mtx)
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_REPLACE);
-    GXInitTexObj(&sp10, lbl_1_bss_3F0[2].unk0, lbl_1_bss_3F0[2].unk8, lbl_1_bss_3F0[2].unkA, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp10, lbl_1_bss_3F0[2].bmpData, lbl_1_bss_3F0[2].sizeX, lbl_1_bss_3F0[2].sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&sp10, GX_TEXMAP0);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -460,7 +460,7 @@ void fn_1_3594(ModelData *model, Mtx mtx)
     GXPosition3f32(-1000.0f, -70.0f, 1000.0f);
     GXEnd();
     fn_1_32DC(&lbl_1_bss_3F0[2], GX_FALSE);
-    GXInitTexObj(&sp10, lbl_1_bss_3F0[3].unk0, lbl_1_bss_3F0[3].unk8, lbl_1_bss_3F0[3].unkA, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp10, lbl_1_bss_3F0[3].bmpData, lbl_1_bss_3F0[3].sizeX, lbl_1_bss_3F0[3].sizeY, GX_TF_RGB565, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXLoadTexObj(&sp10, GX_TEXMAP0);
     GXSetZMode(GX_TRUE, GX_GREATER, GX_FALSE);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
@@ -508,15 +508,15 @@ void fn_1_3CC8(ModelData *model, Mtx mtx)
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
-    GXSetScissor(0, 0, lbl_1_bss_3F0[0].unk8, lbl_1_bss_3F0[0].unkA);
+    GXSetScissor(0, 0, lbl_1_bss_3F0[0].sizeX, lbl_1_bss_3F0[0].sizeY);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_U16, 0);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
     GXPosition2u16(0, 0);
-    GXPosition2u16(lbl_1_bss_3F0[0].unk8, 0);
-    GXPosition2u16(lbl_1_bss_3F0[0].unk8, lbl_1_bss_3F0[0].unkA);
-    GXPosition2u16(0, lbl_1_bss_3F0[0].unkA);
+    GXPosition2u16(lbl_1_bss_3F0[0].sizeX, 0);
+    GXPosition2u16(lbl_1_bss_3F0[0].sizeX, lbl_1_bss_3F0[0].sizeY);
+    GXPosition2u16(0, lbl_1_bss_3F0[0].sizeY);
     GXEnd();
     GXSetNumTexGens(1);
     GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY);
