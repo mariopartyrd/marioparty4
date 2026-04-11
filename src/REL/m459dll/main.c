@@ -1669,6 +1669,9 @@ s32 fn_1_5310(void)
         lbl_1_bss_4C.unk_10 = lbl_1_bss_4C.unk_0C;
         lbl_1_bss_4C.unk_14 = 1;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 M459DllData70Struct lbl_1_data_70 = { { 0.0f, 300.0f, 0.0f }, { 0.0f, -300.0f, -600.0f }, { 0xFF, 0xFF, 0xFF, 0xFF } };
@@ -1948,9 +1951,9 @@ void fn_1_5E3C(M459DllBss18Struct *arg0)
 void fn_1_5EAC(void)
 {
     M459DllBss7CStruct *var_r31;
-    s32 var_r30;
+    intptr_t var_r30;
 
-    var_r30 = (s32)HuPrcCurrentGet()->user_data;
+    var_r30 = (intptr_t)HuPrcCurrentGet()->user_data;
     var_r31 = &lbl_1_bss_7C[var_r30];
     var_r31->unk_00 = var_r30;
     var_r31->unk_04 = 0;

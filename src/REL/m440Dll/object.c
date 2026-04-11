@@ -1048,6 +1048,9 @@ s32 fn_1_ED88(omObjData *arg0, s16 arg1, u32 arg2)
     if ((var_r29 != arg0->motion[arg1]) && (var_r28 != arg0->motion[arg1])) {
         Hu3DMotionShiftSet(arg0->model[0], arg0->motion[arg1], 0.0f, 7.0f, arg2);
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_EE78(void)

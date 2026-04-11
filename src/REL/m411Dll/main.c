@@ -557,6 +557,9 @@ s32 fn_1_1520(void)
     }
     var_r23 = HuPrcChildCreate(fn_1_4BB0, 0x2000, 0x2000, 0, HuPrcCurrentGet());
     var_r23->user_data = var_r30;
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 s32 fn_1_1C4C(void)
@@ -636,6 +639,9 @@ s32 fn_1_1C4C(void)
     Hu3DModelShadowSet(var_r31);
     var_r26 = HuPrcChildCreate(fn_1_5384, 0x2000, 0x2000, 0, HuPrcCurrentGet());
     var_r26->user_data = var_r30;
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 s32 fn_1_20C8(void)
@@ -720,6 +726,9 @@ s32 fn_1_20C8(void)
     Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
     var_r26 = HuPrcChildCreate(fn_1_5910, 0x2000, 0x2000, 0, HuPrcCurrentGet());
     var_r26->user_data = var_r31;
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 ParticleHook lbl_1_data_30C[] = { fn_1_3A60, fn_1_3A9C, fn_1_3AD8, fn_1_3B14 };
@@ -1514,9 +1523,9 @@ void fn_1_5384(void)
 void fn_1_544C(void)
 {
     UnkBss138InnerStruct00 *temp_r31;
-    s32 temp_r30;
+    intptr_t temp_r30;
 
-    temp_r30 = (s32)HuPrcCurrentGet()->user_data;
+    temp_r30 = (intptr_t)HuPrcCurrentGet()->user_data;
     temp_r31 = &lbl_1_bss_138.unk1C[temp_r30 + 2];
     switch (temp_r30) {
         case 0:

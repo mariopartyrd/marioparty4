@@ -1621,13 +1621,13 @@ void fn_1_9988(s32 arg0)
             var_r29 = var_r31 / (60*REFRESH_RATE);
             var_r31 -= var_r29 * (60*REFRESH_RATE);
             sprintf(lbl_1_bss_120, "%d", var_r29);
-            fn_1_1BB4C((u32)&lbl_1_bss_120, 0);
+            fn_1_1BB4C((uintptr_t)&lbl_1_bss_120, 0);
             var_r30 = var_r31 / (10*REFRESH_RATE);
             var_r31 -= var_r30 * (10*REFRESH_RATE);
             var_r29 = var_r31 / REFRESH_RATE;
             var_r31 -= var_r29 * REFRESH_RATE;
             sprintf(lbl_1_bss_118, "%d%d", var_r30, var_r29);
-            fn_1_1BB4C((u32)lbl_1_bss_118, 1);
+            fn_1_1BB4C((uintptr_t)lbl_1_bss_118, 1);
             if (arg0 == 8) {
                 var_r31 = (101.5/REFRESH_RATE) * (float)var_r31;
             }
@@ -1638,11 +1638,11 @@ void fn_1_9988(s32 arg0)
             var_r31 -= var_r30 * 0xA;
             var_r29 = var_r31;
             sprintf(lbl_1_bss_110, "%d%d", var_r30, var_r29);
-            fn_1_1BB4C((u32)lbl_1_bss_110, 2);
+            fn_1_1BB4C((uintptr_t)lbl_1_bss_110, 2);
         }
         else {
             sprintf(lbl_1_bss_110, "%d", mgRecordExtra);
-            fn_1_1BB4C((u32)lbl_1_bss_110, 0);
+            fn_1_1BB4C((uintptr_t)lbl_1_bss_110, 0);
         }
         HuAudFXPlay(0x4A);
         fn_1_25C4(lbl_1_bss_2D8[1].unk_00, 1, 3, 0xF, 1);

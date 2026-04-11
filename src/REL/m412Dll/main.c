@@ -111,7 +111,7 @@ void *fn_1_6EC(f32 arg8, f32 arg9, f32 argA, s32 arg0)
     sp8.x = arg8;
     sp8.y = arg9;
     sp8.z = argA;
-    return (void *)HuAudFXEmiterPlay(arg0, &sp8);
+    return (void *)(intptr_t)HuAudFXEmiterPlay(arg0, &sp8);
 }
 
 void fn_1_73C(void)

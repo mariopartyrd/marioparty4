@@ -781,6 +781,9 @@ s32 fn_1_28E8(void) {
         lbl_1_bss_10 = 3;
         lbl_1_bss_C = 30;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 s32 lbl_1_data_26C = -1;
@@ -2474,6 +2477,9 @@ s32 fn_1_B1F4(omObjData* arg0) {
             }
             break;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_B828(StructBss9C* arg0) {

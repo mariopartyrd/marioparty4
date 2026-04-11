@@ -530,6 +530,9 @@ s32 fn_1_1128(Vec *arg0)
             arg0->z = lbl_1_data_76B0[i][1] + (130.0f * sp20[1]);
         }
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 float lbl_1_data_7708[3][2][2] = { -99.8, -1431.8, 77.2, -1437.8, -1499.8, -4571.8, -1322.8, -4577.8, 1300.2, -4571.8, 1477.2, -4577.8 };
@@ -585,6 +588,9 @@ s32 fn_1_16B0(Vec *arg0)
             }
         }
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 float fn_1_1C54(s32 arg0, Vec *arg1, Vec *arg2)

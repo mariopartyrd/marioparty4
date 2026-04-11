@@ -4557,6 +4557,9 @@ s32 fn_1_F574(Vec arg0, float arg1, s32 arg2)
         var_r31->unk0C = frandmod(360);
         var_r31->unk14 = arg0;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_F690(void)

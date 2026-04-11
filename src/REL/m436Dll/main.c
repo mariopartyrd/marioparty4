@@ -1564,6 +1564,7 @@ s32 fn_1_62C4(omObjData *arg0)
             }
             break;
     }
+    // TODO PC
 }
 
 void fn_1_68E8(omObjData *arg0)
@@ -2802,6 +2803,9 @@ s32 fn_1_E628(void)
     else {
         fn_1_11D74(&lbl_1_bss_A8);
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_E680(void)

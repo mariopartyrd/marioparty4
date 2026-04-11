@@ -696,7 +696,7 @@ void *fn_1_50A8(s32 arg0)
     return lbl_1_bss_728[i];
 }
 
-void fn_1_5148(u32 sp8)
+void fn_1_5148(intptr_t sp8)
 {
     s32 i;
 

@@ -3501,7 +3501,7 @@ omObjData *fn_2_FC40(s16 arg0, Vec *arg1, Vec *arg2, Vec *arg3)
     omObjData *temp_r22;
     temp_r22 = omAddObjEx(HuPrcCurrentGet(), 1140, 0, 0, -1, fn_2_FF98);
     temp_r30 = fn_2_DEBC(arg0);
-    temp_r22->work[0] = (u32)temp_r30;
+    temp_r22->work[0] = (uintptr_t)temp_r30;
     fn_2_E420(temp_r30, arg1, arg2);
     fn_2_E66C(temp_r30, arg3);
     fn_2_E69C(temp_r30, 90.0f, 0.045999996f);

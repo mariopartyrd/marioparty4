@@ -108,7 +108,6 @@ void fn_1_7CA0(Vec, Vec, f32, Vec *);
 void fn_1_8924(u8, u8);
 void fn_1_8AA8(s32, s32);
 s32 fn_1_8C78(s32, s32);
-s32 fn_1_907C(Vec *, Vec *);
 
 void fn_1_2720(Process *arg0)
 {
@@ -1767,7 +1766,7 @@ s32 fn_1_8C78(s32 arg0, s32 arg1)
     return arg1;
 }
 
-s32 fn_1_907C(Vec *arg0, Vec *arg1)
+intptr_t fn_1_907C(Vec *arg0, Vec *arg1)
 {
     Vec sp10;
     f32 temp_f29;
@@ -1801,5 +1800,5 @@ s32 fn_1_907C(Vec *arg0, Vec *arg1)
         arg1->x = 600.0f * sp10.x;
         arg1->z = 600.0f * sp10.z;
     }
-    return (s32)arg0;
+    return (intptr_t)arg0;
 }

@@ -602,7 +602,7 @@ void fn_1_5868(omObjData *object)
         BoardModelMotionTimeSet(lbl_1_bss_BC[temp_r31->unk8], 0);
         BoardModelAttrReset(lbl_1_bss_BC[temp_r31->unk8], 0x40000002);
         BoardPlayerMotionShiftSet(lbl_1_bss_86, object->motion[1], 0, 5, HU3D_MOTATTR_NONE);
-        lbl_1_bss_A4->work[3] |= 1 << temp_r31->unk8;
+        lbl_1_bss_A4->work[3] |= (uintptr_t)1 << temp_r31->unk8;
         temp_r31->unk0 = 5;
         temp_r31->unk4 = 0;
         sp8.x = object->trans.x;

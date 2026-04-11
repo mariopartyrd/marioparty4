@@ -677,6 +677,9 @@ s32 fn_1_2178(omObjData *object)
             }
             break;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_2894(omObjData *object)
@@ -2317,6 +2320,9 @@ s32 fn_1_88B4(s32 arg0)
         var_r27->unk0->rot.y = 0.0f;
     }
     fn_1_B034(&lbl_1_bss_20, var_r29);
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_89B0(s32 arg0)

@@ -674,6 +674,7 @@ static s32 WalkMiniEvent(void)
         RoundItemEvent();
     }
     BoardRollDispSet(1);
+    // TODO PC
 }
 
 static void UpdateHostDisp(void)

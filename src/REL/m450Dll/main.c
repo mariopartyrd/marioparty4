@@ -6231,6 +6231,9 @@ s32 fn_1_1B4C8(UnkM450Struct5 *arg0)
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         lbl_1_bss_B8[var_r31] = -1;
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_1B510(s32 sp8)

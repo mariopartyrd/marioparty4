@@ -296,7 +296,11 @@ void HuPrcCall(s32 tick)
 #else
                 // memory_block->magic
                 if (((u8 *)(processcur->heap))[4] != 165) {
+#ifdef TARGET_PC
+                    printf("stack overlap error.(process pointer %p)\n", processcur);
+#else
                     printf("stack overlap error.(process pointer %x)\n", processcur);
+#endif
                     while (1)
                         ;
                 }

@@ -58,7 +58,9 @@ void HuPadInit(void)
     BOOL int_level;
     PADSetSpec(PAD_SPEC_5);
     PADInit();
+#ifndef TARGET_PC
     SISetSamplingRate(0);
+#endif
     int_level = OSDisableInterrupts();
     VISetPostRetraceCallback(PadReadVSync);
     OSRestoreInterrupts(int_level);

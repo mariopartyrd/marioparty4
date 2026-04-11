@@ -460,6 +460,7 @@ s32 fn_1_1128(void)
     }
 
     BoardRollDispSet(1);
+    // TODO PC
 }
 
 void fn_1_121C(u32 mesg)

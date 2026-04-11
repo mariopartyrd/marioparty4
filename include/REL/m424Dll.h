@@ -44,7 +44,7 @@ void fn_1_2720(Process *);
 void fn_1_2880(void);
 Vec *fn_1_8A00(u8);
 s32 fn_1_8A2C(void);
-s32 fn_1_907C(Vec *arg0, Vec *arg1);
+intptr_t fn_1_907C(Vec *arg0, Vec *arg1);
 omObjData *fn_1_93F0(Process *);
 void fn_1_94A4(void);
 s32 fn_1_B804(void);

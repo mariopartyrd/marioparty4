@@ -2071,6 +2071,10 @@ s32 fn_1_ADDC(WorkBomhei2 *parent, WorkBomhei2 *bomhei)
     }
     bomhei->unk2C = atan2d(bomhei->unk14.x - bomhei->unk8.x, bomhei->unk14.z - bomhei->unk8.z);
     bomhei->unk30 = bomhei->unk2C;
+
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_B234(omObjData *obj)

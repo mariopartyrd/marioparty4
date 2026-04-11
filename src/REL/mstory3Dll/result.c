@@ -373,6 +373,7 @@ s32 fn_1_16924(void) {
         }
         lbl_1_bss_1A0C.unk10 = fn_1_1834(-1, 1);
     }
+    // TODO PC return value
 }
 
 void fn_1_16AD4(void) {

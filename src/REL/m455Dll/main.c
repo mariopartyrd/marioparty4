@@ -448,7 +448,7 @@ float lbl_1_data_154[4] = { -350, -170, 170, 350 };
 float lbl_1_data_164[3] = { 1.5f, 1.0f, 0.5f };
 
 float fn_1_2390(float arg0, float arg1, float arg2);
-s32 fn_1_24F0(Vec *arg0, Vec *arg1, float arg2);
+void fn_1_24F0(Vec *arg0, Vec *arg1, float arg2);
 
 void fn_1_1444(omObjData *object)
 {
@@ -723,7 +723,7 @@ float fn_1_2494(float arg0, float arg1, float arg2, float arg3)
     return (arg0 * (temp_f31 * temp_f31)) + ((2.0f * temp_f31) * arg3 * arg1) + (arg2 * (arg3 * arg3));
 }
 
-s32 fn_1_24F0(Vec *arg0, Vec *arg1, float arg2)
+void fn_1_24F0(Vec *arg0, Vec *arg1, float arg2)
 {
     arg1->x = fn_1_2494(arg0[0].x, arg0[1].x, arg0[2].x, arg2);
     arg1->y = fn_1_2494(arg0[0].y, arg0[1].y, arg0[2].y, arg2);

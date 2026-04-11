@@ -8,7 +8,6 @@
 
 #include "ext_math.h"
 
-void fn_1_8F7C(void *arg0);
 void fn_1_910C(void);
 void fn_1_9158(UnkM447Struct_01 *arg0);
 void fn_1_9320(UnkM447Struct_01 *arg0);
@@ -68,11 +67,13 @@ UnkM447Struct_01 *fn_1_8DF8(void)
     return temp_r3;
 }
 
+#ifndef NON_MATCHING
 void fn_1_8F7C(void *arg0)
 {
     fn_1_8F7C(arg0);
     HuMemDirectFree(arg0);
 }
+#endif
 
 void fn_1_8FF4(UnkM447Struct_01 *arg0, s32 arg1)
 {

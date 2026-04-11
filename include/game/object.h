@@ -60,7 +60,7 @@ typedef struct om_obj_data {
 /* 0x40 */ s16 *model;
 /* 0x44 */ u16 mtncnt;
 /* 0x48 */ s16 *motion;
-/* 0x4C */ u32 work[4];
+/* 0x4C */ uintptr_t work[4];
 /* 0x5C */ void *data;
 } omObjData;
 

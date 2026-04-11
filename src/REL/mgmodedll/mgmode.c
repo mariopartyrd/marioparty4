@@ -520,6 +520,9 @@ exit:
     while (!Hu3DMotionEndCheck(lbl_1_bss_2C80[9])) {
         HuPrcVSleep();
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 s32 fn_1_21C4(void)
@@ -610,6 +613,9 @@ exit:
     while (!Hu3DMotionEndCheck(lbl_1_bss_2C80[9])) {
         HuPrcVSleep();
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 s32 fn_1_2940(void)
@@ -708,6 +714,9 @@ exit:
     while (!Hu3DMotionEndCheck(lbl_1_bss_2C80[9])) {
         HuPrcVSleep();
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 s32 fn_1_3150(void)
@@ -799,6 +808,9 @@ exit:
     while (!Hu3DMotionEndCheck(lbl_1_bss_2C80[9])) {
         HuPrcVSleep();
     }
+#ifdef NON_MATCHING
+    return 0;
+#endif
 }
 
 void fn_1_38D8(void)

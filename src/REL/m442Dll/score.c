@@ -3,7 +3,7 @@
 
 #include "REL/m442Dll.h"
 
-s32 fn_1_9520(s32 arg0);
+void fn_1_9520(s32 arg0);
 void fn_1_9550(omObjData *object);
 void fn_1_970C(void);
 void fn_1_9784(void);
@@ -28,7 +28,7 @@ typedef struct M442ScoreWork {
     /* 0x20 */ float unk_20;
 } M442ScoreWork; /* size = 0x24 */
 
-s32 fn_1_91AC(Process *arg0, s16 arg1)
+void fn_1_91AC(Process *arg0, s16 arg1)
 {
     M442ScoreWork *var_r31;
     u32 var_r30;
@@ -58,7 +58,7 @@ s32 fn_1_91AC(Process *arg0, s16 arg1)
         espDispOff(var_r31->unk_0C[var_r30]);
     }
     HuDataDirClose(DATADIR_MGCONST);
-    return fn_1_9520(0);
+    fn_1_9520(0);
 }
 
 void fn_1_9438(void)
@@ -92,7 +92,7 @@ void fn_1_94FC(void)
     fn_1_9520(0);
 }
 
-s32 fn_1_9520(s32 arg0)
+void fn_1_9520(s32 arg0)
 {
     M442ScoreWork *var_r31;
 
