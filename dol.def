@@ -494,6 +494,7 @@ EXPORTS
     GXInitSpecularDir
     GXInitTexObj
     GXInitTexObjCI
+    GXInitTexObjData
     GXInitTexObjLOD
     GXInitTlutObj
     GXLoadLightObjImm

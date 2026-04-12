@@ -608,9 +608,8 @@ void fn_1_1A60(unkStruct3 *arg0)
 #ifdef TARGET_PC
     AnimTexData *tex_data = canvas_bmp->texData;
     if (tex_data->tex_initialized) {
-        OSReport("Canvas texture cleared\n");
-        GXDestroyTexObj(&tex_data->tex_obj);
-        tex_data->tex_initialized = FALSE;
+        // Refresh the image data because the function modifies it
+        GXInitTexObjData(&tex_data->tex_obj, canvas_bmp_data);
     }
 #endif
 }

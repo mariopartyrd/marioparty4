@@ -1900,7 +1900,7 @@ void lightSet(LightData* lightP, s16 lightBit, Mtx *cameraMtx, Mtx *cameraMtxXPo
 
 void Hu3DReflectMapSet(AnimData* arg0) {
 #ifndef BYTESWAPPING
-    // this causes anim to be reallocated, so we lose the old allocation
+    // TODO PC this causes anim to be reallocated, so we lose the old allocation
     if (reflectAnim[0] != (AnimData*) refMapData0) {
         HuMemDirectFree(reflectAnim[0]);
     }
