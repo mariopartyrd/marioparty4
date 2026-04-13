@@ -525,12 +525,6 @@ void omMain(void)
             object = &obj_all[obj_index];
             obj_index = object->prev;
 
-// TODO PC I tried this to avoid an issue in the if logic, but it wasn't the right fix, it borked the minigame room completely
-// #ifdef NON_MATCHING
-//             if (obj_index == -1) {
-//                 break;
-//             }
-// #endif
             if ((object->stat & (OM_STAT_DELETED | OM_STAT_DISABLED)) == 0) {
                 if (object->func != NULL && (object->stat & (0x40 | 0x8 | OM_STAT_PAUSED)) == 0) {
                     object->func(object);
@@ -538,6 +532,12 @@ void omMain(void)
                 if (omcurovl == -1 || objman->obj_last == -1) {
                     break;
                 }
+// TODO PC is this the right fix? Not letting the obj func run in this case breaks lots of the game, but is it fine here?
+#ifdef NON_MATCHING
+                if (obj_index == -1) {
+                    break;
+                }
+#endif
                 if ((object->stat & (OM_STAT_DELETED | OM_STAT_DISABLED)) == 0) {
                     if ((obj_all[obj_index].stat & (OM_STAT_DELETED | OM_STAT_DISABLED)) != 0) {
                         obj_index = object->prev;
