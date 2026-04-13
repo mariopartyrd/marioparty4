@@ -453,8 +453,13 @@ void fn_1_9DC8(unkSubStruct2 *arg0)
         }
         else {
             var_r31 = var_r28->unk54;
-
+#ifdef NON_MATCHING
+            // They free var_r28 and the for loop tries to access unk33 afterwards
+            u8 count = var_r28->unk33;
+            for (var_r26 = 0; var_r26 < count; var_r26++, var_r31++) {
+#else
             for (var_r26 = 0; var_r26 < var_r28->unk33; var_r26++, var_r31++) {
+#endif
                 temp_r30 = &lbl_1_bss_36C.unk3C[arg0->unk34[var_r26]];
                 var_r31->unk24 &= ~4;
                 switch (var_r31->unk24 & 0xF) {
@@ -681,7 +686,7 @@ void fn_1_A800(s16 arg0)
             for (var_r30 = 0; var_r30 < temp_r31->unk4; var_r30++) {
                 fn_1_AF48(temp_r31->unk34[var_r30]);
             }
-            HuMemDirectFree(temp_r31->unk3C);
+            HuMemDirectFree(temp_r31->unk3C); // TODO PC this is used in fn_1_9DC8 after being freed
             HuMemDirectFree(temp_r31->unk34);
             temp_r31->unk8 = 0;
         }
