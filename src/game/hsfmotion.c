@@ -451,7 +451,7 @@ void Hu3DMotionNoMotSet(s16 arg0, char *arg1, u32 arg2)
 
     temp_r3 = Hu3DModelObjPtrGet(arg0, arg1);
     if (temp_r3->constData == 0) {
-        var_r29 = ObjConstantMake(temp_r3, (u32)Hu3DData[arg0].unk_48);
+        var_r29 = ObjConstantMake(temp_r3, Hu3DData[arg0].unk_48);
     }
     else {
         var_r29 = temp_r3->constData;
@@ -494,7 +494,7 @@ void Hu3DMotionForceSet(s16 arg0, char *arg1, u32 arg2, float arg3)
 
     temp_r3 = Hu3DModelObjPtrGet(arg0, arg1);
     if (temp_r3->constData == 0) {
-        var_r29 = ObjConstantMake(temp_r3, (u32)Hu3DData[arg0].unk_48);
+        var_r29 = ObjConstantMake(temp_r3, Hu3DData[arg0].unk_48);
     }
     else {
         var_r29 = temp_r3->constData;
@@ -1064,7 +1064,7 @@ void SetObjAttrMotion(s16 arg0, HsfTrack *arg1, float arg2)
         case 0x21:
         case 0x43:
             if (temp_r30->animWorkP == 0) {
-                var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfdrawStruct01), (u32)Hu3DData[arg0].unk_48);
+                var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HsfdrawStruct01), Hu3DData[arg0].unk_48);
                 temp_r30->animWorkP = var_r31;
                 var_r31->attr = 0;
                 var_r31->unk08 = var_r31->unk0C = var_r31->unk10 = 0.0f;

@@ -2752,7 +2752,7 @@ static void MDObjMesh(HsfData *arg0, HsfObject *arg1)
     }
 }
 
-HsfConstData *ObjConstantMake(HsfObject *arg0, u32 arg1)
+HsfConstData *ObjConstantMake(HsfObject *arg0, uintptr_t arg1)
 {
     HsfConstData *temp_r3;
 
