@@ -152,7 +152,7 @@ void fn_1_4650(omObjData *object)
 {
     M433DllMapWork2 *work;
 
-    work = fn_1_72D4(0x190);
+    work = fn_1_72D4(sizeof(M433DllMapWork2));
     object->data = work;
     work->unk_148 = work->unk_144 = 0.0f;
     work->unk_140 = 1.0f;
@@ -428,10 +428,10 @@ void fn_1_5558(s32 arg0, M433DllUnkStruct3 *arg1)
     var_r31 = Hu3DData[arg0].hsfData;
     lbl_1_bss_12C = arg1;
     lbl_1_bss_12C->unk_00 = 0;
-    lbl_1_bss_12C->unk_04 = fn_1_72D4(0x1000);
+    lbl_1_bss_12C->unk_04 = fn_1_72D4(256 * sizeof(M433DllUnkStruct2));
     lbl_1_bss_128 = lbl_1_bss_12C->unk_04;
     fn_1_5CCC(var_r31, var_r31->root);
-    var_r30 = lbl_1_bss_12C->unk_00 * 0x10;
+    var_r30 = lbl_1_bss_12C->unk_00 * sizeof(M433DllUnkStruct2);
     lbl_1_bss_128 = lbl_1_bss_12C->unk_04;
     lbl_1_bss_12C->unk_04 = fn_1_72D4(var_r30);
     memcpy(lbl_1_bss_12C->unk_04, lbl_1_bss_128, var_r30);
@@ -731,7 +731,7 @@ s16 fn_1_71AC(s32 arg0, s16 arg1, ParticleHook hook)
     var_r28 = Hu3DParticleCreate(var_r25, arg1);
     Hu3DParticleHookSet(var_r28, hook);
     var_r30 = Hu3DData[var_r28].unk_120;
-    var_r27 = fn_1_72D4(0x48);
+    var_r27 = fn_1_72D4(sizeof(M433DllUnkStruct));
     var_r30->unk_1C = var_r27;
     var_r27->unk_04 = 0;
     var_r31 = var_r30->unk_48;
