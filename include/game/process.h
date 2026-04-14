@@ -36,7 +36,7 @@ typedef struct process {
     void (*dtor)(void);
     union {
         void *user_data;
-        volatile u32 user_data_u32;
+        volatile uintptr_t user_data_u32;
     };
 } Process;
 
