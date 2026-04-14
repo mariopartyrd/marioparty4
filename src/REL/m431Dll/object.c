@@ -44,9 +44,7 @@ void fn_1_B384(Process *objman);
 
 void fn_1_7ABC(Process *objman)
 {
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
+    Vec sp8[3];
     Bss12CStruct *temp_r31;
     s16 temp_r30;
     s16 temp_r29;
@@ -85,17 +83,17 @@ void fn_1_7ABC(Process *objman)
     lbl_1_bss_12C[0].unkC.z = lbl_1_bss_12C[1].unkC.z = 100;
     lbl_1_bss_12C[0].unk18 = lbl_1_bss_12C[1].unk18 = 230;
     for (temp_r30 = 0, temp_r31 = &lbl_1_bss_12C[0]; temp_r30 < 2; temp_r30++, temp_r31++) {
-        sp8.x = temp_r31->unkC.x;
-        sp8.y = temp_r31->unkC.y;
-        sp8.z = temp_r31->unkC.z;
+        sp8[0].x = temp_r31->unkC.x;
+        sp8[0].y = temp_r31->unkC.y;
+        sp8[0].z = temp_r31->unkC.z;
         for (temp_r29 = 0; temp_r29 < 10; temp_r29++) {
-            sp14.x = sp20.x = (temp_r31->unk18 * sind(lbl_1_bss_62C[temp_r29].unk4)) + sp8.x;
-            sp14.z = sp20.z = (temp_r31->unk18 * cosd(lbl_1_bss_62C[temp_r29].unk4)) + sp8.z;
-            sp14.y = sp8.y;
-            sp20.y = sp8.y - 50;
-            fn_1_6184(&sp8, &temp_r31->unk1C[temp_r29]);
-            temp_r31->unkE4[temp_r29][0] = sp14.x;
-            temp_r31->unkE4[temp_r29][1] = sp14.z;
+            sp8[1].x = sp8[2].x = (temp_r31->unk18 * sind(lbl_1_bss_62C[temp_r29].unk4)) + sp8[0].x;
+            sp8[1].z = sp8[2].z = (temp_r31->unk18 * cosd(lbl_1_bss_62C[temp_r29].unk4)) + sp8[0].z;
+            sp8[1].y = sp8[0].y;
+            sp8[2].y = sp8[0].y - 50;
+            fn_1_6184(sp8, &temp_r31->unk1C[temp_r29]);
+            temp_r31->unkE4[temp_r29][0] = sp8[1].x;
+            temp_r31->unkE4[temp_r29][1] = sp8[1].z;
         }
         temp_r31->unk138[0] = 0;
     }

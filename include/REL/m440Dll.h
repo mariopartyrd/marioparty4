@@ -187,6 +187,15 @@ typedef struct _unkStruct14 {
     s16 unk3C;
 } unkStruct14;
 
+typedef struct _unkStruct15 {
+    s32 unk0;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s32 unkC;
+} unkStruct15;
+
 // object.c
 typedef struct _unkObjStruct {
     s32 unk0;

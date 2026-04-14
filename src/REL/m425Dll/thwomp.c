@@ -1547,8 +1547,8 @@ void fn_1_D9A8(M425DllUnkStruct4 *var_r31, ModelData *var_r24, s32 var_r30, s32 
     s32 var_r27;
 
     var_r31->unk_208[var_r30] = var_r26 * var_r25;
-    var_r31->unk_1A4[var_r30] = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_208[var_r30] * 0xA, var_r24->unk_48);
-    memset(var_r31->unk_1A4[var_r30], 0, var_r31->unk_208[var_r30] * 0xA);
+    var_r31->unk_1A4[var_r30] = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_208[var_r30] * 10, var_r24->unk_48);
+    memset(var_r31->unk_1A4[var_r30], 0, var_r31->unk_208[var_r30] * 10);
     var_r29 = var_r31->unk_1A4[var_r30];
     for (var_r28 = 0; var_r28 < var_r25; var_r28++) {
         for (var_r27 = 0; var_r27 < var_r26; var_r27++) {
@@ -1559,7 +1559,7 @@ void fn_1_D9A8(M425DllUnkStruct4 *var_r31, ModelData *var_r24, s32 var_r30, s32 
             var_r29 += 5;
         }
     }
-    DCFlushRangeNoSync(var_r31->unk_1A4[var_r30], var_r31->unk_208[var_r30] * 0xA);
+    DCFlushRangeNoSync(var_r31->unk_1A4[var_r30], var_r31->unk_208[var_r30] * 10);
     PPCSync();
 }
 

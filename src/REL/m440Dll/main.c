@@ -166,11 +166,11 @@ s32 fn_1_6C8(void)
 void fn_1_8F0(omObjData *arg0)
 {
     s16 var_r30;
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
     AnimData *anim;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10, MEMORY_DEFAULT_NUM);
-    temp_r31 = (unkStruct2 *)arg0->data;
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct15), MEMORY_DEFAULT_NUM);
+    temp_r31 = (unkStruct15 *)arg0->data;
     temp_r31->unk0 = 1;
     temp_r31->unk4 = -1;
     temp_r31->unk8 = -1;
@@ -196,7 +196,7 @@ void fn_1_8F0(omObjData *arg0)
 void fn_1_AE0(omObjData *arg0)
 {
     f32 temp_f31;
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
     temp_r31 = arg0->data;
     switch (fn_1_23E4(7)) {
@@ -302,7 +302,7 @@ u8 fn_1_E14(omObjData *arg0)
 
 u8 fn_1_1138(omObjData *object)
 {
-    unkStruct2 *sp8;
+    unkStruct15 *sp8;
     f32 var_f31;
     f32 var_f30;
     s16 temp_r29;
@@ -310,7 +310,7 @@ u8 fn_1_1138(omObjData *object)
     unkStruct3 *temp_r30;
     unkStruct *var_r31;
 
-    sp8 = (unkStruct2 *)lbl_1_bss_6C->data;
+    sp8 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r29 = fn_1_F0FC();
     temp_r30 = (unkStruct3 *)lbl_1_bss_C0[temp_r29]->data;
     switch (lbl_1_bss_6) {
@@ -369,17 +369,17 @@ u8 fn_1_1138(omObjData *object)
 
 void fn_1_16D8(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r31->unk6--;
 }
 
 void fn_1_1708(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk8 != -1) {
         MGSeqParamSet(temp_r31->unk8, 2, -1);
         temp_r31->unk8 = -1;
@@ -389,9 +389,9 @@ void fn_1_1708(void)
 
 void fn_1_1768(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk8 == -1) {
         temp_r31->unk6 = 5 * REFRESH_RATE;
         temp_r31->unk8 = MGSeqCreate(1, 5, -1, -1);
@@ -400,25 +400,25 @@ void fn_1_1768(void)
 
 s16 fn_1_17CC(void)
 {
-    unkStruct2 *var_r31;
+    unkStruct15 *var_r31;
 
-    var_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    var_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     return var_r31->unk6;
 }
 
 s16 fn_1_17F4(void)
 {
-    unkStruct2 *var_r31;
+    unkStruct15 *var_r31;
 
-    var_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    var_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     return var_r31->unk8;
 }
 
 void fn_1_181C(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk4 == -1) {
         temp_r31->unk4 = MGSeqCreate(3, 0);
         MGSeqPosSet(temp_r31->unk4, 320.0f, 240.0f);
@@ -427,9 +427,9 @@ void fn_1_181C(void)
 
 u8 fn_1_1890(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk4 != -1) {
         return MGSeqStatGet(temp_r31->unk4);
     }
@@ -440,9 +440,9 @@ u8 fn_1_1890(void)
 
 void fn_1_18E0(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r31->unk4 = MGSeqCreate(3, 1);
     MGSeqPosSet(temp_r31->unk4, 320.0f, 240.0f);
     HuAudSeqFadeOut(temp_r31->unkC, 0x64);
@@ -450,9 +450,9 @@ void fn_1_18E0(void)
 
 u8 fn_1_1954(void)
 {
-    unkStruct2 *sp8;
+    unkStruct15 *sp8;
 
-    sp8 = (unkStruct2 *)lbl_1_bss_6C->data;
+    sp8 = (unkStruct15 *)lbl_1_bss_6C->data;
     if ((lbl_1_bss_2 != 0) || (lbl_1_bss_1 != 0)) {
         return 0;
     }
@@ -571,9 +571,9 @@ void fn_1_2240(ModelData *data, unkStruct5 *arg1, Mtx arg2)
 
 u16 fn_1_23E4(u16 arg0)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (!temp_r31) {
         return 0;
     }
@@ -582,9 +582,9 @@ u16 fn_1_23E4(u16 arg0)
 
 void fn_1_2428(u16 arg0, u16 arg1)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r31->unk0 = (temp_r31->unk0 & ~arg0);
     temp_r31->unk0 = (temp_r31->unk0 | arg1);
 }
@@ -852,16 +852,16 @@ void fn_1_3DD8(omObjData *object)
     f32 var_f26;
     f32 var_f30;
     f32 var_f31;
-    unkStruct2 *var_r25;
+    unkStruct15 *var_r25;
     omObjData **var_r24;
     s16 var_r29;
     s16 var_r31;
     s32 var_r23;
-    s32 *var_r26;
+    unkStruct15 *var_r26;
     unkStruct2 *var_r28;
     s16 var_r27;
 
-    var_r25 = (unkStruct2 *)lbl_1_bss_6C->data;
+    var_r25 = (unkStruct15 *)lbl_1_bss_6C->data;
     sp8 = (unkStruct *)object->data;
     switch (lbl_1_data_EC[0]) {
         case 0:
@@ -949,8 +949,8 @@ void fn_1_3DD8(omObjData *object)
                 else {
                     fn_1_4EEC(7, 2);
                     var_r26 = lbl_1_bss_6C->data;
-                    var_r26[0] &= 0xFFFFFFF8;
-                    var_r26[0] |= 4;
+                    var_r26->unk0 &= 0xFFFFFFF8;
+                    var_r26->unk0 |= 4;
                 }
                 lbl_1_data_EC[0] = 0;
             }
