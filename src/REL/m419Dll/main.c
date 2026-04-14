@@ -251,7 +251,11 @@ void fn_1_57C(s16 arg0)
 void fn_1_848(ModelData *arg0, Mtx arg1)
 {
     Mtx44 sp10;
+#ifdef NON_MATCHING
+    GXColor spC = {0};
+#else
     GXColor spC;
+#endif
     s16 i;
 
     C_MTXOrtho(sp10, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 8000.0f);
@@ -2339,6 +2343,12 @@ void fn_1_B054(StructBss200 *arg0)
                 var_f31 = fn_1_21D4(atan2d(var_f30 - arg0->unk54, var_f29 - arg0->unk5C));
             }
             else {
+#ifdef TARGET_PC
+                // TODO PC, the value is slightly higher in the emulator
+                var_f29 = 0.0f;
+                var_f30 = 0.0f;
+                var_f31 = 0.0f;
+#endif
                 arg0->unkAC = 1;
             }
             break;
