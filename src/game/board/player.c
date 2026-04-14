@@ -3090,7 +3090,7 @@ void BoardPlayerCopyMat(s32 arg0)
     modelID = BoardModelIDGet(BoardPlayerModelGet(arg0));
     model = &Hu3DData[modelID];
     temp_r31 = model->hsfData;
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, temp_r31->materialCnt * 0x3C, MEMORY_DEFAULT_NUM);
-    memcpy(temp_r3, temp_r31->material, temp_r31->materialCnt * 0x3C);
+    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, temp_r31->materialCnt * sizeof(HsfMaterial), MEMORY_DEFAULT_NUM);
+    memcpy(temp_r3, temp_r31->material, temp_r31->materialCnt * sizeof(HsfMaterial));
     playerMatCopy[arg0] = temp_r3;
 }

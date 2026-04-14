@@ -1783,6 +1783,11 @@ static void MapAttrLoad(void)
 #endif
         for(i=0; i<head.mapAttr.count; i++, mapattr_file++, mapattr_new++) {
             mapattr_new->data = &data[(uintptr_t)mapattr_file->data];
+#ifdef BYTESWAPPING
+            for (int j = 0; j < mapattr_new->dataLen; j++) {
+                byteswap_u16(&mapattr_new->data[j]);
+            }
+#endif
         }
     }
 }

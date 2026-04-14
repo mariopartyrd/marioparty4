@@ -537,7 +537,7 @@ void fn_1_E88(omObjData *object)
     Hu3DMotionOverlaySet(object->model[0], object->motion[7]);
     CharModelVoiceEnableSet(var_r30->unk_10, object->motion[5], 0);
 #ifdef TARGET_PC
-    // TODO PC
+    // TODO PC is this solution good enough? we should check the values in the emulator
     if (var_r30->unk_02 > 3) {
         var_r30->unk_02 = 3;
     }
