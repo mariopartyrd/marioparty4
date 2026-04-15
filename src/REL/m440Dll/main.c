@@ -1475,7 +1475,7 @@ void fn_1_6554(unkStruct6 *arg0, HsfObject *arg1)
     HsfBuffer *temp_r26;
     s16 var_r28;
     s16 var_r29;
-    unkStruct10 *var_r30;
+    HsfFace *var_r30;
 
     temp_r26 = arg1->data.face;
 
@@ -1484,41 +1484,41 @@ void fn_1_6554(unkStruct6 *arg0, HsfObject *arg1)
         arg0->unk18[var_r28].y = 0.0f;
         arg0->unk18[var_r28].z = 0.0f;
     }
-    var_r30 = (unkStruct10 *)temp_r26->data;
+    var_r30 = (HsfFace *)temp_r26->data;
 
     for (var_r28 = 0; var_r28 < temp_r26->count; var_r28++, var_r30++) {
-        sp20[0] = ((Vec *)(arg1->data.vertex->data))[var_r30->unk4[0].unk0];
-        sp20[1] = ((Vec *)(arg1->data.vertex->data))[var_r30->unk4[1].unk0];
-        sp20[2] = ((Vec *)(arg1->data.vertex->data))[var_r30->unk4[2].unk0];
+        sp20[0] = ((Vec *)(arg1->data.vertex->data))[var_r30->indices[0][0]];
+        sp20[1] = ((Vec *)(arg1->data.vertex->data))[var_r30->indices[1][0]];
+        sp20[2] = ((Vec *)(arg1->data.vertex->data))[var_r30->indices[2][0]];
         fn_1_91A4(&sp20[0], &sp20[1], &sp20[2], spC);
         spC[0] = -spC[0];
         spC[1] = -spC[1];
         spC[2] = -spC[2];
-        switch (var_r30->unk0 & 7) {
+        switch (var_r30->type & 7) {
             case 2:
                 for (var_r29 = 0; var_r29 < 3; var_r29++) {
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].z += spC[2];
+                    arg0->unk18[var_r30->indices[var_r29][0]].x += spC[0];
+                    arg0->unk18[var_r30->indices[var_r29][0]].y += spC[1];
+                    arg0->unk18[var_r30->indices[var_r29][0]].z += spC[2];
                 }
                 break;
             case 3:
                 for (var_r29 = 0; var_r29 < 4; var_r29++) {
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].z += spC[2];
+                    arg0->unk18[var_r30->indices[var_r29][0]].x += spC[0];
+                    arg0->unk18[var_r30->indices[var_r29][0]].y += spC[1];
+                    arg0->unk18[var_r30->indices[var_r29][0]].z += spC[2];
                 }
                 break;
             case 4:
                 for (var_r29 = 0; var_r29 < 3; var_r29++) {
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].z += spC[2];
+                    arg0->unk18[var_r30->strip.indices[var_r29][0]].x += spC[0];
+                    arg0->unk18[var_r30->strip.indices[var_r29][0]].y += spC[1];
+                    arg0->unk18[var_r30->strip.indices[var_r29][0]].z += spC[2];
                 }
-                for (var_r29 = 0; var_r29 < var_r30->unk1C; var_r29++) {
-                    arg0->unk18[var_r30->unk20[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk20[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk20[var_r29].unk0].z += spC[2];
+                for (var_r29 = 0; var_r29 < var_r30->strip.count; var_r29++) {
+                    arg0->unk18[((s16(*)[4])var_r30->strip.data)[var_r29][0]].x += spC[0];
+                    arg0->unk18[((s16(*)[4])var_r30->strip.data)[var_r29][0]].y += spC[1];
+                    arg0->unk18[((s16(*)[4])var_r30->strip.data)[var_r29][0]].z += spC[2];
                 }
                 break;
         }
@@ -1544,7 +1544,7 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
     ModelData *var_r22;
     unkStruct8 *var_r31;
     unkStruct11 *temp_r26;
-    unkStruct10 *var_r29;
+    HsfFace *var_r29;
 
     var_r22 = &Hu3DData[arg0->unk0];
     temp_r25 = arg1->data.face;
@@ -1552,9 +1552,9 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
     arg0->unk20 = 0;
 
     var_r28 = 0;
-    var_r29 = (unkStruct10 *)temp_r25->data;
+    var_r29 = (HsfFace *)temp_r25->data;
     for (; var_r28 < temp_r25->count; var_r28++, var_r29++) {
-        switch (var_r29->unk0 & 7) {
+        switch (var_r29->type & 7) {
             case 2:
                 arg0->unk20 += 1;
                 break;
@@ -1562,7 +1562,7 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
                 arg0->unk20 += 2;
                 break;
             case 4:
-                arg0->unk20 += var_r29->unk1C + 1;
+                arg0->unk20 += var_r29->strip.count + 1;
                 break;
         }
     }
@@ -1576,13 +1576,13 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
     }
 
     var_r28 = 0;
-    var_r29 = (unkStruct10 *)temp_r25->data;
+    var_r29 = (HsfFace *)temp_r25->data;
     for (; var_r28 < temp_r25->count; var_r28++, var_r29++) {
-        switch (var_r29->unk0 & 7) {
+        switch (var_r29->type & 7) {
             case 2:
-                var_r31->unk0[0] = var_r29->unk4[0];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[1];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[0];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[1];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1592,9 +1592,9 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
                 var_r31++;
                 break;
             case 3:
-                var_r31->unk0[0] = var_r29->unk4[0];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[1];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[0];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[1];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1602,9 +1602,9 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
                 }
                 var_r31->unk1E = var_r30++;
                 var_r31++;
-                var_r31->unk0[0] = var_r29->unk4[1];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[3];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[1];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[3];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1614,9 +1614,9 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
                 var_r31++;
                 break;
             case 4:
-                var_r31->unk0[0] = var_r29->unk4[0];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[1];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[0];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[1];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1625,8 +1625,8 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
                 var_r31->unk1E = var_r30++;
                 var_r31++;
                 var_r28 = 0;
-                temp_r26 = var_r29->unk20;
-                for (; var_r28 < var_r29->unk1C; var_r28++) {
+                temp_r26 = (unkStruct11*)var_r29->strip.data;
+                for (; var_r28 < var_r29->strip.count; var_r28++) {
                     if (var_r28 == 0) {
                         var_r31->unk0[0] = var_r31->unk0[1];
                         var_r31->unk0[1] = var_r31->unk0[2];
@@ -1867,14 +1867,14 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     MTXInvXpose(arg1, sp14);
     GXLoadNrmMtxImm(sp14, 0);
     fn_1_8AC4(arg1);
-    sp10.r = (temp_r31->unk28->unkB[0] * arg0->unk_58.x);
-    sp10.g = (temp_r31->unk28->unkB[1] * arg0->unk_58.z);
-    sp10.b = (temp_r31->unk28->unkB[2] * arg0->unk_58.y);
+    sp10.r = (temp_r31->unk28->litColor[0] * arg0->unk_58.x);
+    sp10.g = (temp_r31->unk28->litColor[1] * arg0->unk_58.z);
+    sp10.b = (temp_r31->unk28->litColor[2] * arg0->unk_58.y);
     sp10.a = 0xFF;
     GXSetChanAmbColor(GX_COLOR0A0, sp10);
-    sp10.r = temp_r31->unk28->unkE[0];
-    sp10.g = temp_r31->unk28->unkE[1];
-    sp10.b = temp_r31->unk28->unkE[2];
+    sp10.r = temp_r31->unk28->color[0];
+    sp10.g = temp_r31->unk28->color[1];
+    sp10.b = temp_r31->unk28->color[2];
     sp10.a = 0xFF;
     GXSetChanMatColor(GX_COLOR0A0, sp10);
     GXClearVtxDesc();
@@ -1885,7 +1885,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
     GXSETARRAY(GX_VA_NRM, temp_r31->unk14, temp_r31->unk8 * sizeof(Vec), sizeof(Vec), TRUE);
     lbl_1_bss_C = temp_r31->unk3C;
-    if (temp_r31->unk28->unk34 == 0) {
+    if (temp_r31->unk28->numAttrs == 0) {
         GXSetNumTevStages(1);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
         GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ONE, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO);
@@ -1899,7 +1899,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, temp_r31->unk1C, sizeof(Vec2f), sizeof(Vec2f), TRUE); // TODO PC
-        temp_r29 = &temp_r31->unk2C[temp_r31->unk28->unk38[0]];
+        temp_r29 = &temp_r31->unk2C[temp_r31->unk28->attrs[0]];
         fn_1_7D60(temp_r29->bitmap, temp_r29, 0);
         lbl_1_bss_2C = 1;
         HuSprTexLoad(hiliteAnim[0], 0, lbl_1_bss_2C, GX_CLAMP, GX_CLAMP, GX_LINEAR);
@@ -1912,7 +1912,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXCallDisplayList(temp_r31->unk30, temp_r31->unk34);
 }
 
-void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
+void fn_1_8470(HsfMaterial *arg0, HsfAttribute *arg1)
 {
     ModelData sp40;
     Mtx sp10;
@@ -1928,13 +1928,13 @@ void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
     s32 var_r25;
 
     sp40.attr = 0x20000;
-    temp_r24 = arg0->unk30;
-    if ((arg0->unkA == 2) || (arg0->unkA == 3)) {
+    temp_r24 = arg0->flags;
+    if ((arg0->vtxMode == 2) || (arg0->vtxMode == 3)) {
         var_r27 = 1;
     }
     else {
         var_r27 = 0;
-        if ((arg0->unkA == 0) || (arg0->unkA == 5)) {
+        if ((arg0->vtxMode == 0) || (arg0->vtxMode == 5)) {
             var_r25 = 0;
         }
         else {
@@ -1974,7 +1974,7 @@ void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
             GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
             GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_APREV, GX_CA_A0, GX_CA_ZERO);
             GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
-            var_f31 = 6.0f * (arg0->unk14 / 300.0f);
+            var_f31 = 6.0f * (arg0->hilite_scale / 300.0f);
             if (var_f31 < 0.1) {
                 var_f31 = 0.1f;
             }
@@ -2001,7 +2001,7 @@ void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
             var_r31++;
         }
     }
-    else if (0.0f != arg0->unk1C) {
+    else if (0.0f != arg0->invAlpha) {
         GXSetTevOrder(var_r31, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
         GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_CPREV);
         GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -2012,7 +2012,7 @@ void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
     GXSetNumTexGens(var_r28);
     GXSetNumTevStages(var_r31);
     if (var_r27 != 0) {
-        var_f30 = arg0->unk14;
+        var_f30 = arg0->hilite_scale;
     }
     else {
         var_f30 = 0.0f;
@@ -2020,7 +2020,7 @@ void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
     temp_r29 = Hu3DLightSet(&sp40, &Hu3DCameraMtx, &Hu3DCameraMtxXPose, var_f30);
     if (var_r27 != 0) {
         GXSetNumChans(2);
-        if (arg0->unkA == 5) {
+        if (arg0->vtxMode == 5) {
             GXSetChanCtrl(GX_COLOR0A0, 1, GX_SRC_REG, GX_SRC_VTX, temp_r29, GX_DF_CLAMP, GX_AF_NONE);
             GXSetChanCtrl(GX_COLOR1A1, 1, GX_SRC_REG, GX_SRC_VTX, temp_r29, GX_DF_NONE, GX_AF_SPEC);
             return;
@@ -2030,7 +2030,7 @@ void fn_1_8470(unkStruct12 *arg0, HsfAttribute *arg1)
         return;
     }
     GXSetNumChans(1);
-    if (arg0->unkA == 5) {
+    if (arg0->vtxMode == 5) {
         GXSetChanCtrl(GX_COLOR0A0, var_r25, GX_SRC_REG, GX_SRC_REG, temp_r29, GX_DF_CLAMP, GX_AF_SPOT);
         return;
     }
@@ -2407,15 +2407,9 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     ROMtx spF8;
     Mtx spC8;
     Mtx sp98;
-    Mtx sp68;
-    Vec sp5C;
-    Vec sp50;
-    Vec sp44;
-    Vec sp38;
-    Vec sp2C;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
+    Vec sp68[4];
+    Vec sp38[4];
+    Vec sp8[4];
     Vec *var_r31;
     s16 temp_r0;
     u8 temp_r0_2;
@@ -2477,7 +2471,7 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     var_r29 = temp_r30->unk18;
     var_r31 = temp_r30->unk1C;
     var_r27 = temp_r30->unk20;
-    MTXROMultVecArray(spF8, &temp_r30->unk2C, (Vec *)&sp68[0], 4);
+    MTXROMultVecArray(spF8, &temp_r30->unk2C, sp68, 4);
 
     for (var_r26 = 0; var_r26 < temp_r30->unk0; var_r26++, var_r29++, var_r27 += 4) {
         if (var_r29->unk62 == 0) {
@@ -2492,21 +2486,21 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
         }
         else {
             if (0.0f == var_r29->unk44) {
-                fn_1_A328((Vec *)&sp68[0], &sp38, &var_r29->unk48, 4);
-                VECAdd(&sp38, &var_r29->unk54, var_r31++);
-                VECAdd(&sp44, &var_r29->unk54, var_r31++);
-                VECAdd(&sp50, &var_r29->unk54, var_r31++);
-                VECAdd(&sp5C, &var_r29->unk54, var_r31++);
+                fn_1_A328(sp68, sp38, &var_r29->unk48, 4);
+                VECAdd(&sp38[0], &var_r29->unk54, var_r31++);
+                VECAdd(&sp38[1], &var_r29->unk54, var_r31++);
+                VECAdd(&sp38[2], &var_r29->unk54, var_r31++);
+                VECAdd(&sp38[3], &var_r29->unk54, var_r31++);
             }
             else {
-                fn_1_A328(&temp_r30->unk2C, &sp38, &var_r29->unk48, 4);
+                fn_1_A328(&temp_r30->unk2C, sp38, &var_r29->unk48, 4);
                 MTXRotRad(spC8, 0x5A, 0.017453292f * var_r29->unk44);
                 MTXConcat(sp128, spC8, sp98);
-                MTXMultVecArray(sp98, &sp38, &sp8, 4);
-                VECAdd(&sp8, &var_r29->unk54, var_r31++);
-                VECAdd(&sp14, &var_r29->unk54, var_r31++);
-                VECAdd(&sp20, &var_r29->unk54, var_r31++);
-                VECAdd(&sp2C, &var_r29->unk54, var_r31++);
+                MTXMultVecArray(sp98, sp38, sp8, 4);
+                VECAdd(&sp8[0], &var_r29->unk54, var_r31++);
+                VECAdd(&sp8[1], &var_r29->unk54, var_r31++);
+                VECAdd(&sp8[2], &var_r29->unk54, var_r31++);
+                VECAdd(&sp8[3], &var_r29->unk54, var_r31++);
             }
             if (var_r29->unk60 != -1) {
                 fn_1_A284(var_r27, temp_r30->unk5C, var_r29->unk60, temp_r30->unk60, temp_r30->unk64);

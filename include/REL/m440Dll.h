@@ -143,30 +143,6 @@ typedef struct _unkStruct8 {
     Vec unkC4;
 } unkStruct8; // sizeof 0xD0
 
-typedef struct _unkStruct10 {
-    s16 unk0;
-    s16 unk2;
-    unkStruct11 unk4[3];
-    u32 unk1C;
-    unkStruct11 *unk20;
-    char unk24[0xC];
-} unkStruct10; // sizeof 0x30
-
-typedef struct _unkStruct12 {
-    char unk0[0xA];
-    u8 unkA;
-    u8 unkB[3];
-    u8 unkE[3];
-    char unk12[0x2];
-    float unk14;
-    char unk18[0x4];
-    float unk1C;
-    char unk20[0x10];
-    u32 unk30;
-    u32 unk34;
-    s32 *unk38;
-} unkStruct12;
-
 typedef struct _unkStruct14 {
     s16 unk0;
     s16 unk2;
@@ -179,7 +155,7 @@ typedef struct _unkStruct14 {
     void *unk1C;
     char unk20[0x4];
     GXColor *unk24;
-    unkStruct12 *unk28;
+    HsfMaterial *unk28;
     HsfAttribute *unk2C;
     void *unk30;
     u32 unk34;
@@ -302,7 +278,7 @@ void fn_1_71FC(unkStruct6 *, Vec *, s16, Vec);
 void fn_1_7934(unkStruct6 *, unkStruct8 *, Vec *);
 void fn_1_7D60(HsfBitmap *, HsfAttribute *, s16);
 void fn_1_806C(ModelData *, Mtx);
-void fn_1_8470(unkStruct12 *, HsfAttribute *);
+void fn_1_8470(HsfMaterial *, HsfAttribute *);
 void fn_1_8AC4(Mtx);
 void fn_1_8D1C(void);
 void fn_1_91A4(Vec *, Vec *, Vec *, float[5]);
