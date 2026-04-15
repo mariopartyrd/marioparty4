@@ -24,7 +24,7 @@ typedef struct UnkM406PlayerStruct {
 } UnkM406PlayerStruct; /* size = 0x08 */
 
 typedef struct UnkM406PlayerStruct2 {
-    /* 0x00 */ Vec *unk_00;
+    /* 0x00 */ HsfFace *unk_00;
     /* 0x04 */ HsfFace *unk_04;
     /* 0x08 */ s16 unk_08;
 } UnkM406PlayerStruct2; /* size = 0x0C */
@@ -780,8 +780,8 @@ void fn_1_F194(omObjData *object)
         sp44.x = 0.0f;
         sp44.y = -0.27222222f;
         sp44.z = 0.0f;
-        var_f28 = 0.27222222f * var_r31->unk_44.unk_00[3].y;
-        VECScale(&var_r31->unk_44.unk_00[3], &sp38, var_f28);
+        var_f28 = 0.27222222f * var_r31->unk_44.unk_00->nbt.y;
+        VECScale(&var_r31->unk_44.unk_00->nbt, &sp38, var_f28);
         VECAdd(&sp44, &sp38, &sp2C);
         VECAdd(&var_r31->unk_2C, &sp2C, &var_r31->unk_2C);
         sp20.x = sp20.y = sp20.z = 0.0f;
@@ -858,11 +858,11 @@ void fn_1_F694(omObjData *object)
         sp2C.y = var_r31->unk_2C.y;
         sp2C.z = var_r31->unk_2C.z;
 
-        var_f30 = -((var_r31->unk_44.unk_00[3].z * sp2C.z) + ((var_r31->unk_44.unk_00[3].x * sp2C.x) + (var_r31->unk_44.unk_00[3].y * sp2C.y)));
+        var_f30 = -((var_r31->unk_44.unk_00->nbt.z * sp2C.z) + ((var_r31->unk_44.unk_00->nbt.x * sp2C.x) + (var_r31->unk_44.unk_00->nbt.y * sp2C.y)));
 
-        sp2C.x += var_f30 * var_r31->unk_44.unk_00[3].x;
-        sp2C.y += var_f30 * var_r31->unk_44.unk_00[3].y;
-        sp2C.z += var_f30 * var_r31->unk_44.unk_00[3].z;
+        sp2C.x += var_f30 * var_r31->unk_44.unk_00->nbt.x;
+        sp2C.y += var_f30 * var_r31->unk_44.unk_00->nbt.y;
+        sp2C.z += var_f30 * var_r31->unk_44.unk_00->nbt.z;
         if (!var_r31->unk_00_field3) {
             fn_1_117BC(var_r31->unk_14.x, 1.0f, &var_r31->unk_44, &sp20);
             VECNormalize(&sp2C, &sp14);
@@ -1374,7 +1374,7 @@ void fn_1_117BC(float arg8, float arg9, UnkM406PlayerStruct2 *arg0, Vec *arg1)
         arg1->x = arg1->y = arg1->z = 0.0f;
         return;
     }
-    var_r31 = &arg0->unk_00[3];
+    var_r31 = &arg0->unk_00->nbt;
     sp10.x = var_r31->y * sind((180.0f + arg8));
     sp10.z = var_r31->y * cosd((180.0f + arg8));
     var_f30 = 1.0f - (var_r31->y * var_r31->y);
@@ -1902,7 +1902,7 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     if (var_r21 >= 6) {
 #ifdef NON_MATCHING
         // TODO PC is this right?
-        return (s32)(uintptr_t)var_r20;
+        return 1;
 #else
         return;
 #endif
@@ -1912,7 +1912,7 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     var_r27 = var_r19->hsfData->root;
     if (var_r27->type != 2) {
 #ifdef NON_MATCHING
-        return (s32)(uintptr_t)var_r20;
+        return 1;
 #else
         return;
 #endif
@@ -2048,6 +2048,10 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
     ModelData *var_r22;
     s32 var_r21;
 
+#ifdef NON_MATCHING
+    sp8 = -5.0f; // TODO PC is this right?
+#endif
+
     arg1->unk_00 = NULL;
     var_r23 = omGetGroupMemberListEx(lbl_1_bss_1C8, 2);
     var_r27 = arg0->z / -10000.0f;
@@ -2087,7 +2091,7 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
             }
             var_f30 = (var_r31->nbt.z * sp34[0]->z) + ((var_r31->nbt.x * sp34[0]->x) + (var_r31->nbt.y * sp34[0]->y));
             var_f31 = ((var_f30 - (var_r31->nbt.x * arg0->x)) - (var_r31->nbt.z * arg0->z)) / var_r31->nbt.y;
-            arg1->unk_00 = (Vec *)var_r31;
+            arg1->unk_00 = var_r31;
             arg1->unk_08 = (var_r31->mat & 0xFFF) == lbl_1_bss_1D0[var_r27] ? 1 : 0;
             return var_f31;
         }

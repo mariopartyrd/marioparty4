@@ -989,6 +989,10 @@ void fn_1_BBD0(omObjData *object)
     s32 var_r21;
     s32 var_r20;
 
+#ifdef NON_MATCHING
+    var_r20 = 0;
+#endif
+
     var_r31 = object->data;
     var_r29 = &lbl_1_bss_2AC[var_r31->unk_02];
     var_r22 = var_r31->unk_04 ^ 1;

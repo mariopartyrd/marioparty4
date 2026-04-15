@@ -1289,7 +1289,7 @@ void fn_1_4964(ModelData *arg0)
                 var_r26 = (frand() & 0x1F) + 0xE0;
                 sp3C.r = 0.96f * var_r26;
                 sp3C.g = 0.98f * var_r26;
-                sp3C.b = (float)var_r26;
+                sp3C.b = 1.0f * var_r26;
                 sp3C.a = 0xFF;
                 if (frand() & 1) {
                     var_f31 = 0.05f;
