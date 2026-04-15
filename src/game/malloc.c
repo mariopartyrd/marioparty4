@@ -12,7 +12,7 @@ void HuMemInitAll(void)
     u32 free_size;
     for(i=0; i<4; i++) {
 #ifdef TARGET_PC
-        HeapSizeTbl[i] *= 2;
+        HeapSizeTbl[i] *= 4;
 #endif
         ptr = OSAlloc(HeapSizeTbl[i]);
         if(ptr == NULL) {

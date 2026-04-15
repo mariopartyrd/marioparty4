@@ -511,7 +511,9 @@ void fn_1_6180(M430DllWork *work)
         var_r30->unk2C = 0.0f;
         var_r30->unk40.a = 0;
     }
+#ifndef TARGET_PC
     DCStoreRange(var_r30, sizeof(HsfanimStruct01));
+#endif
 }
 
 void fn_1_6540(M430DllWork *work)
