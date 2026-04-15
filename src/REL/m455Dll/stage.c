@@ -356,7 +356,11 @@ void fn_1_4180(ModelData *model, Mtx matrix)
     Work347CUnk74 *workUnk74 = &work2->unk74[0];
     Work347CUnk4 *workUnk4 = &work2->unk4[0];
     s32 i;
+#ifdef NON_MATCHING
+    Mtx44 proj;
+#else
     Mtx proj;
+#endif
     Mtx modelview;
     MTXOrtho(proj, 0, 480, 0, 640, 0, 100);
     GXSetProjection(proj, GX_ORTHOGRAPHIC);

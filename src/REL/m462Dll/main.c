@@ -1281,6 +1281,9 @@ s32 fn_1_65D0(StructBss340 *arg0)
     float var_f31;
     float var_f30;
     s32 sp8; // ! - uninitialized
+#ifdef NON_MATCHING
+    sp8 = 1952805376;
+#endif
 
     var_f31 = fn_1_1534(arg0->unk4C.z, arg0->unk84);
     var_f30 = fn_1_1534(arg0->unk4C.x, arg0->unk84);
