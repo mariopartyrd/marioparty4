@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
@@ -80,7 +81,7 @@ void ObjectSetup(void)
     lbl_1_bss_54 = GWMGAvailGet(var_r30 + 0x191);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 15000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     CRot.x = 0.0f;
     CRot.y = 0.0f;
     CRot.z = 0.0f;

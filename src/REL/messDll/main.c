@@ -1,4 +1,5 @@
 #include "REL/executor.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/object.h"
@@ -36,7 +37,7 @@ void ObjectSetup(void)
     CZoom = 500.0f;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 45.0f, 20.0f, 15000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     lbl_1_bss_30 = omAddObjEx(lbl_1_bss_34, 0, 0x40, 0, -1, fn_1_2BC);
     lbl_1_bss_2C = omAddObjEx(lbl_1_bss_34, 0x7FDA, 0, 0, -1, omOutView);
     HuWinInit(1);

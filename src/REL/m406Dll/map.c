@@ -1,5 +1,6 @@
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -2650,7 +2651,7 @@ void fn_1_ADB4(ModelData *arg0, float (*arg1)[4])
         return;
     }
     GXSetScissor(var_r31->scissor_x, var_r31->scissor_y, var_r31->scissor_w, var_r31->scissor_h);
-    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    GXSetViewport(0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     C_MTXOrtho(sp10, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f);
     GXSetProjection(sp10, GX_ORTHOGRAPHIC);
     spC.a = 255.0f * var_r30->unk_28;

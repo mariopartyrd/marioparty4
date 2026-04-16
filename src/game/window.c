@@ -293,8 +293,8 @@ s16 HuWinCreate(float x, float y, s16 w, s16 h, s16 frame)
     window->w = w;
     window->h = h;
     window->scissor_x = window->scissor_y = 0;
-    window->scissor_w = 0x280;
-    window->scissor_h = 0x1E0;
+    window->scissor_w = HU_FB_WIDTH;
+    window->scissor_h = HU_FB_HEIGHT;
     window->tab_w = 24;
     window->push_key = 0x300;
 #if !VERSION_JP

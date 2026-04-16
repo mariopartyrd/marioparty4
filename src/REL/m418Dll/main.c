@@ -1,5 +1,6 @@
 #include "ext_math.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
@@ -174,7 +175,7 @@ void fn_1_500(void)
 {
     M418DllUnkStruct *var_r31;
     Hu3DCameraCreate(1);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 40.0f, 0.1f, 17500.0f, 1.2f);
     var_r31 = &lbl_1_bss_1F4;
     var_r31->unk0 = fn_1_74;

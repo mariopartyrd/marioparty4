@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #define HUSPR_USE_OLD_DEFS
 #include "game/chrman.h"
 #include "game/gamework_data.h"
@@ -50,7 +51,7 @@ void ObjectSetup(void)
 
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 45.0f, 20.0f, 20000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
 
     lbl_1_bss_9A4 = omAddObjEx(prc, 0, 0x20, 0x20, -1, fn_1_29C);
     lbl_1_bss_9A0 = omAddObjEx(prc, 0x7FDA, 0, 0, -1, omOutView);
@@ -756,17 +757,17 @@ void fn_1_2B68(ModelData *mdl, Mtx arg1)
     f32 var_f27; // ! - uninitialized
 
     if (!lbl_1_bss_30[0]) {
-        lbl_1_bss_30[0] = HuMemDirectMallocNum(HEAP_SYSTEM, FB_SIZE(640, 480), MEMORY_DEFAULT_NUM);
+        lbl_1_bss_30[0] = HuMemDirectMallocNum(HEAP_SYSTEM, FB_SIZE(HU_FB_WIDTHF, HU_FB_HEIGHT), MEMORY_DEFAULT_NUM);
     }
 
-    GXSetTexCopySrc(0, 0, 640, 480);
-    GXSetTexCopyDst(640, 480, GX_TF_RGB565, GX_FALSE);
+    GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+    GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB565, GX_FALSE);
     GXCopyTex(lbl_1_bss_30[0], GX_FALSE);
-    DCFlushRangeNoSync(lbl_1_bss_30[0], FB_SIZE(640, 480));
+    DCFlushRangeNoSync(lbl_1_bss_30[0], FB_SIZE(HU_FB_WIDTH, HU_FB_HEIGHT));
     C_MTXOrtho(sp50, 0.0f, 480.0f, 0.0f, 576.0f, 0.0f, 10.0f);
     GXSetProjection(sp50, GX_ORTHOGRAPHIC);
-    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    GXSetScissor(0, 0, 640, 480);
+    GXSetViewport(0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    GXSetScissor(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     GXInvalidateTexAll();
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -806,7 +807,7 @@ void fn_1_2B68(ModelData *mdl, Mtx arg1)
     HuSprTexLoad(lbl_1_bss_454, 0, 1, GX_REPEAT, GX_REPEAT, GX_LINEAR);
 
     PPCSync();
-    GXInitTexObj(&sp30, lbl_1_bss_30[0], 0x280U, 0x1E0U, 4U, GX_CLAMP, GX_CLAMP, 0U);
+    GXInitTexObj(&sp30, lbl_1_bss_30[0], 640, 480, 4U, GX_CLAMP, GX_CLAMP, 0U);
     GXInitTexObjLOD(&sp30, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0U, 0U, GX_ANISO_1);
     GXLoadTexObj(&sp30, GX_TEXMAP0);
     GXSetNumIndStages(1U);

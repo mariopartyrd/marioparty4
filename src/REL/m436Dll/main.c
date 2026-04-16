@@ -1,6 +1,7 @@
 #include "REL/m436Dll.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
@@ -288,7 +289,7 @@ void fn_1_8C4(omObjData *arg0)
 void fn_1_F6C(void)
 {
     Hu3DCameraCreate(1);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 45.0f, 0.1f, 10000.0f, 1.2f);
     fn_1_8A4(fn_1_818);
     omAddObjEx(lbl_1_bss_0, 0x7FDA, 0, 0, -1, omOutView);

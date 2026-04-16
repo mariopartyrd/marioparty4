@@ -1154,8 +1154,8 @@ void BoardCameraInit(void)
     camera->aspect = HU_DISP_ASPECT;
     camera->viewport_x = 0;
     camera->viewport_y = 0;
-    camera->viewport_h = 480;
-    camera->viewport_w = 640;
+    camera->viewport_h = HU_FB_HEIGHT;
+    camera->viewport_w = HU_FB_WIDTH;
     camera->viewport_near = 0;
     camera->viewport_far = 1;
     camera->up.y = 1;

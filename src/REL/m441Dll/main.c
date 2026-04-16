@@ -1,5 +1,6 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
@@ -2062,7 +2063,7 @@ void ObjectSetup(void)
     lbl_1_bss_4 = 0;
     lbl_1_bss_8 = 2100;
     lbl_1_bss_0 = 1200;
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     Hu3DCameraPerspectiveSet(1, 30, 20, 20000, 1.2);
     fn_1_1350(&lbl_1_data_10, &lbl_1_data_1C, &lbl_1_data_28);
 

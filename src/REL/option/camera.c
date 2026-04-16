@@ -1,4 +1,5 @@
 #include "REL/option.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/memory.h"
 #include "game/pad.h"
@@ -61,7 +62,7 @@ omObjData *OptionCameraCreate(void)
     work->timeEye = 1.0f;
     work->timeRot = 1.0f;
     Hu3DCameraCreate(1);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 42.0f, 10.0f, 8000.0f, 1.2f);
     OptionCameraViewSet(object, 600.0f, 60.0f, 120.0f, 1);
     OptionCameraTargetSet(object, 180.0f, 120.0f, 0.0f, 1);

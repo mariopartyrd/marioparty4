@@ -1,5 +1,6 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework.h"
 #include "game/minigame_seq.h"
@@ -2268,7 +2269,7 @@ void ObjectSetup(void)
     lbl_1_bss_200 = 0;
     lbl_1_bss_1FC = GWMGRecordGet(13);
     lbl_1_bss_1EC = -1;
-    Hu3DCameraViewportSet(HU3D_CAM0, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(HU3D_CAM0, 0, 0, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0, 1);
     Hu3DCameraPerspectiveSet(HU3D_CAM0, 30, 20, 30000, 1.2f);
     fn_1_1350(&lbl_1_data_A0, &lbl_1_data_AC, &lbl_1_data_B8);
     light = Hu3DGLightCreateV(&lbl_1_data_E8, &lbl_1_data_F4, &lbl_1_data_100);

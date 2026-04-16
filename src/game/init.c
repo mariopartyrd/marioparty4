@@ -1,4 +1,5 @@
 #include "game/init.h"
+#include "game/disp.h"
 #include "game/memory.h"
 #include "game/fault.h"
 #include "game/sreset.h"
@@ -70,7 +71,7 @@ void HuSysInit(GXRenderModeObj *mode)
     InitMem();
     VIConfigure(RenderMode);
     #if VERSION_NTSC
-    VIConfigurePan(0, 0, 640, 480);
+    VIConfigurePan(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     #endif
     DefaultFifo = OSAlloc(0x100000);
     DefaultFifoObj = GXInit(DefaultFifo, 0x100000);

@@ -1,6 +1,7 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/flag.h"
 #include "game/frand.h"
@@ -1818,7 +1819,7 @@ void ObjectSetup(void)
     lbl_1_bss_1D0 = lbl_1_data_10;
     lbl_1_bss_1B8 = lbl_1_data_28;
     Hu3DReflectNoSet(0);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 20000.0f, 1.2f);
     fn_1_1350(&lbl_1_data_10, &lbl_1_data_1C, &lbl_1_data_28);
     lbl_1_bss_38 = 180.0f;

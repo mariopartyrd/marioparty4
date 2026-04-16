@@ -13,6 +13,13 @@
 #define HU_DISP_CENTERY (HU_DISP_HEIGHTF/2)
 
 #define HU_FB_WIDTH 640
+#define HU_FB_WIDTHF ((float)HU_FB_WIDTH)
 #define HU_FB_HEIGHT 480
+#define HU_FB_HEIGHTF ((float)HU_FB_HEIGHT)
+
+#define HU_FB_CENTERXI (HU_FB_WIDTH/2)
+#define HU_FB_CENTERX (HU_FB_WIDTHF/2)
+#define HU_FB_CENTERYI (HU_FB_HEIGHT/2)
+#define HU_FB_CENTERY (HU_FB_HEIGHTF/2)
 
 #endif

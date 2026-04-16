@@ -1,5 +1,6 @@
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfdraw.h"
 #include "game/hsfmotion.h"
 #include "game/sprite.h"
@@ -314,7 +315,7 @@ void fn_1_3D58(omObjData *object)
         DCFlushRange(lbl_1_bss_178.unk_6E0[var_r31], lbl_1_bss_178.unk_6DC);
         lbl_1_bss_178.unk_6E8[var_r31] = 0;
     }
-    lbl_1_bss_178.unk_6F0 = GXGetTexBufferSize(640, 480, 5, GX_FALSE, 0);
+    lbl_1_bss_178.unk_6F0 = GXGetTexBufferSize(HU_FB_WIDTH, HU_FB_HEIGHT, 5, GX_FALSE, 0);
     lbl_1_bss_178.bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_178.unk_6F0, MEMORY_DEFAULT_NUM);
     DCFlushRange(lbl_1_bss_178.bmpData, lbl_1_bss_178.unk_6F0);
     lbl_1_bss_178.unk_6B8 = 30.0f;
@@ -875,8 +876,8 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
 
 void fn_1_6B04(ModelData *model, Mtx arg1)
 {
-    GXSetTexCopySrc(0, 0, 640, 480);
-    GXSetTexCopyDst(640, 480, GX_TF_RGB5A3, GX_FALSE);
+    GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+    GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB5A3, GX_FALSE);
     GXCopyTex(lbl_1_bss_178.bmpData, GX_FALSE);
     GXPixModeSync();
 }

@@ -1,5 +1,6 @@
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
@@ -79,7 +80,7 @@ void fn_1_7A74(omObjData *object)
     }
     object->model[1] = Hu3DHookFuncCreate(fn_1_89BC);
     Hu3DModelLayerSet(object->model[1], 1);
-    lbl_1_bss_1184 = GXGetTexBufferSize(640, 480, GX_TF_RGBA8, GX_FALSE, 0);
+    lbl_1_bss_1184 = GXGetTexBufferSize(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGBA8, GX_FALSE, 0);
     lbl_1_bss_1180 = HuMemDirectMallocNum(HEAP_DATA, lbl_1_bss_1184, MEMORY_DEFAULT_NUM);
     memset(lbl_1_bss_1180, 0, lbl_1_bss_1184);
     object->func = fn_1_7D74;
@@ -226,8 +227,8 @@ void fn_1_83B4(omObjData *object)
 
 void fn_1_8904(void *arg0, u8 arg1)
 {
-    GXSetTexCopySrc(0, 0, 640, 480);
-    GXSetTexCopyDst(640, 480, GX_TF_RGBA8, GX_FALSE);
+    GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+    GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGBA8, GX_FALSE);
     GXSetCopyClear(BGColor, 0xFFFFFF);
     GXCopyTex(arg0, arg1);
     DCFlushRange(arg0, lbl_1_bss_1184);

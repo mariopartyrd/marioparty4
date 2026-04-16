@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #include "version.h"
 #define HUSPR_USE_OLD_DEFS
 #include "ext_math.h"
@@ -240,7 +241,7 @@ void ObjectSetup(void)
     omGameSysInit(var_r31);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 25000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     lbl_1_bss_11F38 = omAddObjEx(var_r31, 0x7FDA, 0, 0, -1, omOutView);
     lbl_1_bss_14.x = lbl_1_data_60.x - lbl_1_data_54.x;
     lbl_1_bss_14.y = lbl_1_data_60.y - lbl_1_data_54.y;
@@ -1374,8 +1375,8 @@ void fn_1_3E64(Process *arg0)
 void fn_1_3EBC(void) { }
 
 u16 lbl_1_data_18A[2][5] = {
-    { 0x280, 0x1E0, 0x280, 0x1E0, 0 },
-    { 0x280, 0x1E0, 0x280, 0x1E0, 0 },
+    { HU_FB_WIDTH, HU_FB_HEIGHT, HU_FB_WIDTH, HU_FB_HEIGHT, 0 },
+    { HU_FB_WIDTH, HU_FB_HEIGHT, HU_FB_WIDTH, HU_FB_HEIGHT, 0 },
 };
 
 s32 lbl_1_data_1A0[3] = { 0x490007, 0x490008, 0x490009 };

@@ -1,4 +1,5 @@
 #include "ext_math.h"
+#include "game/disp.h"
 #include "game/flag.h"
 #include "game/hsfman.h"
 #include "game/objsub.h"
@@ -23,7 +24,7 @@ float lbl_1_bss_30;
 
 s32 fn_1_D98(void)
 {
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 30.0f, 10.0f, 8000.0f, 1.2f);
     lbl_1_bss_8C.unk_00.x = 0.0f;
     lbl_1_bss_8C.unk_00.y = 0.0f;

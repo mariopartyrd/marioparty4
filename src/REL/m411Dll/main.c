@@ -2,6 +2,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
@@ -316,7 +317,7 @@ void ObjectSetup(void)
     Hu3DShadowPosSet(&sp24, &sp18, &spC);
     Hu3DBGColorSet(0, 0, 0);
     fn_1_25D0();
-    fn_1_8A80(640.0f, 480.0f);
+    fn_1_8A80(HU_FB_WIDTHF, HU_FB_HEIGHTF);
     HuPrcChildCreate(fn_1_AD58, 0x1000, 0x2000, 0, HuPrcCurrentGet());
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
 }
@@ -352,8 +353,8 @@ void fn_1_1074(void)
     var_r31 = &Hu3DCamera[0];
     C_MTXPerspective(sp64, var_r31->fov, var_r31->aspect, var_r31->nnear, var_r31->ffar);
     GXSetProjection(sp64, GX_PERSPECTIVE);
-    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    GXSetScissor(0, 0, 640, 480);
+    GXSetViewport(0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    GXSetScissor(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_RGBA6, 0);

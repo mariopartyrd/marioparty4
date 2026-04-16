@@ -4,6 +4,7 @@
 #include "game/EnvelopeExec.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/frand.h"
 #include "game/hsfdraw.h"
@@ -84,7 +85,7 @@ void ObjectSetup(void)
     CZoom = 1500.0f;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, -1.0f, 5.0f, 10000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTH, HU_FB_HEIGHT, 0.0f, 1.0f);
     lbl_1_bss_364 = omAddObjEx(temp_r30, 0x7FDA, 0, 0, -1, omOutView);
     lbl_1_bss_368 = omAddObjEx(temp_r30, 0x10, 8, 0, -1, fn_1_43C);
     lbl_1_bss_35C = omAddObjEx(temp_r30, 0x20, 0x10, 0, -1, fn_1_15D0);

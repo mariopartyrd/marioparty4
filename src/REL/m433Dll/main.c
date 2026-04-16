@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
 #include "game/hsfman.h"
@@ -94,7 +95,7 @@ void ObjectSetup(void)
     omGameSysInit(var_r31);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, -1.0f, 10.0f, 10000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     lbl_1_bss_20 = omAddObjEx(var_r31, 0x7FDA, 0, 0, -1, omOutView);
     lbl_1_bss_24 = omAddObjEx(var_r31, 0xA, 0, 0, -1, fn_1_4C0);
     fn_1_2894(var_r31);

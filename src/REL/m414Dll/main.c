@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
@@ -192,12 +193,12 @@ void ObjectSetup(void)
     Hu3DCameraViewportSet(2, 322.0f, 20.0f, 309.0f, 219.0f, 0.0f, 1.0f);
     Hu3DCameraViewportSet(4, 10.0f, 242.0f, 309.0f, 219.0f, 0.0f, 1.0f);
     Hu3DCameraViewportSet(8, 322.0f, 242.0f, 309.0f, 219.0f, 0.0f, 1.0f);
-    Hu3DCameraViewportSet(16, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(16, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraScissorSet(1, 10, 20, 309, 219);
     Hu3DCameraScissorSet(2, 322, 20, 309, 219);
     Hu3DCameraScissorSet(4, 10, 242, 309, 219);
     Hu3DCameraScissorSet(8, 322, 242, 309, 219);
-    Hu3DCameraScissorSet(16, 0, 0, 640, 480);
+    Hu3DCameraScissorSet(16, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     lbl_1_bss_24 = omAddObjEx(var_r29, 32730, 0, 0, -1, fn_1_91C);
     lbl_1_bss_24->work[0] = 4;
 

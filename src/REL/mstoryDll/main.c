@@ -1,4 +1,5 @@
 #include "REL/mstoryDll.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 
 #ifndef __MWERKS__
@@ -552,7 +553,7 @@ void fn_1_2730(omObjData* arg0) {
 
 void fn_1_27E8(Process* arg0, void (*arg1)(void)) {
     Hu3DCameraCreate(1);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTH, HU_FB_HEIGHT, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 42.0f, 0.1f, 10000.0f, 1.2f);
     lbl_1_bss_4.unk00 = arg1;
     lbl_1_bss_4.unk04 = fn_1_2350;

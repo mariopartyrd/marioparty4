@@ -1,4 +1,5 @@
 #include "ext_math.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/pad.h"
 #include "game/printfunc.h"
@@ -55,7 +56,7 @@ omObjData *PresentCameraCreate(void)
     work->timeTarget = 1.0f;
     work->timeEye = 1.0f;
     work->timeRot = 1.0f;
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 42.0f, 10.0f, 8000.0f, 1.2f);
     PresentCameraFocusSet(object, 0.0f, 0.0f, -600.0f, 1);
     PresentCameraTargetSet(object, 0.0f, 220.0f, 250.0f, 1);

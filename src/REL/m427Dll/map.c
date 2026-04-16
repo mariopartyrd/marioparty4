@@ -7,6 +7,7 @@
 #include "ext_math.h"
 #include "game/animdata.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -781,8 +782,8 @@ void fn_1_4D7C(ModelData *arg0, Mtx arg1)
     spC.z = cosd(temp_f30) * sind(temp_f31);
     Hu3DCameraPosSetV(1, &sp24, &spC, &sp18);
     if (lbl_1_bss_98.unk30) {
-        GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
-        GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGB5A3, 0);
+        GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+        GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB5A3, 0);
         GXCopyTex(lbl_1_bss_98.unk30, 1);
     }
 }
@@ -790,8 +791,8 @@ void fn_1_4D7C(ModelData *arg0, Mtx arg1)
 void fn_1_50A0(ModelData *arg0, Mtx arg1)
 {
     if (lbl_1_bss_98.unk28) {
-        GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
-        GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGB5A3, 0);
+        GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+        GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB5A3, 0);
         GXCopyTex(lbl_1_bss_98.unk28, 0);
     }
 }
@@ -821,9 +822,9 @@ void fn_1_510C(s32 arg0, s16 arg1, s16 arg2)
     Hu3DModelCameraSet(var_r29, 1);
     Hu3DModelLayerSet(var_r29, 4);
     var_r31->unk38 = var_r31->unk3C = 0.0f;
-    var_r31->unk34 = GXGetTexBufferSize(0x280, 0x1E0, 5, 0, 0);
+    var_r31->unk34 = GXGetTexBufferSize(HU_FB_WIDTH, HU_FB_HEIGHT, 5, 0, 0);
     var_r31->unk30 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk34, temp_r28->unk_48);
-    var_r31->unk2C = GXGetTexBufferSize(0x280, 0x1E0, 5, 0, 0);
+    var_r31->unk2C = GXGetTexBufferSize(HU_FB_WIDTH, HU_FB_HEIGHT, 5, 0, 0);
     var_r31->unk28 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk2C, temp_r28->unk_48);
     var_r31->unk16 = arg1 + 1;
     var_r31->unk18 = arg2 + 1;
@@ -1013,10 +1014,10 @@ void fn_1_618C(ModelData *arg0, Mtx arg1)
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_TEX_ST, GX_RGBA8, 0);
     GXSETARRAY(GX_VA_CLR0, var_r31->unk10, var_r31->unk14 * 3 * sizeof(GXColor), sizeof(GXColor), TRUE);
-    GXInitTexObj(&sp14, var_r31->unk30, 0x280, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+    GXInitTexObj(&sp14, var_r31->unk30, 640, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     GXInitTexObjLOD(&sp14, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&sp14, GX_TEXMAP0);
-    GXInitTexObj(&sp14, var_r31->unk28, 0x280, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+    GXInitTexObj(&sp14, var_r31->unk28, 640, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     GXInitTexObjLOD(&sp14, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&sp14, GX_TEXMAP1);
     HuSprTexLoad(var_r30->unk_00, 0, 2, GX_REPEAT, GX_REPEAT, GX_LINEAR);
@@ -2352,10 +2353,10 @@ void fn_1_B3CC(ModelData *model, Mtx matrix)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSETARRAY(GX_VA_TEX0, var_r31->unk_30, var_r31->unk_38 * sizeof(Vec2f), sizeof(Vec2f), TRUE);
     if (var_r31->unk_00 == 0) {
-        GXInitTexObj(&sp44, var_r27->bmpData, 0x140, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+        GXInitTexObj(&sp44, var_r27->bmpData, 320, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     }
     else {
-        GXInitTexObj(&sp44, var_r27->bmpData, 0x140, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+        GXInitTexObj(&sp44, var_r27->bmpData, 320, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     }
     GXInitTexObjLOD(&sp44, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&sp44, GX_TEXMAP0);

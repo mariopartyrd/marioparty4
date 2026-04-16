@@ -1,6 +1,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
@@ -4347,7 +4348,7 @@ s32 fn_1_E678(void)
     memset(var_r30->unk210, 0, 32 * sizeof(*var_r30->unk210));
     var_r30->unk214 = HuMemDirectMallocNum(HEAP_DATA, 5 * sizeof(*var_r30->unk214), temp_r27->unk_48);
     memset(var_r30->unk214, 0, 5 * sizeof(*var_r30->unk214));
-    var_r30->unk204 = GXGetTexBufferSize(640, 480, GX_TF_RGB5A3, GX_FALSE, 0);
+    var_r30->unk204 = GXGetTexBufferSize(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB5A3, GX_FALSE, 0);
     var_r30->bmpData = HuMemDirectMallocNum(HEAP_DATA, var_r30->unk204, temp_r27->unk_48);
     DCFlushRange(var_r30->bmpData, var_r30->unk204);
     var_r30->unk200 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M423, 23), MEMORY_DEFAULT_NUM));
@@ -4453,8 +4454,8 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     s32 i;
 
     temp_r30 = arg0->unk_120;
-    GXSetTexCopySrc(0, 0, 640, 480);
-    GXSetTexCopyDst(640, 480, GX_TF_RGB5A3, GX_FALSE);
+    GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+    GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB5A3, GX_FALSE);
     GXCopyTex(temp_r30->bmpData, GX_FALSE);
     GXPixModeSync();
     MTXTrans(spF4, -400.0f, 400.0f, -700.0f);
@@ -4753,12 +4754,12 @@ void fn_1_100DC(void)
     Hu3DCameraScissorSet(1, 0, 0, 320, 240);
     Hu3DCameraCreate(2);
     Hu3DCameraPerspectiveSet(2, 45.0f, 50.0f, 50000.0f, 1.2f);
-    Hu3DCameraViewportSet(2, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(2, 0, 0, 640, 480);
+    Hu3DCameraViewportSet(2, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    Hu3DCameraScissorSet(2, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     Hu3DCameraCreate(4);
     Hu3DCameraPerspectiveSet(4, 45.0f, 100.0f, 50000.0f, 1.2f);
-    Hu3DCameraViewportSet(4, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(4, 0, 0, 640, 480);
+    Hu3DCameraViewportSet(4, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    Hu3DCameraScissorSet(4, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     temp_r3 = lbl_1_bss_8C = omAddObjEx(lbl_1_bss_120, 0x7FDA, 0, 0, -1, omOutViewMulti);
     temp_r3->work[0] = 3;
     for (i = 0; i < temp_r3->work[0]; i++) {
@@ -4894,8 +4895,8 @@ void fn_1_10BC8(void)
     }
     C_MTXPerspective(sp64, var_r31->fov, var_r31->aspect, var_r31->nnear, var_r31->ffar);
     GXSetProjection(sp64, GX_PERSPECTIVE);
-    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    GXSetScissor(0, 0, 640, 480);
+    GXSetViewport(0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    GXSetScissor(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);

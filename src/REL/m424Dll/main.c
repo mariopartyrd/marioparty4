@@ -2,6 +2,7 @@
 
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
@@ -312,8 +313,8 @@ void fn_1_FF0(void) {
 
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 45.0f, 50.0f, 50000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(1, 0, 0, 0x280, 0x1E0);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    Hu3DCameraScissorSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     var_r31 = lbl_1_bss_14 = omAddObjEx(lbl_1_bss_4C, 0x7FDA, 0, 0, -1, omOutView);
     var_r31->work[0] = 1;
     CRot.x = lbl_1_data_0[0].rot.x;

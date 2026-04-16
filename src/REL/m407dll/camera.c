@@ -1,4 +1,5 @@
 #include "ext_math.h"
+#include "game/disp.h"
 #include "game/hsfdraw.h"
 #include "game/object.h"
 #include "game/process.h"
@@ -37,7 +38,7 @@ void fn_1_1B1C(Process *arg0)
     unkDominationData2 *unkData;
 
     lbl_1_bss_34 = arg0;
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 45.0f, 10.0f, 40000.0f, 1.2f);
     lbl_1_bss_30 = omAddObjEx(lbl_1_bss_34, 0x80, 0, 0, -1, fn_1_2024);
     lbl_1_bss_30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkDominationData2), MEMORY_DEFAULT_NUM);

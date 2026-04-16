@@ -1,4 +1,5 @@
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
@@ -125,7 +126,7 @@ void ObjectSetup(void)
     light->type |= 0x8000;
     Hu3DCameraCreate(1);
     camera = &Hu3DCamera[0];
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     lbl_2_bss_114 = omAddObjEx(lbl_2_bss_1C, 1000, 3, 0, -1, fn_2_BD90);
     lbl_2_bss_114->work[0] = 0;
     lbl_2_bss_110 = omAddObjEx(lbl_2_bss_1C, 10, 0, 0, -1, fn_2_70C);

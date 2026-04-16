@@ -1,5 +1,6 @@
 #include "game/objsub.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/object.h"
@@ -1201,7 +1202,7 @@ void omGameSysInit(Process *objman)
     omObjData *obj;
 
     omSystemKeyCheckSetup(objman);
-    Hu3DCameraScissorSet(1, 0, 0, 0x280, 0x1E0);
+    Hu3DCameraScissorSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     omSysPauseEnable(0);
 
     for (i = 0; i < 4; i++) {

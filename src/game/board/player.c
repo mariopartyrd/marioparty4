@@ -730,11 +730,13 @@ s32 BoardPlayerSizeGet(s32 idx)
     PlayerState *player;
 
     player = BoardPlayerGet(idx);
-#ifndef NON_MATCHING
     if (!player) {
+#ifdef NON_MATCHING
+        return 1;
+#else
         return;
-    }
 #endif
+    }
     return player->size;
 }
 
@@ -2158,7 +2160,7 @@ static void UpdateRollSprite(omObjData *arg0)
             else {
                 sp1C.x = spC[var_r30];
             }
-            sp1C.y = (HU_DISP_HEIGHTF * 176) / 480;
+            sp1C.y = (HU_DISP_HEIGHTF * 176) / HU_FB_HEIGHT;
             HuSprAttrReset(temp_r31->unk_04, var_r30, HUSPR_ATTR_DISPOFF);
             HuSprBankSet(temp_r31->unk_04, var_r30, sp14[var_r30]);
             HuSprPosSet(temp_r31->unk_04, var_r30, sp1C.x, sp1C.y);

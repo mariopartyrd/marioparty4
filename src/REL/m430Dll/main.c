@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
@@ -180,15 +181,15 @@ void fn_1_720(omObjData *object)
                 Hu3DCameraPerspectiveSet(2, 41.5f, 5.0f, 25000.0f, 0.6f);
                 Hu3DCameraViewportSet(1, 0.0f, 0.0f, 320.0f, 480.0f, 0.0f, 1.0f);
                 Hu3DCameraViewportSet(2, 320.0f, 0.0f, 320.0f, 480.0f, 0.0f, 1.0f);
-                Hu3DCameraScissorSet(1, 0, 0, 0x140, 0x1E0);
-                Hu3DCameraScissorSet(2, 0x140, 0, 0x140, 0x1E0);
+                Hu3DCameraScissorSet(1, 0, 0, 320, 480);
+                Hu3DCameraScissorSet(2, 0x140, 0, 320, 480);
             }
         }
         else if ((Hu3DCamera->fov < 0.0f) || (Hu3DCamera[1].fov >= 0.0f)) {
             Hu3DCamera[1].fov = -1.0f;
             Hu3DCameraPerspectiveSet(1, 41.5f, 5.0f, 25000.0f, 1.2f);
-            Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-            Hu3DCameraScissorSet(1, 0, 0, 0x280, 0x1E0);
+            Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+            Hu3DCameraScissorSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
         }
     }
 }

@@ -1,4 +1,5 @@
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfanim.h"
 #include "game/hsfman.h"
@@ -259,9 +260,9 @@ void ObjectSetup(void)
     Hu3DCameraPerspectiveSet(1, 15, 20, 25000, 1.2);
     Hu3DCameraPerspectiveSet(2, 15, 20, 25000, 1.2);
     Hu3DCameraViewportSet(1, 0, 0, 320, 240, 0, 1);
-    Hu3DCameraViewportSet(2, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(2, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     Hu3DCameraScissorSet(1, 0, 0, 320, 240);
-    Hu3DCameraScissorSet(2, 0, 0, 640, 480);
+    Hu3DCameraScissorSet(2, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     lbl_1_bss_8 = omAddObjEx(objman, 32730, 0, 0, -1, omOutViewMulti);
     lbl_1_bss_8->work[0] = 2;
     for (i = 0; i < 1; i++) {

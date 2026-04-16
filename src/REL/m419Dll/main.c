@@ -1,6 +1,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfex.h"
@@ -166,8 +167,8 @@ void ObjectSetup(void)
     omGameSysInit(temp_r3);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 20.0f, 20.0f, 10000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(1, 0, 0, 640, 480);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    Hu3DCameraScissorSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     lbl_1_bss_C8.unk00 = omAddObjEx(temp_r3, 0x7FDA, 0, 0, -1, omOutViewMulti);
     lbl_1_bss_C8.unk00->work[0] = 1;
     CRotM->x = -40.0f;

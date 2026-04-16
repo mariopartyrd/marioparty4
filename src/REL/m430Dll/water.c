@@ -4,6 +4,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
 #include "game/hsfman.h"
@@ -1202,10 +1203,10 @@ void fn_1_8CE0(ModelData *model, Mtx matrix)
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, 0, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
     if ((fn_1_4030() == 0) && (var_r31->unk_00 == 0)) {
-        GXInitTexObj(&sp24, var_r31->bmpData, 0x280, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+        GXInitTexObj(&sp24, var_r31->bmpData, 640, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     }
     else {
-        GXInitTexObj(&sp24, var_r31->bmpData, 0x140, 0x1E0, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
+        GXInitTexObj(&sp24, var_r31->bmpData, 320, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     }
     GXInitTexObjLOD(&sp24, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp24, GX_TEXMAP0);
@@ -1598,8 +1599,8 @@ void fn_1_AB98(ModelData *model, Mtx matrix)
         var_r31++;
     }
     if ((fn_1_4030() == 0) && (var_r31 == 0)) {
-        GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
-        GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGB5A3, 0);
+        GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+        GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB5A3, 0);
     }
     else {
         GXSetTexCopySrc(var_r31 * 0x140, 0, 0x140, 0x1E0);

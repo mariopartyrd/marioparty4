@@ -1,4 +1,5 @@
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
@@ -2182,7 +2183,7 @@ void ObjectSetup(void)
     HuAudSndGrpSet(38);
     lbl_1_bss_24 = omInitObjMan(600, 8192);
     omGameSysInit(lbl_1_bss_24);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     Hu3DCameraPerspectiveSet(1, 40, 10, 20000, 1.2f);
     {
         Vec sp54 = { 616.5714f, -1331.2f, 2120.1142f };

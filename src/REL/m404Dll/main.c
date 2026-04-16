@@ -1,5 +1,6 @@
 #include "ext_math.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
@@ -251,7 +252,7 @@ void ObjectSetup(void)
     omGameSysInit(var_r31);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 10.0f, 20.0f, 25000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     lbl_1_bss_50 = omAddObjEx(var_r31, 32730, 0, 0, -1, omOutView);
     lbl_1_bss_10.x = lbl_1_data_77C.x - lbl_1_data_770.x;
     lbl_1_bss_10.y = lbl_1_data_77C.y - lbl_1_data_770.y;
@@ -1293,7 +1294,7 @@ void fn_1_58E4(ModelData *modelData, Mtx arg1)
         GXSetChanMatColor(GX_COLOR0A0, sp18);
         GXSetNumChans(1);
         GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_NONE);
-        GXSetBlendMode(GX_DECAL, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
+        GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
         GXClearVtxDesc();
         GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);

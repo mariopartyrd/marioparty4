@@ -2,6 +2,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/flag.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
@@ -599,7 +600,7 @@ static void SetBallView(s32 arg0) {
     BoardSpaceCameraSet(var_r31);
     BoardModelCameraSetAll(var_r31);
     BoardCameraMaskSet((u16) var_r31);
-    BoardCameraScissorSet(0, 0, 640, 480);
+    BoardCameraScissorSet(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
 }
 
 static void SetBallActive(s32 arg0) {

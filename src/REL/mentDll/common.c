@@ -1,6 +1,7 @@
 #include "REL/mentDll.h"
 #include "ext_math.h"
 #include "game/board/tutorial.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/object.h"
@@ -552,7 +553,7 @@ void fn_1_2808(void (*arg0)(void))
 void fn_1_2844(Process *arg0, void (*arg1)(void))
 {
     Hu3DCameraCreate(1);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 42.0f, 20.0f, 5000.0f, 1.2f);
     lbl_1_bss_64.func = arg1;
     lbl_1_bss_64.func2 = &fn_1_236C;

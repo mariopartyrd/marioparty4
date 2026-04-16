@@ -3,6 +3,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
@@ -864,7 +865,7 @@ void fn_1_2790(void) {
     Hu3DCameraCreate(4);
     Hu3DCameraPerspectiveSet(4, -1.0f, 100.0f, 50000.0f, 1.2f);
     Hu3DCameraViewportSet(4, 0.0f, 0.0f, 576.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(4, 0, 0, 0x280, 0x1E0);
+    Hu3DCameraScissorSet(4, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     var_r30 = lbl_1_bss_48 = omAddObjEx(lbl_1_bss_8C, 0x7FDA, 0, 0, -1, omOutViewMulti);
     var_r30->work[0] = 3;
     
@@ -941,8 +942,8 @@ void fn_1_3164(void) {
     Hu3DCameraKill(2);
     Hu3DCameraKill(4);
     Hu3DCameraPerspectiveSet(1, 45.0f, 100.0f, 50000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(1, 0, 0, 0x280, 0x1E0);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    Hu3DCameraScissorSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     CRotM->x = lbl_1_data_0[1].rot.x;
     CRotM->y = lbl_1_data_0[1].rot.y;
     CRotM->z = lbl_1_data_0[1].rot.z;

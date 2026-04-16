@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
@@ -1687,7 +1688,7 @@ void fn_1_A528(omObjData *object)
     object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M421DllPlayerDLWork), MEMORY_DEFAULT_NUM);
     work = object->data;
     memset(work, 0, sizeof(M421DllPlayerDLWork));
-    work->unk_2F0 = GXGetTexBufferSize(0x280, 0x1E0, 5, 0, 0);
+    work->unk_2F0 = GXGetTexBufferSize(HU_FB_WIDTH, HU_FB_HEIGHT, 5, 0, 0);
     work->bmpData = HuMemDirectMallocNum(HEAP_SYSTEM, work->unk_2F0, MEMORY_DEFAULT_NUM);
     DCFlushRange(work->bmpData, work->unk_2F0);
     for (i = 0; i < 4; i++) {
@@ -1730,8 +1731,8 @@ void fn_1_AB6C(ModelData *model, Mtx matrix)
 {
     M421DllPlayerDLWork *work = lbl_1_bss_44->data;
     GXPixModeSync();
-    GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
-    GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGB5A3, GX_FALSE);
+    GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+    GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGB5A3, GX_FALSE);
     GXCopyTex(work->bmpData, GX_FALSE);
     GXPixModeSync();
 }
@@ -1758,7 +1759,7 @@ void fn_1_ABDC(ModelData *model, Mtx matrix)
     GXLoadPosMtxImm(sp88, 0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_NONE);
-    GXInitTexObj(&sp8, work->bmpData, 0x280, 0x1E0, 5, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&sp8, work->bmpData, 640, 480, 5, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&sp8, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&sp8, GX_TEXMAP0);
     GXSetNumTexGens(1);

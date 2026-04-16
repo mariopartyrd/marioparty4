@@ -1,6 +1,7 @@
 #include "REL/m435Dll.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
@@ -404,7 +405,7 @@ void fn_1_92C(omObjData* arg0) {
 
 void fn_1_FDC(void) {
     Hu3DCameraCreate(1);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 45.0f, 0.1f, 10000.0f, 1.2f);
     fn_1_8A4(fn_1_818);
     fn_1_8C4(fn_1_434);

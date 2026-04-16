@@ -2,6 +2,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/board/ui.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
@@ -59,7 +60,7 @@ void ObjectSetup(void)
     lbl_1_bss_70[0] = 0;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30, 20, 8000, 1.2f);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0, 1);
     Hu3DCameraScissorSet(1, 0, 16, 640, 448);
     light = Hu3DGLightCreate(0, 100, 1000, 0, -0.5, -1, 255, 255, 255);
     Hu3DGLightInfinitytSet(light);

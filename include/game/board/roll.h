@@ -3,7 +3,7 @@
 
 #include "dolphin/types.h"
 
-s32 BoardRollExec(s32 arg0);
+s32 BoardRollExec(s32 playerNo);
 void BoardRollKill(void);
 void BoardRollUPauseSet(s32 arg0);
 void BoardRollWinDispSet(s32 arg0);

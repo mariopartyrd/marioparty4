@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #define HUSPR_USE_OLD_DEFS
 #include "dolphin/gx/GXEnum.h"
 #include "dolphin/gx/GXStruct.h"
@@ -213,7 +214,7 @@ void ObjectSetup(void)
     CZoom = 1650.0f;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 45.0f, 100.0f, 50000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     lbl_1_bss_664 = omAddObjEx(process, 0x7FDA, 0, 0, -1, omOutView);
     var_r26 = Hu3DCamera;
     var_r26->fov = -1.0f;

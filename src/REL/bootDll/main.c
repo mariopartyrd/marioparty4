@@ -2,6 +2,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
@@ -16,9 +17,11 @@
 #include "game/wipe.h"
 #include "math.h"
 
-#include "port/byteswap.h"
-
 #include "data_num/title.h"
+
+#ifdef TARGET_PC
+#include "port/byteswap.h"
+#endif
 
 #define HU_PAD_BTN_ALL (HuPadBtn[0] | HuPadBtn[1] | HuPadBtn[2] | HuPadBtn[3])
 #define HU_PAD_BTNDOWN_ALL (HuPadBtnDown[0] | HuPadBtnDown[1] | HuPadBtnDown[2] | HuPadBtnDown[3])
@@ -69,7 +72,7 @@ void ObjectSetup(void)
     debugCamZoom[0] = 2885;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30, 20, 15000, 1.2);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     HuPrcCreate(BootExec, 100, 12288, 0);
     Hu3DBGColorSet(0, 0, 0);
     history = omOvlHisGet(0);

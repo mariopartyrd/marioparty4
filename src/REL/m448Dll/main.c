@@ -2,6 +2,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
@@ -202,8 +203,8 @@ void fn_1_4FC(ModelData *model, Mtx matrix)
     if (!lbl_1_bss_28) {
         return;
     }
-    GXSetScissor(0, 0, 640, 480);
-    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    GXSetScissor(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+    GXSetViewport(0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     C_MTXOrtho(sp98, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f);
     GXSetProjection(sp98, GX_ORTHOGRAPHIC);
     MTXIdentity(spC8);
@@ -1781,7 +1782,7 @@ void ObjectSetup(void)
     omGameSysInit(lbl_1_bss_70);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 25000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     CZoom = 2500.0f;
     Center.x = 0.0f;
     Center.y = 0.0f;

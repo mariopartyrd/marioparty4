@@ -100,7 +100,11 @@ void FadeSpriteWithMultiplier(s16 model, BOOL inF, float tpMultiplier, s32 durat
 {
     Process *process;
     //  bug: wrong struct in sizeof
+#ifdef NON_MATCHING
+    FaderWork2 *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork2), MEMORY_DEFAULT_NUM);
+#else
     FaderWork2 *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
+#endif
     work->id = model;
     work->speed = 1.0f / duration;
     work->tpMultiplier = tpMultiplier;

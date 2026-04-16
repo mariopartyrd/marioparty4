@@ -1,6 +1,7 @@
 #include "REL/m446Dll.h"
 
 #include "ext_math.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/printfunc.h"
 #include "game/pad.h"
@@ -23,7 +24,7 @@ s32 lbl_1_bss_38;
 Vec lbl_1_data_370 = {0, 1, 0};
 
 s32 fn_1_6778(void) {
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTH, HU_FB_HEIGHT, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 30.0f, 10.0f, 8000.0f, 1.2f);
     lbl_1_bss_8C.x = 0.0f;
     lbl_1_bss_8C.y = 0.0f;

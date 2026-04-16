@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/armem.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/object.h"
@@ -151,7 +152,7 @@ void fn_1_8D4(MpexDllUnkFunc arg0)
 void fn_1_910(MpexDllUnkFunc arg0)
 {
     Hu3DCameraCreate(1);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 45.0f, 20.0f, 5000.0f, 1.2f);
     lbl_1_bss_64.unk_00 = arg0;
     lbl_1_bss_64.unk_04 = fn_1_438;

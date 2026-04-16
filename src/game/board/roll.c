@@ -96,9 +96,9 @@ static s32 diceDigitMdlTbl[10] = { DATA_MAKE_NUM(DATADIR_BOARD, 0x0C), DATA_MAKE
     DATA_MAKE_NUM(DATADIR_BOARD, 0x0F), DATA_MAKE_NUM(DATADIR_BOARD, 0x10), DATA_MAKE_NUM(DATADIR_BOARD, 0x11), DATA_MAKE_NUM(DATADIR_BOARD, 0x12),
     DATA_MAKE_NUM(DATADIR_BOARD, 0x13), DATA_MAKE_NUM(DATADIR_BOARD, 0x14), DATA_MAKE_NUM(DATADIR_BOARD, 0x15) };
 
-s32 BoardRollExec(s32 arg0)
+s32 BoardRollExec(s32 playerNo)
 {
-    rollPlayer = arg0;
+    rollPlayer = playerNo;
     inputTimer = 0;
     numDice = 1;
     diceSize = 0;
@@ -117,11 +117,11 @@ s32 BoardRollExec(s32 arg0)
             numDice = 3;
             break;
     }
-    if (BoardPlayerSizeGet(arg0) == 1) {
+    if (BoardPlayerSizeGet(playerNo) == 1) {
         diceSize = 1;
         maxRoll = 5;
     }
-    else if (BoardPlayerSizeGet(arg0) == 2) {
+    else if (BoardPlayerSizeGet(playerNo) == 2) {
         diceSize = 2;
         maxRoll = 10;
         if (BoardMegaDoubleDiceCheck() != 0) {
@@ -131,7 +131,7 @@ s32 BoardRollExec(s32 arg0)
     if (GWPlayer[rollPlayer].bowser_suit != 0) {
         diceSize = 3;
     }
-    GWPlayer[arg0].num_dice = numDice;
+    GWPlayer[playerNo].num_dice = numDice;
     rollProc = HuPrcChildCreate(RollMain, 0x2005, 0x6000, 0, boardMainProc);
     HuPrcDestructorSet2(rollProc, RollDestroy);
     while (rollProc != NULL) {

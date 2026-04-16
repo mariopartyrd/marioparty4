@@ -1,6 +1,7 @@
 #include "dolphin/gx/GXVert.h"
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/flag.h"
 #include "game/gamework.h"
 #include "game/hsfman.h"
@@ -868,7 +869,7 @@ void fn_1_3770(omObjData *arg0)
                 Hu3DCamera[var_r31->unk_38].fov = -1.0f;
             }
             else {
-                var_f31 = 1.2f * ((var_r31->unk_4C / 640.0f) / (var_r31->unk_50 / 480.0f));
+                var_f31 = 1.2f * ((var_r31->unk_4C / HU_FB_WIDTHF) / (var_r31->unk_50 / HU_FB_HEIGHTF));
                 sp18[0] = var_r31->unk_4C * var_r31->unk_40;
                 sp18[1] = var_r31->unk_50 * var_r31->unk_40;
                 Hu3DCameraPerspectiveSet(var_r31->unk_3C, var_r31->unk_10, var_r31->unk_14, var_r31->unk_18, var_f31);

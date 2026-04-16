@@ -1,4 +1,5 @@
 #include "REL/m447dll.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/pad.h"
 #include "game/printfunc.h"
@@ -31,7 +32,7 @@ float lbl_1_bss_1C;
 float lbl_1_bss_18;
 
 s32 fn_1_3130(void) {
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 55.0f, 10.0f, 8000.0f, 1.2f);
     lbl_1_bss_74.unk00.x = 0.0f;
     lbl_1_bss_74.unk00.y = 400.0f;

@@ -1,5 +1,6 @@
 #include "game/animdata.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #ifndef __MWERKS__
 #include "game/minigame_seq.h"
@@ -264,8 +265,8 @@ void ObjectSetup(void)
     HuWinInit(1);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 20.0f, 20.0f, 10000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(1, 0, 0, 640, 480);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    Hu3DCameraScissorSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     multiViewObj = omAddObjEx(process, 0x7FDA, 0, 0, -1, omOutViewMulti);
     multiViewObj->work[0] = 1;
     CRotM[0].x = -35.0f;

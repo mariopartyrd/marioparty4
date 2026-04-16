@@ -8,6 +8,7 @@
 #include "dolphin/types.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
@@ -7636,7 +7637,7 @@ void ObjectSetup(void)
     lbl_1_bss_FC = NULL;
     lbl_1_bss_C4 = -1;
     fn_1_1C6E4();
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 30000.0f, 1.2f);
     fn_1_1350(&lbl_1_data_464, &lbl_1_data_470, &lbl_1_data_47C);
     VECSubtract(&lbl_1_data_47C, &lbl_1_data_464, &sp8);

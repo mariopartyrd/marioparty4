@@ -3,6 +3,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfmotion.h"
 #include "game/mapspace.h"
@@ -65,8 +66,8 @@ void ObjectSetup(void)
     omGameSysInit(lbl_1_bss_274);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 40.0f, 20.0f, 25000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(1, 0U, 0U, 0x280U, 0x1E0U);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+    Hu3DCameraScissorSet(1, 0U, 0U, HU_FB_WIDTH, HU_FB_HEIGHT);
     lbl_1_bss_268.x = 1100.0f;
     lbl_1_bss_268.y = 1600.0f;
     lbl_1_bss_268.z = 760.0f;

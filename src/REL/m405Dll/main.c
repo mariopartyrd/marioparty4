@@ -1,6 +1,7 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/flag.h"
 #include "game/frand.h"
@@ -745,7 +746,7 @@ void fn_1_2714(u8 arg0, s32 arg1)
 
     temp_r31 = &lbl_1_data_10[arg0];
     GXSetZMode(GX_FALSE, GX_LEQUAL, GX_TRUE);
-    GXSetTexCopySrc(0, 0, 640, 480);
+    GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     GXSetTexCopyDst(temp_r31->sizeX, temp_r31->sizeY, GX_TF_RGB565, temp_r31->mipmap);
     GXSetCopyClear(sp14, 0xFFFFFF);
     GXCopyTex(temp_r31->bmpData, arg1);
@@ -1107,7 +1108,7 @@ void fn_1_4700(ModelData *arg0, Mtx arg1)
     s16 var_r24;
     s16 i;
 
-    C_MTXOrtho(sp20, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f);
+    C_MTXOrtho(sp20, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f); // TODO PC dynamic?
     GXSetProjection(sp20, GX_ORTHOGRAPHIC);
     MTXIdentity(sp60);
     GXLoadPosMtxImm(sp60, GX_PNMTX0);
@@ -2342,7 +2343,7 @@ void ObjectSetup(void)
     if (lbl_1_bss_738 == 0) {
         lbl_1_bss_738 = 18000;
     }
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 20000.0f, 1.2f);
     fn_1_1350(&lbl_1_data_10C, &lbl_1_data_100, &lbl_1_data_118);
     temp_r29 = Hu3DGLightCreateV(&lbl_1_data_154, &lbl_1_data_160, &lbl_1_data_16C);

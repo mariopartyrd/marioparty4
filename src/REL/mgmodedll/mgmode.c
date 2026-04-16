@@ -1,5 +1,6 @@
 #include "REL/mgmodedll.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #ifndef __MWERKS__
 #include "game/board/ui.h"
 #endif
@@ -79,7 +80,7 @@ void ObjectSetup(void)
     mgPracticeEnableF = 0;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 42, 20, 15000, 1.2f);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     glight = Hu3DGLightCreate(0, 100, 1000, 0, -0.5, -1, 255, 255, 255);
     Hu3DGLightInfinitytSet(glight);
     HuPrcChildCreate(fn_1_464, 100, 12288, 0, objman);

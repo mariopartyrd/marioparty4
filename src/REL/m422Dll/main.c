@@ -1,6 +1,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
@@ -1710,7 +1711,7 @@ void ObjectSetup(void)
     omGameSysInit(lbl_1_bss_30);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 25000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     CZoom = 1676.6f;
     Center.x = 690.0f;
     Center.y = 1340.0f;

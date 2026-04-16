@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/gamework.h"
 #include "game/hsfex.h"
@@ -539,7 +540,7 @@ void fn_1_E78(void)
     var_r31->unk_20 = 0.0f;
     var_r31->unk_74 = 1.0f;
     var_r31->unk_6C = 1.0f;
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraPerspectiveSet(1, 30.0f, 10.0f, 8000.0f, 1.2f);
     while (TRUE) {
         fn_1_122C();

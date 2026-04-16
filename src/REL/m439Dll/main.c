@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfex.h"
@@ -112,7 +113,7 @@ void ObjectSetup(void)
     omGameSysInit(objman);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 10, 100, 15000, 1.2);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     lbl_1_bss_168 = omAddObjEx(objman, 32730, 0, 0, -1, omOutViewMulti);
     lbl_1_bss_168->work[0] = 1;
     lbl_1_bss_34.x = lbl_1_data_75FC.x - lbl_1_data_75F0.x;
@@ -1691,7 +1692,7 @@ void fn_1_6DEC(omObjData *object)
                 Hu3DCameraScissorSet(1, 0, 0, 320, 240);
                 Hu3DCameraScissorSet(2, 320, 0, 640, 240);
                 Hu3DCameraScissorSet(4, 0, 240, 320, 480);
-                Hu3DCameraScissorSet(8, 320, 240, 640, 480);
+                Hu3DCameraScissorSet(8, 320, 240, HU_FB_WIDTH, HU_FB_HEIGHT);
                 for (i = 0; i < 4; i++) {
                     fn_1_6CD0(i, 1);
                 }

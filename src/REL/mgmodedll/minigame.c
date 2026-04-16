@@ -1,5 +1,6 @@
 #include "REL/mgmodedll.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/wipe.h"
@@ -62,8 +63,8 @@ void fn_1_26C54(s16 layer)
     CameraData *camera = &Hu3DCamera[0];
     MTXPerspective(proj, camera->fov, camera->aspect, camera->nnear, camera->ffar);
     GXSetProjection(proj, GX_PERSPECTIVE);
-    GXSetViewport(0, 0, 640, 480, 0, 1);
-    GXSetScissor(0, 0, 640, 480);
+    GXSetViewport(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
+    GXSetScissor(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);

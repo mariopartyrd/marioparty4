@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
@@ -117,7 +118,7 @@ void ObjectSetup(void)
     lbl_1_bss_2D2 = -2;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30, 20, 15000, 1.2f);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     light = Hu3DGLightCreate(-1000, 1000, 0, 1, -1, 0, 255, 255, 255);
     Hu3DGLightInfinitytSet(light);
     Hu3DGLightStaticSet(light, 1);

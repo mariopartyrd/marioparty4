@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
@@ -131,9 +132,9 @@ void ObjectSetup(void)
     omSysPauseEnable(0);
     Hu3DCameraCreate(3);
     Hu3DCameraPerspectiveSet(1, 30.0f, 20.0f, 15000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     Hu3DCameraPerspectiveSet(2, 30.0f, 20.0f, 15000.0f, 1.2f);
-    Hu3DCameraViewportSet(2, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(2, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT, 0, 1);
     lightId = Hu3DGLightCreate(0, 100, 1000, 0, -0.5, -1, 255, 255, 255);
     Hu3DGLightInfinitytSet(lightId);
     HuPrcChildCreate(InstMain, 100, 12288, 0, objman);

@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -2712,7 +2713,7 @@ void fn_1_73DC(void)
 {
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 45.0f, 100.0f, 50000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     omAddObjEx(lbl_1_bss_98, 32730, 0, 0, -1, omOutView);
     CRot.x = lbl_1_data_4C[1][0];
     CRot.y = lbl_1_data_4C[1][1];
@@ -3227,7 +3228,7 @@ void fn_1_8E48(ModelData *arg0, Mtx arg1)
 
     var_r31 = Hu3DCamera;
     GXSetScissor(var_r31->scissor_x, var_r31->scissor_y, var_r31->scissor_w, var_r31->scissor_h);
-    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    GXSetViewport(0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     C_MTXOrtho(sp10, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f);
     GXSetProjection(sp10, GX_ORTHOGRAPHIC);
     GXSetTevColor(GX_TEVREG0, spC);

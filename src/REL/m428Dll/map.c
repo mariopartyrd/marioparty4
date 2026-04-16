@@ -1,6 +1,7 @@
 #include "dolphin/gx/GXEnum.h"
 #include "dolphin/gx/GXVert.h"
 #include "ext_math.h"
+#include "game/disp.h"
 #include "game/hsfanim.h"
 #include "game/hsfformat.h"
 #include "game/hsfman.h"
@@ -1222,9 +1223,9 @@ void fn_1_9ADC(u8 arg0)
     work->unk_134 = work->unk_130;
     work->unk_138 = var_f31;
     Hu3DCameraPerspectiveSet(1 << arg0, 45.0f, 100.0f, 5000.0f, 1.2f);
-    Hu3DCameraViewportSet(1 << arg0, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1 << arg0, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     Hu3DCameraViewportSet(2 >> arg0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-    Hu3DCameraScissorSet(1 << arg0, 0, 0, 0x280, 0x1E0);
+    Hu3DCameraScissorSet(1 << arg0, 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
     Hu3DCameraScissorSet(2 >> arg0, 0, 0, 0, 0);
     var_r30 = lbl_1_bss_A0;
     Hu3DModelAttrSet(var_r30->model[0], HU3D_ATTR_DISPOFF);

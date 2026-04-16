@@ -3,6 +3,7 @@
 #include "game/audio.h"
 #include "game/board/player.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework.h"
 #ifndef __MWERKS__
@@ -125,7 +126,7 @@ void ObjectSetup(void)
     CZoom = 500.0f;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 20.0f, 20.0f, 15000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
+    Hu3DCameraViewportSet(1, 0, 0, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0, 1);
     lightId = Hu3DGLightCreate(0, 100, 1000, 0, -0.5, -1, 255, 255, 255);
     Hu3DGLightInfinitytSet(lightId);
     resultFastF = 0;

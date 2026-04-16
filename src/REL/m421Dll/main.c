@@ -1,5 +1,6 @@
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -599,7 +600,7 @@ void fn_1_335C(omObjData *object)
                 Hu3DCamera[var_r31->unk_38].fov = -1.0f;
             }
             else {
-                var_f31 = 1.2f * ((var_r31->unk_44.unk_08 / 640.0f) / (var_r31->unk_44.unk_0C / 480.0f));
+                var_f31 = 1.2f * ((var_r31->unk_44.unk_08 / HU_FB_WIDTHF) / (var_r31->unk_44.unk_0C / HU_FB_HEIGHTF));
                 sp10[2] = var_r31->unk_44.unk_08 * var_r31->unk_40;
                 sp10[3] = var_r31->unk_44.unk_0C * var_r31->unk_40;
                 Hu3DCameraPerspectiveSet(var_r31->unk_3C, var_r31->unk_10, var_r31->unk_14, var_r31->unk_18, var_f31);
@@ -615,11 +616,11 @@ void fn_1_335C(omObjData *object)
                 if (sp10[1] < 0.0f) {
                     sp10[1] = 0.0f;
                 }
-                if (sp8[0] > 640.0f) {
-                    sp8[0] = 640.0f;
+                if (sp8[0] > HU_FB_WIDTHF) {
+                    sp8[0] = HU_FB_WIDTHF;
                 }
-                if (sp8[1] > 480.0f) {
-                    sp8[1] = 480.0f;
+                if (sp8[1] > HU_FB_HEIGHTF) {
+                    sp8[1] = HU_FB_HEIGHTF;
                 }
                 sp8[0] -= sp10[0];
                 sp8[1] -= sp10[1];

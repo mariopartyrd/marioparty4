@@ -1,16 +1,17 @@
 #include "game/sprite.h"
+#include "game/disp.h"
 #include "game/memory.h"
 #include "game/init.h"
 
 #include "dolphin/mtx.h"
 
-#include "port/byteswap.h"
 
 #ifndef __MWERKS__
 #include "game/hsfdraw.h"
 #endif
 
 #ifdef TARGET_PC
+#include "port/byteswap.h"
 #include <string.h>
 #endif
 
@@ -328,8 +329,8 @@ s16 HuSprCreate(AnimData *anim, s16 prio, s16 bank)
     sprite->tex_scale_x = sprite->tex_scale_y = 1;
     sprite->bg = NULL;
     sprite->scissor_x = sprite->scissor_y = 0;
-    sprite->scissor_w = 640;
-    sprite->scissor_h = 480;
+    sprite->scissor_w = HU_FB_WIDTH;
+    sprite->scissor_h = HU_FB_HEIGHT;
     if(anim) {
         HuSprAnimLock(anim);
     }

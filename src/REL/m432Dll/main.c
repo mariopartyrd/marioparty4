@@ -1,5 +1,6 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
@@ -3497,8 +3498,8 @@ void fn_1_131A8(omObjData *var_r28)
                 omDelObjEx(lbl_1_bss_5B4, lbl_1_bss_414);
                 Hu3DCameraKill(lbl_1_data_A0[(lbl_1_bss_3FC >> 1) ^ 1]);
                 Hu3DCameraPerspectiveSet(lbl_1_data_A0[lbl_1_bss_3FC >> 1], 20.0f, 20.0f, 20000.0f, 1.2f);
-                Hu3DCameraViewportSet(lbl_1_data_A0[lbl_1_bss_3FC >> 1], 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
-                Hu3DCameraScissorSet(lbl_1_data_A0[lbl_1_bss_3FC >> 1], 0, 0, 0x280, 0x1E0);
+                Hu3DCameraViewportSet(lbl_1_data_A0[lbl_1_bss_3FC >> 1], 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
+                Hu3DCameraScissorSet(lbl_1_data_A0[lbl_1_bss_3FC >> 1], 0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
                 var_r29 = &lbl_1_bss_0[lbl_1_bss_3FC >> 1];
                 var_r29->unk_118.y = 5000.0f;
                 Hu3DModelPosSet(var_r29->unk_04->model[22], var_r29->unk_118.x, var_r29->unk_118.y, var_r29->unk_118.z);

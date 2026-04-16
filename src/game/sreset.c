@@ -1,5 +1,6 @@
 #include "dolphin.h"
 #include "game/flag.h"
+#include "game/disp.h"
 #include "game/dvd.h"
 #include "game/pad.h"
 #include "game/audio.h"
@@ -161,8 +162,8 @@ void HuDvdErrDispInit(GXRenderModeObj *rmode, void *xfb1, void *xfb2)
 		XfbH = rmode->xfbHeight;
 	} else {
 		#if VERSION_NTSC
-		XfbW = 640;
-		XfbH = 480;
+		XfbW = HU_FB_WIDTH;
+		XfbH = HU_FB_HEIGHT;
 		#else
 		XfbW = 640;
 		XfbH = 528;

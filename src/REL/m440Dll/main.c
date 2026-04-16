@@ -2,6 +2,7 @@
 
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfdraw.h"
 #include "game/hsfmotion.h"
@@ -74,7 +75,7 @@ void ObjectSetup(void)
     omGameSysInit(var_r31);
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 41.5f, 5.0f, 5000.0f, 1.2f);
-    Hu3DCameraViewportSet(1, 0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    Hu3DCameraViewportSet(1, 0.0f, 0.0f, HU_FB_WIDTHF, HU_FB_HEIGHTF, 0.0f, 1.0f);
     omAddObjEx(var_r31, 0x7FDA, 0, 0, -1, omOutView);
     CRot.x = lbl_1_data_78[0].rot.x;
     CRot.y = lbl_1_data_78[0].rot.y;
@@ -2108,7 +2109,7 @@ void fn_1_8D1C(void)
         GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXInitTexObj(&sp10, lbl_1_bss_28, 0x280, 0x1E0, 6, GX_CLAMP, GX_CLAMP, GX_FALSE);
+        GXInitTexObj(&sp10, lbl_1_bss_28, 640, 480, 6, GX_CLAMP, GX_CLAMP, GX_FALSE);
         GXInitTexObjLOD(&sp10, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
         GXLoadTexObj(&sp10, GX_TEXMAP0);
         GXSetNumTevStages(1);
@@ -2133,8 +2134,8 @@ void fn_1_8D1C(void)
         GXTexCoord2f32(0.0f, 1.0f);
         GXEnd();
     }
-    GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
-    GXSetTexCopyDst(0x280, 0x1E0, GX_TF_RGBA8, GX_FALSE);
+    GXSetTexCopySrc(0, 0, HU_FB_WIDTH, HU_FB_HEIGHT);
+    GXSetTexCopyDst(HU_FB_WIDTH, HU_FB_HEIGHT, GX_TF_RGBA8, GX_FALSE);
     GXCopyTex(lbl_1_bss_28, 0);
     DCFlushRange(lbl_1_bss_28, lbl_1_bss_24);
 #ifdef TARGET_PC
