@@ -2184,7 +2184,7 @@ void fn_1_102A8(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSETARRAY(GX_VA_POS, var_r31->unk_54->unk_08, sizeof(var_r31->unk_54->unk_08), sizeof(M428DllPlayerUnkStruct), TRUE);
+    GXSETARRAY(GX_VA_POS, var_r31->unk_54->unk_08, var_r31->unk_02 * sizeof(M428DllPlayerUnkStruct), sizeof(M428DllPlayerUnkStruct), TRUE);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
     GXSETARRAY(GX_VA_CLR0, &lbl_1_data_694[var_r31->unk_10], sizeof(GXColor), sizeof(GXColor), TRUE);
@@ -3193,7 +3193,7 @@ void fn_1_134C0(ModelData *var_r23, Mtx var_r22)
         GXSETARRAY(GX_VA_POS, var_r31->unk_40, var_r31->unk_26 * sizeof(Vec) * 4, sizeof(Vec), TRUE);
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_44, sizeof(GXColor), sizeof(M428DllPlayerUnkStruct2), TRUE); // bug?
+        GXSETARRAY(GX_VA_CLR0, &var_r31->unk_3C->unk_44, var_r31->unk_26 * sizeof(*var_r31->unk_3C), sizeof(*var_r31->unk_3C), TRUE);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSETARRAY(GX_VA_TEX0, var_r31->unk_44, var_r31->unk_26 * sizeof(Vec2f) * 4, sizeof(Vec2f), TRUE);

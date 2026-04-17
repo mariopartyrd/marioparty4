@@ -1899,7 +1899,8 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     else {
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-        GXSETARRAY(GX_VA_TEX0, temp_r31->unk1C, sizeof(Vec2f), sizeof(Vec2f), TRUE); // TODO PC
+        // TODO PC arg1->data.st->count * sizeof(Vec2f), save that into a new field after we have united struct 6 and 14
+        GXSETARRAY(GX_VA_TEX0, temp_r31->unk1C, sizeof(Vec2f), sizeof(Vec2f), TRUE);
         temp_r29 = &temp_r31->unk2C[temp_r31->unk28->attrs[0]];
         fn_1_7D60(temp_r29->bitmap, temp_r29, 0);
         lbl_1_bss_2C = 1;
