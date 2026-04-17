@@ -1017,6 +1017,9 @@ void fn_1_618C(ModelData *arg0, Mtx arg1)
     GXInitTexObj(&sp14, var_r31->unk30, 640, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     GXInitTexObjLOD(&sp14, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&sp14, GX_TEXMAP0);
+#ifdef TARGET_PC
+    GXDestroyTexObj(&sp14);
+#endif
     GXInitTexObj(&sp14, var_r31->unk28, 640, 480, GX_TF_RGB5A3, GX_CLAMP, GX_CLAMP, 0);
     GXInitTexObjLOD(&sp14, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, 0, 0, GX_ANISO_1);
     GXLoadTexObj(&sp14, GX_TEXMAP1);
@@ -2027,14 +2030,18 @@ void fn_1_A148(ModelData *model, Mtx matrix)
 
     var_r31 = model->unk_120;
     if (var_r31->unk0 == 0) {
-        GXSetTexCopySrc(0, 0, 0x140, 0x1E0);
-        GXSetTexCopyDst(0x140, 0x1E0, GX_TF_RGB5A3, 0);
+        GXSetTexCopySrc(0, 0, 320, 480);
+        GXSetTexCopyDst(320, 480, GX_TF_RGB5A3, 0);
     }
     else {
-        GXSetTexCopySrc(0x140, 0, 0x140, 0x1E0);
-        GXSetTexCopyDst(0x140, 0x1E0, GX_TF_RGB5A3, 0);
+        GXSetTexCopySrc(320, 0, 320, 480);
+        GXSetTexCopyDst(320, 480, GX_TF_RGB5A3, 0);
     }
+#ifdef TARGET_PC
+    GXCopyTex(var_r31->bmpData, 0); // TODO PC why do we need to skip the clear?
+#else
     GXCopyTex(var_r31->bmpData, 1);
+#endif
     DCFlushRange(var_r31->bmpData, var_r31->unk8);
 }
 
