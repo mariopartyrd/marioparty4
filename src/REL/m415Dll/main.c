@@ -1580,7 +1580,14 @@ s16 fn_1_66AC(void)
     var_r29 = fn_1_9734(var_r30);
     temp_r31 = (*var_r29)->bmp;
     var_r28 = temp_r31->sizeX * temp_r31->sizeY;
+#ifdef TARGET_PC
+    // Hu3DShadowData was copied by GXCopyTex and Aurora doesn't actually copy it there
+    // it just holds a reference to the pointer
+    // TODO PC does this fix cause issues?
+    temp_r31->data = Hu3DShadowData.buf;
+#else
     memcpy(temp_r31->data, Hu3DShadowData.buf, var_r28);
+#endif
     return var_r30;
 }
 
