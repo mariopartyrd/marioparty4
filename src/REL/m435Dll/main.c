@@ -3367,7 +3367,7 @@ void fn_1_10A14(void) {
     sp8 = fn_1_1E80(550.0f - sp10[0], 180.0f, sp10[0], sp10[1], 1);
     HuAudFXPlayVolPan(0x65, 0x7F, 0x60);
     fn_1_A670(var_r29->unk10, var_r29->unk04);
-    HU_WIN_INSERT_MES_SET_PTR(sp8, MAKE_MESSID_PTR(temp_r27->unk34), 0);
+    HuWinInsertMesSet(sp8, temp_r27->unk34, 0);
     HU_WIN_INSERT_MES_SET_PTR(sp8, MAKE_MESSID_PTR(sp18), 1);
     fn_1_7D28(1, 2);
     fn_1_2798(sp8, MAKE_MESSID(29, 63));
