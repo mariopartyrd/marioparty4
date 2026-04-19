@@ -1517,10 +1517,13 @@ void fn_1_8EAC(void)
 void fn_1_9168(void)
 {
     StructBss48 *workP = lbl_1_bss_48;
+#ifndef NON_MATCHING
+    // these already get freed in HuSprAnimKill by hsfman.c
     HuSprAnimKill(workP->unk0[0]);
     HuSprAnimKill(workP->unk0[1]);
     HuSprAnimKill(workP->unk0[2]);
     HuSprAnimKill(workP->unk0[3]);
+#endif
 }
 
 float lbl_1_data_6A0[4] = { 1000, 200, 600, 1200 };

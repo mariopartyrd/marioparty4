@@ -43,7 +43,7 @@ typedef struct M438MapStruct2 {
 typedef struct M438MapStruct3 {
     u32 unk0;
     M438MapStruct2 unk4[32];
-    M438MapStruct unk984;
+    M438MapStruct unk984[50];
 } M438MapStruct3;
 
 // BSS
@@ -93,7 +93,7 @@ void fn_1_B54C(omObjData *arg0)
     M438MapStruct *var_r24;
     M438MapStruct3 *temp_r23;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x108C, MEMORY_DEFAULT_NUM); // TODO PC
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M438MapStruct3), MEMORY_DEFAULT_NUM);
     temp_r23 = arg0->data;
     memset(temp_r23, 0, 0x108C);
     arg0->model[0] = Hu3DModelCreateFile(0x450000);
@@ -218,7 +218,7 @@ void fn_1_B54C(omObjData *arg0)
     }
     var_r27 = Hu3DModelCreateFile(0x45000B);
     Hu3DModelLayerSet(var_r27, 2);
-    var_r24 = &temp_r23->unk984;
+    var_r24 = temp_r23->unk984;
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r24++) {
         var_r24->unk0 = 0;
         var_r24->unk8 = 0;
@@ -313,7 +313,7 @@ void fn_1_BF20(omObjData *arg0)
         }
     }
     if ((temp_r28->unk0 & 1) == 0) {
-        var_r30 = &temp_r28->unk984;
+        var_r30 = temp_r28->unk984;
 
         for (var_r29 = 0; var_r29 < 0x32; var_r29++, var_r30++) {
             if (var_r30->unk0 != 0)
@@ -341,7 +341,7 @@ void fn_1_BF20(omObjData *arg0)
             break;
         }
     }
-    var_r30 = &temp_r28->unk984;
+    var_r30 = temp_r28->unk984;
     for (var_r29 = 0; var_r29 < 0x32; var_r29++, var_r30++) {
         if (var_r30->unk0 != 0) {
             var_r30->unk1C += 0.005f;

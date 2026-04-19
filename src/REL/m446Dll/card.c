@@ -19,7 +19,7 @@ unkStruct2 *fn_1_1C64(s32 arg0)
     if (!temp_r3) {
         return NULL;
     }
-    temp_r3->unk0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * 4, MEMORY_DEFAULT_NUM);
+    temp_r3->unk0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0 * sizeof(void *), MEMORY_DEFAULT_NUM);
     if (!temp_r3->unk0) {
         HuMemDirectFree(temp_r3);
         return NULL;
@@ -198,13 +198,23 @@ void fn_1_207C(void)
 {
     unkStruct4 *var_r30;
     unkStruct3 *var_r31;
+#ifdef NON_MATCHING
+    unkStruct3 *temp;
+#endif
 
     var_r31 = lbl_1_bss_18;
     if (var_r31) {
         do {
             var_r30 = var_r31->unk0;
+#ifdef NON_MATCHING
+            // fixes use after free
+            temp = var_r31->unk8;
+            fn_1_2688(var_r30);
+            var_r31 = temp;
+#else
             fn_1_2688(var_r30);
             var_r31 = var_r31->unk8;
+#endif
         } while (var_r31);
     }
 }
