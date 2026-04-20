@@ -2688,7 +2688,18 @@ void fn_1_ACB0(void)
             WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
             HuAudFadeOut(1000);
             HuPrcSleep(60);
+#ifdef NON_MATCHING
+            // since all of these use the same bmp->data as the previous one, we need to prevent a double free
+            if(lbl_1_bss_0) {
+                HuMemDirectFree(lbl_1_bss_0);
+                lbl_1_bss_0 = NULL;
+            }
+#endif
             for (i = 0; i < 4; i++) {
+#ifdef NON_MATCHING
+                lbl_1_bss_474[i].unk24C->bmp->data = NULL;
+                lbl_1_bss_474[i].unk250->bmp->data = NULL;
+#endif
                 HuSprAnimKill(lbl_1_bss_474[i].unk24C);
                 HuSprAnimKill(lbl_1_bss_474[i].unk250);
             }
@@ -2808,7 +2819,19 @@ void fn_1_AD58(void)
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
     HuPrcSleep(60);
     HuAudFadeOut(1);
+#ifdef NON_MATCHING
+    // since all of these use the same bmp->data as the previous one, we need to prevent a double free
+    // TODO PC but there are still issues because of Hu3DAnimKill...
+    if(lbl_1_bss_0) {
+        HuMemDirectFree(lbl_1_bss_0);
+        lbl_1_bss_0 = NULL;
+    }
+#endif
     for (i = 0; i < 4; i++) {
+#ifdef NON_MATCHING
+        lbl_1_bss_474[i].unk24C->bmp->data = NULL;
+        lbl_1_bss_474[i].unk250->bmp->data = NULL;
+#endif
         HuSprAnimKill(lbl_1_bss_474[i].unk24C);
         HuSprAnimKill(lbl_1_bss_474[i].unk250);
     }

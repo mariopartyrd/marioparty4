@@ -2178,7 +2178,11 @@ void fn_1_82C8(Mtx arg0, s32 arg1, float arg8)
     sp74.x = sp74.z = 0.0f;
     sp74.y = atan2d(arg0[0][0], arg0[2][0]);
     MTXCopy(arg0, sp8C);
+#ifdef NON_MATCHING
+    sp8C[0][3] = sp8C[1][3] = sp8C[2][3] = 0.0f;
+#else
     sp8C[0][3] = sp8C[1][3] = sp8C[2][3] = sp8C[3][3] = 0.0f;
+#endif
     sp68.x = -25.0f;
     sp68.z = -50.0f;
     sp68.y = 0.0f;
