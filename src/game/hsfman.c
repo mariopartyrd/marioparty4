@@ -1330,7 +1330,7 @@ BOOL Hu3DModelCameraInfoSet(s16 arg0, u16 arg1) {
     for (i = 0; i < temp_r27->objectCnt; i++, var_r23++) {
         obj_copy = var_r23;
         if (obj_copy->type == HSF_OBJ_CAMERA) {
-            temp_f31 = obj_copy->data.base.rot.x;
+            temp_f31 = obj_copy->camera.aspect_dupe;
             cam->aspect_dupe = temp_f31;
             
             VECSubtract((Point3d* ) &obj_copy->camera.target, (Point3d* ) &obj_copy->camera.pos, &sp8);
