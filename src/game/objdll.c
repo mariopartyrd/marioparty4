@@ -115,7 +115,7 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 	if (dll->hModule == NULL) {
 		OSReport("objdll>++++++++++++++++ DLL Link Failed\n");
 	}
-#elif defined(__linux__) || defined(__APPLE__)
+#elif defined(__linux__) || defined(__APPLE__) || defined(__ANDROID__)
 	{
 		// RPATH has to be set properly in CMake
 		dll->handle = dlopen(dllFile->name, RTLD_LAZY);

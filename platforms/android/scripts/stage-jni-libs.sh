@@ -20,34 +20,36 @@ if [[ -n "$ANDROID_NDK_VER" ]]; then
   fi
 fi
 
-copy_lib() {
+copy_libs() {
   local abi="$1"
-  local src="$2"
+  local src_dir="$2"
   local dst_dir="$APP_DIR/$abi"
-  local dst="$dst_dir/libmain.so"
   mkdir -p "$dst_dir"
-  cp -f "$src" "$dst"
-  if [[ "$ANDROID_STAGE_STRIP" != "0" ]] && [[ -n "$STRIP_TOOL" ]]; then
-    "$STRIP_TOOL" --strip-debug "$dst"
-    echo "Staged and stripped $src -> $dst"
-  else
-    echo "Staged $src -> $dst (strip disabled or strip tool unavailable)"
-  fi
+  for src in "$src_dir"/*.so; do
+    local dst="$dst_dir/$(basename "$src")"
+    cp -f "$src" "$dst"
+    if [[ "$ANDROID_STAGE_STRIP" != "0" ]] && [[ -n "$STRIP_TOOL" ]]; then
+      "$STRIP_TOOL" --strip-debug "$dst"
+      echo "Staged and stripped $src -> $dst"
+    else
+      echo "Staged $src -> $dst (strip disabled or strip tool unavailable)"
+    fi
+  done
 }
 
-declare -A ABI_TO_LIB=(
-  ["arm64-v8a"]="$ROOT_DIR/build/android-arm64/libmain.so"
-  ["x86_64"]="$ROOT_DIR/build/android-x86_64/libmain.so"
+declare -A ABI_TO_DIR=(
+  ["arm64-v8a"]="$ROOT_DIR/build/android-arm64"
+  ["x86_64"]="$ROOT_DIR/build/android-x86_64"
 )
 
 # Drop any previously staged ABI directories to avoid stale APK contents.
 rm -rf "$APP_DIR/x86" "$APP_DIR/arm64-v8a" "$APP_DIR/x86_64"
 
 for abi in $ANDROID_STAGE_ABIS; do
-  src="${ABI_TO_LIB[$abi]:-}"
-  if [[ -z "$src" ]]; then
+  src_dir="${ABI_TO_DIR[$abi]:-}"
+  if [[ -z "$src_dir" ]]; then
     echo "Unsupported ABI '$abi'. Supported ABIs: arm64-v8a x86_64" >&2
     exit 1
   fi
-  copy_lib "$abi" "$src"
+  copy_libs "$abi" "$src_dir"
 done

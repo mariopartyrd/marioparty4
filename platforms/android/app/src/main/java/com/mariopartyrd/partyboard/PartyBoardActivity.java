@@ -12,7 +12,7 @@ import org.libsdl.app.SDLActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartyBoard extends SDLActivity {
+public class PartyBoardActivity extends SDLActivity {
     private static String[] splitArgs(String raw) {
         List<String> out = new ArrayList<>();
         StringBuilder current = new StringBuilder();
