@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Party Board
+GenericName=Party Board
+Comment=Mario Party4
+Exec=partyboard
+Icon=partyboard
+Terminal=false
+Type=Application
+Categories=Graphics;3DGraphics;Game

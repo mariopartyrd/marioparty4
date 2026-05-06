@@ -1,0 +1,15 @@
+buildType:
+  default: Debug
+  choices:
+    debug:
+      short: Debug
+      long: Unoptimized with debug symbols
+      buildType: Debug
+    release:
+      short: Release
+      long: Optimized, no debug symbols
+      buildType: Release
+    release_debug:
+      short: RelWithDebInfo
+      long: Optimized, with debug symbols
+      buildType: RelWithDebInfo

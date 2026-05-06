@@ -273,16 +273,6 @@ void SoundRevID(int a, int b)
     puts("SoundRevID is a stub");
 }
 
-void VIConfigure(const GXRenderModeObj *rm)
-{
-    puts("VIConfigure is a stub");
-}
-
-void VIConfigurePan(u16 xOrg, u16 yOrg, u16 width, u16 height)
-{
-    puts("VIConfigurePan is a stub");
-}
-
 u32 VIGetRetraceCount()
 {
     // puts("VIGetRetraceCount is a stub");

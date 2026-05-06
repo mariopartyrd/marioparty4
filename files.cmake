@@ -1,0 +1,87 @@
+set(GAME_FILES
+        src/game/board/audio.c
+        src/game/board/basic_space.c
+        src/game/board/battle.c
+        src/game/board/block.c
+        src/game/board/boo.c
+        src/game/board/boo_house.c
+        src/game/board/bowser.c
+        src/game/board/char_wheel.c
+        src/game/board/com.c
+        src/game/board/com_path.c
+        src/game/board/fortune.c
+        src/game/board/item.c
+        src/game/board/last5.c
+        src/game/board/lottery.c
+        src/game/board/main.c
+        src/game/board/mg_setup.c
+        src/game/board/model.c
+        src/game/board/mushroom.c
+        src/game/board/pause.c
+        src/game/board/player.c
+        src/game/board/roll.c
+        src/game/board/shop.c
+        src/game/board/space.c
+        src/game/board/star.c
+        src/game/board/start.c
+        src/game/board/tutorial.c
+        src/game/board/ui.c
+        src/game/board/view.c
+        src/game/board/warp.c
+        src/game/board/window.c
+
+        src/game/armem.c
+        src/game/card.c
+        src/game/chrman.c
+        src/game/ClusterExec.c
+        src/game/data.c
+        src/game/decode.c
+        src/game/dvd.c
+        src/game/EnvelopeExec.c
+        src/game/esprite.c
+        src/game/fault.c
+        src/game/flag.c
+        src/game/font.c
+        src/game/frand.c
+        src/game/gamework.c
+        src/game/hsfanim.c
+        src/game/hsfdraw.c
+        src/game/hsfex.c
+        src/game/hsfload.c
+        src/game/hsfman.c
+        src/game/hsfmotion.c
+        src/game/init.c
+        src/game/main.c
+        src/game/malloc.c
+        src/game/mapspace.c
+        src/game/memory.c
+        src/game/messdata.c
+        src/game/minigame_seq.c
+        src/game/objdll.c
+        src/game/objmain.c
+        src/game/objsub.c
+        src/game/objsysobj.c
+        src/game/ovllist.c
+        src/game/pad.c
+        src/game/perf.c
+        src/game/printfunc.c
+        src/game/process.c
+        src/game/saveload.c
+        src/game/ShapeExec.c
+        src/game/sprman.c
+        src/game/sprput.c
+        src/game/window.c
+        src/game/wipe.c
+
+        src/libhu/setvf.c
+        src/libhu/subvf.c
+)
+
+set(PORT_FILES
+        src/port/audio.c
+        src/port/byteswap.cpp
+        #        src/port/dvd.c
+        src/port/imgui.cpp
+        src/port/OS.c
+        src/port/stubs.c
+)

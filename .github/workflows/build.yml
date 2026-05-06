@@ -2,63 +2,213 @@ name: Build
 
 on:
   push:
+    paths-ignore:
+      - '*.md'
+      - '*LICENSE'
   pull_request:
 
-jobs:
-  build:
-    container: ghcr.io/mariopartyrd/mp-gc-build:main
+env:
+  # SCCACHE_GHA_ENABLED: "true"
+  RUSTC_WRAPPER: "sccache"
+  SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
-    runs-on: ubuntu-latest
+jobs:
+  build-linux:
+    name: Build Linux (${{matrix.name}})
+    runs-on: ${{matrix.runner}}
+
     strategy:
       fail-fast: false
       matrix:
-        version: [GMPE01_00, GMPE01_01, GMPP01_00, GMPP01_02, GMPJ01_00]
+        include:
+          - name: GCC x86_64
+            runner: [self-hosted, Linux]
+            preset: gcc
+            artifact_arch: x86_64
+          # - name: GCC aarch64
+          #   runner: ubuntu-24.04-arm
+          #   preset: gcc
+          #   artifact_arch: aarch64
+          # - name: Clang x86_64
+          #   runner: ubuntu-latest
+          #   preset: clang
+          #   artifact_arch: x86_64
 
     steps:
-    # Checkout the repository
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
 
-    # Set Git config
-    - name: Git config
-      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Install dependencies
+        if: 'false' # disabled for self-hosted
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install ninja-build clang lld openssl libcurl4-openssl-dev \
+            zlib1g-dev libglu1-mesa-dev libdbus-1-dev libvulkan-dev libxi-dev libxrandr-dev libasound2-dev \
+            libpulse-dev libudev-dev libpng-dev libncurses5-dev libx11-xcb-dev libfreetype-dev \
+            libxinerama-dev libxcursor-dev python3-markupsafe libgtk-3-dev libssl-dev \
+            libxss-dev libfuse2 libusb-1.0-0-dev libdecor-0-dev libpipewire-0.3-dev libunwind-dev
 
-    # Copy the original files to the workspace
-    - name: Prepare
-      run: cp -R /orig .
+      - name: Setup sccache
+        if: 'false' # disabled for self-hosted
+        uses: mozilla-actions/sccache-action@v0.0.9
 
-    # Build the project
-    - name: Build
-      run: |
-        python configure.py --map --version ${{ matrix.version }} \
-            --binutils /binutils --compilers /compilers
-        ninja all_source build/${{ matrix.version }}/progress.json \
-            build/${{ matrix.version }}/report.json
+      - name: Print sccache stats
+        run: sccache --show-stats
 
-    # Upload progress if we're on the main branch
-    - name: Upload progress
-      if: github.ref == 'refs/heads/main'
-      continue-on-error: true
-      env:
-        PROGRESS_SLUG: marioparty4
-        PROGRESS_API_KEY: ${{ secrets.PROGRESS_API_KEY }}
-      run: |
-        python tools/upload_progress.py -b https://progress.decomp.club/ \
-          -p $PROGRESS_SLUG -v ${{ matrix.version }} \
-          build/${{ matrix.version }}/progress.json
+      - name: Configure CMake
+        run: cmake --preset x-linux-ci-${{matrix.preset}}
 
-    # Upload map files
-    - name: Upload map
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.version }}_maps
-        path: build/${{ matrix.version }}/**/*.MAP
+      - name: Build
+        run: cmake --build --preset x-linux-ci-${{matrix.preset}}
 
-    # Upload progress report
-    - name: Upload report
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.version }}_report
-        path: build/${{ matrix.version }}/report.json
+      - name: Generate AppImage
+        run: ci/build-appimage.sh
+
+      - name: Upload artifacts
+        if: startsWith(github.event.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v7
+        with:
+          name: partyboard-${{env.PARTY_BOARD_VERSION}}-linux-${{matrix.preset}}-${{matrix.artifact_arch}}
+          path: |
+            build/install/PartyBoard-*.AppImage
+            build/install/debug.tar.*
+
+  build-apple:
+    name: Build Apple (${{matrix.name}})
+    runs-on: [self-hosted, macOS]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: AppleClang macOS arm64
+            platform: macos
+            preset: x-macos-ci-arm64
+            artifact_name: macos-appleclang-arm64
+          # - name: AppleClang macOS x86_64
+          #   platform: macos
+          #   preset: x-macos-ci-x86_64
+          #   artifact_name: macos-appleclang-x86_64
+          # - name: AppleClang iOS arm64
+          #   platform: ios
+          #   preset: x-ios-ci
+          #   artifact_name: ios-appleclang-arm64
+          # - name: AppleClang tvOS arm64
+          #   platform: tvos
+          #   preset: x-tvos-ci
+          #   artifact_name: tvos-appleclang-arm64
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Install dependencies
+        if: 'false'
+        run: brew install cmake ninja
+
+      - name: Install Rust iOS target
+        if: matrix.platform == 'ios'
+        run: |
+          rustup toolchain install stable
+          rustup target add aarch64-apple-ios
+
+      - name: Install Rust tvOS target
+        if: matrix.platform == 'tvos'
+        run: |
+          rustup toolchain install nightly
+          rustup target add --toolchain nightly aarch64-apple-tvos
+
+      - name: Install Rust x86_64 macOS target
+        if: endsWith(matrix.preset, 'x86_64')
+        run: |
+          rustup toolchain install stable
+          rustup target add x86_64-apple-darwin
+
+      - name: Setup sccache
+        uses: mozilla-actions/sccache-action@v0.0.9
+
+      - name: Configure CMake
+        run: cmake --preset ${{matrix.preset}}
+
+      - name: Build
+        run: cmake --build --preset ${{matrix.preset}}
+
+      - name: Upload artifacts
+        if: startsWith(github.event.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v7
+        with:
+          name: partyboard-${{env.PARTY_BOARD_VERSION}}-${{matrix.artifact_name}}
+          path: |
+            build/install/PartyBoard.app
+            build/install/debug.tar.*
+
+  build-windows:
+    name: Build Windows (${{matrix.name}})
+    runs-on: ${{matrix.runner}}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: MSVC x86_64
+            runner: [self-hosted, Windows]
+            preset: msvc
+            msvc_arch: amd64
+            vcpkg_arch: x64
+            artifact_arch: x86_64
+          # - name: MSVC arm64
+          #   runner: windows-11-arm
+          #   preset: arm64-msvc
+          #   msvc_arch: arm64
+          #   vcpkg_arch: arm64
+          #   artifact_arch: arm64
+          # - name: Clang x86_64
+          #   runner: windows-latest
+          #   preset: clang
+          #   msvc_arch: amd64
+          #   vcpkg_arch: x64
+          #   artifact_arch: x86_64
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Enable Visual Studio environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{matrix.msvc_arch}}
+
+      # msvc-dev-cmd sets VCPKG_ROOT, set it back
+      - name: Override VCPKG_ROOT
+        run: echo "VCPKG_ROOT=C:\vcpkg" >> $env:GITHUB_ENV
+
+      - name: Setup sccache
+        uses: mozilla-actions/sccache-action@v0.0.9
+
+      - name: Install dependencies
+        if: 'false' # disabled for self-hosted
+        run: |
+          choco install ninja
+          vcpkg install freetype:${{matrix.vcpkg_arch}}-windows-static zstd:${{matrix.vcpkg_arch}}-windows-static
+
+      - name: Configure CMake
+        run: cmake --preset x-windows-ci-${{matrix.preset}}
+
+      - name: Build
+        run: cmake --build --preset x-windows-ci-${{matrix.preset}}
+
+      - name: Upload artifacts
+        if: startsWith(github.event.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v7
+        with:
+          name: partyboard-${{env.PARTY_BOARD_VERSION}}-win32-msvc-${{matrix.artifact_arch}}
+          path: |
+            build/install/*.exe
+            build/install/*.dll
+            build/install/res/
+            build/install/debug.7z
