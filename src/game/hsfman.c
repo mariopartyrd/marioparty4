@@ -1436,7 +1436,7 @@ s16 Hu3DGLightCreate(f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ,
     return Hu3DGLightCreateV(&pos, &dir, &color);
 }
 
-inline void Hu3DLightCreateV(LightData *light, Vec *arg0, Vec *arg1, GXColor *arg2) {
+static inline void Hu3DLightCreateV(LightData *light, Vec *arg0, Vec *arg1, GXColor *arg2) {
     light->type = 0;
     light->pos = *arg0;
     light->dir = *arg1;
@@ -1517,7 +1517,7 @@ s16 Hu3DLLightCreateV(s16 modelId, Vec* pos, Vec* dir, GXColor* color) {
     return lLightId;
 }
 
-inline void Hu3DLightSpotSet(LightData *light, u16 arg1, f32 arg8) {
+static inline void Hu3DLightSpotSet(LightData *light, u16 arg1, f32 arg8) {
     light->type &= 0xFF00;
     light->cutoff = arg8;
     light->func = arg1;
@@ -1538,7 +1538,7 @@ void Hu3DLLightSpotSet(s16 arg0, s16 arg1, f32 arg8, u16 arg2) {
     Hu3DLightSpotSet(light, arg2, arg8);
 }
 
-inline void Hu3DLightInfinitytSet(LightData *light) {
+static inline void Hu3DLightInfinitytSet(LightData *light) {
     light->type &= 0xFF00;
     light->type |= 1;
 }
@@ -1558,7 +1558,7 @@ void Hu3DLLightInfinitytSet(s16 dataIndex, s16 lightIndex) {
     Hu3DLightInfinitytSet(light);
 }
 
-inline void Hu3DLightPointSet(LightData *lightP, f32 refDistance, f32 refBrightness, u16 distFunc) {
+static inline void Hu3DLightPointSet(LightData *lightP, f32 refDistance, f32 refBrightness, u16 distFunc) {
     lightP->type &= 0xFF00;
     lightP->type |= 2;
     lightP->cutoff = refDistance;
@@ -1617,7 +1617,7 @@ void Hu3DLightAllKill(void) {
     }
 }
 
-inline void Hu3DLightColorSet(LightData *light, u8 r, u8 g, u8 b, u8 a) {
+static inline void Hu3DLightColorSet(LightData *light, u8 r, u8 g, u8 b, u8 a) {
     light->color.r = r;
     light->color.g = g;
     light->color.b = b;
@@ -1639,7 +1639,7 @@ void Hu3DLLightColorSet(s16 dataIndex, s16 lightIndex, u8 r, u8 g, u8 b, u8 a) {
     Hu3DLightColorSet(light, r, g, b, a);
 }
 
-inline void Hu3DLightPosSetV(LightData *light, Vec* pos, Vec* aim) {
+static inline void Hu3DLightPosSetV(LightData *light, Vec* pos, Vec* aim) {
     light->pos = *pos;
     VECNormalize(aim, &light->dir);
 }
@@ -1659,7 +1659,7 @@ void Hu3DLLightPosSetV(s16 modelId, s16 lightId, Vec* pos, Vec* dir) {
     Hu3DLightPosSetV(light, pos, dir);
 }
 
-inline void Hu3DLightPosSet(LightData *lightP, f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ) {
+static inline void Hu3DLightPosSet(LightData *lightP, f32 posX, f32 posY, f32 posZ, f32 dirX, f32 dirY, f32 dirZ) {
     lightP->pos.x = posX;
     lightP->pos.y = posY;
     lightP->pos.z = posZ;
@@ -1685,7 +1685,7 @@ void Hu3DLLightPosSet(s16 modelId, s16 lightId, f32 posX, f32 posY, f32 posZ, f3
     Hu3DLightPosSet(light, posX, posY, posZ, dirX, dirY, dirZ);
 }
 
-inline void Hu3DLightPosAimSetV(LightData *lightP, Vec* pos, Vec* aim) {
+static inline void Hu3DLightPosAimSetV(LightData *lightP, Vec* pos, Vec* aim) {
     lightP->pos = *pos;
     VECSubtract(aim, pos, &lightP->dir);
     VECNormalize(&lightP->dir, &lightP->dir);
@@ -1744,7 +1744,7 @@ void Hu3DLLightPosAimSet(s16 modelId, s16 lightId, f32 posX, f32 posY, f32 posZ,
     Hu3DLightPosAimSetV(light2, &pos, &aim);
 }
 
-inline void Hu3DLightStaticSet(LightData *lightP, s32 staticF) {
+static inline void Hu3DLightStaticSet(LightData *lightP, s32 staticF) {
     if (staticF) {
         lightP->type |= 0x8000;
     } else {

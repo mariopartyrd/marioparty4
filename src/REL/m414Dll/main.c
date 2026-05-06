@@ -1296,7 +1296,7 @@ s32 fn_1_4C74(UnkM414BssF0Struct *arg0)
     return var_r29 - sp8[var_r26];
 }
 
-inline s32 fn_1_4C74_inline(UnkM414BssF0Struct *arg0)
+static inline s32 fn_1_4C74_inline(UnkM414BssF0Struct *arg0)
 {
     s32 sp8[4];
 
