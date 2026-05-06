@@ -11,6 +11,8 @@ static void MountCallBack(s32 chan, s32 result);
 void HuCardInit(void)
 {
 #ifdef TARGET_PC
+        // TODO PC use gci and detect dolphin
+        CARDSetLoadType(CARD_RAWIMAGE);
         CARDInit("Party Board", "mariopartyrd");
 #else
 	CARDInit();

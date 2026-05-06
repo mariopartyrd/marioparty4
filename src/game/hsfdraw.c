@@ -1840,7 +1840,6 @@ static s32 LoadTexture(ModelData *arg0, HsfBitmap *arg1, HsfAttribute *arg2, s16
     var_r22 = (arg2->wrap_s == 1) ? GX_REPEAT : GX_CLAMP;
     var_r21 = (arg2->wrap_t == 1) ? GX_REPEAT : GX_CLAMP;
     var_r20 = (arg2->flag & 0x80) ? GX_TRUE : GX_FALSE;
-    // OSReport("Loading texture for model %p, bitmap %p, fmt %d, attribute %p, index %d\n", arg0, arg1, arg1->dataFmt, arg2, arg3);
     switch (arg1->dataFmt) {
         case 6:
             if (!arg2->tex_initialized) {
