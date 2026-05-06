@@ -199,7 +199,7 @@ void *OSAllocFromHeap(int heap, u32 size)
     return (u8 *)cell + 0x20;
 }
 
-void *OSAllocFixed(void **rstart, void **rend)
+void *OSAllocFixed(void *rstart, void *rend)
 {
     int i;
     struct Cell *cell;

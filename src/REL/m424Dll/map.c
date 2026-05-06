@@ -186,7 +186,11 @@ void fn_1_21B0(Mtx arg0)
     M424DllMapStruct *var_r31;
     if (lbl_1_bss_50 && lbl_1_bss_50->data) {
         var_r31 = lbl_1_bss_50->data;
+#ifdef NON_MATCHING
+        MTXCopy(var_r31->unk8, arg0);
+#else
         MTXCopy(var_r31->unk8, *(Mtx *)&arg0);
+#endif
     }
 }
 

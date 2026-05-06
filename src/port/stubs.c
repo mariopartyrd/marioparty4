@@ -100,7 +100,7 @@ BOOL EXIDma(s32 chan, void *buffer, s32 size, u32 d, EXICallback e)
     return FALSE;
 }
 
-BOOL EXIImm(s32 chan, u32 *b, s32 c, u32 d, EXICallback e)
+BOOL EXIImm(s32 chan, void *b, s32 c, u32 d, EXICallback e)
 {
     puts("EXIImm is a stub");
     return FALSE;
@@ -226,7 +226,7 @@ void OSSetCurrentContext(OSContext *context)
     puts("OSSetCurrentContext is a stub");
 }
 
-void OSSetStringTable(const void *stringTable)
+void OSSetStringTable(void *stringTable)
 {
     puts("OSSetStringTable is a stub");
 }

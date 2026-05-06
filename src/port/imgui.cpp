@@ -10,6 +10,7 @@
 #include <imgui.h>
 #include <numeric>
 #include <thread>
+#include <SDL3/SDL.h>
 #include <SDL3/SDL_dialog.h>
 
 #if _WIN32
@@ -64,9 +65,7 @@ static std::string BytesToString(size_t bytes)
 
 const char* imgui_get_image_path_from_popup()
 {
-    char exePath[MAX_PATH];
-    GetModuleFileNameA(nullptr, exePath, MAX_PATH);
-    const std::filesystem::path exeDir = std::filesystem::path(exePath).parent_path();
+    const std::filesystem::path exeDir = std::filesystem::path(SDL_GetBasePath());
 
     const char* filesToCheck[] = { "GMPE01_00.iso", "GMPE01_00.rvz" };
 
