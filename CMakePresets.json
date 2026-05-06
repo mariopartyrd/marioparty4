@@ -390,11 +390,7 @@
           "value": true
         },
         "CMAKE_OSX_DEPLOYMENT_TARGET": "11.0",
-        "CMAKE_IGNORE_PREFIX_PATH": "/opt/homebrew",
-        "PARTY_BOARD_MOVIE_SUPPORT": {
-          "type": "BOOL",
-          "value": false
-        }
+        "CMAKE_IGNORE_PREFIX_PATH": "/opt/homebrew"
       }
     },
     {
@@ -423,11 +419,7 @@
       ],
       "cacheVariables": {
         "CMAKE_C_COMPILER_LAUNCHER": "sccache",
-        "CMAKE_CXX_COMPILER_LAUNCHER": "sccache",
-        "PARTY_BOARD_MOVIE_SUPPORT": {
-          "type": "BOOL",
-          "value": false
-        }
+        "CMAKE_CXX_COMPILER_LAUNCHER": "sccache"
       }
     },
     {
@@ -437,11 +429,7 @@
       ],
       "cacheVariables": {
         "CMAKE_C_COMPILER_LAUNCHER": "sccache",
-        "CMAKE_CXX_COMPILER_LAUNCHER": "sccache",
-        "PARTY_BOARD_MOVIE_SUPPORT": {
-          "type": "BOOL",
-          "value": false
-        }
+        "CMAKE_CXX_COMPILER_LAUNCHER": "sccache"
       }
     },
     {
@@ -525,7 +513,7 @@
       "description": "iOS release build with debug info",
       "displayName": "iOS RelWithDebInfo",
       "targets": [
-        "PARTY_BOARD"
+        "partyboard"
       ]
     },
     {
@@ -534,7 +522,7 @@
       "description": "tvOS release build with debug info",
       "displayName": "tvOS RelWithDebInfo",
       "targets": [
-        "PARTY_BOARD"
+        "partyboard"
       ]
     },
     {
@@ -543,7 +531,7 @@
       "description": "Android arm64-v8a release build with debug info",
       "displayName": "Android arm64-v8a RelWithDebInfo",
       "targets": [
-        "PARTY_BOARD"
+        "partyboard"
       ]
     },
     {
@@ -552,7 +540,7 @@
       "description": "Android x86_64 release build with debug info",
       "displayName": "Android x86_64 RelWithDebInfo",
       "targets": [
-        "PARTY_BOARD"
+        "partyboard"
       ]
     },
     {

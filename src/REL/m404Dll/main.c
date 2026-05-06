@@ -1432,7 +1432,7 @@ u16 fn_1_607C(AnimData *arg0, u16 arg1, u16 arg2)
         case 8:
             return *var_r29;
         case 16:
-#ifdef TARGET_PC
+#ifdef WIN32
             // TODO PC do we need to byteswap this?
             DebugBreak();
 #endif

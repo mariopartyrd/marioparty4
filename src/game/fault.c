@@ -63,7 +63,7 @@ void OSPanic(const char* file, int line, const char* msg, ...) {
     puts = XFB_puts((s8*)buffer, sp74, sp70);
     XFB_CR(puts, &sp74, &sp70);
     va_start(args, msg);
-    vsnprintf(buffer, 0x400U, msg, &args[0]);
+    vsnprintf(buffer, 0x400U, msg, args);
 #ifdef TARGET_PC
     fputs(buffer, stderr);
 #endif
