@@ -197,7 +197,7 @@ void fn_1_4CB4(omObjData *object)
     M430DllWork *var_r30;
     s32 var_r28;
     s32 var_r27;
-    HsfData *var_r26;
+    HSFDATA *var_r26;
     s32 var_r25;
     M430DllWork *work;
 
@@ -245,7 +245,7 @@ void fn_1_4CB4(omObjData *object)
         Hu3DTexScrollPosMoveSet(var_r30[var_r31].unk_1E, -0.012f * REFRESH_FREQ, 0.0f, 0.0f);
         var_r30[var_r31].unk_20 = 50000.0f;
         var_r26 = Hu3DData[var_r30[var_r31].unk_18].hsfData;
-        for (var_r28 = 0; var_r28 < var_r26->materialCnt; var_r28++) {
+        for (var_r28 = 0; var_r28 < var_r26->materialNum; var_r28++) {
             var_r26->material[var_r28].flags &= ~0x200;
             var_r26->material[var_r28].pass = 1;
             var_r26->material[var_r28].invAlpha = 0.001f;

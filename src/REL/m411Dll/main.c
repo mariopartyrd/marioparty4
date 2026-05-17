@@ -52,7 +52,7 @@ typedef struct {
     /* 0x20 */ float unk20;
 } UnkBss474DoublyInnerStruct6C; // Size unknown
 
-// Maybe HsfObject, but unk1C doesn't seem to match.
+// Maybe HSFOBJECT, but unk1C doesn't seem to match.
 typedef struct {
     /* 0x00 */ char unk00[0x1C];
     /* 0x1C */ UnkBss474DoublyInnerStruct6C unk1C;

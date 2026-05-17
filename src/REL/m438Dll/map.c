@@ -35,7 +35,7 @@ typedef struct M438MapStruct2 {
     Vec unk3C;
     union {
         M438MainWork4 *unk48;
-        HsfObject *unk48o;
+        HSFOBJECT *unk48o;
     };
 } M438MapStruct2;
 
@@ -86,7 +86,7 @@ void fn_1_B54C(omObjData *arg0)
     Vec sp8;
     s32 var_r30;
     s32 var_r29;
-    HsfObject *var_r26;
+    HSFOBJECT *var_r26;
     s32 var_r27;
     M438MapStruct2 *var_r28;
     HsfanimStruct01 *var_r25;
@@ -187,24 +187,24 @@ void fn_1_B54C(omObjData *arg0)
         sp14.x = sp14.y = sp14.z = -100000.0f;
         sp8.x = sp8.y = sp8.z = 100000.0f;
 
-        for (var_r29 = 0; var_r29 < var_r26->data.vertex->count; var_r29++) {
-            if (((Vec *)var_r26->data.vertex->data)[var_r29].x > sp14.x) {
-                sp14.x = ((Vec *)var_r26->data.vertex->data)[var_r29].x;
+        for (var_r29 = 0; var_r29 < var_r26->mesh.vertex->count; var_r29++) {
+            if (((Vec *)var_r26->mesh.vertex->data)[var_r29].x > sp14.x) {
+                sp14.x = ((Vec *)var_r26->mesh.vertex->data)[var_r29].x;
             }
-            if (((Vec *)var_r26->data.vertex->data)[var_r29].y > sp14.y) {
-                sp14.y = ((Vec *)var_r26->data.vertex->data)[var_r29].y;
+            if (((Vec *)var_r26->mesh.vertex->data)[var_r29].y > sp14.y) {
+                sp14.y = ((Vec *)var_r26->mesh.vertex->data)[var_r29].y;
             }
-            if (((Vec *)var_r26->data.vertex->data)[var_r29].z > sp14.z) {
-                sp14.z = ((Vec *)var_r26->data.vertex->data)[var_r29].z;
+            if (((Vec *)var_r26->mesh.vertex->data)[var_r29].z > sp14.z) {
+                sp14.z = ((Vec *)var_r26->mesh.vertex->data)[var_r29].z;
             }
-            if (((Vec *)var_r26->data.vertex->data)[var_r29].x < sp8.x) {
-                sp8.x = ((Vec *)var_r26->data.vertex->data)[var_r29].x;
+            if (((Vec *)var_r26->mesh.vertex->data)[var_r29].x < sp8.x) {
+                sp8.x = ((Vec *)var_r26->mesh.vertex->data)[var_r29].x;
             }
-            if (((Vec *)var_r26->data.vertex->data)[var_r29].y < sp8.y) {
-                sp8.y = ((Vec *)var_r26->data.vertex->data)[var_r29].y;
+            if (((Vec *)var_r26->mesh.vertex->data)[var_r29].y < sp8.y) {
+                sp8.y = ((Vec *)var_r26->mesh.vertex->data)[var_r29].y;
             }
-            if (((Vec *)var_r26->data.vertex->data)[var_r29].z < sp8.z) {
-                sp8.z = ((Vec *)var_r26->data.vertex->data)[var_r29].z;
+            if (((Vec *)var_r26->mesh.vertex->data)[var_r29].z < sp8.z) {
+                sp8.z = ((Vec *)var_r26->mesh.vertex->data)[var_r29].z;
             }
         }
         VECAdd(&sp14, &sp8, &sp20);

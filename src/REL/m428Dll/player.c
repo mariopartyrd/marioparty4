@@ -228,7 +228,7 @@ void fn_1_13D9C(s16 arg0, s16 arg1, s32 arg2);
 void fn_1_13E14(s16 arg0, s16 arg1, Vec arg2);
 void fn_1_13EC8(s16 arg0, s16 arg1, float arg8);
 s32 fn_1_13F54(s16 arg0, char *arg1, Mtx arg2, s32 arg3);
-void fn_1_14088(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3);
+void fn_1_14088(HSFOBJECT *arg0, Mtx arg1, char *arg2, Mtx arg3);
 void fn_1_A108(omObjData *object);
 void fn_1_A4C8(omObjData *object);
 void fn_1_B3D4(omObjData *object);
@@ -3263,7 +3263,7 @@ s32 fn_1_13F54(s16 arg0, char *arg1, Mtx arg2, s32 arg3)
     Mtx sp44;
     Mtx sp14;
     ModelData *var_r31;
-    HsfData *var_r30;
+    HSFDATA *var_r30;
 
     var_r31 = &Hu3DData[arg0];
     var_r30 = var_r31->hsfData;
@@ -3286,7 +3286,7 @@ s32 fn_1_13F54(s16 arg0, char *arg1, Mtx arg2, s32 arg3)
     return lbl_1_bss_130;
 }
 
-void fn_1_14088(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
+void fn_1_14088(HSFOBJECT *arg0, Mtx arg1, char *arg2, Mtx arg3)
 {
     Mtx spF8;
     Mtx spC8;
@@ -3294,21 +3294,21 @@ void fn_1_14088(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
     Mtx sp68;
     Mtx sp38;
     Mtx sp8;
-    HsfTransform *var_r31;
-    HsfTransform *var_r30;
-    HsfTransform *var_r29;
-    HsfObject *var_r28;
-    HsfObject *var_r27;
+    HSFTRANSFORM *var_r31;
+    HSFTRANSFORM *var_r30;
+    HSFTRANSFORM *var_r29;
+    HSFOBJECT *var_r28;
+    HSFOBJECT *var_r27;
     u32 var_r25;
     u32 var_r24;
     u32 var_r23;
 
     if (lbl_1_bss_130 == 0) {
         if (lbl_1_bss_134 != 0) {
-            var_r31 = &arg0->data.curr;
+            var_r31 = &arg0->mesh.curr;
         }
         else {
-            var_r31 = &arg0->data.base;
+            var_r31 = &arg0->mesh.base;
         }
         if ((var_r31->scale.x <= 0.0f) && (var_r31->scale.y <= 0.0f) && (var_r31->scale.z <= 0.0f)) {
             MTXCopy(arg1, spF8);
@@ -3328,14 +3328,14 @@ void fn_1_14088(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
             MTXCopy(spF8, arg3);
             lbl_1_bss_130 = 1;
         }
-        for (var_r25 = 0; var_r25 < arg0->data.childrenCount; var_r25++) {
-            var_r28 = arg0->data.children[var_r25];
+        for (var_r25 = 0; var_r25 < arg0->mesh.childrenCount; var_r25++) {
+            var_r28 = arg0->mesh.children[var_r25];
             if (lbl_1_bss_130 == 0) {
                 if (lbl_1_bss_134 != 0) {
-                    var_r30 = &var_r28->data.curr;
+                    var_r30 = &var_r28->mesh.curr;
                 }
                 else {
-                    var_r30 = &var_r28->data.base;
+                    var_r30 = &var_r28->mesh.base;
                 }
                 if ((var_r30->scale.x <= 0.0f) && (var_r30->scale.y <= 0.0f) && (var_r30->scale.z <= 0.0f)) {
                     MTXCopy(spF8, sp68);
@@ -3355,14 +3355,14 @@ void fn_1_14088(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
                     MTXCopy(sp68, arg3);
                     lbl_1_bss_130 = 1;
                 }
-                for (var_r24 = 0; var_r24 < var_r28->data.childrenCount; var_r24++) {
-                    var_r27 = var_r28->data.children[var_r24];
+                for (var_r24 = 0; var_r24 < var_r28->mesh.childrenCount; var_r24++) {
+                    var_r27 = var_r28->mesh.children[var_r24];
                     if (lbl_1_bss_130 == 0) {
                         if (lbl_1_bss_134 != 0) {
-                            var_r29 = &var_r27->data.curr;
+                            var_r29 = &var_r27->mesh.curr;
                         }
                         else {
-                            var_r29 = &var_r27->data.base;
+                            var_r29 = &var_r27->mesh.base;
                         }
                         if ((var_r29->scale.x <= 0.0f) && (var_r29->scale.y <= 0.0f) && (var_r29->scale.z <= 0.0f)) {
                             MTXCopy(sp68, sp8);
@@ -3382,8 +3382,8 @@ void fn_1_14088(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
                             MTXCopy(sp8, arg3);
                             lbl_1_bss_130 = 1;
                         }
-                        for (var_r23 = 0; var_r23 < var_r27->data.childrenCount; var_r23++) {
-                            fn_1_14088(var_r27->data.children[var_r23], sp8, arg2, arg3);
+                        for (var_r23 = 0; var_r23 < var_r27->mesh.childrenCount; var_r23++) {
+                            fn_1_14088(var_r27->mesh.children[var_r23], sp8, arg2, arg3);
                         }
                     }
                 }

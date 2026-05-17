@@ -446,14 +446,14 @@ void fn_1_1D4C(s32 arg0, s32 arg1, s32 arg2) {
 
 void fn_1_1D8C(s16 arg0) {
     ModelData* var_r28;
-    HsfMaterial* var_r31;
-    HsfData* temp_r30;
+    HSFMATERIAL* var_r31;
+    HSFDATA* temp_r30;
     s16 var_r27;
     s32 i;
 
     var_r28 = &Hu3DData[arg0];
     temp_r30 = var_r28->hsfData;
-    var_r27 = temp_r30->materialCnt;
+    var_r27 = temp_r30->materialNum;
     var_r31 = temp_r30->material;
     for (i = 0; i < var_r27; var_r31++, i++) {
         var_r31->vtxMode = 1;
@@ -749,14 +749,14 @@ void fn_1_2D00(omObjData* arg0, s32 arg1, Vec arg2, float arg3, float arg4, floa
 
 void fn_1_34F4(s16 arg0) {
     ModelData* var_r28;
-    HsfData* temp_r30;
-    HsfMaterial* var_r31;
+    HSFDATA* temp_r30;
+    HSFMATERIAL* var_r31;
     s16 var_r27;
     s32 i;
 
     var_r28 = &Hu3DData[arg0];
     temp_r30 = var_r28->hsfData;
-    var_r27 = temp_r30->materialCnt;
+    var_r27 = temp_r30->materialNum;
     var_r31 = temp_r30->material;
     for (i = 0; i < var_r27; var_r31++, i++) {
         var_r31->vtxMode = 1;
@@ -1164,7 +1164,7 @@ float lbl_1_data_368[8] = {
 
 void fn_1_7244(s16 modelId, char *objName, u32 constFlags, float ofs)
 {
-    HsfObject *obj = Hu3DModelObjPtrGet(modelId, objName);
+    HSFOBJECT *obj = Hu3DModelObjPtrGet(modelId, objName);
     HsfConstData *constData;
     if(!obj->constData) {
         constData = ObjConstantMake(obj, Hu3DData[modelId].unk_48);
@@ -1173,22 +1173,22 @@ void fn_1_7244(s16 modelId, char *objName, u32 constFlags, float ofs)
     }
     constData->flags |= constFlags;
     if(constFlags & 0x10) {
-        obj->data.curr.pos.x += ofs;
+        obj->mesh.curr.pos.x += ofs;
     }
     if(constFlags & 0x20) {
-        obj->data.curr.pos.y += ofs;
+        obj->mesh.curr.pos.y += ofs;
     }
     if(constFlags & 0x40) {
-        obj->data.curr.pos.z += ofs;
+        obj->mesh.curr.pos.z += ofs;
     }
     if(constFlags & 0x80) {
-        obj->data.curr.rot.x += ofs;
+        obj->mesh.curr.rot.x += ofs;
     }
     if(constFlags & 0x100) {
-        obj->data.curr.rot.y += ofs;
+        obj->mesh.curr.rot.y += ofs;
     }
     if(constFlags & 0x200) {
-        obj->data.curr.rot.z += ofs;
+        obj->mesh.curr.rot.z += ofs;
     }
 }
 

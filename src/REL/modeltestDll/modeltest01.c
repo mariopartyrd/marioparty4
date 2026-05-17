@@ -438,16 +438,16 @@ char *lbl_1_data_6F4[] = {
 void fn_1_69C8(s16 arg0, s16 arg1, s16 arg2)
 {
     HsfdrawStruct01 *temp_r31;
-    HsfAttribute *temp_r30;
+    HSFATTRIBUTE *temp_r30;
     ModelData *temp_r29;
     s16 temp_r28;
     char *temp_r27;
     temp_r29 = &Hu3DData[arg1];
     temp_r30 = temp_r29->hsfData->attribute;
     temp_r27 = MakeObjectName(lbl_1_data_6F4[arg2 + (arg0 * 3)]);
-    for (temp_r28 = 0; temp_r28 < temp_r29->hsfData->attributeCnt; temp_r28++, temp_r30++) {
-        if (temp_r30->bitmap->name[0] == temp_r27[0] && strcmp(temp_r30->bitmap->name, temp_r27) == 0 && temp_r30->unk04) {
-            temp_r31 = temp_r30->unk04;
+    for (temp_r28 = 0; temp_r28 < temp_r29->hsfData->attributeNum; temp_r28++, temp_r30++) {
+        if (temp_r30->bitmap->name[0] == temp_r27[0] && strcmp(temp_r30->bitmap->name, temp_r27) == 0 && temp_r30->animWorkP) {
+            temp_r31 = temp_r30->animWorkP;
             temp_r31->unk08 = temp_r31->unk0C = temp_r31->unk10 = 0;
             temp_r31->unk14 = temp_r31->unk18 = temp_r31->unk1C = 0;
         }

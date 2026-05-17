@@ -336,7 +336,7 @@ void fn_1_E74(omObjData *object)
     M418DllUnkStruct3 *temp_r28;
     M418DllUnkStruct4 *temp_r27;
     M418DllUnkStruct6 *temp_r26;
-    HsfObject *temp_r25;
+    HSFOBJECT *temp_r25;
     ModelData *temp_r24;
 
     temp_r26 = &lbl_1_bss_3EC;
@@ -438,7 +438,7 @@ void fn_1_E74(omObjData *object)
     }
     temp_r27 = &lbl_1_bss_170[object->work[0]];
     temp_r25 = Hu3DModelObjPtrGet(object->model[0], "taihou-taihou");
-    temp_r25->data.base.rot.x = temp_r27->unk4;
+    temp_r25->mesh.base.rot.x = temp_r27->unk4;
     temp_r24 = &Hu3DData[object->model[1]];
     temp_r24->rot.x = temp_r27->unk4;
 }

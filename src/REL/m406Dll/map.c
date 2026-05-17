@@ -3248,9 +3248,9 @@ s32 fn_1_CD34(s32 arg0, s32 arg1, s32 arg2)
 
 void fn_1_CDD8(s32 arg0, float arg8, float arg9, float argA, float argB)
 {
-    HsfMaterial *var_r31;
+    HSFMATERIAL *var_r31;
     s32 var_r30;
-    HsfData *var_r29;
+    HSFDATA *var_r29;
     s32 var_r28;
     ModelData *var_r27;
     s32 var_r26;
@@ -3258,7 +3258,7 @@ void fn_1_CDD8(s32 arg0, float arg8, float arg9, float argA, float argB)
     var_r27 = &Hu3DData[arg0];
     var_r29 = var_r27->hsfData;
     var_r31 = var_r29->material;
-    var_r26 = var_r29->materialCnt;
+    var_r26 = var_r29->materialNum;
     for (var_r28 = 0; var_r28 < var_r26; var_r28++, var_r31++) {
         var_r31->vtxMode = 1;
         var_r30 = arg9 * (var_r31->litColor[0] * arg8);
@@ -3281,8 +3281,8 @@ void fn_1_CDD8(s32 arg0, float arg8, float arg9, float argA, float argB)
 
 void fn_1_CF24(s32 arg0, u8 arg1, u8 arg2, u8 arg3)
 {
-    HsfMaterial *var_r31;
-    HsfData *var_r30;
+    HSFMATERIAL *var_r31;
+    HSFDATA *var_r30;
     s32 var_r29;
     ModelData *var_r28;
     s32 var_r27;
@@ -3290,7 +3290,7 @@ void fn_1_CF24(s32 arg0, u8 arg1, u8 arg2, u8 arg3)
     var_r28 = &Hu3DData[arg0];
     var_r30 = var_r28->hsfData;
     var_r31 = var_r30->material;
-    var_r27 = var_r30->materialCnt;
+    var_r27 = var_r30->materialNum;
     for (var_r29 = 0; var_r29 < var_r27; var_r29++, var_r31++) {
         var_r31->vtxMode = 1;
         var_r31->litColor[0] = arg1;
@@ -3302,8 +3302,8 @@ void fn_1_CF24(s32 arg0, u8 arg1, u8 arg2, u8 arg3)
 void fn_1_CF98(s32 arg0, s32 arg1)
 {
     s32 var_r31;
-    HsfData *var_r30;
-    HsfData *var_r29;
+    HSFDATA *var_r30;
+    HSFDATA *var_r29;
     ModelData *var_r28;
     ModelData *var_r27;
 
@@ -3311,10 +3311,10 @@ void fn_1_CF98(s32 arg0, s32 arg1)
     var_r27 = &Hu3DData[arg1];
     var_r29 = var_r28->hsfData;
     var_r30 = var_r27->hsfData;
-    for (var_r31 = 0; var_r31 < var_r30->bitmapCnt; var_r31++) {
+    for (var_r31 = 0; var_r31 < var_r30->bitmapNum; var_r31++) {
         memcpy(&var_r30->bitmap[var_r31], &var_r29->bitmap[var_r31], 0x20);
     }
-    for (var_r31 = 0; var_r31 < var_r30->attributeCnt; var_r31++) {
+    for (var_r31 = 0; var_r31 < var_r30->attributeNum; var_r31++) {
         memcpy(&var_r30->attribute[var_r31], &var_r29->attribute[var_r31], 0x84);
     }
 }

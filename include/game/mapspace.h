@@ -7,7 +7,7 @@
 #include "dolphin.h"
 
 void MapWall(float arg0, float arg1, float arg2, float arg3);
-void MapWallCheck(float *arg0, float *arg1, HsfMapAttr *arg2);
+void MapWallCheck(float *arg0, float *arg1, HSFMAPATTR *arg2);
 float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4);
 BOOL Hitcheck_Triangle_with_Sphere(Vec *arg0, Vec *arg1, float arg2, Vec *arg3);
 BOOL Hitcheck_Quadrangle_with_Sphere(Vec *arg0, Vec *arg1, float arg2, Vec *arg3);

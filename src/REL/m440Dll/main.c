@@ -599,7 +599,7 @@ void fn_1_2428(u16 arg0, u16 arg1)
 void fn_1_2470(omObjData *arg0)
 {
     ModelData *temp_r29;
-    HsfObject *temp_r28;
+    HSFOBJECT *temp_r28;
     f32 temp_f31;
     f32 var_f30;
     f32 var_f29;
@@ -646,9 +646,9 @@ void fn_1_2470(omObjData *arg0)
     temp_r27->unk1C = 5;
     temp_r29 = &Hu3DData[temp_r26];
     temp_r28 = temp_r29->hsfData->root;
-    lbl_1_bss_60 = temp_r28->data.childrenCount;
+    lbl_1_bss_60 = temp_r28->mesh.childrenCount;
     lbl_1_bss_64 = HuMemDirectMalloc(HEAP_DATA, lbl_1_bss_60 * sizeof(unkStruct6));
-    OSReport("Koopa Object Count %d\n", temp_r29->hsfData->objectCnt);
+    OSReport("Koopa Object Count %d\n", temp_r29->hsfData->objectNum);
 
     for (var_r30 = 0; var_r30 < lbl_1_bss_60; var_r30++) {
         lbl_1_bss_64[var_r30].unk20 = 0;
@@ -656,7 +656,7 @@ void fn_1_2470(omObjData *arg0)
 
     for (var_r30 = 0; var_r30 < lbl_1_bss_60; var_r30++) {
         lbl_1_bss_64[var_r30].unk4 = var_r30;
-        fn_1_5C2C(temp_r26, temp_r28->data.children[var_r30], &lbl_1_bss_64[var_r30], 2);
+        fn_1_5C2C(temp_r26, temp_r28->mesh.children[var_r30], &lbl_1_bss_64[var_r30], 2);
         if (lbl_1_bss_64[var_r30].unk20 != 0) {
             Hu3DModelAttrSet(lbl_1_bss_64[var_r30].unk0, HU3D_ATTR_DISPOFF);
             Hu3DModelPosSet(lbl_1_bss_64[var_r30].unk0, 0.0f, 250.0f, 0.0f);
@@ -1316,7 +1316,7 @@ void fn_1_57B4(unkStruct6 *arg0)
     DCFlushRangeNoSync(arg0->unkC, arg0->unk8 * 0xC);
 }
 
-void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
+void fn_1_5C2C(s16 arg0, HSFOBJECT *arg1, unkStruct6 *arg2, u16 arg3)
 {
     Mtx sp68;
     Vec sp44[3];
@@ -1330,7 +1330,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
     HuVec2f *var_r22;
     s16 var_r24;
     s16 var_r23;
-    HsfTransform *var_r25;
+    HSFTRANSFORM *var_r25;
     s16 var_r27;
     ModelData *var_r29;
     s16 var_r28;
@@ -1346,26 +1346,26 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
         var_r29->unk_120 = (ParticleData *)arg2;
         var_r29->unk_58.x = var_r29->unk_58.z = var_r29->unk_58.y = 1.0f;
         arg2->unk2 = arg3;
-        arg2->unk28 = &arg1->data.material[((s16 *)(arg1->data.face->data))[1] & 0xFFF];
-        arg2->unk2C = arg1->data.attribute;
+        arg2->unk28 = &arg1->mesh.material[((s16 *)(arg1->mesh.face->data))[1] & 0xFFF];
+        arg2->unk2C = arg1->mesh.attribute;
         arg2->unk38 = NULL;
         arg2->unk3C = 0xFF;
         arg2->unk3E = 0;
-        arg2->unk18 = HuMemDirectMallocNum(HEAP_DATA, arg1->data.vertex->count * 0xC, var_r29->unk_48);
+        arg2->unk18 = HuMemDirectMallocNum(HEAP_DATA, arg1->mesh.vertex->count * 0xC, var_r29->unk_48);
         fn_1_6554(arg2, arg1);
         fn_1_6B58(arg2, arg1);
         arg2->unkC = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * 0xC, var_r29->unk_48);
         arg2->unk10 = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * 0xC, var_r29->unk_48);
         arg2->unk14 = HuMemDirectMallocNum(HEAP_DATA, arg2->unk8 * 0xC, var_r29->unk_48);
-        if (arg2->unk28->numAttrs != 0) {
-            arg2->unk1C = HuMemDirectMallocNum(HEAP_DATA, arg1->data.st->count * 8, var_r29->unk_48);
-            var_r22 = arg1->data.st->data;
+        if (arg2->unk28->attrNum != 0) {
+            arg2->unk1C = HuMemDirectMallocNum(HEAP_DATA, arg1->mesh.st->count * 8, var_r29->unk_48);
+            var_r22 = arg1->mesh.st->data;
         }
         else {
             arg2->unk1C = NULL;
             var_r22 = NULL;
         }
-        var_r25 = &arg1->data.base;
+        var_r25 = &arg1->mesh.base;
         MTXScale(sp68, var_r25->scale.x, var_r25->scale.y, var_r25->scale.z);
         mtxRotCat(sp68, var_r25->rot.x, var_r25->rot.y, var_r25->rot.z);
         mtxTransCat(sp68, var_r25->pos.x, var_r25->pos.y, var_r25->pos.z);
@@ -1382,14 +1382,14 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
                     var_r27 = arg2->unk24[var_r30].unk18[var_r28];
                     var_r23 = arg2->unk24[var_r30].unk0[var_r28].unk0;
                 }
-                MTXMultVec(sp68, &((Vec *)(arg1->data.vertex->data))[var_r23], &sp38);
+                MTXMultVec(sp68, &((Vec *)(arg1->mesh.vertex->data))[var_r23], &sp38);
                 arg2->unkC[var_r27] = sp38;
                 sp44[var_r28] = arg2->unkC[var_r27];
                 arg2->unk14[var_r27] = arg2->unk18[var_r23];
                 sp2C.x += sp38.x;
                 sp2C.y += sp38.y;
                 sp2C.z += sp38.z;
-                if (arg2->unk28->numAttrs != 0) {
+                if (arg2->unk28->attrNum != 0) {
                     var_r23 = arg2->unk24[var_r30].unk0[var_r28].unk6;
                     var_r27 = var_r23;
                     arg2->unk1C[var_r27].x = var_r22[var_r23].x;
@@ -1409,8 +1409,8 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
         memcpy(arg2->unk10, arg2->unkC, arg2->unk8 * 0xC);
         DCFlushRangeNoSync(arg2->unkC, arg2->unk8 * 0xC);
         DCFlushRangeNoSync(arg2->unk14, arg2->unk8 * 0xC);
-        if (arg2->unk28->numAttrs != 0) {
-            DCFlushRangeNoSync(arg2->unk1C, arg1->data.st->count * 8);
+        if (arg2->unk28->attrNum != 0) {
+            DCFlushRangeNoSync(arg2->unk1C, arg1->mesh.st->count * 8);
         }
         var_r20 = 0;
         var_r19 = var_r21 = HuMemDirectMallocNum(HEAP_DATA, 0x20000, var_r29->unk_48);
@@ -1429,7 +1429,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
                     }
                     GXPosition1x16(var_r27);
                     GXNormal1x16(var_r27);
-                    if (arg2->unk28->numAttrs != 0) {
+                    if (arg2->unk28->attrNum != 0) {
                         GXTexCoord1x16(arg2->unk24[var_r30].unk0[var_r28].unk6);
                     }
                 }
@@ -1440,7 +1440,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
                     }
                     GXPosition1x16(arg2->unk24[var_r30].unk20[var_r24].unk0);
                     GXNormal1x16(arg2->unk24[var_r30].unk20[var_r24].unk0);
-                    if (arg2->unk28->numAttrs != 0) {
+                    if (arg2->unk28->attrNum != 0) {
                         GXTexCoord1x16(arg2->unk24[var_r30].unk20[var_r24].unk6);
                     }
                 }
@@ -1458,7 +1458,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
                     }
                     GXPosition1x16(var_r27);
                     GXNormal1x16(var_r27);
-                    if (arg2->unk28->numAttrs != 0) {
+                    if (arg2->unk28->attrNum != 0) {
                         GXTexCoord1x16(arg2->unk24[var_r30].unk0[var_r28].unk6);
                     }
                 }
@@ -1473,19 +1473,19 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
     }
 }
 
-void fn_1_6554(unkStruct6 *arg0, HsfObject *arg1)
+void fn_1_6554(unkStruct6 *arg0, HSFOBJECT *arg1)
 {
     Vec sp20[3];
     f32 spC[5];
     f32 var_f28;
-    HsfBuffer *temp_r26;
+    HSFBUFFER *temp_r26;
     s16 var_r28;
     s16 var_r29;
     unkStruct10 *var_r30;
 
-    temp_r26 = arg1->data.face;
+    temp_r26 = arg1->mesh.face;
 
-    for (var_r28 = 0; var_r28 < arg1->data.vertex->count; var_r28++) {
+    for (var_r28 = 0; var_r28 < arg1->mesh.vertex->count; var_r28++) {
         arg0->unk18[var_r28].x = 0.0f;
         arg0->unk18[var_r28].y = 0.0f;
         arg0->unk18[var_r28].z = 0.0f;
@@ -1493,9 +1493,9 @@ void fn_1_6554(unkStruct6 *arg0, HsfObject *arg1)
     var_r30 = (unkStruct10 *)temp_r26->data;
 
     for (var_r28 = 0; var_r28 < temp_r26->count; var_r28++, var_r30++) {
-        sp20[0] = ((Vec *)(arg1->data.vertex->data))[var_r30->unk4[0].unk0];
-        sp20[1] = ((Vec *)(arg1->data.vertex->data))[var_r30->unk4[1].unk0];
-        sp20[2] = ((Vec *)(arg1->data.vertex->data))[var_r30->unk4[2].unk0];
+        sp20[0] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->unk4[0].unk0];
+        sp20[1] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->unk4[1].unk0];
+        sp20[2] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->unk4[2].unk0];
         fn_1_91A4(&sp20[0], &sp20[1], &sp20[2], spC);
         spC[0] = -spC[0];
         spC[1] = -spC[1];
@@ -1530,7 +1530,7 @@ void fn_1_6554(unkStruct6 *arg0, HsfObject *arg1)
         }
     }
 
-    for (var_r28 = 0; var_r28 < arg1->data.vertex->count; var_r28++) {
+    for (var_r28 = 0; var_r28 < arg1->mesh.vertex->count; var_r28++) {
         sp20[0].x = arg0->unk18[var_r28].x;
         sp20[0].y = arg0->unk18[var_r28].y;
         sp20[0].z = arg0->unk18[var_r28].z;
@@ -1541,9 +1541,9 @@ void fn_1_6554(unkStruct6 *arg0, HsfObject *arg1)
     }
 }
 
-void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
+void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
 {
-    HsfBuffer *temp_r25;
+    HSFBUFFER *temp_r25;
     s32 var_r28;
     s32 var_r30;
     u8 var_r24;
@@ -1553,7 +1553,7 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
     unkStruct10 *var_r29;
 
     var_r22 = &Hu3DData[arg0->unk0];
-    temp_r25 = arg1->data.face;
+    temp_r25 = arg1->mesh.face;
     var_r24 = ((arg0->unk2 & 1) != 0) ? 1 : 0;
     arg0->unk20 = 0;
 
@@ -1575,7 +1575,7 @@ void fn_1_6B58(unkStruct6 *arg0, HsfObject *arg1)
     arg0->unk24 = HuMemDirectMallocNum(HEAP_DATA, arg0->unk20 * 0xD0, var_r22->unk_48);
     var_r31 = arg0->unk24;
     if (var_r24 != 0) {
-        var_r30 = arg1->data.vertex->count;
+        var_r30 = arg1->mesh.vertex->count;
     }
     else {
         var_r30 = 0;

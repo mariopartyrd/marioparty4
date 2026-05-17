@@ -724,14 +724,14 @@ void fn_1_7978(void)
 
 void fn_1_7A74(s16 arg0)
 {
-    HsfData *var_r31;
-    HsfObject *var_r30;
+    HSFDATA *var_r31;
+    HSFOBJECT *var_r30;
     s16 var_r29;
-    HsfObject *var_r28;
+    HSFOBJECT *var_r28;
     HsfConstData *var_r27;
 
     var_r31 = Hu3DData[arg0].hsfData;
-    for (var_r28 = var_r31->object, var_r29 = 0; var_r29 < var_r31->objectCnt; var_r29++, var_r28++) {
+    for (var_r28 = var_r31->object, var_r29 = 0; var_r29 < var_r31->objectNum; var_r29++, var_r28++) {
         var_r30 = var_r28;
         if (var_r30->constData) {
             var_r27 = var_r30->constData;

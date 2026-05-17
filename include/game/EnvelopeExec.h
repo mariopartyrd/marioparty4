@@ -3,9 +3,9 @@
 
 #include "game/hsfformat.h"
 
-void InitEnvelope(HsfData *arg0);
-void EnvelopeProc(HsfData *arg0);
-void InitVtxParm(HsfData *arg0);
+void InitEnvelope(HSFDATA *arg0);
+void EnvelopeProc(HSFDATA *arg0);
+void InitVtxParm(HSFDATA *arg0);
 
 extern Vec *Vertextop;
 

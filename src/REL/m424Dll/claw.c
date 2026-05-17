@@ -119,7 +119,7 @@ u16 fn_1_B79C(f32, f32, f32);
 s32 fn_1_B9E0(Vec *arg0, Vec *arg1, f32 arg8, Vec *arg2, s32 arg3);
 void fn_1_C604(s32, s32);
 s32 fn_1_C878(s16, const char *, Mtx, s32);
-void fn_1_C99C(HsfObject *, Mtx, const char *, Mtx);
+void fn_1_C99C(HSFOBJECT *, Mtx, const char *, Mtx);
 void fn_1_CE74(s32);
 void fn_1_CF00(Process *);
 void fn_1_CF80(omObjData *);
@@ -1221,7 +1221,7 @@ s32 fn_1_C878(s16 arg0, const char *arg1, Mtx arg2, s32 arg3)
 {
     Mtx sp44;
     Mtx sp14;
-    HsfData *temp_r30;
+    HSFDATA *temp_r30;
     ModelData *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
@@ -1244,7 +1244,7 @@ s32 fn_1_C878(s16 arg0, const char *arg1, Mtx arg2, s32 arg3)
     return lbl_1_bss_6C8;
 }
 
-void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
+void fn_1_C99C(HSFOBJECT *arg0, Mtx arg1, const char *arg2, Mtx arg3)
 {
     Mtx spF8;
     Mtx spC8;
@@ -1252,21 +1252,21 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
     Mtx sp68;
     Mtx sp38;
     Mtx sp8;
-    HsfTransform *var_r31;
-    HsfTransform *var_r30;
-    HsfTransform *var_r29;
-    HsfObject *temp_r28;
-    HsfObject *temp_r27;
+    HSFTRANSFORM *var_r31;
+    HSFTRANSFORM *var_r30;
+    HSFTRANSFORM *var_r29;
+    HSFOBJECT *temp_r28;
+    HSFOBJECT *temp_r27;
     u32 var_r25;
     u32 var_r24;
     u32 var_r23;
 
     if (lbl_1_bss_6C8 == 0) {
         if (lbl_1_bss_6C4 != 0) {
-            var_r31 = &arg0->data.curr;
+            var_r31 = &arg0->mesh.curr;
         }
         else {
-            var_r31 = &arg0->data.base;
+            var_r31 = &arg0->mesh.base;
         }
         if ((var_r31->scale.x <= 0.0f) && (var_r31->scale.y <= 0.0f) && (var_r31->scale.z <= 0.0f)) {
             MTXCopy(arg1, spF8);
@@ -1286,14 +1286,14 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
             MTXCopy(spF8, arg3);
             lbl_1_bss_6C8 = 1;
         }
-        for (var_r25 = 0; var_r25 < arg0->data.childrenCount; var_r25++) {
-            temp_r28 = arg0->data.children[var_r25];
+        for (var_r25 = 0; var_r25 < arg0->mesh.childrenCount; var_r25++) {
+            temp_r28 = arg0->mesh.children[var_r25];
             if (lbl_1_bss_6C8 == 0) {
                 if (lbl_1_bss_6C4 != 0) {
-                    var_r30 = &temp_r28->data.curr;
+                    var_r30 = &temp_r28->mesh.curr;
                 }
                 else {
-                    var_r30 = &temp_r28->data.base;
+                    var_r30 = &temp_r28->mesh.base;
                 }
                 if ((var_r30->scale.x <= 0.0f) && (var_r30->scale.y <= 0.0f) && (var_r30->scale.z <= 0.0f)) {
                     MTXCopy(spF8, sp68);
@@ -1313,14 +1313,14 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
                     MTXCopy(sp68, arg3);
                     lbl_1_bss_6C8 = 1;
                 }
-                for (var_r24 = 0; var_r24 < temp_r28->data.childrenCount; var_r24++) {
-                    temp_r27 = temp_r28->data.children[var_r24];
+                for (var_r24 = 0; var_r24 < temp_r28->mesh.childrenCount; var_r24++) {
+                    temp_r27 = temp_r28->mesh.children[var_r24];
                     if (lbl_1_bss_6C8 == 0) {
                         if (lbl_1_bss_6C4 != 0) {
-                            var_r29 = &temp_r27->data.curr;
+                            var_r29 = &temp_r27->mesh.curr;
                         }
                         else {
-                            var_r29 = &temp_r27->data.base;
+                            var_r29 = &temp_r27->mesh.base;
                         }
                         if ((var_r29->scale.x <= 0.0f) && (var_r29->scale.y <= 0.0f) && (var_r29->scale.z <= 0.0f)) {
                             MTXCopy(sp68, sp8);
@@ -1340,8 +1340,8 @@ void fn_1_C99C(HsfObject *arg0, Mtx arg1, const char *arg2, Mtx arg3)
                             MTXCopy(sp8, arg3);
                             lbl_1_bss_6C8 = 1;
                         }
-                        for (var_r23 = 0; var_r23 < temp_r27->data.childrenCount; var_r23++) {
-                            fn_1_C99C(temp_r27->data.children[var_r23], sp8, arg2, arg3);
+                        for (var_r23 = 0; var_r23 < temp_r27->mesh.childrenCount; var_r23++) {
+                            fn_1_C99C(temp_r27->mesh.children[var_r23], sp8, arg2, arg3);
                         }
                     }
                 }
@@ -1361,7 +1361,7 @@ void fn_1_CE74(s32 arg0)
     if (temp_r31->unk_0C != -1) {
         Hu3DSubMotionExec(arg0);
     }
-    if (temp_r31->hsfData->cenvCnt != 0) {
+    if (temp_r31->hsfData->cenvNum != 0) {
         EnvelopeProc(temp_r31->hsfData);
     }
 }

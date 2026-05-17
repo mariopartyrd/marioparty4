@@ -16,7 +16,7 @@ typedef struct {
     /* 0x20 */ Vec unk20;
 } HsfexStruct02; // Size 0x2C
 
-static void SetObjCamMotion(s16 arg0, HsfTrack *arg1, float arg2, HsfexStruct02 *arg3);
+static void SetObjCamMotion(s16 arg0, HSFTRACK *arg1, float arg2, HsfexStruct02 *arg3);
 
 void CamMotionEx2(s16 arg0, s16 arg1, float arg2, s16 arg3) {
     CameraData *temp_r30;
@@ -47,14 +47,14 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
     HsfexStruct02 *var_r31;
     CameraData *temp_r27;
     ModelData *temp_r23;
-    HsfData *temp_r22;
+    HSFDATA *temp_r22;
     MotionData *temp_r19;
-    HsfData *temp_r18;
-    HsfObject *temp_r24;
-    HsfTrack *temp_r20;
-    HsfMotion *temp_r26;
+    HSFDATA *temp_r18;
+    HSFOBJECT *temp_r24;
+    HSFTRACK *temp_r20;
+    HSFMOTION *temp_r26;
     HsfexStruct02 *temp_r21;
-    HsfTrack *var_r28;
+    HSFTRACK *var_r28;
 
     temp_r23 = &Hu3DData[arg0];
     temp_r19 = &Hu3DMotion[temp_r23->unk_08];
@@ -67,7 +67,7 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
         }
     }
     temp_r27 = &Hu3DCamera[var_r25];
-    temp_f29 = temp_r26->len;
+    temp_f29 = temp_r26->maxTime;
     sp1A = 0.5f + (temp_f29 / 6.0f) + 1.0f;
     var_r31 = temp_r21 = HuMemDirectMallocNum(HEAP_SYSTEM, (sp1A + 1) * sizeof(HsfexStruct02), MEMORY_DEFAULT_NUM);
     var_r31->unk00 = 0.0f;
@@ -319,7 +319,7 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
     HuMemDirectFree(temp_r21);
 }
 
-static void SetObjCamMotion(s16 arg0, HsfTrack *arg1, float arg2, HsfexStruct02 *arg3) {
+static void SetObjCamMotion(s16 arg0, HSFTRACK *arg1, float arg2, HsfexStruct02 *arg3) {
     ModelData *temp_r31 = &Hu3DData[arg0];
     Vec sp18;
     Vec spC;

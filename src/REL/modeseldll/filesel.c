@@ -607,10 +607,10 @@ s32 fn_1_562C(void)
 void fn_1_57C8(s16 arg0)
 {
     ModelData *model = &Hu3DData[arg0];
-    HsfData *hsf = model->hsfData;
-    HsfMaterial *mat = hsf->material;
+    HSFDATA *hsf = model->hsfData;
+    HSFMATERIAL *mat = hsf->material;
     s16 i;
-    for (i = 0; i < hsf->materialCnt; i++, mat++) {
+    for (i = 0; i < hsf->materialNum; i++, mat++) {
         mat->invAlpha = 0.0f;
         mat->pass &= 0xF0;
     }

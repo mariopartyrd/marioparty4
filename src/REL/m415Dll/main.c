@@ -352,7 +352,7 @@ void fn_1_1524(s16 arg0, char *arg1, f32 arg8, Mtx arg2)
     if (temp_r31->unk_0C != -1) {
         Hu3DSubMotionExec(arg0);
     }
-    if (temp_r31->hsfData->cenvCnt != 0) {
+    if (temp_r31->hsfData->cenvNum != 0) {
         EnvelopeProc(temp_r31->hsfData);
     }
     Hu3DModelObjMtxGet(arg0, arg1, arg2);
@@ -1506,11 +1506,11 @@ void fn_1_64DC(void)
 void fn_1_6584(s16 arg0, char *arg1, u8 arg2, u8 arg3, u8 arg4)
 {
     char sp13[0x100];
-    HsfObject *var_r31;
-    HsfMaterial *temp_r30;
-    HsfData *temp_r29;
-    HsfBuffer *temp_r28;
-    HsfObject *var_r26;
+    HSFOBJECT *var_r31;
+    HSFMATERIAL *temp_r30;
+    HSFDATA *temp_r29;
+    HSFBUFFER *temp_r28;
+    HSFOBJECT *var_r26;
     s32 var_r25;
     s32 var_r27;
 
@@ -1518,13 +1518,13 @@ void fn_1_6584(s16 arg0, char *arg1, u8 arg2, u8 arg3, u8 arg4)
     var_r26 = temp_r29->object;
     strcpy(&sp13, MakeObjectName(arg1));
 
-    for (var_r25 = 0; var_r25 < temp_r29->objectCnt; var_r25++, var_r26++) {
+    for (var_r25 = 0; var_r25 < temp_r29->objectNum; var_r25++, var_r26++) {
         var_r31 = var_r26;
-        temp_r28 = var_r31->data.face;
+        temp_r28 = var_r31->mesh.face;
         if (var_r31->constData && strcmp(&sp13, var_r31->name) == 0) {
 
             for (var_r27 = 0; var_r27 < temp_r28->count; var_r27++) {
-                temp_r30 = &var_r31->data.material[((HsfFace *)temp_r28->data)[var_r27].mat & 0xFFF];
+                temp_r30 = &var_r31->mesh.material[((HSFFACE *)temp_r28->data)[var_r27].mat & 0xFFF];
                 temp_r30->color[0] = arg2;
                 temp_r30->color[1] = arg3;
                 temp_r30->color[2] = arg4;

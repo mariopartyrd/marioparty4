@@ -1844,7 +1844,7 @@ void fn_1_77E4(s32 shadowNo)
                     if (model->attr & 0x400) {
                         ClusterProc(model);
                     }
-                    if (model->hsfData->cenvCnt) {
+                    if (model->hsfData->cenvNum) {
                         EnvelopeProc(model->hsfData);
                     }
                     PPCSync();

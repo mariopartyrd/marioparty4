@@ -53,8 +53,8 @@ void Hu3DAnimInit(void) {
 
 s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
     Hu3DTexAnimDataStruct *var_r31;
-    HsfAttribute *var_r29;
-    HsfData *temp_r27;
+    HSFATTRIBUTE *var_r29;
+    HSFDATA *temp_r27;
     HsfdrawStruct01 *var_r30;
     s16 i;
     s16 var_r25;
@@ -72,14 +72,14 @@ s16 Hu3DAnimCreate(void *arg0, s16 arg1, char *arg2) {
     }
     temp_r27 = Hu3DData[arg1].hsfData;
     var_r29 = temp_r27->attribute;
-    for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
+    for (i = var_r25 = 0; i < temp_r27->attributeNum; i++, var_r29++) {
         if (strcmp(arg2, var_r29->bitmap->name) == 0) {
-            if (!var_r29->unk04) {
+            if (!var_r29->animWorkP) {
                 var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg1].unk_48);
-                var_r29->unk04 = var_r30;
+                var_r29->animWorkP = var_r30;
                 var_r30->unk00 = 0;
             } else {
-                var_r30 = var_r29->unk04;
+                var_r30 = var_r29->animWorkP;
             }
             var_r30->unk00 |= 1;
             var_r30->unk02 = var_r28;
@@ -110,8 +110,8 @@ s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
     Hu3DTexAnimDataStruct *var_r24 = &Hu3DTexAnimData[arg0];
     Hu3DTexAnimDataStruct *var_r31;
     AnimData *temp_r4;
-    HsfAttribute *var_r29;
-    HsfData *temp_r27;
+    HSFATTRIBUTE *var_r29;
+    HSFDATA *temp_r27;
     HsfdrawStruct01 *var_r30;
     s16 var_r28;
     s16 i;
@@ -129,13 +129,13 @@ s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
     }
     temp_r27 = Hu3DData[arg1].hsfData;
     var_r29 = temp_r27->attribute;
-    for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
+    for (i = var_r25 = 0; i < temp_r27->attributeNum; i++, var_r29++) {
         if (strcmp(arg2, var_r29->bitmap->name) == 0) {
-            if (!var_r29->unk04) {
+            if (!var_r29->animWorkP) {
                 var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg1].unk_48);
-                var_r29->unk04 = var_r30;
+                var_r29->animWorkP = var_r30;
             } else {
-                var_r30 = var_r29->unk04;
+                var_r30 = var_r29->animWorkP;
             }
             var_r30->unk02 = var_r28;
             var_r30->unk2C = var_r30->unk30 = 1.0f;
@@ -160,20 +160,20 @@ s16 Hu3DAnimLink(s16 arg0, s16 arg1, char *arg2) {
 
 void Hu3DAnimKill(s16 arg0) {
     Hu3DTexAnimDataStruct *temp_r31 = &Hu3DTexAnimData[arg0];
-    HsfData *temp_r28 = Hu3DData[temp_r31->unk06].hsfData;
-    HsfAttribute *var_r30;
+    HSFDATA *temp_r28 = Hu3DData[temp_r31->unk06].hsfData;
+    HSFATTRIBUTE *var_r30;
     HsfdrawStruct01 *temp_r29;
     s16 i;
 
     if (temp_r28) {
         var_r30 = temp_r28->attribute;
-        for (i = 0; i < temp_r28->attributeCnt; i++, var_r30++) {
-            if (var_r30->unk04) {
-                temp_r29 = var_r30->unk04;
+        for (i = 0; i < temp_r28->attributeNum; i++, var_r30++) {
+            if (var_r30->animWorkP) {
+                temp_r29 = var_r30->animWorkP;
                 if (temp_r29->unk02 == arg0) {
                     temp_r29->unk00 &= ~1;
                     if (temp_r29->unk00 == 0) {
-                        var_r30->unk04 = NULL;
+                        var_r30->animWorkP = NULL;
                         HuMemDirectFree(temp_r29);
                     }
                 }
@@ -241,7 +241,7 @@ void Hu3DAnmNoSet(s16 arg0, u16 arg1) {
     temp_r31->unk08 = 0.0f;
 }
 
-s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2) {
+s32 Hu3DAnimSet(ModelData *arg0, HSFATTRIBUTE *arg1, s16 arg2) {
     HsfdrawStruct01 *temp_r30;
     Hu3DTexAnimDataStruct *temp_r29;
     AnimData *temp_r27;
@@ -252,15 +252,15 @@ s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2) {
     s16 var_r23;
     s16 var_r22;
 
-    temp_r30 = arg1->unk04;
+    temp_r30 = arg1->animWorkP;
     temp_r29 = &Hu3DTexAnimData[temp_r30->unk02];
     temp_r27 = temp_r29->unk10;
     temp_r24 = temp_r27->bank[temp_r29->unk02].frame[temp_r29->unk04].pat;
     if (temp_r24 == -1) {
         return 0;
     }
-    var_r23 = (arg1->wrap_s == 1) ? 1 : 0;
-    var_r22 = (arg1->wrap_t == 1) ? 1 : 0;
+    var_r23 = (arg1->wrapS == 1) ? 1 : 0;
+    var_r22 = (arg1->wrapT == 1) ? 1 : 0;
     temp_r25 = &temp_r27->pat[temp_r24];
     temp_r31 = temp_r25->layer;
     temp_r28 = &temp_r27->bmp[temp_r31->bmpNo];
@@ -357,8 +357,8 @@ void Hu3DAnimExec(void) {
 
 s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
     Hu3DTexScrDataStruct *var_r31;
-    HsfData *temp_r27;
-    HsfAttribute *var_r29;
+    HSFDATA *temp_r27;
+    HSFATTRIBUTE *var_r29;
     HsfdrawStruct01 *var_r30;
     s16 i;
     s16 var_r25;
@@ -376,14 +376,14 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
     }
     temp_r27 = Hu3DData[arg0].hsfData;
     var_r29 = temp_r27->attribute;
-    for (i = var_r25 = 0; i < temp_r27->attributeCnt; i++, var_r29++) {
+    for (i = var_r25 = 0; i < temp_r27->attributeNum; i++, var_r29++) {
         if (strcmp(arg1, var_r29->bitmap->name) == 0) {
-            if (!var_r29->unk04) {
+            if (!var_r29->animWorkP) {
                 var_r30 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), (u32) Hu3DData[arg0].unk_48);
-                var_r29->unk04 = var_r30;
+                var_r29->animWorkP = var_r30;
                 var_r30->unk00 = 0;
             } else {
-                var_r30 = var_r29->unk04;
+                var_r30 = var_r29->animWorkP;
             }
             var_r30->unk00 |= 2;
             var_r30->unk04 = var_r28;
@@ -406,20 +406,20 @@ s16 Hu3DTexScrollCreate(s16 arg0, char *arg1) {
 
 void Hu3DTexScrollKill(s16 arg0) {
     Hu3DTexScrDataStruct *temp_r28 = &Hu3DTexScrData[arg0];
-    HsfData *temp_r29 = Hu3DData[temp_r28->unk02].hsfData;
-    HsfAttribute *var_r31;
+    HSFDATA *temp_r29 = Hu3DData[temp_r28->unk02].hsfData;
+    HSFATTRIBUTE *var_r31;
     HsfdrawStruct01 *temp_r30;
     s16 i;
 
     if (temp_r29) {
         var_r31 = temp_r29->attribute;
-        for (i = 0; i < temp_r29->attributeCnt; i++, var_r31++) {
-            if (var_r31->unk04) {
-                temp_r30 = var_r31->unk04;
+        for (i = 0; i < temp_r29->attributeNum; i++, var_r31++) {
+            if (var_r31->animWorkP) {
+                temp_r30 = var_r31->animWorkP;
                 if (temp_r30->unk04 == arg0) {
                     temp_r30->unk00 &= ~2;
                     if (temp_r30->unk00 == 0) {
-                        var_r31->unk04 = NULL;
+                        var_r31->animWorkP = NULL;
                         HuMemDirectFree(temp_r30);
                     }
                 }

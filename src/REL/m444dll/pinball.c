@@ -1141,19 +1141,19 @@ void fn_1_D1E0(s16 model)
     Vec sp8;
     s32 temp_r31;
     s32 temp_r30;
-    HsfData *temp_r29;
-    HsfBuffer *temp_r28;
-    HsfFace *temp_r27;
+    HSFDATA *temp_r29;
+    HSFBUFFER *temp_r28;
+    HSFFACE *temp_r27;
     s32 temp_r26;
     s32 temp_r25;
     s32 temp_r24;
     s32 temp_r23;
-    HsfBuffer *temp_r22;
+    HSFBUFFER *temp_r22;
     temp_r29 = Hu3DData[model].hsfData;
     lbl_1_bss_77C.x = lbl_1_bss_77C.y = -100000;
     lbl_1_bss_770.x = lbl_1_bss_770.y = 100000;
     temp_r28 = temp_r29->face;
-    for (temp_r24 = temp_r31 = 0; temp_r24 < temp_r29->faceCnt; temp_r24++, temp_r28++) {
+    for (temp_r24 = temp_r31 = 0; temp_r24 < temp_r29->faceNum; temp_r24++, temp_r28++) {
         temp_r27 = temp_r28->data;
         for (temp_r23 = 0; temp_r23 < temp_r28->count; temp_r23++, temp_r27++) {
             switch (temp_r27->type & 0x7) {

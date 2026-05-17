@@ -29,44 +29,46 @@
 #define HSF_CURVE_BITMAP 3
 #define HSF_CURVE_CONST 4
 
-typedef struct hsf_section {
+typedef struct HsfObject_s HSFOBJECT;
+
+typedef struct HsfSection_s {
     s32 ofs;
     s32 count;
-} HsfSection;
+} HSFSECTION;
 
 typedef struct hsf_header {
     char magic[8];
-    HsfSection scene;
-    HsfSection color;
-    HsfSection material;
-    HsfSection attribute;
-    HsfSection vertex;
-    HsfSection normal;
-    HsfSection st;
-    HsfSection face;
-    HsfSection object;
-    HsfSection bitmap;
-    HsfSection palette;
-    HsfSection motion;
-    HsfSection cenv;
-    HsfSection skeleton;
-    HsfSection part;
-    HsfSection cluster;
-    HsfSection shape;
-    HsfSection mapAttr;
-    HsfSection matrix;
-    HsfSection symbol;
-    HsfSection string;
-} HsfHeader;
+    HSFSECTION scene;
+    HSFSECTION color;
+    HSFSECTION material;
+    HSFSECTION attribute;
+    HSFSECTION vertex;
+    HSFSECTION normal;
+    HSFSECTION st;
+    HSFSECTION face;
+    HSFSECTION object;
+    HSFSECTION bitmap;
+    HSFSECTION palette;
+    HSFSECTION motion;
+    HSFSECTION cenv;
+    HSFSECTION skeleton;
+    HSFSECTION part;
+    HSFSECTION cluster;
+    HSFSECTION shape;
+    HSFSECTION mapAttr;
+    HSFSECTION matrix;
+    HSFSECTION symbol;
+    HSFSECTION string;
+} HSFHEADER;
 
-typedef struct hsf_scene {
+typedef struct HsfScene_s {
     GXFogType fogType;
-    f32 start;
-    f32 end;
+    float fogStart;
+    float fogEnd;
     GXColor color;
-} HsfScene;
+} HSFSCENE;
 
-typedef struct hsf_bitmap {
+typedef struct HsfBitmap_s {
     char *name;
     u32 maxLod;
     u8 dataFmt;
@@ -75,42 +77,40 @@ typedef struct hsf_bitmap {
     s16 sizeY;
     s16 palSize;
     GXColor tint;
-    void *palData;
+    u16 *palData;
     u32 unk;
     void *data;
-} HsfBitmap;
+} HSFBITMAP;
 
-typedef struct hsf_palette {
+typedef struct HsfPalette_s {
     char *name;
     s32 unk;
     u32 palSize;
     u16 *data;
-} HsfPalette;
+} HSFPALETTE;
 
-typedef struct hsf_attribute {
+typedef struct HsfAttribute_s {
     char *name;
-    struct hsfdraw_struct_01 *unk04;
+    struct hsfdraw_struct_01 *animWorkP;
     u8 unk8[4];
-    float unk0C;
+    float kColor;
     u8 unk10[4];
-    float unk14;
+    float nbtTpLvl;
     u8 unk18[8];
     float unk20;
     u8 unk24[4];
-    float unk28;
-    float unk2C;
-    float unk30;
-    float unk34;
+    HuVec2f scale;
+    HuVec2f trans;
     u8 unk38[44];
-    u32 wrap_s;
-    u32 wrap_t;
+    u32 wrapS;
+    u32 wrapT;
     u8 unk6C[12];
-    u32 unk78;
+    u32 maxLod;
     u32 flag;
-    HsfBitmap *bitmap;
-} HsfAttribute;
+    HSFBITMAP *bitmap;
+} HSFATTRIBUTE;
 
-typedef struct hsf_material {
+typedef struct HsfMaterial_s {
     char *name;
     u8 unk4[4];
     u16 pass;
@@ -118,24 +118,25 @@ typedef struct hsf_material {
     u8 litColor[3];
     u8 color[3];
     u8 shadowColor[3];
-    float hilite_scale;
+    float hiliteScale;
     float unk18;
     float invAlpha;
     float unk20[2];
     float refAlpha;
     float unk2C;
     u32 flags;
-    u32 numAttrs;
-    s32 *attrs;
-} HsfMaterial;
+    u32 attrNum;
+    s32 *attr;
+} HSFMATERIAL;
 
-typedef struct hsf_vertex_buf {
+typedef struct HsfBuffer_s {
     char *name;
     s32 count;
     void *data;
-} HsfBuffer;
+} HSFBUFFER;
 
-typedef struct hsf_face {
+// TODO port indexing from MP5
+typedef struct HsfFace_s {
     s16 type;
     s16 mat;
     union {
@@ -147,101 +148,100 @@ typedef struct hsf_face {
         s16 indices[4][4];
     };
     Vec nbt;
-} HsfFace;
+} HSFFACE;
 
-typedef struct hsf_transform {
-    Vec pos;
-    Vec rot;
-    Vec scale;
-} HsfTransform;
+typedef struct HsfTransform_s {
+    HuVecF pos;
+    HuVecF rot;
+    HuVecF scale;
+} HSFTRANSFORM;
 
-typedef struct hsf_cenv_single {
+typedef struct HsfCenvSingle_s {
     u32 target;
     u16 pos;
-    u16 posCnt;
+    u16 posNum;
     u16 normal;
-    u16 normalCnt;
-} HsfCenvSingle;
+    u16 normalNum;
+} HSFCENVSINGLE;
 
-typedef struct hsf_cenv_dual_weight {
+typedef struct HsfCenvDualWeight_s {
     float weight;
     u16 pos;
-    u16 posCnt;
+    u16 posNum;
     u16 normal;
-    u16 normalCnt;
-} HsfCenvDualWeight;
+    u16 normalNum;
+} HSFCENVDUALWEIGHT;
 
-typedef struct hsf_cenv_dual {
+typedef struct HsfCenvDual_s {
     u32 target1;
     u32 target2;
-    u32 weightCnt;
-    HsfCenvDualWeight *weight;
-} HsfCenvDual;
+    u32 weightNum;
+    HSFCENVDUALWEIGHT *weight;
+} HSFCENVDUAL;
 
-typedef struct hsf_cenv_multi_weight {
+typedef struct HsfCenvMultiWeight_s {
     u32 target;
     float value;
-} HsfCenvMultiWeight;
+} HSFCENVMULTIWEIGHT;
 
-typedef struct hsf_cenv_multi {
-    u32 weightCnt;
+typedef struct HsfCenvMulti_s {
+    u32 weightNum;
     u16 pos;
-    u16 posCnt;
+    u16 posNum;
     u16 normal;
-    u16 normalCnt;
-    HsfCenvMultiWeight *weight;
+    u16 normalNum;
+    HSFCENVMULTIWEIGHT *weight;
 } HsfCenvMulti;
 
-typedef struct hsf_cenv {
+typedef struct HsfCenv_s {
     char *name;
-    HsfCenvSingle *singleData;
-    HsfCenvDual *dualData;
+    HSFCENVSINGLE *singleData;
+    HSFCENVDUAL *dualData;
     HsfCenvMulti *multiData;
     u32 singleCount;
     u32 dualCount;
     u32 multiCount;
     u32 vtxCount;
     u32 copyCount;
-} HsfCenv;
+} HSFCENV;
 
-typedef struct hsf_part {
+typedef struct HsfPart_s {
     char *name;
-    u32 count;
+    u32 num;
     u16 *vertex;
 } HsfPart;
 
-typedef struct hsf_cluster {
+typedef struct HsfCluster_s {
     char *name[2];
     union {
         char *targetName;
         s32 target;
     };
     HsfPart *part;
-    float unk10;
-    float unk14[1]; // unknown array size
-    u8 unk18[124];
+    float index;
+    float weight[32];
     u8 adjusted;
     u8 unk95;
     u16 type;
-    u32 vertexCnt;
-    HsfBuffer **vertex;
+    u32 vertexNum;
+    HSFBUFFER **vertex;
 } HsfCluster;
 
-typedef struct hsf_shape {
+typedef struct HsfShape_s {
     char *name;
     union {
-        u16 count16[2];
-        u32 vertexCnt;
+        u16 num16[2];
+        u32 vertexNum;
     };
-    HsfBuffer **vertex;
+    HSFBUFFER **vertex;
 } HsfShape;
 
-typedef struct hsf_object_data {
-    struct hsf_object *parent;
+typedef struct HsfMesh_s {
+    HSFOBJECT *parent;
     u32 childrenCount;
-    struct hsf_object **children;
-    HsfTransform base;
-    HsfTransform curr;
+    HSFOBJECT **children;
+    HSFTRANSFORM base;
+    HSFTRANSFORM curr;
     union {
         struct {
             HuVecF min;
@@ -249,36 +249,37 @@ typedef struct hsf_object_data {
             float baseMorph;
             float morphWeight[33];
         } mesh;
-        struct hsf_object *replica;
+        HSFOBJECT *replica;
     };
     
-    HsfBuffer *face;
-    HsfBuffer *vertex;
-    HsfBuffer *normal;
-    HsfBuffer *color;
-    HsfBuffer *st;
-    HsfMaterial *material;
-    HsfAttribute *attribute;
-    u8 unk120[2];
+    HSFBUFFER *face;
+    HSFBUFFER *vertex;
+    HSFBUFFER *normal;
+    HSFBUFFER *color;
+    HSFBUFFER *st;
+    HSFMATERIAL *material;
+    HSFATTRIBUTE *attribute;
+    u8 writeNum;
+    u8 unk121;
     u8 shapeType;
-    u8 unk123;
-    u32 vertexShapeCnt;
-    HsfBuffer **vertexShape;
-    u32 clusterCnt;
+    u8 matPass;
+    u32 shapeNum;
+    HSFBUFFER **shape;
+    u32 clusterNum;
     HsfCluster **cluster;
-    u32 cenvCnt;
-    HsfCenv *cenv;
+    u32 cenvNum;
+    HSFCENV *cenv;
     void *file[2];
-} HsfObjectData;
+} HSFMESH;
 
 typedef struct hsf_camera {
-    HuVecF target;
     HuVecF pos;
-    float aspect_dupe;
+    HuVecF target;
+    float upRot;
     float fov;
     float near;
     float far;
-} HsfCamera;
+} HSFCAMERA;
 
 typedef struct hsf_light {
     HuVecF pos;
@@ -291,121 +292,124 @@ typedef struct hsf_light {
     float ref_distance;
     float ref_brightness;
     float cutoff;
-} HsfLight;
+} HSFLIGHT;
 
-typedef struct hsf_object {
+struct HsfObject_s {
     char *name;
     u32 type;
     void *constData;
     u32 flags;
     union {
-        HsfObjectData data;
-        HsfCamera camera;
-        HsfLight light;
+        HSFMESH mesh;
+        HSFCAMERA camera;
+        HSFLIGHT light;
     };
-} HsfObject;
+};
 
-typedef struct hsf_skeleton {
+typedef struct HsfSkeleton_s {
     char *name;
-    HsfTransform transform;
-} HsfSkeleton;
+    HSFTRANSFORM transform;
+} HSFSKELETON;
 
-typedef struct hsf_bitmap_keyframe {
+typedef struct HsfBitmapKey_s {
     float time;
-    HsfBitmap *data;
-} HsfBitmapKey;
+    HSFBITMAP *data;
+} HSFBITMAPKEY;
 
-typedef struct hsf_track {
+typedef struct HsfTrack_s {
     u8 type;
     u8 start;
     union {
         u16 target;
-        s16 target_s16;
+        s16 cluster;
     };
     union {
-        s32 unk04;
+        s32 clusterWeight;
         struct {
             union {
-                s16 param;
-                u16 param_u16;
+                s16 attrIdx;
+                u16 index;
             };
             union {
                 u16 channel;
-                s16 channel_s16;
+                s16 morphWeight;
             };
         };
     };
     u16 curveType;
-    u16 numKeyframes;
+    union {
+        u16 numKeyframes;
+        s16 dataNum;
+    };
     union {
         float value;
         void *data;
     };
-} HsfTrack;
+} HSFTRACK;
 
-typedef struct hsf_motion {
+typedef struct HsfMotion_s {
     char *name;
     s32 numTracks;
-    HsfTrack *track;
-    float len;
-} HsfMotion;
+    HSFTRACK *track;
+    float maxTime;
+} HSFMOTION;
 
-typedef struct hsf_map_attr {
+typedef struct HsfMapAttr_s {
     float minX;
     float minZ;
     float maxX;
     float maxZ;
     u16 *data;
     u32 dataLen;
-} HsfMapAttr;
+} HSFMAPATTR;
 
-typedef struct hsf_matrix {
+typedef struct HsfMatrix_s {
     u32 base_idx;
     u32 count;
     Mtx *data;
-} HsfMatrix;
+} HSFMATRIX;
 
-typedef struct hsf_data {
+typedef struct HsfData_s {
     u8 magic[8];
-    HsfScene *scene;
-    HsfAttribute *attribute;
-    HsfMaterial *material;
-    HsfBuffer *vertex;
-    HsfBuffer *normal;
-    HsfBuffer *st;
-    HsfBuffer *color;
-    HsfBuffer *face;
-    HsfBitmap *bitmap;
-    HsfPalette *palette;
-    HsfObject *root;
-    HsfCenv *cenv;
-    HsfSkeleton *skeleton;
+    HSFSCENE *scene;
+    HSFATTRIBUTE *attribute;
+    HSFMATERIAL *material;
+    HSFBUFFER *vertex;
+    HSFBUFFER *normal;
+    HSFBUFFER *st;
+    HSFBUFFER *color;
+    HSFBUFFER *face;
+    HSFBITMAP *bitmap;
+    HSFPALETTE *palette;
+    HSFOBJECT *root;
+    HSFCENV *cenv;
+    HSFSKELETON *skeleton;
     HsfCluster *cluster;
     HsfPart *part;
     HsfShape *shape;
-    HsfMotion *motion;
-    HsfObject *object;
-    HsfMapAttr *mapAttr;
-    HsfMatrix *matrix;
-    s16 sceneCnt;
-    s16 attributeCnt;
-    s16 materialCnt;
-    s16 vertexCnt;
-    s16 normalCnt;
-    s16 stCnt;
-    s16 colorCnt;
-    s16 faceCnt;
-    s16 bitmapCnt;
-    s16 paletteCnt;
-    s16 objectCnt;
-    s16 cenvCnt;
-    s16 skeletonCnt;
-    s16 clusterCnt;
-    s16 partCnt;
-    s16 shapeCnt;
-    s16 mapAttrCnt;
-    s16 motionCnt;
-    s16 matrixCnt;
-} HsfData;
+    HSFMOTION *motion;
+    HSFOBJECT *object;
+    HSFMAPATTR *mapAttr;
+    HSFMATRIX *matrix;
+    s16 sceneNum;
+    s16 attributeNum;
+    s16 materialNum;
+    s16 vertexNum;
+    s16 normalNum;
+    s16 stNum;
+    s16 colorNum;
+    s16 faceNum;
+    s16 bitmapNum;
+    s16 paletteNum;
+    s16 objectNum;
+    s16 cenvNum;
+    s16 skeletonNum;
+    s16 clusterNum;
+    s16 partNum;
+    s16 shapeNum;
+    s16 mapAttrNum;
+    s16 motionNum;
+    s16 matrixNum;
+} HSFDATA;
 
 #endif

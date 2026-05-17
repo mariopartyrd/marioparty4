@@ -2441,7 +2441,7 @@ void fn_1_6594(void)
 
 void fn_1_65E4(omObjData *object)
 {
-    HsfData *sp8;
+    HSFDATA *sp8;
 
     UnkM426Struct6 *var_r31;
     s32 var_r30;
@@ -3476,16 +3476,16 @@ void fn_1_995C(s16 arg0)
     UnkM426Struct11 sp8;
 
     UnkM426Struct12 *var_r31;
-    HsfBuffer *var_r30;
+    HSFBUFFER *var_r30;
     ModelData *var_r29;
-    HsfData *var_r28;
+    HSFDATA *var_r28;
     s32 var_r27;
     s32 var_r26;
 
     var_r29 = &Hu3DData[arg0];
     var_r28 = var_r29->hsfData;
     var_r30 = var_r28->face;
-    for (var_r27 = 0; var_r27 < var_r28->faceCnt; var_r27++, var_r30++) {
+    for (var_r27 = 0; var_r27 < var_r28->faceNum; var_r27++, var_r30++) {
         var_r31 = var_r30->data;
         for (var_r26 = 0; var_r26 < var_r30->count; var_r26++, var_r31++) {
             switch (var_r31->unk_00 & 7) {

@@ -5669,10 +5669,10 @@ void fn_1_186A8(void)
     s32 var_r31;
     UnkM450Struct5 *var_r30;
     UnkM450Struct3 *var_r29;
-    HsfBuffer *var_r28;
+    HSFBUFFER *var_r28;
     s32 var_r27;
     ModelData *var_r26;
-    HsfObject *var_r25;
+    HSFOBJECT *var_r25;
 
     if (lbl_1_bss_C4 >= 0) {
         var_r30 = lbl_1_bss_138->data;
@@ -5691,7 +5691,7 @@ void fn_1_186A8(void)
                 Hu3DModelTPLvlSet(lbl_1_bss_1A0->model[28], 0.0f);
                 var_r26 = &Hu3DData[lbl_1_bss_1A0->model[28]];
                 var_r25 = var_r26->hsfData->object;
-                var_r28 = var_r25->data.vertex;
+                var_r28 = var_r25->mesh.vertex;
                 for (var_r31 = 0; var_r31 < 3; var_r31++) {
                     ((Vec *)var_r28->data)[var_r31].x = lbl_1_data_1450[lbl_1_bss_B8[var_r31]].unk_04.x;
                     ((Vec *)var_r28->data)[var_r31].z = lbl_1_data_1450[lbl_1_bss_B8[var_r31]].unk_04.z;

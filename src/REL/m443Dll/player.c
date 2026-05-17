@@ -703,7 +703,7 @@ void fn_1_7130(omObjData *object)
 void fn_1_7340(omObjData *object)
 {
     M443DllWorkStruct *temp_r31 = object->data;
-    HsfObject *var_r29;
+    HSFOBJECT *var_r29;
     f32 sp28[8] = { 0.0f, 40.0f, 0.0f, 0.0f, -16.0f, 40.0f, -16.0f, 0.0f };
     f32 var_f31;
     f32 var_f29;
@@ -815,16 +815,16 @@ void fn_1_7340(omObjData *object)
     temp_r31->unk74 = 1 - temp_r31->unk74;
     var_f31 = 22.5f * (temp_r31->unk40 & 0xF);
     var_r29 = Hu3DModelObjPtrGet(object->model[2], "ballon");
-    var_r29->data.base.rot.z = var_f31;
+    var_r29->mesh.base.rot.z = var_f31;
     var_r29 = Hu3DModelObjPtrGet(object->model[1], "r_tire");
     if ((temp_r31->unk7C <= 0.0f) && (temp_r31->unk94 < 1.5f)) {
         temp_r31->unk94 = 0.0f;
     }
-    var_r29->data.base.rot.x += 360.0f * REFRESH_FREQ * temp_r31->unk94;
-    var_r29->data.base.rot.x = fmod(var_r29->data.base.rot.x, 360.0);
+    var_r29->mesh.base.rot.x += 360.0f * REFRESH_FREQ * temp_r31->unk94;
+    var_r29->mesh.base.rot.x = fmod(var_r29->mesh.base.rot.x, 360.0);
     var_r29 = Hu3DModelObjPtrGet(object->model[1], "f_tire");
-    var_r29->data.base.rot.x += 360.0f * REFRESH_FREQ * (0.003978877f * (100.0f * temp_r31->unk7C));
-    var_r29->data.base.rot.x = fmod(var_r29->data.base.rot.x, 360.0);
+    var_r29->mesh.base.rot.x += 360.0f * REFRESH_FREQ * (0.003978877f * (100.0f * temp_r31->unk7C));
+    var_r29->mesh.base.rot.x = fmod(var_r29->mesh.base.rot.x, 360.0);
     var_f31 = 0.110999994f * temp_r31->unk94;
     if (var_f31 > 1.0f) {
         var_f31 = 1.0f;

@@ -3,6 +3,6 @@
 
 #include "game/hsfformat.h"
 
-void ShapeProc(HsfData *arg0);
+void ShapeProc(HSFDATA *arg0);
 
 #endif

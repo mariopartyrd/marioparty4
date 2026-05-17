@@ -2358,9 +2358,9 @@ void fn_1_1723C(Mtx arg0, Vec *arg1)
 
 void fn_1_172F0(s32 arg0, float arg8)
 {
-    HsfMaterial *var_r31;
+    HSFMATERIAL *var_r31;
     s32 var_r30;
-    HsfData *var_r29;
+    HSFDATA *var_r29;
     s32 var_r28;
     ModelData *var_r27;
     s32 var_r26;
@@ -2368,7 +2368,7 @@ void fn_1_172F0(s32 arg0, float arg8)
     var_r27 = &Hu3DData[arg0];
     var_r29 = var_r27->hsfData;
     var_r31 = var_r29->material;
-    var_r26 = var_r29->materialCnt;
+    var_r26 = var_r29->materialNum;
     for (var_r28 = 0; var_r28 < var_r26; var_r28++, var_r31++) {
         var_r31->vtxMode = 1;
         var_r30 = var_r31->litColor[0] * arg8;

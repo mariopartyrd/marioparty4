@@ -213,11 +213,11 @@ void fn_1_2220(Vec *arg0, Vec *arg1)
 void fn_1_2438(f32 arg0)
 {
     M424DllMapStruct *spC;
-    HsfAttribute *var_r31;
+    HSFATTRIBUTE *var_r31;
     ModelData *temp_r30;
-    HsfData *temp_r29;
+    HSFDATA *temp_r29;
     s32 var_r28;
-    HsfBitmap *var_r27;
+    HSFBITMAP *var_r27;
     omObjData *var_r26;
 
     if (lbl_1_bss_50 && lbl_1_bss_50->data) {
@@ -226,13 +226,13 @@ void fn_1_2438(f32 arg0)
         temp_r30 = &Hu3DData[var_r26->model[2]];
         temp_r29 = temp_r30->hsfData;
         var_r31 = temp_r30->hsfData->attribute;
-        for (var_r28 = 0; var_r28 < temp_r29->attributeCnt; var_r28++, var_r31++) {
+        for (var_r28 = 0; var_r28 < temp_r29->attributeNum; var_r28++, var_r31++) {
             var_r27 = var_r31->bitmap;
             if (strcmp("cr_dk2", var_r27->name) == 0)
                 break;
         }
-        if (var_r28 < temp_r29->attributeCnt) {
-            var_r31->unk30 += arg0;
+        if (var_r28 < temp_r29->attributeNum) {
+            var_r31->trans.x += arg0;
         }
     }
 }

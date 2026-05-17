@@ -287,15 +287,15 @@ void fn_1_8EA0(void)
 
 void fn_1_8EB4(s16 model)
 {
-    HsfMaterial *temp_r31;
-    HsfData *temp_r30;
+    HSFMATERIAL *temp_r31;
+    HSFDATA *temp_r30;
     s32 temp_r29;
     ModelData *temp_r28;
     s16 *temp_r27;
     s16 temp_r26;
     temp_r28 = &Hu3DData[model];
     temp_r30 = temp_r28->hsfData;
-    temp_r26 = temp_r30->materialCnt;
+    temp_r26 = temp_r30->materialNum;
     temp_r27 = &lbl_1_bss_968[lbl_1_bss_1168][0];
     *temp_r27 = model;
     temp_r31 = temp_r30->material;

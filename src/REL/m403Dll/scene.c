@@ -504,14 +504,14 @@ static void fn_1_799C(void)
 static void fn_1_7A98(s16 arg0)
 {
     s16 i;
-    HsfData *temp_r31;
-    HsfObject *var_r28;
-    HsfObject *var_r30;
+    HSFDATA *temp_r31;
+    HSFOBJECT *var_r28;
+    HSFOBJECT *var_r30;
     HsfConstData *temp_r27;
 
     temp_r31 = Hu3DData[arg0].hsfData;
     var_r28 = temp_r31->object;
-    for (i = 0; i < temp_r31->objectCnt; i++, var_r28++) {
+    for (i = 0; i < temp_r31->objectNum; i++, var_r28++) {
         var_r30 = var_r28;
         if (var_r30->constData) {
             temp_r27 = var_r30->constData;

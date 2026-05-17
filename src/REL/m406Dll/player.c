@@ -19,7 +19,7 @@ typedef struct UnkM406PlayerStruct {
 
 typedef struct UnkM406PlayerStruct2 {
     /* 0x00 */ Vec *unk_00;
-    /* 0x04 */ HsfFace *unk_04;
+    /* 0x04 */ HSFFACE *unk_04;
     /* 0x08 */ s16 unk_08;
 } UnkM406PlayerStruct2; /* size = 0x0C */
 
@@ -305,10 +305,10 @@ s32 lbl_1_bss_D8;
 
 void fn_1_D65C(Process *arg0)
 {
-    HsfMaterial *var_r31;
+    HSFMATERIAL *var_r31;
     s32 var_r30;
     s32 var_r29;
-    HsfData *var_r28;
+    HSFDATA *var_r28;
     omObjData **var_r26;
     ModelData *var_r25;
     s16 var_r24;
@@ -328,7 +328,7 @@ void fn_1_D65C(Process *arg0)
         lbl_1_bss_1E8[var_r30] = lbl_1_bss_1DC[var_r30] = lbl_1_bss_1D0[var_r30] = -1;
         var_r25 = &Hu3DData[(*var_r26)->model[var_r30]];
         var_r28 = var_r25->hsfData;
-        for (var_r29 = 0; var_r29 < var_r28->materialCnt; var_r29++) {
+        for (var_r29 = 0; var_r29 < var_r28->materialNum; var_r29++) {
             var_r31 = &var_r28->material[var_r29];
             if (var_r31->color[0] == 0xFF && var_r31->color[1] == 0 && var_r31->color[2] == 0) {
                 lbl_1_bss_1E8[var_r30] = var_r29;
@@ -1823,14 +1823,14 @@ void fn_1_12BC4(omObjData *object)
 
 void fn_1_136A8(void) { }
 
-s32 fn_1_136AC(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
+s32 fn_1_136AC(HSFOBJECT *arg0, Mtx arg1, char *arg2, Mtx arg3)
 {
     char sp4A4[256];
     Mtx sp174;
     Mtx sp144;
     u32 var_r23;
 
-    HsfTransform *var_r31 = &arg0->data.curr;
+    HSFTRANSFORM *var_r31 = &arg0->mesh.curr;
 
     mtxRot(sp144, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
     MTXScale(sp174, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
@@ -1842,8 +1842,8 @@ s32 fn_1_136AC(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
         MTXCopy(sp174, arg3);
         return 1;
     }
-    for (var_r23 = 0; var_r23 < arg0->data.childrenCount; var_r23++) {
-        s32 sp20 = fn_1_136AC(arg0->data.children[var_r23], sp174, arg2, arg3);
+    for (var_r23 = 0; var_r23 < arg0->mesh.childrenCount; var_r23++) {
+        s32 sp20 = fn_1_136AC(arg0->mesh.children[var_r23], sp174, arg2, arg3);
         if (sp20) {
             return 1;
         }
@@ -1856,7 +1856,7 @@ void fn_1_13A88(s16 arg0, char *arg1, Mtx arg2)
     Mtx sp14;
 
     ModelData *var_r31;
-    HsfData *var_r30;
+    HSFDATA *var_r30;
 
     var_r31 = &Hu3DData[arg0];
     var_r30 = var_r31->hsfData;
@@ -1894,19 +1894,19 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     Vec sp24;
     Vec sp18;
     Vec spC;
-    HsfBuffer *sp8;
+    HSFBUFFER *sp8;
 
     float var_f31;
     float var_f30;
     float var_f29;
     float var_f28;
 
-    HsfFace *var_r31;
+    HSFFACE *var_r31;
     s32 var_r29;
-    HsfFace *var_r28;
-    HsfObject *var_r27;
-    HsfBuffer *var_r26;
-    HsfBuffer *var_r24;
+    HSFFACE *var_r28;
+    HSFOBJECT *var_r27;
+    HSFBUFFER *var_r26;
+    HSFBUFFER *var_r24;
     s32 var_r23;
     s32 var_r22;
     s32 var_r21;
@@ -1924,9 +1924,9 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     if (var_r27->type != 2) {
         return;
     }
-    var_r24 = var_r27->data.face;
-    var_r26 = var_r27->data.vertex;
-    sp8 = var_r27->data.normal;
+    var_r24 = var_r27->mesh.face;
+    var_r26 = var_r27->mesh.vertex;
+    sp8 = var_r27->mesh.normal;
     var_r31 = var_r24->data;
     for (var_r23 = 0; var_r23 < var_r24->count; var_r23++, var_r31++) {
         if ((var_r31->type == 2) && ((var_r31->mat & 0xFFF) == lbl_1_bss_1E8[var_r21])) {
@@ -2039,17 +2039,17 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
     Vec sp28;
     Vec sp1C;
     Vec sp10;
-    HsfBuffer *spC;
+    HSFBUFFER *spC;
     float sp8; // ! - uninitialized
 
     float var_f31;
     float var_f30;
 
-    HsfFace *var_r31;
-    HsfObject *var_r30;
-    HsfBuffer *var_r28;
+    HSFFACE *var_r31;
+    HSFOBJECT *var_r30;
+    HSFBUFFER *var_r28;
     s32 var_r27;
-    HsfBuffer *var_r25;
+    HSFBUFFER *var_r25;
     s32 var_r24;
     omObjData **var_r23;
     ModelData *var_r22;
@@ -2066,9 +2066,9 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
     if (var_r30->type != 2) {
         return -100000.0f;
     }
-    var_r25 = var_r30->data.face;
-    var_r28 = var_r30->data.vertex;
-    spC = var_r30->data.normal;
+    var_r25 = var_r30->mesh.face;
+    var_r28 = var_r30->mesh.vertex;
+    spC = var_r30->mesh.normal;
     for (var_r31 = var_r25->data, var_r24 = 0; var_r24 < var_r25->count; var_r24++, var_r31++) {
         if (var_r31->type == 2 && (((var_r31->mat & 0xFFF) == lbl_1_bss_1DC[var_r27]) || ((var_r31->mat & 0xFFF) == lbl_1_bss_1D0[var_r27]))) {
             sp34[0] = &((Vec *)var_r28->data)[var_r31->indices[0][0]];

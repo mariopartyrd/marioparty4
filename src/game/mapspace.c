@@ -5,7 +5,7 @@
 
 extern void HuSetVecF(Vec*, double, double, double);
 
-static BOOL PolygonRangeCheck(HsfMapAttr *arg0, float arg1, float arg2, float *arg3, float arg4);
+static BOOL PolygonRangeCheck(HSFMAPATTR *arg0, float arg1, float arg2, float *arg3, float arg4);
 static s32 DefIfnnerMapCircle(Vec *arg0, s16 *arg1, Vec *arg2, Vec *arg3);
 static s32 CalcPPLength(float *arg0, s16 *arg1, Vec *arg2);
 static float MapIflnnerCalc(float arg0, float arg1, float arg2, Vec *arg3, Vec *arg4, Vec *arg5);
@@ -33,7 +33,7 @@ float AddZ;
 s32 nMap;
 s32 nChar;
 s32 HitFaceCount;
-static HsfData *AttrHsf;
+static HSFDATA *AttrHsf;
 static Vec *topvtx;
 s32 ColisionCount;
 
@@ -45,9 +45,9 @@ void MapWall(float arg0, float arg1, float arg2, float arg3) {
     float var_f29;
     omObjData *var_r25;
     ModelData *var_r26;
-    HsfData *temp_r29;
-    HsfMapAttr *sp14;
-    HsfMapAttr *var_r31;
+    HSFDATA *temp_r29;
+    HSFMAPATTR *sp14;
+    HSFMAPATTR *var_r31;
     s32 temp_r24;
     s32 i;
     s32 j;
@@ -68,7 +68,7 @@ void MapWall(float arg0, float arg1, float arg2, float arg3) {
         AttrHsf = temp_r29;
         sp14 = AttrHsf->mapAttr;
         var_r31 = temp_r29->mapAttr;
-        for (j = 0; j < temp_r29->mapAttrCnt; j++, var_r31++) {
+        for (j = 0; j < temp_r29->mapAttrNum; j++, var_r31++) {
             var_f30 = sp18[0];
             var_f29 = sp18[2];
             sp18[3] = arg0;
@@ -80,7 +80,7 @@ void MapWall(float arg0, float arg1, float arg2, float arg3) {
     }
 }
 
-void MapWallCheck(float *arg0, float *arg1, HsfMapAttr *arg2) {
+void MapWallCheck(float *arg0, float *arg1, HSFMAPATTR *arg2) {
     u32 var_r30;
     u16 temp_r29;
     u16 *var_r31;
@@ -113,12 +113,12 @@ float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4) {
     float var_f29;
     float sp10;
     float var_f28;
-    HsfMapAttr *var_r29;
+    HSFMAPATTR *var_r29;
     ModelData *var_r24;
     omObjData *temp_r27;
     s32 i;
     s32 j;
-    HsfData *temp_r25;
+    HSFDATA *temp_r25;
     Mtx sp20;
 
     var_f31 = -100000.0f;
@@ -135,7 +135,7 @@ float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4) {
         var_f28 = sp14.z;
         AttrHsf = temp_r25;
         var_r29 = AttrHsf->mapAttr;
-        for (j = 0; j < temp_r25->mapAttrCnt; j++, var_r29++) {
+        for (j = 0; j < temp_r25->mapAttrNum; j++, var_r29++) {
             if (var_r29->minX <= var_f29 && var_r29->maxX >= var_f29
                 && var_r29->minZ <= var_f28 && var_r29->maxZ >= var_f28
                 && PolygonRangeCheck(var_r29, var_f29, var_f28, &sp10, arg1 + arg3) == TRUE) {
@@ -167,7 +167,7 @@ float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4) {
     }
 }
 
-BOOL PolygonRangeCheck(HsfMapAttr *arg0, float arg1, float arg2, float *arg3, float arg4) {
+BOOL PolygonRangeCheck(HSFMAPATTR *arg0, float arg1, float arg2, float *arg3, float arg4) {
     Vec sp20;
     float temp_f29;
     float var_f27;

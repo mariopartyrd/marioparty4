@@ -211,7 +211,7 @@ void fn_1_77F8(u16 arg0, Vec *arg1);
 void fn_1_7840(u16 arg0, Vec *arg1);
 void fn_1_7888(u16 arg0, u16 arg1, Vec *arg2);
 s32 fn_1_79F8(s16 arg0, char *arg1, Mtx arg2);
-void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3);
+void fn_1_7AC4(HSFOBJECT *arg0, Mtx arg1, char *arg2, Mtx arg3);
 void fn_1_7E30(Process *objman);
 
 #endif

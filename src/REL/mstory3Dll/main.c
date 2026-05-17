@@ -437,14 +437,14 @@ void fn_1_1D78(s32 arg0, s32 arg1, s32 arg2) {
 
 void fn_1_1DB8(s16 arg0) {
     ModelData* var_r28;
-    HsfMaterial* var_r31;
-    HsfData* temp_r30;
+    HSFMATERIAL* var_r31;
+    HSFDATA* temp_r30;
     s16 var_r27;
     s32 i;
 
     var_r28 = &Hu3DData[arg0];
     temp_r30 = var_r28->hsfData;
-    var_r27 = temp_r30->materialCnt;
+    var_r27 = temp_r30->materialNum;
     var_r31 = temp_r30->material;
     for (i = 0; i < var_r27; var_r31++, i++) {
         var_r31->vtxMode = 1;
@@ -745,14 +745,14 @@ void fn_1_2DD4(omObjData* arg0, s32 arg1, Vec arg2, float arg3, float arg4, floa
 
 void fn_1_35C8(s16 arg0) {
     ModelData* var_r28;
-    HsfData* temp_r30;
-    HsfMaterial* var_r31;
+    HSFDATA* temp_r30;
+    HSFMATERIAL* var_r31;
     s16 var_r27;
     s32 i;
 
     var_r28 = &Hu3DData[arg0];
     temp_r30 = var_r28->hsfData;
-    var_r27 = temp_r30->materialCnt;
+    var_r27 = temp_r30->materialNum;
     var_r31 = temp_r30->material;
     for (i = 0; i < var_r27; var_r31++, i++) {
         var_r31->vtxMode = 1;

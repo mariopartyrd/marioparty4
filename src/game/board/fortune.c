@@ -243,7 +243,7 @@ static void ExecFortunePlatform(omObjData *object)
 		{
 			s16 model;
 			ModelData *model_ptr;
-			HsfObject *focus_obj;
+			HSFOBJECT *focus_obj;
 			if(BoardModelMotionEndCheck(work->model)) {
 				work->state = 1;
 			}
@@ -252,9 +252,9 @@ static void ExecFortunePlatform(omObjData *object)
 			Hu3DMotionExec(model, model_ptr->unk_08, model_ptr->unk_64, 0);
 			focus_obj = Hu3DModelObjPtrGet(model, "player");
 			BoardModelPosGet(work->model, &camTargetFortune);
-			camTargetFortune.x += focus_obj->data.curr.pos.x;
-			camTargetFortune.y += focus_obj->data.curr.pos.y;
-			camTargetFortune.z += focus_obj->data.curr.pos.z;
+			camTargetFortune.x += focus_obj->mesh.curr.pos.x;
+			camTargetFortune.y += focus_obj->mesh.curr.pos.y;
+			camTargetFortune.z += focus_obj->mesh.curr.pos.z;
 		}
 			
 			break;

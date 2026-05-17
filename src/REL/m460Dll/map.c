@@ -39,7 +39,7 @@ typedef struct UnkM460MapWork {
     float unk_38;
     Vec unk_3C;
     Vec unk_48;
-    HsfObject *unk_54;
+    HSFOBJECT *unk_54;
     u32 unk_58;
     void *unk_5C;
 } UnkM460MapWork; /* size = 0x60 */
@@ -229,9 +229,9 @@ void fn_1_6C00(omObjData *object)
             var_r31->unk_48 = var_r31->unk_3C;
             var_r31->unk_38 = 175.0f * REFRESH_FREQ;
             if (var_r31->unk_54) {
-                sp14.x = var_r31->unk_54->data.base.pos.x;
-                sp14.y = 10.0f + var_r31->unk_54->data.base.pos.y;
-                sp14.z = 20.0f + var_r31->unk_54->data.base.pos.z;
+                sp14.x = var_r31->unk_54->mesh.base.pos.x;
+                sp14.y = 10.0f + var_r31->unk_54->mesh.base.pos.y;
+                sp14.z = 20.0f + var_r31->unk_54->mesh.base.pos.z;
                 fn_1_7DA8(object, &sp14, 0);
             }
             HuAudFXPlay(0x818);
@@ -253,9 +253,9 @@ void fn_1_6C00(omObjData *object)
             var_r31->unk_28 = 1;
             HuAudFXPlay(0x819);
             if (var_r31->unk_54) {
-                sp14.x = var_r31->unk_54->data.base.pos.x;
-                sp14.y = (var_r31->unk_54->data.base.pos.y + var_r31->unk_34) - 15.000001f;
-                sp14.z = 10.0f + var_r31->unk_54->data.base.pos.z;
+                sp14.x = var_r31->unk_54->mesh.base.pos.x;
+                sp14.y = (var_r31->unk_54->mesh.base.pos.y + var_r31->unk_34) - 15.000001f;
+                sp14.z = 10.0f + var_r31->unk_54->mesh.base.pos.z;
                 fn_1_7DA8(object, &sp14, 2);
             }
         }
@@ -265,9 +265,9 @@ void fn_1_6C00(omObjData *object)
             var_r31->unk_48.y = 100.0f * ((0.00006f * frandmod(0x3E8)) - 0.03f);
             var_r31->unk_48.z = 100.0f * ((0.00006f * frandmod(0x3E8)) - 0.03f);
             if (var_r31->unk_54) {
-                sp14.x = var_r31->unk_54->data.base.pos.x;
-                sp14.y = (var_r31->unk_54->data.base.pos.y + var_r31->unk_34) - 15.000001f;
-                sp14.z = 15.000001f + var_r31->unk_54->data.base.pos.z;
+                sp14.x = var_r31->unk_54->mesh.base.pos.x;
+                sp14.y = (var_r31->unk_54->mesh.base.pos.y + var_r31->unk_34) - 15.000001f;
+                sp14.z = 15.000001f + var_r31->unk_54->mesh.base.pos.z;
                 fn_1_7DA8(object, &sp14, 1);
             }
         }

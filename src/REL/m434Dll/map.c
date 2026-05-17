@@ -184,23 +184,23 @@ void fn_1_1E64(omObjData *object)
     object->func = fn_1_26A4;
 }
 
-HsfAttribute *fn_1_2608(s16 model, char *name)
+HSFATTRIBUTE *fn_1_2608(s16 model, char *name)
 {
-    HsfData *temp_r31;
-    HsfAttribute *temp_r30;
+    HSFDATA *temp_r31;
+    HSFATTRIBUTE *temp_r30;
     s32 temp_r29;
     ModelData *temp_r28;
-    HsfBitmap *temp_r27;
+    HSFBITMAP *temp_r27;
     temp_r28 = &Hu3DData[model];
     temp_r31 = temp_r28->hsfData;
     temp_r30 = temp_r31->attribute;
-    for (temp_r29 = 0; temp_r29 < temp_r31->attributeCnt; temp_r29++, temp_r30++) {
+    for (temp_r29 = 0; temp_r29 < temp_r31->attributeNum; temp_r29++, temp_r30++) {
         temp_r27 = temp_r30->bitmap;
         if (strcmp(name, temp_r27->name) == 0) {
             break;
         }
     }
-    if (temp_r29 >= temp_r31->attributeCnt) {
+    if (temp_r29 >= temp_r31->attributeNum) {
         return NULL;
     }
     return temp_r30;
@@ -211,7 +211,7 @@ void fn_1_26A4(omObjData *object)
     s32 temp_r31;
     Bss2468Data *temp_r30;
     HuVec2f *temp_r29;
-    HsfAttribute *temp_r27;
+    HSFATTRIBUTE *temp_r27;
     Vec *temp_r25;
     s32 temp_r23;
     s32 temp_r22;
@@ -219,8 +219,8 @@ void fn_1_26A4(omObjData *object)
 
     temp_r27 = fn_1_2608(object->model[1], "sora");
     if (temp_r27 != NULL) {
-        temp_r27->unk30 += 0.0001f;
-        temp_r27->unk34 -= 0.00005f;
+        temp_r27->trans.x += 0.0001f;
+        temp_r27->trans.y -= 0.00005f;
     }
     temp_r30 = lbl_1_bss_2468;
     temp_r22 = 0;

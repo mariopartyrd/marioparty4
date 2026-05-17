@@ -105,7 +105,7 @@ void fn_1_4F04(omObjData *object);
 void fn_1_51E0(omObjData *object);
 u8 fn_1_5370(M433DllUnkStruct2 *arg0, Vec *arg1);
 void fn_1_5558(s32 arg0, M433DllUnkStruct3 *arg1);
-void fn_1_5CCC(HsfData *arg0, HsfObject *arg1);
+void fn_1_5CCC(HSFDATA *arg0, HSFOBJECT *arg1);
 void fn_1_6280(ModelData *arg1, ParticleData *particle, Mtx matrix);
 s16 fn_1_71AC(s32 arg0, s16 arg1, ParticleHook arg2);
 void fn_1_7294(void);
@@ -433,7 +433,7 @@ u8 fn_1_5370(M433DllUnkStruct2 *arg0, Vec *arg1)
 
 void fn_1_5558(s32 arg0, M433DllUnkStruct3 *arg1)
 {
-    HsfData *var_r31;
+    HSFDATA *var_r31;
     u32 var_r30;
 
     var_r31 = Hu3DData[arg0].hsfData;
@@ -449,20 +449,20 @@ void fn_1_5558(s32 arg0, M433DllUnkStruct3 *arg1)
     fn_1_739C(lbl_1_bss_128);
 }
 
-void fn_1_5684(HsfData *arg0, HsfObject *arg1)
+void fn_1_5684(HSFDATA *arg0, HSFOBJECT *arg1)
 {
     Vec sp18;
     Vec spC;
     float var_f31;
     M433DllUnkStruct4 *var_r31;
-    HsfFace *var_r30;
-    HsfBuffer *var_r29;
+    HSFFACE *var_r30;
+    HSFBUFFER *var_r29;
     s32 var_r28;
     s32 var_r27;
-    HsfBuffer *var_r25;
+    HSFBUFFER *var_r25;
 
-    var_r29 = arg1->data.vertex;
-    var_r25 = arg1->data.face;
+    var_r29 = arg1->mesh.vertex;
+    var_r25 = arg1->mesh.face;
     lbl_1_bss_128->unk_08 = var_r25->count;
     lbl_1_bss_128->unk_04 = var_r29->count;
     lbl_1_bss_128->unk_00 = var_r29->data;
@@ -535,12 +535,12 @@ void fn_1_5684(HsfData *arg0, HsfObject *arg1)
                 break;
         }
     }
-    for (var_r27 = 0; var_r27 < arg1->data.childrenCount; var_r27++) {
-        fn_1_5CCC(arg0, arg1->data.children[var_r27]);
+    for (var_r27 = 0; var_r27 < arg1->mesh.childrenCount; var_r27++) {
+        fn_1_5CCC(arg0, arg1->mesh.children[var_r27]);
     }
 }
 
-void fn_1_5CCC(HsfData *var_r31, HsfObject *var_r23)
+void fn_1_5CCC(HSFDATA *var_r31, HSFOBJECT *var_r23)
 {
     s16 var_r22;
 
@@ -552,8 +552,8 @@ void fn_1_5CCC(HsfData *var_r31, HsfObject *var_r23)
         case 5:
         case 6:
         case 9:
-            for (var_r22 = 0; var_r22 < var_r23->data.childrenCount; var_r22++) {
-                fn_1_5CCC(var_r31, var_r23->data.children[var_r22]);
+            for (var_r22 = 0; var_r22 < var_r23->mesh.childrenCount; var_r22++) {
+                fn_1_5CCC(var_r31, var_r23->mesh.children[var_r22]);
             }
             break;
         case 2:

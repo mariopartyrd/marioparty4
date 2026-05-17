@@ -297,11 +297,11 @@ s16 E3PadRead(void)
 float MotionMaxTimeGet(s16 arg0)
 {
     MotionData *temp_r31 = &Hu3DMotion[arg0];
-    HsfMotion *temp_r30;
+    HSFMOTION *temp_r30;
     s16 temp_r29;
 
     temp_r30 = temp_r31->unk_04->motion;
-    temp_r29 = temp_r30->len;
+    temp_r29 = temp_r30->maxTime;
     return temp_r29;
 }
 

@@ -26,7 +26,7 @@ typedef struct {
     s32 unk24;
     s32 unk28;
     s32 unk2C;
-    HsfObject *obj; // 0030
+    HSFOBJECT *obj; // 0030
 } HuObjUnk;
 
 extern Vec CRot;

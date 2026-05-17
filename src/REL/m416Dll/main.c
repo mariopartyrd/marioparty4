@@ -1771,14 +1771,14 @@ void fn_1_6AE8(ModelData *model, ParticleData *particle, Mtx matrix)
 
 void fn_1_6DEC(s16 arg0, u32 arg1)
 {
-    HsfData *temp_r31;
-    HsfMaterial *temp_r30;
+    HSFDATA *temp_r31;
+    HSFMATERIAL *temp_r30;
     s32 temp_r29;
     ModelData *temp_r28;
     temp_r28 = &Hu3DData[arg0];
     temp_r31 = temp_r28->hsfData;
     temp_r30 = temp_r31->material;
-    for (temp_r29 = 0; temp_r29 < temp_r31->materialCnt; temp_r29++, temp_r30++) {
+    for (temp_r29 = 0; temp_r29 < temp_r31->materialNum; temp_r29++, temp_r30++) {
         temp_r30->flags |= arg1;
     }
 }

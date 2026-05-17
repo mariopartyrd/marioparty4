@@ -880,7 +880,7 @@ void fn_1_2E2C(s32 var_r26)
                         if ((var_r31->attr & 0x400) != 0) {
                             ClusterProc(var_r31);
                         }
-                        if (var_r31->hsfData->cenvCnt != 0) {
+                        if (var_r31->hsfData->cenvNum != 0) {
                             EnvelopeProc(var_r31->hsfData);
                         }
                         PPCSync();

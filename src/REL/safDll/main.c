@@ -18,17 +18,17 @@ void fn_1_0(void)
 void safMarioEyeDim(s16 id)
 {
 	ModelData *model = &Hu3DData[id];
-	HsfData *hsf = model->hsfData;
-	HsfMaterial *material = hsf->material;
+	HSFDATA *hsf = model->hsfData;
+	HSFMATERIAL *material = hsf->material;
 	s16 i, j;
-	for(i=0; i<hsf->materialCnt; i++, material++) {
-		for(j=0; j<material->numAttrs; j++) {
-			HsfAttribute *attr = &hsf->attribute[material->attrs[j]];
+	for(i=0; i<hsf->materialNum; i++, material++) {
+		for(j=0; j<material->attrNum; j++) {
+			HSFATTRIBUTE *attr = &hsf->attribute[material->attr[j]];
 			if(strcmp(attr->bitmap->name, "s3c000m1_eyes") == 0 || strcmp(attr->bitmap->name, "mario_eyes") == 0) {
 				break;
 			}
 		}
-		if(j == material->numAttrs) {
+		if(j == material->attrNum) {
 			material->color[0] *= 0.6f;
 			material->color[1] *= 0.3f;
 			material->color[2] *= 0.3f;

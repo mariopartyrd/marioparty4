@@ -120,7 +120,7 @@ void fn_1_9AF0(void)
 
 void fn_1_9B74(void)
 {
-    HsfObject *var_r31;
+    HSFOBJECT *var_r31;
     omDelObjEx(boardObjMan, lbl_1_bss_C8);
     BoardModelKill(lbl_1_bss_FE);
     var_r31 = Hu3DModelObjPtrGet(BoardModelIDGet(lbl_1_bss_14[1]), lbl_1_data_464[lbl_1_bss_B8]);
@@ -290,7 +290,7 @@ void fn_1_A5B0(omObjData *arg0)
 {
     Vec sp14;
     Vec sp8;
-    HsfObject *temp_r28;
+    HSFOBJECT *temp_r28;
     dataCopy2 *temp_r30;
     omObjData *temp_r29;
     Vec *temp_r31;

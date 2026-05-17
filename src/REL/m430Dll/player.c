@@ -360,8 +360,8 @@ void fn_1_C1E4(omObjData *object)
     s32 var_r29;
     M430PlayerBss174Struct *var_r28;
     u32 var_r27;
-    HsfData *var_r26;
-    HsfMaterial *var_r25;
+    HSFDATA *var_r26;
+    HSFMATERIAL *var_r25;
     ModelData *var_r24;
     s32 var_r23;
 
@@ -511,7 +511,7 @@ void fn_1_C1E4(omObjData *object)
     if (work->unk_0C != 0) {
         var_r24 = &Hu3DData[object->model[1]];
         var_r26 = var_r24->hsfData;
-        for (var_r25 = var_r26->material, var_r29 = 0; var_r29 < var_r26->materialCnt; var_r29++, var_r25++) {
+        for (var_r25 = var_r26->material, var_r29 = 0; var_r29 < var_r26->materialNum; var_r29++, var_r25++) {
             var_r25->flags |= 2;
         }
     }
@@ -529,8 +529,8 @@ void fn_1_CA3C(omObjData *object)
     M430PlayerWork *work;
     s32 var_r29;
     M430PlayerBss174Struct *var_r28;
-    HsfData *var_r27;
-    HsfMaterial *var_r26;
+    HSFDATA *var_r27;
+    HSFMATERIAL *var_r26;
     ModelData *var_r25;
 
     work = object->data;
@@ -625,7 +625,7 @@ void fn_1_CA3C(omObjData *object)
         else {
             var_r25 = &Hu3DData[object->model[1]];
             var_r27 = var_r25->hsfData;
-            for (var_r26 = var_r27->material, var_r29 = 0; var_r29 < var_r27->materialCnt; var_r29++, var_r26++) {
+            for (var_r26 = var_r27->material, var_r29 = 0; var_r29 < var_r27->materialNum; var_r29++, var_r26++) {
                 var_r26->flags &= 0xFFFFFFFD;
             }
             if (work->unk_6C != -1) {

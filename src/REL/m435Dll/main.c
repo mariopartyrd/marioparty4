@@ -2065,13 +2065,13 @@ void fn_1_9824(s32 arg0, s32 arg1) {
 
 void fn_1_984C(omObjData* arg0) {
     StructBssE88* temp_r30;
-    HsfMaterial* var_r31;
-    HsfData* temp_r28;
+    HSFMATERIAL* var_r31;
+    HSFDATA* temp_r28;
     char** temp_r27;
     s32 var_r23;
     s32 i, j;
     ModelData* temp_r25;
-    HsfAttribute* temp_r24;
+    HSFATTRIBUTE* temp_r24;
 
     temp_r30 = &lbl_1_bss_E88[arg0->work[0]];
     if (temp_r30->unk08 != 1) {
@@ -2082,7 +2082,7 @@ void fn_1_984C(omObjData* arg0) {
     temp_r28 = temp_r25->hsfData;
     var_r31 = temp_r28->material;
     if (temp_r30->unk34 == 3) {
-        for (i = 0; i < temp_r25->hsfData->materialCnt; i++, var_r31++) {
+        for (i = 0; i < temp_r25->hsfData->materialNum; i++, var_r31++) {
             if (i == 1 || i == 2) {
                 continue;
             }
@@ -2101,10 +2101,10 @@ void fn_1_984C(omObjData* arg0) {
         }
     } else {
         temp_r27 = CharModelEyeBmpGet(temp_r30->unk34, 2);
-        for (i = 0; i < temp_r28->materialCnt; i++, var_r31++) {
+        for (i = 0; i < temp_r28->materialNum; i++, var_r31++) {
             var_r23 = 1;
-            for (j = 0; j < var_r31->numAttrs; j++) {
-                temp_r24 = &temp_r28->attribute[var_r31->attrs[j]];
+            for (j = 0; j < var_r31->attrNum; j++) {
+                temp_r24 = &temp_r28->attribute[var_r31->attr[j]];
                 if (strcmp(temp_r27[0], temp_r24->bitmap->name) == 0 || strcmp(temp_r27[1], temp_r24->bitmap->name) == 0) {
                     var_r23 = 0;
                 }

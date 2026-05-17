@@ -1254,7 +1254,7 @@ s32 fn_1_79F8(s16 arg0, char *arg1, Mtx arg2)
 {
     Mtx sp44;
     Mtx sp14;
-    HsfData *var_r30;
+    HSFDATA *var_r30;
     ModelData *var_r31;
 
     var_r31 = &Hu3DData[arg0];
@@ -1268,7 +1268,7 @@ s32 fn_1_79F8(s16 arg0, char *arg1, Mtx arg2)
     return lbl_1_bss_30;
 }
 
-void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
+void fn_1_7AC4(HSFOBJECT *arg0, Mtx arg1, char *arg2, Mtx arg3)
 {
     Mtx sp15C;
     Mtx sp12C;
@@ -1279,13 +1279,13 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
     Mtx sp3C;
     Mtx spC;
 
-    HsfTransform *var_r31;
-    HsfTransform *var_r30;
-    HsfTransform *var_r29;
-    HsfTransform *var_r28;
-    HsfObject *var_r27;
-    HsfObject *var_r26;
-    HsfObject *var_r25;
+    HSFTRANSFORM *var_r31;
+    HSFTRANSFORM *var_r30;
+    HSFTRANSFORM *var_r29;
+    HSFTRANSFORM *var_r28;
+    HSFOBJECT *var_r27;
+    HSFOBJECT *var_r26;
+    HSFOBJECT *var_r25;
     u32 var_r23;
     u32 var_r22;
     u32 var_r21;
@@ -1294,7 +1294,7 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
     if (lbl_1_bss_30) {
         return;
     }
-    var_r31 = &arg0->data.curr;
+    var_r31 = &arg0->mesh.curr;
 
     mtxRot(sp12C, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
     MTXScale(sp15C, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
@@ -1306,10 +1306,10 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
         lbl_1_bss_30 = 1;
     }
 
-    for (var_r23 = 0; var_r23 < arg0->data.childrenCount; var_r23++) {
-        var_r27 = arg0->data.children[var_r23];
+    for (var_r23 = 0; var_r23 < arg0->mesh.childrenCount; var_r23++) {
+        var_r27 = arg0->mesh.children[var_r23];
         if (!lbl_1_bss_30) {
-            var_r30 = &var_r27->data.curr;
+            var_r30 = &var_r27->mesh.curr;
             mtxRot(spFC, var_r30->rot.x, var_r30->rot.y, var_r30->rot.z);
             MTXScale(spCC, var_r30->scale.x, var_r30->scale.y, var_r30->scale.z);
             MTXConcat(spFC, spCC, spCC);
@@ -1319,10 +1319,10 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
                 MTXCopy(spCC, arg3);
                 lbl_1_bss_30 = 1;
             }
-            for (var_r22 = 0; var_r22 < var_r27->data.childrenCount; var_r22++) {
-                var_r26 = var_r27->data.children[var_r22];
+            for (var_r22 = 0; var_r22 < var_r27->mesh.childrenCount; var_r22++) {
+                var_r26 = var_r27->mesh.children[var_r22];
                 if (!lbl_1_bss_30) {
-                    var_r29 = &var_r26->data.curr;
+                    var_r29 = &var_r26->mesh.curr;
                     mtxRot(sp9C, var_r29->rot.x, var_r29->rot.y, var_r29->rot.z);
                     MTXScale(sp6C, var_r29->scale.x, var_r29->scale.y, var_r29->scale.z);
                     MTXConcat(sp9C, sp6C, sp6C);
@@ -1333,10 +1333,10 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
                         lbl_1_bss_30 = 1;
                     }
 
-                    for (var_r21 = 0; var_r21 < var_r26->data.childrenCount; var_r21++) {
-                        var_r25 = var_r26->data.children[var_r21];
+                    for (var_r21 = 0; var_r21 < var_r26->mesh.childrenCount; var_r21++) {
+                        var_r25 = var_r26->mesh.children[var_r21];
                         if (!lbl_1_bss_30) {
-                            var_r28 = &var_r25->data.curr;
+                            var_r28 = &var_r25->mesh.curr;
                             mtxRot(sp3C, var_r28->rot.x, var_r28->rot.y, var_r28->rot.z);
                             MTXScale(spC, var_r28->scale.x, var_r28->scale.y, var_r28->scale.z);
                             MTXConcat(sp3C, spC, spC);
@@ -1347,8 +1347,8 @@ void fn_1_7AC4(HsfObject *arg0, Mtx arg1, char *arg2, Mtx arg3)
                                 lbl_1_bss_30 = 1;
                             }
 
-                            for (var_r20 = 0; var_r20 < var_r25->data.childrenCount; var_r20++) {
-                                fn_1_7AC4(var_r25->data.children[var_r20], spC, arg2, arg3);
+                            for (var_r20 = 0; var_r20 < var_r25->mesh.childrenCount; var_r20++) {
+                                fn_1_7AC4(var_r25->mesh.children[var_r20], spC, arg2, arg3);
                             }
                         }
                     }

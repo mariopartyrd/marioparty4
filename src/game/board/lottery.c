@@ -1033,7 +1033,7 @@ static void ExecBallPrize(void) {
     s16 temp_r29;
     s16 var_r27;
     s16 sp8;
-    HsfObject *temp_r3;
+    HSFOBJECT *temp_r3;
     Mtx sp6C;
     Mtx sp3C;
 
@@ -1045,8 +1045,8 @@ static void ExecBallPrize(void) {
     PSMTXRotRad(sp6C, 'Y', MTXDegToRad(sp18.y));
     var_r27 = BoardModelIDGet(lotteryMdl[0]);
     temp_r3 = Hu3DModelObjPtrGet(var_r27, "toto_gara");
-    temp_f28 = sp30.y + temp_r3->data.curr.pos.y + 100.0f;
-    PSMTXTrans(sp3C, temp_r3->data.curr.pos.x, temp_r3->data.curr.pos.y + 210.0f, temp_r3->data.curr.pos.z + -40.0f);
+    temp_f28 = sp30.y + temp_r3->mesh.curr.pos.y + 100.0f;
+    PSMTXTrans(sp3C, temp_r3->mesh.curr.pos.x, temp_r3->mesh.curr.pos.y + 210.0f, temp_r3->mesh.curr.pos.z + -40.0f);
     PSMTXConcat(sp6C, sp3C, sp3C);
     Hu3DMtxTransGet(sp3C, &spC);
     VECAdd(&spC, &sp30, &sp30);

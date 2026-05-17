@@ -101,7 +101,7 @@ void Hu3DAnimAttrReset(s16 arg0, s32 arg1);
 void Hu3DAnimSpeedSet(s16 arg0, float arg1);
 void Hu3DAnimBankSet(s16 arg0, s32 arg1);
 void Hu3DAnmNoSet(s16 arg0, u16 arg1);
-s32 Hu3DAnimSet(ModelData *arg0, HsfAttribute *arg1, s16 arg2);
+s32 Hu3DAnimSet(ModelData *arg0, HSFATTRIBUTE *arg1, s16 arg2);
 void Hu3DAnimExec(void);
 s16 Hu3DTexScrollCreate(s16 arg0, char *arg1);
 void Hu3DTexScrollKill(s16 arg0);

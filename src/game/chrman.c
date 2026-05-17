@@ -1143,7 +1143,7 @@ static void EyeBmpUpdate(s16 charNo)
 {
     CHARWORK *workP = &charWork[charNo];
     ModelData *modelP = &Hu3DData[workP->modelId];
-    HsfAttribute *attrP = modelP->hsfData->attribute;
+    HSFATTRIBUTE *attrP = modelP->hsfData->attribute;
     s16 modelBit;
     s16 i;
     char **eyeBmp;
@@ -1155,11 +1155,11 @@ static void EyeBmpUpdate(s16 charNo)
     }
     if (i < 4) {
         eyeBmp = CharModelEyeBmpGet(charNo, workP->model);
-        for (i = 0; i < modelP->hsfData->attributeCnt; i++, attrP++) {
+        for (i = 0; i < modelP->hsfData->attributeNum; i++, attrP++) {
             if ((attrP->bitmap->name[0] == eyeBmp[0][0] && strcmp(attrP->bitmap->name, eyeBmp[0]) == 0)
             || (attrP->bitmap->name[0] == eyeBmp[1][0] && strcmp(attrP->bitmap->name, eyeBmp[1]) == 0)) {
-                if (attrP->unk04) {
-                    HsfdrawStruct01 *particleDataP = attrP->unk04;
+                if (attrP->animWorkP) {
+                    HsfdrawStruct01 *particleDataP = attrP->animWorkP;
                     particleDataP->unk08 = particleDataP->unk0C = particleDataP->unk10 = 0.0f;
                     particleDataP->unk14 = particleDataP->unk18 = particleDataP->unk1C = 0.0f;
                 }
@@ -1304,7 +1304,7 @@ void CharModelHookDustCreate(s16 charNo, char *objName)
 {
     CHARWORK *workP = &charWork[charNo];
     ModelData *modelP = &Hu3DData[workP->modelId];
-    HsfObject *objPtr = Hu3DModelObjPtrGet(workP->modelId, objName);
+    HSFOBJECT *objPtr = Hu3DModelObjPtrGet(workP->modelId, objName);
     HsfConstData *constData;
     Process *process;
     HOOKDUSTWORK *hookDustWork;

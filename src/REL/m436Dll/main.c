@@ -1122,14 +1122,14 @@ void fn_1_49FC(omObjData *arg0)
 void fn_1_4AB4(s32 arg0)
 {
     ModelData *var_r28;
-    HsfData *temp_r31;
-    HsfMaterial *var_r30;
+    HSFDATA *temp_r31;
+    HSFMATERIAL *var_r30;
     s32 i;
 
     var_r28 = &Hu3DData[arg0];
     temp_r31 = var_r28->hsfData;
     var_r30 = temp_r31->material;
-    for (i = 0; i < temp_r31->materialCnt; i++, var_r30++) {
+    for (i = 0; i < temp_r31->materialNum; i++, var_r30++) {
         var_r30->flags = 0x10;
     }
 }
@@ -1379,10 +1379,10 @@ void fn_1_5CD0(omObjData *arg0)
     s32 var_r22;
     s32 i, j;
     ModelData *temp_r24;
-    HsfData *temp_r27;
-    HsfMaterial *var_r31;
+    HSFDATA *temp_r27;
+    HSFMATERIAL *var_r31;
     StructBss3E4 *temp_r30;
-    HsfAttribute *temp_r23;
+    HSFATTRIBUTE *temp_r23;
 
     sp8 = &lbl_1_bss_3E4[arg0->work[0]];
     if (arg0->work[2] != 1) {
@@ -1394,7 +1394,7 @@ void fn_1_5CD0(omObjData *arg0)
     var_r31 = temp_r27->material;
     temp_r30 = &lbl_1_bss_3E4[arg0->work[0]];
     if (temp_r30->unk14 == 3) {
-        for (i = 0; i < temp_r24->hsfData->materialCnt; i++, var_r31++) {
+        for (i = 0; i < temp_r24->hsfData->materialNum; i++, var_r31++) {
             if (i != 1 && i != 2) {
                 var_r31->color[0] *= temp_r30->unk2C;
                 if (var_r31->color[0] == 0) {
@@ -1413,10 +1413,10 @@ void fn_1_5CD0(omObjData *arg0)
     }
     else {
         temp_r26 = CharModelEyeBmpGet(temp_r30->unk14, 2);
-        for (i = 0; i < temp_r27->materialCnt; i++, var_r31++) {
+        for (i = 0; i < temp_r27->materialNum; i++, var_r31++) {
             var_r22 = 1;
-            for (j = 0; j < var_r31->numAttrs; j++) {
-                temp_r23 = &temp_r27->attribute[var_r31->attrs[j]];
+            for (j = 0; j < var_r31->attrNum; j++) {
+                temp_r23 = &temp_r27->attribute[var_r31->attr[j]];
                 if (strcmp(temp_r26[0], temp_r23->bitmap->name) == 0 || strcmp(temp_r26[1], temp_r23->bitmap->name) == 0) {
                     var_r22 = 0;
                 }

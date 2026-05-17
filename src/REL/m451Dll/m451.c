@@ -28,10 +28,10 @@ typedef struct bss_348_data {
     s32 unk40;
     s32 unk44;
     float unk48[9];
-    HsfObject *unk6C[40];
-    HsfObject *unk10C[40];
-    HsfObject *unk1AC[40];
-    HsfTransform unk24C[40];
+    HSFOBJECT *unk6C[40];
+    HSFOBJECT *unk10C[40];
+    HSFOBJECT *unk1AC[40];
+    HSFTRANSFORM unk24C[40];
     u32 unk7EC[2];
     s8 unk7F4;
     s8 unk7F5;
@@ -374,9 +374,9 @@ void fn_1_B2C(void)
     s32 temp_r30;
     void *temp_r29;
     s32 temp_r28;
-    HsfTransform *temp_r27;
+    HSFTRANSFORM *temp_r27;
     s16 temp_r26;
-    HsfTransform *temp_r25;
+    HSFTRANSFORM *temp_r25;
     Process *temp_r18;
     s32 temp_r17;
     AnimData *sp2C[4];
@@ -421,7 +421,7 @@ void fn_1_B2C(void)
                 OSPanic("m451.c", 543, "ObjPtr1");
             }
             temp_r25 = &temp_r31->unk24C[temp_r28];
-            temp_r27 = &temp_r31->unk6C[temp_r28]->data.base;
+            temp_r27 = &temp_r31->unk6C[temp_r28]->mesh.base;
             temp_r27->pos.z += -10;
             temp_r25->pos.x = temp_r27->pos.x;
             temp_r25->pos.y = temp_r27->pos.y;
@@ -750,9 +750,9 @@ void fn_1_22E0(Bss348Data *arg0, s32 arg1)
     Vec sp20;
     Vec sp14;
     Vec sp8;
-    temp_r31 = &arg0->unk6C[arg1]->data.base.pos;
-    temp_r26 = &arg0->unk10C[arg1]->data.base.pos;
-    temp_r28 = &arg0->unk1AC[arg1]->data.base.pos;
+    temp_r31 = &arg0->unk6C[arg1]->mesh.base.pos;
+    temp_r26 = &arg0->unk10C[arg1]->mesh.base.pos;
+    temp_r28 = &arg0->unk1AC[arg1]->mesh.base.pos;
     temp_r29 = &arg0->unk24C[arg1].pos;
     temp_f29 = (temp_r29->x - temp_r31->x) / 15.0f;
     temp_f27 = (temp_r29->z - temp_r31->z) / 30.0f;
@@ -803,12 +803,12 @@ void fn_1_22E0(Bss348Data *arg0, s32 arg1)
 
 void fn_1_263C(Bss348Data *arg0, s32 arg1)
 {
-    HsfTransform *temp_r31;
-    HsfTransform *temp_r30;
-    HsfTransform *temp_r29;
+    HSFTRANSFORM *temp_r31;
+    HSFTRANSFORM *temp_r30;
+    HSFTRANSFORM *temp_r29;
     float temp_f31;
-    temp_r31 = &arg0->unk6C[arg1]->data.base;
-    temp_r29 = &arg0->unk10C[arg1]->data.base;
+    temp_r31 = &arg0->unk6C[arg1]->mesh.base;
+    temp_r29 = &arg0->unk10C[arg1]->mesh.base;
     temp_r30 = &arg0->unk24C[arg1];
     for (temp_f31 = 0; temp_f31 < 180; temp_f31 += 10) {
         temp_r31->scale.x = (temp_r30->scale.x * 0.8f) + (0.2f * (temp_r30->scale.x * (1.0 - sind(temp_f31))));
@@ -838,8 +838,8 @@ void fn_1_263C(Bss348Data *arg0, s32 arg1)
 
 void fn_1_2A34(Bss348Data *arg0, s32 arg1, s32 arg2)
 {
-    HsfTransform *temp_r31;
-    HsfTransform *temp_r30;
+    HSFTRANSFORM *temp_r31;
+    HSFTRANSFORM *temp_r30;
     s32 temp_r28;
 
     float temp_f31;
@@ -847,8 +847,8 @@ void fn_1_2A34(Bss348Data *arg0, s32 arg1, s32 arg2)
     float temp_f29;
     float temp_f28;
 
-    temp_r31 = &arg0->unk6C[arg1]->data.base;
-    temp_r30 = &arg0->unk10C[arg1]->data.base;
+    temp_r31 = &arg0->unk6C[arg1]->mesh.base;
+    temp_r30 = &arg0->unk10C[arg1]->mesh.base;
     temp_f30 = temp_r31->scale.x;
     temp_f29 = temp_r31->scale.y;
     temp_f28 = temp_r31->scale.z;
@@ -890,18 +890,18 @@ typedef struct work_2C50 {
 
 void fn_1_2C50(void)
 {
-    HsfTransform *temp_r31;
+    HSFTRANSFORM *temp_r31;
     Work2C50 *temp_r30;
     s32 temp_r29;
-    HsfTransform *temp_r28;
+    HSFTRANSFORM *temp_r28;
     s32 temp_r27;
 
     float temp_f31;
     float temp_f30;
     float temp_f29;
     temp_r30 = HuPrcCurrentGet()->user_data;
-    temp_r31 = &temp_r30->unk0->unk6C[temp_r30->unk4]->data.base;
-    temp_r28 = &temp_r30->unk0->unk10C[temp_r30->unk4]->data.base;
+    temp_r31 = &temp_r30->unk0->unk6C[temp_r30->unk4]->mesh.base;
+    temp_r28 = &temp_r30->unk0->unk10C[temp_r30->unk4]->mesh.base;
     HuAudFXPlay(1401);
     if (temp_r30->unk8) {
         temp_f30 = temp_r31->rot.z + 90.0f;
@@ -977,7 +977,7 @@ void fn_1_2F08(void)
 
 void fn_1_2FEC(Bss348Data *arg0, s32 arg1)
 {
-    Vec *temp_r31 = &arg0->unk6C[arg1]->data.base.pos;
+    Vec *temp_r31 = &arg0->unk6C[arg1]->mesh.base.pos;
     if (temp_r31->x > 230.0f) {
         temp_r31->x = 230.0f;
     }
@@ -1017,16 +1017,16 @@ void fn_1_30B0(s32 arg0, s32 arg1)
 
 void fn_1_3154(Bss348Data *arg0, s32 arg1, s32 arg2)
 {
-    HsfTransform *temp_r30;
+    HSFTRANSFORM *temp_r30;
     s32 temp_r29;
-    HsfTransform *temp_r25;
+    HSFTRANSFORM *temp_r25;
     s32 temp_r23;
     float temp_f29;
     Vec sp24;
     Vec sp18;
     Vec spC;
     arg1 = lbl_1_bss_C04[arg2];
-    temp_r30 = &arg0->unk6C[arg1]->data.base;
+    temp_r30 = &arg0->unk6C[arg1]->mesh.base;
     arg0->unk7F4 = arg0->unk7F5 = 0;
     arg0->unk7F7 = arg0->unk7F6 = 0;
     arg0->unk7F8 = 0;
@@ -1125,11 +1125,11 @@ void fn_1_3154(Bss348Data *arg0, s32 arg1, s32 arg2)
 void fn_1_37C4(void)
 {
     Bss348Data *temp_r31;
-    HsfTransform *temp_r30;
+    HSFTRANSFORM *temp_r30;
     s32 temp_r29;
-    HsfTransform *temp_r28;
+    HSFTRANSFORM *temp_r28;
     s32 temp_r26;
-    HsfTransform *temp_r25;
+    HSFTRANSFORM *temp_r25;
     Process *temp_r24;
     s32 temp_r23;
     Vec spCC;
@@ -1149,9 +1149,9 @@ void fn_1_37C4(void)
     temp_r31 = HuPrcCurrentGet()->user_data;
     temp_r31->unk40 = 0;
     for (temp_r29 = 0; temp_r29 < lbl_1_bss_B58; temp_r29++) {
-        temp_r30 = &temp_r31->unk10C[temp_r29]->data.base;
+        temp_r30 = &temp_r31->unk10C[temp_r29]->mesh.base;
         temp_r30->pos.x = 5000;
-        temp_r30 = &temp_r31->unk1AC[temp_r29]->data.base;
+        temp_r30 = &temp_r31->unk1AC[temp_r29]->mesh.base;
         temp_r30->pos.x = 5000;
     }
     while (lbl_1_bss_CA8 == 0) {
@@ -1160,7 +1160,7 @@ void fn_1_37C4(void)
     HuPrcSleep(REFRESH_RATE * 3);
     HuAudFXPlay(1391);
     for (temp_r29 = 0; temp_r29 < lbl_1_bss_B58; temp_r29++) {
-        temp_r30 = &temp_r31->unk6C[temp_r29]->data.base;
+        temp_r30 = &temp_r31->unk6C[temp_r29]->mesh.base;
         temp_f26 = atan2d(temp_r30->pos.x, temp_r30->pos.y);
         temp_f27 = VECMagXY(&temp_r30->pos);
         temp_f27 *= 1.05f;
@@ -1172,7 +1172,7 @@ void fn_1_37C4(void)
     HuAudFXPlay(1387);
     for (temp_r29 = 0; temp_r29 < lbl_1_bss_B58; temp_r29++) {
         temp_r24 = HuPrcChildCreate(fn_1_2F08, 8192, 4096, 0, HuPrcCurrentGet());
-        temp_r30 = &temp_r31->unk6C[temp_r29]->data.base;
+        temp_r30 = &temp_r31->unk6C[temp_r29]->mesh.base;
         temp_r24->user_data = temp_r30;
     }
     HuPrcSleep(120);
@@ -1182,8 +1182,8 @@ void fn_1_37C4(void)
         temp_r31->unk44 = 0;
         temp_r31->unk804 = -1;
         temp_r26 = lbl_1_bss_C04[temp_r29];
-        temp_r30 = &temp_r31->unk6C[temp_r26]->data.base;
-        temp_r28 = &temp_r31->unk10C[temp_r26]->data.base;
+        temp_r30 = &temp_r31->unk6C[temp_r26]->mesh.base;
+        temp_r28 = &temp_r31->unk10C[temp_r26]->mesh.base;
         if (temp_r29 != 0) {
             temp_r25 = &temp_r31->unk24C[lbl_1_bss_C04[temp_r29 - 1]];
             temp_r30->pos.x = temp_r25->pos.x;
