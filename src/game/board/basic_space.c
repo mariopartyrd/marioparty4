@@ -30,6 +30,11 @@ typedef struct bit_copy {
     s16 coin_model;
 } coinChg;
 
+#define COIN_CHG_MODE_APPEAR 0
+#define COIN_CHG_MODE_SEPARATE 1
+#define COIN_CHG_MODE_SHOW 3
+#define COIN_CHG_MODE_DISAPPEAR 4
+
 static void CreateCoinChg(coinChg*, Vec*);
 static void UpdateCoinChg(omObjData*);
 static void CoinChgAppear(omObjData*, coinChg*);
@@ -223,7 +228,7 @@ void BoardLandRedExec(s32 player, s32 space) {
  *   * Returns the position of the object in the Coin Change object array
  * 
  * @param [in] pos The position of the 
- * @param value the amount of coins gained or lost by the player
+ * @param [in] value the amount of coins gained or lost by the player
  *
  * @return The position of the Coin Change object in the array
  */
@@ -285,7 +290,7 @@ s8 BoardCoinChgCreate(Vec *pos, s8 value) {
  *   * Returns false if Coin Change object at `num - 1` exists
  *   * Returns true otherwise
  * 
- * @param num Coin change object number
+ * @param [in] num Coin change object number
  * @return 0 if killed, 1 if exists, `num` if invalid
  */
 s32 BoardCoinChgKillCheck(s32 num) {
@@ -315,7 +320,7 @@ s32 BoardCoinChgKillCheck(s32 num) {
  *      the following:
  *   * Marks a Coin Change object for deletion if valid
  * 
- * @param num Coin change object number
+ * @param [in] num Coin change object number
  */
 void BoardCoinChgKill(s32 num) {
     // Return early if num is invalid
@@ -350,8 +355,8 @@ static const s32 coinSignMdl[2] = {
  *   * Sets all models to near top layer
  *   * Disables the tens digit model if the coin count is less than 10
  *
- * @param coin_chg The Coin Change object
- * @param pos The position of where it should start its animation
+ * @param [in, out] coin_chg The Coin Change object data
+ * @param [in] pos The position of where it should start its animation
  */
 static void CreateCoinChg(coinChg *coin_chg, Vec *pos) {
     f32 time;
@@ -380,7 +385,7 @@ static void CreateCoinChg(coinChg *coin_chg, Vec *pos) {
     BoardModelMotionStart(coin_chg->tens_model, 0, 0);
     BoardModelMotionStart(coin_chg->ones_model, 0, 0);
 
-    // Set time to end animation
+    // Set time for animation
     BoardModelMotionTimeSet(coin_chg->sign_model, time);
     BoardModelMotionTimeSet(coin_chg->tens_model, time);
     BoardModelMotionTimeSet(coin_chg->ones_model, time);
@@ -408,10 +413,31 @@ static void CreateCoinChg(coinChg *coin_chg, Vec *pos) {
     }
 }
 
+/**
+ * @brief Updates the given Coin Change object for each frame
+ *
+ * @details This is the update function for a Coin Change model object
+ *     It does the following:
+ *
+ *   * Kills the Coin Change object if it or the board is set to be deleted
+ *   * Plays the current animation for the Coin Change object if it
+ *     is set to be updated and the delay timer is not 0
+ *   * The current animation is determined by the Coin Change object's mode, which can be:
+ *     * APPEAR (0): Coin pops up while spinning
+ *     * SEPARATE (1): The coin and text split from each other
+ *     * SHOW (3): The text moves up/down, pauses afterward
+ *     * DISAPPEAR (4): The models all shrink away
+ *   * *There is no (2) mode*
+ * 
+ * @param [in, out] object Coin Change object
+ */
 static void UpdateCoinChg(omObjData *object) {
     coinChg *coin_chg;
 
     coin_chg = OM_GET_WORK_PTR(object, coinChg);
+
+    // If the Coin Change object should be killed,
+    // kill all models that exist, and clear value in array
     if ((coin_chg->kill != 0) || (BoardIsKill() != 0)) {
         if (coin_chg->coin_model != -1) {
             BoardModelKill(coin_chg->coin_model);
@@ -433,47 +459,75 @@ static void UpdateCoinChg(omObjData *object) {
         omDelObjEx(HuPrcCurrentGet(), object);
         return;
     }
+
+    // If object is set to update ...
     if (coin_chg->update != 0) {
+        // Wait until time runs out
         if (coin_chg->time != 0) {
             coin_chg->time -= 1;
             return;
         }
         
+        // Play currently set animation
         switch (coin_chg->mode) {
-			case 0:
+			case COIN_CHG_MODE_APPEAR:
 				CoinChgAppear(object, coin_chg);
 				return;
-			case 1:
+			case COIN_CHG_MODE_SEPARATE:
 				CoinChgSeparate(object, coin_chg);
 				return;
-			case 3:
+			case COIN_CHG_MODE_SHOW:
 				CoinChgShow(object, coin_chg);
 				return;
-			case 4:
+			case COIN_CHG_MODE_DISAPPEAR:
 				CoinChgDisappear(object, coin_chg);
 				break;
         }
     }
 }
 
+/**
+ * @brief Plays the "appear" animation for a Coin Change object
+ *
+ * @details This function is called when the current animation mode
+ *     is set to 0 (`COIN_CHG_MODE_APPEAR`) and does the following:
+ *
+ *   * Uses `coinChg.angle` as a smoothing value to scale and rotate the coin model
+ *   * Increases the angle by 6 until it is greater than 90
+ *   * When finished, sets mode to 1 (`COIN_CHG_MODE_SEPARATE`) and scales,
+ *     positions, and rotates the other models to be in line with the coin
+ * 
+ * @param [in, out] object Coin Change object
+ * @param [in, out] coin_chg Coin Change object data
+ */
 static void CoinChgAppear(omObjData *object, coinChg *coin_chg) {
     f32 scale;
     f32 angle;
 
+    // Scale the object smoothly with sine
     OSu16tof32(&coin_chg->angle, &angle);
     angle = sind(angle);
     scale = angle;
+
+    // Rotate the object linearly with the scale
     object->rot.x = 405.0f * angle;
+
+    // scale, position, and rotate model
     BoardModelScaleSet(coin_chg->coin_model, scale, scale, scale);
     BoardModelPosSet(coin_chg->coin_model, object->trans.x, object->trans.y, object->trans.z);
     BoardModelRotYSet(coin_chg->coin_model, object->rot.x);
+
+    // Increase angle if we haven't rotated enough
     if (coin_chg->angle < 90) {
         coin_chg->angle += 6;
         return;
     }
     
-    coin_chg->mode = 1;
+    // Otherwise, move to next animation and reset angle
+    coin_chg->mode = COIN_CHG_MODE_SEPARATE;
     coin_chg->angle = 0;
+
+    // Set other models to be where coin model is
     BoardModelScaleSet(coin_chg->sign_model, scale, scale, scale);
     BoardModelPosSet(coin_chg->sign_model, object->trans.x, object->trans.y, object->trans.z);
     BoardModelRotYSet(coin_chg->sign_model, object->rot.x);
@@ -485,6 +539,19 @@ static void CoinChgAppear(omObjData *object, coinChg *coin_chg) {
     BoardModelRotYSet(coin_chg->tens_model, object->rot.x);
 }
 
+/**
+ * @brief Plays the "separate" animation for a Coin Change object
+ * 
+ * @details This function is called when the current animation mode
+ *     is set to 1 (`COIN_CHG_MODE_SEPARATE`) and does the following:
+ *
+ *   * Sets up spacing between models, making it larger if there is no tens digit
+ *   * Uses `angle` to separate models from each other by a bit each frame
+ *   * When finished, resets `angle` and sets the animation mode to 3 (`COIN_CHG_MODE_SHOW`)
+ *
+ * @param [in, out] object Coin Change object
+ * @param [in, out] coin_chg Coin Change object data
+ */
 static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
     f32 y_offset;
     f32 x_scale;
@@ -494,13 +561,17 @@ static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
     f32 tens_x;
     f32 sign_x;
 
+    // Get angle
     OSu16tof32(&coin_chg->angle, &x_scale);
     
+    // Make spacing between models smaller if displaying more digits
     if (coin_chg->tens != 0) {
         spacing = 140.0f;
     } else {
         spacing = 105.0f;
     }
+    
+    // Get scale, position, and rotation for each model
     y_offset = 200.0 * sind(2.0f * x_scale);
     x_scale = sind(x_scale);
     object->rot.x = 45.0f + (315.0f * x_scale);
@@ -515,6 +586,8 @@ static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
         ones_x = object->trans.x + (x_scale * spacing);
         coin_x = object->trans.x + (x_scale * -spacing);
     }
+
+    // Set position and rotation
     BoardModelPosSet(coin_chg->coin_model, coin_x, object->trans.y + y_offset, object->trans.z);
     BoardModelPosSet(coin_chg->sign_model, sign_x, object->trans.y + y_offset, object->trans.z);
     BoardModelPosSet(coin_chg->ones_model, ones_x, object->trans.y + y_offset, object->trans.z);
@@ -523,22 +596,48 @@ static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
     BoardModelRotYSet(coin_chg->sign_model, object->rot.x);
     BoardModelRotYSet(coin_chg->ones_model, object->rot.x);
     BoardModelRotYSet(coin_chg->tens_model, object->rot.x);
+
+    // Increase angle if we haven't separated enough
     if (coin_chg->angle < 90) {
         coin_chg->angle += 6;
         return;
     }
+
+    // Set y position to new offset
     object->trans.y += y_offset;
-    coin_chg->mode = 3;
+    
+    // Move to next animation and set angle to 0
+    coin_chg->mode = COIN_CHG_MODE_SHOW;
     coin_chg->angle = 0;
 }
 
+/**
+ * @brief Plays the "show" animation for a Coin Change object
+ * 
+ * @details This function is called when the current animation mode
+ *     is set to 3 (`COIN_CHG_MODE_SHOW`) and does the following:
+ *
+ *   * Uses `angle` to move all models up or down each frame if the
+ *     player gained or lost coins respectively
+ *   * When finished:
+ *     * Resets the angle and sets the animation mode to 4 (`COIN_CHG_MODE_DISAPPEAR`)
+ *     * Sets update function to wait ~0.3 seconds
+ *     * Sets the scale of the object to 1.
+ *   
+ * 
+ * @param [in, out] object Coin Change object
+ * @param [in, out] coin_chg Coin Change object data
+ */
 static void CoinChgShow(omObjData* object, coinChg* coin_chg) {
     Vec pos;
     f32 angle;
     f32 y_pos;
 
+    // Get y offset
     OSu16tof32(&coin_chg->angle, &angle);
     angle = sind(angle);
+    
+    // Move down if negative, up if positive
     if (coin_chg->minus != 0) {
         y_pos = (-50.0f * angle) + object->trans.y;
     } else {
@@ -552,21 +651,46 @@ static void CoinChgShow(omObjData* object, coinChg* coin_chg) {
     BoardModelPosSet(coin_chg->ones_model, pos.x, y_pos, pos.z);
     BoardModelPosGet(coin_chg->tens_model, &pos);
     BoardModelPosSet(coin_chg->tens_model, pos.x, y_pos, pos.z);
+
+    // Increase angle if we haven't moved enough
     if (coin_chg->angle < 90) {
         coin_chg->angle += 6;
         return;
     }
-    coin_chg->mode = 4;
+    
+    // Move to next animation and set angle to 0
+    coin_chg->mode = COIN_CHG_MODE_DISAPPEAR;
     coin_chg->angle = 0;
+
+    // Set wait time to 0.3 seconds (or 0.36 seconds in PAL)
     coin_chg->time = 18;
+
+    // Reset scale
     object->scale.x = 1.0f;
     object->scale.y = 1.0f;
 }
 
+/**
+ * @brief Plays the "disappear" animation for a Coin Change object
+ *     and, when finished, makes invisible and sets it to be killed
+ *
+ * @details This function is called when the current animation mode
+ *     is set to 4 (`COIN_CHG_MODE_DISAPPEAR`) and does the following:
+ *
+ *   * Splits the animation into 2: the animation initially stretches
+ *     the text vertically, then flips the text and squishes it horizontally
+ *   * Uses `angle` to set the scale each frame
+ *   * When finished, all models are made invisible and the object data is
+ *     set to be killed
+ * 
+ * @param [in, out] object Coin Change object
+ * @param [in, out] coin_chg Coin Change object data
+ */
 static void CoinChgDisappear(omObjData* object, coinChg* coin_chg) {
     const u16 angle = ((coin_chg->angle * 2) % 180);
     f32 rot;
     
+    // Set scale. First half of animation stretches up, second half squishes inward (and is upside down)
     OSu16tof32(&angle, &rot);
     if (angle <= 90.0f) {
         object->scale.x = 0.5 * cosd(rot);
@@ -575,22 +699,30 @@ static void CoinChgDisappear(omObjData* object, coinChg* coin_chg) {
         object->scale.x = 2.5 * sind(rot);
         object->scale.y = 0.5 * cosd(rot);
     }
+
+    // Ensure object's scale is not 0
     if (0.0f == object->scale.x) {
         object->scale.x = 0.0001f;
     }
     if (0.0f == object->scale.y) {
         object->scale.y = 0.0001f;
     }
+
+    // Set scale for all models
     BoardModelScaleSet(coin_chg->coin_model, object->scale.x, object->scale.y, 1.0f);
     BoardModelScaleSet(coin_chg->sign_model, object->scale.x, object->scale.y, 1.0f);
     BoardModelScaleSet(coin_chg->ones_model, object->scale.x, object->scale.y, 1.0f);
     BoardModelScaleSet(coin_chg->tens_model, object->scale.x, object->scale.y, 1.0f);
+
+    // Increase angle if we haven't moved enough,
+    // half of normal amount because animation is twice as long
     if (coin_chg->angle < 90) {
         coin_chg->angle += 3;
         if (coin_chg->angle > 90) {
             coin_chg->angle = 90;
         }
     } else {
+        // All animations have played, make invisible and set to be killed
         BoardModelVisibilitySet(coin_chg->sign_model, 0);
         BoardModelVisibilitySet(coin_chg->tens_model, 0);
         BoardModelVisibilitySet(coin_chg->ones_model, 0);
