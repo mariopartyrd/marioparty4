@@ -699,8 +699,8 @@ void fn_1_4ABC(w03StructUnk2 *arg0)
             if (BoardVecMinDistCheck(&sp8, &temp_r31->unk_08, 200.0f) != 0) {
                 temp_r31->unk_00 = -1;
                 BoardModelVisibilitySet(temp_r31->model, 0);
-                CharModelLayerSetAll(2);
-                CharModelCoinEffectCreate(1, &temp_r31->unk_08);
+                CharEffectLayerSet(2);
+                CharEffectCoinGlowCreate(1, &temp_r31->unk_08);
                 BoardPlayerCoinsAdd(arg0->unkbit_01, 1);
                 HuAudFXPlay(7);
             }
@@ -729,8 +729,8 @@ void fn_1_4ABC(w03StructUnk2 *arg0)
                 temp_r31->unk_00 = -1;
                 BoardModelVisibilitySet(temp_r31->model, 0);
                 BoardPlayerCoinsAdd(arg0->unkbit_01, 1);
-                CharModelLayerSetAll(2);
-                CharModelCoinEffectCreate(1, &temp_r31->unk_08);
+                CharEffectLayerSet(2);
+                CharEffectCoinGlowCreate(1, &temp_r31->unk_08);
                 HuAudFXPlay(7);
             }
             else {

@@ -1480,8 +1480,8 @@ void fn_1_1CDF0(omObjData* arg0) {
             s32 sp8[] = { 9, 14, 10, 11, 12, 13 };
 
             if (i != 3) {
-                CharModelEffectNpcInit(arg0->model[i * 3 + 1], arg0->motion[i * 3 + 2], 1, sp8[i]);
-                CharModelEffectEnableSet(sp8[i], 0);
+                CharNpcDustSet(arg0->model[i * 3 + 1], arg0->motion[i * 3 + 2], 1, sp8[i]);
+                CharModelFxFlagSet(sp8[i], 0);
             }
         }
     }

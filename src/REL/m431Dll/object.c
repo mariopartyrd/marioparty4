@@ -620,19 +620,19 @@ void fn_1_9440(omObjData *object)
     object->model[0] = CharModelCreate(temp_r31->unk8, 2);
     Hu3DModelLayerSet(object->model[0], 0);
     Hu3DModelShadowSet(object->model[0]);
-    CharModelStepTypeSet(temp_r31->unk8, 0);
+    CharModelStepFxSet(temp_r31->unk8, 0);
     for (temp_r28 = 0; temp_r28 < 8; temp_r28++) {
         if (lbl_1_data_1F4[temp_r28] != -1) {
-            object->motion[temp_r28] = CharModelMotionCreate(temp_r31->unk8, lbl_1_data_1F4[temp_r28]);
+            object->motion[temp_r28] = CharMotionCreate(temp_r31->unk8, lbl_1_data_1F4[temp_r28]);
         }
         else {
             object->motion[temp_r28] = Hu3DJointMotionFile(object->model[0], DATA_MAKE_NUM(DATADIR_M431, 0x21) + temp_r31->unk8);
         }
         if (temp_r28 == 4 || temp_r28 == 5) {
-            CharModelVoiceEnableSet(temp_r31->unk8, object->motion[temp_r28], 0);
+            CharMotionVoiceOnSet(temp_r31->unk8, object->motion[temp_r28], 0);
         }
     }
-    CharModelMotionDataClose(temp_r31->unk8);
+    CharMotionDataClose(temp_r31->unk8);
     temp_r29 = &lbl_1_bss_12C[temp_r31->unkA];
     for (temp_r28 = 0; temp_r28 < 8; temp_r28++) {
         temp_r31->unk5E[temp_r28] = -1;

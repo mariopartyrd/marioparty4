@@ -2100,7 +2100,7 @@ void fn_1_984C(omObjData* arg0) {
             }
         }
     } else {
-        temp_r27 = CharModelTexNameGet(temp_r30->unk34, 2);
+        temp_r27 = CharModelEyeBmpGet(temp_r30->unk34, 2);
         for (i = 0; i < temp_r28->materialCnt; i++, var_r31++) {
             var_r23 = 1;
             for (j = 0; j < var_r31->numAttrs; j++) {
@@ -2204,10 +2204,10 @@ void fn_1_A148(omObjData* arg0) {
     };
 
     arg0->model[0] = CharModelCreate(temp_r31->unk34, 2);
-    arg0->motion[0] = CharModelMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-    arg0->motion[1] = CharModelMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 2));
-    arg0->motion[2] = CharModelMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
-    arg0->motion[6] = CharModelMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 28));
+    arg0->motion[0] = CharMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+    arg0->motion[1] = CharMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 2));
+    arg0->motion[2] = CharMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
+    arg0->motion[6] = CharMotionCreate(temp_r31->unk34, DATA_MAKE_NUM(DATADIR_MARIOMOT, 28));
     arg0->motion[3] = Hu3DJointMotionFile(arg0->model[0], DATA_MAKE_NUM(DATADIR_M435, temp_r31->unk34));
     arg0->motion[4] = Hu3DJointMotionFile(arg0->model[0], DATA_MAKE_NUM(DATADIR_M435, 8 + temp_r31->unk34));
     arg0->motion[5] = Hu3DJointMotionFile(arg0->model[0], DATA_MAKE_NUM(DATADIR_M435, 16 + temp_r31->unk34));
@@ -2226,7 +2226,7 @@ void fn_1_A148(omObjData* arg0) {
     temp_r31->unk40 = temp_r31->unk44 = temp_r31->unk48 = 0.0f;
     temp_r31->unk4C = temp_r31->unk50 = temp_r31->unk54 = 0.0f;
     temp_r31->unk3C = 1.0f;
-    CharModelMotionDataClose(temp_r31->unk34);
+    CharMotionDataClose(temp_r31->unk34);
     arg0->func = fn_1_9D88;
 }
 

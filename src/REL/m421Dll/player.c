@@ -281,9 +281,9 @@ void fn_1_48D4(omObjData *object)
     object->model[0] = CharModelCreate(var_r26, 4);
     Hu3DModelLayerSet(object->model[0], 1);
     for (var_r29 = 0; var_r29 < 6; var_r29++) {
-        object->motion[var_r29] = CharModelMotionCreate(var_r26, lbl_1_data_1A4[var_r29]);
+        object->motion[var_r29] = CharMotionCreate(var_r26, lbl_1_data_1A4[var_r29]);
     }
-    CharModelMotionDataClose(var_r26);
+    CharMotionDataClose(var_r26);
     if (var_r27 == 1) {
         object->model[1] = Hu3DModelCreateFile(lbl_1_data_164[var_r26]);
         Hu3DModelLayerSet(object->model[1], 1);
@@ -780,7 +780,7 @@ void fn_1_676C(omObjData *object)
         }
         if (work->unk_1C < 0.05f) {
             fn_1_982C(object, 0);
-            CharModelMotionSpeedSet(work->unk_00, 1.0f);
+            CharMotionSpeedSet(work->unk_00, 1.0f);
         }
         else {
             var_f30 = 0.5f;
@@ -795,7 +795,7 @@ void fn_1_676C(omObjData *object)
                 fn_1_982C(object, 1);
                 var_f29 = work->unk_1C / var_f30;
             }
-            CharModelMotionSpeedSet(work->unk_00, var_f29);
+            CharMotionSpeedSet(work->unk_00, var_f29);
         }
         sp8.x = 1.0 * REFRESH_FREQ * (REFRESH_FREQ * 100.0f * (2.0 * (work->unk_1C * sind(work->unk_18))));
         sp8.y = 0.0f;
@@ -981,7 +981,7 @@ void fn_1_7478(omObjData *object)
             fn_1_982C(object, 1);
             var_f30 = work->unk_1C / var_f31;
         }
-        CharModelMotionSpeedSet(work->unk_00, var_f30);
+        CharMotionSpeedSet(work->unk_00, var_f30);
         return;
     }
     work->unk_D8.x = work->unk_D8.y = work->unk_D8.z = 0.0f;
@@ -1568,7 +1568,7 @@ void fn_1_982C(omObjData *object, u32 arg1)
             var_f31 = 0.0f;
         }
         work->unk_08 = arg1;
-        CharModelMotionShiftSet(
+        CharMotionShiftSet(
             work->unk_00, object->motion[lbl_1_data_1BC[arg1].unk_00], REFRESH_RATE_F * lbl_1_data_1BC[arg1].unk_08, var_f31, lbl_1_data_1BC[arg1].unk_10);
         if (lbl_1_data_1BC[arg1].unk_0C >= 0.0f) {
             Hu3DMotionShiftStartEndSet(object->model[0], REFRESH_RATE_F * lbl_1_data_1BC[arg1].unk_08, REFRESH_RATE_F * lbl_1_data_1BC[arg1].unk_0C);
@@ -1581,7 +1581,7 @@ s32 fn_1_99B8(omObjData *object)
 
     M421DllPlayerWork *work = object->data;
     s32 var_r30 = 0;
-    if ((CharModelMotionEndCheck(work->unk_00) != 0) && (CharModelMotionShiftIDGet(work->unk_00) < 0)) {
+    if ((CharMotionEndCheck(work->unk_00) != 0) && (CharMotionShiftIDGet(work->unk_00) < 0)) {
         var_r30 = 1;
     }
     return var_r30;

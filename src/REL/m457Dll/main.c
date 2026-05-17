@@ -620,7 +620,7 @@ static void M457PlayerExec(omObjData *object)
                 char sp1D8[][50] = { "g000mN-itemhook_R", "g000mN-itemhook_L" };
 
                 if (playerData->character != CHARACTER_BOWSER) {
-                    var_r18 = CharModelHookNameGet(playerData->character, 1, (temp_r21 % 2 == 0) ? 0 : 1);
+                    var_r18 = CharModelItemHookGet(playerData->character, 1, (temp_r21 % 2 == 0) ? 0 : 1);
                 }
                 else {
                     var_r18 = (temp_r21 % 2 == 0) ? sp1D8[0] : sp1D8[1];
@@ -1580,7 +1580,7 @@ static void M457PlayerSetup(omObjData *object)
     }
     for (i = 0; i < 12; i++) {
         if (playerData->character != CHARACTER_BOWSER) {
-            object->motion[i] = CharModelMotionCreate(playerData->character, lbl_1_data_B8[i] + (lbl_1_data_E8[i] != 0 ? playerData->character : 0));
+            object->motion[i] = CharMotionCreate(playerData->character, lbl_1_data_B8[i] + (lbl_1_data_E8[i] != 0 ? playerData->character : 0));
         }
         else if (lbl_1_data_118[i] != 0) {
             object->motion[i] = Hu3DJointMotionFile(object->model[MODEL_ID_PLAYER_PLAYER], lbl_1_data_118[i]);

@@ -1251,10 +1251,10 @@ static void fn_1_63C8(omObjData *arg0)
     temp_r31->unk3C = 10;
     temp_r31->unk40 = 60;
     arg0->model[0] = CharModelCreate(lbl_1_data_0[temp_r31->unk58], 4);
-    CharModelStepTypeSet(lbl_1_data_0[temp_r31->unk58], 0);
+    CharModelStepFxSet(lbl_1_data_0[temp_r31->unk58], 0);
     for (i = 0; i < 11; i++) {
-        arg0->motion[i] = CharModelMotionCreate(lbl_1_data_0[temp_r31->unk58], lbl_1_data_78[temp_r31->unk58][i]);
-        CharModelMotionSet(lbl_1_data_0[temp_r31->unk58], arg0->motion[i]);
+        arg0->motion[i] = CharMotionCreate(lbl_1_data_0[temp_r31->unk58], lbl_1_data_78[temp_r31->unk58][i]);
+        CharMotionSet(lbl_1_data_0[temp_r31->unk58], arg0->motion[i]);
     }
     temp_r28 = arg0->model[0];
     var_r27 = Hu3DLLightCreateV(temp_r28, &lbl_1_data_34, &lbl_1_data_40, &lbl_1_data_4C);
@@ -1291,7 +1291,7 @@ static void fn_1_63C8(omObjData *arg0)
         }
         temp_r31->unk38 = (temp_r31->unk3C >> 1) + frandmod(temp_r31->unk3C);
     }
-    CharModelMotionDataClose(lbl_1_data_0[temp_r31->unk58]);
+    CharMotionDataClose(lbl_1_data_0[temp_r31->unk58]);
     arg0->func = fn_1_43D8;
 }
 

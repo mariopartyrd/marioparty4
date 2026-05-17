@@ -740,7 +740,7 @@ static void SpaceAmidaCoinRainMain(void)
                 BoardModelRotSetV(coinMdlId[i], &coinRot[i]);
                 if (coinPos[i].y <= playerPos.y + 80.0f) {
                     Vec pos = coinPos[i];
-                    CharModelCoinEffectCreate(1, &pos);
+                    CharEffectCoinGlowCreate(1, &pos);
                     BoardModelVisibilitySet(coinMdlId[i], 0);
                     coinNum++;
                     BoardPlayerCoinsAdd(spaceAmidaPlayerNo, 1);

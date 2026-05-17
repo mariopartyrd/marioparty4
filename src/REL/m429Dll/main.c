@@ -1510,7 +1510,7 @@ void fn_1_54BC(Work8F68 *arg0, omObjData *arg1)
     if (1.0f <= temp_f31) {
         temp_f31 = 1.0f;
     }
-    fn_1_1D18(arg1->model[0], CharModelHookNameGet(arg0->unk118, 8, 0), &sp14);
+    fn_1_1D18(arg1->model[0], CharModelItemHookGet(arg0->unk118, 8, 0), &sp14);
     fn_1_11F4(temp_f31, &arg0->unk28, &sp14, &sp8);
     sp8.y += sind(180.0f * temp_f31) * 100;
     temp_r29 = lbl_1_bss_1A0[arg0->unkA0];
@@ -1521,7 +1521,7 @@ void fn_1_54BC(Work8F68 *arg0, omObjData *arg1)
         arg0->unkE8 |= 0x4;
         arg0->unkA8 = 0;
         omSetTra(temp_r29, 0, 0, 0);
-        Hu3DModelHookSet(arg1->model[0], CharModelHookNameGet(arg0->unk118, 8, 0), temp_r29->model[0]);
+        Hu3DModelHookSet(arg1->model[0], CharModelItemHookGet(arg0->unk118, 8, 0), temp_r29->model[0]);
         if (arg0->unkA4 == 0) {
             arg0->unkAC = 7;
         }
@@ -1898,10 +1898,10 @@ void fn_1_7D38(omObjData *object)
                     temp_r31->unk9C = 2004;
                     temp_r31->unk5C = 0;
                     temp_r31->unkE8 |= 0x20;
-                    fn_1_1D18(object->model[0], CharModelHookNameGet(temp_r31->unk118, 8, 0), &temp_r31->unk28);
-                    Hu3DModelObjMtxGet(object->model[0], CharModelHookNameGet(temp_r31->unk118, 8, 0), sp74);
+                    fn_1_1D18(object->model[0], CharModelItemHookGet(temp_r31->unk118, 8, 0), &temp_r31->unk28);
+                    Hu3DModelObjMtxGet(object->model[0], CharModelItemHookGet(temp_r31->unk118, 8, 0), sp74);
                     Hu3DMtxRotGet(sp74, &temp_r31->unk40);
-                    Hu3DModelHookObjReset(object->model[0], CharModelHookNameGet(temp_r31->unk118, 8, 0));
+                    Hu3DModelHookObjReset(object->model[0], CharModelItemHookGet(temp_r31->unk118, 8, 0));
                     omSetTra(lbl_1_bss_1A0[temp_r31->unkA0], temp_r31->unk28.x, temp_r31->unk28.y, temp_r31->unk28.z);
                     if (temp_r31->unkA4 == 0) {
                         temp_r31->unk4C = lbl_1_bss_110;
@@ -1939,7 +1939,7 @@ void fn_1_7D38(omObjData *object)
             }
             if (temp_r31->unk9C == 2008 && temp_r31->unkA0 >= 0) {
                 Hu3DModelAttrSet(lbl_1_bss_1A0[temp_r31->unkA0]->model[0], HU3D_ATTR_DISPOFF);
-                fn_1_1D18(object->model[0], CharModelHookNameGet(temp_r31->unk118, 8, 0), &sp8);
+                fn_1_1D18(object->model[0], CharModelItemHookGet(temp_r31->unk118, 8, 0), &sp8);
                 temp_r31->unk70 = Hu3DParManLink(lbl_1_bss_8, &lbl_1_data_13E8);
                 temp_r31->unk6C = 0;
                 Hu3DParManPosSet(temp_r31->unk70, sp8.x, sp8.y, sp8.z);
@@ -2093,10 +2093,10 @@ void fn_1_8F68(omObjData *object)
         temp_r31->unk94[temp_r29] = 0;
     }
     object->model[0] = CharModelCreate(lbl_1_data_0[temp_r31->unk118], 8);
-    CharModelStepTypeSet(lbl_1_data_0[temp_r31->unk118], 0);
+    CharModelStepFxSet(lbl_1_data_0[temp_r31->unk118], 0);
     for (temp_r29 = 0; temp_r29 < 10; temp_r29++) {
-        object->motion[temp_r29] = CharModelMotionCreate(lbl_1_data_0[temp_r31->unk118], lbl_1_data_1150[temp_r31->unk118][temp_r29]);
-        CharModelMotionSet(lbl_1_data_0[temp_r31->unk118], object->motion[temp_r29]);
+        object->motion[temp_r29] = CharMotionCreate(lbl_1_data_0[temp_r31->unk118], lbl_1_data_1150[temp_r31->unk118][temp_r29]);
+        CharMotionSet(lbl_1_data_0[temp_r31->unk118], object->motion[temp_r29]);
     }
     Hu3DModelCameraSet(object->model[0], 15);
     Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
@@ -2165,11 +2165,11 @@ void fn_1_8F68(omObjData *object)
         temp_r31->unk80 = frandf() * temp_r31->unk0->unk4;
         temp_r31->unk8C = temp_r31->unk0->unkC + ((temp_r31->unk0->unkC / 2.0f) * frandf());
     }
-    CharModelVoiceEnableSet(temp_r31->unk118, object->motion[4], 0);
+    CharMotionVoiceOnSet(temp_r31->unk118, object->motion[4], 0);
     fn_1_2950(temp_r31);
     Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
     CharModelLayerSetAll2(5);
-    CharModelMotionDataClose(lbl_1_data_0[temp_r31->unk118]);
+    CharMotionDataClose(lbl_1_data_0[temp_r31->unk118]);
     object->func = fn_1_7D38;
 }
 
@@ -2229,7 +2229,7 @@ void fn_1_9BAC(omObjData *object)
         lbl_1_bss_20++;
         HuAudFXPlay(7);
         Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
-        CharModelCoinEffectCreate(lbl_1_data_FEC[lbl_1_bss_28], temp_r31);
+        CharEffectCoinGlowCreate(lbl_1_data_FEC[lbl_1_bss_28], temp_r31);
         omDelObjEx(lbl_1_bss_33C, object);
     }
 }

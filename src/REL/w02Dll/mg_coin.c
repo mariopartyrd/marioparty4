@@ -406,7 +406,7 @@ void fn_1_46E8(void)
             BoardModelRotSetV(lbl_1_bss_5C[temp_r31], &sp3C[temp_r31]);
             if (sp21C[temp_r31].y <= 80.0f + sp18.y) {
                 spC = sp21C[temp_r31];
-                CharModelCoinEffectCreate(1, &spC);
+                CharEffectCoinGlowCreate(1, &spC);
                 BoardModelVisibilitySet(lbl_1_bss_5C[temp_r31], 0);
                 temp_r30++;
                 BoardPlayerCoinsAdd(lbl_1_bss_86, 1);

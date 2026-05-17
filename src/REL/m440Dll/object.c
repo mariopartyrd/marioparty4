@@ -76,14 +76,14 @@ void fn_1_AEE4(omObjData *arg0)
 
     for (var_r29 = 0; var_r29 < 8; var_r29++) {
         if (lbl_1_data_1DC[var_r29][1] == 0) {
-            arg0->motion[var_r29] = CharModelMotionCreate(temp_r31->unk8, lbl_1_data_1DC[var_r29][0]);
+            arg0->motion[var_r29] = CharMotionCreate(temp_r31->unk8, lbl_1_data_1DC[var_r29][0]);
         }
         else {
-            arg0->motion[var_r29] = CharModelMotionCreate(temp_r31->unk8, temp_r31->unk8 + lbl_1_data_1DC[var_r29][0]);
+            arg0->motion[var_r29] = CharMotionCreate(temp_r31->unk8, temp_r31->unk8 + lbl_1_data_1DC[var_r29][0]);
         }
     }
-    CharModelVoiceEnableSet(temp_r31->unk8, arg0->motion[4], 0);
-    CharModelMotionDataClose(temp_r31->unk8);
+    CharMotionVoiceOnSet(temp_r31->unk8, arg0->motion[4], 0);
+    CharMotionDataClose(temp_r31->unk8);
     Hu3DMotionSet(arg0->model[0], arg0->motion[0]);
     temp_r31->unk18.x = temp_r31->unk18.y = temp_r31->unk18.z = 0.0f;
     temp_r31->unk30.x = temp_r31->unk30.y = temp_r31->unk30.z = 0.0f;

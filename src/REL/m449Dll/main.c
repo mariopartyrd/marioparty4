@@ -1816,7 +1816,7 @@ void fn_1_8538(omObjData *var_r30)
     for (var_r29 = 0; var_r29 < 4; var_r29++) {
         if (var_r31->unk_08 != -1) {
             var_r30->motion[var_r29]
-                = CharModelMotionCreate(var_r31->unk_08, lbl_1_data_90[var_r29] + (lbl_1_data_B0[var_r29] != 0 ? var_r31->unk_08 : 0));
+                = CharMotionCreate(var_r31->unk_08, lbl_1_data_90[var_r29] + (lbl_1_data_B0[var_r29] != 0 ? var_r31->unk_08 : 0));
         }
         else {
             var_r30->motion[var_r29] = Hu3DJointMotionFile(var_r30->model[0], lbl_1_data_A0[var_r29]);
@@ -1826,7 +1826,7 @@ void fn_1_8538(omObjData *var_r30)
     Hu3DMotionTimeSet(var_r30->model[0], 20.0f);
     Hu3DModelAttrSet(var_r30->model[0], HU3D_MOTATTR_LOOP);
     Hu3DModelShadowSet(var_r30->model[0]);
-    CharModelVoiceEnableSet(var_r31->unk_08, var_r30->motion[3], 0);
+    CharMotionVoiceOnSet(var_r31->unk_08, var_r30->motion[3], 0);
     lbl_1_data_23C[var_r31->unk_00] = var_r31->unk_00 == 0 ? (rand8() % 3) : ((lbl_1_data_23C[0] + ((rand8() % 2)) + 1) % 3);
     if (var_r31->unk_00 == 0) {
         for (var_r29 = 0; var_r29 < 3; var_r29++) {

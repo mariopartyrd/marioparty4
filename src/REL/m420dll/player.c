@@ -204,25 +204,25 @@ M420DllPlayerStruct *fn_1_1B8C(s32 arg0, s32 arg1)
     switch (arg1) {
         case 0:
             if (var_r31->unk_0A == 5) {
-                CharModelMotionSet(var_r31->unk_0A, var_r31->unk_AE[0xA]);
+                CharMotionSet(var_r31->unk_0A, var_r31->unk_AE[0xA]);
                 Hu3DMotionStartEndSet(var_r31->unk_AC, 0.0f, 1.0f);
                 Hu3DMotionTimeSet(var_r31->unk_AC, 0.0f);
             }
             else {
-                CharModelMotionSet(var_r31->unk_0A, var_r31->unk_AE[0]);
+                CharMotionSet(var_r31->unk_0A, var_r31->unk_AE[0]);
             }
             break;
         case 1:
         case 2:
         case 3:
             var_r31->unk_1C.y = 0.0f;
-            CharModelMotionSet(var_r31->unk_0A, var_r31->unk_AE[0]);
+            CharMotionSet(var_r31->unk_0A, var_r31->unk_AE[0]);
             break;
         default:
             break;
     }
 
-    CharModelMotionDataClose(var_r31->unk_0A);
+    CharMotionDataClose(var_r31->unk_0A);
     fn_1_200C(var_r31);
     var_r31->unk_40 = HuPrcChildCreate(fn_1_1F14, 0x64, 0x5000, 0, lbl_1_bss_4);
     var_r31->unk_40->user_data = var_r31;
@@ -287,7 +287,7 @@ void fn_1_1F94(M420DllPlayerStruct *arg0)
     s32 var_r31;
 
     for (var_r31 = 0; var_r31 < 0xB; var_r31++) {
-        arg0->unk_AE[var_r31] = CharModelMotionCreate(arg0->unk_0A, lbl_1_rodata_F8[arg0->unk_0A][var_r31]);
+        arg0->unk_AE[var_r31] = CharMotionCreate(arg0->unk_0A, lbl_1_rodata_F8[arg0->unk_0A][var_r31]);
     }
 }
 
@@ -325,7 +325,7 @@ void fn_1_211C(M420DllPlayerStruct *arg0)
     s32 var_r31;
 
     for (var_r31 = 0; var_r31 < 0xB; var_r31++) {
-        CharModelMotionKill(arg0->unk_0A, arg0->unk_AE[var_r31]);
+        CharMotionKill(arg0->unk_0A, arg0->unk_AE[var_r31]);
     }
 }
 
@@ -393,7 +393,7 @@ void fn_1_22CC(M420DllPlayerStruct *arg0)
 
     var_r30 = &lbl_1_data_50[arg0->unk_08];
     fn_1_3098(arg0);
-    CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[8], 0.0f, 10.0f, 0x40000001);
+    CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[8], 0.0f, 10.0f, 0x40000001);
     arg0->unk_50 = 0;
     arg0->unk_58 = var_r30->unk_00 + (fn_1_8944() % var_r30->unk_04);
 
@@ -422,7 +422,7 @@ void fn_1_22CC(M420DllPlayerStruct *arg0)
                 case 1:
                     var_f31 = 5.0f * arg0->unk_50;
                     var_f30 = 5.0f + var_f31;
-                    CharModelMotionSet(arg0->unk_0A, arg0->unk_AE[5]);
+                    CharMotionSet(arg0->unk_0A, arg0->unk_AE[5]);
                     Hu3DMotionStartEndSet(arg0->unk_AC, var_f31, var_f30);
                     Hu3DMotionTimeSet(arg0->unk_AC, var_f31);
                     Hu3DModelAttrReset(arg0->unk_AC, HU3D_MOTATTR_PAUSE);
@@ -450,7 +450,7 @@ void fn_1_22CC(M420DllPlayerStruct *arg0)
                         arg0->unk_50 = 0;
                         var_f31 = 0.0f;
                         var_f30 = 0.0f;
-                        CharModelMotionSet(arg0->unk_0A, arg0->unk_AE[5]);
+                        CharMotionSet(arg0->unk_0A, arg0->unk_AE[5]);
                         Hu3DMotionStartEndSet(arg0->unk_AC, var_f31, var_f30);
                         Hu3DMotionTimeSet(arg0->unk_AC, var_f31);
                         Hu3DModelAttrReset(arg0->unk_AC, HU3D_MOTATTR_LOOP);
@@ -495,7 +495,7 @@ void fn_1_276C(M420DllPlayerStruct *arg0)
         fn_1_669C(1);
         fn_1_6554();
         WAITMODECHG(arg0, 15);
-        CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[7], 0.0f, 6.0f, 0);
+        CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[7], 0.0f, 6.0f, 0);
         WAITMODECHG(arg0, 6);
         fn_1_669C(0);
         fn_1_36E4(arg0);
@@ -527,7 +527,7 @@ void fn_1_276C(M420DllPlayerStruct *arg0)
 
                 case 1:
                     if (arg0->unk_4C != 1) {
-                        CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[7], 0.0f, 6.0f, 0);
+                        CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[7], 0.0f, 6.0f, 0);
                         WAITMODECHG(arg0, 6);
                         fn_1_374C(arg0->unk_E8);
                         fn_1_36E4(arg0);
@@ -539,7 +539,7 @@ void fn_1_276C(M420DllPlayerStruct *arg0)
                         case 2:
                             var_f31 = 0.0f;
                             var_f30 = 34.0f;
-                            CharModelMotionSet(arg0->unk_0A, arg0->unk_AE[4]);
+                            CharMotionSet(arg0->unk_0A, arg0->unk_AE[4]);
                             Hu3DMotionStartEndSet(arg0->unk_AC, var_f31, var_f30);
                             Hu3DMotionTimeSet(arg0->unk_AC, var_f31);
                             Hu3DMotionSpeedSet(arg0->unk_AC, 2.0f);
@@ -556,14 +556,14 @@ void fn_1_276C(M420DllPlayerStruct *arg0)
                         case 1:
                             var_f31 = 0.0f;
                             var_f30 = 10.0f;
-                            CharModelMotionSet(arg0->unk_0A, arg0->unk_AE[4]);
+                            CharMotionSet(arg0->unk_0A, arg0->unk_AE[4]);
                             Hu3DMotionStartEndSet(arg0->unk_AC, var_f31, var_f30);
                             Hu3DMotionTimeSet(arg0->unk_AC, var_f31);
                             Hu3DModelAttrReset(arg0->unk_AC, HU3D_MOTATTR_PAUSE);
                             WAITMODECHG(arg0, 30);
                             var_f31 = 60.0f;
                             var_f30 = 70.0f;
-                            CharModelMotionSet(arg0->unk_0A, arg0->unk_AE[4]);
+                            CharMotionSet(arg0->unk_0A, arg0->unk_AE[4]);
                             Hu3DMotionStartEndSet(arg0->unk_AC, var_f31, var_f30);
                             Hu3DMotionTimeSet(arg0->unk_AC, var_f31);
                             Hu3DModelAttrReset(arg0->unk_AC, HU3D_MOTATTR_PAUSE);
@@ -572,9 +572,9 @@ void fn_1_276C(M420DllPlayerStruct *arg0)
 
                         case 2:
                         case 3:
-                            CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[9], 0.0f, 2.0f, 0);
+                            CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[9], 0.0f, 2.0f, 0);
                             WAITMODECHG(arg0, 60);
-                            CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 8.0f, 0);
+                            CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 8.0f, 0);
                             break;
                     }
                     break;
@@ -589,7 +589,7 @@ void fn_1_276C(M420DllPlayerStruct *arg0)
 
 void fn_1_2CE0(M420DllPlayerStruct *arg0)
 {
-    CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 30.0f, 0x40000001);
+    CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 30.0f, 0x40000001);
 
     WAITMODECHG(arg0, 35);
     arg0->unk_48 = 0;
@@ -638,7 +638,7 @@ void fn_1_2EA8(M420DllPlayerStruct *arg0)
     s32 var_r22;
 
     fn_1_326C(arg0);
-    CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[3], 0.0f, 1.0f, 0);
+    CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[3], 0.0f, 1.0f, 0);
     var_r30 = fn_1_6660();
 
     Hu3DModelAttrReset(var_r30, HU3D_MOTATTR_PAUSE);
@@ -688,7 +688,7 @@ void fn_1_2EA8(M420DllPlayerStruct *arg0)
             }
         }
     }
-    CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 30.0f, 0x40000001);
+    CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 30.0f, 0x40000001);
     {
         s32 var_r30;
         s32 var_r29;
@@ -929,7 +929,7 @@ void fn_1_3970(M420DllPlayerStruct *arg0)
         Hu3DModelAttrReset(arg0->unk_AC, HU3D_MOTATTR_LOOP);
         Hu3DModelAttrSet(arg0->unk_AC, HU3D_MOTATTR_REV);
         fn_1_63EC();
-        CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[6], 0.0f, 32.0f, 0);
+        CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[6], 0.0f, 32.0f, 0);
         Hu3DMotionShiftStartEndSet(arg0->unk_AC, 0.0f, 59.0f);
         sp38 = arg0->unk_1C;
         sp38.y = 0.0f;
@@ -943,7 +943,7 @@ void fn_1_3970(M420DllPlayerStruct *arg0)
             return;
         }
     }
-    CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 16.0f, 0);
+    CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 16.0f, 0);
     for (var_r26 = 0; var_r26 < 0x3C; var_r26++) {
         fn_1_355C(arg0);
         var_r24 = arg0->unk_48;
@@ -962,7 +962,7 @@ void fn_1_3F94(M420DllPlayerStruct *arg0)
     s32 var_r28;
 
     if (arg0->unk_4C != 0) {
-        CharModelMotionSet(arg0->unk_0A, arg0->unk_AE[6]);
+        CharMotionSet(arg0->unk_0A, arg0->unk_AE[6]);
         Hu3DMotionStartEndSet(arg0->unk_AC, 60.0f, 119.0f);
         Hu3DMotionTimeSet(arg0->unk_AC, 60.0f);
         sp8 = arg0->unk_1C;
@@ -978,7 +978,7 @@ void fn_1_3F94(M420DllPlayerStruct *arg0)
                 }
             }
         }
-        CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 4.0f, 0);
+        CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 4.0f, 0);
     }
     arg0->unk_48 = 0;
 }
@@ -990,7 +990,7 @@ void fn_1_4294(M420DllPlayerStruct *arg0)
     s32 var_r28;
 
     if (arg0->unk_4C != 0) {
-        CharModelMotionSet(arg0->unk_0A, arg0->unk_AE[6]);
+        CharMotionSet(arg0->unk_0A, arg0->unk_AE[6]);
         Hu3DMotionStartEndSet(arg0->unk_AC, 0.0f, 59.0f);
         sp8 = arg0->unk_1C;
         sp8.y = 0.0f;
@@ -1005,7 +1005,7 @@ void fn_1_4294(M420DllPlayerStruct *arg0)
                 }
             }
         }
-        CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 8.0f, 0);
+        CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[0], 0.0f, 8.0f, 0);
     }
     arg0->unk_48 = 0;
 }
@@ -1017,7 +1017,7 @@ void fn_1_4574(M420DllPlayerStruct *arg0)
     s32 var_r29;
     s32 var_r28;
 
-    CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[1], 0.0f, 4.0f, 0);
+    CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[1], 0.0f, 4.0f, 0);
     fn_1_2260(arg0);
 }
 
@@ -1028,6 +1028,6 @@ void fn_1_476C(M420DllPlayerStruct *arg0)
     s32 var_r29;
     s32 var_r28;
 
-    CharModelMotionShiftSet(arg0->unk_0A, arg0->unk_AE[2], 0.0f, 4.0f, 0);
+    CharMotionShiftSet(arg0->unk_0A, arg0->unk_AE[2], 0.0f, 4.0f, 0);
     fn_1_2260(arg0);
 }

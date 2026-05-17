@@ -504,7 +504,7 @@ void fn_1_5B98(omObjData *object)
     work->unk_2C = GWPlayerCfg[object->work[0]].iscom;
     if (work->unk_04 < 0) {
         object->model[0] = CharModelCreate(var_r28, 4);
-        CharModelStepTypeSet(var_r28, 2);
+        CharModelStepFxSet(var_r28, 2);
     }
     else {
         object->model[0] = Hu3DModelCreateFile(lbl_1_data_180[work->unk_04]);
@@ -515,7 +515,7 @@ void fn_1_5B98(omObjData *object)
     for (var_r29 = 0; var_r29 < 0x11; var_r29++) {
         if (work->unk_04 < 0) {
             if (lbl_1_data_1C4[var_r29] < 0x10000) {
-                object->motion[var_r29] = CharModelMotionCreate(var_r28, lbl_1_data_1C4[var_r29]);
+                object->motion[var_r29] = CharMotionCreate(var_r28, lbl_1_data_1C4[var_r29]);
             }
             else {
                 object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], var_r28 + lbl_1_data_1C4[var_r29]);
@@ -526,12 +526,12 @@ void fn_1_5B98(omObjData *object)
         }
     }
     if (work->unk_04 < 0) {
-        CharModelVoiceEnableSet(var_r28, object->motion[16], 0);
-        CharModelMotionDataClose(var_r28);
+        CharMotionVoiceOnSet(var_r28, object->motion[16], 0);
+        CharMotionDataClose(var_r28);
     }
     else {
-        CharModelEffectNpcInitSilent(object->model[0], object->motion[1], 0);
-        CharModelEffectNpcInitSilent(object->model[0], object->motion[2], 1);
+        CharNpcDustVoiceOffSet(object->model[0], object->motion[1], 0);
+        CharNpcDustVoiceOffSet(object->model[0], object->motion[2], 1);
     }
     object->trans.x = work->unk_128.x = (0.4f * (700.0f * (object->work[0] + 1))) - 700.0f;
     object->trans.y = work->unk_128.y = 0.0f;
@@ -1389,7 +1389,7 @@ void fn_1_8BD0(omObjData *object)
                     var_f31 = work->unk_24 / var_f30;
                 }
                 if (work->unk_04 < 0) {
-                    CharModelMotionSpeedSet(work->unk_00, var_f31);
+                    CharMotionSpeedSet(work->unk_00, var_f31);
                 }
                 else {
                     Hu3DMotionSpeedSet(object->model[0], var_f31);
@@ -1438,7 +1438,7 @@ void fn_1_8F80(omObjData *object)
         work->unk_3C = 0;
         work->unk_40 = 0;
         if (work->unk_04 < 0) {
-            char *var_r28 = CharModelHookNameGet(work->unk_00, 4, 0);
+            char *var_r28 = CharModelItemHookGet(work->unk_00, 4, 0);
             Hu3DModelObjPosGet(object->model[0], var_r28, &sp10);
         }
         else {
@@ -2074,7 +2074,7 @@ void fn_1_B4D4(omObjData *object, u32 arg1)
         }
         work->unk_0C = arg1;
         if (work->unk_04 < 0) {
-            CharModelMotionShiftSet(
+            CharMotionShiftSet(
                 work->unk_00, object->motion[lbl_1_data_24C[arg1].unk_00], REFRESH_RATE * lbl_1_data_24C[arg1].unk_08, var_f31, lbl_1_data_24C[arg1].unk_10);
         }
         else {
@@ -2093,7 +2093,7 @@ s32 fn_1_B6E0(omObjData *object)
     M433PlayerWork *work = object->data;
     s32 var_r29 = 0;
     if (work->unk_04 < 0) {
-        if (((CharModelMotionEndCheck(work->unk_00) != 0) || (work->unk_10 != 0)) && (CharModelMotionShiftIDGet(work->unk_00) < 0)) {
+        if (((CharMotionEndCheck(work->unk_00) != 0) || (work->unk_10 != 0)) && (CharMotionShiftIDGet(work->unk_00) < 0)) {
             var_r29 = 1;
         }
     }
@@ -2108,7 +2108,7 @@ s32 fn_1_B7AC(omObjData *object)
     M433PlayerWork *work = object->data;
     s32 var_r30 = 0;
     if (work->unk_04 < 0) {
-        if (CharModelMotionShiftIDGet(work->unk_00) < 0) {
+        if (CharMotionShiftIDGet(work->unk_00) < 0) {
             var_r30 = 1;
         }
     }

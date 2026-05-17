@@ -1718,8 +1718,8 @@ static void ExecCoinPrize(void) {
             if (coinF[i] != 0) {
                 if (sp64[i].y < var_f31) {
                     sp64[i].y = var_f31;
-                    CharModelLayerSetAll(2);
-                    CharModelCoinEffectCreate(1, &sp64[i]);
+                    CharEffectLayerSet(2);
+                    CharEffectCoinGlowCreate(1, &sp64[i]);
                     BoardModelVisibilitySet(coinMdl[i], 0);
                     coinF[i] = 0;
                     BoardPlayerCoinsAdd(temp_r27, 1);

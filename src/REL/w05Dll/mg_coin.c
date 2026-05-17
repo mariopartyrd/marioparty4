@@ -250,8 +250,8 @@ void fn_1_A224(omObjData *arg0)
         sp8.x -= 20.0f;
         sp8.y += 25.0f;
         sp8.z += 80.0f;
-        CharModelLayerSetAll(7);
-        CharModelEffectCreate(-1, &sp8);
+        CharEffectLayerSet(7);
+        CharEffectSmokeCreate(-1, &sp8);
         BoardModelVisibilitySet(lbl_1_bss_100, 1);
         BoardModelMotionTimeSet(lbl_1_bss_100, 0.0f);
         BoardModelAttrSet(lbl_1_bss_100, 0x40000002);
@@ -356,9 +356,9 @@ void fn_1_A990(omObjData *arg0)
         sp8.x += 20.0f;
         sp8.y += 25.0f;
         sp8.z += 80.0f;
-        CharModelLayerSetAll(7);
+        CharEffectLayerSet(7);
         HuAudFXPlay(0x351);
-        CharModelEffectCreate(-1, &sp8);
+        CharEffectSmokeCreate(-1, &sp8);
         BoardModelHookReset(BoardPlayerModelGet(lbl_1_bss_C0));
         BoardModelKill(lbl_1_bss_100);
         var_r31 = HuPrcCreate(fn_1_AB24, 0x2004, 0x1800, 0);
@@ -438,7 +438,7 @@ void fn_1_AB24(void)
                 BoardModelRotSetV(lbl_1_bss_D6[var_r31], &sp34[var_r31]);
                 if (sp124[var_r31].y <= (80.0f + sp28.y)) {
                     sp10 = sp124[var_r31];
-                    CharModelCoinEffectCreate(1, &sp10);
+                    CharEffectCoinGlowCreate(1, &sp10);
                     BoardModelVisibilitySet(lbl_1_bss_D6[var_r31], 0);
                     var_r29++;
                     BoardPlayerCoinsAdd(lbl_1_bss_C0, 1);

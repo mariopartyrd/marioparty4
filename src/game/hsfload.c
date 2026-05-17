@@ -298,7 +298,7 @@ static void VertexLoad(void)
     HsfBuffer *file_vertex;
     HsfBuffer *new_vertex;
     void *data;
-    HsfVector3f *data_elem;
+    HuVecF *data_elem;
     void *temp_data;
     
     if(head.vertex.count) {
@@ -306,7 +306,7 @@ static void VertexLoad(void)
         data = (void *)&file_vertex[head.vertex.count];
         for(i=0; i<head.vertex.count; i++, file_vertex++) {
             for(j=0; j<(u32)file_vertex->count; j++) {
-                data_elem = (HsfVector3f *)(((u32)data)+((u32)file_vertex->data)+(j*sizeof(HsfVector3f)));
+                data_elem = (HuVecF *)(((u32)data)+((u32)file_vertex->data)+(j*sizeof(HuVecF)));
             }
         }
         new_vertex = vtxtop;
@@ -320,10 +320,10 @@ static void VertexLoad(void)
             new_vertex->name = SetName((u32 *)&file_vertex->name);
             new_vertex->data = (void *)((u32)data+(u32)temp_data);
             for(j=0; j<new_vertex->count; j++) {
-                data_elem = (HsfVector3f *)(((u32)data)+((u32)temp_data)+(j*sizeof(HsfVector3f)));
-                ((HsfVector3f *)new_vertex->data)[j].x = data_elem->x;
-                ((HsfVector3f *)new_vertex->data)[j].y = data_elem->y;
-                ((HsfVector3f *)new_vertex->data)[j].z = data_elem->z;
+                data_elem = (HuVecF *)(((u32)data)+((u32)temp_data)+(j*sizeof(HuVecF)));
+                ((HuVecF *)new_vertex->data)[j].x = data_elem->x;
+                ((HuVecF *)new_vertex->data)[j].y = data_elem->y;
+                ((HuVecF *)new_vertex->data)[j].z = data_elem->z;
             }
         }
     }
@@ -364,7 +364,7 @@ static void STLoad(void)
     HsfBuffer *temp_st;
     HsfBuffer *new_st;
     void *data;
-    HsfVector2f *data_elem;
+    HuVec2f *data_elem;
     void *temp_data;
     
     if(head.st.count) {
@@ -372,7 +372,7 @@ static void STLoad(void)
         data = (void *)&file_st[head.st.count];
         for(i=0; i<head.st.count; i++, file_st++) {
             for(j=0; j<(u32)file_st->count; j++) {
-                data_elem = (HsfVector2f *)(((u32)data)+((u32)file_st->data)+(j*sizeof(HsfVector2f)));
+                data_elem = (HuVec2f *)(((u32)data)+((u32)file_st->data)+(j*sizeof(HuVec2f)));
             }
         }
         new_st = temp_st;
@@ -386,9 +386,9 @@ static void STLoad(void)
             new_st->name = SetName((u32 *)&file_st->name);
             new_st->data = (void *)((u32)data+(u32)temp_data);
             for(j=0; j<new_st->count; j++) {
-                data_elem = (HsfVector2f *)(((u32)data)+((u32)temp_data)+(j*sizeof(HsfVector2f)));
-                ((HsfVector2f *)new_st->data)[j].x = data_elem->x;
-                ((HsfVector2f *)new_st->data)[j].y = data_elem->y;
+                data_elem = (HuVec2f *)(((u32)data)+((u32)temp_data)+(j*sizeof(HuVec2f)));
+                ((HuVec2f *)new_st->data)[j].x = data_elem->x;
+                ((HuVec2f *)new_st->data)[j].y = data_elem->y;
             }
         }
     }

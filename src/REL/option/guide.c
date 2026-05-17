@@ -70,9 +70,9 @@ omObjData *OptionGuideCreate(void)
     for (i = 0; i < 3; i++) {
         object->motion[i] = Hu3DJointMotionFile(object->model[0], guideMotTbl[i]);
     }
-    work->unk_5C = CharModelEffectNpcInit(object->model[0], object->motion[2], 1, 0xC);
-    work->unk_60 = CharModelEffectNpcInit(object->model[0], object->motion[1], 0, 0xC);
-    CharModelLayerSetAll(1);
+    work->unk_5C = CharNpcDustSet(object->model[0], object->motion[2], 1, 0xC);
+    work->unk_60 = CharNpcDustSet(object->model[0], object->motion[1], 0, 0xC);
+    CharEffectLayerSet(1);
     Hu3DModelShadowSet(object->model[0]);
     Hu3DMotionShiftSet(object->model[0], object->motion[0], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
     SetExecMode(object, MODE_DISABLED);

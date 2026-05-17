@@ -398,7 +398,7 @@ static void fn_1_D770(void) {
             BoardModelRotSetV(lbl_1_bss_2D0[i], &sp24[i]);
             if (sp114[i].y <= sp18.y + 80.0f) {
                 spC = sp114[i];
-                CharModelCoinEffectCreate(1, &spC);
+                CharEffectCoinGlowCreate(1, &spC);
                 BoardModelVisibilitySet(lbl_1_bss_2D0[i], 0);
                 var_r29 += 1;
                 BoardPlayerCoinsAdd(lbl_1_bss_324, 1);

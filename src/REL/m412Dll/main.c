@@ -409,7 +409,7 @@ void fn_1_8BC(void)
         Hu3DModelScaleSet(temp_r30->unk2, 1.0f, -1.0f, 1.0f);
         Hu3DModelAttrSet(temp_r30->unk2, HU3D_ATTR_CULL_FRONT);
         Hu3DModelLayerSet(temp_r30->unk2, 0);
-        CharModelLayerSetAll(3);
+        CharEffectLayerSet(3);
         temp_r30->unk54.x = temp_r30->unk54.z = temp_r30->unk54.y = 0.0f;
         temp_r30->unk54.y = fn_1_1D08(45.0f + (90.0f * temp_r30->unk3C) + lbl_1_bss_778);
         temp_r30->unk40.x = (400.0 * sind(temp_r30->unk54.y));
@@ -427,16 +427,16 @@ void fn_1_8BC(void)
         Hu3DModelShadowSet(temp_r30->unk0);
 
         for (var_r26 = 0; var_r26 < 6; var_r26++) {
-            temp_r30->unkC[var_r26] = CharModelMotionCreate(lbl_1_data_0[GWPlayerCfg[var_r28].character], lbl_1_data_60[var_r26]);
+            temp_r30->unkC[var_r26] = CharMotionCreate(lbl_1_data_0[GWPlayerCfg[var_r28].character], lbl_1_data_60[var_r26]);
             var_r27
                 = HuDataSelHeapReadNum((u16)lbl_1_data_60[var_r26] | lbl_1_data_40[GWPlayerCfg[var_r28].character], MEMORY_DEFAULT_NUM, HEAP_DATA);
             temp_r30->unk18[var_r26] = Hu3DJointMotion(temp_r30->unk2, var_r27);
         }
-        CharModelMotionSet(lbl_1_data_0[GWPlayerCfg[var_r28].character], temp_r30->unkC[0]);
+        CharMotionSet(lbl_1_data_0[GWPlayerCfg[var_r28].character], temp_r30->unkC[0]);
         Hu3DModelAttrSet(temp_r30->unk0, HU3D_MOTATTR_LOOP);
         Hu3DMotionSet(temp_r30->unk2, temp_r30->unk18[0]);
         Hu3DModelAttrSet(temp_r30->unk2, HU3D_MOTATTR_LOOP);
-        CharModelMotionDataClose(lbl_1_data_0[GWPlayerCfg[var_r28].character]);
+        CharMotionDataClose(lbl_1_data_0[GWPlayerCfg[var_r28].character]);
         var_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M412, 0x1C), MEMORY_DEFAULT_NUM, HEAP_DATA);
         temp_r30->unk6 = var_r29 = Hu3DModelCreate(var_r27);
         Hu3DModelLayerSet(var_r29, 1);
@@ -1648,14 +1648,14 @@ loop_6:
                 if (temp_r31->unk60.z >= 8.0f) {
                     if (temp_r31->unk30 != 2) {
                         temp_r31->unk30 = 2;
-                        CharModelMotionShiftSet(
+                        CharMotionShiftSet(
                             lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[2], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
                         Hu3DMotionShiftSet(temp_r31->unk2, temp_r31->unk18[2], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
                     }
                 }
                 else if (temp_r31->unk30 != 1) {
                     temp_r31->unk30 = 1;
-                    CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[1], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
+                    CharMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[1], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
                     Hu3DMotionShiftSet(temp_r31->unk2, temp_r31->unk18[1], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
                 }
                 temp_r31->unk7C.x += 0.1f * sp1A0.x;
@@ -1663,7 +1663,7 @@ loop_6:
             }
             else if (temp_r31->unk30 != 0) {
                 temp_r31->unk30 = 0;
-                CharModelMotionSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[0]);
+                CharMotionSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[0]);
                 Hu3DModelAttrSet(temp_r31->unk0, HU3D_MOTATTR_LOOP);
                 Hu3DMotionSet(temp_r31->unk2, temp_r31->unk18[0]);
                 Hu3DMotionSpeedSet(temp_r31->unk2, 2.0f);
@@ -1765,7 +1765,7 @@ loop_6:
                 HuPrcVSleep();
             }
         case 4:
-            CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[0], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
+            CharMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[0], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
             Hu3DMotionShiftSet(temp_r31->unk2, temp_r31->unk18[0], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
             var_r27 = 30;
             sp12C = fn_1_27C4(var_r27, lbl_1_bss_778, temp_r31->unk54.y);
@@ -1779,7 +1779,7 @@ loop_6:
             while (lbl_1_bss_794 < 5) {
                 HuPrcVSleep();
             }
-            CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[5], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
+            CharMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk24].character], temp_r31->unkC[5], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
             Hu3DMotionShiftSet(temp_r31->unk2, temp_r31->unk18[5], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
 
             while (1) {
@@ -2053,7 +2053,7 @@ void fn_1_ADC8(void)
         if (var_f31 == 90.0f) {
             for (var_r31 = 0; var_r31 < 4; var_r31++) {
                 temp_r30 = &lbl_1_bss_4D4[var_r31];
-                CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[var_r31].character], temp_r30->unkC[3], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
+                CharMotionShiftSet(lbl_1_data_0[GWPlayerCfg[var_r31].character], temp_r30->unkC[3], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
                 Hu3DMotionShiftSet(temp_r30->unk2, temp_r30->unk18[3], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
             }
         }
@@ -2064,7 +2064,7 @@ void fn_1_ADC8(void)
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
         temp_r30 = &lbl_1_bss_4D4[var_r31];
         PlayerFXPlay(temp_r30->unk24, 0x128);
-        CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[var_r31].character], temp_r30->unkC[4], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
+        CharMotionShiftSet(lbl_1_data_0[GWPlayerCfg[var_r31].character], temp_r30->unkC[4], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
         Hu3DMotionShiftSet(temp_r30->unk2, temp_r30->unk18[4], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     }
 }

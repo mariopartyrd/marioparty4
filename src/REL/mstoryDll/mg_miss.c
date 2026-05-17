@@ -308,13 +308,13 @@ void fn_1_12D78(omObjData* arg0) {
 
     temp_r30 = lbl_1_bss_7B4.unk34[lbl_1_bss_7B4.unk04].unk10;
     arg0->model[1] = CharModelCreate(temp_r30, 1);
-    arg0->motion[1] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-    arg0->motion[2] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 24));
-    arg0->motion[3] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 52));
-    arg0->motion[4] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
-    arg0->motion[5] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 53));
-    CharModelVoiceEnableSet(temp_r30, arg0->motion[2], 0);
-    CharModelMotionDataClose(temp_r30);
+    arg0->motion[1] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+    arg0->motion[2] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 24));
+    arg0->motion[3] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 52));
+    arg0->motion[4] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
+    arg0->motion[5] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 53));
+    CharMotionVoiceOnSet(temp_r30, arg0->motion[2], 0);
+    CharMotionDataClose(temp_r30);
     Hu3DModelPosSet(arg0->model[1], 120.0f, 0.0f, 670.0f);
     Hu3DModelRotSet(arg0->model[1], 0.0f, -45.0f, 0.0f);
     Hu3DModelScaleSet(arg0->model[1], 1.0f, 1.0f, 1.0f);

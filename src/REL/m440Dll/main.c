@@ -1327,7 +1327,7 @@ void fn_1_5C2C(s16 arg0, HsfObject *arg1, unkStruct6 *arg2, u16 arg3)
     Vec *var_r21;
     Vec *var_r19;
     s16 var_r20;
-    HsfVector2f *var_r22;
+    HuVec2f *var_r22;
     s16 var_r24;
     s16 var_r23;
     HsfTransform *var_r25;
@@ -2245,7 +2245,7 @@ s16 fn_1_956C(AnimData *arg0, s16 arg1, f32 arg2, s16 arg3, s16 arg4)
     s16 var_r20;
     s16 var_r22;
     s16 var_r19;
-    HsfVector2f *var_r29;
+    HuVec2f *var_r29;
     s16 var_r30;
     unkStruct5 *var_r31;
     void *var_r21;
@@ -2418,7 +2418,7 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     s16 temp_r0;
     u8 temp_r0_2;
     unkStruct5 *temp_r30;
-    HsfVector2f *var_r27;
+    HuVec2f *var_r27;
     s16 var_r26;
     unkStruct4 *var_r29;
     m440Func5 var_r23;
@@ -2516,7 +2516,7 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
 }
 
-void fn_1_A1B8(HsfVector2f *arg0, s16 arg1, s16 arg2, f32 arg8, f32 arg9)
+void fn_1_A1B8(HuVec2f *arg0, s16 arg1, s16 arg2, f32 arg8, f32 arg9)
 {
     s16 var_r31;
     s16 var_r30;
@@ -2530,7 +2530,7 @@ void fn_1_A1B8(HsfVector2f *arg0, s16 arg1, s16 arg2, f32 arg8, f32 arg9)
     }
 }
 
-void fn_1_A284(HsfVector2f *arg0, HsfVector2f *arg1, s16 arg2, f32 arg3, f32 arg4)
+void fn_1_A284(HuVec2f *arg0, HuVec2f *arg1, s16 arg2, f32 arg3, f32 arg4)
 {
     arg0[0].x = arg1[arg2].x;
     arg0[0].y = arg1[arg2].y;

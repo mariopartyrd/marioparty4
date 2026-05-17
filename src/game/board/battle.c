@@ -457,7 +457,7 @@ static void UpdateExplode(omObjData *arg0) {
                         BoardPlayerMotionShiftSet(i, 6, temp_f31, 8.0f, HU3D_MOTATTR_LOOP);
                     }
                 }
-                CharModelLayerSetAll(2);
+                CharEffectLayerSet(2);
             }
             if (temp_r30->unk01-- <= 0) {
                 arg0->trans.y += 50.0f;

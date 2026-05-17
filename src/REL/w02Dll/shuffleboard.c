@@ -468,7 +468,7 @@ void fn_1_A8E8(void)
 			if(VECDistanceXZ(&sp10, &sp28) < 100.0f) {
 				lbl_1_bss_1C4[temp_r31] = 0;
 				BoardModelVisibilitySet(lbl_1_bss_34C[temp_r31], 0);
-				CharModelCoinEffectCreate(1, &sp10);
+				CharEffectCoinGlowCreate(1, &sp10);
 				BoardPlayerCoinsAdd(lbl_1_bss_36E, 1);
 				HuAudFXPlay(7);
 			}

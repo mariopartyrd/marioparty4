@@ -3,6 +3,7 @@
 
 #include "dolphin.h"
 #include "game/animdata.h"
+#include "game/humath.h"
 
 #define HSF_OBJ_NULL1 0
 #define HSF_OBJ_REPLICA 1
@@ -27,17 +28,6 @@
 #define HSF_CURVE_BEZIER 2
 #define HSF_CURVE_BITMAP 3
 #define HSF_CURVE_CONST 4
-
-typedef struct hsf_vector3f {
-    float x;
-    float y;
-    float z;
-} HsfVector3f;
-
-typedef struct hsf_vector2f {
-    float x;
-    float y;
-} HsfVector2f;
 
 typedef struct hsf_section {
     s32 ofs;
@@ -254,8 +244,8 @@ typedef struct hsf_object_data {
     HsfTransform curr;
     union {
         struct {
-            HsfVector3f min;
-            HsfVector3f max;
+            HuVecF min;
+            HuVecF max;
             float baseMorph;
             float morphWeight[33];
         } mesh;
@@ -282,8 +272,8 @@ typedef struct hsf_object_data {
 } HsfObjectData;
 
 typedef struct hsf_camera {
-    HsfVector3f target;
-    HsfVector3f pos;
+    HuVecF target;
+    HuVecF pos;
     float aspect_dupe;
     float fov;
     float near;
@@ -291,8 +281,8 @@ typedef struct hsf_camera {
 } HsfCamera;
 
 typedef struct hsf_light {
-    HsfVector3f pos;
-    HsfVector3f target;
+    HuVecF pos;
+    HuVecF target;
     u8 type;
     u8 r;
     u8 g;

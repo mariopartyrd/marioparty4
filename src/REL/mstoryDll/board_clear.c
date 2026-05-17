@@ -442,13 +442,13 @@ void fn_1_9408(omObjData* arg0, s32 arg1) {
     var_r30 = arg1;
     temp_r29 = lbl_1_bss_1C4.unk34[var_r30].unk10;
     arg0->model[1] = CharModelCreate(temp_r29, 4);
-    arg0->motion[1] = CharModelMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-    arg0->motion[2] = CharModelMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
-    arg0->motion[3] = CharModelMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 5));
+    arg0->motion[1] = CharMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+    arg0->motion[2] = CharMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
+    arg0->motion[3] = CharMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 5));
     arg0->motion[4] = Hu3DJointMotionFile(arg0->model[1], DATA_MAKE_NUM(DATADIR_MSTORY, 48 + temp_r29));
-    arg0->motion[5] = CharModelMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 109));
+    arg0->motion[5] = CharMotionCreate(temp_r29, DATA_MAKE_NUM(DATADIR_MARIOMOT, 109));
     arg0->motion[6] = Hu3DJointMotionFile(arg0->model[1], DATA_MAKE_NUM(DATADIR_MSTORY, 40 + temp_r29));
-    CharModelMotionDataClose(temp_r29);
+    CharMotionDataClose(temp_r29);
     Hu3DModelPosSet(arg0->model[1], lbl_1_data_354[var_r30].x, lbl_1_data_354[lbl_1_bss_1C4.unk34[var_r30].unk18 - 1].y + 90.0f, lbl_1_data_354[var_r30].z - 15.0f);
     Hu3DModelRotSet(arg0->model[1], 0.0f, 0.0f, 0.0f);
     Hu3DModelScaleSet(arg0->model[1], 1.0f, 1.0f, 1.0f);
@@ -535,7 +535,7 @@ void fn_1_9D08(omObjData* arg0, s32 arg1) {
         s32 sp8[] = { 9, 14, 10, 11, 12 };
 
         if (arg1 != 3) {
-            CharModelEffectNpcInit(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
+            CharNpcDustSet(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
         }
     }
 }

@@ -243,14 +243,14 @@ void fn_1_7C8C(omObjData *object)
     for (var_r29 = 0; var_r29 < 11; var_r29++) {
         if (lbl_1_data_90[var_r29][var_r27 + 1]) {
             if (lbl_1_data_90[var_r29][0] < 65536) {
-                object->motion[var_r29] = CharModelMotionCreate(var_r28, lbl_1_data_90[var_r29][0]);
+                object->motion[var_r29] = CharMotionCreate(var_r28, lbl_1_data_90[var_r29][0]);
             }
             else {
                 object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], var_r28 + lbl_1_data_90[var_r29][0]);
             }
         }
     }
-    CharModelMotionDataClose(var_r28);
+    CharMotionDataClose(var_r28);
     object->model[1] = Hu3DModelCreateFile(lbl_1_data_50[var_r28][var_r27]);
     Hu3DModelShadowMapSet(object->model[1]);
 
@@ -815,7 +815,7 @@ void fn_1_9C14(omObjData *object)
         var_r31->unk_E0.z = (1.0 * REFRESH_FREQ) * (500.0 * (var_r31->unk_24 * cosd(var_r31->unk_20)));
         var_r31->unk_6C = 0.2f;
         var_r31->unk_70 = 0.0f;
-        if (CharModelMotionShiftIDGet(var_r31->unk_00) < 0) {
+        if (CharMotionShiftIDGet(var_r31->unk_00) < 0) {
             var_f30 = 0.5f;
             if (var_r31->unk_08 == 4) {
                 var_f30 = 0.45f;
@@ -831,12 +831,12 @@ void fn_1_9C14(omObjData *object)
 #if VERSION_PAL
             var_f29 *= 1.2f;
 #endif
-            CharModelMotionSpeedSet(var_r31->unk_00, var_f29);
+            CharMotionSpeedSet(var_r31->unk_00, var_f29);
         }
     }
     else {
         var_r31->unk_E0.x = var_r31->unk_E0.y = var_r31->unk_E0.z = 0.0f;
-        if (var_r31->unk_28 && CharModelMotionShiftIDGet(var_r31->unk_00) < 0) {
+        if (var_r31->unk_28 && CharMotionShiftIDGet(var_r31->unk_00) < 0) {
             fn_1_B8A0(object, 0);
         }
     }
@@ -1237,7 +1237,7 @@ void fn_1_B8A0(omObjData *object, u32 arg1)
             var_f31 = 0.0f;
         }
         var_r30->unk_08 = arg1;
-        CharModelMotionShiftSet(
+        CharMotionShiftSet(
             var_r30->unk_00,
             object->motion[lbl_1_data_114[arg1].unk_00],
             REFRESH_RATE_F * lbl_1_data_114[arg1].unk_08,
@@ -1252,7 +1252,7 @@ void fn_1_B8A0(omObjData *object, u32 arg1)
             );
         }
 #if VERSION_PAL
-        CharModelMotionSpeedSet(var_r30->unk_00, 1.2f);
+        CharMotionSpeedSet(var_r30->unk_00, 1.2f);
 #endif
     }
 }
@@ -1264,7 +1264,7 @@ s32 fn_1_BA2C(omObjData *object)
 
     var_r31 = object->data;
     var_r30 = 0;
-    if (CharModelMotionEndCheck(var_r31->unk_00) && CharModelMotionShiftIDGet(var_r31->unk_00) < 0) {
+    if (CharMotionEndCheck(var_r31->unk_00) && CharMotionShiftIDGet(var_r31->unk_00) < 0) {
         var_r30 = 1;
     }
     return var_r30;

@@ -21,7 +21,7 @@ typedef struct M427DllStruct2 {
     s32 unk10;
     s32 unk14[7];
     s32 unk30[7];
-    HsfVector2f unk4C[7];
+    HuVec2f unk4C[7];
     f32 unk84;
     f32 unk88;
     s32 unk8C;

@@ -487,45 +487,45 @@ void HuWinHomeClear(void);
 void HuWinPushKeySet(void);
 void HuWinDisablePlayerSet(void);
 void HuWinDisablePlayerReset(void);
-void CharManInit(void);
-void CharARAMOpen(void);
-void CharKill(void);
+void CharInit(void);
+void CharMotionInit(void);
+void CharDataClose(void);
 void CharModelKill(void);
-void CharKillAll(void);
+void CharClose(void);
 void CharModelCreate(void);
-void CharModelMotionCreate(void);
-void CharModelMotionIndexSet(void);
-void CharModelMotionKill(void);
-void CharModelMotionDataClose(void);
+void CharMotionCreate(void);
+void CharMotionNoSet(void);
+void CharMotionKill(void);
+void CharMotionDataClose(void);
 void CharModelDataClose(void);
-void CharAMemPtrGet(void);
-void CharModelMotionSet(void);
-void CharModelMotionTimeSet(void);
-void CharModelMotionTimeGet(void);
-void CharModelMotionMaxTimeGet(void);
-void CharModelMotionEndCheck(void);
-void CharModelMotionShiftIDGet(void);
-void CharModelMotionShiftSet(void);
-void CharModelMotionShiftTimeGet(void);
-void CharModelMotionSpeedSet(void);
-void CharModelLayerSetAll(void);
-void CharModelItemHookCreate(void);
-void CharModelEffectCreate(void);
-void CharModelCoinEffectCreate(void);
-void fn_8004EC74(void);
-void fn_8004EDA4(void);
-void fn_8004F13C(void);
-void fn_8004F058(void);
+void CharMotionAMemPGet(void);
+void CharMotionSet(void);
+void CharMotionTimeSet(void);
+void CharMotionTimeGet(void);
+void CharMotionMaxTimeGet(void);
+void CharMotionEndCheck(void);
+void CharMotionShiftIDGet(void);
+void CharMotionShiftSet(void);
+void CharMotionShiftTimeGet(void);
+void CharMotionSpeedSet(void);
+void CharEffectLayerSet(void);
+void CharModelHookDustCreate(void);
+void CharEffectSmokeCreate(void);
+void CharEffectCoinGlowCreate(void);
+void CharModelHitCreate(void);
+void CharEffectHitCreate(void);
+void CharEffectShoeHitCreate(void);
+void CharModelShoeHitCreate(void);
 void GWCharColorGet(void);
 void CharModelLayerSetAll2(void);
-void charTexNameTbl(void);
-void CharModelTexNameGet(void);
-void CharModelVoiceEnableSet(void);
-void CharModelEffectNpcInitSilent(void);
-void CharModelStepTypeSet(void);
-void fn_8004F52C(void);
-void CharModelEffectEnableSet(void);
-void CharModelEffectNpcInit(void);
+void charEyeBmpNameTbl(void);
+void CharModelEyeBmpGet(void);
+void CharMotionVoiceOnSet(void);
+void CharNpcDustVoiceOffSet(void);
+void CharModelStepFxSet(void);
+void CharModelVoicePanAutoSet(void);
+void CharModelFxFlagSet(void);
+void CharNpcDustSet(void);
 void HuPrcSetStat(void);
 void HuPrcResetStat(void);
 void omGameSysInit(void);
@@ -1507,17 +1507,17 @@ extern void _kerjmp_HuWinPushKeySet(void);
 extern void _kerjmp_HuWinDisablePlayerSet(void);
 extern void _kerjmp_HuWinDisablePlayerReset(void);
 extern void _kerjmp_CharManInit(void);
-extern void _kerjmp_CharARAMOpen(void);
-extern void _kerjmp_CharKill(void);
+extern void _kerjmp_CharMotionInit(void);
+extern void _kerjmp_CharDataClose(void);
 extern void _kerjmp_CharModelKill(void);
-extern void _kerjmp_CharKillAll(void);
+extern void _kerjmp_CharClose(void);
 extern void _kerjmp_CharModelCreate(void);
 extern void _kerjmp_CharModelMotionCreate(void);
 extern void _kerjmp_CharModelMotionIndexSet(void);
 extern void _kerjmp_CharModelMotionKill(void);
 extern void _kerjmp_CharModelMotionDataClose(void);
 extern void _kerjmp_CharModelDataClose(void);
-extern void _kerjmp_CharAMemPtrGet(void);
+extern void _kerjmp_CharMotionAMemPGet(void);
 extern void _kerjmp_CharModelMotionSet(void);
 extern void _kerjmp_CharModelMotionTimeSet(void);
 extern void _kerjmp_CharModelMotionTimeGet(void);
@@ -3018,83 +3018,83 @@ asm void _kerent(void) {
     entry _kerjmp_HuWinDisablePlayerReset
     b HuWinDisablePlayerReset
     entry _kerjmp_CharManInit
-    b CharManInit
-    entry _kerjmp_CharARAMOpen
-    b CharARAMOpen
-    entry _kerjmp_CharKill
-    b CharKill
+    b CharInit
+    entry _kerjmp_CharMotionInit
+    b CharMotionInit
+    entry _kerjmp_CharDataClose
+    b CharDataClose
     entry _kerjmp_CharModelKill
     b CharModelKill
-    entry _kerjmp_CharKillAll
-    b CharKillAll
+    entry _kerjmp_CharClose
+    b CharClose
     entry _kerjmp_CharModelCreate
     b CharModelCreate
     entry _kerjmp_CharModelMotionCreate
-    b CharModelMotionCreate
+    b CharMotionCreate
     entry _kerjmp_CharModelMotionIndexSet
-    b CharModelMotionIndexSet
+    b CharMotionNoSet
     entry _kerjmp_CharModelMotionKill
-    b CharModelMotionKill
+    b CharMotionKill
     entry _kerjmp_CharModelMotionDataClose
-    b CharModelMotionDataClose
+    b CharMotionDataClose
     entry _kerjmp_CharModelDataClose
     b CharModelDataClose
-    entry _kerjmp_CharAMemPtrGet
-    b CharAMemPtrGet
+    entry _kerjmp_CharMotionAMemPGet
+    b CharMotionAMemPGet
     entry _kerjmp_CharModelMotionSet
-    b CharModelMotionSet
+    b CharMotionSet
     entry _kerjmp_CharModelMotionTimeSet
-    b CharModelMotionTimeSet
+    b CharMotionTimeSet
     entry _kerjmp_CharModelMotionTimeGet
-    b CharModelMotionTimeGet
+    b CharMotionTimeGet
     entry _kerjmp_CharModelMotionMaxTimeGet
-    b CharModelMotionMaxTimeGet
+    b CharMotionMaxTimeGet
     entry _kerjmp_CharModelMotionEndCheck
-    b CharModelMotionEndCheck
+    b CharMotionEndCheck
     entry _kerjmp_CharModelMotionShiftIDGet
-    b CharModelMotionShiftIDGet
+    b CharMotionShiftIDGet
     entry _kerjmp_CharModelMotionShiftSet
-    b CharModelMotionShiftSet
+    b CharMotionShiftSet
     entry _kerjmp_CharModelMotionShiftTimeGet
-    b CharModelMotionShiftTimeGet
+    b CharMotionShiftTimeGet
     entry _kerjmp_CharModelMotionSpeedSet
-    b CharModelMotionSpeedSet
+    b CharMotionSpeedSet
     entry _kerjmp_CharModelLayerSetAll
-    b CharModelLayerSetAll
+    b CharEffectLayerSet
     entry _kerjmp_CharModelItemHookCreate
-    b CharModelItemHookCreate
+    b CharModelHookDustCreate
     entry _kerjmp_CharModelEffectCreate
-    b CharModelEffectCreate
+    b CharEffectSmokeCreate
     entry _kerjmp_CharModelCoinEffectCreate
-    b CharModelCoinEffectCreate
+    b CharEffectCoinGlowCreate
     entry _kerjmp_fn_8004EC74
-    b fn_8004EC74
+    b CharModelHitCreate
     entry _kerjmp_fn_8004EDA4
-    b fn_8004EDA4
+    b CharEffectHitCreate
     entry _kerjmp_fn_8004F13C
-    b fn_8004F13C
+    b CharEffectShoeHitCreate
     entry _kerjmp_fn_8004F058
-    b fn_8004F058
+    b CharModelShoeHitCreate
     entry _kerjmp_GWCharColorGet
     b GWCharColorGet
     entry _kerjmp_CharModelLayerSetAll2
     b CharModelLayerSetAll2
     entry _kerjmp_charTexNameTbl
-    b charTexNameTbl
+    b charEyeBmpNameTbl
     entry _kerjmp_CharModelTexNameGet
-    b CharModelTexNameGet
+    b CharModelEyeBmpGet
     entry _kerjmp_CharModelVoiceEnableSet
-    b CharModelVoiceEnableSet
+    b CharMotionVoiceOnSet
     entry _kerjmp_CharModelEffectNpcInitSilent
-    b CharModelEffectNpcInitSilent
+    b CharNpcDustVoiceOffSet
     entry _kerjmp_CharModelStepTypeSet
-    b CharModelStepTypeSet
+    b CharModelStepFxSet
     entry _kerjmp_fn_8004F52C
-    b fn_8004F52C
+    b CharModelVoicePanAutoSet
     entry _kerjmp_CharModelEffectEnableSet
-    b CharModelEffectEnableSet
+    b CharModelFxFlagSet
     entry _kerjmp_CharModelEffectNpcInit
-    b CharModelEffectNpcInit
+    b CharNpcDustSet
     entry _kerjmp_HuPrcSetStat
     b HuPrcSetStat
     entry _kerjmp_HuPrcResetStat

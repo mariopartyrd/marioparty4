@@ -809,7 +809,7 @@ static void CreateBallPlayer(void) {
         BoardModelCameraSet(temp_r30->unk00, 1);
         BoardModelCameraSet(temp_r30->unk02, 1);
         BoardModelScaleSet(temp_r30->unk00, 0.4f, 0.4f, 0.4f);
-        temp_r27 = CharModelHookNameGet(temp_r28, 2, 0);
+        temp_r27 = CharModelItemHookGet(temp_r28, 2, 0);
         BoardModelHookSet(temp_r30->unk00, "b00p_item30", temp_r30->unk02);
         BoardModelHookSet(BoardPlayerModelGet(stealTarget), temp_r27, temp_r30->unk00);
     } else {

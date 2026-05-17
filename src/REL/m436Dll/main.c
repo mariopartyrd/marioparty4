@@ -1412,7 +1412,7 @@ void fn_1_5CD0(omObjData *arg0)
         }
     }
     else {
-        temp_r26 = CharModelTexNameGet(temp_r30->unk14, 2);
+        temp_r26 = CharModelEyeBmpGet(temp_r30->unk14, 2);
         for (i = 0; i < temp_r27->materialCnt; i++, var_r31++) {
             var_r22 = 1;
             for (j = 0; j < var_r31->numAttrs; j++) {
@@ -1450,20 +1450,20 @@ void fn_1_6060(omObjData *arg0)
     Vec sp8[] = { { -600.0f, 0.0f, 300.0f }, { -600.0f, 0.0f, 150.0f }, { -450.0f, 0.0f, 150.0f }, { -300.0f, 0.0f, 150.0f } };
 
     arg0->model[0] = CharModelCreate(temp_r30->unk14, 2);
-    arg0->motion[0] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-    arg0->motion[1] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 2));
-    arg0->motion[2] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
-    arg0->motion[3] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 88));
-    arg0->motion[4] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 89));
-    arg0->motion[5] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 90));
-    arg0->motion[6] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
-    arg0->motion[7] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 28));
+    arg0->motion[0] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+    arg0->motion[1] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 2));
+    arg0->motion[2] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
+    arg0->motion[3] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 88));
+    arg0->motion[4] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 89));
+    arg0->motion[5] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 90));
+    arg0->motion[6] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
+    arg0->motion[7] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 28));
     arg0->motion[8] = Hu3DJointMotionFile(arg0->model[0], DATA_MAKE_NUM(DATADIR_M436, temp_r30->unk14));
     Hu3DModelShadowSet(arg0->model[0]);
     Hu3DModelAttrSet(arg0->model[0], HU3D_ATTR_DISPOFF);
     fn_1_11B18(arg0, 0, 0, 0, 1);
     omSetTra(arg0, sp8[temp_r29].x, sp8[temp_r29].y, sp8[temp_r29].z);
-    CharModelMotionDataClose(temp_r30->unk14);
+    CharMotionDataClose(temp_r30->unk14);
     temp_r30->unk2C = 1.0f;
     arg0->func = fn_1_5CD0;
 }
@@ -2505,7 +2505,7 @@ s32 fn_1_D6E4(void)
     }
     else if (fn_1_11708(temp_r31->unk00, 0, 5, 35, 1) != 0 && var_r29->unk0C == 0) {
         var_r29->unk0C = 1;
-        Hu3DModelHookSet(temp_r31->unk00->model[0], CharModelHookNameGet(temp_r31->unk14, 2, 0), var_r30->unk00->model[temp_r31->unk1C + 1]);
+        Hu3DModelHookSet(temp_r31->unk00->model[0], CharModelItemHookGet(temp_r31->unk14, 2, 0), var_r30->unk00->model[temp_r31->unk1C + 1]);
         if (temp_r31->unk14 != 7) {
             Hu3DModelPosSet(var_r30->unk00->model[temp_r31->unk1C + 1], 0.0f, 5.0f, 0.0f);
         }

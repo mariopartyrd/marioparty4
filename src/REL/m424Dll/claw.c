@@ -196,12 +196,12 @@ void fn_1_94D0(omObjData *arg0)
     var_r31->unk1AC = 0;
     arg0->model[0] = CharModelCreate(var_r31->unk2, 1);
     Hu3DModelShadowSet(arg0->model[0]);
-    CharModelStepTypeSet(var_r31->unk2, 1);
+    CharModelStepFxSet(var_r31->unk2, 1);
     for (var_r29 = 0; var_r29 < 9; var_r29++) {
-        arg0->motion[var_r29] = CharModelMotionCreate(var_r31->unk2, lbl_1_data_2E8[var_r29]);
+        arg0->motion[var_r29] = CharMotionCreate(var_r31->unk2, lbl_1_data_2E8[var_r29]);
     }
     var_r31->unkE = 5;
-    CharModelMotionSet(var_r31->unk2, arg0->motion[var_r31->unkE]);
+    CharMotionSet(var_r31->unk2, arg0->motion[var_r31->unkE]);
     arg0->model[1] = Hu3DModelCreateFile(0x37001D);
     Hu3DModelShadowSet(arg0->model[1]);
     arg0->model[2] = Hu3DModelCreateFile(0x37001E);
@@ -498,9 +498,9 @@ void fn_1_9A64(omObjData *arg0)
         case 10:
             if (fn_1_B888() != 0) {
                 temp_r31->unkE = 5;
-                CharModelMotionSet(temp_r31->unk2, arg0->motion[temp_r31->unkE]);
+                CharMotionSet(temp_r31->unk2, arg0->motion[temp_r31->unkE]);
                 temp_r31->unkE = 3;
-                CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
+                CharMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
                 temp_r31->unk16 = 0;
                 temp_r31->unk14 = 0;
                 temp_r31->unk1C = lbl_1_data_210[0];
@@ -529,9 +529,9 @@ void fn_1_9A64(omObjData *arg0)
                 arg0->trans.y += temp_r31->unk1C;
                 temp_r31->unk1C -= 39.2f / REFRESH_RATE_F;
                 if (temp_r31->unk14 == 2) {
-                    if ((temp_r31->unk12 >= (0.4f * temp_r31->unk18)) && (temp_r31->unkE != 6) && (CharModelMotionShiftIDGet(temp_r31->unk2) == -1)) {
+                    if ((temp_r31->unk12 >= (0.4f * temp_r31->unk18)) && (temp_r31->unkE != 6) && (CharMotionShiftIDGet(temp_r31->unk2) == -1)) {
                         temp_r31->unkE = 6;
-                        CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
+                        CharMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
                     }
                 }
                 if (temp_r31->unk12 >= temp_r31->unk18) {
@@ -539,7 +539,7 @@ void fn_1_9A64(omObjData *arg0)
                     arg0->trans.y = sp8.y;
                     arg0->trans.z = sp8.z;
                     temp_r31->unkE = 4;
-                    CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
+                    CharMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0U);
                     temp_r31->unk12 = 0;
                     temp_r31->unk16 ^= 1;
                     if (++temp_r31->unk14 >= 3) {
@@ -552,9 +552,9 @@ void fn_1_9A64(omObjData *arg0)
                 sp8 = lbl_1_data_1E0[var_r29 + 1];
                 var_f31 = atan2d((sp8.x - arg0->trans.x), (sp8.z - arg0->trans.z));
                 arg0->rot.y = fn_1_1470(var_f31, arg0->rot.y, 10.0f);
-                if ((fn_1_1358(var_f31, arg0->rot.y) < 1.0f) && (CharModelMotionShiftIDGet(temp_r31->unk2) == -1)) {
+                if ((fn_1_1358(var_f31, arg0->rot.y) < 1.0f) && (CharMotionShiftIDGet(temp_r31->unk2) == -1)) {
                     temp_r31->unkE = 3;
-                    CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
+                    CharMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
                     temp_r31->unk1C = lbl_1_data_210[var_r29];
                     temp_r31->unk18 = fn_1_B79C(sp14.y, sp8.y, temp_r31->unk1C);
                     temp_r31->unk12 = 0;
@@ -563,9 +563,9 @@ void fn_1_9A64(omObjData *arg0)
             }
             break;
         case 12:
-            if ((temp_r31->unkE != 0) && (CharModelMotionShiftIDGet(temp_r31->unk2) == -1)) {
+            if ((temp_r31->unkE != 0) && (CharMotionShiftIDGet(temp_r31->unk2) == -1)) {
                 temp_r31->unkE = 0;
-                CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0x40000008);
+                CharMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0x40000008);
             }
             arg0->rot.y = fn_1_1470(0.0f, arg0->rot.y, 10.0f);
             if ((fn_1_1358(0.0f, arg0->rot.y) < 1.0f) && (temp_r31->unkE == 0)) {
@@ -586,9 +586,9 @@ void fn_1_9A64(omObjData *arg0)
             }
             break;
         case 14:
-            if ((temp_r31->unkE != 7) && (CharModelMotionShiftIDGet(temp_r31->unk2) == -1)) {
+            if ((temp_r31->unkE != 7) && (CharMotionShiftIDGet(temp_r31->unk2) == -1)) {
                 temp_r31->unkE = 7;
-                CharModelMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
+                CharMotionShiftSet(temp_r31->unk2, arg0->motion[temp_r31->unkE], 0.0f, 8.0f, 0);
             }
             break;
         case 15:

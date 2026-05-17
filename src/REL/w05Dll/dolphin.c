@@ -628,7 +628,7 @@ void fn_1_64BC(void)
             VECSubtract(&sp14, &sp20, &sp8);
             var_f31 = VECMag(&sp8);
             if (var_f31 < 60.0f) {
-                CharModelCoinEffectCreate(1, &sp14);
+                CharEffectCoinGlowCreate(1, &sp14);
                 BoardModelVisibilitySet(lbl_1_bss_6C[var_r31], 0);
                 BoardPlayerCoinsAdd(lbl_1_bss_68, 1);
                 HuAudFXPlay(7);

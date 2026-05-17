@@ -61,7 +61,7 @@ typedef struct work_f4b0 {
     s16 unk0;
     s16 unk2;
     GXColor *unk4;
-    HsfVector2f *unk8;
+    HuVec2f *unk8;
     u8 *unkC;
     union {
         s16 unk10[32];
@@ -786,11 +786,11 @@ void fn_1_F564(s16 arg0)
     temp_r29 = temp_r27->hsfData->root;
     temp_r31 = temp_r27->unk_120;
     if (temp_r31->unk8 == NULL) {
-        temp_r31->unk8 = HuMemDirectMallocNum(HEAP_SYSTEM, temp_r29->data.st->count * sizeof(HsfVector2f), MEMORY_DEFAULT_NUM);
+        temp_r31->unk8 = HuMemDirectMallocNum(HEAP_SYSTEM, temp_r29->data.st->count * sizeof(HuVec2f), MEMORY_DEFAULT_NUM);
         temp_r31->unkC = HuMemDirectMallocNum(HEAP_SYSTEM, temp_r29->data.st->count, MEMORY_DEFAULT_NUM);
         for (temp_r30 = 0; temp_r30 < temp_r29->data.st->count; temp_r30++) {
-            temp_r31->unk8[temp_r30].x = ((HsfVector2f *)(temp_r29->data.st->data))[temp_r30].x;
-            temp_r31->unk8[temp_r30].y = ((HsfVector2f *)(temp_r29->data.st->data))[temp_r30].y;
+            temp_r31->unk8[temp_r30].x = ((HuVec2f *)(temp_r29->data.st->data))[temp_r30].x;
+            temp_r31->unk8[temp_r30].y = ((HuVec2f *)(temp_r29->data.st->data))[temp_r30].y;
         }
     }
     temp_r31->unk10_f[0] += 2.0f;
@@ -803,8 +803,8 @@ void fn_1_F564(s16 arg0)
         }
         temp_r31->unkC[temp_r30]++;
         temp_f31 = temp_r31->unk10_f[0] + (60.0f * temp_r30);
-        ((HsfVector2f *)(temp_r29->data.st->data))[temp_r30].x = temp_r31->unk8[temp_r30].x + (0.005f * sind(temp_f31));
-        ((HsfVector2f *)(temp_r29->data.st->data))[temp_r30].y = temp_r31->unk8[temp_r30].y + (0.005f * cosd(temp_f31));
+        ((HuVec2f *)(temp_r29->data.st->data))[temp_r30].x = temp_r31->unk8[temp_r30].x + (0.005f * sind(temp_f31));
+        ((HuVec2f *)(temp_r29->data.st->data))[temp_r30].y = temp_r31->unk8[temp_r30].y + (0.005f * cosd(temp_f31));
         for (temp_r28 = temp_r30; temp_r28 < temp_r29->data.st->count; temp_r28++) {
             if (temp_r31->unkC[temp_r28]) {
                 continue;
@@ -813,8 +813,8 @@ void fn_1_F564(s16 arg0)
                 continue;
             }
             temp_r31->unkC[temp_r28]++;
-            ((HsfVector2f *)(temp_r29->data.st->data))[temp_r28].x = ((HsfVector2f *)(temp_r29->data.st->data))[temp_r30].x;
-            ((HsfVector2f *)(temp_r29->data.st->data))[temp_r28].y = ((HsfVector2f *)(temp_r29->data.st->data))[temp_r30].y;
+            ((HuVec2f *)(temp_r29->data.st->data))[temp_r28].x = ((HuVec2f *)(temp_r29->data.st->data))[temp_r30].x;
+            ((HuVec2f *)(temp_r29->data.st->data))[temp_r28].y = ((HuVec2f *)(temp_r29->data.st->data))[temp_r30].y;
         }
     }
 }
@@ -937,11 +937,11 @@ void fn_1_FB98(ModelData *arg0, Mtx arg1)
         }
     }
     if (temp_r31->unk8 == NULL) {
-        temp_r31->unk8 = HuMemDirectMallocNum(HEAP_SYSTEM, sp120.unk4->data.st->count * sizeof(HsfVector2f), MEMORY_DEFAULT_NUM);
+        temp_r31->unk8 = HuMemDirectMallocNum(HEAP_SYSTEM, sp120.unk4->data.st->count * sizeof(HuVec2f), MEMORY_DEFAULT_NUM);
         temp_r31->unkC = HuMemDirectMallocNum(HEAP_SYSTEM, sp120.unk4->data.st->count, MEMORY_DEFAULT_NUM);
         for (temp_r30 = 0; temp_r30 < sp120.unk4->data.st->count; temp_r30++) {
-            temp_r31->unk8[temp_r30].x = ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].x;
-            temp_r31->unk8[temp_r30].y = ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].y;
+            temp_r31->unk8[temp_r30].x = ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].x;
+            temp_r31->unk8[temp_r30].y = ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].y;
         }
     }
     temp_r31->unk10_f[15] += 0.5f;
@@ -959,12 +959,12 @@ void fn_1_FB98(ModelData *arg0, Mtx arg1)
         }
         temp_r31->unkC[temp_r30]++;
         if (temp_r31->unk10[4]) {
-            temp_r31->unk8[temp_r30].x = (1.5f * ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].x) + (0.04f * sp50[0][temp_r29 & 0x7]);
-            temp_r31->unk8[temp_r30].y = (2.0f * ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].y) + (0.04f * sp10[0][temp_r29 & 0x7]);
+            temp_r31->unk8[temp_r30].x = (1.5f * ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].x) + (0.04f * sp50[0][temp_r29 & 0x7]);
+            temp_r31->unk8[temp_r30].y = (2.0f * ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].y) + (0.04f * sp10[0][temp_r29 & 0x7]);
         }
         else {
-            temp_r31->unk8[temp_r30].x = (1.25f * ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].x) + (0.04f * sp50[0][temp_r29 & 0x7]);
-            temp_r31->unk8[temp_r30].y = (1.75f * ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].y) + (0.04f * sp10[0][temp_r29 & 0x7]);
+            temp_r31->unk8[temp_r30].x = (1.25f * ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].x) + (0.04f * sp50[0][temp_r29 & 0x7]);
+            temp_r31->unk8[temp_r30].y = (1.75f * ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].y) + (0.04f * sp10[0][temp_r29 & 0x7]);
         }
         temp_r23 = temp_r31->unk10[3] + ((0.8f * temp_r31->unk10[3]) * sind((3.0f * temp_r31->unk10_f[15]) + (120.0f * temp_r29)));
         temp_r31->unk4[temp_r30].a = temp_r23;
@@ -973,8 +973,8 @@ void fn_1_FB98(ModelData *arg0, Mtx arg1)
             if (temp_r31->unkC[temp_r28]) {
                 continue;
             }
-            if (((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].x != ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r28].x
-                || ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r30].y != ((HsfVector2f *)(sp120.unk4->data.st->data))[temp_r28].y) {
+            if (((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].x != ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r28].x
+                || ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r30].y != ((HuVec2f *)(sp120.unk4->data.st->data))[temp_r28].y) {
                 continue;
             }
             temp_r31->unkC[temp_r28]++;
@@ -1042,7 +1042,7 @@ void fn_1_10484(UnkFn10484 *arg0, HsfFace *arg1, HsfDrawData *arg2, GXColor *arg
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXSetArray(GX_VA_POS, temp_r30->data.vertex->data, sizeof(HsfVector3f));
+    GXSetArray(GX_VA_POS, temp_r30->data.vertex->data, sizeof(HuVecF));
     if (temp_r25 & 0x2) {
         GXSetVtxDesc(GX_VA_NBT, GX_DIRECT);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_S16, 8);
@@ -1050,11 +1050,11 @@ void fn_1_10484(UnkFn10484 *arg0, HsfFace *arg1, HsfDrawData *arg2, GXColor *arg
     else {
         GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
-        GXSetArray(GX_VA_NRM, temp_r30->data.normal->data, sizeof(HsfVector3f));
+        GXSetArray(GX_VA_NRM, temp_r30->data.normal->data, sizeof(HuVecF));
     }
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_TEX0, temp_r30->data.st->data, sizeof(HsfVector2f));
+    GXSetArray(GX_VA_TEX0, temp_r30->data.st->data, sizeof(HuVec2f));
     if (temp_r25 & 0x4) {
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);

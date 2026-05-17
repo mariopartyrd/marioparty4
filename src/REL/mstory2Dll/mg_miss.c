@@ -423,12 +423,12 @@ void fn_1_17F48(omObjData *object)
 {
     int charNo = lbl_1_bss_A34.unk30[lbl_1_bss_A34.unk00].unk10;
     object->model[1] = CharModelCreate(charNo, 1);
-    object->motion[1] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-    object->motion[2] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
-    object->motion[3] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x34));
-    object->motion[4] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
-    CharModelVoiceEnableSet(charNo, object->motion[2], FALSE);
-    CharModelMotionDataClose(charNo);
+    object->motion[1] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+    object->motion[2] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
+    object->motion[3] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x34));
+    object->motion[4] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
+    CharMotionVoiceOnSet(charNo, object->motion[2], FALSE);
+    CharMotionDataClose(charNo);
     Hu3DModelPosSet(object->model[1], 120, 0, 800);
     Hu3DModelRotSet(object->model[1], 0, -135, 0);
     Hu3DModelScaleSet(object->model[1], 1, 1, 1);

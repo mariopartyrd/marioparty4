@@ -499,7 +499,7 @@ void fn_1_2FC(omObjData *arg0)
                                     else {
                                         temp_r29->unk04 = 0;
                                         lbl_1_data_18F4[temp_r31->unk00 == 0 ? 0 : 1] += (phi_r24 == 10 ? 1 : 5);
-                                        CharModelCoinEffectCreate(-1, &sp188);
+                                        CharEffectCoinGlowCreate(-1, &sp188);
                                         if (lbl_1_bss_54[phi_r24 == 10 ? 8 : 9].unk00 < 3) {
                                             lbl_1_bss_54[phi_r24 == 10 ? 8 : 9].unk04[lbl_1_bss_54[phi_r24 == 10 ? 8 : 9].unk00] = 0.0f;
                                             lbl_1_bss_54[phi_r24 == 10 ? 8 : 9].unk00++;
@@ -1677,9 +1677,9 @@ void fn_1_AC4C(omObjData *arg0)
     temp_r31->unk18 = 0;
     temp_r31->unk1C = -1;
     for (i = 0; i < 8; i++) {
-        arg0->motion[i] = CharModelMotionCreate(temp_r31->unk08, lbl_1_data_A0[i] + (lbl_1_data_C0[i] != 0 ? temp_r31->unk08 : 0));
+        arg0->motion[i] = CharMotionCreate(temp_r31->unk08, lbl_1_data_A0[i] + (lbl_1_data_C0[i] != 0 ? temp_r31->unk08 : 0));
     }
-    CharModelVoiceEnableSet(temp_r31->unk08, arg0->motion[6], 0);
+    CharMotionVoiceOnSet(temp_r31->unk08, arg0->motion[6], 0);
     Hu3DMotionSet(arg0->model[0], arg0->motion[3]);
     arg0->trans.x = lbl_1_data_18B4[temp_r31->unk00][0];
     arg0->trans.y = lbl_1_data_18B4[temp_r31->unk00][1];

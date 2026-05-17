@@ -89,8 +89,8 @@ void fn_1_6B7C(void)
     Hu3DModelObjPosGet(BoardModelIDGet(BoardPlayerModelGet(lbl_1_bss_B6)), "a-itemhook-r", &sp1C);
     VECAdd(&sp1C, &sp10, &sp1C);
     sp1C.y += 25.0f;
-    CharModelLayerSetAll(7);
-    CharModelEffectCreate(-1, &sp1C);
+    CharEffectLayerSet(7);
+    CharEffectSmokeCreate(-1, &sp1C);
     HuPadRumbleStop(GWPlayer[lbl_1_bss_B6].port);
     BoardModelAttrSet(lbl_1_bss_14[0], 0x40000002);
     HuPrcSleep(0x1E);
@@ -515,8 +515,8 @@ void fn_1_850C(omObjData *arg0)
         Hu3DModelObjPosGet(BoardModelIDGet(BoardPlayerModelGet(lbl_1_bss_B6)), "a-itemhook-r", &sp14);
         VECAdd(&sp14, &sp8, &sp14);
         sp14.y += 25.0f;
-        CharModelLayerSetAll(7);
-        CharModelEffectCreate(-1, &sp14);
+        CharEffectLayerSet(7);
+        CharEffectSmokeCreate(-1, &sp14);
         arg0->work[0] = 0xA;
         arg0->func = fn_1_8668;
     }

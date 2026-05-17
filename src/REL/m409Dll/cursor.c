@@ -344,13 +344,13 @@ void fn_1_CFC4(Vec **arg0, s16 arg1, Vec *arg2)
     }
 }
 
-void fn_1_D050(HsfVector2f **arg0, s16 arg1, HsfVector2f *arg2)
+void fn_1_D050(HuVec2f **arg0, s16 arg1, HuVec2f *arg2)
 {
     s32 var_r28;
     s32 var_r29;
-    HsfVector2f *var_r31;
+    HuVec2f *var_r31;
 
-    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(HsfVector2f[4]), MEMORY_DEFAULT_NUM);
+    var_r31 = *arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(HuVec2f[4]), MEMORY_DEFAULT_NUM);
 
     for (var_r28 = 0; var_r28 < arg1; var_r28++) {
         for (var_r29 = 0; var_r29 < 4; var_r31++, arg2++, var_r29++) {

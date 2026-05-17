@@ -200,7 +200,7 @@ BOOL LanguageMenuExec(void)
     omDelObjEx(objman, outView);
     omDelObjEx(objman, updateCamera);
     if(SystemInitF == 0) {
-        CharManInit();
+        CharInit();
         MGSeqInit();
     }
     HuWinAllKill();

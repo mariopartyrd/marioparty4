@@ -232,19 +232,19 @@ void fn_1_29C(omObjData *arg0)
             Hu3DModelLayerSet(lbl_1_bss_98A[var_r31], 1);
         }
 
-        lbl_1_bss_88A[var_r31][0] = CharModelMotionCreate(chrIdx, lbl_1_data_0[0]);
-        lbl_1_bss_88A[var_r31][1] = CharModelMotionCreate(chrIdx, lbl_1_data_0[1]);
-        lbl_1_bss_88A[var_r31][2] = CharModelMotionCreate(chrIdx, lbl_1_data_0[2]);
-        lbl_1_bss_88A[var_r31][3] = CharModelMotionCreate(chrIdx, lbl_1_data_0[3]);
-        lbl_1_bss_88A[var_r31][4] = CharModelMotionCreate(chrIdx, lbl_1_data_0[4]);
-        lbl_1_bss_88A[var_r31][5] = CharModelMotionCreate(chrIdx, lbl_1_data_0[5]);
-        lbl_1_bss_88A[var_r31][6] = CharModelMotionCreate(chrIdx, lbl_1_data_0[6]);
-        lbl_1_bss_88A[var_r31][7] = CharModelMotionCreate(chrIdx, lbl_1_data_0[7]);
-        lbl_1_bss_88A[var_r31][0] = CharModelMotionCreate(chrIdx, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x4D));
-        CharModelMotionSet(chrIdx, lbl_1_bss_88A[var_r31][0]);
+        lbl_1_bss_88A[var_r31][0] = CharMotionCreate(chrIdx, lbl_1_data_0[0]);
+        lbl_1_bss_88A[var_r31][1] = CharMotionCreate(chrIdx, lbl_1_data_0[1]);
+        lbl_1_bss_88A[var_r31][2] = CharMotionCreate(chrIdx, lbl_1_data_0[2]);
+        lbl_1_bss_88A[var_r31][3] = CharMotionCreate(chrIdx, lbl_1_data_0[3]);
+        lbl_1_bss_88A[var_r31][4] = CharMotionCreate(chrIdx, lbl_1_data_0[4]);
+        lbl_1_bss_88A[var_r31][5] = CharMotionCreate(chrIdx, lbl_1_data_0[5]);
+        lbl_1_bss_88A[var_r31][6] = CharMotionCreate(chrIdx, lbl_1_data_0[6]);
+        lbl_1_bss_88A[var_r31][7] = CharMotionCreate(chrIdx, lbl_1_data_0[7]);
+        lbl_1_bss_88A[var_r31][0] = CharMotionCreate(chrIdx, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x4D));
+        CharMotionSet(chrIdx, lbl_1_bss_88A[var_r31][0]);
         Hu3DModelAttrSet(lbl_1_bss_98A[var_r31], HU3D_MOTATTR_LOOP);
         Hu3DModelPosSet(lbl_1_bss_98A[var_r31], (var_r31 / 4 * 0xC8) - 100, 0.0f, -(var_r31 % 4) * 0x96);
-        CharModelMotionDataClose(chrIdx);
+        CharMotionDataClose(chrIdx);
     }
     temp_r26 = OSGetTick();
 

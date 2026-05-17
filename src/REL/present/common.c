@@ -59,9 +59,9 @@ omObjData *PresentGuideCreate(void)
         object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], guideMotTbl[var_r29]);
     }
     Hu3DMotionShiftSet(object->model[0], object->motion[work->motion = 0], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
-    work->unk_50 = CharModelEffectNpcInit(object->model[0], object->motion[2], 1, 10);
-    work->unk_54 = CharModelEffectNpcInit(object->model[0], object->motion[1], 0, 10);
-    CharModelLayerSetAll(1);
+    work->unk_50 = CharNpcDustSet(object->model[0], object->motion[2], 1, 10);
+    work->unk_54 = CharNpcDustSet(object->model[0], object->motion[1], 0, 10);
+    CharEffectLayerSet(1);
     Hu3DModelShadowSet(object->model[0]);
     PresentGuideExecModeSet(object, PRESENT_GUIDE_MODE_NONE);
     UpdateGuide(object);

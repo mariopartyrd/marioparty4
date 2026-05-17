@@ -520,15 +520,15 @@ void fn_1_E88(omObjData *object)
     Hu3DModelHookSet(object->model[0], "test11_tex_we-itemhook-r", object->model[1]);
     var_r30->unk_30 = 0;
     for (var_r29 = 0; var_r29 < 7; var_r29++) {
-        object->motion[var_r29] = CharModelMotionCreate(var_r30->unk_10, lbl_1_data_FC[var_r29]);
+        object->motion[var_r29] = CharMotionCreate(var_r30->unk_10, lbl_1_data_FC[var_r29]);
     }
     for (var_r28 = 0; var_r28 < 2; var_r28++) {
-        object->motion[var_r29 + var_r28] = CharModelMotionCreate(var_r30->unk_10, var_r30->unk_10 + lbl_1_data_118[var_r28]);
+        object->motion[var_r29 + var_r28] = CharMotionCreate(var_r30->unk_10, var_r30->unk_10 + lbl_1_data_118[var_r28]);
     }
     Hu3DMotionSet(object->model[0], object->motion[0]);
     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
     Hu3DMotionOverlaySet(object->model[0], object->motion[7]);
-    CharModelVoiceEnableSet(var_r30->unk_10, object->motion[5], 0);
+    CharMotionVoiceOnSet(var_r30->unk_10, object->motion[5], 0);
     object->trans.x = lbl_1_data_120[var_r30->unk_02].x;
     object->trans.y = lbl_1_data_120[var_r30->unk_02].y;
     object->trans.z = lbl_1_data_120[var_r30->unk_02].z;
@@ -1044,10 +1044,10 @@ void fn_1_2254(omObjData *object)
     if ((var_r29 >= 0 && var_r29 != var_r31->unk_30) || var_r28 != var_r31->unk_34) {
         var_r31->unk_30 = var_r29;
         var_r31->unk_34 = var_r28;
-        CharModelMotionShiftSet(var_r31->unk_10, object->motion[var_r31->unk_30], 0.0f, 8.0f, var_r28);
+        CharMotionShiftSet(var_r31->unk_10, object->motion[var_r31->unk_30], 0.0f, 8.0f, var_r28);
     }
     var_r31->unk_38 = var_f28;
-    CharModelMotionSpeedSet(var_r31->unk_10, var_f28);
+    CharMotionSpeedSet(var_r31->unk_10, var_f28);
 }
 
 s16 fn_1_31FC(omObjData *object)
@@ -1336,10 +1336,10 @@ void fn_1_3C94(omObjData *object)
     if ((var_r29 >= 0 && var_r29 != var_r31->unk_30) || var_r28 != var_r31->unk_34) {
         var_r31->unk_30 = var_r29;
         var_r31->unk_34 = var_r28;
-        CharModelMotionShiftSet(var_r31->unk_10, object->motion[var_r31->unk_30], 0.0f, 8.0f, var_r28);
+        CharMotionShiftSet(var_r31->unk_10, object->motion[var_r31->unk_30], 0.0f, 8.0f, var_r28);
     }
     var_r31->unk_38 = var_f31;
-    CharModelMotionSpeedSet(var_r31->unk_10, var_f31);
+    CharMotionSpeedSet(var_r31->unk_10, var_f31);
 }
 
 void fn_1_3E14(omObjData *object)

@@ -6,14 +6,16 @@
 #include "game/hsfformat.h"
 #include "game/memory.h"
 
+// TODO rename to hu3d.h
+
 #define HU3D_MODEL_MAX 512
 #define HU3D_MOTION_MAX 256
 #define HU3D_TEXANIM_MAX 256
 #define HU3D_TEXSCROLL_MAX 16
 
-#define HU3D_MOTATTR_NONE 0
+//Motion attributes
 #define HU3D_MOTATTR 0x40000000
-
+#define HU3D_MOTATTR_NONE 0
 #define HU3D_MOTATTR_LOOP 0x40000001
 #define HU3D_MOTATTR_PAUSE 0x40000002
 #define HU3D_MOTATTR_REV 0x40000004
@@ -77,7 +79,39 @@
 #define HU3D_CAM15 (1 << 15)
 #define HU3D_CAM_MAX 16
 
+//Reflection types
+#define HU3D_REFLECT_TYPE_NONE -1
+#define HU3D_REFLECT_TYPE_METAL 0
+#define HU3D_REFLECT_TYPE_GROUND 1
+#define HU3D_REFLECT_TYPE_ROOM 2
+#define HU3D_REFLECT_TYPE_OCEAN 3
+#define HU3D_REFLECT_TYPE_LAND 4
+
+//Particle Blend Modes
+#define HU3D_PARTICLE_BLEND_NORMAL 0
+#define HU3D_PARTICLE_BLEND_ADDCOL 1
+#define HU3D_PARTICLE_BLEND_INVCOL 2
+
+//Special IDs
+#define HU3D_MODELID_NONE -1
+#define HU3D_MOTID_NONE -1
+#define HU3D_LIGHTID_NONE -1
+#define HU3D_PROJID_NONE -1
+#define HU3D_ANIMID_NONE -1
+#define HU3D_TEXSCRID_NONE -1
+#define HU3D_CLUSTER_NONE -1
+#define HU3D_PARMANID_NONE -1
+
 #define Hu3DModelCreateFile(data_id) (Hu3DModelCreate(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
+
+typedef s16 HU3DMODELID;
+typedef s16 HU3DMOTID;
+typedef s16 HU3DPROJID;
+typedef s16 HU3DLIGHTID;
+typedef s16 HU3DLLIGHTID;
+typedef s16 HU3DPARMANID;
+typedef s16 HU3DANIMID;
+typedef s16 HU3DTEXSCRID;
 
 typedef struct model_data ModelData;
 typedef struct particle_data ParticleData;

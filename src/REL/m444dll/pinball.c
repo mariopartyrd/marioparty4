@@ -261,14 +261,14 @@ void fn_1_9418(s16 arg0)
     fn_1_8180(0);
     Hu3DModelPosSet(lbl_1_bss_2D0, 124, 0, 70);
     Hu3DModelRotSet(lbl_1_bss_2D0, 0, 180, 0);
-    CharModelMotionShiftSet(lbl_1_bss_2DA, lbl_1_bss_2C0[3], 0, 4, HU3D_MOTATTR_SHIFT_REV);
+    CharMotionShiftSet(lbl_1_bss_2DA, lbl_1_bss_2C0[3], 0, 4, HU3D_MOTATTR_SHIFT_REV);
     HuPrcSleep(12);
     HuWinMesMaxSizeGet(1, sp8, MAKE_MESSID(0x1C, 0x0F));
     temp_r29 = HuWinCreate(-10000, 340, sp8[0], sp8[1], 1);
     HuWinMesSpeedSet(temp_r29, 0);
     HuWinBGTPLvlSet(temp_r29, 0);
     HuWinMesSet(temp_r29, MAKE_MESSID(0x1C, 0x0F));
-    CharModelMotionSet(lbl_1_bss_2DA, lbl_1_bss_2C0[2]);
+    CharMotionSet(lbl_1_bss_2DA, lbl_1_bss_2C0[2]);
     Hu3DModelAttrSet(lbl_1_bss_2D0, HU3D_MOTATTR_PAUSE);
     temp_f29 = Hu3DMotionTimeGet(lbl_1_bss_2D0);
     temp_f28 = Hu3DMotionMaxTimeGet(lbl_1_bss_2D0);
@@ -355,7 +355,7 @@ void fn_1_9418(s16 arg0)
             HuPrcVSleep();
         }
     }
-    CharModelMotionShiftSet(lbl_1_bss_2DA, lbl_1_bss_2C0[3], 0, 8, HU3D_MOTATTR_NONE);
+    CharMotionShiftSet(lbl_1_bss_2DA, lbl_1_bss_2C0[3], 0, 8, HU3D_MOTATTR_NONE);
     HuPrcSleep(4);
     temp_r24 = lbl_1_bss_788[arg0] / 4;
     lbl_1_bss_1888.y = (-15 - temp_r24) + (0.1 * (float)frandmod(10));

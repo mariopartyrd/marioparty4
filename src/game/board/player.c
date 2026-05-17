@@ -329,7 +329,7 @@ void BoardPlayerModelInit(void)
         temp_r27->space_prev = -1;
         CharModelDataClose(GWPlayer[var_r31].character);
     }
-    CharModelLayerSetAll(2);
+    CharEffectLayerSet(2);
 }
 
 void BoardPlayerModelKill(void)
@@ -726,13 +726,13 @@ void BoardPlayerSizeSet(s32 arg0, s32 arg1)
     temp_r27 = BoardPlayerGet(arg0);
     temp_r27->size = arg1;
     if (arg1 == 2) {
-        CharModelStepTypeSet(GWPlayer[arg0].character, 4);
+        CharModelStepFxSet(GWPlayer[arg0].character, 4);
     }
     else if (arg1 == 1) {
-        CharModelStepTypeSet(GWPlayer[arg0].character, 5);
+        CharModelStepFxSet(GWPlayer[arg0].character, 5);
     }
     else {
-        CharModelStepTypeSet(GWPlayer[arg0].character, 0);
+        CharModelStepFxSet(GWPlayer[arg0].character, 0);
     }
     BoardPlayerScaleSetV(arg0, &temp_r4[arg1]);
 }

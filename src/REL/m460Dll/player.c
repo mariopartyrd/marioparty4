@@ -151,18 +151,18 @@ void fn_1_4C08(omObjData *object)
     var_r31->unk_24 = GWPlayerCfg[object->work[0]].iscom;
     object->model[0] = CharModelCreate(var_r31->unk_00, 2);
     Hu3DModelLayerSet(object->model[0], 1);
-    CharModelLayerSetAll(2);
+    CharEffectLayerSet(2);
     Hu3DModelShadowSet(object->model[0]);
     for (var_r29 = 0; var_r29 < 8; var_r29++) {
         if (lbl_1_data_F0[var_r29] < 0x10000) {
-            object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_00, lbl_1_data_F0[var_r29]);
+            object->motion[var_r29] = CharMotionCreate(var_r31->unk_00, lbl_1_data_F0[var_r29]);
         }
         else {
             object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], var_r31->unk_00 + lbl_1_data_F0[var_r29]);
         }
     }
-    CharModelMotionDataClose(var_r31->unk_00);
-    CharModelEffectNpcInitSilent(object->model[0], object->motion[3], 1);
+    CharMotionDataClose(var_r31->unk_00);
+    CharNpcDustVoiceOffSet(object->model[0], object->motion[3], 1);
     object->trans.x = var_r31->unk_60.x = sp18[var_r31->unk_08].x;
     object->trans.y = var_r31->unk_60.y = sp18[var_r31->unk_08].y;
     object->trans.z = var_r31->unk_60.z = sp18[var_r31->unk_08].z;
@@ -287,7 +287,7 @@ void fn_1_5168(omObjData *object)
             case 5:
                 var_r29 = 0;
                 fn_1_5A14(object);
-                if (CharModelMotionShiftIDGet(var_r31->unk_00) < 0) {
+                if (CharMotionShiftIDGet(var_r31->unk_00) < 0) {
                     var_r29 = 1;
                 }
                 var_r28 = fn_1_42F0();
@@ -467,7 +467,7 @@ void fn_1_5A14(omObjData *object)
         }
         var_r31->unk_4C = 0.2f;
         var_r31->unk_50 = 0.0f;
-        if (CharModelMotionShiftIDGet(var_r31->unk_00) < 0) {
+        if (CharMotionShiftIDGet(var_r31->unk_00) < 0) {
             var_f31 = 0.5f;
             if (var_r31->unk_04 == 2) {
                 var_f31 = 0.45f;
@@ -485,12 +485,12 @@ void fn_1_5A14(omObjData *object)
                 fn_1_5CE0(object, 1);
                 var_f30 = var_r31->unk_20 / var_f31;
             }
-            CharModelMotionSpeedSet(var_r31->unk_00, var_f30);
+            CharMotionSpeedSet(var_r31->unk_00, var_f30);
         }
     }
     else {
         var_r31->unk_6C.x = var_r31->unk_6C.y = var_r31->unk_6C.z = 0.0f;
-        if (CharModelMotionShiftIDGet(var_r31->unk_00) < 0) {
+        if (CharMotionShiftIDGet(var_r31->unk_00) < 0) {
             fn_1_5CE0(object, 0);
         }
     }
@@ -515,7 +515,7 @@ void fn_1_5CE0(omObjData *object, u32 arg1)
             var_f31 = 0.0f;
         }
         var_r30->unk_04 = arg1;
-        CharModelMotionShiftSet(
+        CharMotionShiftSet(
             var_r30->unk_00, object->motion[lbl_1_data_110[arg1].unk_00], REFRESH_RATE_F * lbl_1_data_110[arg1].unk_08, var_f31, lbl_1_data_110[arg1].unk_10);
         if (lbl_1_data_110[arg1].unk_0C >= 0.0f) {
             Hu3DMotionShiftStartEndSet(object->model[0], REFRESH_RATE_F * lbl_1_data_110[arg1].unk_08, REFRESH_RATE_F * lbl_1_data_110[arg1].unk_0C);
@@ -527,7 +527,7 @@ s32 fn_1_5E6C(omObjData *object)
 {
     M460DllCameraStruct *var_r31 = object->data;
     s32 var_r30 = 0;
-    if ((CharModelMotionEndCheck(var_r31->unk_00) != 0) && (CharModelMotionShiftIDGet(var_r31->unk_00) < 0)) {
+    if ((CharMotionEndCheck(var_r31->unk_00) != 0) && (CharMotionShiftIDGet(var_r31->unk_00) < 0)) {
         var_r30 = 1;
     }
     return var_r30;
@@ -565,9 +565,9 @@ void fn_1_60B0(omObjData *object)
     for (var_r29 = 0; var_r29 < 5; var_r29++) {
         object->motion[var_r29] = Hu3DJointMotionFile(var_r30, lbl_1_data_1D4[var_r29]);
     }
-    CharModelEffectNpcInitSilent(var_r30, object->motion[1], 0);
-    CharModelEffectNpcInitSilent(var_r30, object->motion[2], 1);
-    CharModelEffectNpcInitSilent(var_r30, object->motion[3], 1);
+    CharNpcDustVoiceOffSet(var_r30, object->motion[1], 0);
+    CharNpcDustVoiceOffSet(var_r30, object->motion[2], 1);
+    CharNpcDustVoiceOffSet(var_r30, object->motion[3], 1);
     object->work[1] = 0;
     object->func = fn_1_61F4;
 }

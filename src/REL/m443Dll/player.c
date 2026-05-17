@@ -244,14 +244,14 @@ void fn_1_5680(omObjData *object)
 
     for (var_r29 = 0; var_r29 < 4; var_r29++) {
         if (lbl_1_data_2C4[var_r29] < 0x10000) {
-            object->motion[var_r29] = CharModelMotionCreate(temp_r27, lbl_1_data_2C4[var_r29]);
+            object->motion[var_r29] = CharMotionCreate(temp_r27, lbl_1_data_2C4[var_r29]);
         }
         else {
             object->motion[var_r29]
                 = Hu3DJointMotion(object->model[0], HuDataSelHeapReadNum(temp_r27 + lbl_1_data_2C4[var_r29], 0x10000000, HEAP_DATA));
         }
     }
-    CharModelMotionDataClose(temp_r27);
+    CharMotionDataClose(temp_r27);
     temp_r3 = Hu3DParticleCreate(HuSprAnimReadFile(0x4A001D), 0xC8);
     object->model[3] = temp_r3;
     Hu3DModelLayerSet(temp_r3, 4);
@@ -912,7 +912,7 @@ void fn_1_8138(omObjData *object, u32 arg1)
             var_f31 = 0.0f;
         }
         temp_r30->unk8 = arg1;
-        CharModelMotionShiftSet(
+        CharMotionShiftSet(
             temp_r30->unk0, object->motion[lbl_1_data_2D4[arg1].unk0], REFRESH_RATE_F * lbl_1_data_2D4[arg1].unk8, var_f31, lbl_1_data_2D4[arg1].unk10);
         if (lbl_1_data_2D4[arg1].unkC >= 0.0f) {
             Hu3DMotionShiftStartEndSet(object->model[0], REFRESH_RATE_F * lbl_1_data_2D4[arg1].unk8, REFRESH_RATE_F * lbl_1_data_2D4[arg1].unkC);
@@ -927,7 +927,7 @@ s32 fn_1_82C4(omObjData *object)
 
     temp_r31 = object->data;
     var_r30 = 0;
-    if ((CharModelMotionEndCheck(temp_r31->unk0) != 0) && (CharModelMotionShiftIDGet(temp_r31->unk0) < 0)) {
+    if ((CharMotionEndCheck(temp_r31->unk0) != 0) && (CharMotionShiftIDGet(temp_r31->unk0) < 0)) {
         var_r30 = 1;
     }
     return var_r30;
@@ -942,7 +942,7 @@ s32 fn_1_8338(omObjData *object, u32 arg1)
     var_r27 = 0;
     temp_r31 = object->data;
     var_r26 = 0;
-    if ((CharModelMotionEndCheck(temp_r31->unk0) != 0) && (CharModelMotionShiftIDGet(temp_r31->unk0) < 0)) {
+    if ((CharMotionEndCheck(temp_r31->unk0) != 0) && (CharMotionShiftIDGet(temp_r31->unk0) < 0)) {
         var_r26 = 1;
     }
 

@@ -1047,15 +1047,15 @@ void fn_1_2964(omObjData *object)
     object->model[0] = var_r27;
     Hu3DModelAttrSet(var_r27, HU3D_MOTATTR_LOOP);
     Hu3DModelShadowSet(var_r27);
-    CharModelStepTypeSet(var_r31->unk_01, 0);
+    CharModelStepFxSet(var_r31->unk_01, 0);
     var_r31->unk_A4 = -1;
     var_r31->unk_A8 = -1;
     for (var_r29 = 0; var_r29 < 11; var_r29++) {
-        object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_01, lbl_1_data_488[var_r29]);
+        object->motion[var_r29] = CharMotionCreate(var_r31->unk_01, lbl_1_data_488[var_r29]);
     }
-    CharModelVoiceEnableSet(var_r31->unk_01, object->motion[3], 0);
-    CharModelMotionDataClose(var_r31->unk_01);
-    CharModelMotionSet(var_r31->unk_01, object->motion[var_r31->unk_20]);
+    CharMotionVoiceOnSet(var_r31->unk_01, object->motion[3], 0);
+    CharMotionDataClose(var_r31->unk_01);
+    CharMotionSet(var_r31->unk_01, object->motion[var_r31->unk_20]);
     object->func = fn_1_2D50;
 }
 
@@ -1277,7 +1277,7 @@ void fn_1_35C0(omObjData *object)
             break;
         case 3:
             var_r27 = 0;
-            if (Hu3DData[var_r25].unk_0C == -1 && CharModelMotionEndCheck(var_r31->unk_01)) {
+            if (Hu3DData[var_r25].unk_0C == -1 && CharMotionEndCheck(var_r31->unk_01)) {
                 var_r31->unk_88 += -122.5f / REFRESH_RATE_F;
             }
             else {
@@ -1300,13 +1300,13 @@ void fn_1_35C0(omObjData *object)
             break;
         case 4:
             var_r31->unk_88 += -122.5f / REFRESH_RATE_F;
-            if (var_r31->unk_0D != 0 && CharModelMotionEndCheck(var_r31->unk_01)) {
+            if (var_r31->unk_0D != 0 && CharMotionEndCheck(var_r31->unk_01)) {
                 var_r28 = 5;
                 var_r27 = 0;
             }
             break;
         case 5:
-            if (CharModelMotionEndCheck(var_r31->unk_01) != 0) {
+            if (CharMotionEndCheck(var_r31->unk_01) != 0) {
                 var_r28 = 0;
                 var_r27 = 1;
             }
@@ -1379,22 +1379,22 @@ void fn_1_35C0(omObjData *object)
         if (var_r31->unk_20 == 7 && var_r31->unk_14 != 0) {
             var_r31->unk_22 = var_r28;
             var_r31->unk_20 = var_r28;
-            CharModelMotionShiftSet(var_r31->unk_01, object->motion[8], 0.0f, 8.0f, var_r27);
+            CharMotionShiftSet(var_r31->unk_01, object->motion[8], 0.0f, 8.0f, var_r27);
         }
         else {
             switch (var_r28) {
                 case 0:
                 case 1:
                 case 2:
-                    if (var_r31->unk_20 != 0 && CharModelMotionShiftIDGet(var_r31->unk_01) >= 0)
+                    if (var_r31->unk_20 != 0 && CharMotionShiftIDGet(var_r31->unk_01) >= 0)
                         break;
                 default:
                     var_r31->unk_22 = var_r28;
                     var_r31->unk_20 = var_r28;
-                    CharModelMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_20], 0.0f, 8.0f, var_r27);
+                    CharMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_20], 0.0f, 8.0f, var_r27);
             }
         }
-        var_r31->unk_30 = CharModelMotionMaxTimeGet(var_r31->unk_01);
+        var_r31->unk_30 = CharMotionMaxTimeGet(var_r31->unk_01);
     }
     omSetTra(object, var_r31->unk_6C.x, var_r31->unk_6C.y, var_r31->unk_6C.z);
     omSetRot(object, var_r31->unk_78, var_r31->unk_7C, var_r31->unk_80);

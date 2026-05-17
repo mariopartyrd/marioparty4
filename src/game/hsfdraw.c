@@ -335,8 +335,8 @@ static void objMesh(ModelData *arg0, HsfObject *arg1) {
 
 s32 ObjCullCheck(HsfData *arg0, HsfObject *arg1, Mtx arg2) {
     CameraData *temp_r30;
-    HsfVector3f *temp_r29;
-    HsfVector3f *temp_r31;
+    HuVecF *temp_r29;
+    HuVecF *temp_r31;
     Mtx sp28;
     float sp24;
     float temp_f20;

@@ -732,7 +732,7 @@ void fn_1_95B8(omObjData *arg0)
             var_r30->unk8.y += -0.08166667f * temp_f31 * temp_f31 * 0.75f;
             if (var_r30->unk8.y < temp_r29->unk8) {
                 var_r30->unk8.y = temp_r29->unk8;
-                CharModelCoinEffectCreate(1, &var_r30->unk8);
+                CharEffectCoinGlowCreate(1, &var_r30->unk8);
                 BoardModelVisibilitySet(var_r30->unk_02, 0);
                 HuAudFXPlay(7);
                 BoardPlayerCoinsAdd(temp_r29->unk4, 1);

@@ -245,7 +245,7 @@ s32 fn_1_E72C(void)
         HuPrcVSleep();
         fn_1_27418();
         for (temp_r31 = 0; temp_r31 < 4; temp_r31++) {
-            CharModelMotionSet(lbl_1_bss_2C24[temp_r31], lbl_1_bss_2BC4[temp_r31][2]);
+            CharMotionSet(lbl_1_bss_2C24[temp_r31], lbl_1_bss_2BC4[temp_r31][2]);
             Hu3DModelAttrSet(lbl_1_bss_2C14[temp_r31], HU3D_MOTATTR_LOOP);
             Hu3DModelRotSet(lbl_1_bss_2C14[temp_r31], 0, -90, 0);
         }

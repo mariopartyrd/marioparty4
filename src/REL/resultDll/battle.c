@@ -337,11 +337,11 @@ static void ResultBattleCreate(void)
         charNo = GWPlayerCfg[resultBattleOrder[i]].character;
         charMdlId = CharModelCreate(charNo, 2);
         resultBattleCharMdl[playerNo] = charMdlId;
-        resultBattleCharMot[playerNo][0] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-        resultBattleCharMot[playerNo][1] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
-        resultBattleCharMot[playerNo][2] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x49));
-        CharModelVoiceEnableSet(charNo, resultBattleCharMot[playerNo][1], 0);
-        CharModelMotionSet(charNo, resultBattleCharMot[playerNo][0]);
+        resultBattleCharMot[playerNo][0] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+        resultBattleCharMot[playerNo][1] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
+        resultBattleCharMot[playerNo][2] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x49));
+        CharMotionVoiceOnSet(charNo, resultBattleCharMot[playerNo][1], 0);
+        CharMotionSet(charNo, resultBattleCharMot[playerNo][0]);
         Hu3DModelPosSet(charMdlId, playerPosTbl[i].x, playerPosTbl[resultBattleRank[i]].y, 0);
         Hu3DModelAttrSet(charMdlId, HU3D_MOTATTR_LOOP);
         Hu3DModelShadowSet(charMdlId);
@@ -472,11 +472,11 @@ static void ResultBattleStatAdd(void)
     coinNum[resultBonusPlayer] += coinNum[4];
     for (i = 0; i < 4; i++) {
         if (coinNum[resultBattleOrder[i]]) {
-            CharModelMotionShiftSet(GWPlayerCfg[resultBattleOrder[i]].character, resultBattleCharMot[resultBattleOrder[i]][1], 0, 4, HU3D_MOTATTR_NONE);
+            CharMotionShiftSet(GWPlayerCfg[resultBattleOrder[i]].character, resultBattleCharMot[resultBattleOrder[i]][1], 0, 4, HU3D_MOTATTR_NONE);
             PlayerFXPlay(resultBattleOrder[i], 293);
         }
         else {
-            CharModelMotionShiftSet(GWPlayerCfg[resultBattleOrder[i]].character, resultBattleCharMot[resultBattleOrder[i]][2], 0, 4, HU3D_MOTATTR_NONE);
+            CharMotionShiftSet(GWPlayerCfg[resultBattleOrder[i]].character, resultBattleCharMot[resultBattleOrder[i]][2], 0, 4, HU3D_MOTATTR_NONE);
         }
     }
     HuPrcSleep(20);
@@ -629,7 +629,7 @@ static void CoinEffectMain(void)
                 pos.x = playerPosTbl[player].x;
                 pos.y = ((3 - coinEffectData[i].rank) * 100) + coinEffectYOfs[GWPlayerCfg[resultBattleOrder[player]].character];
                 pos.z = 0.0f;
-                CharModelCoinEffectCreate(1, &pos);
+                CharEffectCoinGlowCreate(1, &pos);
                 coinEffectData[i].playerNo = -1;
                 HuAudFXPlay(7);
                 Hu3DModelAttrSet(coinEffectMdlId[i], HU3D_ATTR_DISPOFF);

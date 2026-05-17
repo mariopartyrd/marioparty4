@@ -482,16 +482,16 @@ void fn_1_FD0(omObjData *object)
     var_r31->unk_20 = 0;
     for (var_r29 = 0; var_r29 < 0xA; var_r29++) {
         if (lbl_1_data_E4[var_r29].unk_04 == 0) {
-            object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_14, lbl_1_data_E4[var_r29].unk_00);
+            object->motion[var_r29] = CharMotionCreate(var_r31->unk_14, lbl_1_data_E4[var_r29].unk_00);
         }
         else {
-            object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_14, var_r31->unk_14 + lbl_1_data_E4[var_r29].unk_00);
+            object->motion[var_r29] = CharMotionCreate(var_r31->unk_14, var_r31->unk_14 + lbl_1_data_E4[var_r29].unk_00);
         }
     }
     Hu3DMotionSet(object->model[0], object->motion[var_r31->unk_20]);
     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
-    CharModelVoiceEnableSet(var_r31->unk_14, object->motion[5], 0);
-    CharModelVoiceEnableSet(var_r31->unk_14, object->motion[6], 0);
+    CharMotionVoiceOnSet(var_r31->unk_14, object->motion[5], 0);
+    CharMotionVoiceOnSet(var_r31->unk_14, object->motion[6], 0);
     var_r31->unk_2E = REFRESH_RATE;
     object->trans.x = lbl_1_data_134[var_r31->unk_02].x;
     object->trans.y = lbl_1_data_134[var_r31->unk_02].y;
@@ -746,7 +746,7 @@ void fn_1_1304(omObjData *var_r30)
     if ((var_r29 != var_r31->unk_20) || (var_r28 != var_r31->unk_24)) {
         var_r31->unk_20 = var_r29;
         var_r31->unk_24 = var_r28;
-        CharModelMotionShiftSet(var_r31->unk_14, var_r30->motion[var_r31->unk_20], 0.0f, 8.0f, var_r28);
+        CharMotionShiftSet(var_r31->unk_14, var_r30->motion[var_r31->unk_20], 0.0f, 8.0f, var_r28);
     }
 }
 

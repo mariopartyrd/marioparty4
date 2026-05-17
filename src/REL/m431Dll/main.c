@@ -1886,13 +1886,13 @@ Unk72B4Data18 *fn_1_6B34(s16 arg0, Vec *arg1, Vec *arg2, float arg3, GXColor *ar
 }
 
 void fn_1_72B4(ModelData *model, Mtx mtx);
-void fn_1_7824(HsfVector2f *arg0, s16 arg1, s16 arg2, float arg3, float arg4);
+void fn_1_7824(HuVec2f *arg0, s16 arg1, s16 arg2, float arg3, float arg4);
 
 s16 fn_1_6C74(AnimData *arg0, s16 arg1, float arg2, s16 arg3, s16 arg4)
 {
     Work72B4 *temp_r31;
     s16 temp_r30;
-    HsfVector2f *temp_r29;
+    HuVec2f *temp_r29;
     ModelData *temp_r28;
     GXColor *temp_r27;
     Vec *temp_r25;
@@ -1927,7 +1927,7 @@ s16 fn_1_6C74(AnimData *arg0, s16 arg1, float arg2, s16 arg3, s16 arg4)
     for (temp_r30 = 0; temp_r30 < arg1; temp_r30++, temp_r27++) {
         temp_r27->r = temp_r27->g = temp_r27->b = temp_r27->a = 255;
     }
-    temp_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(HsfVector2f) * 4, temp_r28->unk_48);
+    temp_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(HuVec2f) * 4, temp_r28->unk_48);
     temp_r31->unk20 = temp_r29;
     for (temp_r30 = 0; temp_r30 < arg1; temp_r30++) {
         temp_r29->x = 0;
@@ -1956,7 +1956,7 @@ s16 fn_1_6C74(AnimData *arg0, s16 arg1, float arg2, s16 arg3, s16 arg4)
         temp_r31->unk60 = 1;
         temp_r31->unk64 = 1;
     }
-    temp_r31->unk5C = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk14 * sizeof(HsfVector2f), temp_r28->unk_48);
+    temp_r31->unk5C = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk14 * sizeof(HuVec2f), temp_r28->unk_48);
     fn_1_7824(temp_r31->unk5C, temp_r31->unk14, temp_r22, temp_r31->unk60, temp_r31->unk64);
     temp_r31->unk2C[0].x = temp_r31->unk2C[3].x = temp_r31->unk2C[2].y = temp_r31->unk2C[3].y = -arg2;
     temp_r31->unk2C[1].x = temp_r31->unk2C[2].x = temp_r31->unk2C[0].y = temp_r31->unk2C[1].y = arg2;
@@ -2023,7 +2023,7 @@ void fn_1_727C(s16 arg0, u8 arg1)
     temp_r30->unk8 = arg1;
 }
 
-void fn_1_78F0(HsfVector2f *arg0, HsfVector2f *arg1, s16 arg2, float arg3, float arg4);
+void fn_1_78F0(HuVec2f *arg0, HuVec2f *arg1, s16 arg2, float arg3, float arg4);
 void fn_1_7994(Vec *arg0, Vec *arg1, Vec *arg2, s16 arg3);
 
 void fn_1_79FC(Mtx arg0, Mtx arg1);
@@ -2040,7 +2040,7 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
     Vec *temp_r31;
     Work72B4 *temp_r30;
     Unk72B4Data18 *temp_r29;
-    HsfVector2f *temp_r27;
+    HuVec2f *temp_r27;
     s16 temp_r26;
     s16 temp_r25;
     unkHook72B4 temp_r23;
@@ -2093,7 +2093,7 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
     GXSetArray(GX_VA_CLR0, temp_r30->unk24, sizeof(GXColor));
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
-    GXSetArray(GX_VA_TEX0, temp_r30->unk20, sizeof(HsfVector2f));
+    GXSetArray(GX_VA_TEX0, temp_r30->unk20, sizeof(HuVec2f));
     fn_1_79FC(mtx, sp128);
     PSMTXReorder(sp128, spF8);
     if (!omPauseChk() && temp_r30->unkC) {
@@ -2139,12 +2139,12 @@ void fn_1_72B4(ModelData *model, Mtx mtx)
         }
     }
     DCFlushRangeNoSync(temp_r30->unk1C, (temp_r30->unk0 * sizeof(Vec)) * 4);
-    DCFlushRangeNoSync(temp_r30->unk20, (temp_r30->unk0 * sizeof(HsfVector2f)) * 4);
+    DCFlushRangeNoSync(temp_r30->unk20, (temp_r30->unk0 * sizeof(HuVec2f)) * 4);
     PPCSync();
     GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
 }
 
-void fn_1_7824(HsfVector2f *arg0, s16 arg1, s16 arg2, float arg3, float arg4)
+void fn_1_7824(HuVec2f *arg0, s16 arg1, s16 arg2, float arg3, float arg4)
 {
     s16 temp_r30;
     s16 temp_r29;
@@ -2157,7 +2157,7 @@ void fn_1_7824(HsfVector2f *arg0, s16 arg1, s16 arg2, float arg3, float arg4)
     }
 }
 
-void fn_1_78F0(HsfVector2f *arg0, HsfVector2f *arg1, s16 arg2, float arg3, float arg4)
+void fn_1_78F0(HuVec2f *arg0, HuVec2f *arg1, s16 arg2, float arg3, float arg4)
 {
     arg0[0].x = arg1[arg2].x;
     arg0[0].y = arg1[arg2].y;

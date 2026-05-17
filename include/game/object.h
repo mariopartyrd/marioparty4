@@ -109,7 +109,6 @@ void omSystemKeyCheck(omObjData *object);
 void omSysPauseEnable(u8 flag);
 void omSysPauseCtrl(s16 flag);
 
-extern s16 omSysExitReq;
 extern omObjData *omDBGSysKeyObj;
 extern Process *omwatchproc;
 extern OMOVL omnextovl;

@@ -433,11 +433,11 @@ static Process *ItemShowProc(UnkItemShowProcStruct *arg0, Vec *arg1)
     }
     BoardCameraRotGet(&sp14);
     if (arg0 == NULL || arg0->unk1C != 0) {
-        CharModelLayerSetAll(3);
+        CharEffectLayerSet(3);
         sp20.y += 35.0f;
         sp20.z += 50.0 * cosd(sp14.y);
         sp20.x += 50.0 * sind(sp14.y);
-        CharModelEffectCreate(1, &sp20);
+        CharEffectSmokeCreate(1, &sp20);
         HuPrcSleep(10);
     }
     if (suitMdl >= 0) {
@@ -907,7 +907,7 @@ static void ExecItemPipe(void)
         }
         BoardPlayerMotionShiftSet(sp2C[1], 6, 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
         BoardModelVoiceEnableSet(BoardPlayerModelGet(sp2C[1]), 6, 0);
-        CharModelLayerSetAll(2);
+        CharEffectLayerSet(2);
         BoardPlayerIdleSet(sp2C[0]);
         for (var_r31 = 0; var_r31 < 45; var_r31++) {
             sp9C.y -= 0.044444446f;
@@ -1880,9 +1880,9 @@ static void ExecItemBooBall(void)
     ExecItemBooBallInlineFunc01(60);
     HuPrcKill(temp_r17);
     BoardAudSeqPause(0, 0, 1000);
-    CharModelLayerSetAll(3);
+    CharEffectLayerSet(3);
     BoardModelPosGet(suitMdl, &sp74);
-    CharModelEffectCreate(1, &sp74);
+    CharEffectSmokeCreate(1, &sp74);
     HuAudFXPlay(0x351);
     HuPrcSleep(10);
     BoardModelKill(suitMdl);
@@ -2435,7 +2435,7 @@ static void ExecItemGenie(void)
         HuPrcVSleep();
     }
     HuAudFXPlay(0x35E);
-    CharModelEffectEnableSet(GWPlayer[currItemRestore].character, 0);
+    CharModelFxFlagSet(GWPlayer[currItemRestore].character, 0);
     BoardPlayerMotionStart(currItemRestore, 6, 0x40000001);
     var_f29 = 0.0f;
     var_f31 = 1.0f;
@@ -2467,7 +2467,7 @@ static void ExecItemGenie(void)
         HuPrcVSleep();
     }
     BoardPlayerIdleSet(currItemRestore);
-    CharModelEffectEnableSet(GWPlayer[currItemRestore].character, 1);
+    CharModelFxFlagSet(GWPlayer[currItemRestore].character, 1);
     HuSprAnimKill(genieParticleAnim);
     BoardPlayerMotionKill(currItemRestore, geniePlayerMot[0]);
     BoardPlayerMotionKill(currItemRestore, geniePlayerMot[1]);
@@ -2521,8 +2521,8 @@ static void ExecItemBagJump(void)
         }
         HuPrcVSleep();
     }
-    CharModelLayerSetAll(3);
-    CharModelEffectCreate(1, &sp14);
+    CharEffectLayerSet(3);
+    CharEffectSmokeCreate(1, &sp14);
     BoardModelVisibilitySet(temp_r31, 0);
     HuAudFXPlay(0x30D);
     HuPrcKill(NULL);
@@ -2661,8 +2661,8 @@ static void ExecItemBag(void)
     }
     HuWinKill(temp_r28);
     BoardModelPosGet(suitMdl, &sp30);
-    CharModelLayerSetAll(3);
-    CharModelEffectCreate(1, &sp30);
+    CharEffectLayerSet(3);
+    CharEffectSmokeCreate(1, &sp30);
     HuAudFXPlay(0x351);
     HuPrcSleep(10);
     HuPrcKill(temp_r24);

@@ -158,7 +158,7 @@ void BootExec(void)
         WipeColorSet(255, 255, 255);
         if (!SystemInitF) {
             tick_prev = OSGetTick();
-            CharManInit();
+            CharInit();
             HuWindowInit();
             MGSeqInit();
             HuWinInit(1);

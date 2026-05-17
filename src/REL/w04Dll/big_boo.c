@@ -767,7 +767,7 @@ static void fn_1_7888(void) {
             BoardModelPosSetV(lbl_1_bss_13C[i], &sp8F8[i]);
             BoardModelRotYSet(lbl_1_bss_13C[i], spC4[i]);
             if (sp8F8[i].y <= sp4C.y + 180.0f) {
-                CharModelCoinEffectCreate(1, &sp8F8[i]);
+                CharEffectCoinGlowCreate(1, &sp8F8[i]);
                 BoardModelVisibilitySet(lbl_1_bss_13C[i], 0);
                 var_r28++;
                 BoardPlayerCoinsAdd(lbl_1_bss_282, 1);

@@ -17,7 +17,7 @@ typedef struct _unkStruct {
     s16 unkA;
     s16 unkC;
     Vec unk10;
-    HsfVector2f unk1C;
+    HuVec2f unk1C;
     Vec unk24;
     float unk30;
 } unkStruct;
@@ -55,7 +55,7 @@ typedef struct _unkStruct3 {
     s32 unk38;
     s32 unk3C;
     Vec unk40;
-    HsfVector2f unk4C;
+    HuVec2f unk4C;
     Vec unk54;
     Vec unk60;
     float unk6C;
@@ -67,7 +67,7 @@ typedef struct _unkStruct3 {
     s8 unk8B;
     u16 unk8C;
     u16 unk8E;
-    HsfVector2f unk90;
+    HuVec2f unk90;
     float unk98;
     s32 unk9C;
     s32 unkA0;

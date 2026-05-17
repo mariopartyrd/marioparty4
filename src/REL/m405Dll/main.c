@@ -1454,7 +1454,7 @@ void fn_1_6040(UnkBssA4Data *arg0, omObjData *arg1)
     for (i = 0; i < 5; i++) {
         sp44[i] = arg0->unkA0[i];
         if (lbl_1_bss_740 % 5 == i) {
-            fn_1_1D18(arg1->model[0], CharModelHookNameGet(arg0->unk10C, 4, lbl_1_data_328[i]), &arg0->unkA0[i]);
+            fn_1_1D18(arg1->model[0], CharModelItemHookGet(arg0->unk10C, 4, lbl_1_data_328[i]), &arg0->unkA0[i]);
         }
         if ((0.0f <= sp44[i].y && 0.0f > arg0->unkA0[i].y) || (0.0f >= sp44[i].y && 0.0f < arg0->unkA0[i].y)) {
             var_r26++;
@@ -1867,10 +1867,10 @@ void fn_1_81B4(omObjData *arg0)
     temp_r31->unk60 = 1.0f;
     temp_r31->unk64 = 0.0f;
     arg0->model[0] = CharModelCreate(lbl_1_data_0[temp_r31->unk10C], 4);
-    CharModelStepTypeSet(lbl_1_data_0[temp_r31->unk10C], 0);
+    CharModelStepFxSet(lbl_1_data_0[temp_r31->unk10C], 0);
     for (i = 0; i < 8; i++) {
-        arg0->motion[i] = CharModelMotionCreate(lbl_1_data_0[temp_r31->unk10C], lbl_1_data_188[temp_r31->unk10C][i]);
-        CharModelMotionSet(lbl_1_data_0[temp_r31->unk10C], arg0->motion[i]);
+        arg0->motion[i] = CharMotionCreate(lbl_1_data_0[temp_r31->unk10C], lbl_1_data_188[temp_r31->unk10C][i]);
+        CharMotionSet(lbl_1_data_0[temp_r31->unk10C], arg0->motion[i]);
     }
     Hu3DModelAttrSet(arg0->model[0], HU3D_ATTR_DISPOFF);
     Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_LOOP);
@@ -1878,7 +1878,7 @@ void fn_1_81B4(omObjData *arg0)
     Hu3DModelLayerSet(arg0->model[0], 3);
     Hu3DMotionSet(arg0->model[0], arg0->motion[1]);
     Hu3DMotionTimeSet(arg0->model[0], 1.0f);
-    CharModelVoiceEnableSet(temp_r31->unk10C, arg0->motion[0], 0);
+    CharMotionVoiceOnSet(temp_r31->unk10C, arg0->motion[0], 0);
     temp_r31->unk4C.x = 450.0f - 300.0f * arg0->work[0];
     temp_r31->unk4C.y = -32.0f;
     temp_r31->unk4C.z = 1328.7f;
@@ -1916,7 +1916,7 @@ void fn_1_81B4(omObjData *arg0)
         Hu3DParticleBlendModeSet(Hu3DParManModelIDGet(temp_r31->unkF0[i]), 1);
         Hu3DModelLayerSet(Hu3DParManModelIDGet(temp_r31->unkF0[i]), 7);
         temp_r31->unkDC[i] = 0;
-        fn_1_1D18(arg0->model[0], CharModelHookNameGet(temp_r31->unk10C, 4, lbl_1_data_328[i]), &temp_r31->unkA0[i]);
+        fn_1_1D18(arg0->model[0], CharModelItemHookGet(temp_r31->unk10C, 4, lbl_1_data_328[i]), &temp_r31->unkA0[i]);
     }
     temp_r31->unk34 = 0.0f;
     temp_r31->unk48 = 0;
@@ -1951,7 +1951,7 @@ void fn_1_81B4(omObjData *arg0)
         temp_r31->unk3C = 0.0f;
         temp_r31->unk40 = 0.0f;
     }
-    CharModelMotionDataClose(lbl_1_data_0[temp_r31->unk10C]);
+    CharMotionDataClose(lbl_1_data_0[temp_r31->unk10C]);
     arg0->func = fn_1_798C;
 }
 

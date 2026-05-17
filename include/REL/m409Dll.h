@@ -86,14 +86,14 @@ typedef struct _unkStruct6 {
     s16 unk14;
     unkStruct5 *unk18;
     Vec *unk1C;
-    HsfVector2f *unk20;
+    HuVec2f *unk20;
     GXColor *unk24;
     void *unk28;
     Vec unk2C;
     Vec unk38;
     Vec unk44;
     Vec unk50;
-    HsfVector2f *unk5C;
+    HuVec2f *unk5C;
     float unk60;
     float unk64;
 } unkStruct6; // sizeof 0x68
@@ -244,7 +244,7 @@ typedef struct _unkStruct12 {
     s8 unk0;
     s8 unk1;
     s16 unk2;
-    HsfVector2f *unk4;
+    HuVec2f *unk4;
     u8 unk8;
     s16 unkA;
     float unkC;
@@ -287,8 +287,8 @@ void fn_1_5F5C(s16);
 void fn_1_5FBC(s16, m409Func6);
 void fn_1_5FF4(s16, u8);
 void fn_1_602C(ModelData *, Mtx);
-void fn_1_6608(HsfVector2f *, s16, s16, float, float);
-void fn_1_66D4(HsfVector2f *, HsfVector2f *, s16, float, float);
+void fn_1_6608(HuVec2f *, s16, s16, float, float);
+void fn_1_66D4(HuVec2f *, HuVec2f *, s16, float, float);
 void fn_1_6778(Vec *, Vec *, Vec *, s16);
 // player.c
 void fn_1_67E0(Process *);
@@ -325,7 +325,7 @@ void fn_1_CCF8(unkStruct11 **, s16, float, float);
 void fn_1_CE7C(Vec **, s16, Vec *);
 void fn_1_CF1C(GXColor **, s16, GXColor *);
 void fn_1_CFC4(Vec **, s16, Vec *);
-void fn_1_D050(HsfVector2f **, s16, HsfVector2f *);
+void fn_1_D050(HuVec2f **, s16, HuVec2f *);
 void fn_1_D0E8(unkStruct8Sub *);
 void fn_1_D430(unkStruct8 *);
 s16 fn_1_DA48(u8, u8);

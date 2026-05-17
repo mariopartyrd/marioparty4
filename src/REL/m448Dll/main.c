@@ -564,7 +564,7 @@ void fn_1_1338(omObjData *arg0)
         case 4:
         case 7:
         case 8:
-            if ((temp_r31->unk08 != -1) ? CharModelMotionEndCheck(temp_r31->unk08) : Hu3DMotionEndCheck(arg0->model[0])) {
+            if ((temp_r31->unk08 != -1) ? CharMotionEndCheck(temp_r31->unk08) : Hu3DMotionEndCheck(arg0->model[0])) {
                 var_r29 = 0;
             }
             /* fallthrough */
@@ -696,7 +696,7 @@ void fn_1_1338(omObjData *arg0)
             }
             break;
         case 5:
-            if ((Hu3DData[arg0->model[0]].unk_0C == -1 && temp_r31->unk08 != -1) ? CharModelMotionEndCheck(temp_r31->unk08)
+            if ((Hu3DData[arg0->model[0]].unk_0C == -1 && temp_r31->unk08 != -1) ? CharMotionEndCheck(temp_r31->unk08)
                                                                                  : Hu3DMotionEndCheck(arg0->model[0])) {
                 temp_r31->unk44 += -2.4333334f;
             }
@@ -740,7 +740,7 @@ void fn_1_1338(omObjData *arg0)
         case 6:
             temp_r31->unk44 += -2.4333334f;
             if (temp_r31->unk2C != 0) {
-                if ((temp_r31->unk08 != -1) ? CharModelMotionEndCheck(temp_r31->unk08) : Hu3DMotionEndCheck(arg0->model[0])) {
+                if ((temp_r31->unk08 != -1) ? CharMotionEndCheck(temp_r31->unk08) : Hu3DMotionEndCheck(arg0->model[0])) {
                     var_r29 = 7;
                 }
             }
@@ -1738,7 +1738,7 @@ void fn_1_8DD0(omObjData *arg0)
     Hu3DModelAmbSet(arg0->model[0], 0.0f, 0.0f, 0.0f);
     for (i = 0; i < 11; i++) {
         if (temp_r31->unk08 != -1) {
-            arg0->motion[i] = CharModelMotionCreate(temp_r31->unk08, lbl_1_data_50[i]);
+            arg0->motion[i] = CharMotionCreate(temp_r31->unk08, lbl_1_data_50[i]);
         }
         else {
             arg0->motion[i] = Hu3DJointMotionFile(arg0->model[0], lbl_1_data_7C[i]);
@@ -1752,8 +1752,8 @@ void fn_1_8DD0(omObjData *arg0)
         Hu3DModelAttrSet(arg0->model[0], HU3D_MOTATTR_LOOP);
     }
     else {
-        lbl_1_bss_20 = CharModelEffectNpcInit(arg0->model[0], arg0->motion[2], 1, 14);
-        lbl_1_bss_24 = CharModelEffectNpcInit(arg0->model[0], arg0->motion[6], 5, 14);
+        lbl_1_bss_20 = CharNpcDustSet(arg0->model[0], arg0->motion[2], 1, 14);
+        lbl_1_bss_24 = CharNpcDustSet(arg0->model[0], arg0->motion[6], 5, 14);
     }
     arg0->trans.x = lbl_1_data_1BC[temp_r31->unk00][0];
     arg0->trans.y = lbl_1_data_1BC[temp_r31->unk00][1];

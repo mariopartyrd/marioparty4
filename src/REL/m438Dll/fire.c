@@ -380,12 +380,12 @@ void fn_1_F994(Vec** arg0, s16 arg1, Vec* arg2) {
     }
 }
 
-void fn_1_FA20(M438FireStruct3** arg0, s16 arg1, HsfVector2f* arg2) {
-    HsfVector2f* var_r31;
+void fn_1_FA20(M438FireStruct3** arg0, s16 arg1, HuVec2f* arg2) {
+    HuVec2f* var_r31;
     s32 var_r29;
     s32 var_r28;
     
-    var_r31 = (HsfVector2f*)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct3), 0x10000000);
+    var_r31 = (HuVec2f*)*arg0 = HuMemDirectMallocNum(HEAP_SYSTEM, arg1 * sizeof(M438FireStruct3), 0x10000000);
     
     for (var_r29 = 0; var_r29 < arg1; var_r29++) {
         for (var_r28 = 0; var_r28 < 4; var_r31++, arg2++, var_r28++) {

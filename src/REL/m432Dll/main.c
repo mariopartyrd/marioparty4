@@ -3085,10 +3085,10 @@ void fn_1_10CCC(omObjData *object)
     var_r31->unk_13C.y = 0.0f;
     var_r31->unk_13C.z = 0.0f;
     object->model[0] = CharModelCreate(lbl_1_data_0[var_r31->unk_18C], 4);
-    CharModelStepTypeSet(lbl_1_data_0[var_r31->unk_18C], 0);
+    CharModelStepFxSet(lbl_1_data_0[var_r31->unk_18C], 0);
     for (var_r29 = 0; var_r29 < 0xB; var_r29++) {
-        object->motion[var_r29] = CharModelMotionCreate(lbl_1_data_0[var_r31->unk_18C], lbl_1_data_108[var_r31->unk_18C][var_r29]);
-        CharModelMotionSet(lbl_1_data_0[var_r31->unk_18C], object->motion[var_r29]);
+        object->motion[var_r29] = CharMotionCreate(lbl_1_data_0[var_r31->unk_18C], lbl_1_data_108[var_r31->unk_18C][var_r29]);
+        CharMotionSet(lbl_1_data_0[var_r31->unk_18C], object->motion[var_r29]);
     }
     Hu3DModelCameraSet(object->model[0], lbl_1_data_A0[var_r31->unk_184 >> 1]);
     Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
@@ -3125,7 +3125,7 @@ void fn_1_10CCC(omObjData *object)
         }
     }
     CharModelLayerSetAll2(5);
-    CharModelMotionDataClose(lbl_1_data_0[var_r31->unk_18C]);
+    CharMotionDataClose(lbl_1_data_0[var_r31->unk_18C]);
     object->func = fn_1_10250;
 }
 

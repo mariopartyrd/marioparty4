@@ -10,14 +10,14 @@ void **HuDataReadMultiSub(s32 *data_ids, BOOL use_num, s32 num);
 
 #define DATA_MAX_READSTAT 128
 
-#define DATADIR_DEFINE(name, path) { path, -1 },
+#define DATADIR(name, path) { path, -1 },
 
 static FileListEntry DataDirStat[] = {
     #include "datadir_table.h"
     { NULL, -1 }
 };
 
-#undef DATADIR_DEFINE
+#undef DATADIR
 
 u32 DirDataSize;
 static u32 DataDirMax;

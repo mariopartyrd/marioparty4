@@ -514,7 +514,7 @@ static s16 SMChangeChar(s16 player, s16 offset)
     return character;
 }
 
-static void SMCharKill(void)
+static void SMCharDataClose(void)
 {
     s32 i;
     for (i = 0; i < 8; i++) {
@@ -596,19 +596,19 @@ static void SMCharUpdate(omObjData *object)
         SMChangeChar(0, 0);
         CharRandomize();
         CopyPlayerCfg(GWPlayerCfg, smPlayerCfg);
-        CharKill(-1);
+        CharDataClose(-1);
         OSReport("%d,%d,%d,%d\n", GWPlayerCfg[0].character, GWPlayerCfg[1].character, GWPlayerCfg[2].character, GWPlayerCfg[3].character);
-        if (!CharAMemPtrGet(GWPlayerCfg[0].character)) {
-            CharARAMOpen(GWPlayerCfg[0].character);
+        if (!CharMotionAMemPGet(GWPlayerCfg[0].character)) {
+            CharMotionInit(GWPlayerCfg[0].character);
         }
-        if (!CharAMemPtrGet(GWPlayerCfg[1].character)) {
-            CharARAMOpen(GWPlayerCfg[1].character);
+        if (!CharMotionAMemPGet(GWPlayerCfg[1].character)) {
+            CharMotionInit(GWPlayerCfg[1].character);
         }
-        if (!CharAMemPtrGet(GWPlayerCfg[2].character)) {
-            CharARAMOpen(GWPlayerCfg[2].character);
+        if (!CharMotionAMemPGet(GWPlayerCfg[2].character)) {
+            CharMotionInit(GWPlayerCfg[2].character);
         }
-        if (!CharAMemPtrGet(GWPlayerCfg[3].character)) {
-            CharARAMOpen(GWPlayerCfg[3].character);
+        if (!CharMotionAMemPGet(GWPlayerCfg[3].character)) {
+            CharMotionInit(GWPlayerCfg[3].character);
         }
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 20);
         object->func = SMExit;
@@ -632,7 +632,7 @@ static void SMCharUpdate(omObjData *object)
                 playerDoneF[i] = 0;
             }
             else {
-                SMCharKill();
+                SMCharDataClose();
                 object->func = SMUpdate;
                 return;
             }

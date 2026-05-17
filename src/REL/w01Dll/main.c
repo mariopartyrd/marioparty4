@@ -1000,8 +1000,8 @@ static void CoasterCoinCheck(void)
             if (coasterCoinF[i] == 0) {
                 BoardModelPosGet(coasterCoinMdlId[i], &coinPos);
                 if (BoardVecMaxDistXZCheck(&coinPos, &ofs, 180.0f)) {
-                    CharModelLayerSetAll(2);
-                    CharModelCoinEffectCreate(1, &coinPos);
+                    CharEffectLayerSet(2);
+                    CharEffectCoinGlowCreate(1, &coinPos);
                     BoardModelVisibilitySet(coasterCoinMdlId[i], 0);
                     BoardPlayerCoinsAdd(eventPlayer, 1);
                     HuAudFXPlay(7);

@@ -548,7 +548,7 @@ void fn_1_D3AC(void)
             BoardModelPosSetV(sp38[temp_r31], &sp2C);
             BoardModelRotSetV(sp38[temp_r31], &sp20);
             if (sp2C.y <= sp14.y + (180.0f * temp_f30)) {
-                CharModelCoinEffectCreate(1, &sp2C);
+                CharEffectCoinGlowCreate(1, &sp2C);
                 BoardModelVisibilitySet(sp38[temp_r31], 0);
                 temp_r30++;
                 BoardPlayerCoinsAdd(lbl_1_bss_388, 1);

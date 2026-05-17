@@ -1255,7 +1255,7 @@ void fn_1_5850(omObjData *arg0)
     for (i = 0; i < 9; i++) {
         if (data->character != -1) {
             if (data->player < 4 || (i != 1 && i != 2)) {
-                arg0->motion[i] = CharModelMotionCreate(data->character, lbl_1_data_48[i] + (lbl_1_data_6C[i] ? data->character : 0));
+                arg0->motion[i] = CharMotionCreate(data->character, lbl_1_data_48[i] + (lbl_1_data_6C[i] ? data->character : 0));
             }
         }
         else if (lbl_1_data_90[i] != 0) {

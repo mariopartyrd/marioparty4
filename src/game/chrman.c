@@ -7,88 +7,77 @@
 #include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+#include "game/humath.h"
 #include "game/object.h"
 #include "game/process.h"
 #include "game/sprite.h"
 
 #include "ext_math.h"
 
-typedef struct {
-    /* 0x00 */ s16 unk00;
-    /* 0x02 */ s16 unk02;
-    /* 0x04 */ s16 unk04;
-    /* 0x06 */ s16 unk06;
-    /* 0x08 */ s16 unk08;
-    /* 0x0A */ s16 unk0A;
-    /* 0x0C */ s16 unk0C[32];
-    /* 0x4C */ s16 unk4C[32];
-    /* 0x8C */ u8 unk8C[32];
-    /* 0xAC */ u32 unkAC;
-    /* 0xB0 */ s8 unkB0;
-    /* 0xB1 */ char unkB1[3];
-    /* 0xB4 */ Vec unkB4;
-    /* 0xC0 */ void *unkC0;
-    /* 0xC4 */ Process *unkC4;
-} UnkCharInstanceStruct; // Size 0xC8
+#include "data_num/effect.h"
+
+typedef struct CharWork_s {
+    /* 0x00 */ HU3DMODELID modelId;
+    /* 0x02 */ s16 model;
+    /* 0x04 */ s16 motNoCurr;
+    /* 0x06 */ s16 motNoShiftCurr;
+    /* 0x08 */ s16 motNoPrev;
+    /* 0x0A */ s16 motNoShiftPrev;
+    /* 0x0C */ HU3DMOTID motId[CHAR_MOT_MAX];
+    /* 0x4C */ s16 motNoTbl[CHAR_MOT_MAX];
+    /* 0x8C */ u8 voiceFlag[CHAR_MOT_MAX];
+    /* 0xAC */ u32 attr;
+    /* 0xB0 */ s8 stepFx;
+    /* 0xB4 */ HuVecF pos;
+    /* 0xC0 */ AMEM_PTR motAMemP;
+    /* 0xC4 */ Process *process;
+} CHARWORK; // Size 0xC8
 
 typedef struct EffectData_s {
-    /* 0x00 */ s32 unk00;
-    /* 0x04 */ s16 unk04;
-    /* 0x06 */ s16 unk06;
-    /* 0x08 */ s32 unk08;
+    /* 0x00 */ s32 dataNum;
+    /* 0x04 */ s16 maxCnt;
+    /* 0x06 */ s16 blendMode;
+    /* 0x08 */ s32 motCnt;
 } EFFECTDATA; // Size 0xC
 
-typedef struct {
-    /* 0x00 */ u32 unk00;
-    /* 0x04 */ u8 unk04;
-    /* 0x05 */ u8 unk05;
-    /* 0x06 */ u8 unk06;
-    /* 0x07 */ u8 unk07;
-    /* 0x08 */ u8 unk08;
-    /* 0x09 */ u8 unk09;
-    /* 0x0A */ u8 unk0A;
-    /* 0x0B */ char unk0B[1];
-    /* 0x0C */ Vec unk0C;
-    /* 0x18 */ float unk18;
-    /* 0x1C */ float unk1C;
-    /* 0x20 */ float unk20;
-    /* 0x24 */ float unk24;
-    /* 0x28 */ s32 unk28; // unknown type
-    /* 0x2C */ float unk2C;
-    /* 0x30 */ float unk30;
-    /* 0x34 */ float unk34;
-} EffectParamData; // Size 0x38
-
-typedef struct {
-    u16 unk00;
-    s16 unk02;
-} UnkProcessData; // Size 4
+typedef struct EffectParam_s {
+    /* 0x00 */ u32 attr;
+    /* 0x04 */ GXColor colorBegin;
+    /* 0x08 */ GXColor colorEnd;
+    /* 0x0C */ HuVecF vel;
+    /* 0x18 */ HuVecF velDecay;
+    /* 0x24 */ float gravity;
+    /* 0x28 */ u32 zero;
+    /* 0x2C */ float scaleVel;
+    /* 0x30 */ float alphaBase;
+    /* 0x34 */ float colorWeight;
+} EFFECTPARAM; // Size 0x38
 
 static void UpdateChar(void);
-static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4, Vec *arg5);
-static s32 _CharFXPlay(s16 character, s16 arg1, u8 arg2);
-static void InitEffect(void);
-static s16 CreateEffectDust(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
-static s16 CreateEffectSmoke(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
-static s16 CreateEffectDot(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
-static s16 CreateEffectStar(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
-static s16 CreateEffectWarn(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
-static s16 CreateEffectBird(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
-static s16 CreateEffect(s16 arg0, s16 arg1, float arg2, float arg3, float arg4, float arg5, EffectParamData *arg6);
+static void UpdateCharAnim(s16 charNo, HU3DMODELID modelId, s16 motNo, u8 voiceFlag, s16 frameNo, HuVecF *ofs);
+static s32 _CharFXPlay(s16 charNo, s16 seNo, u8 voiceFlag);
+static void EffectInit(void);
+static s16 EffectDustCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
+static s16 EffectSmokeCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
+static s16 EffectDotCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
+static s16 EffectStarCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
+static s16 EffectWarnCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
+static s16 EffectBirdCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
+static s16 EffectCreate(s16 type, s16 cameraBit, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
 static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix);
-static void RotateEffect(HsfanimStruct01 *arg0);
-static void PlayEffectSound(HsfanimStruct01 *arg0);
-static void UpdateItemHook(void);
-static void OrbitEffect(HsfanimStruct01 *arg0);
-static void UpdateNpcEffect(void);
-static s32 PlayStepFX(s16 arg0, s16 arg1, u8 arg2);
+static void RotateEffect(HsfanimStruct01 *particleDataP);
+static void PlayEffectSound(HsfanimStruct01 *particleDataP);
+static void CreateHookDust(void);
+static void UpdateModelEffect(HsfanimStruct01 *particleDataP);
+static void UpdateNpcDust(void);
+static s32 PlayStepVoice(s16 charNo, s16 seId, u8 voiceFlag);
 
-static UnkCharInstanceStruct charInstance[CHARNO_MAX ];
+static CHARWORK charWork[CHARNO_MAX];
 static s16 effectMdl[CHAR_EFFECT_AND_PARTICLE_MAX];
-static EffectParamData *particleData[CHAR_EFFECT_AND_PARTICLE_MAX];
-static Process *itemHookProcess[32];
+static EFFECTPARAM *particleData[CHAR_EFFECT_AND_PARTICLE_MAX];
+static Process *itemHookProcess[CHAR_MOT_MAX];
 //holds normal characters 0-7, then more characters 8-14
-static u16 lbl_801975B0[CHARNO_MAX  + CHAR_NPC_MAX];
+static u16 dustFlags[CHARNO_MAX  + CHAR_NPC_MAX];
 static u8 lbl_801975CE[0x82]; // Unused?
 
 static s32 skipAnimUpdate;
@@ -101,40 +90,40 @@ static u8 lbl_801D3608[8] = { 0x0D, 0x00, 0x17, 0x69, 0x0D, 0x1E, 0x1D, 0x14 };
 static u8 lbl_801D3610[8] = { 0x15, 0x1E, 0x16, 0x54, 0x0F, 0x62, 0x39, 0x0A };
 
 static EFFECTDATA effectDataTbl[8] = {
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x06), 0x000A, 0x0000, 0x00000002 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x05), 0x000A, 0x0000, 0x00000002 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x02), 0x0096, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x03), 0x0046, 0x0000, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x00), 0x012C, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x01), 0x012C, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x04), 0x00C8, 0x0001, 0x00000000 },
-    { DATA_MAKE_NUM(DATADIR_EFFECT, 0x07), 0x000C, 0x0000, 0x00000002 },
+    { EFFECT_ANM_danger, 10, 0, 2 },
+    { EFFECT_ANM_hatena, 10, 0, 2 },
+    { EFFECT_ANM_dust, 150, 1, 0 },
+    { EFFECT_ANM_smoke, 70, 0, 0 },
+    { EFFECT_ANM_star, 300, 1, 0 },
+    { EFFECT_ANM_glow, 300, 1, 0 },
+    { EFFECT_ANM_circle, 200, 1, 0 },
+    { EFFECT_ANM_bird, 12, 0, 2 },
 };
 
-static s32 charDirTbl[CHARNO_MAX ][3] = {
-    { DATADIR_MARIOMDL0, DATADIR_MARIOMDL1, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00) },
-    { DATADIR_LUIGIMDL0, DATADIR_LUIGIMDL1, DATA_MAKE_NUM(DATADIR_LUIGIMOT, 0x00) },
-    { DATADIR_PEACHMDL0, DATADIR_PEACHMDL1, DATA_MAKE_NUM(DATADIR_PEACHMOT, 0x00) },
-    { DATADIR_YOSHIMDL0, DATADIR_YOSHIMDL1, DATA_MAKE_NUM(DATADIR_YOSHIMOT, 0x00) },
-    { DATADIR_WARIOMDL0, DATADIR_WARIOMDL1, DATA_MAKE_NUM(DATADIR_WARIOMOT, 0x00) },
-    { DATADIR_DONKEYMDL0, DATADIR_DONKEYMDL1, DATA_MAKE_NUM(DATADIR_DONKEYMOT, 0x00) },
-    { DATADIR_DAISYMDL0, DATADIR_DAISYMDL1, DATA_MAKE_NUM(DATADIR_DAISYMOT, 0x00) },
-    { DATADIR_WALUIGIMDL0, DATADIR_WALUIGIMDL1, DATA_MAKE_NUM(DATADIR_WALUIGIMOT, 0x00) },
+static s32 charDirTbl[CHARNO_MAX][3] = {
+    { DATADIR_MARIOMDL0, DATADIR_MARIOMDL1, DATADIR_MARIOMOT },
+    { DATADIR_LUIGIMDL0, DATADIR_LUIGIMDL1, DATADIR_LUIGIMOT },
+    { DATADIR_PEACHMDL0, DATADIR_PEACHMDL1, DATADIR_PEACHMOT },
+    { DATADIR_YOSHIMDL0, DATADIR_YOSHIMDL1, DATADIR_YOSHIMOT },
+    { DATADIR_WARIOMDL0, DATADIR_WARIOMDL1, DATADIR_WARIOMOT },
+    { DATADIR_DONKEYMDL0, DATADIR_DONKEYMDL1, DATADIR_DONKEYMOT },
+    { DATADIR_DAISYMDL0, DATADIR_DAISYMDL1, DATADIR_DAISYMOT },
+    { DATADIR_WALUIGIMDL0, DATADIR_WALUIGIMDL1, DATADIR_WALUIGIMOT },
 };
 
-static EffectParamData effectDustParam
+static EFFECTPARAM dustEffParam
     = { 0, 0x80, 0x80, 0x80, 0xFF, 0x40, 0x20, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, 1.0f, -5.0f, 0.02f };
 
-static EffectParamData effectDotParam
+static EFFECTPARAM effectDotParam
     = { 0, 0xFF, 0x40, 0x40, 0x80, 0xFF, 0x40, 0x40, 0x80, { 0.0f, 0.0f, 0.0f }, 0.0f, 0.0f, 0.0f, 0.0f, 0x00000000, -5.0f, 0.0f, 0.0f };
 
-static EffectParamData effectStarParam
+static EFFECTPARAM effectStarParam
     = { 0, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0xFF, { 0.0f, 0.0f, 0.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, -0.5f, -10.0f, 0.0f };
 
-static EffectParamData effectWarnParam
+static EFFECTPARAM effectWarnParam
     = { 0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, { 0.0f, 20.0f, 0.0f }, 0.95f, 0.85f, 0.95f, 0.0f, 0x00000000, 1.0f, -5.0f, 0.0f };
 
-static EffectParamData effectSmokeParam
+static EFFECTPARAM effectSmokeParam
     = { 0, 0x80, 0x20, 0x20, 0xFF, 0x00, 0x00, 0x00, 0xFF, { 0.0f, 10.0f, 0.0f }, 1.0f, 0.95f, 1.0f, 0.0f, 0x00000000, 5.0f, -13.0f, 0.1f };
 
 static s8 lbl_801309A0[32]
@@ -145,20 +134,19 @@ static s8 lbl_801309C0[32]
 
 static s8 lbl_801309E0[16] = { 5, 7, 6, 9, 10, 11, 9, -1, 9, 11, 9, -1, 8, -1, 10, -1 };
 
-void CharManInit(void)
+void CharInit(void)
 {
-    UnkCharInstanceStruct *temp_r29;
     s16 i;
     s16 j;
-
-    for (i = 0; i < CHARNO_MAX ; i++) {
-        temp_r29 = &charInstance[i];
-        temp_r29->unkC0 = NULL;
-        for (j = 0; j < ARRAY_COUNT(temp_r29->unk0C); j++) {
-            temp_r29->unk0C[j] = -1;
+    
+    for (i = 0; i < CHARNO_MAX; i++) {
+        CHARWORK *workP = &charWork[i];
+        workP->motAMemP = 0;
+        for (j = 0; j < ARRAY_COUNT(workP->motId); j++) {
+            workP->motId[j] = HU3D_MOTID_NONE;
         }
-        temp_r29->unk00 = -1;
-        temp_r29->unkC4 = NULL;
+        workP->modelId = HU3D_MODELID_NONE;
+        workP->process = NULL;
     }
     if (!effectAMemP) {
         effectAMemP = (void *)HuAR_DVDtoARAM(0x120000);
@@ -172,277 +160,271 @@ void CharManInit(void)
     }
 }
 
-void *CharAMemPtrGet(s16 character)
+AMEM_PTR CharMotionAMemPGet(s16 charNo)
 {
-    return charInstance[character].unkC0;
+    return charWork[charNo].motAMemP;
 }
 
-void CharARAMOpen(s16 character)
+void CharMotionInit(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r31;
-
-    if (character >= CHARNO_MAX  || character < 0 || character == 0xFF) {
+    if (charNo >= CHARNO_MAX  || charNo < 0 || charNo == 0xFF) {
         return;
-    }
-    temp_r31 = &charInstance[character];
-    if (!temp_r31->unkC0) {
-        temp_r31->unkC0 = (void *)HuAR_DVDtoARAM(charDirTbl[character][2]);
+    } else {
+        CHARWORK *workP = &charWork[charNo];
+        if (!workP->motAMemP) {
+            workP->motAMemP = HuAR_DVDtoARAM(charDirTbl[charNo][2]);
+        }
     }
 }
 
-void CharARAMClose(s16 character)
+void CharMotionClose(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r31;
-
-    temp_r31 = &charInstance[character];
-    if (temp_r31->unkC0) {
-        HuARFree((u32)temp_r31->unkC0);
-        temp_r31->unkC0 = NULL;
+    CHARWORK *workP = &charWork[charNo];
+    if (workP->motAMemP) {
+        HuARFree(workP->motAMemP);
+        workP->motAMemP = 0;
     }
 }
 
-void CharKill(s16 character)
+void CharDataClose(s16 charNo)
 {
     s16 i;
 
-    if (character == -1) {
-        for (i = 0; i < 8; i++) {
-            CharKill(i);
+    if (charNo == CHARNO_NONE) {
+        for (i = 0; i < CHARNO_MAX; i++) {
+            CharDataClose(i);
         }
     }
     else {
-        HuDataDirClose(charDirTbl[character][0]);
-        HuDataDirClose(charDirTbl[character][1]);
-        HuDataDirClose(charDirTbl[character][2]);
-        CharARAMClose(character);
+        HuDataDirClose(charDirTbl[charNo][0]);
+        HuDataDirClose(charDirTbl[charNo][1]);
+        HuDataDirClose(charDirTbl[charNo][2]);
+        CharMotionClose(charNo);
     }
 }
 
-void CharKillAll(void)
+void CharClose(void)
 {
-    CharModelKill(-1);
-    CharKill(-1);
+    CharModelKill(CHARNO_NONE);
+    CharDataClose(CHARNO_NONE);
     HuARFree((u32)effectAMemP);
     effectAMemP = NULL;
 }
 
-s16 CharModelCreate(s16 character, s16 lod)
+HU3DMODELID CharModelCreate(s16 charNo, s16 model)
 {
     s16 sp8 = 0;
-    UnkCharInstanceStruct *temp_r31;
-    void *var_r26;
-    s16 *var_r27;
-    s16 var_r25;
-    s32 var_r29;
+    CHARWORK *workP = &charWork[charNo];
+    void *dataP;
+    s16 *property;
+    s16 modelId;
+    s32 dataNum;
 
-    temp_r31 = &charInstance[character];
-    if (temp_r31->unk00 != -1) {
-        Hu3DModelKill(temp_r31->unk00);
+    if (workP->modelId != HU3D_MODELID_NONE) {
+        Hu3DModelKill(workP->modelId);
     }
-    if (lod & 1) {
-        var_r29 = charDirTbl[character][0];
+    if (model & CHAR_MODEL0) {
+        dataNum = charDirTbl[charNo][0];
     }
-    else if (lod & 2) {
-        var_r29 = charDirTbl[character][1];
+    else if (model & CHAR_MODEL1) {
+        dataNum = charDirTbl[charNo][1];
     }
-    else if (lod & 4) {
-        var_r29 = charDirTbl[character][1] | 1;
+    else if (model & CHAR_MODEL2) {
+        dataNum = charDirTbl[charNo][1] | 1;
     }
     else {
-        var_r29 = charDirTbl[character][1] | 2;
+        dataNum = charDirTbl[charNo][1] | 2;
     }
-    var_r26 = HuDataSelHeapReadNum(var_r29, MEMORY_DEFAULT_NUM, HEAP_DATA);
-    temp_r31->unk00 = var_r25 = Hu3DModelCreate(var_r26);
-    temp_r31->unkC4 = HuPrcCreate(UpdateChar, 0x64, 0x4000, 0);
-    temp_r31->unkC4->user_data = var_r27 = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(s16));
-    temp_r31->unk02 = lod;
-    temp_r31->unkAC = 0;
-    *var_r27 = character;
-    temp_r31->unkB0 = 0;
-    InitEffect();
-    return var_r25;
+    dataP = HuDataSelHeapReadNum(dataNum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+    workP->modelId = modelId = Hu3DModelCreate(dataP);
+    workP->process = HuPrcCreate(UpdateChar, 100, 16384, 0);
+    workP->process->user_data = property = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(s16));
+    workP->model = model;
+    workP->attr = 0;
+    *property = charNo;
+    workP->stepFx = 0;
+    EffectInit();
+    return modelId;
 }
+
+static void EyeBmpUpdate(s16 charNo);
 
 static void UpdateChar(void)
 {
-    Vec sp8;
-    s16 *temp_r28;
-    UnkCharInstanceStruct *temp_r31;
-    ModelData *temp_r29;
-    s16 var_r27;
+    HuVecF sp8;
+    s16 *property = HuPrcCurrentGet()->user_data;
+    CHARWORK *workP = &charWork[*property];
+    ModelData *modelP = &Hu3DData[workP->modelId];
+    s16 updateBmpF = FALSE;
     s16 i;
 
-    temp_r28 = HuPrcCurrentGet()->user_data;
-    temp_r31 = &charInstance[*temp_r28];
-    temp_r29 = &Hu3DData[temp_r31->unk00];
-    var_r27 = 0;
     while (1) {
-        for (i = 0; i < 32; i++) {
-            if (temp_r31->unk0C[i] == temp_r29->unk_08) {
+        for (i = 0; i < CHAR_MOT_MAX; i++) {
+            if (workP->motId[i] == modelP->unk_08) {
                 break;
             }
         }
         skipAnimUpdate = 0;
-        if (i != 32) {
-            temp_r31->unk04 = temp_r31->unk4C[i];
-            UpdateCharAnim(*temp_r28, temp_r31->unk00, temp_r31->unk4C[i], temp_r31->unk8C[i], temp_r29->unk_64, &sp8);
-            temp_r31->unk08 = temp_r31->unk4C[i];
+        if (i != CHAR_MOT_MAX) {
+            workP->motNoCurr = workP->motNoTbl[i];
+            UpdateCharAnim(*property, workP->modelId, workP->motNoTbl[i], workP->voiceFlag[i], modelP->unk_64, &sp8);
+            workP->motNoPrev = workP->motNoTbl[i];
         }
         else {
-            temp_r31->unk04 = -1;
+            workP->motNoCurr = -1;
         }
-        if (temp_r29->unk_0C != -1) {
-            for (i = 0; i < 32; i++) {
-                if (temp_r31->unk0C[i] == temp_r29->unk_0C) {
+        if (modelP->unk_0C != -1) {
+            for (i = 0; i < CHAR_MOT_MAX; i++) {
+                if (workP->motId[i] == modelP->unk_0C) {
                     break;
                 }
             }
             skipAnimUpdate = 1;
-            var_r27 = 1;
-            if (i != 32) {
-                temp_r31->unk06 = temp_r31->unk4C[i];
-                UpdateCharAnim(*temp_r28, temp_r31->unk00, temp_r31->unk4C[i], temp_r31->unk8C[i], temp_r29->unk_84, &sp8);
-                temp_r31->unk0A = temp_r31->unk4C[i];
+            updateBmpF = TRUE;
+            if (i != CHAR_MOT_MAX) {
+                workP->motNoShiftCurr = workP->motNoTbl[i];
+                UpdateCharAnim(*property, workP->modelId, workP->motNoTbl[i], workP->voiceFlag[i], modelP->unk_84, &sp8);
+                workP->motNoShiftPrev = workP->motNoTbl[i];
             }
             else {
-                temp_r31->unk06 = -1;
+                workP->motNoShiftCurr = -1;
             }
         }
-        else if (var_r27 != 0) {
-            CharModelTexAnimSet(*temp_r28);
-            var_r27 = 0;
+        else if (updateBmpF) {
+            EyeBmpUpdate(*property);
+            updateBmpF = FALSE;
         }
-        temp_r31->unkB4 = temp_r29->pos;
+        workP->pos = modelP->pos;
         HuPrcVSleep();
     }
 }
 
-static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4, Vec *arg5)
+static void UpdateCharAnim(s16 charNo, HU3DMODELID modelId, s16 motNo, u8 voiceFlag, s16 frameNo, HuVecF *ofs)
 {
-    Vec sp1C;
-    Vec sp10;
-    ModelData *temp_r30;
+    HuVecF pos;
+    HuVecF hitPos;
+    ModelData *modelP;
     s16 var_r19;
     ParticleData *var_r18;
     ModelData *var_r17;
     HsfanimStruct01 *var_r27;
-    UnkCharInstanceStruct *temp_r29;
-    Mtx sp28;
-    u32 var_r22;
+    CHARWORK *workP;
+    Mtx hitMtx;
+    u32 attrOld;
     s16 var_r20;
     s16 i;
-
-    temp_r30 = &Hu3DData[arg1];
-    temp_r29 = &charInstance[character];
-    var_r22 = 0;
-    if (skipAnimUpdate == 0 && (temp_r30->motion_attr & 0x40000002)) {
+    
+    modelP = &Hu3DData[modelId];
+    workP = &charWork[charNo];
+    attrOld = 0;
+    if (skipAnimUpdate == 0 && (modelP->motion_attr & HU3D_MOTATTR_PAUSE)) {
         return;
     }
-    switch (arg2) {
+    switch (motNo) {
         case 2:
-            if (skipAnimUpdate == 0 && temp_r30->unk_68 <= 0.5) {
+            if (skipAnimUpdate == 0 && modelP->unk_68 <= 0.5) {
                 break;
             }
-            if (skipAnimUpdate != 0 && temp_r30->unk_88 <= 0.5) {
+            if (skipAnimUpdate != 0 && modelP->unk_88 <= 0.5) {
                 break;
             }
-            if (!(arg4 & 0xF) && !(temp_r29->unkAC & 0x10)) {
-                effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
-                effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
-                effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
-                sp1C.x = temp_r30->pos.x + temp_r30->scale.x * (frandmod(50) - 25);
-                sp1C.y = temp_r30->pos.y;
-                sp1C.z = temp_r30->pos.z + temp_r30->scale.x * (frandmod(50) - 25);
-                CreateEffectDust(arg1, sp1C.x, sp1C.y, sp1C.z, frandmod(10) + 30, &effectDustParam);
+            if (!(frameNo & 0xF) && !(workP->attr & 0x10)) {
+                dustEffParam.vel.x = 2.0 * -sind(modelP->rot.y);
+                dustEffParam.vel.y = 1.0 + 0.1 * frandmod(10);
+                dustEffParam.vel.z = 2.0 * -cosd(modelP->rot.y);
+                pos.x = modelP->pos.x + modelP->scale.x * (frandmod(50) - 25);
+                pos.y = modelP->pos.y;
+                pos.z = modelP->pos.z + modelP->scale.x * (frandmod(50) - 25);
+                EffectDustCreate(modelId, pos.x, pos.y, pos.z, frandmod(10) + 30, &dustEffParam);
             }
             for (i = 0; i < 4; i++) {
-                if (lbl_801309A0[character * 4 + i] == arg4) {
-                    PlayStepFX(character, 0x101, arg3);
+                if (lbl_801309A0[charNo * 4 + i] == frameNo) {
+                    PlayStepVoice(charNo, 0x101, voiceFlag);
                     break;
                 }
             }
             break;
         case 3:
-            if (skipAnimUpdate == 0 && temp_r30->unk_68 <= 0.5) {
+            if (skipAnimUpdate == 0 && modelP->unk_68 <= 0.5) {
                 break;
             }
-            if (skipAnimUpdate != 0 && temp_r30->unk_88 <= 0.5) {
+            if (skipAnimUpdate != 0 && modelP->unk_88 <= 0.5) {
                 break;
             }
-            if (!(arg4 & 3) && !(temp_r29->unkAC & 0x10)) {
-                effectDustParam.unk0C.x = 4.0 * -sind(temp_r30->rot.y);
-                effectDustParam.unk0C.y = 2.0 + 0.1 * frandmod(10);
-                effectDustParam.unk0C.z = 4.0 * -cosd(temp_r30->rot.y);
-                sp1C.x = temp_r30->pos.x + temp_r30->scale.x * (frandmod(50) - 25);
-                sp1C.y = temp_r30->pos.y;
-                sp1C.z = temp_r30->pos.z + temp_r30->scale.x * (frandmod(50) - 25);
-                CreateEffectDust(arg1, sp1C.x, sp1C.y, sp1C.z, frandmod(10) + 30, &effectDustParam);
+            if (!(frameNo & 3) && !(workP->attr & 0x10)) {
+                dustEffParam.vel.x = 4.0 * -sind(modelP->rot.y);
+                dustEffParam.vel.y = 2.0 + 0.1 * frandmod(10);
+                dustEffParam.vel.z = 4.0 * -cosd(modelP->rot.y);
+                pos.x = modelP->pos.x + modelP->scale.x * (frandmod(50) - 25);
+                pos.y = modelP->pos.y;
+                pos.z = modelP->pos.z + modelP->scale.x * (frandmod(50) - 25);
+                EffectDustCreate(modelId, pos.x, pos.y, pos.z, frandmod(10) + 30, &dustEffParam);
             }
             for (i = 0; i < 4; i++) {
-                if (lbl_801309C0[character * 4 + i] == arg4) {
-                    PlayStepFX(character, 0x105, arg3);
+                if (lbl_801309C0[charNo * 4 + i] == frameNo) {
+                    PlayStepVoice(charNo, 0x105, voiceFlag);
                     break;
                 }
             }
             break;
         case 4:
-            if (arg4 < 5 && !(temp_r29->unkAC & 0x10)) {
-                effectDustParam.unk0C.x = 6.0 * sind(temp_r30->rot.y);
-                effectDustParam.unk0C.z = 6.0 * cosd(temp_r30->rot.y);
+            if (frameNo < 5 && !(workP->attr & 0x10)) {
+                dustEffParam.vel.x = 6.0 * sind(modelP->rot.y);
+                dustEffParam.vel.z = 6.0 * cosd(modelP->rot.y);
                 for (i = 0; i < 5; i++) {
-                    effectDustParam.unk0C.y = 2.0 + 0.1 * frandmod(10);
-                    sp1C.x = temp_r30->pos.x + temp_r30->scale.x * (frandmod(50) - 25);
-                    sp1C.y = temp_r30->pos.y;
-                    sp1C.z = temp_r30->pos.z + temp_r30->scale.x * (frandmod(50) - 25);
-                    CreateEffectDust(arg1, sp1C.x, sp1C.y, sp1C.z, 20.0f, &effectDustParam);
+                    dustEffParam.vel.y = 2.0 + 0.1 * frandmod(10);
+                    pos.x = modelP->pos.x + modelP->scale.x * (frandmod(50) - 25);
+                    pos.y = modelP->pos.y;
+                    pos.z = modelP->pos.z + modelP->scale.x * (frandmod(50) - 25);
+                    EffectDustCreate(modelId, pos.x, pos.y, pos.z, 20.0f, &dustEffParam);
                 }
             }
-            if (arg4 == 0) {
-                PlayStepFX(character, 0x10D, arg3);
+            if (frameNo == 0) {
+                PlayStepVoice(charNo, 0x10D, voiceFlag);
             }
             break;
         case 6:
-            if (arg4 == 5 && !(temp_r29->unkAC & 0x10)) {
+            if (frameNo == 5 && !(workP->attr & 0x10)) {
                 for (i = 0; i < 8; i++) {
-                    effectDustParam.unk0C.x = 4.0 * sind(45.0f * i) * temp_r30->scale.x;
-                    effectDustParam.unk0C.y = 0.0f;
-                    effectDustParam.unk0C.z = 4.0 * cosd(45.0f * i) * temp_r30->scale.x;
-                    CreateEffectDust(arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                    dustEffParam.vel.x = 4.0 * sind(45.0f * i) * modelP->scale.x;
+                    dustEffParam.vel.y = 0.0f;
+                    dustEffParam.vel.z = 4.0 * cosd(45.0f * i) * modelP->scale.x;
+                    EffectDustCreate(modelId, modelP->pos.x, modelP->pos.y + 10.0f * modelP->scale.x, modelP->pos.z, 20.0f, &dustEffParam);
                 }
                 for (i = 0; i < 8; i++) {
-                    effectDustParam.unk0C.x = 2.0 * sind(45.0f * i + 22.5) * temp_r30->scale.x;
-                    effectDustParam.unk0C.y = 0.0f;
-                    effectDustParam.unk0C.z = 2.0 * cosd(45.0f * i + 22.5) * temp_r30->scale.x;
-                    CreateEffectDust(arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                    dustEffParam.vel.x = 2.0 * sind(45.0f * i + 22.5) * modelP->scale.x;
+                    dustEffParam.vel.y = 0.0f;
+                    dustEffParam.vel.z = 2.0 * cosd(45.0f * i + 22.5) * modelP->scale.x;
+                    EffectDustCreate(modelId, modelP->pos.x, modelP->pos.y + 10.0f * modelP->scale.x, modelP->pos.z, 20.0f, &dustEffParam);
                 }
             }
             for (i = 0; i < 2; i++) {
-                if (lbl_801309E0[character * 2 + i] == arg4) {
-                    PlayStepFX(character, 0x10D, arg3);
+                if (lbl_801309E0[charNo * 2 + i] == frameNo) {
+                    PlayStepVoice(charNo, 0x10D, voiceFlag);
                     break;
                 }
             }
             break;
         case 7:
-            if (arg2 == 7) {
-                Hu3DModelObjMtxGet(arg1, CharModelHookNameGet(character, temp_r29->unk02, 0), sp28);
+            if (motNo == 7) {
+                Hu3DModelObjMtxGet(modelId, CharModelItemHookGet(charNo, workP->model, 0), hitMtx);
                 var_r20 = 10;
             }
             else {
-                Hu3DModelObjMtxGet(arg1, CharModelHookNameGet(character, temp_r29->unk02, 1), sp28);
+                Hu3DModelObjMtxGet(modelId, CharModelItemHookGet(charNo, workP->model, 1), hitMtx);
                 var_r20 = 13;
             }
-            if (arg4 <= var_r20 && !(temp_r29->unkAC & 0x10)) {
-                effectDotParam.unk0C.x = 0.0f;
-                effectDotParam.unk0C.y = 0.0f;
-                effectDotParam.unk0C.z = 0.0f;
-                effectDotParam.unk2C = -5.0f;
-                sp1C.x = sp28[0][3];
-                sp1C.y = sp28[1][3];
-                sp1C.z = sp28[2][3];
-                if (arg4 != 0) {
-                    VECSubtract(&sp1C, arg5, &sp10);
-                    var_r20 = 0.2 * sqrtf(sp10.x * sp10.x + sp10.y * sp10.y + sp10.z * sp10.z);
+            if (frameNo <= var_r20 && !(workP->attr & 0x10)) {
+                effectDotParam.vel.x = 0.0f;
+                effectDotParam.vel.y = 0.0f;
+                effectDotParam.vel.z = 0.0f;
+                effectDotParam.scaleVel = -5.0f;
+                pos.x = hitMtx[0][3];
+                pos.y = hitMtx[1][3];
+                pos.z = hitMtx[2][3];
+                if (frameNo != 0) {
+                    VECSubtract(&pos, ofs, &hitPos);
+                    var_r20 = 0.2 * sqrtf(hitPos.x * hitPos.x + hitPos.y * hitPos.y + hitPos.z * hitPos.z);
                     if (var_r20 > 5) {
                         var_r20 = 5;
                     }
@@ -450,46 +432,46 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                         var_r20 = 1;
                     }
                     for (i = 1; i <= var_r20; i++) {
-                        sp10.x = arg5->x + (sp1C.x - arg5->x) * ((float)i / var_r20);
-                        sp10.y = arg5->y + (sp1C.y - arg5->y) * ((float)i / var_r20);
-                        sp10.z = arg5->z + (sp1C.z - arg5->z) * ((float)i / var_r20);
-                        CreateEffectDot(arg1, sp10.x, sp10.y, sp10.z, 50.0f, &effectDotParam);
+                        hitPos.x = ofs->x + (pos.x - ofs->x) * ((float)i / var_r20);
+                        hitPos.y = ofs->y + (pos.y - ofs->y) * ((float)i / var_r20);
+                        hitPos.z = ofs->z + (pos.z - ofs->z) * ((float)i / var_r20);
+                        EffectDotCreate(modelId, hitPos.x, hitPos.y, hitPos.z, 50.0f, &effectDotParam);
                     }
                 }
                 else {
-                    CreateEffectDot(arg1, sp1C.x, sp1C.y, sp1C.z, 40.0f, &effectDotParam);
+                    EffectDotCreate(modelId, pos.x, pos.y, pos.z, 40.0f, &effectDotParam);
                 }
-                *arg5 = sp1C;
+                *ofs = pos;
             }
             break;
         case 0xA:
-            if (arg4 == 0) {
-                if (!(temp_r29->unkAC & 0x10)) {
+            if (frameNo == 0) {
+                if (!(workP->attr & 0x10)) {
                     for (i = 0; i < 8; i++) {
-                        effectStarParam.unk0C.x = 10.0 * sind(45.0f * i) * temp_r30->scale.x;
-                        effectStarParam.unk0C.y = 0.0f;
-                        effectStarParam.unk0C.z = 10.0 * cosd(45.0f * i) * temp_r30->scale.x;
-                        CreateEffectStar(
-                            arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 40.0f, &effectStarParam);
+                        effectStarParam.vel.x = 10.0 * sind(45.0f * i) * modelP->scale.x;
+                        effectStarParam.vel.y = 0.0f;
+                        effectStarParam.vel.z = 10.0 * cosd(45.0f * i) * modelP->scale.x;
+                        EffectStarCreate(
+                            modelId, modelP->pos.x, modelP->pos.y + 10.0f * modelP->scale.x, modelP->pos.z, 40.0f, &effectStarParam);
                     }
                     for (i = 0; i < 8; i++) {
-                        effectDustParam.unk0C.x = 4.0 * sind(45.0f * i + 22.5) * temp_r30->scale.x;
-                        effectDustParam.unk0C.y = 0.0f;
-                        effectDustParam.unk0C.z = 4.0 * cosd(45.0f * i + 22.5) * temp_r30->scale.x;
-                        CreateEffectDust(
-                            arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                        dustEffParam.vel.x = 4.0 * sind(45.0f * i + 22.5) * modelP->scale.x;
+                        dustEffParam.vel.y = 0.0f;
+                        dustEffParam.vel.z = 4.0 * cosd(45.0f * i + 22.5) * modelP->scale.x;
+                        EffectDustCreate(
+                            modelId, modelP->pos.x, modelP->pos.y + 10.0f * modelP->scale.x, modelP->pos.z, 20.0f, &dustEffParam);
                     }
                 }
-                _CharFXPlay(character, 0x119, arg3);
+                _CharFXPlay(charNo, 0x119, voiceFlag);
             }
             break;
         case 0x1B:
-            if (temp_r30->unk_0C != -1 && skipAnimUpdate == 0) {
+            if (modelP->unk_0C != -1 && skipAnimUpdate == 0) {
                 break;
             }
-            if (!(temp_r29->unkAC & 0x10)) {
-                if (arg4 == 10) {
-                    var_r19 = CreateEffectWarn(arg1, temp_r30->pos.x, temp_r30->pos.y + 100.0f, temp_r30->pos.z, 20.0f, &effectWarnParam);
+            if (!(workP->attr & 0x10)) {
+                if (frameNo == 10) {
+                    var_r19 = EffectWarnCreate(modelId, modelP->pos.x, modelP->pos.y + 100.0f, modelP->pos.z, 20.0f, &effectWarnParam);
                     if (var_r19 == -1) {
                         break;
                     }
@@ -497,11 +479,11 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                     var_r18 = var_r17->unk_120;
                     var_r27 = &var_r18->unk_48[var_r19];
                     var_r27->unk02 = 0;
-                    var_r27->unk08.x = arg1;
-                    if (character == 7) {
+                    var_r27->unk08.x = modelId;
+                    if (charNo == 7) {
                         var_r27->unk08.y = 190.0f;
                     }
-                    else if (character == 2 || character == 5 || character == 6) {
+                    else if (charNo == 2 || charNo == 5 || charNo == 6) {
                         var_r27->unk08.y = 140.0f;
                     }
                     else {
@@ -510,23 +492,23 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                     var_r27->unk14.x = var_r27->unk14.z = 0.0f;
                     var_r27->unk14.y = 100.0f;
                 }
-                if (arg4 == 30) {
+                if (frameNo == 30) {
                     for (i = 0; i < 8; i++) {
-                        effectDustParam.unk0C.x = 4.0 * sind(45.0f * i + 22.5) * temp_r30->scale.x;
-                        effectDustParam.unk0C.y = 0.0f;
-                        effectDustParam.unk0C.z = 4.0 * cosd(45.0f * i + 22.5) * temp_r30->scale.x;
-                        CreateEffectDust(
-                            arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                        dustEffParam.vel.x = 4.0 * sind(45.0f * i + 22.5) * modelP->scale.x;
+                        dustEffParam.vel.y = 0.0f;
+                        dustEffParam.vel.z = 4.0 * cosd(45.0f * i + 22.5) * modelP->scale.x;
+                        EffectDustCreate(
+                            modelId, modelP->pos.x, modelP->pos.y + 10.0f * modelP->scale.x, modelP->pos.z, 20.0f, &dustEffParam);
                     }
                 }
             }
             break;
         case 0x1C:
-            if (temp_r30->unk_0C != -1 && skipAnimUpdate == 0) {
+            if (modelP->unk_0C != -1 && skipAnimUpdate == 0) {
                 break;
             }
-            if (!(temp_r29->unkAC & 0x10) && arg4 == 0) {
-                var_r19 = CreateEffectWarn(arg1, temp_r30->pos.x, temp_r30->pos.y + 100.0f, temp_r30->pos.z, 20.0f, &effectWarnParam);
+            if (!(workP->attr & 0x10) && frameNo == 0) {
+                var_r19 = EffectWarnCreate(modelId, modelP->pos.x, modelP->pos.y + 100.0f, modelP->pos.z, 20.0f, &effectWarnParam);
                 if (var_r19 == -1) {
                     break;
                 }
@@ -534,11 +516,11 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                 var_r18 = var_r17->unk_120;
                 var_r27 = &var_r18->unk_48[var_r19];
                 var_r27->unk02 = 0;
-                var_r27->unk08.x = arg1;
-                if (character == 7) {
+                var_r27->unk08.x = modelId;
+                if (charNo == 7) {
                     var_r27->unk08.y = 150.0f;
                 }
-                else if (character == 2 || character == 5 || character == 6) {
+                else if (charNo == 2 || charNo == 5 || charNo == 6) {
                     var_r27->unk08.y = 120.0f;
                 }
                 else {
@@ -551,11 +533,11 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
         case 0x15:
         case 0x16:
         case 0x79:
-            if (!(temp_r29->unkAC & 1) && !(temp_r29->unkAC & 0x10)) {
-                _CharFXPlay(character, 0x11A, arg3);
+            if (!(workP->attr & 1) && !(workP->attr & 0x10)) {
+                _CharFXPlay(charNo, 0x11A, voiceFlag);
                 for (i = 0; i < 3; i++) {
-                    var_r19 = CreateEffectBird(
-                        arg1, temp_r30->pos.x, temp_r30->pos.y + 100.0f * temp_r30->scale.x, temp_r30->pos.z, 1.0f, &effectWarnParam);
+                    var_r19 = EffectBirdCreate(
+                        modelId, modelP->pos.x, modelP->pos.y + 100.0f * modelP->scale.x, modelP->pos.z, 1.0f, &effectWarnParam);
                     if (var_r19 == -1) {
                         break;
                     }
@@ -564,293 +546,273 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                     var_r27 = &var_r18->unk_48[var_r19];
                     var_r27->unk02 = 1;
                     var_r27->unk00 = 0;
-                    var_r27->unk08.x = character;
+                    var_r27->unk08.x = charNo;
                     var_r27->unk08.y = i * 0x78;
-                    temp_r29->unkAC |= 1;
+                    workP->attr |= 1;
                 }
             }
             break;
         case 0x13:
-            if ((arg4 & 1) && !(temp_r29->unkAC & 0x10)) {
-                Hu3DModelObjMtxGet(arg1, CharModelHookNameGet(character, temp_r29->unk02, 4), sp28);
-                sp1C.x = sp28[0][3];
-                sp1C.y = sp28[1][3];
-                sp1C.z = sp28[2][3];
-                CreateEffectSmoke(arg1, sp1C.x, sp1C.y, sp1C.z, 20.0f, &effectSmokeParam);
+            if ((frameNo & 1) && !(workP->attr & 0x10)) {
+                Hu3DModelObjMtxGet(modelId, CharModelItemHookGet(charNo, workP->model, 4), hitMtx);
+                pos.x = hitMtx[0][3];
+                pos.y = hitMtx[1][3];
+                pos.z = hitMtx[2][3];
+                EffectSmokeCreate(modelId, pos.x, pos.y, pos.z, 20.0f, &effectSmokeParam);
             }
             break;
         case 5:
-            if (arg4 == 0) {
-                if (temp_r29->unkB0 == 4) {
-                    _CharFXPlay(character, 0x10A, arg3);
+            if (frameNo == 0) {
+                if (workP->stepFx == 4) {
+                    _CharFXPlay(charNo, 0x10A, voiceFlag);
                 }
-                else if (temp_r29->unkB0 == 5) {
-                    _CharFXPlay(character, 0x10C, arg3);
+                else if (workP->stepFx == 5) {
+                    _CharFXPlay(charNo, 0x10C, voiceFlag);
                 }
                 else {
-                    _CharFXPlay(character, 0x115, arg3);
+                    _CharFXPlay(charNo, 0x115, voiceFlag);
                 }
             }
             break;
         case 8:
-            if (arg4 == 0) {
-                _CharFXPlay(character, 0x118, arg3);
+            if (frameNo == 0) {
+                _CharFXPlay(charNo, 0x118, voiceFlag);
             }
             break;
         case 0x14:
         case 0x50:
-            if (arg4 == 0 && !(temp_r29->unkAC & 0x14)) {
-                _CharFXPlay(character, 0x123, arg3);
+            if (frameNo == 0 && !(workP->attr & 0x14)) {
+                _CharFXPlay(charNo, 0x123, voiceFlag);
             }
             break;
         case 0x3B:
         case 0x48:
-            if (arg4 == 0 && !(temp_r29->unkAC & 0x12)) {
-                _CharFXPlay(character, 0x122, arg3);
+            if (frameNo == 0 && !(workP->attr & 0x12)) {
+                _CharFXPlay(charNo, 0x122, voiceFlag);
             }
             break;
         case 0x3F:
         case 0x53:
         case 0x57:
-            if (arg4 == 0 && !(temp_r29->unkAC & 0x12)) {
-                _CharFXPlay(character, 0x124, arg3);
+            if (frameNo == 0 && !(workP->attr & 0x12)) {
+                _CharFXPlay(charNo, 0x124, voiceFlag);
             }
-            temp_r29->unkAC |= 2;
-            var_r22 |= 2;
+            workP->attr |= 2;
+            attrOld |= 2;
             break;
         case 0x4B:
-            if (arg4 == lbl_801D3600[character] && !(temp_r29->unkAC & 0x12)) {
-                _CharFXPlay(character, 0x124, arg3);
-                temp_r29->unkAC |= 2;
-                var_r22 |= 2;
+            if (frameNo == lbl_801D3600[charNo] && !(workP->attr & 0x12)) {
+                _CharFXPlay(charNo, 0x124, voiceFlag);
+                workP->attr |= 2;
+                attrOld |= 2;
             }
             break;
         case 0x4C:
-            if (arg4 == lbl_801D3608[character] && !(temp_r29->unkAC & 0x12)) {
-                _CharFXPlay(character, 0x124, arg3);
-                temp_r29->unkAC |= 2;
-                var_r22 |= 2;
+            if (frameNo == lbl_801D3608[charNo] && !(workP->attr & 0x12)) {
+                _CharFXPlay(charNo, 0x124, voiceFlag);
+                workP->attr |= 2;
+                attrOld |= 2;
             }
             break;
         case 0x17:
-            if (!(temp_r29->unkAC & 0x12)) {
-                if (omcurovl < DLL_w01dll && arg4 == lbl_801D35F0[character]) {
-                    _CharFXPlay(character, 0x124, arg3);
-                    temp_r29->unkAC |= 2;
-                    var_r22 |= 2;
+            if (!(workP->attr & 0x12)) {
+                if (omcurovl < DLL_w01dll && frameNo == lbl_801D35F0[charNo]) {
+                    _CharFXPlay(charNo, 0x124, voiceFlag);
+                    workP->attr |= 2;
+                    attrOld |= 2;
                 }
-                else if (omcurovl >= DLL_w01dll && arg4 == lbl_801D35F8[character]) {
-                    _CharFXPlay(character, 0x122, arg3);
-                    temp_r29->unkAC |= 2;
-                    var_r22 |= 2;
+                else if (omcurovl >= DLL_w01dll && frameNo == lbl_801D35F8[charNo]) {
+                    _CharFXPlay(charNo, 0x122, voiceFlag);
+                    workP->attr |= 2;
+                    attrOld |= 2;
                 }
             }
             break;
         case 0x18:
-            if (arg4 == lbl_801D3610[character] && !(temp_r29->unkAC & 0x14)) {
-                _CharFXPlay(character, 0x121, arg3);
-                temp_r29->unkAC |= 4;
-                var_r22 |= 4;
+            if (frameNo == lbl_801D3610[charNo] && !(workP->attr & 0x14)) {
+                _CharFXPlay(charNo, 0x121, voiceFlag);
+                workP->attr |= 4;
+                attrOld |= 4;
             }
             break;
         case 0x2A:
         case 0x72:
-            if (arg4 == 0 && !(temp_r29->unkAC & 0x14)) {
-                _CharFXPlay(character, 0x121, arg3);
+            if (frameNo == 0 && !(workP->attr & 0x14)) {
+                _CharFXPlay(charNo, 0x121, voiceFlag);
             }
-            temp_r29->unkAC |= 4;
-            var_r22 |= 4;
+            workP->attr |= 4;
+            attrOld |= 4;
             break;
         case 0x49:
         case 0x4E:
-            if (arg4 == 0 && !(temp_r29->unkAC & 0x14)) {
-                _CharFXPlay(character, 0x12E, arg3);
+            if (frameNo == 0 && !(workP->attr & 0x14)) {
+                _CharFXPlay(charNo, 0x12E, voiceFlag);
             }
-            temp_r29->unkAC |= 4;
-            var_r22 |= 4;
+            workP->attr |= 4;
+            attrOld |= 4;
             break;
     }
     if (skipAnimUpdate == 0) {
-        if (!(var_r22 & 4)) {
-            temp_r29->unkAC &= ~4;
+        if (!(attrOld & 4)) {
+            workP->attr &= ~4;
         }
-        if (!(var_r22 & 2)) {
-            temp_r29->unkAC &= ~2;
+        if (!(attrOld & 2)) {
+            workP->attr &= ~2;
         }
     }
 }
 
 static s32 _CharFXPlay(s16 charNo, s16 seNo, u8 voiceFlag)
 {
-    UnkCharInstanceStruct *temp_r31;
-    ModelData *temp_r29;
-
-    temp_r31 = &charInstance[charNo];
-    temp_r29 = &Hu3DData[temp_r31->unk00];
+    CHARWORK *workP = &charWork[charNo];
+    ModelData *modelP = &Hu3DData[workP->modelId];
     if (voiceFlag & 1) {
         return;
     }
-    if (temp_r31->unkAC & 8) {
-        return CharFXPlayPos(charNo, seNo, &temp_r29->pos);
+    if (workP->attr & 8) {
+        return CharFXPlayPos(charNo, seNo, &modelP->pos);
     }
     else {
         return CharFXPlay(charNo, seNo);
     }
 }
 
-static void InitEffect(void)
+static void EffectInit(void)
 {
-    HsfanimStruct01 *var_r29;
-    ParticleData *temp_r30;
-    void *temp_r26;
-    AnimData *temp_r25;
-    s16 var_r27;
+    HsfanimStruct01 *particleDataP;
+    ParticleData *particleP;
+    void *data;
+    AnimData *anim;
+    s16 effInitF;
     s16 i;
     s16 j;
 
-    var_r27 = 0;
+    effInitF = FALSE;
     for (i = 0; i < CHAR_EFFECT_AND_PARTICLE_MAX; i++) {
         if (effectMdl[i] == -1) {
-            temp_r26 = HuDataSelHeapReadNum(effectDataTbl[i].unk00, MEMORY_DEFAULT_NUM, HEAP_DATA);
-            temp_r25 = HuSprAnimRead(temp_r26);
-            effectMdl[i] = Hu3DParticleCreate(temp_r25, effectDataTbl[i].unk04);
+            data = HuDataSelHeapReadNum(effectDataTbl[i].dataNum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+            anim = HuSprAnimRead(data);
+            effectMdl[i] = Hu3DParticleCreate(anim, effectDataTbl[i].maxCnt);
             if (i == CHAR_EFFECT_AND_PARTICLE_MAX - 1) {
                 Hu3DParticleAnimModeSet(effectMdl[i], 0);
             }
             Hu3DParticleHookSet(effectMdl[i], UpdateEffect);
             if (!particleData[i]) {
-                particleData[i] = HuMemDirectMalloc(HEAP_SYSTEM, effectDataTbl[i].unk04 * sizeof(EffectParamData));
+                particleData[i] = HuMemDirectMalloc(HEAP_SYSTEM, effectDataTbl[i].maxCnt * sizeof(EFFECTPARAM));
             }
-            Hu3DParticleBlendModeSet(effectMdl[i], effectDataTbl[i].unk06);
-            temp_r30 = Hu3DData[effectMdl[i]].unk_120;
-            temp_r30->unk_02 = 0;
-            temp_r30->unk_1C = particleData[i];
-            temp_r30->unk_34 = 1;
-            var_r29 = temp_r30->unk_48;
-            for (j = 0; j < temp_r30->unk_30; j++, var_r29++) {
-                var_r29->unk2C = 0.0f;
+            Hu3DParticleBlendModeSet(effectMdl[i], effectDataTbl[i].blendMode);
+            particleP = Hu3DData[effectMdl[i]].unk_120;
+            particleP->unk_02 = 0;
+            particleP->unk_1C = particleData[i];
+            particleP->unk_34 = 1;
+            particleDataP = particleP->unk_48;
+            for (j = 0; j < particleP->unk_30; j++, particleDataP++) {
+                particleDataP->unk2C = 0.0f;
             }
-            var_r27 = 1;
+            effInitF = TRUE;
         }
     }
-    if (var_r27 != 0) {
+    if (effInitF != 0) {
         HuDataDirClose(DATADIR_EFFECT);
     }
 }
 
-static s16 CreateEffectDust(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
+static s16 EffectDustCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param)
 {
-    ModelData *temp_r31;
-
-    temp_r31 = &Hu3DData[arg0];
+    ModelData *modelP = &Hu3DData[modelId];
     if (effectMdl[2] == -1) {
         return -1;
     }
-    arg4 *= temp_r31->scale.x;
-    return CreateEffect(effectMdl[2], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
+    scale *= modelP->scale.x;
+    return EffectCreate(effectMdl[2], modelP->camera, posX, posY, posZ, scale, param);
 }
 
-static s16 CreateEffectSmoke(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
+static s16 EffectSmokeCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param)
 {
-    ModelData *temp_r31;
-
-    temp_r31 = &Hu3DData[arg0];
+    ModelData *modelP = &Hu3DData[modelId];
     if (effectMdl[3] == -1) {
         return -1;
     }
-    arg4 *= temp_r31->scale.x;
-    return CreateEffect(effectMdl[3], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
+    scale *= modelP->scale.x;
+    return EffectCreate(effectMdl[3], modelP->camera, posX, posY, posZ, scale, param);
 }
 
-static s16 CreateEffectDot(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
+static s16 EffectDotCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param)
 {
-    ModelData *temp_r31;
-
-    temp_r31 = &Hu3DData[arg0];
+    ModelData *modelP = &Hu3DData[modelId];
     if (effectMdl[6] == -1) {
         return -1;
     }
-    arg4 *= temp_r31->scale.x;
-    return CreateEffect(effectMdl[6], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
+    scale *= modelP->scale.x;
+    return EffectCreate(effectMdl[6], modelP->camera, posX, posY, posZ, scale, param);
 }
 
-static s16 CreateEffectStar(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
+static s16 EffectStarCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param)
 {
-    ModelData *temp_r31;
-
-    temp_r31 = &Hu3DData[arg0];
+    ModelData *modelP = &Hu3DData[modelId];
     if (effectMdl[4] == -1) {
         return -1;
     }
-    arg4 *= temp_r31->scale.x;
-    return CreateEffect(effectMdl[4], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
+    scale *= modelP->scale.x;
+    return EffectCreate(effectMdl[4], modelP->camera, posX, posY, posZ, scale, param);
 }
 
-static s16 CreateEffectWarn(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
+static s16 EffectWarnCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param)
 {
-    ModelData *temp_r31;
-
-    temp_r31 = &Hu3DData[arg0];
+    ModelData *modelP = &Hu3DData[modelId];
     if (effectMdl[0] == -1) {
         return -1;
     }
-    arg4 *= temp_r31->scale.x;
-    return CreateEffect(effectMdl[0], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
+    scale *= modelP->scale.x;
+    return EffectCreate(effectMdl[0], modelP->camera, posX, posY, posZ, scale, param);
 }
 
-static s16 CreateEffectBird(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5)
+static s16 EffectBirdCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param)
 {
-    ModelData *temp_r31;
-
-    temp_r31 = &Hu3DData[arg0];
+    ModelData *modelP = &Hu3DData[modelId];
     if (effectMdl[7] == -1) {
         return -1;
     }
-    arg4 *= temp_r31->scale.x;
-    return CreateEffect(effectMdl[7], temp_r31->camera, arg1, arg2, arg3, arg4, arg5);
+    scale *= modelP->scale.x;
+    return EffectCreate(effectMdl[7], modelP->camera, posX, posY, posZ, scale, param);
 }
 
-static s16 CreateEffect(s16 arg0, s16 arg1, float arg2, float arg3, float arg4, float arg5, EffectParamData *arg6)
+static s16 EffectCreate(s16 type, s16 cameraBit, float posX, float posY, float posZ, float scale, EFFECTPARAM *param)
 {
-    ModelData *var_r28;
-    ParticleData *temp_r30;
-    EffectParamData *var_r27;
-    HsfanimStruct01 *var_r31;
+    ModelData *modelP = &Hu3DData[type];
+    ParticleData *particleP = modelP->unk_120;
+    EFFECTPARAM *effParam = particleP->unk_1C;
+    HsfanimStruct01 *particleDataP = &particleP->unk_48[particleP->unk_02];
     s16 i;
-
-    var_r28 = &Hu3DData[arg0];
-    temp_r30 = var_r28->unk_120;
-    var_r27 = temp_r30->unk_1C;
-    var_r31 = &temp_r30->unk_48[temp_r30->unk_02];
-    for (i = temp_r30->unk_02; i < temp_r30->unk_30; i++, var_r31++) {
-        if (!var_r31->unk2C) {
+    for (i = particleP->unk_02; i < particleP->unk_30; i++, particleDataP++) {
+        if (!particleDataP->unk2C) {
             break;
         }
     }
-    if (i >= temp_r30->unk_30) {
-        var_r31 = temp_r30->unk_48;
-        for (i = 0; i < temp_r30->unk_30; i++, var_r31++) {
-            if (!var_r31->unk2C) {
+    if (i >= particleP->unk_30) {
+        particleDataP = particleP->unk_48;
+        for (i = 0; i < particleP->unk_30; i++, particleDataP++) {
+            if (!particleDataP->unk2C) {
                 break;
             }
         }
     }
-    if (i != temp_r30->unk_30) {
-        var_r27[i] = *arg6;
-        var_r31->unk06 = arg1;
-        var_r31->unk34.x = arg2;
-        var_r31->unk34.y = arg3;
-        var_r31->unk34.z = arg4;
-        var_r31->unk08 = arg6->unk0C;
-        var_r31->unk40.r = arg6->unk04;
-        var_r31->unk40.g = arg6->unk05;
-        var_r31->unk40.b = arg6->unk06;
-        var_r31->unk40.a = arg6->unk07;
-        var_r31->unk28 = arg5;
-        var_r31->unk2C = arg5;
-        var_r31->unk00 = 0;
-        var_r31->unk02 = -1;
-        temp_r30->unk_02 = i;
+    if (i != particleP->unk_30) {
+        effParam[i] = *param;
+        particleDataP->unk06 = cameraBit;
+        particleDataP->unk34.x = posX;
+        particleDataP->unk34.y = posY;
+        particleDataP->unk34.z = posZ;
+        particleDataP->unk08 = param->vel;
+        particleDataP->unk40.r = param->colorBegin.r;
+        particleDataP->unk40.g = param->colorBegin.g;
+        particleDataP->unk40.b = param->colorBegin.b;
+        particleDataP->unk40.a = param->colorBegin.a;
+        particleDataP->unk28 = scale;
+        particleDataP->unk2C = scale;
+        particleDataP->unk00 = 0;
+        particleDataP->unk02 = HU3D_PARMANID_NONE;
+        particleP->unk_02 = i;
     }
     else {
         return -1;
@@ -860,80 +822,79 @@ static s16 CreateEffect(s16 arg0, s16 arg1, float arg2, float arg3, float arg4, 
 
 static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    EffectParamData *temp_r30;
-    HsfanimStruct01 *var_r31;
+    EFFECTPARAM *effParam = particle->unk_1C;
+    HsfanimStruct01 *particleDataP;
     s16 var_r28;
     s16 i;
 
-    temp_r30 = particle->unk_1C;
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
-        for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk2C = 0.0f;
+        particleDataP = particle->unk_48;
+        for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+            particleDataP->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk2C) {
-            if (var_r31->unk02 == -1) {
-                var_r31->unk08.x *= temp_r30[i].unk18;
-                var_r31->unk08.y *= temp_r30[i].unk1C;
-                var_r31->unk08.z *= temp_r30[i].unk20;
-                VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
-                var_r31->unk08.y += temp_r30[i].unk24;
-                var_r28 = var_r31->unk40.r + temp_r30[i].unk34 * (temp_r30[i].unk08 - temp_r30[i].unk04);
+    particleDataP = particle->unk_48;
+    for (i = 0; i < particle->unk_30; i++, particleDataP++) {
+        if (particleDataP->unk2C) {
+            if (particleDataP->unk02 == -1) {
+                particleDataP->unk08.x *= effParam[i].velDecay.x;
+                particleDataP->unk08.y *= effParam[i].velDecay.y;
+                particleDataP->unk08.z *= effParam[i].velDecay.z;
+                VECAdd(&particleDataP->unk08, &particleDataP->unk34, &particleDataP->unk34);
+                particleDataP->unk08.y += effParam[i].gravity;
+                var_r28 = particleDataP->unk40.r + effParam[i].colorWeight * (effParam[i].colorEnd.r - effParam[i].colorBegin.r);
                 if (var_r28 < 0) {
                     var_r28 = 0;
                 }
                 else if (var_r28 > 0xFF) {
                     var_r28 = 0xFF;
                 }
-                var_r31->unk40.r = var_r28;
-                var_r28 = var_r31->unk40.g + temp_r30[i].unk34 * (temp_r30[i].unk09 - temp_r30[i].unk05);
+                particleDataP->unk40.r = var_r28;
+                var_r28 = particleDataP->unk40.g + effParam[i].colorWeight * (effParam[i].colorEnd.g - effParam[i].colorBegin.g);
                 if (var_r28 < 0) {
                     var_r28 = 0;
                 }
                 else if (var_r28 > 0xFF) {
                     var_r28 = 0xFF;
                 }
-                var_r31->unk40.g = var_r28;
-                var_r28 = var_r31->unk40.b + temp_r30[i].unk34 * (temp_r30[i].unk0A - temp_r30[i].unk06);
+                particleDataP->unk40.g = var_r28;
+                var_r28 = particleDataP->unk40.b + effParam[i].colorWeight * (effParam[i].colorEnd.b - effParam[i].colorBegin.b);
                 if (var_r28 < 0) {
                     var_r28 = 0;
                 }
                 else if (var_r28 > 0xFF) {
                     var_r28 = 0xFF;
                 }
-                var_r31->unk40.b = var_r28;
-                var_r28 = var_r31->unk40.a + temp_r30[i].unk30;
+                particleDataP->unk40.b = var_r28;
+                var_r28 = particleDataP->unk40.a + effParam[i].alphaBase;
                 if (var_r28 < 1) {
-                    var_r31->unk2C = 0.0f;
+                    particleDataP->unk2C = 0.0f;
                 }
-                var_r31->unk40.a = var_r28;
-                if (var_r31->unk2C) {
-                    if (temp_r30[i].unk00 & 1) {
-                        var_r31->unk2C = var_r31->unk28 * (((var_r31->unk00 + i) & 1) ? 1.0 : 0.5);
+                particleDataP->unk40.a = var_r28;
+                if (particleDataP->unk2C) {
+                    if (effParam[i].attr & 1) {
+                        particleDataP->unk2C = particleDataP->unk28 * (((particleDataP->unk00 + i) & 1) ? 1.0 : 0.5);
                     }
                     else {
-                        var_r31->unk2C = var_r31->unk28;
+                        particleDataP->unk2C = particleDataP->unk28;
                     }
-                    var_r31->unk28 += temp_r30[i].unk2C;
-                    if (var_r31->unk28 <= 0.01f) {
-                        var_r31->unk2C = 0.0f;
+                    particleDataP->unk28 += effParam[i].scaleVel;
+                    if (particleDataP->unk28 <= 0.01f) {
+                        particleDataP->unk2C = 0.0f;
                     }
                 }
-                var_r31->unk00++;
+                particleDataP->unk00++;
             }
             else {
-                switch (var_r31->unk02) {
+                switch (particleDataP->unk02) {
                     case 0:
-                        RotateEffect(var_r31);
+                        RotateEffect(particleDataP);
                         break;
                     case 1:
-                        PlayEffectSound(var_r31);
+                        PlayEffectSound(particleDataP);
                         break;
                     case 2:
-                        OrbitEffect(var_r31);
+                        UpdateModelEffect(particleDataP);
                         break;
                 }
             }
@@ -942,283 +903,272 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
     DCStoreRangeNoSync(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
 }
 
-static void RotateEffect(HsfanimStruct01 *arg0)
+static void RotateEffect(HsfanimStruct01 *particleDataP)
 {
-    ModelData *temp_r30;
+    ModelData *modelP = &Hu3DData[(s32)particleDataP->unk08.x];
     float var_f31;
 
-    temp_r30 = &Hu3DData[(s32)arg0->unk08.x];
-    if (arg0->unk00 < 8) {
-        var_f31 = 0.3 + sind(40.0f + 10.0f * (arg0->unk00 + 1));
-        arg0->unk2C = 50.0f * var_f31 * temp_r30->scale.x;
-        arg0->unk40.a = 0xFF;
-        var_f31 = 0.3 + sind(15.0f * (arg0->unk00 + 1));
+    if (particleDataP->unk00 < 8) {
+        var_f31 = 0.3 + sind(40.0f + 10.0f * (particleDataP->unk00 + 1));
+        particleDataP->unk2C = 50.0f * var_f31 * modelP->scale.x;
+        particleDataP->unk40.a = 0xFF;
+        var_f31 = 0.3 + sind(15.0f * (particleDataP->unk00 + 1));
     }
     else {
         var_f31 = 0.3 + sind(135);
     }
-    var_f31 *= temp_r30->scale.x;
-    arg0->unk34.x = temp_r30->pos.x + arg0->unk14.x * var_f31;
-    arg0->unk34.y = temp_r30->pos.y + arg0->unk08.y * temp_r30->scale.x + arg0->unk14.y * var_f31;
-    arg0->unk34.z = temp_r30->pos.z + arg0->unk14.z * var_f31;
-    if (arg0->unk00 > 0x14) {
-        arg0->unk40.a -= 0x20;
-        arg0->unk2C -= 8.0f * temp_r30->scale.x;
-        if (arg0->unk2C < 0.0f) {
-            arg0->unk2C = 0.0f;
+    var_f31 *= modelP->scale.x;
+    particleDataP->unk34.x = modelP->pos.x + particleDataP->unk14.x * var_f31;
+    particleDataP->unk34.y = modelP->pos.y + particleDataP->unk08.y * modelP->scale.x + particleDataP->unk14.y * var_f31;
+    particleDataP->unk34.z = modelP->pos.z + particleDataP->unk14.z * var_f31;
+    if (particleDataP->unk00 > 20) {
+        particleDataP->unk40.a -= 32;
+        particleDataP->unk2C -= 8.0f * modelP->scale.x;
+        if (particleDataP->unk2C < 0.0f) {
+            particleDataP->unk2C = 0.0f;
         }
     }
-    arg0->unk00++;
+    particleDataP->unk00++;
 }
 
 static float voiceParam[16]
     = { 110.0f, 160.0f, 110.0f, 160.0f, 150.0f, 180.0f, 130.0f, 160.0f, 130.0f, 160.0f, 150.0f, 160.0f, 150.0f, 180.0f, 120.0f, 210.0f };
 
-static void PlayEffectSound(HsfanimStruct01 *arg0)
+static void PlayEffectSound(HsfanimStruct01 *particleDataP)
 {
-    ModelData *temp_r30;
-    UnkCharInstanceStruct *temp_r29;
+    ModelData *modelP;
+    CHARWORK *workP;
     s16 temp_r26;
     s16 temp_r28;
     s16 var_r25;
 
-    temp_r28 = arg0->unk08.x;
-    temp_r29 = &charInstance[temp_r28];
-    temp_r30 = &Hu3DData[temp_r29->unk00];
-    if (arg0->unk00 < 0x14 && arg0->unk2C < 40.0f * temp_r30->scale.x) {
-        arg0->unk2C += 4.0f * temp_r30->scale.x;
+    temp_r28 = particleDataP->unk08.x;
+    workP = &charWork[temp_r28];
+    modelP = &Hu3DData[workP->modelId];
+    if (particleDataP->unk00 < 0x14 && particleDataP->unk2C < 40.0f * modelP->scale.x) {
+        particleDataP->unk2C += 4.0f * modelP->scale.x;
     }
-    arg0->unk40.a = 0xFF;
-    if (temp_r29->unk04 == 0x16 || temp_r29->unk06 == 0x16) {
+    particleDataP->unk40.a = 0xFF;
+    if (workP->motNoCurr == 0x16 || workP->motNoShiftCurr == 0x16) {
         var_r25 = voiceParam[temp_r28 * 2];
     }
     else {
         var_r25 = voiceParam[temp_r28 * 2 + 1];
     }
-    temp_r26 = (arg0->unk00 * 5) % 360;
-    arg0->unk34.x = temp_r30->pos.x + 40.0 * sind(arg0->unk08.y + temp_r26) * temp_r30->scale.x;
-    arg0->unk34.y = temp_r30->pos.y + var_r25 * temp_r30->scale.x;
-    arg0->unk34.z = temp_r30->pos.z + 40.0 * cosd(arg0->unk08.y + temp_r26) * temp_r30->scale.x;
-    arg0->unk00++;
-    if (arg0->unk00 >= 0x8F) {
-        arg0->unk00 = 0x48;
+    temp_r26 = (particleDataP->unk00 * 5) % 360;
+    particleDataP->unk34.x = modelP->pos.x + 40.0 * sind(particleDataP->unk08.y + temp_r26) * modelP->scale.x;
+    particleDataP->unk34.y = modelP->pos.y + var_r25 * modelP->scale.x;
+    particleDataP->unk34.z = modelP->pos.z + 40.0 * cosd(particleDataP->unk08.y + temp_r26) * modelP->scale.x;
+    particleDataP->unk00++;
+    if (particleDataP->unk00 >= 0x8F) {
+        particleDataP->unk00 = 0x48;
     }
-    if (temp_r29->unk04 != 0x15 && temp_r29->unk04 != 0x16 && temp_r29->unk04 != 0x79 && arg0->unk00 > 0x1E) {
-        arg0->unk2C -= 4.0f * temp_r30->scale.x;
-        if (arg0->unk2C < 0.0f) {
-            arg0->unk2C = 0.0f;
-            temp_r29->unkAC &= ~1;
-            if (arg0->unk08.y == 0.0) {
-                _CharFXPlay(temp_r28, 0x100, temp_r29->unkAC);
+    if (workP->motNoCurr != 0x15 && workP->motNoCurr != 0x16 && workP->motNoCurr != 0x79 && particleDataP->unk00 > 0x1E) {
+        particleDataP->unk2C -= 4.0f * modelP->scale.x;
+        if (particleDataP->unk2C < 0.0f) {
+            particleDataP->unk2C = 0.0f;
+            workP->attr &= ~1;
+            if (particleDataP->unk08.y == 0.0) {
+                _CharFXPlay(temp_r28, 0x100, workP->attr);
             }
         }
     }
 }
 
-s16 CharModelMotionCreate(s16 character, s32 data_num)
+HU3DMOTID CharMotionCreate(s16 charNo, s32 data_num)
 {
-    UnkCharInstanceStruct *temp_r31;
-    s16 var_r28;
-    s16 var_r30;
-    u32 temp_r26;
-    void *var_r27;
+    CHARWORK *workP = &charWork[charNo];
+    s16 i;
+    s16 motNo;
+    u32 dir;
+    void *data;
 
-    temp_r31 = &charInstance[character];
-    if (temp_r31->unk00 == -1) {
+    if (workP->modelId == -1) {
         return -1;
     }
-    for (var_r30 = 0; var_r30 < 32; var_r30++) {
-        if (temp_r31->unk0C[var_r30] == -1) {
+    for (motNo = 0; motNo < 32; motNo++) {
+        if (workP->motId[motNo] == -1) {
             break;
         }
     }
-    if (var_r30 == 32) {
-        return -1;
+    if (motNo == CHAR_MOT_MAX) {
+        return HU3D_MOTID_NONE;
     }
-    temp_r26 = data_num & 0xFFFF0000;
-    for (var_r28 = 0; var_r28 < CHARNO_MAX ; var_r28++) {
-        if (temp_r26 == charDirTbl[var_r28][2]) {
+    dir = data_num & 0xFFFF0000;
+    for (i = 0; i < CHARNO_MAX; i++) {
+        if (dir == charDirTbl[i][2]) {
             break;
         }
     }
-    if (var_r28 != CHARNO_MAX  || temp_r26 == 0) {
+    if (i != CHARNO_MAX  || dir == 0) {
         data_num &= 0xFFFF;
-        var_r27 = HuAR_ARAMtoMRAMFileRead(data_num | charDirTbl[character][2], MEMORY_DEFAULT_NUM, 2);
-        if (!var_r27) {
-            var_r27 = HuDataSelHeapReadNum(data_num | charDirTbl[character][2], MEMORY_DEFAULT_NUM, HEAP_DATA);
+        data = HuAR_ARAMtoMRAMFileRead(data_num | charDirTbl[charNo][2], MEMORY_DEFAULT_NUM, HEAP_DATA);
+        if (!data) {
+            data = HuDataSelHeapReadNum(data_num | charDirTbl[charNo][2], MEMORY_DEFAULT_NUM, HEAP_DATA);
         }
-        temp_r31->unk4C[var_r30] = data_num;
+        workP->motNoTbl[motNo] = data_num;
     }
     else {
-        var_r27 = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
-        temp_r31->unk4C[var_r30] = -1;
+        data = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
+        workP->motNoTbl[motNo] = HU3D_MOTID_NONE;
     }
-    temp_r31->unk0C[var_r30] = Hu3DJointMotion(temp_r31->unk00, var_r27);
-    temp_r31->unk8C[var_r30] = 0;
-    return temp_r31->unk0C[var_r30];
+    workP->motId[motNo] = Hu3DJointMotion(workP->modelId, data);
+    workP->voiceFlag[motNo] = 0;
+    return workP->motId[motNo];
 }
 
-void CharModelMotionIndexSet(s16 character, s16 arg1, s32 arg2)
+void CharMotionNoSet(s16 charNo, HU3DMOTID motId, s32 motNo)
 {
-    UnkCharInstanceStruct *temp_r30;
+    CHARWORK *workP = &charWork[charNo];
     s16 i;
 
-    temp_r30 = &charInstance[character];
-    for (i = 0; i < ARRAY_COUNT(temp_r30->unk0C); i++) {
-        if (temp_r30->unk0C[i] == arg1) {
+    for (i = 0; i < ARRAY_COUNT(workP->motId); i++) {
+        if (workP->motId[i] == motId) {
             break;
         }
     }
-    if (i != ARRAY_COUNT(temp_r30->unk0C)) {
-        temp_r30->unk4C[i] = arg2;
+    if (i != ARRAY_COUNT(workP->motId)) {
+        workP->motNoTbl[i] = motNo;
     }
 }
 
-void CharModelMotionKill(s16 character, u32 motion)
+void CharMotionKill(s16 charNo, u32 motId)
 {
-    UnkCharInstanceStruct *temp_r30;
+    CHARWORK *workP = &charWork[charNo];
     s16 i;
 
-    temp_r30 = &charInstance[character];
-    for (i = 0; i < ARRAY_COUNT(temp_r30->unk0C); i++) {
-        if (temp_r30->unk0C[i] == motion) {
+    for (i = 0; i < ARRAY_COUNT(workP->motId); i++) {
+        if (workP->motId[i] == motId) {
             break;
         }
     }
-    temp_r30->unk0C[i] = -1;
-    Hu3DMotionKill(motion);
+    workP->motId[i] = -1;
+    Hu3DMotionKill(motId);
 }
 
-void CharModelMotionDataClose(s16 character)
+void CharMotionDataClose(s16 charNo)
 {
     s16 i;
 
-    if (character == -1) {
-        for (i = 0; i < CHARNO_MAX ; i++) {
-            CharModelMotionDataClose(i);
+    if (charNo == CHARNO_NONE) {
+        for (i = 0; i < CHARNO_MAX; i++) {
+            CharMotionDataClose(i);
         }
     }
     else {
-        HuDataDirClose(charDirTbl[character][2]);
+        HuDataDirClose(charDirTbl[charNo][2]);
     }
 }
 
-void CharModelDataClose(s16 arg0)
+void CharModelDataClose(s16 charNo)
 {
     s16 i;
 
-    if (arg0 == -1) {
-        for (i = 0; i < CHARNO_MAX ; i++) {
+    if (charNo == CHARNO_NONE) {
+        for (i = 0; i < CHARNO_MAX; i++) {
             CharModelDataClose(i);
             // Required to match.
             (void)i;
-            (void)arg0;
+            (void)charNo;
         }
     }
     else {
-        HuDataDirClose(charDirTbl[arg0][0]);
-        HuDataDirClose(charDirTbl[arg0][1]);
-        HuDataDirClose(charDirTbl[arg0][2]);
+        HuDataDirClose(charDirTbl[charNo][0]);
+        HuDataDirClose(charDirTbl[charNo][1]);
+        HuDataDirClose(charDirTbl[charNo][2]);
     }
 }
 
-void CharModelKill(s16 character)
+void CharModelKill(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r29;
+    CHARWORK *workP;
     s16 i;
 
-    if (character == -1) {
-        for (i = 0; i < CHARNO_MAX ; i++) {
+    if (charNo == CHARNO_NONE) {
+        for (i = 0; i < CHARNO_MAX; i++) {
             CharModelKill(i);
         }
-        for (i = 0; i < ARRAY_COUNT(lbl_801975B0); i++) {
-            lbl_801975B0[i] = 0;
+        for (i = 0; i < ARRAY_COUNT(dustFlags); i++) {
+            dustFlags[i] = 0;
         }
         return;
     }
-    CharModelMotionDataClose(character);
-    temp_r29 = &charInstance[character];
-    for (i = 0; i < ARRAY_COUNT(temp_r29->unk0C); i++) {
-        if (temp_r29->unk0C[i] != -1) {
-            Hu3DMotionKill(temp_r29->unk0C[i]);
+    CharMotionDataClose(charNo);
+    workP = &charWork[charNo];
+    for (i = 0; i < ARRAY_COUNT(workP->motId); i++) {
+        if (workP->motId[i] != HU3D_MOTID_NONE) {
+            Hu3DMotionKill(workP->motId[i]);
         }
-        temp_r29->unk0C[i] = -1;
+        workP->motId[i] = HU3D_MOTID_NONE;
     }
-    if (temp_r29->unk00 != -1) {
-        Hu3DModelKill(temp_r29->unk00);
+    if (workP->modelId != HU3D_MODELID_NONE) {
+        Hu3DModelKill(workP->modelId);
     }
-    temp_r29->unk00 = -1;
-    for (i = 0; i < CHARNO_MAX ; i++) {
-        if (charInstance[i].unk00 != -1) {
+    workP->modelId = HU3D_MODELID_NONE;
+    for (i = 0; i < CHARNO_MAX; i++) {
+        if (charWork[i].modelId != HU3D_MODELID_NONE) {
             break;
         }
     }
-    if (i == CHARNO_MAX ) {
+    if (i == CHARNO_MAX) {
         for (i = 0; i < CHAR_EFFECT_AND_PARTICLE_MAX; i++) {
-            if (effectMdl[i] != -1) {
+            if (effectMdl[i] != HU3D_MODELID_NONE) {
                 Hu3DModelKill(effectMdl[i]);
             }
-            effectMdl[i] = -1;
+            effectMdl[i] = HU3D_MODELID_NONE;
         }
     }
-    if (temp_r29->unkC4) {
-        HuMemDirectFree(temp_r29->unkC4->user_data);
-        HuPrcKill(temp_r29->unkC4);
+    if (workP->process) {
+        HuMemDirectFree(workP->process->user_data);
+        HuPrcKill(workP->process);
         for (i = 0; i < ARRAY_COUNT(itemHookProcess); i++) {
             if (itemHookProcess[i]) {
                 HuPrcKill(itemHookProcess[i]);
             }
             itemHookProcess[i] = NULL;
         }
-        temp_r29->unkC4 = NULL;
+        workP->process = NULL;
     }
 }
 
-void CharModelMotionSet(s16 character, s16 motion)
+void CharMotionSet(s16 charNo, HU3DMOTID motId)
 {
-    UnkCharInstanceStruct *temp_r31;
-    MotionData *sp8;
-
-    temp_r31 = &charInstance[character];
-    sp8 = &Hu3DMotion[motion];
-    CharModelTexAnimSet(character);
-    Hu3DMotionSet(temp_r31->unk00, motion);
+    CHARWORK *workP = &charWork[charNo];
+    MotionData *motP = &Hu3DMotion[motId];
+    EyeBmpUpdate(charNo);
+    Hu3DMotionSet(workP->modelId, motId);
 }
 
-void CharModelTexAnimSet(s16 character)
+static void EyeBmpUpdate(s16 charNo)
 {
-    HsfAttribute *var_r31;
-    HsfdrawStruct01 *temp_r30;
-    ModelData *temp_r26;
-    UnkCharInstanceStruct *temp_r27;
-    s16 var_r25;
+    CHARWORK *workP = &charWork[charNo];
+    ModelData *modelP = &Hu3DData[workP->modelId];
+    HsfAttribute *attrP = modelP->hsfData->attribute;
+    s16 modelBit;
     s16 i;
-    char **temp_r28;
-
-    temp_r27 = &charInstance[character];
-    temp_r26 = &Hu3DData[temp_r27->unk00];
-    var_r31 = temp_r26->hsfData->attribute;
-    for (i = 0, var_r25 = 1; i < 4; i++, var_r25 <<= 1) {
-        if (var_r25 & temp_r27->unk02) {
+    char **eyeBmp;
+    
+    for (i = 0, modelBit = 1; i < 4; i++, modelBit <<= 1) {
+        if (modelBit & workP->model) {
             break;
         }
     }
     if (i < 4) {
-        temp_r28 = CharModelTexNameGet(character, temp_r27->unk02);
-        for (i = 0; i < temp_r26->hsfData->attributeCnt; i++, var_r31++) {
-            if ((var_r31->bitmap->name[0] == temp_r28[0][0] && strcmp(var_r31->bitmap->name, temp_r28[0]) == 0)
-                || (var_r31->bitmap->name[0] == temp_r28[1][0] && strcmp(var_r31->bitmap->name, temp_r28[1]) == 0)) {
-                if (var_r31->unk04) {
-                    temp_r30 = var_r31->unk04;
-                    temp_r30->unk08 = temp_r30->unk0C = temp_r30->unk10 = 0.0f;
-                    temp_r30->unk14 = temp_r30->unk18 = temp_r30->unk1C = 0.0f;
+        eyeBmp = CharModelEyeBmpGet(charNo, workP->model);
+        for (i = 0; i < modelP->hsfData->attributeCnt; i++, attrP++) {
+            if ((attrP->bitmap->name[0] == eyeBmp[0][0] && strcmp(attrP->bitmap->name, eyeBmp[0]) == 0)
+            || (attrP->bitmap->name[0] == eyeBmp[1][0] && strcmp(attrP->bitmap->name, eyeBmp[1]) == 0)) {
+                if (attrP->unk04) {
+                    HsfdrawStruct01 *particleDataP = attrP->unk04;
+                    particleDataP->unk08 = particleDataP->unk0C = particleDataP->unk10 = 0.0f;
+                    particleDataP->unk14 = particleDataP->unk18 = particleDataP->unk1C = 0.0f;
                 }
             }
         }
     }
 }
 
-char *charTexNameTbl[64] = { "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m2_eyes", "s3c000m2_eyes", "s3c000m3_eyes",
+char *charEyeBmpNameTbl[64] = { "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m2_eyes", "s3c000m2_eyes", "s3c000m3_eyes",
     "s3c000m3_eyes", "S3c001m0_eye", "S3c001m0_eye", "S3c001m1_eye", "S3c001m1_eye", "c001m3_eye", "c001m3_eye", "c001m3_eye", "c001m3_eye",
     "s3c002m0_r_eye", "s3c002m0_l_eye", "s3c002m1_r_eye", "s3c002m1_l_eye", "s3c002m2_r_eye", "s3c002m2_l_eye", "", "", "eye1", "eye2", "S3c003m1",
     "S3c003m1", "eye1", "eye2", "eye1", "eye2", "GC-eyes", "GC-eyes", "s3c004m1_eye", "s3c004m1_eye", "Clswario_eye_l1_AUTO12",
@@ -1226,103 +1176,103 @@ char *charTexNameTbl[64] = { "s3c000m1_eyes", "s3c000m1_eyes", "s3c000m1_eyes", 
     "GC-eyes", "GC-eyes", "s3c007m1_Eye_L", "s3c007m1_Eye_R", "mat87", "mat89", "", "", "clswaluigi_eye_l1_AUTO1", "clswaluigi_eye_l1_AUTO2",
     "s3c007_m1_eye", "s3c007_m1_eye", "clswaluigi_eye_l1_AUTO9", "clswaluigi_eye_l1_AUTO10", "", "" };
 
-char **CharModelTexNameGet(s16 arg0, s16 arg1)
+char **CharModelEyeBmpGet(s16 charNo, s16 model)
 {
-    s16 var_r30;
+    s16 bit;
     s16 i;
 
-    for (i = 0, var_r30 = 1; i < 3; i++, var_r30 <<= 1) {
-        if (var_r30 & arg1) {
+    for (i = 0, bit = 1; i < 3; i++, bit <<= 1) {
+        if (bit & model) {
             break;
         }
     }
-    return &charTexNameTbl[arg0 * 8 + i * 2];
+    return &charEyeBmpNameTbl[charNo * (CHAR_MODEL_MAX * 2) + i * 2];
 }
 
-static char *hookNameTbl[40]
+static char *hookNameTbl[CHARNO_MAX * 5]
     = { "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr",
           "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r",
           "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl",
           "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l",
           "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body", "a-itemhook-r", "a-itemhook-l", "a-itemhook-fr", "a-itemhook-fl", "a-itemhook-body" };
 
-char *CharModelHookNameGet(s16 arg0, s16 arg1, s16 arg2)
+char *CharModelItemHookGet(s16 charNo, s16 model, s16 hookNo)
 {
     s16 i;
-    s16 var_r30;
+    s16 bit;
 
-    for (i = 0, var_r30 = 1; i < 3; i++, var_r30 <<= 1) {
-        if (var_r30 & arg1) {
+    for (i = 0, bit = 1; i < 3; i++, bit <<= 1) {
+        if (bit & model) {
             break;
         }
     }
-    return hookNameTbl[arg0 * 5 + arg2];
+    return hookNameTbl[charNo * 5 + hookNo];
 }
 
-void CharModelMotionTimeSet(s16 character, float time)
+void CharMotionTimeSet(s16 charNo, float time)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    Hu3DMotionTimeSet(temp_r31->unk00, time);
+    Hu3DMotionTimeSet(workP->modelId, time);
 }
 
-float CharModelMotionTimeGet(s16 character)
+float CharMotionTimeGet(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    return Hu3DMotionTimeGet(temp_r31->unk00);
+    return Hu3DMotionTimeGet(workP->modelId);
 }
 
-float CharModelMotionMaxTimeGet(s16 character)
+float CharMotionMaxTimeGet(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    return Hu3DMotionMaxTimeGet(temp_r31->unk00);
+    return Hu3DMotionMaxTimeGet(workP->modelId);
 }
 
-s32 CharModelMotionEndCheck(s16 character)
+s32 CharMotionEndCheck(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    return Hu3DMotionEndCheck(temp_r31->unk00);
+    return Hu3DMotionEndCheck(workP->modelId);
 }
 
-s16 CharModelMotionShiftIDGet(s16 character)
+s16 CharMotionShiftIDGet(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    return Hu3DMotionShiftIDGet(temp_r31->unk00);
+    return Hu3DMotionShiftIDGet(workP->modelId);
 }
 
-void CharModelMotionShiftSet(s16 character, s16 motion, float time, float shift_time, u32 attr)
+void CharMotionShiftSet(s16 charNo, HU3DMOTID motId, float start, float end, u32 attr)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
-    MotionData *sp18 = &Hu3DMotion[motion];
+    CHARWORK *workP = &charWork[charNo];
+    MotionData *motP = &Hu3DMotion[motId];
 
-    Hu3DMotionShiftSet(temp_r31->unk00, motion, time, shift_time, attr);
+    Hu3DMotionShiftSet(workP->modelId, motId, start, end, attr);
 }
 
-float CharModelMotionShiftTimeGet(s16 character)
+float CharMotionShiftTimeGet(s16 charNo)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    return Hu3DMotionShiftTimeGet(temp_r31->unk00);
+    return Hu3DMotionShiftTimeGet(workP->modelId);
 }
 
-void CharModelMotionSpeedSet(s16 character, float speed)
+void CharMotionSpeedSet(s16 charNo, float speed)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    Hu3DMotionSpeedSet(temp_r31->unk00, speed);
+    Hu3DMotionSpeedSet(workP->modelId, speed);
 }
 
-void CharModelLayerSetAll(s16 arg0)
+void CharEffectLayerSet(s16 layerNo)
 {
     s16 i;
 
     for (i = 0; i < CHAR_EFFECT_AND_PARTICLE_MAX; i++) {
-        if (effectMdl[i] != -1) {
-            Hu3DModelLayerSet(effectMdl[i], arg0);
+        if (effectMdl[i] != HU3D_MODELID_NONE) {
+            Hu3DModelLayerSet(effectMdl[i], layerNo);
         }
     }
 }
@@ -1340,94 +1290,93 @@ static inline Process *CharModelItemHookCreateInlineFunc(void)
         return NULL;
     }
     else {
-        itemHookProcess[i] = HuPrcCreate(UpdateItemHook, 0x64, 0x2000, 0);
+        itemHookProcess[i] = HuPrcCreate(CreateHookDust, 0x64, 0x2000, 0);
         return itemHookProcess[i];
     }
 }
 
-void CharModelItemHookCreate(s16 character, char *arg1)
-{
-    Mtx sp18;
-    Vec spC;
-    UnkCharInstanceStruct *temp_r31;
-    ModelData *temp_r28;
-    HsfObject *temp_r25;
-    HsfConstData *temp_r24;
-    Process *var_r26;
-    UnkProcessData *temp_r27;
-    s16 temp_r29;
+typedef struct HookDustWork_s {
+    u16 cameraBit;
+    HU3DMODELID modelId;
+} HOOKDUSTWORK; // Size 4
 
-    temp_r31 = &charInstance[character];
-    temp_r28 = &Hu3DData[temp_r31->unk00];
-    temp_r25 = Hu3DModelObjPtrGet(temp_r31->unk00, arg1);
-    Hu3DModelObjMtxGet(temp_r31->unk00, arg1, sp18);
-    temp_r24 = temp_r25->constData;
-    temp_r29 = temp_r24->hook;
-    if (temp_r29 != -1) {
-        Hu3DModelHookObjReset(temp_r31->unk00, arg1);
-        var_r26 = CharModelItemHookCreateInlineFunc();
-        if (!var_r26) {
-            Hu3DModelAttrSet(temp_r29, HU3D_ATTR_DISPOFF);
+void CharModelHookDustCreate(s16 charNo, char *objName)
+{
+    CHARWORK *workP = &charWork[charNo];
+    ModelData *modelP = &Hu3DData[workP->modelId];
+    HsfObject *objPtr = Hu3DModelObjPtrGet(workP->modelId, objName);
+    HsfConstData *constData;
+    Process *process;
+    HOOKDUSTWORK *hookDustWork;
+    s16 hookMdlId;
+    Mtx hookMtx;
+    HuVecF temp;
+
+    Hu3DModelObjMtxGet(workP->modelId, objName, hookMtx);
+    constData = objPtr->constData;
+    hookMdlId = constData->hook;
+    if (hookMdlId != HU3D_MODELID_NONE) {
+        Hu3DModelHookObjReset(workP->modelId, objName);
+        process = CharModelItemHookCreateInlineFunc();
+        if (!process) {
+            Hu3DModelAttrSet(hookMdlId, HU3D_ATTR_DISPOFF);
             return;
         }
-        var_r26->user_data = temp_r27 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkProcessData), MEMORY_DEFAULT_NUM);
-        temp_r28 = &Hu3DData[temp_r29];
-        Hu3DMtxTransGet(sp18, &spC);
-        Hu3DModelPosSetV(temp_r29, &spC);
-        Hu3DMtxRotGet(sp18, &spC);
-        mtxRot(temp_r28->unk_F0, spC.x, spC.y, spC.z);
-        Hu3DMtxScaleGet(sp18, &spC);
-        Hu3DModelScaleSetV(temp_r29, &spC);
-        temp_r27->unk02 = temp_r29;
-        temp_r27->unk00 = temp_r28->camera;
+        process->user_data = hookDustWork = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(HOOKDUSTWORK), MEMORY_DEFAULT_NUM);
+        modelP = &Hu3DData[hookMdlId];
+        Hu3DMtxTransGet(hookMtx, &temp);
+        Hu3DModelPosSetV(hookMdlId, &temp);
+        Hu3DMtxRotGet(hookMtx, &temp);
+        mtxRot(modelP->unk_F0, temp.x, temp.y, temp.z);
+        Hu3DMtxScaleGet(hookMtx, &temp);
+        Hu3DModelScaleSetV(hookMdlId, &temp);
+        hookDustWork->modelId = hookMdlId;
+        hookDustWork->cameraBit = modelP->camera;
     }
 }
 
-static void UpdateItemHook(void)
+static void CreateHookDust(void)
 {
-    Mtx sp14;
-    Vec sp8;
-    ModelData *temp_r30;
-    Process *temp_r25;
-    s16 var_r28;
-    s16 var_r29;
-    UnkProcessData *temp_r31;
-
-    temp_r31 = HuPrcCurrentGet()->user_data;
-    temp_r30 = &Hu3DData[temp_r31->unk02];
-    Hu3DModelObjMtxGet(temp_r31->unk02, "", sp14);
-    sp8.x = PGMinPos.x + (PGMaxPos.x - PGMinPos.x) / 2;
-    sp8.y = PGMinPos.y + (PGMaxPos.y - PGMinPos.y) / 2;
-    sp8.z = PGMinPos.z + (PGMaxPos.z - PGMinPos.z) / 2;
-    for (var_r29 = 0; var_r29 < 0x28; var_r29++) {
-        temp_r30->pos.y += 4.0f;
-        mtxRotCat(temp_r30->unk_F0, 24.0f, 0.0f, 0.0f);
-        temp_r30->scale.x *= 0.95f;
-        temp_r30->scale.y *= 0.95f;
-        temp_r30->scale.z *= 0.95f;
+    Mtx rootMtx;
+    HuVecF pos;
+    Process *process;
+    s16 j;
+    s16 i;
+    HOOKDUSTWORK *hookDustWork = HuPrcCurrentGet()->user_data;
+    ModelData *modelP = &Hu3DData[hookDustWork->modelId];
+    Hu3DModelObjMtxGet(hookDustWork->modelId, "", rootMtx);
+    pos.x = PGMinPos.x + (PGMaxPos.x - PGMinPos.x) / 2;
+    pos.y = PGMinPos.y + (PGMaxPos.y - PGMinPos.y) / 2;
+    pos.z = PGMinPos.z + (PGMaxPos.z - PGMinPos.z) / 2;
+    for (i = 0; i < 40; i++) {
+        modelP->pos.y += 4.0f;
+        mtxRotCat(modelP->unk_F0, 24.0f, 0.0f, 0.0f);
+        modelP->scale.x *= 0.95f;
+        modelP->scale.y *= 0.95f;
+        modelP->scale.z *= 0.95f;
         HuPrcVSleep();
     }
-    Hu3DModelObjMtxGet(temp_r31->unk02, "", sp14);
-    sp8.x = PGMinPos.x + (PGMaxPos.x - PGMinPos.x) / 2;
-    sp8.y = PGMinPos.y + (PGMaxPos.y - PGMinPos.y) / 2;
-    sp8.z = PGMinPos.z + (PGMaxPos.z - PGMinPos.z) / 2;
-    Hu3DModelAttrSet(temp_r31->unk02, HU3D_ATTR_DISPOFF);
-    effectDustParam.unk0C.x = 0.0f;
-    effectDustParam.unk0C.y = 0.0f;
-    effectDustParam.unk0C.z = 0.0f;
-    CreateEffectDust(temp_r31->unk02, sp8.x, sp8.y, sp8.z, 40.0f, &effectDustParam);
-    for (var_r29 = 0; var_r29 < 8; var_r29++) {
-        effectDustParam.unk0C.x = frandmod(10) - 5;
-        effectDustParam.unk0C.y = frandmod(10) - 5;
-        effectDustParam.unk0C.z = frandmod(10) - 5;
-        CreateEffectDust(temp_r31->unk02, sp8.x, sp8.y, sp8.z, 20.0f, &effectDustParam);
+    Hu3DModelObjMtxGet(hookDustWork->modelId, "", rootMtx);
+    pos.x = PGMinPos.x + (PGMaxPos.x - PGMinPos.x) / 2;
+    pos.y = PGMinPos.y + (PGMaxPos.y - PGMinPos.y) / 2;
+    pos.z = PGMinPos.z + (PGMaxPos.z - PGMinPos.z) / 2;
+    Hu3DModelAttrSet(hookDustWork->modelId, HU3D_ATTR_DISPOFF);
+    dustEffParam.vel.x = 0.0f;
+    dustEffParam.vel.y = 0.0f;
+    dustEffParam.vel.z = 0.0f;
+    EffectDustCreate(hookDustWork->modelId, pos.x, pos.y, pos.z, 40.0f, &dustEffParam);
+    for (i = 0; i < 8; i++) {
+        dustEffParam.vel.x = frandmod(10) - 5;
+        dustEffParam.vel.y = frandmod(10) - 5;
+        dustEffParam.vel.z = frandmod(10) - 5;
+        EffectDustCreate(hookDustWork->modelId, pos.x, pos.y, pos.z, 20.0f, &dustEffParam);
     }
-    PSMTXIdentity(temp_r30->unk_F0);
-    temp_r25 = HuPrcCurrentGet();
-    for (var_r28 = 0; var_r28 < ARRAY_COUNT(itemHookProcess); var_r28++) {
-        if (itemHookProcess[var_r28] == temp_r25) {
-            HuPrcKill(temp_r25);
-            itemHookProcess[var_r28] = NULL;
+    PSMTXIdentity(modelP->unk_F0);
+    process = HuPrcCurrentGet();
+    for (j = 0; j < ARRAY_COUNT(itemHookProcess); j++) {
+        if (itemHookProcess[j] == process) {
+            HuPrcKill(process);
+            itemHookProcess[j] = NULL;
         }
     }
     while (1) {
@@ -1435,347 +1384,341 @@ static void UpdateItemHook(void)
     }
 }
 
-static EffectParamData modelParticleParam
+static EFFECTPARAM modelSmokeEffParam
     = { 0, 0xFF, 0xFF, 0xFF, 0xFF, 0x40, 0x20, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, 1.0f, -5.0f, 0.02f };
 
-void CharModelEffectCreate(s16 arg0, Vec *arg1)
+void CharEffectSmokeCreate(s16 cameraBit, HuVecF *pos)
 {
-    s16 temp_r28;
+    s16 effectNo;
     s16 i;
-    HsfanimStruct01 *var_r31;
-    ParticleData *var_r27;
-    ModelData *var_r26;
+    HsfanimStruct01 *particleDataP;
+    ParticleData *particleP;
+    ModelData *modelP;
 
     for (i = 0; i < CHAR_EFFECT_AND_PARTICLE_MAX; i++) {
-        temp_r28 = CreateEffect(effectMdl[3], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &modelParticleParam);
-        if (temp_r28 == -1) {
+        effectNo = EffectCreate(effectMdl[3], cameraBit, pos->x, pos->y, pos->z, 20.0f, &modelSmokeEffParam);
+        if (effectNo == -1) {
             break;
         }
-        var_r26 = &Hu3DData[effectMdl[3]];
-        var_r27 = var_r26->unk_120;
-        var_r31 = &var_r27->unk_48[temp_r28];
-        var_r31->unk02 = 2;
-        var_r31->unk08.x = 30.0 * sind(i * 45);
-        var_r31->unk08.y = 30.0 * cosd(i * 45);
-        var_r31->unk08.z = 0.0f;
-        var_r31->unk14 = *arg1;
-        var_r31->unk20 = 1.15f;
-        var_r31->unk24 = 0.1f * (frandmod(20) - 10);
-        var_r31->unk40.a = 0xFF - frandmod(3) * 16;
+        modelP = &Hu3DData[effectMdl[3]];
+        particleP = modelP->unk_120;
+        particleDataP = &particleP->unk_48[effectNo];
+        particleDataP->unk02 = 2;
+        particleDataP->unk08.x = 30.0 * sind(i * 45);
+        particleDataP->unk08.y = 30.0 * cosd(i * 45);
+        particleDataP->unk08.z = 0.0f;
+        particleDataP->unk14 = *pos;
+        particleDataP->unk20 = 1.15f;
+        particleDataP->unk24 = 0.1f * (frandmod(20) - 10);
+        particleDataP->unk40.a = 0xFF - frandmod(3) * 16;
     }
     for (i = 0; i < CHAR_EFFECT_AND_PARTICLE_MAX; i++) {
-        temp_r28 = CreateEffect(effectMdl[3], arg0, arg1->x, arg1->y, arg1->z, 10.0f, &modelParticleParam);
-        if (temp_r28 == -1) {
+        effectNo = EffectCreate(effectMdl[3], cameraBit, pos->x, pos->y, pos->z, 10.0f, &modelSmokeEffParam);
+        if (effectNo == -1) {
             break;
         }
-        var_r26 = &Hu3DData[effectMdl[3]];
-        var_r27 = var_r26->unk_120;
-        var_r31 = &var_r27->unk_48[temp_r28];
-        var_r31->unk02 = 2;
-        var_r31->unk08.x = frandmod(100) - 50;
-        var_r31->unk08.y = frandmod(100) - 50;
-        var_r31->unk08.z = frandmod(100) - 50;
-        var_r31->unk14 = *arg1;
-        var_r31->unk20 = 1.15f;
-        var_r31->unk24 = 0.1f * (frandmod(20) - 10);
-        var_r31->unk40.a = 0xFF - frandmod(3) * 16;
+        modelP = &Hu3DData[effectMdl[3]];
+        particleP = modelP->unk_120;
+        particleDataP = &particleP->unk_48[effectNo];
+        particleDataP->unk02 = 2;
+        particleDataP->unk08.x = frandmod(100) - 50;
+        particleDataP->unk08.y = frandmod(100) - 50;
+        particleDataP->unk08.z = frandmod(100) - 50;
+        particleDataP->unk14 = *pos;
+        particleDataP->unk20 = 1.15f;
+        particleDataP->unk24 = 0.1f * (frandmod(20) - 10);
+        particleDataP->unk40.a = 0xFF - frandmod(3) * 16;
     }
-    temp_r28 = CreateEffect(effectMdl[3], arg0, arg1->x, arg1->y, arg1->z, 10.0f, &modelParticleParam);
-    if (temp_r28 != -1) {
-        var_r26 = &Hu3DData[effectMdl[3]];
-        var_r27 = var_r26->unk_120;
-        var_r31 = &var_r27->unk_48[temp_r28];
-        var_r31->unk02 = 2;
-        var_r31->unk08.x = 0.0f;
-        var_r31->unk08.y = 0.0f;
-        var_r31->unk08.z = 0.0f;
-        var_r31->unk14 = *arg1;
-        var_r31->unk24 = 0.0f;
-        var_r31->unk20 = 1.15f;
-        var_r31->unk40.a = 0xFF;
+    effectNo = EffectCreate(effectMdl[3], cameraBit, pos->x, pos->y, pos->z, 10.0f, &modelSmokeEffParam);
+    if (effectNo != -1) {
+        modelP = &Hu3DData[effectMdl[3]];
+        particleP = modelP->unk_120;
+        particleDataP = &particleP->unk_48[effectNo];
+        particleDataP->unk02 = 2;
+        particleDataP->unk08.x = 0.0f;
+        particleDataP->unk08.y = 0.0f;
+        particleDataP->unk08.z = 0.0f;
+        particleDataP->unk14 = *pos;
+        particleDataP->unk24 = 0.0f;
+        particleDataP->unk20 = 1.15f;
+        particleDataP->unk40.a = 0xFF;
     }
 }
 
-static void OrbitEffect(HsfanimStruct01 *arg0)
+static void UpdateModelEffect(HsfanimStruct01 *particleDataP)
 {
-    float temp_f31;
-    float var_f30;
-    s16 temp_r30;
+    float speed;
+    float angle;
+    s16 alpha;
 
-    var_f30 = 20.0f + 3.75f * arg0->unk00;
-    if (var_f30 > 90.0f) {
-        var_f30 = 90.0f;
+    angle = 20.0f + 3.75f * particleDataP->unk00;
+    if (angle > 90.0f) {
+        angle = 90.0f;
     }
-    temp_f31 = sind(var_f30);
-    arg0->unk34.x = arg0->unk14.x + arg0->unk08.x * temp_f31;
-    arg0->unk34.y = arg0->unk14.y + arg0->unk08.y * temp_f31;
-    arg0->unk34.z = arg0->unk14.z + arg0->unk08.z * temp_f31;
-    arg0->unk2C *= arg0->unk20;
-    arg0->unk20 -= 0.01;
-    if (arg0->unk20 < 1.0f) {
-        arg0->unk20 = 1.0f;
+    speed = sind(angle);
+    particleDataP->unk34.x = particleDataP->unk14.x + particleDataP->unk08.x * speed;
+    particleDataP->unk34.y = particleDataP->unk14.y + particleDataP->unk08.y * speed;
+    particleDataP->unk34.z = particleDataP->unk14.z + particleDataP->unk08.z * speed;
+    particleDataP->unk2C *= particleDataP->unk20;
+    particleDataP->unk20 -= 0.01;
+    if (particleDataP->unk20 < 1.0f) {
+        particleDataP->unk20 = 1.0f;
     }
-    if (arg0->unk00 > 8) {
-        temp_r30 = arg0->unk40.a;
-        temp_r30 -= 8;
-        if (temp_r30 < 0) {
-            arg0->unk40.a = 0;
-            arg0->unk2C = 0.0f;
+    if (particleDataP->unk00 > 8) {
+        alpha = particleDataP->unk40.a;
+        alpha -= 8;
+        if (alpha < 0) {
+            particleDataP->unk40.a = 0;
+            particleDataP->unk2C = 0.0f;
         }
         else {
-            arg0->unk40.a = temp_r30;
+            particleDataP->unk40.a = alpha;
         }
     }
-    arg0->unk00++;
+    particleDataP->unk00++;
 }
 
-static EffectParamData coinParticleParam
+static EFFECTPARAM coinEffParam
     = { 1, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 1.0f, 0.95f, -0.1f, 0x00000000, -0.2f, -8.0f, 0.0f };
 
-void CharModelCoinEffectCreate(s16 arg0, Vec *arg1)
+void CharEffectCoinGlowCreate(s16 cameraBit, HuVecF *pos)
 {
-    s16 temp_r29;
-    s16 var_r28;
     s16 i;
-
     for (i = 0; i < 16; i++) {
-        temp_r29 = i * 22.5f;
-        coinParticleParam.unk0C.x = 5.0 * sind(temp_r29);
-        coinParticleParam.unk0C.y = 0.1f * (frandmod(100) - 50);
-        coinParticleParam.unk0C.z = 5.0 * cosd(temp_r29);
-        var_r28 = CreateEffect(effectMdl[5], arg0, arg1->x, arg1->y, arg1->z, 30.0f, &coinParticleParam);
-        if (var_r28 == -1) {
+        s16 angle = i * (360.0f / 16.0f);
+        s16 effectNo;
+        coinEffParam.vel.x = 5.0 * sind(angle);
+        coinEffParam.vel.y = 0.1f * (frandmod(100) - 50);
+        coinEffParam.vel.z = 5.0 * cosd(angle);
+        effectNo = EffectCreate(effectMdl[5], cameraBit, pos->x, pos->y, pos->z, 30.0f, &coinEffParam);
+        if (effectNo == -1) {
             break;
         }
     }
 }
 
-static EffectParamData lbl_80131030
+static EFFECTPARAM modelHitEffParam
     = { 0, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0x80, 0x00, 0xFF, { 0.0f, 2.0f, 1.0f }, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, -0.2f, -16.0f, 0.05f };
 
-static EffectParamData lbl_80131068
+static EFFECTPARAM hitGlowEffParam
     = { 0, 0xE0, 0x20, 0x20, 0xFF, 0xE0, 0x20, 0x20, 0xFF, { 0.0f, 2.0f, 1.0f }, 1.0f, 1.0f, 1.0f, 0.0f, 0x00000000, -0.2f, -12.0f, 0.05f };
 
-void fn_8004EC74(s16 character)
+void CharModelHitCreate(s16 charNo)
 {
-    Mtx sp24;
-    Vec sp18;
-    Vec spC;
-    UnkCharInstanceStruct *temp_r30;
-    ModelData *temp_r31;
-    s16 i;
+    CHARWORK *workP = &charWork[charNo];
+    ModelData *modelP = &Hu3DData[workP->modelId];
+    s16 motNo;
+    Mtx mtx;
+    HuVecF pos;
+    HuVecF radius;
 
-    temp_r30 = &charInstance[character];
-    temp_r31 = &Hu3DData[temp_r30->unk00];
-    for (i = 0; i < ARRAY_COUNT(temp_r30->unk0C); i++) {
-        if (temp_r30->unk0C[i] == temp_r31->unk_08) {
+    for (motNo = 0; motNo < ARRAY_COUNT(workP->motId); motNo++) {
+        if (workP->motId[motNo] == modelP->unk_08) {
             break;
         }
     }
-    if (i != ARRAY_COUNT(temp_r30->unk0C)) {
-        Hu3DModelObjMtxGet(temp_r30->unk00, "test11_tex_we-itemhook-r", sp24);
-        sp18.x = sp24[0][3];
-        sp18.y = sp24[1][3];
-        sp18.z = sp24[2][3];
-        mtxRot(sp24, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
-        spC.x = sp24[0][2];
-        spC.y = sp24[1][2];
-        spC.z = sp24[2][2];
-        VECScale(&spC, &spC, 20.0f);
-        VECAdd(&sp18, &spC, &sp18);
-        fn_8004EDA4(temp_r31->camera, &sp18, &temp_r31->rot);
+    if (motNo != ARRAY_COUNT(workP->motId)) {
+        Hu3DModelObjMtxGet(workP->modelId, "test11_tex_we-itemhook-r", mtx);
+        pos.x = mtx[0][3];
+        pos.y = mtx[1][3];
+        pos.z = mtx[2][3];
+        mtxRot(mtx, modelP->rot.x, modelP->rot.y, modelP->rot.z);
+        radius.x = mtx[0][2];
+        radius.y = mtx[1][2];
+        radius.z = mtx[2][2];
+        VECScale(&radius, &radius, 20.0f);
+        VECAdd(&pos, &radius, &pos);
+        CharEffectHitCreate(modelP->camera, &pos, &modelP->rot);
     }
 }
 
-void fn_8004EDA4(s16 arg0, Vec *arg1, Vec *arg2)
+void CharEffectHitCreate(s16 cameraBit, HuVecF *pos, HuVecF *rot)
 {
-    Mtx sp2C;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
-    float temp_f31;
-    s16 var_r28;
+    Mtx mtx;
+    HuVecF radius;
+    HuVecF dir;
+    HuVecF vel;
+    s16 effectNo;
     s16 i;
-
-    mtxRot(sp2C, arg2->x, arg2->y, arg2->z);
-    sp20.x = sp2C[0][2];
-    sp20.y = sp2C[1][2];
-    sp20.z = sp2C[2][2];
+    
+    mtxRot(mtx, rot->x, rot->y, rot->z);
+    radius.x = mtx[0][2];
+    radius.y = mtx[1][2];
+    radius.z = mtx[2][2];
     for (i = 0; i < 8; i++) {
-        temp_f31 = i * 45;
-        sp14.x = sp20.x * sp20.y * (1.0 - cosd(temp_f31)) - sp20.z * sind(temp_f31);
-        sp14.y = sp20.y * sp20.y + (1.0f - sp20.y * sp20.y) * cosd(temp_f31);
-        sp14.z = sp20.y * sp20.z * (1.0 - cosd(temp_f31)) + sp20.x * sind(temp_f31);
-        VECNormalize(&sp14, &sp14);
-        VECScale(&sp14, &lbl_80131030.unk0C, 10.0f);
-        var_r28 = CreateEffect(effectMdl[4], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_80131030);
-        if (var_r28 == -1) {
+        float angle = i * 45;
+        dir.x = radius.x * radius.y * (1.0 - cosd(angle)) - radius.z * sind(angle);
+        dir.y = radius.y * radius.y + (1.0f - radius.y * radius.y) * cosd(angle);
+        dir.z = radius.y * radius.z * (1.0 - cosd(angle)) + radius.x * sind(angle);
+        VECNormalize(&dir, &dir);
+        VECScale(&dir, &modelHitEffParam.vel, 10.0f);
+        effectNo = EffectCreate(effectMdl[4], cameraBit, pos->x, pos->y, pos->z, 20.0f, &modelHitEffParam);
+        if (effectNo == -1) {
             break;
         }
-        VECScale(&sp20, &sp8, -2.0 - 0.1 * frandmod(20));
-        VECScale(&sp14, &sp14, 2.0f);
-        VECAdd(&sp14, &sp8, &lbl_80131068.unk0C);
-        var_r28 = CreateEffect(effectMdl[6], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_80131068);
-        if (var_r28 == -1) {
+        VECScale(&radius, &vel, -2.0 - 0.1 * frandmod(20));
+        VECScale(&dir, &dir, 2.0f);
+        VECAdd(&dir, &vel, &hitGlowEffParam.vel);
+        effectNo = EffectCreate(effectMdl[6], cameraBit, pos->x, pos->y, pos->z, 20.0f, &hitGlowEffParam);
+        if (effectNo == -1) {
             break;
         }
     }
 }
 
-static EffectParamData lbl_801310BC
+static EFFECTPARAM shoeHitEffParam
     = { 0, 0x20, 0x20, 0xFF, 0xFF, 0x80, 0xFF, 0x20, 0xFF, 0.0f, 2.0f, 1.0f, 0.95f, 0.95f, 0.95f, 0.0f, 0x00000000, -0.2f, -16.0f, 0.06f };
 
-static EffectParamData lbl_801310F4
+static EFFECTPARAM shoeHitGlowEffParam
     = { 0, 0x20, 0xE0, 0x20, 0xFF, 0x20, 0xE0, 0x20, 0xFF, 0.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0x00000000, -0.2f, -12.0f, 0.05f };
 
-void fn_8004F058(s16 character)
+void CharModelShoeHitCreate(s16 charNo)
 {
-    Mtx sp24;
-    Vec sp18;
-    Vec spC;
-    ModelData *temp_r31;
-    UnkCharInstanceStruct *temp_r30;
+    Mtx mtx;
+    HuVecF pos;
+    HuVecF radius;
+    CHARWORK *workP = &charWork[charNo];
+    ModelData *modelP = &Hu3DData[workP->modelId];
 
-    temp_r30 = &charInstance[character];
-    temp_r31 = &Hu3DData[temp_r30->unk00];
-    Hu3DModelObjMtxGet(temp_r30->unk00, "test11_tex_we-ske_R_shoe1", sp24);
-    sp18.x = sp24[0][3];
-    sp18.y = sp24[1][3];
-    sp18.z = sp24[2][3];
-    mtxRot(sp24, temp_r31->rot.x, temp_r31->rot.y, temp_r31->rot.z);
-    spC.x = sp24[0][2];
-    spC.y = sp24[1][2];
-    spC.z = sp24[2][2];
-    VECScale(&spC, &spC, 30.0f);
-    VECAdd(&sp18, &spC, &sp18);
-    fn_8004F13C(temp_r31->camera, &sp18, &temp_r31->rot);
+    Hu3DModelObjMtxGet(workP->modelId, "test11_tex_we-ske_R_shoe1", mtx);
+    pos.x = mtx[0][3];
+    pos.y = mtx[1][3];
+    pos.z = mtx[2][3];
+    mtxRot(mtx, modelP->rot.x, modelP->rot.y, modelP->rot.z);
+    radius.x = mtx[0][2];
+    radius.y = mtx[1][2];
+    radius.z = mtx[2][2];
+    VECScale(&radius, &radius, 30.0f);
+    VECAdd(&pos, &radius, &pos);
+    CharEffectShoeHitCreate(modelP->camera, &pos, &modelP->rot);
 }
 
-void fn_8004F13C(s16 arg0, Vec *arg1, Vec *arg2)
+void CharEffectShoeHitCreate(s16 cameraBit, HuVecF *pos, HuVecF *rot)
 {
-    Mtx sp2C;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
-    float temp_f31;
-    s16 var_r28;
+    Mtx mtx;
+    HuVecF radius;
+    HuVecF dir;
+    HuVecF vel;
+    s16 effectNo;
     s16 i;
-
-    mtxRot(sp2C, arg2->x, arg2->y, arg2->z);
-    sp20.x = sp2C[0][2];
-    sp20.y = sp2C[1][2];
-    sp20.z = sp2C[2][2];
+    
+    mtxRot(mtx, rot->x, rot->y, rot->z);
+    radius.x = mtx[0][2];
+    radius.y = mtx[1][2];
+    radius.z = mtx[2][2];
     for (i = 0; i < 8; i++) {
-        temp_f31 = i * 45;
-        sp14.x = sp20.x * sp20.y * (1.0 - cosd(temp_f31)) - sp20.z * sind(temp_f31);
-        sp14.y = sp20.y * sp20.y + (1.0f - sp20.y * sp20.y) * cosd(temp_f31);
-        sp14.z = sp20.y * sp20.z * (1.0 - cosd(temp_f31)) + sp20.x * sind(temp_f31);
-        VECNormalize(&sp14, &sp14);
-        VECScale(&sp14, &lbl_801310BC.unk0C, 10.0f);
-        var_r28 = CreateEffect(effectMdl[4], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_801310BC);
-        if (var_r28 == -1) {
+        float angle = i * 45;
+        dir.x = radius.x * radius.y * (1.0 - cosd(angle)) - radius.z * sind(angle);
+        dir.y = radius.y * radius.y + (1.0f - radius.y * radius.y) * cosd(angle);
+        dir.z = radius.y * radius.z * (1.0 - cosd(angle)) + radius.x * sind(angle);
+        VECNormalize(&dir, &dir);
+        VECScale(&dir, &shoeHitEffParam.vel, 10.0f);
+        effectNo = EffectCreate(effectMdl[4], cameraBit, pos->x, pos->y, pos->z, 20.0f, &shoeHitEffParam);
+        if (effectNo == -1) {
             break;
         }
-        VECScale(&sp20, &sp8, -2.0 - 0.1 * frandmod(20));
-        VECScale(&sp14, &sp14, 2.0f);
-        VECAdd(&sp14, &sp8, &lbl_801310F4.unk0C);
-        var_r28 = CreateEffect(effectMdl[6], arg0, arg1->x, arg1->y, arg1->z, 20.0f, &lbl_801310F4);
-        if (var_r28 == -1) {
+        VECScale(&radius, &vel, -2.0 - 0.1 * frandmod(20));
+        VECScale(&dir, &dir, 2.0f);
+        VECAdd(&dir, &vel, &shoeHitGlowEffParam.vel);
+        effectNo = EffectCreate(effectMdl[6], cameraBit, pos->x, pos->y, pos->z, 20.0f, &shoeHitGlowEffParam);
+        if (effectNo == -1) {
             break;
         }
     }
 }
 
-void CharModelLayerSetAll2(s16 arg0)
+void CharModelLayerSetAll2(s16 layerNo)
 {
-    CharModelLayerSetAll(arg0);
+    CharEffectLayerSet(layerNo);
 }
 
-void CharModelVoiceEnableSet(s16 character, s16 motion, s32 flag)
+void CharMotionVoiceOnSet(s16 charNo, s16 motion, BOOL voiceOn)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
     s16 i;
 
-    if (temp_r31->unk00 == -1) {
+    if (workP->modelId == HU3D_MODELID_NONE) {
         return;
     }
-    for (i = 0; i < ARRAY_COUNT(temp_r31->unk0C); i++) {
-        if (temp_r31->unk0C[i] == motion) {
+    for (i = 0; i < ARRAY_COUNT(workP->motId); i++) {
+        if (workP->motId[i] == motion) {
             break;
         }
     }
-    if (i != ARRAY_COUNT(temp_r31->unk0C)) {
-        if (flag == 0) {
-            temp_r31->unk8C[i] |= 1;
+    if (i != ARRAY_COUNT(workP->motId)) {
+        if (!voiceOn) {
+            workP->voiceFlag[i] |= 1;
         }
         else {
-            temp_r31->unk8C[i] &= ~1;
+            workP->voiceFlag[i] &= ~1;
         }
     }
 }
 
-void fn_8004F52C(s16 character, s32 arg1)
+void CharModelVoicePanAutoSet(s16 charNo, BOOL voicePanAuto)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
-
-    if (arg1 != 0) {
-        temp_r31->unkAC |= 8;
-        return;
+    CHARWORK *workP = &charWork[charNo];
+    if (voicePanAuto) {
+        workP->attr |= 8;
     }
     else {
-        temp_r31->unkAC &= ~8;
+        workP->attr &= ~8;
     }
 }
 
-void CharModelEffectEnableSet(s16 character, s32 arg1)
+void CharModelFxFlagSet(s16 charNo, BOOL fxFlag)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    if (character >= CHARNO_MAX ) {
-        if (arg1 == 0) {
-            lbl_801975B0[character] |= 0x10;
+    if (charNo >= CHARNO_MAX ) {
+        if (!fxFlag) {
+            dustFlags[charNo] |= 0x10;
         }
         else {
-            lbl_801975B0[character] &= ~0x10;
+            dustFlags[charNo] &= ~0x10;
         }
         return;
     }
-    if (arg1 == 0) {
-        temp_r31->unkAC |= 0x10;
+    if (!fxFlag) {
+        workP->attr |= 0x10;
     }
     else {
-        temp_r31->unkAC &= ~0x10;
+        workP->attr &= ~0x10;
     }
 }
 
-s32 CharModelEffectNpcInit(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
-{
-    Process *var_r24;
-    Process *var_r27;
-    s16 *var_r29;
+typedef struct NpcDustWork_s {
+    HU3DMODELID modelId;
+    HU3DMOTID motId;
+    s16 type;
+    s16 npcNo;
+} NPCDUSTWORK;
 
-    var_r24 = HuPrcCurrentGet();
-    var_r27 = HuPrcChildCreate(UpdateNpcEffect, 0x64, 0x2000, 0, var_r24);
-    if (var_r27) {
-        var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 4 * sizeof(s16), MEMORY_DEFAULT_NUM);
-        var_r27->user_data = var_r29;
-        var_r29[0] = arg0;
-        var_r29[1] = arg1;
-        var_r29[2] = arg2;
-        var_r29[3] = arg3;
-        InitEffect();
+s32 CharNpcDustSet(HU3DMODELID modelId, HU3DMOTID motId, s16 type, s16 npcNo)
+{
+    Process *parent = HuPrcCurrentGet();
+    Process *process = HuPrcChildCreate(UpdateNpcDust, 0x64, 0x2000, 0, parent);
+    
+    if (process) {
+        NPCDUSTWORK *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(NPCDUSTWORK), MEMORY_DEFAULT_NUM);
+        process->user_data = work;
+        work->modelId = modelId;
+        work->motId = motId;
+        work->type = type;
+        work->npcNo = npcNo;
+        EffectInit();
     }
 }
 
-s32 CharModelEffectNpcInitSilent(s16 arg0, s16 arg1, s16 arg2)
+s32 CharNpcDustVoiceOffSet(HU3DMODELID modelId, HU3DMOTID motId, s16 type)
 {
-    s32 sp10; // ! - uninitialized
+    s32 ret; // ! - uninitialized
 
-    CharModelEffectNpcInit(arg0, arg1, arg2, -1);
-    return sp10;
+    CharNpcDustSet(modelId, motId, type, CHAR_NPC_NONE);
+    return ret;
 }
 
-static s8 lbl_80131146[] = { 0x07, 0x20, 0x10, 0x28, 0x01, 0x1E, 0xE7, 0xE7, 0x01, 0x1E, 0x01, 0x1A, 0x01, 0x14, 0x13, 0x20, 0x02, 0x13 };
+static s8 npcSeTimeTbl[] = { 0x07, 0x20, 0x10, 0x28, 0x01, 0x1E, 0xE7, 0xE7, 0x01, 0x1E, 0x01, 0x1A, 0x01, 0x14, 0x13, 0x20, 0x02, 0x13 };
 
 static u16 lbl_80131158[] = {
     0x0051,
@@ -1806,148 +1749,148 @@ static s8 lbl_801311C6[] = { 0x01, 0x17, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE7, 0xE
 
 static u16 lbl_801311D4[] = { 0x0051, 0x0053, 0x0057, 0x0101, 0x0059, 0x005B, 0x0055 };
 
-static void UpdateNpcEffect(void)
+static void UpdateNpcDust(void)
 {
-    Vec sp2C;
-    ModelData *temp_r30;
-    s16 *temp_r27;
-    s16 temp_r25;
-    s16 temp_r26;
-    s16 temp_r28;
+    HuVecF pos;
+    ModelData *modelP;
+    NPCDUSTWORK *work;
+    s16 modelId;
+    s16 time;
+    s16 npcNo;
     s16 i;
 
-    temp_r27 = HuPrcCurrentGet()->user_data;
-    temp_r25 = temp_r27[0];
-    temp_r26 = 0;
-    temp_r30 = &Hu3DData[temp_r27[0]];
-    temp_r28 = temp_r27[3] - 8;
+    work = HuPrcCurrentGet()->user_data;
+    modelId = work->modelId;
+    time = 0;
+    modelP = &Hu3DData[work->modelId];
+    npcNo = work->npcNo - 8;
     while (1) {
         HuPrcVSleep();
-        if (temp_r27[1] != Hu3DMotionIDGet(temp_r25)) {
+        if (work->motId != Hu3DMotionIDGet(modelId)) {
             continue;
         }
-        if (temp_r30->attr & 1) {
+        if (modelP->attr & 1) {
             continue;
         }
-        temp_r26 = Hu3DMotionTimeGet(temp_r25);
-        switch (temp_r27[2]) {
+        time = Hu3DMotionTimeGet(modelId);
+        switch (work->type) {
             case 0:
-                if (!(temp_r26 & 0xF) && !(lbl_801975B0[temp_r28] & 0x10)) {
-                    effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
-                    effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
-                    effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
-                    sp2C.x = temp_r30->pos.x + (frandmod(50) - 25);
-                    sp2C.y = temp_r30->pos.y;
-                    sp2C.z = temp_r30->pos.z + (frandmod(50) - 25);
-                    CreateEffectDust(temp_r25, sp2C.x, sp2C.y, sp2C.z, frandmod(10) + 30, &effectDustParam);
+                if (!(time & 0xF) && !(dustFlags[npcNo] & 0x10)) {
+                    dustEffParam.vel.x = 2.0 * -sind(modelP->rot.y);
+                    dustEffParam.vel.y = 1.0 + 0.1 * frandmod(10);
+                    dustEffParam.vel.z = 2.0 * -cosd(modelP->rot.y);
+                    pos.x = modelP->pos.x + (frandmod(50) - 25);
+                    pos.y = modelP->pos.y;
+                    pos.z = modelP->pos.z + (frandmod(50) - 25);
+                    EffectDustCreate(modelId, pos.x, pos.y, pos.z, frandmod(10) + 30, &dustEffParam);
                 }
-                if (temp_r27[3] != -1) {
+                if (work->npcNo != CHAR_NPC_NONE) {
                     for (i = 0; i < 2; i++) {
-                        if (lbl_80131146[temp_r28 * 2 + i] == temp_r26 * 2) {
-                            HuAudFXPlay(lbl_80131158[temp_r28]);
+                        if (npcSeTimeTbl[npcNo * 2 + i] == time * 2) {
+                            HuAudFXPlay(lbl_80131158[npcNo]);
                             break;
                         }
                     }
                 }
                 break;
             case 1:
-                if (!(temp_r26 & 3) && !(lbl_801975B0[temp_r28] & 0x10)) {
-                    effectDustParam.unk0C.x = 4.0 * -sind(temp_r30->rot.y);
-                    effectDustParam.unk0C.y = 2.0 + 0.1 * frandmod(10);
-                    effectDustParam.unk0C.z = 4.0 * -cosd(temp_r30->rot.y);
-                    sp2C.x = temp_r30->pos.x + (frandmod(50) - 25);
-                    sp2C.y = temp_r30->pos.y;
-                    sp2C.z = temp_r30->pos.z + (frandmod(50) - 25);
-                    CreateEffectDust(temp_r25, sp2C.x, sp2C.y, sp2C.z, frandmod(10) + 30, &effectDustParam);
+                if (!(time & 3) && !(dustFlags[npcNo] & 0x10)) {
+                    dustEffParam.vel.x = 4.0 * -sind(modelP->rot.y);
+                    dustEffParam.vel.y = 2.0 + 0.1 * frandmod(10);
+                    dustEffParam.vel.z = 4.0 * -cosd(modelP->rot.y);
+                    pos.x = modelP->pos.x + (frandmod(50) - 25);
+                    pos.y = modelP->pos.y;
+                    pos.z = modelP->pos.z + (frandmod(50) - 25);
+                    EffectDustCreate(modelId, pos.x, pos.y, pos.z, frandmod(10) + 30, &dustEffParam);
                 }
-                if (temp_r27[3] != -1) {
+                if (work->npcNo != CHAR_NPC_NONE) {
                     for (i = 0; i < 2; i++) {
-                        if (lbl_80131146[temp_r28 * 2 + i] == temp_r26 * 2) {
-                            HuAudFXPlay(lbl_8013117C[temp_r28]);
+                        if (npcSeTimeTbl[npcNo * 2 + i] == time * 2) {
+                            HuAudFXPlay(lbl_8013117C[npcNo]);
                             break;
                         }
                     }
                 }
                 break;
             case 2:
-                if (temp_r28 != -1) {
-                    if (!(temp_r26 & 0x1F) && !(lbl_801975B0[temp_r28] & 0x10)) {
-                        effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
-                        effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
-                        effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
-                        sp2C.x = temp_r30->pos.x + (frandmod(50) - 25);
-                        sp2C.y = temp_r30->pos.y;
-                        sp2C.z = temp_r30->pos.z + (frandmod(50) - 25);
-                        CreateEffectDust(temp_r25, sp2C.x, sp2C.y, sp2C.z, frandmod(10) + 30, &effectDustParam);
+                if (npcNo != CHAR_NPC_NONE) {
+                    if (!(time & 0x1F) && !(dustFlags[npcNo] & 0x10)) {
+                        dustEffParam.vel.x = 2.0 * -sind(modelP->rot.y);
+                        dustEffParam.vel.y = 1.0 + 0.1 * frandmod(10);
+                        dustEffParam.vel.z = 2.0 * -cosd(modelP->rot.y);
+                        pos.x = modelP->pos.x + (frandmod(50) - 25);
+                        pos.y = modelP->pos.y;
+                        pos.z = modelP->pos.z + (frandmod(50) - 25);
+                        EffectDustCreate(modelId, pos.x, pos.y, pos.z, frandmod(10) + 30, &dustEffParam);
                     }
                     for (i = 0; i < 2; i++) {
-                        if (lbl_8013118E[temp_r28 * 2 + i] == temp_r26 * 2) {
-                            HuAudFXPlay(lbl_8013119C[temp_r28]);
+                        if (lbl_8013118E[npcNo * 2 + i] == time * 2) {
+                            HuAudFXPlay(lbl_8013119C[npcNo]);
                             break;
                         }
                     }
                 }
                 break;
             case 3:
-                if (temp_r28 != -1) {
-                    if (!(temp_r26 & 3) && !(lbl_801975B0[temp_r28] & 0x10)) {
-                        effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
-                        effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
-                        effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
-                        sp2C.x = temp_r30->pos.x + (frandmod(50) - 25);
-                        sp2C.y = temp_r30->pos.y;
-                        sp2C.z = temp_r30->pos.z + (frandmod(50) - 25);
-                        CreateEffectDust(temp_r25, sp2C.x, sp2C.y, sp2C.z, frandmod(10) + 30, &effectDustParam);
+                if (npcNo != CHAR_NPC_NONE) {
+                    if (!(time & 3) && !(dustFlags[npcNo] & 0x10)) {
+                        dustEffParam.vel.x = 2.0 * -sind(modelP->rot.y);
+                        dustEffParam.vel.y = 1.0 + 0.1 * frandmod(10);
+                        dustEffParam.vel.z = 2.0 * -cosd(modelP->rot.y);
+                        pos.x = modelP->pos.x + (frandmod(50) - 25);
+                        pos.y = modelP->pos.y;
+                        pos.z = modelP->pos.z + (frandmod(50) - 25);
+                        EffectDustCreate(modelId, pos.x, pos.y, pos.z, frandmod(10) + 30, &dustEffParam);
                     }
                     for (i = 0; i < 2; i++) {
-                        if (lbl_801311AA[temp_r28 * 2 + i] == temp_r26 * 2) {
-                            HuAudFXPlay(lbl_801311B8[temp_r28]);
+                        if (lbl_801311AA[npcNo * 2 + i] == time * 2) {
+                            HuAudFXPlay(lbl_801311B8[npcNo]);
                             break;
                         }
                     }
                 }
                 break;
             case 4:
-                if (temp_r28 != -1) {
-                    if (!(temp_r26 & 7) && !(lbl_801975B0[temp_r28] & 0x10)) {
-                        effectDustParam.unk0C.x = 2.0 * -sind(temp_r30->rot.y);
-                        effectDustParam.unk0C.y = 1.0 + 0.1 * frandmod(10);
-                        effectDustParam.unk0C.z = 2.0 * -cosd(temp_r30->rot.y);
-                        sp2C.x = temp_r30->pos.x + (frandmod(50) - 25);
-                        sp2C.y = temp_r30->pos.y;
-                        sp2C.z = temp_r30->pos.z + (frandmod(50) - 25);
-                        CreateEffectDust(temp_r25, sp2C.x, sp2C.y, sp2C.z, frandmod(10) + 30, &effectDustParam);
+                if (npcNo != CHAR_NPC_NONE) {
+                    if (!(time & 7) && !(dustFlags[npcNo] & 0x10)) {
+                        dustEffParam.vel.x = 2.0 * -sind(modelP->rot.y);
+                        dustEffParam.vel.y = 1.0 + 0.1 * frandmod(10);
+                        dustEffParam.vel.z = 2.0 * -cosd(modelP->rot.y);
+                        pos.x = modelP->pos.x + (frandmod(50) - 25);
+                        pos.y = modelP->pos.y;
+                        pos.z = modelP->pos.z + (frandmod(50) - 25);
+                        EffectDustCreate(modelId, pos.x, pos.y, pos.z, frandmod(10) + 30, &dustEffParam);
                     }
                     for (i = 0; i < 2; i++) {
-                        if (lbl_801311C6[temp_r28 * 2 + i] == temp_r26 * 2) {
-                            HuAudFXPlay(lbl_801311D4[temp_r28]);
+                        if (lbl_801311C6[npcNo * 2 + i] == time * 2) {
+                            HuAudFXPlay(lbl_801311D4[npcNo]);
                             break;
                         }
                     }
                 }
                 break;
             case 5:
-                if (temp_r26 != 0) {
+                if (time != 0) {
                     break;
                 }
-                if (lbl_801975B0[temp_r28] & 0x10) {
+                if (dustFlags[npcNo] & 0x10) {
                     break;
                 }
                 for (i = 0; i < CHAR_EFFECT_AND_PARTICLE_MAX; i++) {
-                    effectStarParam.unk0C.x = 10.0 * sind(45.0f * i) * temp_r30->scale.x;
-                    effectStarParam.unk0C.y = 0.0f;
-                    effectStarParam.unk0C.z = 10.0 * cosd(45.0f * i) * temp_r30->scale.x;
-                    CreateEffectStar(
-                        temp_r25, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 40.0f, &effectStarParam);
+                    effectStarParam.vel.x = 10.0 * sind(45.0f * i) * modelP->scale.x;
+                    effectStarParam.vel.y = 0.0f;
+                    effectStarParam.vel.z = 10.0 * cosd(45.0f * i) * modelP->scale.x;
+                    EffectStarCreate(
+                        modelId, modelP->pos.x, modelP->pos.y + 10.0f * modelP->scale.x, modelP->pos.z, 40.0f, &effectStarParam);
                 }
                 for (i = 0; i < CHAR_EFFECT_AND_PARTICLE_MAX; i++) {
-                    effectDustParam.unk0C.x = 4.0 * sind(45.0f * i + 22.5) * temp_r30->scale.x;
-                    effectDustParam.unk0C.y = 0.0f;
-                    effectDustParam.unk0C.z = 4.0 * cosd(45.0f * i + 22.5) * temp_r30->scale.x;
-                    CreateEffectDust(
-                        temp_r25, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
+                    dustEffParam.vel.x = 4.0 * sind(45.0f * i + 22.5) * modelP->scale.x;
+                    dustEffParam.vel.y = 0.0f;
+                    dustEffParam.vel.z = 4.0 * cosd(45.0f * i + 22.5) * modelP->scale.x;
+                    EffectDustCreate(
+                        modelId, modelP->pos.x, modelP->pos.y + 10.0f * modelP->scale.x, modelP->pos.z, 20.0f, &dustEffParam);
                 }
-                if (temp_r28 != -1) {
+                if (npcNo != CHAR_NPC_NONE) {
                     HuAudFXPlay(0x61);
                 }
                 break;
@@ -1955,36 +1898,33 @@ static void UpdateNpcEffect(void)
     }
 }
 
-void CharModelStepTypeSet(s16 character, s32 arg1)
+void CharModelStepFxSet(s16 charNo, s32 stepFx)
 {
-    UnkCharInstanceStruct *temp_r31 = &charInstance[character];
+    CHARWORK *workP = &charWork[charNo];
 
-    temp_r31->unkB0 = arg1;
+    workP->stepFx = stepFx;
 }
 
-static s32 PlayStepFX(s16 character, s16 arg1, u8 arg2)
+static s32 PlayStepVoice(s16 charNo, s16 seId, u8 voiceFlag)
 {
-    UnkCharInstanceStruct *temp_r31;
-    ModelData *var_r28;
-
-    temp_r31 = &charInstance[character];
-    var_r28 = &Hu3DData[temp_r31->unk00];
-    if (arg2 & 1) {
+    CHARWORK *workP = &charWork[charNo];
+    ModelData *modelP = &Hu3DData[workP->modelId];
+    if (voiceFlag & 1) {
         return;
     }
-    if (temp_r31->unkB0 == 4) {
-        arg1 = 0x109;
+    if (workP->stepFx == 4) {
+        seId = 0x109;
     }
-    else if (temp_r31->unkB0 == 5) {
-        arg1 = 0x10B;
-    }
-    else {
-        arg1 += temp_r31->unkB0;
-    }
-    if (temp_r31->unkAC & 8) {
-        return CharFXPlayPos(character, arg1, &var_r28->pos);
+    else if (workP->stepFx == 5) {
+        seId = 0x10B;
     }
     else {
-        return CharFXPlay(character, arg1);
+        seId += workP->stepFx;
+    }
+    if (workP->attr & 8) {
+        return CharFXPlayPos(charNo, seId, &modelP->pos);
+    }
+    else {
+        return CharFXPlay(charNo, seId);
     }
 }

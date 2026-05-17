@@ -133,7 +133,7 @@ void fn_1_E638(void)
         GWPlayerCfg[i].iscom = lbl_1_bss_4E8[i].unk08;
     }
     BoardSaveInit(GWSystem.board);
-    CharKill(-1);
+    CharDataClose(-1);
     HuDataDirClose(DATADIR_MSTORY2);
     HuPrcChildCreate(fn_1_E570, 100, 12288, 0, lbl_1_bss_4E0);
 }
@@ -153,10 +153,10 @@ void fn_1_E8EC(void)
     do {
         fn_1_BC8();
     } while (lbl_1_bss_4E4 != 1);
-    CharARAMOpen(GWPlayerCfg[0].character);
-    CharARAMOpen(GWPlayerCfg[1].character);
-    CharARAMOpen(GWPlayerCfg[2].character);
-    CharARAMOpen(GWPlayerCfg[3].character);
+    CharMotionInit(GWPlayerCfg[0].character);
+    CharMotionInit(GWPlayerCfg[1].character);
+    CharMotionInit(GWPlayerCfg[2].character);
+    CharMotionInit(GWPlayerCfg[3].character);
     HuAudSeqAllFadeOut(1000);
     HuAudSStreamAllFadeOut(1000);
     omOvlCallEx(ovlTbl[GWSystem.board], 1, 0, 0);
@@ -609,7 +609,7 @@ void fn_1_10C00(omObjData *object)
     Hu3DModelScaleSet(object->model[1], 1, 1, 1);
     Hu3DModelShadowSet(object->model[1]);
     fn_1_1DFC(object, 1, 1, 0, 1);
-    CharModelEffectNpcInit(object->model[1], object->motion[2], 1, 13);
+    CharNpcDustSet(object->model[1], object->motion[2], 1, 13);
 }
 
 void fn_1_10DF4(int arg0, int arg1, int arg2, int arg3, int arg4)
@@ -709,13 +709,13 @@ void fn_1_1154C(omObjData *object, int player)
     int playerNo = player;
     int charNo = lbl_1_bss_688.unk30[playerNo].unk10;
     object->model[1] = CharModelCreate(charNo, 4);
-    object->motion[1] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-    object->motion[2] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
-    object->motion[3] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x05));
-    object->motion[4] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x1A));
-    object->motion[5] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x6D));
+    object->motion[1] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+    object->motion[2] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
+    object->motion[3] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x05));
+    object->motion[4] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x1A));
+    object->motion[5] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x6D));
     object->motion[6] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x18) + charNo);
-    CharModelMotionDataClose(charNo);
+    CharMotionDataClose(charNo);
     Hu3DModelPosSet(
         object->model[1], lbl_1_data_81C[playerNo].x, lbl_1_data_81C[lbl_1_bss_688.unk30[playerNo].unk18 - 1].y + 90, lbl_1_data_81C[playerNo].z);
     Hu3DModelRotSet(object->model[1], 0, 0, 0);

@@ -1032,20 +1032,20 @@ void fn_1_ABAC(void) {
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
         if (lbl_1_bss_1580.unk344 == 1) {
             if (lbl_1_bss_1580.unk348 == 0) {
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[0].unk00.unk10, lbl_1_bss_1490[0].unk00->motion[3], 0);
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[1].unk00.unk10, lbl_1_bss_1490[1].unk00->motion[3], 0);
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[2].unk00.unk10, lbl_1_bss_1490[2].unk00->motion[4], 0);
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[3].unk00.unk10, lbl_1_bss_1490[3].unk00->motion[4], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[0].unk00.unk10, lbl_1_bss_1490[0].unk00->motion[3], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[1].unk00.unk10, lbl_1_bss_1490[1].unk00->motion[3], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[2].unk00.unk10, lbl_1_bss_1490[2].unk00->motion[4], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[3].unk00.unk10, lbl_1_bss_1490[3].unk00->motion[4], 0);
                 fn_1_1E28(lbl_1_bss_1490[0].unk00, 1, 3, 15, 0);
                 fn_1_1E28(lbl_1_bss_1490[1].unk00, 1, 3, 15, 0);
                 fn_1_1E28(lbl_1_bss_1490[2].unk00, 1, 4, 15, 0);
                 fn_1_1E28(lbl_1_bss_1490[3].unk00, 1, 4, 15, 0);
                 lbl_1_bss_1580.unk0C = 0;
             } else {
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[0].unk00.unk10, lbl_1_bss_1490[0].unk00->motion[4], 0);
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[1].unk00.unk10, lbl_1_bss_1490[1].unk00->motion[4], 0);
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[2].unk00.unk10, lbl_1_bss_1490[2].unk00->motion[3], 0);
-                CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[3].unk00.unk10, lbl_1_bss_1490[3].unk00->motion[3], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[0].unk00.unk10, lbl_1_bss_1490[0].unk00->motion[4], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[1].unk00.unk10, lbl_1_bss_1490[1].unk00->motion[4], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[2].unk00.unk10, lbl_1_bss_1490[2].unk00->motion[3], 0);
+                CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[3].unk00.unk10, lbl_1_bss_1490[3].unk00->motion[3], 0);
                 fn_1_1E28(lbl_1_bss_1490[0].unk00, 1, 4, 15, 0);
                 fn_1_1E28(lbl_1_bss_1490[1].unk00, 1, 4, 15, 0);
                 fn_1_1E28(lbl_1_bss_1490[2].unk00, 1, 3, 15, 0);
@@ -1053,11 +1053,11 @@ void fn_1_ABAC(void) {
                 lbl_1_bss_1580.unk0C = 2;
             }
         } else if (lbl_1_bss_1580.unkC4[var_r31].unk00.unk18 == 1) {
-            CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[var_r31].unk00.unk10, lbl_1_bss_1490[var_r31].unk00->motion[3], 0);
+            CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[var_r31].unk00.unk10, lbl_1_bss_1490[var_r31].unk00->motion[3], 0);
             fn_1_1E28(lbl_1_bss_1490[var_r31].unk00, 1, 3, 15, 0);
             lbl_1_bss_1580.unk0C = var_r31;
         } else {
-            CharModelVoiceEnableSet(lbl_1_bss_1580.unkC4[var_r31].unk00.unk10, lbl_1_bss_1490[var_r31].unk00->motion[4], 0);
+            CharMotionVoiceOnSet(lbl_1_bss_1580.unkC4[var_r31].unk00.unk10, lbl_1_bss_1490[var_r31].unk00->motion[4], 0);
             fn_1_1E28(lbl_1_bss_1490[var_r31].unk00, 1, 4, 15, 0);
         }
         GWPlayer[lbl_1_bss_1580.unkC4[var_r31].unk00.unk00].rank = lbl_1_bss_1580.unkC4[var_r31].unk00.unk18 - 1;
@@ -2402,14 +2402,14 @@ void fn_1_132AC(omObjData* arg0, s32 arg1) {
 
     temp_r30 = &lbl_1_bss_1580.unkC4[arg1].unk00;
     arg0->model[1] = CharModelCreate(temp_r30->unk10, 4);
-    arg0->motion[1] = CharModelMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-    arg0->motion[2] = CharModelMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
-    arg0->motion[5] = CharModelMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 47));
-    arg0->motion[3] = CharModelMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 23));
-    arg0->motion[4] = CharModelMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 24));
-    arg0->motion[14] = CharModelMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
-    arg0->motion[15] = CharModelMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 73));
-    CharModelMotionDataClose(temp_r30->unk10);
+    arg0->motion[1] = CharMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+    arg0->motion[2] = CharMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
+    arg0->motion[5] = CharMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 47));
+    arg0->motion[3] = CharMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 23));
+    arg0->motion[4] = CharMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 24));
+    arg0->motion[14] = CharMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 72));
+    arg0->motion[15] = CharMotionCreate(temp_r30->unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 73));
+    CharMotionDataClose(temp_r30->unk10);
     Hu3DModelPosSet(arg0->model[1], lbl_1_data_130[arg1].x, lbl_1_data_130[arg1].y, lbl_1_data_130[arg1].z - 20.0f);
     Hu3DModelRotSet(arg0->model[1], 0.0f, 0.0f, 0.0f);
     Hu3DModelScaleSet(arg0->model[1], 1.0f, 1.0f, 1.0f);
@@ -2649,7 +2649,7 @@ void fn_1_13D98(omObjData* arg0, s32 arg1) {
         s32 sp8[] = { 9, 14, 10, 11, 12, 13 };
 
         if (arg1 != 3) {
-            CharModelEffectNpcInit(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
+            CharNpcDustSet(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
         }
     }
 }

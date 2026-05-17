@@ -109,7 +109,7 @@ void fn_1_7C00(void)
     s16 var_r31;
     s32 var_r30;
 
-    CharKill(-1);
+    CharDataClose(-1);
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
         if (GWPlayerCfg[var_r31].character < 8) {
             var_r30 = HuDataDirReadAsync(lbl_1_data_3C8[GWPlayerCfg[var_r31].character]);
@@ -118,7 +118,7 @@ void fn_1_7C00(void)
                     HuPrcVSleep();
                 }
             }
-            CharARAMOpen(GWPlayerCfg[var_r31].character);
+            CharMotionInit(GWPlayerCfg[var_r31].character);
         }
     }
     for (var_r31 = 0; var_r31 < 4; var_r31++) {

@@ -479,9 +479,9 @@ void fn_1_156C(omObjData *object)
     fn_1_8EB4(object->model[1]);
     Hu3DMotionSet(object->model[0], object->motion[0]);
     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
-    CharModelMotionIndexSet(work->unk0C, object->motion[1], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-    CharModelMotionIndexSet(work->unk0C, object->motion[2], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-    CharModelMotionDataClose(work->unk0C);
+    CharMotionNoSet(work->unk0C, object->motion[1], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+    CharMotionNoSet(work->unk0C, object->motion[2], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+    CharMotionDataClose(work->unk0C);
     object->model[4] = Hu3DParticleCreate(lbl_1_bss_914, 2);
     Hu3DParticleHookSet(object->model[4], fn_1_6AE8);
     Hu3DParticleBlendModeSet(object->model[4], 1);
@@ -527,10 +527,10 @@ void fn_1_1964(omObjData *object)
     work = object->data;
     for (i = 0; i < 9; i++) {
         if (!lbl_1_data_10C[i][1]) {
-            object->motion[i] = CharModelMotionCreate(work->unk0C, lbl_1_data_10C[i][0]);
+            object->motion[i] = CharMotionCreate(work->unk0C, lbl_1_data_10C[i][0]);
         }
         else {
-            object->motion[i] = CharModelMotionCreate(work->unk0C, work->unk0C + lbl_1_data_10C[i][0]);
+            object->motion[i] = CharMotionCreate(work->unk0C, work->unk0C + lbl_1_data_10C[i][0]);
         }
     }
     object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M416, 0x03));
@@ -558,7 +558,7 @@ void fn_1_1ADC(omObjData *object)
     s32 i;
     work = object->data;
     for (i = 0; i < 9; i++) {
-        object->motion[i] = CharModelMotionCreate(work->unk0C, lbl_1_data_154[i]);
+        object->motion[i] = CharMotionCreate(work->unk0C, lbl_1_data_154[i]);
     }
     object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M416, 0x04));
     object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M416, 0x02));
@@ -761,7 +761,7 @@ void fn_1_1D84(omObjData *object)
     if ((temp_r29 >= 0 && temp_r29 != temp_r31->unk28) || temp_r28 != temp_r31->unk30) {
         temp_r31->unk28 = temp_r29;
         temp_r31->unk30 = temp_r28;
-        CharModelMotionShiftSet(temp_r31->unk0C, object->motion[temp_r31->unk28], 0, 8, temp_r28);
+        CharMotionShiftSet(temp_r31->unk0C, object->motion[temp_r31->unk28], 0, 8, temp_r28);
     }
 }
 

@@ -816,10 +816,10 @@ void fn_1_33B0(void)
     GWPlayerCfg[spC[2]].diff = GWPlayerCfg[spC[3]].diff = lbl_1_data_44[mgBattleStarMax];
     var_r26 = -0x113;
     if (lbl_1_bss_58 != 0) {
-        CharKill(-1);
+        CharDataClose(-1);
         for (var_r31 = 0; var_r31 < 4; var_r31++) {
             if (GWPlayerCfg[spC[var_r31]].character < 8) {
-                CharARAMOpen(GWPlayerCfg[spC[var_r31]].character);
+                CharMotionInit(GWPlayerCfg[spC[var_r31]].character);
             }
         }
     }
@@ -828,14 +828,14 @@ void fn_1_33B0(void)
         if (var_r28 != 0xFF) {
             if (var_r28 < 8) {
                 lbl_1_bss_36[var_r31] = CharModelCreate(var_r28, 2);
-                lbl_1_bss_E[var_r31][0] = CharModelMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-                lbl_1_bss_E[var_r31][1] = CharModelMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
+                lbl_1_bss_E[var_r31][0] = CharMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+                lbl_1_bss_E[var_r31][1] = CharMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
                 if (var_r31 < 2) {
-                    lbl_1_bss_E[var_r31][2] = CharModelMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
-                    lbl_1_bss_E[var_r31][3] = CharModelMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
-                    lbl_1_bss_E[var_r31][4] = CharModelMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
+                    lbl_1_bss_E[var_r31][2] = CharMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
+                    lbl_1_bss_E[var_r31][3] = CharMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
+                    lbl_1_bss_E[var_r31][4] = CharMotionCreate(var_r28, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
                 }
-                CharModelVoiceEnableSet(GWPlayerCfg[spC[var_r31]].character, lbl_1_bss_E[var_r31][1], 0);
+                CharMotionVoiceOnSet(GWPlayerCfg[spC[var_r31]].character, lbl_1_bss_E[var_r31][1], 0);
                 Hu3DModelScaleSet(lbl_1_bss_36[var_r31], 0.8f, 0.8f, 0.8f);
             }
             else {
@@ -1059,9 +1059,9 @@ void fn_1_4948(void)
         var_r30 = GWPlayerCfg[spC[var_r31]].character;
         if (var_r30 < 8) {
             lbl_1_bss_36[var_r31] = CharModelCreate(var_r30, 2);
-            lbl_1_bss_E[var_r31][0] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-            lbl_1_bss_E[var_r31][3] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
-            lbl_1_bss_E[var_r31][4] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
+            lbl_1_bss_E[var_r31][0] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+            lbl_1_bss_E[var_r31][3] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
+            lbl_1_bss_E[var_r31][4] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
             Hu3DModelScaleSet(lbl_1_bss_36[var_r31], 0.8f, 0.8f, 0.8f);
         }
         else {

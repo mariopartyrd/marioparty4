@@ -145,7 +145,7 @@ void fn_1_A8F8(void) {
         GWPlayerCfg[i].iscom = lbl_1_bss_2D0[i].unk08;
     }
     BoardSaveInit(GWSystem.board);
-    CharKill(-1);
+    CharDataClose(-1);
     HuDataDirClose(DATADIR_MSTORY);
     HuPrcChildCreate(fn_1_A830, 100, 0x3000, 0, lbl_1_bss_2C8);
 }
@@ -166,10 +166,10 @@ void fn_1_ABAC(void) {
     do {
         fn_1_B8C();
     } while (lbl_1_bss_2CC != 1);
-    CharARAMOpen(GWPlayerCfg[0].character);
-    CharARAMOpen(GWPlayerCfg[1].character);
-    CharARAMOpen(GWPlayerCfg[2].character);
-    CharARAMOpen(GWPlayerCfg[3].character);
+    CharMotionInit(GWPlayerCfg[0].character);
+    CharMotionInit(GWPlayerCfg[1].character);
+    CharMotionInit(GWPlayerCfg[2].character);
+    CharMotionInit(GWPlayerCfg[3].character);
     HuAudSeqAllFadeOut(1000);
     HuAudSStreamAllFadeOut(1000);
     omOvlCallEx(sp8[GWSystem.board], 1, 0, 0);
@@ -563,7 +563,7 @@ void fn_1_CB48(omObjData* arg0, s32 arg1) {
         s32 sp8[] = { 9, 14, 10, 11, 12 };
 
         if (arg1 != 3) {
-            CharModelEffectNpcInit(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
+            CharNpcDustSet(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
         }
     }
 }
@@ -661,10 +661,10 @@ void fn_1_D6B0(omObjData* arg0, s32 arg1) {
     var_r30 = arg1;
     temp_r28 = lbl_1_bss_450.unk34[var_r30].unk10;
     arg0->model[1] = CharModelCreate(lbl_1_bss_450.unk34[arg1].unk10, 4);
-    arg0->motion[1] = CharModelMotionCreate(lbl_1_bss_450.unk34[arg1].unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-    arg0->motion[2] = CharModelMotionCreate(lbl_1_bss_450.unk34[arg1].unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
-    arg0->motion[3] = CharModelMotionCreate(lbl_1_bss_450.unk34[arg1].unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 109));
-    CharModelMotionDataClose(temp_r28);
+    arg0->motion[1] = CharMotionCreate(lbl_1_bss_450.unk34[arg1].unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+    arg0->motion[2] = CharMotionCreate(lbl_1_bss_450.unk34[arg1].unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 3));
+    arg0->motion[3] = CharMotionCreate(lbl_1_bss_450.unk34[arg1].unk10, DATA_MAKE_NUM(DATADIR_MARIOMOT, 109));
+    CharMotionDataClose(temp_r28);
     Hu3DModelPosSet(arg0->model[1], lbl_1_data_540[var_r30].x, 90.0f + lbl_1_data_540[lbl_1_bss_450.unk34[var_r30].unk18 - 1].y, lbl_1_data_540[var_r30].z - 15.0f);
     Hu3DModelRotSet(arg0->model[1], 0.0f, 0.0f, 0.0f);
     Hu3DModelScaleSet(arg0->model[1], 1.0f, 1.0f, 1.0f);

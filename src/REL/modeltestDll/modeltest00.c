@@ -196,13 +196,13 @@ void fn_1_46F0(void)
         var_r30 = var_r31;
         lbl_1_bss_9EC[var_r31] = CharModelCreate(var_r30, 8);
         Hu3DModelShadowSet(lbl_1_bss_9EC[var_r31]);
-        lbl_1_bss_9AC[var_r31][0] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-        CharModelMotionSet(var_r30, lbl_1_bss_9AC[var_r31][0]);
+        lbl_1_bss_9AC[var_r31][0] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+        CharMotionSet(var_r30, lbl_1_bss_9AC[var_r31][0]);
         Hu3DModelAttrSet(lbl_1_bss_9EC[var_r31], HU3D_MOTATTR_LOOP);
         Hu3DModelCameraSet(lbl_1_bss_9EC[var_r31], lbl_1_data_358[var_r31]);
         Hu3DModelPosSet(lbl_1_bss_9EC[var_r31], (((var_r31 / 4) * 200) - 100), 0.0f, (-(var_r31 % 4) * 150));
         Hu3DModelPosSet(lbl_1_bss_9EC[var_r31], 0.0f, 0.0f, 0.0f);
-        CharModelMotionDataClose(var_r30);
+        CharMotionDataClose(var_r30);
     }
 
     var_r31 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_SAF, 0x24));
@@ -216,7 +216,7 @@ void fn_1_46F0(void)
             Hu3DCameraKill(8);
             sp20.x = sp20.z = sp20.y = 0.0f;
             sp20.y += 200.0f;
-            CharModelCoinEffectCreate(4, &sp20);
+            CharEffectCoinGlowCreate(4, &sp20);
         }
         HuPrcVSleep();
     }

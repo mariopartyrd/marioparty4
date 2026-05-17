@@ -178,13 +178,13 @@ void fn_1_80A0(omObjData *object)
 
     for (var_r29 = 0; var_r29 < 10; var_r29++) {
         if (lbl_1_data_1AC[var_r29] < 0x10000) {
-            object->motion[var_r29] = CharModelMotionCreate(var_r28, lbl_1_data_1AC[var_r29]);
+            object->motion[var_r29] = CharMotionCreate(var_r28, lbl_1_data_1AC[var_r29]);
         }
         else {
             object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], var_r28 + lbl_1_data_1AC[var_r29]);
         }
     }
-    CharModelMotionDataClose(var_r28);
+    CharMotionDataClose(var_r28);
     object->trans.x = var_r31->unk_58.x = 2.0f * var_r31->unk_04 * 100.0f - 300.0f;
     object->trans.y = var_r31->unk_58.y = 0.0f;
     object->trans.z = var_r31->unk_58.z = 0.0f;
@@ -638,7 +638,7 @@ void fn_1_96F4(omObjData *object)
             var_r31->unk_14 = 1;
             var_r31->unk_28 = 0;
             Hu3DModelHookSet(object->model[0], lbl_1_data_140[var_r31->unk_08], object->model[1]);
-            CharModelMotionSpeedSet(var_r31->unk_00, 2.0f);
+            CharMotionSpeedSet(var_r31->unk_00, 2.0f);
             var_r31->unk_40 = 180.0f;
             var_r31->unk_44 = 0.0f;
             var_r31->unk_48 = 0.005f;
@@ -756,8 +756,8 @@ void fn_1_9E0C(omObjData *object, u32 arg1)
             var_f31 = 0.0f;
         }
         var_r31->unk_0C = arg1;
-        CharModelMotionShiftSet(var_r31->unk_00, object->motion[arg1], lbl_1_data_1D4[arg1].unk_00, var_f31, lbl_1_data_1D4[arg1].unk_0C);
-        CharModelMotionSpeedSet(var_r31->unk_00, 1.0f);
+        CharMotionShiftSet(var_r31->unk_00, object->motion[arg1], lbl_1_data_1D4[arg1].unk_00, var_f31, lbl_1_data_1D4[arg1].unk_0C);
+        CharMotionSpeedSet(var_r31->unk_00, 1.0f);
     }
 }
 
@@ -768,7 +768,7 @@ s32 fn_1_9EFC(omObjData *object)
 
     var_r31 = object->data;
     var_r30 = 0;
-    if (CharModelMotionEndCheck(var_r31->unk_00) && (CharModelMotionShiftIDGet(var_r31->unk_00) < 0)) {
+    if (CharMotionEndCheck(var_r31->unk_00) && (CharMotionShiftIDGet(var_r31->unk_00) < 0)) {
         var_r30 = 1;
     }
     return var_r30;
@@ -783,7 +783,7 @@ s32 fn_1_9F70(omObjData *object, u32 arg1)
     var_r27 = 0;
     var_r28 = object->data;
     var_r26 = 0;
-    if (CharModelMotionEndCheck(var_r28->unk_00) && (CharModelMotionShiftIDGet(var_r28->unk_00) < 0)) {
+    if (CharMotionEndCheck(var_r28->unk_00) && (CharMotionShiftIDGet(var_r28->unk_00) < 0)) {
         var_r26 = 1;
     }
     if (var_r26) {

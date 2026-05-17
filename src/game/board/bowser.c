@@ -743,8 +743,8 @@ static void SuitGiveMain(omObjData *object)
     Hu3D2Dto3D(&pos, 1, &pos);
     BoardModelPosSetV(work->model, &pos);
     if(effect_active) {
-        CharModelLayerSetAll(6);
-        CharModelEffectCreate(1, &pos);
+        CharEffectLayerSet(6);
+        CharEffectSmokeCreate(1, &pos);
     }
 }
 

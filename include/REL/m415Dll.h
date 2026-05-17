@@ -108,7 +108,7 @@ typedef struct _unkSubStruct4 {
     s8 unk0;
     s8 unk1;
     char unk2[0x2];
-    HsfVector2f unk4[4];
+    HuVec2f unk4[4];
     u8 unk24;
     char unk25[0x3];
     float unk28;

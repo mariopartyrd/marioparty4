@@ -3,6 +3,7 @@
 
 #include "dolphin/types.h"
 
+// TODO rename to HU_MEMNUM_OVL
 #define MEMORY_DEFAULT_NUM 0x10000000
 
 typedef enum {

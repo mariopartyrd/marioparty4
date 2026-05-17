@@ -101,7 +101,7 @@ void fn_1_27080(void)
     s16 i;
     s32 status;
     CharModelDataClose(-1);
-    CharKill(-1);
+    CharDataClose(-1);
     for (i = 0; i < 4; i++) {
         status = HuDataDirReadAsync(lbl_1_data_9C0[GWPlayerCfg[i].character]);
         if (status != -1) {
@@ -109,7 +109,7 @@ void fn_1_27080(void)
                 HuPrcVSleep();
             }
         }
-        CharARAMOpen(GWPlayerCfg[i].character);
+        CharMotionInit(GWPlayerCfg[i].character);
     }
     for (i = 0; i < 2; i++) {
         status = HuDataDirReadAsync(lbl_1_data_9E0[GWPlayerCfg[i].character]);
@@ -184,15 +184,15 @@ void fn_1_27418(void)
         s16 charNo;
         lbl_1_bss_2C24[i] = charNo = GWPlayerCfg[lbl_1_bss_2C1C[i]].character;
         lbl_1_bss_2C14[i] = CharModelCreate(charNo, 2);
-        lbl_1_bss_2BC4[i][0] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-        lbl_1_bss_2BC4[i][1] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-        lbl_1_bss_2BC4[i][2] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
-        lbl_1_bss_2BC4[i][3] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
-        lbl_1_bss_2BC4[i][4] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x49));
-        lbl_1_bss_2BC4[i][5] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
-        lbl_1_bss_2BC4[i][6] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
-        CharModelVoiceEnableSet(GWPlayerCfg[lbl_1_bss_2C1C[i]].character, lbl_1_bss_2BC4[i][1], 0);
-        CharModelVoiceEnableSet(GWPlayerCfg[lbl_1_bss_2C1C[i]].character, lbl_1_bss_2BC4[i][2], 0);
+        lbl_1_bss_2BC4[i][0] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+        lbl_1_bss_2BC4[i][1] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+        lbl_1_bss_2BC4[i][2] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
+        lbl_1_bss_2BC4[i][3] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
+        lbl_1_bss_2BC4[i][4] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x49));
+        lbl_1_bss_2BC4[i][5] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
+        lbl_1_bss_2BC4[i][6] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
+        CharMotionVoiceOnSet(GWPlayerCfg[lbl_1_bss_2C1C[i]].character, lbl_1_bss_2BC4[i][1], 0);
+        CharMotionVoiceOnSet(GWPlayerCfg[lbl_1_bss_2C1C[i]].character, lbl_1_bss_2BC4[i][2], 0);
         Hu3DModelPosSet(lbl_1_bss_2C14[i], 600, 0, 800);
         Hu3DModelLayerSet(lbl_1_bss_2C14[i], 3);
         CharModelDataClose(charNo);
@@ -216,9 +216,9 @@ void fn_1_2783C(s16 evtno)
     while (WipeStatGet()) {
         HuPrcVSleep();
     }
-    CharKill(-1);
+    CharDataClose(-1);
     for (i = 0; i < 4; i++) {
-        CharARAMOpen(GWPlayerCfg[i].character);
+        CharMotionInit(GWPlayerCfg[i].character);
     }
     HuAudSndCharGrpSet(-1);
     his = omOvlHisGet(0);

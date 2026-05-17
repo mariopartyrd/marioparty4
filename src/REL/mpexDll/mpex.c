@@ -373,11 +373,11 @@ void fn_1_3758(s32 arg0, s32 arg1)
     HuDataDirClose(DATA_MAKE_NUM(DATADIR_MPEX, 0x00));
     HuDataDirClose(0x150000);
     CharModelKill(-1);
-    CharKill(-1);
-    CharARAMOpen(GWPlayerCfg[0].character);
-    CharARAMOpen(GWPlayerCfg[1].character);
-    CharARAMOpen(GWPlayerCfg[2].character);
-    CharARAMOpen(GWPlayerCfg[3].character);
+    CharDataClose(-1);
+    CharMotionInit(GWPlayerCfg[0].character);
+    CharMotionInit(GWPlayerCfg[1].character);
+    CharMotionInit(GWPlayerCfg[2].character);
+    CharMotionInit(GWPlayerCfg[3].character);
     HuAudAllStop();
     if (arg0 > 1) {
         mgPracticeEnableF = 1;
@@ -1318,17 +1318,17 @@ void fn_1_816C(omObjData *object, s32 arg1)
 {
     s32 var_r30 = GWPlayerCfg[arg1].character;
     object->model[1] = CharModelCreate(var_r30, 4);
-    object->motion[1] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-    object->motion[2] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-    object->motion[3] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
-    object->motion[4] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
-    object->motion[5] = CharModelMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x49));
+    object->motion[1] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+    object->motion[2] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+    object->motion[3] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
+    object->motion[4] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x48));
+    object->motion[5] = CharMotionCreate(var_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x49));
     Hu3DModelPosSet(object->model[1], -150.0f + (100.0f * arg1), 0.0f, 0.0f);
     Hu3DModelShadowSet(object->model[1]);
     Hu3DModelAttrSet(object->model[1], HU3D_ATTR_DISPOFF);
     CharModelLayerSetAll2(2);
     fn_1_25C4(object, 1, 1, 0, 1);
-    CharKill(var_r30);
+    CharDataClose(var_r30);
     object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_MPEX, 0x02));
     Hu3DModelAttrSet(object->model[2], HU3D_ATTR_DISPOFF);
 }
@@ -1369,7 +1369,7 @@ void fn_1_85C4(omObjData *object)
     object->motion[5] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MPEX, 0x08));
     Hu3DModelPosSet(object->model[1], -200.0f, 0.0f, 0.0f);
     Hu3DModelShadowSet(object->model[1]);
-    CharModelEffectNpcInit(object->model[1], object->motion[2], 0, 0xF);
+    CharNpcDustSet(object->model[1], object->motion[2], 0, 0xF);
     fn_1_25C4(object, 1, 1, 0, 1);
 }
 
@@ -1383,7 +1383,7 @@ void fn_1_8758(omObjData *object)
     object->motion[5] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MPEX, 0x0E));
     Hu3DModelPosSet(object->model[1], 200.0f, 0.0f, 0.0f);
     Hu3DModelShadowSet(object->model[1]);
-    CharModelEffectNpcInit(object->model[1], object->motion[2], 0, 0x10);
+    CharNpcDustSet(object->model[1], object->motion[2], 0, 0x10);
     fn_1_25C4(object, 1, 1, 0, 1);
 }
 

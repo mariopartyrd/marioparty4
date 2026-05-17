@@ -844,15 +844,15 @@ void fn_1_2B2C(omObjData *object)
     var_r28 = CharModelCreate(var_r31->unk_01, 4);
     object->model[0] = var_r28;
     Hu3DModelAttrSet(var_r28, HU3D_MOTATTR_LOOP);
-    CharModelStepTypeSet(var_r31->unk_01, 1);
+    CharModelStepFxSet(var_r31->unk_01, 1);
     for (var_r29 = 0; var_r29 < 0xA; var_r29++) {
-        object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_01, lbl_1_data_6C[var_r29]);
+        object->motion[var_r29] = CharMotionCreate(var_r31->unk_01, lbl_1_data_6C[var_r29]);
         if (var_r29 == 5) {
-            CharModelVoiceEnableSet(var_r31->unk_01, object->motion[var_r29], 0);
+            CharMotionVoiceOnSet(var_r31->unk_01, object->motion[var_r29], 0);
         }
     }
-    CharModelMotionDataClose(var_r31->unk_01);
-    CharModelMotionSet(var_r31->unk_01, object->motion[var_r31->unk_0E]);
+    CharMotionDataClose(var_r31->unk_01);
+    CharMotionSet(var_r31->unk_01, object->motion[var_r31->unk_0E]);
     omSetTra(object, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
     Hu3DModelPosSet(var_r28, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
     Hu3DModelRotSet(var_r28, 0.0f, 30.0f, 0.0f);
@@ -882,7 +882,7 @@ void fn_1_2E78(omObjData *object)
         case 2:
             if (lbl_1_bss_640 == 1) {
                 var_r31->unk_0E = 5;
-                CharModelMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_0E], 0.0f, 8.0f, 0);
+                CharMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_0E], 0.0f, 8.0f, 0);
                 var_r31->unk_24.y = 0.0f;
                 var_r31->unk_0B = 0;
             }
@@ -897,7 +897,7 @@ void fn_1_2E78(omObjData *object)
                 if (var_r31->unk_0B == 0) {
                     HuAudFXPlay(0x62F);
                 }
-                CharModelVoiceEnableSet(var_r31->unk_01, object->motion[5], 1);
+                CharMotionVoiceOnSet(var_r31->unk_01, object->motion[5], 1);
                 var_r31->unk_0B = 1;
             }
             break;
@@ -933,7 +933,7 @@ void fn_1_2E78(omObjData *object)
                 else {
                     var_r31->unk_0E = 9;
                 }
-                CharModelMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_0E], 0.0f, 8.0f, 0);
+                CharMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_0E], 0.0f, 8.0f, 0);
             }
             break;
         case 9:
@@ -1055,7 +1055,7 @@ void fn_1_3764(omObjData *object)
     switch (var_r31->unk_0E) {
         case 4:
         case 7:
-            if (CharModelMotionEndCheck(var_r31->unk_01) != 0) {
+            if (CharMotionEndCheck(var_r31->unk_01) != 0) {
                 var_r30 = 0;
                 var_r29 = 1;
             }
@@ -1141,7 +1141,7 @@ void fn_1_3764(omObjData *object)
             }
             break;
         case 5:
-            if ((Hu3DData[var_r23].unk_0C == -1) && (CharModelMotionEndCheck(var_r31->unk_01) != 0)) {
+            if ((Hu3DData[var_r23].unk_0C == -1) && (CharMotionEndCheck(var_r31->unk_01) != 0)) {
                 var_r31->unk_24.y += -146.0f / REFRESH_RATE_F;
             }
             else {
@@ -1164,7 +1164,7 @@ void fn_1_3764(omObjData *object)
             break;
         case 6:
             var_r31->unk_24.y += -146.0f / REFRESH_RATE_F;
-            if ((var_r31->unk_0B != 0) && (CharModelMotionEndCheck(var_r31->unk_01) != 0)) {
+            if ((var_r31->unk_0B != 0) && (CharMotionEndCheck(var_r31->unk_01) != 0)) {
                 var_r30 = 7;
                 var_r29 = 0;
             }
@@ -1182,7 +1182,7 @@ void fn_1_3764(omObjData *object)
     var_r31->unk_18.z += var_r31->unk_24.z;
     if (var_r30 != var_r31->unk_0E) {
         var_r31->unk_0E = var_r30;
-        CharModelMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_0E], 0.0f, 8.0f, var_r29);
+        CharMotionShiftSet(var_r31->unk_01, object->motion[var_r31->unk_0E], 0.0f, 8.0f, var_r29);
     }
     omSetTra(object, var_r31->unk_18.x, var_r31->unk_18.y, var_r31->unk_18.z);
     omSetRot(object, 0.0f, var_r31->unk_10, 0.0f);

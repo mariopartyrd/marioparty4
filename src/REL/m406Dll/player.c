@@ -377,7 +377,7 @@ void fn_1_D90C(omObjData *object)
         Hu3DModelHookSet(object->model[0], lbl_1_data_1068[var_r29], object->model[var_r29 + 1]);
     }
     Hu3DModelShadowSet(object->model[0]);
-    CharModelLayerSetAll(Hu3DData[object->model[0]].layer + 1);
+    CharEffectLayerSet(Hu3DData[object->model[0]].layer + 1);
     object->model[5] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M406, 32));
     Hu3DModelHookSet(object->model[0], "test11_tex_we-itemhook-body", object->model[5]);
     Hu3DModelAttrSet(object->model[5], HU3D_ATTR_DISPOFF);
@@ -390,7 +390,7 @@ void fn_1_D90C(omObjData *object)
     object->model[7] = Hu3DModelCreateFile(lbl_1_data_1120[var_r31->unk_0C]);
     Hu3DModelAttrSet(object->model[7], HU3D_ATTR_DISPOFF);
     for (var_r29 = 0; var_r29 < 10U; var_r29++) {
-        object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_0C, lbl_1_data_1078[var_r29]);
+        object->motion[var_r29] = CharMotionCreate(var_r31->unk_0C, lbl_1_data_1078[var_r29]);
     }
     var_r31->unk_38 = -1;
     var_r31->unk_58 = 0;
@@ -452,13 +452,13 @@ void fn_1_DD7C(omObjData *object, s32 arg1, float arg8, u32 arg2)
     var_r31 = object->data;
     spC = &Hu3DData[object->model[0]];
     if (arg1 != var_r31->unk_38) {
-        CharModelMotionShiftSet(var_r31->unk_0C, object->motion[arg1], 0.0f, 10.0f, arg2);
+        CharMotionShiftSet(var_r31->unk_0C, object->motion[arg1], 0.0f, 10.0f, arg2);
         var_r31->unk_40 = -1.0f;
         var_r31->unk_38 = arg1;
         var_r31->unk_3C = arg2;
     }
     if (arg8 != var_r31->unk_40) {
-        CharModelMotionSpeedSet(var_r31->unk_0C, 1.0f);
+        CharMotionSpeedSet(var_r31->unk_0C, 1.0f);
     }
 }
 
@@ -1210,7 +1210,7 @@ void fn_1_10744(omObjData *object)
                     Hu3DModelHookSet(object->model[0], lbl_1_data_1068[var_r24], object->model[var_r24 + 1]);
                 }
                 for (var_r24 = 0; var_r24 < 10U; var_r24++) {
-                    object->motion[var_r24] = CharModelMotionCreate(var_r31->unk_0C, lbl_1_data_1078[var_r24]);
+                    object->motion[var_r24] = CharMotionCreate(var_r31->unk_0C, lbl_1_data_1078[var_r24]);
                 }
                 var_r31->unk_38 = -1;
                 fn_1_DD7C(object, 0, 1.0f, HU3D_MOTATTR_NONE);

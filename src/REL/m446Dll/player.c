@@ -267,17 +267,17 @@ unkStruct8 *m446PlayerCreate(s32 arg0, unkStruct6 *arg1)
             var_r31->unk40[var_r30] = Hu3DJointMotionFile(var_r31->unk3C[0], lbl_1_data_24C[var_r31->unk64][var_r30]);
         }
         else {
-            var_r31->unk40[var_r30] = CharModelMotionCreate(var_r31->unk64, lbl_1_data_24C[var_r31->unk64][var_r30]);
+            var_r31->unk40[var_r30] = CharMotionCreate(var_r31->unk64, lbl_1_data_24C[var_r31->unk64][var_r30]);
         }
     }
     if (var_r31->unk70 == 0) {
-        CharModelMotionDataClose(var_r31->unk64);
+        CharMotionDataClose(var_r31->unk64);
     }
     if (var_r31->unk70 != 0) {
         Hu3DMotionSet(var_r31->unk3C[0], var_r31->unk40[0]);
     }
     else {
-        CharModelMotionSet(var_r31->unk64, var_r31->unk40[0]);
+        CharMotionSet(var_r31->unk64, var_r31->unk40[0]);
     }
     Hu3DModelAttrSet(var_r31->unk3C[0], HU3D_MOTATTR_LOOP);
     var_r28 = fn_1_1DF4(var_r31);
@@ -315,7 +315,7 @@ void fn_1_509C(unkStruct8 *arg0)
                     Hu3DMotionKill(arg0->unk40[var_r29]);
                 }
                 else {
-                    CharModelMotionKill(arg0->unk64, arg0->unk40[var_r29]);
+                    CharMotionKill(arg0->unk64, arg0->unk40[var_r29]);
                 }
             }
             if (arg0->unk70 != 0) {
@@ -608,7 +608,7 @@ void fn_1_5B48(unkStruct8 *arg0)
                 Hu3DMotionShiftSet(arg0->unk3C[0], arg0->unk40[2], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
             }
             else {
-                CharModelMotionShiftSet(arg0->unk64, arg0->unk40[2], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+                CharMotionShiftSet(arg0->unk64, arg0->unk40[2], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
             }
             arg0->unk1C = 1;
             break;
@@ -633,7 +633,7 @@ void fn_1_5C24(unkStruct8 *arg0)
                 Hu3DMotionShiftSet(arg0->unk3C[0], arg0->unk40[3], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
             }
             else {
-                CharModelMotionShiftSet(arg0->unk64, arg0->unk40[3], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
+                CharMotionShiftSet(arg0->unk64, arg0->unk40[3], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
             }
             arg0->unk1C = 1;
             break;
@@ -662,7 +662,7 @@ void fn_1_5D00(unkStruct8 *arg0)
                 Hu3DMotionShiftSet(arg0->unk3C[0], arg0->unk40[1], 0.0f, 10.0f, HU3D_MOTATTR_NONE);
             }
             else {
-                CharModelMotionShiftSet(arg0->unk64, arg0->unk40[1], 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
+                CharMotionShiftSet(arg0->unk64, arg0->unk40[1], 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
                 Hu3DMotionStartEndSet(arg0->unk3C[0], 0.0f, 59.0f);
             }
             sp8.y = 0.0f;

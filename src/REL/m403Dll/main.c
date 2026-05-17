@@ -722,15 +722,15 @@ static void fn_1_1DD0(omObjData *arg0)
     Hu3DModelAttrSet(temp_r28, HU3D_MOTATTR_LOOP);
     Hu3DModelShadowSet(temp_r28);
     for (i = 0; i < 8; i++) {
-        arg0->motion[i] = CharModelMotionCreate(temp_r3->unk01, lbl_1_data_C4[i]);
+        arg0->motion[i] = CharMotionCreate(temp_r3->unk01, lbl_1_data_C4[i]);
     }
-    CharModelMotionDataClose(temp_r3->unk01);
-    CharModelMotionSet(temp_r3->unk01, arg0->motion[temp_r3->unk18]);
+    CharMotionDataClose(temp_r3->unk01);
+    CharMotionSet(temp_r3->unk01, arg0->motion[temp_r3->unk18]);
     omSetTra(arg0, temp_r3->unk2C.x, temp_r3->unk2C.y, temp_r3->unk2C.z);
     Hu3DModelPosSet(temp_r28, temp_r3->unk2C.x, temp_r3->unk2C.y, temp_r3->unk2C.z);
     Hu3DModelRotSet(temp_r28, 0.0f, 30.0f, 0.0f);
-    CharModelStepTypeSet(temp_r3->unk01, 1);
-    CharModelVoiceEnableSet(temp_r3->unk01, arg0->motion[3], 0);
+    CharModelStepFxSet(temp_r3->unk01, 1);
+    CharMotionVoiceOnSet(temp_r3->unk01, arg0->motion[3], 0);
     arg0->func = fn_1_2158;
 }
 
@@ -1044,7 +1044,7 @@ static void fn_1_2FDC(omObjData *arg0)
             break;
         case 3:
             var_r27 = 0;
-            if (Hu3DData[temp_r25].unk_0C == -1 && CharModelMotionEndCheck(temp_r31->unk01)) {
+            if (Hu3DData[temp_r25].unk_0C == -1 && CharMotionEndCheck(temp_r31->unk01)) {
                 temp_r31->unk48 += -146.0f/REFRESH_RATE;
             }
             else {
@@ -1067,13 +1067,13 @@ static void fn_1_2FDC(omObjData *arg0)
             break;
         case 4:
             temp_r31->unk48 += -146.0f/REFRESH_RATE;
-            if (temp_r31->unk0C != 0 && CharModelMotionEndCheck(temp_r31->unk01)) {
+            if (temp_r31->unk0C != 0 && CharMotionEndCheck(temp_r31->unk01)) {
                 var_r28 = 5;
                 var_r27 = 0;
             }
             break;
         case 5:
-            if (CharModelMotionEndCheck(temp_r31->unk01)) {
+            if (CharMotionEndCheck(temp_r31->unk01)) {
                 var_r28 = 0;
                 var_r27 = 1;
             }
@@ -1105,8 +1105,8 @@ static void fn_1_2FDC(omObjData *arg0)
     if (var_r28 != temp_r31->unk1A) {
         temp_r31->unk1A = var_r28;
         temp_r31->unk18 = var_r28;
-        CharModelMotionShiftSet(temp_r31->unk01, arg0->motion[temp_r31->unk18], 0.0f, 8.0f, var_r27);
-        temp_r31->unk28 = CharModelMotionMaxTimeGet(temp_r31->unk01);
+        CharMotionShiftSet(temp_r31->unk01, arg0->motion[temp_r31->unk18], 0.0f, 8.0f, var_r27);
+        temp_r31->unk28 = CharMotionMaxTimeGet(temp_r31->unk01);
     }
     omSetTra(arg0, temp_r31->unk2C.x, temp_r31->unk2C.y, temp_r31->unk2C.z);
     omSetRot(arg0, temp_r31->unk38, temp_r31->unk3C, temp_r31->unk40);

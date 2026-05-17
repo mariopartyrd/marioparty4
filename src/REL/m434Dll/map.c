@@ -56,7 +56,7 @@ omObjData *lbl_1_bss_5868;
 Vec lbl_1_bss_2868[1024];
 Bss2468Data lbl_1_bss_2468[64];
 s32 lbl_1_bss_2464;
-HsfVector2f lbl_1_bss_464[1024];
+HuVec2f lbl_1_bss_464[1024];
 AnimData *lbl_1_bss_460;
 AnimData *lbl_1_bss_45C;
 AnimData *lbl_1_bss_458;
@@ -100,7 +100,7 @@ void fn_1_1E64(omObjData *object)
 {
     s32 temp_r30;
     Vec *temp_r29;
-    HsfVector2f *temp_r28;
+    HuVec2f *temp_r28;
     s32 temp_r27;
     AnimData *temp_r26;
 
@@ -210,7 +210,7 @@ void fn_1_26A4(omObjData *object)
 {
     s32 temp_r31;
     Bss2468Data *temp_r30;
-    HsfVector2f *temp_r29;
+    HuVec2f *temp_r29;
     HsfAttribute *temp_r27;
     Vec *temp_r25;
     s32 temp_r23;

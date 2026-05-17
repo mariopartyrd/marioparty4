@@ -1513,10 +1513,10 @@ void fn_1_7328(omObjData *obj)
     player->unk58 = 2000;
     player->unk54 = 0;
     obj->model[0] = CharModelCreate(lbl_1_data_0[player->unk5C], 2);
-    CharModelStepTypeSet(lbl_1_data_0[player->unk5C], 0);
+    CharModelStepFxSet(lbl_1_data_0[player->unk5C], 0);
     for (i = 0; i < 5; i++) {
-        obj->motion[i] = CharModelMotionCreate(lbl_1_data_0[player->unk5C], lbl_1_data_128[player->unk5C][i]);
-        CharModelMotionSet(lbl_1_data_0[player->unk5C], obj->motion[i]);
+        obj->motion[i] = CharMotionCreate(lbl_1_data_0[player->unk5C], lbl_1_data_128[player->unk5C][i]);
+        CharMotionSet(lbl_1_data_0[player->unk5C], obj->motion[i]);
     }
     Hu3DModelAttrSet(obj->model[0], HU3D_ATTR_DISPOFF);
     Hu3DModelAttrSet(obj->model[0], HU3D_MOTATTR_LOOP);
@@ -1532,7 +1532,7 @@ void fn_1_7328(omObjData *obj)
     omSetRot(obj, player->unk18.x, player->unk18.y, 0);
     Hu3DModelAttrReset(obj->model[0], HU3D_ATTR_DISPOFF);
     CharModelLayerSetAll2(6);
-    CharModelMotionDataClose(lbl_1_data_0[player->unk5C]);
+    CharMotionDataClose(lbl_1_data_0[player->unk5C]);
     obj->func = fn_1_6A00;
 }
 

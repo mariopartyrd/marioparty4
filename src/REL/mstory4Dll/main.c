@@ -451,11 +451,11 @@ void fn_1_EC(void)
 				do {
 					HuPrcVSleep();
 				} while(lbl_1_bss_14 != 1);
-				CharKill(-1);
-				CharARAMOpen(GWPlayerCfg[0].character);
-				CharARAMOpen(GWPlayerCfg[1].character);
-				CharARAMOpen(GWPlayerCfg[2].character);
-				CharARAMOpen(GWPlayerCfg[3].character);
+				CharDataClose(-1);
+				CharMotionInit(GWPlayerCfg[0].character);
+				CharMotionInit(GWPlayerCfg[1].character);
+				CharMotionInit(GWPlayerCfg[2].character);
+				CharMotionInit(GWPlayerCfg[3].character);
 				{
 					omOvlHisData *his = omOvlHisGet(0);
 					omOvlHisChg(0, DLL_mstory3dll, 0, 0);
@@ -496,11 +496,11 @@ void fn_1_EC(void)
 				do {
 					HuPrcVSleep();
 				} while(lbl_1_bss_14 != 1);
-				CharKill(-1);
-				CharARAMOpen(GWPlayerCfg[0].character);
-				CharARAMOpen(GWPlayerCfg[1].character);
-				CharARAMOpen(GWPlayerCfg[2].character);
-				CharARAMOpen(GWPlayerCfg[3].character);
+				CharDataClose(-1);
+				CharMotionInit(GWPlayerCfg[0].character);
+				CharMotionInit(GWPlayerCfg[1].character);
+				CharMotionInit(GWPlayerCfg[2].character);
+				CharMotionInit(GWPlayerCfg[3].character);
 				{
 					omOvlHisData *his = omOvlHisGet(0);
 					omOvlHisChg(0, DLL_mstory3dll, 0, 0);
@@ -582,7 +582,7 @@ void fn_1_13A0(void)
 	float scale = 1.5f;
 	float delay = 0;
 	GXColor hilite = { 0, 0, 255, 128 };
-	CharKill(-1);
+	CharDataClose(-1);
 	WipeColorSet(255, 255, 255);
 	WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, -1);
 	while(1) {
@@ -665,10 +665,10 @@ void fn_1_13A0(void)
 		GWPlayer[1].character = GWPlayerCfg[1].character;
 		GWPlayer[2].character = GWPlayerCfg[2].character;
 		GWPlayer[3].character = GWPlayerCfg[3].character;
-		CharARAMOpen(GWPlayerCfg[0].character);
-		CharARAMOpen(GWPlayerCfg[1].character);
-		CharARAMOpen(GWPlayerCfg[2].character);
-		CharARAMOpen(GWPlayerCfg[3].character);
+		CharMotionInit(GWPlayerCfg[0].character);
+		CharMotionInit(GWPlayerCfg[1].character);
+		CharMotionInit(GWPlayerCfg[2].character);
+		CharMotionInit(GWPlayerCfg[3].character);
 		GWSystem.board = itemno%6;
 		if(GWSystem.board != BOARD_ID_MAIN6) {
 			GWPlayerCoinWinSet(0, 10);

@@ -342,7 +342,7 @@ void fn_1_1D8(void)
             espDispOff(var_r29->unk_10A[var_r31]);
         }
     }
-    CharModelLayerSetAll(3);
+    CharEffectLayerSet(3);
     for (var_r30 = 0; var_r30 < 5; var_r30++) {
         var_r24 = &lbl_1_bss_7C[var_r30];
         for (var_r31 = 0; var_r31 < 2; var_r31++) {
@@ -633,8 +633,8 @@ void fn_1_14B8(void)
     Hu3DMotionSet(var_r31->unk_62[var_r31->unk_08], var_r31->unk_7A[var_r31->unk_08][var_r31->unk_60 = 0]);
     Hu3DModelAttrSet(var_r31->unk_62[var_r31->unk_08], HU3D_MOTATTR_LOOP);
     for (var_r30 = 0; var_r30 < 5; var_r30++) {
-        var_r31->unk_28[var_r30] = CharModelEffectNpcInit(var_r31->unk_62[var_r30], var_r31->unk_7A[var_r30][2], 1, lbl_1_rodata_31C[var_r30]);
-        var_r31->unk_3C[var_r30] = CharModelEffectNpcInit(var_r31->unk_62[var_r30], var_r31->unk_7A[var_r30][1], 0, lbl_1_rodata_31C[var_r30]);
+        var_r31->unk_28[var_r30] = CharNpcDustSet(var_r31->unk_62[var_r30], var_r31->unk_7A[var_r30][2], 1, lbl_1_rodata_31C[var_r30]);
+        var_r31->unk_3C[var_r30] = CharNpcDustSet(var_r31->unk_62[var_r30], var_r31->unk_7A[var_r30][1], 0, lbl_1_rodata_31C[var_r30]);
     }
     while (TRUE) {
         switch (var_r31->unk_04) {

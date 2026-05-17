@@ -425,11 +425,11 @@ void fn_1_D0C(omObjData *object)
     work->unk2C = 0;
     work->unk30 = HU3D_MOTATTR_LOOP;
     for (i = 0; i < 7; i++) {
-        object->motion[i] = CharModelMotionCreate(work->unkC, lbl_1_data_7694[i]);
+        object->motion[i] = CharMotionCreate(work->unkC, lbl_1_data_7694[i]);
     }
     Hu3DMotionSet(object->model[0], object->motion[0]);
     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
-    CharModelVoiceEnableSet(work->unkC, object->motion[4], 0);
+    CharMotionVoiceOnSet(work->unkC, object->motion[4], 0);
     CharModelDataClose(work->unkC);
     object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M439, 0x12));
     Hu3DModelAttrSet(object->model[1], HU3D_ATTR_DISPOFF);
@@ -986,9 +986,9 @@ void fn_1_2C84(omObjData *object)
     if ((temp_r28 >= 0 && temp_r28 != temp_r31->unk2C) || temp_r26 != temp_r31->unk30) {
         temp_r31->unk2C = temp_r28;
         temp_r31->unk30 = temp_r26;
-        CharModelMotionShiftSet(temp_r31->unkC, object->motion[temp_r31->unk2C], 0, 8, temp_r26);
+        CharMotionShiftSet(temp_r31->unkC, object->motion[temp_r31->unk2C], 0, 8, temp_r26);
     }
-    CharModelMotionSpeedSet(temp_r31->unkC, temp_f25);
+    CharMotionSpeedSet(temp_r31->unkC, temp_f25);
     temp_r31->unk34 = temp_f25;
     if (temp_r31->unk2 == 0) {
         Hu3DShadowData.unk_20.x = object->trans.x;
@@ -1078,9 +1078,9 @@ void fn_1_3C1C(omObjData *object)
     if ((temp_r29 >= 0 && temp_r29 != temp_r31->unk2C) || temp_r28 != temp_r31->unk30) {
         temp_r31->unk2C = temp_r29;
         temp_r31->unk30 = temp_r28;
-        CharModelMotionShiftSet(temp_r31->unkC, object->motion[temp_r31->unk2C], 0, 8, temp_r28);
+        CharMotionShiftSet(temp_r31->unkC, object->motion[temp_r31->unk2C], 0, 8, temp_r28);
     }
-    CharModelMotionSpeedSet(temp_r31->unkC, temp_f29);
+    CharMotionSpeedSet(temp_r31->unkC, temp_f29);
     temp_r31->unk34 = temp_f29;
 }
 

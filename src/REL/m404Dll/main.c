@@ -715,15 +715,15 @@ void fn_1_1344(omObjData *object)
 
     for (var_r29 = 0; var_r29 < (u32)5; var_r29++) {
         if (!lbl_1_data_890[var_r29][1]) {
-            object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_0C, lbl_1_data_890[var_r29][0]);
+            object->motion[var_r29] = CharMotionCreate(var_r31->unk_0C, lbl_1_data_890[var_r29][0]);
         }
         else {
-            object->motion[var_r29] = CharModelMotionCreate(var_r31->unk_0C, var_r31->unk_0C + lbl_1_data_890[var_r29][0]);
+            object->motion[var_r29] = CharMotionCreate(var_r31->unk_0C, var_r31->unk_0C + lbl_1_data_890[var_r29][0]);
         }
     }
     Hu3DMotionSet(object->model[0], object->motion[0]);
     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP | HU3D_MOTATTR_OVL_LOOP | HU3D_MOTATTR_OVL_PAUSE);
-    CharModelVoiceEnableSet(var_r24, object->motion[1], 0);
+    CharMotionVoiceOnSet(var_r24, object->motion[1], 0);
     object->trans.x = -90.0f;
     object->trans.y = 0.0f;
     object->trans.z = -450.0f + (300.0f * var_r31->unk_02);
@@ -1022,10 +1022,10 @@ void fn_1_44A0(omObjData *object)
                     var_r31->unk_28 = (VERSION_NTSC ? 3.0 : 3.5999999046325684) * cosd(var_f31);
                     var_r28 = 1;
                     if (var_r31->unk_20 > 0.0f) {
-                        CharModelMotionSpeedSet(var_r31->unk_0C, 0.5f);
+                        CharMotionSpeedSet(var_r31->unk_0C, 0.5f);
                     }
                     else {
-                        CharModelMotionSpeedSet(var_r31->unk_0C, -0.5f);
+                        CharMotionSpeedSet(var_r31->unk_0C, -0.5f);
                     }
                     Hu3DMotionOverlaySpeedSet(object->model[0], Hu3DData[object->model[0]].unk_68);
                     if (var_r31->unk_2C == 0) {
@@ -1036,7 +1036,7 @@ void fn_1_44A0(omObjData *object)
                 else {
                     var_r31->unk_20 = var_r31->unk_28 = 0.0f;
                     var_r28 = 0;
-                    CharModelMotionSpeedSet(var_r31->unk_0C, 1.0f);
+                    CharMotionSpeedSet(var_r31->unk_0C, 1.0f);
                     Hu3DMotionOverlayTimeSet(object->model[0], 0.0f);
                     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_OVL_PAUSE);
                 }
@@ -1074,7 +1074,7 @@ void fn_1_44A0(omObjData *object)
                     var_r31->unk_12++;
                     var_r31->unk_2C = -1;
                     var_r28 = 1;
-                    CharModelMotionSpeedSet(var_r31->unk_0C, 1.0f);
+                    CharMotionSpeedSet(var_r31->unk_0C, 1.0f);
                     Hu3DMotionOverlayReset(object->model[0]);
                     Hu3DModelAttrSet(object->model[1], HU3D_ATTR_DISPOFF);
                     if (var_r31->unk_74 >= 0) {
@@ -1112,7 +1112,7 @@ void fn_1_44A0(omObjData *object)
         }
         if (var_r28 >= 0 && var_r28 != var_r31->unk_2C) {
             var_r31->unk_2C = var_r28;
-            CharModelMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
+            CharMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
         }
     }
 }
@@ -1126,7 +1126,7 @@ void fn_1_4C7C(omObjData *object)
     object->trans.z = -450.0f + (300.0f * var_r30->unk_02);
     object->rot.y = 0.0f;
     var_r30->unk_2C = -1;
-    CharModelMotionShiftSet(var_r30->unk_0C, *object->motion, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
+    CharMotionShiftSet(var_r30->unk_0C, *object->motion, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
     var_r30->unk_5A = 0;
     var_r30->unk_5C = fn_1_F70(object, 1.0f);
     var_r30->unk_5A = 0;
@@ -1161,7 +1161,7 @@ void fn_1_4F4C(omObjData *object)
         else {
             var_r30->unk_2C = 4;
         }
-        CharModelMotionShiftSet(var_r30->unk_0C, object->motion[var_r30->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
+        CharMotionShiftSet(var_r30->unk_0C, object->motion[var_r30->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     }
 }
 

@@ -389,10 +389,10 @@ void fn_1_D14(omObjData *object)
     player->unk1C = 1;
     for (i = 0; i < 5; i++) {
         if (lbl_1_data_E0[i][1] == 0) {
-            object->motion[i] = CharModelMotionCreate(player->unk10, lbl_1_data_E0[i][0]);
+            object->motion[i] = CharMotionCreate(player->unk10, lbl_1_data_E0[i][0]);
         }
         else {
-            object->motion[i] = CharModelMotionCreate(player->unk10, player->unk10 + lbl_1_data_E0[i][0]);
+            object->motion[i] = CharMotionCreate(player->unk10, player->unk10 + lbl_1_data_E0[i][0]);
         }
     }
     Hu3DMotionSet(object->model[0], object->motion[player->unk1C]);
@@ -582,7 +582,7 @@ void fn_1_1444(omObjData *object)
             if (fn_1_320() == 7) {
                 temp_r31->unk16 = 3;
                 Hu3DModelObjPosGet(object->model[0], "test11_tex_we-itemhook-r", &sp18);
-                CharModelEffectCreate(1, &sp18);
+                CharEffectSmokeCreate(1, &sp18);
                 Hu3DModelAttrSet(object->model[1], HU3D_ATTR_DISPOFF);
                 Hu3DModelAttrSet(object->model[3], HU3D_ATTR_DISPOFF);
             }
@@ -637,7 +637,7 @@ void fn_1_1444(omObjData *object)
     if ((temp_r29 >= 0 && temp_r29 != temp_r31->unk1C) || temp_r28 != temp_r31->unk20) {
         temp_r31->unk1C = temp_r29;
         temp_r31->unk20 = temp_r28;
-        CharModelMotionShiftSet(temp_r31->unk10, object->motion[temp_r31->unk1C], 0, 8, temp_r28);
+        CharMotionShiftSet(temp_r31->unk10, object->motion[temp_r31->unk1C], 0, 8, temp_r28);
     }
 }
 

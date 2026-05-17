@@ -463,11 +463,11 @@ static void InstPlayerMain(void)
         Hu3DModelPosSet(playerMdlId[i], 5000.0f, 0.0f, 0.0f);
         Hu3DModelRotSet(playerMdlId[i], 0.0f, 180.0f, 0.0f);
         Hu3DModelCameraSet(playerMdlId[i], 1);
-        motId[i][0] = CharModelMotionCreate(charNo[i], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-        motId[i][1] = CharModelMotionCreate(charNo[i], DATA_MAKE_NUM(DATADIR_MARIOMOT, 5));
-        motId[i][2] = CharModelMotionCreate(charNo[i], DATA_MAKE_NUM(DATADIR_MARIOMOT, 6));
-        CharModelVoiceEnableSet(charNo[i], motId[i][1], 0);
-        CharModelMotionSet(charNo[i], motId[i][1]);
+        motId[i][0] = CharMotionCreate(charNo[i], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+        motId[i][1] = CharMotionCreate(charNo[i], DATA_MAKE_NUM(DATADIR_MARIOMOT, 5));
+        motId[i][2] = CharMotionCreate(charNo[i], DATA_MAKE_NUM(DATADIR_MARIOMOT, 6));
+        CharMotionVoiceOnSet(charNo[i], motId[i][1], 0);
+        CharMotionSet(charNo[i], motId[i][1]);
         CharModelDataClose(-1);
         shadowMdl[i] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_INST, 7));
         Hu3DModelTPLvlSet(shadowMdl[i], 0.0f);
@@ -488,10 +488,10 @@ static void InstPlayerMain(void)
                 continue;
             }
             if (time == 15) {
-                CharModelMotionSet(charNo[j], motId[j][2]);
+                CharMotionSet(charNo[j], motId[j][2]);
             }
             if (time == 30) {
-                CharModelMotionShiftSet(charNo[j], motId[j][0], 0, 10, HU3D_MOTATTR_LOOP);
+                CharMotionShiftSet(charNo[j], motId[j][0], 0, 10, HU3D_MOTATTR_LOOP);
             }
             if (time <= 20) {
                 Hu3DModelPosSet(playerMdlId[j], playerPos[j].x, playerPos[j].y + 1000.0 * cosd(time * 4.5f), playerPos[j].z);
@@ -517,8 +517,8 @@ static void InstPlayerMain(void)
             }
             if (time == 0) {
                 Hu3DModelAttrReset(playerMdlId[j], HU3D_MOTATTR_LOOP);
-                CharModelVoiceEnableSet(charNo[i], motId[i][1], 1);
-                CharModelMotionSet(charNo[j], motId[j][1]);
+                CharMotionVoiceOnSet(charNo[i], motId[i][1], 1);
+                CharMotionSet(charNo[j], motId[j][1]);
             }
             if (time <= 30) {
                 Hu3DModelPosSet(playerMdlId[j], playerPos[j].x, playerPos[j].y + (300.0 * sind(time * 9.0f)), playerPos[j].z - (time * 20));

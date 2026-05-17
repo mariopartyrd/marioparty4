@@ -271,7 +271,7 @@ void fn_1_F19C(void) {
     }
     Hu3DModelPosSet(lbl_1_bss_5B8.unk00->model[5], 0.0f, 0.0f, 0.0f);
     Hu3DModelHookReset(lbl_1_bss_5B8.unk00->model[9]);
-    Hu3DModelHookSet(lbl_1_bss_568.unk00->model[1], CharModelHookNameGet(lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10, 1, 1), lbl_1_bss_5B8.unk00->model[5]);
+    Hu3DModelHookSet(lbl_1_bss_568.unk00->model[1], CharModelItemHookGet(lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10, 1, 1), lbl_1_bss_5B8.unk00->model[5]);
     fn_1_BAC(60);
     lbl_1_bss_5B8.unk04 = (void*) fn_1_10298;
     HuAudFXPlay(0xA3);
@@ -546,7 +546,7 @@ void fn_1_105F8(omObjData* arg0, s32 arg1) {
         s32 sp8[] = { 9, 14, 10, 11, 12 };
 
         if (arg1 != 3) {
-            CharModelEffectNpcInit(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
+            CharNpcDustSet(arg0->model[1], arg0->motion[2], 1, sp8[arg1]);
         }
     }
 }
@@ -590,13 +590,13 @@ void fn_1_10D50(omObjData* arg0, s32 arg1) {
 
     temp_r30 = lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10;
     arg0->model[1] = CharModelCreate(temp_r30, 1);
-    arg0->motion[1] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
-    arg0->motion[2] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 2));
-    arg0->motion[3] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 53));
-    arg0->motion[4] = CharModelMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 109));
+    arg0->motion[1] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0));
+    arg0->motion[2] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 2));
+    arg0->motion[3] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 53));
+    arg0->motion[4] = CharMotionCreate(temp_r30, DATA_MAKE_NUM(DATADIR_MARIOMOT, 109));
     arg0->motion[5] = Hu3DJointMotionFile(arg0->model[1], DATA_MAKE_NUM(DATADIR_MSTORY, 24 + temp_r30));
     arg0->motion[6] = Hu3DJointMotionFile(arg0->model[1], DATA_MAKE_NUM(DATADIR_MSTORY, 32 + temp_r30));
-    CharModelMotionDataClose(temp_r30);
+    CharMotionDataClose(temp_r30);
     Hu3DModelPosSet(arg0->model[1], 120.0f, 0.0f, 670.0f);
     Hu3DModelRotSet(arg0->model[1], 0.0f, -60.0f, 0.0f);
     Hu3DModelScaleSet(arg0->model[1], 1.0f, 1.0f, 1.0f);

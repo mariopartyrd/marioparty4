@@ -76,10 +76,10 @@ typedef struct M438FireStruct2 {
 } M438FireStruct2; // sizeof 0x10
 
 typedef struct M438FireStruct3 {
-    HsfVector2f unk0;
-    HsfVector2f unk8;
-    HsfVector2f unk10;
-    HsfVector2f unk18;
+    HuVec2f unk0;
+    HuVec2f unk8;
+    HuVec2f unk10;
+    HuVec2f unk18;
 } M438FireStruct3; // sizeof 0x20
 
 typedef struct M438UnkStruct2 {

@@ -363,7 +363,7 @@ void fn_1_13264(void)
     }
     Hu3DModelPosSet(lbl_1_bss_810.unk00->model[5], 0, 0, 0);
     Hu3DModelHookSet(
-        lbl_1_bss_798.unk00->model[1], CharModelHookNameGet(lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10, 1, 1), lbl_1_bss_810.unk00->model[5]);
+        lbl_1_bss_798.unk00->model[1], CharModelItemHookGet(lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10, 1, 1), lbl_1_bss_810.unk00->model[5]);
     fn_1_BE8(60);
     lbl_1_bss_810.unk04 = (void *)fn_1_13FB4;
     HuAudFXPlay(163);
@@ -660,7 +660,7 @@ void fn_1_14F6C(omObjData *object)
     Hu3DModelScaleSet(object->model[1], 1, 1, 1);
     Hu3DModelShadowSet(object->model[1]);
     fn_1_1DFC(object, 1, 1, 0, 1);
-    CharModelEffectNpcInit(object->model[1], object->motion[2], 1, 13);
+    CharNpcDustSet(object->model[1], object->motion[2], 1, 13);
 }
 
 void fn_1_15134(int arg0, int arg1, int arg2, int arg3, int arg4)
@@ -739,13 +739,13 @@ void fn_1_1574C(omObjData *object)
 {
     int charNo = lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10;
     object->model[1] = CharModelCreate(charNo, 1);
-    object->motion[1] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-    object->motion[2] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+    object->motion[1] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+    object->motion[2] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
     object->motion[3] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x28) + charNo);
     object->motion[4] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x30) + charNo);
     object->motion[5] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x38) + charNo);
     object->motion[6] = Hu3DJointMotionFile(object->model[1], DATA_MAKE_NUM(DATADIR_MSTORY2, 0x00) + charNo);
-    CharModelMotionDataClose(charNo);
+    CharMotionDataClose(charNo);
     Hu3DModelPosSet(object->model[1], 120, 0, 800);
     Hu3DModelRotSet(object->model[1], 0, -60, 0);
     Hu3DModelScaleSet(object->model[1], 1, 1, 1);

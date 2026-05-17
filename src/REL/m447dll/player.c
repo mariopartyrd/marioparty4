@@ -143,13 +143,13 @@ UnkM447Struct_04 *fn_1_3FC4(s32 arg0)
     fn_1_4590(temp_r3);
     fn_1_717C(temp_r3, 0, 0x40000001);
     if (temp_r3->unk1C == 0) {
-        CharModelMotionDataClose(temp_r3->unk18);
+        CharMotionDataClose(temp_r3->unk18);
     }
     if (temp_r3->unk1C != 0) {
-        temp_r3->unkB0 = (Process *)CharModelEffectNpcInit(temp_r3->unk68, temp_r3->unk6A[2], 1, 10);
-        temp_r3->unkB4 = (Process *)CharModelEffectNpcInit(temp_r3->unk68, temp_r3->unk6A[1], 0, 10);
+        temp_r3->unkB0 = (Process *)CharNpcDustSet(temp_r3->unk68, temp_r3->unk6A[2], 1, 10);
+        temp_r3->unkB4 = (Process *)CharNpcDustSet(temp_r3->unk68, temp_r3->unk6A[1], 0, 10);
     }
-    CharModelLayerSetAll(2);
+    CharEffectLayerSet(2);
     temp_r3->unkAC = HuPrcChildCreate(fn_1_43F8, 102, 0x3000, 0, lbl_1_bss_4);
     temp_r3->unkAC->user_data = temp_r3;
     for (i = 0; i < 2; i++) {
@@ -232,7 +232,7 @@ void fn_1_44B0(UnkM447Struct_04 *arg0)
     }
     else {
         for (i = 0; i < 9; i++) {
-            arg0->unk6A[i] = CharModelMotionCreate(arg0->unk18, lbl_1_rodata_2A0[arg0->unk18][i]);
+            arg0->unk6A[i] = CharMotionCreate(arg0->unk18, lbl_1_rodata_2A0[arg0->unk18][i]);
         }
     }
 }
@@ -269,7 +269,7 @@ void fn_1_4680(UnkM447Struct_04 *arg0)
     }
     else {
         for (i = 0; i < 9; i++) {
-            CharModelMotionKill(arg0->unk18, arg0->unk6A[i]);
+            CharMotionKill(arg0->unk18, arg0->unk6A[i]);
         }
     }
 }
@@ -809,7 +809,7 @@ void fn_1_717C(UnkM447Struct_04 *arg0, s32 arg1, s32 arg2)
         Hu3DMotionSet(arg0->unk68, arg0->unk6A[arg1]);
     }
     else {
-        CharModelMotionSet(arg0->unk18, arg0->unk6A[arg1]);
+        CharMotionSet(arg0->unk18, arg0->unk6A[arg1]);
     }
     Hu3DModelAttrSet(arg0->unk68, arg2);
     arg0->unkA4 = arg1;
@@ -821,7 +821,7 @@ void fn_1_71FC(UnkM447Struct_04 *arg0, s32 arg1, float arg2, float arg3, s32 arg
         Hu3DMotionShiftSet(arg0->unk68, arg0->unk6A[arg1], arg2, arg3, arg4);
     }
     else {
-        CharModelMotionShiftSet(arg0->unk18, arg0->unk6A[arg1], arg2, arg3, arg4);
+        CharMotionShiftSet(arg0->unk18, arg0->unk6A[arg1], arg2, arg3, arg4);
     }
     arg0->unkA4 = arg1;
 }

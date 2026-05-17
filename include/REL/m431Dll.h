@@ -106,11 +106,11 @@ typedef struct work_72B4 {
     s16 unk14;
     Unk72B4Data18 *unk18;
     Vec *unk1C;
-    HsfVector2f *unk20;
+    HuVec2f *unk20;
     GXColor *unk24;
     void *unk28;
     Vec unk2C[4];
-    HsfVector2f *unk5C;
+    HuVec2f *unk5C;
     float unk60;
     float unk64;
 } Work72B4;

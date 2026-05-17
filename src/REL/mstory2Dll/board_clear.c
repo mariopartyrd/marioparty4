@@ -415,7 +415,7 @@ void fn_1_D030(omObjData *object)
     Hu3DModelScaleSet(object->model[1], 1, 1, 1);
     Hu3DModelShadowSet(object->model[1]);
     fn_1_1DFC(object, 1, 1, 0, 1);
-    CharModelEffectNpcInit(object->model[1], object->motion[2], 1, 13);
+    CharNpcDustSet(object->model[1], object->motion[2], 1, 13);
 }
 
 void fn_1_D224(int arg0, int arg1, int arg2, int arg3, int arg4)
@@ -506,12 +506,12 @@ void fn_1_D898(omObjData *object, int player)
     int playerNo = player;
     int charNo = lbl_1_bss_3DC.unk30[playerNo].unk10;
     object->model[1] = CharModelCreate(charNo, 4);
-    object->motion[1] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-    object->motion[2] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
-    object->motion[3] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x05));
-    object->motion[4] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x1A));
-    object->motion[5] = CharModelMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x6D));
-    CharModelMotionDataClose(charNo);
+    object->motion[1] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+    object->motion[2] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
+    object->motion[3] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x05));
+    object->motion[4] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x1A));
+    object->motion[5] = CharMotionCreate(charNo, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x6D));
+    CharMotionDataClose(charNo);
     Hu3DModelPosSet(
         object->model[1], lbl_1_data_668[playerNo].x, lbl_1_data_668[lbl_1_bss_3DC.unk30[playerNo].unk18 - 1].y + 90, lbl_1_data_668[playerNo].z);
     Hu3DModelRotSet(object->model[1], 0, 0, 0);

@@ -390,8 +390,8 @@ s32 BoardModelMotionCreate(s16 model, s32 data_num)
             model = Hu3DJointMotion(model_ptr->id, model_ptr->mot_data[i]);
         }
         else {
-            model = CharModelMotionCreate(model_ptr->character, data_num);
-            CharModelMotionDataClose(model_ptr->character);
+            model = CharMotionCreate(model_ptr->character, data_num);
+            CharMotionDataClose(model_ptr->character);
         }
         model_ptr->mot_id[i] = model;
         model_ptr->mot_count++;
@@ -417,7 +417,7 @@ s32 BoardModelMotionKill(s16 model, s32 motion)
                 Hu3DMotionKill(model_ptr->mot_id[motion]);
             }
             else {
-                CharModelMotionKill(model_ptr->character, model_ptr->mot_id[motion]);
+                CharMotionKill(model_ptr->character, model_ptr->mot_id[motion]);
             }
             model_ptr->mot_id[motion] = -1;
         }
@@ -475,7 +475,7 @@ s32 BoardModelVoiceEnableSet(s16 model, s32 motion, s32 flag)
         if (model_ptr->character == -1) {
             return 0;
         }
-        CharModelVoiceEnableSet(model_ptr->character, model_ptr->mot_id[motion], flag);
+        CharMotionVoiceOnSet(model_ptr->character, model_ptr->mot_id[motion], flag);
         return 0;
     }
 }
@@ -495,14 +495,14 @@ s32 BoardModelMotionStart(s16 model, s32 motion, u32 attr)
             Hu3DMotionSet(model_ptr->id, model_ptr->mot_id[motion]);
         }
         else {
-            CharModelMotionSet(model_ptr->character, model_ptr->mot_id[motion]);
+            CharMotionSet(model_ptr->character, model_ptr->mot_id[motion]);
         }
         model_ptr->mot_start = 0.0f;
         if (model_ptr->character == -1) {
             model_ptr->mot_end = Hu3DMotionMaxTimeGet(model_ptr->id);
         }
         else {
-            model_ptr->mot_end = CharModelMotionMaxTimeGet(model_ptr->character);
+            model_ptr->mot_end = CharMotionMaxTimeGet(model_ptr->character);
         }
         model_ptr->field00_bit4 = 0;
         if (attr & 0x40000024) {
@@ -510,7 +510,7 @@ s32 BoardModelMotionStart(s16 model, s32 motion, u32 attr)
                 Hu3DMotionTimeSet(model_ptr->id, model_ptr->mot_end);
             }
             else {
-                CharModelMotionTimeSet(model_ptr->character, model_ptr->mot_end);
+                CharMotionTimeSet(model_ptr->character, model_ptr->mot_end);
             }
         }
         Hu3DModelAttrReset(model_ptr->id, HU3D_MOTATTR_LOOP | HU3D_MOTATTR_PAUSE);
@@ -546,14 +546,14 @@ s32 BoardModelMotionShiftSet(s16 model, s32 motion, float time, float shift_time
             model_ptr->mot_end = Hu3DMotionMaxTimeGet(model_ptr->id);
         }
         else {
-            model_ptr->mot_end = CharModelMotionMaxTimeGet(model_ptr->character);
+            model_ptr->mot_end = CharMotionMaxTimeGet(model_ptr->character);
         }
         model_ptr->field00_bit4 = 0;
         if (model_ptr->character == -1) {
             Hu3DMotionShiftSet(model_ptr->id, model_ptr->mot_id[motion], time, shift_time, attr);
         }
         else {
-            CharModelMotionShiftSet(model_ptr->character, model_ptr->mot_id[motion], time, shift_time, attr);
+            CharMotionShiftSet(model_ptr->character, model_ptr->mot_id[motion], time, shift_time, attr);
         }
         model_ptr->curr_mot = motion;
         return 0;
@@ -595,7 +595,7 @@ s32 BoardModelMotionTimeSet(s16 model, float time)
             Hu3DMotionTimeSet(model_ptr->id, time);
         }
         else {
-            CharModelMotionTimeSet(model_ptr->character, time);
+            CharMotionTimeSet(model_ptr->character, time);
         }
         return 0;
     }
@@ -613,7 +613,7 @@ float BoardModelMotionTimeGet(s16 model)
             time = Hu3DData[model_ptr->id].unk_64;
         }
         else {
-            time = CharModelMotionTimeGet(model_ptr->character);
+            time = CharMotionTimeGet(model_ptr->character);
         }
         return time;
     }
@@ -631,7 +631,7 @@ float BoardModelMotionMaxTimeGet(s16 model)
             time = Hu3DMotionMaxTimeGet(model_ptr->id);
         }
         else {
-            time = CharModelMotionMaxTimeGet(model_ptr->character);
+            time = CharMotionMaxTimeGet(model_ptr->character);
         }
         return time;
     }
@@ -661,7 +661,7 @@ s32 BoardModelMotionSpeedSet(s16 model, float speed)
             Hu3DMotionSpeedSet(model_ptr->id, speed);
         }
         else {
-            CharModelMotionSpeedSet(model_ptr->character, speed);
+            CharMotionSpeedSet(model_ptr->character, speed);
         }
         hsf_model = &Hu3DData[model_ptr->id];
         hsf_model->unk_88 = speed;
@@ -681,7 +681,7 @@ s32 BoardModelMotionEndCheck(s16 model)
             result = Hu3DMotionEndCheck(model_ptr->id);
         }
         else {
-            result = CharModelMotionEndCheck(model_ptr->character);
+            result = CharMotionEndCheck(model_ptr->character);
         }
         return result;
     }
@@ -1237,7 +1237,7 @@ static s32 CreateBoardModelMotion(BoardModel *model, s32 count, s32 *data_num)
             index = Hu3DJointMotion(model->id, data);
         }
         else {
-            index = CharModelMotionCreate(model->character, data_num[i]);
+            index = CharMotionCreate(model->character, data_num[i]);
         }
         if (index < 0) {
             return -1;

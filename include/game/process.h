@@ -24,7 +24,7 @@ typedef struct process {
     u32 base_sp;
     jmp_buf jump;
     void (*dtor)(void);
-    void *user_data;
+    void *user_data; // TODO rename to property
 } Process;
 
 void HuPrcInit(void);

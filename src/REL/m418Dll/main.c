@@ -1165,15 +1165,15 @@ void fn_1_4F60(omObjData *object)
 
     temp_r30 = &lbl_1_bss_26C[object->work[0]];
     object->model[0] = CharModelCreate(temp_r30->unk14, 2);
-    object->motion[0] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
-    object->motion[1] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-    object->motion[2] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
-    object->motion[3] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x73));
-    object->motion[4] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x74));
-    object->motion[5] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
-    object->motion[6] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
-    object->motion[7] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x1B));
-    object->motion[8] = CharModelMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x2A));
+    object->motion[0] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x00));
+    object->motion[1] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+    object->motion[2] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
+    object->motion[3] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x73));
+    object->motion[4] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x74));
+    object->motion[5] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x17));
+    object->motion[6] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
+    object->motion[7] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x1B));
+    object->motion[8] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x2A));
     object->motion[9] = Hu3DJointMotion(object->model[0], HuDataSelHeapReadNum(temp_r30->unk14 + 0x310000, 0x10000000, HEAP_DATA));
     object->motion[10] = Hu3DJointMotion(object->model[0], HuDataSelHeapReadNum(temp_r30->unk14 + 0x310008, 0x10000000, HEAP_DATA));
     object->model[1] = Hu3DModelCreateFile(0x310017);
@@ -1183,7 +1183,7 @@ void fn_1_4F60(omObjData *object)
         Hu3DMotionOverlaySet(object->model[0], object->motion[9]);
         Hu3DMotionOverlaySpeedSet(object->model[0], 0.0f);
         object->model[11] = Hu3DModelCreateFile(0x31002F);
-        Hu3DModelHookSet(object->model[0], CharModelHookNameGet(temp_r30->unk14, 2, 0), object->model[11]);
+        Hu3DModelHookSet(object->model[0], CharModelItemHookGet(temp_r30->unk14, 2, 0), object->model[11]);
         if ((temp_r30->unk14 == 4) || (temp_r30->unk14 == 5)) {
             Hu3DModelScaleSet(object->model[11], 1.0f, 1.2f, 1.0f);
         }
@@ -1197,7 +1197,7 @@ void fn_1_4F60(omObjData *object)
         fn_1_ABC4(object, 0xD, 0xD, 0, 2);
     }
     lbl_1_data_1E0[object->work[0]][0] = -1;
-    CharModelMotionDataClose(temp_r30->unk14);
+    CharMotionDataClose(temp_r30->unk14);
     CharModelLayerSetAll2(7);
     object->func = fn_1_4C84;
 }

@@ -153,7 +153,7 @@ void fn_1_4988(omObjData *object)
     temp_r31->unk64 = sp1C[GWPlayerCfg[temp_r27].diff & 0x3];
     temp_r31->unk68 = spC[GWPlayerCfg[temp_r27].diff & 0x3];
     object->model[0] = CharModelCreate(temp_r28, 8);
-    CharModelStepTypeSet(temp_r28, 3);
+    CharModelStepFxSet(temp_r28, 3);
     Hu3DModelCameraSet(object->model[0], 4);
     Hu3DModelLayerSet(object->model[0], 4);
     object->model[1] = Hu3DModelCreateFile(lbl_1_data_1DC[temp_r31->unk0]);
@@ -163,13 +163,13 @@ void fn_1_4988(omObjData *object)
     Hu3DModelClusterAttrSet(object->model[1], 0, 0xC0000001);
     for (temp_r29 = 0; temp_r29 < 10; temp_r29++) {
         if (lbl_1_data_1FC[temp_r29] < 0x10000) {
-            object->motion[temp_r29] = CharModelMotionCreate(temp_r28, lbl_1_data_1FC[temp_r29]);
+            object->motion[temp_r29] = CharMotionCreate(temp_r28, lbl_1_data_1FC[temp_r29]);
         }
         else {
             object->motion[temp_r29] = Hu3DJointMotionFile(object->model[0], temp_r28 + lbl_1_data_1FC[temp_r29]);
         }
     }
-    CharModelMotionDataClose(temp_r28);
+    CharMotionDataClose(temp_r28);
     object->trans.x = temp_r31->unk88.x = ((2.0f * object->work[1]) * 100.0f) - 300.0f;
     object->trans.y = temp_r31->unk88.y = -70;
     object->trans.z = temp_r31->unk88.z = 0;
@@ -258,9 +258,9 @@ void fn_1_4E50(omObjData *object)
                 temp_r31->unk94.z += 225.0f * (temp_r31->unk1C * cosd(temp_r31->unk20)) * (1.0f / REFRESH_RATE);
                 temp_r31->unk48 = 0.2f;
                 temp_r31->unk4C = 0;
-                if (CharModelMotionShiftIDGet(temp_r31->unk8) < 0) {
+                if (CharMotionShiftIDGet(temp_r31->unk8) < 0) {
                     fn_1_60AC(object, 1);
-                    CharModelMotionSpeedSet(temp_r31->unk8, temp_r31->unk1C);
+                    CharMotionSpeedSet(temp_r31->unk8, temp_r31->unk1C);
                 }
                 if (temp_r31->unk1C > 0.75f && (temp_r31->unk3A & 0x7) == 0) {
                     fn_1_8C14(object->work[0], &temp_r31->unk88, temp_r31->unk1C);
@@ -271,7 +271,7 @@ void fn_1_4E50(omObjData *object)
             }
             else {
                 temp_r31->unk24 = 0;
-                if (CharModelMotionShiftIDGet(temp_r31->unk8) < 0) {
+                if (CharMotionShiftIDGet(temp_r31->unk8) < 0) {
                     fn_1_60AC(object, 0);
                 }
             }
@@ -331,9 +331,9 @@ void fn_1_4E50(omObjData *object)
                         temp_r31->unk44 = temp_r31->unk40 + temp_f28;
                         temp_r31->unk48 = 0.2f;
                         temp_r31->unk4C = 0;
-                        if (CharModelMotionShiftIDGet(temp_r31->unk8) < 0) {
+                        if (CharMotionShiftIDGet(temp_r31->unk8) < 0) {
                             fn_1_60AC(object, 4);
-                            CharModelMotionSpeedSet(temp_r31->unk8, 0.5f);
+                            CharMotionSpeedSet(temp_r31->unk8, 0.5f);
                         }
                         if (temp_r31->unk54 < 3) {
                             temp_r28 = fn_1_8884(&temp_r31->unk88, 20, 150, temp_r31->unk40, -15, 15, 1, object->work[0]);
@@ -345,7 +345,7 @@ void fn_1_4E50(omObjData *object)
                     }
                     else {
                         temp_r31->unk24 = 0;
-                        if (CharModelMotionShiftIDGet(temp_r31->unk8) < 0) {
+                        if (CharMotionShiftIDGet(temp_r31->unk8) < 0) {
                             fn_1_60AC(object, 3);
                         }
                     }
@@ -564,8 +564,8 @@ void fn_1_60AC(omObjData *arg0, u32 arg1)
             temp_f31 = 0;
         }
         temp_r30->unk10 = arg1;
-        CharModelMotionShiftSet(temp_r30->unk8, arg0->motion[lbl_1_data_224[arg1].unk0], 0, temp_f31, lbl_1_data_224[arg1].unkC);
-        CharModelMotionSpeedSet(temp_r30->unk8, 1.0f);
+        CharMotionShiftSet(temp_r30->unk8, arg0->motion[lbl_1_data_224[arg1].unk0], 0, temp_f31, lbl_1_data_224[arg1].unkC);
+        CharMotionSpeedSet(temp_r30->unk8, 1.0f);
         if (lbl_1_data_224[arg1].unk2) {
             Hu3DMotionOverlaySet(arg0->model[0], arg0->motion[lbl_1_data_224[arg1].unk2]);
             Hu3DMotionOverlayTimeSet(arg0->model[0], lbl_1_data_224[arg1].unk8);
@@ -581,7 +581,7 @@ s32 fn_1_6248(omObjData *object)
 {
     Work4988 *temp_r31 = object->data;
     s32 temp_r30 = 0;
-    if (CharModelMotionEndCheck(temp_r31->unk8) && CharModelMotionShiftIDGet(temp_r31->unk8) < 0) {
+    if (CharMotionEndCheck(temp_r31->unk8) && CharMotionShiftIDGet(temp_r31->unk8) < 0) {
         temp_r30 = 1;
     }
     return temp_r30;

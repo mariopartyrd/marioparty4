@@ -1004,7 +1004,7 @@ void fn_1_3C00(omObjData *object)
     netOfs.x = 0;
     netOfs.y = 0;
     netOfs.z = 170;
-    Hu3DModelObjMtxGet(object->model[0], CharModelHookNameGet(work->unkB4, 2, 0), hookMtx);
+    Hu3DModelObjMtxGet(object->model[0], CharModelItemHookGet(work->unkB4, 2, 0), hookMtx);
     MTXMultVec(hookMtx, &netOfs, &work->unk28);
 }
 
@@ -1069,14 +1069,14 @@ void fn_1_40A8(omObjData *object)
             if (0.0f > work->unk64.x && lbl_1_bss_4C->work[0] == 1006) {
                 work->unk98++;
                 work->unk64.x = 40;
-                Hu3DModelObjMtxGet(object->model[0], CharModelHookNameGet(work->unkB4, 2, 0), hookMtx);
+                Hu3DModelObjMtxGet(object->model[0], CharModelItemHookGet(work->unkB4, 2, 0), hookMtx);
                 Hu3DMtxTransGet(hookMtx, &work->unk28);
                 Hu3DMtxRotGet(hookMtx, &work->unk34);
                 Hu3DMtxScaleGet(hookMtx, &work->unk40);
                 Hu3DModelPosSet(object->model[1], work->unk28.x, work->unk28.y, work->unk28.z);
                 Hu3DModelRotSet(object->model[1], work->unk34.x, work->unk34.y, work->unk34.z);
                 Hu3DModelScaleSet(object->model[1], work->unk40.x, work->unk40.y, work->unk40.z);
-                Hu3DModelHookObjReset(object->model[0], CharModelHookNameGet(work->unkB4, 2, 0));
+                Hu3DModelHookObjReset(object->model[0], CharModelItemHookGet(work->unkB4, 2, 0));
             }
             break;
 
@@ -1179,13 +1179,13 @@ void fn_1_40A8(omObjData *object)
                 if (18.0f == motTime) {
                     Hu3DParManAttrSet(work->unkE0, 1);
                     Hu3DModelPosSet(object->model[2], 0, 0, 0);
-                    Hu3DModelHookObjReset(object->model[0], CharModelHookNameGet(work->unkB4, 2, 4));
-                    Hu3DModelHookSet(object->model[0], CharModelHookNameGet(work->unkB4, 2, 0), object->model[2]);
+                    Hu3DModelHookObjReset(object->model[0], CharModelItemHookGet(work->unkB4, 2, 4));
+                    Hu3DModelHookSet(object->model[0], CharModelItemHookGet(work->unkB4, 2, 0), object->model[2]);
                 }
                 if (40.0f == motTime) {
                     work->unk64.z = 0;
-                    Hu3DModelHookObjReset(object->model[0], CharModelHookNameGet(work->unkB4, 2, 0));
-                    fn_1_1D18(object->model[0], CharModelHookNameGet(work->unkB4, 2, 0), &work->unk4C);
+                    Hu3DModelHookObjReset(object->model[0], CharModelItemHookGet(work->unkB4, 2, 0));
+                    fn_1_1D18(object->model[0], CharModelItemHookGet(work->unkB4, 2, 0), &work->unk4C);
                     work->unk4C.z += 20.0f;
                     Hu3DModelPosSet(object->model[2], work->unk4C.x, work->unk4C.y, work->unk4C.z);
                 }
@@ -1314,14 +1314,14 @@ void fn_1_53E8(omObjData *object)
     work->unk4C.y = 0;
     work->unk4C.z = 0;
     object->model[0] = CharModelCreate(lbl_1_data_0[work->unkB4], 2);
-    CharModelStepTypeSet(lbl_1_data_0[work->unkB4], 0);
+    CharModelStepFxSet(lbl_1_data_0[work->unkB4], 0);
     for (i = 0; i < 16; i++) {
-        object->motion[i] = CharModelMotionCreate(lbl_1_data_0[work->unkB4], lbl_1_data_B0[work->unkB4][i]);
-        CharModelMotionSet(lbl_1_data_0[work->unkB4], object->motion[i]);
+        object->motion[i] = CharMotionCreate(lbl_1_data_0[work->unkB4], lbl_1_data_B0[work->unkB4][i]);
+        CharMotionSet(lbl_1_data_0[work->unkB4], object->motion[i]);
     }
-    CharModelMotionIndexSet(work->unkB4, object->motion[2], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-    CharModelMotionIndexSet(work->unkB4, object->motion[7], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
-    CharModelMotionIndexSet(work->unkB4, object->motion[3], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
+    CharMotionNoSet(work->unkB4, object->motion[2], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+    CharMotionNoSet(work->unkB4, object->motion[7], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x02));
+    CharMotionNoSet(work->unkB4, object->motion[3], DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x03));
     Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
     Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
     Hu3DModelLayerSet(object->model[0], 2);
@@ -1333,7 +1333,7 @@ void fn_1_53E8(omObjData *object)
     Hu3DModelAttrSet(object->model[1], HU3D_ATTR_DISPOFF);
     Hu3DModelAttrReset(object->model[1], HU3D_MOTATTR_LOOP);
     Hu3DModelLayerSet(object->model[1], 2);
-    Hu3DModelHookSet(object->model[0], CharModelHookNameGet(work->unkB4, 2, 0), object->model[1]);
+    Hu3DModelHookSet(object->model[0], CharModelItemHookGet(work->unkB4, 2, 0), object->model[1]);
     object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M441, 0x42));
     for (i = 13; i <= 15; i++) {
         object->motion[i] = Hu3DJointMotionFile(object->model[2], lbl_1_data_2B8[i - 13]);
@@ -1341,7 +1341,7 @@ void fn_1_53E8(omObjData *object)
     Hu3DModelAttrSet(object->model[2], HU3D_ATTR_DISPOFF);
     Hu3DModelAttrReset(object->model[2], HU3D_MOTATTR_LOOP);
     Hu3DModelLayerSet(object->model[2], 2);
-    Hu3DModelHookSet(object->model[0], CharModelHookNameGet(work->unkB4, 2, 4), object->model[2]);
+    Hu3DModelHookSet(object->model[0], CharModelItemHookGet(work->unkB4, 2, 4), object->model[2]);
     for (i = 0; i < 4; i++) {
         work->unkD0[i] = espEntry(lbl_1_data_2C4[i], 0, 0);
         espDrawNoSet(work->unkD0[i], 0x40);
@@ -1383,7 +1383,7 @@ void fn_1_53E8(omObjData *object)
         }
     }
     CharModelLayerSetAll2(6);
-    CharModelMotionDataClose(lbl_1_data_0[work->unkB4]);
+    CharMotionDataClose(lbl_1_data_0[work->unkB4]);
     object->func = fn_1_40A8;
 }
 

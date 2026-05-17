@@ -1200,7 +1200,7 @@ s16 fn_1_5A18(AnimData *arg0, s16 arg1, f32 arg8, s16 arg2, s16 arg3)
     unkStruct5 *var_r24;
     Vec *var_r25;
     GXColor *var_r27;
-    HsfVector2f *var_r29;
+    HuVec2f *var_r29;
 
     var_r21 = Hu3DHookFuncCreate(fn_1_602C);
     temp_r28 = &Hu3DData[var_r21];
@@ -1230,7 +1230,7 @@ s16 fn_1_5A18(AnimData *arg0, s16 arg1, f32 arg8, s16 arg2, s16 arg3)
     for (var_r30 = 0; var_r30 < arg1; var_r30++, var_r27++) {
         var_r27->r = var_r27->g = var_r27->b = var_r27->a = 0xFF;
     }
-    var_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(HsfVector2f) * 4, temp_r28->unk_48);
+    var_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(HuVec2f) * 4, temp_r28->unk_48);
     var_r31->unk20 = var_r29;
 
     for (var_r30 = 0; var_r30 < arg1; var_r30++) {
@@ -1260,7 +1260,7 @@ s16 fn_1_5A18(AnimData *arg0, s16 arg1, f32 arg8, s16 arg2, s16 arg3)
         var_r31->unk60 = 1.0f;
         var_r31->unk64 = 1.0f;
     }
-    var_r31->unk5C = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk14 * sizeof(HsfVector2f), temp_r28->unk_48);
+    var_r31->unk5C = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk14 * sizeof(HuVec2f), temp_r28->unk_48);
     fn_1_6608(var_r31->unk5C, var_r31->unk14, var_r22, var_r31->unk60, var_r31->unk64);
     var_r31->unk2C.x = var_r31->unk50.x = var_r31->unk44.y = var_r31->unk50.y = -arg8;
     var_r31->unk38.x = var_r31->unk44.x = var_r31->unk2C.y = var_r31->unk38.y = arg8;
@@ -1340,7 +1340,7 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
     Vec sp8;
     Vec *var_r31;
     s16 var_r24;
-    HsfVector2f *var_r26;
+    HuVec2f *var_r26;
     s16 var_r25;
     unkStruct6 *temp_r30;
     unkStruct5 *var_r29;
@@ -1445,7 +1445,7 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
     GXCallDisplayList(temp_r30->unk28, temp_r30->unk4);
 }
 
-void fn_1_6608(HsfVector2f *arg0, s16 arg1, s16 arg2, f32 arg3, f32 arg4)
+void fn_1_6608(HuVec2f *arg0, s16 arg1, s16 arg2, f32 arg3, f32 arg4)
 {
     s16 var_r31;
     s16 var_r30;
@@ -1459,7 +1459,7 @@ void fn_1_6608(HsfVector2f *arg0, s16 arg1, s16 arg2, f32 arg3, f32 arg4)
     }
 }
 
-void fn_1_66D4(HsfVector2f *arg0, HsfVector2f *arg1, s16 arg2, f32 arg3, f32 arg4)
+void fn_1_66D4(HuVec2f *arg0, HuVec2f *arg1, s16 arg2, f32 arg3, f32 arg4)
 {
     arg0[0].x = arg1[arg2].x;
     arg0[0].y = arg1[arg2].y;

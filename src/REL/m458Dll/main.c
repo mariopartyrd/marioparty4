@@ -1435,7 +1435,7 @@ void fn_1_6314(omObjData *object)
     }
     for (var_r29 = 0; var_r29 < 0xA; var_r29++) {
         if (work->unk_08 != -1) {
-            object->motion[var_r29] = CharModelMotionCreate(work->unk_08, lbl_1_data_10[var_r29] + (lbl_1_data_38[var_r29] != 0 ? work->unk_08 : 0));
+            object->motion[var_r29] = CharMotionCreate(work->unk_08, lbl_1_data_10[var_r29] + (lbl_1_data_38[var_r29] != 0 ? work->unk_08 : 0));
         }
         else if (lbl_1_data_60[var_r29] != 0) {
             object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], lbl_1_data_60[var_r29]);
