@@ -2063,7 +2063,7 @@ void fn_1_ADC8(void)
 
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
         temp_r30 = &lbl_1_bss_4D4[var_r31];
-        HuAudPlayerVoicePlay(temp_r30->unk24, 0x128);
+        PlayerFXPlay(temp_r30->unk24, 0x128);
         CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[var_r31].character], temp_r30->unkC[4], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
         Hu3DMotionShiftSet(temp_r30->unk2, temp_r30->unk18[4], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     }

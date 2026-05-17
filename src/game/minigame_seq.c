@@ -33,7 +33,7 @@ typedef struct seq_info {
     s32 time_max;
 } SeqInfo;
 
-OverlayID mgSeqOvlPrev = OVL_INVALID;
+OMOVL mgSeqOvlPrev = DLL_NONE;
 
 static SeqInfo seqInfoTbl[] = {
     { NULL, NULL, HU_DISP_CENTERX + 4, HU_DISP_CENTERY, 1.0f, 1.0f, 60 },
@@ -3076,8 +3076,8 @@ s32 MGSeqInitRecord(SeqWork *work, va_list params)
         sprite = HuSprCreate(spr_data, 0, 0);
         HuSprGrpMemberSet(spr_grp, i + 2, sprite);
     }
-    if (omcurovl == OVL_M407 || omcurovl == OVL_M453 || omcurovl == OVL_M459 || omcurovl == OVL_M460 || omcurovl == OVL_M462
-        || omcurovl == OVL_M442) {
+    if (omcurovl == DLL_m407dll || omcurovl == DLL_m453dll || omcurovl == DLL_m459dll || omcurovl == DLL_m460dll || omcurovl == DLL_m462dll
+        || omcurovl == DLL_m442dll) {
         digit_idx = 0;
         if (seqRecordVal > 9999) {
             seqRecordVal = 9999;
@@ -3138,7 +3138,7 @@ s32 MGSeqInitRecord(SeqWork *work, va_list params)
         HuSprBankSet(spr_grp, digit_idx + 2, 11);
         time_pos[1] = digit_idx;
         digit_idx++;
-        if (omcurovl == OVL_M405 || omcurovl == OVL_M432 || omcurovl == OVL_M461) {
+        if (omcurovl == DLL_m405dll || omcurovl == DLL_m432dll || omcurovl == DLL_m461dll) {
             seqRecordVal = (float)seqRecordVal * (101.5 / REFRESH_RATE);
         }
         else {
@@ -3433,91 +3433,91 @@ void MGSeqPauseEnableCtrl(s32 flag)
 static void PracticeProc(void);
 
 static s16 practiceTbl[][2] = {
-    OVL_M401,
+    DLL_m401dll,
     1,
-    OVL_M402,
+    DLL_m402dll,
     1,
-    OVL_M403,
+    DLL_m403dll,
     1,
-    OVL_M405,
+    DLL_m405dll,
     1,
-    OVL_M406,
+    DLL_m406dll,
     0,
-    OVL_M407,
+    DLL_m407dll,
     1,
-    OVL_M408,
+    DLL_m408dll,
     0,
-    OVL_M409,
+    DLL_m409dll,
     0,
-    OVL_M410,
+    DLL_m410dll,
     1,
-    OVL_M411,
+    DLL_m411dll,
     2,
-    OVL_M412,
+    DLL_m412dll,
     1,
-    OVL_M413,
+    DLL_m413dll,
     0,
-    OVL_M414,
+    DLL_m414dll,
     2,
-    OVL_M415,
+    DLL_m415dll,
     1,
-    OVL_M443,
+    DLL_m443dll,
     2,
-    OVL_M416,
+    DLL_m416dll,
     1,
-    OVL_M417,
+    DLL_m417dll,
     1,
-    OVL_M418,
+    DLL_m418dll,
     1,
-    OVL_M419,
+    DLL_m419dll,
     1,
-    OVL_M420,
+    DLL_m420dll,
     1,
-    OVL_M421,
+    DLL_m421dll,
     1,
-    OVL_M422,
+    DLL_m422dll,
     1,
-    OVL_M423,
+    DLL_m423dll,
     1,
-    OVL_M424,
+    DLL_m424dll,
     1,
-    OVL_M425,
+    DLL_m425dll,
     1,
-    OVL_M426,
+    DLL_m426dll,
     1,
-    OVL_M427,
+    DLL_m427dll,
     0,
-    OVL_M428,
+    DLL_m428dll,
     0,
-    OVL_M429,
+    DLL_m429dll,
     2,
-    OVL_M430,
+    DLL_m430dll,
     1,
-    OVL_M431,
+    DLL_m431dll,
     1,
-    OVL_M432,
+    DLL_m432dll,
     1,
-    OVL_M433,
+    DLL_m433dll,
     0,
-    OVL_M434,
+    DLL_m434dll,
     1,
-    OVL_M404,
+    DLL_m404dll,
     0,
-    OVL_M438,
+    DLL_m438dll,
     1,
-    OVL_M439,
+    DLL_m439dll,
     2,
-    OVL_M440,
+    DLL_m440dll,
     1,
-    OVL_M441,
+    DLL_m441dll,
     1,
-    OVL_M442,
+    DLL_m442dll,
     1,
-    OVL_M455,
+    DLL_m455dll,
     0,
-    OVL_M456,
+    DLL_m456dll,
     0,
-    OVL_INVALID,
+    DLL_NONE,
     0,
 };
 
@@ -3530,7 +3530,7 @@ void MGSeqPracticeInit(void)
         return;
     }
     wipeFadeInF = 0;
-    for (i = 0; practiceTbl[i][0] != OVL_INVALID; i++) {
+    for (i = 0; practiceTbl[i][0] != DLL_NONE; i++) {
         if (omcurovl == practiceTbl[i][0]) {
             break;
         }
@@ -3551,7 +3551,7 @@ static void PracticeProc(void)
     float time;
     static float yPosTbl[] = { 53, HU_DISP_HEIGHT - 56, HU_DISP_CENTERY };
     time = 0.0f;
-    for (i = 0; practiceTbl[i][0] != OVL_INVALID; i++) {
+    for (i = 0; practiceTbl[i][0] != DLL_NONE; i++) {
         if (omcurovl == practiceTbl[i][0]) {
             break;
         }
@@ -3594,22 +3594,22 @@ static void PracticeProc(void)
 }
 
 static s16 seqStartFXTbl[][2]
-    = { OVL_M401, 17, OVL_M402, 16, OVL_M403, 12, OVL_M404, 12, OVL_M405, 17, OVL_M406, 12, OVL_M407, 16, OVL_M408, 12, OVL_M409, 16, OVL_M410, 12,
-          OVL_M411, 16, OVL_M412, 12, OVL_M413, 16, OVL_M414, 16, OVL_M415, 16, OVL_M416, 16, OVL_M417, 17, OVL_M418, 16, OVL_M419, 16, OVL_M420, 16,
-          OVL_M421, 16, OVL_M422, 12, OVL_M423, 12, OVL_M424, 16, OVL_M425, 16, OVL_M426, 16, OVL_M427, 12, OVL_M428, 12, OVL_M429, 16, OVL_M430, 12,
-          OVL_M431, 16, OVL_M432, 12, OVL_M433, 12, OVL_M434, 16, OVL_M435, 12, OVL_M436, 16, OVL_M437, 12, OVL_M438, 16, OVL_M439, 12, OVL_M440, 16,
-          OVL_M441, 16, OVL_M442, 16, OVL_M443, -1, OVL_M444, -1, OVL_M445, 12, OVL_M446, -1, OVL_M447, 12, OVL_M448, -1, OVL_M449, 16, OVL_M450, 12,
-          OVL_M455, 17, OVL_M456, 17, OVL_M457, 12, OVL_M458, 12, OVL_M459, 17, OVL_M460, 12, OVL_M461, 12, OVL_M462, 12, OVL_INVALID, 0 };
+    = { DLL_m401dll, 17, DLL_m402dll, 16, DLL_m403dll, 12, DLL_m404dll, 12, DLL_m405dll, 17, DLL_m406dll, 12, DLL_m407dll, 16, DLL_m408dll, 12, DLL_m409dll, 16, DLL_m410dll, 12,
+          DLL_m411dll, 16, DLL_m412dll, 12, DLL_m413dll, 16, DLL_m414dll, 16, DLL_m415dll, 16, DLL_m416dll, 16, DLL_m417dll, 17, DLL_m418dll, 16, DLL_m419dll, 16, DLL_m420dll, 16,
+          DLL_m421dll, 16, DLL_m422dll, 12, DLL_m423dll, 12, DLL_m424dll, 16, DLL_m425dll, 16, DLL_m426dll, 16, DLL_m427dll, 12, DLL_m428dll, 12, DLL_m429dll, 16, DLL_m430dll, 12,
+          DLL_m431dll, 16, DLL_m432dll, 12, DLL_m433dll, 12, DLL_m434dll, 16, DLL_m435dll, 12, DLL_m436dll, 16, DLL_m437dll, 12, DLL_m438dll, 16, DLL_m439dll, 12, DLL_m440dll, 16,
+          DLL_m441dll, 16, DLL_m442dll, 16, DLL_m443dll, -1, DLL_m444dll, -1, DLL_m445dll, 12, DLL_m446dll, -1, DLL_m447dll, 12, DLL_m448dll, -1, DLL_m449dll, 16, DLL_m450dll, 12,
+          DLL_m455dll, 17, DLL_m456dll, 17, DLL_m457dll, 12, DLL_m458dll, 12, DLL_m459dll, 17, DLL_m460dll, 12, DLL_m461dll, 12, DLL_m462dll, 12, DLL_NONE, 0 };
 
 static void SeqPlayStartFX(void)
 {
     s16 i;
-    for (i = 0; seqStartFXTbl[i][0] != OVL_INVALID; i++) {
+    for (i = 0; seqStartFXTbl[i][0] != DLL_NONE; i++) {
         if (omcurovl == seqStartFXTbl[i][0]) {
             break;
         }
     }
-    if (seqStartFXTbl[i][0] == OVL_INVALID || seqStartFXTbl[i][1] == -1) {
+    if (seqStartFXTbl[i][0] == DLL_NONE || seqStartFXTbl[i][1] == -1) {
         return;
     }
     HuAudFXPlay(seqStartFXTbl[i][1]);

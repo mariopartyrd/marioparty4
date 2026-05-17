@@ -1018,7 +1018,7 @@ void fn_1_16F8(omObjData *object)
                     }
                 }
                 if (object->trans.y <= 0.0f) {
-                    HuAudCharVoicePlay(var_r31->unk_0C, 281);
+                    CharFXPlay(var_r31->unk_0C, 281);
                     var_r31->unk_9C.x = var_r31->unk_9C.z = 0.0f;
                     var_r31->unk_9C.y = 28.0f;
                     object->trans.y = 0.0f;
@@ -1034,7 +1034,7 @@ void fn_1_16F8(omObjData *object)
                     var_r31->unk_9C.y = 0.0f;
                     var_r31->unk_24 = 6;
                     var_r31->unk_2C = 0;
-                    HuAudCharVoicePlay(var_r31->unk_0C, 281);
+                    CharFXPlay(var_r31->unk_0C, 281);
                     var_r31->unk_28 = 6;
                     CharModelMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_28], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
                 }
@@ -1277,7 +1277,7 @@ void fn_1_2B74(Vec *arg0)
                         if (var_r27 != -1) {
                             HuAudFXPanning(var_r27, var_r29->unk_00 * 64 + 32);
                         }
-                        HuAudCharVoicePlay(var_r31->unk_0C, 291);
+                        CharFXPlay(var_r31->unk_0C, 291);
                         if (var_r27 != -1) {
                             HuAudFXPanning(var_r27, var_r29->unk_00 * 64 + 32);
                         }

@@ -34,80 +34,80 @@ static char *smCharTbl[] = { "Mario", "Luigi", "Peach", "Yoshi", "Wario", "Donke
 typedef struct sm_entry {
     u16 enabled;
     char *name;
-    OverlayID overlay;
+    OMOVL overlay;
 } SMEntry;
 
 static SMEntry smMenuTbl[SM_PAGE_MAX * SM_PAGE_SIZE] = {
-    { 1, "401:WAKUGURI DIVING", OVL_M401 },
-    { 1, "402:PURURUN! BIGSLIME", OVL_M402 },
-    { 1, "403:TAORERUKABE!", OVL_M403 },
-    { 1, "404:CRAYON RUNNER", OVL_M404 },
-    { 1, "405:MEDREY RACE", OVL_M405 },
-    { 1, "406:SKI RACE", OVL_M406 },
-    { 1, "407:BATTANDOMINO", OVL_M407 },
-    { 1, "408:SKY DIVE", OVL_M408 },
-    { 1, "409:CRAY SHOT", OVL_M409 },
-    { 1, "410:JANJAN FREE THROW", OVL_M410 },
-    { 1, "411:PAZZLE DE PONG", OVL_M411 },
-    { 1, "412:SNOW THROW", OVL_M412 },
-    { 1, "413:BOMBHEI PAZZLE!", OVL_M413 },
-    { 1, "414:NERATTE UTE!", OVL_M414 },
-    { 1, "415:PYONPYON STAMP", OVL_M415 },
-    { 1, "416:MAMORE FIRE", OVL_M416 },
-    { 1, "417:MARIO SURFER", OVL_M417 },
-    { 1, "418:TAIHOU KAKURENBO", OVL_M418 },
-    { 1, "419:BANANA DE KOROBASE", OVL_M419 },
-    { 1, "420:WATER BATTLE", OVL_M420 },
-    { 1, "421:BODY BALOON", OVL_M421 },
-    { 1, "422:BELCON COIN", OVL_M422 },
-    { 1, "423:GOAL AND GOAL", OVL_M423 },
-    { 1, "424:CLANE CATCH", OVL_M424 },
-    { 1, "425:AIR DOSSUN", OVL_M425 },
-    { 1, "426:KYOROKYORO PANIC", OVL_M426 },
-    { 1, "427:BOAT RACE", OVL_M427 },
-    { 1, "428:THE ROCK CLIME", OVL_M428 },
-    { 1, "429:TREASURE FOREST", OVL_M429 },
-    { 1, "430:PARASAILING GO", OVL_M430 },
-    { 1, "431:GURUGURU BOX", OVL_M431 },
-    { 1, "432:PAIR DE RACE", OVL_M432 },
-    { 1, "433:BEACH VOLLEY", OVL_SUBCHRSEL },
-    { 1, "434:KINGYOSUKUI", OVL_M434 },
-    { 1, "435:KOOPA DARTS", OVL_M435 },
-    { 1, "436:KOOPANO AREGA TABETAI!", OVL_M436 },
-    { 1, "437:FUSEN RAKUGO", OVL_M437 },
-    { 1, "438:SYAKUNETSU WANWAN ATTACK", OVL_M438 },
-    { 1, "439:GURUGURU DANGEROUS", OVL_M439 },
-    { 1, "440:NEO KOOPA BAKUDAN", OVL_M440 },
-    { 1, "441:HIRAHIRA CHOUCHO", OVL_M441 },
-    { 1, "442:SUIMYAKU HORE2", OVL_M442 },
-    { 1, "443:DRUG RACE", OVL_M443 },
-    { 1, "444:MIRACLE PINBALL", OVL_M444 },
-    { 1, "445:KINOPIO HAMMER", OVL_M445 },
-    { 1, "446:3MAI SOROERO!", OVL_M446 },
-    { 1, "447:IQ BLOCK", OVL_M447 },
-    { 1, "448:FUMIKURI", OVL_M448 },
-    { 1, "449:NOKO2 KOURA PAZZLE", OVL_M449 },
-    { 1, "450:LAST GAME", OVL_M450 },
-    { 1, "451:PAZZLE", OVL_M451 },
-    { 1, "455:BURUTTE 1BAN", OVL_M455 },
-    { 1, "456:MOGUTTE 1BAN", OVL_M456 },
-    { 1, "457:SUMOH", OVL_M457 },
-    { 1, "458:PSYCOLO BATTLE", OVL_M458 },
-    { 1, "459:Dr.WARIO", OVL_M459 },
-    { 1, "460:", OVL_M460 },
-    { 1, "461:BOMBHEI SCRANBLE", OVL_M461 },
-    { 1, "462:", OVL_M462 },
-    { 1, "***:MESS CHECK", OVL_MESS },
-    { 1, "***:BOARD W01", OVL_W01 },
-    { 1, "***:BOARD W02", OVL_W02 },
-    { 1, "***:BOARD W03", OVL_W03 },
-    { 1, "***:BOARD W04", OVL_W04 },
-    { 1, "***:BOARD W05", OVL_W05 },
-    { 1, "***:BOARD W06", OVL_W06 },
-    { 1, "***:BOARD W20", OVL_W20 },
-    { 1, "***:BOARD W21", OVL_W21 },
-    { 1, "***:STAFF", OVL_STAFF },
-    { 1, "***:STORY TEST", OVL_MSTORY4 },
+    { 1, "401:WAKUGURI DIVING", DLL_m401dll },
+    { 1, "402:PURURUN! BIGSLIME", DLL_m402dll },
+    { 1, "403:TAORERUKABE!", DLL_m403dll },
+    { 1, "404:CRAYON RUNNER", DLL_m404dll },
+    { 1, "405:MEDREY RACE", DLL_m405dll },
+    { 1, "406:SKI RACE", DLL_m406dll },
+    { 1, "407:BATTANDOMINO", DLL_m407dll },
+    { 1, "408:SKY DIVE", DLL_m408dll },
+    { 1, "409:CRAY SHOT", DLL_m409dll },
+    { 1, "410:JANJAN FREE THROW", DLL_m410dll },
+    { 1, "411:PAZZLE DE PONG", DLL_m411dll },
+    { 1, "412:SNOW THROW", DLL_m412dll },
+    { 1, "413:BOMBHEI PAZZLE!", DLL_m413dll },
+    { 1, "414:NERATTE UTE!", DLL_m414dll },
+    { 1, "415:PYONPYON STAMP", DLL_m415dll },
+    { 1, "416:MAMORE FIRE", DLL_m416dll },
+    { 1, "417:MARIO SURFER", DLL_m417dll },
+    { 1, "418:TAIHOU KAKURENBO", DLL_m418dll },
+    { 1, "419:BANANA DE KOROBASE", DLL_m419dll },
+    { 1, "420:WATER BATTLE", DLL_m420dll },
+    { 1, "421:BODY BALOON", DLL_m421dll },
+    { 1, "422:BELCON COIN", DLL_m422dll },
+    { 1, "423:GOAL AND GOAL", DLL_m423dll },
+    { 1, "424:CLANE CATCH", DLL_m424dll },
+    { 1, "425:AIR DOSSUN", DLL_m425dll },
+    { 1, "426:KYOROKYORO PANIC", DLL_m426dll },
+    { 1, "427:BOAT RACE", DLL_m427dll },
+    { 1, "428:THE ROCK CLIME", DLL_m428dll },
+    { 1, "429:TREASURE FOREST", DLL_m429dll },
+    { 1, "430:PARASAILING GO", DLL_m430dll },
+    { 1, "431:GURUGURU BOX", DLL_m431dll },
+    { 1, "432:PAIR DE RACE", DLL_m432dll },
+    { 1, "433:BEACH VOLLEY", DLL_subchrseldll },
+    { 1, "434:KINGYOSUKUI", DLL_m434dll },
+    { 1, "435:KOOPA DARTS", DLL_m435dll },
+    { 1, "436:KOOPANO AREGA TABETAI!", DLL_m436dll },
+    { 1, "437:FUSEN RAKUGO", DLL_m437dll },
+    { 1, "438:SYAKUNETSU WANWAN ATTACK", DLL_m438dll },
+    { 1, "439:GURUGURU DANGEROUS", DLL_m439dll },
+    { 1, "440:NEO KOOPA BAKUDAN", DLL_m440dll },
+    { 1, "441:HIRAHIRA CHOUCHO", DLL_m441dll },
+    { 1, "442:SUIMYAKU HORE2", DLL_m442dll },
+    { 1, "443:DRUG RACE", DLL_m443dll },
+    { 1, "444:MIRACLE PINBALL", DLL_m444dll },
+    { 1, "445:KINOPIO HAMMER", DLL_m445dll },
+    { 1, "446:3MAI SOROERO!", DLL_m446dll },
+    { 1, "447:IQ BLOCK", DLL_m447dll },
+    { 1, "448:FUMIKURI", DLL_m448dll },
+    { 1, "449:NOKO2 KOURA PAZZLE", DLL_m449dll },
+    { 1, "450:LAST GAME", DLL_m450dll },
+    { 1, "451:PAZZLE", DLL_m451dll },
+    { 1, "455:BURUTTE 1BAN", DLL_m455dll },
+    { 1, "456:MOGUTTE 1BAN", DLL_m456dll },
+    { 1, "457:SUMOH", DLL_m457dll },
+    { 1, "458:PSYCOLO BATTLE", DLL_m458dll },
+    { 1, "459:Dr.WARIO", DLL_m459dll },
+    { 1, "460:", DLL_m460dll },
+    { 1, "461:BOMBHEI SCRANBLE", DLL_m461dll },
+    { 1, "462:", DLL_m462dll },
+    { 1, "***:MESS CHECK", DLL_messdll },
+    { 1, "***:BOARD W01", DLL_w01dll },
+    { 1, "***:BOARD W02", DLL_w02dll },
+    { 1, "***:BOARD W03", DLL_w03dll },
+    { 1, "***:BOARD W04", DLL_w04dll },
+    { 1, "***:BOARD W05", DLL_w05dll },
+    { 1, "***:BOARD W06", DLL_w06dll },
+    { 1, "***:BOARD W20", DLL_w20dll },
+    { 1, "***:BOARD W21", DLL_w21dll },
+    { 1, "***:STAFF", DLL_staffdll },
+    { 1, "***:STORY TEST", DLL_mstory4dll },
 };
 
 static u32 cameraMaskTbl[] = { (1 << 0), (1 << 1), (1 << 2), (1 << 3) };
@@ -331,7 +331,7 @@ static void SMInit(omObjData *object)
         }
     }
     MoveSMPage(1);
-    if (mgSeqOvlPrev != OVL_INVALID) {
+    if (mgSeqOvlPrev != DLL_NONE) {
         for (i = 0; i < SM_PAGE_MAX * SM_PAGE_SIZE; i++) {
             if (mgSeqOvlPrev == smMenuTbl[i].overlay && smMenuTbl[i].enabled == 1) {
                 smPage = i / SM_PAGE_SIZE;
@@ -392,7 +392,7 @@ static void SMUpdate(omObjData *object)
 
 static void SMGroupGen(s32 index)
 {
-    OverlayID overlay;
+    OMOVL overlay;
     s32 i;
     overlay = smMenuTbl[index].overlay;
     for (i = 0; i < 50; i++) {
@@ -433,7 +433,7 @@ static void SMGroupGen(s32 index)
             }
             break;
     }
-    if (overlay == OVL_M430) {
+    if (overlay == DLL_m430dll) {
         s32 team_cnt[2];
         s32 team_players[2][2];
         team_cnt[0] = team_cnt[1] = 0;
@@ -688,14 +688,14 @@ static void SMExit(omObjData *object)
     mg = omMgIndexGet(smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay);
     GWSystem.mg_next = mg;
     OSReport("mgNo=%d\n", mg);
-    if (smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay == OVL_W10) {
+    if (smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay == DLL_w10dll) {
         _SetFlag(0x1000B);
     }
-    else if (smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay == OVL_W20) {
+    else if (smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay == DLL_w20dll) {
         BoardSaveInit(7);
         BoardPartyConfigSet(0, 0, 0, 20, 0, 0, 0, 0);
     }
-    else if (smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay == OVL_W21) {
+    else if (smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay == DLL_w21dll) {
         BoardSaveInit(8);
         BoardPartyConfigSet(0, 0, 0, 20, 0, 0, 0, 0);
     }
@@ -706,7 +706,7 @@ static void SMExit(omObjData *object)
         omOvlCallEx(smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay, 1, 0, 0);
     }
     else {
-        omOvlCallEx(OVL_INST, 1, 0, 0);
+        omOvlCallEx(DLL_instdll, 1, 0, 0);
     }
     mgSeqOvlPrev = smMenuTbl[(smPage * SM_PAGE_SIZE) + smSelectPos].overlay;
     smSelectPosExit = smSelectPos;

@@ -163,7 +163,7 @@ static void fn_1_20EC(void)
     }
     BoardCameraMotionWait();
     BoardPlayerMotionShiftSet(temp_r30, lbl_1_bss_52[temp_r30][0], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
-    HuAudPlayerVoicePlay(temp_r30, 0x128);
+    PlayerFXPlay(temp_r30, 0x128);
     BoardModelPosGet(lbl_1_bss_14[3], &sp20);
     BoardModelPosSetV(lbl_1_bss_FA, &sp20);
     BoardModelVisibilitySet(lbl_1_bss_FA, 1);
@@ -916,13 +916,13 @@ static void fn_1_4848(void)
         BoardModelPosGet(lbl_1_bss_FA, &sp14);
         temp_f28 = VECDistanceXZ(&sp20, &sp14);
         if (temp_f28 <= 200.0f) {
-            HuAudPlayerVoicePlay(temp_r30, 0x128);
+            PlayerFXPlay(temp_r30, 0x128);
             goto block_A;
         }
         HuPrcVSleep();
     }
     BoardPlayerMotionShiftSet(temp_r30, lbl_1_bss_52[temp_r30][0], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
-    HuAudPlayerVoicePlay(temp_r30, 0x128);
+    PlayerFXPlay(temp_r30, 0x128);
     for (i = 0; i < 65; i++) {
         BoardModelPosGet(lbl_1_bss_FA, &sp14);
         temp_f28 = VECDistanceXZ(&sp20, &sp14);

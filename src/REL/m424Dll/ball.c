@@ -491,7 +491,7 @@ void fn_1_37FC(omObjData *object)
             var_r28 = 7;
             var_r27 = 1;
             if (temp_r31->unkE8 == 1) {
-                temp_r31->unkEC = HuAudCharVoicePlay(temp_r31->unk1, 0x11A);
+                temp_r31->unkEC = CharFXPlay(temp_r31->unk1, 0x11A);
             }
             else if ((temp_r31->unkE8 > REFRESH_RATE_F * 1.5f) && (temp_r31->unkEC != -1)) {
                 HuAudFXStop(temp_r31->unkEC);

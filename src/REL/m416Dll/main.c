@@ -213,7 +213,7 @@ void fn_1_4FC(omObjData *object)
                 if (lbl_1_bss_920 < 0.1f) {
                     if (lbl_1_bss_0 == 0) {
                         temp_r31 = lbl_1_bss_930[0][0]->data;
-                        HuAudCharVoicePlay(temp_r31->unk0C, 296);
+                        CharFXPlay(temp_r31->unk0C, 296);
                         lbl_1_bss_0 = 1;
                     }
                 }
@@ -809,11 +809,11 @@ void fn_1_29DC(omObjData *object)
             lbl_1_bss_91A[1] = -1;
             Hu3DModelAttrSet(object->model[2], HU3D_ATTR_DISPOFF);
             HuAudFXEmiterPlay(1469, &object->trans);
-            HuAudCharVoicePlay(temp_r31->unk0C, 291);
+            CharFXPlay(temp_r31->unk0C, 291);
         }
         else {
             HuAudFXEmiterPlay(1466, &object->trans);
-            HuAudCharVoicePlay(temp_r31->unk0C, 296);
+            CharFXPlay(temp_r31->unk0C, 296);
         }
         temp_r31->field_0_bit0 = 0;
         temp_r31->field_0_bit1 = 1;

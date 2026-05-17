@@ -594,8 +594,8 @@ void fn_1_F0E0(omObjData *object)
                 if (fn_1_160D4(work->unk_10, &sp20, 200.0f) != 0) {
                     omVibrate(work->unk_08[0]->unk_00, 0xC, 6, 6);
                     omVibrate(work->unk_08[1]->unk_00, 0xC, 6, 6);
-                    HuAudCharVoicePlay(work->unk_08[0]->unk_0C, 0x123);
-                    HuAudCharVoicePlay(work->unk_08[1]->unk_0C, 0x123);
+                    CharFXPlay(work->unk_08[0]->unk_0C, 0x123);
+                    CharFXPlay(work->unk_08[1]->unk_0C, 0x123);
                     work->unk_24 = REFRESH_RATE * 2;
                     work->unk_1C = 3;
                     work->unk_28 = 5.0f;
@@ -1375,7 +1375,7 @@ void fn_1_11ED8(omObjData *object)
             if ((var_r29 != var_r31->unk_2C) && (CharModelMotionShiftIDGet(var_r31->unk_0C) == -1)) {
                 var_r31->unk_2C = var_r29;
                 CharModelMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_2C], 0.0f, 8.0f, 0);
-                HuAudCharVoicePlay(var_r31->unk_0C, 0x124);
+                CharFXPlay(var_r31->unk_0C, 0x124);
                 var_r31->unk_28 = 0;
             }
             break;

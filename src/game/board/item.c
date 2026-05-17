@@ -858,7 +858,7 @@ static void ExecItemPipe(void)
             VECScale(&spB4[var_r31], &spB4[var_r31], 0.03f);
             BoardModelVisibilitySet(BoardPlayerModelGet(sp2C[var_r31]), 1);
         }
-        HuAudPlayerVoicePlay(currItemRestore, 0x122);
+        PlayerFXPlay(currItemRestore, 0x122);
         var_f31 = 0.65f;
         var_r27 = 5;
         while (1) {
@@ -1593,7 +1593,7 @@ static void ExecItemBowser(void)
     BoardModelMotionShiftSet(suitMdl, suitMot[0], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     BoardModelMotionShiftSet(temp_r31, suitCommonMot[0], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     HuPrcSleep(0x28);
-    HuAudPlayerVoicePlay(currItemRestore, 0x129);
+    PlayerFXPlay(currItemRestore, 0x129);
     omVibrate(currItemRestore, 12, 4, 2);
     HuPrcSleep(60);
     BoardModelMotionShiftSet(suitMdl, 0, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
@@ -2236,7 +2236,7 @@ static void GenieSceneExec(void)
         HuPrcVSleep();
     }
     HuPrcSleep(45);
-    HuAudPlayerVoicePlay(currItemRestore, 0x128);
+    PlayerFXPlay(currItemRestore, 0x128);
     BoardPlayerMotionStart(currItemRestore, geniePlayerMot[1], 0);
     BoardPlayerMotionEndWait(currItemRestore);
     HuPrcSleep(25);
@@ -2390,7 +2390,7 @@ static void ExecItemGenie(void)
         HuPrcVSleep();
         var_r30++;
     }
-    HuAudPlayerVoicePlay(currItemRestore, 0x125);
+    PlayerFXPlay(currItemRestore, 0x125);
     temp_r25 = HuAudFXPlay(0x34D);
     temp_r31 = Hu3DParticleCreate(genieParticleAnim, 0x96);
     Hu3DParticleHookSet(temp_r31, LampParticleUpdate);
@@ -2749,7 +2749,7 @@ static void RestoreItemBowser(void)
     BoardModelMotionShiftSet(suitMdl, suitMot[0], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     BoardModelMotionShiftSet(temp_r29, suitCommonMot[0], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     HuPrcSleep(40);
-    HuAudPlayerVoicePlay(currItemRestore, 0x129);
+    PlayerFXPlay(currItemRestore, 0x129);
     HuPrcSleep(20);
     HuAudFXPlay(0x32B);
     BoardModelVisibilitySet(temp_r31, 1);

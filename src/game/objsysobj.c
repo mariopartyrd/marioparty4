@@ -97,7 +97,7 @@ void omSystemKeyCheck(omObjData *object)
 	} else {
 		s32 i;
 		s16 pause = 0;
-		if(WipeStatGet() || omCurrentOvlGet() == OVL_INVALID || omSysExitReq) {
+		if(WipeStatGet() || omCurrentOvlGet() == DLL_NONE || omSysExitReq) {
 			return;
 		}
 		for(i=0; i<4; i++) {

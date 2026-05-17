@@ -146,7 +146,7 @@ void fn_1_94C0(void)
 	BoardCameraTargetGet(&lbl_1_bss_1A0);
 	BoardCameraTargetModelSet(-1);
 	fn_1_A558();
-	HuAudPlayerVoicePlay(lbl_1_bss_36E, 291);
+	PlayerFXPlay(lbl_1_bss_36E, 291);
 	fn_1_A8E8();
 	HuPrcKill(lbl_1_bss_374);
 	for(temp_r31=0; temp_r31<15; temp_r31++) {
@@ -500,7 +500,7 @@ void fn_1_B450(s32 arg0)
 	Vec sp10;
 	BoardSpacePosGet(0, arg0, &sp28);
 	BoardPlayerPosGet(lbl_1_bss_36E, &sp1C);
-	HuAudPlayerVoicePlay(lbl_1_bss_36E, 290);
+	PlayerFXPlay(lbl_1_bss_36E, 290);
 	temp_f26 = VECDistanceXZ(&sp28, &sp1C);
 	VECSubtract(&sp28, &sp1C, &sp10);
 	VECNormalize(&sp10, &sp10);

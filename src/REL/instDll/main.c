@@ -63,15 +63,15 @@ void ObjectSetup(void)
     instMesOfs = 0;
     instBusyF = 0;
     _ClearFlag(0x1000C);
-    for (i = 0; sndGrpTable[i].ovl != OVL_INVALID; i++) {
+    for (i = 0; sndGrpTable[i].ovl != DLL_NONE; i++) {
         if (sndGrpTable[i].ovl == mgInfoTbl[instMgNo].ovl) {
             break;
         }
     }
-    if (sndGrpTable[i].ovl != OVL_INVALID) {
+    if (sndGrpTable[i].ovl != DLL_NONE) {
         HuAudSndGrpSetSet(sndGrpTable[i].grpSet);
     }
-    if (mgInfoTbl[instMgNo].ovl == OVL_M411) {
+    if (mgInfoTbl[instMgNo].ovl == DLL_m411dll) {
         if (GWMGTypeGet() == -1) {
             GWMGTypeSet(frandmod(3));
         }
@@ -81,8 +81,8 @@ void ObjectSetup(void)
     }
     HuDataDirClose(mgInfoTbl[instMgNo].data_dir);
     his = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_RESULT, his->event, his->stat);
-    if (omovlevtno == 0 && mgInfoTbl[instMgNo].ovl == OVL_M430) {
+    omOvlHisChg(0, DLL_resultdll, his->event, his->stat);
+    if (omovlevtno == 0 && mgInfoTbl[instMgNo].ovl == DLL_m430dll) {
         s32 team_cnt[2];
         s32 team_players[2][2];
         team_cnt[0] = team_cnt[1] = 0;
@@ -301,7 +301,7 @@ static void InstMain(void)
                 HuAudFXPlay(1);
                 endF = 1;
                 his = omOvlHisGet(0);
-                omOvlHisChg(0, OVL_INST, 1, his->stat);
+                omOvlHisChg(0, DLL_instdll, 1, his->stat);
                 _SetFlag(0x1000C);
             }
             if (mgInstExitEnableF && (btnDown & PAD_BUTTON_B)) {
@@ -317,7 +317,7 @@ static void InstMain(void)
                     HuPrcVSleep();
                 }
                 HuDataDirClose(mgInfoTbl[instMgNo].data_dir);
-                if (mgInfoTbl[instMgNo].ovl == OVL_M430) {
+                if (mgInfoTbl[instMgNo].ovl == DLL_m430dll) {
                     for (comNum = 0; comNum < 4; comNum++) {
                         GWPlayerCfg[comNum].group = GWPlayerCfg[comNum].group / 2;
                     }
@@ -427,7 +427,7 @@ static void InstPlayerMain(void)
     for (i = 0; i < playerNum; i++) {
         playerOrder[i] = -1;
     }
-    if (mgInfoTbl[instMgNo].ovl != OVL_M430) {
+    if (mgInfoTbl[instMgNo].ovl != DLL_m430dll) {
         grpType = type;
     }
     else {

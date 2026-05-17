@@ -163,7 +163,7 @@ static void ExecBattle(void) {
     };
 
     var_r29 = mgInfoTbl;
-    for (var_r31 = var_r30 = 0; var_r29->ovl != (u16) OVL_INVALID; var_r29++, var_r31++) {
+    for (var_r31 = var_r30 = 0; var_r29->ovl != (u16) DLL_NONE; var_r29++, var_r31++) {
         if (var_r29->type == 4) {
             battleMGList[var_r30] = var_r31 + 401;
             var_r30++;
@@ -309,7 +309,7 @@ static void ExecBattle(void) {
         BoardDataAsyncWait(var_r21);
         if (var_r27 == 0) {
             _SetFlag(FLAG_ID_MAKE(1, 4));
-            BoardNextOvlSet(OVL_INST);
+            BoardNextOvlSet(DLL_instdll);
             BoardFilterFadeOut(30);
             StopBattleBomb();
             HuPrcEnd();

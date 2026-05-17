@@ -613,7 +613,7 @@ void fn_1_E214(omObjData *object)
                         }
                         HuAudFXPlay(0x53E);
                         HuAudFXVolSet(var_r31->unk_7C[0], 0);
-                        HuAudCharVoicePlay(var_r31->unk_0C, 0x125);
+                        CharFXPlay(var_r31->unk_0C, 0x125);
                     }
                     if (fn_1_122C() == 4) {
                         var_r31->unk_62++;
@@ -739,7 +739,7 @@ void fn_1_E214(omObjData *object)
             var_r26 = &Hu3DData[object->model[0]];
             MTXIdentity(var_r26->unk_F0);
             omVibrate(var_r31->unk_02, 0xC, 4, 2);
-            HuAudCharVoicePlayPos(var_r31->unk_0C, 0x123, &object->trans);
+            CharFXPlayPos(var_r31->unk_0C, 0x123, &object->trans);
             for (var_r24 = 0; var_r24 < 2; var_r24++) {
                 if (var_r31->unk_7C[var_r24] >= 0) {
                     HuAudFXStop(var_r31->unk_7C[var_r24]);

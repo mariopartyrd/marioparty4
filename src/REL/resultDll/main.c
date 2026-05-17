@@ -97,7 +97,7 @@ void ObjectSetup(void)
     objman = omInitObjMan(50, 8192);
     resultMgNo = GWSystem.mg_next;
 
-    if (mgInfoTbl[resultMgNo].ovl == OVL_M430) {
+    if (mgInfoTbl[resultMgNo].ovl == DLL_m430dll) {
         for (i = 0; i < 4; i++) {
             GWPlayerCfg[i].group = GWPlayerCfg[i].group / 2;
         }
@@ -723,7 +723,7 @@ static void ResultOrderApply(void)
                                 Hu3DAnimCreate(resultCharAnim[charNo][2], resultCubeMdlId[charNo][resultRank[i]], "ys22");
                             }
                             if (resultRank[i] == 0) {
-                                voiceSeNo[resultOrder[i]] = HuAudPlayerVoicePlay(resultOrder[i], 293);
+                                voiceSeNo[resultOrder[i]] = PlayerFXPlay(resultOrder[i], 293);
                             }
                             if (!sePlayF) {
                                 sePlayF = 1;

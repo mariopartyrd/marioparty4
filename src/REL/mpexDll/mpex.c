@@ -324,9 +324,9 @@ void fn_1_36A4(void)
     CharModelKill(-1);
     MGSeqKillAll();
     sp8 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MPEX, 2, 0);
+    omOvlHisChg(0, DLL_mpexdll, 2, 0);
     mgQuitExtraF = 0;
-    omOvlCallEx(OVL_ZTAR, 1, 0, 0);
+    omOvlCallEx(DLL_ztardll, 1, 0, 0);
     while (TRUE) {
         fn_1_1B7D0(1);
     }
@@ -369,7 +369,7 @@ void fn_1_3758(s32 arg0, s32 arg1)
     }
 
     sp8 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MPEX, spC[arg0][1], spC[arg0][2]);
+    omOvlHisChg(0, DLL_mpexdll, spC[arg0][1], spC[arg0][2]);
     HuDataDirClose(DATA_MAKE_NUM(DATADIR_MPEX, 0x00));
     HuDataDirClose(0x150000);
     CharModelKill(-1);

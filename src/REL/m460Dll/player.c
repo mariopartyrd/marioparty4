@@ -374,7 +374,7 @@ void fn_1_55EC(omObjData *object)
                 var_r31->unk_78.y = 0.0f;
                 var_r31->unk_78.z = 500.0f;
                 fn_1_4224(object->work[0]);
-                HuAudCharVoicePlay(var_r31->unk_00, 0x128);
+                CharFXPlay(var_r31->unk_00, 0x128);
                 var_r31->unk_28 = 1;
                 var_r31->unk_2C = 0xA;
             }

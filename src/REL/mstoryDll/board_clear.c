@@ -3,6 +3,7 @@
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+#include "game/object.h"
 #include "game/printfunc.h"
 #include "game/window.h"
 #include "game/wipe.h"
@@ -59,7 +60,7 @@ void fn_1_7090(s32 arg0, StructBss19C* arg1) {
     fn_1_BAC(10);
     fn_1_1DCC(lbl_1_bss_D4[lbl_1_bss_1C4.unk04].unk00, 1, 5, 15, 0);
     fn_1_BAC(5);
-    HuAudCharVoicePlay(lbl_1_bss_1C4.unk34[lbl_1_bss_1C4.unk04].unk10, 0x128);
+    CharFXPlay(lbl_1_bss_1C4.unk34[lbl_1_bss_1C4.unk04].unk10, 0x128);
     fn_1_BAC(25);
     arg1->unk04 = 0;
 }
@@ -312,7 +313,7 @@ void fn_1_8408(void) {
         GWPlayerCfg[i].iscom = GWPlayerCfg[i].group = 1;
     }
     var_r30 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY, 2, var_r30->stat);
+    omOvlHisChg(0, DLL_mstorydll, 2, var_r30->stat);
     OSReport("########## dllno - %d\n", sp8[GWSystem.board], GWSystem.board);
     HuAudSeqAllFadeOut(1000);
     HuAudSStreamAllFadeOut(1000);

@@ -844,7 +844,7 @@ void fn_1_D828(omObjData *var_r30)
                 else {
                     HuAudFXPlay(0x67E);
                 }
-                HuAudCharVoicePlay(var_r31->unk_38, 0x123);
+                CharFXPlay(var_r31->unk_38, 0x123);
                 omVibrate(var_r31->unk_00, 0xC, 4, 2);
                 var_r31->unk_2C = 5.0f;
                 var_r31->unk_16 = frand() & 3;
@@ -1229,7 +1229,7 @@ void fn_1_F0D8(omObjData *object)
                 }
                 CharModelMotionShiftSet(work->unk_38, object->motion[work->unk_58], 0.0f, 8.0f, 0);
                 if (work->unk_0E == 3) {
-                    HuAudCharVoicePlay(work->unk_38, 0x122);
+                    CharFXPlay(work->unk_38, 0x122);
                 }
                 work->unk_10 = 0;
                 work->unk_5C++;

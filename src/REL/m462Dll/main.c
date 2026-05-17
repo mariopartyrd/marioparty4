@@ -1598,7 +1598,7 @@ void fn_1_69C0(void)
         HuAudSStreamPlay(1);
         var_r22 = HuPrcChildCreate(fn_1_68F4, 0x2000, 0x1000, 0, HuPrcCurrentGet());
         var_r22->user_data = temp_r31;
-        HuAudPlayerVoicePlay(temp_r31->unk20, 0x122);
+        PlayerFXPlay(temp_r31->unk20, 0x122);
         CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk20].character], temp_r31->unk16[2], 0.0f, 2.0f, HU3D_MOTATTR_NONE);
         temp_r31->unk2C = 10;
         HuPrcSleep(REFRESH_RATE*3);

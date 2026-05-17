@@ -514,7 +514,7 @@ void fn_1_2FC(omObjData *arg0)
             if (arg0->trans.z > (temp_r31->unk00 == 0 ? 620.0f : 1400.0f) - 50.0f) {
                 temp_r31->unk20 = 2;
                 temp_r31->unk30 = 0.0f;
-                HuAudCharVoicePlay(temp_r31->unk08, 0x123);
+                CharFXPlay(temp_r31->unk08, 0x123);
             }
             if (temp_r31->unk20 != 2) {
                 if (arg0->trans.x > (temp_r31->unk00 == 0 ? 400 : 400) - 50.0f) {

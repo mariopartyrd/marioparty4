@@ -347,7 +347,7 @@ void fn_1_7344(omObjData *arg0)
             break;
         case 4:
             if (temp_r31->unk18 < 0) {
-                temp_r31->unk18 = HuAudCharVoicePlay(temp_r31->unk1, 0x125);
+                temp_r31->unk18 = CharFXPlay(temp_r31->unk1, 0x125);
             }
             if (CharModelMotionEndCheck(temp_r31->unk1) != 0) {
                 temp_r31->unk3C.y = fn_1_AD40(temp_r31->unk3C.y, 180.0f, 0.8f);

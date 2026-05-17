@@ -100,7 +100,7 @@ static void SubchrMain()
             WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);
             HuPrcSleep(wipeData.duration+1.0f);
             MGSeqKillAll();
-            omOvlGotoEx(OVL_M433, 1, 0, 0);
+            omOvlGotoEx(DLL_m433dll, 1, 0, 0);
             do {
                 HuPrcVSleep();
             } while(1);

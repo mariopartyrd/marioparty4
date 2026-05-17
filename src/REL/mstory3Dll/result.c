@@ -8,6 +8,7 @@
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+#include "game/object.h"
 #include "game/pad.h"
 #include "game/printfunc.h"
 #include "game/saveload.h"
@@ -674,9 +675,9 @@ void fn_1_17570(void) {
                         fn_1_938();
                     } while (lbl_1_bss_18D4 != 1);
                     if (lbl_1_bss_1A0C.unk00 != 5) {
-                        omOvlGotoEx(OVL_MSTORY, 1, 0, 0);
+                        omOvlGotoEx(DLL_mstorydll, 1, 0, 0);
                     } else {
-                        omOvlGotoEx(OVL_MSTORY2, 1, 1, 0);
+                        omOvlGotoEx(DLL_mstory2dll, 1, 1, 0);
                     }
                 } else {
                     switch (lbl_1_bss_1A0C.unk00) {
@@ -706,9 +707,9 @@ void fn_1_17570(void) {
                         fn_1_938();
                     } while (lbl_1_bss_18D4 != 1);
                     if (lbl_1_bss_1A0C.unk00 != 5) {
-                        omOvlGotoEx(OVL_MSTORY, 1, 1, 0);
+                        omOvlGotoEx(DLL_mstorydll, 1, 1, 0);
                     } else {
-                        omOvlGotoEx(OVL_MSTORY2, 1, 2, 0);
+                        omOvlGotoEx(DLL_mstory2dll, 1, 2, 0);
                     }
                 }
             } else {
@@ -728,7 +729,7 @@ void fn_1_17570(void) {
                 do {
                     fn_1_938();
                 } while (lbl_1_bss_18D4 != 1);
-                omOvlGotoEx(OVL_MENT, 1, 10, 0);
+                omOvlGotoEx(DLL_mentdll, 1, 10, 0);
             }
         }
     }

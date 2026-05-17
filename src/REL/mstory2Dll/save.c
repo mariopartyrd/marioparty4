@@ -104,7 +104,7 @@ void fn_1_1B870(void)
         fn_1_BC8();
     } while (lbl_1_bss_D14 != 1);
     if (omovlstat == 0) {
-        omOvlGotoEx(OVL_MSTORY2, 1, 4, 0);
+        omOvlGotoEx(DLL_mstory2dll, 1, 4, 0);
     }
     else {
         omOvlReturnEx(omovlhisidx, 1);

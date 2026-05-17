@@ -111,7 +111,7 @@ void fn_1_1618(void) {
     lbl_1_bss_0->unk00 ^= 1;
     fn_1_191C();
     fn_1_1C2C();
-    HuAudPlayerVoicePlay(temp_r31, 0x128);
+    PlayerFXPlay(temp_r31, 0x128);
     BoardPlayerMotionStart(temp_r31, temp_r30, 0);
     while (!BoardPlayerMotionEndCheck(temp_r31)) {
         HuPrcVSleep();

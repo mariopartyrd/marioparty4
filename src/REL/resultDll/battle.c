@@ -473,7 +473,7 @@ static void ResultBattleStatAdd(void)
     for (i = 0; i < 4; i++) {
         if (coinNum[resultBattleOrder[i]]) {
             CharModelMotionShiftSet(GWPlayerCfg[resultBattleOrder[i]].character, resultBattleCharMot[resultBattleOrder[i]][1], 0, 4, HU3D_MOTATTR_NONE);
-            HuAudPlayerVoicePlay(resultBattleOrder[i], 293);
+            PlayerFXPlay(resultBattleOrder[i], 293);
         }
         else {
             CharModelMotionShiftSet(GWPlayerCfg[resultBattleOrder[i]].character, resultBattleCharMot[resultBattleOrder[i]][2], 0, 4, HU3D_MOTATTR_NONE);

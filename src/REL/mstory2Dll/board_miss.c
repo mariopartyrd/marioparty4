@@ -140,7 +140,7 @@ void fn_1_E638(void)
 
 void fn_1_E8EC(void)
 {
-    int ovlTbl[7] = { OVL_W01, OVL_W02, OVL_W03, OVL_W04, OVL_W05, OVL_W06, OVL_W10 };
+    int ovlTbl[7] = { DLL_w01dll, DLL_w02dll, DLL_w03dll, DLL_w04dll, DLL_w05dll, DLL_w06dll, DLL_w10dll };
     omOvlHisData *his;
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);
     while (WipeStatGet()) {
@@ -149,7 +149,7 @@ void fn_1_E8EC(void)
     CharModelKill(-1);
     MGSeqKillAll();
     his = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY3, 0, his->stat);
+    omOvlHisChg(0, DLL_mstory3dll, 0, his->stat);
     do {
         fn_1_BC8();
     } while (lbl_1_bss_4E4 != 1);

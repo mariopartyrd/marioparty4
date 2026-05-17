@@ -1817,7 +1817,7 @@ void fn_1_798C(omObjData *arg0)
                 Hu3DMotionOverlaySet(arg0->model[0], arg0->motion[temp_r31->unk104]);
                 Hu3DMotionOverlayTimeSet(arg0->model[0], 0.0f);
                 Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_OVL_PAUSE);
-                HuAudCharVoicePlay(temp_r31->unk10C, 0x124);
+                CharFXPlay(temp_r31->unk10C, 0x124);
             }
             if (temp_r31->unk104 == 7 && 73.0f <= Hu3DMotionOverlayTimeGet(arg0->model[0])) {
                 Hu3DMotionOverlayTimeSet(arg0->model[0], 35.0f);

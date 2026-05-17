@@ -275,7 +275,7 @@ void fn_1_F19C(void) {
     fn_1_BAC(60);
     lbl_1_bss_5B8.unk04 = (void*) fn_1_10298;
     HuAudFXPlay(0xA3);
-    HuAudCharVoicePlay(lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10, 0x128);
+    CharFXPlay(lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10, 0x128);
     fn_1_1DCC(lbl_1_bss_5B8.unk00, 6, 6, 0, 0);
     Hu3DModelAttrReset(lbl_1_bss_5B8.unk00->model[6], HU3D_ATTR_DISPOFF);
     Hu3DModelAttrSet(lbl_1_bss_5B8.unk00->model[5], HU3D_ATTR_DISPOFF);
@@ -383,8 +383,8 @@ void fn_1_F910(void) {
     GWGameStat.present[lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10 * 6 + lbl_1_bss_608.unk00] = 1;
     OSReport("########## PRESENTFLG CHR:%d, MAP:%d, PRESENT:%d\n", lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10, lbl_1_bss_608.unk00, lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10 * 6 + lbl_1_bss_608.unk00);
     var_r31 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY, 20, var_r31->stat);
-    omOvlCallEx(OVL_PRESENT, 1, lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10 * 6 + lbl_1_bss_608.unk00 + 1, 0);
+    omOvlHisChg(0, DLL_mstorydll, 20, var_r31->stat);
+    omOvlCallEx(DLL_present, 1, lbl_1_bss_608.unk34[lbl_1_bss_608.unk04].unk10 * 6 + lbl_1_bss_608.unk00 + 1, 0);
 }
 
 void fn_1_FAE4(omObjData* arg0, StructBss19C* arg1) {

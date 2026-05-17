@@ -104,7 +104,7 @@ void fn_1_13E2C(void)
         do {
             fn_1_B8C();
         } while (lbl_1_bss_8BC != 1);
-        omOvlGotoEx(OVL_MSTORY2, 1, 0, 0);
+        omOvlGotoEx(DLL_mstory2dll, 1, 0, 0);
     }
     else {
         OSReport(
@@ -113,7 +113,7 @@ void fn_1_13E2C(void)
         do {
             fn_1_B8C();
         } while (lbl_1_bss_8BC != 1);
-        omOvlGotoEx(OVL_MENT, 1, 10, 0);
+        omOvlGotoEx(DLL_mentdll, 1, 10, 0);
     }
     HuPrcEnd();
     while (TRUE) {

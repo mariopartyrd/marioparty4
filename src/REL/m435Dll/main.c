@@ -2417,7 +2417,7 @@ s32 fn_1_B1F4(omObjData* arg0) {
                 fn_1_157BC(temp_r26->unk00, 0, 6, 5, 0);
                 Hu3DMotionTimeSet(var_r28->unk00->model[0], 90.0f);
                 Hu3DMotionSpeedSet(var_r28->unk00->model[0], 0.0f);
-                HuAudCharVoicePlay(temp_r26->unk34, 0x123);
+                CharFXPlay(temp_r26->unk34, 0x123);
                 HuAudFXPlay(0x6D5);
                 omVibrate(temp_r26->unk24, 120, 12, 0);
             }

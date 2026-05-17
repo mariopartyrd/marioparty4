@@ -7,7 +7,7 @@
 
 MgInfo mgInfoTbl[] = {
     {
-        OVL_M401, // ovl
+        DLL_m401dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -25,7 +25,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x03), // inst_mess[3]
     },
     {
-        OVL_M402, // ovl
+        DLL_m402dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -43,7 +43,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x07), // inst_mess[3]
     },
     {
-        OVL_M403, // ovl
+        DLL_m403dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -61,7 +61,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x0B), // inst_mess[3]
     },
     {
-        OVL_M404, // ovl
+        DLL_m404dll, // ovl
         4, // type
         2, // flag
         255, // record_idx
@@ -79,7 +79,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x0F), // inst_mess[3]
     },
     {
-        OVL_M405, // ovl
+        DLL_m405dll, // ovl
         0, // type
         2, // flag
         0, // record_idx
@@ -97,7 +97,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x13), // inst_mess[3]
     },
     {
-        OVL_M406, // ovl
+        DLL_m406dll, // ovl
         0, // type
         2, // flag
         255, // record_idx
@@ -115,7 +115,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x17), // inst_mess[3]
     },
     {
-        OVL_M407, // ovl
+        DLL_m407dll, // ovl
         0, // type
         3, // flag
         1, // record_idx
@@ -133,7 +133,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x1B), // inst_mess[3]
     },
     {
-        OVL_M408, // ovl
+        DLL_m408dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -151,7 +151,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x1F), // inst_mess[3]
     },
     {
-        OVL_M409, // ovl
+        DLL_m409dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -169,7 +169,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x23), // inst_mess[3]
     },
     {
-        OVL_M410, // ovl
+        DLL_m410dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -187,7 +187,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x27), // inst_mess[3]
     },
     {
-        OVL_M411, // ovl
+        DLL_m411dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -205,7 +205,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x2B), // inst_mess[3]
     },
     {
-        OVL_M412, // ovl
+        DLL_m412dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -223,7 +223,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x2F), // inst_mess[3]
     },
     {
-        OVL_M413, // ovl
+        DLL_m413dll, // ovl
         0, // type
         2, // flag
         255, // record_idx
@@ -241,7 +241,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x33), // inst_mess[3]
     },
     {
-        OVL_M414, // ovl
+        DLL_m414dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -259,7 +259,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x37), // inst_mess[3]
     },
     {
-        OVL_M415, // ovl
+        DLL_m415dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -277,7 +277,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x3B), // inst_mess[3]
     },
     {
-        OVL_M416, // ovl
+        DLL_m416dll, // ovl
         1, // type
         1, // flag
         255, // record_idx
@@ -295,7 +295,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x3F), // inst_mess[3]
     },
     {
-        OVL_M417, // ovl
+        DLL_m417dll, // ovl
         1, // type
         1, // flag
         255, // record_idx
@@ -313,7 +313,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x43), // inst_mess[3]
     },
     {
-        OVL_M418, // ovl
+        DLL_m418dll, // ovl
         1, // type
         1, // flag
         255, // record_idx
@@ -331,7 +331,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x47), // inst_mess[3]
     },
     {
-        OVL_M419, // ovl
+        DLL_m419dll, // ovl
         1, // type
         1, // flag
         255, // record_idx
@@ -349,7 +349,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x4B), // inst_mess[3]
     },
     {
-        OVL_M420, // ovl
+        DLL_m420dll, // ovl
         1, // type
         0, // flag
         255, // record_idx
@@ -367,7 +367,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x4F), // inst_mess[3]
     },
     {
-        OVL_M421, // ovl
+        DLL_m421dll, // ovl
         1, // type
         1, // flag
         255, // record_idx
@@ -385,7 +385,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x53), // inst_mess[3]
     },
     {
-        OVL_M422, // ovl
+        DLL_m422dll, // ovl
         1, // type
         1, // flag
         255, // record_idx
@@ -403,7 +403,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x57), // inst_mess[3]
     },
     {
-        OVL_M423, // ovl
+        DLL_m423dll, // ovl
         1, // type
         0, // flag
         255, // record_idx
@@ -421,7 +421,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x5B), // inst_mess[3]
     },
     {
-        OVL_M424, // ovl
+        DLL_m424dll, // ovl
         1, // type
         0, // flag
         255, // record_idx
@@ -439,7 +439,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x5F), // inst_mess[3]
     },
     {
-        OVL_M425, // ovl
+        DLL_m425dll, // ovl
         2, // type
         3, // flag
         255, // record_idx
@@ -457,7 +457,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x63), // inst_mess[3]
     },
     {
-        OVL_M426, // ovl
+        DLL_m426dll, // ovl
         2, // type
         3, // flag
         255, // record_idx
@@ -475,7 +475,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x67), // inst_mess[3]
     },
     {
-        OVL_M427, // ovl
+        DLL_m427dll, // ovl
         2, // type
         2, // flag
         2, // record_idx
@@ -493,7 +493,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x6B), // inst_mess[3]
     },
     {
-        OVL_M428, // ovl
+        DLL_m428dll, // ovl
         2, // type
         3, // flag
         255, // record_idx
@@ -511,7 +511,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x6F), // inst_mess[3]
     },
     {
-        OVL_M429, // ovl
+        DLL_m429dll, // ovl
         2, // type
         2, // flag
         255, // record_idx
@@ -529,7 +529,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x73), // inst_mess[3]
     },
     {
-        OVL_M430, // ovl
+        DLL_m430dll, // ovl
         2, // type
         3, // flag
         255, // record_idx
@@ -547,7 +547,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x77), // inst_mess[3]
     },
     {
-        OVL_M431, // ovl
+        DLL_m431dll, // ovl
         2, // type
         3, // flag
         255, // record_idx
@@ -565,7 +565,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x7B), // inst_mess[3]
     },
     {
-        OVL_M432, // ovl
+        DLL_m432dll, // ovl
         2, // type
         3, // flag
         3, // record_idx
@@ -583,7 +583,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x7F), // inst_mess[3]
     },
     {
-        OVL_M433, // ovl
+        DLL_m433dll, // ovl
         7, // type
         3, // flag
         255, // record_idx
@@ -601,7 +601,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x83), // inst_mess[3]
     },
     {
-        OVL_M434, // ovl
+        DLL_m434dll, // ovl
         2, // type
         2, // flag
         255, // record_idx
@@ -619,7 +619,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x87), // inst_mess[3]
     },
     {
-        OVL_M435, // ovl
+        DLL_m435dll, // ovl
         3, // type
         3, // flag
         255, // record_idx
@@ -637,7 +637,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M436, // ovl
+        DLL_m436dll, // ovl
         3, // type
         3, // flag
         255, // record_idx
@@ -655,7 +655,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M437, // ovl
+        DLL_m437dll, // ovl
         3, // type
         3, // flag
         255, // record_idx
@@ -673,7 +673,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M438, // ovl
+        DLL_m438dll, // ovl
         4, // type
         3, // flag
         255, // record_idx
@@ -691,7 +691,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x97), // inst_mess[3]
     },
     {
-        OVL_M439, // ovl
+        DLL_m439dll, // ovl
         4, // type
         2, // flag
         255, // record_idx
@@ -709,7 +709,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x9B), // inst_mess[3]
     },
     {
-        OVL_M440, // ovl
+        DLL_m440dll, // ovl
         4, // type
         3, // flag
         255, // record_idx
@@ -727,7 +727,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0x9F), // inst_mess[3]
     },
     {
-        OVL_M441, // ovl
+        DLL_m441dll, // ovl
         4, // type
         3, // flag
         255, // record_idx
@@ -745,7 +745,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xA3), // inst_mess[3]
     },
     {
-        OVL_M442, // ovl
+        DLL_m442dll, // ovl
         7, // type
         3, // flag
         255, // record_idx
@@ -763,7 +763,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xA7), // inst_mess[3]
     },
     {
-        OVL_M443, // ovl
+        DLL_m443dll, // ovl
         0, // type
         2, // flag
         5, // record_idx
@@ -781,7 +781,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xAB), // inst_mess[3]
     },
     {
-        OVL_M444, // ovl
+        DLL_m444dll, // ovl
         5, // type
         3, // flag
         255, // record_idx
@@ -799,7 +799,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M445, // ovl
+        DLL_m445dll, // ovl
         6, // type
         0, // flag
         255, // record_idx
@@ -817,7 +817,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xAF), // inst_mess[3]
     },
     {
-        OVL_M446, // ovl
+        DLL_m446dll, // ovl
         6, // type
         0, // flag
         255, // record_idx
@@ -835,7 +835,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xB3), // inst_mess[3]
     },
     {
-        OVL_M447, // ovl
+        DLL_m447dll, // ovl
         6, // type
         0, // flag
         255, // record_idx
@@ -853,7 +853,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xB7), // inst_mess[3]
     },
     {
-        OVL_M448, // ovl
+        DLL_m448dll, // ovl
         6, // type
         0, // flag
         255, // record_idx
@@ -871,7 +871,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xBB), // inst_mess[3]
     },
     {
-        OVL_M449, // ovl
+        DLL_m449dll, // ovl
         6, // type
         0, // flag
         255, // record_idx
@@ -889,7 +889,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xBF), // inst_mess[3]
     },
     {
-        OVL_M450, // ovl
+        DLL_m450dll, // ovl
         8, // type
         0, // flag
         255, // record_idx
@@ -907,7 +907,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xC3), // inst_mess[3]
     },
     {
-        OVL_M451, // ovl
+        DLL_m451dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -925,7 +925,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xC7), // inst_mess[3]
     },
     {
-        OVL_M450, // ovl
+        DLL_m450dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -943,7 +943,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M453, // ovl
+        DLL_m453dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -961,7 +961,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xCB), // inst_mess[3]
     },
     {
-        OVL_M450, // ovl
+        DLL_m450dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -979,7 +979,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M455, // ovl
+        DLL_m455dll, // ovl
         4, // type
         3, // flag
         255, // record_idx
@@ -997,7 +997,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xCF), // inst_mess[3]
     },
     {
-        OVL_M456, // ovl
+        DLL_m456dll, // ovl
         0, // type
         3, // flag
         255, // record_idx
@@ -1015,7 +1015,7 @@ MgInfo mgInfoTbl[] = {
         MAKE_MESSID(0x21, 0xD3), // inst_mess[3]
     },
     {
-        OVL_M457, // ovl
+        DLL_m457dll, // ovl
         8, // type
         0, // flag
         255, // record_idx
@@ -1033,7 +1033,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M458, // ovl
+        DLL_m458dll, // ovl
         8, // type
         0, // flag
         255, // record_idx
@@ -1051,7 +1051,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M459, // ovl
+        DLL_m459dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -1069,7 +1069,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M460, // ovl
+        DLL_m460dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -1087,7 +1087,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M461, // ovl
+        DLL_m461dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -1105,7 +1105,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M462, // ovl
+        DLL_m462dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -1123,7 +1123,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        OVL_M463, // ovl
+        DLL_m463dll, // ovl
         7, // type
         0, // flag
         255, // record_idx
@@ -1141,7 +1141,7 @@ MgInfo mgInfoTbl[] = {
         0, // inst_mess[3]
     },
     {
-        ((u16)OVL_INVALID), // ovl
+        ((u16)DLL_NONE), // ovl
         0, // type
         0, // flag
         255, // record_idx
@@ -1183,7 +1183,7 @@ s32 omMgIndexGet(s16 overlay)
 
     info = mgInfoTbl;
 
-    for (i = 0; info->ovl != ((u16)OVL_INVALID); i++) {
+    for (i = 0; info->ovl != ((u16)DLL_NONE); i++) {
         if (info->ovl == overlay) {
             return (s16)i;
         }

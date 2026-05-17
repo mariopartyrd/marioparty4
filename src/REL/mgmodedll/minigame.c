@@ -220,10 +220,10 @@ void fn_1_2783C(s16 evtno)
     for (i = 0; i < 4; i++) {
         CharARAMOpen(GWPlayerCfg[i].character);
     }
-    HuAudVoiceInit(-1);
+    HuAudSndCharGrpSet(-1);
     his = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MGMODE, evtno, his->stat);
-    omOvlCallEx(OVL_INST, 1, 0, 0);
+    omOvlHisChg(0, DLL_mgmodedll, evtno, his->stat);
+    omOvlCallEx(DLL_instdll, 1, 0, 0);
     while (1) {
         HuPrcVSleep();
     }
@@ -243,7 +243,7 @@ void fn_1_279FC(s32 coinSkipF)
         if (type >= 0 && type < 9) {
             if (coinSkipF) {
                 s16 ovl = mgInfoTbl[i].ovl;
-                if (ovl == OVL_M408 || ovl == OVL_M422 || ovl == OVL_M430) {
+                if (ovl == DLL_m408dll || ovl == DLL_m422dll || ovl == DLL_m430dll) {
                     continue;
                 }
             }

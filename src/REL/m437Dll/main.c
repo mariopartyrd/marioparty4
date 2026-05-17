@@ -1970,7 +1970,7 @@ void fn_1_7A14(omObjData *arg0)
                 temp_r31->unk04 = 3;
                 Hu3DMotionTimeSet(var_r29->unk00->model[0], 90.0f);
                 Hu3DMotionSpeedSet(var_r29->unk00->model[0], 0.0f);
-                HuAudCharVoicePlay(lbl_1_bss_1DC[lbl_1_bss_944.unk10].unk3C, 0x123);
+                CharFXPlay(lbl_1_bss_1DC[lbl_1_bss_944.unk10].unk3C, 0x123);
                 HuAudFXPlay(0x6D5);
                 omVibrate(lbl_1_bss_1DC[lbl_1_bss_944.unk10].unk2C, 120, 12, 0);
             }

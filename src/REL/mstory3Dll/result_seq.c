@@ -10,6 +10,7 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
+#include "game/object.h"
 #include "game/pad.h"
 #include "game/printfunc.h"
 #include "game/sprite.h"
@@ -589,7 +590,7 @@ void fn_1_9140(void) {
     MGSeqKillAll();
     HuAudSStreamAllStop();
     msmSeStopAll(0, 1000);
-    omOvlGotoEx(OVL_MSTORY3, 1, 1, 0);
+    omOvlGotoEx(DLL_mstory3dll, 1, 1, 0);
 }
 
 void fn_1_91C8(void) {
@@ -1284,14 +1285,14 @@ void fn_1_C060(float arg8) {
     fn_1_958(15);
     if (lbl_1_bss_1580.unk344 == 1) {
         if (lbl_1_bss_1580.unk348 == 0) {
-            HuAudCharVoicePlay(lbl_1_bss_1580.unkC4[0].unk00.unk10, 0x12B);
-            HuAudCharVoicePlay(lbl_1_bss_1580.unkC4[1].unk00.unk10, 0x12B);
+            CharFXPlay(lbl_1_bss_1580.unkC4[0].unk00.unk10, 0x12B);
+            CharFXPlay(lbl_1_bss_1580.unkC4[1].unk00.unk10, 0x12B);
         } else {
-            HuAudCharVoicePlay(lbl_1_bss_1580.unkC4[2].unk00.unk10, 0x12B);
-            HuAudCharVoicePlay(lbl_1_bss_1580.unkC4[3].unk00.unk10, 0x12B);
+            CharFXPlay(lbl_1_bss_1580.unkC4[2].unk00.unk10, 0x12B);
+            CharFXPlay(lbl_1_bss_1580.unkC4[3].unk00.unk10, 0x12B);
         }
     } else {
-        HuAudCharVoicePlay(lbl_1_bss_1580.unkC4[lbl_1_bss_1458[1]].unk00.unk10, 0x12B);
+        CharFXPlay(lbl_1_bss_1580.unkC4[lbl_1_bss_1458[1]].unk00.unk10, 0x12B);
     }
     HuAudFXPlay(0xBA);
     HuAudFXPlay(0x9A);

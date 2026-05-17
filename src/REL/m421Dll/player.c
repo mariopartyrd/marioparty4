@@ -567,7 +567,7 @@ void fn_1_5B9C(omObjData *object)
                 Hu3DMotionTimeSet(object->model[3], 0.0f);
                 Hu3DMotionSpeedSet(object->model[3], 3.0f);
                 HuAudFXEmiterPlay(0x5FC, &work->unk_F0);
-                work->unk_78 = HuAudCharVoicePlayPos(work->unk_00, 0x123, &work->unk_CC);
+                work->unk_78 = CharFXPlayPos(work->unk_00, 0x123, &work->unk_CC);
                 omVibrate(object->work[0], 0xC, 4, 2);
                 Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
                 fn_1_982C(object, 0);

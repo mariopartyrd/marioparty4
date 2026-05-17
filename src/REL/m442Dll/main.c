@@ -1323,7 +1323,7 @@ void fn_1_3C94(omObjData *object)
             var_r28 = HU3D_MOTATTR_NONE;
             if (var_r31->unk_3C != 0) {
                 if (--var_r31->unk_3C == 0) {
-                    HuAudCharVoicePlay(var_r31->unk_10, 0x125);
+                    CharFXPlay(var_r31->unk_10, 0x125);
                 }
             }
         }

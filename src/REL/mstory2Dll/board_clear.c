@@ -269,13 +269,13 @@ void fn_1_BF48(void)
         GWPlayerCfg[i].iscom = GWPlayerCfg[i].group = 1;
     }
     his = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY2, 3, his->stat);
+    omOvlHisChg(0, DLL_mstory2dll, 3, his->stat);
     HuAudSeqAllFadeOut(1000);
     HuAudSStreamAllFadeOut(1000);
     GWSystem.mg_type = -1;
     GWMGAvailSet(450);
     GWSystem.mg_next = 450 - 401;
-    omOvlCallEx(OVL_M450, 1, 0, 0);
+    omOvlCallEx(DLL_m450dll, 1, 0, 0);
     while (1) {
         fn_1_BC8();
     }

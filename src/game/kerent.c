@@ -312,12 +312,12 @@ void HuAudSStreamFadeOut(void);
 void HuAudSStreamAllFadeOut(void);
 void HuAudSStreamAllStop(void);
 void HuAudSStreamStatGet(void);
-void HuAudPlayerVoicePlay(void);
-void HuAudCharVoicePlay(void);
-void HuAudPlayerVoicePlayPos(void);
-void HuAudCharVoicePlayPos(void);
-void HuAudPlayerVoicePlayEntry(void);
-void HuAudCharVoicePlayEntry(void);
+void PlayerFXPlay(void);
+void CharFXPlay(void);
+void PlayerFXPlayPos(void);
+void CharFXPlayPos(void);
+void PlayerFXStop(void);
+void CharFXStop(void);
 void HuAudAUXSet(void);
 void msmMusPlay(void);
 void espInit(void);
@@ -1334,9 +1334,9 @@ extern void _kerjmp_HuAudSStreamStatGet(void);
 extern void _kerjmp_HuAudPlayerVoicePlay(void);
 extern void _kerjmp_HuAudCharVoicePlay(void);
 extern void _kerjmp_HuAudPlayerVoicePlayPos(void);
-extern void _kerjmp_HuAudCharVoicePlayPos(void);
+extern void _kerjmp_CharFXPlayPos(void);
 extern void _kerjmp_HuAudPlayerVoicePlayEntry(void);
-extern void _kerjmp_HuAudCharVoicePlayEntry(void);
+extern void _kerjmp_CharFXStop(void);
 extern void _kerjmp_HuAudAUXSet(void);
 extern void _kerjmp_msmMusPlay(void);
 extern void _kerjmp_espInit(void);
@@ -2668,17 +2668,17 @@ asm void _kerent(void) {
     entry _kerjmp_HuAudSStreamStatGet
     b HuAudSStreamStatGet
     entry _kerjmp_HuAudPlayerVoicePlay
-    b HuAudPlayerVoicePlay
+    b PlayerFXPlay
     entry _kerjmp_HuAudCharVoicePlay
-    b HuAudCharVoicePlay
+    b CharFXPlay
     entry _kerjmp_HuAudPlayerVoicePlayPos
-    b HuAudPlayerVoicePlayPos
-    entry _kerjmp_HuAudCharVoicePlayPos
-    b HuAudCharVoicePlayPos
+    b PlayerFXPlayPos
+    entry _kerjmp_CharFXPlayPos
+    b CharFXPlayPos
     entry _kerjmp_HuAudPlayerVoicePlayEntry
-    b HuAudPlayerVoicePlayEntry
-    entry _kerjmp_HuAudCharVoicePlayEntry
-    b HuAudCharVoicePlayEntry
+    b PlayerFXStop
+    entry _kerjmp_CharFXStop
+    b CharFXStop
     entry _kerjmp_HuAudAUXSet
     b HuAudAUXSet
     entry _kerjmp_msmMusPlay

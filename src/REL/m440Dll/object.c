@@ -890,7 +890,7 @@ void fn_1_E034(omObjData *arg0, unkObjStruct *arg1)
 #else
             Hu3DMotionSet(arg0->model[0], arg0->motion[4]);
 #endif
-            HuAudCharVoicePlay(arg1->unk8, 0x125);
+            CharFXPlay(arg1->unk8, 0x125);
             arg1->unk60++;
             break;
         case 1:
@@ -1009,7 +1009,7 @@ u8 fn_1_E8AC(omObjData *arg0, unkObjStruct *arg1)
         case 0:
             lbl_1_bss_70 = 0;
             Hu3DMotionShiftSet(arg0->model[0], arg0->motion[6], 0.0f, 7.0f, HU3D_MOTATTR_NONE);
-            HuAudCharVoicePlay(arg1->unk8, 0x12E);
+            CharFXPlay(arg1->unk8, 0x12E);
             arg1->unk60++;
             break;
         case 1:

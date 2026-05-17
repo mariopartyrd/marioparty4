@@ -130,7 +130,7 @@ void fn_1_414(void)
             while (WipeStatGet()) {
                 HuPrcVSleep();
             }
-            omOvlGotoEx(OVL_MODESEL, 1, 0, 0);
+            omOvlGotoEx(DLL_modeseldll, 1, 0, 0);
             while (1) {
                 HuPrcVSleep();
             }
@@ -161,7 +161,7 @@ void fn_1_414(void)
                     GWMGListSet(GWGameStat.party_pause.mg_list);
                     GWMessSpeedSet(GWGameStat.party_pause.mess_speed);
                     GWSaveModeSet(GWGameStat.party_pause.save_mode);
-                    omOvlCallEx(OVL_MENT, 1, 0, 0);
+                    omOvlCallEx(DLL_mentdll, 1, 0, 0);
                     break;
 
                 case 1:
@@ -170,23 +170,23 @@ void fn_1_414(void)
                     GWMGListSet(GWGameStat.story_pause.mg_list);
                     GWMessSpeedSet(GWGameStat.story_pause.mess_speed);
                     GWSaveModeSet(GWGameStat.story_pause.save_mode);
-                    omOvlCallEx(OVL_MENT, 1, 1, 0);
+                    omOvlCallEx(DLL_mentdll, 1, 1, 0);
                     break;
 
                 case 2:
-                    omOvlCallEx(OVL_MGMODE, 1, 0, 0);
+                    omOvlCallEx(DLL_mgmodedll, 1, 0, 0);
                     break;
 
                 case 3:
-                    omOvlCallEx(OVL_MENT, 1, 3, 0);
+                    omOvlCallEx(DLL_mentdll, 1, 3, 0);
                     break;
 
                 case 4:
-                    omOvlCallEx(OVL_MENT, 1, 4, 0);
+                    omOvlCallEx(DLL_mentdll, 1, 4, 0);
                     break;
 
                 case 5:
-                    omOvlCallEx(OVL_MPEX, 1, 0, 0);
+                    omOvlCallEx(DLL_mpexdll, 1, 0, 0);
                     break;
             }
             while (1) {

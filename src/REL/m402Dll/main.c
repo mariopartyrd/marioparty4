@@ -785,7 +785,7 @@ static void fn_1_2B30(UnkFn27A8Struct *arg0, omObjData *arg1, omObjData *arg2)
     Hu3DModelAttrReset(arg1->model[0], HU3D_MOTATTR_LOOP | HU3D_MOTATTR_PAUSE);
     Hu3DMotionShiftSet(arg1->model[0], arg1->motion[7], 0.0f, 8.0f, HU3D_MOTATTR_NONE);
     fn_1_2970(arg0, arg2, 1);
-    HuAudCharVoicePlay(arg0->unk58, 0x123);
+    CharFXPlay(arg0->unk58, 0x123);
 }
 
 static u8 fn_1_2DBC(UnkFn27A8Struct *arg0, omObjData *arg1)
@@ -1042,7 +1042,7 @@ static void fn_1_43D8(omObjData *arg0)
             temp_r31->unk04 -= temp_r31->unk08;
             if (temp_r31->unk48 != 0 && Hu3DMotionEndCheck(arg0->model[0])) {
                 temp_r31->unk48 = 0;
-                HuAudCharVoicePlay(temp_r31->unk58, 0x128);
+                CharFXPlay(temp_r31->unk58, 0x128);
             }
             if (786.0f > temp_r31->unk04) {
                 temp_r31->unk4C++;

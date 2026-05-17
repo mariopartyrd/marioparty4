@@ -207,7 +207,7 @@ void fn_1_3514(void) {
         }
     }
     HuAudFXPlay(0x48B);
-    HuAudPlayerVoicePlay(lbl_1_bss_4C, 0x123);
+    PlayerFXPlay(lbl_1_bss_4C, 0x123);
     HuPrcChildCreate(fn_1_3E8C, 0x2001, 0x1000, 0, boardMainProc);
     HuAudFXPlay(0x48A);
     BoardModelMotionStart(lbl_1_bss_4E[lbl_1_bss_48], 2, 0);
@@ -254,7 +254,7 @@ void fn_1_3514(void) {
     } else if (BoardPlayerSizeGet(lbl_1_bss_4C) == 1) {
         HuAudFXPlay(0x48F);
     } else {
-        HuAudPlayerVoicePlay(lbl_1_bss_4C, 0x119);
+        PlayerFXPlay(lbl_1_bss_4C, 0x119);
     }
     while (1) {
         sp20.y = var_f30 - (0.18333334f * (0.25f * (var_f31 * var_f31)));
@@ -273,7 +273,7 @@ void fn_1_3514(void) {
                     HuAudFXPlay(0x48F);
                 } else {
                     OSReport("normal se\n");
-                    HuAudPlayerVoicePlay(lbl_1_bss_4C, 0x119);
+                    PlayerFXPlay(lbl_1_bss_4C, 0x119);
                 }
             }
         }

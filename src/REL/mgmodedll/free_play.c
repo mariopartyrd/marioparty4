@@ -1028,7 +1028,7 @@ void fn_1_BFA0(s16 arg0)
     for (i = 0; i < 4; i++) {
         HuSprGrpTPLvlSet(lbl_1_bss_34A[i], 1.0f);
     }
-    if (mgInfoTbl[arg0].ovl == OVL_M450) {
+    if (mgInfoTbl[arg0].ovl == DLL_m450dll) {
         HuSprGrpTPLvlSet(lbl_1_bss_34A[1], 0.0f);
     }
     if (mgInfoTbl[arg0].type == 6 || mgInfoTbl[arg0].type == 8) {

@@ -90,7 +90,7 @@ void ObjectSetup(void)
     Hu3DBGColorSet(0, 0, 0);
     HuWinInit(1);
     if (lbl_1_bss_58 == 1) {
-        HuAudVoiceInit(-1);
+        HuAudSndCharGrpSet(-1);
     }
     if (lbl_1_bss_58 != 0) {
         HuAudSndGrpSetSet(4);
@@ -1132,8 +1132,8 @@ void fn_1_51BC(s16 arg0)
     }
 #endif
     var_r30 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_ZTAR, arg0, var_r30->stat);
-    omOvlCallEx(OVL_M433, 1, 0, 0);
+    omOvlHisChg(0, DLL_ztardll, arg0, var_r30->stat);
+    omOvlCallEx(DLL_m433dll, 1, 0, 0);
     while (TRUE) {
         HuPrcVSleep();
     }

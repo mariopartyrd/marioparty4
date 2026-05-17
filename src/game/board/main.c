@@ -51,7 +51,7 @@ Process *boardMainProc;
 BoardCameraData boardCamera;
 static BoardCameraData cameraBackup;
 
-static OverlayID nextOvl = OVL_INVALID;
+static OMOVL nextOvl = DLL_NONE;
 
 static CameraView camViewTbl[] = {
     { 0, 0, 25 },
@@ -99,7 +99,7 @@ void BoardObjectSetup(BoardFunc create, BoardFunc destroy)
         BoardMGSetupPlayClear();
     }
 
-    nextOvl = OVL_INVALID;
+    nextOvl = DLL_NONE;
     _SetFlag(FLAG_ID_MAKE(1, 28));
     _SetFlag(FLAG_ID_MAKE(1, 14));
     _ClearFlag(FLAG_ID_MAKE(1, 16));
@@ -123,39 +123,39 @@ void BoardObjectSetup(BoardFunc create, BoardFunc destroy)
     omSystemKeyCheckSetup(boardObjMan);
     boardMainObj = omAddObjEx(boardObjMan, 0, 0, 0, -1, InitBoardFunc);
     switch(omcurovl) {
-        case OVL_W01:
+        case DLL_w01dll:
             GWSystem.board = BOARD_ID_MAIN1;
             break;
 
-        case OVL_W02:
+        case DLL_w02dll:
             GWSystem.board = BOARD_ID_MAIN2;
             break;
 
-        case OVL_W03:
+        case DLL_w03dll:
             GWSystem.board = BOARD_ID_MAIN3;
             break;
 
-        case OVL_W04:
+        case DLL_w04dll:
             GWSystem.board = BOARD_ID_MAIN4;
             break;
 
-        case OVL_W05:
+        case DLL_w05dll:
             GWSystem.board = BOARD_ID_MAIN5;
             break;
 
-        case OVL_W06:
+        case DLL_w06dll:
             GWSystem.board = BOARD_ID_MAIN6;
             break;
 
-        case OVL_W10:
+        case DLL_w10dll:
             GWSystem.board = BOARD_ID_TUTORIAL;
             break;
 
-        case OVL_W20:
+        case DLL_w20dll:
             GWSystem.board = BOARD_ID_EXTRA1;
             break;
 
-        case OVL_W21:
+        case DLL_w21dll:
             GWSystem.board = BOARD_ID_EXTRA2;
             break;
     }
@@ -204,7 +204,7 @@ static void KillBoardFunc(omObjData *object)
         if(HuARDMACheck()) {
             goto return_alt;
         }
-        if(nextOvl != OVL_INVALID) {
+        if(nextOvl != DLL_NONE) {
             omOvlCallEx(nextOvl, 1, 0, 0);
         } else {
             if(_CheckFlag(FLAG_ID_MAKE(1, 11))) {
@@ -598,7 +598,7 @@ static s32 ExecTurnStart(void)
     return 1;
 }
 
-void BoardNextOvlSet(OverlayID overlay)
+void BoardNextOvlSet(OMOVL overlay)
 {
     nextOvl = overlay;
     BoardAudSeqFadeOut(0, 1000);

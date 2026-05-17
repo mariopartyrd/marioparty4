@@ -51,7 +51,7 @@ void safSaveTest(void)
 		print8(16, 430, 1.5f, "WRITE TIME %d", OSTicksToMilliseconds(time_write));
 		HuPrcVSleep();
 		if(HuPadBtnDown[0] & PAD_BUTTON_Y) {
-			HuAudCharVoicePlayEntry(character, 282);
+			CharFXStop(character, 282);
 			time_write = OSGetTick();
 			SLSave();
 			time_write = OSGetTick()-time_write;

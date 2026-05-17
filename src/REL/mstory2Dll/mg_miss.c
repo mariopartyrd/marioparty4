@@ -139,7 +139,7 @@ void fn_1_1661C(void)
     lbl_1_bss_A34.unk04 = fn_1_185C(1, 0, 21, 2, lbl_1_bss_A34.unk0C);
     fn_1_1774C(2, 1, 15, 0, 1);
     fn_1_180D8(2, 3, 15, 0, 1);
-    HuAudCharVoicePlay(lbl_1_bss_A34.unk30[lbl_1_bss_A34.unk00].unk10, 302);
+    CharFXPlay(lbl_1_bss_A34.unk30[lbl_1_bss_A34.unk00].unk10, 302);
     fn_1_6D78(lbl_1_bss_A34.unk04, 0x1F0010, -1, lbl_1_bss_9BC.unk00->model[1]);
     fn_1_1D18(lbl_1_bss_A34.unk04, 0x250004);
     fn_1_1774C(1, -1, 15, 1, 0);
@@ -205,13 +205,13 @@ void fn_1_169D8(int arg0)
     } while (WipeStatGet() != 0);
     CharModelKill(-1);
     his = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY2, 3, his->stat);
+    omOvlHisChg(0, DLL_mstory2dll, 3, his->stat);
     if (arg0 == 0) {
         HuAudSeqAllFadeOut(1000);
         HuAudSStreamAllFadeOut(1000);
         GWMGAvailSet(450);
         GWSystem.mg_next = 450 - 401;
-        omOvlCallEx(OVL_M450, 1, 0, 0);
+        omOvlCallEx(DLL_m450dll, 1, 0, 0);
     }
     else {
         HuAudFadeOut(1);

@@ -170,7 +170,7 @@ void GambleExec(void)
 
 	// Announce Goomba's roll, if 10 then play player's disappointment sound
 	if(goombaDieResult == 10) {
-		HuAudPlayerVoicePlay(currPlayer, 302);
+		PlayerFXPlay(currPlayer, 302);
 		W02MesExec(MAKE_MESSID(0x13, 0x10));
 	} else {
 		W02MesExec(MAKE_MESSID(0x13, 0x0C));
@@ -238,7 +238,7 @@ void GambleExec(void)
 		if(playerDie.unk94 > goombaDieResult) {
 			W02MesExec(MAKE_MESSID(0x13, 0x0D));
 		} else {
-			HuAudPlayerVoicePlay(currPlayer, 302);
+			PlayerFXPlay(currPlayer, 302);
 			W02MesExec(MAKE_MESSID(0x13, 0x0F));
 		}
 	} else {

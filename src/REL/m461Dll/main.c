@@ -1364,7 +1364,7 @@ void fn_1_5A7C(WorkPlayer *player, omObjData *obj)
     player->unk30 = player->unk0;
     player->unk48 = 15;
     lbl_1_bss_10 = HuAudFXEmiterPlay(2084, &player->unk0);
-    lbl_1_bss_C = HuAudCharVoicePlayPos(player->unk5C, 291, &player->unk0);
+    lbl_1_bss_C = CharFXPlayPos(player->unk5C, 291, &player->unk0);
 }
 
 void fn_1_5BF4(WorkPlayer *player, omObjData *obj)

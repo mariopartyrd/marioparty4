@@ -177,14 +177,14 @@ void fn_1_EC(void)
 	s32 delay = 0;
 	float scale = 1.0f;
 	GXColor hilite = { 0, 0, 255, 128 };
-	OverlayID boardOvlTbl[] = {
-		OVL_W01,
-		OVL_W02,
-		OVL_W03,
-		OVL_W04,
-		OVL_W05,
-		OVL_W06,
-		OVL_W10
+	OMOVL boardOvlTbl[] = {
+		DLL_w01dll,
+		DLL_w02dll,
+		DLL_w03dll,
+		DLL_w04dll,
+		DLL_w05dll,
+		DLL_w06dll,
+		DLL_w10dll
 	};
 	WipeColorSet(255, 255, 255);
 	WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, -1);
@@ -458,35 +458,35 @@ void fn_1_EC(void)
 				CharARAMOpen(GWPlayerCfg[3].character);
 				{
 					omOvlHisData *his = omOvlHisGet(0);
-					omOvlHisChg(0, OVL_MSTORY3, 0, 0);
+					omOvlHisChg(0, DLL_mstory3dll, 0, 0);
 					omOvlCallEx(boardOvlTbl[GWSystem.board], 1, 0, 0);
 				}
 				break;
 				
 			case 1:
-				omOvlGotoEx(OVL_MSTORY2, 1, 1, 0);
+				omOvlGotoEx(DLL_mstory2dll, 1, 1, 0);
 				break;
 				
 			case 2:
-				omOvlGotoEx(OVL_MSTORY2, 1, 2, 0);
+				omOvlGotoEx(DLL_mstory2dll, 1, 2, 0);
 				break;
 				
 			case 3:
 				GWPlayerCoinWinSet(0, 10);
-				omOvlGotoEx(OVL_MSTORY2, 1, 3, 0);
+				omOvlGotoEx(DLL_mstory2dll, 1, 3, 0);
 				break;
 				
 			case 4:
 				GWPlayerCoinWinSet(0, 0);
-				omOvlGotoEx(OVL_MSTORY2, 1, 3, 0);
+				omOvlGotoEx(DLL_mstory2dll, 1, 3, 0);
 				break;
 				
 			case 5:
-				omOvlGotoEx(OVL_MSTORY2, 1, 0, 0);
+				omOvlGotoEx(DLL_mstory2dll, 1, 0, 0);
 				break;
 				
 			case 6:
-				omOvlGotoEx(OVL_MSTORY2, 1, 4, 0);
+				omOvlGotoEx(DLL_mstory2dll, 1, 4, 0);
 				break;
 		}
 	} else {
@@ -503,27 +503,27 @@ void fn_1_EC(void)
 				CharARAMOpen(GWPlayerCfg[3].character);
 				{
 					omOvlHisData *his = omOvlHisGet(0);
-					omOvlHisChg(0, OVL_MSTORY3, 0, 0);
+					omOvlHisChg(0, DLL_mstory3dll, 0, 0);
 					omOvlCallEx(boardOvlTbl[GWSystem.board], 1, 0, 0);
 				}
 				break;
 				
 			case 1:
-				omOvlGotoEx(OVL_MSTORY, 1, 0, 0);
+				omOvlGotoEx(DLL_mstorydll, 1, 0, 0);
 				break;
 				
 			case 2:
-				omOvlGotoEx(OVL_MSTORY, 1, 1, 0);
+				omOvlGotoEx(DLL_mstorydll, 1, 1, 0);
 				break;
 			
 			case 3:
 				GWPlayerCoinWinSet(0, 10);
-				omOvlGotoEx(OVL_MSTORY, 1, 2, 0);
+				omOvlGotoEx(DLL_mstorydll, 1, 2, 0);
 				break;
 				
 			case 4:
 				GWPlayerCoinWinSet(0, 0);
-				omOvlGotoEx(OVL_MSTORY, 1, 2, 0);
+				omOvlGotoEx(DLL_mstorydll, 1, 2, 0);
 				break;
 		}
 	}
@@ -672,10 +672,10 @@ void fn_1_13A0(void)
 		GWSystem.board = itemno%6;
 		if(GWSystem.board != BOARD_ID_MAIN6) {
 			GWPlayerCoinWinSet(0, 10);
-			omOvlGotoEx(OVL_MSTORY, 1, 2, 9999);
+			omOvlGotoEx(DLL_mstorydll, 1, 2, 9999);
 		} else {
 			GWPlayerCoinWinSet(0, 10);
-			omOvlGotoEx(OVL_MSTORY2, 1, 3, 9999);
+			omOvlGotoEx(DLL_mstory2dll, 1, 3, 9999);
 		}
 	}
 	HuPrcEnd();

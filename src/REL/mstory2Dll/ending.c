@@ -11,6 +11,7 @@
 #include "game/hsfmotion.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
+#include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/printfunc.h"
@@ -448,8 +449,8 @@ void fn_1_19BE8(void)
     CharModelKill(-1);
     HuAudFadeOut(1);
     his = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY2, 20, 1);
-    omOvlCallEx(OVL_STAFF, 1, 0, 0);
+    omOvlHisChg(0, DLL_mstory2dll, 20, 1);
+    omOvlCallEx(DLL_staffdll, 1, 0, 0);
     while (1) {
         fn_1_BC8();
     }

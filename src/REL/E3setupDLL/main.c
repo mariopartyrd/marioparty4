@@ -29,7 +29,7 @@ s16 e3ConfigPlayerCnt;
 static s32 e3EvtNo;
 s32 e3ExitEnableF;
 s32 lbl_2_bss_B0;
-OverlayID e3NextOvl;
+OMOVL e3NextOvl;
 s32 e3NextEvent;
 u32 e3ExitMode;
 static s32 needCharKill;
@@ -367,13 +367,13 @@ static void UpdateMenuControl(omObjData *object)
 		s32 playerCnt;
 		e3ExitMode = 2;
 		if(configE3.mode != 0) {
-			e3NextOvl = OVL_E3SETUP;
+			e3NextOvl = DLL_e3setupDLL;
 			e3NextEvent = 1;
 		} else {
 			if(configE3.board != 0) {
-				e3NextOvl = OVL_W02;
+				e3NextOvl = DLL_w02dll;
 			} else {
-				e3NextOvl = OVL_W01;
+				e3NextOvl = DLL_w01dll;
 			}
 		}
 		GWRumbleSet(configE3.rumble);

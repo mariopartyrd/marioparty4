@@ -359,7 +359,7 @@ void fn_1_9A64(omObjData *arg0)
                     var_r27 = fn_1_897C(temp_r31->unk168);
                     if (var_r27 != 0) {
                         var_r26 = fn_1_89A8(temp_r31->unk168);
-                        HuAudCharVoicePlay(var_r26, 0x128);
+                        CharFXPlay(var_r26, 0x128);
                     }
                 }
                 temp_r31->unk10 = 6;
@@ -443,7 +443,7 @@ void fn_1_9A64(omObjData *arg0)
                 if (fn_1_897C(temp_r31->unk168) != 0) {
                     fn_1_8924(temp_r31->unk168, 4);
                     var_r26 = fn_1_89A8(temp_r31->unk168);
-                    HuAudCharVoicePlay(var_r26, 0x123);
+                    CharFXPlay(var_r26, 0x123);
                     fn_1_D010(0x628, REFRESH_RATE / 2);
                 }
                 else {

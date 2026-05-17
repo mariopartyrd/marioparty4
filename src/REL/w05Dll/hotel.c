@@ -342,7 +342,7 @@ void fn_1_1E44(void) {
             BoardPlayerVoiceEnableSet(var_r31, sp1C[var_r31][0], 0);
             BoardPlayerMotionStart(var_r31, sp1C[var_r31][0], 0);
         }
-        HuAudPlayerVoicePlay(lbl_1_bss_28, 0x12E);
+        PlayerFXPlay(lbl_1_bss_28, 0x12E);
         HuPrcSleep(0x5A);
         HuAudFXStop(temp_r24);
         HuAudFXPlay(0x483);

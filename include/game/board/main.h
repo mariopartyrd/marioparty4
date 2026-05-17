@@ -95,7 +95,7 @@ void BoardSaveInit(s32 board);
 void BoardStoryConfigSet(s32 mg_list, s32 diff_story);
 void BoardPartyConfigSet(s32 team, s32 bonus_star, s32 mg_list, s32 max_turn, s32 p1_handicap, s32 p2_handicap, s32 p3_handicap, s32 p4_handicap);
 s32 BoardTurnNext(void);
-void BoardNextOvlSet(OverlayID overlay);
+void BoardNextOvlSet(OMOVL overlay);
 s32 BoardStartCheck(void);
 void BoardLightHookSet(BoardLightHook set, BoardLightHook reset);
 void BoardLightSetExec(void);

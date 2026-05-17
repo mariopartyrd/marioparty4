@@ -350,7 +350,7 @@ void fn_1_9198(void)
     GWPlayerCfg[0].character = lbl_1_bss_194.unk30[lbl_1_bss_194.unk00].unk10;
     GWPlayerCfg[0].pad_idx = lbl_1_bss_194.unk30[lbl_1_bss_194.unk00].unk14;
     GWPlayerCfg[0].iscom = FALSE;
-    omOvlGotoEx(OVL_MENT, 1, 11, 0);
+    omOvlGotoEx(DLL_mentdll, 1, 11, 0);
 }
 
 void fn_1_92BC(omObjData *arg0, StructBss16C *arg1)

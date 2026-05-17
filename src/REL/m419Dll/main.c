@@ -995,7 +995,7 @@ void fn_1_344C(void)
             }
             else if (temp_r30->unk24 == 0) {
                 temp_r30->unk34 = 4;
-                HuAudPlayerVoicePlay(temp_r30->unk28, 0x128);
+                PlayerFXPlay(temp_r30->unk28, 0x128);
                 HuAudFXPlay(0x5E9);
             }
             break;
@@ -1939,7 +1939,7 @@ void fn_1_9AF0(void)
             case 5:
                 if (temp_r31->unk44 != 0) {
                     if (temp_r31->unk44 == 20) {
-                        HuAudPlayerVoicePlay(temp_r31->unk28, 0x119);
+                        PlayerFXPlay(temp_r31->unk28, 0x119);
                     }
                     temp_r31->unk44--;
                 }
@@ -2036,7 +2036,7 @@ void fn_1_9AF0(void)
     }
     else {
         omVibrate(temp_r31->unk28, 12, 4, 2);
-        HuAudPlayerVoicePlay(temp_r31->unk28, 0x123);
+        PlayerFXPlay(temp_r31->unk28, 0x123);
         HuAudFXPlay(0x5EC);
         temp_r29 = &lbl_1_bss_200[temp_r31->unk40];
         temp_r31->unk9C = atan2d(temp_r31->unk54 - temp_r29->unk54, temp_r31->unk5C - temp_r29->unk5C);
@@ -2767,7 +2767,7 @@ void fn_1_DF98(void)
         while (!Hu3DMotionEndCheck(temp_r31->unk00)) {
             HuPrcVSleep();
         }
-        lbl_1_bss_594[temp_r31->unk28] = HuAudPlayerVoicePlay(temp_r31->unk28, 0x11A);
+        lbl_1_bss_594[temp_r31->unk28] = PlayerFXPlay(temp_r31->unk28, 0x11A);
         CharModelMotionShiftSet(lbl_1_data_0[GWPlayerCfg[temp_r31->unk28].character], temp_r31->unk1C[3], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
         Hu3DModelHookReset(temp_r31->unk00);
         Hu3DModelShadowSet(temp_r31->unk02);
@@ -2925,7 +2925,7 @@ void fn_1_F9BC(void)
         omVibrate(var_r28, 12, 12, 0);
     }
     Hu3DModelAttrSet(lbl_1_bss_5B8, 1);
-    HuAudPlayerVoicePlay(temp_r31->unk28, 0x128);
+    PlayerFXPlay(temp_r31->unk28, 0x128);
     temp_r31 = &lbl_1_bss_200[lbl_1_bss_5AC];
     while (Hu3DMotionEndCheck(temp_r31->unk00)) {
         HuPrcVSleep();

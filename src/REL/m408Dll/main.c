@@ -952,13 +952,13 @@ void fn_1_3E80(omObjData *object)
         HuAudFXPlay(1358);
         omVibrate(object->work[0], 12, 4, 2);
         if (temp_r31->unk8) {
-            HuAudCharVoicePlay(temp_r31->unk2, 296);
+            CharFXPlay(temp_r31->unk2, 296);
             object->func = fn_1_4A58;
         }
         else {
             temp_r31->unk4 |= 0x30;
             lbl_1_bss_4C--;
-            HuAudCharVoicePlay(temp_r31->unk2, 291);
+            CharFXPlay(temp_r31->unk2, 291);
             object->func = fn_1_5684;
         }
     }
@@ -1091,7 +1091,7 @@ void fn_1_54E4(omObjData *object)
         temp_r30->unk4 |= 0x8;
         if (temp_r30->unk14 != 0) {
             CharModelMotionShiftSet(temp_r30->unk2, object->motion[1], 0, 0.2f, HU3D_MOTATTR_NONE);
-            HuAudCharVoicePlay(temp_r30->unk2, 290);
+            CharFXPlay(temp_r30->unk2, 290);
             GWPlayerCoinCollectAdd(object->work[0], temp_r30->unk14);
         }
         else {

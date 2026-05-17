@@ -9,6 +9,7 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
+#include "game/object.h"
 #include "game/printfunc.h"
 #include "game/sprite.h"
 #include "game/window.h"
@@ -151,7 +152,7 @@ void fn_1_A8F8(void) {
 
 void fn_1_ABAC(void) {
     omOvlHisData* var_r30;
-    s32 sp8[] = { OVL_W01, OVL_W02, OVL_W03, OVL_W04, OVL_W05, OVL_W06, OVL_W10 };
+    s32 sp8[] = { DLL_w01dll, DLL_w02dll, DLL_w03dll, DLL_w04dll, DLL_w05dll, DLL_w06dll, DLL_w10dll };
 
     WipeColorSet(0xFF, 0xFF, 0xFF);
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);
@@ -161,7 +162,7 @@ void fn_1_ABAC(void) {
     CharModelKill(-1);
     MGSeqKillAll();
     var_r30 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY3, 0, var_r30->stat);
+    omOvlHisChg(0, DLL_mstory3dll, 0, var_r30->stat);
     do {
         fn_1_B8C();
     } while (lbl_1_bss_2CC != 1);
@@ -402,7 +403,7 @@ void fn_1_B9D0(s32 arg0) {
             GWPlayer[i].com = GWPlayerCfg[i].iscom;
             GWPlayer[i].team = GWPlayerCfg[i].group;
         }
-        omOvlGotoEx(OVL_MENT, 1, 10, 0);
+        omOvlGotoEx(DLL_mentdll, 1, 10, 0);
     }
     while (TRUE) {
         fn_1_B8C();

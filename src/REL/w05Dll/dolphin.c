@@ -502,7 +502,7 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec *arg2)
                 else if (var_r30 == 1 && var_f28 < -180.0f) {
                     HuAudFXStop(var_r28);
                     HuAudFXPlay(0x47D);
-                    HuAudPlayerVoicePlay(lbl_1_bss_68, 0x125);
+                    PlayerFXPlay(lbl_1_bss_68, 0x125);
                     fn_1_66C0(3, &sp58);
                     var_r30++;
                 }

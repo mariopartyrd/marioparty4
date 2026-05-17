@@ -3,6 +3,7 @@
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+#include "game/object.h"
 #include "game/printfunc.h"
 #include "game/window.h"
 #include "game/wipe.h"
@@ -113,7 +114,7 @@ void fn_1_11AE8(void) {
     fn_1_1DCC(lbl_1_bss_73C.unk00, 1, 2, 15, 0);
     lbl_1_bss_73C.unk04 = (void*) fn_1_12F20;
     HuAudFXPlay(lbl_1_data_0[lbl_1_bss_7B4.unk00][1]);
-    HuAudCharVoicePlay(lbl_1_bss_7B4.unk34[lbl_1_bss_7B4.unk04].unk10, 0x12E);
+    CharFXPlay(lbl_1_bss_7B4.unk34[lbl_1_bss_7B4.unk04].unk10, 0x12E);
     lbl_1_bss_7B4.unk08 = fn_1_1834(1, 0, 21, 2, lbl_1_bss_7B4.unk10);
     fn_1_1DCC(lbl_1_bss_714.unk00, 1, 2, 15, 1);
     fn_1_1CE8(lbl_1_bss_7B4.unk08, lbl_1_data_AF8[lbl_1_bss_7B4.unk00][0]);
@@ -168,7 +169,7 @@ void fn_1_11F28(void) {
 
 void fn_1_11F2C(s32 arg0) {
     omOvlHisData* var_r30;
-    OverlayID sp8[] = { OVL_M445, OVL_M448, OVL_M447, OVL_M446, OVL_M449 };
+    OMOVL sp8[] = { DLL_m445dll, DLL_m448dll, DLL_m447dll, DLL_m446dll, DLL_m449dll };
 
     if (arg0 != 0) {
         fn_1_BAC(60);
@@ -182,7 +183,7 @@ void fn_1_11F2C(s32 arg0) {
     fn_1_BAC(60);
     CharModelKill(-1);
     var_r30 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY, 2, var_r30->stat);
+    omOvlHisChg(0, DLL_mstorydll, 2, var_r30->stat);
     if (arg0 == 0) {
         HuAudSeqAllFadeOut(1000);
         HuAudSStreamAllFadeOut(1000);

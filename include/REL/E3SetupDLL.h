@@ -57,7 +57,7 @@ extern s16 e3PadCtrl;
 extern s16 e3ConfigPlayerCnt;
 extern s16 e3ConfigPlayerF;
 extern s32 e3ExitEnableF;
-extern OverlayID e3NextOvl;
+extern OMOVL e3NextOvl;
 extern s32 e3NextEvent;
 extern u32 e3ExitMode;
 extern float e3CameraFov;

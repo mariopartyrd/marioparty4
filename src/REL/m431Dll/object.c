@@ -977,7 +977,7 @@ void fn_1_A450(omObjData *object)
             }
             else {
                 fn_1_B0E8(object, 4, 4);
-                HuAudCharVoicePlay(temp_r31->unk8, 290);
+                CharFXPlay(temp_r31->unk8, 290);
                 temp_r31->unk80++;
             }
             break;

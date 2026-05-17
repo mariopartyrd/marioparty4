@@ -367,7 +367,7 @@ void fn_1_13264(void)
     fn_1_BE8(60);
     lbl_1_bss_810.unk04 = (void *)fn_1_13FB4;
     HuAudFXPlay(163);
-    HuAudCharVoicePlay(lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10, 296);
+    CharFXPlay(lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10, 296);
     fn_1_1DFC(lbl_1_bss_810.unk00, 6, 6, 0, 0);
     Hu3DModelAttrReset(lbl_1_bss_810.unk00->model[6], 1);
     Hu3DModelAttrSet(lbl_1_bss_810.unk00->model[5], 1);
@@ -457,8 +457,8 @@ void fn_1_138CC(void)
     OSReport("########## PRESENTFLG CHR:%d, MAP:5, PRESENT:%d\n", lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10,
         lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10 * 6 + 5);
     var_r31 = omOvlHisGet(0);
-    omOvlHisChg(0, OVL_MSTORY2, 20, var_r31->stat);
-    omOvlCallEx(OVL_PRESENT, 1, lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10 * 6 + 5 + 1, 0);
+    omOvlHisChg(0, DLL_mstory2dll, 20, var_r31->stat);
+    omOvlCallEx(DLL_present, 1, lbl_1_bss_860.unk30[lbl_1_bss_860.unk00].unk10 * 6 + 5 + 1, 0);
 }
 
 void fn_1_13A18(omObjData *arg0, StructBss16C *arg1)

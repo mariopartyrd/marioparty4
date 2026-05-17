@@ -290,7 +290,7 @@ void BootExec(void)
         omOvlReturnEx(1, 1);
     }
     else {
-        omOvlCallEx(OVL_MODESEL, 1, 0, 0);
+        omOvlCallEx(DLL_modeseldll, 1, 0, 0);
     }
     for (i = 0; i < 4; i++) {
         GWPlayerCfg[i].character = -1;

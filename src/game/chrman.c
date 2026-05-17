@@ -31,12 +31,12 @@ typedef struct {
     /* 0xC4 */ Process *unkC4;
 } UnkCharInstanceStruct; // Size 0xC8
 
-typedef struct {
+typedef struct EffectData_s {
     /* 0x00 */ s32 unk00;
     /* 0x04 */ s16 unk04;
     /* 0x06 */ s16 unk06;
     /* 0x08 */ s32 unk08;
-} EffectData; // Size 0xC
+} EFFECTDATA; // Size 0xC
 
 typedef struct {
     /* 0x00 */ u32 unk00;
@@ -66,7 +66,7 @@ typedef struct {
 
 static void UpdateChar(void);
 static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4, Vec *arg5);
-static s32 PlayCharVoice(s16 character, s16 arg1, u8 arg2);
+static s32 _CharFXPlay(s16 character, s16 arg1, u8 arg2);
 static void InitEffect(void);
 static s16 CreateEffectDust(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
 static s16 CreateEffectSmoke(s16 arg0, float arg1, float arg2, float arg3, float arg4, EffectParamData *arg5);
@@ -100,7 +100,7 @@ static u8 lbl_801D3600[8] = { 0x0A, 0x00, 0x19, 0x63, 0x26, 0x00, 0x10, 0x0F };
 static u8 lbl_801D3608[8] = { 0x0D, 0x00, 0x17, 0x69, 0x0D, 0x1E, 0x1D, 0x14 };
 static u8 lbl_801D3610[8] = { 0x15, 0x1E, 0x16, 0x54, 0x0F, 0x62, 0x39, 0x0A };
 
-static EffectData effectDataTbl[8] = {
+static EFFECTDATA effectDataTbl[8] = {
     { DATA_MAKE_NUM(DATADIR_EFFECT, 0x06), 0x000A, 0x0000, 0x00000002 },
     { DATA_MAKE_NUM(DATADIR_EFFECT, 0x05), 0x000A, 0x0000, 0x00000002 },
     { DATA_MAKE_NUM(DATADIR_EFFECT, 0x02), 0x0096, 0x0001, 0x00000000 },
@@ -480,7 +480,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
                             arg1, temp_r30->pos.x, temp_r30->pos.y + 10.0f * temp_r30->scale.x, temp_r30->pos.z, 20.0f, &effectDustParam);
                     }
                 }
-                PlayCharVoice(character, 0x119, arg3);
+                _CharFXPlay(character, 0x119, arg3);
             }
             break;
         case 0x1B:
@@ -552,7 +552,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
         case 0x16:
         case 0x79:
             if (!(temp_r29->unkAC & 1) && !(temp_r29->unkAC & 0x10)) {
-                PlayCharVoice(character, 0x11A, arg3);
+                _CharFXPlay(character, 0x11A, arg3);
                 for (i = 0; i < 3; i++) {
                     var_r19 = CreateEffectBird(
                         arg1, temp_r30->pos.x, temp_r30->pos.y + 100.0f * temp_r30->scale.x, temp_r30->pos.z, 1.0f, &effectWarnParam);
@@ -582,65 +582,65 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
         case 5:
             if (arg4 == 0) {
                 if (temp_r29->unkB0 == 4) {
-                    PlayCharVoice(character, 0x10A, arg3);
+                    _CharFXPlay(character, 0x10A, arg3);
                 }
                 else if (temp_r29->unkB0 == 5) {
-                    PlayCharVoice(character, 0x10C, arg3);
+                    _CharFXPlay(character, 0x10C, arg3);
                 }
                 else {
-                    PlayCharVoice(character, 0x115, arg3);
+                    _CharFXPlay(character, 0x115, arg3);
                 }
             }
             break;
         case 8:
             if (arg4 == 0) {
-                PlayCharVoice(character, 0x118, arg3);
+                _CharFXPlay(character, 0x118, arg3);
             }
             break;
         case 0x14:
         case 0x50:
             if (arg4 == 0 && !(temp_r29->unkAC & 0x14)) {
-                PlayCharVoice(character, 0x123, arg3);
+                _CharFXPlay(character, 0x123, arg3);
             }
             break;
         case 0x3B:
         case 0x48:
             if (arg4 == 0 && !(temp_r29->unkAC & 0x12)) {
-                PlayCharVoice(character, 0x122, arg3);
+                _CharFXPlay(character, 0x122, arg3);
             }
             break;
         case 0x3F:
         case 0x53:
         case 0x57:
             if (arg4 == 0 && !(temp_r29->unkAC & 0x12)) {
-                PlayCharVoice(character, 0x124, arg3);
+                _CharFXPlay(character, 0x124, arg3);
             }
             temp_r29->unkAC |= 2;
             var_r22 |= 2;
             break;
         case 0x4B:
             if (arg4 == lbl_801D3600[character] && !(temp_r29->unkAC & 0x12)) {
-                PlayCharVoice(character, 0x124, arg3);
+                _CharFXPlay(character, 0x124, arg3);
                 temp_r29->unkAC |= 2;
                 var_r22 |= 2;
             }
             break;
         case 0x4C:
             if (arg4 == lbl_801D3608[character] && !(temp_r29->unkAC & 0x12)) {
-                PlayCharVoice(character, 0x124, arg3);
+                _CharFXPlay(character, 0x124, arg3);
                 temp_r29->unkAC |= 2;
                 var_r22 |= 2;
             }
             break;
         case 0x17:
             if (!(temp_r29->unkAC & 0x12)) {
-                if (omcurovl < OVL_W01 && arg4 == lbl_801D35F0[character]) {
-                    PlayCharVoice(character, 0x124, arg3);
+                if (omcurovl < DLL_w01dll && arg4 == lbl_801D35F0[character]) {
+                    _CharFXPlay(character, 0x124, arg3);
                     temp_r29->unkAC |= 2;
                     var_r22 |= 2;
                 }
-                else if (omcurovl >= OVL_W01 && arg4 == lbl_801D35F8[character]) {
-                    PlayCharVoice(character, 0x122, arg3);
+                else if (omcurovl >= DLL_w01dll && arg4 == lbl_801D35F8[character]) {
+                    _CharFXPlay(character, 0x122, arg3);
                     temp_r29->unkAC |= 2;
                     var_r22 |= 2;
                 }
@@ -648,7 +648,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
             break;
         case 0x18:
             if (arg4 == lbl_801D3610[character] && !(temp_r29->unkAC & 0x14)) {
-                PlayCharVoice(character, 0x121, arg3);
+                _CharFXPlay(character, 0x121, arg3);
                 temp_r29->unkAC |= 4;
                 var_r22 |= 4;
             }
@@ -656,7 +656,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
         case 0x2A:
         case 0x72:
             if (arg4 == 0 && !(temp_r29->unkAC & 0x14)) {
-                PlayCharVoice(character, 0x121, arg3);
+                _CharFXPlay(character, 0x121, arg3);
             }
             temp_r29->unkAC |= 4;
             var_r22 |= 4;
@@ -664,7 +664,7 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
         case 0x49:
         case 0x4E:
             if (arg4 == 0 && !(temp_r29->unkAC & 0x14)) {
-                PlayCharVoice(character, 0x12E, arg3);
+                _CharFXPlay(character, 0x12E, arg3);
             }
             temp_r29->unkAC |= 4;
             var_r22 |= 4;
@@ -680,21 +680,21 @@ static void UpdateCharAnim(s16 character, s16 arg1, s16 arg2, u8 arg3, s16 arg4,
     }
 }
 
-static s32 PlayCharVoice(s16 character, s16 arg1, u8 arg2)
+static s32 _CharFXPlay(s16 charNo, s16 seNo, u8 voiceFlag)
 {
     UnkCharInstanceStruct *temp_r31;
     ModelData *temp_r29;
 
-    temp_r31 = &charInstance[character];
+    temp_r31 = &charInstance[charNo];
     temp_r29 = &Hu3DData[temp_r31->unk00];
-    if (arg2 & 1) {
+    if (voiceFlag & 1) {
         return;
     }
     if (temp_r31->unkAC & 8) {
-        return HuAudCharVoicePlayPos(character, arg1, &temp_r29->pos);
+        return CharFXPlayPos(charNo, seNo, &temp_r29->pos);
     }
     else {
-        return HuAudCharVoicePlay(character, arg1);
+        return CharFXPlay(charNo, seNo);
     }
 }
 
@@ -1009,7 +1009,7 @@ static void PlayEffectSound(HsfanimStruct01 *arg0)
             arg0->unk2C = 0.0f;
             temp_r29->unkAC &= ~1;
             if (arg0->unk08.y == 0.0) {
-                PlayCharVoice(temp_r28, 0x100, temp_r29->unkAC);
+                _CharFXPlay(temp_r28, 0x100, temp_r29->unkAC);
             }
         }
     }
@@ -1982,9 +1982,9 @@ static s32 PlayStepFX(s16 character, s16 arg1, u8 arg2)
         arg1 += temp_r31->unkB0;
     }
     if (temp_r31->unkAC & 8) {
-        return HuAudCharVoicePlayPos(character, arg1, &var_r28->pos);
+        return CharFXPlayPos(character, arg1, &var_r28->pos);
     }
     else {
-        return HuAudCharVoicePlay(character, arg1);
+        return CharFXPlay(character, arg1);
     }
 }

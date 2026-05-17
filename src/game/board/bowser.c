@@ -6,6 +6,7 @@
 #include "game/board/ui.h"
 #include "game/hsfdraw.h"
 
+#include "game/object.h"
 #include "game/objsub.h"
 #include "game/sprite.h"
 #include "game/audio.h"
@@ -450,7 +451,7 @@ static void ExecBowserGame(void)
     GWMGAvailSet(mg);
     GWSystem.mg_next = mg-401;
     _SetFlag(0x10003);
-    BoardNextOvlSet(OVL_INST);
+    BoardNextOvlSet(DLL_instdll);
     BoardFilterFadeOut(30);
     HuPrcEnd();
 }

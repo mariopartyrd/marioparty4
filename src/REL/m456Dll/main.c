@@ -694,7 +694,7 @@ void fn_1_1304(omObjData *var_r30)
                 fn_1_67E0(&var_r30->trans, 5.0f);
                 fn_1_61C8(&var_r30->trans, -1.0f, -1.0f, -1);
                 HuAudFXPlay(0x7D3);
-                HuAudCharVoicePlay(var_r31->unk_14, 0x125);
+                CharFXPlay(var_r31->unk_14, 0x125);
             }
             if (--var_r31->unk_28 == 0) {
                 var_r31->unk_00_field2 = 1;
@@ -721,7 +721,7 @@ void fn_1_1304(omObjData *var_r30)
                 var_r31->unk_1A = 7;
                 if (var_r31->unk_00_field3 != 0) {
                     Hu3DMotionOverlaySet(var_r30->model[0], var_r30->motion[9]);
-                    HuAudCharVoicePlay(var_r31->unk_14, 0x124);
+                    CharFXPlay(var_r31->unk_14, 0x124);
                 }
             }
             break;

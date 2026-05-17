@@ -1068,7 +1068,7 @@ void fn_1_46C4(omObjData *object)
                 temp_r31->unk28 = 15.0f;
                 temp_r31->unk24 = 2;
                 omVibrate(temp_r31->unk4, 0xC, 0xC, 0);
-                lbl_1_data_1E0[object->work[0]][0] = HuAudCharVoicePlay(temp_r31->unk14, 0x123);
+                lbl_1_data_1E0[object->work[0]][0] = CharFXPlay(temp_r31->unk14, 0x123);
                 lbl_1_data_1E0[object->work[0]][1] = 0x7F;
                 HuAudFXPlay(0x5D4);
             }
@@ -1379,7 +1379,7 @@ s32 fn_1_5A6C(s32 arg0)
                 if (temp_r28->unk1C == 0) {
                     temp_r28->unk1C = 1;
                 }
-                HuAudCharVoicePlay(temp_r30->unk14, 0x122);
+                CharFXPlay(temp_r30->unk14, 0x122);
             }
         }
         else {
@@ -1795,7 +1795,7 @@ s32 fn_1_6F38(s32 arg0)
                 }
                 if ((var_r26 != 0) || (fn_1_B0C8(&lbl_1_bss_38, 0) >= 10)) {
                     HuAudFXPlay(0x5DC);
-                    HuAudCharVoicePlay(temp_r31->unk14, 0x128);
+                    CharFXPlay(temp_r31->unk14, 0x128);
                     temp_r29->unk4[var_r30] = 2;
                     Hu3DModelShadowDispOff(temp_r31->unk0->model[0]);
                     fn_1_ABC4(temp_r31->unk0, 0, 7, 0x1E, 0);

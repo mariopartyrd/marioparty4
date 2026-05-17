@@ -1,11 +1,11 @@
 #include "game/dvd.h"
 #include "game/object.h"
 
-#define OVL_DEFINE(name, path) { path, 0 },
+#define DLL(name) { "dll/" #name ".rel", 0 },
 
-FileListEntry _ovltbl[OVL_COUNT+1] = {
+FileListEntry _ovltbl[] = {
     #include "ovl_table.h"
     { NULL, -1 }
 };
 
-#undef OVL_DEFINE
+#undef DLL

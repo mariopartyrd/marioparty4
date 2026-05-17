@@ -532,7 +532,7 @@ void fn_1_10564(void)
             for (temp_r31 = 0; temp_r31 < 4; temp_r31++) {
                 sp8[GWPlayerCfg[temp_r31].group] += GWPlayerCoinWinGet(temp_r31) + GWPlayerCoinCollectGet(temp_r31);
             }
-            if (mgInfoTbl[GWSystem.mg_next].ovl == OVL_M422) {
+            if (mgInfoTbl[GWSystem.mg_next].ovl == DLL_m422dll) {
                 sp8[1] /= 3;
             }
             lbl_1_bss_394 = 0;

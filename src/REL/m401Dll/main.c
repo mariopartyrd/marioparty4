@@ -1354,7 +1354,7 @@ void fn_2_48A0(omObjData *object)
         case 16:
             if (!temp_r31->unk6C) {
                 temp_r31->unk6C = 1;
-                HuAudPlayerVoicePlay(temp_r31->unk4, 292);
+                PlayerFXPlay(temp_r31->unk4, 292);
                 Hu3DMotionOverlaySet(object->model[0], object->motion[9]);
                 if (temp_r31->unk4 == lbl_2_bss_B2[0]) {
                     HuAudSStreamPlay(1);
@@ -2612,7 +2612,7 @@ s32 lbl_2_data_434[] = { 0x12D, 0x16D, 0x1AD, 0x1ED, 0x22D, 0x26D, 0x2AD, 0x2ED 
 
 void fn_2_A914(s32 player)
 {
-    HuAudPlayerVoicePlay(player, 301);
+    PlayerFXPlay(player, 301);
 }
 
 void fn_2_A940(omObjData *object)

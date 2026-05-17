@@ -1317,13 +1317,13 @@ void fn_1_35C0(omObjData *object)
             var_r31->unk_88 += -122.5f / REFRESH_RATE_F;
             var_r31->unk_7C = fn_1_7EDC(var_r31->unk_7C, var_r31->unk_28, 0.5f);
             if (var_r31->unk_A4 < 0) {
-                var_r31->unk_A4 = HuAudCharVoicePlayPos(var_r31->unk_01, 0x123, &var_r31->unk_6C);
+                var_r31->unk_A4 = CharFXPlayPos(var_r31->unk_01, 0x123, &var_r31->unk_6C);
             }
             if (var_r31->unk_0D != 0) {
                 var_r31->unk_0D = 0;
                 var_r31->unk_88 = 1347.5f / REFRESH_RATE_F;
                 if (var_r31->unk_07 != 0 && var_r31->unk_10 == 0) {
-                    HuAudCharVoicePlayPos(var_r31->unk_01, 0x11C, &var_r31->unk_6C);
+                    CharFXPlayPos(var_r31->unk_01, 0x11C, &var_r31->unk_6C);
                 }
             }
             if ((fn_1_7DB4() & 3) == 0) {
@@ -1342,7 +1342,7 @@ void fn_1_35C0(omObjData *object)
             break;
         case 7:
             if (var_r31->unk_A4 < 0) {
-                var_r31->unk_A4 = HuAudCharVoicePlayPos(var_r31->unk_01, 0x123, &var_r31->unk_6C);
+                var_r31->unk_A4 = CharFXPlayPos(var_r31->unk_01, 0x123, &var_r31->unk_6C);
             }
             if (var_r31->unk_A8 < 0) {
                 var_r31->unk_A8 = HuAudFXPlay(0x701);

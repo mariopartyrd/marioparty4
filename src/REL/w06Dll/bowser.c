@@ -499,7 +499,7 @@ static void fn_1_A408(s32 arg0) {
     Vec sp14;
     Vec sp8;
     float var_f31;
-    OverlayID var_r29;
+    OMOVL var_r29;
     s32 temp_r28;
     s32 temp_r27;
     s32 i;
@@ -572,11 +572,11 @@ static void fn_1_A408(s32 arg0) {
     BoardAudSeqFadeOutAll();
     lbl_1_bss_0->unk06 = BoardItemPrevGet() + 1;
     if (BoardRandMod(100) < 50) {
-        var_r29 = OVL_M457;
+        var_r29 = DLL_m457dll;
         GWMGAvailSet(0x1C9);
         GWSystem.mg_next = 0x38;
     } else {
-        var_r29 = OVL_M458;
+        var_r29 = DLL_m458dll;
         GWMGAvailSet(0x1CA);
         GWSystem.mg_next = 0x39;
     }

@@ -2579,7 +2579,7 @@ void fn_1_A120(s32 arg0)
     CharModelMotionShiftSet(lbl_1_data_240[GWPlayerCfg[temp_r31->unk34].character], temp_r31->unk0E[0], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
     HuPrcSleep(30);
     HuAudSStreamPlay(1);
-    HuAudPlayerVoicePlay(temp_r31->unk34, 0x124);
+    PlayerFXPlay(temp_r31->unk34, 0x124);
     CharModelMotionShiftSet(lbl_1_data_240[GWPlayerCfg[temp_r31->unk34].character], temp_r31->unk0E[7], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     Hu3DMotionShiftSet(temp_r31->unk20, temp_r31->unk22[7], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     HuPrcChildCreate(fn_1_A07C, 0x2000, 0x1000, 0, HuPrcCurrentGet());
@@ -2682,7 +2682,7 @@ void fn_1_A788(s32 arg0)
         Hu3DModelRotSet(temp_r31->unk08, temp_r31->unk54, temp_r31->unk58, temp_r31->unk5C);
         HuPrcVSleep();
     }
-    HuAudPlayerVoicePlay(temp_r31->unk34, 0x124);
+    PlayerFXPlay(temp_r31->unk34, 0x124);
     Hu3DModelPosSet(temp_r31->unk08, 0.0f, 0.0f, 0.0f);
     Hu3DModelRotSet(temp_r31->unk08, 0.0f, 0.0f, 0.0f);
     switch (GWPlayerCfg[temp_r31->unk34].character) {
