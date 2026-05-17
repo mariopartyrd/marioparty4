@@ -14,12 +14,12 @@
 
 typedef struct bit_copy {
     struct {
-        u8 hide : 1;
+        u8 kill : 1;
         u8 minus : 1;
         u8 update : 1;
         u8 mode : 3;
     };
-    s8 index;
+    s8 no;
     s8 tens;
     s8 ones;
     u16 time;
@@ -107,7 +107,7 @@ void BoardLandBlueExec(s32 player, s32 space) {
         coins *= 2;
     }
 
-    // Creates and displays the coin change model above the player
+    // Creates and displays the Coin Change model above the player
     BoardPlayerPosGet(player, &pos);
     pos.y += 250.0f;
     coin_chg = BoardCoinChgCreate(&pos, coins);
@@ -122,9 +122,9 @@ void BoardLandBlueExec(s32 player, s32 space) {
         HuPrcSleep(6);
     }
 
-    // Wait for the coin change model to disappear
+    // Wait for the Coin Change model to disappear
     HuAudFXPlay(15);
-    while (BoardCoinChgExist(coin_chg) == 0) {
+    while (BoardCoinChgKillCheck(coin_chg) == 0) {
         HuPrcVSleep();
     }
 
@@ -177,7 +177,7 @@ void BoardLandRedExec(s32 player, s32 space) {
         coins *= 2;
     }
 
-    // Creates and displays the coin change model above the player
+    // Creates and displays the Coin Change model above the player
     BoardPlayerPosGet(player, &pos);
     pos.y += 250.0f;
     coin_chg = BoardCoinChgCreate(&pos, -coins);
@@ -193,8 +193,8 @@ void BoardLandRedExec(s32 player, s32 space) {
     }
     HuAudFXPlay(15);
     
-    // Wait for the coin change model to disappear
-    while (BoardCoinChgExist(coin_chg) == 0) {
+    // Wait for the Coin Change model to disappear
+    while (BoardCoinChgKillCheck(coin_chg) == 0) {
         HuPrcVSleep();
     }
 
@@ -204,11 +204,35 @@ void BoardLandRedExec(s32 player, s32 space) {
     BoardPlayerIdleSet(player);
 }
 
+/**
+ * @brief Creates a Coin Change object that shows the amount of
+ *     coins a player gained/lost when on the map.
+ *
+ * @details This function is called when a player:
+ *   * Lands on a blue or a red space
+ *   * Wins coins in the gambling minigame
+ *   * Loses coins stepping on a Sparky Sticker
+ *   * Loses coins being stepped on by a player with a Mega Mushroom
+ *
+ * and does the following:
+ *
+ *   * Initializes a new Coin Change object and stores it into the earliest element of the Coin Change object array
+ *   * Creates a new Coin Change on the board with the given `value`
+ *   * Positions the object with `pos`
+ *   * Starts the object's processes
+ *   * Returns the position of the object in the Coin Change object array
+ * 
+ * @param [in] pos The position of the 
+ * @param value the amount of coins gained or lost by the player
+ *
+ * @return The position of the Coin Change object in the array
+ */
 s8 BoardCoinChgCreate(Vec *pos, s8 value) {
     omObjData *obj = NULL;
     coinChg *coin_chg;
     s8 i;
     
+    // Find the earliest Coin Change object not initialized (and return with -1 if none)
     for (i = 0; i < 4; i++) {
         if (coinChgObj[i] == 0) {
             break;
@@ -218,48 +242,90 @@ s8 BoardCoinChgCreate(Vec *pos, s8 value) {
         return -1;
     }
     
+    // Initialize new Coin Change object
     obj = omAddObjEx(boardObjMan, 266, 0, 0, -1, &UpdateCoinChg);
     coinChgObj[i] = obj;
+
+    // Setup and create object
     coin_chg = OM_GET_WORK_PTR(obj, coinChg);
-    coin_chg->hide = 0;
+    coin_chg->kill = 0;
     coin_chg->update = 0;
     coin_chg->minus = (value < 0) ? 1 : 0;
     coin_chg->mode = 0;
     coin_chg->tens = abs(value) / 10;
     coin_chg->ones = abs(value) % 10;
-    coin_chg->index = (s8) (i + 1);
+    coin_chg->no = (s8) (i + 1);
     coin_chg->time = 0;
     coin_chg->angle = 0;
+
+    // Create board model for object
     CreateCoinChg(coin_chg, pos);
+
+    // Position object
     obj->trans.x = pos->x;
     obj->trans.y = pos->y;
     obj->trans.z = pos->z;
     obj->rot.x = 0.0f;
     obj->rot.y = 0.01f;
+
+    // Enable object
     coin_chg->update = 1;
-    return coin_chg->index;
+
+    // Return the position of the Coin Change object in the array
+    return coin_chg->no;
 }
 
-s32 BoardCoinChgExist(s32 index) {
+/**
+ * @brief Checks if a Coin Change object has been killed.
+ *
+ * @details This function is called constantly to sleep until a Coin Change
+ * object has been deleted and does the following:
+ *
+ *   * Returns `num` if `num` is less than zero or greater than four
+ *   * Returns false if Coin Change object at `num - 1` exists
+ *   * Returns true otherwise
+ * 
+ * @param num Coin change object number
+ * @return 0 if killed, 1 if exists, `num` if invalid
+ */
+s32 BoardCoinChgKillCheck(s32 num) {
     coinChg *coin_chg;
 
-    if ((index <= 0) || (index > 4)) {
-        return index;
+    // If num is invalid, return num
+    if ((num <= 0) || (num > 4)) {
+        return num;
     }
-    if (coinChgObj[index - 1] != 0) {
-        coin_chg = OM_GET_WORK_PTR(coinChgObj[index - 1], coinChg);
+
+    // If Coin Change object at num exists, return 0
+    if (coinChgObj[num - 1] != 0) {
+        // possibly removed debug info for displaying object information
+        coin_chg = OM_GET_WORK_PTR(coinChgObj[num - 1], coinChg);
         return 0;
     }
+
+    // Otherwise (if Coin Change object doesn't exist), return 1
     return 1;
 }
 
-void BoardCoinChgHide(s32 index) {
-
-    if ((index <= 0) || (index > 4)) {
+/**
+ * @brief Kills Coin Change at the given position in the array, if valid
+ *
+ * @details This function is called when a player with the Mega Mushroom
+ *      finishes or prematurely stops squishing another player. It does
+ *      the following:
+ *   * Marks a Coin Change object for deletion if valid
+ * 
+ * @param num Coin change object number
+ */
+void BoardCoinChgKill(s32 num) {
+    // Return early if num is invalid
+    if ((num <= 0) || (num > 4)) {
         return;
     }
-    if (coinChgObj[index - 1] != 0) {
-        OM_GET_WORK_PTR(coinChgObj[index - 1], coinChg)->hide = 1;
+
+    // If object exists, mark it for deletion
+    if (coinChgObj[num - 1] != 0) {
+        OM_GET_WORK_PTR(coinChgObj[num - 1], coinChg)->kill = 1;
     }
 }
 
@@ -268,39 +334,75 @@ static const s32 coinSignMdl[2] = {
 	DATA_MAKE_NUM(DATADIR_BOARD, 23)
 };
 
+/**
+ * @brief Creates and starts animation of a Coin Change model
+ * 
+ * @details This function is called when creating a Coin Change object
+ *     to create the models for each part of the Coin Change. It does
+ *     the following:
+ *
+ *   * Determines the time the animation will take, depending on if
+ *  the player loses or gains money (losing take longer)
+ *   * Creates models for the coin, sign, tens digit, and ones digit
+ *   * Positions the models at `pos`
+ *   * Starts the animation of the sign, tens digit, and ones digit
+ *   * Initializes the animations to not move and be very small
+ *   * Sets all models to near top layer
+ *   * Disables the tens digit model if the coin count is less than 10
+ *
+ * @param coin_chg The Coin Change object
+ * @param pos The position of where it should start its animation
+ */
 static void CreateCoinChg(coinChg *coin_chg, Vec *pos) {
     f32 time;
 
+    // Determine time for animation, lasts longer if coins are lost
     if (coin_chg->minus != 0) {
         time = 2.5f;
     } else {
         time = 1.5f;
     }
+
+    // Create 4 different models for each symbol to be displayed
     coin_chg->sign_model = BoardModelCreate(coinSignMdl[coin_chg->minus], NULL, 0);
     coin_chg->tens_model = BoardModelCreate(coinDigitMdl[coin_chg->tens], NULL, 0);
     coin_chg->ones_model = BoardModelCreate(coinDigitMdl[coin_chg->ones], NULL, 0);
     coin_chg->coin_model = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 10), NULL, 0);
+
+    // Position models all at origin for beginning of animation
     BoardModelPosSetV(coin_chg->sign_model, pos);
     BoardModelPosSetV(coin_chg->tens_model, pos);
     BoardModelPosSetV(coin_chg->ones_model, pos);
     BoardModelPosSetV(coin_chg->coin_model, pos);
+
+    // Start animation for all models but coin
     BoardModelMotionStart(coin_chg->sign_model, 0, 0);
     BoardModelMotionStart(coin_chg->tens_model, 0, 0);
     BoardModelMotionStart(coin_chg->ones_model, 0, 0);
+
+    // Set time to end animation
     BoardModelMotionTimeSet(coin_chg->sign_model, time);
     BoardModelMotionTimeSet(coin_chg->tens_model, time);
     BoardModelMotionTimeSet(coin_chg->ones_model, time);
+
+    // Set initial speed for animation
     BoardModelMotionSpeedSet(coin_chg->sign_model, 0.0f);
     BoardModelMotionSpeedSet(coin_chg->tens_model, 0.0f);
     BoardModelMotionSpeedSet(coin_chg->ones_model, 0.0f);
+
+    // Scale all models to be very small
     BoardModelScaleSet(coin_chg->sign_model, 0.001, 0.001, 0.001);
     BoardModelScaleSet(coin_chg->tens_model, 0.001, 0.001, 0.001);
     BoardModelScaleSet(coin_chg->ones_model, 0.001, 0.001, 0.001);
     BoardModelScaleSet(coin_chg->coin_model, 0.001, 0.001, 0.001);
+
+    // Set to near top layer for all models
     BoardModelLayerSet(coin_chg->sign_model, 1);
     BoardModelLayerSet(coin_chg->tens_model, 1);
     BoardModelLayerSet(coin_chg->ones_model, 1);
     BoardModelLayerSet(coin_chg->coin_model, 1);
+
+    // disable visibility of tens digit if it is 0
     if (coin_chg->tens == 0) {
         BoardModelVisibilitySet(coin_chg->tens_model, 0);
     }
@@ -310,7 +412,7 @@ static void UpdateCoinChg(omObjData *object) {
     coinChg *coin_chg;
 
     coin_chg = OM_GET_WORK_PTR(object, coinChg);
-    if ((coin_chg->hide != 0) || (BoardIsKill() != 0)) {
+    if ((coin_chg->kill != 0) || (BoardIsKill() != 0)) {
         if (coin_chg->coin_model != -1) {
             BoardModelKill(coin_chg->coin_model);
             coin_chg->coin_model = -1;
@@ -327,7 +429,7 @@ static void UpdateCoinChg(omObjData *object) {
             BoardModelKill(coin_chg->ones_model);
             coin_chg->ones_model = -1;
         }
-        coinChgObj[coin_chg->index - 1] = 0;
+        coinChgObj[coin_chg->no - 1] = 0;
         omDelObjEx(HuPrcCurrentGet(), object);
         return;
     }
@@ -493,6 +595,6 @@ static void CoinChgDisappear(omObjData* object, coinChg* coin_chg) {
         BoardModelVisibilitySet(coin_chg->tens_model, 0);
         BoardModelVisibilitySet(coin_chg->ones_model, 0);
         BoardModelVisibilitySet(coin_chg->coin_model, 0);
-        coin_chg->hide = 1;
+        coin_chg->kill = 1;
     }
 }

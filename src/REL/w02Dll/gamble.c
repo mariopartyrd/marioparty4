@@ -255,7 +255,7 @@ void GambleExec(void)
 		spC.y += 250.0f;
 		HuAudFXPlay(839);
 		tmpValue = BoardCoinChgCreate(&spC, 10);
-		while(!BoardCoinChgExist(tmpValue)) {
+		while(!BoardCoinChgKillCheck(tmpValue)) {
 			HuPrcVSleep();
 		}
 		for(tmpValue=0; tmpValue<10; tmpValue++) {

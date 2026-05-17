@@ -2744,7 +2744,7 @@ static void MegaSquishFunc(omObjData *object)
     Vec pos;
     if (work->kill || BoardIsKill()) {
         if (work->coinchg != -1) {
-            BoardCoinChgHide(work->coinchg);
+            BoardCoinChgKill(work->coinchg);
         }
         megaSquishObj[work->player] = NULL;
         omDelObjEx(HuPrcCurrentGet(), object);
