@@ -47,7 +47,7 @@ s16 HuTHPSprCreateVol(char *path, s16 loop, s16 prio, float volume)
     SimpleControl.unk19C = 0;
     SimpleControl.unk19E = temp_r31;
     SimpleControl.unkBC = volume;
-    strcpy(THPFileName, path);
+    strcpy_s(THPFileName, sizeof(THPFileName), path);
     THPLoopF = loop;
     THPStat = 0;
     THPFrame = 0;
@@ -76,7 +76,7 @@ s16 HuTHP3DCreateVol(char *path, s16 loop, float volume)
     temp_r31 = Hu3DHookFuncCreate(&THPViewFunc);
     SimpleControl.unk19E = temp_r31;
     SimpleControl.unkBC = volume;
-    strcpy(THPFileName, path);
+    strcpy_s(THPFileName, sizeof(THPFileName), path);
     THPLoopF = loop;
     THPStat = 0;
     THPFrame = 0;
