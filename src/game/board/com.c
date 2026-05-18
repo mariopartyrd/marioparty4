@@ -739,6 +739,11 @@ s32 BoardComJunctionInputGet(s32 item, Vec *input, s32 num_dirs, float *dirs) {
             }
         }
     }
+#ifdef NON_MATCHING
+    else {
+        angle = 0.0f;
+    }
+#endif
     if (path_unknown != 0) {
         dir_random = BoardRandMod(num_dirs);
         angle = dirs[dir_random];

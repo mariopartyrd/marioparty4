@@ -236,7 +236,13 @@ M430PlayerData170Struct lbl_1_data_1A8[4] = {
 };
 s32 lbl_1_data_1C8[5] = { 0, DATA_MAKE_NUM(DATADIR_M430, 0x31), DATA_MAKE_NUM(DATADIR_M430, 0x39), DATA_MAKE_NUM(DATADIR_M430, 0x41),
     DATA_MAKE_NUM(DATADIR_M430, 0x49) };
-float lbl_1_data_1DC[7] = { -262.5f, -173.25f, -86.625f, 0.0f, 86.625f, 173.25f, 262.5f };
+
+float lbl_1_data_1DC[] = { -262.5f, -173.25f, -86.625f, 0.0f, 86.625f, 173.25f, 262.5f,
+#ifdef NON_MATCHING
+    0.0f,
+#endif
+};
+
 Vec lbl_1_data_1F8[8] = {
     { 0.0f, 0.0f, 0.0f },
     { 0.0f, 0.0f, 160.0f },
@@ -1760,12 +1766,17 @@ s32 fn_1_10F24(s32 var_r29, float sp8, float spC, float sp10)
 
 s32 fn_1_110A8(s32 arg0, float arg8, float arg9, float argA, s32 arg1)
 {
+#ifdef NON_MATCHING
+#define BSS_16C_LEN 16
+#else
+#define BSS_16C_LEN 32
+#endif
     float var_f31;
     float var_f30;
     M430PlayerBss16CStruct *var_r31;
     s32 var_r30;
 
-    for (var_r31 = lbl_1_bss_16C, var_r30 = 0; var_r30 < 0x20; var_r30++, var_r31++) {
+    for (var_r31 = lbl_1_bss_16C, var_r30 = 0; var_r30 < BSS_16C_LEN; var_r30++, var_r31++) {
         if ((var_r31->unk_10 == 1) && (var_r31->unk_0C == arg0)) {
             var_f31 = arg8 - var_r31->unk_1C.x;
             var_f30 = argA - var_r31->unk_1C.z;
@@ -1774,7 +1785,7 @@ s32 fn_1_110A8(s32 arg0, float arg8, float arg9, float argA, s32 arg1)
             }
         }
     }
-    if (var_r30 >= 0x20) {
+    if (var_r30 >= BSS_16C_LEN) {
         return 0;
     }
     if (arg1 != 0) {
@@ -1783,6 +1794,7 @@ s32 fn_1_110A8(s32 arg0, float arg8, float arg9, float argA, s32 arg1)
         var_r31->unk_14 = 0;
     }
     return 1;
+#undef BSS_16C_LEN
 }
 
 s32 fn_1_111BC(s32 arg0, float arg8, Vec *arg1)
@@ -2237,7 +2249,11 @@ void fn_1_125C4(void)
 
 void fn_1_129CC(void)
 {
+#ifdef NON_MATCHING
+    s32 sp8[6];
+#else
     s32 sp8[4];
+#endif
     float var_f31;
     float var_f30;
     float var_f29;

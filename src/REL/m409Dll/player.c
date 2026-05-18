@@ -741,7 +741,7 @@ void fn_1_91C0(omObjData *arg0)
 
 void fn_1_962C(omObjData *arg0)
 {
-    s32 sp8[7];
+    s32 sp8[8];
     unkStruct10 *var_r31;
     s32 var_r29;
     s32 var_r28;

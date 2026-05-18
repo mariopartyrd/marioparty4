@@ -1674,6 +1674,10 @@ void fn_1_6640(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_r31->unk40.a = 0;
             temp_r31->time = ((float)particle->unk_3C) * ((float)temp_r28 / (float)particle->unk_30);
         }
+#ifdef NON_MATCHING
+        temp_f29 = 0.0f;
+        temp_f28 = 0.0f;
+#endif
     }
     else {
         temp_f29 = (particle->unk_04.x - model->pos.x);
@@ -1727,6 +1731,10 @@ void fn_1_6AE8(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 temp_r29;
     s16 temp_r28;
     s32 temp_r27; // ! - uninitialized
+
+#ifdef NON_MATCHING
+    temp_r27 = 0;
+#endif
 
     if (!particle->unk_00) {
         particle->unk_00 = 1;

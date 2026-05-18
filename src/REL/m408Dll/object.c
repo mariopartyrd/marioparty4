@@ -746,6 +746,10 @@ void fn_1_13820(StructBssDA4 *arg0)
     temp_f26 = cosd(arg0->unk30);
     temp_f25 = sind(arg0->unk30);
     arg0->unk40[1] = 270.0f;
+#ifdef NON_MATCHING
+    temp_f28 = 0.0f;
+    temp_f27 = 0.0f;
+#endif
     temp_f29 = arg0->unk18.y;
     switch (arg0->unk54) {
         case 0:

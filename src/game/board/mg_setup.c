@@ -23,9 +23,8 @@ typedef struct structActiveMG {
 } structActiveMG;
 
 typedef struct unkSubstructR31 {
-    s16 unk_00[4];
-    char unk_08[0x14];
-    Vec unk_1C[13][13];
+    s16 unk_00[13];
+    Vec unk_1C[2][13];
 } unkSubstructR31;
 
 typedef struct bitcopy {
@@ -632,14 +631,14 @@ static void CreateMGSetup(void) {
     temp_r29->unk_02 = 0;
     temp_r29->unk_03 = 0;
     temp_r29->unk_04 = 0;
-    temp_r28->unk_0C = HuMemDirectMallocNum(HEAP_SYSTEM, 0x154, MEMORY_DEFAULT_NUM);
+    temp_r28->unk_0C = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkSubstructR31), MEMORY_DEFAULT_NUM);
     temp_r31 = temp_r28->unk_0C;
     temp_r31->unk_00[0] = HuSprGrpCreate(0xD);
     
     for (var_r30 = 0; var_r30 < 13; var_r30++) {
         BoardSpriteCreate(mgSetupSprTbl[var_r30], 0x5DC, NULL, &temp_r31->unk_00[var_r30] + 1);
         HuSprGrpMemberSet(*temp_r31->unk_00, var_r30, *(&temp_r31->unk_00[var_r30] + 1));
-        HuSprAttrSet(*temp_r31->unk_00, var_r30, 4);
+        HuSprAttrSet(temp_r31->unk_00[0], var_r30, 4);
         temp_r31->unk_1C[0][var_r30].x = temp_r31->unk_1C[0][var_r30].y = temp_r31->unk_1C[0][var_r30].z = 0.0f;
         temp_r31->unk_1C[1][var_r30].x = temp_r31->unk_1C[1][var_r30].y = temp_r31->unk_1C[1][var_r30].z = 0.0f;
     }

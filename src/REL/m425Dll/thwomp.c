@@ -1392,8 +1392,8 @@ s32 fn_1_6EC4(float var_f24, float sp8, s16 var_r22, s16 var_r24)
             var_r31->unk_178[var_r30] = -1;
         }
     }
-    memcpy(var_r31->unk_180, var_r31->unk_17C, var_r31->unk_110 * 0xC);
-    memcpy(var_r31->unk_198, &var_r31->unk_180[var_r31->unk_144[0]], var_r31->unk_112[0] * 0xC);
+    memcpy(var_r31->unk_180, var_r31->unk_17C, var_r31->unk_110 * sizeof(Vec));
+    memcpy(var_r31->unk_198, &var_r31->unk_180[var_r31->unk_144[0]], var_r31->unk_112[0] * sizeof(Vec));
     var_r31->unk_19C = 0;
     fn_1_DB44(var_r31, var_r23);
     fn_1_DE3C(var_r31, var_r23);
@@ -1503,10 +1503,10 @@ s32 fn_1_6EC4(float var_f24, float sp8, s16 var_r22, s16 var_r24)
             var_r31->unk_190[var_r30][2] = 2;
         }
     }
-    DCFlushRangeNoSync(var_r31->unk_180, var_r31->unk_110 * 0xC);
-    DCFlushRangeNoSync(var_r31->unk_17C, var_r31->unk_110 * 0xC);
-    DCFlushRangeNoSync(var_r31->unk_188, var_r31->unk_110 * 0xC);
-    DCFlushRangeNoSync(var_r31->unk_184, var_r31->unk_110 * 8);
+    DCFlushRangeNoSync(var_r31->unk_180, var_r31->unk_110 * sizeof(Vec));
+    DCFlushRangeNoSync(var_r31->unk_17C, var_r31->unk_110 * sizeof(Vec));
+    DCFlushRangeNoSync(var_r31->unk_188, var_r31->unk_110 * sizeof(Vec));
+    DCFlushRangeNoSync(var_r31->unk_184, var_r31->unk_110 * sizeof(Vec2f));
     DCFlushRangeNoSync(var_r31->unk_178, var_r31->unk_110 * 2);
     PPCSync();
     for (var_r21 = 0; var_r21 < 0x19; var_r21++) {
@@ -1553,8 +1553,8 @@ void fn_1_D9A8(M425DllUnkStruct4 *var_r31, ModelData *var_r24, s32 var_r30, s32 
     s32 var_r27;
 
     var_r31->unk_208[var_r30] = var_r26 * var_r25;
-    var_r31->unk_1A4[var_r30] = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_208[var_r30] * 0xA, var_r24->unk_48);
-    memset(var_r31->unk_1A4[var_r30], 0, var_r31->unk_208[var_r30] * 0xA);
+    var_r31->unk_1A4[var_r30] = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_208[var_r30] * 10, var_r24->unk_48);
+    memset(var_r31->unk_1A4[var_r30], 0, var_r31->unk_208[var_r30] * 10);
     var_r29 = var_r31->unk_1A4[var_r30];
     for (var_r28 = 0; var_r28 < var_r25; var_r28++) {
         for (var_r27 = 0; var_r27 < var_r26; var_r27++) {
@@ -1565,7 +1565,7 @@ void fn_1_D9A8(M425DllUnkStruct4 *var_r31, ModelData *var_r24, s32 var_r30, s32 
             var_r29 += 5;
         }
     }
-    DCFlushRangeNoSync(var_r31->unk_1A4[var_r30], var_r31->unk_208[var_r30] * 0xA);
+    DCFlushRangeNoSync(var_r31->unk_1A4[var_r30], var_r31->unk_208[var_r30] * 10);
     PPCSync();
 }
 
@@ -2188,7 +2188,7 @@ void fn_1_101C4(ModelData *var_r29, Mtx var_r28)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_TEX_ST, GX_RGBA8, 0);
     GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
     GXSetArray(GX_VA_CLR0, &var_r31->unk_23A, 4);
-    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
     GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
     GXSetArray(GX_VA_TEX0, var_r31->unk_184, 8);
     if (var_r31->unk_2A8[1] && (var_r31->unk_244[1] != 0)) {
@@ -2597,18 +2597,21 @@ s16 fn_1_11A74(AnimData *arg0, s16 arg1)
     GXBeginDisplayList(var_r21, 0x4000);
     GXBegin(GX_QUADS, GX_VTXFMT0, arg1 * 4);
     for (var_r30 = 0; var_r30 < arg1; var_r30++) {
-        GXUnknownu16(var_r30 * 4);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4);
-        GXUnknownu16(var_r30 * 4 + 1);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 1);
-        GXUnknownu16(var_r30 * 4 + 2);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 2);
-        GXUnknownu16(var_r30 * 4 + 3);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 3);
+        GXPosition1x16(var_r30 * 4);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4);
+
+        GXPosition1x16(var_r30 * 4 + 1);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 1);
+
+        GXPosition1x16(var_r30 * 4 + 2);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 2);
+
+        GXPosition1x16(var_r30 * 4 + 3);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 3);
     }
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r27->unk_48);

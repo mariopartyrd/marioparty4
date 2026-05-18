@@ -1524,10 +1524,7 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
     Mtx spD0;
     Mtx spA0;
     Vec sp70[4];
-    Vec sp64;
-    Vec sp58;
-    Vec sp4C;
-    Vec sp40;
+    Vec sp40[4];
     Vec sp34;
     Vec sp28;
     Vec sp1C;
@@ -1624,17 +1621,17 @@ void fn_1_56C4(ModelData *arg0, Mtx arg1)
             }
             else {
                 if (var_r29->unk_28 == 0.0f) {
-                    fn_1_55C4(sp70, &sp40, 4, var_r29->unk_2C);
-                    VECAdd(&sp40, &var_r29->unk_30, var_r30++);
-                    VECAdd(&sp4C, &var_r29->unk_30, var_r30++);
-                    VECAdd(&sp58, &var_r29->unk_30, var_r30++);
-                    VECAdd(&sp64, &var_r29->unk_30, var_r30++);
+                    fn_1_55C4(sp70, sp40, 4, var_r29->unk_2C);
+                    VECAdd(&sp40[0], &var_r29->unk_30, var_r30++);
+                    VECAdd(&sp40[1], &var_r29->unk_30, var_r30++);
+                    VECAdd(&sp40[2], &var_r29->unk_30, var_r30++);
+                    VECAdd(&sp40[3], &var_r29->unk_30, var_r30++);
                 }
                 else {
-                    fn_1_55C4(&var_r31->unk_28, &sp40, 4, var_r29->unk_2C);
+                    fn_1_55C4(&var_r31->unk_28, sp40, 4, var_r29->unk_2C);
                     MTXRotRad(spD0, 0x5A, 0.017453292f * var_r29->unk_28);
                     MTXConcat(sp130, spD0, spA0);
-                    MTXMultVecArray(spA0, &sp40, &sp10, 4);
+                    MTXMultVecArray(spA0, sp40, &sp10, 4);
                     VECAdd(&sp10, &var_r29->unk_30, var_r30++);
                     VECAdd(&sp1C, &var_r29->unk_30, var_r30++);
                     VECAdd(&sp28, &var_r29->unk_30, var_r30++);

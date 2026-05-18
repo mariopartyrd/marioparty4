@@ -1330,14 +1330,8 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
     Mtx spC8;
     Mtx sp98;
     Vec sp68[4];
-    Vec sp5C;
-    Vec sp50;
-    Vec sp44;
-    Vec sp38;
-    Vec sp2C;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
+    Vec sp38[4];
+    Vec sp8[4];
     Vec *var_r31;
     s16 var_r24;
     HuVec2f *var_r26;
@@ -1418,21 +1412,21 @@ void fn_1_602C(ModelData *arg0, f32 (*arg1)[4])
         }
         else {
             if (var_r29->unk30 == 0.0f) {
-                fn_1_6778(&sp68[0], &sp38, &var_r29->unk34, 4);
-                VECAdd(&sp38, &var_r29->unk40, var_r31++);
-                VECAdd(&sp44, &var_r29->unk40, var_r31++);
-                VECAdd(&sp50, &var_r29->unk40, var_r31++);
-                VECAdd(&sp5C, &var_r29->unk40, var_r31++);
+                fn_1_6778(sp68, sp38, &var_r29->unk34, 4);
+                VECAdd(&sp38[0], &var_r29->unk40, var_r31++);
+                VECAdd(&sp38[1], &var_r29->unk40, var_r31++);
+                VECAdd(&sp38[2], &var_r29->unk40, var_r31++);
+                VECAdd(&sp38[3], &var_r29->unk40, var_r31++);
             }
             else {
-                fn_1_6778(&temp_r30->unk2C, &sp38, &var_r29->unk34, 4);
+                fn_1_6778(&temp_r30->unk2C, sp38, &var_r29->unk34, 4);
                 MTXRotRad(spC8, 0x5A, 0.017453292f * var_r29->unk30);
                 MTXConcat(sp128, spC8, sp98);
-                MTXMultVecArray(sp98, &sp38, &sp8, 4);
-                VECAdd(&sp8, &var_r29->unk40, var_r31++);
-                VECAdd(&sp14, &var_r29->unk40, var_r31++);
-                VECAdd(&sp20, &var_r29->unk40, var_r31++);
-                VECAdd(&sp2C, &var_r29->unk40, var_r31++);
+                MTXMultVecArray(sp98, sp38, sp8, 4);
+                VECAdd(&sp8[0], &var_r29->unk40, var_r31++);
+                VECAdd(&sp8[1], &var_r29->unk40, var_r31++);
+                VECAdd(&sp8[2], &var_r29->unk40, var_r31++);
+                VECAdd(&sp8[3], &var_r29->unk40, var_r31++);
             }
             if (var_r29->unk4C != -1) {
                 fn_1_66D4(var_r26, temp_r30->unk5C, var_r29->unk4C, temp_r30->unk60, temp_r30->unk64);

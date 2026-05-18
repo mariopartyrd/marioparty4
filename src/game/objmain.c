@@ -501,6 +501,11 @@ void omMain(void)
                     break;
                 }
                 if((object->stat & (OM_STAT_DELETED|OM_STAT_DISABLED)) == 0) {
+#ifdef NON_MATCHING
+                    if(obj_index == -1) {
+                        break;
+                    }
+#endif
                     if((obj_all[obj_index].stat & (OM_STAT_DELETED|OM_STAT_DISABLED)) != 0) {
                         obj_index = object->prev;
                     }

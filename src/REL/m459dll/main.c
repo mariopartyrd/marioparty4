@@ -1773,6 +1773,12 @@ void fn_1_55B0(M459DllBss18Struct *var_r31)
     s32 var_r21;
     s32 var_r20;
 
+#ifdef NON_MATCHING
+    sp20.x = 0.0f;
+    sp20.y = 0.0f;
+    sp20.z = 0.0f;
+#endif
+
     lbl_1_bss_14 = 0;
     var_r28 = -1;
     var_r29 = var_r31->unk_04[var_r31->unk_24[1]];

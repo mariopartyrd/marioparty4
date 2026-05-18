@@ -1817,6 +1817,14 @@ void fn_1_4778(omObjData *arg0)
         var_r29 = temp_r31->unk12;
         var_r28 = temp_r31->unk14;
     }
+#ifdef NON_MATCHING
+    else {
+        var_r25 = 0;
+        var_r24 = 0;
+        var_r29 = 0;
+        var_r28 = 0;
+    }
+#endif
     if (fabs(var_r29) < 8.0) {
         var_r29 = 0;
     }
@@ -2137,6 +2145,12 @@ void fn_1_5D18(omObjData *arg0)
         var_r28 = temp_r31->unk12;
         var_r24 = temp_r31->unk14;
     }
+#ifdef NON_MATCHING
+    else {
+        var_r28 = 0;
+        var_r24 = 0;
+    }
+#endif
     if (fabs(var_r28) < 8.0) {
         var_r28 = 0;
     }
@@ -2946,6 +2960,9 @@ void fn_1_8CB4(omObjData *arg0)
                     || temp_r30->unk14 < temp_r31->unk94) {
                     continue;
                 }
+#ifdef NON_MATCHING
+                var_f26 = 60.000004f + arg0->trans.z;
+#endif
                 var_r28 = (var_f26 - temp_r30->unk38.z) / temp_r30->unk50.z;
                 if (var_r28 > REFRESH_RATE_F * 5) {
                     continue;

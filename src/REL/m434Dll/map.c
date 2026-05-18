@@ -478,7 +478,11 @@ void fn_1_3CC8(ModelData *model, Mtx mtx)
 {
 
     float temp_f31;
+#ifdef NON_MATCHING
+    Mtx44 sp44;
+#else
     Mtx sp44;
+#endif
     Mtx sp14;
     Bss2468Data *temp_r31;
     s32 temp_r30;

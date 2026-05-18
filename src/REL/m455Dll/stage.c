@@ -477,7 +477,11 @@ void fn_1_4180(ModelData *model, Mtx matrix)
     Work347CUnk74 *workUnk74 = &work2->unk74[0];
     Work347CUnk4 *workUnk4 = &work2->unk4[0];
     s32 i;
+#ifdef NON_MATCHING
+    Mtx44 proj;
+#else
     Mtx proj;
+#endif
     Mtx modelview;
     MTXOrtho(proj, 0, 480, 0, 640, 0, 100);
     GXSetProjection(proj, GX_ORTHOGRAPHIC);
@@ -1634,10 +1638,13 @@ void fn_1_8EAC(void)
 void fn_1_9168(void)
 {
     StructBss48 *workP = lbl_1_bss_48;
+#ifndef NON_MATCHING
+    // these already get freed in HuSprAnimKill by hsfman.c
     HuSprAnimKill(workP->unk0[0]);
     HuSprAnimKill(workP->unk0[1]);
     HuSprAnimKill(workP->unk0[2]);
     HuSprAnimKill(workP->unk0[3]);
+#endif
 }
 
 float lbl_1_data_6A0[4] = {

@@ -181,7 +181,11 @@ void fn_1_3158(void);
 void fn_1_4568(void);
 void fn_1_45BC(ModelData *arg0, Mtx arg1);
 void fn_1_6304(ModelData *arg0, Mtx arg1);
+#ifdef NON_MATCHING
+void fn_1_64F8(UnkM406Struct2 *arg0, float var_f31);
+#else
 void fn_1_64F8(UnkM406Struct2 *arg0);
+#endif
 s32 fn_1_66F4(float arg8, float *arg0);
 void fn_1_67CC(ModelData *arg0);
 void fn_1_6F24(void);
@@ -694,6 +698,10 @@ void fn_1_3158(void)
     void *var_r18;
     ModelData *var_r17;
 
+#ifdef NON_MATCHING
+    var_f31 = 0.0f;
+#endif
+
     var_r19 = lbl_1_data_7A4 = Hu3DHookFuncCreate(fn_1_45BC);
     var_r26 = &Hu3DData[var_r19];
     var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(UnkM406Unk120Struct), var_r26->unk_48);
@@ -915,13 +923,12 @@ void fn_1_3158(void)
     GXBeginDisplayList(sp10[0], 0x10000);
     GXBegin(GX_TRIANGLESTRIP, GX_VTXFMT0, 70);
     for (var_r29 = 0; var_r29 < 35; var_r29++) {
-        // TODO fix up
-        GXUnknownu16(var_r29 + 35);
-        GXUnknownu16(var_r29 + 35);
-        GXUnknownu16(var_r29 + 35);
-        GXUnknownu16(var_r29);
-        GXUnknownu16(var_r29);
-        GXUnknownu16(var_r29);
+        GXPosition1x16(var_r29 + 35);
+        GXNormal1x16(var_r29 + 35);
+        GXColor1x16(var_r29 + 35);
+        GXPosition1x16(var_r29);
+        GXNormal1x16(var_r29);
+        GXColor1x16(var_r29);
     }
     var_r31->unk_A0 = GXEndDisplayList();
     if (var_r31->unk_A0 >= 0x10000) {
@@ -934,7 +941,11 @@ void fn_1_3158(void)
     lbl_1_bss_B4 = 70;
     lbl_1_bss_B8 = HuMemDirectMallocNum(HEAP_DATA, lbl_1_bss_B4 * 32, var_r26->unk_48);
     memset(lbl_1_bss_B8, 0, lbl_1_bss_B4 * 32);
+#ifdef NON_MATCHING
+    fn_1_64F8(lbl_1_bss_B8, var_f31);
+#else
     fn_1_64F8(lbl_1_bss_B8);
+#endif
     sp10[1] = &lbl_1_bss_B8[lbl_1_bss_B4 - 1];
     var_r31->unk_18 = sp10[1]->unk_04;
     var_r31->unk_1C = 0.0f;
@@ -1271,7 +1282,7 @@ void fn_1_4964(ModelData *arg0)
                 var_r26 = (frand() & 0x1F) + 0xE0;
                 sp3C.r = 0.96f * var_r26;
                 sp3C.g = 0.98f * var_r26;
-                sp3C.b = (float)var_r26;
+                sp3C.b = 1.0f * var_r26;
                 sp3C.a = 0xFF;
                 if (frand() & 1) {
                     var_f31 = 0.05f;
@@ -1446,9 +1457,14 @@ void fn_1_6304(ModelData *arg0, Mtx arg1)
     var_r28->unk_08 = 1;
 }
 
+#ifdef NON_MATCHING
+void fn_1_64F8(UnkM406Struct2 *arg0, float var_f31)
+{
+#else
 void fn_1_64F8(UnkM406Struct2 *arg0)
 {
     float var_f31; // ! - uninitialized
+#endif
 
     UnkM406Struct2 *var_r31;
     s32 var_r30;
@@ -2345,7 +2361,12 @@ s32 fn_1_94C0(Mtx arg0, s32 arg1, s32 arg2)
     sp58.x = sp58.z = 0.0f;
     sp58.y = atan2d(arg0[0][0], arg0[2][0]);
     MTXCopy(arg0, spA0);
+#ifdef NON_MATCHING
+    spA0[0][3] = spA0[1][3] = spA0[2][3] = 0.0f;
+#else
     spA0[0][3] = spA0[1][3] = spA0[2][3] = spA0[3][3] = 0.0f;
+#endif
+
     if (!arg2) {
         sp4C.x = 25.0f;
         sp4C.z = -50.0f;
@@ -2779,22 +2800,21 @@ s16 fn_1_B474(AnimData *arg0, s16 arg1)
     GXBeginDisplayList(var_r22, 0x10000);
     GXBegin(GX_QUADS, GX_VTXFMT0, arg1 * 4);
     for (var_r30 = 0; var_r30 < arg1; var_r30++) {
-        // TODO
-        GXUnknownu16(var_r30 * 4);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4);
+        GXPosition1x16(var_r30 * 4);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4);
 
-        GXUnknownu16(var_r30 * 4 + 1);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 1);
+        GXPosition1x16(var_r30 * 4 + 1);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 1);
 
-        GXUnknownu16(var_r30 * 4 + 2);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 2);
+        GXPosition1x16(var_r30 * 4 + 2);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 2);
 
-        GXUnknownu16(var_r30 * 4 + 3);
-        GXUnknownu16(var_r30);
-        GXUnknownu16(var_r30 * 4 + 3);
+        GXPosition1x16(var_r30 * 4 + 3);
+        GXColor1x16(var_r30);
+        GXTexCoord1x16(var_r30 * 4 + 3);
     }
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r27->unk_48);
@@ -3098,14 +3118,17 @@ s16 fn_1_C4F4(s16 arg0)
     GXBeginDisplayList(var_r23, 0x10000);
     GXBegin(GX_QUADS, GX_VTXFMT0, arg0 * 4);
     for (var_r29 = 0; var_r29 < arg0; var_r29++) {
-        GXUnknownu16(var_r29 * 4);
-        GXUnknownu16(var_r29);
-        GXUnknownu16(var_r29 * 4 + 1);
-        GXUnknownu16(var_r29);
-        GXUnknownu16(var_r29 * 4 + 2);
-        GXUnknownu16(var_r29);
-        GXUnknownu16(var_r29 * 4 + 3);
-        GXUnknownu16(var_r29);
+        GXPosition1x16(var_r29 * 4);
+        GXColor1x16(var_r29);
+
+        GXPosition1x16(var_r29 * 4 + 1);
+        GXColor1x16(var_r29);
+
+        GXPosition1x16(var_r29 * 4 + 2);
+        GXColor1x16(var_r29);
+
+        GXPosition1x16(var_r29 * 4 + 3);
+        GXColor1x16(var_r29);
     }
     var_r31->unk_34 = GXEndDisplayList();
     var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r28->unk_48);

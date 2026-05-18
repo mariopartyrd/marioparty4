@@ -1398,8 +1398,7 @@ void fn_1_5848(UnkM432DllStruct *var_r28, UnkM432DllBss0SubStruct *var_r31)
 
 void fn_1_5BAC(UnkM432DllStruct *arg0, omObjData *object, UnkM432DllBss0SubStruct *arg2, UnkM432DllBss0SubStruct *arg3)
 {
-    Vec sp14;
-    Vec sp8;
+    Vec sp8[2];
     float var_f31;
 
     var_f31 = arg2->unk_20.y;
@@ -1415,9 +1414,9 @@ void fn_1_5BAC(UnkM432DllStruct *arg0, omObjData *object, UnkM432DllBss0SubStruc
     }
     arg2->unk_2C.y += 0.25f * (var_f31 - arg2->unk_2C.y);
     if ((arg2->unk_40 < 0) && ((arg2->unk_20.y - 200.0f) > arg2->unk_2C.y)) {
-        fn_1_52B8_inline(&sp8, arg2->unk_2C.x - 80.0f, arg2->unk_20.y, arg2->unk_2C.z);
-        fn_1_52B8_inline(&sp14, 80.0f + arg2->unk_2C.x, arg2->unk_20.y, arg2->unk_2C.z);
-        fn_1_174(lbl_1_bss_404, &lbl_1_data_1814, 4, 4, 2, &sp8, 0);
+        fn_1_52B8_inline(&sp8[0], arg2->unk_2C.x - 80.0f, arg2->unk_20.y, arg2->unk_2C.z);
+        fn_1_52B8_inline(&sp8[1], 80.0f + arg2->unk_2C.x, arg2->unk_20.y, arg2->unk_2C.z);
+        fn_1_174(lbl_1_bss_404, &lbl_1_data_1814, 4, 4, 2, sp8, 0);
         HuAudFXPlay(0x69A);
     }
     Hu3DModelPosSet(object->model[arg2->unk_08], arg2->unk_2C.x, arg2->unk_2C.y, arg2->unk_2C.z);
@@ -2041,6 +2040,10 @@ void fn_1_93BC(UnkM432DllStruct *arg0)
     UnkM432DllBss0SubStruct *var_r28;
     UnkM432DllStruct *var_r27;
     s32 var_r20;
+
+#ifdef NON_MATCHING
+    var_r30 = NULL;
+#endif
 
     if (NULL != arg0->unk_CC) {
         var_r27 = fn_1_51A8(arg0->unk_184 ^ 1);

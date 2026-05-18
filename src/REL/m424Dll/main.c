@@ -141,6 +141,9 @@ void fn_1_41C(omObjData* object) {
     switch (lbl_1_bss_40) {
         case 0:
             lbl_1_bss_0 += fn_1_213C();
+#ifdef NON_MATCHING
+            var_f31 = lbl_1_bss_34 / 60.0f;
+#endif
             fn_1_1204(2, 2, var_f31);
             if (lbl_1_bss_0 >= 360.0f) {
                 WipeCreate(1, 0, 0x3C);

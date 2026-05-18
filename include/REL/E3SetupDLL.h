@@ -49,7 +49,6 @@ typedef struct mgSelect {
 	/* 0x42 */ s16 unk_42;
 	/* 0x44 */ s16 unk_44;
 	/* 0x46 */ s16 unk_46;
-	/* 0x48	*/ s32 unk48[3];
 } mgSelect;
 
 extern E3Pad e3PadData[4];

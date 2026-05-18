@@ -1164,7 +1164,6 @@ void fn_1_C604(s32 arg0, s32 arg1)
     Vec sp24;
     Vec sp18;
     Vec spC;
-    M424DllBallStruct2 *sp8;
     Vec *var_r31;
     f32 temp_f31;
     f32 var_f30;
@@ -1172,7 +1171,10 @@ void fn_1_C604(s32 arg0, s32 arg1)
     M424DllBallStruct2 *var_r28;
     Vec *var_r27;
 
+#ifdef __MWERKS__
+    M424DllBallStruct2 *sp8;
     sp8 = &lbl_1_bss_60[var_r30];
+#endif
     var_r27 = fn_1_89D4(arg0);
     sp30 = *var_r27;
     for (var_r30 = 0; var_r30 < lbl_1_bss_58; var_r30++) {

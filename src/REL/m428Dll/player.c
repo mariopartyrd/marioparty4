@@ -446,7 +446,11 @@ omObjData *fn_1_9F5C(Process *process)
     fn_1_11798(0);
     fn_1_11930();
     lbl_1_bss_29C[0] = lbl_1_bss_29C[1] = 0;
+#ifdef NON_MATCHING
+    return NULL; // the return value is never used anyways and var_r31 is too high, causing an error
+#else
     return lbl_1_bss_2C8[var_r31];
+#endif
 }
 
 void fn_1_A0B0(void)
@@ -990,6 +994,10 @@ void fn_1_BBD0(omObjData *object)
     s32 var_r22;
     s32 var_r21;
     s32 var_r20;
+
+#ifdef NON_MATCHING
+    var_r20 = 0;
+#endif
 
     var_r31 = object->data;
     var_r29 = &lbl_1_bss_2AC[var_r31->unk_02];

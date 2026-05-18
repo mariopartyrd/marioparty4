@@ -2035,12 +2035,12 @@ void fn_1_A148(ModelData *model, Mtx matrix)
 
     var_r31 = model->unk_120;
     if (var_r31->unk0 == 0) {
-        GXSetTexCopySrc(0, 0, 0x140, 0x1E0);
-        GXSetTexCopyDst(0x140, 0x1E0, GX_TF_RGB5A3, 0);
+        GXSetTexCopySrc(0, 0, 320, 480);
+        GXSetTexCopyDst(320, 480, GX_TF_RGB5A3, 0);
     }
     else {
-        GXSetTexCopySrc(0x140, 0, 0x140, 0x1E0);
-        GXSetTexCopyDst(0x140, 0x1E0, GX_TF_RGB5A3, 0);
+        GXSetTexCopySrc(320, 0, 320, 480);
+        GXSetTexCopyDst(320, 480, GX_TF_RGB5A3, 0);
     }
     GXCopyTex(var_r31->unk4, 1);
     DCFlushRange(var_r31->unk4, var_r31->unk8);
@@ -2957,10 +2957,7 @@ void fn_1_DCD4(ModelData *model, Mtx matrix)
     Mtx spC8;
     Mtx sp98;
     Vec sp68[4];
-    Vec sp5C;
-    Vec sp50;
-    Vec sp44;
-    Vec sp38;
+    Vec sp38[4];
     Vec sp2C;
     Vec sp20;
     Vec sp14;
@@ -3055,21 +3052,21 @@ void fn_1_DCD4(ModelData *model, Mtx matrix)
         }
         else {
             if (var_r29->unk_44 == 0.0f) {
-                fn_1_E420(sp68, &sp38, &var_r29->unk_48, 4);
-                PSVECAdd(&sp38, &var_r29->unk_54, var_r31++);
-                PSVECAdd(&sp44, &var_r29->unk_54, var_r31++);
-                PSVECAdd(&sp50, &var_r29->unk_54, var_r31++);
-                PSVECAdd(&sp5C, &var_r29->unk_54, var_r31++);
+                fn_1_E420(sp68, sp38, &var_r29->unk_48, 4);
+                VECAdd(&sp38[0], &var_r29->unk_54, var_r31++);
+                VECAdd(&sp38[1], &var_r29->unk_54, var_r31++);
+                VECAdd(&sp38[2], &var_r29->unk_54, var_r31++);
+                VECAdd(&sp38[3], &var_r29->unk_54, var_r31++);
             }
             else {
-                fn_1_E420(&var_r30->unk_2C, &sp38, &var_r29->unk_48, 4);
-                PSMTXRotRad(spC8, 0x5A, MTXDegToRad(var_r29->unk_44));
-                PSMTXConcat(sp128, spC8, sp98);
-                PSMTXMultVecArray(sp98, &sp38, &sp8, 4);
-                PSVECAdd(&sp8, &var_r29->unk_54, var_r31++);
-                PSVECAdd(&sp14, &var_r29->unk_54, var_r31++);
-                PSVECAdd(&sp20, &var_r29->unk_54, var_r31++);
-                PSVECAdd(&sp2C, &var_r29->unk_54, var_r31++);
+                fn_1_E420(&var_r30->unk_2C, sp38, &var_r29->unk_48, 4);
+                MTXRotRad(spC8, 0x5A, MTXDegToRad(var_r29->unk_44));
+                MTXConcat(sp128, spC8, sp98);
+                MTXMultVecArray(sp98, sp38, &sp8, 4);
+                VECAdd(&sp8, &var_r29->unk_54, var_r31++);
+                VECAdd(&sp14, &var_r29->unk_54, var_r31++);
+                VECAdd(&sp20, &var_r29->unk_54, var_r31++);
+                VECAdd(&sp2C, &var_r29->unk_54, var_r31++);
             }
             if (var_r29->unk_60 != -1) {
                 fn_1_E37C(var_r26, var_r30->unk_5C, var_r29->unk_60, var_r30->unk_60, var_r30->unk_64);

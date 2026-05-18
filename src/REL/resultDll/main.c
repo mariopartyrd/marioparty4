@@ -985,6 +985,9 @@ void ResultCoinNumGet(s16 *coinNum)
                 coin *= coinMul;
                 coinNum[i] = coin;
             }
+#ifdef NON_MATCHING
+            coinNum[4] = 0;
+#endif
             break;
     }
 }

@@ -723,7 +723,11 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3) 
         PSMTXMultVec(MapMT, &spC4, &spC4);
         DefSetHitFace(spC4.x, spC4.y, spC4.z);
         temp_r29 = &HitFaceVec[HitFaceCount];
+#ifdef NON_MATCHING
+        compute_tri_normal(temp_r29, &arg1[arg0[0] & 0x7FFF], &arg1[arg0[1]], &arg1[arg0[2]]);
+#else
         compute_tri_normal(temp_r29, &arg1[arg0[0]], &arg1[arg0[1]], &arg1[arg0[2]]);
+#endif
         temp_f31 = spC4.x - spD0[0];
         spA4 = spC4.y - spD0[1];
         temp_f30 = spC4.z - spD0[2];

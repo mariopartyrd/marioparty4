@@ -8,7 +8,6 @@
 #include "string.h"
 #include "version.h"
 
-
 // STRUCT
 typedef struct M438MapStruct {
     s32 unk0;
@@ -33,17 +32,13 @@ typedef struct M438MapStruct2 {
     Vec unk24;
     Vec unk30;
     Vec unk3C;
-    union {
-        M438MainWork4 *unk48;
-        HSFOBJECT *unk48o;
-    };
+    HSFOBJECT *unk48;
 } M438MapStruct2;
 
 typedef struct M438MapStruct3 {
     u32 unk0;
-    M438MapStruct2 unk4;
-    char unk4C[0x934];
-    M438MapStruct unk984;
+    M438MapStruct2 unk4[32];
+    M438MapStruct unk984[50];
 } M438MapStruct3;
 
 // BSS
@@ -93,7 +88,7 @@ void fn_1_B54C(omObjData *arg0)
     M438MapStruct *var_r24;
     M438MapStruct3 *temp_r23;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x108C, 0x10000000);
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M438MapStruct3), MEMORY_DEFAULT_NUM);
     temp_r23 = arg0->data;
     memset(temp_r23, 0, 0x108C);
     arg0->model[0] = Hu3DModelCreateFile(0x450000);
@@ -175,7 +170,7 @@ void fn_1_B54C(omObjData *arg0)
         var_r25->unk40.a = 0;
         var_r25->time = 0;
     }
-    var_r28 = &temp_r23->unk4;
+    var_r28 = temp_r23->unk4;
     for (var_r30 = 0; var_r30 < 0x20; var_r30++, var_r28++) {
         var_r28->unk0 = 1;
         var_r28->unk4 = 0;
@@ -183,7 +178,7 @@ void fn_1_B54C(omObjData *arg0)
         var_r28->unk14 = var_r28->unk18 = 0.0f;
         var_r28->unk1C = var_r28->unk20 = 0.0f;
         var_r26 = Hu3DModelObjPtrGet(arg0->model[0], lbl_1_data_848[var_r30]);
-        var_r28->unk48o = var_r26;
+        var_r28->unk48 = var_r26;
         sp14.x = sp14.y = sp14.z = -100000.0f;
         sp8.x = sp8.y = sp8.z = 100000.0f;
 
@@ -218,7 +213,7 @@ void fn_1_B54C(omObjData *arg0)
     }
     var_r27 = Hu3DModelCreateFile(0x45000B);
     Hu3DModelLayerSet(var_r27, 2);
-    var_r24 = &temp_r23->unk984;
+    var_r24 = temp_r23->unk984;
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r24++) {
         var_r24->unk0 = 0;
         var_r24->unk8 = 0;
@@ -268,7 +263,7 @@ void fn_1_BF20(omObjData *arg0)
 
     temp_r28 = arg0->data;
     temp_r28->unk0++;
-    var_r31 = &temp_r28->unk4;
+    var_r31 = temp_r28->unk4;
 
     for (var_r29 = 0; var_r29 < 0x20; var_r29++, var_r31++) {
         if ((var_r31->unk0 == 0) && (var_r31->unk4 != 0)) {
@@ -299,21 +294,21 @@ void fn_1_BF20(omObjData *arg0)
             MTXRotAxisRad(sp2C, &sp14, MTXDegToRad(var_r31->unk1C));
             MTXConcat(sp2C, sp5C, sp5C);
             fn_1_E034(sp5C, &sp20);
-            var_r31->unk48->unk_28.x = sp20.x;
-            var_r31->unk48->unk_28.y = sp20.y;
-            var_r31->unk48->unk_28.z = sp20.z;
+            var_r31->unk48->mesh.base.rot.x = sp20.x;
+            var_r31->unk48->mesh.base.rot.y = sp20.y;
+            var_r31->unk48->mesh.base.rot.z = sp20.z;
             MTXInverse(sp5C, sp5C);
             MTXMultVec(sp5C, &var_r31->unk24, &sp8);
-            var_r31->unk48->unk_1C.x = (var_r31->unk30.x - sp8.x);
-            var_r31->unk48->unk_1C.y = (var_r31->unk30.y - sp8.y);
-            var_r31->unk48->unk_1C.z = (var_r31->unk30.z - sp8.z);
+            var_r31->unk48->mesh.base.pos.x = (var_r31->unk30.x - sp8.x);
+            var_r31->unk48->mesh.base.pos.y = (var_r31->unk30.y - sp8.y);
+            var_r31->unk48->mesh.base.pos.z = (var_r31->unk30.z - sp8.z);
             if (var_r31->unk30.y < -500.0f) {
                 var_r31->unk4 = 0;
             }
         }
     }
     if ((temp_r28->unk0 & 1) == 0) {
-        var_r30 = &temp_r28->unk984;
+        var_r30 = temp_r28->unk984;
 
         for (var_r29 = 0; var_r29 < 0x32; var_r29++, var_r30++) {
             if (var_r30->unk0 != 0)
@@ -341,7 +336,7 @@ void fn_1_BF20(omObjData *arg0)
             break;
         }
     }
-    var_r30 = &temp_r28->unk984;
+    var_r30 = temp_r28->unk984;
     for (var_r29 = 0; var_r29 < 0x32; var_r29++, var_r30++) {
         if (var_r30->unk0 != 0) {
             var_r30->unk1C += 0.005f;
@@ -586,7 +581,7 @@ s32 fn_1_DA64(f32 arg8)
 
     var_r28 = lbl_1_bss_108C[0]->data;
     var_r29 = 0;
-    var_r31 = &var_r28->unk4;
+    var_r31 = var_r28->unk4;
   
     for (var_r30 = 0; var_r30 < 0x20; var_r30++, var_r31++) {
         var_f31 = fn_1_E5A4(var_r31->unk8, arg8);
@@ -627,7 +622,7 @@ s32 fn_1_DEA0(f32 arg8)
 
     var_r28 = lbl_1_bss_108C[0]->data;
     var_r29 = 0;
-    var_r31 = &var_r28->unk4;
+    var_r31 = var_r28->unk4;
   
     for (var_r30 = 0; var_r30 < 0x20; var_r30++, var_r31++) {
         var_f31 = fn_1_E5A4(var_r31->unk8, arg8);

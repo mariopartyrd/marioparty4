@@ -1283,7 +1283,7 @@ static void ExecItemPick(void) {
     }
     itemPickObj = omAddObjEx(boardObjMan, 0x7E03, 0, 0, -1, &UpdateItemPick);
     temp_r27 = OM_GET_WORK_PTR(itemPickObj, UnkUiWork03);
-    temp_r27->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x240, MEMORY_DEFAULT_NUM);
+    temp_r27->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, 8 * sizeof(Vec[6]), MEMORY_DEFAULT_NUM);
     temp_r27->unk00_bit0 = 0;
     temp_r27->unk01 = 0;
     temp_r27->unk02 = 0;

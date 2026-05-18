@@ -173,11 +173,11 @@ s32 fn_1_6C8(void)
 void fn_1_8F0(omObjData *arg0)
 {
     s16 var_r30;
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
     AnimData *anim;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10, MEMORY_DEFAULT_NUM);
-    temp_r31 = (unkStruct2 *)arg0->data;
+    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct15), MEMORY_DEFAULT_NUM);
+    temp_r31 = (unkStruct15 *)arg0->data;
     temp_r31->unk0 = 1;
     temp_r31->unk4 = -1;
     temp_r31->unk8 = -1;
@@ -203,7 +203,7 @@ void fn_1_8F0(omObjData *arg0)
 void fn_1_AE0(omObjData *arg0)
 {
     f32 temp_f31;
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
     temp_r31 = arg0->data;
     switch (fn_1_23E4(7)) {
@@ -309,7 +309,7 @@ u8 fn_1_E14(omObjData *arg0)
 
 u8 fn_1_1138(omObjData *object)
 {
-    unkStruct2 *sp8;
+    unkStruct15 *sp8;
     f32 var_f31;
     f32 var_f30;
     s16 temp_r29;
@@ -317,7 +317,7 @@ u8 fn_1_1138(omObjData *object)
     unkStruct3 *temp_r30;
     unkStruct *var_r31;
 
-    sp8 = (unkStruct2 *)lbl_1_bss_6C->data;
+    sp8 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r29 = fn_1_F0FC();
     temp_r30 = (unkStruct3 *)lbl_1_bss_C0[temp_r29]->data;
     switch (lbl_1_bss_6) {
@@ -376,17 +376,17 @@ u8 fn_1_1138(omObjData *object)
 
 void fn_1_16D8(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r31->unk6--;
 }
 
 void fn_1_1708(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk8 != -1) {
         MGSeqParamSet(temp_r31->unk8, 2, -1);
         temp_r31->unk8 = -1;
@@ -396,9 +396,9 @@ void fn_1_1708(void)
 
 void fn_1_1768(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk8 == -1) {
         temp_r31->unk6 = 5 * REFRESH_RATE;
         temp_r31->unk8 = MGSeqCreate(1, 5, -1, -1);
@@ -407,25 +407,25 @@ void fn_1_1768(void)
 
 s16 fn_1_17CC(void)
 {
-    unkStruct2 *var_r31;
+    unkStruct15 *var_r31;
 
-    var_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    var_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     return var_r31->unk6;
 }
 
 s16 fn_1_17F4(void)
 {
-    unkStruct2 *var_r31;
+    unkStruct15 *var_r31;
 
-    var_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    var_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     return var_r31->unk8;
 }
 
 void fn_1_181C(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk4 == -1) {
         temp_r31->unk4 = MGSeqCreate(3, 0);
         MGSeqPosSet(temp_r31->unk4, 320.0f, 240.0f);
@@ -434,9 +434,9 @@ void fn_1_181C(void)
 
 u8 fn_1_1890(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (temp_r31->unk4 != -1) {
         return MGSeqStatGet(temp_r31->unk4);
     }
@@ -447,9 +447,9 @@ u8 fn_1_1890(void)
 
 void fn_1_18E0(void)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r31->unk4 = MGSeqCreate(3, 1);
     MGSeqPosSet(temp_r31->unk4, 320.0f, 240.0f);
     HuAudSeqFadeOut(temp_r31->unkC, 0x64);
@@ -457,9 +457,9 @@ void fn_1_18E0(void)
 
 u8 fn_1_1954(void)
 {
-    unkStruct2 *sp8;
+    unkStruct15 *sp8;
 
-    sp8 = (unkStruct2 *)lbl_1_bss_6C->data;
+    sp8 = (unkStruct15 *)lbl_1_bss_6C->data;
     if ((lbl_1_bss_2 != 0) || (lbl_1_bss_1 != 0)) {
         return 0;
     }
@@ -578,9 +578,9 @@ void fn_1_2240(ModelData *data, unkStruct5 *arg1, Mtx arg2)
 
 u16 fn_1_23E4(u16 arg0)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     if (!temp_r31) {
         return 0;
     }
@@ -589,9 +589,9 @@ u16 fn_1_23E4(u16 arg0)
 
 void fn_1_2428(u16 arg0, u16 arg1)
 {
-    unkStruct2 *temp_r31;
+    unkStruct15 *temp_r31;
 
-    temp_r31 = (unkStruct2 *)lbl_1_bss_6C->data;
+    temp_r31 = (unkStruct15 *)lbl_1_bss_6C->data;
     temp_r31->unk0 = (temp_r31->unk0 & ~arg0);
     temp_r31->unk0 = (temp_r31->unk0 | arg1);
 }
@@ -859,16 +859,16 @@ void fn_1_3DD8(omObjData *object)
     f32 var_f26;
     f32 var_f30;
     f32 var_f31;
-    unkStruct2 *var_r25;
+    unkStruct15 *var_r25;
     omObjData **var_r24;
     s16 var_r29;
     s16 var_r31;
     s32 var_r23;
-    s32 *var_r26;
+    unkStruct15 *var_r26;
     unkStruct2 *var_r28;
     s16 var_r27;
 
-    var_r25 = (unkStruct2 *)lbl_1_bss_6C->data;
+    var_r25 = (unkStruct15 *)lbl_1_bss_6C->data;
     sp8 = (unkStruct *)object->data;
     switch (lbl_1_data_EC[0]) {
         case 0:
@@ -956,8 +956,8 @@ void fn_1_3DD8(omObjData *object)
                 else {
                     fn_1_4EEC(7, 2);
                     var_r26 = lbl_1_bss_6C->data;
-                    var_r26[0] &= 0xFFFFFFF8;
-                    var_r26[0] |= 4;
+                    var_r26->unk0 &= 0xFFFFFFF8;
+                    var_r26->unk0 |= 4;
                 }
                 lbl_1_data_EC[0] = 0;
             }
@@ -1481,7 +1481,7 @@ void fn_1_6554(unkStruct6 *arg0, HSFOBJECT *arg1)
     HSFBUFFER *temp_r26;
     s16 var_r28;
     s16 var_r29;
-    unkStruct10 *var_r30;
+    HSFFACE *var_r30;
 
     temp_r26 = arg1->mesh.face;
 
@@ -1490,41 +1490,41 @@ void fn_1_6554(unkStruct6 *arg0, HSFOBJECT *arg1)
         arg0->unk18[var_r28].y = 0.0f;
         arg0->unk18[var_r28].z = 0.0f;
     }
-    var_r30 = (unkStruct10 *)temp_r26->data;
+    var_r30 = (HSFFACE *)temp_r26->data;
 
     for (var_r28 = 0; var_r28 < temp_r26->count; var_r28++, var_r30++) {
-        sp20[0] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->unk4[0].unk0];
-        sp20[1] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->unk4[1].unk0];
-        sp20[2] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->unk4[2].unk0];
+        sp20[0] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->indices[0][0]];
+        sp20[1] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->indices[1][0]];
+        sp20[2] = ((Vec *)(arg1->mesh.vertex->data))[var_r30->indices[2][0]];
         fn_1_91A4(&sp20[0], &sp20[1], &sp20[2], spC);
         spC[0] = -spC[0];
         spC[1] = -spC[1];
         spC[2] = -spC[2];
-        switch (var_r30->unk0 & 7) {
+        switch (var_r30->type & 7) {
             case 2:
                 for (var_r29 = 0; var_r29 < 3; var_r29++) {
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].z += spC[2];
+                    arg0->unk18[var_r30->indices[var_r29][0]].x += spC[0];
+                    arg0->unk18[var_r30->indices[var_r29][0]].y += spC[1];
+                    arg0->unk18[var_r30->indices[var_r29][0]].z += spC[2];
                 }
                 break;
             case 3:
                 for (var_r29 = 0; var_r29 < 4; var_r29++) {
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].z += spC[2];
+                    arg0->unk18[var_r30->indices[var_r29][0]].x += spC[0];
+                    arg0->unk18[var_r30->indices[var_r29][0]].y += spC[1];
+                    arg0->unk18[var_r30->indices[var_r29][0]].z += spC[2];
                 }
                 break;
             case 4:
                 for (var_r29 = 0; var_r29 < 3; var_r29++) {
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk4[var_r29].unk0].z += spC[2];
+                    arg0->unk18[var_r30->strip.indices[var_r29][0]].x += spC[0];
+                    arg0->unk18[var_r30->strip.indices[var_r29][0]].y += spC[1];
+                    arg0->unk18[var_r30->strip.indices[var_r29][0]].z += spC[2];
                 }
-                for (var_r29 = 0; var_r29 < var_r30->unk1C; var_r29++) {
-                    arg0->unk18[var_r30->unk20[var_r29].unk0].x += spC[0];
-                    arg0->unk18[var_r30->unk20[var_r29].unk0].y += spC[1];
-                    arg0->unk18[var_r30->unk20[var_r29].unk0].z += spC[2];
+                for (var_r29 = 0; var_r29 < var_r30->strip.count; var_r29++) {
+                    arg0->unk18[((s16(*)[4])var_r30->strip.data)[var_r29][0]].x += spC[0];
+                    arg0->unk18[((s16(*)[4])var_r30->strip.data)[var_r29][0]].y += spC[1];
+                    arg0->unk18[((s16(*)[4])var_r30->strip.data)[var_r29][0]].z += spC[2];
                 }
                 break;
         }
@@ -1550,7 +1550,7 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
     ModelData *var_r22;
     unkStruct8 *var_r31;
     unkStruct11 *temp_r26;
-    unkStruct10 *var_r29;
+    HSFFACE *var_r29;
 
     var_r22 = &Hu3DData[arg0->unk0];
     temp_r25 = arg1->mesh.face;
@@ -1558,9 +1558,9 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
     arg0->unk20 = 0;
 
     var_r28 = 0;
-    var_r29 = (unkStruct10 *)temp_r25->data;
+    var_r29 = (HSFFACE *)temp_r25->data;
     for (; var_r28 < temp_r25->count; var_r28++, var_r29++) {
-        switch (var_r29->unk0 & 7) {
+        switch (var_r29->type & 7) {
             case 2:
                 arg0->unk20 += 1;
                 break;
@@ -1568,7 +1568,7 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
                 arg0->unk20 += 2;
                 break;
             case 4:
-                arg0->unk20 += var_r29->unk1C + 1;
+                arg0->unk20 += var_r29->strip.count + 1;
                 break;
         }
     }
@@ -1582,13 +1582,13 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
     }
 
     var_r28 = 0;
-    var_r29 = (unkStruct10 *)temp_r25->data;
+    var_r29 = (HSFFACE *)temp_r25->data;
     for (; var_r28 < temp_r25->count; var_r28++, var_r29++) {
-        switch (var_r29->unk0 & 7) {
+        switch (var_r29->type & 7) {
             case 2:
-                var_r31->unk0[0] = var_r29->unk4[0];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[1];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[0];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[1];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1598,9 +1598,9 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
                 var_r31++;
                 break;
             case 3:
-                var_r31->unk0[0] = var_r29->unk4[0];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[1];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[0];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[1];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1608,9 +1608,9 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
                 }
                 var_r31->unk1E = var_r30++;
                 var_r31++;
-                var_r31->unk0[0] = var_r29->unk4[1];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[3];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[1];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[3];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1620,9 +1620,9 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
                 var_r31++;
                 break;
             case 4:
-                var_r31->unk0[0] = var_r29->unk4[0];
-                var_r31->unk0[1] = var_r29->unk4[2];
-                var_r31->unk0[2] = var_r29->unk4[1];
+                var_r31->unk0[0] = *(unkStruct11*)&var_r29->indices[0];
+                var_r31->unk0[1] = *(unkStruct11*)&var_r29->indices[2];
+                var_r31->unk0[2] = *(unkStruct11*)&var_r29->indices[1];
                 if (var_r24 == 0) {
                     var_r31->unk18[0] = var_r30++;
                     var_r31->unk18[1] = var_r30++;
@@ -1631,8 +1631,8 @@ void fn_1_6B58(unkStruct6 *arg0, HSFOBJECT *arg1)
                 var_r31->unk1E = var_r30++;
                 var_r31++;
                 var_r28 = 0;
-                temp_r26 = var_r29->unk20;
-                for (; var_r28 < var_r29->unk1C; var_r28++) {
+                temp_r26 = (unkStruct11*)var_r29->strip.data;
+                for (; var_r28 < var_r29->strip.count; var_r28++) {
                     if (var_r28 == 0) {
                         var_r31->unk0[0] = var_r31->unk0[1];
                         var_r31->unk0[1] = var_r31->unk0[2];
@@ -1792,7 +1792,7 @@ void fn_1_7934(unkStruct6 *arg0, unkStruct8 *arg1, Vec *arg2)
     }
 }
 
-void fn_1_7D60(unkStruct15 *arg0, unkStruct13 *arg1, s16 arg2)
+void fn_1_7D60(HSFBITMAP *arg0, HSFATTRIBUTE *arg1, s16 arg2)
 {
     GXTexObj sp1C;
     GXTlutObj sp10;
@@ -1806,42 +1806,42 @@ void fn_1_7D60(unkStruct15 *arg0, unkStruct13 *arg1, s16 arg2)
         OSReport("Error: No Texture\n");
         return;
     }
-    temp_r29 = arg0->unkA;
-    temp_r28 = arg0->unkC;
-    var_r27 = (arg1->unk64 == 1) ? 1 : 0;
-    var_r26 = (arg1->unk68 == 1) ? 1 : 0;
-    switch (arg0->unk8) {
+    temp_r29 = arg0->sizeX;
+    temp_r28 = arg0->sizeY;
+    var_r27 = (arg1->wrapS == 1) ? 1 : 0;
+    var_r26 = (arg1->wrapT == 1) ? 1 : 0;
+    switch (arg0->dataFmt) {
         case 6:
-            GXInitTexObj(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_RGBA8, var_r27, var_r26, GX_FALSE);
+            GXInitTexObj(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_RGBA8, var_r27, var_r26, GX_FALSE);
             break;
         case 4:
-            GXInitTexObj(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_RGB565, var_r27, var_r26, GX_FALSE);
+            GXInitTexObj(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_RGB565, var_r27, var_r26, GX_FALSE);
             break;
         case 5:
-            GXInitTexObj(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_RGB5A3, var_r27, var_r26, GX_FALSE);
+            GXInitTexObj(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_RGB5A3, var_r27, var_r26, GX_FALSE);
             break;
         case 9:
-            if (arg0->unk9 < 8) {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB565, arg0->unkE);
+            if (arg0->pixSize < 8) {
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB565, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
             }
             else {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB565, arg0->unkE);
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB565, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
             }
             break;
         case 10:
-            if (arg0->unk9 < 8) {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB5A3, arg0->unkE);
+            if (arg0->pixSize < 8) {
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB5A3, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C4, var_r27, var_r26, GX_FALSE, arg2);
             }
             else {
-                GXInitTlutObj(&sp10, arg0->unk14, GX_TL_RGB5A3, arg0->unkE);
+                GXInitTlutObj(&sp10, arg0->palData, GX_TL_RGB5A3, arg0->palSize);
                 GXLoadTlut(&sp10, arg2);
-                GXInitTexObjCI(&sp1C, arg0->unk1C, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
+                GXInitTexObjCI(&sp1C, arg0->data, temp_r29, temp_r28, GX_TF_C8, var_r27, var_r26, GX_FALSE, arg2);
             }
             break;
         default:
@@ -1857,7 +1857,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
 {
     Mtx sp14;
     GXColor sp10;
-    unkStruct13 *temp_r29;
+    HSFATTRIBUTE *temp_r29;
     unkStruct14 *temp_r31;
     m440Func14 temp_r27;
 
@@ -1870,14 +1870,14 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     MTXInvXpose(arg1, sp14);
     GXLoadNrmMtxImm(sp14, 0);
     fn_1_8AC4(arg1);
-    sp10.r = (temp_r31->unk28->unkB[0] * arg0->unk_58.x);
-    sp10.g = (temp_r31->unk28->unkB[1] * arg0->unk_58.z);
-    sp10.b = (temp_r31->unk28->unkB[2] * arg0->unk_58.y);
+    sp10.r = (temp_r31->unk28->litColor[0] * arg0->unk_58.x);
+    sp10.g = (temp_r31->unk28->litColor[1] * arg0->unk_58.z);
+    sp10.b = (temp_r31->unk28->litColor[2] * arg0->unk_58.y);
     sp10.a = 0xFF;
     GXSetChanAmbColor(GX_COLOR0A0, sp10);
-    sp10.r = temp_r31->unk28->unkE[0];
-    sp10.g = temp_r31->unk28->unkE[1];
-    sp10.b = temp_r31->unk28->unkE[2];
+    sp10.r = temp_r31->unk28->color[0];
+    sp10.g = temp_r31->unk28->color[1];
+    sp10.b = temp_r31->unk28->color[2];
     sp10.a = 0xFF;
     GXSetChanMatColor(GX_COLOR0A0, sp10);
     GXClearVtxDesc();
@@ -1888,7 +1888,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
     GXSetArray(GX_VA_NRM, temp_r31->unk14, 12);
     lbl_1_bss_C = temp_r31->unk3C;
-    if (temp_r31->unk28->unk34 == 0) {
+    if (temp_r31->unk28->attrNum == 0) {
         GXSetNumTevStages(1);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
         GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ONE, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO);
@@ -1902,8 +1902,8 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
         GXSetArray(GX_VA_TEX0, temp_r31->unk1C, 8);
-        temp_r29 = &temp_r31->unk2C[temp_r31->unk28->unk38[0]];
-        fn_1_7D60(temp_r29->unk80, temp_r29, 0);
+        temp_r29 = &temp_r31->unk2C[temp_r31->unk28->attr[0]];
+        fn_1_7D60(temp_r29->bitmap, temp_r29, 0);
         lbl_1_bss_2C = 1;
         HuSprTexLoad(*hiliteAnim, 0, lbl_1_bss_2C, GX_CLAMP, GX_CLAMP, GX_LINEAR);
         fn_1_8470(temp_r31->unk28, temp_r29);
@@ -1915,7 +1915,7 @@ void fn_1_806C(ModelData *arg0, Mtx arg1)
     GXCallDisplayList(temp_r31->unk30, temp_r31->unk34);
 }
 
-void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
+void fn_1_8470(HSFMATERIAL *arg0, HSFATTRIBUTE *arg1)
 {
     ModelData sp40;
     Mtx sp10;
@@ -1931,13 +1931,13 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
     s32 var_r25;
 
     sp40.attr = 0x20000;
-    temp_r24 = arg0->unk30;
-    if ((arg0->unkA == 2) || (arg0->unkA == 3)) {
+    temp_r24 = arg0->flags;
+    if ((arg0->vtxMode == 2) || (arg0->vtxMode == 3)) {
         var_r27 = 1;
     }
     else {
         var_r27 = 0;
-        if ((arg0->unkA == 0) || (arg0->unkA == 5)) {
+        if ((arg0->vtxMode == 0) || (arg0->vtxMode == 5)) {
             var_r25 = 0;
         }
         else {
@@ -1947,7 +1947,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
     var_r28 = var_r31 = 1;
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
     if (1.0f == arg1->unk20) {
-        if (arg1->unkA == 0) {
+        if (arg1->unk8[2] == 0) {
             GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
             GXSetTevOrder(var_r31, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
             GXSetTevColorIn(var_r31, GX_CC_CPREV, GX_CC_TEXC, GX_CC_TEXA, GX_CC_ZERO);
@@ -1977,7 +1977,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
             GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
             GXSetTevAlphaIn(var_r31, GX_CA_ZERO, GX_CA_APREV, GX_CA_A0, GX_CA_ZERO);
             GXSetTevAlphaOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
-            var_f31 = 6.0f * (arg0->unk14 / 300.0f);
+            var_f31 = 6.0f * (arg0->hiliteScale / 300.0f);
             if (var_f31 < 0.1) {
                 var_f31 = 0.1f;
             }
@@ -2004,7 +2004,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
             var_r31++;
         }
     }
-    else if (0.0f != arg0->unk1C) {
+    else if (0.0f != arg0->invAlpha) {
         GXSetTevOrder(var_r31, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
         GXSetTevColorIn(var_r31, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_CPREV);
         GXSetTevColorOp(var_r31, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
@@ -2015,7 +2015,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
     GXSetNumTexGens(var_r28);
     GXSetNumTevStages(var_r31);
     if (var_r27 != 0) {
-        var_f30 = arg0->unk14;
+        var_f30 = arg0->hiliteScale;
     }
     else {
         var_f30 = 0.0f;
@@ -2023,7 +2023,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
     temp_r29 = Hu3DLightSet(&sp40, &Hu3DCameraMtx, &Hu3DCameraMtxXPose, var_f30);
     if (var_r27 != 0) {
         GXSetNumChans(2);
-        if (arg0->unkA == 5) {
+        if (arg0->vtxMode == 5) {
             GXSetChanCtrl(GX_COLOR0A0, 1, GX_SRC_REG, GX_SRC_VTX, temp_r29, GX_DF_CLAMP, GX_AF_NONE);
             GXSetChanCtrl(GX_COLOR1A1, 1, GX_SRC_REG, GX_SRC_VTX, temp_r29, GX_DF_NONE, GX_AF_SPEC);
             return;
@@ -2033,7 +2033,7 @@ void fn_1_8470(unkStruct12 *arg0, unkStruct13 *arg1)
         return;
     }
     GXSetNumChans(1);
-    if (arg0->unkA == 5) {
+    if (arg0->vtxMode == 5) {
         GXSetChanCtrl(GX_COLOR0A0, var_r25, GX_SRC_REG, GX_SRC_REG, temp_r29, GX_DF_CLAMP, GX_AF_SPOT);
         return;
     }
@@ -2405,15 +2405,9 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
     ROMtx spF8;
     Mtx spC8;
     Mtx sp98;
-    Mtx sp68;
-    Vec sp5C;
-    Vec sp50;
-    Vec sp44;
-    Vec sp38;
-    Vec sp2C;
-    Vec sp20;
-    Vec sp14;
-    Vec sp8;
+    Vec sp68[4];
+    Vec sp38[4];
+    Vec sp8[4];
     Vec *var_r31;
     s16 temp_r0;
     u8 temp_r0_2;
@@ -2490,21 +2484,21 @@ void fn_1_9C04(ModelData *arg0, Mtx arg1)
         }
         else {
             if (0.0f == var_r29->unk44) {
-                fn_1_A328((Vec *)&sp68[0], &sp38, &var_r29->unk48, 4);
-                VECAdd(&sp38, &var_r29->unk54, var_r31++);
-                VECAdd(&sp44, &var_r29->unk54, var_r31++);
-                VECAdd(&sp50, &var_r29->unk54, var_r31++);
-                VECAdd(&sp5C, &var_r29->unk54, var_r31++);
+                fn_1_A328(sp68, sp38, &var_r29->unk48, 4);
+                VECAdd(&sp38[0], &var_r29->unk54, var_r31++);
+                VECAdd(&sp38[1], &var_r29->unk54, var_r31++);
+                VECAdd(&sp38[2], &var_r29->unk54, var_r31++);
+                VECAdd(&sp38[3], &var_r29->unk54, var_r31++);
             }
             else {
-                fn_1_A328(&temp_r30->unk2C, &sp38, &var_r29->unk48, 4);
+                fn_1_A328(&temp_r30->unk2C, sp38, &var_r29->unk48, 4);
                 MTXRotRad(spC8, 0x5A, 0.017453292f * var_r29->unk44);
                 MTXConcat(sp128, spC8, sp98);
-                MTXMultVecArray(sp98, &sp38, &sp8, 4);
-                VECAdd(&sp8, &var_r29->unk54, var_r31++);
-                VECAdd(&sp14, &var_r29->unk54, var_r31++);
-                VECAdd(&sp20, &var_r29->unk54, var_r31++);
-                VECAdd(&sp2C, &var_r29->unk54, var_r31++);
+                MTXMultVecArray(sp98, sp38, sp8, 4);
+                VECAdd(&sp8[0], &var_r29->unk54, var_r31++);
+                VECAdd(&sp8[1], &var_r29->unk54, var_r31++);
+                VECAdd(&sp8[2], &var_r29->unk54, var_r31++);
+                VECAdd(&sp8[3], &var_r29->unk54, var_r31++);
             }
             if (var_r29->unk60 != -1) {
                 fn_1_A284(var_r27, temp_r30->unk5C, var_r29->unk60, temp_r30->unk60, temp_r30->unk64);

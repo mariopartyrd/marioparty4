@@ -5,6 +5,7 @@
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
+#include "game/hsfformat.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
@@ -41,36 +42,6 @@ typedef struct {
 } UnkBss138Struct; // Size 0x33C
 
 typedef struct {
-    /* 0x00 */ float unk00;
-    /* 0x04 */ float unk04;
-    /* 0x08 */ float unk08;
-    /* 0x0C */ float unk0C;
-    /* 0x10 */ float unk10;
-    /* 0x14 */ float unk14;
-    /* 0x18 */ float unk18;
-    /* 0x1C */ float unk1C;
-    /* 0x20 */ float unk20;
-} UnkBss474DoublyInnerStruct6C; // Size unknown
-
-// Maybe HSFOBJECT, but unk1C doesn't seem to match.
-typedef struct {
-    /* 0x00 */ char unk00[0x1C];
-    /* 0x1C */ UnkBss474DoublyInnerStruct6C unk1C;
-} UnkBss474InnerStruct6C; // Size unknown
-
-typedef struct {
-    /* 0x00 */ float unk00;
-    /* 0x04 */ float unk04;
-    /* 0x08 */ float unk08;
-    /* 0x0C */ float unk0C;
-    /* 0x10 */ float unk10;
-    /* 0x14 */ float unk14;
-    /* 0x18 */ float unk18;
-    /* 0x1C */ float unk1C;
-    /* 0x20 */ float unk20;
-} UnkBss474InnerStructE4; // Size 0x24
-
-typedef struct {
     /* 0x000 */ s16 unk00;
     /* 0x002 */ s16 unk02;
     /* 0x004 */ s16 unk04;
@@ -95,10 +66,10 @@ typedef struct {
     /* 0x060 */ float unk60;
     /* 0x064 */ float unk64;
     /* 0x068 */ float unk68;
-    /* 0x06C */ UnkBss474InnerStruct6C *unk6C[10];
-    /* 0x094 */ UnkBss474InnerStruct6C *unk94[10];
-    /* 0x0BC */ UnkBss474InnerStruct6C *unkBC[10];
-    /* 0x0E4 */ UnkBss474InnerStructE4 unkE4[10];
+    /* 0x06C */ HSFOBJECT *unk6C[10];
+    /* 0x094 */ HSFOBJECT *unk94[10];
+    /* 0x0BC */ HSFOBJECT *unkBC[10];
+    /* 0x0E4 */ HSFTRANSFORM unkE4[10];
     /* 0x24C */ AnimData *unk24C;
     /* 0x250 */ AnimData *unk250;
     /* 0x254 */ s8 unk254;
@@ -726,8 +697,8 @@ void fn_1_25D0(void)
     u32 temp_r24;
     UnkBss474Struct *temp_r31;
     void *var_r28;
-    UnkBss474InnerStructE4 *temp_r27;
-    UnkBss474DoublyInnerStruct6C *temp_r26;
+    HSFTRANSFORM *temp_r27;
+    HSFTRANSFORM *temp_r26;
     AnimData *var_r21;
     AnimData *var_r20;
     Process *var_r23;
@@ -792,28 +763,28 @@ void fn_1_25D0(void)
         Hu3DModelTPLvlSet(temp_r31->unk06, 128.0f);
         Hu3DModelAttrSet(temp_r31->unk06, HU3D_ATTR_NOCULL);
         for (j = 0; j < lbl_1_bss_E38; j++) {
-            temp_r31->unk6C[j] = (void *)Hu3DModelObjPtrGet(temp_r31->unk00, lbl_1_data_1C8[lbl_1_bss_E3C][j]);
+            temp_r31->unk6C[j] = (HSFOBJECT *)Hu3DModelObjPtrGet(temp_r31->unk00, lbl_1_data_1C8[lbl_1_bss_E3C][j]);
             if (!temp_r31->unk6C[j]) {
                 OSReport("objname %s\n", lbl_1_data_1C8[lbl_1_bss_E3C][j]);
                 OSPanic("m411.c", 908, "ObjPtr");
             }
             temp_r27 = &temp_r31->unkE4[j];
-            temp_r26 = &temp_r31->unk6C[j]->unk1C;
-            temp_r27->unk00 = temp_r26->unk00;
-            temp_r27->unk04 = temp_r26->unk04;
-            temp_r27->unk08 = temp_r26->unk08;
-            temp_r27->unk0C = temp_r26->unk0C;
-            temp_r27->unk10 = temp_r26->unk10;
-            temp_r27->unk14 = temp_r26->unk14;
-            temp_r27->unk18 = temp_r26->unk18;
-            temp_r27->unk1C = temp_r26->unk1C;
-            temp_r27->unk20 = temp_r26->unk20;
-            temp_r31->unk94[j] = (void *)Hu3DModelObjPtrGet(temp_r31->unk06, lbl_1_data_1C8[lbl_1_bss_E3C][j]);
+            temp_r26 = &temp_r31->unk6C[j]->mesh.base;
+            temp_r27->pos.x = temp_r26->pos.x;
+            temp_r27->pos.y = temp_r26->pos.y;
+            temp_r27->pos.z = temp_r26->pos.z;
+            temp_r27->rot.x = temp_r26->rot.x;
+            temp_r27->rot.y = temp_r26->rot.y;
+            temp_r27->rot.z = temp_r26->rot.z;
+            temp_r27->scale.x = temp_r26->scale.x;
+            temp_r27->scale.y = temp_r26->scale.y;
+            temp_r27->scale.z = temp_r26->scale.z;
+            temp_r31->unk94[j] = (HSFOBJECT *)Hu3DModelObjPtrGet(temp_r31->unk06, lbl_1_data_1C8[lbl_1_bss_E3C][j]);
             if (!temp_r31->unk94[j]) {
                 OSReport("objname %s\n", lbl_1_data_1C8[lbl_1_bss_E3C][j]);
                 OSPanic("m411.c", 919, "ObjPtr");
             }
-            temp_r31->unkBC[j] = (void *)Hu3DModelObjPtrGet(temp_r31->unk04, lbl_1_data_1C8[lbl_1_bss_E3C][j]);
+            temp_r31->unkBC[j] = (HSFOBJECT *)Hu3DModelObjPtrGet(temp_r31->unk04, lbl_1_data_1C8[lbl_1_bss_E3C][j]);
             if (!temp_r31->unkBC[j]) {
                 OSReport("objname %s\n", lbl_1_data_1C8[lbl_1_bss_E3C][j]);
                 OSPanic("m411.c", 925, "ObjPtr");
@@ -1569,6 +1540,9 @@ void fn_1_5554(void)
     Hu3DModelScaleSet(var_r31->unk00, temp_f27, temp_f27, temp_f27);
     var_f31 = 0.0f;
     var_f30 = 0.0f;
+#if NON_MATCHING
+    var_f29 = 0.0f; // TODO PC is this right?
+#endif
     while (TRUE) {
         var_r31->unk10.x += var_f28;
         var_f29 += 10.0f;
@@ -1725,42 +1699,42 @@ void fn_1_5F3C(UnkBss474Struct *arg0, s32 arg1)
     float var_f27;
     float var_f26;
     float var_f25;
-    UnkBss474DoublyInnerStruct6C *temp_r31;
-    UnkBss474DoublyInnerStruct6C *temp_r29;
-    UnkBss474DoublyInnerStruct6C *temp_r27;
-    UnkBss474InnerStructE4 *temp_r28;
+    HSFTRANSFORM *temp_r31;
+    HSFTRANSFORM *temp_r29;
+    HSFTRANSFORM *temp_r27;
+    HSFTRANSFORM *temp_r28;
     s32 var_r25;
     s32 i;
 
-    temp_r31 = &arg0->unk6C[arg1]->unk1C;
-    temp_r29 = &arg0->unk94[arg1]->unk1C;
-    temp_r27 = &arg0->unkBC[arg1]->unk1C;
+    temp_r31 = &arg0->unk6C[arg1]->mesh.base;
+    temp_r29 = &arg0->unk94[arg1]->mesh.base;
+    temp_r27 = &arg0->unkBC[arg1]->mesh.base;
     temp_r28 = &arg0->unkE4[arg1];
-    temp_f31 = (temp_r28->unk00 - temp_r31->unk00) / 15.0f;
-    temp_f29 = (temp_r28->unk08 - temp_r31->unk08) / 30.0f;
-    temp_f30 = (temp_r28->unk04 - temp_r31->unk04) / 15.0f;
+    temp_f31 = (temp_r28->pos.x - temp_r31->pos.x) / 15.0f;
+    temp_f29 = (temp_r28->pos.z - temp_r31->pos.z) / 30.0f;
+    temp_f30 = (temp_r28->pos.y - temp_r31->pos.y) / 15.0f;
     HuSprAttrSet(arg0->unk0C, 0, HUSPR_ATTR_REVERSE);
     omVibrate(arg0->unk34, 12, 6, 6);
     var_r25 = 0;
     for (i = 0; i < 30; i++) {
-        temp_r31->unk08 += temp_f29;
-        temp_r27->unk08 = temp_r29->unk08 = temp_r31->unk08 - 5.0f;
+        temp_r31->pos.z += temp_f29;
+        temp_r27->pos.z = temp_r29->pos.z = temp_r31->pos.z - 5.0f;
         if (i < 15) {
-            temp_r31->unk00 += temp_f31;
-            temp_r31->unk04 += temp_f30;
-            temp_r27->unk00 = temp_r29->unk00 = temp_r31->unk00;
-            temp_r27->unk04 = temp_r29->unk04 = temp_r31->unk04;
-            temp_r29->unk18 *= 0.95f;
-            temp_r29->unk1C *= 0.95f;
-            sp2C.x = temp_r31->unk00 + 60.0f;
+            temp_r31->pos.x += temp_f31;
+            temp_r31->pos.y += temp_f30;
+            temp_r27->pos.x = temp_r29->pos.x = temp_r31->pos.x;
+            temp_r27->pos.y = temp_r29->pos.y = temp_r31->pos.y;
+            temp_r29->scale.x *= 0.95f;
+            temp_r29->scale.y *= 0.95f;
+            sp2C.x = temp_r31->pos.x + 60.0f;
             sp2C.z = 100.0f;
-            sp2C.y = temp_r31->unk04 - 30.0f;
+            sp2C.y = temp_r31->pos.y - 30.0f;
             Hu3D3Dto2D(&sp2C, 1 << arg0->unk38, &sp20);
             var_f28 = 290.0f * (arg0->unk34 % 2) + sp20.x / 2;
             var_f27 = 245.0f * (arg0->unk34 / 2) + sp20.y / 2;
             HuSprGrpPosSet(arg0->unk0C, var_f28, var_f27);
         }
-        temp_r27->unk08 += 10.0f;
+        temp_r27->pos.z += 10.0f;
         if (i < 14) {
             var_r25 += 17;
         }
@@ -1770,91 +1744,91 @@ void fn_1_5F3C(UnkBss474Struct *arg0, s32 arg1)
         Hu3DModelTPLvlSet(arg0->unk04, 255 - var_r25);
         HuPrcVSleep();
     }
-    temp_r31->unk00 = temp_r28->unk00;
-    temp_r31->unk04 = temp_r28->unk04;
-    temp_r31->unk08 = temp_r28->unk08;
-    sp14.x = temp_r31->unk00 + 60.0f;
+    temp_r31->pos.x = temp_r28->pos.x;
+    temp_r31->pos.y = temp_r28->pos.y;
+    temp_r31->pos.z = temp_r28->pos.z;
+    sp14.x = temp_r31->pos.x + 60.0f;
     sp14.z = 100.0f;
-    sp14.y = temp_r31->unk04 - 30.0f;
+    sp14.y = temp_r31->pos.y - 30.0f;
     Hu3D3Dto2D(&sp14, 1 << arg0->unk38, &sp8);
     var_f26 = 290.0f * (arg0->unk34 % 2) + sp8.x / 2;
     var_f25 = 245.0f * (arg0->unk34 / 2) + sp8.y / 2;
     HuSprGrpPosSet(arg0->unk0C, var_f26, var_f25);
-    temp_r29->unk00 = 5000.0f;
-    temp_r27->unk00 = 5000.0f;
+    temp_r29->pos.x = 5000.0f;
+    temp_r27->pos.x = 5000.0f;
 }
 
 void fn_1_6428(UnkBss474Struct *arg0, s32 arg1)
 {
     float var_f31;
-    UnkBss474DoublyInnerStruct6C *temp_r31;
-    UnkBss474DoublyInnerStruct6C *temp_r29;
-    UnkBss474InnerStructE4 *temp_r30;
+    HSFTRANSFORM *temp_r31;
+    HSFTRANSFORM *temp_r29;
+    HSFTRANSFORM *temp_r30;
 
-    temp_r31 = &arg0->unk6C[arg1]->unk1C;
-    temp_r29 = &arg0->unk94[arg1]->unk1C;
+    temp_r31 = &arg0->unk6C[arg1]->mesh.base;
+    temp_r29 = &arg0->unk94[arg1]->mesh.base;
     temp_r30 = &arg0->unkE4[arg1];
     for (var_f31 = 0.0f; var_f31 < 180.0f; var_f31 += 10.0f) {
-        temp_r31->unk18 = 0.8f * temp_r30->unk18 + temp_r30->unk18 * (1.0 - sind(var_f31)) * 0.2f;
-        temp_r31->unk1C = 0.8f * temp_r30->unk1C + temp_r30->unk1C * (1.0 - sind(var_f31)) * 0.2f;
-        temp_r31->unk20 = 0.8f * temp_r30->unk20 + temp_r30->unk20 * (1.0 - sind(var_f31)) * 0.2f;
-        temp_r29->unk18 = temp_r31->unk18;
-        temp_r29->unk1C = temp_r31->unk1C;
-        temp_r29->unk20 = 0.8f * temp_r31->unk20;
+        temp_r31->scale.x = 0.8f * temp_r30->scale.x + temp_r30->scale.x * (1.0 - sind(var_f31)) * 0.2f;
+        temp_r31->scale.y = 0.8f * temp_r30->scale.y + temp_r30->scale.y * (1.0 - sind(var_f31)) * 0.2f;
+        temp_r31->scale.z = 0.8f * temp_r30->scale.z + temp_r30->scale.z * (1.0 - sind(var_f31)) * 0.2f;
+        temp_r29->scale.x = temp_r31->scale.x;
+        temp_r29->scale.y = temp_r31->scale.y;
+        temp_r29->scale.z = 0.8f * temp_r31->scale.z;
         HuPrcVSleep();
     }
     for (var_f31 = 180.0f; var_f31 < 360.0f; var_f31 += 20.0f) {
-        temp_r31->unk18 = 0.9f * temp_r30->unk18 + temp_r30->unk18 * (1.0 - sind(var_f31)) * 0.1f;
-        temp_r31->unk1C = 0.9f * temp_r30->unk1C + temp_r30->unk1C * (1.0 - sind(var_f31)) * 0.1f;
-        temp_r31->unk20 = 0.9f * temp_r30->unk20 + temp_r30->unk20 * (1.0 - sind(var_f31)) * 0.1f;
-        temp_r29->unk18 = temp_r31->unk18;
-        temp_r29->unk1C = temp_r31->unk1C;
-        temp_r29->unk20 = 0.8f * temp_r31->unk20;
+        temp_r31->scale.x = 0.9f * temp_r30->scale.x + temp_r30->scale.x * (1.0 - sind(var_f31)) * 0.1f;
+        temp_r31->scale.y = 0.9f * temp_r30->scale.y + temp_r30->scale.y * (1.0 - sind(var_f31)) * 0.1f;
+        temp_r31->scale.z = 0.9f * temp_r30->scale.z + temp_r30->scale.z * (1.0 - sind(var_f31)) * 0.1f;
+        temp_r29->scale.x = temp_r31->scale.x;
+        temp_r29->scale.y = temp_r31->scale.y;
+        temp_r29->scale.z = 0.8f * temp_r31->scale.z;
         HuPrcVSleep();
     }
-    temp_r31->unk18 = temp_r30->unk18;
-    temp_r31->unk1C = temp_r30->unk1C;
-    temp_r31->unk20 = temp_r30->unk20;
-    temp_r29->unk18 = temp_r31->unk18;
-    temp_r29->unk1C = temp_r31->unk1C;
-    temp_r29->unk20 = 0.8f * temp_r31->unk20;
+    temp_r31->scale.x = temp_r30->scale.x;
+    temp_r31->scale.y = temp_r30->scale.y;
+    temp_r31->scale.z = temp_r30->scale.z;
+    temp_r29->scale.x = temp_r31->scale.x;
+    temp_r29->scale.y = temp_r31->scale.y;
+    temp_r29->scale.z = 0.8f * temp_r31->scale.z;
 }
 
 void fn_1_6820(UnkBss474Struct *arg0, s32 arg1, s32 arg2)
 {
-    UnkBss474DoublyInnerStruct6C *temp_r30;
-    UnkBss474DoublyInnerStruct6C *temp_r31;
+    HSFTRANSFORM *temp_r30;
+    HSFTRANSFORM *temp_r31;
     float temp_f30;
     float temp_f29;
     float temp_f28;
     float var_f31;
     s32 i;
 
-    temp_r31 = &arg0->unk6C[arg1]->unk1C;
-    temp_r30 = &arg0->unk94[arg1]->unk1C;
-    temp_f30 = temp_r31->unk18;
-    temp_f29 = temp_r31->unk1C;
-    temp_f28 = temp_r31->unk20;
-    temp_r31->unk18 = temp_r31->unk1C = temp_r31->unk20 = 0.0f;
-    temp_r30->unk18 = temp_r30->unk1C = temp_r30->unk20 = 0.0f;
+    temp_r31 = &arg0->unk6C[arg1]->mesh.base;
+    temp_r30 = &arg0->unk94[arg1]->mesh.base;
+    temp_f30 = temp_r31->scale.x;
+    temp_f29 = temp_r31->scale.y;
+    temp_f28 = temp_r31->scale.z;
+    temp_r31->scale.x = temp_r31->scale.y = temp_r31->scale.z = 0.0f;
+    temp_r30->scale.x = temp_r30->scale.y = temp_r30->scale.z = 0.0f;
     for (i = 0, var_f31 = 0.0f; i < 30; i++, var_f31 += 0.033333335f) {
-        temp_r31->unk18 += temp_f30 / 30.0f;
-        temp_r31->unk1C += temp_f29 / 30.0f;
-        temp_r31->unk20 += temp_f28 / 30.0f;
-        temp_r30->unk18 = temp_r31->unk18;
-        temp_r30->unk1C = temp_r31->unk1C;
-        temp_r30->unk20 = 0.8f * temp_r31->unk20;
+        temp_r31->scale.x += temp_f30 / 30.0f;
+        temp_r31->scale.y += temp_f29 / 30.0f;
+        temp_r31->scale.z += temp_f28 / 30.0f;
+        temp_r30->scale.x = temp_r31->scale.x;
+        temp_r30->scale.y = temp_r31->scale.y;
+        temp_r30->scale.z = 0.8f * temp_r31->scale.z;
         if (arg2 == 0) {
             HuSprGrpScaleSet(arg0->unk0C, var_f31, var_f31);
         }
         HuPrcVSleep();
     }
-    temp_r31->unk18 = temp_f30;
-    temp_r31->unk1C = temp_f29;
-    temp_r31->unk20 = temp_f28;
-    temp_r30->unk18 = temp_r31->unk18;
-    temp_r30->unk1C = temp_r31->unk1C;
-    temp_r30->unk20 = 0.8f * temp_r31->unk20;
+    temp_r31->scale.x = temp_f30;
+    temp_r31->scale.y = temp_f29;
+    temp_r31->scale.z = temp_f28;
+    temp_r30->scale.x = temp_r31->scale.x;
+    temp_r30->scale.y = temp_r31->scale.y;
+    temp_r30->scale.z = 0.8f * temp_r31->scale.z;
     if (arg2 == 0) {
         HuSprAttrReset(arg0->unk0C, 0, HUSPR_ATTR_NOANIM);
         HuSprGrpScaleSet(arg0->unk0C, 1.0f, 1.0f);
@@ -1869,20 +1843,20 @@ void fn_1_6A3C(void)
     float var_f30;
     float temp_f29;
     UnkFn64A3Struct *temp_r30;
-    UnkBss474DoublyInnerStruct6C *temp_r31;
-    UnkBss474DoublyInnerStruct6C *temp_r28;
+    HSFTRANSFORM *temp_r31;
+    HSFTRANSFORM *temp_r28;
     s32 var_r27;
     s32 i;
 
     temp_r30 = HuPrcCurrentGet()->user_data;
-    temp_r31 = &temp_r30->unk00->unk6C[temp_r30->unk04]->unk1C;
-    temp_r28 = &temp_r30->unk00->unk94[temp_r30->unk04]->unk1C;
+    temp_r31 = &temp_r30->unk00->unk6C[temp_r30->unk04]->mesh.base;
+    temp_r28 = &temp_r30->unk00->unk94[temp_r30->unk04]->mesh.base;
     HuAudFXPlay(0x56C);
     if (temp_r30->unk08 != 0) {
-        var_f30 = temp_r31->unk14 + 90.0f;
+        var_f30 = temp_r31->rot.z + 90.0f;
     }
     else {
-        var_f30 = temp_r31->unk14 - 90.0f;
+        var_f30 = temp_r31->rot.z - 90.0f;
     }
     if (var_f30 >= 360.0f) {
         var_f30 -= 360.0f;
@@ -1890,16 +1864,16 @@ void fn_1_6A3C(void)
     if (var_f30 < 0.0f) {
         var_f30 += 360.0f;
     }
-    temp_f29 = temp_r31->unk14;
+    temp_f29 = temp_r31->rot.z;
     var_f31 = 0.0f;
     for (i = 0, var_r27 = 15; i < var_r27; i++) {
         if (temp_r30->unk08 != 0) {
-            temp_r31->unk14 = temp_f29 + 100.0 * sind(var_f31);
+            temp_r31->rot.z = temp_f29 + 100.0 * sind(var_f31);
         }
         else {
-            temp_r31->unk14 = temp_f29 - 100.0 * sind(var_f31);
+            temp_r31->rot.z = temp_f29 - 100.0 * sind(var_f31);
         }
-        temp_r28->unk14 = temp_r31->unk14;
+        temp_r28->rot.z = temp_r31->rot.z;
         var_f31 += 6.0f;
         HuPrcVSleep();
     }
@@ -1907,16 +1881,16 @@ void fn_1_6A3C(void)
     for (i = 0, var_r27 = 3; i < var_r27; i++) {
         var_f31 -= 8.333333f;
         if (temp_r30->unk08 != 0) {
-            temp_r31->unk14 = temp_f29 + 100.0 * sind(var_f31);
+            temp_r31->rot.z = temp_f29 + 100.0 * sind(var_f31);
         }
         else {
-            temp_r31->unk14 = temp_f29 - 100.0 * sind(var_f31);
+            temp_r31->rot.z = temp_f29 - 100.0 * sind(var_f31);
         }
-        temp_r28->unk14 = temp_r31->unk14;
+        temp_r28->rot.z = temp_r31->rot.z;
         HuPrcVSleep();
     }
-    temp_r28->unk14 = var_f30;
-    temp_r31->unk14 = var_f30;
+    temp_r28->rot.z = var_f30;
+    temp_r31->rot.z = var_f30;
     *temp_r30->unk0C = 0;
     HuPrcKill(HuPrcCurrentGet());
     while (TRUE) {
@@ -1928,23 +1902,23 @@ void fn_1_6CF4(void)
 {
     float temp_f30;
     float var_f31;
-    UnkBss474DoublyInnerStruct6C *temp_r31;
+    HSFTRANSFORM *temp_r31;
 
     temp_r31 = HuPrcCurrentGet()->user_data;
     HuPrcSleep(frandmod(30));
-    temp_f30 = temp_r31->unk00 / 100.0f;
+    temp_f30 = temp_r31->pos.x / 100.0f;
     var_f31 = -7.0f;
     while (TRUE) {
-        temp_r31->unk04 -= var_f31;
-        if (temp_r31->unk04 < -500.0f) {
+        temp_r31->pos.y -= var_f31;
+        if (temp_r31->pos.y < -500.0f) {
             break;
         }
         var_f31 += 0.5f;
         if (var_f31 > 20.0f) {
             var_f31 = 20.0f;
         }
-        temp_r31->unk00 += temp_f30;
-        temp_r31->unk08 += 10.0f;
+        temp_r31->pos.x += temp_f30;
+        temp_r31->pos.z += 10.0f;
         HuPrcVSleep();
     }
     HuPrcKill(HuPrcCurrentGet());
@@ -1955,20 +1929,20 @@ void fn_1_6CF4(void)
 
 void fn_1_6DD8(UnkBss474Struct *arg0, s32 arg1)
 {
-    UnkBss474DoublyInnerStruct6C *temp_r31;
+    HSFTRANSFORM *temp_r31;
 
-    temp_r31 = &arg0->unk6C[arg1]->unk1C;
-    if (temp_r31->unk00 > 220.0f) {
-        temp_r31->unk00 = 220.0f;
+    temp_r31 = &arg0->unk6C[arg1]->mesh.base;
+    if (temp_r31->pos.x > 220.0f) {
+        temp_r31->pos.x = 220.0f;
     }
-    if (temp_r31->unk00 < -220.0f) {
-        temp_r31->unk00 = -220.0f;
+    if (temp_r31->pos.x < -220.0f) {
+        temp_r31->pos.x = -220.0f;
     }
-    if (temp_r31->unk04 > 140.0f) {
-        temp_r31->unk04 = 140.0f;
+    if (temp_r31->pos.y > 140.0f) {
+        temp_r31->pos.y = 140.0f;
     }
-    if (temp_r31->unk04 < -140.0f) {
-        temp_r31->unk04 = -140.0f;
+    if (temp_r31->pos.y < -140.0f) {
+        temp_r31->pos.y = -140.0f;
     }
 }
 
@@ -2002,13 +1976,13 @@ void fn_1_6F48(UnkBss474Struct *arg0, s32 arg1, s32 arg2)
     Vec sp18;
     Vec spC;
     float temp_f29;
-    UnkBss474DoublyInnerStruct6C *temp_r30;
-    UnkBss474InnerStructE4 *temp_r25;
+    HSFTRANSFORM *temp_r30;
+    HSFTRANSFORM *temp_r25;
     s32 var_r27;
     s32 var_r23;
 
     arg1 = lbl_1_bss_E6C[arg2];
-    temp_r30 = &arg0->unk6C[arg1]->unk1C;
+    temp_r30 = &arg0->unk6C[arg1]->mesh.base;
     arg0->unk254 = arg0->unk255 = 0;
     arg0->unk257 = arg0->unk256 = 0;
     arg0->unk258 = 0;
@@ -2044,17 +2018,17 @@ void fn_1_6F48(UnkBss474Struct *arg0, s32 arg1, s32 arg2)
         fn_1_6E9C(arg0->unk34, 10);
     }
     temp_r25 = &arg0->unkE4[arg0->unk264];
-    HuSetVecF(&sp24, temp_r25->unk00, temp_r25->unk04, 0.0);
-    HuSetVecF(&sp18, temp_r30->unk00, temp_r30->unk04, 0.0);
+    HuSetVecF(&sp24, temp_r25->pos.x, temp_r25->pos.y, 0.0);
+    HuSetVecF(&sp18, temp_r30->pos.x, temp_r30->pos.y, 0.0);
     HuSubVecF(&spC, &sp24, &sp18);
     if (sqrtf(spC.x * spC.x + spC.y * spC.y) >= 40.0f) {
-        temp_f29 = atan2d(spC.x, spC.y);
+        temp_f29 = atan2d(spC.x, spC.y); // TODO
         arg0->unk254 = 50.0 * sind(temp_f29);
         arg0->unk255 = 50.0 * cosd(temp_f29);
         if (arg0->unk268 >= 0) {
-            if (arg0->unk268-- == 0 && temp_r30->unk14 != 0.0f) {
+            if (arg0->unk268-- == 0 && temp_r30->rot.z != 0.0f) {
                 arg0->unk268 = 10;
-                if (temp_r30->unk14 - 90.0f == 0.0f) {
+                if (temp_r30->rot.z - 90.0f == 0.0f) {
                     arg0->unk256 = 50;
                 }
                 else {
@@ -2066,8 +2040,8 @@ void fn_1_6F48(UnkBss474Struct *arg0, s32 arg1, s32 arg2)
     else {
         fn_1_6E9C(arg0->unk34, 1);
         if (frandmod(100) < var_r27 || lbl_1_bss_E38 == arg2 + 1) {
-            if (temp_r30->unk14 != 0.0f) {
-                if (temp_r30->unk14 - 90.0f == 0.0f) {
+            if (temp_r30->rot.z != 0.0f) {
+                if (temp_r30->rot.z - 90.0f == 0.0f) {
                     arg0->unk256 = 50;
                 }
                 else {
@@ -2146,7 +2120,7 @@ void fn_1_7680(void)
     }
 }
 
-static inline void m411InlineFunc(UnkBss474Struct *temp_r31, UnkBss474DoublyInnerStruct6C *temp_r30)
+static inline void m411InlineFunc(UnkBss474Struct *temp_r31, HSFTRANSFORM *temp_r30)
 {
     Vec sp74;
     Vec sp80;
@@ -2154,9 +2128,9 @@ static inline void m411InlineFunc(UnkBss474Struct *temp_r31, UnkBss474DoublyInne
     float var_f22;
     float var_f23;
 
-    sp80.x = 60.0f + temp_r30->unk00;
+    sp80.x = 60.0f + temp_r30->pos.x;
     sp80.z = 100.0f;
-    sp80.y = temp_r30->unk04 - 30.0f;
+    sp80.y = temp_r30->pos.y - 30.0f;
     Hu3D3Dto2D(&sp80, 1 << temp_r31->unk38, &sp74);
     var_f23 = 290.0f * (temp_r31->unk34 % 2) + sp74.x / 2.0f;
     var_f22 = 245.0f * (temp_r31->unk34 / 2) + sp74.y / 2.0f;
@@ -2171,11 +2145,11 @@ void fn_1_7738(void)
     f32 temp_f27;
     Process *var_r24;
     UnkBss474Struct *temp_r31;
-    UnkBss474DoublyInnerStruct6C *temp_r30;
+    HSFTRANSFORM *temp_r30;
     s32 var_r29;
-    UnkBss474DoublyInnerStruct6C *temp_r28;
+    HSFTRANSFORM *temp_r28;
     s32 temp_r26;
-    UnkBss474InnerStructE4 *temp_r25;
+    HSFTRANSFORM *temp_r25;
     s32 var_r23;
     Vec spCC;
     Vec spC0;
@@ -2186,10 +2160,10 @@ void fn_1_7738(void)
     temp_r31 = HuPrcCurrentGet()->user_data;
     temp_r31->unk40 = 0;
     for (var_r29 = 0; var_r29 < lbl_1_bss_E38; var_r29++) {
-        temp_r30 = &temp_r31->unk94[var_r29]->unk1C;
-        temp_r30->unk00 = 5000.0f;
-        temp_r30 = &temp_r31->unkBC[var_r29]->unk1C;
-        temp_r30->unk00 = 5000.0f;
+        temp_r30 = &temp_r31->unk94[var_r29]->mesh.base;
+        temp_r30->pos.x = 5000.0f;
+        temp_r30 = &temp_r31->unkBC[var_r29]->mesh.base;
+        temp_r30->pos.x = 5000.0f;
     }
     while (lbl_1_bss_E98 == 0) {
         HuPrcVSleep();
@@ -2210,12 +2184,12 @@ void fn_1_7738(void)
         HuAudFXPlay(0x56F);
     }
     for (var_r29 = 0; var_r29 < lbl_1_bss_E38; var_r29++) {
-        temp_r30 = &temp_r31->unk6C[var_r29]->unk1C;
-        temp_f26 = atan2d(temp_r30->unk00, temp_r30->unk04);
-        temp_f27 = sqrtf(temp_r30->unk00 * temp_r30->unk00 + temp_r30->unk04 * temp_r30->unk04);
+        temp_r30 = &temp_r31->unk6C[var_r29]->mesh.base;
+        temp_f26 = atan2d(temp_r30->pos.x, temp_r30->pos.y);
+        temp_f27 = sqrtf(temp_r30->pos.x * temp_r30->pos.x + temp_r30->pos.y * temp_r30->pos.y);
         temp_f27 *= 1.05f;
-        temp_r30->unk00 = temp_f27 * sind(temp_f26);
-        temp_r30->unk04 = temp_f27 * cosd(temp_f26);
+        temp_r30->pos.x = temp_f27 * sind(temp_f26);
+        temp_r30->pos.y = temp_f27 * cosd(temp_f26);
     }
     omVibrate(temp_r31->unk34, 12, 6, 6);
     HuPrcSleep(30);
@@ -2226,7 +2200,7 @@ void fn_1_7738(void)
     }
     for (var_r29 = 0; var_r29 < lbl_1_bss_E38; var_r29++) {
         var_r24 = HuPrcChildCreate(fn_1_6CF4, 0x2000, 0x1000, 0, HuPrcCurrentGet());
-        temp_r30 = &temp_r31->unk6C[var_r29]->unk1C;
+        temp_r30 = &temp_r31->unk6C[var_r29]->mesh.base;
         var_r24->user_data = temp_r30;
     }
     HuPrcSleep(40);
@@ -2248,25 +2222,25 @@ void fn_1_7738(void)
         temp_r31->unk44 = 0;
         temp_r31->unk264 = -1;
         temp_r26 = lbl_1_bss_E6C[var_r29];
-        temp_r30 = &temp_r31->unk6C[temp_r26]->unk1C;
-        temp_r28 = &temp_r31->unk94[temp_r26]->unk1C;
+        temp_r30 = &temp_r31->unk6C[temp_r26]->mesh.base;
+        temp_r28 = &temp_r31->unk94[temp_r26]->mesh.base;
         if (var_r29 != 0) {
             temp_r25 = &temp_r31->unkE4[lbl_1_bss_E6C[var_r29 - 1]];
-            temp_r30->unk00 = temp_r25->unk00;
-            temp_r30->unk04 = temp_r25->unk04;
-            temp_r28->unk00 = 20.0f + temp_r30->unk00;
-            temp_r28->unk04 = -20.0f + temp_r30->unk04;
+            temp_r30->pos.x = temp_r25->pos.x;
+            temp_r30->pos.y = temp_r25->pos.y;
+            temp_r28->pos.x = 20.0f + temp_r30->pos.x;
+            temp_r28->pos.y = -20.0f + temp_r30->pos.y;
         }
         else {
-            temp_r30->unk00 = temp_r30->unk04 = 0.0f;
-            temp_r28->unk00 = 20.0f + temp_r30->unk00;
-            temp_r28->unk04 = -20.0f + temp_r30->unk04;
+            temp_r30->pos.x = temp_r30->pos.y = 0.0f;
+            temp_r28->pos.x = 20.0f + temp_r30->pos.x;
+            temp_r28->pos.y = -20.0f + temp_r30->pos.y;
             m411InlineFunc(temp_r31, temp_r30);
             HuSprAttrReset(temp_r31->unk0C, 0, HUSPR_ATTR_DISPOFF);
         }
-        temp_r30->unk08 = 50.0f;
-        temp_r28->unk08 = temp_r30->unk08 - 5.0f;
-        temp_r30->unk14 = temp_r28->unk14 = 90.0f * lbl_1_bss_E44[var_r29];
+        temp_r30->pos.z = 50.0f;
+        temp_r28->pos.z = temp_r30->pos.z - 5.0f;
+        temp_r30->rot.z = temp_r28->rot.z = 90.0f * lbl_1_bss_E44[var_r29];
         fn_1_6820(temp_r31, temp_r26, var_r29);
         if (var_r29 == 0) {
             while (lbl_1_bss_E98 != 3) {
@@ -2296,16 +2270,16 @@ void fn_1_7738(void)
                 }
             }
             if ((fn_1_5ED0(temp_r31->unk34) & 0x100) && sp70 == 0) {
-                if (0.0f == temp_r30->unk14) {
+                if (0.0f == temp_r30->rot.z) {
                     temp_r25 = &temp_r31->unkE4[temp_r26];
-                    HuSetVecF(&spCC, temp_r25->unk00, temp_r25->unk04, 0.0);
-                    HuSetVecF(&spC0, temp_r30->unk00, temp_r30->unk04, 0.0);
+                    HuSetVecF(&spCC, temp_r25->pos.x, temp_r25->pos.y, 0.0);
+                    HuSetVecF(&spC0, temp_r30->pos.x, temp_r30->pos.y, 0.0);
                     HuSubVecF(&spB4, &spCC, &spC0);
                     if (sqrtf(spB4.x * spB4.x + spB4.y * spB4.y) < 40.0f) {
                         HuAudFXPlay(0x56D);
                         temp_r31->unk44 = 1;
-                        temp_r31->unk64 = temp_r30->unk00;
-                        temp_r31->unk68 = temp_r30->unk04;
+                        temp_r31->unk64 = temp_r30->pos.x;
+                        temp_r31->unk68 = temp_r30->pos.y;
                         fn_1_5F3C(temp_r31, temp_r26);
                         break;
                     }
@@ -2317,11 +2291,11 @@ void fn_1_7738(void)
                 temp_r31->unk60 = atan2d(fn_1_5D58(temp_r31->unk34, 0), fn_1_5D58(temp_r31->unk34, 1));
             }
             if (-1.0f != temp_r31->unk60) {
-                temp_r30->unk00 += 5 * sind(temp_r31->unk60);
-                temp_r30->unk04 += 5 * cosd(temp_r31->unk60);
+                temp_r30->pos.x += 5 * sind(temp_r31->unk60);
+                temp_r30->pos.y += 5 * cosd(temp_r31->unk60);
                 fn_1_6DD8(temp_r31, temp_r26);
-                temp_r28->unk00 = 20.0f + temp_r30->unk00;
-                temp_r28->unk04 = -20.0f + temp_r30->unk04;
+                temp_r28->pos.x = 20.0f + temp_r30->pos.x;
+                temp_r28->pos.y = -20.0f + temp_r30->pos.y;
                 m411InlineFunc(temp_r31, temp_r30);
             }
             HuPrcVSleep();

@@ -301,7 +301,7 @@ s16 HuWinCreate(float x, float y, s16 w, s16 h, s16 frame)
         window->mess_shadow_color = 9;
     }
     for (i = 0; i < 8; i++) {
-        window->insert_mess[i] = 0;
+        window->insert_mess[i] = NULL;
     }
     for (i = 2; i < 30; i++) {
         window->sprite_id[i] = -1;

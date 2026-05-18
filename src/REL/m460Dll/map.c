@@ -353,7 +353,11 @@ void fn_1_7724(ModelData *model, Mtx mtx)
 void fn_1_7790(ModelData *model, Mtx mtx)
 {
     Mtx sp5C;
+#ifdef NON_MATCHING
+    Mtx44 sp2C;
+#else
     Mtx sp2C;
+#endif
     GXTexObj spC;
     float var_f31;
     float var_f30;

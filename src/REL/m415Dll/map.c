@@ -447,9 +447,16 @@ void fn_1_9DC8(unkSubStruct2 *arg0)
             var_r27++;
         }
         else {
+#ifdef NON_MATCHING
+            u8 count = var_r28->unk33;
+#endif
             var_r31 = var_r28->unk54;
-
+#ifdef NON_MATCHING
+            // They free var_r28 and the for loop tries to access unk33 afterwards
+            for (var_r26 = 0; var_r26 < count; var_r26++, var_r31++) {
+#else
             for (var_r26 = 0; var_r26 < var_r28->unk33; var_r26++, var_r31++) {
+#endif
                 temp_r30 = &lbl_1_bss_36C.unk3C[arg0->unk34[var_r26]];
                 var_r31->unk24 &= ~4;
                 switch (var_r31->unk24 & 0xF) {

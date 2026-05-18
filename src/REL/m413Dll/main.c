@@ -468,8 +468,12 @@ void fn_1_10B8(Work19C8 *arg0)
 {
     s32 temp_r31;
     s32 temp_r30;
-    u8 sp16C[12][17] = {};
-    u8 sp6C[12] = {};
+    u8 sp16C[12][17] = {0};
+#ifdef NON_MATCHING
+    u8 sp6C[13] = {0};
+#else
+    u8 sp6C[12] = {0};
+#endif
     s32 temp_r22 = (arg0->unk48[0]->unk18 - 4 < 0) ? 0 : (arg0->unk48[0]->unk18 - 4);
     s32 temp_r21 = (arg0->unk48[0]->unk18 + 4 > 11) ? 11 : (arg0->unk48[0]->unk18 + 4);
     s32 sp44[2] = {};

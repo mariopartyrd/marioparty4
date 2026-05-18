@@ -724,7 +724,11 @@ void fn_1_3618(omObjData *var_r28)
 void fn_1_3BC0(ModelData *model, Mtx mtx)
 {
     Mtx sp3C;
+#ifdef NON_MATCHING
+    Mtx44 spC;
+#else
     Mtx spC;
+#endif
     float var_f31;
     float var_f30;
     float var_f29;

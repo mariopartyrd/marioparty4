@@ -323,7 +323,7 @@ static void CreateMGSelect(omObjData *object)
     float sp8[2];
 
     omSetStatBit(object, OM_STAT_MODEL_PAUSED);
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x48, MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(mgSelect), MEMORY_DEFAULT_NUM);
     temp_r31 = object->data;
     index2 = 0;
     temp_r30 = HuSprGrpCreate(3);
