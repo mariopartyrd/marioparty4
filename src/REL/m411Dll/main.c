@@ -912,7 +912,7 @@ void fn_1_34B0(ModelData *model, ParticleData *particle, Mtx matrix, s32 arg3)
     float temp_f28;
     float var_f31;
     float temp_f29;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     UnkBss474Struct *temp_r28;
     s16 i;
     s16 j;
@@ -920,12 +920,12 @@ void fn_1_34B0(ModelData *model, ParticleData *particle, Mtx matrix, s32 arg3)
     s32 var_r25;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (k = 0; k < particle->unk_30; k++, var_r31++) {
             var_r31->unk14.x = var_r31->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     temp_r28 = &lbl_1_bss_474[arg3];
     if (temp_r28->unk44 == 1) {
         for (i = 0; i < 4; i++) {
@@ -958,9 +958,9 @@ void fn_1_34B0(ModelData *model, ParticleData *particle, Mtx matrix, s32 arg3)
             }
         }
         temp_r28->unk44++;
-        DCStoreRangeNoSync(particle->unk_48, particle->unk_30 * sizeof(*particle->unk_48));
+        DCStoreRangeNoSync(particle->data, particle->unk_30 * sizeof(*particle->data));
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (k = 0; k < particle->unk_30; k++, var_r31++) {
         if (var_r31->unk14.x == 0.0f) {
             continue;

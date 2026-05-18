@@ -1847,19 +1847,19 @@ block_exit_loop:
 
 void fn_1_7FC0(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     UnkM445Struct_02 *temp_r29;
     float var_f31;
     s16 var_r27;
     s16 var_r28;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
             var_r31->unk14.x = var_r31->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (var_r27 = 0; var_r27 < 2; var_r27++) {
         temp_r29 = &lbl_1_bss_588[var_r27];
         if (temp_r29->unk28 != 0) {
@@ -1882,7 +1882,7 @@ void fn_1_7FC0(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_r29->unk28 = 0;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
         if (0.0f != var_r31->unk14.x) {
             var_r31->unk2C += var_r31->unk14.y;

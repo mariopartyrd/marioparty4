@@ -886,37 +886,37 @@ void fn_1_6B60(ModelData *model, Mtx arg1)
 
 void fn_1_6B94(ModelData *model, ParticleData *particle, float (*matrix)[4])
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     s32 var_r29;
 
     if (!particle->unk_00) {
         particle->unk_00++;
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-            var_r31->unk00 = 0;
+            var_r31->time = 0;
             var_r31->unk2C = 0.0f;
             var_r31->unk40.a = 0;
         }
         return;
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk00) {
+        if (var_r31->time) {
             var_r31->unk34.x += var_r31->unk08.x;
             var_r31->unk34.y += var_r31->unk08.y;
             var_r31->unk34.z += var_r31->unk08.z;
             var_r31->unk08.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
-            if (var_r31->unk00 < REFRESH_RATE_F / 5) {
+            if (var_r31->time < REFRESH_RATE_F / 5) {
                 var_r31->unk40.a = 0.88f * var_r31->unk40.a;
             }
-            if (!(--var_r31->unk00)) {
-                var_r31->unk00 = 0;
+            if (!(--var_r31->time)) {
+                var_r31->time = 0;
                 var_r31->unk2C = 0.0f;
                 var_r31->unk40.a = 0;
             }
         }
     }
-    DCStoreRange(particle->unk_48, particle->unk_30 * 68);
+    DCStoreRange(particle->data, particle->unk_30 * 68);
 }
 
 void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
@@ -928,7 +928,7 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
     float var_f28;
     float var_f27;
 
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     ParticleData *var_r30;
     s32 var_r29;
     u32 var_r28;
@@ -939,7 +939,7 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
         if (!var_r30->unk_00) {
             return;
         }
-        var_r31 = var_r30->unk_48;
+        var_r31 = var_r30->data;
         if (arg1) {
             var_r28 = 10.0f + (20.0f * argA);
             argA *= 0.7f;
@@ -952,10 +952,10 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
             var_f27 = 0.0f;
         }
         for (var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
-            if (var_r31->unk00) {
+            if (var_r31->time) {
                 continue;
             }
-            var_r31->unk00 = REFRESH_RATE_F * (1.0f + (0.0005f * frandmod(1000)));
+            var_r31->time = REFRESH_RATE_F * (1.0f + (0.0005f * frandmod(1000)));
             var_f30 = 0.001f * frandmod(1000);
             var_f28 = var_f30;
             if (frandmod(1000) < 500) {

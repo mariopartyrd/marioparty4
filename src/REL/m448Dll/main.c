@@ -1510,27 +1510,27 @@ void fn_1_7148(omObjData *arg0)
 
 void fn_1_7DC4(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     s16 i;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk00 = i * 2 + 100;
+            var_r31->time = i * 2 + 100;
             var_r31->unk40.a = 0;
             var_r31->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
         if (!var_r31->unk2C) {
             break;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk00 == 100) {
-            var_r31->unk00 = (lbl_1_data_1DC[0] == 0.0f && lbl_1_data_1DC[1] == 0.0f && lbl_1_data_1DC[2] == 0.0f) ? 0 : var_r31->unk00;
+        if (var_r31->time == 100) {
+            var_r31->time = (lbl_1_data_1DC[0] == 0.0f && lbl_1_data_1DC[1] == 0.0f && lbl_1_data_1DC[2] == 0.0f) ? 0 : var_r31->time;
             var_r31->unk34.x = lbl_1_data_1DC[0] + 75.0 * (rand8() / 255.0);
             var_r31->unk34.y = lbl_1_data_1DC[1] + 75.0 * (rand8() / 255.0);
             var_r31->unk34.z = lbl_1_data_1DC[2] + 75.0 * (rand8() / 255.0);
@@ -1541,14 +1541,14 @@ void fn_1_7DC4(ModelData *model, ParticleData *particle, Mtx matrix)
             var_r31->unk30 = 0.785f;
             var_r31->unk2C = 40.0f;
         }
-        if (var_r31->unk00 <= 100) {
+        if (var_r31->time <= 100) {
             var_r31->unk34.y -= 3.0f;
-            var_r31->unk2C = ((var_r31->unk00 > 50) ? (var_r31->unk00 - 50) / 50.0 : 0.0) * (rand8() * 80 / 255.0);
+            var_r31->unk2C = ((var_r31->time > 50) ? (var_r31->time - 50) / 50.0 : 0.0) * (rand8() * 80 / 255.0);
         }
-        if (var_r31->unk00 == 0) {
+        if (var_r31->time == 0) {
             var_r31->unk2C = 0.0f;
         }
-        var_r31->unk00 -= (var_r31->unk00 > 0);
+        var_r31->time -= (var_r31->time > 0);
     }
 }
 

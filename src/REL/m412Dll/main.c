@@ -1790,7 +1790,7 @@ loop_6:
 
 void fn_1_A01C(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     f32 var_f29;
     f32 var_f28;
     f32 var_f30;
@@ -1803,12 +1803,12 @@ void fn_1_A01C(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
     unkStruct *temp_r30;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
             var_r31->unk14.x = var_r31->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
 
     for (var_r26 = 0; var_r26 < 0x20; var_r26++) {
         temp_r30 = lbl_1_bss_278[var_r26];
@@ -1851,7 +1851,7 @@ void fn_1_A01C(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
             temp_r30->unkA++;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
         if (var_r31->unk14.x != 0.0f) {
             VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
@@ -1878,7 +1878,7 @@ void fn_1_A01C(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
 
 void fn_1_A618(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     f32 var_f31;
     f32 var_f30;
     f32 var_f29;
@@ -1890,13 +1890,13 @@ void fn_1_A618(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
     unkStruct *temp_r28;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
 
         for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
             var_r31->unk14.x = var_r31->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
 
     for (var_r26 = 0; var_r26 < 0x20; var_r26++) {
         temp_r28 = lbl_1_bss_278[var_r26];
@@ -1932,7 +1932,7 @@ void fn_1_A618(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
             temp_r28->unkA = 0;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
         if (0.0f != var_r31->unk14.x) {
             VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
@@ -1959,20 +1959,20 @@ void fn_1_A618(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
 
 void fn_1_AA88(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     f32 var_f31;
     s16 var_r27;
     s16 var_r28;
     unkStruct2 *temp_r29;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
 
         for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
             var_r31->unk14.x = var_r31->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
 
     for (var_r27 = 0; var_r27 < 6; var_r27++) {
         temp_r29 = &lbl_1_bss_33C[var_r27];
@@ -1994,7 +1994,7 @@ void fn_1_AA88(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
         var_r31->unk14.z = 17.0f;
         temp_r29->unk20 = 0;
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
 
     for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
         if (0.0f != var_r31->unk14.x) {

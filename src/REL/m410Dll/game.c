@@ -1137,10 +1137,10 @@ void fn_1_7494(void)
 void fn_1_7520(Vec *arg0)
 {
     ParticleData *var_r30;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
 
     var_r30 = Hu3DData[lbl_1_bss_38].unk_120;
-    var_r31 = &var_r30->unk_48[var_r30->unk_02++];
+    var_r31 = &var_r30->data[var_r30->unk_02++];
     var_r31->unk2C = 100.0f;
     var_r31->unk34.x = arg0->x;
     var_r31->unk34.y = arg0->y;
@@ -1151,19 +1151,19 @@ s32 lbl_1_data_110 = REFRESH_RATE;
 
 void fn_1_75A0(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *var_r30;
+    HU3DPARTICLEDATA *var_r30;
     s32 var_r29;
     s32 var_r28;
 
     if (!particle->unk_00) {
         particle->unk_00 = 1;
-        var_r30 = &particle->unk_48[particle->unk_02];
+        var_r30 = &particle->data[particle->unk_02];
         for (var_r29 = particle->unk_02; var_r29 < particle->unk_30; var_r29++, var_r30++) {
             var_r30->unk2C = 0.0f;
         }
     }
     var_r28 = (lbl_1_data_110 * 0xFF) / REFRESH_RATE;
-    var_r30 = particle->unk_48;
+    var_r30 = particle->data;
 
     for (var_r29 = 0; var_r29 < particle->unk_02; var_r29++, var_r30++) {
         var_r30->unk40.a = var_r28; // 43?
@@ -1171,7 +1171,7 @@ void fn_1_75A0(ModelData *model, ParticleData *particle, Mtx matrix)
     if (--lbl_1_data_110 == 0) {
         model->attr |= 1;
     }
-    DCStoreRange(particle->unk_48, particle->unk_30 * 0x44);
+    DCStoreRange(particle->data, particle->unk_30 * 0x44);
 }
 
 s32 fn_1_76B8(Vec arg0, Vec arg1, u16 arg2)

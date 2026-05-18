@@ -929,7 +929,7 @@ static void SpaceAmidaEffUpdate(omObjData *obj)
 static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     RocketWork *work;
-    HsfanimStruct01 *particleDataP;
+    HU3DPARTICLEDATA *particleDataP;
     Vec pos;
     float size;
     s32 i;
@@ -939,7 +939,7 @@ static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, 
     BoardModelPosGet(rocketObj[spaceAmidaPath]->work[0], &pos);
     work = rocketObj[spaceAmidaPath]->data;
     if (particle->unk_34 == 0) {
-        particleDataP = particle->unk_48;
+        particleDataP = particle->data;
         for (i = 0; i < particle->unk_30; i++, particleDataP++) {
             particleDataP->unk2C = 0.0f;
         }
@@ -947,7 +947,7 @@ static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, 
     }
     if (work->kemuriSize > 0.0f) {
         for (i = 0; i < 80.0f * work->kemuriSize; i++) {
-            particleDataP = particle->unk_48;
+            particleDataP = particle->data;
             for (j = 0; j < particle->unk_30; j++, particleDataP++) {
                 if (particleDataP->unk2C == 0.0f) {
                     break;
@@ -970,7 +970,7 @@ static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, 
             }
         }
     }
-    particleDataP = particle->unk_48;
+    particleDataP = particle->data;
     for (i = 0; i < particle->unk_30; i++, particleDataP++) {
         if (particleDataP->unk2C == 0.0f) {
             continue;

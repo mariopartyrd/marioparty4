@@ -200,7 +200,7 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
     s16 var_r22;
     s16 var_r29;
     StructBss1CF8* temp_r28;
-    HsfanimStruct01* var_r31;
+    HU3DPARTICLEDATA* var_r31;
     s16 var_r27;
     s16 temp_r25;
     s16 temp_r24;
@@ -211,7 +211,7 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
 
     temp_r28 = particle->unk_1C;
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
             var_r31->unk2C = 0.0f;
         }
@@ -225,7 +225,7 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
     PSVECSubtract(&temp_r28->unk04, &temp_r28->unk10, &sp8);
     temp_f31 = PSVECMag(&sp8) / temp_r20;
     for (var_r22 = 0; var_r22 < particle->unk_30 / (temp_r28->unk24 / 5.0f); var_r22++) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
             if (!var_r31->unk2C) {
                 break;
@@ -244,16 +244,16 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
         var_r31->unk40.g = 0x80;
         var_r31->unk40.b = 0x60;
         var_r31->unk2C = 10.0f;
-        var_r31->unk00 = 0;
+        var_r31->time = 0;
         var_r31->unk02 = 0;
         var_r31->unk14.x = frandmod(360);
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (var_r29 = var_r23 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
         if (!var_r31->unk2C) {
             continue;
         }
-        if (var_r31->unk00 == 0) {
+        if (var_r31->time == 0) {
             PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
             var_r31->unk08.x *= 0.999f;
             var_r31->unk08.y -= 0.5f;
@@ -262,19 +262,19 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
                 PSVECScale(&var_r31->unk08, &var_r31->unk08, 1.0 - ((var_r31->unk02 - (temp_r26 - temp_r26 / 5.0)) / (temp_r26 / 5.0)));
             }
             if (var_r31->unk02 == temp_r26) {
-                var_r31->unk00++;
+                var_r31->time++;
             }
             if (var_r31->unk34.y <= 0.0f) {
                 var_r31->unk08.y = 0.5f * -var_r31->unk08.y;
                 var_r31->unk34.y = 0.0f;
             }
-        } else if (var_r31->unk00 == 1) {
+        } else if (var_r31->time == 1) {
             sp8 = temp_r28->unk00[var_r29];
             PSVECSubtract(&sp8, &var_r31->unk34, &sp8);
             if (PSVECMag(&sp8) <= 1.0 + temp_f31) {
                 var_r23++;
                 var_r31->unk34 = temp_r28->unk00[var_r29];
-                var_r31->unk00++;
+                var_r31->time++;
                 continue;
             }
             PSVECNormalize(&sp8, &sp8);
@@ -286,7 +286,7 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
         } else {
             var_r23++;
         }
-        if (var_r31->unk00 >= 1) {
+        if (var_r31->time >= 1) {
             var_r27 = var_r31->unk40.r;
             var_r27 += (var_r27 - 0xFF) / 20;
             if (var_r27 > 0xFF) {
@@ -315,7 +315,7 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
         }
         var_r31->unk02++;
     }
-    DCStoreRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCStoreRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
     if (var_r23 >= particle->unk_30) {
         particle->unk_00++;
     }

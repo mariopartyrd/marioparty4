@@ -583,7 +583,7 @@ float fn_1_21D4(float arg0)
 
 void fn_1_2254(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     StructBss200 *temp_r28;
     float var_f31;
     float temp_f29;
@@ -594,12 +594,12 @@ void fn_1_2254(ModelData *model, ParticleData *particle, Mtx matrix)
     s16 k;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (k = 0; k < particle->unk_30; k++, var_r31++) {
             var_r31->unk14.x = var_r31->unk2C = 0.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (i = 0; i < 4; i++) {
         temp_r28 = &lbl_1_bss_200[i];
         if (temp_r28->unk38 & 1) {
@@ -629,7 +629,7 @@ void fn_1_2254(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_r28->unk38 &= ~1;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (k = 0; k < particle->unk_30; k++, var_r31++) {
         if (var_r31->unk14.x != 0.0f) {
             VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
@@ -664,7 +664,7 @@ void fn_1_2254(ModelData *model, ParticleData *particle, Mtx matrix)
 
 void fn_1_2744(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     StructBss200 *temp_r28;
     float temp_f31;
     float temp_f30;
@@ -674,13 +674,13 @@ void fn_1_2744(ModelData *model, ParticleData *particle, Mtx matrix)
     s16 k;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (k = 0; k < particle->unk_30; k++, var_r31++) {
             var_r31->unk14.x = var_r31->unk2C = 0.0f;
             var_r31->unk20 = -1.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (i = 0; i < 4; i++) {
         temp_r28 = &lbl_1_bss_200[i];
         if (temp_r28->unk38 & 2) {
@@ -712,7 +712,7 @@ void fn_1_2744(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_r28->unk38 &= ~2;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (k = 0; k < particle->unk_30; k++, var_r31++) {
         if (var_r31->unk20 > 0.0f) {
             var_r31->unk20 -= 1.0f;

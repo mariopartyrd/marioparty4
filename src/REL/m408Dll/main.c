@@ -1160,22 +1160,22 @@ void fn_1_5AA0(omObjData *object)
 
 void fn_1_5AB4(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *temp_r31;
+    HU3DPARTICLEDATA *temp_r31;
     s32 temp_r29;
     float temp_f31;
     if (particle->unk_00 == 0) {
         particle->unk_00++;
-        temp_r31 = particle->unk_48;
+        temp_r31 = particle->data;
         for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
-            temp_r31->unk00 = 0;
+            temp_r31->time = 0;
             temp_r31->unk2C = 0;
             temp_r31->unk40.a = 0;
         }
         return;
     }
-    temp_r31 = particle->unk_48;
+    temp_r31 = particle->data;
     for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
-        if (temp_r31->unk00 == 0 || temp_r31->unk00 != 1) {
+        if (temp_r31->time == 0 || temp_r31->time != 1) {
             continue;
         }
         temp_r31->unk02++;
@@ -1200,7 +1200,7 @@ void fn_1_5AB4(ModelData *model, ParticleData *particle, Mtx matrix)
             temp_r31->unk40.a = 0.92f * temp_r31->unk40.a;
         }
     }
-    DCStoreRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCStoreRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
 }
 
 void fn_1_5DCC(s32 arg0, Vec *arg1, u32 arg2)
@@ -1208,17 +1208,17 @@ void fn_1_5DCC(s32 arg0, Vec *arg1, u32 arg2)
     float temp_f31;
     float temp_f30;
 
-    HsfanimStruct01 *temp_r31;
+    HU3DPARTICLEDATA *temp_r31;
     ParticleData *temp_r29;
     s32 temp_r28;
     temp_r29 = Hu3DData[arg0].unk_120;
     if (temp_r29->unk_00 != 0) {
-        temp_r31 = temp_r29->unk_48;
+        temp_r31 = temp_r29->data;
         for (temp_r28 = 0; temp_r28 < temp_r29->unk_30; temp_r28++, temp_r31++) {
-            if (temp_r31->unk00) {
+            if (temp_r31->time) {
                 continue;
             }
-            temp_r31->unk00 = 1;
+            temp_r31->time = 1;
             temp_r31->unk02 = 0;
             temp_r31->unk34.x = arg1->x;
             temp_r31->unk34.y = 11990;

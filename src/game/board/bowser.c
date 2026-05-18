@@ -1309,8 +1309,8 @@ static void KillPlayerMot(void)
 
 static void BowserFireHook(ModelData *model, ParticleData *particle, Mtx matrix);
 
-static void SpawnBowserFire(HsfanimStruct01 *arg0);
-static s32 CheckBowserFire(HsfanimStruct01 *arg0);
+static void SpawnBowserFire(HU3DPARTICLEDATA *arg0);
+static s32 CheckBowserFire(HU3DPARTICLEDATA *arg0);
 
 static void InitBowserFire(void)
 {
@@ -1325,13 +1325,13 @@ static void InitBowserFire(void)
 
 static void BowserFireHook(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01* var_r30;
+    HU3DPARTICLEDATA* var_r30;
     s32 i;
     s32 var_r28;
     Vec pos;
     Hu3DModelObjPosGet(BoardModelIDGet(bowserMdl), "itemhook_M_1", &pos);
     if (particle->unk_34 == 0) {
-        var_r30 = particle->unk_48;
+        var_r30 = particle->data;
         for (i = 0; i < particle->unk_30; i++, var_r30++) {
             var_r30->unk2C = 0.0f;
         }
@@ -1339,7 +1339,7 @@ static void BowserFireHook(ModelData *model, ParticleData *particle, Mtx matrix)
         particle->unk_00 = 0;
     }
     if((particle->unk_34 & 0x3) == 0) {
-        var_r30 = particle->unk_48;
+        var_r30 = particle->data;
         for(var_r28=0; var_r28<particle->unk_30; var_r28++, var_r30++) {
              if(var_r30->unk2C == 0.0f) {
                 break; 
@@ -1351,7 +1351,7 @@ static void BowserFireHook(ModelData *model, ParticleData *particle, Mtx matrix)
             SpawnBowserFire(var_r30);
         }
     }
-    var_r30 = particle->unk_48;
+    var_r30 = particle->data;
     for (i = 0; i < particle->unk_30; i++, var_r30++) {
         if(var_r30->unk2C != 0.0f && CheckBowserFire(var_r30)) {
             particle->unk_00--;
@@ -1359,7 +1359,7 @@ static void BowserFireHook(ModelData *model, ParticleData *particle, Mtx matrix)
     }
 }
 
-static void SpawnBowserFire(HsfanimStruct01 *arg0)
+static void SpawnBowserFire(HU3DPARTICLEDATA *arg0)
 {
     Vec dir;
     BoardCameraDirGet(&dir);
@@ -1377,7 +1377,7 @@ static void SpawnBowserFire(HsfanimStruct01 *arg0)
     arg0->unk2C = 100.0f;
 }
 
-static s32 CheckBowserFire(HsfanimStruct01 *arg0)
+static s32 CheckBowserFire(HU3DPARTICLEDATA *arg0)
 {
     arg0->unk34.x += arg0->unk08.x;
     arg0->unk34.y += arg0->unk08.y;

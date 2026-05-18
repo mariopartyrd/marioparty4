@@ -418,7 +418,7 @@ void fn_1_2D08(UnkM447Struct_06 *arg0)
 void fn_1_2DAC(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     GXColor sp8 = { 0xFF, 0xFF, 0xFF, 0xFF };
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     s32 i;
 
     if (particle->unk_02 == 0) {
@@ -428,8 +428,8 @@ void fn_1_2DAC(ModelData *model, ParticleData *particle, Mtx matrix)
         particle->unk_00 = 1;
         particle->unk_04.z = 0.0f;
         particle->unk_10.z = 0.016666668f;
-        for (i = 0, var_r31 = particle->unk_48; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk00 = 0;
+        for (i = 0, var_r31 = particle->data; i < particle->unk_30; i++, var_r31++) {
+            var_r31->time = 0;
             var_r31->unk2C = 20.0f;
             var_r31->unk40.r = sp8.r;
             var_r31->unk40.g = sp8.g;
@@ -443,8 +443,8 @@ void fn_1_2DAC(ModelData *model, ParticleData *particle, Mtx matrix)
             var_r31->unk08.z = 0.0f;
         }
     }
-    for (i = 0, var_r31 = particle->unk_48; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk00 < 0) {
+    for (i = 0, var_r31 = particle->data; i < particle->unk_30; i++, var_r31++) {
+        if (var_r31->time < 0) {
             continue;
         }
         var_r31->unk34.x += var_r31->unk08.x;

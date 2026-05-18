@@ -114,7 +114,7 @@ typedef s16 HU3DANIMID;
 typedef s16 HU3DTEXSCRID;
 
 typedef struct model_data ModelData;
-typedef struct particle_data ParticleData;
+typedef struct Hu3DParticle_s ParticleData;
 
 typedef void (*ModelHookFunc)(struct model_data *, Mtx);
 

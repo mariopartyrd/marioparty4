@@ -1213,7 +1213,7 @@ void fn_1_3F80(ModelData *model, ParticleData *particle, Mtx matrix)
     float var_f25;
     float var_f24;
 
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     M425DllUnkStruct *var_r29;
     s32 var_r28;
 
@@ -1228,7 +1228,7 @@ void fn_1_3F80(ModelData *model, ParticleData *particle, Mtx matrix)
     var_r29 = particle->unk_1C;
     switch (var_r29->unk_04) {
         case 0:
-            var_r31 = particle->unk_48;
+            var_r31 = particle->data;
             if (var_r29->unk_02 != 0) {
                 sp14.x = 0.0f;
                 sp14.y = -3600.0f;
@@ -1278,20 +1278,20 @@ void fn_1_3F80(ModelData *model, ParticleData *particle, Mtx matrix)
             sp20.x = -sp38.x + (-2.0f * sp2C.x * var_f29);
             sp20.y = -sp38.y + (-2.0f * sp2C.y * var_f29);
             sp20.z = -sp38.z + (-2.0f * sp2C.z * var_f29);
-            for (var_r31 = particle->unk_48, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
+            for (var_r31 = particle->data, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
                 var_r31->unk34.x = sp20.x * var_r31->unk14.x;
                 var_r31->unk34.y = 4000.0f + (sp20.y * var_r31->unk14.x);
                 var_r31->unk34.z = -6750.0f + (sp20.z * var_r31->unk14.x);
             }
             break;
     }
-    DCFlushRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCFlushRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
 }
 
 void fn_1_4A88(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     float var_f31;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     M425DllUnkStruct *var_r29;
     s32 var_r28;
     s16 var_r27;
@@ -1300,15 +1300,15 @@ void fn_1_4A88(ModelData *model, ParticleData *particle, Mtx matrix)
     var_r29 = particle->unk_1C;
     switch (var_r29->unk_04) {
         case 0:
-            for (var_r31 = particle->unk_48, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-                var_r31->unk00 = var_r31->unk02 = 0;
+            for (var_r31 = particle->data, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
+                var_r31->time = var_r31->unk02 = 0;
             }
             var_r29->unk_04++;
             break;
         case 1:
-            for (var_r31 = particle->unk_48, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-                if (var_r31->unk00 != 0) {
-                    var_r31->unk00--;
+            for (var_r31 = particle->data, var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
+                if (var_r31->time != 0) {
+                    var_r31->time--;
                 }
                 else {
                     if (var_r31->unk02 == 0) {
@@ -1326,7 +1326,7 @@ void fn_1_4A88(ModelData *model, ParticleData *particle, Mtx matrix)
                         var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = var_r31->unk40.a = 0xC0;
                         var_r31->unk40.b = 0xA0;
                         var_r31->unk2C = 0.0f;
-                        var_r31->unk00 = (s32)(90.0 * (1.52587890625e-05 * (float)fn_1_64D4()));
+                        var_r31->time = (s32)(90.0 * (1.52587890625e-05 * (float)fn_1_64D4()));
                         var_r31->unk02 = 0x3C;
                         var_r31->unk40.r = 0xC0;
                         var_r31->unk40.g = 0xE0;
@@ -1346,7 +1346,7 @@ void fn_1_4A88(ModelData *model, ParticleData *particle, Mtx matrix)
                 return;
             }
     }
-    DCFlushRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCFlushRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
 }
 
 void fn_1_5044(s16 sp8)

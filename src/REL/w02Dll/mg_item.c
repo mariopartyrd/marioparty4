@@ -956,11 +956,11 @@ void fn_1_8E38(ModelData *model, ParticleData *particle, Mtx matrix)
     f32 temp_f30;
     f32 temp_f29;
     f32 temp_f31;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     s32 i, j;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (i = 0; i < particle->unk_30; i++, var_r31++) {
             var_r31->unk40.a = 0;
             var_r31->unk2C = 0.0f;
@@ -973,7 +973,7 @@ void fn_1_8E38(ModelData *model, ParticleData *particle, Mtx matrix)
     BoardModelPosGet(particle->unk_02, &sp8);
 
     for (i = 0; i < 22; i++) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (j = 0; j < particle->unk_30; j++, var_r31++) {
             if (0.0f == var_r31->unk2C) {
                 break;
@@ -992,7 +992,7 @@ void fn_1_8E38(ModelData *model, ParticleData *particle, Mtx matrix)
         }
     }
 
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
 
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
         if (0.0f != var_r31->unk2C) {

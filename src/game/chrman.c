@@ -65,10 +65,10 @@ static s16 EffectWarnCreate(s16 modelId, float posX, float posY, float posZ, flo
 static s16 EffectBirdCreate(s16 modelId, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
 static s16 EffectCreate(s16 type, s16 cameraBit, float posX, float posY, float posZ, float scale, EFFECTPARAM *param);
 static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix);
-static void RotateEffect(HsfanimStruct01 *particleDataP);
-static void PlayEffectSound(HsfanimStruct01 *particleDataP);
+static void RotateEffect(HU3DPARTICLEDATA *particleDataP);
+static void PlayEffectSound(HU3DPARTICLEDATA *particleDataP);
 static void CreateHookDust(void);
-static void UpdateModelEffect(HsfanimStruct01 *particleDataP);
+static void UpdateModelEffect(HU3DPARTICLEDATA *particleDataP);
 static void UpdateNpcDust(void);
 static s32 PlayStepVoice(s16 charNo, s16 seId, u8 voiceFlag);
 
@@ -307,7 +307,7 @@ static void UpdateCharAnim(s16 charNo, HU3DMODELID modelId, s16 motNo, u8 voiceF
     s16 var_r19;
     ParticleData *var_r18;
     ModelData *var_r17;
-    HsfanimStruct01 *var_r27;
+    HU3DPARTICLEDATA *var_r27;
     CHARWORK *workP;
     Mtx hitMtx;
     u32 attrOld;
@@ -477,7 +477,7 @@ static void UpdateCharAnim(s16 charNo, HU3DMODELID modelId, s16 motNo, u8 voiceF
                     }
                     var_r17 = &Hu3DData[effectMdl[0]];
                     var_r18 = var_r17->unk_120;
-                    var_r27 = &var_r18->unk_48[var_r19];
+                    var_r27 = &var_r18->data[var_r19];
                     var_r27->unk02 = 0;
                     var_r27->unk08.x = modelId;
                     if (charNo == 7) {
@@ -514,7 +514,7 @@ static void UpdateCharAnim(s16 charNo, HU3DMODELID modelId, s16 motNo, u8 voiceF
                 }
                 var_r17 = &Hu3DData[effectMdl[0]];
                 var_r18 = var_r17->unk_120;
-                var_r27 = &var_r18->unk_48[var_r19];
+                var_r27 = &var_r18->data[var_r19];
                 var_r27->unk02 = 0;
                 var_r27->unk08.x = modelId;
                 if (charNo == 7) {
@@ -543,9 +543,9 @@ static void UpdateCharAnim(s16 charNo, HU3DMODELID modelId, s16 motNo, u8 voiceF
                     }
                     var_r17 = &Hu3DData[effectMdl[7]];
                     var_r18 = var_r17->unk_120;
-                    var_r27 = &var_r18->unk_48[var_r19];
+                    var_r27 = &var_r18->data[var_r19];
                     var_r27->unk02 = 1;
-                    var_r27->unk00 = 0;
+                    var_r27->time = 0;
                     var_r27->unk08.x = charNo;
                     var_r27->unk08.y = i * 0x78;
                     workP->attr |= 1;
@@ -679,7 +679,7 @@ static s32 _CharFXPlay(s16 charNo, s16 seNo, u8 voiceFlag)
 
 static void EffectInit(void)
 {
-    HsfanimStruct01 *particleDataP;
+    HU3DPARTICLEDATA *particleDataP;
     ParticleData *particleP;
     void *data;
     AnimData *anim;
@@ -705,7 +705,7 @@ static void EffectInit(void)
             particleP->unk_02 = 0;
             particleP->unk_1C = particleData[i];
             particleP->unk_34 = 1;
-            particleDataP = particleP->unk_48;
+            particleDataP = particleP->data;
             for (j = 0; j < particleP->unk_30; j++, particleDataP++) {
                 particleDataP->unk2C = 0.0f;
             }
@@ -782,7 +782,7 @@ static s16 EffectCreate(s16 type, s16 cameraBit, float posX, float posY, float p
     ModelData *modelP = &Hu3DData[type];
     ParticleData *particleP = modelP->unk_120;
     EFFECTPARAM *effParam = particleP->unk_1C;
-    HsfanimStruct01 *particleDataP = &particleP->unk_48[particleP->unk_02];
+    HU3DPARTICLEDATA *particleDataP = &particleP->data[particleP->unk_02];
     s16 i;
     for (i = particleP->unk_02; i < particleP->unk_30; i++, particleDataP++) {
         if (!particleDataP->unk2C) {
@@ -790,7 +790,7 @@ static s16 EffectCreate(s16 type, s16 cameraBit, float posX, float posY, float p
         }
     }
     if (i >= particleP->unk_30) {
-        particleDataP = particleP->unk_48;
+        particleDataP = particleP->data;
         for (i = 0; i < particleP->unk_30; i++, particleDataP++) {
             if (!particleDataP->unk2C) {
                 break;
@@ -810,7 +810,7 @@ static s16 EffectCreate(s16 type, s16 cameraBit, float posX, float posY, float p
         particleDataP->unk40.a = param->colorBegin.a;
         particleDataP->unk28 = scale;
         particleDataP->unk2C = scale;
-        particleDataP->unk00 = 0;
+        particleDataP->time = 0;
         particleDataP->unk02 = HU3D_PARMANID_NONE;
         particleP->unk_02 = i;
     }
@@ -823,17 +823,17 @@ static s16 EffectCreate(s16 type, s16 cameraBit, float posX, float posY, float p
 static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     EFFECTPARAM *effParam = particle->unk_1C;
-    HsfanimStruct01 *particleDataP;
+    HU3DPARTICLEDATA *particleDataP;
     s16 var_r28;
     s16 i;
 
     if (particle->unk_34 == 0) {
-        particleDataP = particle->unk_48;
+        particleDataP = particle->data;
         for (i = 0; i < particle->unk_30; i++, particleDataP++) {
             particleDataP->unk2C = 0.0f;
         }
     }
-    particleDataP = particle->unk_48;
+    particleDataP = particle->data;
     for (i = 0; i < particle->unk_30; i++, particleDataP++) {
         if (particleDataP->unk2C) {
             if (particleDataP->unk02 == -1) {
@@ -873,7 +873,7 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
                 particleDataP->unk40.a = var_r28;
                 if (particleDataP->unk2C) {
                     if (effParam[i].attr & 1) {
-                        particleDataP->unk2C = particleDataP->unk28 * (((particleDataP->unk00 + i) & 1) ? 1.0 : 0.5);
+                        particleDataP->unk2C = particleDataP->unk28 * (((particleDataP->time + i) & 1) ? 1.0 : 0.5);
                     }
                     else {
                         particleDataP->unk2C = particleDataP->unk28;
@@ -883,7 +883,7 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
                         particleDataP->unk2C = 0.0f;
                     }
                 }
-                particleDataP->unk00++;
+                particleDataP->time++;
             }
             else {
                 switch (particleDataP->unk02) {
@@ -900,19 +900,19 @@ static void UpdateEffect(ModelData *model, ParticleData *particle, Mtx matrix)
             }
         }
     }
-    DCStoreRangeNoSync(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCStoreRangeNoSync(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
 }
 
-static void RotateEffect(HsfanimStruct01 *particleDataP)
+static void RotateEffect(HU3DPARTICLEDATA *particleDataP)
 {
     ModelData *modelP = &Hu3DData[(s32)particleDataP->unk08.x];
     float var_f31;
 
-    if (particleDataP->unk00 < 8) {
-        var_f31 = 0.3 + sind(40.0f + 10.0f * (particleDataP->unk00 + 1));
+    if (particleDataP->time < 8) {
+        var_f31 = 0.3 + sind(40.0f + 10.0f * (particleDataP->time + 1));
         particleDataP->unk2C = 50.0f * var_f31 * modelP->scale.x;
         particleDataP->unk40.a = 0xFF;
-        var_f31 = 0.3 + sind(15.0f * (particleDataP->unk00 + 1));
+        var_f31 = 0.3 + sind(15.0f * (particleDataP->time + 1));
     }
     else {
         var_f31 = 0.3 + sind(135);
@@ -921,20 +921,20 @@ static void RotateEffect(HsfanimStruct01 *particleDataP)
     particleDataP->unk34.x = modelP->pos.x + particleDataP->unk14.x * var_f31;
     particleDataP->unk34.y = modelP->pos.y + particleDataP->unk08.y * modelP->scale.x + particleDataP->unk14.y * var_f31;
     particleDataP->unk34.z = modelP->pos.z + particleDataP->unk14.z * var_f31;
-    if (particleDataP->unk00 > 20) {
+    if (particleDataP->time > 20) {
         particleDataP->unk40.a -= 32;
         particleDataP->unk2C -= 8.0f * modelP->scale.x;
         if (particleDataP->unk2C < 0.0f) {
             particleDataP->unk2C = 0.0f;
         }
     }
-    particleDataP->unk00++;
+    particleDataP->time++;
 }
 
 static float voiceParam[16]
     = { 110.0f, 160.0f, 110.0f, 160.0f, 150.0f, 180.0f, 130.0f, 160.0f, 130.0f, 160.0f, 150.0f, 160.0f, 150.0f, 180.0f, 120.0f, 210.0f };
 
-static void PlayEffectSound(HsfanimStruct01 *particleDataP)
+static void PlayEffectSound(HU3DPARTICLEDATA *particleDataP)
 {
     ModelData *modelP;
     CHARWORK *workP;
@@ -945,7 +945,7 @@ static void PlayEffectSound(HsfanimStruct01 *particleDataP)
     temp_r28 = particleDataP->unk08.x;
     workP = &charWork[temp_r28];
     modelP = &Hu3DData[workP->modelId];
-    if (particleDataP->unk00 < 0x14 && particleDataP->unk2C < 40.0f * modelP->scale.x) {
+    if (particleDataP->time < 0x14 && particleDataP->unk2C < 40.0f * modelP->scale.x) {
         particleDataP->unk2C += 4.0f * modelP->scale.x;
     }
     particleDataP->unk40.a = 0xFF;
@@ -955,15 +955,15 @@ static void PlayEffectSound(HsfanimStruct01 *particleDataP)
     else {
         var_r25 = voiceParam[temp_r28 * 2 + 1];
     }
-    temp_r26 = (particleDataP->unk00 * 5) % 360;
+    temp_r26 = (particleDataP->time * 5) % 360;
     particleDataP->unk34.x = modelP->pos.x + 40.0 * sind(particleDataP->unk08.y + temp_r26) * modelP->scale.x;
     particleDataP->unk34.y = modelP->pos.y + var_r25 * modelP->scale.x;
     particleDataP->unk34.z = modelP->pos.z + 40.0 * cosd(particleDataP->unk08.y + temp_r26) * modelP->scale.x;
-    particleDataP->unk00++;
-    if (particleDataP->unk00 >= 0x8F) {
-        particleDataP->unk00 = 0x48;
+    particleDataP->time++;
+    if (particleDataP->time >= 0x8F) {
+        particleDataP->time = 0x48;
     }
-    if (workP->motNoCurr != 0x15 && workP->motNoCurr != 0x16 && workP->motNoCurr != 0x79 && particleDataP->unk00 > 0x1E) {
+    if (workP->motNoCurr != 0x15 && workP->motNoCurr != 0x16 && workP->motNoCurr != 0x79 && particleDataP->time > 0x1E) {
         particleDataP->unk2C -= 4.0f * modelP->scale.x;
         if (particleDataP->unk2C < 0.0f) {
             particleDataP->unk2C = 0.0f;
@@ -1391,7 +1391,7 @@ void CharEffectSmokeCreate(s16 cameraBit, HuVecF *pos)
 {
     s16 effectNo;
     s16 i;
-    HsfanimStruct01 *particleDataP;
+    HU3DPARTICLEDATA *particleDataP;
     ParticleData *particleP;
     ModelData *modelP;
 
@@ -1402,7 +1402,7 @@ void CharEffectSmokeCreate(s16 cameraBit, HuVecF *pos)
         }
         modelP = &Hu3DData[effectMdl[3]];
         particleP = modelP->unk_120;
-        particleDataP = &particleP->unk_48[effectNo];
+        particleDataP = &particleP->data[effectNo];
         particleDataP->unk02 = 2;
         particleDataP->unk08.x = 30.0 * sind(i * 45);
         particleDataP->unk08.y = 30.0 * cosd(i * 45);
@@ -1419,7 +1419,7 @@ void CharEffectSmokeCreate(s16 cameraBit, HuVecF *pos)
         }
         modelP = &Hu3DData[effectMdl[3]];
         particleP = modelP->unk_120;
-        particleDataP = &particleP->unk_48[effectNo];
+        particleDataP = &particleP->data[effectNo];
         particleDataP->unk02 = 2;
         particleDataP->unk08.x = frandmod(100) - 50;
         particleDataP->unk08.y = frandmod(100) - 50;
@@ -1433,7 +1433,7 @@ void CharEffectSmokeCreate(s16 cameraBit, HuVecF *pos)
     if (effectNo != -1) {
         modelP = &Hu3DData[effectMdl[3]];
         particleP = modelP->unk_120;
-        particleDataP = &particleP->unk_48[effectNo];
+        particleDataP = &particleP->data[effectNo];
         particleDataP->unk02 = 2;
         particleDataP->unk08.x = 0.0f;
         particleDataP->unk08.y = 0.0f;
@@ -1445,13 +1445,13 @@ void CharEffectSmokeCreate(s16 cameraBit, HuVecF *pos)
     }
 }
 
-static void UpdateModelEffect(HsfanimStruct01 *particleDataP)
+static void UpdateModelEffect(HU3DPARTICLEDATA *particleDataP)
 {
     float speed;
     float angle;
     s16 alpha;
 
-    angle = 20.0f + 3.75f * particleDataP->unk00;
+    angle = 20.0f + 3.75f * particleDataP->time;
     if (angle > 90.0f) {
         angle = 90.0f;
     }
@@ -1464,7 +1464,7 @@ static void UpdateModelEffect(HsfanimStruct01 *particleDataP)
     if (particleDataP->unk20 < 1.0f) {
         particleDataP->unk20 = 1.0f;
     }
-    if (particleDataP->unk00 > 8) {
+    if (particleDataP->time > 8) {
         alpha = particleDataP->unk40.a;
         alpha -= 8;
         if (alpha < 0) {
@@ -1475,7 +1475,7 @@ static void UpdateModelEffect(HsfanimStruct01 *particleDataP)
             particleDataP->unk40.a = alpha;
         }
     }
-    particleDataP->unk00++;
+    particleDataP->time++;
 }
 
 static EFFECTPARAM coinEffParam

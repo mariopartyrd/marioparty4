@@ -1244,16 +1244,16 @@ f32 fn_1_B9E0(Vec *arg0, Vec *arg1, Vec *arg2, Vec *arg3, Vec *arg4)
 void fn_1_BE90(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     s32 var_r29;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
 
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
         var_r31->unk34.x = 0.0f;
         var_r31->unk34.y = 200.0f;
         var_r31->unk34.z = -500.0f;
         var_r31->unk2C = 80.0f;
     }
-    DCFlushRange(particle->unk_48, particle->unk_30 * 0x44);
+    DCFlushRange(particle->data, particle->unk_30 * 0x44);
 }
 
 f32 fn_1_BF38(s16 arg0)

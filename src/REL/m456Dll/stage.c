@@ -985,10 +985,10 @@ void fn_1_659C(omObjData *object)
         if (work->unkC > 1) {
             ModelData *modelP = &Hu3DData[work->unk4];
             ParticleData *particleP = modelP->unk_120;
-            HsfanimStruct01 *data = particleP->unk_48;
+            HU3DPARTICLEDATA *data = particleP->data;
             s32 j;
             for (j = 0; j < particleP->unk_30; j++, data++) {
-                if (++data->unk00 > data->unk02) {
+                if (++data->time > data->unk02) {
                     s32 alpha = data->unk40.a - 1;
                     if (alpha < 0) {
                         data->unk2C = 0;
@@ -1030,7 +1030,7 @@ s32 fn_1_67E0(Vec *arg0, float arg1)
     s32 i;
     ModelData *temp_r27;
     ParticleData *temp_r28;
-    HsfanimStruct01 *temp_r30;
+    HU3DPARTICLEDATA *temp_r30;
 
     for (i = 0; i < 8; i++, work++) {
         if (work->unk8 == 0) {
@@ -1046,7 +1046,7 @@ s32 fn_1_67E0(Vec *arg0, float arg1)
     temp_r27 = &Hu3DData[work->unk4];
     temp_r28 = temp_r27->unk_120;
     temp_r28->unk_2C = 1;
-    temp_r30 = temp_r28->unk_48;
+    temp_r30 = temp_r28->data;
     for (i = 0; i < temp_r28->unk_30; i++, temp_r30++) {
         float temp_f30 = ((s32)frand() % 20) + 90;
         float temp_f29 = (s32)frand() % 360;
@@ -1057,7 +1057,7 @@ s32 fn_1_67E0(Vec *arg0, float arg1)
         temp_r30->unk08.x = temp_f31 * (0.65f * (50.0 * (temp_f28 * sind(temp_f29))));
         temp_r30->unk08.z = temp_f31 * (0.65f * (50.0 * (temp_f28 * cosd(temp_f29))));
         temp_r30->unk08.y = temp_f31 * (50 * temp_f26 * temp_f25);
-        temp_r30->unk00 = 0;
+        temp_r30->time = 0;
         temp_r30->unk02 = ((s32)frand() % 16) + 45;
         temp_r30->unk30 = (s32)frand() % 360;
         temp_r30->unk2C = 145.0f;
@@ -1141,7 +1141,7 @@ void fn_1_71E0(omObjData *object);
 void fn_1_70F0(omObjData *object)
 {
     ParticleData *temp_r30;
-    HsfanimStruct01 *temp_r29;
+    HU3DPARTICLEDATA *temp_r29;
     s32 i;
     ModelData *modelP;
     AnimData *anim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M456, 26), MEMORY_DEFAULT_NUM));
@@ -1153,7 +1153,7 @@ void fn_1_70F0(omObjData *object)
     Hu3DModelAttrReset(object->model[0], HU3D_ATTR_PARTICLE_KILL);
     modelP = &Hu3DData[object->model[0]];
     temp_r30 = modelP->unk_120;
-    temp_r29 = temp_r30->unk_48;
+    temp_r29 = temp_r30->data;
     temp_r30->unk_2C = 1;
     for (i = 0; i < temp_r30->unk_30; i++, temp_r29++) {
         temp_r29->unk2C = 0;
@@ -1165,16 +1165,16 @@ void fn_1_71E0(omObjData *object)
 {
     ModelData *modelP = &Hu3DData[object->model[0]];
     ParticleData *temp_r29 = modelP->unk_120;
-    HsfanimStruct01 *temp_r30 = temp_r29->unk_48;
+    HU3DPARTICLEDATA *temp_r30 = temp_r29->data;
     s32 i;
     for (i = 0; i < temp_r29->unk_30; i++, temp_r30++) {
         if (temp_r30->unk2C <= 0.0f) {
             continue;
         }
-        if (++temp_r30->unk00 > 360) {
-            temp_r30->unk00 -= 360;
+        if (++temp_r30->time > 360) {
+            temp_r30->time -= 360;
         }
-        temp_r30->unk34.x += temp_r30->unk08.x * sind(2.0f * temp_r30->unk00);
+        temp_r30->unk34.x += temp_r30->unk08.x * sind(2.0f * temp_r30->time);
         temp_r30->unk34.y += temp_r30->unk08.y;
         if (temp_r30->unk34.y >= 0.0f) {
             fn_1_61C8(&temp_r30->unk34, 0.00625f * temp_r30->unk2C, 1, REFRESH_RATE / 4);
@@ -1196,7 +1196,7 @@ s32 fn_1_74F8(Vec *pos, float scale)
     s32 i;
     ModelData *modelP = &Hu3DData[lbl_1_bss_A8->model[0]];
     ParticleData *temp_r30 = modelP->unk_120;
-    HsfanimStruct01 *temp_r31 = temp_r30->unk_48;
+    HU3DPARTICLEDATA *temp_r31 = temp_r30->data;
     for (i = 0; i < temp_r30->unk_30; i++, temp_r31++) {
         if (temp_r31->unk2C <= 0.0f) {
             break;
@@ -1212,7 +1212,7 @@ s32 fn_1_74F8(Vec *pos, float scale)
     temp_r31->unk08.x = ((60.0f/REFRESH_RATE) * (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F))))) * 0.5f;
     temp_r31->unk08.z = (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F)))) * (60.0f/REFRESH_RATE);
     temp_r31->unk08.y = ((60.0f/REFRESH_RATE) * (1.5f + (0.2f * (0.007874016f * (frand() & 0x7F))))) * 2.0f;
-    temp_r31->unk00 = (s32)frand() % 360;
+    temp_r31->time = (s32)frand() % 360;
     temp_r31->unk2C = 20 * scale;
     return i;
 }
@@ -1532,7 +1532,7 @@ void fn_1_8CB8(ModelData *model, ParticleData *particle, Mtx matrix)
     float temp_f26;
     float temp_f25;
     float zoom = CZoom;
-    HsfanimStruct01 *temp_r31;
+    HU3DPARTICLEDATA *temp_r31;
     Vec sp3C;
     Vec sp30;
     Vec sp24;
@@ -1542,7 +1542,7 @@ void fn_1_8CB8(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 i;
     switch (newWorkP[2]) {
         case 0:
-            temp_r31 = particle->unk_48;
+            temp_r31 = particle->data;
             if (newWorkP[1]) {
                 sp18.x = 2000;
                 sp18.y = -300;
@@ -1593,7 +1593,7 @@ void fn_1_8CB8(ModelData *model, ParticleData *particle, Mtx matrix)
             sp24.x = -sp3C.x + ((-2.0f * sp30.x) * temp_f29);
             sp24.y = -sp3C.y + ((-2.0f * sp30.y) * temp_f29);
             sp24.z = -sp3C.z + ((-2.0f * sp30.z) * temp_f29);
-            temp_r31 = particle->unk_48;
+            temp_r31 = particle->data;
             for (i = 0; i < particle->unk_30; i++, temp_r31++) {
                 temp_r31->unk34.x = 1000 + (sp24.x * temp_r31->unk14.x);
                 temp_r31->unk34.y = 4800 + (sp24.y * temp_r31->unk14.x);
@@ -1602,7 +1602,7 @@ void fn_1_8CB8(ModelData *model, ParticleData *particle, Mtx matrix)
             }
             break;
     }
-    DCFlushRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCFlushRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
 }
 
 void fn_1_97FC(float arg0)

@@ -487,7 +487,7 @@ void Hu3DTexScrollPauseDisableSet(s16 arg0, s32 arg1) {
 s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     ModelData *temp_r28;
     ParticleData *temp_r31;
-    HsfanimStruct01 *var_r30;
+    HU3DPARTICLEDATA *var_r30;
     Vec *var_r27;
     s16 temp_r25;
     s16 i;
@@ -507,8 +507,8 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
     temp_r31->unk_2D = 0;
     temp_r31->unk_3C = 0;
     temp_r31->unk_00 = temp_r31->unk_02 = 0;
-    var_r30 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(HsfanimStruct01), temp_r28->unk_48);
-    temp_r31->unk_48 = var_r30;
+    var_r30 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(HU3DPARTICLEDATA), temp_r28->unk_48);
+    temp_r31->data = var_r30;
     temp_r31->unk_38 = -1;
     for (i = 0; i < arg1; i++, var_r30++) {
         var_r30->unk2C = 0.0f;
@@ -551,10 +551,10 @@ s16 Hu3DParticleCreate(AnimData *arg0, s16 arg1) {
 void Hu3DParticleScaleSet(s16 arg0, float arg1) {
     ModelData *temp_r25 = &Hu3DData[arg0];
     ParticleData *temp_r31 = temp_r25->unk_120;
-    HsfanimStruct01 *var_r30;
+    HU3DPARTICLEDATA *var_r30;
     s16 i;
 
-    var_r30 = temp_r31->unk_48;
+    var_r30 = temp_r31->data;
     for (i = 0; i < temp_r31->unk_30; i++, var_r30++) {
         var_r30->unk2C = arg1;
     }
@@ -563,10 +563,10 @@ void Hu3DParticleScaleSet(s16 arg0, float arg1) {
 void Hu3DParticleZRotSet(s16 arg0, float arg1) {
     ModelData *temp_r28 = &Hu3DData[arg0];
     ParticleData *temp_r31 = temp_r28->unk_120;
-    HsfanimStruct01 *var_r30;
+    HU3DPARTICLEDATA *var_r30;
     s16 i;
 
-    var_r30 = temp_r31->unk_48;
+    var_r30 = temp_r31->data;
     for (i = 0; i < temp_r31->unk_30; i++, var_r30++) {
         var_r30->unk30 = arg1;
     }
@@ -575,10 +575,10 @@ void Hu3DParticleZRotSet(s16 arg0, float arg1) {
 void Hu3DParticleColSet(s16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     ModelData *temp_r28 = &Hu3DData[arg0];
     ParticleData *temp_r30 = temp_r28->unk_120;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     s16 i;
 
-    var_r31 = temp_r30->unk_48;
+    var_r31 = temp_r30->data;
     for (i = 0; i < temp_r30->unk_30; i++, var_r31++) {
         var_r31->unk40.r = arg1;
         var_r31->unk40.g = arg2;
@@ -589,11 +589,11 @@ void Hu3DParticleColSet(s16 arg0, u8 arg1, u8 arg2, u8 arg3) {
 void Hu3DParticleTPLvlSet(s16 arg0, float arg1) {
     ModelData *temp_r28 = &Hu3DData[arg0];
     ParticleData *temp_r31 = temp_r28->unk_120;
-    HsfanimStruct01 *var_r30;
+    HU3DPARTICLEDATA *var_r30;
     u8 var_r27;
     s16 i;
 
-    var_r30 = temp_r31->unk_48;
+    var_r30 = temp_r31->data;
     var_r27 = arg1 * 255.0f;
     for (i = 0; i < temp_r31->unk_30; i++, var_r30++) {
         var_r30->unk40.a = var_r27;
@@ -673,7 +673,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
     AnimBmpData *temp_r24;
     AnimLayerData *temp_r27;
     ParticleData *temp_r31;
-    HsfanimStruct01 *var_r29;
+    HU3DPARTICLEDATA *var_r29;
     ParticleHook var_r17;
     Mtx sp128;
     Mtx spF8;
@@ -693,7 +693,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         var_r17 = temp_r31->unk_54;
         var_r17(arg0, temp_r31, arg1);
     }
-    var_r29 = temp_r31->unk_48;
+    var_r29 = temp_r31->data;
     var_r30 = temp_r31->unk_4C;
     PSMTXROMultVecArray(sp8, &basePos[0], sp38, 4);
     for (i = 0, var_r19 = 0; i < temp_r31->unk_30; i++, var_r29++) {
@@ -827,7 +827,7 @@ static void particleFunc(ModelData *arg0, Mtx arg1) {
         GXSetArray(GX_VA_POS, temp_r31->unk_4C, 0xC);
         GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
-        GXSetArray(GX_VA_CLR0, &temp_r31->unk_48->unk40, 0x44);
+        GXSetArray(GX_VA_CLR0, &temp_r31->data->unk40, 0x44);
         GXSetVtxDesc(GX_VA_TEX0, GX_INDEX16);
         GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_RGBA6, 0);
         GXSetArray(GX_VA_TEX0, baseST, 8);
@@ -859,7 +859,7 @@ s16 Hu3DParManCreate(AnimData *arg0, s16 arg1, HsfanimStruct00 *arg2) {
     ModelData *temp_r25;
     ParticleData *temp_r29;
     ParManProcUserData *temp_r3_2;
-    HsfanimStruct01 *var_r28;
+    HU3DPARTICLEDATA *var_r28;
     s16 temp_r3;
     s16 var_r26;
     s16 var_r30;
@@ -877,7 +877,7 @@ s16 Hu3DParManCreate(AnimData *arg0, s16 arg1, HsfanimStruct00 *arg2) {
     temp_r25 = &Hu3DData[temp_r3];
     temp_r29 = temp_r25->unk_120;
     temp_r29->unk_00 = var_r30;
-    var_r28 = temp_r29->unk_48;
+    var_r28 = temp_r29->data;
     for (var_r26 = 0; var_r26 < temp_r29->unk_30; var_r26++, var_r28++) {
         var_r28->unk2C = 0.0f;
     }
@@ -938,7 +938,7 @@ s16 Hu3DParManLink(s16 arg0, HsfanimStruct00 *arg1) {
 void Hu3DParManKill(s16 arg0) {
     ParManProcUserData *temp_r26;
     ParManProcUserData *temp_r30;
-    HsfanimStruct01 *var_r29;
+    HU3DPARTICLEDATA *var_r29;
     ModelData *temp_r25;
     ParticleData *temp_r27;
     s16 i;
@@ -947,7 +947,7 @@ void Hu3DParManKill(s16 arg0) {
         temp_r30 = parManProc[arg0]->user_data;
         temp_r25 = &Hu3DData[temp_r30->unk00];
         temp_r27 = temp_r25->unk_120;
-        var_r29 = temp_r27->unk_48;
+        var_r29 = temp_r27->data;
         for (i = 0; i < temp_r27->unk_30; i++, var_r29++) {
             if (var_r29->unk02 == arg0) {
                 var_r29->unk2C = 0.0f;
@@ -1059,8 +1059,8 @@ static void ParManFunc(void) {
     HsfanimStruct00 *temp_r30;
     ModelData *temp_r27;
     ParticleData *temp_r28;
-    HsfanimStruct01 *var_r29;
-    HsfanimStruct01 *temp_r23;
+    HU3DPARTICLEDATA *var_r29;
+    HU3DPARTICLEDATA *temp_r23;
     Vec sp2C;
     Vec sp20;
     Vec sp14;
@@ -1084,7 +1084,7 @@ static void ParManFunc(void) {
             continue;
         }
         temp_r28 = temp_r27->unk_120;
-        var_r29 = temp_r28->unk_48;
+        var_r29 = temp_r28->data;
         if (temp_r31->unk02 & 0x400) {
             // Bug? Likely to be (u32) (temp_r30->unk04 * 0.1 * 1000.0)
             var_f27 = temp_r30->unk04 * 0.9 + (s32) frandmod((u32) temp_r30->unk04 * 0.1 * 1000.0) / 1000.0f;
@@ -1095,7 +1095,7 @@ static void ParManFunc(void) {
         }
         temp_r31->unk34 += var_f27;
         var_r26 = 0;
-        temp_r23 = &((HsfanimStruct01*) temp_r28->unk_48)[temp_r28->unk_30];
+        temp_r23 = &((HU3DPARTICLEDATA*) temp_r28->data)[temp_r28->unk_30];
         if (temp_r31->unk02 & 0x100) {
             var_f26 = (s32) frandmod((u32) (360.0f / temp_r30->unk04) * 100) / 100;
         }
@@ -1189,7 +1189,7 @@ static void ParManFunc(void) {
                             var_r29->unk24 = var_r24 = frandmod(temp_r30->unk2C);
                         }
                         var_r29->unk40 = temp_r30->unk2E[var_r24];
-                        var_r29->unk00 = 0;
+                        var_r29->time = 0;
                         var_r29->unk02 = temp_r31->unk06;
                         break;
                     } else {
@@ -1218,7 +1218,7 @@ static float jitterTbl[] = {
 static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
     HsfanimStruct00 *temp_r26;
     ParManProcUserData *temp_r28;
-    HsfanimStruct01 *var_r29;
+    HU3DPARTICLEDATA *var_r29;
     GXColor *temp_r24;
     GXColor *temp_r27;
     Vec sp1C;
@@ -1230,7 +1230,7 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
     s16 i;
 
     if (Hu3DPauseF == 0 || (model->attr & HU3D_ATTR_NOPAUSE)) {
-        var_r29 = particle->unk_48;
+        var_r29 = particle->data;
         for (i = 0; i < particle->unk_30; i++, var_r29++) {
             if (var_r29->unk2C) {
                 temp_r28 = parManProc[var_r29->unk02]->user_data;
@@ -1241,7 +1241,7 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                     var_r29->unk2C = var_r29->unk28;
                 }
                 if (!(temp_r28->unk02 & 0x80)) {
-                    sp8 = var_r29->unk00;
+                    sp8 = var_r29->time;
                     var_r29->unk34.x += var_r29->unk08.x + var_r29->unk14.x;
                     var_r29->unk34.y += var_r29->unk08.y + var_r29->unk14.y;
                     var_r29->unk34.z += var_r29->unk08.z + var_r29->unk14.z;
@@ -1261,7 +1261,7 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                         }
                     }
                     var_r29->unk28 *= temp_r26->unk28;
-                    var_f30 = (float) var_r29->unk00 / temp_r26->unk00;
+                    var_f30 = (float) var_r29->time / temp_r26->unk00;
                     if (var_f30 > 1.0f) {
                         var_f30 = 1.0f;
                     }
@@ -1272,15 +1272,15 @@ static void ParManHook(ModelData *model, ParticleData *particle, Mtx matrix) {
                     var_r29->unk40.g = temp_r27->g + var_f30 * (temp_r24->g - temp_r27->g);
                     var_r29->unk40.b = temp_r27->b + var_f30 * (temp_r24->b - temp_r27->b);
                     var_r29->unk40.a = temp_r27->a + var_f30 * (temp_r24->a - temp_r27->a);
-                    if (var_r29->unk2C < 0.01 || var_r29->unk00 >= temp_r26->unk00) {
+                    if (var_r29->unk2C < 0.01 || var_r29->time >= temp_r26->unk00) {
                         var_r29->unk2C = 0.0f;
                     }
-                    var_r29->unk00++;
+                    var_r29->time++;
                 }
             }
         }
         temp_r28 = parManProc[particle->unk_00]->user_data;
         temp_r28->unk38++;
-        DCStoreRangeNoSync(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+        DCStoreRangeNoSync(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
     }
 }

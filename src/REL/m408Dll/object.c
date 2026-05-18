@@ -1275,7 +1275,7 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
 {
     float temp_f31;
     float temp_f30;
-    HsfanimStruct01 *temp_r31;
+    HU3DPARTICLEDATA *temp_r31;
     u32 temp_r29;
     s32 temp_r28;
     s16 temp_r27;
@@ -1284,7 +1284,7 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
         temp_f31 = 90;
         particle->unk_02 = 0;
         particle->unk_10.y = 3;
-        temp_r31 = particle->unk_48;
+        temp_r31 = particle->data;
         for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
             temp_r31->unk2C = 0;
             temp_r31->unk40.a = 0;
@@ -1295,7 +1295,7 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
         if (particle->unk_02 <= 0.0f) {
             particle->unk_02 = 2;
             temp_r27 = 4;
-            temp_r31 = particle->unk_48;
+            temp_r31 = particle->data;
             for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
                 if (temp_r31->unk2C != 0) {
                     continue;
@@ -1317,7 +1317,7 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
                 else {
                     temp_r31->unk14.x = 0.96666664f;
                 }
-                temp_r31->unk00 = 60;
+                temp_r31->time = 60;
                 temp_r31->unk2C = 8;
                 temp_r29 = frand() & 0x1;
                 temp_r26 = &lbl_1_data_4F4[temp_r29];
@@ -1334,7 +1334,7 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
         }
     }
     temp_r27 = 0;
-    temp_r31 = particle->unk_48;
+    temp_r31 = particle->data;
     for (temp_r28 = 0; temp_r28 < particle->unk_30; temp_r28++, temp_r31++) {
         if (temp_r31->unk2C == 0) {
             continue;
@@ -1363,12 +1363,12 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
             }
             temp_r31->unk40.a = temp_r29;
         }
-        temp_r31->unk00--;
-        if (temp_r31->unk00 <= 0) {
+        temp_r31->time--;
+        if (temp_r31->time <= 0) {
             temp_r31->unk2C = 0;
         }
     }
-    DCStoreRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCStoreRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
     if (particle->unk_00 == 0 && temp_r27 == 0) {
         model->attr |= 0x1;
     }
@@ -1377,12 +1377,12 @@ void fn_1_15658(ModelData *model, ParticleData *particle, Mtx matrix)
 void fn_1_15B50(s16 arg0)
 {
     ParticleData *temp_r31;
-    HsfanimStruct01 *temp_r30;
+    HU3DPARTICLEDATA *temp_r30;
     s32 temp_r29;
     ModelData *temp_r28 = &Hu3DData[arg0];
     temp_r31 = temp_r28->unk_120;
     temp_r31->unk_34 = 0;
-    temp_r30 = temp_r31->unk_48;
+    temp_r30 = temp_r31->data;
     for (temp_r29 = 0; temp_r29 < temp_r31->unk_30; temp_r29++, temp_r30++) {
         temp_r30->unk2C = 0;
     }
@@ -1433,7 +1433,7 @@ void fn_1_15D64(ModelData *model, ParticleData *particle, Mtx matrix)
     float temp_f30;
     float temp_f29;
     float temp_f28;
-    HsfanimStruct01 *temp_r31;
+    HU3DPARTICLEDATA *temp_r31;
     s32 temp_r29;
     u32 temp_r28;
     s16 temp_r27;
@@ -1443,7 +1443,7 @@ void fn_1_15D64(ModelData *model, ParticleData *particle, Mtx matrix)
         particle->unk_00 = 1;
         particle->unk_02 = 0;
         particle->unk_10.y = 22.5f;
-        temp_r31 = particle->unk_48;
+        temp_r31 = particle->data;
         for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
             temp_r31->unk2C = 0;
             temp_r31->unk40.a = 0;
@@ -1454,7 +1454,7 @@ void fn_1_15D64(ModelData *model, ParticleData *particle, Mtx matrix)
         particle->unk_02--;
         if (particle->unk_02 <= 0.0f) {
             particle->unk_02 = 30;
-            temp_r31 = particle->unk_48;
+            temp_r31 = particle->data;
             temp_r26 = -1;
             temp_r27 = 0;
             for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
@@ -1486,7 +1486,7 @@ void fn_1_15D64(ModelData *model, ParticleData *particle, Mtx matrix)
                 temp_r31->unk20 = 0;
                 temp_r31->unk24 = particle->unk_10.y;
                 temp_r28 = 1;
-                temp_r31->unk00 = 8;
+                temp_r31->time = 8;
                 temp_r31->unk2C = 10;
                 temp_r31->unk14.x = 1.125f;
                 temp_r28 = frand() & 0x1;
@@ -1504,7 +1504,7 @@ void fn_1_15D64(ModelData *model, ParticleData *particle, Mtx matrix)
         }
     }
     temp_r27 = 0;
-    temp_r31 = particle->unk_48;
+    temp_r31 = particle->data;
     for (temp_r29 = 0; temp_r29 < particle->unk_30; temp_r29++, temp_r31++) {
         if (temp_r31->unk2C == 0) {
             continue;
@@ -1532,12 +1532,12 @@ void fn_1_15D64(ModelData *model, ParticleData *particle, Mtx matrix)
             }
             temp_r31->unk40.a = temp_r28;
         }
-        temp_r31->unk00--;
-        if (temp_r31->unk00 <= 0) {
+        temp_r31->time--;
+        if (temp_r31->time <= 0) {
             temp_r31->unk2C = 0;
         }
     }
-    DCStoreRange(particle->unk_48, particle->unk_30 * sizeof(HsfanimStruct01));
+    DCStoreRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
     if (particle->unk_00 == 0 && temp_r27 == 0) {
         model->attr |= 0x1;
     }

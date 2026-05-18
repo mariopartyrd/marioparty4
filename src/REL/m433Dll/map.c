@@ -500,7 +500,7 @@ void fn_1_3F14(ModelData *model, ParticleData *var_r30, Mtx matrix)
     float var_f26;
     float var_f25;
     float var_f24;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     s32 var_r28;
     float sp54[4] = { 1000.0f, 200.0f, 600.0f, 1200.0f };
     float sp44[4] = { 1.0f, 0.6f, 0.3f, 0.425f };
@@ -513,7 +513,7 @@ void fn_1_3F14(ModelData *model, ParticleData *var_r30, Mtx matrix)
     switch (var_r29->unk_04) {
         case 0:
             var_r30->unk_00 = 0x54;
-            var_r31 = var_r30->unk_48;
+            var_r31 = var_r30->data;
             if (var_r29->unk_02 != 0) {
                 sp14.x = 0.0f;
                 sp14.y = -4700.0f;
@@ -560,7 +560,7 @@ void fn_1_3F14(ModelData *model, ParticleData *var_r30, Mtx matrix)
             sp20.x = -sp38.x + (-2.0f * sp2C.x * var_f29);
             sp20.y = -sp38.y + (-2.0f * sp2C.y * var_f29);
             sp20.z = -sp38.z + (-2.0f * sp2C.z * var_f29);
-            for (var_r31 = var_r30->unk_48, var_r28 = 0; var_r28 < var_r30->unk_30; var_r28++, var_r31++) {
+            for (var_r31 = var_r30->data, var_r28 = 0; var_r28 < var_r30->unk_30; var_r28++, var_r31++) {
                 var_r31->unk34.x = sp20.x * var_r31->unk14.x;
                 var_r31->unk34.y = 5500.0f + (sp20.y * var_r31->unk14.x);
                 var_r31->unk34.z = -3950.0f + (sp20.z * var_r31->unk14.x);
@@ -576,7 +576,7 @@ void fn_1_3F14(ModelData *model, ParticleData *var_r30, Mtx matrix)
             }
             break;
     }
-    DCFlushRange(var_r30->unk_48, var_r30->unk_30 * sizeof(HsfanimStruct01));
+    DCFlushRange(var_r30->data, var_r30->unk_30 * sizeof(HU3DPARTICLEDATA));
 }
 
 void fn_1_4A94(omObjData *var_r30)

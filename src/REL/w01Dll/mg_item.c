@@ -863,7 +863,7 @@ static float RoundItemAngleGet(Vec *dir)
 
 static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *particleDataP;
+    HU3DPARTICLEDATA *particleDataP;
     float angle;
     float radius;
     float radiusBase;
@@ -871,7 +871,7 @@ static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix
     s32 i;
 
     if (particle->unk_34 == 0) {
-        particleDataP = particle->unk_48;
+        particleDataP = particle->data;
         for (i = 0; i < particle->unk_30; i++, particleDataP++) {
             particleDataP->unk40.a = 0;
             particleDataP->unk2C = 0.0f;
@@ -880,7 +880,7 @@ static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix
     }
     radiusBase = itemGetObj->scale.x;
     for (i = 0; i < 30; i++) {
-        particleDataP = particle->unk_48;
+        particleDataP = particle->data;
         for (j = 0; j < particle->unk_30; j++, particleDataP++) {
             if (particleDataP->unk2C == 0.0f) {
                 break;
@@ -898,7 +898,7 @@ static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix
             particleDataP->unk2C = 15.0f * radiusBase;
         }
     }
-    particleDataP = particle->unk_48;
+    particleDataP = particle->data;
     for (i = 0; i < particle->unk_30; i++, particleDataP++) {
         if (particleDataP->unk2C != 0.0f) {
             particleDataP->unk34.y -= particleDataP->unk08.x;
@@ -912,7 +912,7 @@ static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix
 
 static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix)
 {
-    HsfanimStruct01 *particleDataP;
+    HU3DPARTICLEDATA *particleDataP;
     float angle2;
     float angle;
     float radius;
@@ -920,7 +920,7 @@ static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix
     s32 i;
 
     if (particle->unk_34 == 0) {
-        particleDataP = particle->unk_48;
+        particleDataP = particle->data;
         for (i = 0; i < particle->unk_30; i++, particleDataP++) {
             particleDataP->unk40.a = 0;
             particleDataP->unk2C = 0.0f;
@@ -928,7 +928,7 @@ static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix
         particle->unk_00 = 0;
     }
     if (particle->unk_00 == 0) {
-        particleDataP = particle->unk_48;
+        particleDataP = particle->data;
         for (j = 0; j < particle->unk_30; j++, particleDataP++) {
             angle = 0.003921569f * frand8() * 360.0f;
             radius = 0.003921569f * frand8() * 50.0f;
@@ -946,7 +946,7 @@ static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix
         }
         particle->unk_00 = 1;
     }
-    particleDataP = particle->unk_48;
+    particleDataP = particle->data;
     for (i = 0; i < particle->unk_30; i++, particleDataP++) {
         if (particleDataP->unk2C != 0.0f) {
             particleDataP->unk34.x = particleDataP->unk08.x + particleDataP->unk14.x * particleDataP->unk20;

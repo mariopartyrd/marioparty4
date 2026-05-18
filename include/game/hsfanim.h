@@ -5,13 +5,15 @@
 #include "game/hsfman.h"
 #include "game/animdata.h"
 
+// TODO move these to hu3d.h
+
 typedef struct model_data ModelData;
-typedef struct particle_data ParticleData;
+typedef struct Hu3DParticle_s ParticleData;
 
 typedef void (*ParticleHook)(ModelData *model, ParticleData *particle, Mtx matrix);
 
 typedef struct Hu3DParticleData_s {
-    /* 0x00 */ s16 unk00;
+    /* 0x00 */ s16 time;
     /* 0x02 */ s16 unk02;
     /* 0x04 */ s16 unk04;
     /* 0x06 */ s16 unk06;
@@ -24,9 +26,9 @@ typedef struct Hu3DParticleData_s {
     /* 0x30 */ float unk30;
     /* 0x34 */ Vec unk34;
     /* 0x40 */ GXColor unk40;
-} HsfanimStruct01; // Size 0x44
+} HU3DPARTICLEDATA; // Size 0x44
 
-struct particle_data {
+struct Hu3DParticle_s {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ Vec unk_04;
@@ -46,7 +48,7 @@ struct particle_data {
     /* 0x3C */ u32 unk_3C;
     /* 0x40 */ s32 unk_40;
     /* 0x44 */ AnimData *unk_44;
-    /* 0x48 */ HsfanimStruct01 *unk_48;
+    /* 0x48 */ HU3DPARTICLEDATA *data;
     /* 0x4C */ Vec *unk_4C;
     /* 0x50 */ void *unk_50;
     /* 0x54 */ ParticleHook unk_54;

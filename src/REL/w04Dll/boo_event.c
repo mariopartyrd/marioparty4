@@ -1150,12 +1150,12 @@ static void fn_1_5A2C(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 var_r26;
     s32 i;
     s32 j;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     UnkParticleDataStruct *temp_r27;
 
     temp_r27 = particle->unk_1C;
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (i = 0; i < particle->unk_30; i++, var_r31++) {
             var_r31->unk08.z = 0.0f;
             var_r31->unk2C = 0.0f;
@@ -1163,7 +1163,7 @@ static void fn_1_5A2C(ModelData *model, ParticleData *particle, Mtx matrix)
     }
     if (temp_r27->unk50 == 0) {
         for (i = 0; i < 3; i++) {
-            var_r31 = particle->unk_48;
+            var_r31 = particle->data;
             for (j = 0; j < particle->unk_30; j++, var_r31++) {
                 if (var_r31->unk08.z == 0.0f) {
                     break;
@@ -1186,7 +1186,7 @@ static void fn_1_5A2C(ModelData *model, ParticleData *particle, Mtx matrix)
             }
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     var_r26 = 0;
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
         if (var_r31->unk08.z != 0.0f) {

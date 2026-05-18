@@ -612,7 +612,7 @@ void fn_1_C2BC(void) {
 
 static void fn_1_C388(ModelData *model, ParticleData *particle, Mtx matrix) {
     Vec sp8;
-    HsfanimStruct01 *var_r31;
+    HU3DPARTICLEDATA *var_r31;
     float var_f31;
     float temp_f30;
     float temp_f29;
@@ -620,7 +620,7 @@ static void fn_1_C388(ModelData *model, ParticleData *particle, Mtx matrix) {
     s32 i;
 
     if (particle->unk_34 == 0) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (i = 0; i < particle->unk_30; i++, var_r31++) {
             var_r31->unk40.a = 0;
             var_r31->unk2C = 0.0f;
@@ -631,7 +631,7 @@ static void fn_1_C388(ModelData *model, ParticleData *particle, Mtx matrix) {
     var_f31 = sp8.x;
     BoardModelPosGet(particle->unk_02, &sp8);
     for (i = 0; i < 22; i++) {
-        var_r31 = particle->unk_48;
+        var_r31 = particle->data;
         for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
             if (var_r31->unk2C == 0.0f) {
                 break;
@@ -649,7 +649,7 @@ static void fn_1_C388(ModelData *model, ParticleData *particle, Mtx matrix) {
             var_r31->unk2C = var_f31 * 15.0f;
         }
     }
-    var_r31 = particle->unk_48;
+    var_r31 = particle->data;
     for (i = 0; i < particle->unk_30; i++, var_r31++) {
         if (var_r31->unk2C != 0.0f) {
             var_r31->unk34.y -= var_r31->unk08.x;
