@@ -1,5 +1,5 @@
-#ifndef RESULTDLL_H
-#define RESULTDLL_H
+#ifndef REL_RESULTDLL_H
+#define REL_RESULTDLL_H
 
 #include "game/data.h"
 #include "game/hsfman.h"

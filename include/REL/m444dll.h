@@ -1,5 +1,5 @@
-#ifndef M444DLL_H
-#define M444DLL_H
+#ifndef REL_M444DLL_H
+#define REL_M444DLL_H
 
 #include "game/data.h"
 #include "game/hsfman.h"

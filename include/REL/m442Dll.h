@@ -1,5 +1,5 @@
-#ifndef M442DLL_H
-#define M442DLL_H
+#ifndef REL_M442DLL_H
+#define REL_M442DLL_H
 
 #include "game/object.h"
 #include "game/process.h"

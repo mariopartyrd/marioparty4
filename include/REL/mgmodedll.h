@@ -1,5 +1,5 @@
-#ifndef MGMODEDLL_H
-#define MGMODEDLL_H
+#ifndef REL_MGMODEDLL_H
+#define REL_MGMODEDLL_H
 
 #include "game/data.h"
 #include "game/hsfman.h"

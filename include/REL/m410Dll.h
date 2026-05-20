@@ -1,5 +1,5 @@
-#ifndef M410DLL_H
-#define M410DLL_H
+#ifndef REL_M410DLL_H
+#define REL_M410DLL_H
 
 #include "dolphin.h"
 #include "game/hsfformat.h"

@@ -1,3 +1,6 @@
+#ifndef REL_M435DLL_H
+#define REL_M435DLL_H
+
 #include "game/object.h"
 
 #include "dolphin.h"
@@ -84,3 +87,5 @@ void fn_1_19960(StructFn19894* arg0, s32 arg1);
 void fn_1_19968(StructFn19894* arg0, s32 arg1);
 void fn_1_19974(StructFn19894* arg0, s32 arg1);
 void fn_1_1A33C(Process* arg0, StructFn19894* arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5);
+
+#endif

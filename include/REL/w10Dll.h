@@ -1,5 +1,5 @@
-#ifndef REL_W10_H
-#define REL_W10_H
+#ifndef REL_W10DLL_H
+#define REL_W10DLL_H
 
 #include "game/gamework_data.h"
 #include "dolphin.h"

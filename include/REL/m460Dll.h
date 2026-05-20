@@ -1,5 +1,5 @@
-#ifndef M460DLL_H
-#define M460DLL_H
+#ifndef REL_M460DLL_H
+#define REL_M460DLL_H
 
 #include "game/object.h"
 

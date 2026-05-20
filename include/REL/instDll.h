@@ -1,5 +1,5 @@
-#ifndef INSTDLL_H
-#define INSTDLL_H
+#ifndef REL_INSTDLL_H
+#define REL_INSTDLL_H
 
 #include "game/minigame_seq.h"
 

@@ -1,5 +1,5 @@
-#ifndef M417DLL_H
-#define M417DLL_H
+#ifndef REL_M417DLL_H
+#define REL_M417DLL_H
 
 #include "game/object.h"
 #include "game/process.h"

@@ -1,5 +1,5 @@
-#ifndef E3SETUPDLL_H
-#define E3SETUPDLL_H
+#ifndef REL_E3SETUPDLL_H
+#define REL_E3SETUPDLL_H
 
 #include "game/animdata.h"
 #include "game/object.h"

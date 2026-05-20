@@ -1,3 +1,6 @@
+#ifndef REL_M428DLL_H
+#define REL_M428DLL_H
+
 #include "dolphin.h"
 #include "game/object.h"
 
@@ -33,3 +36,5 @@ extern Vec *lbl_1_bss_558;
 extern Vec *lbl_1_bss_554;
 extern Vec *lbl_1_bss_550;
 extern M427DllStruct lbl_1_bss_0[8];
+
+#endif

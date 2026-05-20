@@ -1,5 +1,5 @@
-#ifndef M432DATA_H
-#define M432DATA_H
+#ifndef REL_M432DATA_H
+#define REL_M432DATA_H
 
 #include "datadir_enum.h"
 #include "dolphin.h"

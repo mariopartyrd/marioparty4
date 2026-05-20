@@ -1,5 +1,5 @@
-#ifndef M446DLL_H
-#define M446DLL_H
+#ifndef REL_M446DLL_H
+#define REL_M446DLL_H
 
 #include "dolphin/types.h"
 

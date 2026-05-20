@@ -1,5 +1,5 @@
-#ifndef M403DLL_H
-#define M403DLL_H
+#ifndef REL_M403DLL_H
+#define REL_M403DLL_H
 
 #include "game/process.h"
 

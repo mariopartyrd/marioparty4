@@ -1,5 +1,5 @@
-#ifndef MPEXDLL_H
-#define MPEXDLL_H
+#ifndef REL_MPEXDLL_H
+#define REL_MPEXDLL_H
 
 #include "game/object.h"
 

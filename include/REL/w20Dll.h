@@ -1,5 +1,5 @@
-#ifndef REL_W20_H
-#define REL_W20_H
+#ifndef REL_W20DLL_H
+#define REL_W20DLL_H
 
 #include "dolphin/types.h"
 

@@ -1,5 +1,5 @@
-#ifndef M416DLL_H
-#define M416DLL_H
+#ifndef REL_M416DLL_H
+#define REL_M416DLL_H
 
 #include "game/object.h"
 #include "game/hsfman.h"

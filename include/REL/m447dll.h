@@ -1,5 +1,5 @@
-#ifndef M447DLL_H
-#define M447DLL_H
+#ifndef REL_M447DLL_H
+#define REL_M447DLL_H
 
 #include "game/animdata.h"
 #include "game/process.h"

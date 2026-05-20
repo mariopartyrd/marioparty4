@@ -1,5 +1,5 @@
-#ifndef W02DLL
-#define W02DLL
+#ifndef REL_W02DLL_H
+#define REL_W02DLL_H
 
 #include "dolphin.h"
 #include "game/board/main.h"

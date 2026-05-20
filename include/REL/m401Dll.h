@@ -1,5 +1,5 @@
-#ifndef M401DLL_H
-#define M401DLL_H
+#ifndef REL_M401DLL_H
+#define REL_M401DLL_H
 
 #include "game/object.h"
 #include "dolphin.h"

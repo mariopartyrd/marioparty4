@@ -1,3 +1,6 @@
+#ifndef REL_M415DLL_H
+#define REL_M415DLL_H
+
 #include "dolphin.h"
 
 #include "game/hsfman.h"
@@ -282,3 +285,5 @@ void fn_1_C2D0(s16, s16, u8);
 void fn_1_C410(s16, s16, u8, u8);
 void fn_1_C58C(s16, s16, u8, float);
 void fn_1_C81C(s16, u8);
+
+#endif

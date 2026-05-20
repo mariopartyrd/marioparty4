@@ -1,5 +1,5 @@
-#ifndef M406DLL_H
-#define M406DLL_H
+#ifndef REL_M406DLL_H
+#define REL_M406DLL_H
 
 #include "game/object.h"
 #include "game/process.h"

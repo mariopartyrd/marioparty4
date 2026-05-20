@@ -1,5 +1,5 @@
-#ifndef M409DLL_H
-#define M409DLL_H
+#ifndef REL_M409DLL_H
+#define REL_M409DLL_H
 
 #include "dolphin.h"
 

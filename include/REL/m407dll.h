@@ -1,5 +1,5 @@
-#ifndef M407DLL_H
-#define M407DLL_H
+#ifndef REL_M407DLL_H
+#define REL_M407DLL_H
 
 #include "game/object.h"
 

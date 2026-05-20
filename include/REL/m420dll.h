@@ -1,5 +1,5 @@
-#ifndef M420DLL_H
-#define M420DLL_H
+#ifndef REL_M420DLL_H
+#define REL_M420DLL_H
 
 #include "game/object.h"
 

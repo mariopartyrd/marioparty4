@@ -1,5 +1,5 @@
-#ifndef REL_W03_H
-#define REL_W03_H
+#ifndef REL_W03DLL_H
+#define REL_W03DLL_H
 
 #include "game/gamework_data.h"
 #include "dolphin.h"

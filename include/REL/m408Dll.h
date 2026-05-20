@@ -1,5 +1,5 @@
-#ifndef M408DLL_H
-#define M408DLL_H
+#ifndef REL_M408DLL_H
+#define REL_M408DLL_H
 
 #include "game/object.h"
 

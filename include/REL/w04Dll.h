@@ -1,5 +1,5 @@
-#ifndef REL_W04_H
-#define REL_W04_H
+#ifndef REL_W04DLL_H
+#define REL_W04DLL_H
 
 #include "game/board/map_object.h"
 

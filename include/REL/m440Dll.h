@@ -1,5 +1,5 @@
-#ifndef M440DLL_H
-#define M440DLL_H
+#ifndef REL_M440DLL_H
+#define REL_M440DLL_H
 
 #include "dolphin/types.h"
 #include "game/hsfman.h"

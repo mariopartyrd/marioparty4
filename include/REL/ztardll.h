@@ -1,5 +1,5 @@
-#ifndef ZTARDLL_H
-#define ZTARDLL_H
+#ifndef REL_ZTARDLL_H
+#define REL_ZTARDLL_H
 
 #include "game/minigame_seq.h"
 

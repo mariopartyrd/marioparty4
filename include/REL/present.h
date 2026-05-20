@@ -1,5 +1,5 @@
-#ifndef PRESENT_H
-#define PRESENT_H
+#ifndef REL_PRESENT_H
+#define REL_PRESENT_H
 
 #include "game/object.h"
 

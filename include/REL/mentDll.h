@@ -1,5 +1,5 @@
-#ifndef MENTDLL_H
-#define MENTDLL_H
+#ifndef REL_MENTDLL_H
+#define REL_MENTDLL_H
 
 #include "game/object.h"
 extern s32 lbl_1_data_0[][4];

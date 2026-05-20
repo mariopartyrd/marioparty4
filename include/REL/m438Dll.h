@@ -1,5 +1,5 @@
-#ifndef M438DLL_H
-#define M438DLL_H
+#ifndef REL_M438DLL_H
+#define REL_M438DLL_H
 
 #include "game/animdata.h"
 #include "game/hsfformat.h"

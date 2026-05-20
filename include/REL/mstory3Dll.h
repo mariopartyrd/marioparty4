@@ -1,5 +1,5 @@
-#ifndef MSTORY3DLL_H
-#define MSTORY3DLL_H
+#ifndef REL_MSTORY3DLL_H
+#define REL_MSTORY3DLL_H
 
 #include "game/object.h"
 #include "game/process.h"
