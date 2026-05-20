@@ -3,6 +3,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
@@ -17,6 +18,7 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/esprite.h"

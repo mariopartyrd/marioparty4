@@ -317,6 +317,9 @@ void Hu3DLLightStaticSet(s16, s16, s32);
 s32 Hu3DModelLightInfoSet(s16, s16);
 s16 Hu3DLightSet(ModelData *, Mtx *, Mtx *, float);
 void lightSet(LightData *arg0, s16 arg1, Mtx *arg2, Mtx *arg3, float arg8);
+#ifndef __MWERKS__
+void Hu3DReflectMapSet(AnimData* arg0);
+#endif
 void Hu3DReflectNoSet(s16 arg0);
 void Hu3DFogSet(float, float, u8, u8, u8);
 void Hu3DFogClear(void);
@@ -329,7 +332,7 @@ s16 Hu3DProjectionCreate(void *, float, float, float);
 void Hu3DProjectionKill(s16);
 void Hu3DProjectionPosSet(s16, Vec *, Vec *, Vec *);
 void Hu3DProjectionTPLvlSet(s16, float);
-void Hu3DMipMapSet(char *, s16, s32, float);
+void Hu3DMipMapSet(char *, s16, char *, float);
 
 extern ModelData Hu3DData[0x200];
 extern CameraData Hu3DCamera[0x10];

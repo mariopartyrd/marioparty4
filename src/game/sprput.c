@@ -1,10 +1,10 @@
-#include "game/sprite.h"
+#include "dolphin/gx.h"
+#include "dolphin/mtx.h"
+#include "dolphin/vi.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
 #include "game/init.h"
-#include "game/disp.h"
-#include "dolphin/mtx.h"
-#include "dolphin/gx.h"
-#include "dolphin/vi.h"
+#include "game/sprite.h"
 
 static void *bmpNoCC[8];
 static short HuSprLayerDrawNo[8];

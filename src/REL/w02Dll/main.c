@@ -1,5 +1,14 @@
 #include "REL/w02Dll.h"
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 #include "game/frand.h"
+#ifndef __MWERKS__
+#include "game/board/boo_house.h"
+#include "game/board/lottery.h"
+#include "game/board/shop.h"
+#include "game/board/star.h"
+#endif
 #include "game/board/player.h"
 
 // // Temporary defines

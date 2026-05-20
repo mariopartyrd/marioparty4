@@ -5,8 +5,8 @@
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
-#include "game/jmp.h"
 #include "game/minigame_seq.h"
+#include "game/objsub.h"
 #include "game/window.h"
 #include "game/wipe.h"
 #include "version.h"
@@ -46,8 +46,7 @@ void fn_1_13C(omObjData *arg0)
         case 0:
             HuWinInit(1);
             Hu3DLighInit();
-            frand();
-            fn_1_38E0();
+            fn_1_38E0(frand());
             fn_1_6778();
             fn_1_7BF0();
             fn_1_2064();

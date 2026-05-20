@@ -1,3 +1,4 @@
+#include "types.h"
 #include "game/chrman.h"
 #include "game/armem.h"
 #include "game/audio.h"
@@ -13,6 +14,11 @@
 #include "game/sprite.h"
 
 #include "ext_math.h"
+#include <string.h>
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 #include "data_num/effect.h"
 

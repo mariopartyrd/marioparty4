@@ -10,7 +10,17 @@
 #include "game/object.h"
 #include "game/pad.h"
 
+#include "game/board/window.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#include "game/objsub.h"
+#endif
+
 #include "ext_math.h"
+#include <string.h>
 
 // structs
 typedef struct someBits3 { // make sure this is defined correctly

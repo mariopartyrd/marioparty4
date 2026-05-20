@@ -1,9 +1,12 @@
 #include "REL/m435Dll.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
+#include "game/hsfdraw.h"
+#include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
@@ -14,9 +17,15 @@
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
+#include <string.h>
 
 #include "ext_math.h"
 #include "version.h"
+
+s32 rand8(void);
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 typedef struct {
     /* 0x00 */ omObjData* unk00;
@@ -4253,7 +4262,9 @@ void fn_1_14760(omObjData* arg0) {
     arg0->func = fn_1_14384;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_14A54(void) {
     lbl_1_bss_0 = omInitObjMan(62, 0x2000);

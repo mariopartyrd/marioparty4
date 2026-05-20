@@ -35,6 +35,21 @@ void fn_1_10E4(omObjData* arg0);
 s32 fn_1_12C8(void);
 s32 fn_1_2930(s32 arg0);
 
+#ifndef __MWERKS__
+void fn_1_3058(void);
+s32 fn_1_309C(void);
+void fn_1_63F4(s32 arg0);
+void fn_1_6494(void);
+s16 fn_1_675C(void);
+void fn_1_785C(void);
+void fn_1_7ABC(void);
+void fn_1_7B58(void);
+void fn_1_7BA8(void);
+void fn_1_9A7C(void);
+void fn_1_9A9C(void);
+void fn_1_9AA0(void);
+#endif
+
 typedef void (*VoidFunc)(void);
 extern const VoidFunc _ctors[];
 extern const VoidFunc _dtors[];

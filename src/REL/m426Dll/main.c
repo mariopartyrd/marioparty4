@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -12,6 +13,10 @@
 #include "game/wipe.h"
 #include "string.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 typedef struct UnkM426Struct {
     /* 0x00 */ s32 unk_00;

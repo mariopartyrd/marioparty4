@@ -1,24 +1,20 @@
+#include "game/audio.h"
 #include "game/object.h"
-#include "game/chrman.h"
-#include "game/minigame_seq.h"
 #include "game/objsub.h"
-#include "game/pad.h"
-#include "game/wipe.h"
-
 #include "game/hsfanim.h"
-#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/sprite.h"
 
-#include "game/audio.h"
-#include "game/gamework_data.h"
-
 #include "REL/m408Dll.h"
 
 #include "ext_math.h"
-#include "math.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
 #include "version.h"
+#endif
+s32 rand8(void);
 
 typedef struct struct_data_20C {
     s32 unk0;

@@ -1,5 +1,12 @@
 #include "game/board/model.h"
 #include "game/data.h"
+#ifndef __MWERKS__
+#include "game/board/lottery.h"
+#include "game/board/main.h"
+#include "game/board/shop.h"
+#include "game/board/space.h"
+#include "game/board/star.h"
+#endif
 #include "game/gamework_data.h"
 #include "math.h"
 

@@ -1,3 +1,5 @@
+#include "game/disp.h"
+#include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/object.h"
@@ -17,7 +19,6 @@
 
 #include "REL/m444dll.h"
 #include "ext_math.h"
-#include "math.h"
 
 typedef struct camera_view_params {
     Vec rot;

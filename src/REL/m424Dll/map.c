@@ -3,8 +3,10 @@
 #include "game/audio.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
+
 #include "math.h"
 #include "version.h"
+#include <string.h>
 
 
 // STRUCT

@@ -15,6 +15,7 @@
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
+#include <string.h>
 #endif
 
 typedef struct camera_view {

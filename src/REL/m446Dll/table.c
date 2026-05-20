@@ -1,4 +1,5 @@
 #include "REL/m446Dll.h"
+#include "game/audio.h"
 #include "game/hsfman.h"
 #include "game/pad.h"
 

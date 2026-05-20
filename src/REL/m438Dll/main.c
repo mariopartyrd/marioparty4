@@ -1,6 +1,8 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
+#include "game/hsfex.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
@@ -10,9 +12,14 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
+#include <string.h>
 
 #include "REL/m438Dll.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 #define BOARD_FABS(value) ((value < 0.0f) ? -(value) : (value))
 

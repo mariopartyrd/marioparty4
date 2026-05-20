@@ -1,5 +1,9 @@
 #include "ext_math.h"
 #include "game/esprite.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfex.h"

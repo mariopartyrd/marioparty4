@@ -1,10 +1,10 @@
-#include "dolphin.h"
 #include "game/printfunc.h"
-#include "game/init.h"
+#include "dolphin.h"
 #include "game/disp.h"
+#include "game/init.h"
 
-#include "stdio.h"
-#include "stdarg.h"
+#include <stdio.h>
+#include <stdarg.h>
 
 extern u8 ank8x8_4b[];
 

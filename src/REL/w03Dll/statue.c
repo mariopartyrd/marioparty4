@@ -7,6 +7,13 @@
 #include "game/board/player.h"
 #include "game/board/space.h"
 #include "game/board/ui.h"
+
+#include "game/board/window.h"
+
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#endif
 #include "game/data.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
@@ -14,6 +21,10 @@
 #include "game/process.h"
 
 #include "ext_math.h"
+
+// forward declarations from main.c
+void fn_1_B5C(s32 arg0);
+void fn_1_CF4(void);
 
 void fn_1_1358(void);
 void fn_1_152C(void);

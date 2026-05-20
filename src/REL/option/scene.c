@@ -10,6 +10,7 @@
 #include "game/process.h"
 #include "game/saveload.h"
 #include "game/sprite.h"
+#include "game/window.h"
 #include "game/wipe.h"
 
 #include "math.h"

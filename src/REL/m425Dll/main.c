@@ -1,4 +1,5 @@
 #include "version.h"
+#include "game/disp.h"
 #define HUSPR_USE_OLD_DEFS
 #include "dolphin/gx/GXEnum.h"
 #include "dolphin/gx/GXStruct.h"
@@ -6,7 +7,6 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/esprite.h"
 #include "game/flag.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
@@ -19,9 +19,7 @@
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
-#include "game/window.h"
 #include "game/wipe.h"
 #include "math.h"
 #include "string.h"

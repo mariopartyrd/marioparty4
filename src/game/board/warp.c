@@ -1,4 +1,5 @@
 #include "game/board/warp.h"
+#include "game/audio.h"
 #include "game/board/char_wheel.h"
 #include "game/board/main.h"
 #include "game/board/model.h"

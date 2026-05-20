@@ -623,7 +623,6 @@ static void *HuDataDecodeIt(void *buf_start, s32 buf_ofs, s32 num, HeapID heap)
 }
 
 
-//Still to be decompiled
 void *HuDataReadNumHeapShortForce(s32 data_id, s32 num, HeapID heap)
 {
 	DVDFileInfo fileInfo;

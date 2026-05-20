@@ -156,7 +156,11 @@ void fn_1_26CC(u8 arg0)
     }
 }
 
+#ifdef __MWERKS__
 void fn_1_2770(u8 arg0, s16 arg2)
+#else
+void fn_1_2770(u8 arg0)
+#endif
 {
     omObjData *temp_r30;
     unkDominationData7 *temp_r31;

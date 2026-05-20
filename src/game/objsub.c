@@ -1,7 +1,10 @@
 #include "game/objsub.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
+#include "game/hsfman.h"
 #include "game/object.h"
+#include "game/pad.h"
 #include "game/window.h"
 
 

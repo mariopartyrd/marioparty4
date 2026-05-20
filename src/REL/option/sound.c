@@ -13,6 +13,12 @@
 #include "dolphin.h"
 #include "math.h"
 
+#ifndef __MWERKS__
+#include <game/audio.h>
+#include "game/frand.h"
+#include "game/sprite.h"
+#endif
+
 typedef struct {
     /* 0x000 */ omObjData *object[26];
     /* 0x068 */ OptionWindow *window[13];

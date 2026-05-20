@@ -1,6 +1,6 @@
 #include "REL/executor.h"
-#include "dolphin/types.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
@@ -2235,7 +2235,9 @@ void fn_1_AF28(omObjData *object)
     fn_1_4ED8(&var_r31->unk_00, 0);
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_B234(void)
 {

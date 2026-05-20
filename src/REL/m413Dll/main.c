@@ -1,4 +1,5 @@
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"

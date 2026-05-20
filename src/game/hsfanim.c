@@ -1,4 +1,6 @@
 #include "game/hsfanim.h"
+#include "dolphin/gx/GXStruct.h"
+#include "dolphin/gx/GXVert.h"
 #include "game/hsfdraw.h"
 #include "game/init.h"
 #include "game/memory.h"
@@ -6,7 +8,11 @@
 #include "game/sprite.h"
 
 #include "ext_math.h"
-#include "string.h"
+#include <string.h>
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 typedef struct {
     /* 0x00 */ s16 unk00;

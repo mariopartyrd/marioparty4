@@ -11,6 +11,7 @@
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
+#include "game/frand.h"
 #endif
 
 #include "REL/m443Dll.h"

@@ -12,7 +12,18 @@
 #include "game/pad.h"
 #include "game/wipe.h"
 
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#include "game/board/view.h"
+#include "game/chrman.h"
+#include "game/hsfex.h"
+#include "game/objsub.h"
+#endif
+
 #include "ext_math.h"
+#include <string.h>
 
 // structs
 

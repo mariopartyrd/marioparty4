@@ -1,14 +1,14 @@
 #include "game/hsfmotion.h"
 #include "game/ClusterExec.h"
 #include "game/EnvelopeExec.h"
+#include "game/ShapeExec.h"
 #include "game/hsfdraw.h"
 #include "game/hsfload.h"
 #include "game/hsfman.h"
 #include "game/init.h"
-#include "game/ShapeExec.h"
 
 #include "ext_math.h"
-#include "string.h"
+#include <string.h>
 
 #define HU3D_MOTATTR_SHIFT_ALL (HU3D_MOTATTR_SHIFT_LOOP|HU3D_MOTATTR_SHIFT_PAUSE|HU3D_MOTATTR_SHIFT_REV)
 #define HU3D_MOTATTR_NOSHIFT_ALL (HU3D_MOTATTR_LOOP|HU3D_MOTATTR_PAUSE|HU3D_MOTATTR_REV)

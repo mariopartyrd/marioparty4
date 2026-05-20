@@ -1,3 +1,4 @@
+#include "types.h"
 #include "game/board/mg_setup.h"
 #include "game/audio.h"
 #include "game/objsub.h"
@@ -13,6 +14,7 @@
 #include "game/board/window.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 // structs
 typedef struct structActiveMG {

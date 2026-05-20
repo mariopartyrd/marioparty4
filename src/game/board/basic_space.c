@@ -1,3 +1,4 @@
+#include "game/audio.h"
 #include "game/board/basic_space.h"
 #include "game/board/main.h"
 #include "game/board/model.h"

@@ -16,7 +16,6 @@
 #include "game/wipe.h"
 #include "math.h"
 
-
 #include "data_num/title.h"
 
 #define HU_PAD_BTN_ALL (HuPadBtn[0] | HuPadBtn[1] | HuPadBtn[2] | HuPadBtn[3])

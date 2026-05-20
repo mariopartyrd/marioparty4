@@ -1,6 +1,6 @@
 #include "game/fault.h"
-#include "stdarg.h"
-#include "stdio.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 typedef struct rgb_color {
     u8 r;

@@ -29,8 +29,6 @@ typedef enum {
     DEMO_STAT_IO = 4
 } DEMO_STAT_DISP;
 
-extern unsigned char DemoStatEnable;
-
 void DEMOSetStats(DemoStatData * stat, unsigned long nstats, DEMO_STAT_DISP disp);
 void DEMOUpdateStats(unsigned char inc);
 void DEMOPrintStats(void);

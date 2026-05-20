@@ -16,6 +16,9 @@
 
 #include "REL/m431Dll.h"
 #include "version.h"
+#include <string.h>
+
+s32 rand8(void);
 
 typedef struct bss_5C_struct {
     s16 unk0[6];

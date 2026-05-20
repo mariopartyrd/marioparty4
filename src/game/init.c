@@ -1,10 +1,15 @@
 #include "game/init.h"
-#include "game/fault.h"
-#include "dolphin/os.h"
-#include "dolphin/gx.h"
 #include "dolphin/dvd.h"
-#include "dolphin/vi.h"
+#include "dolphin/gx.h"
+#include "dolphin/os.h"
 #include "dolphin/pad.h"
+#include "dolphin/vi.h"
+#include "game/disp.h"
+#include "game/fault.h"
+#include "game/memory.h"
+#include "game/sreset.h"
+
+#include "dolphin/demo/DEMOStats.h"
 
 struct memory_info {
     void *start;

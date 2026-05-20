@@ -1,6 +1,10 @@
 #include "dolphin.h"
 #include "game/gamework_data.h"
 
+#ifndef __MWERKS__
+#include <string.h>
+#endif
+
 // Used to store system flags. There are 128 bits available for system flags.
 // Though Mario Party 4 seems to only use the first bit to toggle read/write 
 // access to the memory card.

@@ -1,5 +1,15 @@
+#include "types.h"
 #include "game/board/lottery.h"
 #include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
+#include "game/board/main.h"
+#include "game/board/model.h"
+#include "game/board/player.h"
+#include "game/board/space.h"
+#include "game/board/tutorial.h"
+#include "game/board/ui.h"
+#include "game/board/window.h"
 #include "game/chrman.h"
 #include "game/data.h"
 #include "game/esprite.h"
@@ -11,18 +21,14 @@
 #include "game/pad.h"
 #include "game/process.h"
 #include "game/sprite.h"
-#include "game/board/audio.h"
-#include "game/board/com.h"
-#include "game/board/main.h"
-#include "game/board/model.h"
-#include "game/board/player.h"
-#include "game/board/space.h"
-#include "game/board/tutorial.h"
-#include "game/board/ui.h"
-#include "game/board/window.h"
 
 #include "ext_math.h"
 #include "stdlib.h"
+#include <string.h>
+
+#ifndef __MWERKS__
+#include "game/board/shop.h"
+#endif
 
 typedef struct {
     struct {

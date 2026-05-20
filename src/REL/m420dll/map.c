@@ -4,6 +4,10 @@
 
 #include "REL/m420dll.h"
 
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
+
 typedef struct M420DllUnkMapStruct2 {
     /* 0x00 */ struct {
         s8 unk_00_field0 : 1;

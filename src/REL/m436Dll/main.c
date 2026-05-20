@@ -1,6 +1,8 @@
 #include "REL/m436Dll.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
+#include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -15,6 +17,12 @@
 
 #include "ext_math.h"
 #include "version.h"
+#include <string.h>
+
+s32 rand8(void);
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 typedef struct {
     /* 0x00 */ omObjData *unk00;
@@ -3280,7 +3288,9 @@ void fn_1_10670(omObjData *arg0)
     arg0->func = fn_1_1026C;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_108DC(void)
 {

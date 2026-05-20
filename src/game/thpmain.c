@@ -6,7 +6,7 @@
 #include "game/process.h"
 #include "game/sprite.h"
 
-#include "string.h"
+#include <string.h>
 
 #define THP_DECODE_STACK_SIZE 0x2000
 

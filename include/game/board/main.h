@@ -1,10 +1,10 @@
 #ifndef _BOARD_MAIN_H
 #define _BOARD_MAIN_H
 
+#include "dolphin.h"
+#include "game/data.h"
 #include "game/gamework_data.h"
 #include "game/object.h"
-#include "game/data.h"
-#include "dolphin.h"
 
 #define BOARD_ID_MAIN1 0 //TOADS_MIDWAY_MADNESS
 #define BOARD_ID_MAIN2 1 //GOOMBAS_GREEDY_GALA
@@ -119,12 +119,15 @@ void BoardCameraTargetSpaceSet(s32 space);
 void BoardCameraQuakeSet(s32 duration, float strength);
 void BoardCameraQuakeReset();
 void BoardCameraTargetSet(float x, float y, float z);
+#ifndef __MWERKS__
+void BoardCameraPosCalcFuncSet(BoardCameraPosCalcFunc func);
+#endif
 void BoardCameraPosSet(float x, float y, float z);
 void BoardCameraXRotZoomSet(float zoom, float x_rot);
 void BoardCameraZoomSet(float zoom);
 void BoardCameraRotSet(float x, float y);
-void BoardCameraNearFarSet(float near, float far);
-void BoardCameraNearFarGet(float *near, float *far);
+void BoardCameraNearFarSet(float nnear, float ffar);
+void BoardCameraNearFarGet(float *nnear, float *ffar);
 void BoardCameraMotionStart(s16 model_target, Vec *rot_target, float zoom_target, float fov_target);
 void BoardCameraMotionStartEx(s16 model_target, Vec *rot_target, Vec *offset_end, float zoom_target, float fov_target, s16 max_time);
 void BoardCameraFovSet(float fov);

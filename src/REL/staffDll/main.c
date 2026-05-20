@@ -1,11 +1,18 @@
 #include "game/animdata.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfman.h"
+#ifndef __MWERKS__
+#include "game/minigame_seq.h"
+#endif
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/process.h"
 #include "game/sprite.h"
+#ifndef __MWERKS__
+#include "game/thpmain.h"
+#endif
 #include "game/window.h"
 #include "game/wipe.h"
 

@@ -7,6 +7,7 @@
 #include "ext_math.h"
 #include "game/animdata.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"

@@ -1,4 +1,5 @@
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfanim.h"
 #include "game/hsfman.h"
@@ -17,6 +18,10 @@
 
 #include "game/gamework_data.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
 
 typedef struct bss_348_data {
     s16 unk0[5];

@@ -8,6 +8,7 @@ void BoardBooHouseHostSet(s16);
 s16 BoardBooHouseHostGet(void);
 void BoardBooHouseCreate(void);
 void BoardBooHouseExec(s32);
+void BoardBooHouseKill(void);
 
 s32 BoardBooComUseCheck(s32);
 void BoardBooHouseTutorialExec(void);

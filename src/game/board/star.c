@@ -3,15 +3,6 @@
 #include "game/data.h"
 #include "game/disp.h"
 
-#include "game/flag.h"
-#include "game/gamework.h"
-#include "game/gamework_data.h"
-#include "game/hsfanim.h"
-#include "game/hsfman.h"
-#include "game/msm.h"
-#include "game/objsub.h"
-#include "game/window.h"
-#include "game/wipe.h"
 #include "game/board/audio.h"
 #include "game/board/com.h"
 #include "game/board/main.h"
@@ -21,8 +12,22 @@
 #include "game/board/tutorial.h"
 #include "game/board/ui.h"
 #include "game/board/window.h"
+#include "game/flag.h"
+#include "game/gamework.h"
+#include "game/gamework_data.h"
+#include "game/hsfanim.h"
+#include "game/hsfman.h"
+#include "game/msm.h"
+#include "game/objsub.h"
+#include "game/window.h"
+#include "game/wipe.h"
+#include "game/hsfex.h"
 
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+#include "game/board/view.h"
+#endif
 
 typedef struct {
     struct {

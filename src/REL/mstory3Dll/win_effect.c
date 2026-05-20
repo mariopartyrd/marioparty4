@@ -6,6 +6,10 @@
 #include "game/memory.h"
 #include "game/sprite.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
+
 #include "ext_math.h"
 
 #define frand5() (((s32)frand() & 0x1F))

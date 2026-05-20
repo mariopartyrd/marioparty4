@@ -1,5 +1,7 @@
 #include "ext_math.h"
 #include "game/chrman.h"
+#include "game/disp.h"
+#include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
@@ -9,6 +11,12 @@
 
 #include "REL/m418Dll.h"
 #include "version.h"
+
+
+#ifndef __MWERKS__
+s32 rand8(void);
+#include "game/audio.h"
+#endif
 
 // types
 typedef struct M418DllUnkStruct2 {
@@ -433,7 +441,7 @@ void fn_1_E74(omObjData *object)
     }
     if (object->work[1] != 0) {
         const char *sp8[4] = { "doukasen-null_B", "doukasen-null_A", "doukasen-null_X", "doukasen-null_Y" };
-        Hu3DModelObjMtxGet(object->model[3], sp8[object->work[0]], sp18);
+        Hu3DModelObjMtxGet(object->model[3], (char*)sp8[object->work[0]], sp18);
         Hu3DModelPosSet(object->model[4], sp18[0][3], sp18[1][3], sp18[2][3]);
     }
     temp_r27 = &lbl_1_bss_170[object->work[0]];
@@ -2862,7 +2870,9 @@ void fn_1_9F94(omObjData *object)
     object->func = fn_1_9BA4;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_A1F0(void)
 {

@@ -1,12 +1,12 @@
 #include "game/hsfdraw.h"
+#include "game/disp.h"
 #include "game/hsfanim.h"
 #include "game/hsfformat.h"
 #include "game/hsfload.h"
 #include "game/sprite.h"
-#include "game/disp.h"
 
 #include "ext_math.h"
-#include "string.h"
+#include <string.h>
 
 static void objCall(ModelData *arg0, HSFOBJECT *arg1);
 static void objMesh(ModelData *arg0, HSFOBJECT *arg1);

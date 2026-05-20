@@ -27,7 +27,9 @@ typedef struct datalist_sprite {
 	GXColor color;
 } DataListSprite;
 
-// void fn_1_1EC0(s16 view);
+#ifndef __MWERKS__
+void fn_1_1EC0(s16 view);
+#endif
 
 s32 fn_1_2490(void);
 s32 fn_1_37DC(void);

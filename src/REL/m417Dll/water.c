@@ -1,11 +1,17 @@
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/hsfdraw.h"
 #include "game/hsfmotion.h"
 #include "game/sprite.h"
 
 #include "REL/m417Dll.h"
 #include "version.h"
+#include <string.h>
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 typedef struct UnkM417Struct3 {
     /* 0x00 */ s16 unk_00;

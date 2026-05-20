@@ -2,6 +2,7 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/disp.h"
+#include "game/process.h"
 
 #include "ext_math.h"
 

@@ -2,7 +2,7 @@
 #define _GAME_MINIGAME_SEQ_H
 
 #include "game/object.h"
-#include "stdarg.h"
+#include <stdarg.h>
 
 #define MG_SEQ_TYPE_TIMER 1
 #define MG_SEQ_TYPE_AUTO 3

@@ -1,8 +1,12 @@
 #include "game/gamework.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
-#include "string.h"
+#include <string.h>
 #include "version.h"
+
+#ifndef __MWERKS__
+#include "game/pad.h"
+#endif
 
 s16 GwLanguage = 1;
 s16 GwLanguageSave = -1;

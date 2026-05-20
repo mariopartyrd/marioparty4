@@ -1,8 +1,12 @@
 #include "REL/m438Dll.h"
 
 #include "game/hsfdraw.h"
+#include "game/memory.h"
 #define HUSPR_USE_OLD_DEFS
 #include "game/sprite.h"
+#include <string.h>
+
+#include "ext_math.h"
 
 extern u8 texMtxTbl[];
 

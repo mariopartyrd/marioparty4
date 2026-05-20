@@ -10,7 +10,9 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
+
 #include "math.h"
+#include <string.h>
 
 // bss
 Process *lbl_1_bss_E8;

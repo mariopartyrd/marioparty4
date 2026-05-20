@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #include "version.h"
 #define HUSPR_USE_OLD_DEFS
 #include "ext_math.h"
@@ -15,6 +16,12 @@
 #include "game/wipe.h"
 
 #include "REL/m442Dll.h"
+#include <string.h>
+
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#include "game/frand.h"
+#endif
 
 typedef struct M442StructBss5C {
     /* 0x00 */ float unk_00; // probably Vec

@@ -17,6 +17,17 @@
 #include "ext_math.h"
 #include "string.h"
 
+#include "game/audio.h"
+#include "game/board/basic_space.h"
+#include "game/board/bowser.h"
+#include "game/board/fortune.h"
+#include "game/board/warp.h"
+
+s32 BoardBlockExec(s32 player, s32 space); // wrong
+extern void BoardMushroomExec(s32 player, s32 space); // wrong
+extern void BoardBooHouseExec(s32 player, s32 space); // wrong
+extern void BoardBlockHouseExec(s32 player, s32 space); // wrong
+
 static BoardSpace spaceData[2][256];
 s16 boardSpaceStarTbl[8];
 static GXTexObj spaceHiliteTex;

@@ -2,6 +2,10 @@
 #include "game/dvd.h"
 #include "game/memory.h"
 
+#ifndef __MWERKS__
+#include <string.h>
+#endif
+
 typedef s32 (*DLLProlog)(void);
 typedef void (*DLLEpilog)(void);
 

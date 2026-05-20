@@ -1,5 +1,9 @@
 #include "REL/modeseldll.h"
 
+#ifndef __MWERKS__
+#include "game/esprite.h"
+#endif
+
 s16 lbl_1_bss_19A[24];
 s16 lbl_1_bss_16A[24];
 s16 lbl_1_bss_152[12];

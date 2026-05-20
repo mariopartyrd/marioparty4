@@ -1,4 +1,5 @@
 #include "game/armem.h"
+#include "game/audio.h"
 #include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
@@ -14,6 +15,8 @@
 
 #include "ext_math.h"
 
+#include <string.h>
+#include <stdlib.h>
 #include "stdarg.h"
 #include "version.h"
 

@@ -10,6 +10,7 @@
 
 #include "REL/m410Dll.h"
 #include "version.h"
+#include <string.h>
 
 typedef void (*lbl_1_bss_44_type)(u16, u16, u16);
 

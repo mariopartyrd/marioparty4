@@ -14,6 +14,10 @@
 #include "math.h"
 #include "version.h"
 
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
+
 typedef struct {
     /* 0x00 */ s16 unk00;
     /* 0x02 */ char unk02[2];

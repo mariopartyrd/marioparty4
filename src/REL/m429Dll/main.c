@@ -1,27 +1,32 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
 #include "game/frand.h"
-#include "game/minigame_seq.h"
-#include "game/object.h"
-#include "game/objsub.h"
-#include "game/wipe.h"
-
-#include "game/gamework_data.h"
-
-#include "game/mapspace.h"
-#include "game/pad.h"
-#include "game/printfunc.h"
-
+#include "game/esprite.h"
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
-
-#include "game/esprite.h"
+#include "game/gamework.h"
+#include "game/gamework_data.h"
+#include "game/mapspace.h"
+#include "game/minigame_seq.h"
+#include "game/object.h"
+#include "game/objsub.h"
+#include "game/pad.h"
+#include "game/printfunc.h"
 #include "game/sprite.h"
+#include "game/wipe.h"
 
 #include "ext_math.h"
 #include "version.h"
+
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/hsfex.h"
+#endif
+
+void HuSysVWaitSet(s16 vcount);
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -1323,7 +1328,9 @@ void fn_1_3DCC(Work8F68 *arg0)
     }
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_40C0(Work8F68 *arg0, omObjData *arg1, s32 arg2)
 {

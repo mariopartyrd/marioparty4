@@ -1,6 +1,7 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/flag.h"
 #include "game/frand.h"
@@ -20,8 +21,14 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
+#include "game/hsfex.h"
+#include <string.h>
+
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -1271,7 +1278,9 @@ float fn_1_5664(Vec *arg0)
     return lbl_1_bss_5AC.unk04[fn_1_23B4(arg0)].y;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 Vec lbl_1_data_100 = { 0.0f, 1.0f, 0.0f };
 Vec lbl_1_data_10C = { 450.0f, 300.0f, 500.0f };

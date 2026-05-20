@@ -1,8 +1,11 @@
+#include "game/memory.h"
 #define HUSPR_USE_OLD_DEFS
 #include "REL/m415Dll.h"
 
 #include "game/hsfdraw.h"
 #include "game/sprite.h"
+
+#include <string.h>
 
 void fn_1_8780(s16 arg0, s16 arg1)
 {
@@ -892,7 +895,7 @@ s32 fn_1_B0B8(s16 arg0, u8 arg1, s16 arg2)
     return 1;
 }
 
-void fn_1_B634(s32 arg0)
+void fn_1_B634(void)
 {
     s32 var_r28;
     s32 var_r27;

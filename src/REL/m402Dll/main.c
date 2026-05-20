@@ -1,6 +1,7 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/flag.h"
 #include "game/frand.h"
@@ -23,6 +24,11 @@
 #include "dolphin.h"
 #include "ext_math.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+void HuSysVWaitSet(s16 vcount);
+#endif
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -682,7 +688,9 @@ static void fn_1_1FC4(Vec *arg0, float *arg1, s32 arg2, s32 arg3)
     VECAdd((Vec *)&arg0, &sp18, (Vec *)&arg0);
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 static void fn_1_2454(void)
 {

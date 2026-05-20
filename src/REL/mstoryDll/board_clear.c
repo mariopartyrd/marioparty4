@@ -5,6 +5,12 @@
 #include "game/hsfmotion.h"
 #include "game/object.h"
 #include "game/printfunc.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/minigame_seq.h"
+#endif
+
 #include "game/window.h"
 #include "game/wipe.h"
 

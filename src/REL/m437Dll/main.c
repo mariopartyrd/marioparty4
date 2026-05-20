@@ -15,10 +15,14 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "math.h"
 #include "string.h"
 #include "version.h"
+
+s32 rand8(void);
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 typedef struct {
     /* 0x000 */ omObjData *unk00;
@@ -3443,7 +3447,9 @@ void fn_1_108A4(omObjData *arg0)
     arg0->func = fn_1_1043C;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_10B30(void)
 {

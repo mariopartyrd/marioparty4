@@ -1,5 +1,7 @@
 #include "ext_math.h"
+#include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -9,11 +11,14 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 
+#include <string.h>
+
 #include "REL/m410Dll.h"
 #include "version.h"
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
+#include "game/frand.h"
 #endif
 
 omObjData *lbl_1_bss_74;

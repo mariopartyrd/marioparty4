@@ -2,10 +2,22 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/frand.h"
+#ifndef __MWERKS__
+#include "game/objsub.h"
+#endif
 #include "game/pad.h"
 
+#ifndef __MWERKS__
+#include <stdlib.h>
+#endif
 
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+#include "game/board/com.h"
+#include "game/board/player.h"
+#include "game/board/view.h"
+#endif
 
 /* DATA */
 s32 lbl_1_data_4D0[] = { -1, 2, 2, 2, -1, 1, 1, 1, -1, 0, 0, 0, -1, 3, 3, 3 };

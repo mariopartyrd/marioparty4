@@ -81,6 +81,7 @@ void BoardPlayerRotYSet(s32, f32);
 f32 BoardPlayerRotYGet(s32);
 void BoardPlayerScaleSetV(s32, Vec*);
 void BoardPlayerScaleSet(s32, f32, f32, f32);
+void BoardPlayerScaleGet(s32, Vec*);
 s16 BoardPlayerCurrMotionGet(s32);
 s32 BoardPlayerMotionCreate(s32, s32);
 s32 BoardPlayerMotionKill(s32, s32);
@@ -117,6 +118,9 @@ void BoardJunctionMaskReset(s32);
 void BoardJunctionMaskZero(void);
 void BoardPlayerVoiceEnableSet(s32, s32, s32);
 
+#ifndef __MWERKS__
+void BoardPlayerMoveBetween(s32 arg0, s32 arg1, s32 arg2);
+#endif
 
 void BoardPlayerMoveTo(s32, s32);
 void BoardPlayerMoveToAsync(s32, s32);
@@ -133,6 +137,7 @@ u32 BoardPlayerMoveAwayIsDone(void);
 void BoardPlayerMoveAwayStart(s32, s32, s32);
 void BoardPlayerMoveAwayStartCurr(s32, s32);
 void BoardPlayerCopyMat(s32);
+void BoardPlayerCopyEyeMat(s32, s32);
 void BoardBowserSuitMotionSetJump(void);
 //...
 s32 BoardPlayerAutoSizeGet(s32);

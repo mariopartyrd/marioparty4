@@ -1,11 +1,13 @@
 #include "REL/executor.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/wipe.h"
 
+#include "game/gamework.h"
 #include "game/gamework_data.h"
 
 #include "game/mapspace.h"
@@ -22,6 +24,13 @@
 
 #include "ext_math.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include <game/hsfex.h>
+#include <game/audio.h>
+#endif
+
+void HuSysVWaitSet(s16 vcount);
 
 #undef ABS
 #define ABS(x) ((0 > (x)) ? -(x) : (x))
@@ -700,7 +709,9 @@ HsfanimStruct00 lbl_1_data_48C = {
     { { 255, 255, 255, 0 }, { 255, 255, 255, 0 }, { 255, 255, 255, 0 }, { 255, 255, 255, 0 } },
 };
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_2454(omObjData *object)
 {

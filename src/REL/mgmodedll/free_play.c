@@ -4,10 +4,15 @@
 #include "game/audio.h"
 #include "game/esprite.h"
 #include "game/gamework_data.h"
-#include "game/saveload.h"
+#include "game/window.h"
 #include "game/wipe.h"
 
 #include "ext_math.h"
+#include <string.h>
+
+#ifndef __MWERKS__
+void fn_1_2783C(s16 evtno);
+#endif
 
 s16 lbl_1_bss_352[2][7];
 s16 lbl_1_bss_34A[4];

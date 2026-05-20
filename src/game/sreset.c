@@ -1,5 +1,6 @@
 #include "dolphin.h"
 #include "game/flag.h"
+#include "game/disp.h"
 #include "game/dvd.h"
 #include "game/pad.h"
 #include "game/audio.h"

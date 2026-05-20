@@ -4,9 +4,11 @@
 #include "game/EnvelopeExec.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/frand.h"
 #include "game/hsfdraw.h"
+#include "game/hsfload.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
@@ -16,6 +18,10 @@
 #include "game/wipe.h"
 #include "math.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include <string.h>
+#endif
 
 // bss
 unkStruct5 lbl_1_bss_36C;

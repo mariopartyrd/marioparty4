@@ -3,12 +3,13 @@
 #include "game/chrman.h"
 #include "game/frand.h"
 #include "game/hsfdraw.h"
+#include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 
 #include "ext_math.h"
 
-#include "game/minigame_seq.h"
+#include "game/board/audio.h"
 
 #if VERSION_JP
 #define MDL_ID_SHIFT 0

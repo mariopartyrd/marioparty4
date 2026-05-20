@@ -356,6 +356,8 @@ config.linker_version = "GC/2.6"
 config.rel_strip_partial = False
 config.rel_empty_file = "REL/empty.c"
 
+config.extra_clang_flags = ["-Wno-incompatible-function-pointer-types", "-fdeclspec"]
+
 
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name, objects):

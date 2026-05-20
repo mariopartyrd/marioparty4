@@ -28,8 +28,13 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
+#include "game/frand.h"
+#include <string.h>
+
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
 
 typedef struct {
     struct {

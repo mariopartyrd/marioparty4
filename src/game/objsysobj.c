@@ -1,12 +1,16 @@
+#include "game/audio.h"
 #include "game/object.h"
 #include "game/hsfman.h"
 #include "game/pad.h"
 #include "game/objsub.h"
 #include "game/minigame_seq.h"
 #include "game/sprite.h"
-#include "game/hsfman.h"
-#include "game/audio.h"
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+void MGSeqPauseKill(void);
+#include "game/wipe.h"
+#endif
 
 Vec CRot;
 Vec Center;

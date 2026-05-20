@@ -1,5 +1,8 @@
 #include "REL/w02Dll.h"
 #include "game/audio.h"
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 #include "game/pad.h"
 #include "game/objsub.h"
 

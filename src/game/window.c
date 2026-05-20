@@ -12,8 +12,8 @@
 #include "game/window.h"
 
 #include "ext_math.h"
-#include "stdarg.h"
-#include "string.h"
+#include <stdarg.h>
+#include <string.h>
 
 #include "data_num/win.h"
 

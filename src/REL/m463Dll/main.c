@@ -19,6 +19,9 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
+#include <string.h>
+
+extern s32 rand8(void);
 
 typedef struct {
     /* 0x00 */ s32 unk00;

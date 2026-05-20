@@ -1,13 +1,17 @@
 #include "game/board/roll.h"
 #include "game/audio.h"
+#include "game/board/audio.h"
+#include "game/board/com.h"
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/pause.h"
 #include "game/board/player.h"
 #include "game/board/tutorial.h"
+#include "game/board/window.h"
 #include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
+#include "game/hsfex.h"
 #include "game/object.h"
 #include "game/pad.h"
 #include "game/process.h"
@@ -911,7 +915,7 @@ static void SameRollExec(void)
     }
     BoardAudSeqPause(0, 0, 0x3E8);
     BoardWinCreate(0, MAKE_MESSID(9, 0), -1);
-    BoardWinInsertMesSet(sameRollCoinStr, 0);
+    BoardWinInsertMesSet(MAKE_MESSID_PTR(sameRollCoinStr), 0);
     BoardWinWait();
     BoardWinKill();
     if (var_r31 >= 0x32) {

@@ -1,5 +1,6 @@
 #include "game/THPSimple.h"
 #include "game/THPDraw.h"
+#include <string.h>
 
 #define ALIGN32(val) (((val) + 0x1F) & ~0x1F)
 

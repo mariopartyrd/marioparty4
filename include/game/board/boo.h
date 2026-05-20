@@ -8,10 +8,6 @@ s16 BoardBooCreate(s32 arg0, Vec *arg1);
 void BoardBooKill(void);
 s32 BoardBooStealTypeSet(s32 arg0);
 s32 BoardBooStealMain(void);
-BOOL CheckBallCoinDone(void);
-void TakeBallStar(void);
-void ExecTakeBallStar(omObjData *arg0);
-BOOL CheckTakeBallStarDone(void);
 s32 BoardBooStealValueGet(s16 *arg0, s16 *arg1);
 BOOL BoardBooStealLightCheck(void);
 

@@ -6,6 +6,13 @@
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/objsub.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/hsfdraw.h"
+#include "game/msm.h"
+#endif
+
 #include "game/printfunc.h"
 #include "game/saveload.h"
 #include "game/sprite.h"

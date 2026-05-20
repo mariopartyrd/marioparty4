@@ -9,8 +9,13 @@
 
 #include "game/objsub.h"
 
-#include "math.h"
 #include "ext_math.h"
+#include "math.h"
+
+#include "game/audio.h"
+#include "game/board/tutorial.h"
+#include "game/board/window.h"
+#include "game/hsfex.h"
 
 extern s32 boardTutorialData[4];
 

@@ -1,6 +1,10 @@
 #include "game/process.h"
-#include "game/memory.h"
 #include "dolphin/os.h"
+#include "game/memory.h"
+
+#ifdef __MWERKS__
+#include "game/jmp.h"
+#endif
 
 #define FAKE_RETADDR 0xA5A5A5A5
 

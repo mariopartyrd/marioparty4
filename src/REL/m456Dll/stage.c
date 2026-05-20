@@ -1,25 +1,20 @@
 #include "game/hsfanim.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
+#include "game/hsfmotion.h"
 #include "game/object.h"
 #include "game/objsub.h"
-
-#include "game/hsfmotion.h"
-#include "game/pad.h"
-
-#include "game/audio.h"
-#include "game/chrman.h"
-#include "game/gamework_data.h"
-#include "game/minigame_seq.h"
 #include "game/sprite.h"
-#include "game/wipe.h"
 
 #include "REL/m456Dll.h"
 
 #include "ext_math.h"
-#include "math.h"
 #include "version.h"
+#include <string.h>
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 Process *lbl_1_bss_B8;
 omObjData *lbl_1_bss_B4;

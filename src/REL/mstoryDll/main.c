@@ -1,5 +1,11 @@
 #include "REL/mstoryDll.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
+
+#ifndef __MWERKS__
+#include "game/gamework.h"
+#endif
+
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/pad.h"
@@ -138,7 +144,9 @@ void fn_1_A4(void) {
     }
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_488(void) {
     s32 i;

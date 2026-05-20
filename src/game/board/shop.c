@@ -1,13 +1,6 @@
+#include "types.h"
 #include "game/board/shop.h"
 #include "game/audio.h"
-#include "game/gamework.h"
-#include "game/gamework_data.h"
-#include "game/object.h"
-#include "game/objsub.h"
-#include "game/disp.h"
-#include "game/pad.h"
-#include "game/process.h"
-#include "game/sprite.h"
 #include "game/board/audio.h"
 #include "game/board/com.h"
 #include "game/board/com_path.h"
@@ -20,9 +13,19 @@
 #include "game/board/ui.h"
 #include "game/board/view.h"
 #include "game/board/window.h"
+#include "game/disp.h"
+#include "game/gamework.h"
+#include "game/gamework_data.h"
+#include "game/object.h"
+#include "game/objsub.h"
+#include "game/pad.h"
+#include "game/process.h"
+#include "game/sprite.h"
 
 #include "dolphin.h"
 #include "ext_math.h"
+
+#include "game/hsfex.h"
 
 typedef struct {
     struct {

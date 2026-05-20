@@ -1,15 +1,16 @@
 #include "REL/mgmodedll.h"
-#include "game/gamework.h"
 
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/esprite.h"
 #include "game/gamework_data.h"
 #include "game/minigame_seq.h"
-#include "game/saveload.h"
 #include "game/wipe.h"
 
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 s16 lbl_1_bss_3A4;
 s32 lbl_1_bss_3A0;

@@ -1,5 +1,6 @@
 #include "game/board/view.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfex.h"
@@ -7,7 +8,6 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
-#include "game/disp.h"
 
 #include "game/board/main.h"
 #include "game/board/model.h"

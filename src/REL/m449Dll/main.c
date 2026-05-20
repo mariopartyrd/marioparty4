@@ -4,8 +4,8 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
-#include "game/flag.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
@@ -16,7 +16,6 @@
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"
-#include "game/printfunc.h"
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
@@ -27,7 +26,7 @@
 #include "game/hsfex.h"
 #endif
 
-s32 rand8(void);
+extern s32 rand8(void);
 
 typedef struct UnkCameraStruct {
     /* 0x00 */ float unk_00;

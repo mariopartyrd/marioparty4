@@ -1,6 +1,7 @@
 #ifndef _GAME_OBJECT_H
 #define _GAME_OBJECT_H
 
+#include "types.h"
 #include "dolphin.h"
 #include "game/process.h"
 #include "game/dvd.h"

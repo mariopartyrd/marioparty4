@@ -6,6 +6,14 @@
 #include "game/hsfdraw.h"
 #include "game/object.h"
 
+#include "game/board/window.h"
+#include "game/window.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#include "game/board/com.h"
+#include "game/board/view.h"
+#endif
 
 #include "ext_math.h"
 
@@ -205,7 +213,7 @@ s32 fn_1_6898(s32 arg0)
     j = 0;
     while (j == 0) {
         BoardWinCreateChoice(2, MAKE_MESSID(22, 11), 2, 0);
-        BoardWinInsertMesSet(lbl_1_bss_130, 2);
+        BoardWinInsertMesSet(MAKE_MESSID_PTR(lbl_1_bss_130), 2);
         BoardWinAttrSet(0x10);
 
         if (GWPlayer[arg0].com != 0) {

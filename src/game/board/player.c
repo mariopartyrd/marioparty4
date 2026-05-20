@@ -1,3 +1,4 @@
+#include "types.h"
 #include "game/board/player.h"
 
 #include "ext_math.h"
@@ -12,6 +13,8 @@
 #include "game/board/tutorial.h"
 #include "game/board/ui.h"
 #include "game/board/view.h"
+#include "game/board/window.h"
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/disp.h"
 #include "game/hsfman.h"
@@ -19,7 +22,8 @@
 #include "game/pad.h"
 
 #include "ext_math.h"
-#include "stdlib.h"
+#include <stdlib.h>
+#include <string.h>
 
 static void InitJunction(s32, s32, f32);
 static void UpdateJunctionGfx(omObjData *);
@@ -1073,7 +1077,7 @@ static inline u32 BoardJunctionMaskGet(void)
     return junctionMask;
 }
 
-static inline GetLinkCount(s32 playerIdx, s32 boardIdx)
+static inline s32 GetLinkCount(s32 playerIdx, s32 boardIdx)
 {
     s32 i;
     s32 linkCount;

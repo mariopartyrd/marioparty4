@@ -1,4 +1,5 @@
 #include "REL/mstory3Dll.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
@@ -7,6 +8,10 @@
 #include "game/printfunc.h"
 #include "game/window.h"
 #include "game/wipe.h"
+
+#ifndef __MWERKS__
+#include "game/objsub.h"
+#endif
 
 #include "ext_math.h"
 
@@ -127,7 +132,9 @@ void fn_1_A4(void) {
     }
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_40C(void) {
     lbl_1_bss_0 = omInitObjMan(62, 0x2000);

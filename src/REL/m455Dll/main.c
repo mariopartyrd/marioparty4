@@ -1,3 +1,4 @@
+#include "game/disp.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
 #include "game/object.h"
@@ -17,9 +18,11 @@
 #include "ext_math.h"
 #include "math.h"
 #include "version.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/esprite.h"
+#include "game/hsfex.h"
 #endif
 
 typedef struct camera_view_params {

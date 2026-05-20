@@ -302,8 +302,8 @@ void fn_1_1E44(void) {
         } else {
             var_r26 = 0;
         }
-        sprintf(&sp84, "%d", lbl_1_bss_0->unk_00);
-        sprintf(&sp74, "%d", var_r28);
+        sprintf(sp84, "%d", lbl_1_bss_0->unk_00);
+        sprintf(sp74, "%d", var_r28);
         if (var_r28 == lbl_1_bss_0->unk_00) {
             BoardWinCreate(2, MAKE_MESSID(39, 4), 7);
         } else {

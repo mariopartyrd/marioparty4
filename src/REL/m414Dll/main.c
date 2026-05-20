@@ -1,6 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
@@ -9,6 +10,10 @@
 #include "game/pad.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
+
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
 
 typedef struct UnkM414Struct {
     s32 unk00;

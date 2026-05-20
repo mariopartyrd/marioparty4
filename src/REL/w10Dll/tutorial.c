@@ -5,6 +5,13 @@
 #include "game/wipe.h"
 #include "game/board/ui.h"
 
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#include "game/board/main.h"
+#include "game/board/roll.h"
+#include "game/board/tutorial.h"
+#endif
+
 static s16 sprList[11];
 static s16 sprCurr;
 

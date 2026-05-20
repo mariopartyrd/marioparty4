@@ -1,5 +1,6 @@
 #include "REL/mgmodedll.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/wipe.h"

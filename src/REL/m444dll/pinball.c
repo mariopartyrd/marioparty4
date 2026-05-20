@@ -10,19 +10,17 @@
 
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/esprite.h"
 #include "game/window.h"
-#include "game/wipe.h"
 
-#include "game/board/ui.h"
-#include "game/gamework.h"
 #include "game/gamework_data.h"
 
 #include "REL/m444dll.h"
 #include "ext_math.h"
 #include "version.h"
-#include "math.h"
 
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 s16 lbl_1_bss_198F0[5][2];
 Vec lbl_1_bss_D8F0[4096];

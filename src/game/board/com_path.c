@@ -2,6 +2,8 @@
 #include "game/board/space.h"
 #include "game/flag.h"
 
+#include <string.h>
+
 #define NODE_INDEX(x) ((x) ? ((x) - pathNodeData) : -1)
 
 typedef struct {

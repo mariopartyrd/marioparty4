@@ -4,6 +4,10 @@
 #include "game/jmp.h"
 #include "dolphin/types.h"
 
+#ifndef __MWERKS__
+#include <stdio.h>
+#endif
+
 #define PROCESS_STAT_PAUSE 0x1
 #define PROCESS_STAT_UPAUSE 0x2
 #define PROCESS_STAT_PAUSE_EN 0x4

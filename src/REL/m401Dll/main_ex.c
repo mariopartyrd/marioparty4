@@ -11,6 +11,10 @@
 
 #include "REL/m401Dll.h"
 
+#ifndef __MWERKS__
+extern s32 rand8(void);
+#endif
+
 struct Bss13EData {
     s16 unk0;
     s16 unk2[3];

@@ -1,4 +1,4 @@
-#include "include/REL/w10Dll.h"
+#include "REL/w10Dll.h"
 #include "game/board/char_wheel.h"
 #include "game/board/lottery.h"
 #include "game/board/main.h"
@@ -10,6 +10,11 @@
 #include "game/board/ui.h"
 #include "game/board/boo_house.h"
 #include "game/board/mg_setup.h"
+
+#ifndef __MWERKS__
+#include "game/board/audio.h"
+#include "game/board/player.h"
+#endif
 
 void TutorialStartExec(void) {
     HostWinExec(0x2E0001);

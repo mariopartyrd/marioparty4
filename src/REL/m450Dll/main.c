@@ -8,6 +8,7 @@
 #include "dolphin/types.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
@@ -6089,7 +6090,9 @@ void fn_1_1A3F0(void)
     lbl_1_bss_30C.y += 150.0f;
 }
 
+#ifdef __MWERKS__
 #include "src/REL/executor.c"
+#endif
 
 void fn_1_1A714(void)
 {

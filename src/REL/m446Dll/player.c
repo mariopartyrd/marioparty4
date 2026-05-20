@@ -1,5 +1,6 @@
 #include "REL/m446Dll.h"
 
+#include "game/audio.h"
 #include "game/chrman.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
@@ -859,7 +860,7 @@ void fn_1_64BC(unkStruct8 *arg0, s32 arg1, s32 arg2)
     }
 }
 
-static inline unkStruct8UnkC8(unkStruct8 *arg0)
+static inline s32 unkStruct8UnkC8(unkStruct8 *arg0)
 {
     if (arg0->unkC8 == 0) {
         return 0;

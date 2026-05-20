@@ -1,5 +1,10 @@
 #include "REL/mstoryDll.h"
 #include "game/chrman.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
+
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"

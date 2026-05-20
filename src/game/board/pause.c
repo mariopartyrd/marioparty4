@@ -1,5 +1,11 @@
 #include "game/board/pause.h"
 #include "game/audio.h"
+#include "game/board/main.h"
+#include "game/board/model.h"
+#include "game/board/player.h"
+#include "game/board/roll.h"
+#include "game/board/star.h"
+#include "game/board/ui.h"
 #include "game/data.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
@@ -11,12 +17,9 @@
 #include "game/sprite.h"
 #include "game/window.h"
 #include "game/wipe.h"
-#include "game/board/main.h"
-#include "game/board/model.h"
-#include "game/board/player.h"
-#include "game/board/roll.h"
-#include "game/board/star.h"
-#include "game/board/ui.h"
+
+#include "game/board/audio.h"
+#include "game/hsfex.h"
 
 typedef struct {
     struct {

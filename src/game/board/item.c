@@ -1,3 +1,4 @@
+#include "types.h"
 #include "game/board/item.h"
 #include "game/audio.h"
 #include "game/board/audio.h"
@@ -27,6 +28,13 @@
 #include "game/wipe.h"
 
 #include "ext_math.h"
+
+#include "game/msm.h"
+
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+extern s32 rand8(void);
+#endif
 
 typedef struct {
     /* 0x00 */ s16 unk00;

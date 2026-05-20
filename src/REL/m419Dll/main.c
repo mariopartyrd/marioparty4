@@ -1,8 +1,10 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
+#include "game/hsfex.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
@@ -13,7 +15,6 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
 #include "version.h"
 
@@ -221,7 +222,7 @@ void fn_1_57C(s16 arg0)
     temp_r30 = &Hu3DData[lbl_1_bss_5BE];
     sp14 = temp_r30->pos;
     sp14.y += 50.0f;
-    Hu3D3Dto2D(&sp14, 1, &sp8.x);
+    Hu3D3Dto2D(&sp14, 1, &sp8);
     var_r31 = sp8.x - 96.0f;
     var_r31 &= 0xFFF8;
     sp8.x = var_r31;

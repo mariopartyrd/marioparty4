@@ -1,8 +1,13 @@
 #include "game/sprite.h"
+#include "game/disp.h"
 #include "game/memory.h"
 #include "game/init.h"
 
 #include "dolphin/mtx.h"
+
+#ifndef __MWERKS__
+#include "game/hsfdraw.h"
+#endif
 
 #define SPRITE_DIRTY_ATTR 0x1
 #define SPRITE_DIRTY_XFORM 0x2

@@ -1,7 +1,15 @@
+#include "types.h"
 #include "game/board/ui.h"
 #include "game/audio.h"
+#include "game/board/com.h"
+#include "game/board/item.h"
+#include "game/board/main.h"
+#include "game/board/model.h"
+#include "game/board/player.h"
+#include "game/board/tutorial.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfex.h"
@@ -11,15 +19,9 @@
 #include "game/process.h"
 #include "game/sprite.h"
 #include "game/window.h"
-#include "game/board/com.h"
-#include "game/board/item.h"
-#include "game/board/main.h"
-#include "game/board/model.h"
-#include "game/board/player.h"
-#include "game/board/tutorial.h"
-#include "game/disp.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 typedef struct {
     /* 0x00 */ struct {

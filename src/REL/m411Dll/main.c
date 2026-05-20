@@ -2,10 +2,10 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/data.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
 #include "game/hsfanim.h"
-#include "game/hsfformat.h"
 #include "game/hsfman.h"
 #include "game/hsfmotion.h"
 #include "game/memory.h"
@@ -17,8 +17,11 @@
 #include "game/sprite.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
+
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#endif
 
 typedef struct {
     /* 0x00 */ s16 unk00;

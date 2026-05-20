@@ -1,6 +1,8 @@
 #include "game/hsfload.h"
-#include "string.h"
+#include "game/EnvelopeExec.h"
 #include "ctype.h"
+#include "game/hsfformat.h"
+#include <string.h>
 
 #define AS_S16(field) (*((s16 *)&(field)))
 #define AS_U16(field) (*((u16 *)&(field)))

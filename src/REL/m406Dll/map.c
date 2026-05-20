@@ -1,5 +1,6 @@
 #include "ext_math.h"
 #include "game/audio.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
@@ -7,6 +8,11 @@
 #include "game/sprite.h"
 
 #include "REL/m406Dll.h"
+
+#ifndef __MWERKS__
+#include <game/frand.h>
+#include <string.h>
+#endif
 
 typedef struct UnkM406Struct {
     /* 0x00 */ u8 unk_00;
@@ -1265,7 +1271,11 @@ void fn_1_4964(ModelData *arg0)
         fn_1_71C4(spC4, spA0, 100.0f + (50.0f * (0.007874016f * (frand() & 0x7F))), -0.1f, sp3C);
     }
     var_r29 = var_r30->unk_2C;
+#if defined(NON_MATCHING)
+    memset(&lbl_1_bss_48, 0, sizeof(UnkM406Struct5));
+#else
     memset(lbl_1_bss_48, 0, sizeof(UnkM406Struct5));
+#endif
     for (var_r27 = 0; var_r27 < 105; var_r27++, var_r29++) {
         fn_1_D488(var_r29->unk_04, &var_r30->unk_84[var_r29->unk_00], &var_r30->unk_84[var_r29->unk_00 + 1], &var_r29->unk_18);
         if (var_r29->unk_08 >= 0) {

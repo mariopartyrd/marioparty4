@@ -1,4 +1,5 @@
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/esprite.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
@@ -16,6 +17,10 @@
 #include "REL/m401Dll.h"
 #include "ext_math.h"
 #include "math.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 float lbl_2_data_0 = -7.1875f;
 

@@ -1,12 +1,15 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/esprite.h"
+#include "game/flag.h"
 #include "game/hsfdraw.h"
 #include "game/hsfman.h"
-#include "game/printfunc.h"
 #include "game/object.h"
+#include <game/sprite.h>
 #include "game/pad.h"
-#include "game/flag.h"
+#include "game/printfunc.h"
+#include "game/minigame_seq.h"
+#include "game/window.h"
 
 #define OM_OVL_HIS_MAX 16
 #define OM_MAX_GROUPS 10
@@ -243,7 +246,7 @@ void omDestroyObjMan(void)
     OSReport("objman>Destory ObjMan\n");
 }
 
-omObjData *omAddObjEx(Process *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, void (*func)(omObjData *))
+omObjData *omAddObjEx(Process *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, omObjFunc func)
 {
     s32 i;
     omObjData *object;

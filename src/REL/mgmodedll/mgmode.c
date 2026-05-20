@@ -1,11 +1,20 @@
 #include "REL/mgmodedll.h"
 #include "game/audio.h"
+#include "game/disp.h"
+#ifndef __MWERKS__
+#include "game/board/ui.h"
+#endif
 #include "game/esprite.h"
+#ifndef __MWERKS__
+#include "game/gamework.h"
+#endif
 #include "game/gamework_data.h"
 #include "game/saveload.h"
+#include "game/window.h"
 #include "game/wipe.h"
 
 #include "ext_math.h"
+#include <string.h>
 
 #ifndef __MWERKS__
 #include "game/hsfex.h"

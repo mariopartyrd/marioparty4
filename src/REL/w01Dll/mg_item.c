@@ -25,6 +25,8 @@
 #include "dolphin.h"
 #include "ext_math.h"
 
+extern s32 rand8(void);
+
 static void RoundItemEnd(void);
 static void RoundItemClose(void);
 static void RoundItemMainUpdate(omObjData *obj);

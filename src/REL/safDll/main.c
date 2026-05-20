@@ -3,7 +3,13 @@
 #include "game/gamework_data.h"
 #include "game/printfunc.h"
 #include "game/pad.h"
+#include "game/process.h"
+#include "game/saveload.h"
 #include "math.h"
+
+#ifndef __MWERKS__
+#include "game/audio.h"
+#endif
 
 s32 lbl_1_data_0 = 100;
 #if VERSION_NTSC

@@ -1,12 +1,18 @@
 #include "REL/m438Dll.h"
 
 #include "ext_math.h"
+#include "game/audio.h"
 #include "game/hsfanim.h"
 #include "game/hsfmotion.h"
+#include "game/memory.h"
 #include "game/sprite.h"
 #include "game/wipe.h"
 #include "string.h"
 #include "version.h"
+
+#ifndef __MWERKS__
+#include "game/frand.h"
+#endif
 
 // STRUCT
 typedef struct M438MapStruct {

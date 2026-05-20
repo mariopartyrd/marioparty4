@@ -3,6 +3,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
+#include "game/disp.h"
 #include "game/frand.h"
 #include "game/hsfmotion.h"
 #include "game/mapspace.h"

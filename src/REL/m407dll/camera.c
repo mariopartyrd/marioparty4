@@ -1,7 +1,12 @@
 #include "ext_math.h"
+#include "game/disp.h"
 #include "game/hsfdraw.h"
 #include "game/object.h"
 #include "game/process.h"
+
+#ifndef __MWERKS__
+#include <stdlib.h>
+#endif
 
 
 typedef struct unkDominationData2 {

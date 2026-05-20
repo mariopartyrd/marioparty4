@@ -1,5 +1,5 @@
+#include "game/audio.h"
 #include "game/board/boo_house.h"
-
 #include "game/board/audio.h"
 #include "game/board/boo.h"
 #include "game/board/com.h"
@@ -15,6 +15,9 @@
 #include "game/msm.h"
 
 #include "ext_math.h"
+
+#include "game/board/tutorial.h"
+#include "game/hsfex.h"
 
 // bss
 static s16 houseMdl[6];
@@ -100,7 +103,7 @@ static s8 currPlayer;
 static s8 stealTarget;
 static s8 comStarStealTarget;
 static s32 comCoinStealTarget;
-static s8 stealAmountStr[8];
+static char stealAmountStr[8];
 static Process *houseProc;
 
 // sdata
@@ -689,10 +692,10 @@ void ApplyCoinSteal(s16 arg0, s16 arg1)
     else {
         var_r31 = MAKE_MESSID(7, 5);
     }
-    sprintf(&stealAmountStr, "%d", arg0);
+    sprintf(stealAmountStr, "%d", arg0);
     HuAudFXPlay(0x4B);
     BoardWinCreate(2, var_r31, 3);
-    BoardWinInsertMesSet((s32)&stealAmountStr, 0);
+    BoardWinInsertMesSet(MAKE_MESSID_PTR(stealAmountStr), 0);
     BoardWinWait();
     BoardWinKill();
     BoardStatusShowSetForce(currPlayer);

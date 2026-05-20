@@ -12,6 +12,10 @@
 #include "REL/executor.h"
 #include "game/board/main.h"
 
+#ifndef __MWERKS__
+#include "game/objsub.h"
+#endif
+
 typedef struct struct_data0 {
 	s32 unk0;
 	s32 unk4;

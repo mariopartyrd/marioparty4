@@ -4,6 +4,11 @@
 #include "game/board/tutorial.h"
 #include "game/board/window.h"
 
+#ifndef __MWERKS__
+#include "game/hsfex.h"
+#include "game/board/main.h"
+#endif
+
 static s16 hostMdl;
 static s16 hostPos;
 static Process *hostProc;

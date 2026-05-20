@@ -1,4 +1,5 @@
 #include "REL/executor.h"
+#include "game/disp.h"
 #include "game/gamework_data.h"
 #include "game/hsfman.h"
 #include "game/object.h"
@@ -7,10 +8,7 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
-#include "dolphin.h"
 #include "ext_math.h"
-
-extern s32 sprintf(char *, const char *, s32);
 
 static void fn_1_2BC(omObjData *arg0);
 static void fn_1_300(omObjData *arg0);
