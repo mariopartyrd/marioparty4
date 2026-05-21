@@ -2,20 +2,20 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-typedef struct rgb_color {
-    u8 r;
-    u8 g;
-    u8 b;
-} RGBColor;
+typedef struct Xfb_Color_s {
+    u8 y;
+    u8 cb;
+    u8 cr;
+} XFB_COLOR;
 
-typedef struct xfb_geometry {
-    void* frame_buffers[4];
+typedef struct Xfb_Geometry_s {
+    void* fb[4];
     u16 width;
     u16 height;
     u16 mode;
-} XFBGeometry;
+} XFB_GEOMETRY;
 
-static RGBColor XFB_Colors[5] = {
+static XFB_COLOR XFB_Colors[5] = {
     { 0x00, 0x80, 0x80 },
     { 0xFF, 0x80, 0x80 },
     { 0xC0, 0x80, 0x80 },
@@ -25,11 +25,11 @@ static RGBColor XFB_Colors[5] = {
 
 #include "Ascii8x8_1bpp.inc"
 
-static XFBGeometry XFB_Geometry;
+static XFB_GEOMETRY XFB_Geometry;
 
 static s32 (*XFB_putc)(u8 c, s32 x, s32 y);
 
-static RGBColor Draw_Color;
+static XFB_COLOR Draw_Color;
 
 static s32 x_start;
 static s32 y_start;
@@ -39,7 +39,7 @@ static s32 XFB_putcInterlace(u8 arg0, s32 arg1, s32 arg2);
 static s32 XFB_puts(s8* arg0, s32 arg1, s32 arg2);
 static s32 XFB_putcS(u8 arg0, s32 arg1, s32 arg2);
 static void XFB_WriteBackCache(void);
-static void XFB_CR(s32 arg0, s32* arg1, s32* arg2);
+static void XFB_CR(s32 value, s32* arg1, s32* arg2);
 
 void OSPanic(const char* file, int line, const char* msg, ...) {
     static char* titleMes = "OSPanic encounterd:";
@@ -70,7 +70,7 @@ void HuFaultInitXfbDirectDraw(GXRenderModeObj *mode) {
     s32 i;
     
     for (i = 0; i < 4; i++) {
-        XFB_Geometry.frame_buffers[i] = 0;
+        XFB_Geometry.fb[i] = 0;
     }
     
     XFB_Geometry.width = 0;
@@ -93,44 +93,44 @@ void HuFaultInitXfbDirectDraw(GXRenderModeObj *mode) {
     }
 }
 
-void HuFaultSetXfbAddress(s16 index, void* value) {
-    if (index >= 0 && index < 4) {
-        XFB_Geometry.frame_buffers[index] = value;
+void HuFaultSetXfbAddress(s16 id, void* addr) {
+    if (id >= 0 && id < 4) {
+        XFB_Geometry.fb[id] = addr;
     }
 }
 
 static void XFB_WriteBackCache(void) {
     s32 i;
-    void* frame_buffer;
-    u32 temp_r29;
+    void* fb;
+    u32 size;
 
-    temp_r29 = XFB_Geometry.width * 2 * XFB_Geometry.height;
-    
-    if (temp_r29 != 0) {
+    size = XFB_Geometry.width * 2 * XFB_Geometry.height;
+
+    if (size != 0) {
         for (i = 0; i < 4; i += 1) {
-            frame_buffer = XFB_Geometry.frame_buffers[i];
-            
-            if (frame_buffer) {
-                DCStoreRange(frame_buffer, temp_r29);
+            fb = XFB_Geometry.fb[i];
+
+            if (fb) {
+                DCStoreRange(fb, size);
             }
         }
     }
 }
 
-static void XFB_CR(s32 arg0, s32* x_ptr, s32* y_ptr) {
-    s32 temp_r30;
+static void XFB_CR(s32 value, s32* x_ptr, s32* y_ptr) {
+    s32 numLines;
     s32 y;
     s32 x;
 
     x = *x_ptr;
     y = *y_ptr;
-    
+
     x = x_start;
     y += 0x12;
-    
-    temp_r30 = arg0 & 7;
-    if (temp_r30 != 0) {
-        y += temp_r30 * 0x12;
+
+    numLines = value & 7;
+    if (numLines != 0) {
+        y += numLines * 0x12;
     }
 
     *x_ptr = x;
@@ -173,207 +173,202 @@ static s32 XFB_puts(s8* message, s32 x, s32 y) {
 }
 
 static s32 XFB_putcS(u8 c, s32 x, s32 y) {
-    RGBColor sp8;
-    s32 var_r26;
-    s32 var_r25;
-    s32 var_r27;
-    s32 var_r29;
-    RGBColor* temp_r3;
-    
-    var_r27 = 0;
-    sp8 = Draw_Color;
-    
+    XFB_COLOR colorOld;
+    s32 crNum;
+
+    crNum = 0;
+    colorOld = Draw_Color;
+
     if (x + 0x11 >= XFB_Geometry.width) {
         XFB_CR(0, &x, &y);
-        var_r27++;
+        crNum++;
     }
-    
+
     Draw_Color = XFB_Colors[0];
     XFB_putc(c, x, y - 2);
     XFB_putc(c, x, y + 2);
     XFB_putc(c, x - 1, y);
     XFB_putc(c, x + 1, y);
-    
-    Draw_Color = sp8;
+
+    Draw_Color = colorOld;
     XFB_putc(c, x, y);
-    
-    return var_r27;
+
+    return crNum;
 }
 
 static s32 XFB_putcProgressive(u8 c, s32 x, s32 y) {
     s32 result;
-    s32 temp_r20;
-    u8 red;
-    u8 blue;
-    u8 green;
+    s32 pitch;
+    u8 colorY;
+    u8 colorCr;
+    u8 colorCb;
     s32 i;
     s32 j;
-    s32 var_r23;
-    u8* var_r29;
+    s32 xfbOfs;
+    u8* src;
     s32 k;
-    s32 var_r27;
-    s32 var_r26;
-    u32 temp_r31;
-    u32 var_r30;
-    u32 var_r22;
-    u8* frame_buffer;
-    
+    s32 width;
+    s32 writeMaskIdx;
+    u32 writeMask;
+    u32 bits;
+    u8* fb;
+
     result = 0;
-    
+
     if (c == 0) {
         return -1;
     }
-    
+
     if (x + 0x10 >= XFB_Geometry.width) {
         y += 0x12;
         x = x_start;
         result = 1;
     }
-    
+
     if (y + 0x10 >= XFB_Geometry.height) {
         return -1;
     }
-    
-    red = Draw_Color.r;
-    green = Draw_Color.g;
-    blue = Draw_Color.b;
-    
-    temp_r20 = XFB_Geometry.width * 2;
-    var_r23 = (x & 0xFFFE) * 2 + y * temp_r20;
-    var_r29 = Ascii8x8_1bpp + (c * 8);
-    
+
+    colorY = Draw_Color.y;
+    colorCb = Draw_Color.cb;
+    colorCr = Draw_Color.cr;
+
+    pitch = XFB_Geometry.width * 2;
+    xfbOfs = (x & 0xFFFE) * 2 + y * pitch;
+    src = Ascii8x8_1bpp + (c * 8);
+
     i = 8;
-    
+
     while (i != 0) {
         j = 2;
-        
+
         while (j != 0) {
             for (k = 0; k < 4; k ++) {
-                frame_buffer = XFB_Geometry.frame_buffers[k];
-                
-                if (frame_buffer != 0) {
-                    frame_buffer += var_r23;
-                    
-                    var_r22 = *var_r29;
-                    var_r30 = 0;
-                    var_r26 = 0;
-                    while (var_r26 < 0x10) {
-                        if (var_r22 & 0xF != 0) {
-                            var_r30 |= 3 << var_r26;
+                fb = XFB_Geometry.fb[k];
+
+                if (fb != 0) {
+                    fb += xfbOfs;
+
+                    bits = *src;
+                    writeMask = 0;
+                    writeMaskIdx = 0;
+                    while (writeMaskIdx < 0x10) {
+                        if (bits & 0xF != 0) {
+                            writeMask |= 3 << writeMaskIdx;
                         }
-                        var_r26 += 2;
-                        var_r22 >>= 1;
+                        writeMaskIdx += 2;
+                        bits >>= 1;
                     }
-                    var_r27 = 8;
+                    width = 8;
                     if ((s32) (x & 1) != 0) {
-                        var_r30 *= 2;
-                        var_r27 = 0xA;
+                        writeMask *= 2;
+                        width = 0xA;
                     }
-                    
-                    while (var_r27 != 0) {
-                        if ((u32) (var_r30 & 3) != 0) {
-                            frame_buffer[1] = blue;
-                            frame_buffer[3] = green;
-                            
-                            if ((u32) (var_r30 & 1) != 0) {
-                                frame_buffer[0] = red;
+
+                    while (width != 0) {
+                        if ((u32) (writeMask & 3) != 0) {
+                            fb[1] = colorCr;
+                            fb[3] = colorCb;
+
+                            if ((u32) (writeMask & 1) != 0) {
+                                fb[0] = colorY;
                             }
-                            if ((u32) (var_r30 & 2) != 0) {
-                                frame_buffer[2] = red;
+                            if ((u32) (writeMask & 2) != 0) {
+                                fb[2] = colorY;
                             }
                         }
-                        var_r27 -= 1;
-                        frame_buffer += 4;
-                        var_r30 = var_r30 >> 2;
+                        width -= 1;
+                        fb += 4;
+                        writeMask = writeMask >> 2;
                     }
                 }
             }
-            
+
             j -= 1;
-            var_r23 += temp_r20;
+            xfbOfs += pitch;
         }
         i -= 1;
-        var_r29 += 1;
+        src += 1;
     }
     
     return result;
 }
 
 static s32 XFB_putcInterlace(u8 c, s32 x, s32 y) {
-    u8 red;
-    u8 blue;
-    u8 green;
-    s32 temp_r23;
+    u8 colorY;
+    u8 colorCr;
+    u8 colorCb;
+    s32 pitch;
     s32 i;
-    s32 var_r25;
-    u8* var_r28;
+    s32 xfbOfs;
+    u8* src;
     s32 j;
-    s16 var_r29;
-    s32 var_r30;
-    u8* var_r31;
-    
+    s16 bits;
+    s32 width;
+    u8* fb;
+
     if (c == 0) {
         return -1;
     }
-    
+
     if (x + 8 >= XFB_Geometry.width || y + 8 >= XFB_Geometry.height) {
         return -1;
     }
 
-    red = Draw_Color.r;
-    green = Draw_Color.g;
-    blue = Draw_Color.b;
-    
-    temp_r23 = XFB_Geometry.width * 2;
-    var_r25 = ((x & 0xFFFE) * 2) + ((y >> 1) * temp_r23);
-    var_r28 = Ascii8x8_1bpp + c * 8;
-    
+    colorY = Draw_Color.y;
+    colorCb = Draw_Color.cb;
+    colorCr = Draw_Color.cr;
+
+    pitch = XFB_Geometry.width * 2;
+    xfbOfs = ((x & 0xFFFE) * 2) + ((y >> 1) * pitch);
+    src = Ascii8x8_1bpp + c * 8;
+
     i = 8;
-    
+
     while (i != 0) {
         for (j = 0; j < 4; j += 2) {
-            var_r30 = j;
-            
+            width = j;
+
             if ((s32) (y & 1) != 0) {
-                var_r30 += 1;
+                width += 1;
             }
-            
-            var_r31 = XFB_Geometry.frame_buffers[var_r30];
-            
-            if (var_r31) {
-                var_r31 = var_r31 + var_r25;
-                var_r29 = *var_r28;
-                var_r30 = 4;
-                
+
+            fb = XFB_Geometry.fb[width];
+
+            if (fb) {
+                fb = fb + xfbOfs;
+                bits = *src;
+                width = 4;
+
                 if (x & 1) {
-                    var_r29 = (s16)var_r29 * 2;
-                    var_r30 = 5;
+                    bits = (s16)bits * 2;
+                    width = 5;
                 }
 
-                while (var_r30) {
-                    if (var_r29 & 3) {
-                        var_r31[1] = blue;
-                        var_r31[3] = green;
-                        
-                        if (var_r29 & 1) {
-                            var_r31[0] = red;
+                while (width) {
+                    if (bits & 3) {
+                        fb[1] = colorCr;
+                        fb[3] = colorCb;
+
+                        if (bits & 1) {
+                            fb[0] = colorY;
                         }
-                        if (var_r29 & 2) {
-                            var_r31[2] = red;
+                        if (bits & 2) {
+                            fb[2] = colorY;
                         }
                     }
-                    
-                    var_r30 -= 1;
-                    var_r31 += 4;
-                    var_r29 >>= 2;
+
+                    width -= 1;
+                    fb += 4;
+                    bits >>= 2;
                 }
             }
         }
-        
+
         i -= 1;
         y += 1;
-        var_r28 += 1;
-        var_r25 += temp_r23;
+        src += 1;
+        xfbOfs += pitch;
     }
     
     return 0;

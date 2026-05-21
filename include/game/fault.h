@@ -4,6 +4,6 @@
 #include "game/gamework_data.h"
 
 void HuFaultInitXfbDirectDraw(GXRenderModeObj *mode);
-void HuFaultSetXfbAddress(s16 index, void* value);
+void HuFaultSetXfbAddress(s16 id, void* addr);
 
 #endif
