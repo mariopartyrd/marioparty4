@@ -1,6 +1,6 @@
 #include "game/audio.h"
 #include "game/object.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/pad.h"
 #include "game/objsub.h"
 #include "game/minigame_seq.h"

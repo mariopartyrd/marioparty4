@@ -1,7 +1,6 @@
 #include "REL/m446Dll.h"
 
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 
 // bss
 unkStruct3 *lbl_1_bss_A0;

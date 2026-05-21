@@ -1,4 +1,4 @@
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 
 #include "game/window.h"

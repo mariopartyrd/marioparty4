@@ -3,7 +3,7 @@
 #include "game/audio.h"
 #include "game/disp.h"
 #include "game/gamework_data.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/wipe.h"

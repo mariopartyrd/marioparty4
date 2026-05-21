@@ -1,9 +1,7 @@
 #include "REL/m403Dll.h"
 #include "game/audio.h"
 #include "game/frand.h"
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/object.h"
 

@@ -6,12 +6,10 @@
 #include "game/objsub.h"
 #include "game/wipe.h"
 
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/pad.h"
 #include "game/sprite.h"
 
-#include "game/hsfmotion.h"
 
 #include "ext_math.h"
 

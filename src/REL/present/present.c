@@ -5,9 +5,8 @@
 #include "game/audio.h"
 #endif
 #include "game/gamework_data.h"
-#include "game/hsfdraw.h"
 #include "game/hsfex.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/window.h"
 #include "game/wipe.h"
 

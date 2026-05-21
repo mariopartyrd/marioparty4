@@ -3,7 +3,7 @@
 #include "game/audio.h"
 #include "game/data.h"
 #include "game/flag.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/process.h"
 #include "game/board/boo_house.h"

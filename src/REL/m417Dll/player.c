@@ -2,8 +2,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/gamework_data.h"
-#include "game/hsfdraw.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 

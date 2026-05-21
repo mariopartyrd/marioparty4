@@ -1,11 +1,9 @@
 #include "game/disp.h"
-#include "game/hsfdraw.h"
 #include "game/hsfload.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/printfunc.h"
 
-#include "game/hsfmotion.h"
 
 #include "game/audio.h"
 #include "game/gamework_data.h"

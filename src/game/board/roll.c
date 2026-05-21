@@ -10,7 +10,7 @@
 #include "game/board/window.h"
 #include "game/disp.h"
 #include "game/gamework_data.h"
-#include "game/hsfanim.h"
+#include "game/hu3d.h"
 #include "game/hsfex.h"
 #include "game/object.h"
 #include "game/pad.h"

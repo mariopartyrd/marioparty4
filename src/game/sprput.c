@@ -2,7 +2,7 @@
 #include "dolphin/mtx.h"
 #include "dolphin/vi.h"
 #include "game/disp.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/init.h"
 #include "game/sprite.h"
 

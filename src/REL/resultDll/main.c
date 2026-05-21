@@ -9,7 +9,7 @@
 #ifndef __MWERKS__
 #include "game/hsfex.h"
 #endif
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/objsub.h"
 #include "game/pad.h"

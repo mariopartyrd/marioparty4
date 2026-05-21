@@ -10,7 +10,7 @@
 #include "game/audio.h"
 #include "game/gamework_data.h"
 #include "game/flag.h"
-#include "game/hsfanim.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/pad.h"
 #include "game/process.h"

@@ -17,7 +17,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/disp.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 

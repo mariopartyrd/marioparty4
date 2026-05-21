@@ -1,7 +1,7 @@
 #define HUSPR_USE_OLD_DEFS
 #include "REL/m409Dll.h"
 
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/sprite.h"
 
 void fn_1_BF88(s16 arg0, s16 arg1)

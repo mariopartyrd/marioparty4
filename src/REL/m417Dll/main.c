@@ -1,7 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/chrman.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/wipe.h"

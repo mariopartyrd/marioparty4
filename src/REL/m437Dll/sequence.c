@@ -1,6 +1,5 @@
 #include "REL/m437Dll.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 
 #include "ext_math.h"
 #include "string.h"

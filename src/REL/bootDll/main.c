@@ -3,7 +3,7 @@
 #include "game/chrman.h"
 #include "game/data.h"
 #include "game/gamework_data.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/minigame_seq.h"
 #include "game/memory.h"
 #include "game/msm.h"

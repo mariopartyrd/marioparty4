@@ -1,8 +1,6 @@
 #include "REL/m447dll.h"
 #include "game/audio.h"
-#include "game/hsfanim.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/sprite.h"
 

@@ -1,5 +1,4 @@
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 
 #include "REL/m421Dll.h"
 

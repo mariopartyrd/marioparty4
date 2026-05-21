@@ -1,5 +1,4 @@
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/msm.h"
 
 #include "game/audio.h"

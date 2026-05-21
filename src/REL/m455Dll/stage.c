@@ -1,10 +1,7 @@
-#include "game/hsfanim.h"
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/objsub.h"
 
-#include "game/hsfmotion.h"
 
 #include "game/frand.h"
 #include "game/sprite.h"

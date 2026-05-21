@@ -1,9 +1,7 @@
 #include "datadir_enum.h"
 #include "ext_math.h"
 #include "game/audio.h"
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 
 #include "REL/m443Dll.h"
 #include "version.h"

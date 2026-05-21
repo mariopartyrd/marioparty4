@@ -2,8 +2,7 @@
 #define REL_M444DLL_H
 
 #include "game/data.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 
 #include "game/sprite.h"
 

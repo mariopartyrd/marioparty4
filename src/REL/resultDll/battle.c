@@ -5,12 +5,10 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/frand.h"
-#include "game/hsfanim.h"
 #ifndef __MWERKS__
 #include "game/hsfex.h"
 #endif
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/pad.h"
 #include "game/process.h"

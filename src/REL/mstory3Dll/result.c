@@ -4,7 +4,6 @@
 #include "game/data.h"
 
 #ifndef __MWERKS__
-#include "game/hsfdraw.h"
 #include "game/hsfex.h"
 #endif
 
@@ -12,8 +11,7 @@
 #include "game/flag.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/pad.h"
 #include "game/printfunc.h"

@@ -3,7 +3,7 @@
 #include "game/audio.h"
 #include "game/chrman.h"
 #include "game/frand.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/objsub.h"
 
 #include "game/board/audio.h"

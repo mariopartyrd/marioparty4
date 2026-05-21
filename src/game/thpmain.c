@@ -1,7 +1,6 @@
 #include "game/thpmain.h"
 #include "game/THPSimple.h"
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/init.h"
 #include "game/process.h"
 #include "game/sprite.h"

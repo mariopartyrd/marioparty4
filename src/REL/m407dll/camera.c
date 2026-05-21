@@ -1,6 +1,6 @@
 #include "ext_math.h"
 #include "game/disp.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/process.h"
 

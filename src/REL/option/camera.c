@@ -1,5 +1,5 @@
 #include "REL/option.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/pad.h"
 #include "game/printfunc.h"

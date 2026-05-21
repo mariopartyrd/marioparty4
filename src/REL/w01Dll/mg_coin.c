@@ -4,7 +4,6 @@
 #include "game/data.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
-#include "game/hsfanim.h"
 
 #include "game/board/audio.h"
 #include "game/board/com.h"
@@ -12,7 +11,7 @@
 #include "game/board/model.h"
 #include "game/board/player.h"
 #include "game/board/window.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"

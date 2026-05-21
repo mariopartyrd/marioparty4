@@ -3,7 +3,7 @@
 #include "game/audio.h"
 #include "game/flag.h"
 #include "game/gamework.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"

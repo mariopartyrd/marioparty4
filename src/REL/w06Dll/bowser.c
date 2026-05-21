@@ -4,7 +4,7 @@
 #include "game/flag.h"
 #include "game/gamework.h"
 #include "game/gamework_data.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/hsfex.h"
 #include "game/object.h"
 #include "game/objsub.h"

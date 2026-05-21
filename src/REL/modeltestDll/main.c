@@ -1,9 +1,8 @@
 #define HUSPR_USE_OLD_DEFS
 #include "game/chrman.h"
 #include "game/gamework_data.h"
-#include "game/hsfanim.h"
+#include "game/hu3d.h"
 #include "game/hsfex.h"
-#include "game/hsfmotion.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/pad.h"

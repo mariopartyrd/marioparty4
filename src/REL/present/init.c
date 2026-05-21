@@ -1,6 +1,6 @@
 #include "game/audio.h"
 #include "game/esprite.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/process.h"

@@ -1,6 +1,5 @@
-#include "game/hsfdraw.h"
 #include "game/disp.h"
-#include "game/hsfanim.h"
+#include "game/hu3d.h"
 #include "game/hsfformat.h"
 #include "game/hsfload.h"
 #include "game/sprite.h"

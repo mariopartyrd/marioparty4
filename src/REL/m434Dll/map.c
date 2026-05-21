@@ -1,10 +1,8 @@
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/objsub.h"
 
 #include "game/frand.h"
-#include "game/hsfmotion.h"
 #include "game/sprite.h"
 
 #include "REL/m434Dll.h"

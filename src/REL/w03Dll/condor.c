@@ -6,8 +6,7 @@
 #include "game/board/window.h"
 #include "game/data.h"
 
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 
 #include "game/pad.h"
 #include "game/wipe.h"

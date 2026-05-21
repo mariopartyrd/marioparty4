@@ -1,8 +1,8 @@
 #include "REL/m438Dll.h"
 
-#include "game/hsfdraw.h"
 #include "game/memory.h"
 #define HUSPR_USE_OLD_DEFS
+#include "game/hu3d.h"
 #include "game/sprite.h"
 #include <string.h>
 

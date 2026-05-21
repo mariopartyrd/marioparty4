@@ -4,7 +4,7 @@
 #include "game/minigame_seq.h"
 #include "game/wipe.h"
 #include "game/audio.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 
 #include "REL/m407dll.h"
 

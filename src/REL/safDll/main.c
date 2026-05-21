@@ -1,5 +1,5 @@
 #include "dolphin.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/gamework_data.h"
 #include "game/printfunc.h"
 #include "game/pad.h"
