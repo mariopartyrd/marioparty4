@@ -41,17 +41,17 @@ void HuSprDispInit(void)
     GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);
 }
 
-void HuSprDisp(HuSprite *sprite)
+void HuSprDisp(HUSPRITE *sprite)
 {
     short i;
     ANIMDATA *anim = sprite->data;
-    ANIMPAT *pat = sprite->pat_data;
+    ANIMPAT *pat = sprite->patP;
     Vec axis = {0, 0, 1};
     Mtx modelview, rot;
     short color_sum;
-    HuSprFunc func;
+    HUSPRFUNC func;
     
-    GXSetScissor(sprite->scissor_x, sprite->scissor_y, sprite->scissor_w, sprite->scissor_h);
+    GXSetScissor(sprite->scissorX, sprite->scissorY, sprite->scissorW, sprite->scissorH);
     if(sprite->attr & HUSPR_ATTR_FUNC) {
         if(sprite->func) {
             func = sprite->func;
@@ -91,7 +91,7 @@ void HuSprDisp(HuSprite *sprite)
         if(sprite->bg) {
             ANIMPAT *bg_pat;
             ANIMFRAME *bg_frame;
-            bg_frame = sprite->bg->bank[sprite->bg_bank].frame;
+            bg_frame = sprite->bg->bank[sprite->bgBank].frame;
             bg_pat = &sprite->bg->pat[bg_frame->pat];
             layer = bg_pat->layer;
             bg_bmp = &sprite->bg->bmp[layer->bmpNo];
@@ -104,15 +104,15 @@ void HuSprDisp(HuSprite *sprite)
         }
         GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_GEQUAL, 1);
         GXSetZCompLoc(GX_FALSE);
-        if(0 != sprite->z_rot) {
-            MTXRotAxisDeg(rot, &axis, sprite->z_rot);
-            MTXScale(modelview, sprite->scale_x, sprite->scale_y, 1.0f);
+        if(0 != sprite->zRot) {
+            MTXRotAxisDeg(rot, &axis, sprite->zRot);
+            MTXScale(modelview, sprite->scale.x, sprite->scale.y, 1.0f);
             MTXConcat(rot, modelview, modelview);
         } else {
-            MTXScale(modelview, sprite->scale_x, sprite->scale_y, 1.0f);
+            MTXScale(modelview, sprite->scale.x, sprite->scale.y, 1.0f);
         }
-        mtxTransCat(modelview, sprite->x, sprite->y, 0);
-        MTXConcat(*sprite->group_mtx, modelview, modelview);
+        mtxTransCat(modelview, sprite->pos.x, sprite->pos.y, 0);
+        MTXConcat(*sprite->groupMtx, modelview, modelview);
         GXLoadPosMtxImm(modelview, GX_PNMTX0);
         for(i=pat->layerNum-1; i>=0; i--) {
             float pos[4][2];
@@ -124,7 +124,7 @@ void HuSprDisp(HuSprite *sprite)
                 continue;
             }
             GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
-            HuSprTexLoad(anim, layer->bmpNo, 0, sprite->wrap_s, sprite->wrap_t, (sprite->attr & HUSPR_ATTR_LINEAR) ? GX_LINEAR : GX_NEAR);
+            HuSprTexLoad(anim, layer->bmpNo, 0, sprite->wrapS, sprite->wrapT, (sprite->attr & HUSPR_ATTR_LINEAR) ? GX_LINEAR : GX_NEAR);
             if(layer->alpha != 255 || color_sum != 255*4) {
                 color.a = (u16)(sprite->a*layer->alpha) >> 8;
                 GXSetTevColor(GX_TEVSTAGE1, color);
@@ -165,13 +165,13 @@ void HuSprDisp(HuSprite *sprite)
             }
             GXBegin(GX_QUADS, GX_VTXFMT0, 4);
             GXPosition3f32(pos[0][0], pos[0][1], 0);
-            GXTexCoord2f32(texcoord_x1*sprite->tex_scale_x, texcoord_y1*sprite->tex_scale_y);
+            GXTexCoord2f32(texcoord_x1*sprite->uvScaleX, texcoord_y1*sprite->uvScaleY);
             GXPosition3f32(pos[1][0], pos[1][1], 0);
-            GXTexCoord2f32(texcoord_x2*sprite->tex_scale_x, texcoord_y1*sprite->tex_scale_y);
+            GXTexCoord2f32(texcoord_x2*sprite->uvScaleX, texcoord_y1*sprite->uvScaleY);
             GXPosition3f32(pos[2][0], pos[2][1], 0);
-            GXTexCoord2f32(texcoord_x2*sprite->tex_scale_x, texcoord_y2*sprite->tex_scale_y);
+            GXTexCoord2f32(texcoord_x2*sprite->uvScaleX, texcoord_y2*sprite->uvScaleY);
             GXPosition3f32(pos[3][0], pos[3][1], 0);
-            GXTexCoord2f32(texcoord_x1*sprite->tex_scale_x, texcoord_y2*sprite->tex_scale_y);
+            GXTexCoord2f32(texcoord_x1*sprite->uvScaleX, texcoord_y2*sprite->uvScaleY);
             GXEnd();
         }
         if(sprite->bg) {

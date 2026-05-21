@@ -902,7 +902,7 @@ void fn_1_18CFC(omObjData* arg0) {
     if (var_r28 < 0) {
         var_r28 = 0;
     }
-    temp_f31 = HuSprGrpData[arg0->work[2]].x;
+    temp_f31 = HuSprGrpData[arg0->work[2]].pos.x;
     var_f30 = 164 + lbl_1_bss_1A0C.unk2C4 * 66;
     temp_f31 = fn_1_5FC(temp_f31, var_f30, 2.0f);
     HuSprGrpPosSet(arg0->work[1], -5.0f, 25.0f);

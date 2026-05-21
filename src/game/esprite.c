@@ -2,144 +2,148 @@
 #include "game/data.h"
 #include "game/sprite.h"
 
-typedef struct {
-    /* 0x00 */ u32 unk00;
-    /* 0x04 */ u16 unk04;
-    /* 0x06 */ char unk06[2];
-    /* 0x08 */ ANIMDATA *unk08;
-} UnkEspriteStruct01; // Size 0xC
+typedef struct esprite_s {
+    s16 memberNo;
+    s16 animNo;
+} ESPRITE;
 
-s16 esprite[0x180][2];
-UnkEspriteStruct01 espanim[0x180];
+typedef struct espanim_s {
+    /* 0x00 */ u32 dataNum;
+    /* 0x04 */ u16 useCnt;
+    /* 0x08 */ ANIMDATA *anim;
+} ESPANIM; // Size 0xC
 
-static s16 gid;
+ESPRITE esprite[HUSPR_MAX];
+ESPANIM espanim[HUSPR_MAX];
+
+static HUSPRGRPID gid;
 
 void espInit(void) {
     s32 i;
 
     gid = HuSprGrpCreate(0x180);
-    for (i = 0; i < 0x180; i++) {
-        esprite[i][0] = i;
-        esprite[i][1] = -1;
+    for (i = 0; i < HUSPR_MAX; i++) {
+        esprite[i].memberNo = i;
+        esprite[i].animNo = -1;
     }
-    for (i = 0; i < 0x180; i++) {
-        espanim[i].unk04 = 0;
+    for (i = 0; i < HUSPR_MAX; i++) {
+        espanim[i].useCnt = 0;
     }
 }
 
-s16 espEntry(s32 arg0, s16 arg1, s16 arg2) {
-    UnkEspriteStruct01 *var_r30;
-    UnkEspriteStruct01 *var_r31;
-    s16 (*var_r29)[2];
-    void *temp_r26;
-    s16 temp_r25;
-    s16 var_r28;
-    s32 var_r27;
+s16 espEntry(unsigned int dataNum, s16 prio, s16 bank) {
+    ESPANIM *animFree;
+    ESPANIM *anim;
+    ESPRITE *esp;
+    void *data;
+    s16 sprNo;
+    s16 i;
+    s32 animFreeId;
 
-    var_r29 = esprite;
-    for (var_r28 = 0; var_r28 < 0x180; var_r29++, var_r28++) {
-        if (var_r29[0][1] == -1) {
+    esp = esprite;
+    for (i = 0; i < HUSPR_MAX; esp++, i++) {
+        if (esp->animNo == -1) {
             break;
         }
     }
-    if (var_r28 == 0x180) {
+    if (i == HUSPR_MAX) {
         return -1;
     }
-    var_r31 = espanim;
-    var_r30 = NULL;
-    for (var_r27 = 0; var_r27 < 0x180; var_r31++, var_r27++) {
-        if (var_r31->unk04 != 0) {
-            if (var_r31->unk00 == arg0) {
-                var_r30 = NULL;
+    anim = espanim;
+    animFree = NULL;
+    for (animFreeId = 0; animFreeId < HUSPR_MAX; anim++, animFreeId++) {
+        if (anim->useCnt != 0) {
+            if (anim->dataNum == dataNum) {
+                animFree = NULL;
                 break;
             }
-        } else if (var_r30 == NULL) {
-            var_r30 = var_r31;
+        } else if (animFree == NULL) {
+            animFree = anim;
         }
     }
-    if (var_r27 == 0x180) {
-        if (var_r30 == NULL) {
+    if (animFreeId == HUSPR_MAX) {
+        if (animFree == NULL) {
             return -1;
         }
-        temp_r26 = HuDataSelHeapReadNum(arg0, MEMORY_DEFAULT_NUM, HEAP_DATA);
-        if (temp_r26 == NULL) {
+        data = HuDataSelHeapReadNum(dataNum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+        if (data == NULL) {
             return -1;
         }
-        var_r30->unk00 = arg0;
-        var_r30->unk08 = HuSprAnimRead(temp_r26);
-        var_r31 = var_r30;
+        animFree->dataNum = dataNum;
+        animFree->anim = HuSprAnimRead(data);
+        anim = animFree;
     }
-    temp_r25 = HuSprCreate(var_r31->unk08, arg1, arg2);
-    if (temp_r25 == -1) {
-        if (var_r30 != NULL) {
-            HuSprAnimKill(var_r31->unk08);
+    sprNo = HuSprCreate(anim->anim, prio, bank);
+    if (sprNo == -1) {
+        if (animFree != NULL) {
+            HuSprAnimKill(anim->anim);
         }
         return -1;
     }
-    var_r31->unk04++;
-    var_r29[0][1] = var_r31 - espanim;
-    HuSprGrpMemberSet(gid, var_r29[0][0], temp_r25);
-    return var_r28;
+    anim->useCnt++;
+    esp->animNo = anim - espanim;
+    HuSprGrpMemberSet(gid, esp->memberNo, sprNo);
+    return i;
 }
 
-void espKill(s16 arg0) {
-    HuSprGrpMemberKill(gid, esprite[arg0][0]);
-    espanim[esprite[arg0][1]].unk04--;
-    esprite[arg0][1] = -1;
+void espKill(s16 espId) {
+    HuSprGrpMemberKill(gid, esprite[espId].memberNo);
+    espanim[esprite[espId].animNo].useCnt--;
+    esprite[espId].animNo = -1;
 }
 
 s16 espGrpIDGet(void) {
     return gid;
 }
 
-void espDispOn(s16 arg0) {
-    HuSprAttrReset(gid, esprite[arg0][0], 4);
+void espDispOn(s16 espId) {
+    HuSprAttrReset(gid, esprite[espId].memberNo, 4);
 }
 
-void espDispOff(s16 arg0) {
-    HuSprAttrSet(gid, esprite[arg0][0], 4);
+void espDispOff(s16 espId) {
+    HuSprAttrSet(gid, esprite[espId].memberNo, 4);
 }
 
-void espAttrSet(s16 arg0, u16 arg1) {
-    HuSprAttrSet(gid, esprite[arg0][0], arg1);
+void espAttrSet(s16 espId, u16 attr) {
+    HuSprAttrSet(gid, esprite[espId].memberNo, attr);
 }
 
-void espAttrReset(s16 arg0, u16 arg1) {
-    HuSprAttrReset(gid, esprite[arg0][0], arg1);
+void espAttrReset(s16 espId, u16 attr) {
+    HuSprAttrReset(gid, esprite[espId].memberNo, attr);
 }
 
-void espPosSet(s16 arg0, float arg1, float arg2) {
-    HuSprPosSet(gid, esprite[arg0][0], arg1, arg2);
+void espPosSet(s16 espId, float posX, float posY) {
+    HuSprPosSet(gid, esprite[espId].memberNo, posX, posY);
 }
 
-void espScaleSet(s16 arg0, float arg1, float arg2) {
-    HuSprScaleSet(gid, esprite[arg0][0], arg1, arg2);
+void espScaleSet(s16 espId, float scaleX, float scaleY) {
+    HuSprScaleSet(gid, esprite[espId].memberNo, scaleX, scaleY);
 }
 
-void espZRotSet(s16 arg0, float arg1) {
-    HuSprZRotSet(gid, esprite[arg0][0], arg1);
+void espZRotSet(s16 espId, float zRot) {
+    HuSprZRotSet(gid, esprite[espId].memberNo, zRot);
 }
 
-void espTPLvlSet(s16 arg0, float arg1) {
-    HuSprTPLvlSet(gid, esprite[arg0][0], arg1);
+void espTPLvlSet(s16 espId, float tpLvl) {
+    HuSprTPLvlSet(gid, esprite[espId].memberNo, tpLvl);
 }
 
-void espColorSet(s16 arg0, u8 arg1, u8 arg2, u8 arg3) {
-    HuSprColorSet(gid, esprite[arg0][0], arg1, arg2, arg3);
+void espColorSet(s16 espId, u8 r, u8 g, u8 b) {
+    HuSprColorSet(gid, esprite[espId].memberNo, r, g, b);
 }
 
-void espSpeedSet(s16 arg0, float arg1) {
-    HuSprSpeedSet(gid, esprite[arg0][0], arg1);
+void espSpeedSet(s16 espId, float speed) {
+    HuSprSpeedSet(gid, esprite[espId].memberNo, speed);
 }
 
-void espBankSet(s16 arg0, s16 arg1) {
-    HuSprBankSet(gid, esprite[arg0][0], arg1);
+void espBankSet(s16 espId, s16 bank) {
+    HuSprBankSet(gid, esprite[espId].memberNo, bank);
 }
 
-void espDrawNoSet(s16 arg0, s16 arg1) {
-    HuSprDrawNoSet(gid, esprite[arg0][0], arg1);
+void espDrawNoSet(s16 espId, s16 drawNo) {
+    HuSprDrawNoSet(gid, esprite[espId].memberNo, drawNo);
 }
 
-void espPriSet(s16 arg0, s16 arg1) {
-    HuSprPriSet(gid, esprite[arg0][0], arg1);
+void espPriSet(s16 espId, s16 pri) {
+    HuSprPriSet(gid, esprite[espId].memberNo, pri);
 }

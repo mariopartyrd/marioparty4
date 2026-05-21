@@ -3,6 +3,7 @@
 
 #include "dolphin.h"
 #include "game/data.h"
+#include "game/humath.h"
 #include "game/memory.h"
 
 #define HUSPR_MAX 384
@@ -23,75 +24,75 @@
 
 #include "game/animdata.h"
 
-typedef void (*HuSprFunc)(struct hu_sprite *);
+#define HuSprAnimReadFile(data_id) (HuSprAnimRead(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
 
-typedef struct hu_sprite {
+typedef struct HuSprite_s HUSPRITE;
+
+typedef s16 HUSPRID;
+typedef s16 HUSPRGRPID;
+
+typedef void (*HUSPRFUNC)(HUSPRITE *);
+
+typedef struct HuSprite_s {
     u8 r;
     u8 g;
     u8 b;
-    u8 draw_no;
-    s16 frame;
+    u8 drawNo;
+    s16 animNo;
     s16 bank;
     s16 attr;
-    s16 dirty_flag;
+    s16 dirty;
     s16 prio;
     float time;
-    float x;
-    float y;
-    float z_rot;
-    float scale_x;
-    float scale_y;
+    HuVec2f pos;
+    float zRot;
+    HuVec2f scale;
     float speed;
     float a;
-    GXTexWrapMode wrap_s;
-    GXTexWrapMode wrap_t;
-    s16 tex_scale_x;
-    s16 tex_scale_y;
-    Mtx *group_mtx;
+    GXTexWrapMode wrapS;
+    GXTexWrapMode wrapT;
+    s16 uvScaleX;
+    s16 uvScaleY;
+    Mtx *groupMtx;
     union {
         ANIMDATA *data;
-        HuSprFunc func;
+        HUSPRFUNC func;
     };
-    ANIMPAT *pat_data;
-    ANIMFRAME *frame_data;
+    ANIMPAT *patP;
+    ANIMFRAME *frameP;
     s16 work[4];
     ANIMDATA *bg;
-    u16 bg_bank;
-    s16 scissor_x;
-    s16 scissor_y;
-    s16 scissor_w;
-    s16 scissor_h;
-} HuSprite;
+    u16 bgBank;
+    s16 scissorX;
+    s16 scissorY;
+    s16 scissorW;
+    s16 scissorH;
+};
 
-typedef struct hu_spr_grp {
+typedef struct HuSprGrp_s {
     s16 capacity;
-    float x;
-    float y;
-    float z_rot;
-    float scale_x;
-    float scale_y;
-    float center_x;
-    float center_y;
+    HuVec2f pos;
+    float zRot;
+    HuVec2f scale;
+    HuVec2f center;
     s16 *members;
     Mtx mtx;
-} HuSprGrp;
+} HUSPRGRP;
 
-extern HuSprite HuSprData[HUSPR_MAX];
-extern HuSprGrp HuSprGrpData[HUSPR_GRP_MAX];
-
-#define HuSprAnimReadFile(data_id) (HuSprAnimRead(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
+extern HUSPRITE HuSprData[HUSPR_MAX];
+extern HUSPRGRP HuSprGrpData[HUSPR_GRP_MAX];
 
 void HuSprInit(void);
 void HuSprClose(void);
 void HuSprExec(s16 draw_no);
 void HuSprBegin(void);
-HuSprite *HuSprCall(void);
+HUSPRITE *HuSprCall(void);
 void HuSprFinish(void);
 void HuSprPauseSet(BOOL value);
 ANIMDATA *HuSprAnimRead(void *data);
 void HuSprAnimLock(ANIMDATA *anim);
 s16 HuSprCreate(ANIMDATA *anim, s16 prio, s16 bank);
-s16 HuSprFuncCreate(HuSprFunc func, s16 prio);
+s16 HuSprFuncCreate(HUSPRFUNC func, s16 prio);
 s16 HuSprGrpCreate(s16 capacity);
 s16 HuSprGrpCopy(s16 group);
 void HuSprGrpMemberSet(s16 group, s16 member, s16 sprite);
@@ -126,7 +127,7 @@ void HuSprSprBGSet(s16 sprite, ANIMDATA *bg, s16 bg_bank);
 void AnimDebug(ANIMDATA *anim);
 
 void HuSprDispInit(void);
-void HuSprDisp(HuSprite *sprite);
+void HuSprDisp(HUSPRITE *sprite);
 #if !defined(HUSPR_USE_OLD_DEFS) || !defined(__MWERKS__)
 void HuSprTexLoad(ANIMDATA *anim, s16 bmp, s16 slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter);
 #endif

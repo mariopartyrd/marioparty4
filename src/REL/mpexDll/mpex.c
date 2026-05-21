@@ -2079,15 +2079,15 @@ void fn_1_BB34(s32 arg0, s32 arg1)
 {
     float sp10[2];
     s32 var_r31;
-    HuSprGrp *var_r30;
-    HuSprite *var_r29;
+    HUSPRGRP *var_r30;
+    HUSPRITE *var_r29;
 
     var_r30 = &HuSprGrpData[winData[arg0].group];
     HuWinMesMaxSizeGet(1, sp10, arg1);
     for (var_r31 = 0; var_r31 < var_r30->capacity; var_r31++) {
         var_r29 = &HuSprData[var_r30->members[var_r31]];
-        var_r29->x -= sp10[0] / 2;
-        var_r29->y -= 30.0f;
+        var_r29->pos.x -= sp10[0] / 2;
+        var_r29->pos.y -= 30.0f;
     }
 }
 

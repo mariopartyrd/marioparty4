@@ -4,21 +4,21 @@
 #include "dolphin.h"
 
 void espInit(void);
-s16 espEntry(s32 arg0, s16 arg1, s16 arg2);
-void espKill(s16 arg0);
+s16 espEntry(unsigned int dataNum, s16 prio, s16 bank);
+void espKill(s16 espId);
 s16 espGrpIDGet(void);
-void espDispOn(s16 arg0);
-void espDispOff(s16 arg0);
-void espAttrSet(s16 arg0, u16 arg1);
-void espAttrReset(s16 arg0, u16 arg1);
-void espPosSet(s16 arg0, float arg1, float arg2);
-void espScaleSet(s16 arg0, float arg1, float arg2);
-void espZRotSet(s16 arg0, float arg1);
-void espTPLvlSet(s16 arg0, float arg1);
-void espColorSet(s16 arg0, u8 arg1, u8 arg2, u8 arg3);
-void espSpeedSet(s16 arg0, float arg1);
-void espBankSet(s16 arg0, s16 arg1);
-void espDrawNoSet(s16 arg0, s16 arg1);
-void espPriSet(s16 arg0, s16 arg1);
+void espDispOn(s16 espId);
+void espDispOff(s16 espId);
+void espAttrSet(s16 espId, u16 attr);
+void espAttrReset(s16 espId, u16 attr);
+void espPosSet(s16 espId, float posX, float posY);
+void espScaleSet(s16 espId, float scaleX, float scaleY);
+void espZRotSet(s16 espId, float zRot);
+void espTPLvlSet(s16 espId, float tpLvl);
+void espColorSet(s16 espId, u8 r, u8 g, u8 b);
+void espSpeedSet(s16 espId, float speed);
+void espBankSet(s16 espId, s16 bank);
+void espDrawNoSet(s16 espId, s16 drawNo);
+void espPriSet(s16 espId, s16 pri);
 
 #endif
