@@ -73,7 +73,7 @@ void fn_1_D8D0(void)
 
 void fn_1_DE3C(void)
 {
-    AnimData *numAnim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGMODE, 53), MEMORY_DEFAULT_NUM));
+    ANIMDATA *numAnim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGMODE, 53), MEMORY_DEFAULT_NUM));
     s16 i;
     for (i = 0; i < 6; i++) {
         s16 window = HuWinCreate(0, (i * 24), 268, 32, 0);

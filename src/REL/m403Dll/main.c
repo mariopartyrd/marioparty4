@@ -122,8 +122,8 @@ static s32 fn_1_3894(void);
 static void fn_1_3B80(omObjData *arg0);
 static void fn_1_3D6C(Vec *arg0, Vec *arg1);
 static void fn_1_3E4C(omObjData *arg0);
-static s16 fn_1_400C(s32 arg0, s16 arg1, ParticleHook arg2);
-static void fn_1_40A8(ModelData *model, ParticleData *particle, Mtx matrix);
+static s16 fn_1_400C(s32 arg0, s16 arg1, HU3DPARTICLEHOOK arg2);
+static void fn_1_40A8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 static s32 fn_1_4528(void);
 static float fn_1_457C(float arg0, float arg1, float arg2);
 static void fn_1_46E4(Mtx arg0, float arg1, float arg2, float arg3);
@@ -172,7 +172,7 @@ static u8 lbl_1_data_38_unused[0xC] = { 0 };
 
 void ObjectSetup(void)
 {
-    LightData *var_r28;
+    HU3DLIGHT *var_r28;
     Process *temp_r31;
     omObjData *var_r29;
     s32 temp_r27;
@@ -184,7 +184,7 @@ void ObjectSetup(void)
     var_r26 = Hu3DGLightCreateV(&lbl_1_data_4, &lbl_1_data_10, &lbl_1_data_1C);
     Hu3DGLightInfinitytSet(var_r26);
     var_r28 = &Hu3DGlobalLight[0];
-    var_r28->unk_00 |= 0x8000;
+    var_r28->type |= 0x8000;
     temp_r31 = omInitObjMan(50, 0x2000);
     temp_r27 = frand() & 0x1F;
     for (i = 0; i < temp_r27; i++) {
@@ -1046,7 +1046,7 @@ static void fn_1_2FDC(omObjData *arg0)
             break;
         case 3:
             var_r27 = 0;
-            if (Hu3DData[temp_r25].unk_0C == -1 && CharMotionEndCheck(temp_r31->unk01)) {
+            if (Hu3DData[temp_r25].motIdShift == -1 && CharMotionEndCheck(temp_r31->unk01)) {
                 temp_r31->unk48 += -146.0f/REFRESH_RATE;
             }
             else {
@@ -1284,22 +1284,22 @@ static void fn_1_3E4C(omObjData *arg0)
     }
 }
 
-static s16 fn_1_400C(s32 arg0, s16 arg1, ParticleHook arg2)
+static s16 fn_1_400C(s32 arg0, s16 arg1, HU3DPARTICLEHOOK arg2)
 {
-    AnimData *var_r29;
-    ParticleData *temp_r31;
+    ANIMDATA *var_r29;
+    HU3DPARTICLE *temp_r31;
     s32 temp_r30;
 
     var_r29 = HuSprAnimRead(HuDataReadNum(arg0, MEMORY_DEFAULT_NUM));
     temp_r30 = Hu3DParticleCreate(var_r29, arg1);
     Hu3DParticleHookSet(temp_r30, arg2);
-    temp_r31 = Hu3DData[temp_r30].unk_120;
+    temp_r31 = Hu3DData[temp_r30].hookData;
     temp_r31->unk_2E = temp_r30;
-    temp_r31->unk_00 = temp_r31->unk_02 = 0;
+    temp_r31->dataCnt = temp_r31->emitCnt = 0;
     return temp_r30;
 }
 
-static void fn_1_40A8(ModelData *model, ParticleData *particle, Mtx matrix)
+static void fn_1_40A8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     float temp_f31;
     float temp_f30;
@@ -1309,43 +1309,43 @@ static void fn_1_40A8(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 i;
 
     sp8 = 0;
-    switch (particle->unk_00) {
+    switch (particle->dataCnt) {
         case 0:
-            temp_f29 = 360.0f / particle->unk_30;
+            temp_f29 = 360.0f / particle->maxCnt;
             var_r31 = particle->data;
-            for (i = 0; i < particle->unk_30; i++, var_r31++) {
-                var_r31->unk08.x = sind(temp_f29 * i) * (1.0f + 6.0f * ((fn_1_4528() - 0x8000) / 32768.0f) * 0.1f);
-                var_r31->unk08.y = 0.0f;
-                var_r31->unk08.z = cosd(temp_f29 * i) * (1.0f + 6.0f * ((fn_1_4528() - 0x8000) / 32768.0f) * 0.1f);
-                var_r31->unk34.x = 0.0f;
-                var_r31->unk34.y = 0.0f;
-                var_r31->unk34.z = 0.0f;
+            for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+                var_r31->vel.x = sind(temp_f29 * i) * (1.0f + 6.0f * ((fn_1_4528() - 0x8000) / 32768.0f) * 0.1f);
+                var_r31->vel.y = 0.0f;
+                var_r31->vel.z = cosd(temp_f29 * i) * (1.0f + 6.0f * ((fn_1_4528() - 0x8000) / 32768.0f) * 0.1f);
+                var_r31->pos.x = 0.0f;
+                var_r31->pos.y = 0.0f;
+                var_r31->pos.z = 0.0f;
             }
-            particle->unk_02 = REFRESH_RATE/2;
-            particle->unk_00++;
+            particle->emitCnt = REFRESH_RATE/2;
+            particle->dataCnt++;
             /* fallthrough */
         case 1:
-            particle->unk_02--;
-            temp_f31 = ((REFRESH_RATE/2.0f) - particle->unk_02) / (REFRESH_RATE/2.0f);
-            temp_f30 = particle->unk_02 / (REFRESH_RATE/2.0f);
+            particle->emitCnt--;
+            temp_f31 = ((REFRESH_RATE/2.0f) - particle->emitCnt) / (REFRESH_RATE/2.0f);
+            temp_f30 = particle->emitCnt / (REFRESH_RATE/2.0f);
             var_r31 = particle->data;
-            for (i = 0; i < particle->unk_30; i++, var_r31++) {
-                var_r31->unk34.x += 5.0f * temp_f30 * var_r31->unk08.x;
-                var_r31->unk34.y = 20.0f;
-                var_r31->unk34.z += 5.0f * temp_f30 * var_r31->unk08.z;
-                var_r31->unk2C = 20.0f + 60.0f * temp_f31;
-                var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = 0xFF;
-                var_r31->unk40.a = 64.0f * (1.0f - temp_f31 * temp_f31);
+            for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+                var_r31->pos.x += 5.0f * temp_f30 * var_r31->vel.x;
+                var_r31->pos.y = 20.0f;
+                var_r31->pos.z += 5.0f * temp_f30 * var_r31->vel.z;
+                var_r31->scale = 20.0f + 60.0f * temp_f31;
+                var_r31->color.r = var_r31->color.g = var_r31->color.b = 0xFF;
+                var_r31->color.a = 64.0f * (1.0f - temp_f31 * temp_f31);
             }
-            if (particle->unk_02 == 0) {
-                particle->unk_00++;
+            if (particle->emitCnt == 0) {
+                particle->dataCnt++;
             }
             break;
         case 2:
             Hu3DModelKill(particle->unk_2E);
             return;
     }
-    DCFlushRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
+    DCFlushRange(particle->data, particle->maxCnt * sizeof(HU3DPARTICLEDATA));
 }
 
 static s32 fn_1_4528(void)

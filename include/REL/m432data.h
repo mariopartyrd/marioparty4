@@ -1207,7 +1207,7 @@ UnkM432DllData1794Struct lbl_1_data_1794 = { 105.0f * REFRESH_RATE, 0.7f, 10.0f,
 UnkM432DllData1794Struct lbl_1_data_17B4 = { 95.0f * REFRESH_RATE, 0.8f, 8.0f, 0.6f, 1.0f, 0, 4, 5 };
 UnkM432DllData1794Struct lbl_1_data_17D4 = { 85.0f * REFRESH_RATE, 0.9f, 6.0f, 0.8f, 1.0f, 0, 6, 4 };
 UnkM432DllData1794Struct lbl_1_data_17F4 = { 75.0f * REFRESH_RATE, 1.0f, 4.0f, 1.0f, 1.0f, 0, 8, 3 };
-HsfanimStruct00 lbl_1_data_1814 = {
+HU3DPARMANPARAM lbl_1_data_1814 = {
     0x1E,
     { 0, 0 },
     1.0f,

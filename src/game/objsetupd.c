@@ -69,7 +69,7 @@ s16* stepFrameTable[] = {
 };
 
 void fn_8003FF68(ModelSetupEntry* setupList) {
-    ModelData* modelData;
+    HU3DMODEL* modelData;
     s16 modelId;
     s16 j, i;
     ModelSetupEntry* entry;
@@ -90,8 +90,8 @@ void fn_8003FF68(ModelSetupEntry* setupList) {
             Hu3DModelRotSetV(modelId, &entry->rot);
             Hu3DModelScaleSetV(modelId, &entry->scale);
             modelData = &Hu3DData[modelId];
-            if (modelData->unk_08 != -1) {
-                motionTable[j] = modelData->unk_08;
+            if (modelData->motId != -1) {
+                motionTable[j] = modelData->motId;
             }
         } else if (entry->type == 1) {
             data = HuDataSelHeapReadNum(entry->dataNum, MEMORY_DEFAULT_NUM, HEAP_DATA);
@@ -179,7 +179,7 @@ void fn_80040374(s16 tableIdx, s16 animIdx, s16 modelIdx, s16 motionId) {
 }
 
 void fn_8004040C(void) {
-    ModelData* modelData;
+    HU3DMODEL* modelData;
     s16* frames;
     FootstepWork* work;
     Process* process;
@@ -190,9 +190,9 @@ void fn_8004040C(void) {
     frames = stepFrameTable[work->tableIdx];
 
     while (1) {
-        if (modelData->unk_08 == work->motionId &&
-            (modelData->unk_64 == (frames[work->animIdx * 2] & 0xFFE) ||
-            modelData->unk_64 == (frames[work->animIdx * 2 + 1] & 0xFFE))) {
+        if (modelData->motId == work->motionId &&
+            (modelData->motWork.time == (frames[work->animIdx * 2] & 0xFFE) ||
+            modelData->motWork.time == (frames[work->animIdx * 2 + 1] & 0xFFE))) {
             HuAudFXPlay(0);
         }
         HuPrcVSleep();        

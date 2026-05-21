@@ -44,7 +44,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ StructBssD0Data *unk00;
-    /* 0x04 */ AnimData *unk04;
+    /* 0x04 */ ANIMDATA *unk04;
 } StructM423_00; // Size 8
 
 typedef struct {
@@ -106,13 +106,13 @@ typedef struct struct_m423_05 {
     /* 0x2C */ s32 unk2C;
     /* 0x30 */ u32 unk30;
     /* 0x34 */ s32 unk34;
-    /* 0x38 */ AnimData *unk38;
+    /* 0x38 */ ANIMDATA *unk38;
     /* 0x3C */ StructM423_04 *unk3C;
     /* 0x40 */ Vec *unk40;
     /* 0x44 */ float (*unk44)[2];
     /* 0x48 */ void *unk48;
     /* 0x4C */ void *unk4C;
-    /* 0x50 */ ModelData *unk50;
+    /* 0x50 */ HU3DMODEL *unk50;
 } StructM423_05; // Size 0x54
 
 typedef struct {
@@ -158,7 +158,7 @@ typedef struct {
 
 typedef struct {
     /* 0x000 */ StructM423_0A unk00[16];
-    /* 0x200 */ AnimData *unk200;
+    /* 0x200 */ ANIMDATA *unk200;
     /* 0x204 */ s32 unk204;
     /* 0x208 */ void *unk208;
     /* 0x20C */ StructM423_08 *unk20C;
@@ -291,7 +291,7 @@ typedef struct {
 typedef struct {
     /* 0x00 */ s32 unk00;
     /* 0x04 */ s32 unk04;
-    /* 0x08 */ AnimData *unk08;
+    /* 0x08 */ ANIMDATA *unk08;
 } StructBssA4Data; // Size 0xC
 
 void fn_1_318(omObjData *arg0);
@@ -302,17 +302,17 @@ void fn_1_F10(void);
 void fn_1_F60(omObjData *arg0);
 void fn_1_11A4(omObjData *arg0);
 void fn_1_1238(void);
-void fn_1_12A0(ModelData *arg0, Mtx arg1);
+void fn_1_12A0(HU3DMODEL *arg0, Mtx arg1);
 s32 fn_1_13A0(StructBssD0Data *arg0);
 void fn_1_1444(s32 arg0);
-void fn_1_14A0(ModelData *arg0, Mtx arg1);
+void fn_1_14A0(HU3DMODEL *arg0, Mtx arg1);
 s32 fn_1_18FC(void);
-void fn_1_1B5C(ModelData *arg0, StructM423_02 *arg1);
-void fn_1_1F5C(ModelData *arg0, StructM423_02 *arg1);
-void fn_1_2290(ModelData *arg0, StructM423_02 *arg1);
-void fn_1_2624(ModelData *arg0, StructM423_02 *arg1);
+void fn_1_1B5C(HU3DMODEL *arg0, StructM423_02 *arg1);
+void fn_1_1F5C(HU3DMODEL *arg0, StructM423_02 *arg1);
+void fn_1_2290(HU3DMODEL *arg0, StructM423_02 *arg1);
+void fn_1_2624(HU3DMODEL *arg0, StructM423_02 *arg1);
 void fn_1_29B8(s32 arg0);
-void fn_1_29BC(ModelData *arg0, Mtx arg1);
+void fn_1_29BC(HU3DMODEL *arg0, Mtx arg1);
 void fn_1_2C08(s32 arg0);
 void fn_1_34D8(void);
 void fn_1_3528(omObjData *arg0);
@@ -358,7 +358,7 @@ void fn_1_E460(void);
 void fn_1_E4EC(omObjData *arg0);
 void fn_1_E60C(void);
 s32 fn_1_E678(void);
-void fn_1_EF44(ModelData *arg0, Mtx arg1);
+void fn_1_EF44(HU3DMODEL *arg0, Mtx arg1);
 s32 fn_1_F574(Vec arg0, float arg1, s32 arg2);
 void fn_1_F690(void);
 void fn_1_F6E0(omObjData *arg0);
@@ -371,8 +371,8 @@ void fn_1_10540(s32 arg0, s32 arg1, s32 arg2, float arg3);
 void fn_1_106D8(s32 arg0);
 void fn_1_10BC8(void);
 void fn_1_11008(StructBssD0Data *arg0, void *arg1, s16 arg2, GXTexWrapMode arg3, s32 arg4, s32 arg5);
-s16 fn_1_11114(AnimData *arg0, s16 arg1);
-void fn_1_11900(ModelData *arg0, Mtx arg1);
+s16 fn_1_11114(ANIMDATA *arg0, s16 arg1);
+void fn_1_11900(HU3DMODEL *arg0, Mtx arg1);
 float fn_1_121DC(float arg0, float arg1);
 float fn_1_122F4(float arg0, float arg1, float arg2);
 float fn_1_12544(float arg0, float arg1, float arg2);
@@ -442,7 +442,7 @@ Vec lbl_1_data_1EC = { 0.0f, 0.0f, -450.0f };
 void ObjectSetup(void)
 {
     Process *var_r30;
-    CameraData *var_r29;
+    HU3DCAMERA *var_r29;
     s32 i;
 
     OSReport("******* M426ObjectSetup *********\n");
@@ -512,7 +512,7 @@ s32 lbl_1_data_250[] = {
 
 void fn_1_3B0(omObjData *arg0)
 {
-    CameraData *var_r28;
+    HU3DCAMERA *var_r28;
     float var_f31;
     s32 temp_r27;
     s32 var_r30;
@@ -723,7 +723,7 @@ void fn_1_F10(void)
 void fn_1_F60(omObjData *arg0)
 {
     StructBssD0Data *temp_r30;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r29;
 
     temp_r30 = arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r30), MEMORY_DEFAULT_NUM);
     memset(temp_r30, 0, sizeof(*temp_r30));
@@ -739,11 +739,11 @@ void fn_1_F60(omObjData *arg0)
     arg0->model[3] = Hu3DHookFuncCreate(fn_1_12A0);
     Hu3DModelCameraSet(arg0->model[3], 2);
     temp_r29 = &Hu3DData[arg0->model[3]];
-    temp_r29->unk_120 = temp_r30;
+    temp_r29->hookData = temp_r30;
     temp_r30->unk00 = 160;
     temp_r30->unk04 = 160;
     temp_r30->unk08 = GXGetTexBufferSize(temp_r30->unk00, temp_r30->unk04, 5, 0, 0);
-    temp_r30->unk10 = HuMemDirectMallocNum(HEAP_DATA, temp_r30->unk08, (u32)temp_r29->unk_48);
+    temp_r30->unk10 = HuMemDirectMallocNum(HEAP_DATA, temp_r30->unk08, (u32)temp_r29->mallocNo);
     temp_r30->unk0C = 0.0f;
     arg0->model[4] = fn_1_13A0(temp_r30);
     Hu3DModelCameraSet(arg0->model[4], 5);
@@ -774,12 +774,12 @@ void fn_1_1238(void)
 
 GXColor lbl_1_data_298 = { 0x00, 0x00, 0x00, 0xFF };
 
-void fn_1_12A0(ModelData *arg0, Mtx arg1)
+void fn_1_12A0(HU3DMODEL *arg0, Mtx arg1)
 {
     StructBssD0Data *temp_r31;
-    CameraData *var_r30;
+    HU3DCAMERA *var_r30;
 
-    temp_r31 = arg0->unk_120;
+    temp_r31 = arg0->hookData;
     var_r30 = &Hu3DCamera[1];
     if (var_r30->fov <= 0.0f) {
         return;
@@ -797,12 +797,12 @@ void fn_1_12A0(ModelData *arg0, Mtx arg1)
 s32 fn_1_13A0(StructBssD0Data *arg0)
 {
     StructM423_00 *var_r31;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     s32 var_r29;
 
     var_r29 = Hu3DHookFuncCreate(fn_1_14A0);
     temp_r30 = &Hu3DData[var_r29];
-    var_r31 = temp_r30->unk_120 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r31), temp_r30->unk_48);
+    var_r31 = temp_r30->hookData = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r31), temp_r30->mallocNo);
     memset(var_r31, 0, sizeof(*var_r31));
     var_r31->unk00 = arg0;
     var_r31->unk04 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M423, 21), MEMORY_DEFAULT_NUM));
@@ -812,11 +812,11 @@ s32 fn_1_13A0(StructBssD0Data *arg0)
 void fn_1_1444(s32 arg0)
 {
     StructM423_00 *var_r31;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
 
     if (arg0 >= 0) {
         var_r30 = &Hu3DData[arg0];
-        var_r31 = var_r30->unk_120;
+        var_r31 = var_r30->hookData;
         HuSprAnimKill(var_r31->unk04);
     }
 }
@@ -831,16 +831,16 @@ GXColor lbl_1_data_30C[] = { { 0x40, 0x40, 0x40, 0xFF } };
 
 GXColor lbl_1_data_310 = { 0x00, 0x00, 0x00, 0x80 };
 
-void fn_1_14A0(ModelData *arg0, Mtx arg1)
+void fn_1_14A0(HU3DMODEL *arg0, Mtx arg1)
 {
-    CameraData *var_r28;
+    HU3DCAMERA *var_r28;
     StructM423_00 *temp_r29;
     StructBssD0Data *temp_r30;
     Mtx spC;
     s16 i;
 
     var_r28 = &Hu3DCamera[2];
-    temp_r29 = arg0->unk_120;
+    temp_r29 = arg0->hookData;
     temp_r30 = temp_r29->unk00;
     if (temp_r30->unk0C != 0) {
         if (var_r28->fov <= 0.0f) {
@@ -911,7 +911,7 @@ Vec lbl_1_data_334[] = { { 0.0f, 100.0f, -1100.0f }, { 0.0f, 200.0f, -1000.0f },
 
 s32 fn_1_18FC(void)
 {
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     StructM423_03 *var_r29;
     StructM423_02 *temp_r31;
     s32 var_r27;
@@ -919,11 +919,11 @@ s32 fn_1_18FC(void)
 
     var_r27 = Hu3DHookFuncCreate(fn_1_29BC);
     temp_r30 = &Hu3DData[var_r27];
-    var_r29 = temp_r30->unk_120 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r29), temp_r30->unk_48);
+    var_r29 = temp_r30->hookData = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r29), temp_r30->mallocNo);
     memset(var_r29, 0, sizeof(*var_r29));
     var_r29->unk00 = var_r27;
     var_r29->unk02 = 4;
-    temp_r31 = var_r29->unk04 = HuMemDirectMallocNum(HEAP_DATA, var_r29->unk02 * sizeof(*temp_r31), temp_r30->unk_48);
+    temp_r31 = var_r29->unk04 = HuMemDirectMallocNum(HEAP_DATA, var_r29->unk02 * sizeof(*temp_r31), temp_r30->mallocNo);
     memset(temp_r31, 0, var_r29->unk02 * sizeof(*temp_r31));
     for (i = 0; i < var_r29->unk02; i++) {
         temp_r31 = &var_r29->unk04[i];
@@ -931,13 +931,13 @@ s32 fn_1_18FC(void)
         temp_r31->unk04 = lbl_1_data_314[i][1];
         temp_r31->unk00 = temp_r31->unk02 * temp_r31->unk04;
         temp_r31->unk08 = lbl_1_data_334[i];
-        temp_r31->unk14 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk14), temp_r30->unk_48);
+        temp_r31->unk14 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk14), temp_r30->mallocNo);
         memset(temp_r31->unk14, 0, temp_r31->unk00 * sizeof(*temp_r31->unk14));
-        temp_r31->unk18 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk18), temp_r30->unk_48);
+        temp_r31->unk18 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk18), temp_r30->mallocNo);
         memset(temp_r31->unk18, 0, temp_r31->unk00 * sizeof(*temp_r31->unk18));
-        temp_r31->unk1C = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk1C), temp_r30->unk_48);
+        temp_r31->unk1C = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk1C), temp_r30->mallocNo);
         memset(temp_r31->unk1C, 0, temp_r31->unk00 * sizeof(*temp_r31->unk1C));
-        temp_r31->unk20 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk20), temp_r30->unk_48);
+        temp_r31->unk20 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk00 * sizeof(*temp_r31->unk20), temp_r30->mallocNo);
         memset(temp_r31->unk20, 0, temp_r31->unk00 * sizeof(*temp_r31->unk20));
         switch (i) {
             case 0:
@@ -961,7 +961,7 @@ Vec lbl_1_data_364[] = { { -200.0f, 0.0f, -1100.0f }, { -200.0f, 200.0f, -1050.0
 
 GXColor lbl_1_data_388 = { 0xFF, 0xFF, 0xFF, 0xFF };
 
-void fn_1_1B5C(ModelData *arg0, StructM423_02 *arg1)
+void fn_1_1B5C(HU3DMODEL *arg0, StructM423_02 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -1002,7 +1002,7 @@ void fn_1_1B5C(ModelData *arg0, StructM423_02 *arg1)
     DCFlushRangeNoSync(arg1->unk14, arg1->unk00 * sizeof(*arg1->unk14));
     DCFlushRangeNoSync(arg1->unk1C, arg1->unk00 * sizeof(*arg1->unk1C));
     PPCSync();
-    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->unk_48);
+    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->mallocNo);
     DCFlushRange(var_r25, 0x10000);
     GXBeginDisplayList(var_r23, 0x10000);
     GXBegin(GX_LINES, GX_VTXFMT0, 9 * 19 * 4);
@@ -1026,7 +1026,7 @@ void fn_1_1B5C(ModelData *arg0, StructM423_02 *arg1)
     if (arg1->unk34 >= 0x10000) {
         OSReport("ERROR! GList test size over! \n");
     }
-    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->unk_48);
+    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->mallocNo);
     memcpy(arg1->unk38, var_r25, arg1->unk34);
     DCFlushRange(arg1->unk38, arg1->unk34);
     HuMemDirectFree(var_r25);
@@ -1035,7 +1035,7 @@ void fn_1_1B5C(ModelData *arg0, StructM423_02 *arg1)
 
 GXColor lbl_1_data_3AB = { 0xFF, 0xFF, 0xFF, 0xFF };
 
-void fn_1_1F5C(ModelData *arg0, StructM423_02 *arg1)
+void fn_1_1F5C(HU3DMODEL *arg0, StructM423_02 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -1064,7 +1064,7 @@ void fn_1_1F5C(ModelData *arg0, StructM423_02 *arg1)
     DCFlushRangeNoSync(arg1->unk14, arg1->unk00 * sizeof(*arg1->unk14));
     DCFlushRangeNoSync(arg1->unk1C, arg1->unk00 * sizeof(*arg1->unk1C));
     PPCSync();
-    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->unk_48);
+    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->mallocNo);
     DCFlushRange(var_r25, 0x10000);
     GXBeginDisplayList(var_r23, 0x10000);
     GXBegin(GX_LINES, GX_VTXFMT0, 6 * 19 * 4);
@@ -1088,7 +1088,7 @@ void fn_1_1F5C(ModelData *arg0, StructM423_02 *arg1)
     if (arg1->unk34 >= 0x10000) {
         OSReport("ERROR! GList test size over! \n");
     }
-    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->unk_48);
+    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->mallocNo);
     memcpy(arg1->unk38, var_r25, arg1->unk34);
     DCFlushRange(arg1->unk38, arg1->unk34);
     HuMemDirectFree(var_r25);
@@ -1096,7 +1096,7 @@ void fn_1_1F5C(ModelData *arg0, StructM423_02 *arg1)
 
 GXColor lbl_1_data_3AF = { 0xFF, 0xFF, 0xFF, 0xFF };
 
-void fn_1_2290(ModelData *arg0, StructM423_02 *arg1)
+void fn_1_2290(HU3DMODEL *arg0, StructM423_02 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -1130,7 +1130,7 @@ void fn_1_2290(ModelData *arg0, StructM423_02 *arg1)
     DCFlushRangeNoSync(arg1->unk14, arg1->unk00 * sizeof(*arg1->unk14));
     DCFlushRangeNoSync(arg1->unk1C, arg1->unk00 * sizeof(*arg1->unk1C));
     PPCSync();
-    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->unk_48);
+    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->mallocNo);
     DCFlushRangeNoSync(var_r25, 0x10000);
     GXBeginDisplayList(var_r23, 0x10000);
     GXBegin(GX_LINES, GX_VTXFMT0, 9 * 9 * 4);
@@ -1154,7 +1154,7 @@ void fn_1_2290(ModelData *arg0, StructM423_02 *arg1)
     if (arg1->unk34 >= 0x10000) {
         OSReport("ERROR! GList test size over! \n");
     }
-    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->unk_48);
+    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->mallocNo);
     memcpy(arg1->unk38, var_r25, arg1->unk34);
     DCFlushRange(arg1->unk38, arg1->unk34);
     HuMemDirectFree(var_r25);
@@ -1162,7 +1162,7 @@ void fn_1_2290(ModelData *arg0, StructM423_02 *arg1)
 
 GXColor lbl_1_data_3B3 = { 0xFF, 0xFF, 0xFF, 0xFF };
 
-void fn_1_2624(ModelData *arg0, StructM423_02 *arg1)
+void fn_1_2624(HU3DMODEL *arg0, StructM423_02 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -1196,7 +1196,7 @@ void fn_1_2624(ModelData *arg0, StructM423_02 *arg1)
     DCFlushRangeNoSync(arg1->unk14, arg1->unk00 * sizeof(*arg1->unk14));
     DCFlushRangeNoSync(arg1->unk1C, arg1->unk00 * sizeof(*arg1->unk1C));
     PPCSync();
-    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->unk_48);
+    var_r23 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, arg0->mallocNo);
     DCFlushRange(var_r25, 0x10000);
     GXBeginDisplayList(var_r23, 0x10000);
     GXBegin(GX_LINES, GX_VTXFMT0, 9 * 9 * 4);
@@ -1220,7 +1220,7 @@ void fn_1_2624(ModelData *arg0, StructM423_02 *arg1)
     if (arg1->unk34 >= 0x10000) {
         OSReport("ERROR! GList test size over! \n");
     }
-    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->unk_48);
+    arg1->unk38 = HuMemDirectMallocNum(HEAP_DATA, arg1->unk34, arg0->mallocNo);
     memcpy(arg1->unk38, var_r25, arg1->unk34);
     DCFlushRange(arg1->unk38, arg1->unk34);
     HuMemDirectFree(var_r25);
@@ -1228,14 +1228,14 @@ void fn_1_2624(ModelData *arg0, StructM423_02 *arg1)
 
 void fn_1_29B8(s32 arg0) { }
 
-void fn_1_29BC(ModelData *arg0, Mtx arg1)
+void fn_1_29BC(HU3DMODEL *arg0, Mtx arg1)
 {
     StructM423_03 *temp_r30;
     StructM423_02 *temp_r31;
     Mtx sp8;
     s16 i;
 
-    temp_r30 = arg0->unk_120;
+    temp_r30 = arg0->hookData;
     GXLoadPosMtxImm(arg1, GX_PNMTX0);
     MTXInvXpose(arg1, sp8);
     GXLoadNrmMtxImm(sp8, GX_PNMTX0);
@@ -1290,8 +1290,8 @@ void fn_1_2C08(s32 arg0)
     StructM423_01 *var_r28;
     StructBssA8Data *var_r31;
     StructM423_03 *var_r17;
-    ModelData *sp20;
-    ModelData *sp1C;
+    HU3DMODEL *sp20;
+    HU3DMODEL *sp1C;
     StructM423_01 *sp18;
     s32 var_r20;
     s32 temp_r19;
@@ -1306,7 +1306,7 @@ void fn_1_2C08(s32 arg0)
     Mtx sp48;
 
     sp20 = &Hu3DData[arg0];
-    var_r17 = sp20->unk_120;
+    var_r17 = sp20->hookData;
     temp_r30 = var_r17->unk04;
     var_r25 = temp_r30->unk14;
     var_r24 = temp_r30->unk18;
@@ -1365,7 +1365,7 @@ void fn_1_2C08(s32 arg0)
             temp_f31 = 0.05 * VECMag(&sp24);
             if (temp_f31 > 0.00001f) {
                 MTXRotAxisRad(sp48, &sp24, temp_f31);
-                MTXConcat(sp48, sp1C->unk_F0, sp1C->unk_F0);
+                MTXConcat(sp48, sp1C->mtx, sp1C->mtx);
             }
             temp_f31 = 0.0133333336f * fabs(var_f29 - (var_r31->unk38.z - 20.0));
             var_r31->unk50.z += temp_f31 * 0.4f;
@@ -1797,7 +1797,7 @@ void fn_1_4778(omObjData *arg0)
     float temp_f30;
     float var_f25;
     StructBssBCData *temp_r31;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r27;
     s32 temp_r26;
     s16 var_r25;
     s16 var_r24;
@@ -1881,7 +1881,7 @@ void fn_1_4778(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
             }
             break;
@@ -1989,7 +1989,7 @@ void fn_1_4778(omObjData *arg0)
             if (var_r24 & PAD_BUTTON_A) {
                 temp_r31->unk16 = 4;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_NONE);
-                temp_r27->unk_88 = VERSION_PAL ? 0.6f : 0.5f;
+                temp_r27->motShiftWork.speed = VERSION_PAL ? 0.6f : 0.5f;
                 temp_r31->unkD4 = sp110;
                 temp_r31->unk18 = 7;
                 temp_r31->unk68 = 0;
@@ -2022,9 +2022,9 @@ void fn_1_4778(omObjData *arg0)
                 temp_r31->unk16 = 5;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_NONE);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f * (0.5f + 1.5f * temp_f29);
+                temp_r27->motShiftWork.speed = 1.2f * (0.5f + 1.5f * temp_f29);
 #else
-                temp_r27->unk_88 = 0.5f + 1.5f * temp_f29;
+                temp_r27->motShiftWork.speed = 0.5f + 1.5f * temp_f29;
 #endif
                 temp_r31->unk18 = 8;
                 temp_r31->unk68 = 0;
@@ -2081,7 +2081,7 @@ void fn_1_4778(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
                 temp_r31->unk18 = 3;
                 temp_r31->unk68 = 0;
@@ -2093,7 +2093,7 @@ void fn_1_4778(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
             }
             break;
@@ -2127,7 +2127,7 @@ void fn_1_5D18(omObjData *arg0)
     float var_f31;
     float var_f29;
     StructBssBCData *temp_r31;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r27;
     s16 var_r26;
     s16 var_r25;
     s16 var_r28;
@@ -2209,7 +2209,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = var_r25;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
             }
             if (temp_r31->unk16 == 1 && CharMotionShiftIDGet(temp_r31->unk02) == -1) {
@@ -2257,7 +2257,7 @@ void fn_1_5D18(omObjData *arg0)
             }
             else if (temp_r31->unk10 & PAD_BUTTON_A) {
                 if (var_r28 > 0) {
-                    temp_r27->unk_0C = -1;
+                    temp_r27->motIdShift = -1;
                     temp_r31->unk16 = 3;
                     CharMotionSet(temp_r31->unk02, arg0->motion[temp_r31->unk16]);
                     CharMotionSpeedSet(temp_r31->unk02, VERSION_PAL ? 1.2f : 1.0f);
@@ -2299,7 +2299,7 @@ void fn_1_5D18(omObjData *arg0)
                     temp_r31->unk18 = 2;
                 }
                 else if (var_r28 < 0) {
-                    temp_r27->unk_0C = -1;
+                    temp_r27->motIdShift = -1;
                     temp_r31->unk16 = 5;
                     CharMotionSet(temp_r31->unk02, arg0->motion[temp_r31->unk16]);
                     CharMotionSpeedSet(temp_r31->unk02, VERSION_PAL ? 1.2f : 1.0f);
@@ -2341,7 +2341,7 @@ void fn_1_5D18(omObjData *arg0)
                     temp_r31->unk18 = 4;
                 }
                 else {
-                    temp_r27->unk_0C = -1;
+                    temp_r27->motIdShift = -1;
                     temp_r31->unk16 = 7;
                     CharMotionSet(temp_r31->unk02, arg0->motion[temp_r31->unk16]);
                     CharMotionSpeedSet(temp_r31->unk02, VERSION_PAL ? 1.2f : 1.0f);
@@ -2370,7 +2370,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 4;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_NONE);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
                 Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_LOOP);
                 Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_SHIFT_LOOP);
@@ -2399,7 +2399,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
                 temp_r31->unk18 = 6;
                 temp_r31->unkAC = 0;
@@ -2421,7 +2421,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 6;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_NONE);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
                 Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_LOOP);
                 Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_SHIFT_LOOP);
@@ -2450,7 +2450,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
                 temp_r31->unk18 = 6;
                 temp_r31->unkAC = 0;
@@ -2470,7 +2470,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_NONE);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
                 Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_LOOP);
                 Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_SHIFT_LOOP);
@@ -2486,7 +2486,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
                 temp_r31->unk18 = 1;
             }
@@ -2497,7 +2497,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 1;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
             }
             if (CharMotionShiftIDGet(temp_r31->unk02) == -1 && temp_r31->unk16 == 1) {
@@ -2513,7 +2513,7 @@ void fn_1_5D18(omObjData *arg0)
                 temp_r31->unk16 = 0;
                 CharMotionShiftSet(temp_r31->unk02, arg0->motion[temp_r31->unk16], 0.0f, REFRESH_RATE_F / 7.5f, HU3D_MOTATTR_LOOP);
 #if VERSION_PAL
-                temp_r27->unk_88 = 1.2f;
+                temp_r27->motShiftWork.speed = 1.2f;
 #endif
             }
             break;
@@ -2654,7 +2654,7 @@ s32 fn_1_7B48(Vec *arg0, Vec *arg1, Vec *arg2, float arg3)
     float var_f26;
     omObjData *temp_r31;
     StructBssBCData *temp_r28;
-    ModelData *sp8;
+    HU3DMODEL *sp8;
 
     if (lbl_1_bss_B8 == NULL) {
         return 0;
@@ -2785,7 +2785,7 @@ void fn_1_8338(omObjData *arg0)
     float var_f31;
     float temp_f30;
     StructBssBCData *temp_r31;
-    ModelData *sp8;
+    HU3DMODEL *sp8;
     s32 var_r29;
 
     temp_r31 = arg0->data;
@@ -2920,7 +2920,7 @@ void fn_1_8CB4(omObjData *arg0)
     float var_f26; // ! - uninitialized
     float temp_f27;
     StructBssBCData *temp_r31;
-    ModelData *sp8;
+    HU3DMODEL *sp8;
     StructBssA8Data *temp_r30;
     s32 var_r28;
     s32 var_r24;
@@ -3062,7 +3062,7 @@ void fn_1_9614(omObjData *arg0)
 {
     StructBssA8Data *var_r28;
     StructBssA8Data *var_r31;
-    ModelData *var_r27;
+    HU3DMODEL *var_r27;
     s32 i;
 
     if (lbl_1_bss_EC[0] == -1) {
@@ -3102,7 +3102,7 @@ void fn_1_9614(omObjData *arg0)
         Hu3DModelCameraSet(var_r31->unk00, 5);
         Hu3DModelShadowSet(var_r31->unk00);
         var_r27 = &Hu3DData[var_r31->unk00];
-        MTXIdentity(var_r27->unk_F0);
+        MTXIdentity(var_r27->mtx);
     }
     fn_1_B430();
     arg0->func = fn_1_98A0;
@@ -3122,7 +3122,7 @@ void fn_1_98A0(omObjData *arg0)
     float var_f22;
     StructBssA8Data *var_r31;
     StructBssA8Data *var_r30;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r27;
     s32 i, j;
     s32 var_r25;
     s32 var_r23;
@@ -3179,7 +3179,7 @@ void fn_1_98A0(omObjData *arg0)
                     var_f31 = 0.05 * VECMag(&spAC);
                     if (var_f31 > 0.00001f) {
                         MTXRotAxisRad(spC4, &spAC, var_f31);
-                        MTXConcat(spC4, temp_r27->unk_F0, temp_r27->unk_F0);
+                        MTXConcat(spC4, temp_r27->mtx, temp_r27->mtx);
                     }
                 }
                 Hu3DModelPosSet(var_r31->unk00, var_r31->unk38.x, var_r31->unk38.y, var_r31->unk38.z);
@@ -3355,7 +3355,7 @@ void fn_1_98A0(omObjData *arg0)
                 var_f31 = 0.05 * VECMag(&spAC);
                 if (var_f31 > 0.00001f) {
                     MTXRotAxisRad(spC4, &spAC, var_f31);
-                    MTXConcat(spC4, temp_r27->unk_F0, temp_r27->unk_F0);
+                    MTXConcat(spC4, temp_r27->mtx, temp_r27->mtx);
                 }
                 Hu3DModelPosSet(var_r31->unk00, var_r31->unk38.x, var_r31->unk38.y, var_r31->unk38.z);
                 break;
@@ -3392,7 +3392,7 @@ void fn_1_A9AC(void)
 s32 fn_1_A9D4(s32 arg0, Vec arg1, Vec arg2)
 {
     StructBssA8Data *var_r31;
-    ModelData *temp_r26;
+    HU3DMODEL *temp_r26;
     s32 var_r27;
     s32 i;
 
@@ -3435,7 +3435,7 @@ s32 fn_1_A9D4(s32 arg0, Vec arg1, Vec arg2)
     Hu3DModelPosSet(var_r31->unk00, var_r31->unk38.x, var_r31->unk38.y, var_r31->unk38.z);
     Hu3DModelRotSet(var_r31->unk00, var_r31->unk44, var_r31->unk48, var_r31->unk4C);
     Hu3DModelAttrReset(var_r31->unk00, HU3D_ATTR_DISPOFF);
-    MTXIdentity(temp_r26->unk_F0);
+    MTXIdentity(temp_r26->mtx);
     return i;
 }
 
@@ -4172,9 +4172,9 @@ void fn_1_D930(void)
 {
     omObjData *var_r30;
     StructBssA4Data *var_r31;
-    AnimData *var_r27;
+    ANIMDATA *var_r27;
     StructM423_05 *var_r29;
-    ModelData *var_r28;
+    HU3DMODEL *var_r28;
     s32 sp8;
 
     var_r30 = lbl_1_bss_A4 = omAddObjEx(lbl_1_bss_120, 0xBF, 0, 0, -1, fn_1_DA38);
@@ -4186,14 +4186,14 @@ void fn_1_D930(void)
     Hu3DModelLayerSet(var_r31->unk00, 1);
     var_r31->unk04 = 0;
     var_r28 = &Hu3DData[var_r31->unk00];
-    var_r29 = var_r28->unk_120;
+    var_r29 = var_r28->hookData;
     var_r29->unk20 = 0;
 }
 
 void fn_1_DA38(omObjData *arg0)
 {
     StructBssA4Data *temp_r30;
-    ModelData *var_r27;
+    HU3DMODEL *var_r27;
     StructM423_05 *temp_r29;
     StructM423_04 *var_r31;
     s32 i;
@@ -4205,7 +4205,7 @@ void fn_1_DA38(omObjData *arg0)
     }
     Hu3DModelAttrReset(temp_r30->unk00, HU3D_ATTR_DISPOFF);
     var_r27 = &Hu3DData[temp_r30->unk00];
-    temp_r29 = var_r27->unk_120;
+    temp_r29 = var_r27->hookData;
     var_r31 = temp_r29->unk3C;
     temp_r29->unk23 = 0;
     for (i = 0; i < temp_r29->unk26; i++, var_r31++) {
@@ -4246,7 +4246,7 @@ inline s32 fn_1_DC24(Vec arg0, Vec arg1, float arg2, float arg3, float arg4, GXC
 {
     omObjData *var_r27;
     StructBssA4Data *temp_r28;
-    ModelData *var_r26;
+    HU3DMODEL *var_r26;
     StructM423_05 *temp_r30;
     StructM423_04 *var_r31;
     s32 i;
@@ -4254,7 +4254,7 @@ inline s32 fn_1_DC24(Vec arg0, Vec arg1, float arg2, float arg3, float arg4, GXC
     var_r27 = lbl_1_bss_A4;
     temp_r28 = var_r27->data;
     var_r26 = &Hu3DData[temp_r28->unk00];
-    temp_r30 = var_r26->unk_120;
+    temp_r30 = var_r26->hookData;
     var_r31 = temp_r30->unk3C;
     for (i = 0; i < temp_r30->unk26; i++, var_r31++) {
         if (var_r31->unk30 <= 0.0f) {
@@ -4327,7 +4327,7 @@ void fn_1_E1BC(void)
 
 void fn_1_E290(omObjData *arg0)
 {
-    ModelData *var_r28;
+    HU3DMODEL *var_r28;
     s32 temp_r30;
     s32 i;
 
@@ -4345,7 +4345,7 @@ void fn_1_E330(void) { }
 s32 fn_1_E334(Vec arg0, Vec arg1, float arg2)
 {
     omObjData *var_r31;
-    ModelData *var_r26;
+    HU3DMODEL *var_r26;
     s32 temp_r29;
     s32 i;
 
@@ -4381,13 +4381,13 @@ void fn_1_E460(void)
 
 void fn_1_E4EC(omObjData *arg0)
 {
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
     StructM423_0B *var_r28;
     StructM423_0A *var_r31;
     s32 i;
 
     var_r29 = &Hu3DData[arg0->model[0]];
-    var_r28 = var_r29->unk_120;
+    var_r28 = var_r29->hookData;
     var_r31 = var_r28->unk00;
     for (i = 0; i < 16; i++, var_r31++) {
         if (var_r31->unk00 == 0) {
@@ -4410,12 +4410,12 @@ void fn_1_E4EC(omObjData *arg0)
 void fn_1_E60C(void)
 {
     omObjData *temp_r31;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
     StructM423_0B *var_r29;
 
     temp_r31 = lbl_1_bss_9C;
     var_r30 = &Hu3DData[temp_r31->model[0]];
-    var_r29 = var_r30->unk_120;
+    var_r29 = var_r30->hookData;
     HuSprAnimKill(var_r29->unk200);
     temp_r31->func = NULL;
 }
@@ -4428,7 +4428,7 @@ s32 fn_1_E678(void)
     float temp_f30;
     float temp_f29;
     float var_f31;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r27;
     StructM423_0B *var_r30;
     StructM423_09 *var_r29;
     StructM423_08 *var_r28;
@@ -4437,16 +4437,16 @@ s32 fn_1_E678(void)
 
     var_r26 = Hu3DHookFuncCreate(fn_1_EF44);
     temp_r27 = &Hu3DData[var_r26];
-    var_r30 = temp_r27->unk_120 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), temp_r27->unk_48);
+    var_r30 = temp_r27->hookData = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r30), temp_r27->mallocNo);
     memset(var_r30, 0, sizeof(*var_r30));
-    var_r30->unk20C = HuMemDirectMallocNum(HEAP_DATA, 32 * sizeof(*var_r30->unk20C), temp_r27->unk_48);
+    var_r30->unk20C = HuMemDirectMallocNum(HEAP_DATA, 32 * sizeof(*var_r30->unk20C), temp_r27->mallocNo);
     memset(var_r30->unk20C, 0, 32 * sizeof(*var_r30->unk20C));
-    var_r30->unk210 = HuMemDirectMallocNum(HEAP_DATA, 32 * sizeof(*var_r30->unk210), temp_r27->unk_48);
+    var_r30->unk210 = HuMemDirectMallocNum(HEAP_DATA, 32 * sizeof(*var_r30->unk210), temp_r27->mallocNo);
     memset(var_r30->unk210, 0, 32 * sizeof(*var_r30->unk210));
-    var_r30->unk214 = HuMemDirectMallocNum(HEAP_DATA, 5 * sizeof(*var_r30->unk214), temp_r27->unk_48);
+    var_r30->unk214 = HuMemDirectMallocNum(HEAP_DATA, 5 * sizeof(*var_r30->unk214), temp_r27->mallocNo);
     memset(var_r30->unk214, 0, 5 * sizeof(*var_r30->unk214));
     var_r30->unk204 = GXGetTexBufferSize(640, 480, GX_TF_RGB5A3, GX_FALSE, 0);
-    var_r30->unk208 = HuMemDirectMallocNum(HEAP_DATA, var_r30->unk204, temp_r27->unk_48);
+    var_r30->unk208 = HuMemDirectMallocNum(HEAP_DATA, var_r30->unk204, temp_r27->mallocNo);
     DCFlushRange(var_r30->unk208, var_r30->unk204);
     var_r30->unk200 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M423, 23), MEMORY_DEFAULT_NUM));
     var_f31 = 0.0f;
@@ -4536,7 +4536,7 @@ s32 fn_1_E678(void)
 GXColor lbl_1_data_7FC[] = { { 0x66, 0x00, 0x00, 0xFF }, { 0x00, 0x00, 0x66, 0xFF }, { 0x66, 0x00, 0x5B, 0xFF }, { 0x00, 0x66, 0x00, 0xFF },
     { 0x42, 0x00, 0x4C, 0xFF }, { 0x47, 0x28, 0x00, 0xFF }, { 0x66, 0x66, 0x00, 0xFF }, { 0x00, 0x00, 0x00, 0xFF } };
 
-void fn_1_EF44(ModelData *arg0, Mtx arg1)
+void fn_1_EF44(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx sp124;
     Mtx spF4;
@@ -4550,7 +4550,7 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
     StructM423_0A *var_r31;
     s32 i;
 
-    temp_r30 = arg0->unk_120;
+    temp_r30 = arg0->hookData;
     GXSetTexCopySrc(0, 0, 640, 480);
     GXSetTexCopyDst(640, 480, GX_TF_RGB5A3, GX_FALSE);
     GXCopyTex(temp_r30->unk208, GX_FALSE);
@@ -4626,7 +4626,7 @@ void fn_1_EF44(ModelData *arg0, Mtx arg1)
 s32 fn_1_F574(Vec arg0, float arg1, s32 arg2)
 {
     omObjData *var_r29;
-    ModelData *var_r28;
+    HU3DMODEL *var_r28;
     StructM423_0B *var_r26;
     StructM423_0A *var_r31;
     s32 var_r27;
@@ -4634,7 +4634,7 @@ s32 fn_1_F574(Vec arg0, float arg1, s32 arg2)
 
     var_r29 = lbl_1_bss_9C;
     var_r28 = &Hu3DData[var_r29->model[0]];
-    var_r26 = var_r28->unk_120;
+    var_r26 = var_r28->hookData;
     var_r31 = var_r26->unk00;
     for (i = 0; i < 16; i++, var_r31++) {
         if (var_r31->unk00 == 0) {
@@ -4984,7 +4984,7 @@ void fn_1_10BC8(void)
     Vec sp1C;
     Vec sp10;
     GXColor spC;
-    CameraData *var_r31;
+    HU3DCAMERA *var_r31;
 
     var_r31 = &Hu3DCamera[0];
     if (var_r31->fov <= 0.0f) {
@@ -5042,11 +5042,11 @@ void fn_1_11008(StructBssD0Data *arg0, void *arg1, s16 arg2, GXTexWrapMode arg3,
     GXLoadTexObj(&sp18, arg2);
 }
 
-s16 fn_1_11114(AnimData *arg0, s16 arg1)
+s16 fn_1_11114(ANIMDATA *arg0, s16 arg1)
 {
     s16 var_r23;
     s16 i;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r27;
     StructM423_05 *var_r31;
     StructM423_04 *var_r29;
     Vec *var_r25;
@@ -5056,7 +5056,7 @@ s16 fn_1_11114(AnimData *arg0, s16 arg1)
 
     var_r23 = Hu3DHookFuncCreate(fn_1_11900);
     temp_r27 = &Hu3DData[var_r23];
-    temp_r27->unk_120 = var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r31), temp_r27->unk_48);
+    temp_r27->hookData = var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r31), temp_r27->mallocNo);
     var_r31->unk38 = arg0;
     var_r31->unk26 = arg1;
     var_r31->unk20 = 0;
@@ -5068,7 +5068,7 @@ s16 fn_1_11114(AnimData *arg0, s16 arg1)
     var_r31->unk23 = 0;
     var_r31->unk30 = 0;
     var_r31->unk00 = var_r31->unk02 = 0;
-    var_r31->unk3C = var_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(*var_r29), temp_r27->unk_48);
+    var_r31->unk3C = var_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(*var_r29), temp_r27->mallocNo);
     memset(var_r29, 0, arg1 * sizeof(*var_r29));
     for (i = 0; i < arg1; i++, var_r29++) {
         var_r29->unk30 = 0.0f;
@@ -5081,11 +5081,11 @@ s16 fn_1_11114(AnimData *arg0, s16 arg1)
         var_r29->unk44.r = var_r29->unk44.g = var_r29->unk44.b = var_r29->unk44.a = 0xFF;
         var_r29->unk48 = 0;
     }
-    var_r31->unk40 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(*var_r25) * 4, temp_r27->unk_48);
+    var_r31->unk40 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(*var_r25) * 4, temp_r27->mallocNo);
     for (i = 0; i < arg1 * 4; i++, var_r25++) {
         var_r25->x = var_r25->y = var_r25->z = 0.0f;
     }
-    var_r31->unk44 = var_r28 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(*var_r28) * 4, temp_r27->unk_48);
+    var_r31->unk44 = var_r28 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(*var_r28) * 4, temp_r27->mallocNo);
     for (i = 0; i < arg1; i++) {
         (*var_r28)[0] = 0.0f;
         (*var_r28)[1] = 0.0f;
@@ -5100,7 +5100,7 @@ s16 fn_1_11114(AnimData *arg0, s16 arg1)
         (*var_r28)[1] = 1.0f;
         var_r28++;
     }
-    var_r22 = var_r24 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, temp_r27->unk_48);
+    var_r22 = var_r24 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, temp_r27->mallocNo);
     DCFlushRange(var_r24, 0x10000);
     GXBeginDisplayList(var_r22, 0x10000);
     GXBegin(GX_QUADS, GX_VTXFMT0, arg1 * 4);
@@ -5123,7 +5123,7 @@ s16 fn_1_11114(AnimData *arg0, s16 arg1)
     }
     GXEnd();
     var_r31->unk34 = GXEndDisplayList();
-    var_r31->unk48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk34, temp_r27->unk_48);
+    var_r31->unk48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk34, temp_r27->mallocNo);
     memcpy(var_r31->unk48, var_r24, var_r31->unk34);
     DCFlushRange(var_r31->unk48, var_r31->unk34);
     HuMemDirectFree(var_r24);
@@ -5135,8 +5135,8 @@ s16 fn_1_115C4(s16 arg0)
     s32 temp_r24;
     s16 var_r22;
     s16 i;
-    ModelData *temp_r23;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r23;
+    HU3DMODEL *temp_r27;
     StructM423_05 *temp_r26;
     StructM423_05 *var_r31;
     StructM423_04 *var_r30;
@@ -5144,10 +5144,10 @@ s16 fn_1_115C4(s16 arg0)
     float(*var_r29)[2];
 
     temp_r23 = &Hu3DData[arg0];
-    temp_r26 = temp_r23->unk_120;
-    var_r22 = Hu3DHookFuncCreate(temp_r23->hook);
+    temp_r26 = temp_r23->hookData;
+    var_r22 = Hu3DHookFuncCreate(temp_r23->hookFunc);
     temp_r27 = &Hu3DData[var_r22];
-    temp_r27->unk_120 = var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r31), temp_r27->unk_48);
+    temp_r27->hookData = var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(*var_r31), temp_r27->mallocNo);
     var_r31->unk38 = temp_r26->unk38;
     var_r31->unk26 = temp_r26->unk26;
     temp_r24 = var_r31->unk26;
@@ -5159,7 +5159,7 @@ s16 fn_1_115C4(s16 arg0)
     var_r31->unk21 = 0;
     var_r31->unk30 = 0;
     var_r31->unk00 = var_r31->unk02 = 0;
-    var_r31->unk3C = var_r30 = HuMemDirectMallocNum(HEAP_DATA, temp_r24 * sizeof(*var_r30), temp_r27->unk_48);
+    var_r31->unk3C = var_r30 = HuMemDirectMallocNum(HEAP_DATA, temp_r24 * sizeof(*var_r30), temp_r27->mallocNo);
     for (i = 0; i < temp_r24; i++, var_r30++) {
         var_r30->unk30 = 0.0f;
         var_r30->unk34 = 0.0f;
@@ -5171,11 +5171,11 @@ s16 fn_1_115C4(s16 arg0)
         var_r30->unk44.r = var_r30->unk44.g = var_r30->unk44.b = var_r30->unk44.a = 0xFF;
         var_r30->unk48 = 0;
     }
-    var_r31->unk40 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, temp_r24 * sizeof(*var_r25) * 4, temp_r27->unk_48);
+    var_r31->unk40 = var_r25 = HuMemDirectMallocNum(HEAP_DATA, temp_r24 * sizeof(*var_r25) * 4, temp_r27->mallocNo);
     for (i = 0; i < (temp_r24 * 4); i++, var_r25++) {
         var_r25->x = var_r25->y = var_r25->z = 0.0f;
     }
-    var_r31->unk44 = var_r29 = HuMemDirectMallocNum(HEAP_DATA, temp_r24 * sizeof(*var_r29) * 4, temp_r27->unk_48);
+    var_r31->unk44 = var_r29 = HuMemDirectMallocNum(HEAP_DATA, temp_r24 * sizeof(*var_r29) * 4, temp_r27->mallocNo);
     for (i = 0; i < temp_r24; i++) {
         (*var_r29)[0] = 0.0f;
         (*var_r29)[1] = 0.0f;
@@ -5199,7 +5199,7 @@ Vec lbl_1_data_8C4[] = { { -0.5f, 0.5f, 0.0f }, { 0.5f, 0.5f, 0.0f }, { 0.5f, -0
 
 float lbl_1_data_8F4[][2] = { { 0.0f, 0.0f }, { 0.25f, 0.0f }, { 0.25f, 0.25f }, { 0.0f, 0.25f } };
 
-void fn_1_11900(ModelData *arg0, Mtx arg1)
+void fn_1_11900(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx sp128;
     Mtx spF8;
@@ -5217,11 +5217,11 @@ void fn_1_11900(ModelData *arg0, Mtx arg1)
     s16 var_r21;
     s16 var_r20;
     s16 var_r19;
-    void (*var_r18)(ModelData *, struct struct_m423_05 *, Mtx);
+    void (*var_r18)(HU3DMODEL *, struct struct_m423_05 *, Mtx);
     s16 i;
     s16 j;
 
-    temp_r31 = arg0->unk_120;
+    temp_r31 = arg0->hookData;
     if (temp_r31->unk2C == GlobalCounter && shadowModelDrawF == 0) {
         return;
     }

@@ -810,7 +810,7 @@ static inline void InitGXSpace()
 }
 
 // Some stack allocation issues. code around BoardPlayerGetCurr is incorrect too
-static void DrawSpaces(ModelData *model, Mtx matrix)
+static void DrawSpaces(HU3DMODEL *model, Mtx matrix)
 {
     s32 i;
 
@@ -1013,8 +1013,8 @@ void BoardSpaceInit(s32 data_num)
     spaceDrawF = 0;
     board = GWBoardGet();
     {
-        AnimBmpData *bmp;
-        AnimData *data;
+        ANIMBMP *bmp;
+        ANIMDATA *data;
         void *data_base;
         s32 size;
         data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 29), MEMORY_DEFAULT_NUM, HEAP_DATA);
@@ -1045,8 +1045,8 @@ void BoardSpaceInit(s32 data_num)
         GXInitTexObjLOD(&spaceHiliteTex, GX_LINEAR, GX_LINEAR, 0, 0, 0, GX_FALSE, GX_FALSE, GX_ANISO_1);
     }
     {
-        AnimBmpData *bmp;
-        AnimData *data;
+        ANIMBMP *bmp;
+        ANIMDATA *data;
         void *data_base;
         s32 size;
         data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 28), MEMORY_DEFAULT_NUM, HEAP_DATA);

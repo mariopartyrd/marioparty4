@@ -269,7 +269,7 @@ s32 SLSaveFlagGet(void)
 
 void SLSaveDataMake(s32 erase, OSTime *time)
 {
-    AnimData *anim_data;
+    ANIMDATA *anim_data;
     u8 *buf;
     s32 i;
 

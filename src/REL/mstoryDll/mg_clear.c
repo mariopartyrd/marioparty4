@@ -56,7 +56,7 @@ StructBss19C lbl_1_bss_5E0;
 StructBss19C lbl_1_bss_5B8;
 StructBss19C lbl_1_bss_590;
 StructBss19C lbl_1_bss_568;
-AnimData* lbl_1_bss_560[2];
+ANIMDATA* lbl_1_bss_560[2];
 s32 lbl_1_bss_55C;
 Process* lbl_1_bss_558;
 

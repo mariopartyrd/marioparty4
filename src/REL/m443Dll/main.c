@@ -71,7 +71,7 @@ void fn_1_32C0(Process *arg0);
 void fn_1_3370(omObjData *object);
 void fn_1_3710(omObjData *);
 void fn_1_3770(omObjData *object);
-void fn_1_3D78(ModelData *, float[3][4]);
+void fn_1_3D78(HU3DMODEL *, float[3][4]);
 void fn_1_420(omObjData *object);
 void fn_1_584(omObjData *arg0);
 void fn_1_6D0(omObjData *);
@@ -116,7 +116,7 @@ void ObjectSetup(void)
     Vec sp14;
     Vec sp8;
     Process *var_r31;
-    LightData *var_r30;
+    HU3DLIGHT *var_r30;
 
     HuAudSndGrpSet(0x45);
     lbl_1_bss_C = lbl_1_bss_8 = -1;
@@ -124,7 +124,7 @@ void ObjectSetup(void)
     lbl_1_bss_5C[0] = Hu3DGLightCreateV(&lbl_1_data_0, &lbl_1_data_C, &lbl_1_data_24);
     Hu3DGLightInfinitytSet(lbl_1_bss_5C[0]);
     var_r30 = &Hu3DGlobalLight[lbl_1_bss_5C[0]];
-    var_r30->unk_00 |= 0x8000;
+    var_r30->type |= 0x8000;
 
     lbl_1_data_18.x = 55.74f;
     lbl_1_data_18.y = 0.0f;
@@ -927,7 +927,7 @@ void fn_1_3770(omObjData *arg0)
 
 GXColor lbl_1_data_208 = { 0x00, 0x00, 0x00, 0x00 };
 
-void fn_1_3D78(ModelData *arg0, Mtx arg1)
+void fn_1_3D78(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx spC;
 

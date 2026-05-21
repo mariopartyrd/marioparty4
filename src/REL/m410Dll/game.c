@@ -53,7 +53,7 @@ void fn_1_7138(omObjData *object);
 void fn_1_7464(omObjData *object);
 void fn_1_7494(void);
 void fn_1_7520(Vec *arg0);
-void fn_1_75A0(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_75A0(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 void fn_1_33A8(Process *objman)
 {
@@ -96,7 +96,7 @@ void fn_1_3614(omObjData *object)
     float var_f31;
     float var_f30;
     float var_f29;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
     s32 var_r29;
     s16 var_r28;
 
@@ -936,7 +936,7 @@ void fn_1_6968(omObjData *object)
     float var_f30;
     UnkM410Struct2 *var_r31;
     s32 var_r30;
-    ModelData *var_r28;
+    HU3DMODEL *var_r28;
 
     var_r31 = object->data;
 
@@ -982,7 +982,7 @@ void fn_1_6968(omObjData *object)
                     if (var_f30 >= 0.001f) {
                         MTXRotAxisRad(sp14, &sp8, var_f30);
                         var_r28 = &Hu3DData[object->model[var_r30]];
-                        MTXConcat(sp14, var_r28->unk_F0, var_r28->unk_F0);
+                        MTXConcat(sp14, var_r28->mtx, var_r28->mtx);
                     }
                 }
             }
@@ -1038,7 +1038,7 @@ void fn_1_6DB4(omObjData *object)
         var_r28 = object->model[var_r29];
         (void)var_r28;
         Hu3DModelAttrSet(object->model[var_r29], HU3D_MOTATTR_PAUSE);
-        Hu3DData[object->model[var_r29]].cluster_attr[0] = 0;
+        Hu3DData[object->model[var_r29]].clusterAttr[0] = 0;
         var_r31->unk_30 = object->model[var_r29];
         var_r31->unk_32 = var_r29;
         var_r31->unk_04.x = (250.0f * (var_r29 % 6)) - 750.0f;
@@ -1091,8 +1091,8 @@ void fn_1_7138(omObjData *object)
             Hu3DModelAttrReset(object->model[var_r29], HU3D_MOTATTR_PAUSE);
             Hu3DMotionSpeedSet(object->model[var_r29], 4.0f);
             Hu3DMotionSet(object->model[var_r29], 0);
-            Hu3DMotionClusterNoSet(object->model[var_r29], Hu3DData[object->model[var_r29]].unk_10[0], 0);
-            Hu3DData[object->model[var_r29]].unk_B4[0] = 4.0f;
+            Hu3DMotionClusterNoSet(object->model[var_r29], Hu3DData[object->model[var_r29]].motIdCluster[0], 0);
+            Hu3DData[object->model[var_r29]].clusterSpeed[0] = 4.0f;
             var_r31->unk_00_field4 = 0;
         }
         if (var_r31->unk_1C.x < 0.0f) {
@@ -1109,8 +1109,8 @@ void fn_1_7138(omObjData *object)
             if (var_r31->unk_38 != NULL) {
                 var_r31->unk_38->unk_00_field0 = 0;
                 var_r31->unk_38 = NULL;
-                Hu3DMotionClusterNoSet(object->model[var_r29], Hu3DData[object->model[var_r29]].unk_10[0], 0);
-                Hu3DData[object->model[var_r29]].unk_B4[0] = 0.0f;
+                Hu3DMotionClusterNoSet(object->model[var_r29], Hu3DData[object->model[var_r29]].motIdCluster[0], 0);
+                Hu3DData[object->model[var_r29]].clusterSpeed[0] = 0.0f;
             }
             var_r31->unk_00_field6 = 0;
         }
@@ -1127,7 +1127,7 @@ void fn_1_7464(omObjData *object)
 
 void fn_1_7494(void)
 {
-    AnimData *var_r31;
+    ANIMDATA *var_r31;
 
     var_r31 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 2), MEMORY_DEFAULT_NUM));
     lbl_1_bss_38 = Hu3DParticleCreate(var_r31, 60);
@@ -1137,42 +1137,42 @@ void fn_1_7494(void)
 
 void fn_1_7520(Vec *arg0)
 {
-    ParticleData *var_r30;
+    HU3DPARTICLE *var_r30;
     HU3DPARTICLEDATA *var_r31;
 
-    var_r30 = Hu3DData[lbl_1_bss_38].unk_120;
-    var_r31 = &var_r30->data[var_r30->unk_02++];
-    var_r31->unk2C = 100.0f;
-    var_r31->unk34.x = arg0->x;
-    var_r31->unk34.y = arg0->y;
-    var_r31->unk34.z = arg0->z;
+    var_r30 = Hu3DData[lbl_1_bss_38].hookData;
+    var_r31 = &var_r30->data[var_r30->emitCnt++];
+    var_r31->scale = 100.0f;
+    var_r31->pos.x = arg0->x;
+    var_r31->pos.y = arg0->y;
+    var_r31->pos.z = arg0->z;
 }
 
 s32 lbl_1_data_110 = REFRESH_RATE;
 
-void fn_1_75A0(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_75A0(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA *var_r30;
     s32 var_r29;
     s32 var_r28;
 
-    if (!particle->unk_00) {
-        particle->unk_00 = 1;
-        var_r30 = &particle->data[particle->unk_02];
-        for (var_r29 = particle->unk_02; var_r29 < particle->unk_30; var_r29++, var_r30++) {
-            var_r30->unk2C = 0.0f;
+    if (!particle->dataCnt) {
+        particle->dataCnt = 1;
+        var_r30 = &particle->data[particle->emitCnt];
+        for (var_r29 = particle->emitCnt; var_r29 < particle->maxCnt; var_r29++, var_r30++) {
+            var_r30->scale = 0.0f;
         }
     }
     var_r28 = (lbl_1_data_110 * 0xFF) / REFRESH_RATE;
     var_r30 = particle->data;
 
-    for (var_r29 = 0; var_r29 < particle->unk_02; var_r29++, var_r30++) {
-        var_r30->unk40.a = var_r28; // 43?
+    for (var_r29 = 0; var_r29 < particle->emitCnt; var_r29++, var_r30++) {
+        var_r30->color.a = var_r28; // 43?
     }
     if (--lbl_1_data_110 == 0) {
         model->attr |= 1;
     }
-    DCStoreRange(particle->data, particle->unk_30 * 0x44);
+    DCStoreRange(particle->data, particle->maxCnt * 0x44);
 }
 
 s32 fn_1_76B8(Vec arg0, Vec arg1, u16 arg2)
@@ -1256,10 +1256,10 @@ s32 fn_1_79F8(s16 arg0, char *arg1, Mtx arg2)
     Mtx sp44;
     Mtx sp14;
     HSFDATA *var_r30;
-    ModelData *var_r31;
+    HU3DMODEL *var_r31;
 
     var_r31 = &Hu3DData[arg0];
-    var_r30 = var_r31->hsfData;
+    var_r30 = var_r31->hsf;
     lbl_1_bss_30 = 0;
     mtxRot(sp14, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
     MTXScale(sp44, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);

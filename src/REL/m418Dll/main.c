@@ -345,7 +345,7 @@ void fn_1_E74(omObjData *object)
     M418DllUnkStruct4 *temp_r27;
     M418DllUnkStruct6 *temp_r26;
     HSFOBJECT *temp_r25;
-    ModelData *temp_r24;
+    HU3DMODEL *temp_r24;
 
     temp_r26 = &lbl_1_bss_3EC;
     temp_r28 = &lbl_1_bss_26C[temp_r26->unk0];
@@ -733,7 +733,7 @@ void fn_1_2BC4(Vec arg0)
 
 void fn_1_2C0C(omObjData *object)
 {
-    ModelData *temp_r28;
+    HU3DMODEL *temp_r28;
     M418DllWorkStruct *var_r31 = &lbl_1_bss_68;
     s32 var_r30;
 
@@ -814,7 +814,7 @@ void fn_1_3240(omObjData *object)
     Mtx sp14;
     Vec sp8;
     M418DllUnkStruct3 *temp_r28;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     M418DllWorkStruct *var_r29;
 
     temp_r30 = &Hu3DData[object->model[11]];
@@ -1144,8 +1144,8 @@ void fn_1_4C84(omObjData *object)
     M418DllUnkStruct3 *temp_r26;
     M418DllWorkStruct *var_r27;
     M418DllUnkStruct3 *temp_r30;
-    ModelData *temp_r28;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r28;
+    HU3DMODEL *temp_r29;
     s32 temp_r0;
     u32 temp_r3;
 

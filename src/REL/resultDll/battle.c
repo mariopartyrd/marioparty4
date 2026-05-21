@@ -46,7 +46,7 @@ static StageSprite resultBattleSprite[] = {
     { 0, 0, 0, 0, 0, { 0, 0, 0, 0 } },
 };
 
-static HsfanimStruct00 resultBattleEffParMan = { 80, { 0, 0 }, 3, 30, 90, { 0, -0.2, 0 }, 5.0f, 0.95f, 10.0f, 0.995f, 2,
+static HU3DPARMANPARAM resultBattleEffParMan = { 80, { 0, 0 }, 3, 30, 90, { 0, -0.2, 0 }, 5.0f, 0.95f, 10.0f, 0.995f, 2,
     {
         { 255, 192, 112, 255 },
         { 0, 0, 0, 0 },
@@ -215,7 +215,7 @@ static void ResultBattleCoinAddNumSet(s16 grpId, s16 value);
 static void ResultBattleOrderSet(void);
 static void CoinEffectInit(void);
 static void CoinEffectAdd(s16 playerNo);
-static void ResultShadowDraw(struct model_data *model, Mtx matrix);
+static void ResultShadowDraw(struct Hu3DModel_s *model, Mtx matrix);
 
 static void ResultBattleCreate(void)
 {
@@ -223,9 +223,9 @@ static void ResultBattleCreate(void)
     s16 charNo;
     s16 playerNo;
     s16 xOfs;
-    AnimData *anim;
-    AnimData *anim2;
-    AnimData *anim3;
+    ANIMDATA *anim;
+    ANIMDATA *anim2;
+    ANIMDATA *anim3;
     s16 charMdlId;
     Vec pos;
     Vec target;
@@ -613,7 +613,7 @@ static void CoinEffectAdd(s16 playerNo)
 static void CoinEffectMain(void)
 {
     s16 i;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     s16 player;
     while (1) {
         for (i = 0; i < COIN_EFFECT_MAX; i++) {
@@ -642,7 +642,7 @@ static void CoinEffectMain(void)
     }
 }
 
-static void ResultShadowDraw(struct model_data *model, Mtx matrix)
+static void ResultShadowDraw(struct Hu3DModel_s *model, Mtx matrix)
 {
     s32 sp8 = 0;
     GXTexObj tex;
@@ -652,12 +652,12 @@ static void ResultShadowDraw(struct model_data *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXInitTexObj(&tex, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&tex, Hu3DShadowData.buf, Hu3DShadowData.size, Hu3DShadowData.size, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&tex, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&tex, 0);
     MTXInverse(Hu3DCameraMtx, invCamera);
     MTXConcat(invCamera, matrix, final);
-    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, shadow);
+    MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, shadow);
     MTXConcat(shadow, final, final);
     GXLoadTexMtxImm(final, GX_TEXMTX9, GX_MTX3x4);
     GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, GX_TEXMTX9);

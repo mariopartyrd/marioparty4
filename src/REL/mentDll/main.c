@@ -3855,11 +3855,11 @@ void fn_1_151B8(MentDllUnkBss35BCStruct *arg0, s32 arg1, s32 arg2, s32 arg3)
     s32 var_r29;
     s32 var_r28;
     s32 var_r27;
-    AnimData *var_r26;
-    AnimData *var_r25;
-    AnimData *var_r24;
-    AnimData *var_r23;
-    AnimData *var_r22;
+    ANIMDATA *var_r26;
+    ANIMDATA *var_r25;
+    ANIMDATA *var_r24;
+    ANIMDATA *var_r23;
+    ANIMDATA *var_r22;
 
     var_r30 = HuSprGrpCreate(0x35);
     arg0->unk_30 = var_r30;
@@ -4382,8 +4382,8 @@ void fn_1_17CC8(MentDllUnkBss35BCStruct *arg0, s32 arg1, s32 arg2, s32 arg3)
     s32 var_r28;
     s32 var_r27;
     s32 var_r26;
-    AnimData *var_r25;
-    AnimData *var_r24;
+    ANIMDATA *var_r25;
+    ANIMDATA *var_r24;
 
     var_r26 = HuSprGrpCreate(0x11);
     arg0->unk_34 = var_r26;
@@ -5141,9 +5141,9 @@ void fn_1_1BB2C(MentDllUnkBss35BCStruct *arg0, s32 arg1, s32 arg2, s32 arg3)
     s32 var_r31;
     s32 var_r30;
     s32 var_r29;
-    AnimData *var_r28;
-    AnimData *var_r26;
-    AnimData *var_r25;
+    ANIMDATA *var_r28;
+    ANIMDATA *var_r26;
+    ANIMDATA *var_r25;
 
     s32 sp8[4][2] = {
         { 0x00000070, 0x00000060 },
@@ -5461,8 +5461,8 @@ void fn_1_1D4FC(MentDllUnkBss35BCStruct *arg0, s32 arg1, s32 arg2, s32 arg3)
     s32 var_r31;
     s32 var_r30;
     s32 var_r29;
-    AnimData *var_r27;
-    AnimData *var_r26;
+    ANIMDATA *var_r27;
+    ANIMDATA *var_r26;
 
     s32 sp8[4][2] = {
         { 0x00000070, 0x00000037 },
@@ -6231,8 +6231,8 @@ void fn_1_20B54(MentDllUnkBss35BCStruct *arg0, s32 arg1, s32 arg2, s32 arg3)
     s32 var_r29;
     s32 var_r28;
     s32 var_r27;
-    AnimData *var_r26;
-    AnimData *var_r25;
+    ANIMDATA *var_r26;
+    ANIMDATA *var_r25;
 
     var_r29 = HuSprGrpCreate(0x13);
     arg0->unk_40 = var_r29;

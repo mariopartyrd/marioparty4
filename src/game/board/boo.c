@@ -39,7 +39,7 @@ typedef struct {
     s16 unk02;
     s16 unk04;
     s16 unk06;
-    AnimData *unk08;
+    ANIMDATA *unk08;
 } BallWork;
 
 typedef struct {
@@ -549,7 +549,7 @@ static void CreateBallMdl(s16 *arg0, Vec *arg1) {
 }
 
 static void CreateBallView(void) {
-    AnimBmpData *temp_r29;
+    ANIMBMP *temp_r29;
     BooEventWork *temp_r28;
     BallWork *temp_r31;
     BallCameraWork *temp_r30;

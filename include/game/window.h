@@ -33,7 +33,7 @@ typedef struct {
     /* 0x046 */ s16 advance_sprite;
     /* 0x048 */ s16 prio;
     /* 0x04C */ u32 attr;
-    /* 0x050 */ AnimData *frame;
+    /* 0x050 */ ANIMDATA *frame;
     /* 0x054 */ s16 mess_rect_x;
     /* 0x056 */ s16 mess_rect_w;
     /* 0x058 */ s16 mess_rect_y;
@@ -110,7 +110,7 @@ s16 HuWinChoiceNumGet(s16 window);
 void HuWinChoiceDisable(s16 window, s16 choice);
 s16 HuWinChoiceNowGet(s16 window);
 void HuWinMesWait(s16 window);
-s16 HuWinAnimSet(s16 window, AnimData *anim, s16 bank, float x, float y);
+s16 HuWinAnimSet(s16 window, ANIMDATA *anim, s16 bank, float x, float y);
 s16 HuWinSprSet(s16 window, s16 sprite, float x, float y);
 void HuWinSprPosSet(s16 window, s16 index, float x, float y);
 void HuWinSprPriSet(s16 window, s16 index, s16 prio);

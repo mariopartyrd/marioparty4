@@ -41,7 +41,7 @@ Vec lbl_1_data_218 = { 0.0f, 1.0f, 0.0f };
 
 void fn_1_14F0(Process *arg0, s32 arg1)
 {
-    LightData *sp10;
+    HU3DLIGHT *sp10;
 
     lbl_1_bss_2C = arg0;
     lbl_1_bss_20 = arg1;

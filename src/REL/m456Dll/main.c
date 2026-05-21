@@ -132,7 +132,7 @@ s32 lbl_1_bss_0;
 void ObjectSetup(void)
 {
     Process *var_r31;
-    CameraData *var_r30;
+    HU3DCAMERA *var_r30;
     s16 var_r29;
 
     var_r30 = Hu3DCamera;
@@ -184,7 +184,7 @@ s32 fn_1_3B0(void)
 
 void fn_1_3C0(omObjData *object)
 {
-    CameraData *var_r31 = Hu3DCamera;
+    HU3DCAMERA *var_r31 = Hu3DCamera;
     fn_1_3A0(0);
     lbl_1_bss_6C = REFRESH_RATE;
     lbl_1_bss_70[0] = lbl_1_bss_70[1] = lbl_1_bss_70[2] = lbl_1_bss_70[3] = -1;
@@ -799,7 +799,7 @@ float lbl_1_data_1A8[2] = { 0.0f, 0.0f };
 
 void fn_1_2448(omObjData *object)
 {
-    CameraData *sp8 = Hu3DCamera;
+    HU3DCAMERA *sp8 = Hu3DCamera;
 
     switch (fn_1_3B0()) {
         case 1:

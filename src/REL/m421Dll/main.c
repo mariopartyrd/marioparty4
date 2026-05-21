@@ -52,7 +52,7 @@ void fn_1_3020(Process *process);
 void fn_1_30D0(omObjData *object);
 void fn_1_3334(omObjData *object);
 void fn_1_335C(omObjData *object);
-void fn_1_38FC(ModelData *model, Mtx mtx);
+void fn_1_38FC(HU3DMODEL *model, Mtx mtx);
 void fn_1_3B50(u32 arg0);
 M421DllCameraStruct *fn_1_3B78(s32 arg0);
 M421DllCameraStruct *fn_1_3CB0(u32 arg0);
@@ -103,7 +103,7 @@ void ObjectSetup(void)
     Vec sp14 = { 0.0f, 0.0f, -1.0f };
     Vec sp8;
     Process *process;
-    LightData *lightData;
+    HU3DLIGHT *lightData;
 
     lbl_1_bss_8 = 0;
     HuAudSndGrpSet(0x2E);
@@ -129,7 +129,7 @@ void ObjectSetup(void)
     lbl_1_bss_12[0] = Hu3DGLightCreateV(&lbl_1_data_0, &lbl_1_data_C, &lbl_1_data_24);
     Hu3DGLightInfinitytSet(lbl_1_bss_12[0]);
     lightData = &Hu3DGlobalLight[lbl_1_bss_12[0]];
-    lightData->unk_00 |= 0x8000;
+    lightData->type |= 0x8000;
     lbl_1_data_18.x = 1.0f;
     lbl_1_data_18.y = 0.0f;
     lbl_1_data_18.z = 4200.0f;
@@ -645,7 +645,7 @@ void fn_1_335C(omObjData *object)
     }
 }
 
-void fn_1_38FC(ModelData *model, Mtx mtx)
+void fn_1_38FC(HU3DMODEL *model, Mtx mtx)
 {
     Mtx spC;
     float var_f31;

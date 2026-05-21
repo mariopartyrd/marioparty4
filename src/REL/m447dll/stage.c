@@ -26,7 +26,7 @@ void fn_1_25E4(UnkM447Struct_06 *arg0);
 void fn_1_2700(UnkM447Struct_06 *arg0);
 void fn_1_2A3C(UnkM447Struct_06 *arg0);
 void fn_1_2D08(UnkM447Struct_06 *arg0);
-void fn_1_2DAC(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_2DAC(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 const s32 lbl_1_rodata_138[] = { DATA_MAKE_NUM(DATADIR_M447, 0), DATA_MAKE_NUM(DATADIR_M447, 2), DATA_MAKE_NUM(DATADIR_M447, 3),
     DATA_MAKE_NUM(DATADIR_M447, 1), DATA_MAKE_NUM(DATADIR_M447, 1), DATA_MAKE_NUM(DATADIR_M447, 1), DATA_MAKE_NUM(DATADIR_M447, 1),
@@ -401,61 +401,61 @@ void fn_1_2A3C(UnkM447Struct_06 *arg0)
 
 void fn_1_2D08(UnkM447Struct_06 *arg0)
 {
-    ModelData *temp_r30;
-    ParticleData *temp_r31;
+    HU3DMODEL *temp_r30;
+    HU3DPARTICLE *temp_r31;
 
     temp_r30 = &Hu3DData[arg0->unk00[21]];
-    temp_r31 = temp_r30->unk_120;
+    temp_r31 = temp_r30->hookData;
     temp_r30->attr &= ~1;
-    temp_r31->unk_00 = 0;
-    temp_r31->unk_02 = 1;
-    temp_r31->unk_04.x = 0.0f;
-    temp_r31->unk_04.y = 350.0f;
-    temp_r31->unk_04.z = -700.0f;
+    temp_r31->dataCnt = 0;
+    temp_r31->emitCnt = 1;
+    temp_r31->pos.x = 0.0f;
+    temp_r31->pos.y = 350.0f;
+    temp_r31->pos.z = -700.0f;
     HuAudFXPlay(0x780);
 }
 
-void fn_1_2DAC(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_2DAC(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     GXColor sp8 = { 0xFF, 0xFF, 0xFF, 0xFF };
     HU3DPARTICLEDATA *var_r31;
     s32 i;
 
-    if (particle->unk_02 == 0) {
+    if (particle->emitCnt == 0) {
         return;
     }
-    if (particle->unk_00 == 0) {
-        particle->unk_00 = 1;
-        particle->unk_04.z = 0.0f;
+    if (particle->dataCnt == 0) {
+        particle->dataCnt = 1;
+        particle->pos.z = 0.0f;
         particle->unk_10.z = 0.016666668f;
-        for (i = 0, var_r31 = particle->data; i < particle->unk_30; i++, var_r31++) {
+        for (i = 0, var_r31 = particle->data; i < particle->maxCnt; i++, var_r31++) {
             var_r31->time = 0;
-            var_r31->unk2C = 20.0f;
-            var_r31->unk40.r = sp8.r;
-            var_r31->unk40.g = sp8.g;
-            var_r31->unk40.b = sp8.b;
-            var_r31->unk40.a = sp8.a;
-            var_r31->unk34.x = particle->unk_04.x;
-            var_r31->unk34.y = particle->unk_04.y;
-            var_r31->unk34.z = particle->unk_04.z;
-            var_r31->unk08.x = -8.0f + 0.1f * (fn_1_A240() % 160);
-            var_r31->unk08.y = -8.0f + 0.1f * (fn_1_A240() % 160);
-            var_r31->unk08.z = 0.0f;
+            var_r31->scale = 20.0f;
+            var_r31->color.r = sp8.r;
+            var_r31->color.g = sp8.g;
+            var_r31->color.b = sp8.b;
+            var_r31->color.a = sp8.a;
+            var_r31->pos.x = particle->pos.x;
+            var_r31->pos.y = particle->pos.y;
+            var_r31->pos.z = particle->pos.z;
+            var_r31->vel.x = -8.0f + 0.1f * (fn_1_A240() % 160);
+            var_r31->vel.y = -8.0f + 0.1f * (fn_1_A240() % 160);
+            var_r31->vel.z = 0.0f;
         }
     }
-    for (i = 0, var_r31 = particle->data; i < particle->unk_30; i++, var_r31++) {
+    for (i = 0, var_r31 = particle->data; i < particle->maxCnt; i++, var_r31++) {
         if (var_r31->time < 0) {
             continue;
         }
-        var_r31->unk34.x += var_r31->unk08.x;
-        var_r31->unk34.y += var_r31->unk08.y;
-        var_r31->unk34.z = -700.0 + 500.0 * sind(90.0f * particle->unk_04.z);
-        var_r31->unk40.a = 255.0f * (1.0f - particle->unk_04.z);
-        var_r31->unk2C = 20.0f + fn_1_A240() % 30;
+        var_r31->pos.x += var_r31->vel.x;
+        var_r31->pos.y += var_r31->vel.y;
+        var_r31->pos.z = -700.0 + 500.0 * sind(90.0f * particle->pos.z);
+        var_r31->color.a = 255.0f * (1.0f - particle->pos.z);
+        var_r31->scale = 20.0f + fn_1_A240() % 30;
     }
-    particle->unk_04.z += particle->unk_10.z;
-    if (particle->unk_04.z >= 1.0f) {
+    particle->pos.z += particle->unk_10.z;
+    if (particle->pos.z >= 1.0f) {
         model->attr |= 1;
-        particle->unk_02 = 0;
+        particle->emitCnt = 0;
     }
 }

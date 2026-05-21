@@ -585,7 +585,7 @@ void fn_1_4424(w03StructUnk2 *arg0)
     s16 i;
     char *temp_r22;
     w03StructUnk3 *temp_r27;
-    ModelData *temp_r28;
+    HU3DMODEL *temp_r28;
 
     memset(&lbl_1_bss_80, 0, 0xA0);
     sp48.x = sp54.x = 0.0f;
@@ -615,11 +615,11 @@ void fn_1_4424(w03StructUnk2 *arg0)
     sp24.z = 0.0f;
 
     for (i = var_r25 = 0; i < 20;) {
-        Hu3DMotionExec(temp_r23, temp_r28->unk_08, temp_r28->unk_64, 0);
+        Hu3DMotionExec(temp_r23, temp_r28->motId, temp_r28->motWork.time, 0);
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_314), temp_r22, &sp54);
-        temp_r28->unk_64 += temp_r28->unk_68;
+        temp_r28->motWork.time += temp_r28->motWork.speed;
 
-        if (temp_r28->unk_64 > 400.0f) {
+        if (temp_r28->motWork.time > 400.0f) {
             break;
         }
 
@@ -631,7 +631,7 @@ void fn_1_4424(w03StructUnk2 *arg0)
             sp8 = (sp8 / 10) * 10;
             OSs16tof32(&sp8, &temp_f30);
             lbl_1_bss_80[i + 1][0] = temp_f30;
-            lbl_1_bss_80[i + 1][1] = temp_r28->unk_64;
+            lbl_1_bss_80[i + 1][1] = temp_r28->motWork.time;
             sp30 = sp48;
             sp18 = sp54;
             BoardMTXCalcLookAt(spA8, &sp18, &sp24, &sp30);
@@ -1045,7 +1045,7 @@ void fn_1_5C5C(omObjData *arg0, w03UnkStruct5 *arg1)
     Vec sp8;
     s16 temp_r3;
     char *temp_r27;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
 
     if (((WipeStatGet() == 0) && (arg1->unk00_bit3) || (BoardModelMotionEndCheck(lbl_1_data_314) != 0))) {
         fn_1_629C(3);
@@ -1067,10 +1067,10 @@ void fn_1_5C5C(omObjData *arg0, w03UnkStruct5 *arg1)
     temp_r30 = &Hu3DData[temp_r3];
     temp_r27 = lbl_1_data_35C[lbl_1_bss_0->unk1];
 
-    Hu3DMotionExec(temp_r3, temp_r30->unk_08, temp_r30->unk_64, 0);
+    Hu3DMotionExec(temp_r3, temp_r30->motId, temp_r30->motWork.time, 0);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_314), temp_r27, &sp44);
 
-    if (0.0f != temp_r30->unk_64) {
+    if (0.0f != temp_r30->motWork.time) {
         VECSubtract(&sp38, &sp44, &sp2C);
     }
     else {

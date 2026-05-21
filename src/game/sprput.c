@@ -44,8 +44,8 @@ void HuSprDispInit(void)
 void HuSprDisp(HuSprite *sprite)
 {
     short i;
-    AnimData *anim = sprite->data;
-    AnimPatData *pat = sprite->pat_data;
+    ANIMDATA *anim = sprite->data;
+    ANIMPAT *pat = sprite->pat_data;
     Vec axis = {0, 0, 1};
     Mtx modelview, rot;
     short color_sum;
@@ -60,8 +60,8 @@ void HuSprDisp(HuSprite *sprite)
         }
         
     } else {
-        AnimLayerData *layer;
-        AnimBmpData *bg_bmp;
+        ANIMLAYER *layer;
+        ANIMBMP *bg_bmp;
         GXColor color;
         GXSetNumTexGens(1);
         GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY);
@@ -89,8 +89,8 @@ void HuSprDisp(HuSprite *sprite)
             GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
         }
         if(sprite->bg) {
-            AnimPatData *bg_pat;
-            AnimFrameData *bg_frame;
+            ANIMPAT *bg_pat;
+            ANIMFRAME *bg_frame;
             bg_frame = sprite->bg->bank[sprite->bg_bank].frame;
             bg_pat = &sprite->bg->pat[bg_frame->pat];
             layer = bg_pat->layer;
@@ -117,7 +117,7 @@ void HuSprDisp(HuSprite *sprite)
         for(i=pat->layerNum-1; i>=0; i--) {
             float pos[4][2];
             float texcoord_x1, texcoord_y1, texcoord_x2, texcoord_y2;
-            AnimBmpData *bmp;
+            ANIMBMP *bmp;
             layer = &pat->layer[i];
             bmp = &anim->bmp[layer->bmpNo];
             if(!bmp) {
@@ -182,11 +182,11 @@ void HuSprDisp(HuSprite *sprite)
     }
 }
 
-void HuSprTexLoad(AnimData *anim, short bmp, short slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter)
+void HuSprTexLoad(ANIMDATA *anim, short bmp, short slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter)
 {
     GXTexObj tex_obj;
     GXTlutObj tlut_obj;
-    AnimBmpData *bmp_ptr = &anim->bmp[bmp];
+    ANIMBMP *bmp_ptr = &anim->bmp[bmp];
     short sizeX = bmp_ptr->sizeX;
     short sizeY = bmp_ptr->sizeY;
     switch(bmp_ptr->dataFmt & ANIM_BMP_FMTMASK) {

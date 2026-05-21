@@ -447,7 +447,7 @@ void fn_1_37FC(omObjData *object)
             break;
         case 3:
             var_r27 = 0;
-            if ((Hu3DData[temp_r25].unk_0C == -1) && (CharMotionEndCheck(temp_r31->unk1) != 0)) {
+            if ((Hu3DData[temp_r25].motIdShift == -1) && (CharMotionEndCheck(temp_r31->unk1) != 0)) {
                 temp_r31->unk4C.y += -146.0f / REFRESH_RATE_F;
             }
             else {
@@ -1119,10 +1119,10 @@ void fn_1_61AC(void)
 
 void fn_1_6230(s16 arg0, Mtx arg1)
 {
-    ModelData *var_r31;
+    HU3DMODEL *var_r31;
 
     var_r31 = &Hu3DData[arg0];
-    MTXCopy(arg1, var_r31->unk_F0);
+    MTXCopy(arg1, var_r31->mtx);
 }
 
 u32 lbl_1_data_1D8 = 0x41C64E6D;

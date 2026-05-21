@@ -325,8 +325,8 @@ static void CreateMGSelect(omObjData *object)
     s16 index2;
     u32 temp_r22;
     s32 temp_r21;
-    AnimData *temp_r25;
-    AnimData *temp_r23;
+    ANIMDATA *temp_r25;
+    ANIMDATA *temp_r23;
     float sp8[2];
 
     omSetStatBit(object, OM_STAT_MODEL_PAUSED);
@@ -429,7 +429,7 @@ static void UpdateMGPic(omObjData *object)
 static void CreateMGPic(omObjData *object)
 {
     mgPic *temp_r28;
-    AnimData *temp_r3_2;
+    ANIMDATA *temp_r3_2;
     s16 temp_r3;
     s32 var_r30;
     s32 index;
@@ -472,7 +472,7 @@ static void CreateMGInterface(omObjData *object)
     s16 index;
     s16 group;
     s16 index2;
-    AnimData *temp_r3_2;
+    ANIMDATA *temp_r3_2;
     float sp8[2];
 
     omSetStatBit(object, OM_STAT_MODEL_PAUSED);

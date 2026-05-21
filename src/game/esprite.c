@@ -6,7 +6,7 @@ typedef struct {
     /* 0x00 */ u32 unk00;
     /* 0x04 */ u16 unk04;
     /* 0x06 */ char unk06[2];
-    /* 0x08 */ AnimData *unk08;
+    /* 0x08 */ ANIMDATA *unk08;
 } UnkEspriteStruct01; // Size 0xC
 
 s16 esprite[0x180][2];

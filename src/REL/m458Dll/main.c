@@ -141,7 +141,7 @@ s32 lbl_1_bss_98;
 s32 lbl_1_bss_94;
 s32 lbl_1_bss_90;
 s32 lbl_1_bss_8C;
-HsfanimStruct00 lbl_1_bss_3C;
+HU3DPARMANPARAM lbl_1_bss_3C;
 float lbl_1_bss_38;
 float lbl_1_bss_34;
 float lbl_1_bss_30;
@@ -193,13 +193,13 @@ void fn_1_4C8(omObjData *object)
     float var_f20;
 
     M458DllWork *var_r31;
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
     s16 var_r28;
     M458DllWork *var_r27;
     s32 var_r26;
     s32 var_r25;
     s32 var_r24;
-    ModelData *var_r23;
+    HU3DMODEL *var_r23;
     s32 var_r22;
     s32 var_r21;
     s32 var_r20;
@@ -217,7 +217,7 @@ void fn_1_4C8(omObjData *object)
     s32 spC0;
     float spBC;
     s32 spB8;
-    ModelData *spB4;
+    HU3DMODEL *spB4;
     float spB0;
     float spAC;
     s32 spA8;
@@ -765,9 +765,9 @@ void fn_1_350C(omObjData *var_r27)
 
     s32 var_r31;
     s32 var_r30;
-    ModelData *var_r29;
-    ModelData *var_r28;
-    ModelData *var_r26;
+    HU3DMODEL *var_r29;
+    HU3DMODEL *var_r28;
+    HU3DMODEL *var_r26;
     s32 var_r25;
 
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
@@ -965,7 +965,7 @@ void fn_1_350C(omObjData *var_r27)
     }
 }
 
-const HsfanimStruct00 lbl_1_rodata_2A0 = {
+const HU3DPARMANPARAM lbl_1_rodata_2A0 = {
     0x0096,
     { 0x00, 0x00 },
     50.0f,
@@ -995,10 +995,10 @@ s16 fn_1_4BE8(void)
 {
     s16 var_r31;
     s16 var_r30;
-    AnimData *var_r29;
+    ANIMDATA *var_r29;
     void *var_r28;
 
-    HsfanimStruct00 sp8 = lbl_1_rodata_2A0;
+    HU3DPARMANPARAM sp8 = lbl_1_rodata_2A0;
     lbl_1_bss_3C = sp8;
     var_r28 = HuDataSelHeapReadNum(0x7006B, MEMORY_DEFAULT_NUM, HEAP_DATA);
     var_r29 = HuSprAnimRead(var_r28);
@@ -1294,7 +1294,7 @@ void fn_1_59DC(omObjData *object)
     s16 var_r28;
     s32 var_r27;
     void *var_r26;
-    AnimData *var_r25;
+    ANIMDATA *var_r25;
     s16 var_r24;
     s16 var_r23;
 
@@ -1364,7 +1364,7 @@ void fn_1_59DC(omObjData *object)
         espTPLvlSet(lbl_1_data_8[var_r30], 1.0f);
     }
     {
-        HsfanimStruct00 sp20 = lbl_1_rodata_2A0;
+        HU3DPARMANPARAM sp20 = lbl_1_rodata_2A0;
         lbl_1_bss_3C = sp20;
     }
     var_r26 = HuDataSelHeapReadNum(0x7006B, MEMORY_DEFAULT_NUM, HEAP_DATA);

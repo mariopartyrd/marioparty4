@@ -49,13 +49,13 @@ typedef struct hu_sprite {
     s16 tex_scale_y;
     Mtx *group_mtx;
     union {
-        AnimData *data;
+        ANIMDATA *data;
         HuSprFunc func;
     };
-    AnimPatData *pat_data;
-    AnimFrameData *frame_data;
+    ANIMPAT *pat_data;
+    ANIMFRAME *frame_data;
     s16 work[4];
-    AnimData *bg;
+    ANIMDATA *bg;
     u16 bg_bank;
     s16 scissor_x;
     s16 scissor_y;
@@ -88,9 +88,9 @@ void HuSprBegin(void);
 HuSprite *HuSprCall(void);
 void HuSprFinish(void);
 void HuSprPauseSet(BOOL value);
-AnimData *HuSprAnimRead(void *data);
-void HuSprAnimLock(AnimData *anim);
-s16 HuSprCreate(AnimData *anim, s16 prio, s16 bank);
+ANIMDATA *HuSprAnimRead(void *data);
+void HuSprAnimLock(ANIMDATA *anim);
+s16 HuSprCreate(ANIMDATA *anim, s16 prio, s16 bank);
 s16 HuSprFuncCreate(HuSprFunc func, s16 prio);
 s16 HuSprGrpCreate(s16 capacity);
 s16 HuSprGrpCopy(s16 group);
@@ -98,7 +98,7 @@ void HuSprGrpMemberSet(s16 group, s16 member, s16 sprite);
 void HuSprGrpMemberKill(s16 group, s16 member);
 void HuSprGrpKill(s16 group);
 void HuSprKill(s16 sprite);
-void HuSprAnimKill(AnimData *anim);
+void HuSprAnimKill(ANIMDATA *anim);
 void HuSprAttrSet(s16 group, s16 member, s32 attr);
 void HuSprAttrReset(s16 group, s16 member, s32 attr);
 void HuSprPosSet(s16 group, s16 member, float x, float y);
@@ -120,15 +120,15 @@ void HuSprDrawNoSet(s16 group, s16 member, s32 draw_no);
 void HuSprPriSet(s16 group, s16 member, s16 prio);
 void HuSprGrpScissorSet(s16 group, s16 x, s16 y, s16 w, s16 h);
 void HuSprScissorSet(s16 group, s16 member, s16 x, s16 y, s16 w, s16 h);
-AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt);
-void HuSprBGSet(s16 group, s16 member,  AnimData *bg, s16 bg_bank);
-void HuSprSprBGSet(s16 sprite, AnimData *bg, s16 bg_bank);
-void AnimDebug(AnimData *anim);
+ANIMDATA *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt);
+void HuSprBGSet(s16 group, s16 member,  ANIMDATA *bg, s16 bg_bank);
+void HuSprSprBGSet(s16 sprite, ANIMDATA *bg, s16 bg_bank);
+void AnimDebug(ANIMDATA *anim);
 
 void HuSprDispInit(void);
 void HuSprDisp(HuSprite *sprite);
 #if !defined(HUSPR_USE_OLD_DEFS) || !defined(__MWERKS__)
-void HuSprTexLoad(AnimData *anim, s16 bmp, s16 slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter);
+void HuSprTexLoad(ANIMDATA *anim, s16 bmp, s16 slot, GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXTexFilter filter);
 #endif
 void HuSprExecLayerSet(s16 draw_no, s16 layer);
 

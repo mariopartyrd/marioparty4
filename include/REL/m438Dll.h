@@ -121,7 +121,7 @@ typedef struct M438UnkStruct2 {
 } M438UnkStruct2; /* size = 0xBC */
 
 typedef struct M438UnkStruct3 {
-    AnimData *unk_00;
+    ANIMDATA *unk_00;
     s16 unk_04;
     s16 unk_06;
     u32 unk_08;

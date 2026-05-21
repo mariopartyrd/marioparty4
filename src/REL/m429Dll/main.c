@@ -39,7 +39,7 @@ typedef struct unk_bss_358_struct {
 } UnkBss358Struct; // Size 0xC
 
 typedef struct unk_bss_340_struct {
-    /* 0x00 */ HsfanimStruct00 *unk00;
+    /* 0x00 */ HU3DPARMANPARAM *unk00;
     /* 0x04 */ s32 *unk04;
     /* 0x08 */ s32 unk08;
     /* 0x0C */ s32 unk0C;
@@ -126,7 +126,7 @@ void fn_1_150(void)
     lbl_1_bss_340.unk14 = NULL;
 }
 
-void fn_1_174(s16 arg0, HsfanimStruct00 *arg1, s32 arg2, s32 arg3, s32 arg4, Vec *arg5, u8 arg6)
+void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 arg4, Vec *arg5, u8 arg6)
 {
     UnkBss340Struct *temp_r27;
     UnkBss340Struct *var_r31;
@@ -176,7 +176,7 @@ void fn_1_2D8(void)
         }
         temp_r28 = var_r31->unk10;
         temp_r29 = var_r31->unk14;
-        if (-var_r31->unk00->unk00 > var_r31->unk08) {
+        if (-var_r31->unk00->maxTime > var_r31->unk08) {
             for (i = 0; i < var_r31->unk0C; i++) {
                 if (var_r31->unk04[i] >= 0) {
                     Hu3DParManKill(var_r31->unk04[i]);
@@ -371,7 +371,7 @@ void fn_1_1A60(Vec *arg0, s16 arg1, Vec *arg2)
     float temp_f29;
     float temp_f28;
     float temp_f31;
-    CameraData *temp_r31;
+    HU3DCAMERA *temp_r31;
     s32 i;
 
     for (i = 0; i < 16; i++) {
@@ -384,10 +384,10 @@ void fn_1_1A60(Vec *arg0, s16 arg1, Vec *arg2)
     MTXMultVec(sp1C, arg0, &sp10);
     temp_f30 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * temp_r31->aspect;
     temp_f29 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2));
-    temp_f28 = 0.9f * temp_r31->viewport_x;
-    temp_f31 = 0.9f * temp_r31->viewport_w;
+    temp_f28 = 0.9f * temp_r31->viewportX;
+    temp_f31 = 0.9f * temp_r31->viewportW;
     arg2->x = temp_f31 / 2 + sp10.x * ((temp_f31 / 2) / -temp_f30) + temp_f28;
-    arg2->y = temp_r31->viewport_h / 2 + sp10.y * ((temp_r31->viewport_h / 2) / temp_f29) + temp_r31->viewport_y;
+    arg2->y = temp_r31->viewportH / 2 + sp10.y * ((temp_r31->viewportH / 2) / temp_f29) + temp_r31->viewportY;
     arg2->z = 0.0f;
 }
 
@@ -404,11 +404,11 @@ void fn_1_1D18(s16 arg0, char *arg1, Vec *arg2)
 void fn_1_1D70(s16 arg0, char *arg1, Vec *arg2, Mtx arg3)
 {
     Mtx spC;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
 
     var_r30 = &Hu3DData[arg0];
     Hu3DModelObjMtxGet(arg0, arg1, spC);
-    MTXConcat(var_r30->unk_F0, spC, spC);
+    MTXConcat(var_r30->mtx, spC, spC);
     if (NULL != arg3) {
         MTXCopy(spC, arg3);
     }
@@ -818,7 +818,7 @@ Data13A8Struct lbl_1_data_13C8 = { 0.7f, 120.0f, 110.0f, 9 };
 
 Data13A8Struct lbl_1_data_13D8 = { 0.8f, 130.0f, 100.0f, 6 };
 
-HsfanimStruct00 lbl_1_data_13E8 = {
+HU3DPARMANPARAM lbl_1_data_13E8 = {
     30,
     { 0, 0 },
     1.0f,
@@ -874,7 +874,7 @@ s32 lbl_1_bss_20;
 s32 lbl_1_bss_1C;
 s16 lbl_1_bss_1A;
 s16 lbl_1_bss_10[5];
-AnimData *lbl_1_bss_C;
+ANIMDATA *lbl_1_bss_C;
 s16 lbl_1_bss_8;
 s32 lbl_1_bss_4;
 s32 lbl_1_bss_0;

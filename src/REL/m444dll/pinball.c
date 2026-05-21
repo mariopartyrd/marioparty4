@@ -366,7 +366,7 @@ void fn_1_9CAC(s16 arg0, s16 arg1)
 {
     Mtx sp38;
     Mtx sp8;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r29;
 
     Hu3DMotionSet(lbl_1_bss_199C2[arg0 + 58], lbl_1_bss_1990E[63]);
     Hu3DModelAttrSet(lbl_1_bss_199C2[arg0 + 58], HU3D_MOTATTR_LOOP);
@@ -442,7 +442,7 @@ void fn_1_9CAC(s16 arg0, s16 arg1)
     }
     temp_r29 = &Hu3DData[lbl_1_bss_199C2[64]];
     MTXConcat(sp38, sp8, sp38);
-    MTXCopy(sp38, temp_r29->unk_F0);
+    MTXCopy(sp38, temp_r29->mtx);
 }
 
 void fn_1_A060(void)
@@ -954,36 +954,36 @@ void fn_1_C214(void)
     Mtx sp68;
     Mtx sp38;
     Mtx sp8;
-    ModelData *temp_r31;
+    HU3DMODEL *temp_r31;
     s16 temp_r30;
     s16 temp_r29;
     MTXRotDeg(sp8, 'z', 120);
     while (1) {
         temp_r31 = &Hu3DData[lbl_1_bss_199C2[9]];
-        Hu3DMotionExec(lbl_1_bss_199C2[9], temp_r31->unk_08, temp_r31->unk_64, 0);
+        Hu3DMotionExec(lbl_1_bss_199C2[9], temp_r31->motId, temp_r31->motWork.time, 0);
         Hu3DModelObjMtxGet(lbl_1_bss_199C2[9], "kaitendai-r_dai", sp38);
         for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
             temp_r31 = &Hu3DData[lbl_1_bss_199C2[temp_r30]];
             MTXTrans(sp68, lbl_1_bss_860[temp_r30].x, lbl_1_bss_860[temp_r30].y, lbl_1_bss_860[temp_r30].z);
             MTXConcat(sp68, lbl_1_bss_794[temp_r30], sp68);
             MTXConcat(sp38, sp68, sp98);
-            MTXCopy(sp98, temp_r31->unk_F0);
+            MTXCopy(sp98, temp_r31->mtx);
             temp_r31 = &Hu3DData[lbl_1_bss_199C2[temp_r30 + 55]];
             MTXTrans(sp68, 0, 150, 0);
             MTXConcat(sp38, sp68, sp98);
-            MTXCopy(sp98, temp_r31->unk_F0);
+            MTXCopy(sp98, temp_r31->mtx);
             temp_r31 = &Hu3DData[lbl_1_bss_199C2[temp_r30 + 58]];
             MTXTrans(sp68, 0, 150, 0);
             MTXConcat(sp38, sp68, sp98);
-            MTXCopy(sp98, temp_r31->unk_F0);
+            MTXCopy(sp98, temp_r31->mtx);
             temp_r31 = &Hu3DData[lbl_1_bss_199C2[temp_r30 + 65]];
             MTXTrans(sp68, 0, 150, 0);
             MTXConcat(sp38, sp68, sp98);
-            MTXCopy(sp98, temp_r31->unk_F0);
+            MTXCopy(sp98, temp_r31->mtx);
             temp_r31 = &Hu3DData[lbl_1_bss_199C2[temp_r30 + 68]];
             MTXTrans(sp68, 0, 150, lbl_1_bss_788[temp_r30] - 5.0f);
             MTXConcat(sp38, sp68, sp98);
-            MTXCopy(sp98, temp_r31->unk_F0);
+            MTXCopy(sp98, temp_r31->mtx);
             for (temp_r29 = 0; temp_r29 < 5; temp_r29++) {
                 if (temp_r30 != lbl_1_data_2C8[temp_r29]) {
                     continue;
@@ -992,12 +992,12 @@ void fn_1_C214(void)
                 MTXTrans(sp68, lbl_1_bss_824[temp_r29].x, lbl_1_bss_824[temp_r29].y, lbl_1_bss_824[temp_r29].z);
                 mtxScaleCat(sp68, 0.35f, 0.35f, 0.35f);
                 MTXConcat(sp38, sp68, sp98);
-                MTXCopy(sp98, temp_r31->unk_F0);
+                MTXCopy(sp98, temp_r31->mtx);
                 temp_r31 = &Hu3DData[lbl_1_bss_199C2[temp_r29 + 85]];
                 MTXTrans(sp68, lbl_1_bss_824[temp_r29].x, lbl_1_bss_824[temp_r29].y + 1.0f, lbl_1_bss_824[temp_r29].z);
                 mtxScaleCat(sp68, 0.5f, 0.5f, 0.5f);
                 MTXConcat(sp38, sp68, sp98);
-                MTXCopy(sp98, temp_r31->unk_F0);
+                MTXCopy(sp98, temp_r31->mtx);
             }
             MTXConcat(sp38, sp8, sp38);
         }
@@ -1005,7 +1005,7 @@ void fn_1_C214(void)
     }
 }
 
-void fn_1_C73C(ModelData *model, Mtx matrix)
+void fn_1_C73C(HU3DMODEL *model, Mtx matrix)
 {
     s16 temp_r31;
     u8 temp_r30;
@@ -1147,7 +1147,7 @@ void fn_1_D1E0(s16 model)
     s32 temp_r24;
     s32 temp_r23;
     HSFBUFFER *temp_r22;
-    temp_r29 = Hu3DData[model].hsfData;
+    temp_r29 = Hu3DData[model].hsf;
     lbl_1_bss_77C.x = lbl_1_bss_77C.y = -100000;
     lbl_1_bss_770.x = lbl_1_bss_770.y = 100000;
     temp_r28 = temp_r29->face;

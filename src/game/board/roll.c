@@ -87,7 +87,7 @@ static omObjData *diceObj[3] = { NULL, NULL, NULL };
 static omObjData *diceDigitObj[3] = { NULL, NULL, NULL };
 static s32 diceSndStatus[3] = { -1, -1, -1 };
 
-static HsfanimStruct00 diceEffParam = { 0x0096, { 0x00, 0x00 }, // padding?
+static HU3DPARMANPARAM diceEffParam = { 0x0096, { 0x00, 0x00 }, // padding?
     50.0f, 0.0f, 65.0f, { 0.0f, -0.195f, 0.0f }, 100.0f, 0.99f, 40.0f, 0.999f, 0x0004,
     { { 0xFF, 0xFF, 0x20, 0xFF }, { 0xFF, 0xFF, 0x00, 0xFF }, { 0xFF, 0xFF, 0x80, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF } },
     { { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 } } };
@@ -597,7 +597,7 @@ s16 BoardDiceEffectCreate(void)
 {
     s16 temp_r31;
     s16 temp_r30;
-    AnimData *temp_r29;
+    ANIMDATA *temp_r29;
     void *temp_r28;
 
     temp_r28 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 0x6B), MEMORY_DEFAULT_NUM, HEAP_DATA);

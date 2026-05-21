@@ -48,7 +48,7 @@ static s8 eventType;
 static s16 eventSpace;
 static s16 playerMot[4];
 static s16 fireParMan;
-static AnimData *fireAnim;
+static ANIMDATA *fireAnim;
 static char coinStealStrAll[8];
 static char coinStealStr[8];
 static omObjData *suitGiveObj;
@@ -1311,7 +1311,7 @@ static void KillPlayerMot(void)
     }
 }
 
-static void BowserFireHook(ModelData *model, ParticleData *particle, Mtx matrix);
+static void BowserFireHook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 static void SpawnBowserFire(HU3DPARTICLEDATA *arg0);
 static s32 CheckBowserFire(HU3DPARTICLEDATA *arg0);
@@ -1327,38 +1327,38 @@ static void InitBowserFire(void)
     Hu3DModelLayerSet(fireParMan, 2);
 }
 
-static void BowserFireHook(ModelData *model, ParticleData *particle, Mtx matrix)
+static void BowserFireHook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA* var_r30;
     s32 i;
     s32 var_r28;
     Vec pos;
     Hu3DModelObjPosGet(BoardModelIDGet(bowserMdl), "itemhook_M_1", &pos);
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         var_r30 = particle->data;
-        for (i = 0; i < particle->unk_30; i++, var_r30++) {
-            var_r30->unk2C = 0.0f;
+        for (i = 0; i < particle->maxCnt; i++, var_r30++) {
+            var_r30->scale = 0.0f;
         }
-        particle->unk_34 = 1;
-        particle->unk_00 = 0;
+        particle->count = 1;
+        particle->dataCnt = 0;
     }
-    if((particle->unk_34 & 0x3) == 0) {
+    if((particle->count & 0x3) == 0) {
         var_r30 = particle->data;
-        for(var_r28=0; var_r28<particle->unk_30; var_r28++, var_r30++) {
-             if(var_r30->unk2C == 0.0f) {
+        for(var_r28=0; var_r28<particle->maxCnt; var_r28++, var_r30++) {
+             if(var_r30->scale == 0.0f) {
                 break; 
              }
         }
-        if(var_r28 != particle->unk_30) {
-            var_r30->unk34 = pos;
-            particle->unk_00++;
+        if(var_r28 != particle->maxCnt) {
+            var_r30->pos = pos;
+            particle->dataCnt++;
             SpawnBowserFire(var_r30);
         }
     }
     var_r30 = particle->data;
-    for (i = 0; i < particle->unk_30; i++, var_r30++) {
-        if(var_r30->unk2C != 0.0f && CheckBowserFire(var_r30)) {
-            particle->unk_00--;
+    for (i = 0; i < particle->maxCnt; i++, var_r30++) {
+        if(var_r30->scale != 0.0f && CheckBowserFire(var_r30)) {
+            particle->dataCnt--;
         }
     }
 }
@@ -1367,33 +1367,33 @@ static void SpawnBowserFire(HU3DPARTICLEDATA *arg0)
 {
     Vec dir;
     BoardCameraDirGet(&dir);
-    arg0->unk08.x = 0.0f;
-    arg0->unk08.y = 0.0f;
-    arg0->unk08.z = 0.0f;
-    arg0->unk14.x = -dir.x*((0.5f*BoardRandFloat())+0.5f);
-    arg0->unk14.y = -dir.y*((0.5f*BoardRandFloat())+0.5f);
-    arg0->unk14.z = -dir.z*((0.5f*BoardRandFloat())+0.5f);
-    arg0->unk24 = 1.025f;
-    arg0->unk40.a = 254;
-    arg0->unk40.r = 255;
-    arg0->unk40.g = 255;
-    arg0->unk40.b = 255;
-    arg0->unk2C = 100.0f;
+    arg0->vel.x = 0.0f;
+    arg0->vel.y = 0.0f;
+    arg0->vel.z = 0.0f;
+    arg0->accel.x = -dir.x*((0.5f*BoardRandFloat())+0.5f);
+    arg0->accel.y = -dir.y*((0.5f*BoardRandFloat())+0.5f);
+    arg0->accel.z = -dir.z*((0.5f*BoardRandFloat())+0.5f);
+    arg0->colorIdx = 1.025f;
+    arg0->color.a = 254;
+    arg0->color.r = 255;
+    arg0->color.g = 255;
+    arg0->color.b = 255;
+    arg0->scale = 100.0f;
 }
 
 static s32 CheckBowserFire(HU3DPARTICLEDATA *arg0)
 {
-    arg0->unk34.x += arg0->unk08.x;
-    arg0->unk34.y += arg0->unk08.y;
-    arg0->unk34.z += arg0->unk08.z;
-    arg0->unk08.x += arg0->unk14.x;
-    arg0->unk08.y += arg0->unk14.y;
-    arg0->unk08.z += arg0->unk14.z;
-    arg0->unk40.a -= 8;
-    arg0->unk2C *= arg0->unk24;
-    if(arg0->unk40.a == 0.0f) {
-        arg0->unk40.a = 0;
-        arg0->unk2C = 0.0f;
+    arg0->pos.x += arg0->vel.x;
+    arg0->pos.y += arg0->vel.y;
+    arg0->pos.z += arg0->vel.z;
+    arg0->vel.x += arg0->accel.x;
+    arg0->vel.y += arg0->accel.y;
+    arg0->vel.z += arg0->accel.z;
+    arg0->color.a -= 8;
+    arg0->scale *= arg0->colorIdx;
+    if(arg0->color.a == 0.0f) {
+        arg0->color.a = 0;
+        arg0->scale = 0.0f;
         return 1;
     }
     return 0;

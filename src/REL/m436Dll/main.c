@@ -831,7 +831,7 @@ void fn_1_3088(void)
 void fn_1_31FC(omObjData *arg0)
 {
     StructBss220 *var_r29;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     s32 i;
 
     var_r29 = &lbl_1_bss_220;
@@ -1129,13 +1129,13 @@ void fn_1_49FC(omObjData *arg0)
 
 void fn_1_4AB4(s32 arg0)
 {
-    ModelData *var_r28;
+    HU3DMODEL *var_r28;
     HSFDATA *temp_r31;
     HSFMATERIAL *var_r30;
     s32 i;
 
     var_r28 = &Hu3DData[arg0];
-    temp_r31 = var_r28->hsfData;
+    temp_r31 = var_r28->hsf;
     var_r30 = temp_r31->material;
     for (i = 0; i < temp_r31->materialNum; i++, var_r30++) {
         var_r30->flags = 0x10;
@@ -1386,7 +1386,7 @@ void fn_1_5CD0(omObjData *arg0)
     char **temp_r26;
     s32 var_r22;
     s32 i, j;
-    ModelData *temp_r24;
+    HU3DMODEL *temp_r24;
     HSFDATA *temp_r27;
     HSFMATERIAL *var_r31;
     StructBss3E4 *temp_r30;
@@ -1398,11 +1398,11 @@ void fn_1_5CD0(omObjData *arg0)
     }
     var_r22 = 1;
     temp_r24 = &Hu3DData[arg0->model[0]];
-    temp_r27 = temp_r24->hsfData;
+    temp_r27 = temp_r24->hsf;
     var_r31 = temp_r27->material;
     temp_r30 = &lbl_1_bss_3E4[arg0->work[0]];
     if (temp_r30->unk14 == 3) {
-        for (i = 0; i < temp_r24->hsfData->materialNum; i++, var_r31++) {
+        for (i = 0; i < temp_r24->hsf->materialNum; i++, var_r31++) {
             if (i != 1 && i != 2) {
                 var_r31->color[0] *= temp_r30->unk2C;
                 if (var_r31->color[0] == 0) {
@@ -2639,8 +2639,8 @@ s32 fn_1_DEB0(void)
     StructBss220 *var_r28;
     StructBss1BC *var_r29;
     StructBss3E4 *temp_r31;
-    ModelData *temp_r27;
-    ModelData *temp_r26;
+    HU3DMODEL *temp_r27;
+    HU3DMODEL *temp_r26;
     StructBss180 *var_r25;
 
     var_r30 = &lbl_1_bss_4A4;

@@ -111,10 +111,10 @@ float fn_1_6594(float, float, float);
 float fn_1_6698(float, float, unkStruct3 *);
 void fn_1_6814(unkStruct3 *);
 void fn_1_7C60(void);
-void fn_1_A01C(ModelData *model, ParticleData *particle, Mtx matrix);
-void fn_1_A618(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_A01C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void fn_1_A618(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 //...
-void fn_1_AA88(ModelData *model, ParticleData *particle, Mtx matrix); // *
+void fn_1_AA88(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix); // *
 void fn_1_B160(void); // *
 void fn_1_B1C0(void); // *
 

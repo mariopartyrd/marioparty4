@@ -36,7 +36,7 @@ s32 fn_1_E72C(void)
     s16 temp_r28;
     s16 temp_r27;
     s32 temp_r26;
-    ModelData *temp_r25;
+    HU3DMODEL *temp_r25;
     float temp_f31;
     float temp_f30;
     Vec sp20;
@@ -344,9 +344,9 @@ void fn_1_FF5C(void)
     s16 temp_r31;
     s16 temp_r30;
     s16 temp_r29;
-    AnimData *temp_r28;
+    ANIMDATA *temp_r28;
     s16 temp_r27;
-    AnimData *temp_r26;
+    ANIMDATA *temp_r26;
     if (lbl_1_bss_388 == 0) {
         temp_r30 = HuSprGrpCreate(23);
         lbl_1_bss_388 = temp_r30;
@@ -414,9 +414,9 @@ void fn_1_10564(void)
     s16 temp_r27;
     s16 temp_r26;
     s16 temp_r25;
-    AnimData *temp_r24;
+    ANIMDATA *temp_r24;
     s16 temp_r23;
-    AnimData *temp_r22;
+    ANIMDATA *temp_r22;
     s16 sp8[4];
     if (mgBattleStarMax == 3) {
         temp_r25 = 0;
@@ -771,7 +771,7 @@ void fn_1_1222C(void)
 {
     s16 i;
     s16 j;
-    ModelData *model;
+    HU3DMODEL *model;
     float weight;
     float angle;
 
@@ -874,7 +874,7 @@ void fn_1_12B64(s16 arg0)
 void fn_1_12BEC(void)
 {
     s16 temp_r31;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     HSFMATERIAL *temp_r29;
     s32 *temp_r28;
     s16 temp_r27;
@@ -899,8 +899,8 @@ void fn_1_12BEC(void)
             temp_r26 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_MGMODE, 83));
             sp8[temp_r31] = temp_r26;
             temp_r30 = &Hu3DData[temp_r26];
-            temp_r29 = temp_r30->hsfData->material;
-            for (temp_r24 = 0; temp_r24 < temp_r30->hsfData->materialNum; temp_r24++, temp_r29++) {
+            temp_r29 = temp_r30->hsf->material;
+            for (temp_r24 = 0; temp_r24 < temp_r30->hsf->materialNum; temp_r24++, temp_r29++) {
                 temp_r29->color[0] = lbl_1_data_152[temp_r31].r;
                 temp_r29->color[1] = lbl_1_data_152[temp_r31].g;
                 temp_r29->color[2] = lbl_1_data_152[temp_r31].b;

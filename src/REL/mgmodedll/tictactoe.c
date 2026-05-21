@@ -44,7 +44,7 @@ s32 fn_1_13418(void)
     s16 temp_r30;
     s16 temp_r29;
     s16 temp_r28;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r27;
     Vec sp24;
     Vec sp18;
     Vec spC;
@@ -295,13 +295,13 @@ void fn_1_14CFC(void)
     s16 temp_r31;
     s16 temp_r30;
     s16 temp_r29;
-    AnimData *temp_r28;
+    ANIMDATA *temp_r28;
     s16 temp_r27;
     s16 temp_r26;
     s16 temp_r25;
     s16 temp_r24;
-    AnimData *temp_r23;
-    AnimData *temp_r22;
+    ANIMDATA *temp_r23;
+    ANIMDATA *temp_r22;
     s16 temp_r21;
     s16 temp_r20;
     s16 sp8;
@@ -530,7 +530,7 @@ s32 fn_1_15E98(s16 arg0, s32 arg1)
 void fn_1_16438(void)
 {
     s16 temp_r31;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     Vec sp20;
     Vec sp14;
     Vec sp8;
@@ -604,7 +604,7 @@ s32 fn_1_16B30(void)
     s16 temp_r26;
     s16 temp_r25;
     s16 temp_r24;
-    AnimData *temp_r23;
+    ANIMDATA *temp_r23;
     s16 temp_r22;
     s16 temp_r21;
     s16 temp_r20;

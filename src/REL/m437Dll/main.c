@@ -1639,7 +1639,7 @@ void fn_1_6200(omObjData *arg0)
     char **temp_r27;
     s32 var_r23;
     s32 i, j;
-    ModelData *temp_r25;
+    HU3DMODEL *temp_r25;
     HSFATTRIBUTE *temp_r24;
 
     temp_r30 = &lbl_1_bss_1DC[arg0->work[0]];
@@ -1648,10 +1648,10 @@ void fn_1_6200(omObjData *arg0)
     }
     var_r23 = 1;
     temp_r25 = &Hu3DData[arg0->model[0]];
-    temp_r28 = temp_r25->hsfData;
+    temp_r28 = temp_r25->hsf;
     var_r31 = temp_r28->material;
     if (temp_r30->unk3C == 3) {
-        for (i = 0; i < temp_r25->hsfData->materialNum; i++, var_r31++) {
+        for (i = 0; i < temp_r25->hsf->materialNum; i++, var_r31++) {
             if (i == 1 || i == 2) {
                 continue;
             }

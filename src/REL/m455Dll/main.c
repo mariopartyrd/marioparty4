@@ -67,7 +67,7 @@ s32 fn_1_3214(void);
 void ObjectSetup(void)
 {
     Process *objman;
-    CameraData *camera = &Hu3DCamera[0];
+    HU3DCAMERA *camera = &Hu3DCamera[0];
     s16 light;
     OSReport("******* M455ObjectSetup *********\n");
     objman = omInitObjMan(50, 8192);
@@ -107,7 +107,7 @@ void fn_1_478(omObjData *object);
 
 void fn_1_330(omObjData *object)
 {
-    CameraData *camera = &Hu3DCamera[0];
+    HU3DCAMERA *camera = &Hu3DCamera[0];
     lbl_1_bss_34 = 0;
     lbl_1_bss_2C = REFRESH_RATE;
     lbl_1_bss_30 = -1;
@@ -361,7 +361,7 @@ Vec lbl_1_data_108[4] = {
 
 void fn_1_1444(omObjData *object);
 
-void fn_1_2060(ModelData *arg0, Mtx arg1);
+void fn_1_2060(HU3DMODEL *arg0, Mtx arg1);
 
 void fn_1_D14(omObjData *object)
 {
@@ -408,7 +408,7 @@ void fn_1_D14(omObjData *object)
     object->model[3] = Hu3DHookFuncCreate(fn_1_2060);
     Hu3DModelLayerSet(object->model[3], 3);
     Hu3DModelCameraSet(object->model[3], HU3D_CAM0);
-    Hu3DData[object->model[3]].unk_120 = object;
+    Hu3DData[object->model[3]].hookData = object;
     object->model[4] = Hu3DModelCreateFile(0x54000A);
     Hu3DModelLayerSet(object->model[4], 3);
     Hu3DModelCameraSet(object->model[4], HU3D_CAM0);
@@ -633,7 +633,7 @@ void fn_1_1444(omObjData *object)
     }
     if (temp_r31->unk16 >= 2 && temp_r31->unk16 <= 3 && temp_r31->field0) {
         Hu3DData[object->model[4]].rot.y += 2.0f;
-        if (0.0f == Hu3DData[object->model[4]].unk_64) {
+        if (0.0f == Hu3DData[object->model[4]].motWork.time) {
             HuAudFXPlay(1987);
         }
     }
@@ -657,7 +657,7 @@ GXColor lbl_1_data_170 = { 255, 255, 255, 255 };
 
 void fn_1_27A0(Vec *arg0, Vec *arg1, float arg2);
 
-void fn_1_2060(ModelData *arg0, Mtx arg1)
+void fn_1_2060(HU3DMODEL *arg0, Mtx arg1)
 {
     Vec vtxPos[4];
     Mtx mtxHook;
@@ -665,9 +665,9 @@ void fn_1_2060(ModelData *arg0, Mtx arg1)
     Vec pos;
     Vec itemHookPos;
     s32 i;
-    omObjData *object = arg0->unk_120;
+    omObjData *object = arg0->hookData;
     M455Player *player = object->data;
-    ModelData *modelPuku = &Hu3DData[object->model[4]];
+    HU3DMODEL *modelPuku = &Hu3DData[object->model[4]];
     GXLoadPosMtxImm(arg1, GX_PNMTX0);
     GXSetNumChans(1);
     GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_NONE);
@@ -781,7 +781,7 @@ void fn_1_2AF4(s32 arg0, s32 arg1, float arg2)
 
 void fn_1_2D44(omObjData *object)
 {
-    CameraData *camera = &Hu3DCamera[0];
+    HU3DCAMERA *camera = &Hu3DCamera[0];
     switch (fn_1_320()) {
         case 1:
             fn_1_2AF4(0, 1, sind(lbl_1_data_184[0] * 90.0f));

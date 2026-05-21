@@ -189,7 +189,7 @@ typedef struct _unkSubStruct2 {
 } unkSubStruct2; /* size = 0xBC */
 
 typedef struct _unkSubStruct3 {
-    AnimData *unk0;
+    ANIMDATA *unk0;
     s16 unk4;
     s16 unk6;
     u32 unk8;
@@ -250,7 +250,7 @@ void fn_1_6304(omObjData *object);
 void fn_1_6368(void);
 void *fn_1_63A8(s32);
 void fn_1_64DC(void);
-AnimBmpData *fn_1_668C(s16);
+ANIMBMP *fn_1_668C(s16);
 s16 fn_1_66AC(void);
 s32 fn_1_679C(void);
 float fn_1_67F0(float, float, float);
@@ -261,8 +261,8 @@ void fn_1_7674(float *, Vec *, Vec *, s32);
 void fn_1_7A54(float, Vec *, float *, Vec *, Vec *, s32);
 // map.c
 void fn_1_8780(s16 arg0, s16 arg1);
-void fn_1_95C0(ModelData *, Mtx);
-AnimData **fn_1_9734(s16);
+void fn_1_95C0(HU3DMODEL *, Mtx);
+ANIMDATA **fn_1_9734(s16);
 void fn_1_9DC8(unkSubStruct2 *);
 s16 fn_1_A2D0(u8, u8);
 void fn_1_A800(s16);

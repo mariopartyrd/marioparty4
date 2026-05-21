@@ -330,7 +330,7 @@ static void *SeqReadFile(s32 file)
 
 s32 MGSeqInitTimer(SeqWork *work, va_list params)
 {
-    AnimData *spr_anim;
+    ANIMDATA *spr_anim;
     s16 sprite;
     s16 spr_grp;
     int duration, x, y;
@@ -551,7 +551,7 @@ s32 MGSeqInitType2(SeqWork *work, va_list params)
 {
     s16 spr_idx;
     s16 spr_grp;
-    AnimData *anim_tbl[6];
+    ANIMDATA *anim_tbl[6];
     s32 i;
     s16 len;
     char *str;
@@ -803,7 +803,7 @@ void fn_80036BC8(void)
     }
 }
 
-static AnimData *SeqLoadFontChar(char *str, s16 flags);
+static ANIMDATA *SeqLoadFontChar(char *str, s16 flags);
 
 static s32 SeqMakeWord(SeqWork *work, char *str, s16 flags)
 {
@@ -816,7 +816,7 @@ static s32 SeqMakeWord(SeqWork *work, char *str, s16 flags)
     AnimData **char_anim;
     s16 *char_pos;
 #else
-    AnimData **char_anim;
+    ANIMDATA **char_anim;
     s16 *char_pos;
     char *str_ptr;
 #endif
@@ -829,7 +829,7 @@ static s32 SeqMakeWord(SeqWork *work, char *str, s16 flags)
     if (grp_idx == 16) {
         return -1;
     }
-    char_anim = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(AnimData *) * 100);
+    char_anim = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(ANIMDATA *) * 100);
     char_pos = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(s16) * 100);
     str_ptr = str;
     x = 0;
@@ -870,7 +870,7 @@ static s32 SeqMakeWord(SeqWork *work, char *str, s16 flags)
     return grp_idx;
 }
 
-static AnimData *SeqLoadFontChar(char *str, s16 flags)
+static ANIMDATA *SeqLoadFontChar(char *str, s16 flags)
 {
     s32 data_num;
     s16 id;
@@ -3056,7 +3056,7 @@ s32 MGSeqUpdateWin(SeqWork *work)
 
 s32 MGSeqInitRecord(SeqWork *work, va_list params)
 {
-    AnimData *spr_data;
+    ANIMDATA *spr_data;
     s16 spr_grp;
     s16 time_pos[2];
     s16 i;
@@ -3548,7 +3548,7 @@ static void PracticeProc(void)
 
     s16 group;
     s16 sprite;
-    AnimData *anim;
+    ANIMDATA *anim;
     s16 i;
     s16 *practice;
     float time;

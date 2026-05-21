@@ -109,7 +109,7 @@ void fn_1_D588(DataListModel *model_list)
 	s16 i;
 	s16 model;
 	s16 clear_i;
-	ModelData *model_ptr;
+	HU3DMODEL *model_ptr;
 	void *data;
 	list = model_list;
 	for(clear_i=0; clear_i<90; clear_i++) {
@@ -125,8 +125,8 @@ void fn_1_D588(DataListModel *model_list)
 			Hu3DModelRotSetV(model, &list->rot);
 			Hu3DModelScaleSetV(model, &list->scale);
 			model_ptr = &Hu3DData[model];
-			if(model_ptr->unk_08 != -1) {
-				lbl_1_bss_1990E[i] = model_ptr->unk_08;
+			if(model_ptr->motId != -1) {
+				lbl_1_bss_1990E[i] = model_ptr->motId;
 			}
 		} else if(list->type == 1) {
 			data = HuDataSelHeapReadNum(list->datanum, MEMORY_DEFAULT_NUM, HEAP_DATA);

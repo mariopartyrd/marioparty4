@@ -662,7 +662,7 @@ void fn_1_A6A8(void)
 {
     s16 spA[2];
     s16 i;
-    AnimData *anim;
+    ANIMDATA *anim;
     s16 sprite;
     s16 group;
     s16 player;
@@ -787,7 +787,7 @@ void fn_1_AED0(void)
 {
     s16 temp_r31;
     s16 temp_r30;
-    AnimData *temp_r29;
+    ANIMDATA *temp_r29;
     s16 temp_r28;
     s16 temp_r27;
     s32 temp_r26;
@@ -1068,13 +1068,13 @@ s32 fn_1_C0C8(s32 arg0)
     s16 temp_r30;
     float *temp_r29;
     s16 temp_r28;
-    AnimData *temp_r27;
+    ANIMDATA *temp_r27;
     s16 temp_r26;
     s16 temp_r25;
     s16 temp_r24;
     s16 temp_r23;
     WindowData *temp_r22;
-    AnimData *temp_r21;
+    ANIMDATA *temp_r21;
 
     float temp_f31;
     float temp_f30;

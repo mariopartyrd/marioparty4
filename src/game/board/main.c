@@ -1547,7 +1547,7 @@ typedef struct filter_work {
 } FilterWork;
 
 static void UpdateFilter(omObjData *object);
-static void DrawFilter(ModelData *model, Mtx matrix);
+static void DrawFilter(HU3DMODEL *model, Mtx matrix);
 
 void BoardFilterFadeOut(s16 len)
 {
@@ -1642,7 +1642,7 @@ static void UpdateFilter(omObjData *object)
     }
 }
 
-static void DrawFilter(ModelData *model, Mtx matrix)
+static void DrawFilter(HU3DMODEL *model, Mtx matrix)
 {
     static GXColor colorN = { 0xFF, 0xFF, 0xFF, 0xFF };
     Mtx44 proj;
@@ -1718,7 +1718,7 @@ typedef struct confetti_work {
 static void UpdateConfetti(omObjData *object);
 static void SpawnConfetti(omObjData *object);
 static void MoveConfetti(omObjData *object);
-static void DrawConfetti(ModelData *model, Mtx matrix);
+static void DrawConfetti(HU3DMODEL *model, Mtx matrix);
 
 
 void BoardConfettiCreate(Vec *pos, s16 count, float range)
@@ -1893,16 +1893,16 @@ static Vec confettiLightTbl[6] = {
     { 1, 8, 0.3 }
 };
 
-static void DrawConfetti(ModelData *model, Mtx matrix)
+static void DrawConfetti(HU3DMODEL *model, Mtx matrix)
 {
     if(!confettiObj || BoardIsKill()) {
         return;
     } else {
         ConfettiWork *work = OM_GET_WORK_PTR(confettiObj, ConfettiWork);
-        ModelData *model = &Hu3DData[work->gfx_mdl];
+        HU3DMODEL *model = &Hu3DData[work->gfx_mdl];
         ConfettiParticle *particle;
         s32 i;
-        if(!model->hsfData) {
+        if(!model->hsf) {
             return;
         }
         particle = work->data;

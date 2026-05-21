@@ -24,7 +24,7 @@ typedef struct {
     /* 0x20 */ u16 unk20;
     /* 0x22 */ s16 unk22;
     /* 0x24 */ float unk24;
-    /* 0x28 */ AnimData* unk28;
+    /* 0x28 */ ANIMDATA* unk28;
 } StructBss1CF8; // Size 0x2C
 
 typedef struct {
@@ -35,7 +35,7 @@ typedef struct {
 
 void fn_1_1E13C(s32 arg0, s32 arg1, StructBss1CF8* arg2, Vec* arg3);
 void fn_1_1E558(void);
-void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix);
+void fn_1_1E820(HU3DMODEL* model, HU3DPARTICLE* particle, Mtx matrix);
 
 StructBss1CF8 lbl_1_bss_1CF8[2];
 s32 lbl_1_bss_1CF4;
@@ -44,7 +44,7 @@ s32 lbl_1_bss_1CEC;
 s16 lbl_1_bss_1CE8;
 
 void fn_1_1DED8(s32 arg0, Vec* arg1, Vec* arg2, s16 arg3) {
-    AnimData* temp_r28;
+    ANIMDATA* temp_r28;
     s16 var_r27;
 
     fn_1_1E13C(arg0 + 1, arg0 + 3, &lbl_1_bss_1CF8[0], arg2);
@@ -84,12 +84,12 @@ s32 fn_1_1E12C(void) {
 
 void fn_1_1E13C(s32 arg0, s32 arg1, StructBss1CF8* arg2, Vec* arg3) {
     Vec sp14;
-    AnimBmpData* temp_r31;
+    ANIMBMP* temp_r31;
     s32 sp10;
     s32 var_r27;
     s32 var_r26;
     u16* var_r25;
-    AnimData* var_r24;
+    ANIMDATA* var_r24;
     Vec* var_r22;
     StructFn1E13C* temp_r23;
     s16 var_r29;
@@ -136,7 +136,7 @@ void fn_1_1E13C(s32 arg0, s32 arg1, StructBss1CF8* arg2, Vec* arg3) {
     Hu3DParticleHookSet(var_r27, fn_1_1E820);
     Hu3DParticleBlendModeSet(var_r27, 1);
     Hu3DParticleAttrSet(var_r27, 2);
-    temp_r23 = Hu3DData[var_r27].unk_120;
+    temp_r23 = Hu3DData[var_r27].hookData;
     temp_r23->unk1C = arg2;
     temp_r23->unk00 = 0;
     OSReport("Particle Count %d\n", var_r26);
@@ -158,8 +158,8 @@ void fn_1_1E558(void) {
     Hu3DParticleAttrReset(lbl_1_bss_1CF8->unk22, 2);
     HuPrcSleep(20);
     Hu3DParticleAttrReset(lbl_1_bss_1CF8[1].unk22, 2);
-    temp_r30 = Hu3DData[lbl_1_bss_1CF8[0].unk22].unk_120;
-    temp_r29 = Hu3DData[lbl_1_bss_1CF8[1].unk22].unk_120;
+    temp_r30 = Hu3DData[lbl_1_bss_1CF8[0].unk22].hookData;
+    temp_r29 = Hu3DData[lbl_1_bss_1CF8[1].unk22].hookData;
     while (*temp_r30 == 0 || *temp_r29 == 0) {
         HuPrcVSleep();
     }
@@ -197,7 +197,7 @@ void fn_1_1E558(void) {
     }
 }
 
-void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
+void fn_1_1E820(HU3DMODEL* model, HU3DPARTICLE* particle, Mtx matrix) {
     Vec sp8;
     float temp_f30;
     float temp_f31;
@@ -213,14 +213,14 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
     s16 temp_r20;
     s16 var_r23;
 
-    temp_r28 = particle->unk_1C;
-    if (particle->unk_34 == 0) {
+    temp_r28 = particle->work;
+    if (particle->count == 0) {
         var_r31 = particle->data;
-        for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-            var_r31->unk2C = 0.0f;
+        for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+            var_r31->scale = 0.0f;
         }
     }
-    if (particle->unk_2D & 2) {
+    if (particle->attr & 2) {
         return;
     }
     temp_r21 = temp_r28->unk24 - (temp_r28->unk24 / 5.0f);
@@ -228,99 +228,99 @@ void fn_1_1E820(ModelData* model, ParticleData* particle, Mtx matrix) {
     temp_r20 = temp_r21 - temp_r26;
     PSVECSubtract(&temp_r28->unk04, &temp_r28->unk10, &sp8);
     temp_f31 = PSVECMag(&sp8) / temp_r20;
-    for (var_r22 = 0; var_r22 < particle->unk_30 / (temp_r28->unk24 / 5.0f); var_r22++) {
+    for (var_r22 = 0; var_r22 < particle->maxCnt / (temp_r28->unk24 / 5.0f); var_r22++) {
         var_r31 = particle->data;
-        for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-            if (!var_r31->unk2C) {
+        for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+            if (!var_r31->scale) {
                 break;
             }
         }
-        if (var_r29 == particle->unk_30) {
+        if (var_r29 == particle->maxCnt) {
             break;
         }
-        var_r31->unk34 = temp_r28->unk04;
+        var_r31->pos = temp_r28->unk04;
         var_r27 = (frand8() * 360) >> 8;
         temp_f30 = 0.2 * frand5();
-        var_r31->unk08.x = temp_f30 * sind(var_r27);
-        var_r31->unk08.y = 0.1 * (frand5() + 100);
-        var_r31->unk08.z = temp_f30 * cosd(var_r27);
-        var_r31->unk40.r = 0xF0;
-        var_r31->unk40.g = 0x80;
-        var_r31->unk40.b = 0x60;
-        var_r31->unk2C = 10.0f;
+        var_r31->vel.x = temp_f30 * sind(var_r27);
+        var_r31->vel.y = 0.1 * (frand5() + 100);
+        var_r31->vel.z = temp_f30 * cosd(var_r27);
+        var_r31->color.r = 0xF0;
+        var_r31->color.g = 0x80;
+        var_r31->color.b = 0x60;
+        var_r31->scale = 10.0f;
         var_r31->time = 0;
-        var_r31->unk02 = 0;
-        var_r31->unk14.x = frandmod(360);
+        var_r31->parManId = 0;
+        var_r31->accel.x = frandmod(360);
     }
     var_r31 = particle->data;
-    for (var_r29 = var_r23 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (!var_r31->unk2C) {
+    for (var_r29 = var_r23 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+        if (!var_r31->scale) {
             continue;
         }
         if (var_r31->time == 0) {
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
-            var_r31->unk08.x *= 0.999f;
-            var_r31->unk08.y -= 0.5f;
-            var_r31->unk08.z *= 0.999f;
-            if (var_r31->unk02 > temp_r26 - (temp_r26 / 5.0)) {
-                PSVECScale(&var_r31->unk08, &var_r31->unk08, 1.0 - ((var_r31->unk02 - (temp_r26 - temp_r26 / 5.0)) / (temp_r26 / 5.0)));
+            PSVECAdd(&var_r31->vel, &var_r31->pos, &var_r31->pos);
+            var_r31->vel.x *= 0.999f;
+            var_r31->vel.y -= 0.5f;
+            var_r31->vel.z *= 0.999f;
+            if (var_r31->parManId > temp_r26 - (temp_r26 / 5.0)) {
+                PSVECScale(&var_r31->vel, &var_r31->vel, 1.0 - ((var_r31->parManId - (temp_r26 - temp_r26 / 5.0)) / (temp_r26 / 5.0)));
             }
-            if (var_r31->unk02 == temp_r26) {
+            if (var_r31->parManId == temp_r26) {
                 var_r31->time++;
             }
-            if (var_r31->unk34.y <= 0.0f) {
-                var_r31->unk08.y = 0.5f * -var_r31->unk08.y;
-                var_r31->unk34.y = 0.0f;
+            if (var_r31->pos.y <= 0.0f) {
+                var_r31->vel.y = 0.5f * -var_r31->vel.y;
+                var_r31->pos.y = 0.0f;
             }
         } else if (var_r31->time == 1) {
             sp8 = temp_r28->unk00[var_r29];
-            PSVECSubtract(&sp8, &var_r31->unk34, &sp8);
+            PSVECSubtract(&sp8, &var_r31->pos, &sp8);
             if (PSVECMag(&sp8) <= 1.0 + temp_f31) {
                 var_r23++;
-                var_r31->unk34 = temp_r28->unk00[var_r29];
+                var_r31->pos = temp_r28->unk00[var_r29];
                 var_r31->time++;
                 continue;
             }
             PSVECNormalize(&sp8, &sp8);
-            var_r31->unk08.x = sp8.x * temp_f31 + sind(var_r31->unk14.x);
-            var_r31->unk08.y = sp8.y * temp_f31;
-            var_r31->unk08.z = sp8.z * temp_f31;
-            PSVECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
-            var_r31->unk14.x += 20.0f;
+            var_r31->vel.x = sp8.x * temp_f31 + sind(var_r31->accel.x);
+            var_r31->vel.y = sp8.y * temp_f31;
+            var_r31->vel.z = sp8.z * temp_f31;
+            PSVECAdd(&var_r31->vel, &var_r31->pos, &var_r31->pos);
+            var_r31->accel.x += 20.0f;
         } else {
             var_r23++;
         }
         if (var_r31->time >= 1) {
-            var_r27 = var_r31->unk40.r;
+            var_r27 = var_r31->color.r;
             var_r27 += (var_r27 - 0xFF) / 20;
             if (var_r27 > 0xFF) {
-                var_r31->unk40.r = 0xFF;
+                var_r31->color.r = 0xFF;
             } else {
-                var_r31->unk40.r = var_r27;
+                var_r31->color.r = var_r27;
             }
-            temp_r25 = var_r31->unk40.g;
+            temp_r25 = var_r31->color.g;
             temp_r25 += (temp_r25 - 0xFF) / 20;
             if (temp_r25 > 0xFF) {
-                var_r31->unk40.g = 0xFF;
+                var_r31->color.g = 0xFF;
             } else {
-                var_r31->unk40.g = temp_r25;
+                var_r31->color.g = temp_r25;
             }
-            temp_r24 = var_r31->unk40.b;
+            temp_r24 = var_r31->color.b;
             temp_r24 += (temp_r24 - 0x80) / 20;
             if (temp_r24 > 0x80) {
-                var_r31->unk40.b = 0x80;
+                var_r31->color.b = 0x80;
             } else {
-                var_r31->unk40.b = temp_r24;
+                var_r31->color.b = temp_r24;
             }
         }
-        var_r31->unk2C -= 0.2f;
-        if (var_r31->unk2C < 5.0f) {
-            var_r31->unk2C = 5.0f;
+        var_r31->scale -= 0.2f;
+        if (var_r31->scale < 5.0f) {
+            var_r31->scale = 5.0f;
         }
-        var_r31->unk02++;
+        var_r31->parManId++;
     }
-    DCStoreRange(particle->data, particle->unk_30 * sizeof(HU3DPARTICLEDATA));
-    if (var_r23 >= particle->unk_30) {
-        particle->unk_00++;
+    DCStoreRange(particle->data, particle->maxCnt * sizeof(HU3DPARTICLEDATA));
+    if (var_r23 >= particle->maxCnt) {
+        particle->dataCnt++;
     }
 }

@@ -33,7 +33,7 @@ typedef struct {
     /* 0x44 */ s32 unk44;
     /* 0x48 */ float unk48;
     /* 0x4C */ float unk4C;
-    /* 0x50 */ AnimData* unk50;
+    /* 0x50 */ ANIMDATA* unk50;
     /* 0x54 */ s32 unk54[5];
     /* 0x68 */ s32 unk68[5];
     /* 0x7C */ Process* unk7C;
@@ -64,7 +64,7 @@ typedef struct {
     /* 0x94 */ float unk94;
     /* 0x98 */ float unk98;
     /* 0x9C */ float unk9C;
-    /* 0xA0 */ AnimData* unkA0;
+    /* 0xA0 */ ANIMDATA* unkA0;
     /* 0xA4 */ Process* unkA4;
     /* 0xA8 */ Vec unkA8;
     /* 0xB4 */ float unkB4;

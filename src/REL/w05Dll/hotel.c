@@ -24,12 +24,12 @@ s16 lbl_1_bss_28;
 
 void fn_1_13D4(void) {
     Vec sp8;
-    ModelData* temp_r31;
+    HU3DMODEL* temp_r31;
 
     lbl_1_data_164 = BoardModelCreate(lbl_1_data_150[lbl_1_bss_0->unk_04], NULL, 0);
     BoardModelAttrSet(lbl_1_data_164, 0x40000001);
     temp_r31 = &Hu3DData[BoardModelIDGet(lbl_1_data_118)];
-    Hu3DMotionExec(BoardModelIDGet(lbl_1_data_118), temp_r31->unk_08, 0.0f, 0);
+    Hu3DMotionExec(BoardModelIDGet(lbl_1_data_118), temp_r31->motId, 0.0f, 0);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_118), "hotel1", &sp8);
     BoardModelPosSetV(lbl_1_data_164, &sp8);
 }
@@ -63,7 +63,7 @@ void fn_1_155C(void) {
     Vec spC;
     char sp8[4];
     s32 var_r27;
-    ModelData* temp_r25;
+    HU3DMODEL* temp_r25;
     f32 temp_f30;
     f32 temp_f31;
     s16 var_r26;
@@ -223,7 +223,7 @@ void fn_1_1E44(void) {
     s16 sp1C[4][2];
     Vec sp10;
     s16 sp8[4];
-    ModelData* temp_r25;
+    HU3DMODEL* temp_r25;
     f32 temp_f31;
     f32 temp;
     s16 temp_r3;
@@ -358,7 +358,7 @@ void fn_1_1E44(void) {
         lbl_1_data_164 = BoardModelCreate(lbl_1_data_150[lbl_1_bss_0->unk_04], NULL, 0);
         BoardModelAttrSet(lbl_1_data_164, 0x40000001);
         temp_r25 = &Hu3DData[BoardModelIDGet(lbl_1_data_118)];
-        Hu3DMotionExec(BoardModelIDGet(lbl_1_data_118), temp_r25->unk_08, 0.0f, 0);
+        Hu3DMotionExec(BoardModelIDGet(lbl_1_data_118), temp_r25->motId, 0.0f, 0);
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_data_118), "hotel1", &sp10);
         BoardModelPosSetV(lbl_1_data_164, &sp10);
         BoardModelMotionStart(lbl_1_bss_14[4], sp8[2], 0x40000001U);

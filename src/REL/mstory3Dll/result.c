@@ -100,9 +100,9 @@ StructBss1530 lbl_1_bss_19E4;
 StructBss1530 lbl_1_bss_19BC;
 StructBss1530 lbl_1_bss_1994;
 StructBss1530 lbl_1_bss_18F4[4];
-AnimData* lbl_1_bss_18EC[2];
-AnimData* lbl_1_bss_18E4[2];
-AnimData* lbl_1_bss_18D8[3];
+ANIMDATA* lbl_1_bss_18EC[2];
+ANIMDATA* lbl_1_bss_18E4[2];
+ANIMDATA* lbl_1_bss_18D8[3];
 s32 lbl_1_bss_18D4;
 Process* lbl_1_bss_18D0;
 

@@ -325,7 +325,7 @@ void fn_1_2030(m02GenDice *arg0)
     fn_1_1F94(arg0, 2);
 }
 
-HsfanimStruct00 lbl_1_data_2D8 = { 150, { 0x00, 0x00 }, // padding?
+HU3DPARMANPARAM lbl_1_data_2D8 = { 150, { 0x00, 0x00 }, // padding?
     50, 0, 65.0f, { 0.0f, -0.195f, 0.0f }, 100.0f, 0.99f, 40.0f, 0.999f, 0x0004,
     { 0xFF, 0xFF, 0x20, 0xFF, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x80, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
     { 0xFF, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00 } };
@@ -333,7 +333,7 @@ HsfanimStruct00 lbl_1_data_2D8 = { 150, { 0x00, 0x00 }, // padding?
 void fn_1_2100(m02GenDice *arg0, s32 arg1)
 {
     s16 temp_r29;
-    AnimData *temp_r28;
+    ANIMDATA *temp_r28;
     void *temp_r27;
     temp_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 0x01), MEMORY_DEFAULT_NUM, HEAP_DATA);
     temp_r28 = HuSprAnimRead(temp_r27);

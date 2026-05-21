@@ -397,7 +397,7 @@ void fn_1_4E50(omObjData *object)
         temp_f28 = (temp_r31->unk54 * 10) + 10;
     }
     temp_r31->unk50 += (temp_f28 - temp_r31->unk50) * 0.3f;
-    Hu3DData[object->model[1]].unk_A4[0] = temp_r31->unk50;
+    Hu3DData[object->model[1]].clusterTime[0] = temp_r31->unk50;
     Hu3DModelObjMtxGet(object->model[0], lbl_1_data_190[temp_r31->unkC], sp2C);
     for (temp_r29 = 0; temp_r29 < temp_r31->unk54; temp_r29++) {
         Hu3DModelObjPosGet(object->model[1], sp14[temp_r29], &sp20);
@@ -569,7 +569,7 @@ void fn_1_60AC(omObjData *arg0, u32 arg1)
         if (lbl_1_data_224[arg1].unk2) {
             Hu3DMotionOverlaySet(arg0->model[0], arg0->motion[lbl_1_data_224[arg1].unk2]);
             Hu3DMotionOverlayTimeSet(arg0->model[0], lbl_1_data_224[arg1].unk8);
-            Hu3DData[arg0->model[0]].unk_78 = 1.0f;
+            Hu3DData[arg0->model[0]].motOvlWork.speed = 1.0f;
         }
         else {
             Hu3DMotionOverlayReset(arg0->model[0]);

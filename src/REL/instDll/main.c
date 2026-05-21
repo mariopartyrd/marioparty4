@@ -32,7 +32,7 @@ Vec cameraRot[2];
 Vec cameraPos[2];
 float cameraZoom[2];
 static s32 instBoxMdlId;
-static AnimData *instPicAnim;
+static ANIMDATA *instPicAnim;
 static u16 instMgNo;
 static u16 instHostNo;
 static u16 instMesOfs;
@@ -174,8 +174,8 @@ static s32 instBackFile[] = {
     DATA_MAKE_NUM(DATADIR_INST, 9),
 };
 
-static void InstPicDraw(ModelData *model, Mtx mtx);
-static void ShadowDraw(ModelData *model, Mtx mtx);
+static void InstPicDraw(HU3DMODEL *model, Mtx mtx);
+static void ShadowDraw(HU3DMODEL *model, Mtx mtx);
 
 static void InstMain(void)
 {
@@ -197,7 +197,7 @@ static void InstMain(void)
     s32 picFile;
     omOvlHisData *his;
     s16 sprId;
-    AnimData *anim;
+    ANIMDATA *anim;
     float z;
     float time;
     float fovSpeed;
@@ -414,7 +414,7 @@ static void InstPlayerMain(void)
     s16 type;
     s16 grpType;
     s16 group;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     s16 playerMdlId[4];
     s16 charNo[4];
     s16 shadowMdl[4];
@@ -566,7 +566,7 @@ static void InstHostMain(void)
     s16 i;
     s16 modelId;
     s16 motId[2];
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     modelId = Hu3DModelCreateFile(hostFileTbl[instHostNo * 3]);
     motId[0] = Hu3DJointMotionFile(modelId, hostFileTbl[(instHostNo * 3) + 1]);
     motId[1] = Hu3DJointMotionFile(modelId, hostFileTbl[(instHostNo * 3) + 2]);
@@ -730,7 +730,7 @@ static void InstNameMain(void)
     s16 i;
     s16 j;
     char *mes;
-    AnimData *nameAnim;
+    ANIMDATA *nameAnim;
     s16 rulesWinId;
     s16 mesSpaceNum;
     s16 nameGrpId;
@@ -1048,7 +1048,7 @@ static void CameraDebug(omObjData *object)
 static float lbl_1_data_148 = 842;
 static float instPicRadius = 34;
 
-static void InstPicDraw(ModelData *model, Mtx mtx)
+static void InstPicDraw(HU3DMODEL *model, Mtx mtx)
 {
     Mtx final;
     Mtx invCamera;
@@ -1143,7 +1143,7 @@ static void InstPicDraw(ModelData *model, Mtx mtx)
     GXEnd();
 }
 
-static void ShadowDraw(ModelData *model, Mtx mtx)
+static void ShadowDraw(HU3DMODEL *model, Mtx mtx)
 {
     s32 temp = 0;
     GXTexObj tex;
@@ -1153,12 +1153,12 @@ static void ShadowDraw(ModelData *model, Mtx mtx)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXInitTexObj(&tex, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&tex, Hu3DShadowData.buf, Hu3DShadowData.size, Hu3DShadowData.size, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&tex, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&tex, 0);
     MTXInverse(Hu3DCameraMtx, invCamera);
     MTXConcat(invCamera, mtx, final);
-    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, shadow);
+    MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, shadow);
     MTXConcat(shadow, final, final);
     GXLoadTexMtxImm(final, GX_TEXMTX9, GX_MTX3x4);
     GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, GX_TEXMTX9);

@@ -38,7 +38,7 @@ Process *lbl_1_bss_A00;
 void fn_1_4DF8(omObjData *object);
 void fn_1_5A60(omObjData *object);
 void fn_1_5DA8(void);
-void fn_1_6AE0(ModelData *model, Mtx mtx);
+void fn_1_6AE0(HU3DMODEL *model, Mtx mtx);
 void fn_1_83B4(void);
 
 static const Vec lbl_1_rodata_1C8 = { 0.0f, 0.0f, 0.0f };
@@ -440,13 +440,13 @@ void fn_1_69C8(s16 arg0, s16 arg1, s16 arg2)
 {
     HsfdrawStruct01 *temp_r31;
     HSFATTRIBUTE *temp_r30;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r29;
     s16 temp_r28;
     char *temp_r27;
     temp_r29 = &Hu3DData[arg1];
-    temp_r30 = temp_r29->hsfData->attribute;
+    temp_r30 = temp_r29->hsf->attribute;
     temp_r27 = MakeObjectName(lbl_1_data_6F4[arg2 + (arg0 * 3)]);
-    for (temp_r28 = 0; temp_r28 < temp_r29->hsfData->attributeNum; temp_r28++, temp_r30++) {
+    for (temp_r28 = 0; temp_r28 < temp_r29->hsf->attributeNum; temp_r28++, temp_r30++) {
         if (temp_r30->bitmap->name[0] == temp_r27[0] && strcmp(temp_r30->bitmap->name, temp_r27) == 0 && temp_r30->animWorkP) {
             temp_r31 = temp_r30->animWorkP;
             temp_r31->unk08 = temp_r31->unk0C = temp_r31->unk10 = 0;
@@ -457,7 +457,7 @@ void fn_1_69C8(s16 arg0, s16 arg1, s16 arg2)
 
 s32 lbl_1_data_754 = 20;
 
-void fn_1_6AE0(ModelData *model, Mtx mtx)
+void fn_1_6AE0(HU3DMODEL *model, Mtx mtx)
 {
     s32 temp_r31;
     u8 temp_r30, temp_r29, temp_r28;

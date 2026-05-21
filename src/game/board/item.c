@@ -84,8 +84,8 @@ static void ExecItemLight(void);
 static void ExecItemWhistle(void);
 static void ExecItemBowser(void);
 static void ExecItemBooBall(void);
-static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx matrix);
-static void GenieParticleUpdate(ModelData *model, ParticleData *particle, Mtx matrix);
+static void LampParticleUpdate(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+static void GenieParticleUpdate(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 static void GenieCameraProc(void);
 static void GenieCameraCalc(UnkGenieCameraStruct *arg0, s32 arg1, float arg2, Vec *arg3, Vec *arg4);
 static void GenieSceneExec(void);
@@ -116,7 +116,7 @@ static s16 booBallMdl;
 static float booBallAlpha;
 static char booCoinStr[8];
 static float genieFov;
-static AnimData *genieParticleAnim;
+static ANIMDATA *genieParticleAnim;
 static s16 geniePlayerMot[3];
 static Process *itemProc;
 
@@ -1909,7 +1909,7 @@ static void ForceConsts(void)
     (void)125.0f;
 }
 
-static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx matrix)
+static void LampParticleUpdate(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA *var_r31;
     Vec spC;
@@ -1919,77 +1919,77 @@ static void LampParticleUpdate(ModelData *model, ParticleData *particle, Mtx mat
     s32 i;
     s32 j;
 
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         var_r31 = particle->data;
-        for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk2C = 0.0f;
-            var_r31->unk40.a = 0;
+        for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+            var_r31->scale = 0.0f;
+            var_r31->color.a = 0;
         }
-        particle->unk_04.x = 0.0f;
-        particle->unk_00 = 0;
+        particle->pos.x = 0.0f;
+        particle->dataCnt = 0;
     }
-    if (particle->unk_00 == 0) {
-        particle->unk_00 = 2;
+    if (particle->dataCnt == 0) {
+        particle->dataCnt = 2;
         BoardModelRotGet(suitMdl, &spC);
         for (i = 0; i < 2; i++) {
             var_r31 = particle->data;
-            for (j = 0; j < particle->unk_30; j++, var_r31++) {
-                if (var_r31->unk2C == 0.0f) {
+            for (j = 0; j < particle->maxCnt; j++, var_r31++) {
+                if (var_r31->scale == 0.0f) {
                     break;
                 }
             }
-            if (j != particle->unk_30) {
-                var_r31->unk34.x = 60.0 * sind(spC.y - 90.0f);
-                var_r31->unk34.y = 30.0f;
-                var_r31->unk34.z = 60.0 * cosd(spC.y - 90.0f);
+            if (j != particle->maxCnt) {
+                var_r31->pos.x = 60.0 * sind(spC.y - 90.0f);
+                var_r31->pos.y = 30.0f;
+                var_r31->pos.z = 60.0 * cosd(spC.y - 90.0f);
                 sp8 = 12.0f;
-                var_r31->unk08.x = 12.0 * cosd(i * 110.0f + 35.0f);
-                var_r31->unk08.y = 12.0 * sind(i * 110.0f + 35.0f);
-                var_r31->unk08.z = 3.0f + frand8() * 5.0f * 0.003921569f;
-                var_r31->unk14.y = 255.0f;
-                var_r31->unk2C = 25.0f;
+                var_r31->vel.x = 12.0 * cosd(i * 110.0f + 35.0f);
+                var_r31->vel.y = 12.0 * sind(i * 110.0f + 35.0f);
+                var_r31->vel.z = 3.0f + frand8() * 5.0f * 0.003921569f;
+                var_r31->accel.y = 255.0f;
+                var_r31->scale = 25.0f;
                 temp_f30 = 175.0f + frand8() * 0x50 * 0.003921569f;
-                var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = temp_f30;
+                var_r31->color.r = var_r31->color.g = var_r31->color.b = temp_f30;
                 var_r31->time = 0;
             }
         }
     }
     else {
-        particle->unk_00--;
+        particle->dataCnt--;
     }
     var_r31 = particle->data;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk2C != 0.0f) {
+    for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+        if (var_r31->scale != 0.0f) {
             if (var_r31->time == 0) {
-                VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-                VECScale(&var_r31->unk08, &var_r31->unk08, 0.95f);
-                var_r31->unk2C += 8.0f;
-                var_r31->unk14.y -= 2.8333333f;
-                if (var_r31->unk14.y <= 120.0f) {
-                    var_r31->unk14.y = 200.0f;
+                VECAdd(&var_r31->pos, &var_r31->vel, &var_r31->pos);
+                VECScale(&var_r31->vel, &var_r31->vel, 0.95f);
+                var_r31->scale += 8.0f;
+                var_r31->accel.y -= 2.8333333f;
+                if (var_r31->accel.y <= 120.0f) {
+                    var_r31->accel.y = 200.0f;
                     temp_f31 = frand8() * 180.0f * 0.003921569f;
-                    var_r31->unk08.x = 6.0 * cosd(temp_f31);
-                    var_r31->unk08.y = -4.0f;
-                    var_r31->unk08.z = 6.0 * sind(temp_f31);
+                    var_r31->vel.x = 6.0 * cosd(temp_f31);
+                    var_r31->vel.y = -4.0f;
+                    var_r31->vel.z = 6.0 * sind(temp_f31);
                     var_r31->time = 1;
                 }
-                var_r31->unk40.a = var_r31->unk14.y;
+                var_r31->color.a = var_r31->accel.y;
             }
             else {
-                VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-                var_r31->unk2C += 0.2f;
-                var_r31->unk14.y -= 1.8214285f;
-                if (var_r31->unk14.y <= 55.0f) {
-                    var_r31->unk14.y = 0.0f;
-                    var_r31->unk2C = 0.0f;
+                VECAdd(&var_r31->pos, &var_r31->vel, &var_r31->pos);
+                var_r31->scale += 0.2f;
+                var_r31->accel.y -= 1.8214285f;
+                if (var_r31->accel.y <= 55.0f) {
+                    var_r31->accel.y = 0.0f;
+                    var_r31->scale = 0.0f;
                 }
-                var_r31->unk40.a = var_r31->unk14.y;
+                var_r31->color.a = var_r31->accel.y;
             }
         }
     }
 }
 
-static void GenieParticleUpdate(ModelData *model, ParticleData *particle, Mtx matrix)
+static void GenieParticleUpdate(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA *var_r31;
     float temp_f31;
@@ -1997,41 +1997,41 @@ static void GenieParticleUpdate(ModelData *model, ParticleData *particle, Mtx ma
     s32 var_r28;
     s32 i;
 
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         var_r31 = particle->data;
-        for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk34.x = -50.0f + frand8() * 100.0f * 0.003921569f;
-            var_r31->unk34.y = -50.0f + frand8() * 100.0f * 0.003921569f;
-            var_r31->unk34.z = -10.0f + frand8() * 20.0f * 0.003921569f;
+        for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+            var_r31->pos.x = -50.0f + frand8() * 100.0f * 0.003921569f;
+            var_r31->pos.y = -50.0f + frand8() * 100.0f * 0.003921569f;
+            var_r31->pos.z = -10.0f + frand8() * 20.0f * 0.003921569f;
             temp_f31 = 0.5f + frand8() * 3.0f * 0.003921569f;
-            var_r31->unk08.x = temp_f31 * cosd(i * 110.0f + 35.0f);
-            var_r31->unk08.y = temp_f31 * sind(i * 110.0f + 35.0f);
-            var_r31->unk08.z = 0.0f;
-            var_r31->unk14.y = 255.0f;
+            var_r31->vel.x = temp_f31 * cosd(i * 110.0f + 35.0f);
+            var_r31->vel.y = temp_f31 * sind(i * 110.0f + 35.0f);
+            var_r31->vel.z = 0.0f;
+            var_r31->accel.y = 255.0f;
             temp_f30 = 125.0f + frand8() * 100 * 0.003921569f;
-            var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = temp_f30;
+            var_r31->color.r = var_r31->color.g = var_r31->color.b = temp_f30;
             var_r31->time = 0;
-            var_r31->unk2C = 80.0f + frand8() * 60.0f * 0.003921569f;
+            var_r31->scale = 80.0f + frand8() * 60.0f * 0.003921569f;
         }
     }
     var_r31 = particle->data;
     var_r28 = 0;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk2C != 0.0f) {
+    for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+        if (var_r31->scale != 0.0f) {
             var_r28++;
-            VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-            VECScale(&var_r31->unk08, &var_r31->unk08, 0.995f);
-            var_r31->unk2C -= 0.2f;
-            var_r31->unk14.y -= 1.59375f;
-            if (var_r31->unk14.y <= 20.0f) {
-                var_r31->unk14.y = 0.0f;
-                var_r31->unk2C = 0.0f;
+            VECAdd(&var_r31->pos, &var_r31->vel, &var_r31->pos);
+            VECScale(&var_r31->vel, &var_r31->vel, 0.995f);
+            var_r31->scale -= 0.2f;
+            var_r31->accel.y -= 1.59375f;
+            if (var_r31->accel.y <= 20.0f) {
+                var_r31->accel.y = 0.0f;
+                var_r31->scale = 0.0f;
             }
-            var_r31->unk40.a = var_r31->unk14.y;
+            var_r31->color.a = var_r31->accel.y;
         }
     }
     if (var_r28 == 0) {
-        particle->unk_02 = 0;
+        particle->emitCnt = 0;
     }
 }
 
@@ -2049,8 +2049,8 @@ static void GenieCameraProc(void)
     while (1) {
         Hu3DCameraPerspectiveSet(2, genieFov, 10.0f, 20000.0f, 1.2f);
         Hu3DCameraPosSetV(2, &booCamPos, &booCamTarget, &booCamUp);
-        Hu3DShadowData.unk_08.x = genieFov;
-        C_MTXLightPerspective(Hu3DShadowData.unk_68, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+        Hu3DShadowData.fov = genieFov;
+        C_MTXLightPerspective(Hu3DShadowData.projMtx, Hu3DShadowData.fov, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
         GenieCameraProcInlineFunc();
         Hu3DShadowTPLvlSet(0.8f);
         HuPrcVSleep();
@@ -2173,7 +2173,7 @@ static void GenieSceneExec(void)
     s16 temp_r20;
     s32 var_r26;
     s32 i;
-    ParticleData *temp_r23;
+    HU3DPARTICLE *temp_r23;
 
     BoardModelHideSetAll(1);
     BoardSpaceHide(1);
@@ -2221,8 +2221,8 @@ static void GenieSceneExec(void)
     booCamUp.y = 100.0f;
     booCamUp.z = 600.0f;
     genieFov = 15.0f;
-    Hu3DShadowData.unk_08.x = genieFov;
-    C_MTXLightPerspective(Hu3DShadowData.unk_68, Hu3DShadowData.unk_08.x, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+    Hu3DShadowData.fov = genieFov;
+    C_MTXLightPerspective(Hu3DShadowData.projMtx, Hu3DShadowData.fov, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
     temp_r21 = HuPrcChildCreate(GenieCameraProc, 0x2005, 0x1000, 0, HuPrcCurrentGet());
     Hu3DBGColorSet(0xFF, 0xFF, 0xFF);
     temp_r27 = Hu3DParticleCreate(genieParticleAnim, 0x32);
@@ -2233,14 +2233,14 @@ static void GenieSceneExec(void)
     Hu3DParticleAttrSet(temp_r27, 1);
     Hu3DModelLayerSet(temp_r27, 7);
     Hu3DModelPosSet(temp_r27, booCamPos.x, booCamPos.y, booCamPos.z - 175.0f);
-    temp_r23 = Hu3DData[temp_r27].unk_120;
-    temp_r23->unk_02 = 1;
+    temp_r23 = Hu3DData[temp_r27].hookData;
+    temp_r23->emitCnt = 1;
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 45);
     while (WipeStatGet() != 0) {
         HuPrcVSleep();
     }
     BoardMusStart(1, 9, 0x7F, 0);
-    while (temp_r23->unk_02 != 0) {
+    while (temp_r23->emitCnt != 0) {
         HuPrcVSleep();
     }
     HuPrcSleep(45);
@@ -2358,7 +2358,7 @@ static void ExecItemGenie(void)
     UnkItemShowProcStruct sp24;
     Vec sp18;
     Vec spC;
-    ParticleData *sp8;
+    HU3DPARTICLE *sp8;
     Process *temp_r27;
     float var_f29;
     float var_f31;
@@ -2409,7 +2409,7 @@ static void ExecItemGenie(void)
     Hu3DModelLayerSet(temp_r31, 7);
     BoardModelPosGet(suitMdl, &spC);
     Hu3DModelPosSet(temp_r31, spC.x, spC.y, spC.z);
-    sp8 = Hu3DData[temp_r31].unk_120;
+    sp8 = Hu3DData[temp_r31].hookData;
     omVibrate(currItemRestore, 181, 6, 6);
     HuPrcSleep(135);
     BoardAudSeqPause(0, 1, 1000);
@@ -2609,7 +2609,7 @@ static void ExecItemBag(void)
         }
         if (itemBagItems[i] == 5) {
             temp_f31 = -50.0f;
-            Hu3DData[BoardModelIDGet(sp8[i])].unk_F0[1][3] = temp_f31;
+            Hu3DData[BoardModelIDGet(sp8[i])].mtx[1][3] = temp_f31;
         }
         BoardModelRotYSet(sp8[i], sp18.y);
         BoardModelLayerSet(sp8[i], 2);

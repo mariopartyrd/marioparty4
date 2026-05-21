@@ -42,8 +42,8 @@ typedef struct M428DllUnkStruct2 {
 
 typedef struct M428DllUnkStruct {
     M428DllUnkStruct2 unk_00[0x10];
-    ShadowData unk_640[0x10];
-    ShadowData unk_FC0;
+    HU3DSHADOW unk_640[0x10];
+    HU3DSHADOW unk_FC0;
 } M428DllUnkStruct; /* size = 0x1058 */
 
 void fn_1_478(omObjData *);
@@ -52,7 +52,7 @@ void fn_1_261C(omObjData *arg0);
 void fn_1_29E8(omObjData *object);
 void fn_1_2ACC(s32 arg0);
 void fn_1_2B8(omObjData *object);
-void fn_1_2C90(ModelData *, float[3][4]);
+void fn_1_2C90(HU3DMODEL *, float[3][4]);
 void fn_1_2E2C(s32 arg0);
 void fn_1_40A4(void);
 
@@ -695,10 +695,10 @@ void fn_1_2A00(s32 arg0, s32 arg1, float arg8)
 
 void fn_1_2ACC(s32 arg0)
 {
-    ShadowData *var_r31;
+    HU3DSHADOW *var_r31;
     s32 var_r30;
     M428DllUnkStruct2 *var_r29;
-    ModelData *var_r28;
+    HU3DMODEL *var_r28;
     M428DllUnkStruct *var_r27;
     s32 var_r26;
     s32 var_r25;
@@ -708,7 +708,7 @@ void fn_1_2ACC(s32 arg0)
     lbl_1_bss_0 = var_r24 = Hu3DHookFuncCreate(fn_1_2C90);
     var_r28 = &Hu3DData[var_r24];
     Hu3DModelLayerSet(var_r24, 0);
-    var_r27 = var_r28->unk_120 = HuMemDirectMallocNum(HEAP_DATA, sizeof(M428DllUnkStruct), var_r28->unk_48);
+    var_r27 = var_r28->hookData = HuMemDirectMallocNum(HEAP_DATA, sizeof(M428DllUnkStruct), var_r28->mallocNo);
     memset(var_r27, 0, sizeof(M428DllUnkStruct));
     var_r27->unk_FC0 = Hu3DShadowData;
     for (var_r30 = 0; var_r30 < 0x10; var_r30++) {
@@ -724,33 +724,33 @@ void fn_1_2ACC(s32 arg0)
         var_r29->unk_60 = 0;
         if ((var_r23 & arg0) != 0) {
             if (var_r30 == 0) {
-                var_r31->unk_04 = Hu3DShadowData.unk_04;
+                var_r31->buf = Hu3DShadowData.buf;
             }
             else {
-                var_r25 = var_r31->unk_02;
-                var_r31->unk_04 = HuMemDirectMallocNum(HEAP_DATA, var_r25 * var_r25, var_r28->unk_48);
+                var_r25 = var_r31->size;
+                var_r31->buf = HuMemDirectMallocNum(HEAP_DATA, var_r25 * var_r25, var_r28->mallocNo);
             }
         }
         else {
-            var_r31->unk_04 = NULL;
+            var_r31->buf = NULL;
         }
     }
     Hu3DShadowCamBit++;
 }
 
-void fn_1_2C90(ModelData *model, Mtx matrix)
+void fn_1_2C90(HU3DMODEL *model, Mtx matrix)
 {
-    ShadowData *var_r31;
+    HU3DSHADOW *var_r31;
     s32 var_r30;
     M428DllUnkStruct *var_r29;
     M428DllUnkStruct2 *var_r28;
 
-    var_r29 = model->unk_120;
+    var_r29 = model->hookData;
     if (Hu3DCameraNo == 0) {
         for (var_r30 = 0; var_r30 < 0x10; var_r30++) {
             var_r28 = &var_r29->unk_00[var_r30];
             var_r31 = &var_r29->unk_640[var_r30];
-            if ((var_r31->unk_04 != NULL) && !(var_r31->unk_08.x <= 0.0f) && (var_r28->unk_60 > 0)) {
+            if ((var_r31->buf != NULL) && !(var_r31->fov <= 0.0f) && (var_r28->unk_60 > 0)) {
                 Hu3DShadowData = *var_r31;
                 fn_1_2E2C(var_r30);
                 *var_r31 = Hu3DShadowData;
@@ -761,7 +761,7 @@ void fn_1_2C90(ModelData *model, Mtx matrix)
     }
     var_r28 = &var_r29->unk_00[Hu3DCameraNo];
     var_r31 = &var_r29->unk_640[Hu3DCameraNo];
-    if ((var_r31->unk_04 == NULL) || (var_r31->unk_08.x <= 0.0f)) {
+    if ((var_r31->buf == NULL) || (var_r31->fov <= 0.0f)) {
         return;
     }
     Hu3DShadowData = *var_r31;
@@ -775,8 +775,8 @@ void fn_1_2E2C(s32 var_r26)
     Mtx sp8C;
     Mtx sp5C;
     Mtx44 sp1C;
-    ShadowData *sp18;
-    ModelData *var_r31;
+    HU3DSHADOW *sp18;
+    HU3DMODEL *var_r31;
     s16 var_r30;
     M428DllUnkStruct2 *var_r29;
     M428DllUnkStruct *var_r28;
@@ -785,10 +785,10 @@ void fn_1_2E2C(s32 var_r26)
     u32 var_r24;
 
     var_r31 = &Hu3DData[lbl_1_bss_0];
-    var_r28 = var_r31->unk_120;
+    var_r28 = var_r31->hookData;
     var_r29 = &var_r28->unk_00[var_r26];
     sp18 = &var_r28->unk_640[var_r26];
-    var_r24 = Hu3DShadowData.unk_00;
+    var_r24 = Hu3DShadowData.alpha;
     if (var_r26 == 0) {
         GXSetViewport(0.0f, 0.0f, RenderMode->fbWidth, RenderMode->xfbHeight, 0.0f, 1.0f);
         GXSetScissor(0, 0, RenderMode->fbWidth, RenderMode->efbHeight);
@@ -827,20 +827,20 @@ void fn_1_2E2C(s32 var_r26)
     }
     Hu3DDrawPreInit();
     GXSetCopyClear(lbl_1_data_E8, 0xFFFFFF);
-    C_MTXPerspective(sp1C, Hu3DShadowData.unk_08.x, 1.2f, Hu3DShadowData.unk_08.y, Hu3DShadowData.unk_08.z);
+    C_MTXPerspective(sp1C, Hu3DShadowData.fov, 1.2f, Hu3DShadowData.nnear, Hu3DShadowData.ffar);
     GXSetProjection(sp1C, GX_PERSPECTIVE);
-    if (Hu3DShadowData.unk_02 <= 0xF0) {
-        GXSetScissor(2, 2, (Hu3DShadowData.unk_02 * 2) - 4, (Hu3DShadowData.unk_02 * 2) - 4);
-        GXSetViewport(0.0f, 0.0f, Hu3DShadowData.unk_02 * 2, Hu3DShadowData.unk_02 * 2, 0.0f, 1.0f);
-        var_r25 = (Hu3DShadowData.unk_02 / 2) * (Hu3DShadowData.unk_02 / 2);
+    if (Hu3DShadowData.size <= 0xF0) {
+        GXSetScissor(2, 2, (Hu3DShadowData.size * 2) - 4, (Hu3DShadowData.size * 2) - 4);
+        GXSetViewport(0.0f, 0.0f, Hu3DShadowData.size * 2, Hu3DShadowData.size * 2, 0.0f, 1.0f);
+        var_r25 = (Hu3DShadowData.size / 2) * (Hu3DShadowData.size / 2);
     }
     else {
-        GXSetScissor(1, 1, Hu3DShadowData.unk_02 - 2, Hu3DShadowData.unk_02 - 2);
-        GXSetViewport(0.0f, 0.0f, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, 0.0f, 1.0f);
-        var_r25 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
+        GXSetScissor(1, 1, Hu3DShadowData.size - 2, Hu3DShadowData.size - 2);
+        GXSetViewport(0.0f, 0.0f, Hu3DShadowData.size, Hu3DShadowData.size, 0.0f, 1.0f);
+        var_r25 = Hu3DShadowData.size * Hu3DShadowData.size;
     }
-    C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.unk_14, &Hu3DShadowData.unk_2C, &Hu3DShadowData.unk_20);
-    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.unk_38);
+    C_MTXLookAt(Hu3DCameraMtx, &Hu3DShadowData.camPos, &Hu3DShadowData.camUp, &Hu3DShadowData.camTarget);
+    MTXCopy(Hu3DCameraMtx, Hu3DShadowData.lookAtMtx);
     shadowModelDrawF = 1;
     GXInvalidateTexAll();
     GXSetFog(GX_FOG_NONE, 0.0f, 0.0f, 0.0f, 0.0f, BGColor);
@@ -850,51 +850,51 @@ void fn_1_2E2C(s32 var_r26)
             if (((var_r31->attr & 1) == 0) && ((var_r31->attr & 0x8000) == 0)) {
                 if ((var_r31->attr & 8) != 0) {
                     var_r27 = 0;
-                    if (var_r31->unk_08 != -1) {
-                        Hu3DMotionExec(var_r30, var_r31->unk_08, var_r31->unk_64, 0);
+                    if (var_r31->motId != -1) {
+                        Hu3DMotionExec(var_r30, var_r31->motId, var_r31->motWork.time, 0);
                     }
-                    if (var_r31->unk_0C != -1) {
+                    if (var_r31->motIdShift != -1) {
                         Hu3DSubMotionExec(var_r30);
                     }
-                    if (var_r31->unk_0A != -1) {
-                        Hu3DMotionExec(var_r30, var_r31->unk_0A, var_r31->unk_74, 1);
+                    if (var_r31->motIdOvl != -1) {
+                        Hu3DMotionExec(var_r30, var_r31->motIdOvl, var_r31->motOvlWork.time, 1);
                     }
                     if ((var_r31->attr & 0x400) != 0) {
                         ClusterMotionExec(var_r31);
                         var_r27 = 1;
                     }
-                    if (var_r31->unk_0E != -1) {
-                        if (var_r31->unk_08 == -1) {
-                            Hu3DMotionExec(var_r30, var_r31->unk_0E, var_r31->unk_94, 0);
+                    if (var_r31->motIdShape != -1) {
+                        if (var_r31->motId == -1) {
+                            Hu3DMotionExec(var_r30, var_r31->motIdShape, var_r31->motShapeWork.time, 0);
                         }
                         else {
-                            Hu3DMotionExec(var_r30, var_r31->unk_0E, var_r31->unk_94, 1);
+                            Hu3DMotionExec(var_r30, var_r31->motIdShape, var_r31->motShapeWork.time, 1);
                         }
                     }
-                    if (((var_r31->attr & 0x90) == 0) || ((var_r31->motion_attr & 0x40000002) == 0)) {
+                    if (((var_r31->attr & 0x90) == 0) || ((var_r31->motAttr & 0x40000002) == 0)) {
                         var_r27 = 1;
-                        InitVtxParm(var_r31->hsfData);
-                        if (var_r31->unk_0E != -1) {
-                            ShapeProc(var_r31->hsfData);
+                        InitVtxParm(var_r31->hsf);
+                        if (var_r31->motIdShape != -1) {
+                            ShapeProc(var_r31->hsf);
                         }
                         if ((var_r31->attr & 0x400) != 0) {
                             ClusterProc(var_r31);
                         }
-                        if (var_r31->hsfData->cenvNum != 0) {
-                            EnvelopeProc(var_r31->hsfData);
+                        if (var_r31->hsf->cenvNum != 0) {
+                            EnvelopeProc(var_r31->hsf);
                         }
                         PPCSync();
                     }
                     var_r31->attr |= 0x800;
                 }
                 Hu3DModelShadowSet(var_r29->unk_00[var_r30]);
-                Hu3DShadowData.unk_00 = (s8)(var_r29->unk_20[var_r30] * var_r24);
+                Hu3DShadowData.alpha = (s8)(var_r29->unk_20[var_r30] * var_r24);
                 mtxRot(sp5C, var_r31->rot.x, var_r31->rot.y, var_r31->rot.z);
                 MTXScale(spBC, var_r31->scale.x, var_r31->scale.y, var_r31->scale.z);
                 MTXConcat(sp5C, spBC, spBC);
                 mtxTransCat(spBC, var_r31->pos.x, var_r31->pos.y, var_r31->pos.z);
                 MTXConcat(Hu3DCameraMtx, spBC, sp8C);
-                MTXConcat(sp8C, var_r31->unk_F0, sp8C);
+                MTXConcat(sp8C, var_r31->mtx, sp8C);
                 Hu3DDraw(var_r31, sp8C, &var_r31->scale);
                 Hu3DModelShadowReset(var_r29->unk_00[var_r30]);
             }
@@ -903,15 +903,15 @@ void fn_1_2E2C(s32 var_r26)
     Hu3DDrawPost();
     GXDrawDone();
     shadowModelDrawF = 0;
-    if (Hu3DShadowData.unk_02 <= 0xF0) {
-        GXSetTexCopySrc(0, 0, Hu3DShadowData.unk_02 * 2, Hu3DShadowData.unk_02 * 2);
-        GXSetTexCopyDst(Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_CTF_R8, 1);
+    if (Hu3DShadowData.size <= 0xF0) {
+        GXSetTexCopySrc(0, 0, Hu3DShadowData.size * 2, Hu3DShadowData.size * 2);
+        GXSetTexCopyDst(Hu3DShadowData.size, Hu3DShadowData.size, GX_CTF_R8, 1);
     }
     else {
-        GXSetTexCopySrc(0, 0, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02);
-        GXSetTexCopyDst(Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_CTF_R8, 0);
+        GXSetTexCopySrc(0, 0, Hu3DShadowData.size, Hu3DShadowData.size);
+        GXSetTexCopyDst(Hu3DShadowData.size, Hu3DShadowData.size, GX_CTF_R8, 0);
     }
-    GXCopyTex(Hu3DShadowData.unk_04, 1);
+    GXCopyTex(Hu3DShadowData.buf, 1);
     GXSetViewport(0.0f, 0.0f, RenderMode->fbWidth, RenderMode->xfbHeight, 0.0f, 1.0f);
     GXSetScissor(0, 0, RenderMode->fbWidth, RenderMode->efbHeight);
     C_MTXOrtho(sp1C, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -953,20 +953,20 @@ void fn_1_3B64(void)
     Mtx44 sp64;
     Mtx sp34;
     GXTexObj sp14;
-    ShadowData *sp10;
+    HU3DSHADOW *sp10;
     GXColor spC;
     M428DllUnkStruct *var_r31;
     M428DllUnkStruct2 *var_r30;
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
     u8 *var_r28;
 
     if (lbl_1_bss_0 != -1) {
         var_r29 = &Hu3DData[lbl_1_bss_0];
-        var_r31 = var_r29->unk_120;
+        var_r31 = var_r29->hookData;
         var_r30 = &var_r31->unk_00[Hu3DCameraNo];
         sp10 = &var_r31->unk_640[Hu3DCameraNo];
         if (var_r30->unk_60 > 0) {
-            GXInitTexObj(&sp14, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, GX_TF_I8, GX_CLAMP, GX_CLAMP, 0);
+            GXInitTexObj(&sp14, Hu3DShadowData.buf, Hu3DShadowData.size, Hu3DShadowData.size, GX_TF_I8, GX_CLAMP, GX_CLAMP, 0);
             GXInitTexObjLOD(&sp14, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
             GXLoadTexObj(&sp14, GX_TEXMAP0);
             C_MTXOrtho(sp64, 0.0f, 480.0f, 0.0f, 320.0f, 0.0f, 10.0f);
@@ -992,11 +992,11 @@ void fn_1_3B64(void)
             GXBegin(GX_QUADS, GX_VTXFMT0, 4);
             GXPosition3f32(0.0f, 0.0f, 0.0f);
             GXTexCoord2f32(0.0f, 0.0f);
-            GXPosition3f32(Hu3DShadowData.unk_02, 0.0f, 0.0f);
+            GXPosition3f32(Hu3DShadowData.size, 0.0f, 0.0f);
             GXTexCoord2f32(1.0f, 0.0f);
-            GXPosition3f32(Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, 0.0f);
+            GXPosition3f32(Hu3DShadowData.size, Hu3DShadowData.size, 0.0f);
             GXTexCoord2f32(1.0f, 1.0f);
-            GXPosition3f32(0.0f, Hu3DShadowData.unk_02, 0.0f);
+            GXPosition3f32(0.0f, Hu3DShadowData.size, 0.0f);
             GXTexCoord2f32(0.0f, 1.0f);
         }
     }
@@ -1025,10 +1025,10 @@ s32 lbl_1_data_EC[] = {
 void fn_1_40A4(void)
 {
     M428DllUnkStruct *var_r31;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
 
     var_r30 = &Hu3DData[lbl_1_bss_0];
-    var_r31 = var_r30->unk_120;
+    var_r31 = var_r30->hookData;
     Hu3DShadowData = var_r31->unk_FC0;
     Hu3DModelKill(lbl_1_bss_0);
     lbl_1_bss_0 = -1;
@@ -1039,16 +1039,16 @@ void fn_1_40A4(void)
 
 void fn_1_4170(s16 arg0, s32 arg1)
 {
-    ShadowData *sp8;
+    HU3DSHADOW *sp8;
     M428DllUnkStruct2 *var_r31;
     s32 var_r30;
     s32 var_r29;
     M428DllUnkStruct *var_r28;
-    ModelData *var_r27;
+    HU3DMODEL *var_r27;
     u32 var_r26;
 
     var_r27 = &Hu3DData[lbl_1_bss_0];
-    var_r28 = var_r27->unk_120;
+    var_r28 = var_r27->hookData;
     for (var_r29 = 0; var_r29 < 0x10; var_r29++) {
         var_r31 = &var_r28->unk_00[var_r29];
         sp8 = &var_r28->unk_640[var_r29];
@@ -1073,16 +1073,16 @@ void fn_1_4170(s16 arg0, s32 arg1)
 
 void fn_1_4264(s16 arg0, s32 arg1, float arg8)
 {
-    ShadowData *sp8;
+    HU3DSHADOW *sp8;
     s32 var_r31;
     s32 var_r30;
     M428DllUnkStruct2 *var_r29;
     M428DllUnkStruct *var_r28;
-    ModelData *var_r27;
+    HU3DMODEL *var_r27;
     u32 var_r26;
 
     var_r27 = &Hu3DData[lbl_1_bss_0];
-    var_r28 = var_r27->unk_120;
+    var_r28 = var_r27->hookData;
     for (var_r31 = 0; var_r31 < 0x10; var_r31++) {
         var_r29 = &var_r28->unk_00[var_r31];
         sp8 = &var_r28->unk_640[var_r31];
@@ -1100,15 +1100,15 @@ void fn_1_4264(s16 arg0, s32 arg1, float arg8)
 void fn_1_4324(s32 arg0, Vec *arg1, Vec *arg2, Vec *arg3)
 {
     M428DllUnkStruct2 *sp8;
-    ShadowData *var_r31;
+    HU3DSHADOW *var_r31;
     M428DllUnkStruct *var_r30;
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
 
     var_r29 = &Hu3DData[lbl_1_bss_0];
-    var_r30 = var_r29->unk_120;
+    var_r30 = var_r29->hookData;
     sp8 = &var_r30->unk_00[arg0];
     var_r31 = &var_r30->unk_640[arg0];
-    var_r31->unk_14 = *arg1;
-    var_r31->unk_20 = *arg3;
-    var_r31->unk_2C = *arg2;
+    var_r31->camPos = *arg1;
+    var_r31->camTarget = *arg3;
+    var_r31->camUp = *arg2;
 }

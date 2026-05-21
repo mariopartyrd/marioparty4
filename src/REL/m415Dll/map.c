@@ -33,7 +33,7 @@ void fn_1_8780(s16 arg0, s16 arg1)
 
 void fn_1_88B8(unkSubStruct2 *arg0)
 {
-    ModelData sp120;
+    HU3DMODEL sp120;
     Mtx spF0;
     Mtx spC0;
     Mtx sp90;
@@ -139,7 +139,7 @@ void fn_1_88B8(unkSubStruct2 *arg0)
                     MTXConcat(Hu3DCameraMtx, sp90, sp30);
                     MTXInverse(Hu3DCameraMtx, sp60);
                     MTXConcat(sp60, sp30, sp60);
-                    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp90);
+                    MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, sp90);
                     MTXConcat(sp90, sp60, sp30);
                     GXLoadTexMtxImm(sp30, texMtxTbl[var_r28], GX_MTX3x4);
                     var_r19 = texMtxTbl[var_r28];
@@ -262,7 +262,7 @@ void fn_1_88B8(unkSubStruct2 *arg0)
     }
 }
 
-void fn_1_95C0(ModelData *arg0, Mtx arg1)
+void fn_1_95C0(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx sp38;
     Mtx sp8;
@@ -303,7 +303,7 @@ unkSubStruct *fn_1_9708(s16 arg0, s16 arg1)
     return &lbl_1_bss_36C.unk40[arg0].unk3C[arg1];
 }
 
-AnimData **fn_1_9734(s16 arg0)
+ANIMDATA **fn_1_9734(s16 arg0)
 {
     return &lbl_1_bss_36C.unk3C[arg0].unk0;
 }
@@ -702,7 +702,7 @@ void fn_1_A920(s16 arg0, s16 arg1, u8 arg2)
 
 s16 fn_1_A94C(u32 arg0, s16 arg1, s16 arg2)
 {
-    AnimData *var_r30;
+    ANIMDATA *var_r30;
     f32 var_f31;
     f32 var_f30;
     s32 var_r29;
@@ -770,7 +770,7 @@ void fn_1_ACF4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5)
 {
     f32 var_f31;
     f32 var_f30;
-    AnimData *var_r30;
+    ANIMDATA *var_r30;
     unkSubStruct3 *var_r31;
 
     var_r31 = &lbl_1_bss_36C.unk3C[arg0];

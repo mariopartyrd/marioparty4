@@ -18,7 +18,7 @@
 #include "data_num/win.h"
 
 typedef struct {
-    /* 0x00 */ AnimData **anim;
+    /* 0x00 */ ANIMDATA **anim;
     /* 0x04 */ s16 bank;
     /* 0x06 */ s16 w;
     /* 0x08 */ s16 h;
@@ -32,7 +32,7 @@ typedef struct {
 } keyBufData; // Size 0x14
 
 static void MesDispFunc(HuSprite *sprite);
-static u8 winBGMake(AnimData *bg, AnimData *frame);
+static u8 winBGMake(ANIMDATA *bg, ANIMDATA *frame);
 static void HuWinProc(void);
 static void HuWinDrawMes(s16 window);
 static s32 HuWinCR(WindowData *window);
@@ -49,10 +49,10 @@ WindowData ATTRIBUTE_ALIGN(32) winData[32];
 u32 winKey[4];
 keyBufData winComKeyBuf[256];
 
-static AnimData *iconAnim;
-static AnimData *cursorAnim;
-static AnimData *cardAnimA;
-static AnimData *cardAnimB;
+static ANIMDATA *iconAnim;
+static ANIMDATA *cursorAnim;
+static ANIMDATA *cardAnimA;
+static ANIMDATA *cardAnimB;
 static Process *winProc;
 void *messDataPtr;
 static s32 messDataNo;
@@ -73,7 +73,7 @@ static s16 mesCharCnt;
 static s16 comKeyIdxNow;
 static s16 comKeyIdx;
 static u8 LanguageNo;
-AnimData *fontAnim;
+ANIMDATA *fontAnim;
 
 static spcFontTblData spcFontTbl[] = { { &iconAnim, 0, 20, 24, 10, 12 }, { &iconAnim, 1, 20, 24, 10, 12 }, { &iconAnim, 2, 20, 24, 10, 12 },
     { &iconAnim, 3, 20, 24, 10, 12 }, { &iconAnim, 4, 20, 24, 10, 12 }, { &iconAnim, 5, 20, 24, 10, 12 }, { &iconAnim, 6, 20, 24, 10, 12 },
@@ -206,7 +206,7 @@ void HuWinInit(s32 mess_data_no)
 
 s16 HuWinCreate(float x, float y, s16 w, s16 h, s16 frame)
 {
-    AnimData *bg_anim;
+    ANIMDATA *bg_anim;
     WindowData *window;
     HuSprite *sprite_ptr;
     s16 group;
@@ -469,9 +469,9 @@ static void MesDispFunc(HuSprite *sprite)
     }
 }
 
-static u8 winBGMake(AnimData *bg, AnimData *frame)
+static u8 winBGMake(ANIMDATA *bg, ANIMDATA *frame)
 {
-    AnimBmpData *bmp;
+    ANIMBMP *bmp;
     s16 block_h;
     s16 h;
     s16 block_w;
@@ -905,7 +905,7 @@ static s16 HuWinSpcFontEntry(WindowData *window, s16 entry, s16 x, s16 y)
     HuSprGrp *group = &HuSprGrpData[window->group];
     s16 sprite;
     s16 i;
-    AnimData *anim;
+    ANIMDATA *anim;
 
     for (i = 10; i < 30; i++) {
         if (window->sprite_id[i] == -1) {
@@ -1427,7 +1427,7 @@ void HuWinMesWait(s16 window)
     }
 }
 
-s16 HuWinAnimSet(s16 window, AnimData *anim, s16 bank, float x, float y)
+s16 HuWinAnimSet(s16 window, ANIMDATA *anim, s16 bank, float x, float y)
 {
     WindowData *window_ptr = &winData[window];
     s16 sprite;
@@ -1894,7 +1894,7 @@ s16 HuWinExCreate(float x, float y, s16 w, s16 h, s16 portrait)
 static void HuWinExCreatePortrait(s16 window, s16 portrait, float x, float y)
 {
     s16 sprite;
-    AnimData *anim;
+    ANIMDATA *anim;
     WindowData *window_ptr;
     void *data;
 

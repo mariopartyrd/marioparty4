@@ -1180,7 +1180,7 @@ void fn_1_A02C(void)
     s32 var_r31;
     s32 var_r30;
     s32 var_r29;
-    AnimData *var_r28;
+    ANIMDATA *var_r28;
 
     var_r30 = HuSprGrpCreate(0xB);
     lbl_1_bss_26C[0] = var_r30;
@@ -1609,8 +1609,8 @@ void fn_1_BA40(void)
     s32 var_r31;
     s32 var_r30;
     s32 var_r29;
-    AnimData *var_r28;
-    AnimData *var_r27;
+    ANIMDATA *var_r28;
+    ANIMDATA *var_r27;
 
     var_r29 = HuSprGrpCreate(0x36);
     lbl_1_bss_26C[1] = var_r29;
@@ -2598,8 +2598,8 @@ void fn_1_FB38(void)
     s32 var_r31;
     s32 var_r30;
     s32 var_r29;
-    AnimData *var_r28;
-    AnimData *var_r27;
+    ANIMDATA *var_r28;
+    ANIMDATA *var_r27;
 
     var_r29 = HuSprGrpCreate(0x1B);
     lbl_1_bss_26C[2] = var_r29;

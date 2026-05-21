@@ -87,7 +87,7 @@ typedef struct work_6A88 {
     float unk4C;
 } Work6A88;
 
-void fn_1_6D7C(ModelData *model, Mtx mtx);
+void fn_1_6D7C(HU3DMODEL *model, Mtx mtx);
 void fn_1_6DB8(omObjData *object);
 
 s32 fn_1_8254(s32 arg0, Vec *arg1);
@@ -147,7 +147,7 @@ void fn_1_6A88(omObjData *object)
 
 void fn_1_6DBC(omObjData *object);
 
-void fn_1_6D7C(ModelData *model, Mtx mtx)
+void fn_1_6D7C(HU3DMODEL *model, Mtx mtx)
 {
     if (!omPauseChk()) {
         fn_1_6DBC(lbl_1_bss_7880);

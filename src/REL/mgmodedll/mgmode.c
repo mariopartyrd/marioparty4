@@ -259,7 +259,7 @@ void fn_1_DF0(void)
     s16 exitF = 0;
     s16 time;
     s16 i;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     Vec pos2D;
     Vec pos3D;
 
@@ -439,7 +439,7 @@ s32 fn_1_1B0C(void)
     Vec posModel;
     Vec pos3D;
     s16 i;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     s16 temp_r29 = 0;
 
     if (mgModeEvtNo == 1) {
@@ -529,7 +529,7 @@ s32 fn_1_21C4(void)
     Vec posModel;
     Vec pos3D;
     s16 i;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     s16 temp_r29 = 1;
     if (mgModeEvtNo == 2) {
         pos2D.x = 60;
@@ -620,7 +620,7 @@ s32 fn_1_2940(void)
     Vec pos3D;
     s16 temp_r29 = 2;
     s16 i;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     for (i = 0; i < 4; i++) {
         Hu3DModelLayerSet(lbl_1_bss_2C80[i + 9], 2);
     }
@@ -717,7 +717,7 @@ s32 fn_1_3150(void)
     Vec posModel;
     Vec pos3D;
     s16 i;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     s16 temp_r29 = 1;
     if (mgModeEvtNo == 4) {
         pos2D.x = 60;
@@ -812,7 +812,7 @@ void fn_1_38D8(void)
     s16 time;
     s16 i;
     float weight;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
 
     fn_1_25E74(lbl_1_bss_2CC);
     fn_1_25584(lbl_1_bss_2CE);
@@ -896,7 +896,7 @@ void fn_1_4010(void)
     s16 time;
     s16 i;
     float weight;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     fn_1_25E74(lbl_1_bss_2CC);
     fn_1_25584(lbl_1_bss_2CE);
     lbl_1_bss_2CE = lbl_1_bss_2CC = -1;
@@ -1041,7 +1041,7 @@ void fn_1_4ADC(void)
     s16 time;
     s16 i;
     float weight;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     fn_1_25E74(lbl_1_bss_2CC);
     fn_1_25584(lbl_1_bss_2CE);
     lbl_1_bss_2CE = lbl_1_bss_2CC = -1;
