@@ -1137,7 +1137,7 @@ void CharModelKill(s16 charNo)
 void CharMotionSet(s16 charNo, HU3DMOTID motId)
 {
     CHARWORK *workP = &charWork[charNo];
-    MotionData *motP = &Hu3DMotion[motId];
+    HU3DMOTION *motP = &Hu3DMotion[motId];
     EyeBmpUpdate(charNo);
     Hu3DMotionSet(workP->modelId, motId);
 }
@@ -1162,9 +1162,9 @@ static void EyeBmpUpdate(s16 charNo)
             if ((attrP->bitmap->name[0] == eyeBmp[0][0] && strcmp(attrP->bitmap->name, eyeBmp[0]) == 0)
             || (attrP->bitmap->name[0] == eyeBmp[1][0] && strcmp(attrP->bitmap->name, eyeBmp[1]) == 0)) {
                 if (attrP->animWorkP) {
-                    HsfdrawStruct01 *particleDataP = attrP->animWorkP;
-                    particleDataP->unk08 = particleDataP->unk0C = particleDataP->unk10 = 0.0f;
-                    particleDataP->unk14 = particleDataP->unk18 = particleDataP->unk1C = 0.0f;
+                    HU3DATTRANIM *particleDataP = attrP->animWorkP;
+                    particleDataP->trans3D.x = particleDataP->trans3D.y = particleDataP->trans3D.z = 0.0f;
+                    particleDataP->rot.x = particleDataP->rot.y = particleDataP->rot.z = 0.0f;
                 }
             }
         }
@@ -1250,7 +1250,7 @@ s16 CharMotionShiftIDGet(s16 charNo)
 void CharMotionShiftSet(s16 charNo, HU3DMOTID motId, float start, float end, u32 attr)
 {
     CHARWORK *workP = &charWork[charNo];
-    MotionData *motP = &Hu3DMotion[motId];
+    HU3DMOTION *motP = &Hu3DMotion[motId];
 
     Hu3DMotionShiftSet(workP->modelId, motId, start, end, attr);
 }
@@ -1308,7 +1308,7 @@ void CharModelHookDustCreate(s16 charNo, char *objName)
     CHARWORK *workP = &charWork[charNo];
     HU3DMODEL *modelP = &Hu3DData[workP->modelId];
     HSFOBJECT *objPtr = Hu3DModelObjPtrGet(workP->modelId, objName);
-    HsfConstData *constData;
+    HSFCONSTDATA *constData;
     Process *process;
     HOOKDUSTWORK *hookDustWork;
     s16 hookMdlId;
@@ -1317,7 +1317,7 @@ void CharModelHookDustCreate(s16 charNo, char *objName)
 
     Hu3DModelObjMtxGet(workP->modelId, objName, hookMtx);
     constData = objPtr->constData;
-    hookMdlId = constData->hook;
+    hookMdlId = constData->hookMdlId;
     if (hookMdlId != HU3D_MODELID_NONE) {
         Hu3DModelHookObjReset(workP->modelId, objName);
         process = CharModelItemHookCreateInlineFunc();

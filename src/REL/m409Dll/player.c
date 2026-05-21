@@ -1259,12 +1259,12 @@ void fn_1_BE90(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 
 f32 fn_1_BF38(s16 arg0)
 {
-    MotionData *motionData;
+    HU3DMOTION *motionData;
     HSFMOTION *hsfMotionData;
     f32 length;
 
     motionData = &Hu3DMotion[arg0];
-    hsfMotionData = motionData->unk_04->motion;
+    hsfMotionData = motionData->hsf->motion;
     length = hsfMotionData->maxTime;
     return length;
 }

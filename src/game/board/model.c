@@ -738,7 +738,7 @@ float BoardModelMotionShapeMaxTimeGet(s16 model)
     }
     else {
         HU3DMODEL *hsf_model;
-        MotionData *motion;
+        HU3DMOTION *motion;
         HSFMOTION *motion_hsf;
         if (model_ptr->character != -1) {
             return -1;
@@ -748,7 +748,7 @@ float BoardModelMotionShapeMaxTimeGet(s16 model)
             return 0;
         }
         motion = &Hu3DMotion[hsf_model->motIdShape];
-        motion_hsf = motion->unk_04->motion;
+        motion_hsf = motion->hsf->motion;
         return motion_hsf->maxTime;
     }
 }

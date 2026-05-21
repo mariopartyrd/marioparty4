@@ -454,7 +454,7 @@ s16 Hu3DModelLink(s16 arg0) {
     for (i = 0; i < 4; i++) {
         var_r31->motIdCluster[i] = temp_r30->motIdCluster[i];
         if (var_r31->motIdCluster[i] != -1) {
-            ClusterAdjustObject(var_r31->hsf, Hu3DMotion[var_r31->motIdCluster[i]].unk_04);
+            ClusterAdjustObject(var_r31->hsf, Hu3DMotion[var_r31->motIdCluster[i]].hsf);
             var_r31->attr |= HU3D_ATTR_CLUSTER_ON;
         }
     }
@@ -582,7 +582,7 @@ void Hu3DModelKill(s16 arg0) {
             if (temp_r31->motIdSrc != -1) {
                 for (i = 0; i < HU3D_MODEL_MAX; i++, var_r30++) {
                     if (var_r30->hsf != 0 && var_r30->linkMdlId != -1 && var_r30->hsfLink == var_r28) {
-                        Hu3DMotion[temp_r31->motIdSrc].unk_02 = i;
+                        Hu3DMotion[temp_r31->motIdSrc].modelId = i;
                         break;
                     }
                 }
@@ -593,7 +593,7 @@ void Hu3DModelKill(s16 arg0) {
             return;
         }
         if (temp_r31->motIdSrc != -1 && Hu3DMotionKill(temp_r31->motIdSrc) == 0) {
-            Hu3DMotion[temp_r31->motIdSrc].unk_02 = -1;
+            Hu3DMotion[temp_r31->motIdSrc].modelId = -1;
             HuMemDirectFreeNum(HEAP_DATA, temp_r31->mallocNo);
             temp_r31->hsf = NULL;
             if (modelKillAllF == 0) {
@@ -776,11 +776,11 @@ HSFOBJECT* Hu3DModelObjPtrGet(s16 arg0, char *arg1) {
 }
 
 static inline void inlineFunc(HSFOBJECT* var_r26, u32 a) {
-    HsfConstData* temp_r25;
+    HSFCONSTDATA* temp_r25;
     HSFOBJECT* copy = var_r26;
     if (copy->type == HSF_OBJ_MESH) {
         temp_r25 = copy->constData;
-        temp_r25->flags |= a;
+        temp_r25->attr |= a;
     }
 }
 
@@ -791,7 +791,7 @@ void Hu3DModelTPLvlSet(s16 arg0, f32 arg8) {
     HU3DMODEL* temp_r28;
     HSFOBJECT* var_r27;
     HSFOBJECT* var_r26;
-    HsfConstData* temp_r25;
+    HSFCONSTDATA* temp_r25;
 
     temp_r28 = &Hu3DData[arg0];
     temp_r30 = temp_r28->hsf;
@@ -809,7 +809,7 @@ void Hu3DModelTPLvlSet(s16 arg0, f32 arg8) {
         var_r27 = var_r26;
         if (var_r27->type == 2) {
             temp_r25 = var_r27->constData;
-            temp_r25->flags |= 1;
+            temp_r25->attr |= 1;
         }
     }
     temp_r28->attr |= HU3D_ATTR_TPLVL_SET;
@@ -821,7 +821,7 @@ void Hu3DModelHiliteMapSet(s16 arg0, ANIMDATA *arg1) {
     HSFDATA* temp_r29;
     s16 i;
     HSFOBJECT* var_r27;
-    HsfConstData* temp_r25;
+    HSFCONSTDATA* temp_r25;
 
     temp_r30 = &Hu3DData[arg0];
     temp_r29 = temp_r30->hsf;
@@ -831,34 +831,34 @@ void Hu3DModelHiliteMapSet(s16 arg0, ANIMDATA *arg1) {
         if (copy->type == HSF_OBJ_MESH) {
             copy->flags |= 0x100;
             temp_r25 = copy->constData;
-            temp_r25->flags |= 0x8000;
+            temp_r25->attr |= 0x8000;
             temp_r25->hiliteMap = arg1;
         }
     }
 }
 
 static inline void constDataFlagSet(HSFOBJECT* var_r26, u32 a) {
-    HsfConstData* temp_r25;
+    HSFCONSTDATA* temp_r25;
     HSFOBJECT* copy = var_r26;
     if (copy->constData != 0) {
         temp_r25 = copy->constData;
-        temp_r25->flags |= a;
+        temp_r25->attr |= a;
     }
 }
 
 static inline void constDataFlagReset(HSFOBJECT* var_r26, u32 a) {
-    HsfConstData* temp_r25;
+    HSFCONSTDATA* temp_r25;
     HSFOBJECT* copy = var_r26;
     if (copy->constData != 0) {
         temp_r25 = copy->constData;
-        temp_r25->flags &= ~a;
+        temp_r25->attr &= ~a;
     }
 }
 
 void Hu3DModelShadowSet(s16 arg0) {
-    HsfConstData* temp_r26;
+    HSFCONSTDATA* temp_r26;
     HSFDATA* temp_r30;
-    HsfConstData* temp_r25;
+    HSFCONSTDATA* temp_r25;
     HSFOBJECT* copy;
     s16 var_r28;
     HSFOBJECT* var_r27;
@@ -880,7 +880,7 @@ void Hu3DModelShadowSet(s16 arg0) {
 void Hu3DModelShadowReset(s16 arg0) {
     s16 var_r28;
     HSFOBJECT* var_r27;
-    HsfConstData* temp_r26;
+    HSFCONSTDATA* temp_r26;
     HU3DMODEL* temp_r31;
     HSFDATA* temp_r30;
     HSFOBJECT* copy;
@@ -910,7 +910,7 @@ void Hu3DModelShadowDispOff(s16 arg0) {
 }
 
 void Hu3DModelShadowMapSet(s16 arg0) {
-    HsfConstData* temp_r27;
+    HSFCONSTDATA* temp_r27;
     HSFDATA* temp_r31;
     s16 i;
     HSFOBJECT* var_r28;
@@ -929,7 +929,7 @@ void Hu3DModelShadowMapObjSet(s16 arg0, char *arg1) {
     s16 i;
     HSFOBJECT* var_r28;
     HSFOBJECT* copy;
-    HsfConstData* temp_r27;
+    HSFCONSTDATA* temp_r27;
 
     temp_r30 = Hu3DData[arg0].hsf;
     var_r28 = temp_r30->object;
@@ -939,7 +939,7 @@ void Hu3DModelShadowMapObjSet(s16 arg0, char *arg1) {
         copy = var_r28;
         if (copy->constData != 0x0 && strcmp(&name, copy->name) == 0) {
             temp_r27 = copy->constData;
-            temp_r27->flags |= 8;
+            temp_r27->attr |= 8;
             break;
         }
     }
@@ -959,7 +959,7 @@ void Hu3DModelHookSet(s16 arg0, char *arg1, s16 arg2) {
     HU3DMODEL* data;
     HSFDATA* temp_r30;
     s16 i;
-    HsfConstData *constData;
+    HSFCONSTDATA *constData;
     HSFOBJECT* copy;
     HSFOBJECT* var_r27;
 
@@ -972,7 +972,7 @@ void Hu3DModelHookSet(s16 arg0, char *arg1, s16 arg2) {
         if (copy->constData != 0) {
             if (strcmp(&name, copy->name) == 0) {
                 constData = copy->constData;
-                constData->hook = arg2;
+                constData->hookMdlId = arg2;
                 data = &Hu3DData[arg2];
                 data->attr |= HU3D_ATTR_HOOK;
                 (void)data;
@@ -984,7 +984,7 @@ void Hu3DModelHookSet(s16 arg0, char *arg1, s16 arg2) {
 }
 
 void Hu3DModelHookReset(s16 arg0) {
-    HsfConstData* temp_r31;
+    HSFCONSTDATA* temp_r31;
     HSFDATA* temp_r30;
     HSFOBJECT* copy;
     HU3DMODEL* temp_r28;
@@ -998,11 +998,11 @@ void Hu3DModelHookReset(s16 arg0) {
         copy = var_r26;
         if (copy->constData != 0) {
             temp_r31 = copy->constData;
-            if (temp_r31->hook != -1) {
-                temp_r0 = temp_r31->hook;
+            if (temp_r31->hookMdlId != -1) {
+                temp_r0 = temp_r31->hookMdlId;
                 temp_r28 = &Hu3DData[temp_r0];
                 temp_r28->attr &= ~HU3D_ATTR_HOOK;
-                temp_r31->hook = -1;
+                temp_r31->hookMdlId = -1;
                 (void)temp_r28;
             }
         }
@@ -1014,7 +1014,7 @@ void Hu3DModelHookObjReset(s16 arg0, char *arg1) {
     HU3DMODEL* temp_r28;
     HSFDATA* temp_r30;
     HSFOBJECT* copy;
-    HsfConstData* temp_r29;
+    HSFCONSTDATA* temp_r29;
     s16 i;
     HSFOBJECT* var_r26;
     s16 temp_r0;
@@ -1028,10 +1028,10 @@ void Hu3DModelHookObjReset(s16 arg0, char *arg1) {
         if (copy->constData != 0) {
             if (strcmp(&name, copy->name) == 0) {
                 temp_r29 = copy->constData;
-                temp_r0 = temp_r29->hook;
+                temp_r0 = temp_r29->hookMdlId;
                 temp_r28 = &Hu3DData[temp_r0];
                 temp_r28->attr &= ~HU3D_ATTR_HOOK;
-                temp_r29->hook = -1;
+                temp_r29->hookMdlId = -1;
                 (void)temp_r28;
                 return;
             }
@@ -1390,7 +1390,7 @@ inline s16 Hu3DLightCreateV(HU3DLIGHT *light, Vec *arg0, Vec *arg1, GXColor *arg
     light->type = 0;
     light->pos = *arg0;
     light->dir = *arg1;
-    light->unk_34.x = light->unk_34.y = light->unk_34.z = 0.0f;
+    light->offset.x = light->offset.y = light->offset.z = 0.0f;
     light->cutoff = 30.0f;
     light->func = 2;
     VECNormalize(&light->dir, &light->dir);

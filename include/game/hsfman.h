@@ -5,6 +5,8 @@
 #include "game/hsfformat.h"
 #include "game/memory.h"
 
+// TODO rename to hu3d.h
+
 //Max for model properties
 #define HU3D_CLUSTER_MAX 4
 #define HU3D_MODEL_LLIGHT_MAX 8
@@ -169,42 +171,51 @@ typedef void (*HU3DTIMINGHOOK)(HU3DMODELID modelId, HU3DMOTID motId, BOOL lagF);
 typedef void (*HU3DMATHOOK)(HU3DDRAWOBJ *drawObj, HSFMATERIAL *material);
 typedef void (*HU3DPARTICLEHOOK)(HU3DMODEL *modelP, HU3DPARTICLE *particleP, Mtx mtx);
 
-struct Hu3DDrawObj_s {
+typedef struct hsf_draw_object {
     /* 0x00 */ HU3DMODEL *model;
     /* 0x04 */ HSFOBJECT *object;
     /* 0x08 */ float z;
     /* 0x0C */ Mtx matrix;
     /* 0x3C */ Vec scale;
-};
+} HU3DDRAWOBJ;
 
-typedef struct Hu3DAttrAnim_s {
-    /* 0x00 */ u16 attr;
-    /* 0x02 */ s16 animId;
-    /* 0x04 */ HU3DTEXSCRID texScrId;
-    /* 0x08 */ HuVecF trans3D;
-    /* 0x14 */ HuVecF rot;
-    /* 0x20 */ HuVecF scale3D;
-    /* 0x2C */ HuVec2f scale;
-    /* 0x34 */ HuVec2f trans;
-    /* 0x3C */ HSFBITMAP *bitMapPtr;
-    /* 0x40 */ u32 unk40;
-} HU3DATTRANIM; // Size 0x44
+typedef struct hsfdraw_struct_01 {
+    /* 0x00 */ u16 unk00;
+    /* 0x02 */ s16 unk02;
+    /* 0x04 */ s16 unk04;
+    /* 0x06 */ char unk06[2];
+    /* 0x08 */ float unk08;
+    /* 0x0C */ float unk0C;
+    /* 0x10 */ float unk10;
+    /* 0x14 */ float unk14;
+    /* 0x18 */ float unk18;
+    /* 0x1C */ float unk1C;
+    /* 0x20 */ float unk20;
+    /* 0x24 */ float unk24;
+    /* 0x28 */ float unk28;
+    /* 0x2C */ float unk2C;
+    /* 0x30 */ float unk30;
+    /* 0x34 */ float unk34;
+    /* 0x38 */ float unk38;
+    /* 0x3C */ HSFBITMAP *unk3C;
+    /* 0x40 */ char unk40[4];
+} HsfdrawStruct01; // Size 0x44
 
-typedef struct HsfDrawData_s {
+typedef struct hsf_draw_data {
     s32 dlOfs;
     s32 dlSize;
     u16 polyCnt;
     u32 flags;
-} HSFDRAWDATA;
+} HsfDrawData;
 
-typedef struct HsfConstData_s {
-    u32 attr;
-    HU3DMODELID hookMdlId;
-    HSFDRAWDATA *drawData;
+typedef struct hsf_const_data {
+    u32 flags;
+    s16 hook;
+    HsfDrawData *drawData;
     void *dlBuf;
     Mtx matrix;
     ANIMDATA *hiliteMap;
-} HSFCONSTDATA;
+} HsfConstData;
 
 typedef struct Hu3DMotWork_s {
     float time;
@@ -220,18 +231,18 @@ struct Hu3DModel_s {
     u8 hiliteIdx;
     s8 reflectType;
     s16 layerNo;
-    HU3DMOTID motId;
-    HU3DMOTID motIdOvl;
-    HU3DMOTID motIdShift;
-    HU3DMOTID motIdShape;
+    s16 motId;
+    s16 motIdOvl;
+    s16 motIdShift;
+    s16 motIdShape;
     s16 motIdCluster[HU3D_CLUSTER_MAX];
     s16 clusterAttr[HU3D_CLUSTER_MAX];
-    HU3DMODELID motIdSrc;
+    s16 motIdSrc;
     u16 cameraBit;
-    HU3DMODELID linkMdlId;
+    s16 linkMdlId;
     u16 lightNum;
     u16 lightId[HU3D_GLIGHT_MAX];
-    HU3DLIGHTID lLightId[HU3D_MODEL_LLIGHT_MAX];
+    s16 lLightId[HU3D_MODEL_LLIGHT_MAX];
     u32 mallocNo;
     u32 mallocNoLink;
     u32 attr;
@@ -313,19 +324,24 @@ typedef struct Hu3DLight_s {
     char unk_0C[16];
     HuVecF pos;
     HuVecF dir;
-    HuVecF offset;
+    HuVecF unk_34;
     GXColor color;
 } HU3DLIGHT;
 
-typedef struct Hu3DMotion_s {
-    u16 attr;
-    HU3DMODELID modelId;
-    HSFDATA *hsf;
-} HU3DMOTION;
+typedef struct motion_data {
+    s16 unk_00;
+    s16 unk_02;
+    HSFDATA *unk_04;
+} MotionData;
+
+typedef struct {
+    /* 0x00 */ float unk00;
+    /* 0x04 */ HSFBITMAP *unk04;
+} UnknownHsfMotionStruct01; // Size 8
 
 typedef struct Hu3DParticleData_s {
     /* 0x00 */ s16 time;
-    /* 0x02 */ HU3DPARMANID parManId;
+    /* 0x02 */ s16 parManId;
     /* 0x04 */ s16 unk04;
     /* 0x06 */ s16 cameraBit;
     /* 0x08 */ HuVecF vel;
@@ -384,7 +400,7 @@ typedef struct Hu3DTexAnim_s {
     /* 0x00 */ u16 attr;
     /* 0x02 */ s16 bank;
     /* 0x04 */ s16 anmNo;
-    /* 0x06 */ HU3DMODELID modelId;
+    /* 0x06 */ s16 modelId;
     /* 0x08 */ float time;
     /* 0x0C */ float speed;
     /* 0x10 */ ANIMDATA *anim;
@@ -392,7 +408,7 @@ typedef struct Hu3DTexAnim_s {
 
 typedef struct Hu3DTexScroll_s {
     /* 0x00 */ u16 attr;
-    /* 0x02 */ HU3DMODELID modelId;
+    /* 0x02 */ s16 modelId;
     /* 0x04 */ HuVecF pos;
     /* 0x10 */ HuVecF scale;
     /* 0x1C */ HuVecF posMove;
@@ -402,21 +418,6 @@ typedef struct Hu3DTexScroll_s {
     /* 0x3C */ Mtx texMtx;
 } HU3DTEXSCROLL; // Size 0x6C
 
-typedef struct Hu3DParMan_s {
-    HU3DMODELID modelId;
-    s16 attr;
-    s16 timeLimit;
-    HU3DPARMANID parManId;
-    s16 color;
-    Vec pos;
-    Vec vec;
-    Vec vacuum;
-    float vacuumSpeed;
-    float accel;
-    s32 jitterNo;
-    HU3DPARMANPARAM *param;
-} HU3DPARMAN;
-
 extern void GXWaitDrawDone(); /* extern */
 extern void GXInitSpecularDir(GXLightObj *, float, float, float);
 
@@ -425,7 +426,7 @@ void Hu3DDraw(HU3DMODEL *arg0, Mtx arg1, Vec *arg2);
 s32 ObjCullCheck(HSFDATA *arg0, HSFOBJECT *arg1, Mtx arg2);
 void Hu3DDrawPost(void);
 void MakeDisplayList(s16 arg0, u32 arg1);
-HSFCONSTDATA *ObjConstantMake(HSFOBJECT *arg0, u32 arg1);
+HsfConstData *ObjConstantMake(HSFOBJECT *arg0, u32 arg1);
 void mtxTransCat(Mtx arg0, float arg1, float arg2, float arg3);
 void mtxRotCat(Mtx arg0, float arg1, float arg2, float arg3);
 void mtxRot(Mtx arg0, float arg1, float arg2, float arg3);
@@ -596,7 +597,7 @@ float GetCurve(HSFTRACK *arg0, float arg1);
 float GetConstant(s32 arg0, float *arg1, float arg2);
 float GetLinear(s32 arg0, float arg1[][2], float arg2);
 float GetBezier(s32 arg0, HSFTRACK *arg1, float arg2);
-HSFBITMAP *GetBitMap(s32 arg0, HSFBITMAPKEY *arg1, float arg2);
+HSFBITMAP *GetBitMap(s32 arg0, UnknownHsfMotionStruct01 *arg1, float arg2);
 s16 Hu3DJointMotion(s16 arg0, void *arg1);
 void JointModel_Motion(s16 arg0, s16 arg1);
 void Hu3DMotionCalc(s16 arg0);
@@ -638,7 +639,7 @@ s16 Hu3DParManCreate(ANIMDATA *anim, s16 maxCnt, HU3DPARMANPARAM *param);
 s16 Hu3DParManLink(s16 linkParManId, HU3DPARMANPARAM *param);
 void Hu3DParManKill(s16 parManId);
 void Hu3DParManAllKill(void);
-HU3DPARMAN *Hu3DParManPtrGet(s16 parManId);
+void *Hu3DParManPtrGet(s16 parManId);
 void Hu3DParManPosSet(s16 parManId, float posX, float posY, float posZ);
 void Hu3DParManVecSet(s16 parManId, float x, float y, float z);
 void Hu3DParManRotSet(s16 parManId, float rotX, float rotY, float rotZ);
@@ -679,7 +680,7 @@ extern s16 Hu3DCameraBit;
 extern s16 Hu3DPauseF;
 extern GXColor BGColor;
 
-extern HU3DMOTION Hu3DMotion[256];
+extern MotionData Hu3DMotion[256];
 
 extern HU3DTEXANIM Hu3DTexAnimData[HU3D_TEXANIM_MAX];
 extern HU3DTEXSCROLL Hu3DTexScrData[HU3D_TEXSCROLL_MAX];

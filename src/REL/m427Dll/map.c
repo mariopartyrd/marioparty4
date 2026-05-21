@@ -2618,7 +2618,7 @@ void fn_1_C68C(HU3DLIGHT *arg0, Vec *arg1, Vec *arg2, GXColor *arg3)
     arg0->type = 0;
     arg0->pos = *arg1;
     arg0->dir = *arg2;
-    arg0->unk_34.x = arg0->unk_34.y = arg0->unk_34.z = 0.0f;
+    arg0->offset.x = arg0->offset.y = arg0->offset.z = 0.0f;
     arg0->cutoff = 30.0f;
     arg0->func = 2;
     VECNormalize(&arg0->dir, &arg0->dir);

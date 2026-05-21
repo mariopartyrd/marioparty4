@@ -725,14 +725,14 @@ void fn_1_7A74(s16 arg0)
     HSFOBJECT *var_r30;
     s16 var_r29;
     HSFOBJECT *var_r28;
-    HsfConstData *var_r27;
+    HSFCONSTDATA *var_r27;
 
     var_r31 = Hu3DData[arg0].hsf;
     for (var_r28 = var_r31->object, var_r29 = 0; var_r29 < var_r31->objectNum; var_r29++, var_r28++) {
         var_r30 = var_r28;
         if (var_r30->constData) {
             var_r27 = var_r30->constData;
-            var_r27->flags &= 0xFFFFFFF7;
+            var_r27->attr &= 0xFFFFFFF7;
         }
     }
 }
