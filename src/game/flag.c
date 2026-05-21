@@ -46,9 +46,9 @@ static u8 *GetFlagPtr(u32 flag)
  */
 s32 _CheckFlag(u32 flag)
 {
-	u8 *flag_ptr = GetFlagPtr(flag);
-	u16 index = flag;
-	return flag_ptr[index/8] & (1 << (index % 8));
+	u8 *ptr = GetFlagPtr(flag);
+	u16 no = flag;
+	return ptr[no/8] & (1 << (no % 8));
 }
 
 /**
@@ -58,9 +58,9 @@ s32 _CheckFlag(u32 flag)
  */
 void _SetFlag(u32 flag)
 {
-	u8 *flag_ptr = GetFlagPtr(flag);
-	u16 index = flag;
-	flag_ptr[index/8] |= (1 << (index % 8));
+	u8 *ptr = GetFlagPtr(flag);
+	u16 fo = flag;
+	ptr[fo/8] |= (1 << (fo % 8));
 }
 
 /**
@@ -70,9 +70,9 @@ void _SetFlag(u32 flag)
  */
 void _ClearFlag(u32 flag)
 {
-	u8 *flag_ptr = GetFlagPtr(flag);
-	u16 index = flag;
-	flag_ptr[index/8] &= ~(1 << (index % 8));
+	u8 *ptr = GetFlagPtr(flag);
+	u16 no = flag;
+	ptr[no/8] &= ~(1 << (no % 8));
 }
 
 /**
