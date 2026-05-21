@@ -66,9 +66,9 @@ s16 lbl_1_bss_116[3];
 s16 lbl_1_bss_110[3];
 float lbl_1_bss_108[2];
 float lbl_1_bss_100[2];
-AnimData *lbl_1_bss_FC;
-AnimData *lbl_1_bss_F8;
-AnimData *lbl_1_bss_F4;
+ANIMDATA *lbl_1_bss_FC;
+ANIMDATA *lbl_1_bss_F8;
+ANIMDATA *lbl_1_bss_F4;
 s16 lbl_1_bss_EE[3];
 s16 lbl_1_bss_E8[3];
 OSTime lbl_1_bss_D0[3];
@@ -609,8 +609,8 @@ s32 fn_1_562C(void)
 
 void fn_1_57C8(s16 arg0)
 {
-    ModelData *model = &Hu3DData[arg0];
-    HSFDATA *hsf = model->hsfData;
+    HU3DMODEL *model = &Hu3DData[arg0];
+    HSFDATA *hsf = model->hsf;
     HSFMATERIAL *mat = hsf->material;
     s16 i;
     for (i = 0; i < hsf->materialNum; i++, mat++) {
@@ -709,7 +709,7 @@ s32 fn_1_5C38(void)
 
 void fn_1_5D30(void)
 {
-    ModelData *model;
+    HU3DMODEL *model;
     Vec pos_2d;
     Vec pos_3d;
     Mtx scale;
@@ -726,11 +726,11 @@ void fn_1_5D30(void)
     Hu3DModelPosSetV(lbl_1_bss_19A[0], &pos_3d);
     MTXScale(scale, 0.5f, 0.5f, 0.5f);
     model = &Hu3DData[lbl_1_bss_19A[2]];
-    MTXCopy(scale, model->unk_F0);
+    MTXCopy(scale, model->mtx);
     model = &Hu3DData[lbl_1_bss_19A[4]];
-    MTXCopy(scale, model->unk_F0);
+    MTXCopy(scale, model->mtx);
     model = &Hu3DData[lbl_1_bss_19A[0]];
-    MTXCopy(scale, model->unk_F0);
+    MTXCopy(scale, model->mtx);
     Hu3DModelAttrReset(lbl_1_bss_19A[3], HU3D_ATTR_DISPOFF);
     pos_2d.x = 388;
     Hu3D2Dto3D(&pos_2d, 1, &pos_3d);
@@ -738,11 +738,11 @@ void fn_1_5D30(void)
     Hu3DModelPosSetV(lbl_1_bss_19A[5], &pos_3d);
     Hu3DModelPosSetV(lbl_1_bss_19A[1], &pos_3d);
     model = &Hu3DData[lbl_1_bss_19A[3]];
-    MTXCopy(scale, model->unk_F0);
+    MTXCopy(scale, model->mtx);
     model = &Hu3DData[lbl_1_bss_19A[5]];
-    MTXCopy(scale, model->unk_F0);
+    MTXCopy(scale, model->mtx);
     model = &Hu3DData[lbl_1_bss_19A[1]];
-    MTXCopy(scale, model->unk_F0);
+    MTXCopy(scale, model->mtx);
     Hu3DModelScaleSet(lbl_1_bss_19A[0], 0, 0, 0);
     Hu3DModelScaleSet(lbl_1_bss_19A[1], 0, 0, 0);
     Hu3DModelScaleSet(lbl_1_bss_19A[2], 0, 0, 0);
@@ -1445,7 +1445,7 @@ s32 fn_1_8540(s16 boxno)
     float scale;
     s32 result;
     s32 time;
-    AnimData *sprite;
+    ANIMDATA *sprite;
     result = HuCardMount(curSlotNo);
     if (result == -3) {
         OSReport("Card Delete Error:No Card\n");
@@ -1536,7 +1536,7 @@ s32 fn_1_8C30(s16 boxno)
     s32 temp_r29;
     s16 temp_r26;
     s16 temp_r25;
-    AnimData *temp_r19;
+    ANIMDATA *temp_r19;
     Vec sp60;
     Vec sp54;
     Vec sp48;
@@ -1544,7 +1544,7 @@ s32 fn_1_8C30(s16 boxno)
     s32 sp38;
     s32 sp34;
     Process *sp30;
-    ModelData *sp2C;
+    HU3DMODEL *sp2C;
     sp30 = HuPrcCurrentGet();
     OSReport("Card Copy Seq.:Open\n");
     temp_r29 = fn_1_76B4(SaveFileNameTbl[boxno], curSlotNo);
@@ -1779,13 +1779,13 @@ s32 fn_1_9E4C(void)
     s16 temp_r31;
     s16 temp_r30;
     s16 temp_r29;
-    ModelData *temp_r28;
+    HU3DMODEL *temp_r28;
     s16 temp_r27;
     s16 temp_r26;
     s16 temp_r25;
-    AnimData *temp_r24;
+    ANIMDATA *temp_r24;
     s16 temp_r23;
-    AnimData *temp_r22;
+    ANIMDATA *temp_r22;
     Mtx sp24;
     Vec sp18;
     Vec spC;
@@ -1843,9 +1843,9 @@ s32 fn_1_9E4C(void)
         Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 8], 0, 0, 0);
         Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 11], 0, 0, 0);
         temp_r28 = &Hu3DData[lbl_1_bss_19A[temp_r31 + 8]];
-        MTXCopy(sp24, temp_r28->unk_F0);
+        MTXCopy(sp24, temp_r28->mtx);
         temp_r28 = &Hu3DData[lbl_1_bss_19A[temp_r31 + 11]];
-        MTXCopy(sp24, temp_r28->unk_F0);
+        MTXCopy(sp24, temp_r28->mtx);
         lbl_1_bss_116[temp_r31] = HuSprGrpCreate(9);
         temp_r29 = HuSprCreate(lbl_1_bss_FC, 3000, 0);
         HuSprGrpMemberSet(lbl_1_bss_116[temp_r31], 0, temp_r29);
@@ -1877,7 +1877,7 @@ s32 fn_1_9E4C(void)
     MTXScale(sp24, 0.45f, 0.45f, 0.45f);
     temp_r28 = &Hu3DData[lbl_1_bss_19A[23]];
     Hu3DModelAttrSet(lbl_1_bss_19A[23], HU3D_MOTATTR_LOOP);
-    MTXCopy(sp24, temp_r28->unk_F0);
+    MTXCopy(sp24, temp_r28->mtx);
     return temp_r23;
 }
 
@@ -1908,7 +1908,7 @@ void fn_1_AAB8(void)
     float temp_f31;
     float temp_f30;
     float temp_f29;
-    ModelData *temp_r31;
+    HU3DMODEL *temp_r31;
     s16 temp_r30;
     s16 temp_r29;
     s16 temp_r28;
@@ -1924,7 +1924,7 @@ void fn_1_AAB8(void)
             MTXScale(sp48, 0.5f, 0.5f, 0.5f);
             mtxRotCat(sp48, 0.0f, 0.0f, 15.0f * lbl_1_bss_100[temp_r30]);
             temp_r31 = &Hu3DData[lbl_1_bss_19A[temp_r30]];
-            MTXCopy(sp48, temp_r31->unk_F0);
+            MTXCopy(sp48, temp_r31->mtx);
             Hu3DModelRotSet(lbl_1_bss_19A[temp_r30], 0, lbl_1_bss_8C * lbl_1_bss_108[temp_r30] * GET_ZEROSIGN(temp_r30 == 0), 0);
             if (!lbl_1_bss_12C[temp_r30]) {
                 espAttrSet(lbl_1_bss_152[temp_r30 + 2], HUSPR_ATTR_DISPOFF);

@@ -88,7 +88,7 @@ BOOL LanguageMenuExec(void);
 
 void BootExec(void)
 {
-    AnimData *data;
+    ANIMDATA *data;
     s16 group;
     s16 sprite_nintendo;
     s16 sprite_hudson;
@@ -339,7 +339,7 @@ void BootProgExec(void)
     s16 option;
     s16 group;
     s16 sprite;
-    AnimData *data;
+    ANIMDATA *data;
     option = 0;
     if (OSGetResetCode() != OS_RESET_RESTART) {
         return;
@@ -525,7 +525,7 @@ void BootTitleCreate(void)
 {
     s16 model;
     s16 sprite;
-    AnimData *sprite_data;
+    ANIMDATA *sprite_data;
     s16 i;
     titleMdlId[0] = model = Hu3DModelCreateFile(TITLE_CHAR_HSF);
     Hu3DModelAttrSet(model, HU3D_ATTR_DISPOFF);

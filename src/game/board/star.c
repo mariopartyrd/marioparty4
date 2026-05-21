@@ -72,7 +72,7 @@ static Vec starCharPos;
 static s16 hostMot[2];
 static omObjData *showNextObj;
 static s16 starDoneF;
-static AnimData *starEffAnim;
+static ANIMDATA *starEffAnim;
 static omObjData *giveStarObj;
 static Process *starProc;
 
@@ -123,7 +123,7 @@ static s32 hostMotTbl[9][2] = {
     { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) }
 };
 
-static HsfanimStruct00 starEffParam = {
+static HU3DPARMANPARAM starEffParam = {
     0x001E,
     { 0x00, 0x00 }, // padding?
     3.3f,

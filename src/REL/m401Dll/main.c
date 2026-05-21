@@ -112,8 +112,8 @@ void ObjectSetup(void)
 {
     s32 i;
     omObjData *object;
-    CameraData *camera;
-    LightData *light;
+    HU3DCAMERA *camera;
+    HU3DLIGHT *light;
     OSReport("**** M401ObjectSetup ****\n");
     HuMemHeapDump(HuMemHeapPtrGet(HEAP_SYSTEM), -1);
     HuMemHeapDump(HuMemHeapPtrGet(HEAP_DATA), -1);
@@ -123,7 +123,7 @@ void ObjectSetup(void)
     lbl_2_bss_A8 = Hu3DGLightCreateV(&lbl_2_data_14, &lbl_2_data_20, &lbl_2_data_2C);
     Hu3DGLightInfinitytSet(lbl_2_bss_A8);
     light = &Hu3DGlobalLight[lbl_2_bss_A8];
-    light->unk_00 |= 0x8000;
+    light->type |= 0x8000;
     Hu3DCameraCreate(1);
     camera = &Hu3DCamera[0];
     Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
@@ -751,8 +751,8 @@ void fn_2_26E0(omObjData *object)
     sp14.z = 0;
     Hu3DCameraPosSetV(1, &sp2C, &sp14, &sp20);
     lbl_2_bss_12C = 45;
-    Hu3DShadowData.unk_08.x = lbl_2_bss_12C;
-    MTXLightPerspective(Hu3DShadowData.unk_68, lbl_2_bss_12C, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
+    Hu3DShadowData.fov = lbl_2_bss_12C;
+    MTXLightPerspective(Hu3DShadowData.projMtx, lbl_2_bss_12C, 1.2f, 0.5f, -0.5f, 0.5f, 0.5f);
     Hu3DCameraPerspectiveSet(1, lbl_2_bss_12C, lbl_2_bss_128, lbl_2_bss_124, 1.2f);
     VECSubtract(&sp20, &sp2C, &sp8);
     VECNormalize(&sp8, &sp8);
@@ -1132,7 +1132,7 @@ void fn_2_3F28(omObjData *object)
     Vec sp1C;
     Vec sp10;
     M401WorkPlayer *temp_r31;
-    CameraData *temp_r29;
+    HU3DCAMERA *temp_r29;
     omObjData *temp_r28;
     UnkWork10A88 *temp_r27;
     float temp_f27;
@@ -1337,7 +1337,7 @@ void fn_2_48A0(omObjData *object)
             else if (temp_r31->unk6E == 50) {
                 Hu3DMotionOverlaySet(object->model[0], object->motion[8]);
                 Hu3DMotionOverlayTimeSet(object->model[0], 31.0f);
-                Hu3DData[object->model[0]].unk_78 = 1;
+                Hu3DData[object->model[0]].motOvlWork.speed = 1;
             }
             if (temp_r31->unk6E >= 70) {
                 if (object->rot.y < 90.0f) {
@@ -2767,7 +2767,7 @@ void fn_2_C130(omObjData *object)
 {
     M401WorkPlayer *temp_r31;
     s32 temp_r30;
-    LightData *temp_r28;
+    HU3DLIGHT *temp_r28;
     Vec sp14;
     Vec sp8;
     switch (object->work[0]) {
@@ -2946,7 +2946,7 @@ void fn_2_CAB0(omObjData *object)
 
 void fn_2_D088(omObjData *object)
 {
-    CameraData *temp_r31 = &Hu3DCamera[0];
+    HU3DCAMERA *temp_r31 = &Hu3DCamera[0];
     Vec sp8;
 
     lbl_2_bss_6C = temp_r31->pos;
@@ -3425,7 +3425,7 @@ void fn_2_E6E8(omObjData *object)
 
 void fn_2_F778()
 {
-    CameraData *temp_r31;
+    HU3DCAMERA *temp_r31;
     s32 temp_r30;
     float sp8[7];
     temp_r31 = lbl_2_bss_DC->data;

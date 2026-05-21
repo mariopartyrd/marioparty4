@@ -57,7 +57,7 @@ typedef struct M430PlayerBss164Struct {
     s32 unk_08;
     s32 unk_0C;
     s32 unk_10;
-    AnimData *unk_14;
+    ANIMDATA *unk_14;
     Vec unk_18;
     Vec unk_24;
     Vec unk_30;
@@ -177,7 +177,7 @@ void fn_1_10540(s32 arg0, s32 arg1, float arg8, float arg9, float argA);
 void fn_1_1058C(s32 arg0, float arg8);
 void fn_1_105B8(s32 arg0);
 void fn_1_1061C(M430PlayerBss170Struct *arg0);
-void fn_1_10948(ModelData *model, Mtx matrix);
+void fn_1_10948(HU3DMODEL *model, Mtx matrix);
 void fn_1_10B88(void);
 void fn_1_10D1C(void);
 void fn_1_10F20(void);
@@ -205,7 +205,7 @@ void fn_1_12DF0(s32 arg0);
 void fn_1_12F20(float arg8, float *arg0, float *arg1, float *arg2, float *arg3);
 float fn_1_1303C(float arg8, float arg9);
 float fn_1_13154(float arg8, float arg9, float argA);
-void fn_1_133A4(AnimData *arg0);
+void fn_1_133A4(ANIMDATA *arg0);
 void fn_1_133DC(Mtx arg0, Vec *arg1);
 void fn_1_BE24(omObjData *object);
 void fn_1_C040(void);
@@ -368,7 +368,7 @@ void fn_1_C1E4(omObjData *object)
     u32 var_r27;
     HSFDATA *var_r26;
     HSFMATERIAL *var_r25;
-    ModelData *var_r24;
+    HU3DMODEL *var_r24;
     s32 var_r23;
 
     object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M430PlayerWork), MEMORY_DEFAULT_NUM);
@@ -516,7 +516,7 @@ void fn_1_C1E4(omObjData *object)
     }
     if (work->unk_0C != 0) {
         var_r24 = &Hu3DData[object->model[1]];
-        var_r26 = var_r24->hsfData;
+        var_r26 = var_r24->hsf;
         for (var_r25 = var_r26->material, var_r29 = 0; var_r29 < var_r26->materialNum; var_r29++, var_r25++) {
             var_r25->flags |= 2;
         }
@@ -537,7 +537,7 @@ void fn_1_CA3C(omObjData *object)
     M430PlayerBss174Struct *var_r28;
     HSFDATA *var_r27;
     HSFMATERIAL *var_r26;
-    ModelData *var_r25;
+    HU3DMODEL *var_r25;
 
     work = object->data;
     var_r28 = &lbl_1_bss_174[work->unk_04];
@@ -630,7 +630,7 @@ void fn_1_CA3C(omObjData *object)
         }
         else {
             var_r25 = &Hu3DData[object->model[1]];
-            var_r27 = var_r25->hsfData;
+            var_r27 = var_r25->hsf;
             for (var_r26 = var_r27->material, var_r29 = 0; var_r29 < var_r27->materialNum; var_r29++, var_r26++) {
                 var_r26->flags &= 0xFFFFFFFD;
             }
@@ -1477,7 +1477,7 @@ void fn_1_FC9C(omObjData *object)
 void fn_1_100A0(void)
 {
     M430PlayerBss170Struct *var_r31;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
     s32 var_r29;
     s32 var_r28;
     void *var_r27;
@@ -1491,7 +1491,7 @@ void fn_1_100A0(void)
         Hu3DModelLayerSet(var_r31->unk_04, 6);
         Hu3DModelCameraSet(var_r31->unk_04, 3);
         var_r30 = &Hu3DData[var_r31->unk_04];
-        var_r30->unk_120 = var_r31;
+        var_r30->hookData = var_r31;
         var_r31->unk_08 = 1;
         var_r31->unk_0C = 0.0f;
         var_r31->unk_10 = var_r31->unk_14 = var_r31->unk_18 = 0.0f;
@@ -1507,7 +1507,7 @@ void fn_1_100A0(void)
         var_r31->unk_54 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x80, MEMORY_DEFAULT_NUM);
         memset(var_r31->unk_54, 0, 0x80);
         var_r30 = &Hu3DData[var_r31->unk_04];
-        var_r27 = HuMemDirectMallocNum(HEAP_DATA, 0x200, var_r30->unk_48);
+        var_r27 = HuMemDirectMallocNum(HEAP_DATA, 0x200, var_r30->mallocNo);
         var_r26 = var_r27;
         DCFlushRange(var_r27, 0x200);
         GXBeginDisplayList(var_r26, 0x200);
@@ -1518,7 +1518,7 @@ void fn_1_100A0(void)
             GXUnknownu16(var_r29);
         }
         var_r31->unk_5C = GXEndDisplayList();
-        var_r31->unk_60 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_5C, var_r30->unk_48);
+        var_r31->unk_60 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_5C, var_r30->mallocNo);
         memcpy(var_r31->unk_60, var_r27, var_r31->unk_5C);
         DCFlushRange(var_r31->unk_60, var_r31->unk_5C);
         HuMemDirectFree(var_r27);
@@ -1621,10 +1621,10 @@ void fn_1_1061C(M430PlayerBss170Struct *var_r31)
     PPCSync();
 }
 
-void fn_1_10948(ModelData *var_r29, Mtx var_r30)
+void fn_1_10948(HU3DMODEL *var_r29, Mtx var_r30)
 {
     Mtx sp8;
-    M430PlayerBss170Struct *var_r31 = var_r29->unk_120;
+    M430PlayerBss170Struct *var_r31 = var_r29->hookData;
     GXLoadPosMtxImm(var_r30, 0);
     MTXInvXpose(var_r30, sp8);
     GXLoadNrmMtxImm(sp8, 0);
@@ -2044,33 +2044,33 @@ void fn_1_11D70(void)
 {
     M430PlayerBss164Struct *var_r31;
     HU3DPARTICLEDATA *var_r30;
-    ParticleData *var_r29;
+    HU3DPARTICLE *var_r29;
     s32 var_r28;
     s32 var_r27;
     M430PlayerBss174Struct *var_r26;
-    ModelData *var_r25;
+    HU3DMODEL *var_r25;
     s32 var_r24;
 
     for (var_r31 = lbl_1_bss_164, var_r28 = 0; var_r28 < 8; var_r28++, var_r31++) {
         if (var_r31->unk_0C != 0) {
             if (var_r31->unk_10 > 1) {
                 var_r25 = &Hu3DData[var_r31->unk_04];
-                var_r29 = var_r25->unk_120;
-                for (var_r30 = var_r29->data, var_r27 = 0; var_r27 < var_r29->unk_30; var_r27++, var_r30++) {
-                    if (++var_r30->time > var_r30->unk02) {
-                        var_r24 = var_r30->unk40.a - 9;
+                var_r29 = var_r25->hookData;
+                for (var_r30 = var_r29->data, var_r27 = 0; var_r27 < var_r29->maxCnt; var_r27++, var_r30++) {
+                    if (++var_r30->time > var_r30->parManId) {
+                        var_r24 = var_r30->color.a - 9;
                         if (var_r24 < 0) {
-                            var_r30->unk2C = 0.0f;
+                            var_r30->scale = 0.0f;
                         }
                         else {
-                            var_r30->unk40.a = var_r24;
+                            var_r30->color.a = var_r24;
                         }
                     }
-                    var_r30->unk2C *= 0.975;
-                    var_r30->unk34.x += var_r30->unk08.x;
-                    var_r30->unk34.y += var_r30->unk08.y;
-                    var_r30->unk34.z += var_r30->unk08.z;
-                    var_r30->unk08.y -= 0.3103333379576603;
+                    var_r30->scale *= 0.975;
+                    var_r30->pos.x += var_r30->vel.x;
+                    var_r30->pos.y += var_r30->vel.y;
+                    var_r30->pos.z += var_r30->vel.z;
+                    var_r30->vel.y -= 0.3103333379576603;
                 }
             }
             var_r26 = &lbl_1_bss_174[var_r31->unk_08];
@@ -2104,8 +2104,8 @@ s32 fn_1_11F90(s32 arg0, float arg8, float arg9, float argA)
     M430PlayerBss164Struct *var_r31;
     HU3DPARTICLEDATA *var_r30;
     s32 var_r29;
-    ParticleData *var_r28;
-    ModelData *var_r27;
+    HU3DPARTICLE *var_r28;
+    HU3DMODEL *var_r27;
 
     for (var_r31 = lbl_1_bss_164, var_r29 = 0; var_r29 < 8; var_r29++, var_r31++) {
         if (var_r31->unk_0C == 0) {
@@ -2126,28 +2126,28 @@ s32 fn_1_11F90(s32 arg0, float arg8, float arg9, float argA)
     var_r31->unk_0C = 1;
     var_r31->unk_10 = 0;
     var_r27 = &Hu3DData[var_r31->unk_04];
-    var_r28 = var_r27->unk_120;
-    var_r28->unk_2C = 1;
-    for (var_r30 = var_r28->data, var_r29 = 0; var_r29 < var_r28->unk_30; var_r29++, var_r30++) {
+    var_r28 = var_r27->hookData;
+    var_r28->blendMode = 1;
+    for (var_r30 = var_r28->data, var_r29 = 0; var_r29 < var_r28->maxCnt; var_r29++, var_r30++) {
         var_f30 = (frand() % 30) + 0x4B;
         var_f29 = frand() % 360;
         var_f27 = sind(var_f30);
         var_f28 = cosd(var_f30);
         var_f26 = 0.8f + (0.3f * (0.007874016f * (frand() % 255)));
         var_f31 = 0.35f;
-        var_r30->unk08.x = var_f31 * (0.6499999761581421 * (50.0 * (var_f28 * sind(var_f29))));
-        var_r30->unk08.y = var_f31 * (50.0f * var_f27 * var_f26);
-        var_r30->unk08.z = var_f31 * (0.6499999761581421 * (50.0 * (var_f28 * cosd(var_f29))));
+        var_r30->vel.x = var_f31 * (0.6499999761581421 * (50.0 * (var_f28 * sind(var_f29))));
+        var_r30->vel.y = var_f31 * (50.0f * var_f27 * var_f26);
+        var_r30->vel.z = var_f31 * (0.6499999761581421 * (50.0 * (var_f28 * cosd(var_f29))));
         var_r30->time = 0;
-        var_r30->unk02 = (frand() % 7) + 0xA;
-        var_r30->unk2C = 45.0f;
-        var_r30->unk34.x = 0.25f * ((frand() & 0x7F) - 0x40);
-        var_r30->unk34.y = 0.25f * ((frand() & 0x7F) - 0x40);
-        var_r30->unk34.z = 0.25f * ((frand() & 0x7F) - 0x40);
-        var_r30->unk40.r = (frand() % 64) + 0xC0;
-        var_r30->unk40.g = (frand() % 64) + 0xC0;
-        var_r30->unk40.b = (frand() % 64) + 0xC0;
-        var_r30->unk40.a = 0xFF;
+        var_r30->parManId = (frand() % 7) + 0xA;
+        var_r30->scale = 45.0f;
+        var_r30->pos.x = 0.25f * ((frand() & 0x7F) - 0x40);
+        var_r30->pos.y = 0.25f * ((frand() & 0x7F) - 0x40);
+        var_r30->pos.z = 0.25f * ((frand() & 0x7F) - 0x40);
+        var_r30->color.r = (frand() % 64) + 0xC0;
+        var_r30->color.g = (frand() % 64) + 0xC0;
+        var_r30->color.b = (frand() % 64) + 0xC0;
+        var_r30->color.a = 0xFF;
     }
     var_r31->unk_18.x = arg8;
     var_r31->unk_18.y = arg9;
@@ -2428,7 +2428,7 @@ float fn_1_13154(float arg8, float arg9, float argA)
     return var_f31;
 }
 
-void fn_1_133A4(AnimData *arg0)
+void fn_1_133A4(ANIMDATA *arg0)
 {
     arg0->useNum = 0;
     HuSprAnimKill(arg0);

@@ -11,7 +11,7 @@
 #define THP_DECODE_STACK_SIZE 0x2000
 
 static void THPTestProc(void);
-static void THPViewFunc(ModelData *arg0, Mtx arg1);
+static void THPViewFunc(HU3DMODEL *arg0, Mtx arg1);
 static void THPViewSprFunc(HuSprite *arg0);
 static void THPDecodeFunc(void *param);
 
@@ -215,7 +215,7 @@ static void THPTestProc(void)
     }
 }
 
-static void THPViewFunc(ModelData *arg0, Mtx arg1)
+static void THPViewFunc(HU3DMODEL *arg0, Mtx arg1)
 {
     GXColor spC = { 0xFF, 0xFF, 0xFF, 0xFF };
 

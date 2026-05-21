@@ -3072,10 +3072,10 @@ void BoardPlayerCopyEyeMat(s32 arg0, s32 arg1)
     char **temp_r28;
     HSFDATA *hsfData;
     HSFMATERIAL *material;
-    ModelData *model;
+    HU3DMODEL *model;
     s16 modelId = BoardModelIDGet(BoardPlayerModelGet(arg0));
     model = &Hu3DData[modelId];
-    hsfData = model->hsfData;
+    hsfData = model->hsf;
     material = hsfData->material;
     var_r29 = playerMatCopy[arg0];
     if (arg1 != 0) {
@@ -3113,13 +3113,13 @@ void BoardPlayerCopyEyeMat(s32 arg0, s32 arg1)
 void BoardPlayerCopyMat(s32 arg0)
 {
     s16 modelID;
-    ModelData *model;
+    HU3DMODEL *model;
     void *temp_r3;
     HSFDATA *temp_r31;
 
     modelID = BoardModelIDGet(BoardPlayerModelGet(arg0));
     model = &Hu3DData[modelID];
-    temp_r31 = model->hsfData;
+    temp_r31 = model->hsf;
     temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, temp_r31->materialNum * sizeof(HSFMATERIAL), MEMORY_DEFAULT_NUM);
     memcpy(temp_r3, temp_r31->material, temp_r31->materialNum * sizeof(HSFMATERIAL));
     playerMatCopy[arg0] = temp_r3;

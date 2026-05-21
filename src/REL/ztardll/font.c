@@ -118,7 +118,7 @@ s32 fn_1_7754(SeqWork *work, char *mess)
     s16 grpNo;
     s32 file;
     s16 *posX;
-    AnimData **animP;
+    ANIMDATA **animP;
     s16 gid;
     s16 sprid;
     s32 var_r19_2;
@@ -133,7 +133,7 @@ s32 fn_1_7754(SeqWork *work, char *mess)
         return -1;
     }
 
-    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(AnimData*)));
+    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(ANIMDATA*)));
     posX = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posX));
     posY = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posY));
 

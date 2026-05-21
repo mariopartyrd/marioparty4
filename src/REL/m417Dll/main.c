@@ -66,7 +66,7 @@ void ObjectSetup(void)
     Vec sp8;
 
     Process *var_r31;
-    LightData *var_r30;
+    HU3DLIGHT *var_r30;
 
     HuAudSndGrpSet(42);
     HuAudFXListnerSetEX(&sp2C, &sp20, 10000.0f, 1000.0f, 0.0f, 300.0f, 300.0f);
@@ -75,7 +75,7 @@ void ObjectSetup(void)
     lbl_1_bss_8[0] = Hu3DGLightCreateV(&lbl_1_data_0, &lbl_1_data_C, &lbl_1_data_24);
     Hu3DGLightInfinitytSet(lbl_1_bss_8[0]);
     var_r30 = &Hu3DGlobalLight[lbl_1_bss_8[0]];
-    var_r30->unk_00 |= 32768;
+    var_r30->type |= 32768;
     lbl_1_data_18.x = 20.0f;
     lbl_1_data_18.y = 45.0f;
     lbl_1_data_18.z = 1000.0f;

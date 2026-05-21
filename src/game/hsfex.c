@@ -20,7 +20,7 @@ typedef struct {
 static void SetObjCamMotion(s16 arg0, HSFTRACK *arg1, float arg2, HsfexStruct02 *arg3);
 
 void CamMotionEx2(s16 arg0, s16 arg1, float arg2, s16 arg3) {
-    CameraData *temp_r30;
+    HU3DCAMERA *temp_r30;
     s16 i;
 
     for (i = 0; i < HU3D_CAM_MAX; i++) {
@@ -46,8 +46,8 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
     s16 var_r29;
     s16 var_r30;
     HsfexStruct02 *var_r31;
-    CameraData *temp_r27;
-    ModelData *temp_r23;
+    HU3DCAMERA *temp_r27;
+    HU3DMODEL *temp_r23;
     HSFDATA *temp_r22;
     MotionData *temp_r19;
     HSFDATA *temp_r18;
@@ -58,8 +58,8 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
     HSFTRACK *var_r28;
 
     temp_r23 = &Hu3DData[arg0];
-    temp_r19 = &Hu3DMotion[temp_r23->unk_08];
-    temp_r22 = temp_r23->hsfData;
+    temp_r19 = &Hu3DMotion[temp_r23->motId];
+    temp_r22 = temp_r23->hsf;
     temp_r18 = temp_r19->unk_04;
     temp_r26 = temp_r18->motion;
     for (var_r25 = 0; var_r25 < HU3D_CAM_MAX; var_r25++) {
@@ -321,7 +321,7 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
 }
 
 static void SetObjCamMotion(s16 arg0, HSFTRACK *arg1, float arg2, HsfexStruct02 *arg3) {
-    ModelData *temp_r31 = &Hu3DData[arg0];
+    HU3DMODEL *temp_r31 = &Hu3DData[arg0];
     Vec sp18;
     Vec spC;
 
@@ -418,7 +418,7 @@ float InterpolateBMLine(float *arg0, float *arg1, float arg2) {
 }
 
 void Hu3D2Dto3D(Vec *arg0, s16 arg1, Vec *arg2) {
-    CameraData *temp_r31;
+    HU3DCAMERA *temp_r31;
     float temp_f31;
     float temp_f30;
     float temp_f29;
@@ -448,7 +448,7 @@ void Hu3D2Dto3D(Vec *arg0, s16 arg1, Vec *arg2) {
 
 void Hu3D3Dto2D(Vec *arg0, s16 arg1, Vec *arg2) {
     Vec sp10;
-    CameraData *temp_r31;
+    HU3DCAMERA *temp_r31;
     float temp_f31;
     float temp_f30;
     s16 i;

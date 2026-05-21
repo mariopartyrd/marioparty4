@@ -276,12 +276,12 @@ void fn_1_758(omObjData *var_r29)
     s32 var_r27;
     s32 var_r26;
     s32 var_r25;
-    ModelData *var_r24;
+    HU3DMODEL *var_r24;
     s32 var_r23;
     s32 var_r22;
     s32 var_r21;
     s32 var_r20;
-    ModelData *var_r19;
+    HU3DMODEL *var_r19;
     s32 var_r18;
     s32 var_r17;
 
@@ -1668,7 +1668,7 @@ void fn_1_7ECC(omObjData *var_r31)
     var_r31->func = fn_1_6850;
 }
 
-void fn_1_7F94(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_7F94(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     float var_f31;
     float var_f30;
@@ -1677,63 +1677,63 @@ void fn_1_7F94(ModelData *model, ParticleData *particle, Mtx matrix)
     HU3DPARTICLEDATA *var_r31;
     s16 var_r29;
 
-    if (particle->unk_34 == 0) {
-        for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
+    if (particle->count == 0) {
+        for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
             var_r31->time = 0;
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+            var_r31->color.a = 0;
+            var_r31->scale = 0.0f;
         }
     }
-    if (particle->unk_34 >= 0xFF) {
-        for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
+    if (particle->count >= 0xFF) {
+        for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
             var_r31->time = 0xFF;
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+            var_r31->color.a = 0;
+            var_r31->scale = 0.0f;
         }
     }
-    for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (!var_r31->unk2C) {
+    for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+        if (!var_r31->scale) {
             break;
         }
     }
-    for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
+    for (var_r31 = particle->data, var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
         if (var_r31->time == 1) {
             var_f31 = ((frand() & 0xFF) * 0x168) >> 8;
             var_f30 = 0.5 + (1.5 * (rand8() / 256.0));
-            var_r31->unk08.x = 2.5 * (var_f30 * sind(var_f31));
-            var_r31->unk08.y = 4.5 * (var_f30 * cosd(var_f31));
-            var_r31->unk08.y *= var_r31->unk08.y < 0.0f ? -0.5 : 1.0;
-            var_r31->unk08.x = (12.0 * (rand8() / 255.0)) - 6.0;
-            var_r31->unk08.y = 12.0 * (rand8() / 255.0);
-            var_r31->unk08.z = (rand8() / 255.0) - 0.5;
-            var_r31->unk34.x = 2.0f * var_r31->unk08.x;
-            var_r31->unk34.y = 10.0f + (2.0f * var_r31->unk08.y);
-            var_r31->unk34.z = 50.0f + (2.0f * var_r31->unk08.z);
-            var_r31->unk40.r = 0xFF;
-            var_r31->unk40.g = 0xFF;
-            var_r31->unk40.b = 0xFF;
-            var_r31->unk40.a = 0xFF;
-            var_r31->unk2C = 50.0f;
+            var_r31->vel.x = 2.5 * (var_f30 * sind(var_f31));
+            var_r31->vel.y = 4.5 * (var_f30 * cosd(var_f31));
+            var_r31->vel.y *= var_r31->vel.y < 0.0f ? -0.5 : 1.0;
+            var_r31->vel.x = (12.0 * (rand8() / 255.0)) - 6.0;
+            var_r31->vel.y = 12.0 * (rand8() / 255.0);
+            var_r31->vel.z = (rand8() / 255.0) - 0.5;
+            var_r31->pos.x = 2.0f * var_r31->vel.x;
+            var_r31->pos.y = 10.0f + (2.0f * var_r31->vel.y);
+            var_r31->pos.z = 50.0f + (2.0f * var_r31->vel.z);
+            var_r31->color.r = 0xFF;
+            var_r31->color.g = 0xFF;
+            var_r31->color.b = 0xFF;
+            var_r31->color.a = 0xFF;
+            var_r31->scale = 50.0f;
         }
         if (var_r31->time < 0xF0) {
-            VECAdd(&var_r31->unk08, &var_r31->unk34, &var_r31->unk34);
-            var_r31->unk08.x *= 0.9f;
-            var_r31->unk08.z *= 0.9f;
-            var_r31->unk08.y *= 0.9f;
-            var_r31->unk40.a = (var_r31->unk40.a * 0xB) / 12;
-            var_r31->unk2C += 1.01f;
-            if (var_r31->unk2C <= 0.0f) {
-                var_r31->unk2C = 0.0f;
+            VECAdd(&var_r31->vel, &var_r31->pos, &var_r31->pos);
+            var_r31->vel.x *= 0.9f;
+            var_r31->vel.z *= 0.9f;
+            var_r31->vel.y *= 0.9f;
+            var_r31->color.a = (var_r31->color.a * 0xB) / 12;
+            var_r31->scale += 1.01f;
+            if (var_r31->scale <= 0.0f) {
+                var_r31->scale = 0.0f;
             }
-            if (var_r31->unk40.a == 0) {
-                var_r31->unk40.a = 0;
-                var_r31->unk2C = 0.0f;
+            if (var_r31->color.a == 0) {
+                var_r31->color.a = 0;
+                var_r31->scale = 0.0f;
             }
         }
         var_r31->time += var_r31->time < 0x8000;
         if (var_r31->time >= 0xF0) {
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+            var_r31->color.a = 0;
+            var_r31->scale = 0.0f;
         }
     }
 }

@@ -10,7 +10,7 @@
 extern s32 rand8(void);
 
 ////// TYPES //////
-typedef void (*m440Func5)(ModelData *, struct _unkStruct5 *, Mtx);
+typedef void (*m440Func5)(HU3DMODEL *, struct _unkStruct5 *, Mtx);
 typedef void (*m440Func6)(struct _unkStruct6 *);
 typedef void (*m440Func14)(struct _unkStruct14 *);
 
@@ -73,7 +73,7 @@ typedef struct _unkStruct5 {
     u32 unk4;
     u8 unk8;
     m440Func5 unkC;
-    AnimData *unk10;
+    ANIMDATA *unk10;
     s16 unk14;
     unkStruct4 *unk18;
     Vec *unk1C;
@@ -269,7 +269,7 @@ void fn_1_18E0(void);
 u8 fn_1_1954(void);
 void fn_1_19B0(void);
 void fn_1_1CAC(void);
-void fn_1_2240(ModelData *data, unkStruct5 *, Mtx);
+void fn_1_2240(HU3DMODEL *data, unkStruct5 *, Mtx);
 u16 fn_1_23E4(u16);
 void fn_1_2428(u16, u16);
 void fn_1_2470(omObjData *object);
@@ -300,7 +300,7 @@ void fn_1_6B58(unkStruct6 *, HSFOBJECT *);
 void fn_1_71FC(unkStruct6 *, Vec *, s16, Vec);
 void fn_1_7934(unkStruct6 *, unkStruct8 *, Vec *);
 void fn_1_7D60(HSFBITMAP *, HSFATTRIBUTE *, s16);
-void fn_1_806C(ModelData *, Mtx);
+void fn_1_806C(HU3DMODEL *, Mtx);
 void fn_1_8470(HSFMATERIAL *, HSFATTRIBUTE *);
 void fn_1_8AC4(Mtx);
 void fn_1_8D1C(void);
@@ -310,17 +310,17 @@ void fn_1_9344(Mtx, Mtx);
 float fn_1_93C0(float, float, float);
 float fn_1_93D0(float, float, float, float);
 unkStruct4 *fn_1_942C(s16, Vec *, Vec *, float, GXColor *);
-s16 fn_1_956C(AnimData *, s16, float, s16, s16);
+s16 fn_1_956C(ANIMDATA *, s16, float, s16, s16);
 void fn_1_9AB0(s16);
 unkStruct5 *fn_1_9B10(s16);
 unkStruct4 *fn_1_9B3C(s16, s16);
 void fn_1_9B94(s16, m440Func5);
 void fn_1_9BCC(s16, u8);
-void fn_1_9C04(ModelData *, Mtx);
+void fn_1_9C04(HU3DMODEL *, Mtx);
 void fn_1_A1B8(HuVec2f *, s16, s16, float, float);
 void fn_1_A284(HuVec2f *, HuVec2f *, s16, float, float);
 void fn_1_A328(Vec *, Vec *, Vec *, s16);
-void fn_1_A390(ModelData *, Mtx);
+void fn_1_A390(HU3DMODEL *, Mtx);
 void fn_1_AA94(void);
 // object.c
 void fn_1_AE08(Process *);

@@ -20,7 +20,7 @@ void fn_1_D9F4(s16 arg0)
     Vec sp1C;
     Vec sp10;
     GXColor spC;
-    CameraData *var_r31;
+    HU3DCAMERA *var_r31;
 
     var_r31 = &Hu3DCamera[0];
     C_MTXPerspective(sp64, var_r31->fov, var_r31->aspect, var_r31->near, var_r31->far);

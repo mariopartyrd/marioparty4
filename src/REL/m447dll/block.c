@@ -20,7 +20,7 @@ void fn_1_991C(UnkM447Struct_01 *arg0);
 void fn_1_9BCC(UnkM447Struct_01 *arg0);
 void fn_1_9CEC(UnkM447Struct_01 *arg0);
 void fn_1_9EEC(UnkM447Struct_01 *arg0);
-void fn_1_9F40(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_9F40(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 u32 lbl_1_bss_B8; // Maybe part of another file with fn_1_A230 and fn_1_A240.
 UnkM447Struct_01 *lbl_1_bss_A4[5];
@@ -157,17 +157,17 @@ void fn_1_9320(UnkM447Struct_01 *arg0)
 
 void fn_1_9374(UnkM447Struct_01 *arg0)
 {
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     Mtx sp8;
 
     temp_r30 = &Hu3DData[arg0->unk58[arg0->unk00]];
-    MTXIdentity(temp_r30->unk_F0);
+    MTXIdentity(temp_r30->mtx);
     MTXRotRad(sp8, 'x', MTXDegToRad(arg0->unk1C.x));
-    MTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
+    MTXConcat(temp_r30->mtx, sp8, temp_r30->mtx);
     MTXRotRad(sp8, 'y', MTXDegToRad(arg0->unk1C.y));
-    MTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
+    MTXConcat(temp_r30->mtx, sp8, temp_r30->mtx);
     MTXRotRad(sp8, 'z', MTXDegToRad(arg0->unk1C.z));
-    MTXConcat(temp_r30->unk_F0, sp8, temp_r30->unk_F0);
+    MTXConcat(temp_r30->mtx, sp8, temp_r30->mtx);
     Hu3DModelPosSet(arg0->unk58[arg0->unk00], arg0->unk10.x, arg0->unk10.y, arg0->unk10.z);
     Hu3DModelPosSet(arg0->unk58[20], arg0->unk10.x, arg0->unk10.y - 100.0f, arg0->unk10.z);
     Hu3DModelPosSet(arg0->unk58[21], arg0->unk10.x, arg0->unk10.y, arg0->unk10.z + 120.0f * arg0->unk54);
@@ -365,18 +365,18 @@ void fn_1_9CEC(UnkM447Struct_01 *arg0)
 
 void fn_1_9EEC(UnkM447Struct_01 *arg0)
 {
-    ModelData *temp_r30;
-    ParticleData *temp_r31;
+    HU3DMODEL *temp_r30;
+    HU3DPARTICLE *temp_r31;
 
     temp_r30 = &Hu3DData[arg0->unk58[22]];
-    temp_r31 = temp_r30->unk_120;
+    temp_r31 = temp_r30->hookData;
     temp_r30->attr &= ~1;
-    temp_r31->unk_00 = 0;
-    temp_r31->unk_02 = 1;
-    temp_r31->unk_1C = arg0;
+    temp_r31->dataCnt = 0;
+    temp_r31->emitCnt = 1;
+    temp_r31->work = arg0;
 }
 
-void fn_1_9F40(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_9F40(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     GXColor sp8 = { 0xFF, 0xFF, 0xFF, 0xFF };
     UnkM447Struct_01 *temp_r29;
@@ -384,50 +384,50 @@ void fn_1_9F40(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 var_r27;
     s32 i;
 
-    if (particle->unk_02 == 0) {
+    if (particle->emitCnt == 0) {
         return;
     }
-    temp_r29 = particle->unk_1C;
-    if (particle->unk_00 == 0) {
-        particle->unk_00 = 1;
-        for (i = 0, var_r31 = particle->data; i < particle->unk_30; i++, var_r31++) {
+    temp_r29 = particle->work;
+    if (particle->dataCnt == 0) {
+        particle->dataCnt = 1;
+        for (i = 0, var_r31 = particle->data; i < particle->maxCnt; i++, var_r31++) {
             var_r31->time = i * 5;
-            var_r31->unk02 = 0;
-            var_r31->unk2C = 0.0f;
-            var_r31->unk40.r = sp8.r;
-            var_r31->unk40.g = sp8.g;
-            var_r31->unk40.b = sp8.b;
-            var_r31->unk40.a = sp8.a;
+            var_r31->parManId = 0;
+            var_r31->scale = 0.0f;
+            var_r31->color.r = sp8.r;
+            var_r31->color.g = sp8.g;
+            var_r31->color.b = sp8.b;
+            var_r31->color.a = sp8.a;
         }
     }
-    for (i = 0, var_r27 = 0, var_r31 = particle->data; i < particle->unk_30; i++, var_r31++) {
+    for (i = 0, var_r27 = 0, var_r31 = particle->data; i < particle->maxCnt; i++, var_r31++) {
         if (var_r31->time > 0 && --var_r31->time > 0) {
             continue;
         }
-        if (var_r31->unk02 == 0 && temp_r29->unk04 == 5 && temp_r29->unk10.z > -700.0f) {
-            var_r31->unk34.x = temp_r29->unk10.x;
-            var_r31->unk34.y = temp_r29->unk10.y;
-            var_r31->unk34.z = temp_r29->unk10.z;
-            var_r31->unk2C = 20.0f;
-            var_r31->unk02 = 1;
+        if (var_r31->parManId == 0 && temp_r29->unk04 == 5 && temp_r29->unk10.z > -700.0f) {
+            var_r31->pos.x = temp_r29->unk10.x;
+            var_r31->pos.y = temp_r29->unk10.y;
+            var_r31->pos.z = temp_r29->unk10.z;
+            var_r31->scale = 20.0f;
+            var_r31->parManId = 1;
         }
-        else if (var_r31->unk02 == 1) {
-            var_r31->unk34.y -= 1.0f;
-            var_r31->unk34.z += 3.0f;
-            var_r31->unk2C = 20.0f + fn_1_A240() % 60;
-            if (var_r31->unk40.a > 10) {
-                var_r31->unk40.a -= 4;
+        else if (var_r31->parManId == 1) {
+            var_r31->pos.y -= 1.0f;
+            var_r31->pos.z += 3.0f;
+            var_r31->scale = 20.0f + fn_1_A240() % 60;
+            if (var_r31->color.a > 10) {
+                var_r31->color.a -= 4;
             }
             else {
-                var_r31->unk40.a = 0;
-                var_r31->unk02 = 2;
+                var_r31->color.a = 0;
+                var_r31->parManId = 2;
             }
         }
         else {
             var_r27++;
         }
     }
-    if (var_r27 == particle->unk_30) {
+    if (var_r27 == particle->maxCnt) {
         OSReport("*****************************************************\n");
         OSReport("*****************************************************\n");
         OSReport("*****************************************************\n");
@@ -436,7 +436,7 @@ void fn_1_9F40(ModelData *model, ParticleData *particle, Mtx matrix)
         OSReport("*****************************************************\n");
         OSReport("*****************************************************\n");
         OSReport("*****************************************************\n");
-        particle->unk_02 = 0;
+        particle->emitCnt = 0;
     }
 }
 

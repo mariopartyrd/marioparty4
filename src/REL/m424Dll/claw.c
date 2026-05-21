@@ -1233,12 +1233,12 @@ s32 fn_1_C878(s16 arg0, const char *arg1, Mtx arg2, s32 arg3)
     Mtx sp44;
     Mtx sp14;
     HSFDATA *temp_r30;
-    ModelData *temp_r31;
+    HU3DMODEL *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
-    temp_r30 = temp_r31->hsfData;
+    temp_r30 = temp_r31->hsf;
     lbl_1_bss_6C8 = 0;
-    if (temp_r31->unk_08 != -1) {
+    if (temp_r31->motId != -1) {
         lbl_1_bss_6C4 = 1;
     }
     else {
@@ -1363,17 +1363,17 @@ void fn_1_C99C(HSFOBJECT *arg0, Mtx arg1, const char *arg2, Mtx arg3)
 
 void fn_1_CE74(s32 arg0)
 {
-    ModelData *temp_r31;
+    HU3DMODEL *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
-    if (temp_r31->unk_08 != -1) {
-        Hu3DMotionExec(arg0, temp_r31->unk_08, temp_r31->unk_64, 0);
+    if (temp_r31->motId != -1) {
+        Hu3DMotionExec(arg0, temp_r31->motId, temp_r31->motWork.time, 0);
     }
-    if (temp_r31->unk_0C != -1) {
+    if (temp_r31->motIdShift != -1) {
         Hu3DSubMotionExec(arg0);
     }
-    if (temp_r31->hsfData->cenvNum != 0) {
-        EnvelopeProc(temp_r31->hsfData);
+    if (temp_r31->hsf->cenvNum != 0) {
+        EnvelopeProc(temp_r31->hsf);
     }
 }
 

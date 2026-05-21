@@ -1895,7 +1895,7 @@ void fn_1_B004(void)
     s32 var_r31;
     s32 var_r30;
     s32 var_r29;
-    AnimData *var_r28;
+    ANIMDATA *var_r28;
 
     var_r29 = HuSprGrpCreate(0x1B);
     lbl_1_bss_10C = var_r29;
@@ -2197,7 +2197,7 @@ void fn_1_C544(void)
     s32 var_r31;
     s32 var_r30;
     s32 var_r29;
-    AnimData *var_r28;
+    ANIMDATA *var_r28;
 
     var_r29 = HuSprGrpCreate(0x25);
     lbl_1_data_324 = var_r29;

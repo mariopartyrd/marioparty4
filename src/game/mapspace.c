@@ -46,7 +46,7 @@ void MapWall(float arg0, float arg1, float arg2, float arg3) {
     float var_f30;
     float var_f29;
     omObjData *var_r25;
-    ModelData *var_r26;
+    HU3DMODEL *var_r26;
     HSFDATA *temp_r29;
     HSFMAPATTR *sp14;
     HSFMAPATTR *var_r31;
@@ -66,7 +66,7 @@ void MapWall(float arg0, float arg1, float arg2, float arg3) {
         ColisionCount = 0;
         HitFaceCount = 0;
         var_r26 = &Hu3DData[temp_r24];
-        temp_r29 = var_r26->hsfData;
+        temp_r29 = var_r26->hsf;
         AttrHsf = temp_r29;
         sp14 = AttrHsf->mapAttr;
         var_r31 = temp_r29->mapAttr;
@@ -116,7 +116,7 @@ float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4) {
     float sp10;
     float var_f28;
     HSFMAPATTR *var_r29;
-    ModelData *var_r24;
+    HU3DMODEL *var_r24;
     omObjData *temp_r27;
     s32 i;
     s32 j;
@@ -128,7 +128,7 @@ float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4) {
     for (i = 0; i < nMap; i++) {
         temp_r27 = MapObject[i];
         var_r24 = &Hu3DData[*temp_r27->model];
-        temp_r25 = var_r24->hsfData;
+        temp_r25 = var_r24->hsf;
         sp14.x = arg0;
         sp14.y = arg1;
         sp14.z = arg2;

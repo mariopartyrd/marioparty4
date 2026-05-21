@@ -191,13 +191,13 @@ typedef struct HsfCenvMulti_s {
     u16 normal;
     u16 normalNum;
     HSFCENVMULTIWEIGHT *weight;
-} HsfCenvMulti;
+} HSFCENVMULTI;
 
 typedef struct HsfCenv_s {
     char *name;
     HSFCENVSINGLE *singleData;
     HSFCENVDUAL *dualData;
-    HsfCenvMulti *multiData;
+    HSFCENVMULTI *multiData;
     u32 singleCount;
     u32 dualCount;
     u32 multiCount;
@@ -209,7 +209,7 @@ typedef struct HsfPart_s {
     char *name;
     u32 num;
     u16 *vertex;
-} HsfPart;
+} HSFPART;
 
 typedef struct HsfCluster_s {
     char *name[2];
@@ -217,7 +217,7 @@ typedef struct HsfCluster_s {
         char *targetName;
         s32 target;
     };
-    HsfPart *part;
+    HSFPART *part;
     float index;
     float weight[32];
     u8 adjusted;
@@ -225,7 +225,7 @@ typedef struct HsfCluster_s {
     u16 type;
     u32 vertexNum;
     HSFBUFFER **vertex;
-} HsfCluster;
+} HSFCLUSTER;
 
 typedef struct HsfShape_s {
     char *name;
@@ -234,7 +234,7 @@ typedef struct HsfShape_s {
         u32 vertexNum;
     };
     HSFBUFFER **vertex;
-} HsfShape;
+} HSFSHAPE;
 
 typedef struct HsfMesh_s {
     HSFOBJECT *parent;
@@ -266,7 +266,7 @@ typedef struct HsfMesh_s {
     u32 shapeNum;
     HSFBUFFER **shape;
     u32 clusterNum;
-    HsfCluster **cluster;
+    HSFCLUSTER **cluster;
     u32 cenvNum;
     HSFCENV *cenv;
     void *file[2];
@@ -384,9 +384,9 @@ typedef struct HsfData_s {
     HSFOBJECT *root;
     HSFCENV *cenv;
     HSFSKELETON *skeleton;
-    HsfCluster *cluster;
-    HsfPart *part;
-    HsfShape *shape;
+    HSFCLUSTER *cluster;
+    HSFPART *part;
+    HSFSHAPE *shape;
     HSFMOTION *motion;
     HSFOBJECT *object;
     HSFMAPATTR *mapAttr;

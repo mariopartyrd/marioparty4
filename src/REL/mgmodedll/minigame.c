@@ -60,7 +60,7 @@ void fn_1_26C54(s16 layer)
     Mtx modelview;
     Vec pos, target, up;
     GXColor color;
-    CameraData *camera = &Hu3DCamera[0];
+    HU3DCAMERA *camera = &Hu3DCamera[0];
     MTXPerspective(proj, camera->fov, camera->aspect, camera->near, camera->far);
     GXSetProjection(proj, GX_PERSPECTIVE);
     GXSetViewport(0, 0, 640, 480, 0, 1);
@@ -130,7 +130,7 @@ void fn_1_27080(void)
 s16 fn_1_271B4(s16 mgNo, s16 x, s16 y)
 {
     s16 time;
-    AnimData *anim;
+    ANIMDATA *anim;
     s16 sprite;
     s32 mgpic;
     if (mgNo == -1) {

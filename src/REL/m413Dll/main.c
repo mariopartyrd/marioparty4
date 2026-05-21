@@ -180,7 +180,7 @@ void fn_1_A0(s32 arg0)
     Mtx44 sp8C;
     Mtx44 sp4C;
     Mtx44 spC;
-    CameraData *temp_r31;
+    HU3DCAMERA *temp_r31;
     s16 temp_r30;
     s16 temp_r29;
     s16 temp_r28;
@@ -1881,7 +1881,7 @@ void fn_1_A53C(omObjData *object)
     }
 }
 
-void fn_1_B6C4(ModelData *arg0, Mtx arg1)
+void fn_1_B6C4(HU3DMODEL *arg0, Mtx arg1)
 {
     GXLoadPosMtxImm(arg1, GX_PNMTX0);
     GXSetNumTevStages(1);
@@ -2066,7 +2066,7 @@ void fn_1_C6E0(omObjData *object)
     }
     {
         void *temp_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M413, 0x1F), MEMORY_DEFAULT_NUM, HEAP_DATA);
-        AnimData *temp_r26 = HuSprAnimRead(temp_r27);
+        ANIMDATA *temp_r26 = HuSprAnimRead(temp_r27);
         lbl_1_bss_14 = HuSprGrpCreate(150);
         for (temp_r30 = 0; temp_r30 < 150; temp_r30++) {
             s16 temp_r25 = HuSprCreate(temp_r26, 0, 0);
@@ -2159,7 +2159,7 @@ void fn_1_CBB4(omObjData *object)
     Hu3DModelAttrSet(object->model[5], HU3D_MOTATTR_LOOP);
     Hu3DMotionSpeedSet(object->model[5], 0.0f);
     {
-        AnimData *temp_r23 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_MGCONST, 0x38) + GWPlayerCfg[temp_r31->unk14].character);
+        ANIMDATA *temp_r23 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_MGCONST, 0x38) + GWPlayerCfg[temp_r31->unk14].character);
         s16 temp_r22;
         temp_r31->unkA4 = HuSprGrpCreate(1);
         temp_r22 = HuSprCreate(temp_r23, 0, 0);

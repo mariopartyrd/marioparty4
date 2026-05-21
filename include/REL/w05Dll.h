@@ -106,7 +106,7 @@ void *fn_1_8884(void);
 void fn_1_88B8(void);
 void fn_1_896C(void);
 void fn_1_91DC(void);
-void fn_1_9268(ModelData *, ParticleData *, float[3][4]);
+void fn_1_9268(HU3DMODEL *, HU3DPARTICLE *, float[3][4]);
 
 void fn_1_9680(void);
 void fn_1_96B4(void);
@@ -202,7 +202,7 @@ extern omObjData *lbl_1_bss_90;
 extern omObjData *lbl_1_bss_8C;
 extern s32 lbl_1_bss_88;
 extern s32 lbl_1_bss_7C[3];
-extern AnimData *lbl_1_bss_78;
+extern ANIMDATA *lbl_1_bss_78;
 
 extern s16 lbl_1_bss_72[2];
 extern s16 lbl_1_bss_6C[3];

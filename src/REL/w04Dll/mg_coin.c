@@ -266,7 +266,7 @@ static void fn_1_D2A4(omObjData *arg0) {
     Vec sp18;
     Vec spC;
     float sp8;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     s32 temp_r3;
 
     temp_r30 = &Hu3DData[BoardModelIDGet(lbl_1_bss_2F8)];
@@ -291,7 +291,7 @@ static void fn_1_D2A4(omObjData *arg0) {
             BoardModelVisibilitySet(lbl_1_bss_2F8, 1);
             BoardModelMotionTimeSet(lbl_1_bss_2F8, lbl_1_bss_2B4[arg0->work[1] - 1]);
             BoardModelHookSet(lbl_1_bss_14[7], lbl_1_data_5BC[arg0->work[1]], lbl_1_bss_2F8);
-            Hu3DMotionExec(BoardModelIDGet(lbl_1_bss_2F8), temp_r30->unk_08, temp_r30->unk_64, 0);
+            Hu3DMotionExec(BoardModelIDGet(lbl_1_bss_2F8), temp_r30->motId, temp_r30->motWork.time, 0);
         }
         lbl_1_bss_31C->work[0] = 60;
         lbl_1_bss_31C->unk10 = frandmod((REFRESH_RATE*2)/3) + (REFRESH_RATE/6);

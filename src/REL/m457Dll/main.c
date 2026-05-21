@@ -722,7 +722,7 @@ static void M457PlayerExec(omObjData *object)
         playerData->unk40 = var_r29;
     }
     if (playerData->group == 1) {
-        ModelData *playerModel = &Hu3DData[object->model[MODEL_ID_PLAYER_PLAYER]];
+        HU3DMODEL *playerModel = &Hu3DData[object->model[MODEL_ID_PLAYER_PLAYER]];
     }
 }
 
@@ -739,10 +739,10 @@ static void M457GameExec(omObjData *object)
     s32 sp140[2];
     omObjData *playerObjLocal[2];
     PlayerData *playerData[2];
-    ModelData *temp_r24;
-    ModelData *temp_r27;
-    ModelData *mushroomModel;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r24;
+    HU3DMODEL *temp_r27;
+    HU3DMODEL *mushroomModel;
+    HU3DMODEL *temp_r29;
     float spAC;
     float spA8;
     float spA4;
@@ -1099,17 +1099,17 @@ static void M457GameExec(omObjData *object)
         for (i = 0; i < 2; i++) {
             temp_r29 = &Hu3DData[playerObj[i]->model[MODEL_ID_PLAYER_PLAYER]];
             var_r21 = (sp158[i]->character != CHARACTER_BOWSER) ? sp158[i]->character : 8;
-            var_r20 = (temp_r29->unk_08 == playerObj[i]->motion[4]) ? 0
-                : (temp_r29->unk_08 == playerObj[i]->motion[6])     ? 1
-                : (temp_r29->unk_08 == playerObj[i]->motion[7])     ? 2
+            var_r20 = (temp_r29->motId == playerObj[i]->motion[4]) ? 0
+                : (temp_r29->motId == playerObj[i]->motion[6])     ? 1
+                : (temp_r29->motId == playerObj[i]->motion[7])     ? 2
                                                                     : -1;
-            var_r19 = (temp_r29->unk_0C == playerObj[i]->motion[4]) ? 0
-                : (temp_r29->unk_0C == playerObj[i]->motion[6])     ? 1
-                : (temp_r29->unk_0C == playerObj[i]->motion[7])     ? 2
+            var_r19 = (temp_r29->motIdShift == playerObj[i]->motion[4]) ? 0
+                : (temp_r29->motIdShift == playerObj[i]->motion[6])     ? 1
+                : (temp_r29->motIdShift == playerObj[i]->motion[7])     ? 2
                                                                     : -1;
             spA8 = (var_r20 == -1) ? 0.0f : lbl_1_data_1B4[var_r21][var_r20];
             spA4 = (var_r19 == -1) ? 0.0f : lbl_1_data_1B4[var_r21][var_r19];
-            var_f19 = (temp_r29->unk_0C == -1) ? 0.0f : (temp_r29->unk_80 == 0.0f) ? 1.0f : (temp_r29->unk_7C / temp_r29->unk_80);
+            var_f19 = (temp_r29->motIdShift == -1) ? 0.0f : (temp_r29->motOvlWork.end == 0.0f) ? 1.0f : (temp_r29->motOvlWork.start / temp_r29->motOvlWork.end);
             sp158[i]->unk48 = (i == 0 ? 1 : -1) * (spA8 * (1.0f - var_f19) + spA4 * var_f19);
             playerObj[i]->trans.x += sp158[i]->unk48;
             Hu3DModelPosSet(playerObj[i]->model[MODEL_ID_PLAYER_PLAYER], playerObj[i]->trans.x, playerObj[i]->trans.y, playerObj[i]->trans.z);

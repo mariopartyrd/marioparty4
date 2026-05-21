@@ -64,7 +64,7 @@ void ObjectSetup(void)
 char *lbl_1_data_D8[16] = { "target1A", "target1B", "target2A", "target2B", "target3A", "target3B", "target4A", "target4B", "target5A", "target5B",
     "target6A", "target6B", "target7A", "target7B", "target8A", "target8B" };
 
-HsfanimStruct00 lbl_1_data_118 = {
+HU3DPARMANPARAM lbl_1_data_118 = {
     /* unk00 */ 40,
     /* unk02 */ { 0, 0 },
     /* unk04 */ 50.0f,
@@ -84,7 +84,7 @@ HsfanimStruct00 lbl_1_data_118 = {
         { /* r */ 255, /* g */ 255, /* b */ 255, /* a */ 0 }, { /* r */ 255, /* g */ 255, /* b */ 255, /* a */ 0 } },
 };
 
-HsfanimStruct00 lbl_1_data_168[2] = { {
+HU3DPARMANPARAM lbl_1_data_168[2] = { {
                                           /* unk00 */ 50,
                                           /* unk02 */ { 0, 0 },
                                           /* unk04 */ 5.0f,
@@ -123,7 +123,7 @@ HsfanimStruct00 lbl_1_data_168[2] = { {
             { /* r */ 0, /* g */ 0, /* b */ 0, /* a */ 0 }, { /* r */ 0, /* g */ 0, /* b */ 0, /* a */ 0 } },
     } };
 
-HsfanimStruct00 lbl_1_data_208 = {
+HU3DPARMANPARAM lbl_1_data_208 = {
     /* unk00 */ 40,
     /* unk02 */ { 0, 0 },
     /* unk04 */ 50.0f,
@@ -143,7 +143,7 @@ HsfanimStruct00 lbl_1_data_208 = {
         { /* r */ 0, /* g */ 0, /* b */ 0, /* a */ 0 } },
 };
 
-HsfanimStruct00 lbl_1_data_258 = {
+HU3DPARMANPARAM lbl_1_data_258 = {
     /* unk00 */ 30,
     /* unk02 */ { 0, 0 },
     /* unk04 */ 50.0f,
@@ -177,7 +177,7 @@ s16 lbl_1_bss_664[256];
 s16 lbl_1_bss_460[258];
 s16 lbl_1_bss_45A[3];
 s16 lbl_1_bss_458;
-AnimData *lbl_1_bss_454;
+ANIMDATA *lbl_1_bss_454;
 s32 unk_bss_450;
 HuObjUnk lbl_1_bss_40[20];
 void *lbl_1_bss_30[4];
@@ -205,7 +205,7 @@ void fn_1_29C(omObjData *arg0)
     u32 temp_r26;
     s16 temp_r3;
     void *temp_r29;
-    AnimData *temp_r28;
+    ANIMDATA *temp_r28;
     f32 temp_r5;
     f32 temp_f30;
     s16 chrIdx;
@@ -393,12 +393,12 @@ void fn_1_F9C(struct om_obj_data *omData)
     CZoom += HuPadTrigL[0] / 2;
     CZoom -= HuPadTrigR[0] / 2;
 
-    if (((HuPadBtn[0] & PAD_BUTTON_LEFT) != 0) && (lbl_1_data_118.unk0C < 360.0f)) {
-        lbl_1_data_118.unk0C += 1.0f;
+    if (((HuPadBtn[0] & PAD_BUTTON_LEFT) != 0) && (lbl_1_data_118.angleRange < 360.0f)) {
+        lbl_1_data_118.angleRange += 1.0f;
     }
 
-    if (((HuPadBtn[0] & PAD_BUTTON_RIGHT) != 0) && (lbl_1_data_118.unk0C > 0.0f)) {
-        lbl_1_data_118.unk0C -= 1.0f;
+    if (((HuPadBtn[0] & PAD_BUTTON_RIGHT) != 0) && (lbl_1_data_118.angleRange > 0.0f)) {
+        lbl_1_data_118.angleRange -= 1.0f;
     }
 
     if ((HuPadBtnDown[0] & PAD_BUTTON_X) != 0) {
@@ -647,7 +647,7 @@ void fn_1_28F8(Vec *arg0, Vec *arg1)
 {
     Vec spC;
     Mtx sp18;
-    CameraData *cam;
+    HU3DCAMERA *cam;
     f32 temp_f31;
     f32 temp_f30;
 
@@ -737,7 +737,7 @@ u8 lbl_1_data_322[54] = {
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_2B68(ModelData *mdl, Mtx arg1)
+void fn_1_2B68(HU3DMODEL *mdl, Mtx arg1)
 {
     GXColor sp17;
     Mtx sp150;
@@ -748,7 +748,7 @@ void fn_1_2B68(ModelData *mdl, Mtx arg1)
     GXTexObj sp30;
     f32 sp18[2][3];
     Mtx44 sp50;
-    AnimBmpData *sp10;
+    ANIMBMP *sp10;
     f32 temp_f31;
     f32 var_f30; // ! - uninitialized
     f32 var_f29; // ! - uninitialized

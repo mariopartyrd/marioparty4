@@ -685,7 +685,7 @@ void fn_1_98D4(omObjData *object)
     Vec sp8;
 
     Bss61CWork *temp_r31;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r29;
     temp_r31 = object->data;
     temp_r29 = &Hu3DData[object->model[0]];
     sp8.x = temp_r31->unk24.x - temp_r29->pos.x;
@@ -704,15 +704,15 @@ void fn_1_98D4(omObjData *object)
 }
 
 #if VERSION_NTSC
-#define fn_1_9A04_CHECK (temp_r29->unk_0C == -1 && temp_r29->unk_64 == 14.0f)
+#define fn_1_9A04_CHECK (temp_r29->motIdShift == -1 && temp_r29->motWork.time == 14.0f)
 #else
-#define fn_1_9A04_CHECK (temp_r29->unk_0C == -1 && temp_r29->unk_64 >= 14.0f && temp_r31->unk3C_pal == 0)
+#define fn_1_9A04_CHECK (temp_r29->motIdShift == -1 && temp_r29->motWork.time >= 14.0f && temp_r31->unk3C_pal == 0)
 #endif
 
 void fn_1_9A04(omObjData *object)
 {
     Bss61CWork *temp_r31;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r29;
 
     temp_r29 = &Hu3DData[object->model[0]];
     temp_r31 = object->data;
@@ -726,7 +726,7 @@ void fn_1_9A04(omObjData *object)
         return;
     }
     if (temp_r31->unk38 == 0) {
-        if (temp_r29->unk_0C == -1 && temp_r31->unkB2 == PAD_BUTTON_A) {
+        if (temp_r29->motIdShift == -1 && temp_r31->unkB2 == PAD_BUTTON_A) {
             if (fn_1_4CDC(temp_r31->unkA, temp_r31->unk40)) {
                 fn_1_B0E8(object, 3, 4);
                 fn_1_B130(object, 0, 8);
@@ -865,7 +865,7 @@ void fn_1_A0F8(omObjData *object)
 {
     Vec sp8;
     Bss61CWork *temp_r31;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r29;
     Bss12CStruct *temp_r28;
     s32 temp_r27;
     temp_r29 = &Hu3DData[object->model[0]];
@@ -930,7 +930,7 @@ void fn_1_A450(omObjData *object)
     float temp_f31;
     Bss61CWork *temp_r31;
     s32 temp_r29;
-    ModelData *temp_r28;
+    HU3DMODEL *temp_r28;
     temp_r28 = &Hu3DData[object->model[0]];
     temp_r31 = object->data;
     if (temp_r31->unk38 == 3) {
@@ -981,7 +981,7 @@ void fn_1_A450(omObjData *object)
             break;
 
         case 2:
-            if (temp_r28->unk_0C == -1) {
+            if (temp_r28->motIdShift == -1) {
                 if (Hu3DMotionTimeGet(object->model[0]) >= Hu3DMotionMaxTimeGet(object->model[0]) - 1.0f) {
                     fn_1_B0E8(object, 1, 8);
                     temp_r31->unk9C.y = 0;
@@ -1206,12 +1206,12 @@ void fn_1_B18C(omObjData *object)
 {
     Bss61CWork *temp_r31;
     u32 temp_r28;
-    ModelData *temp_r27;
+    HU3DMODEL *temp_r27;
     omObjFunc temp_r25;
     temp_r27 = &Hu3DData[object->model[0]];
     temp_r31 = object->data;
     if (temp_r31->unk0 & 0x1) {
-        if (temp_r31->unk3A != -1 && temp_r27->unk_0C == -1) {
+        if (temp_r31->unk3A != -1 && temp_r27->motIdShift == -1) {
             if (Hu3DMotionTimeGet(object->model[0]) >= Hu3DMotionMaxTimeGet(object->model[0])) {
                 fn_1_B0E8(object, temp_r31->unk3A, temp_r31->unk3C);
                 temp_r31->unk3A = -1;

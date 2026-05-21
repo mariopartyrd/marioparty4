@@ -21,7 +21,7 @@ char *DicStringTable;
 void **NSymIndex;
 HSFOBJECT *objtop;
 HSFBUFFER *vtxtop;
-HsfCluster *ClusterTop;
+HSFCLUSTER *ClusterTop;
 HSFATTRIBUTE *AttributeTop;
 HSFMATERIAL *MaterialTop;
 
@@ -54,7 +54,7 @@ static HSFBUFFER *SearchStPtr(s32 id);
 static HSFBUFFER *SearchColorPtr(s32 id);
 static HSFBUFFER *SearchFacePtr(s32 id);
 static HSFCENV *SearchCenvPtr(s32 id);
-static HsfPart *SearchPartPtr(s32 id);
+static HSFPART *SearchPartPtr(s32 id);
 static HSFPALETTE *SearchPalettePtr(s32 id);
 
 static HSFBITMAP *SearchBitmapPtr(s32 id);
@@ -95,7 +95,7 @@ HSFDATA *LoadHSF(void *data)
 
 void ClusterAdjustObject(HSFDATA *model, HSFDATA *src_model)
 {
-    HsfCluster *cluster;
+    HSFCLUSTER *cluster;
     s32 i;
     if(!src_model) {
         return;
@@ -121,7 +121,7 @@ static void FileLoad(void *data)
     memset(&Model, 0, sizeof(HSFDATA));
     NSymIndex = (void **)((u32)fileptr+head.symbol.ofs);
     StringTable = (char *)((u32)fileptr+head.string.ofs);
-    ClusterTop = (HsfCluster *)((u32)fileptr+head.cluster.ofs);
+    ClusterTop = (HSFCLUSTER *)((u32)fileptr+head.cluster.ofs);
     AttributeTop = (HSFATTRIBUTE *)((u32)fileptr+head.attribute.ofs);
     MaterialTop = (HSFMATERIAL *)((u32)fileptr+head.material.ofs);
 }
@@ -444,7 +444,7 @@ static void DispObject(HSFOBJECT *parent, HSFOBJECT *object)
     struct {
         HSFOBJECT *parent;
         HSFBUFFER *shape;
-        HsfCluster *cluster;
+        HSFCLUSTER *cluster;
     } temp;
     
     temp.parent = parent;
@@ -478,7 +478,7 @@ static void DispObject(HSFOBJECT *parent, HSFOBJECT *object)
                 temp.shape = &vtxtop[(u32)new_object->mesh.shape[i]];
                 new_object->mesh.shape[i] = temp.shape;
             }
-            new_object->mesh.cluster = (HsfCluster **)&NSymIndex[(u32)data->cluster];
+            new_object->mesh.cluster = (HSFCLUSTER **)&NSymIndex[(u32)data->cluster];
             for(i=0; i<new_object->mesh.clusterNum; i++) {
                 temp.cluster = &ClusterTop[(u32)new_object->mesh.cluster[i]];
                 new_object->mesh.cluster[i] = temp.cluster;
@@ -708,8 +708,8 @@ static void ObjectLoad(void)
 
 static void CenvLoad(void)
 {
-    HsfCenvMulti *multi_file;
-    HsfCenvMulti *multi_new;
+    HSFCENVMULTI *multi_file;
+    HSFCENVMULTI *multi_new;
     HSFCENVSINGLE *single_new;
     HSFCENVSINGLE *single_file;
     HSFCENVDUAL *dual_file;
@@ -733,7 +733,7 @@ static void CenvLoad(void)
         for(i=0; i<head.cenv.count; i++) {
             cenv_new[i].singleData = (HSFCENVSINGLE *)((u32)cenv_file[i].singleData+(u32)data_base);
             cenv_new[i].dualData = (HSFCENVDUAL *)((u32)cenv_file[i].dualData+(u32)data_base);
-            cenv_new[i].multiData = (HsfCenvMulti *)((u32)cenv_file[i].multiData+(u32)data_base);
+            cenv_new[i].multiData = (HSFCENVMULTI *)((u32)cenv_file[i].multiData+(u32)data_base);
             cenv_new[i].singleCount = cenv_file[i].singleCount;
             cenv_new[i].dualCount = cenv_file[i].dualCount;
             cenv_new[i].multiCount = cenv_file[i].multiCount;
@@ -741,7 +741,7 @@ static void CenvLoad(void)
             cenv_new[i].vtxCount = cenv_file[i].vtxCount;
             weight_base = (void *)((u32)weight_base+(cenv_new[i].singleCount*sizeof(HSFCENVSINGLE)));
             weight_base = (void *)((u32)weight_base+(cenv_new[i].dualCount*sizeof(HSFCENVDUAL)));
-            weight_base = (void *)((u32)weight_base+(cenv_new[i].multiCount*sizeof(HsfCenvMulti)));
+            weight_base = (void *)((u32)weight_base+(cenv_new[i].multiCount*sizeof(HSFCENVMULTI)));
         }
         for(i=0; i<head.cenv.count; i++) {
             single_new = single_file = cenv_new[i].singleData;
@@ -810,14 +810,14 @@ static void SkeletonLoad(void)
 
 static void PartLoad(void)
 {
-    HsfPart *part_file;
-    HsfPart *part_new;
+    HSFPART *part_file;
+    HSFPART *part_new;
     
     u16 *data;
     s32 i, j;
     
     if(head.part.count) {
-        part_new = part_file = (HsfPart *)((u32)fileptr+head.part.ofs);
+        part_new = part_file = (HSFPART *)((u32)fileptr+head.part.ofs);
         Model.partNum = head.part.count;
         Model.part = part_file;
         data = (u16 *)&part_file[head.part.count];
@@ -834,13 +834,13 @@ static void PartLoad(void)
 
 static void ClusterLoad(void)
 {
-    HsfCluster *cluster_file;
-    HsfCluster *cluster_new;
+    HSFCLUSTER *cluster_file;
+    HSFCLUSTER *cluster_new;
     
     s32 i, j;
     
     if(head.cluster.count) {
-        cluster_new = cluster_file = (HsfCluster *)((u32)fileptr+head.cluster.ofs);
+        cluster_new = cluster_file = (HSFCLUSTER *)((u32)fileptr+head.cluster.ofs);
         Model.clusterNum = head.cluster.count;
         Model.cluster = cluster_file;
         for(i=0; i<head.cluster.count; i++) {
@@ -866,11 +866,11 @@ static void ClusterLoad(void)
 static void ShapeLoad(void)
 {
     s32 i, j;
-    HsfShape *shape_new;
-    HsfShape *shape_file;
+    HSFSHAPE *shape_new;
+    HSFSHAPE *shape_file;
 
     if(head.shape.count) {
-        shape_new = shape_file = (HsfShape *)((u32)fileptr+head.shape.ofs);
+        shape_new = shape_file = (HSFSHAPE *)((u32)fileptr+head.shape.ofs);
         Model.shapeNum = head.shape.count;
         Model.shape = shape_file;
         for(i=0; i<Model.shapeNum; i++) {
@@ -1045,7 +1045,7 @@ static inline s32 FindObjectName(char *name)
 static inline s32 FindClusterName(char *name)
 {
     s32 i;
-    HsfCluster *cluster;
+    HSFCLUSTER *cluster;
     
     cluster = ClusterTop;
     for(i=0; i<head.cluster.count; i++, cluster++) {
@@ -1059,7 +1059,7 @@ static inline s32 FindClusterName(char *name)
 static inline s32 FindMotionClusterName(char *name)
 {
     s32 i;
-    HsfCluster *cluster;
+    HSFCLUSTER *cluster;
     
     cluster = MotionModel->cluster;
     for(i=0; i<MotionModel->clusterNum; i++, cluster++) {
@@ -1491,13 +1491,13 @@ static HSFCENV *SearchCenvPtr(s32 id)
     return cenv;
 }
 
-static HsfPart *SearchPartPtr(s32 id)
+static HSFPART *SearchPartPtr(s32 id)
 {
-    HsfPart *part; 
+    HSFPART *part; 
     if(id == -1) {
         return NULL;
     }
-    part = (HsfPart *)((u32)fileptr+head.part.ofs);
+    part = (HSFPART *)((u32)fileptr+head.part.ofs);
     part += id;
     return part;
 }

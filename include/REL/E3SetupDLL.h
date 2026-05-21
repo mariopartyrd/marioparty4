@@ -13,7 +13,7 @@ typedef struct e3pad {
 } E3Pad;
 
 typedef struct mgInterface {
-	/* 0x00 */ AnimData *unk_00[2];
+	/* 0x00 */ ANIMDATA *unk_00[2];
 	/* 0x08 */ s32 unk08[5];
 	/* 0x1C */ s16 group;
 	/* 0x1E */ s16 group2;
@@ -23,7 +23,7 @@ typedef struct mgInterface {
 } mgInterface;
 
 typedef struct mgPic {
-	/* 0x00 */ AnimData *unk_00[2];
+	/* 0x00 */ ANIMDATA *unk_00[2];
 	/* 0x08 */ s32 unk08[9];
 	/* 0x2C */ s16 unk_2C;
 	/* 0x2E */ s32 unk2E[4];
@@ -34,7 +34,7 @@ typedef struct mgPic {
 } mgPic;
 
 typedef struct mgSelect {
-	/* 0x00 */ AnimData *unk_00[4];
+	/* 0x00 */ ANIMDATA *unk_00[4];
 	/* 0x10 */ s32 unk10[3];
 	/* 0x1C */ s16 unk_1C;
 	/* 0x1E */ s16 unk_1E;

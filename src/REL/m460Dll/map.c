@@ -48,8 +48,8 @@ void fn_1_6818(omObjData *object);
 void fn_1_6C00(omObjData *object);
 void fn_1_73F8(omObjData *object);
 u32 fn_1_76C4(u32 arg0, u32 arg1);
-void fn_1_7724(ModelData *model, Mtx mtx);
-void fn_1_7790(ModelData *model, Mtx mtx);
+void fn_1_7724(HU3DMODEL *model, Mtx mtx);
+void fn_1_7790(HU3DMODEL *model, Mtx mtx);
 void fn_1_7B94(s32 arg0);
 void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2);
 
@@ -141,12 +141,12 @@ void fn_1_6818(omObjData *object)
     var_r30 = Hu3DParticleCreate(HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M460, 0x23)), 0x100);
     object->model[15] = var_r30;
     Hu3DModelLayerSet(var_r30, 4);
-    for (var_r27 = ((ParticleData *)Hu3DData[var_r30].unk_120)->data, var_r31 = 0; var_r31 < 0x100; var_r31++, var_r27++) {
-        var_r27->unk2C = 0.0f;
-        var_r27->unk40.a = 0;
+    for (var_r27 = ((HU3DPARTICLE *)Hu3DData[var_r30].hookData)->data, var_r31 = 0; var_r31 < 0x100; var_r31++, var_r27++) {
+        var_r27->scale = 0.0f;
+        var_r27->color.a = 0;
         var_r27->time = 0;
     }
-    DCStoreRange(((ParticleData *)Hu3DData[var_r30].unk_120)->data, 0x4400);
+    DCStoreRange(((HU3DPARTICLE *)Hu3DData[var_r30].hookData)->data, 0x4400);
     var_r28->unk_28 = 1;
     var_r28->unk_2C = -1;
     object->func = fn_1_6C00;
@@ -341,7 +341,7 @@ u32 fn_1_76C4(u32 arg0, u32 arg8)
     return var_r31;
 }
 
-void fn_1_7724(ModelData *model, Mtx mtx)
+void fn_1_7724(HU3DMODEL *model, Mtx mtx)
 {
     UnkM460MapWork *var_r31 = lbl_1_bss_48->data;
     GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
@@ -350,7 +350,7 @@ void fn_1_7724(ModelData *model, Mtx mtx)
     GXPixModeSync();
 }
 
-void fn_1_7790(ModelData *model, Mtx mtx)
+void fn_1_7790(HU3DMODEL *model, Mtx mtx)
 {
     Mtx sp5C;
 #ifdef NON_MATCHING
@@ -408,40 +408,40 @@ void fn_1_7790(ModelData *model, Mtx mtx)
 void fn_1_7B94(s32 arg0)
 {
     HU3DPARTICLEDATA *var_r31;
-    ParticleData *var_r30;
+    HU3DPARTICLE *var_r30;
     s32 var_r29;
 
-    var_r30 = Hu3DData[arg0].unk_120;
-    for (var_r31 = var_r30->data, var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
+    var_r30 = Hu3DData[arg0].hookData;
+    for (var_r31 = var_r30->data, var_r29 = 0; var_r29 < var_r30->maxCnt; var_r29++, var_r31++) {
         if (var_r31->time != 0) {
-            VECAdd(&var_r31->unk34, &var_r31->unk08, &var_r31->unk34);
-            switch (var_r31->unk02) {
+            VECAdd(&var_r31->pos, &var_r31->vel, &var_r31->pos);
+            switch (var_r31->parManId) {
                 case 0:
-                    var_r31->unk2C += 1.0f;
-                    var_r31->unk20 *= 0.99f;
-                    var_r31->unk08.y += 70.0f * REFRESH_FREQ * REFRESH_FREQ;
+                    var_r31->scale += 1.0f;
+                    var_r31->speedDecay *= 0.99f;
+                    var_r31->vel.y += 70.0f * REFRESH_FREQ * REFRESH_FREQ;
                     break;
                 case 1:
-                    var_r31->unk2C += 2.0f;
-                    var_r31->unk20 *= 0.98f;
+                    var_r31->scale += 2.0f;
+                    var_r31->speedDecay *= 0.98f;
                     break;
                 case 2:
-                    var_r31->unk2C += 1.0f;
-                    var_r31->unk20 *= 0.995f;
+                    var_r31->scale += 1.0f;
+                    var_r31->speedDecay *= 0.995f;
                     break;
             }
             if (var_r31->time < REFRESH_RATE_F / 5) {
-                var_r31->unk20 = 0.9f * var_r31->unk20;
+                var_r31->speedDecay = 0.9f * var_r31->speedDecay;
             }
-            var_r31->unk40.a = var_r31->unk20;
+            var_r31->color.a = var_r31->speedDecay;
             if (--var_r31->time == 0) {
                 var_r31->time = 0;
-                var_r31->unk2C = 0.0f;
-                var_r31->unk40.a = 0;
+                var_r31->scale = 0.0f;
+                var_r31->color.a = 0;
             }
         }
     }
-    DCStoreRange(var_r30->data, var_r30->unk_30 * 0x44);
+    DCStoreRange(var_r30->data, var_r30->maxCnt * 0x44);
 }
 
 void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
@@ -450,7 +450,7 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
     float var_f31;
 
     HU3DPARTICLEDATA *var_r31;
-    ParticleData *var_r30;
+    HU3DPARTICLE *var_r30;
     s32 var_r28;
     u32 var_r27;
 
@@ -458,31 +458,31 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
     GXColor sp8 = { 0xE7, 0xDD, 0xC0, 0xFF };
     s32 sp10[3] = { 0x00000032, 4, 0x00000046 };
 
-    var_r30 = Hu3DData[object->model[15]].unk_120;
+    var_r30 = Hu3DData[object->model[15]].hookData;
     if (arg2 > 2) {
         arg2 = 1;
     }
     var_r27 = sp10[arg2];
-    for (var_r31 = var_r30->data, var_r28 = 0; var_r28 < var_r30->unk_30; var_r28++, var_r31++) {
+    for (var_r31 = var_r30->data, var_r28 = 0; var_r28 < var_r30->maxCnt; var_r28++, var_r31++) {
         if (var_r31->time == 0) {
-            var_r31->unk02 = arg2;
+            var_r31->parManId = arg2;
             sp1C.x = 100.0f * ((0.0026f * frandmod(0x3E8)) - 1.3f);
             sp1C.y = 0.0f;
             sp1C.z = 100.0f * ((0.000100000005f * frandmod(0x3E8)) - 0.05f);
-            VECAdd(&sp1C, arg1, &var_r31->unk34);
-            var_r31->unk30 = 0.0031415902f * frandmod(0x3E8);
+            VECAdd(&sp1C, arg1, &var_r31->pos);
+            var_r31->zRot = 0.0031415902f * frandmod(0x3E8);
             switch (arg2) {
                 case 0:
                     var_r31->time = REFRESH_RATE_F * (0.8f + (0.0007f * frandmod(0x3E8)));
-                    var_r31->unk08.x = 100.0f * REFRESH_FREQ * (0.000100000005f * frandmod(0x3E8) - 0.05f);
-                    var_r31->unk08.y = 100.0f * REFRESH_FREQ * (0.05f + (0.00020000001f * frandmod(0x3E8)));
-                    var_r31->unk08.z = 100.0f * REFRESH_FREQ * (0.1f + (0.0006f * frandmod(0x3E8)));
+                    var_r31->vel.x = 100.0f * REFRESH_FREQ * (0.000100000005f * frandmod(0x3E8) - 0.05f);
+                    var_r31->vel.y = 100.0f * REFRESH_FREQ * (0.05f + (0.00020000001f * frandmod(0x3E8)));
+                    var_r31->vel.z = 100.0f * REFRESH_FREQ * (0.1f + (0.0006f * frandmod(0x3E8)));
                     var_f31 = 0.001f * frandmod(0x3E8);
-                    var_r31->unk2C = 30.0f + (30.0f * var_f31);
-                    var_r31->unk40.a = 40.0f + (40.0f * (1.0f - var_f31));
-                    var_r31->unk40.r = spC.r + (var_f31 * (sp8.r - spC.r));
-                    var_r31->unk40.g = spC.g + (var_f31 * (sp8.g - spC.g));
-                    var_r31->unk40.b = spC.b + (var_f31 * (sp8.b - spC.b));
+                    var_r31->scale = 30.0f + (30.0f * var_f31);
+                    var_r31->color.a = 40.0f + (40.0f * (1.0f - var_f31));
+                    var_r31->color.r = spC.r + (var_f31 * (sp8.r - spC.r));
+                    var_r31->color.g = spC.g + (var_f31 * (sp8.g - spC.g));
+                    var_r31->color.b = spC.b + (var_f31 * (sp8.b - spC.b));
                     break;
                 case 1:
                     sp1C.x = 100.0f * (1.1f + (0.00020000001f * frandmod(0x3E8)));
@@ -490,32 +490,32 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
                     if (frandmod(0x3E8) < 0x1F4) {
                         sp1C.x *= -1.0f;
                     }
-                    VECAdd(&sp1C, arg1, &var_r31->unk34);
+                    VECAdd(&sp1C, arg1, &var_r31->pos);
                     var_r31->time = REFRESH_RATE_F * (0.2f + (0.0005f * frandmod(0x3E8)));
-                    var_r31->unk08.x = 100.0f * REFRESH_FREQ * ((0.000100000005f * frandmod(0x3E8)) - 0.05f);
-                    var_r31->unk08.y = -100.0f * REFRESH_FREQ * (0.2f + (0.0003f * frandmod(0x3E8)));
-                    var_r31->unk08.z = 100.0f * REFRESH_FREQ * (0.05f + (0.000100000005f * frandmod(0x3E8)));
+                    var_r31->vel.x = 100.0f * REFRESH_FREQ * ((0.000100000005f * frandmod(0x3E8)) - 0.05f);
+                    var_r31->vel.y = -100.0f * REFRESH_FREQ * (0.2f + (0.0003f * frandmod(0x3E8)));
+                    var_r31->vel.z = 100.0f * REFRESH_FREQ * (0.05f + (0.000100000005f * frandmod(0x3E8)));
                     var_f31 = 0.001f * frandmod(0x3E8);
-                    var_r31->unk2C = 20.0f + (30.0f * var_f31);
-                    var_r31->unk40.a = 8.0f + (13.0f * (1.0f - var_f31));
-                    var_r31->unk40.r = spC.r + (var_f31 * (sp8.r - spC.r));
-                    var_r31->unk40.g = spC.g + (var_f31 * (sp8.g - spC.g));
-                    var_r31->unk40.b = spC.b + (var_f31 * (sp8.b - spC.b));
+                    var_r31->scale = 20.0f + (30.0f * var_f31);
+                    var_r31->color.a = 8.0f + (13.0f * (1.0f - var_f31));
+                    var_r31->color.r = spC.r + (var_f31 * (sp8.r - spC.r));
+                    var_r31->color.g = spC.g + (var_f31 * (sp8.g - spC.g));
+                    var_r31->color.b = spC.b + (var_f31 * (sp8.b - spC.b));
                     break;
                 case 2:
                     var_r31->time = REFRESH_RATE_F * (0.9f + (0.00080000004f * frandmod(0x3E8)));
-                    var_r31->unk08.x = 100.0f * REFRESH_FREQ * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
-                    var_r31->unk08.y = -100.0f * REFRESH_FREQ * (0.1f + (0.0007f * frandmod(0x3E8)));
-                    var_r31->unk08.z = 100.0f * REFRESH_FREQ * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
+                    var_r31->vel.x = 100.0f * REFRESH_FREQ * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
+                    var_r31->vel.y = -100.0f * REFRESH_FREQ * (0.1f + (0.0007f * frandmod(0x3E8)));
+                    var_r31->vel.z = 100.0f * REFRESH_FREQ * ((0.00020000001f * frandmod(0x3E8)) - 0.1f);
                     var_f31 = 0.001f * frandmod(0x3E8);
-                    var_r31->unk2C = 40.0f + (60.0f * var_f31);
-                    var_r31->unk40.a = 8.0f + (10.0f * (1.0f - var_f31));
-                    var_r31->unk40.r = spC.r + (var_f31 * (sp8.r - spC.r));
-                    var_r31->unk40.g = spC.g + (var_f31 * (sp8.g - spC.g));
-                    var_r31->unk40.b = spC.b + (var_f31 * (sp8.b - spC.b));
+                    var_r31->scale = 40.0f + (60.0f * var_f31);
+                    var_r31->color.a = 8.0f + (10.0f * (1.0f - var_f31));
+                    var_r31->color.r = spC.r + (var_f31 * (sp8.r - spC.r));
+                    var_r31->color.g = spC.g + (var_f31 * (sp8.g - spC.g));
+                    var_r31->color.b = spC.b + (var_f31 * (sp8.b - spC.b));
                     break;
             }
-            var_r31->unk20 = var_r31->unk40.a;
+            var_r31->speedDecay = var_r31->color.a;
             var_r27--;
             if (var_r27 < 1) {
                 break;
@@ -523,7 +523,7 @@ void fn_1_7DA8(omObjData *object, Vec *arg1, u32 arg2)
         }
     }
 
-    DCStoreRange(var_r30->data, var_r30->unk_30 * sizeof(HU3DPARTICLEDATA));
+    DCStoreRange(var_r30->data, var_r30->maxCnt * sizeof(HU3DPARTICLEDATA));
 }
 
 void fn_1_8BA0(float arg8)

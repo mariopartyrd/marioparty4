@@ -41,7 +41,7 @@ typedef struct unk_bss_790_struct {
 } UnkBss790Struct; // Size 0xC
 
 typedef struct unk_bss_778_struct {
-    /* 0x00 */ HsfanimStruct00 *unk00;
+    /* 0x00 */ HU3DPARMANPARAM *unk00;
     /* 0x04 */ s32 *unk04;
     /* 0x08 */ s32 unk08;
     /* 0x0C */ s32 unk0C;
@@ -153,7 +153,7 @@ void fn_1_0(void);
 void fn_1_24(u16 arg0, s16 arg1);
 s16 fn_1_AC(s16 arg0);
 void fn_1_150(void);
-void fn_1_174(s16 arg0, HsfanimStruct00 *arg1, s32 arg2, s32 arg3, s32 arg4, Vec *arg5, u8 arg6);
+void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 arg4, Vec *arg5, u8 arg6);
 void fn_1_2D8(void);
 void fn_1_414(void);
 s16 fn_1_46C(s32 arg0);
@@ -179,11 +179,11 @@ void fn_1_2508(UnkFn2480Struct *arg0);
 void fn_1_2714(u8 arg0, s32 arg1);
 void fn_1_280C(omObjData *arg0);
 void fn_1_2AAC(omObjData *arg0);
-void fn_1_37A4(ModelData *arg0, Mtx arg1);
-void fn_1_3F1C(ModelData *arg0, Mtx arg1);
-void fn_1_3F40(ModelData *arg0, Mtx arg1);
-void fn_1_4024(ModelData *arg0, Mtx arg1);
-void fn_1_4700(ModelData *arg0, Mtx arg1);
+void fn_1_37A4(HU3DMODEL *arg0, Mtx arg1);
+void fn_1_3F1C(HU3DMODEL *arg0, Mtx arg1);
+void fn_1_3F40(HU3DMODEL *arg0, Mtx arg1);
+void fn_1_4024(HU3DMODEL *arg0, Mtx arg1);
+void fn_1_4700(HU3DMODEL *arg0, Mtx arg1);
 void fn_1_4F28(omObjData *arg0);
 void fn_1_5404(omObjData *arg0);
 void fn_1_5530(Vec *arg0, s32 arg1);
@@ -223,10 +223,10 @@ s32 lbl_1_bss_72C;
 float lbl_1_bss_728;
 s32 lbl_1_bss_6E8[16];
 UnkBss5E8Struct lbl_1_bss_5E8[32];
-AnimData *lbl_1_bss_5E4;
-AnimData *lbl_1_bss_5E0;
-AnimData *lbl_1_bss_5DC;
-AnimData *lbl_1_bss_5D8;
+ANIMDATA *lbl_1_bss_5E4;
+ANIMDATA *lbl_1_bss_5E0;
+ANIMDATA *lbl_1_bss_5DC;
+ANIMDATA *lbl_1_bss_5D8;
 UnkBss5ACStruct lbl_1_bss_5AC;
 UnkBssACStruct lbl_1_bss_AC[80];
 u8 lbl_1_bss_A8;
@@ -235,9 +235,9 @@ omObjData *lbl_1_bss_A0;
 omObjData *lbl_1_bss_9C;
 omObjData *lbl_1_bss_98;
 u8 lbl_1_bss_94_unused[4];
-AnimData *lbl_1_bss_90;
+ANIMDATA *lbl_1_bss_90;
 s16 lbl_1_bss_8C;
-AnimData *lbl_1_bss_88;
+ANIMDATA *lbl_1_bss_88;
 s16 lbl_1_bss_84;
 float lbl_1_bss_80;
 s32 lbl_1_bss_7C;
@@ -323,7 +323,7 @@ void fn_1_150(void)
     lbl_1_bss_778.unk14 = NULL;
 }
 
-void fn_1_174(s16 arg0, HsfanimStruct00 *arg1, s32 arg2, s32 arg3, s32 arg4, Vec *arg5, u8 arg6)
+void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 arg4, Vec *arg5, u8 arg6)
 {
     UnkBss778Struct *temp_r27;
     UnkBss778Struct *var_r31;
@@ -373,7 +373,7 @@ void fn_1_2D8(void)
         }
         temp_r28 = var_r31->unk10;
         temp_r29 = var_r31->unk14;
-        if (-var_r31->unk00->unk00 > var_r31->unk08) {
+        if (-var_r31->unk00->maxTime > var_r31->unk08) {
             for (i = 0; i < var_r31->unk0C; i++) {
                 if (var_r31->unk04[i] >= 0) {
                     Hu3DParManKill(var_r31->unk04[i]);
@@ -568,7 +568,7 @@ void fn_1_1A60(Vec *arg0, s16 arg1, Vec *arg2)
     float temp_f29;
     float temp_f28;
     float temp_f31;
-    CameraData *temp_r31;
+    HU3DCAMERA *temp_r31;
     s32 i;
 
     for (i = 0; i < 16; i++) {
@@ -581,10 +581,10 @@ void fn_1_1A60(Vec *arg0, s16 arg1, Vec *arg2)
     MTXMultVec(sp1C, arg0, &sp10);
     temp_f30 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2)) * temp_r31->aspect;
     temp_f29 = sp10.z * (sind(temp_r31->fov / 2) / cosd(temp_r31->fov / 2));
-    temp_f28 = 0.9f * temp_r31->viewport_x;
-    temp_f31 = 0.9f * temp_r31->viewport_w;
+    temp_f28 = 0.9f * temp_r31->viewportX;
+    temp_f31 = 0.9f * temp_r31->viewportW;
     arg2->x = temp_f31 / 2 + sp10.x * ((temp_f31 / 2) / -temp_f30) + temp_f28;
-    arg2->y = temp_r31->viewport_h / 2 + sp10.y * ((temp_r31->viewport_h / 2) / temp_f29) + temp_r31->viewport_y;
+    arg2->y = temp_r31->viewportH / 2 + sp10.y * ((temp_r31->viewportH / 2) / temp_f29) + temp_r31->viewportY;
     arg2->z = 0.0f;
 }
 
@@ -601,11 +601,11 @@ void fn_1_1D18(s16 arg0, char *arg1, Vec *arg2)
 void fn_1_1D70(s16 arg0, char *arg1, Vec *arg2, Mtx arg3)
 {
     Mtx spC;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
 
     var_r30 = &Hu3DData[arg0];
     Hu3DModelObjMtxGet(arg0, arg1, spC);
-    MTXConcat(var_r30->unk_F0, spC, spC);
+    MTXConcat(var_r30->mtx, spC, spC);
     if (NULL != arg3) {
         MTXCopy(spC, arg3);
     }
@@ -923,7 +923,7 @@ void fn_1_2AAC(omObjData *arg0)
     }
 }
 
-void fn_1_37A4(ModelData *arg0, Mtx arg1)
+void fn_1_37A4(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx spEC;
     Mtx spBC;
@@ -1017,17 +1017,17 @@ void fn_1_37A4(ModelData *arg0, Mtx arg1)
     GXSetTevDirect(GX_TEVSTAGE1);
 }
 
-void fn_1_3F1C(ModelData *arg0, Mtx arg1)
+void fn_1_3F1C(HU3DMODEL *arg0, Mtx arg1)
 {
     fn_1_280C(NULL);
 }
 
-void fn_1_3F40(ModelData *arg0, Mtx arg1)
+void fn_1_3F40(HU3DMODEL *arg0, Mtx arg1)
 {
     fn_1_2714(2, GX_FALSE);
 }
 
-void fn_1_4024(ModelData *arg0, Mtx arg1)
+void fn_1_4024(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx sp98;
     Mtx sp68;
@@ -1086,7 +1086,7 @@ void fn_1_4024(ModelData *arg0, Mtx arg1)
     GXEnd();
 }
 
-void fn_1_4700(ModelData *arg0, Mtx arg1)
+void fn_1_4700(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx sp60;
     Mtx44 sp20;
@@ -1335,12 +1335,12 @@ UnkBssA4InnerStruct lbl_1_data_358 = { REFRESH_RATE*55.5f, 2 };
 UnkBssA4InnerStruct lbl_1_data_360 = { REFRESH_RATE*53, 2 };
 UnkBssA4InnerStruct lbl_1_data_368 = { REFRESH_RATE*51, 6 };
 
-HsfanimStruct00 lbl_1_data_370 = { 0x0014, { 0x00, 0x00 }, // padding?
+HU3DPARMANPARAM lbl_1_data_370 = { 0x0014, { 0x00, 0x00 }, // padding?
     1.0f, 30.0f, 0.0f, { 0.0f, 0.05f, 0.0f }, 1.0f, 0.999f, 30.0f, 1.03f, 0x0004,
     { { 0xFF, 0xFF, 0xFF, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF } },
     { { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 } } };
 
-HsfanimStruct00 lbl_1_data_3C0 = { 0x0014, { 0x00, 0x00 }, // padding?
+HU3DPARMANPARAM lbl_1_data_3C0 = { 0x0014, { 0x00, 0x00 }, // padding?
     1.0f, 10.0f, 360.0f, { 0.0f, 0.1f, 0.0f }, 1.0f, 1.0f, 50.0f, 1.05f, 0x0001,
     { { 0xFF, 0xFF, 0xFF, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF } },
     { { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 } } };

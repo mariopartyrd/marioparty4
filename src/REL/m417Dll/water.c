@@ -93,18 +93,18 @@ void fn_1_3D54(omObjData *object);
 void fn_1_3D58(omObjData *object);
 void fn_1_57B0(omObjData *object);
 void fn_1_5E3C(omObjData *object);
-void fn_1_604C(ModelData *model, Mtx mtx);
-void fn_1_6B04(ModelData *model, Mtx mtx);
-void fn_1_6B60(ModelData *model, Mtx mtx);
-void fn_1_6B94(ModelData *model, ParticleData *particle, Mtx mtx);
+void fn_1_604C(HU3DMODEL *model, Mtx mtx);
+void fn_1_6B04(HU3DMODEL *model, Mtx mtx);
+void fn_1_6B60(HU3DMODEL *model, Mtx mtx);
+void fn_1_6B94(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx mtx);
 void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA);
 
 omObjData *lbl_1_bss_878;
 UnkM417Struct4 lbl_1_bss_178;
 UnkM417Struct2 lbl_1_bss_68[17];
-AnimData *lbl_1_bss_64;
-AnimData *lbl_1_bss_60;
-AnimData *lbl_1_bss_5C;
+ANIMDATA *lbl_1_bss_64;
+ANIMDATA *lbl_1_bss_60;
+ANIMDATA *lbl_1_bss_5C;
 s16 lbl_1_bss_58;
 char lbl_1_bss_28[0x30]; // unused, might be in main.c
 
@@ -261,7 +261,7 @@ void fn_1_3BC4(omObjData *object)
     Hu3DParticleColSet(var_r30, 255, 255, 255);
     Hu3DParticleHookSet(var_r30, fn_1_6B94);
     Hu3DModelPosSet(var_r30, 0.0f, 0.0f, 0.0f);
-    ((ParticleData *)Hu3DData[var_r30].unk_120)->unk_00 = 0;
+    ((HU3DPARTICLE *)Hu3DData[var_r30].hookData)->dataCnt = 0;
     lbl_1_bss_58 = var_r30;
     fn_1_3D58(object);
     object->func = fn_1_3D54;
@@ -752,7 +752,7 @@ void fn_1_5E3C(omObjData *object)
     lbl_1_bss_178.unk_6E8[0] = GXEndDisplayList();
 }
 
-void fn_1_604C(ModelData *arg0, Mtx arg1)
+void fn_1_604C(HU3DMODEL *arg0, Mtx arg1)
 {
     Mtx sp98;
     Mtx sp68;
@@ -875,7 +875,7 @@ void fn_1_604C(ModelData *arg0, Mtx arg1)
     GXSetTevDirect(GX_TEVSTAGE3);
 }
 
-void fn_1_6B04(ModelData *model, Mtx arg1)
+void fn_1_6B04(HU3DMODEL *model, Mtx arg1)
 {
     GXSetTexCopySrc(0, 0, 640, 480);
     GXSetTexCopyDst(640, 480, GX_TF_RGB5A3, GX_FALSE);
@@ -883,46 +883,46 @@ void fn_1_6B04(ModelData *model, Mtx arg1)
     GXPixModeSync();
 }
 
-void fn_1_6B60(ModelData *model, Mtx arg1)
+void fn_1_6B60(HU3DMODEL *model, Mtx arg1)
 {
     if (!omPauseChk()) {
         fn_1_57B0(NULL);
     }
 }
 
-void fn_1_6B94(ModelData *model, ParticleData *particle, float (*matrix)[4])
+void fn_1_6B94(HU3DMODEL *model, HU3DPARTICLE *particle, float (*matrix)[4])
 {
     HU3DPARTICLEDATA *var_r31;
     s32 var_r29;
 
-    if (!particle->unk_00) {
-        particle->unk_00++;
+    if (!particle->dataCnt) {
+        particle->dataCnt++;
         var_r31 = particle->data;
-        for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
+        for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
             var_r31->time = 0;
-            var_r31->unk2C = 0.0f;
-            var_r31->unk40.a = 0;
+            var_r31->scale = 0.0f;
+            var_r31->color.a = 0;
         }
         return;
     }
     var_r31 = particle->data;
-    for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
+    for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
         if (var_r31->time) {
-            var_r31->unk34.x += var_r31->unk08.x;
-            var_r31->unk34.y += var_r31->unk08.y;
-            var_r31->unk34.z += var_r31->unk08.z;
-            var_r31->unk08.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
+            var_r31->pos.x += var_r31->vel.x;
+            var_r31->pos.y += var_r31->vel.y;
+            var_r31->pos.z += var_r31->vel.z;
+            var_r31->vel.y += -980.0f * REFRESH_FREQ * REFRESH_FREQ;
             if (var_r31->time < REFRESH_RATE_F / 5) {
-                var_r31->unk40.a = 0.88f * var_r31->unk40.a;
+                var_r31->color.a = 0.88f * var_r31->color.a;
             }
             if (!(--var_r31->time)) {
                 var_r31->time = 0;
-                var_r31->unk2C = 0.0f;
-                var_r31->unk40.a = 0;
+                var_r31->scale = 0.0f;
+                var_r31->color.a = 0;
             }
         }
     }
-    DCStoreRange(particle->data, particle->unk_30 * 68);
+    DCStoreRange(particle->data, particle->maxCnt * 68);
 }
 
 void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
@@ -935,14 +935,14 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
     float var_f27;
 
     HU3DPARTICLEDATA *var_r31;
-    ParticleData *var_r30;
+    HU3DPARTICLE *var_r30;
     s32 var_r29;
     u32 var_r28;
 
-    var_r30 = Hu3DData[arg0].unk_120;
+    var_r30 = Hu3DData[arg0].hookData;
     {
         float spC[2] = { 800.0f, 150.0f };
-        if (!var_r30->unk_00) {
+        if (!var_r30->dataCnt) {
             return;
         }
         var_r31 = var_r30->data;
@@ -957,7 +957,7 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
             var_r28 = 20.0f + (80.0f * argA);
             var_f27 = 0.0f;
         }
-        for (var_r29 = 0; var_r29 < var_r30->unk_30; var_r29++, var_r31++) {
+        for (var_r29 = 0; var_r29 < var_r30->maxCnt; var_r29++, var_r31++) {
             if (var_r31->time) {
                 continue;
             }
@@ -972,30 +972,30 @@ void fn_1_6D64(s32 arg0, u32 arg1, float arg8, float arg9, float argA)
             sp14.x = sind(var_f31);
             sp14.y = 0.0f;
             sp14.z = cosd(var_f31);
-            var_r31->unk34.x = sp14.x * spC[arg1];
-            var_r31->unk34.y = (var_f27 + (0.15f * frandmod(1000))) - 100.0f;
-            var_r31->unk34.z = sp14.z * spC[arg1];
-            var_r31->unk08.x = REFRESH_FREQ * (((100.0f * (1.5f * sp14.x)) + (0.1f * frandmod(1000))) - 50.0f);
-            var_r31->unk08.y = REFRESH_FREQ * (450.0f + (0.5f * frandmod(1000)));
-            var_r31->unk08.z = REFRESH_FREQ * (((100.0f * (1.5f * sp14.z)) + (0.1f * frandmod(1000))) - 50.0f);
-            var_r31->unk08.x *= var_f30;
-            var_r31->unk08.y *= 0.2f + (0.8f * var_f30);
-            var_r31->unk08.z *= var_f30;
-            var_r31->unk30 = frandmod(360);
+            var_r31->pos.x = sp14.x * spC[arg1];
+            var_r31->pos.y = (var_f27 + (0.15f * frandmod(1000))) - 100.0f;
+            var_r31->pos.z = sp14.z * spC[arg1];
+            var_r31->vel.x = REFRESH_FREQ * (((100.0f * (1.5f * sp14.x)) + (0.1f * frandmod(1000))) - 50.0f);
+            var_r31->vel.y = REFRESH_FREQ * (450.0f + (0.5f * frandmod(1000)));
+            var_r31->vel.z = REFRESH_FREQ * (((100.0f * (1.5f * sp14.z)) + (0.1f * frandmod(1000))) - 50.0f);
+            var_r31->vel.x *= var_f30;
+            var_r31->vel.y *= 0.2f + (0.8f * var_f30);
+            var_r31->vel.z *= var_f30;
+            var_r31->zRot = frandmod(360);
             var_f31 = 0.001f * frandmod(1000);
             if (arg1) {
-                var_r31->unk2C = 50.0f + frandmod(50);
-                var_r31->unk40.a = frandmod(80) + 60;
-                var_r31->unk40.r = 200.0f + (55.0f * var_f31);
-                var_r31->unk40.g = 220.0f + (20.0f * var_f31);
-                var_r31->unk40.b = 245.0f + (10.0f * var_f31);
+                var_r31->scale = 50.0f + frandmod(50);
+                var_r31->color.a = frandmod(80) + 60;
+                var_r31->color.r = 200.0f + (55.0f * var_f31);
+                var_r31->color.g = 220.0f + (20.0f * var_f31);
+                var_r31->color.b = 245.0f + (10.0f * var_f31);
             }
             else {
-                var_r31->unk2C = 100.0f + frandmod(100);
-                var_r31->unk40.a = frandmod(100) + 80;
-                var_r31->unk40.r = 200.0f + (55.0f * var_f31);
-                var_r31->unk40.g = 220.0f + (20.0f * var_f31);
-                var_r31->unk40.b = 245.0f + (10.0f * var_f31);
+                var_r31->scale = 100.0f + frandmod(100);
+                var_r31->color.a = frandmod(100) + 80;
+                var_r31->color.r = 200.0f + (55.0f * var_f31);
+                var_r31->color.g = 220.0f + (20.0f * var_f31);
+                var_r31->color.b = 245.0f + (10.0f * var_f31);
             }
             var_r28--;
             if (!var_r28) {

@@ -371,7 +371,7 @@ s32 fn_1_1CB80(SeqWork *arg0, char *arg1, s16 arg2)
     s16 i;
     s16 grpNo;
     s16 *posX;
-    AnimData **animP;
+    ANIMDATA **animP;
     s16 gid;
     s16 sprid;
     s32 file;
@@ -386,7 +386,7 @@ s32 fn_1_1CB80(SeqWork *arg0, char *arg1, s16 arg2)
     if (grpNo == 0x10) {
         return -1;
     }
-    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(AnimData*)));
+    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(ANIMDATA*)));
     posX = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posX));
     posY = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posY));
 

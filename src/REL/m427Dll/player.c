@@ -1673,7 +1673,7 @@ GXColor lbl_1_data_648 = { 0xFF, 0xFF, 0xFF, 0xFF };
 GXColor lbl_1_data_64C = { 0xFF, 0, 0, 0xFF };
 GXColor lbl_1_data_650 = { 0xFF, 0xFF, 0, 0xFF };
 
-void fn_1_13FBC(ModelData *model, Mtx matrix)
+void fn_1_13FBC(HU3DMODEL *model, Mtx matrix)
 {
     Mtx sp70;
     float var_f31;
@@ -1688,7 +1688,7 @@ void fn_1_13FBC(ModelData *model, Mtx matrix)
     s32 *var_r25;
     omObjData *var_r24;
 
-    var_r25 = model->unk_120;
+    var_r25 = model->hookData;
     var_r27 = &lbl_1_bss_578[*var_r25];
     var_r24 = lbl_1_bss_56C[*var_r25];
     GXLoadPosMtxImm(matrix, 0);
@@ -2359,11 +2359,11 @@ void fn_1_172F0(s32 arg0, float arg8)
     s32 var_r30;
     HSFDATA *var_r29;
     s32 var_r28;
-    ModelData *var_r27;
+    HU3DMODEL *var_r27;
     s32 var_r26;
 
     var_r27 = &Hu3DData[arg0];
-    var_r29 = var_r27->hsfData;
+    var_r29 = var_r27->hsf;
     var_r31 = var_r29->material;
     var_r26 = var_r29->materialNum;
     for (var_r28 = 0; var_r28 < var_r26; var_r28++, var_r31++) {
@@ -2389,20 +2389,20 @@ void fn_1_172F0(s32 arg0, float arg8)
 s32 fn_1_17430(s32 arg0, s32 arg1, s32 arg2)
 {
     s32 var_r31;
-    ModelData *var_r30;
-    ModelData *var_r29;
+    HU3DMODEL *var_r30;
+    HU3DMODEL *var_r29;
 
     var_r29 = &Hu3DData[arg0];
     var_r30 = &Hu3DData[arg2];
     for (var_r31 = 0; var_r31 < 8; var_r31++) {
-        if (var_r30->unk_38[var_r31] == -1) {
+        if (var_r30->lLightId[var_r31] == -1) {
             break;
         }
     }
     if (var_r31 == 8) {
         return -1;
     }
-    var_r30->unk_38[var_r31] = var_r29->unk_38[arg1];
+    var_r30->lLightId[var_r31] = var_r29->lLightId[arg1];
     var_r30->attr |= 0x1000;
     return var_r31;
 }

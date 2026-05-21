@@ -22,22 +22,22 @@
 #define ANIM_LAYER_FLIPX 0x1
 #define ANIM_LAYER_FLIPY 0x2
 
-typedef struct anim_frame_data {
+typedef struct AnimTime_s {
     s16 pat;
     s16 time;
     s16 shiftX;
     s16 shiftY;
     s16 flip;
     s16 pad;
-} AnimFrameData;
+} ANIMFRAME;
 
-typedef struct anim_bank_data {
+typedef struct AnimBank_s {
     s16 timeNum;
     s16 unk;
-    AnimFrameData *frame;
-} AnimBankData;
+    ANIMFRAME *frame;
+} ANIMBANK;
 
-typedef struct anim_layer_data {
+typedef struct AnimLayer_s {
     u8 alpha;
     u8 flip;
     s16 bmpNo;
@@ -48,18 +48,18 @@ typedef struct anim_layer_data {
     s16 shiftX;
     s16 shiftY;
     s16 vtx[8];
-} AnimLayerData;
+} ANIMLAYER;
 
-typedef struct anim_pat_data {
+typedef struct AnimPat_s {
     s16 layerNum;
     s16 centerX;
     s16 centerY;
     s16 sizeX;
     s16 sizeY;
-    AnimLayerData *layer;
-} AnimPatData;
+    ANIMLAYER *layer;
+} ANIMPAT;
 
-typedef struct anim_bmp_data {
+typedef struct AnimBmp_s {
     u8 pixSize;
     u8 dataFmt;
     s16 palNum;
@@ -68,16 +68,16 @@ typedef struct anim_bmp_data {
     u32 dataSize;
     void *palData;
     void *data;
-} AnimBmpData;
+} ANIMBMP;
 
-typedef struct anim_data {
+typedef struct AnimData_s {
 /* 0x00 */ s16 bankNum;
 /* 0x02 */ s16 patNum;
 /* 0x04 */ s16 bmpNum;
 /* 0x06 */ s16 useNum;
-/* 0x08 */ AnimBankData *bank;
-/* 0x0C */ AnimPatData *pat;
-/* 0x10 */ AnimBmpData *bmp;
-} AnimData; //sizeof 0x14
+/* 0x08 */ ANIMBANK *bank;
+/* 0x0C */ ANIMPAT *pat;
+/* 0x10 */ ANIMBMP *bmp;
+} ANIMDATA; //sizeof 0x14
 
 #endif

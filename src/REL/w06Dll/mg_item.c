@@ -113,7 +113,7 @@ static void fn_1_4124(void);
 static void fn_1_4194(omObjData *arg0);
 static void fn_1_42AC(s16 arg0);
 static void fn_1_43DC(void);
-static void fn_1_4460(ModelData *model, ParticleData *particle, Mtx matrix);
+static void fn_1_4460(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 static s16 lbl_1_bss_3C[3];
 static s16 lbl_1_bss_36[3];
@@ -123,7 +123,7 @@ static s8 lbl_1_bss_30[3];
 static omObjData *lbl_1_bss_2C;
 static omObjData *lbl_1_bss_28;
 static omObjData *lbl_1_bss_24;
-static AnimData *lbl_1_bss_20;
+static ANIMDATA *lbl_1_bss_20;
 static s8 lbl_1_bss_1C;
 static Process *lbl_1_bss_18;
 
@@ -1170,7 +1170,7 @@ static void fn_1_4194(omObjData *arg0)
 
 static void fn_1_42AC(s16 arg0)
 {
-    ParticleData *var_r31;
+    HU3DPARTICLE *var_r31;
 
     lbl_1_bss_20 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_EFFECT, 0));
     HuSprAnimLock(lbl_1_bss_20);
@@ -1180,8 +1180,8 @@ static void fn_1_42AC(s16 arg0)
     Hu3DModelPosSet(lbl_1_data_1B0, 0.0f, 0.0f, 0.0f);
     Hu3DParticleBlendModeSet(lbl_1_data_1B0, 1);
     Hu3DModelLayerSet(lbl_1_data_1B0, 2);
-    var_r31 = Hu3DData[lbl_1_data_1B0].unk_120;
-    var_r31->unk_02 = arg0;
+    var_r31 = Hu3DData[lbl_1_data_1B0].hookData;
+    var_r31->emitCnt = arg0;
 }
 
 static void fn_1_43DC(void)
@@ -1196,7 +1196,7 @@ static void fn_1_43DC(void)
     }
 }
 
-static void fn_1_4460(ModelData *model, ParticleData *particle, Mtx matrix)
+static void fn_1_4460(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA *var_r31;
     Vec sp8;
@@ -1206,43 +1206,43 @@ static void fn_1_4460(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 i;
     s32 j;
 
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         var_r31 = particle->data;
-        for (i = 0; i < particle->unk_30; i++, var_r31++) {
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+        for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+            var_r31->color.a = 0;
+            var_r31->scale = 0.0f;
         }
-        particle->unk_00 = 0;
+        particle->dataCnt = 0;
     }
-    BoardModelScaleGet(particle->unk_02, &sp8);
+    BoardModelScaleGet(particle->emitCnt, &sp8);
     var_f31 = sp8.x;
-    BoardModelPosGet(particle->unk_02, &sp8);
+    BoardModelPosGet(particle->emitCnt, &sp8);
     for (i = 0; i < 22; i++) {
         var_r31 = particle->data;
-        for (j = 0; j < particle->unk_30; j++, var_r31++) {
-            if (var_r31->unk2C == 0.0f) {
+        for (j = 0; j < particle->maxCnt; j++, var_r31++) {
+            if (var_r31->scale == 0.0f) {
                 break;
             }
         }
-        if (j != particle->unk_30) {
+        if (j != particle->maxCnt) {
             temp_f30 = 0.003921569f * frand8() * 360.0f;
             temp_f29 = var_f31 * (20.0f + 0.003921569f * frand8() * 60.0f);
-            var_r31->unk34.x = sp8.x + temp_f29 * sind(temp_f30);
-            var_r31->unk34.z = sp8.z + temp_f29 * cosd(temp_f30);
-            var_r31->unk34.y = sp8.y + var_f31 * (-30.0f + 0.003921569f * frand8() * 40.0f);
-            var_r31->unk08.x = 0.5f + 0.003921569f * frand8() * 3.0f;
-            var_r31->unk08.y = 0.3f + 0.003921569f * frand8() * 2.0f;
-            var_r31->unk40.a = 0xB4;
-            var_r31->unk2C = 15.0f * var_f31;
+            var_r31->pos.x = sp8.x + temp_f29 * sind(temp_f30);
+            var_r31->pos.z = sp8.z + temp_f29 * cosd(temp_f30);
+            var_r31->pos.y = sp8.y + var_f31 * (-30.0f + 0.003921569f * frand8() * 40.0f);
+            var_r31->vel.x = 0.5f + 0.003921569f * frand8() * 3.0f;
+            var_r31->vel.y = 0.3f + 0.003921569f * frand8() * 2.0f;
+            var_r31->color.a = 0xB4;
+            var_r31->scale = 15.0f * var_f31;
         }
     }
     var_r31 = particle->data;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (var_r31->unk2C != 0.0f) {
-            var_r31->unk34.y -= var_r31->unk08.x;
-            var_r31->unk2C -= var_r31->unk08.y;
-            if (var_r31->unk2C <= 0.0f) {
-                var_r31->unk2C = 0.0f;
+    for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+        if (var_r31->scale != 0.0f) {
+            var_r31->pos.y -= var_r31->vel.x;
+            var_r31->scale -= var_r31->vel.y;
+            if (var_r31->scale <= 0.0f) {
+                var_r31->scale = 0.0f;
             }
         }
     }

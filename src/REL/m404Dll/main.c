@@ -62,12 +62,12 @@ typedef struct UnkM404Struct3 {
     s32 unk30[2];
     s16 unk_38;
     s16 unk3A;
-    AnimData *unk_3C;
-    AnimData *unk_40;
+    ANIMDATA *unk_3C;
+    ANIMDATA *unk_40;
     void *unk_44;
     s32 unk_48;
-    AnimData *unk_4C;
-    AnimData *unk_50;
+    ANIMDATA *unk_4C;
+    ANIMDATA *unk_50;
     u16 unk_54;
     u16 unk_56;
     u16 unk_58;
@@ -231,10 +231,10 @@ void fn_1_553C(omObjData *object);
 void fn_1_55F0(void);
 void fn_1_55F4(omObjData *object);
 void fn_1_57A0(omObjData *object);
-void fn_1_58E4(ModelData *modelData, Mtx arg1);
-AnimData *fn_1_5D64(u16 arg0, u16 arg1, s32 arg2);
-void fn_1_5E74(AnimData *arg0, u16 arg1, u16 arg2, u16 arg3);
-u16 fn_1_607C(AnimData *arg0, u16 arg1, u16 arg2);
+void fn_1_58E4(HU3DMODEL *modelData, Mtx arg1);
+ANIMDATA *fn_1_5D64(u16 arg0, u16 arg1, s32 arg2);
+void fn_1_5E74(ANIMDATA *arg0, u16 arg1, u16 arg2, u16 arg3);
+u16 fn_1_607C(ANIMDATA *arg0, u16 arg1, u16 arg2);
 s32 fn_1_6248(void *arg0, s32 arg1);
 void fn_1_6440(omObjData *object);
 void fn_1_648C(s32 arg0, s32 arg1, float arg8);
@@ -242,7 +242,7 @@ void fn_1_66DC(omObjData *object);
 
 void ObjectSetup(void)
 {
-    CameraData *var_r30;
+    HU3DCAMERA *var_r30;
     Process *var_r31;
     s16 var_r29;
 
@@ -702,7 +702,7 @@ void fn_1_1344(omObjData *object)
     s32 var_r29;
     float(*var_r28)[2];
     s32 var_r24;
-    ModelData *var_r22;
+    HU3DMODEL *var_r22;
 
     var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM404Struct3), MEMORY_DEFAULT_NUM);
     object->data = var_r31;
@@ -737,7 +737,7 @@ void fn_1_1344(omObjData *object)
     object->model[2] = Hu3DHookFuncCreate(fn_1_58E4);
     Hu3DModelPosSet(object->model[2], 0.0f, object->trans.y, object->trans.z);
     var_r22 = &Hu3DData[object->model[2]];
-    var_r22->unk_120 = object;
+    var_r22->hookData = object;
     var_r31->unk_4C = fn_1_5D64(960, 64, 1);
     var_r31->unk_48 = 4096;
     var_r31->unk_44 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r31->unk_48, MEMORY_DEFAULT_NUM);
@@ -999,7 +999,7 @@ void fn_1_44A0(omObjData *object)
     float var_f31;
 
     UnkM404Struct3 *var_r31;
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
     s32 var_r28;
     s16 var_r27;
 
@@ -1033,7 +1033,7 @@ void fn_1_44A0(omObjData *object)
                     else {
                         CharMotionSpeedSet(var_r31->unk_0C, -0.5f);
                     }
-                    Hu3DMotionOverlaySpeedSet(object->model[0], Hu3DData[object->model[0]].unk_68);
+                    Hu3DMotionOverlaySpeedSet(object->model[0], Hu3DData[object->model[0]].motWork.speed);
                     if (var_r31->unk_2C == 0) {
                         Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_OVL_PAUSE);
                         Hu3DMotionOverlayTimeSet(object->model[0], 0.0f);
@@ -1176,7 +1176,7 @@ void fn_1_5278(omObjData *object)
     float var_f31;
     UnkM404Struct3 *var_r31;
     float var_f30;
-    ModelData *var_r27;
+    HU3DMODEL *var_r27;
     s32 var_r29;
     s32 var_r28;
     u16 var_r26;
@@ -1264,14 +1264,14 @@ void fn_1_57A4(s32 arg0, GXColor *arg1)
     *arg1 = sp8[arg0];
 }
 
-void fn_1_58E4(ModelData *modelData, Mtx arg1)
+void fn_1_58E4(HU3DMODEL *modelData, Mtx arg1)
 {
     GXTexObj sp3C;
     UnkM404Struct3 *var_r31;
     omObjData *var_r30;
     s32 var_r29;
 
-    var_r30 = modelData->unk_120;
+    var_r30 = modelData->hookData;
     var_r31 = var_r30->data;
     {
         GXColor sp18 = { 255, 0, 0, 255 };
@@ -1316,13 +1316,13 @@ void fn_1_58E4(ModelData *modelData, Mtx arg1)
     }
 }
 
-AnimData *fn_1_5D64(u16 sizeX, u16 sizeY, s32 arg2)
+ANIMDATA *fn_1_5D64(u16 sizeX, u16 sizeY, s32 arg2)
 {
-    AnimBmpData *bmp;
-    AnimData *anim;
+    ANIMBMP *bmp;
+    ANIMDATA *anim;
 
-    anim = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(AnimBmpData), MEMORY_DEFAULT_NUM);
-    bmp = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(AnimData), MEMORY_DEFAULT_NUM);
+    anim = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(ANIMBMP), MEMORY_DEFAULT_NUM);
+    bmp = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(ANIMDATA), MEMORY_DEFAULT_NUM);
     anim->bmp = bmp;
     bmp->sizeX = sizeX;
     bmp->sizeY = sizeY;
@@ -1335,7 +1335,7 @@ AnimData *fn_1_5D64(u16 sizeX, u16 sizeY, s32 arg2)
     return anim;
 }
 
-void fn_1_5E74(AnimData *arg0, u16 arg1, u16 arg2, u16 arg3)
+void fn_1_5E74(ANIMDATA *arg0, u16 arg1, u16 arg2, u16 arg3)
 {
     u8 *var_r31;
     u16 var_r30;
@@ -1382,7 +1382,7 @@ void fn_1_5E74(AnimData *arg0, u16 arg1, u16 arg2, u16 arg3)
     }
 }
 
-u16 fn_1_607C(AnimData *arg0, u16 arg1, u16 arg2)
+u16 fn_1_607C(ANIMDATA *arg0, u16 arg1, u16 arg2)
 {
     u16 var_r31;
     u16 var_r30;
@@ -1473,7 +1473,7 @@ void fn_1_648C(s32 arg0, s32 arg1, float arg8)
 
 void fn_1_66DC(omObjData *object)
 {
-    CameraData *var_r31;
+    HU3DCAMERA *var_r31;
 
     var_r31 = Hu3DCamera;
     switch (fn_1_38C()) {
@@ -1488,8 +1488,8 @@ void fn_1_66DC(omObjData *object)
             break;
         case 3:
             Center.x += VERSION_NTSC ? 2.0000002f : 2.4f;
-            Hu3DShadowData.unk_14.x = 1000.0f + var_r31->pos.x;
-            Hu3DShadowData.unk_20.x = Hu3DShadowData.unk_14.x - 1500.0f;
+            Hu3DShadowData.camPos.x = 1000.0f + var_r31->pos.x;
+            Hu3DShadowData.camTarget.x = Hu3DShadowData.camPos.x - 1500.0f;
             break;
         case 6:
             fn_1_648C(1, 1, 0.0f);

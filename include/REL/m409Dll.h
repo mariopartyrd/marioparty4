@@ -10,7 +10,7 @@
 extern s32 rand8(void);
 
 // types
-typedef void (*m409Func6)(ModelData *, struct _unkStruct6 *, Mtx);
+typedef void (*m409Func6)(HU3DMODEL *, struct _unkStruct6 *, Mtx);
 typedef void (*m409PlayerFunc8)(struct _unkStruct8 *);
 
 typedef struct _unkStruct {
@@ -82,7 +82,7 @@ typedef struct _unkStruct6 {
     u32 unk4;
     u8 unk8;
     m409Func6 unkC;
-    AnimData *unk10;
+    ANIMDATA *unk10;
     s16 unk14;
     unkStruct5 *unk18;
     Vec *unk1C;
@@ -188,7 +188,7 @@ typedef struct _unkStruct8 {
 } unkStruct8; // sizeof 0xA0
 
 typedef struct _unkStruct9Sub {
-    AnimData *unk0;
+    ANIMDATA *unk0;
     s16 unk4;
     s16 unk6;
     u32 unk8;
@@ -278,15 +278,15 @@ float fn_1_4120(float, float, float, float);
 void fn_1_417C(void);
 void fn_1_44F0(s16, float, float, float, s8, s16);
 void fn_1_4FFC(s16, float, float, float, s16);
-void fn_1_5408(ModelData *, unkStruct6 *, Mtx);
-void fn_1_55E0(ModelData *, unkStruct6 *, Mtx);
-void fn_1_57DC(ModelData *, unkStruct6 *, Mtx);
+void fn_1_5408(HU3DMODEL *, unkStruct6 *, Mtx);
+void fn_1_55E0(HU3DMODEL *, unkStruct6 *, Mtx);
+void fn_1_57DC(HU3DMODEL *, unkStruct6 *, Mtx);
 unkStruct5 *fn_1_58E0(s16, Vec *, Vec *, float, GXColor *);
-s16 fn_1_5A18(AnimData *, s16, float, s16, s16);
+s16 fn_1_5A18(ANIMDATA *, s16, float, s16, s16);
 void fn_1_5F5C(s16);
 void fn_1_5FBC(s16, m409Func6);
 void fn_1_5FF4(s16, u8);
-void fn_1_602C(ModelData *, Mtx);
+void fn_1_602C(HU3DMODEL *, Mtx);
 void fn_1_6608(HuVec2f *, s16, s16, float, float);
 void fn_1_66D4(HuVec2f *, HuVec2f *, s16, float, float);
 void fn_1_6778(Vec *, Vec *, Vec *, s16);
@@ -318,7 +318,7 @@ float fn_1_BF38(s16);
 void fn_1_BF88(s16, s16);
 void fn_1_C0C0(void);
 void fn_1_C164(unkStruct8 *);
-void fn_1_CB98(ModelData *model, Mtx matrix);
+void fn_1_CB98(HU3DMODEL *model, Mtx matrix);
 unkStruct8 *fn_1_CCB0(s16 idx);
 unkStruct8Sub *fn_1_CCCC(s16, s16);
 void fn_1_CCF8(unkStruct11 **, s16, float, float);

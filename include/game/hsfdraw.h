@@ -4,7 +4,7 @@
 #include "game/hsfman.h"
 #include "dolphin.h"
 
-typedef struct model_data ModelData;
+typedef struct Hu3DModel_s HU3DMODEL;
 
 typedef struct hsfdraw_struct_01 {
     /* 0x00 */ u16 unk00;
@@ -41,11 +41,11 @@ typedef struct hsf_const_data {
     HsfDrawData *drawData;
     void *dlBuf;
     Mtx matrix;
-    AnimData *hiliteMap;
+    ANIMDATA *hiliteMap;
 } HsfConstData;
 
 typedef struct hsf_draw_object {
-    /* 0x00 */ ModelData *model;
+    /* 0x00 */ HU3DMODEL *model;
     /* 0x04 */ HSFOBJECT *object;
     /* 0x08 */ float z;
     /* 0x0C */ Mtx matrix;
@@ -54,7 +54,7 @@ typedef struct hsf_draw_object {
 
 
 void Hu3DDrawPreInit(void);
-void Hu3DDraw(ModelData *arg0, Mtx arg1, Vec *arg2);
+void Hu3DDraw(HU3DMODEL *arg0, Mtx arg1, Vec *arg2);
 s32 ObjCullCheck(HSFDATA *arg0, HSFOBJECT *arg1, Mtx arg2);
 void Hu3DDrawPost(void);
 void MakeDisplayList(s16 arg0, u32 arg1);
@@ -67,9 +67,9 @@ s16 HmfInverseMtxF3X3(Mtx arg0, Mtx arg1);
 void SetDefLight(Vec *arg0, Vec *arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 argA);
 void Hu3DModelObjPosGet(s16 arg0, char *arg1, Vec *arg2);
 void Hu3DModelObjMtxGet(s16 arg0, char *arg1, Mtx arg2);
-void PGObjCall(ModelData *arg0, HSFOBJECT *arg1);
-void PGObjCalc(ModelData *arg0, HSFOBJECT *arg1);
-void PGObjReplica(ModelData *arg0, HSFOBJECT *arg1);
+void PGObjCall(HU3DMODEL *arg0, HSFOBJECT *arg1);
+void PGObjCalc(HU3DMODEL *arg0, HSFOBJECT *arg1);
+void PGObjReplica(HU3DMODEL *arg0, HSFOBJECT *arg1);
 HSFOBJECT *Hu3DObjDuplicate(HSFDATA *arg0, u32 arg1);
 void Hu3DModelObjDrawInit(void);
 void Hu3DModelObjDraw(s16 arg0, char *arg1, Mtx arg2);

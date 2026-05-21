@@ -34,7 +34,7 @@ void fn_1_4948(void);
 void fn_1_51BC(s16 arg0);
 s32 fn_1_524C(s32 arg0);
 void fn_1_66F8(void);
-void fn_1_7414(ModelData *model, Mtx matrix);
+void fn_1_7414(HU3DMODEL *model, Mtx matrix);
 
 omObjData *lbl_1_bss_6C;
 Process *lbl_1_bss_68;
@@ -385,11 +385,11 @@ void fn_1_1774(void)
     s16 var_r30;
     char *var_r29;
     s16 var_r28;
-    AnimData *var_r27;
+    ANIMDATA *var_r27;
     char *var_r26;
-    AnimData *var_r25;
-    AnimData *var_r24;
-    AnimData *var_r23;
+    ANIMDATA *var_r25;
+    ANIMDATA *var_r24;
+    ANIMDATA *var_r23;
 
     var_r27 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_ZTAR, 3));
     lbl_1_bss_48 = HuSprGrpCreate(1);
@@ -451,7 +451,7 @@ void fn_1_1774(void)
 void fn_1_1CF0(void)
 {
     float var_f31 = 0.0f;
-    ModelData *var_r31 = &Hu3DData[lbl_1_bss_42];
+    HU3DMODEL *var_r31 = &Hu3DData[lbl_1_bss_42];
 
     while (TRUE) {
         var_r31->pos.y += sind(var_f31);
@@ -468,7 +468,7 @@ void fn_1_1DA0(void)
     s16 spC[4];
     s16 sp8[2];
     s16 var_r31;
-    AnimData *var_r30;
+    ANIMDATA *var_r30;
     s16 var_r29;
     s16 var_r28;
     s16 var_r27;
@@ -740,13 +740,13 @@ void fn_1_33B0(void)
     s16 sp8[2];
     s16 var_r31;
     s16 var_r30;
-    AnimData *var_r29;
+    ANIMDATA *var_r29;
     s16 var_r28;
     s16 var_r27;
     s16 var_r26;
     s16 var_r25;
     s16 var_r24;
-    AnimData *var_r23;
+    ANIMDATA *var_r23;
 
     sp8[0] = 0;
     sp8[1] = 2;
@@ -1021,7 +1021,7 @@ void fn_1_4948(void)
     s16 var_r30;
     s16 var_r29;
     s16 var_r28;
-    AnimData *var_r27;
+    ANIMDATA *var_r27;
     s16 var_r26;
     s16 var_r25;
 
@@ -1171,7 +1171,7 @@ s32 fn_1_524C(s32 arg0)
     float *var_r29;
     s16 var_r28;
     s16 var_r27;
-    AnimData *var_r26;
+    ANIMDATA *var_r26;
     s16 var_r25;
     s16 var_r24;
     s16 var_r23;
@@ -1507,7 +1507,7 @@ void fn_1_6804(void)
     }
 }
 
-void fn_1_7414(ModelData *model, Mtx matrix)
+void fn_1_7414(HU3DMODEL *model, Mtx matrix)
 {
     Mtx sp8C;
     Mtx sp5C;
@@ -1519,12 +1519,12 @@ void fn_1_7414(ModelData *model, Mtx matrix)
     GXClearVtxDesc();
     GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
-    GXInitTexObj(&spC, Hu3DShadowData.unk_04, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, 1, GX_CLAMP, GX_CLAMP, GX_FALSE);
+    GXInitTexObj(&spC, Hu3DShadowData.buf, Hu3DShadowData.size, Hu3DShadowData.size, 1, GX_CLAMP, GX_CLAMP, GX_FALSE);
     GXInitTexObjLOD(&spC, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
     GXLoadTexObj(&spC, GX_TEXMAP0);
     MTXInverse(Hu3DCameraMtx, sp5C);
     MTXConcat(sp5C, matrix, sp8C);
-    MTXConcat(Hu3DShadowData.unk_68, Hu3DShadowData.unk_38, sp2C);
+    MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, sp2C);
     MTXConcat(sp2C, sp8C, sp8C);
     GXLoadTexMtxImm(sp8C, 0x39, GX_MTX3x4);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_POS, 0x39, GX_FALSE, 0x7D);

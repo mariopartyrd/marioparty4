@@ -289,7 +289,7 @@ void fn_1_10BC(omObjData *object);
 
 void fn_1_E44(omObjData *object)
 {
-    ModelData *temp_r31;
+    HU3DMODEL *temp_r31;
     s32 temp_r30;
     Vec sp8;
     switch (lbl_1_bss_8[0]) {

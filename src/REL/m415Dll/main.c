@@ -57,7 +57,7 @@ void ObjectSetup(void)
     s32 var_r31;
     Process *temp_r30;
     omObjData *var_r29;
-    LightData *var_r28;
+    HU3DLIGHT *var_r28;
     s32 temp_r27;
     s32 var_r26;
 
@@ -66,7 +66,7 @@ void ObjectSetup(void)
     var_r26 = Hu3DGLightCreateV(&lbl_1_data_0, &lbl_1_data_C, &lbl_1_data_18);
     Hu3DGLightInfinitytSet(var_r26);
     var_r28 = &Hu3DGlobalLight[0];
-    var_r28->unk_00 |= 0x8000;
+    var_r28->type |= 0x8000;
     temp_r30 = omInitObjMan(0x32, 0x2000);
     temp_r27 = frand() & 0x1F;
 
@@ -108,7 +108,7 @@ void ObjectSetup(void)
 
 void fn_1_43C(omObjData *object)
 {
-    CameraData *var_r31;
+    HU3DCAMERA *var_r31;
 
     var_r31 = &Hu3DCamera[0];
     lbl_1_bss_34A = 0;
@@ -349,17 +349,17 @@ void fn_1_14C0(omObjData *object)
 
 void fn_1_1524(s16 arg0, char *arg1, f32 arg8, Mtx arg2)
 {
-    ModelData *temp_r31;
+    HU3DMODEL *temp_r31;
 
     temp_r31 = &Hu3DData[arg0];
-    if (temp_r31->unk_08 != -1) {
-        Hu3DMotionExec(arg0, temp_r31->unk_08, arg8, 0);
+    if (temp_r31->motId != -1) {
+        Hu3DMotionExec(arg0, temp_r31->motId, arg8, 0);
     }
-    if (temp_r31->unk_0C != -1) {
+    if (temp_r31->motIdShift != -1) {
         Hu3DSubMotionExec(arg0);
     }
-    if (temp_r31->hsfData->cenvNum != 0) {
-        EnvelopeProc(temp_r31->hsfData);
+    if (temp_r31->hsf->cenvNum != 0) {
+        EnvelopeProc(temp_r31->hsf);
     }
     Hu3DModelObjMtxGet(arg0, arg1, arg2);
 }
@@ -371,7 +371,7 @@ void fn_1_15D0(omObjData *object)
     Vec sp8;
     s32 var_r28;
     s32 var_r27;
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
     f32 temp_f31;
     s32 var_r31;
 
@@ -419,7 +419,7 @@ void fn_1_15D0(omObjData *object)
 void fn_1_1960(omObjData *object)
 {
     u32 temp_r29;
-    AnimData **temp_r3;
+    ANIMDATA **temp_r3;
 
     switch (lbl_1_bss_34A) {
         case 0:
@@ -427,8 +427,8 @@ void fn_1_1960(omObjData *object)
         case 1:
             GXDrawDone();
             temp_r3 = fn_1_9734(object->model[2]);
-            temp_r29 = Hu3DShadowData.unk_02 * Hu3DShadowData.unk_02;
-            memcpy((*temp_r3)->bmp->data, OSCachedToUncached(Hu3DShadowData.unk_04), temp_r29);
+            temp_r29 = Hu3DShadowData.size * Hu3DShadowData.size;
+            memcpy((*temp_r3)->bmp->data, OSCachedToUncached(Hu3DShadowData.buf), temp_r29);
             DCStoreRangeNoSync((*temp_r3)->bmp->data, temp_r29);
             break;
         case 2:
@@ -479,7 +479,7 @@ void fn_1_1A60(unkStruct3 *arg0)
     s16 var_r23;
     u16 *temp_r22;
     u8 temp_r21;
-    AnimBmpData *var_r20;
+    ANIMBMP *var_r20;
     s16 temp_r19;
     s16 temp_r18;
     s32 temp_r17;
@@ -1520,7 +1520,7 @@ void fn_1_6584(s16 arg0, char *arg1, u8 arg2, u8 arg3, u8 arg4)
     s32 var_r25;
     s32 var_r27;
 
-    temp_r29 = Hu3DData[arg0].hsfData;
+    temp_r29 = Hu3DData[arg0].hsf;
     var_r26 = temp_r29->object;
     strcpy(&sp13, MakeObjectName(arg1));
 
@@ -1540,24 +1540,24 @@ void fn_1_6584(s16 arg0, char *arg1, u8 arg2, u8 arg3, u8 arg4)
     }
 }
 
-AnimBmpData *fn_1_668C(s16 arg0)
+ANIMBMP *fn_1_668C(s16 arg0)
 {
-    return Hu3DTexAnimData[arg0].unk10->bmp;
+    return Hu3DTexAnimData[arg0].anim->bmp;
 }
 
 s16 fn_1_66AC(void)
 {
-    AnimBmpData *temp_r31;
+    ANIMBMP *temp_r31;
     s32 var_r30;
-    AnimData **var_r29;
+    ANIMDATA **var_r29;
     s32 var_r28;
 
-    var_r30 = fn_1_A94C(0xFFFF0000, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02);
-    fn_1_ACF4(var_r30, 7, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02, Hu3DShadowData.unk_02);
+    var_r30 = fn_1_A94C(0xFFFF0000, Hu3DShadowData.size, Hu3DShadowData.size);
+    fn_1_ACF4(var_r30, 7, Hu3DShadowData.size, Hu3DShadowData.size, Hu3DShadowData.size, Hu3DShadowData.size);
     var_r29 = fn_1_9734(var_r30);
     temp_r31 = (*var_r29)->bmp;
     var_r28 = temp_r31->sizeX * temp_r31->sizeY;
-    memcpy(temp_r31->data, Hu3DShadowData.unk_04, var_r28);
+    memcpy(temp_r31->data, Hu3DShadowData.buf, var_r28);
     return var_r30;
 }
 

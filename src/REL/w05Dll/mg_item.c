@@ -32,7 +32,7 @@ omObjData *lbl_1_bss_90;
 omObjData *lbl_1_bss_8C;
 s32 lbl_1_bss_88;
 s32 lbl_1_bss_7C[3];
-AnimData *lbl_1_bss_78;
+ANIMDATA *lbl_1_bss_78;
 
 void fn_1_6B28(void)
 {
@@ -219,7 +219,7 @@ void fn_1_74D0(s16 arg0[3])
         }
         if (lbl_1_bss_B0[var_r31] == 5) {
             temp_f31 = -50.0f;
-            Hu3DData[BoardModelIDGet(lbl_1_bss_A4[var_r31])].unk_F0[1][3] = temp_f31;
+            Hu3DData[BoardModelIDGet(lbl_1_bss_A4[var_r31])].mtx[1][3] = temp_f31;
         }
         if (lbl_1_bss_B0[var_r31] == 4) {
             BoardModelMotionSpeedSet(lbl_1_bss_A4[var_r31], 0.0f);
@@ -594,7 +594,7 @@ void fn_1_896C(void)
     s32 var_r28;
     s32 var_r31;
     s32 var_r29;
-    ParticleData *var_r27;
+    HU3DPARTICLE *var_r27;
 
     temp_r30 = (u32)HuPrcCurrentGet()->user_data;
 
@@ -629,8 +629,8 @@ void fn_1_896C(void)
             BoardModelPosSetV(lbl_1_bss_A4[var_r31], &sp18);
             if ((temp_r30 & 0x40) != 0) {
                 lbl_1_bss_7C[var_r31] = Hu3DParticleCreate(lbl_1_bss_78, 0x64);
-                var_r27 = Hu3DData[lbl_1_bss_7C[var_r31]].unk_120;
-                var_r27->unk_02 = lbl_1_bss_A4[var_r31];
+                var_r27 = Hu3DData[lbl_1_bss_7C[var_r31]].hookData;
+                var_r27->emitCnt = lbl_1_bss_A4[var_r31];
                 Hu3DParticleHookSet(lbl_1_bss_7C[var_r31], fn_1_9268);
                 Hu3DParticleColSet(lbl_1_bss_7C[var_r31], 0xFF, 0xFF, 0);
                 Hu3DModelPosSet(lbl_1_bss_7C[var_r31], 0.0f, 0.0f, 0.0f);
@@ -780,7 +780,7 @@ void fn_1_91DC(void)
     }
 }
 
-void fn_1_9268(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
+void fn_1_9268(HU3DMODEL *model, HU3DPARTICLE *particle, f32 (*matrix)[4])
 {
     Vec sp8;
     HU3DPARTICLEDATA *var_r31;
@@ -790,44 +790,44 @@ void fn_1_9268(ModelData *model, ParticleData *particle, f32 (*matrix)[4])
     s32 var_r28;
     s32 var_r29;
 
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         var_r31 = particle->data;
-        for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+        for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+            var_r31->color.a = 0;
+            var_r31->scale = 0.0f;
         }
-        particle->unk_00 = 0;
+        particle->dataCnt = 0;
     }
-    BoardModelScaleGet(particle->unk_02, &sp8);
+    BoardModelScaleGet(particle->emitCnt, &sp8);
     temp_f31 = sp8.x;
-    BoardModelPosGet(particle->unk_02, &sp8);
+    BoardModelPosGet(particle->emitCnt, &sp8);
 
     for (var_r29 = 0; var_r29 < 0x16; var_r29++) {
         var_r31 = particle->data;
 
-        for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-            if (var_r31->unk2C == 0.0f)
+        for (var_r28 = 0; var_r28 < particle->maxCnt; var_r28++, var_r31++) {
+            if (var_r31->scale == 0.0f)
                 break;
         }
-        if (var_r28 != particle->unk_30) {
+        if (var_r28 != particle->maxCnt) {
             temp_f30 = 360.0f * (0.003921569f * (s32)(frand() & 0xFF));
             temp_f29 = temp_f31 * (20.0f + (60.0f * (0.003921569f * (s32)(frand() & 0xFF))));
-            var_r31->unk34.x = sp8.x + temp_f29 * sind(temp_f30);
-            var_r31->unk34.z = sp8.z + temp_f29 * cosd(temp_f30);
-            var_r31->unk34.y = sp8.y + (temp_f31 * (-30.0f + (40.0f * (0.003921569f * (s32)(frand() & 0xFF)))));
-            var_r31->unk08.x = 0.5f + (3.0f * (0.003921569f * (s32)(frand() & 0xFF)));
-            var_r31->unk08.y = 0.3f + (2.0f * (0.003921569f * (s32)(frand() & 0xFF)));
-            var_r31->unk40.a = 0xB4;
-            var_r31->unk2C = 15.0f * temp_f31;
+            var_r31->pos.x = sp8.x + temp_f29 * sind(temp_f30);
+            var_r31->pos.z = sp8.z + temp_f29 * cosd(temp_f30);
+            var_r31->pos.y = sp8.y + (temp_f31 * (-30.0f + (40.0f * (0.003921569f * (s32)(frand() & 0xFF)))));
+            var_r31->vel.x = 0.5f + (3.0f * (0.003921569f * (s32)(frand() & 0xFF)));
+            var_r31->vel.y = 0.3f + (2.0f * (0.003921569f * (s32)(frand() & 0xFF)));
+            var_r31->color.a = 0xB4;
+            var_r31->scale = 15.0f * temp_f31;
         }
     }
     var_r31 = particle->data;
-    for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (0.0f != var_r31->unk2C) {
-            var_r31->unk34.y -= var_r31->unk08.x;
-            var_r31->unk2C -= var_r31->unk08.y;
-            if (var_r31->unk2C <= 0.0f) {
-                var_r31->unk2C = 0.0f;
+    for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+        if (0.0f != var_r31->scale) {
+            var_r31->pos.y -= var_r31->vel.x;
+            var_r31->scale -= var_r31->vel.y;
+            if (var_r31->scale <= 0.0f) {
+                var_r31->scale = 0.0f;
             }
         }
     }

@@ -66,12 +66,12 @@ typedef struct {
 void fn_1_A0(void);
 void fn_1_38C(void);
 void fn_1_478(void);
-void fn_1_4FC(ModelData *model, Mtx matrix);
+void fn_1_4FC(HU3DMODEL *model, Mtx matrix);
 void fn_1_1338(omObjData *arg0);
 void fn_1_4310(omObjData *arg0);
 void fn_1_6DAC(void);
 void fn_1_7148(omObjData *arg0);
-void fn_1_7DC4(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_7DC4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 void fn_1_81C0(omObjData *arg0);
 void fn_1_8DD0(omObjData *arg0);
 void fn_1_9508(omObjData *arg0);
@@ -178,7 +178,7 @@ void fn_1_478(void)
     lbl_1_bss_2C = NULL;
 }
 
-void fn_1_4FC(ModelData *model, Mtx matrix)
+void fn_1_4FC(HU3DMODEL *model, Mtx matrix)
 {
     Mtx spC8;
 #ifdef NON_MATCHING
@@ -702,7 +702,7 @@ void fn_1_1338(omObjData *arg0)
             }
             break;
         case 5:
-            if ((Hu3DData[arg0->model[0]].unk_0C == -1 && temp_r31->unk08 != -1) ? CharMotionEndCheck(temp_r31->unk08)
+            if ((Hu3DData[arg0->model[0]].motIdShift == -1 && temp_r31->unk08 != -1) ? CharMotionEndCheck(temp_r31->unk08)
                                                                                  : Hu3DMotionEndCheck(arg0->model[0])) {
                 temp_r31->unk44 += -2.4333334f;
             }
@@ -856,10 +856,10 @@ void fn_1_4310(omObjData *arg0)
     float sp74;
     float sp70;
     float sp6C;
-    ModelData *temp_r23;
-    ModelData *temp_r22;
-    ModelData *temp_r26;
-    ModelData *temp_r29;
+    HU3DMODEL *temp_r23;
+    HU3DMODEL *temp_r22;
+    HU3DMODEL *temp_r26;
+    HU3DMODEL *temp_r29;
     UnkM448Struct_01 *temp_r31;
     float temp_f21;
     float temp_f20;
@@ -1514,45 +1514,45 @@ void fn_1_7148(omObjData *arg0)
     }
 }
 
-void fn_1_7DC4(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_7DC4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA *var_r31;
     s16 i;
 
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         var_r31 = particle->data;
-        for (i = 0; i < particle->unk_30; i++, var_r31++) {
+        for (i = 0; i < particle->maxCnt; i++, var_r31++) {
             var_r31->time = i * 2 + 100;
-            var_r31->unk40.a = 0;
-            var_r31->unk2C = 0.0f;
+            var_r31->color.a = 0;
+            var_r31->scale = 0.0f;
         }
     }
     var_r31 = particle->data;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
-        if (!var_r31->unk2C) {
+    for (i = 0; i < particle->maxCnt; i++, var_r31++) {
+        if (!var_r31->scale) {
             break;
         }
     }
     var_r31 = particle->data;
-    for (i = 0; i < particle->unk_30; i++, var_r31++) {
+    for (i = 0; i < particle->maxCnt; i++, var_r31++) {
         if (var_r31->time == 100) {
             var_r31->time = (lbl_1_data_1DC[0] == 0.0f && lbl_1_data_1DC[1] == 0.0f && lbl_1_data_1DC[2] == 0.0f) ? 0 : var_r31->time;
-            var_r31->unk34.x = lbl_1_data_1DC[0] + 75.0 * (rand8() / 255.0);
-            var_r31->unk34.y = lbl_1_data_1DC[1] + 75.0 * (rand8() / 255.0);
-            var_r31->unk34.z = lbl_1_data_1DC[2] + 75.0 * (rand8() / 255.0);
-            var_r31->unk40.r = 0xFF;
-            var_r31->unk40.g = 0xF0;
-            var_r31->unk40.b = 0xA0;
-            var_r31->unk40.a = 0xFF;
-            var_r31->unk30 = 0.785f;
-            var_r31->unk2C = 40.0f;
+            var_r31->pos.x = lbl_1_data_1DC[0] + 75.0 * (rand8() / 255.0);
+            var_r31->pos.y = lbl_1_data_1DC[1] + 75.0 * (rand8() / 255.0);
+            var_r31->pos.z = lbl_1_data_1DC[2] + 75.0 * (rand8() / 255.0);
+            var_r31->color.r = 0xFF;
+            var_r31->color.g = 0xF0;
+            var_r31->color.b = 0xA0;
+            var_r31->color.a = 0xFF;
+            var_r31->zRot = 0.785f;
+            var_r31->scale = 40.0f;
         }
         if (var_r31->time <= 100) {
-            var_r31->unk34.y -= 3.0f;
-            var_r31->unk2C = ((var_r31->time > 50) ? (var_r31->time - 50) / 50.0 : 0.0) * (rand8() * 80 / 255.0);
+            var_r31->pos.y -= 3.0f;
+            var_r31->scale = ((var_r31->time > 50) ? (var_r31->time - 50) / 50.0 : 0.0) * (rand8() * 80 / 255.0);
         }
         if (var_r31->time == 0) {
-            var_r31->unk2C = 0.0f;
+            var_r31->scale = 0.0f;
         }
         var_r31->time -= (var_r31->time > 0);
     }

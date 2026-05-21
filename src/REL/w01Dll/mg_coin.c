@@ -85,7 +85,7 @@ static u32 SpaceAmidaPlayerRotAdd(Vec *rocketPos, float delta);
 static void SpaceAmidaEffCreate(void);
 static void SpaceAmidaEffKill(void);
 static void SpaceAmidaEffUpdate(omObjData *arg0);
-static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, Mtx matrix);
+static void SpaceAmidaEffParticleHook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 static s32 spaceAmidaPadNo;
 static s32 spaceAmidaPlayerNo;
@@ -111,7 +111,7 @@ static s32 spaceAmidaSeNo;
 static omObjData *spaceAmidaGameObj;
 static omObjData *rocketObj[3];
 static omObjData *spaceAmidaEffObj;
-static AnimData *spaceAmidaEffAnim;
+static ANIMDATA *spaceAmidaEffAnim;
 static s16 spaceAmidaSeqStopF;
 
 static Vec effPosTbl[3] = { { -50.0f, 238.0f, 0.0f }, { 0.0f, 275.5f, 0.0f }, { 50.0f, 238.0f, 0.0f } };
@@ -928,7 +928,7 @@ static void SpaceAmidaEffUpdate(omObjData *obj)
     }
 }
 
-static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, Mtx matrix)
+static void SpaceAmidaEffParticleHook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     RocketWork *work;
     HU3DPARTICLEDATA *particleDataP;
@@ -940,74 +940,74 @@ static void SpaceAmidaEffParticleHook(ModelData *model, ParticleData *particle, 
 
     BoardModelPosGet(rocketObj[spaceAmidaPath]->work[0], &pos);
     work = rocketObj[spaceAmidaPath]->data;
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         particleDataP = particle->data;
-        for (i = 0; i < particle->unk_30; i++, particleDataP++) {
-            particleDataP->unk2C = 0.0f;
+        for (i = 0; i < particle->maxCnt; i++, particleDataP++) {
+            particleDataP->scale = 0.0f;
         }
-        particle->unk_1C = (void *)1;
+        particle->work = (void *)1;
     }
     if (work->kemuriSize > 0.0f) {
         for (i = 0; i < 80.0f * work->kemuriSize; i++) {
             particleDataP = particle->data;
-            for (j = 0; j < particle->unk_30; j++, particleDataP++) {
-                if (particleDataP->unk2C == 0.0f) {
+            for (j = 0; j < particle->maxCnt; j++, particleDataP++) {
+                if (particleDataP->scale == 0.0f) {
                     break;
                 }
             }
-            if (j != particle->unk_30) {
+            if (j != particle->maxCnt) {
                 relSize = frand16();
                 size = (-15.0f + 30.0f * (relSize / 65536.0f)) * work->kemuriSize;
-                particleDataP->unk08.x = pos.x + size;
-                particleDataP->unk08.y = pos.y;
-                particleDataP->unk08.z = pos.z;
-                particleDataP->unk14.x = 255.0f;
-                particleDataP->unk14.y = 155.0f;
-                particleDataP->unk14.z = 55.0f;
-                particleDataP->unk40.a = 0xFF;
-                particleDataP->unk20 = 0.0f;
-                particleDataP->unk24 = work->kemuriSize * (-3.0 + (2.0 * (fabs(size) / 15.0)));
-                particleDataP->unk28 = 0.0f;
-                particleDataP->unk2C = 7.3f;
+                particleDataP->vel.x = pos.x + size;
+                particleDataP->vel.y = pos.y;
+                particleDataP->vel.z = pos.z;
+                particleDataP->accel.x = 255.0f;
+                particleDataP->accel.y = 155.0f;
+                particleDataP->accel.z = 55.0f;
+                particleDataP->color.a = 0xFF;
+                particleDataP->speedDecay = 0.0f;
+                particleDataP->colorIdx = work->kemuriSize * (-3.0 + (2.0 * (fabs(size) / 15.0)));
+                particleDataP->scaleBase = 0.0f;
+                particleDataP->scale = 7.3f;
             }
         }
     }
     particleDataP = particle->data;
-    for (i = 0; i < particle->unk_30; i++, particleDataP++) {
-        if (particleDataP->unk2C == 0.0f) {
+    for (i = 0; i < particle->maxCnt; i++, particleDataP++) {
+        if (particleDataP->scale == 0.0f) {
             continue;
         }
-        particleDataP->unk34.x = particleDataP->unk08.x;
-        particleDataP->unk34.y = particleDataP->unk08.y;
-        particleDataP->unk34.z = particleDataP->unk08.z;
-        particleDataP->unk08.x += particleDataP->unk20;
-        particleDataP->unk08.y += particleDataP->unk24;
-        particleDataP->unk08.z += particleDataP->unk28;
-        if (particleDataP->unk08.y <= spaceAmidaPos.y) {
-            particleDataP->unk08.y = spaceAmidaPos.y;
-            particleDataP->unk24 = -particleDataP->unk24 - 0.3f;
-            if (particleDataP->unk24 < 0.0f) {
-                particleDataP->unk24 = 0.0f;
+        particleDataP->pos.x = particleDataP->vel.x;
+        particleDataP->pos.y = particleDataP->vel.y;
+        particleDataP->pos.z = particleDataP->vel.z;
+        particleDataP->vel.x += particleDataP->speedDecay;
+        particleDataP->vel.y += particleDataP->colorIdx;
+        particleDataP->vel.z += particleDataP->scaleBase;
+        if (particleDataP->vel.y <= spaceAmidaPos.y) {
+            particleDataP->vel.y = spaceAmidaPos.y;
+            particleDataP->colorIdx = -particleDataP->colorIdx - 0.3f;
+            if (particleDataP->colorIdx < 0.0f) {
+                particleDataP->colorIdx = 0.0f;
             }
-            relSize = 80.0f * (2.0f * ((pos.x - particleDataP->unk08.x) / 15.0f) - rand8() / 255.0f);
-            particleDataP->unk20 = 8.0 * sind(relSize);
-            particleDataP->unk28 = 8.0 * cosd(relSize);
+            relSize = 80.0f * (2.0f * ((pos.x - particleDataP->vel.x) / 15.0f) - rand8() / 255.0f);
+            particleDataP->speedDecay = 8.0 * sind(relSize);
+            particleDataP->scaleBase = 8.0 * cosd(relSize);
         }
-        particleDataP->unk24 -= 0.35f;
-        if ((particleDataP->unk14.x -= 25.5f) < 0.0f) {
-            particleDataP->unk14.x = 0.0f;
+        particleDataP->colorIdx -= 0.35f;
+        if ((particleDataP->accel.x -= 25.5f) < 0.0f) {
+            particleDataP->accel.x = 0.0f;
         }
-        if ((particleDataP->unk14.y -= 36.42857f) < 0.0f) {
-            particleDataP->unk14.y = 0.0f;
+        if ((particleDataP->accel.y -= 36.42857f) < 0.0f) {
+            particleDataP->accel.y = 0.0f;
         }
-        if ((particleDataP->unk14.z -= 63.75f) < 0.0f) {
-            particleDataP->unk14.z = 0.0f;
+        if ((particleDataP->accel.z -= 63.75f) < 0.0f) {
+            particleDataP->accel.z = 0.0f;
         }
-        particleDataP->unk40.r = particleDataP->unk14.x;
-        particleDataP->unk40.g = particleDataP->unk14.y;
-        particleDataP->unk40.b = particleDataP->unk14.z;
-        if (particleDataP->unk40.r == 0 && particleDataP->unk40.g == 0 && particleDataP->unk40.b == 0) {
-            particleDataP->unk2C = 0.0f;
+        particleDataP->color.r = particleDataP->accel.x;
+        particleDataP->color.g = particleDataP->accel.y;
+        particleDataP->color.b = particleDataP->accel.z;
+        if (particleDataP->color.r == 0 && particleDataP->color.g == 0 && particleDataP->color.b == 0) {
+            particleDataP->scale = 0.0f;
         }
     }
 }

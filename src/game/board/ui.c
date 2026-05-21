@@ -584,10 +584,10 @@ static void CreateBoardStatusSprite(s32 arg0, UnkUiStatusStruct *arg1) {
     }
 }
 
-void BoardSpriteCreate(s32 file, s32 prio, AnimData **anim, s16 *sprite) {
+void BoardSpriteCreate(s32 file, s32 prio, ANIMDATA **anim, s16 *sprite) {
     s16 temp_r28;
     void *temp_r27;
-    AnimData *temp_r31;
+    ANIMDATA *temp_r31;
 
     temp_r27 = HuDataSelHeapReadNum(file, MEMORY_DEFAULT_NUM, HEAP_DATA);
     temp_r31 = HuSprAnimRead(temp_r27);

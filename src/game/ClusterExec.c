@@ -33,7 +33,7 @@ float GetClusterWeightCurve(HSFTRACK *arg0, float arg1) {
     return 0.0f;
 }
 
-void SetClusterMain(HsfCluster *arg0) {
+void SetClusterMain(HSFCLUSTER *arg0) {
     float var_f30;
     float var_f31;
     s32 temp_r24;
@@ -43,7 +43,7 @@ void SetClusterMain(HsfCluster *arg0) {
     s32 i;
     s32 j;
     HSFBUFFER *temp_r25;
-    HsfPart *temp_r27;
+    HSFPART *temp_r27;
     HSFBUFFER *temp_r30;
 
     temp_r27 = arg0->part;
@@ -97,7 +97,7 @@ void SetClusterMain(HsfCluster *arg0) {
     }
 }
 
-void ClusterProc(ModelData *arg0) {
+void ClusterProc(HU3DMODEL *arg0) {
     s32 temp_r24;
     s32 i;
     s32 j;
@@ -105,15 +105,15 @@ void ClusterProc(ModelData *arg0) {
     HSFDATA *temp_r27;
     HSFDATA *temp_r23;
     MotionData *temp_r22;
-    HsfCluster *var_r29;
+    HSFCLUSTER *var_r29;
     HSFOBJECT *temp_r31;
 
     for (i = 0; i < 4; i++) {
-        temp_r24 = arg0->unk_10[i];
+        temp_r24 = arg0->motIdCluster[i];
         if (temp_r24 != -1) {
             temp_r22 = &Hu3DMotion[temp_r24];
             temp_r27 = temp_r22->unk_04;
-            temp_r23 = arg0->hsfData;
+            temp_r23 = arg0->hsf;
             var_r29 = temp_r27->cluster;
             for (j = 0; j < temp_r27->clusterNum; j++, var_r29++) {
                 if (var_r29->target != -1) {
@@ -136,12 +136,12 @@ void ClusterProc(ModelData *arg0) {
     }
 }
 
-void ClusterMotionExec(ModelData *arg0) {
+void ClusterMotionExec(HU3DMODEL *arg0) {
     float temp_f31;
     s32 i;
     s32 j;
     s16 var_r20;
-    HsfCluster *temp_r26;
+    HSFCLUSTER *temp_r26;
     HSFDATA *temp_r28;
     HSFMOTION *temp_r27; // ! - uninitialized
     HSFTRACK *var_r31;
@@ -150,13 +150,13 @@ void ClusterMotionExec(ModelData *arg0) {
 
     var_r31 = temp_r27->track;
     for (i = 0; i < 4; i++) {
-        if (arg0->unk_10[i] != -1) {
-            var_r20 = arg0->unk_10[i];
+        if (arg0->motIdCluster[i] != -1) {
+            var_r20 = arg0->motIdCluster[i];
             var_r23 = &Hu3DMotion[var_r20];
             temp_r28 = var_r23->unk_04;
             temp_r27 = temp_r28->motion;
             var_r31 = temp_r27->track;
-            temp_f31 = arg0->unk_A4[i];
+            temp_f31 = arg0->clusterTime[i];
             for (j = 0; j < temp_r27->numTracks; j++, var_r31++) {
                 switch (var_r31->type) {
                     case 5:

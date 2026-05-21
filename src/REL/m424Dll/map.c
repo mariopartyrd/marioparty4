@@ -216,7 +216,7 @@ void fn_1_2438(f32 arg0)
 {
     M424DllMapStruct *spC;
     HSFATTRIBUTE *var_r31;
-    ModelData *temp_r30;
+    HU3DMODEL *temp_r30;
     HSFDATA *temp_r29;
     s32 var_r28;
     HSFBITMAP *var_r27;
@@ -226,8 +226,8 @@ void fn_1_2438(f32 arg0)
         var_r26 = lbl_1_bss_50;
         spC = lbl_1_bss_50->data;
         temp_r30 = &Hu3DData[var_r26->model[2]];
-        temp_r29 = temp_r30->hsfData;
-        var_r31 = temp_r30->hsfData->attribute;
+        temp_r29 = temp_r30->hsf;
+        var_r31 = temp_r30->hsf->attribute;
         for (var_r28 = 0; var_r28 < temp_r29->attributeNum; var_r28++, var_r31++) {
             var_r27 = var_r31->bitmap;
             if (strcmp("cr_dk2", var_r27->name) == 0)

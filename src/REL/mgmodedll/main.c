@@ -632,8 +632,8 @@ void fn_1_1AB58(void)
 
 void fn_1_1AC88(StructBss2050 *arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-    AnimData *temp_r26;
-    AnimData *temp_r25;
+    ANIMDATA *temp_r26;
+    ANIMDATA *temp_r25;
     s32 var_r29;
     s32 var_r28;
     s32 i;
@@ -792,11 +792,11 @@ void fn_1_1BECC(void)
 
 void fn_1_1C09C(StructBss2050 *arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-    AnimData *temp_r28;
-    AnimData *temp_r26;
-    AnimData *temp_r25;
-    AnimData *temp_r24;
-    AnimData *temp_r23;
+    ANIMDATA *temp_r28;
+    ANIMDATA *temp_r26;
+    ANIMDATA *temp_r25;
+    ANIMDATA *temp_r24;
+    ANIMDATA *temp_r23;
     s32 var_r29;
     s32 var_r30;
     s32 i;

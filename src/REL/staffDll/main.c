@@ -316,7 +316,7 @@ static void ExitProc(void)
 static void CreateStaff(void)
 {
     void *var_r29;
-    AnimData *var_r28;
+    ANIMDATA *var_r28;
     s16 var_r30;
     s32 var_r31;
 

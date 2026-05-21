@@ -153,12 +153,12 @@ void fn_1_3EC0(omObjData *object);
 void fn_1_4364(omObjData *object);
 void fn_1_4444(s32 arg0);
 void fn_1_448(omObjData *object);
-void fn_1_485C(ModelData *model, Mtx mtx);
-void fn_1_54C8(ModelData *model, Mtx mtx);
+void fn_1_485C(HU3DMODEL *model, Mtx mtx);
+void fn_1_54C8(HU3DMODEL *model, Mtx mtx);
 s16 fn_1_5918(Vec *arg0);
-void fn_1_5A48(ModelData *model, Mtx mtx);
-void fn_1_5EDC(ModelData *model, Mtx mtx);
-void fn_1_64B4(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_5A48(HU3DMODEL *model, Mtx mtx);
+void fn_1_5EDC(HU3DMODEL *model, Mtx mtx);
+void fn_1_64B4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 void fn_1_6BB4(Process *arg0);
 void fn_1_6CC8(void);
 void fn_1_6D24(omObjData *object);
@@ -166,8 +166,8 @@ void fn_1_72C4(omObjData *object);
 s32 fn_1_75DC(Vec *arg0);
 void fn_1_7734(s32 arg0, s32 arg1);
 void fn_1_7848(omObjData *object);
-void fn_1_7890(ModelData *model, ParticleData *particle, Mtx matrix);
-void fn_1_7EBC(ModelData *model, ParticleData *particle, Mtx matrix);
+void fn_1_7890(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void fn_1_7EBC(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 void fn_1_8520(M442StructBssC05C *arg0, u8 arg1);
 float fn_1_85E8(float arg8, float arg9, float argA);
 void fn_1_86EC(omObjData *object);
@@ -206,11 +206,11 @@ s16 lbl_1_bss_11F1A;
 s16 lbl_1_bss_11F18;
 s16 lbl_1_bss_11F16;
 s16 lbl_1_bss_11F14[1];
-AnimData *lbl_1_bss_11F10;
-AnimData *lbl_1_bss_11F04[3];
-AnimData *lbl_1_bss_11F00;
-AnimData *lbl_1_bss_11EFC;
-AnimData *lbl_1_bss_11EEC[4];
+ANIMDATA *lbl_1_bss_11F10;
+ANIMDATA *lbl_1_bss_11F04[3];
+ANIMDATA *lbl_1_bss_11F00;
+ANIMDATA *lbl_1_bss_11EFC;
+ANIMDATA *lbl_1_bss_11EEC[4];
 s16 lbl_1_bss_11EE8;
 s32 lbl_1_bss_11EE4;
 s32 lbl_1_bss_11EE0;
@@ -233,7 +233,7 @@ char pad_05_00000000_bss[0x10];
 void ObjectSetup(void)
 {
     Process *var_r31;
-    CameraData *var_r30;
+    HU3DCAMERA *var_r30;
     s16 var_r29;
 
     var_r30 = Hu3DCamera;
@@ -503,7 +503,7 @@ void fn_1_E88(omObjData *object)
     M442MainWork *var_r30;
     u32 var_r29;
     u32 var_r28;
-    ModelData *var_r27;
+    HU3DMODEL *var_r27;
     s32 var_r26;
 
     var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M442MainWork), MEMORY_DEFAULT_NUM);
@@ -549,7 +549,7 @@ void fn_1_E88(omObjData *object)
     Hu3DModelLayerSet(object->model[3], 7);
     Hu3DModelAttrSet(object->model[3], HU3D_ATTR_DISPOFF);
     var_r27 = &Hu3DData[object->model[3]];
-    var_r27->unk_120 = var_r30;
+    var_r27->hookData = var_r30;
     CharModelDataClose(var_r30->unk_10);
     var_r30->unk_00_field2 = 1;
     var_r30->unk_00_field3 = 1;
@@ -963,7 +963,7 @@ void fn_1_2254(omObjData *object)
                             fn_1_7734(var_r31->unk_5C, var_r31->unk_48);
                         }
                     }
-                    var_r26 = Hu3DData[object->model[2]].unk_120;
+                    var_r26 = Hu3DData[object->model[2]].hookData;
                     *(s16 *)var_r26 = 0;
                     (void)var_r26;
                     Hu3DModelAttrReset(object->model[2], HU3D_ATTR_DISPOFF);
@@ -1379,7 +1379,7 @@ void fn_1_3EC0(omObjData *object)
 {
     s32 var_r31;
     s16 var_r29;
-    ParticleData *var_r28;
+    HU3DPARTICLE *var_r28;
 
     object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M442, 0));
     Hu3DModelLayerSet(object->model[0], 1);
@@ -1387,15 +1387,15 @@ void fn_1_3EC0(omObjData *object)
     object->model[1] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 12), MEMORY_DEFAULT_NUM)), 1);
     Hu3DModelLayerSet(object->model[1], 7);
     Hu3DParticleHookSet(object->model[1], fn_1_64B4);
-    var_r28 = Hu3DData[object->model[1]].unk_120;
+    var_r28 = Hu3DData[object->model[1]].hookData;
     object->model[2] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 13), MEMORY_DEFAULT_NUM)), 20);
     Hu3DModelLayerSet(object->model[2], 7);
-    var_r28->unk_1C = Hu3DData[object->model[2]].unk_120;
+    var_r28->work = Hu3DData[object->model[2]].hookData;
     var_r29 = espEntry(0x49000E, 0x8000, 0);
     espPosSet(var_r29, 288.0, 240.0);
     espScaleSet(var_r29, 80.0, 60.0);
     espColorSet(var_r29, 0xFF, 0xFF, 0xFF);
-    var_r28->unk_02 = var_r29;
+    var_r28->emitCnt = var_r29;
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
         lbl_1_bss_C05C[var_r31].unk_04 = lbl_1_data_18A[var_r31][0];
         lbl_1_bss_C05C[var_r31].unk_06 = lbl_1_data_18A[var_r31][1];
@@ -1460,7 +1460,7 @@ Vec lbl_1_data_1C0[4] = {
     { -1.0f, -1.0f, 0.0f },
 };
 
-void fn_1_485C(ModelData *model, Mtx mtx)
+void fn_1_485C(HU3DMODEL *model, Mtx mtx)
 {
     Mtx sp100;
     Mtx spD0;
@@ -1488,7 +1488,7 @@ void fn_1_485C(ModelData *model, Mtx mtx)
 
     M442StructBss5C *var_r31;
     s32 var_r30;
-    CameraData *var_r29;
+    HU3DCAMERA *var_r29;
     u16 var_r28;
     u16 var_r27;
     u16 var_r26;
@@ -1584,7 +1584,7 @@ GXColor lbl_1_data_20C[3] = {
     { 0xFF, 0x00, 0x00, 0xFF },
 };
 
-void fn_1_54C8(ModelData *model, Mtx mtx)
+void fn_1_54C8(HU3DMODEL *model, Mtx mtx)
 {
     Mtx sp5C;
     Mtx sp2C;
@@ -1670,7 +1670,7 @@ s32 fn_1_59C0(Vec *arg0)
     }
 }
 
-void fn_1_5A48(ModelData *arg0, Mtx arg1)
+void fn_1_5A48(HU3DMODEL *arg0, Mtx arg1)
 {
     float var_f31;
     float var_f30;
@@ -1732,7 +1732,7 @@ void fn_1_5A48(ModelData *arg0, Mtx arg1)
 
 GXColor lbl_1_data_218 = { 0xFF, 0xFF, 0xFF, 0x80 };
 
-void fn_1_5EDC(ModelData *model, float (*mtx)[4])
+void fn_1_5EDC(HU3DMODEL *model, float (*mtx)[4])
 {
     float sp38;
     float sp28;
@@ -1741,7 +1741,7 @@ void fn_1_5EDC(ModelData *model, float (*mtx)[4])
     M442MainWork *var_r31;
     s32 var_r30;
 
-    var_r31 = model->unk_120;
+    var_r31 = model->hookData;
     MTXInverse(mtx, spC);
     spC[0][3] = spC[1][3] = spC[2][3] = 0.0f;
     MTXConcat(mtx, &spC[0], mtx);
@@ -1802,7 +1802,7 @@ void fn_1_5EDC(ModelData *model, float (*mtx)[4])
     GXTexCoord2f32(0.0f, 1.0f);
 }
 
-void fn_1_64B4(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_64B4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     Vec sp38;
     Vec sp2C;
@@ -1815,30 +1815,30 @@ void fn_1_64B4(ModelData *model, ParticleData *particle, Mtx matrix)
     float var_f29;
 
     HU3DPARTICLEDATA *var_r31;
-    ParticleData *var_r29;
+    HU3DPARTICLE *var_r29;
     s32 var_r28;
 
-    var_r29 = particle->unk_1C;
+    var_r29 = particle->work;
     GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);
-    if (particle->unk_00 == 0) {
-        particle->unk_00 = 1;
+    if (particle->dataCnt == 0) {
+        particle->dataCnt = 1;
         var_r31 = particle->data;
-        for (var_r28 = 0; var_r28 < particle->unk_30; var_r28++, var_r31++) {
-            var_r31->unk2C = 2000.0f;
-            var_r31->unk08.x = 20.0f;
-            var_r31->unk08.y = 100.0f;
-            var_r31->unk08.z = 0.0f;
-            VECNormalize(&var_r31->unk08, &var_r31->unk08);
-            var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = var_r31->unk40.a = 0xFF;
+        for (var_r28 = 0; var_r28 < particle->maxCnt; var_r28++, var_r31++) {
+            var_r31->scale = 2000.0f;
+            var_r31->vel.x = 20.0f;
+            var_r31->vel.y = 100.0f;
+            var_r31->vel.z = 0.0f;
+            VECNormalize(&var_r31->vel, &var_r31->vel);
+            var_r31->color.r = var_r31->color.g = var_r31->color.b = var_r31->color.a = 0xFF;
         }
         var_r31 = var_r29->data;
-        for (var_r28 = 0; var_r28 < var_r29->unk_30; var_r28++, var_r31++) {
-            var_r31->unk2C = 50.0f + 500.0f * (frand() & 0xFF) / 256;
-            var_r31->unk40.r = (frand() & 0x3F) + 0xC0;
-            var_r31->unk40.g = (frand() & 0x3F) + 0xC0;
-            var_r31->unk40.b = (frand() & 0x3F) + 0xC0;
-            var_r31->unk40.a = 0x40;
-            var_r31->unk08.x = (frand() & 0xFF) / 4096.0f;
+        for (var_r28 = 0; var_r28 < var_r29->maxCnt; var_r28++, var_r31++) {
+            var_r31->scale = 50.0f + 500.0f * (frand() & 0xFF) / 256;
+            var_r31->color.r = (frand() & 0x3F) + 0xC0;
+            var_r31->color.g = (frand() & 0x3F) + 0xC0;
+            var_r31->color.b = (frand() & 0x3F) + 0xC0;
+            var_r31->color.a = 0x40;
+            var_r31->vel.x = (frand() & 0xFF) / 4096.0f;
         }
     }
     sp14.x = sind(CRot.y) * cosd(CRot.x);
@@ -1849,39 +1849,39 @@ void fn_1_64B4(ModelData *model, ParticleData *particle, Mtx matrix)
     sp38.z = Center.z + (sp14.z * CZoom);
 
     var_r31 = particle->data;
-    sp2C.x = sp38.x + (2500.0f * var_r31->unk08.x);
-    sp2C.y = sp38.y + (2500.0f * var_r31->unk08.y);
-    sp2C.z = sp38.z + (2500.0f * var_r31->unk08.z);
+    sp2C.x = sp38.x + (2500.0f * var_r31->vel.x);
+    sp2C.y = sp38.y + (2500.0f * var_r31->vel.y);
+    sp2C.z = sp38.z + (2500.0f * var_r31->vel.z);
 
-    var_r31->unk30 += 0.0034906585560035243;
-    var_r31->unk34 = sp2C;
-    DCStoreRangeNoSync(particle->data, particle->unk_30 * 0x44);
-    var_f29 = (var_r31->unk08.z * -sp14.z) + ((var_r31->unk08.x * -sp14.x) + (var_r31->unk08.y * -sp14.y));
+    var_r31->zRot += 0.0034906585560035243;
+    var_r31->pos = sp2C;
+    DCStoreRangeNoSync(particle->data, particle->maxCnt * 0x44);
+    var_f29 = (var_r31->vel.z * -sp14.z) + ((var_r31->vel.x * -sp14.x) + (var_r31->vel.y * -sp14.y));
 
-    sp8.x = -var_r31->unk08.x + (2.0f * -sp14.x * var_f29);
-    sp8.y = -var_r31->unk08.y + (2.0f * -sp14.y * var_f29);
-    sp8.z = -var_r31->unk08.z + (2.0f * -sp14.z * var_f29);
+    sp8.x = -var_r31->vel.x + (2.0f * -sp14.x * var_f29);
+    sp8.y = -var_r31->vel.y + (2.0f * -sp14.y * var_f29);
+    sp8.z = -var_r31->vel.z + (2.0f * -sp14.z * var_f29);
     sp20.x = sp38.x + (2500.0f * sp8.x);
     sp20.y = sp38.y + (2500.0f * sp8.y);
     sp20.z = sp38.z + (2500.0f * sp8.z);
-    var_f31 = -VECDotProduct(&var_r31->unk08, &sp14);
+    var_f31 = -VECDotProduct(&var_r31->vel, &sp14);
     if (var_f31 >= 0.0f) {
-        espTPLvlSet(particle->unk_02, 0.5f * var_f31 * var_f31);
+        espTPLvlSet(particle->emitCnt, 0.5f * var_f31 * var_f31);
     }
     else {
-        espTPLvlSet(particle->unk_02, 0.0);
+        espTPLvlSet(particle->emitCnt, 0.0);
     }
     var_r31 = var_r29->data;
-    for (var_r28 = 0; var_r28 < var_r29->unk_30; var_r28++, var_r31++) {
-        var_f30 = var_r31->unk08.x + ((float)(var_r28 - 2) / (var_r29->unk_30 - 2));
-        var_r31->unk34.x = sp2C.x + (var_f30 * (sp20.x - sp2C.x));
-        var_r31->unk34.y = sp2C.y + (var_f30 * (sp20.y - sp2C.y));
-        var_r31->unk34.z = sp2C.z + (var_f30 * (sp20.z - sp2C.z));
+    for (var_r28 = 0; var_r28 < var_r29->maxCnt; var_r28++, var_r31++) {
+        var_f30 = var_r31->vel.x + ((float)(var_r28 - 2) / (var_r29->maxCnt - 2));
+        var_r31->pos.x = sp2C.x + (var_f30 * (sp20.x - sp2C.x));
+        var_r31->pos.y = sp2C.y + (var_f30 * (sp20.y - sp2C.y));
+        var_r31->pos.z = sp2C.z + (var_f30 * (sp20.z - sp2C.z));
         if (var_f31 >= 0.0f) {
-            var_r31->unk40.a = 64.0f * (var_f31 * var_f31);
+            var_r31->color.a = 64.0f * (var_f31 * var_f31);
         }
     }
-    DCStoreRangeNoSync(var_r29->data, var_r29->unk_30 * 0x44);
+    DCStoreRangeNoSync(var_r29->data, var_r29->maxCnt * 0x44);
 }
 
 void fn_1_6BB4(Process *arg0)
@@ -2078,7 +2078,7 @@ void fn_1_7848(omObjData *object)
     }
 }
 
-void fn_1_7890(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_7890(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     float var_f31;
     float var_f30;
@@ -2087,62 +2087,62 @@ void fn_1_7890(ModelData *model, ParticleData *particle, Mtx matrix)
     s32 var_r29;
     s32 var_r28;
 
-    if (particle->unk_00 == 0) {
-        particle->unk_00 = 1;
+    if (particle->dataCnt == 0) {
+        particle->dataCnt = 1;
         var_r31 = particle->data;
-        for (var_r29 = 0; var_r29 < particle->unk_30; var_r31++, var_r29++) {
-            var_r31->unk2C = (50.0f + (20.0f * (frand() & 0xFF))) / 256;
+        for (var_r29 = 0; var_r29 < particle->maxCnt; var_r31++, var_r29++) {
+            var_r31->scale = (50.0f + (20.0f * (frand() & 0xFF))) / 256;
             var_f31 = 360.0f * (frand() & 0xFF) / 256;
-            var_r31->unk34.x = 100.0 * (0.20000000298023224 * sind(var_f31));
-            var_r31->unk34.y = 0.0f;
-            var_r31->unk34.z = 100.0 * (0.20000000298023224 * cosd(var_f31));
+            var_r31->pos.x = 100.0 * (0.20000000298023224 * sind(var_f31));
+            var_r31->pos.y = 0.0f;
+            var_r31->pos.z = 100.0 * (0.20000000298023224 * cosd(var_f31));
             var_f30 = (100.0f / REFRESH_RATE) + ((150.0f / REFRESH_RATE) * (frand() & 0xFF) / 256);
             var_f31 = 360.0f * (frand() & 0xFF) / 256;
-            var_r31->unk08.x = var_f30 * sind(var_f31);
-            var_r31->unk08.z = var_f30 * cosd(var_f31);
-            var_r31->unk08.y = (1000.0f / REFRESH_RATE) * (frand() & 0xFF) / 256;
-            var_r31->unk40.r = var_r31->unk40.g = var_r31->unk40.b = var_r31->unk40.a = 0xFF;
+            var_r31->vel.x = var_f30 * sind(var_f31);
+            var_r31->vel.z = var_f30 * cosd(var_f31);
+            var_r31->vel.y = (1000.0f / REFRESH_RATE) * (frand() & 0xFF) / 256;
+            var_r31->color.r = var_r31->color.g = var_r31->color.b = var_r31->color.a = 0xFF;
         }
     }
     var_r28 = 0;
     var_r31 = particle->data;
-    for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        if (var_r31->unk34.y < -50.0f) {
+    for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+        if (var_r31->pos.y < -50.0f) {
             var_r28++;
         }
         else {
-            var_r31->unk08.y += -(1.2f/REFRESH_RATE)*25;
-            var_r31->unk34.x += var_r31->unk08.x;
-            var_r31->unk34.y += var_r31->unk08.y;
-            var_r31->unk34.z += var_r31->unk08.z;
+            var_r31->vel.y += -(1.2f/REFRESH_RATE)*25;
+            var_r31->pos.x += var_r31->vel.x;
+            var_r31->pos.y += var_r31->vel.y;
+            var_r31->pos.z += var_r31->vel.z;
         }
     }
-    if (var_r28 == particle->unk_30) {
+    if (var_r28 == particle->maxCnt) {
         model->attr |= 1;
     }
-    DCStoreRangeNoSync(particle->data, particle->unk_30 * 0x44);
+    DCStoreRangeNoSync(particle->data, particle->maxCnt * 0x44);
 }
 
 void fn_1_7C8C(HU3DPARTICLEDATA *arg0)
 {
     float sp8;
 
-    arg0->unk2C = 30.0f + (10.0f * (frand() & 0xFF) / 256);
+    arg0->scale = 30.0f + (10.0f * (frand() & 0xFF) / 256);
     sp8 = 360.0f * (frand() & 0xFF) / 256;
-    arg0->unk34.x = 0.0f;
-    arg0->unk34.y = 0.0f;
-    arg0->unk34.z = 0.0f;
-    arg0->unk08.x = 0.0f;
-    arg0->unk08.y = 0.2f + (0.8f * (frand() & 0xFF) / 256);
-    arg0->unk08.z = ((frand() & 0xFF) * 0x168) >> 8;
-    arg0->unk14.x = 0.5f + (0.5f * (frand() & 0xFF) / 256);
-    arg0->unk40.r = 0x19;
-    arg0->unk40.g = 0x13;
-    arg0->unk40.b = 0x1E;
-    arg0->unk40.a = 0xFF;
+    arg0->pos.x = 0.0f;
+    arg0->pos.y = 0.0f;
+    arg0->pos.z = 0.0f;
+    arg0->vel.x = 0.0f;
+    arg0->vel.y = 0.2f + (0.8f * (frand() & 0xFF) / 256);
+    arg0->vel.z = ((frand() & 0xFF) * 0x168) >> 8;
+    arg0->accel.x = 0.5f + (0.5f * (frand() & 0xFF) / 256);
+    arg0->color.r = 0x19;
+    arg0->color.g = 0x13;
+    arg0->color.b = 0x1E;
+    arg0->color.a = 0xFF;
 }
 
-void fn_1_7EBC(ModelData *model, ParticleData *particle, Mtx matrix)
+void fn_1_7EBC(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     s32 sp14;
     float sp10;
@@ -2154,30 +2154,30 @@ void fn_1_7EBC(ModelData *model, ParticleData *particle, Mtx matrix)
     HU3DPARTICLEDATA *var_r31;
     s32 var_r29;
 
-    if (particle->unk_00 == 0) {
-        particle->unk_00 = 1;
+    if (particle->dataCnt == 0) {
+        particle->dataCnt = 1;
         var_r31 = particle->data;
-        sp10 = atan2d(particle->unk_04.x, particle->unk_04.z);
-        for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
+        sp10 = atan2d(particle->pos.x, particle->pos.z);
+        for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
             fn_1_7C8C(var_r31);
-            var_r31->unk08.x = 30.0f * (frand() & 0xFF) / 256;
-            var_r31->unk2C *= model->scale.x;
+            var_r31->vel.x = 30.0f * (frand() & 0xFF) / 256;
+            var_r31->scale *= model->scale.x;
         }
     }
     sp14 = 0;
     var_r31 = particle->data;
-    for (var_r29 = 0; var_r29 < particle->unk_30; var_r29++, var_r31++) {
-        var_f31 = var_r31->unk08.x - 20.0f;
-        var_r31->unk34.y = 400.0f + (var_f31 * (-var_r31->unk08.y * var_f31));
-        var_r31->unk34.x = 2.0 * (var_r31->unk08.x * sind(var_r31->unk08.z));
-        var_r31->unk34.z = 2.0 * (var_r31->unk08.x * cosd(var_r31->unk08.z));
-        var_r31->unk08.x += var_r31->unk14.x;
-        if (var_r31->unk08.x > 30.0f) {
+    for (var_r29 = 0; var_r29 < particle->maxCnt; var_r29++, var_r31++) {
+        var_f31 = var_r31->vel.x - 20.0f;
+        var_r31->pos.y = 400.0f + (var_f31 * (-var_r31->vel.y * var_f31));
+        var_r31->pos.x = 2.0 * (var_r31->vel.x * sind(var_r31->vel.z));
+        var_r31->pos.z = 2.0 * (var_r31->vel.x * cosd(var_r31->vel.z));
+        var_r31->vel.x += var_r31->accel.x;
+        if (var_r31->vel.x > 30.0f) {
             fn_1_7C8C(var_r31);
-            var_r31->unk2C *= model->scale.x;
+            var_r31->scale *= model->scale.x;
         }
     }
-    DCStoreRangeNoSync(particle->data, particle->unk_30 * 0x44);
+    DCStoreRangeNoSync(particle->data, particle->maxCnt * 0x44);
 }
 
 void fn_1_8520(M442StructBssC05C *arg0, u8 arg1)
@@ -2231,7 +2231,7 @@ float lbl_1_data_250[2] = { 0.0f, 0.0f };
 
 void fn_1_8988(omObjData *arg0)
 {
-    CameraData *sp8 = Hu3DCamera;
+    HU3DCAMERA *sp8 = Hu3DCamera;
     switch (lbl_1_bss_11F30) {
         case 1:
             fn_1_8738(0, 1, sind((90.0f * lbl_1_data_250[0])));

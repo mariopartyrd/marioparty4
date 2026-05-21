@@ -56,8 +56,8 @@ static void ItemGetShrink(omObjData *obj);
 static float RoundItemUmaRotYGet(u32 umaNo);
 static void RoundItemUmaPlayerSet(u32 umaNo);
 static float RoundItemAngleGet(Vec *arg0);
-static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix);
-static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix);
+static void ItemGetEff1Hook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+static void ItemGetEff2Hook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 static void *itemAnim;
 static Vec roundItemPos;
@@ -83,7 +83,7 @@ static s32 itemGetSeNo;
 static s16 roundItemStopF;
 static s16 umaStopTimer;
 static s32 roundItemStreamId;
-static AnimData *roundItemEffAnim;
+static ANIMDATA *roundItemEffAnim;
 
 #if VERSION_JP
 #define MDL_ID_SHIFT 0
@@ -162,7 +162,7 @@ void RoundItemInit(s16 *itemTbl)
         itemObj[i]->model[0] = itemMdlId[i];
         itemObj[i]->model[1] = Hu3DModelCreateFile(itemMdlTbl[itemObj[i]->work[1]]);
         if (itemObj[i]->work[1] == 5) {
-            Hu3DData[itemObj[i]->model[1]].unk_F0[1][3] = -50.0f;
+            Hu3DData[itemObj[i]->model[1]].mtx[1][3] = -50.0f;
         }
         if (itemObj[i]->work[1] == 11) {
             Hu3DModelAttrSet(itemObj[i]->model[1], HU3D_MOTATTR_LOOP);
@@ -863,7 +863,7 @@ static float RoundItemAngleGet(Vec *dir)
     return -1.0f;
 }
 
-static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix)
+static void ItemGetEff1Hook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA *particleDataP;
     float angle;
@@ -872,47 +872,47 @@ static void ItemGetEff1Hook(ModelData *model, ParticleData *particle, Mtx matrix
     s32 j;
     s32 i;
 
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         particleDataP = particle->data;
-        for (i = 0; i < particle->unk_30; i++, particleDataP++) {
-            particleDataP->unk40.a = 0;
-            particleDataP->unk2C = 0.0f;
+        for (i = 0; i < particle->maxCnt; i++, particleDataP++) {
+            particleDataP->color.a = 0;
+            particleDataP->scale = 0.0f;
         }
-        particle->unk_00 = 0;
+        particle->dataCnt = 0;
     }
     radiusBase = itemGetObj->scale.x;
     for (i = 0; i < 30; i++) {
         particleDataP = particle->data;
-        for (j = 0; j < particle->unk_30; j++, particleDataP++) {
-            if (particleDataP->unk2C == 0.0f) {
+        for (j = 0; j < particle->maxCnt; j++, particleDataP++) {
+            if (particleDataP->scale == 0.0f) {
                 break;
             }
         }
-        if (j != particle->unk_30) {
+        if (j != particle->maxCnt) {
             angle = 0.003921569f * frand8() * 360.0f;
             radius = 0.003921569f * frand8() * 70.0f * radiusBase;
-            particleDataP->unk34.x = itemGetObj->trans.x + radius * sind(angle);
-            particleDataP->unk34.z = itemGetObj->trans.z + radius * cosd(angle);
-            particleDataP->unk34.y = itemGetObj->trans.y + radiusBase * (-30.0f + 0.003921569f * frand8() * 60.0f);
-            particleDataP->unk08.x = 0.5f + 0.003921569f * frand8() * 3.0f;
-            particleDataP->unk08.y = 0.3f + 0.003921569f * frand8() * 2.0f;
-            particleDataP->unk40.a = 0xB4;
-            particleDataP->unk2C = 15.0f * radiusBase;
+            particleDataP->pos.x = itemGetObj->trans.x + radius * sind(angle);
+            particleDataP->pos.z = itemGetObj->trans.z + radius * cosd(angle);
+            particleDataP->pos.y = itemGetObj->trans.y + radiusBase * (-30.0f + 0.003921569f * frand8() * 60.0f);
+            particleDataP->vel.x = 0.5f + 0.003921569f * frand8() * 3.0f;
+            particleDataP->vel.y = 0.3f + 0.003921569f * frand8() * 2.0f;
+            particleDataP->color.a = 0xB4;
+            particleDataP->scale = 15.0f * radiusBase;
         }
     }
     particleDataP = particle->data;
-    for (i = 0; i < particle->unk_30; i++, particleDataP++) {
-        if (particleDataP->unk2C != 0.0f) {
-            particleDataP->unk34.y -= particleDataP->unk08.x;
-            particleDataP->unk2C -= particleDataP->unk08.y;
-            if (particleDataP->unk2C <= 0.0f) {
-                particleDataP->unk2C = 0.0f;
+    for (i = 0; i < particle->maxCnt; i++, particleDataP++) {
+        if (particleDataP->scale != 0.0f) {
+            particleDataP->pos.y -= particleDataP->vel.x;
+            particleDataP->scale -= particleDataP->vel.y;
+            if (particleDataP->scale <= 0.0f) {
+                particleDataP->scale = 0.0f;
             }
         }
     }
 }
 
-static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix)
+static void ItemGetEff2Hook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
     HU3DPARTICLEDATA *particleDataP;
     float angle2;
@@ -921,43 +921,43 @@ static void ItemGetEff2Hook(ModelData *model, ParticleData *particle, Mtx matrix
     s32 j;
     s32 i;
 
-    if (particle->unk_34 == 0) {
+    if (particle->count == 0) {
         particleDataP = particle->data;
-        for (i = 0; i < particle->unk_30; i++, particleDataP++) {
-            particleDataP->unk40.a = 0;
-            particleDataP->unk2C = 0.0f;
+        for (i = 0; i < particle->maxCnt; i++, particleDataP++) {
+            particleDataP->color.a = 0;
+            particleDataP->scale = 0.0f;
         }
-        particle->unk_00 = 0;
+        particle->dataCnt = 0;
     }
-    if (particle->unk_00 == 0) {
+    if (particle->dataCnt == 0) {
         particleDataP = particle->data;
-        for (j = 0; j < particle->unk_30; j++, particleDataP++) {
+        for (j = 0; j < particle->maxCnt; j++, particleDataP++) {
             angle = 0.003921569f * frand8() * 360.0f;
             radius = 0.003921569f * frand8() * 50.0f;
-            particleDataP->unk08.x = radius * cosd(angle);
-            particleDataP->unk08.y = 2.0f + 0.003921569f * frand8() * 4.0f;
-            particleDataP->unk08.z = radius * sind(angle);
+            particleDataP->vel.x = radius * cosd(angle);
+            particleDataP->vel.y = 2.0f + 0.003921569f * frand8() * 4.0f;
+            particleDataP->vel.z = radius * sind(angle);
             angle2 = 60.0f + 20.0f * frand8() * 0.003921569f;
             radius = 4.0f + 5.0f * frand8() * 0.003921569f;
-            particleDataP->unk14.x = radius * sind(angle) * cosd(angle2);
-            particleDataP->unk14.y = radius * sind(angle2);
-            particleDataP->unk14.z = radius * cosd(angle) * cosd(angle2);
-            particleDataP->unk20 = 1.0f;
-            particleDataP->unk40.a = 0xB4;
-            particleDataP->unk2C = 9.0f + 0.003921569f * frand8() * 4.0f;
+            particleDataP->accel.x = radius * sind(angle) * cosd(angle2);
+            particleDataP->accel.y = radius * sind(angle2);
+            particleDataP->accel.z = radius * cosd(angle) * cosd(angle2);
+            particleDataP->speedDecay = 1.0f;
+            particleDataP->color.a = 0xB4;
+            particleDataP->scale = 9.0f + 0.003921569f * frand8() * 4.0f;
         }
-        particle->unk_00 = 1;
+        particle->dataCnt = 1;
     }
     particleDataP = particle->data;
-    for (i = 0; i < particle->unk_30; i++, particleDataP++) {
-        if (particleDataP->unk2C != 0.0f) {
-            particleDataP->unk34.x = particleDataP->unk08.x + particleDataP->unk14.x * particleDataP->unk20;
-            particleDataP->unk34.z = particleDataP->unk08.z + particleDataP->unk14.z * particleDataP->unk20;
-            particleDataP->unk34.y = particleDataP->unk08.y + particleDataP->unk14.y * particleDataP->unk20 - 0.2f * particleDataP->unk20 * particleDataP->unk20;
-            particleDataP->unk2C -= 0.25f;
-            particleDataP->unk20 += 1.0f;
-            if (particleDataP->unk2C <= 0.0f) {
-                particleDataP->unk2C = 0.0f;
+    for (i = 0; i < particle->maxCnt; i++, particleDataP++) {
+        if (particleDataP->scale != 0.0f) {
+            particleDataP->pos.x = particleDataP->vel.x + particleDataP->accel.x * particleDataP->speedDecay;
+            particleDataP->pos.z = particleDataP->vel.z + particleDataP->accel.z * particleDataP->speedDecay;
+            particleDataP->pos.y = particleDataP->vel.y + particleDataP->accel.y * particleDataP->speedDecay - 0.2f * particleDataP->speedDecay * particleDataP->speedDecay;
+            particleDataP->scale -= 0.25f;
+            particleDataP->speedDecay += 1.0f;
+            if (particleDataP->scale <= 0.0f) {
+                particleDataP->scale = 0.0f;
             }
         }
     }

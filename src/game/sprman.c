@@ -146,7 +146,7 @@ HuSprite *HuSprCall(void)
     }
 }
 
-static inline void SpriteCalcFrame(HuSprite *sprite, AnimBankData *bank, AnimFrameData **frame, s16 loop)
+static inline void SpriteCalcFrame(HuSprite *sprite, ANIMBANK *bank, ANIMFRAME **frame, s16 loop)
 {
     if(sprite->time >= (*frame)->time) {
         sprite->frame++;
@@ -175,9 +175,9 @@ static inline void SpriteCalcFrame(HuSprite *sprite, AnimBankData *bank, AnimFra
 
 void HuSprFinish(void)
 {
-    AnimData *anim;
-    AnimBankData *bank;
-    AnimFrameData *frame;
+    ANIMDATA *anim;
+    ANIMBANK *bank;
+    ANIMFRAME *frame;
     HuSprite *sprite;
     s16 i;
     s16 j;
@@ -211,29 +211,29 @@ void HuSprPauseSet(BOOL value)
     HuSprPauseF = value;
 }
 
-AnimData *HuSprAnimRead(void *data)
+ANIMDATA *HuSprAnimRead(void *data)
 {
     s16 i;
-    AnimBmpData *bmp;
-    AnimBankData *bank;
-    AnimPatData *pat;
+    ANIMBMP *bmp;
+    ANIMBANK *bank;
+    ANIMPAT *pat;
     
-    AnimData *anim = (AnimData *)data;
+    ANIMDATA *anim = (ANIMDATA *)data;
     if((u32)anim->bank & 0xFFFF0000) {
         anim->useNum++;
         return anim;
     }
-    bank = (AnimBankData *)((u32)anim->bank+(u32)data);
+    bank = (ANIMBANK *)((u32)anim->bank+(u32)data);
     anim->bank = bank;
-    pat = (AnimPatData *)((u32)anim->pat+(u32)data);
+    pat = (ANIMPAT *)((u32)anim->pat+(u32)data);
     anim->pat = pat;
-    bmp = (AnimBmpData *)((u32)anim->bmp+(u32)data);
+    bmp = (ANIMBMP *)((u32)anim->bmp+(u32)data);
     anim->bmp = bmp;
     for(i=0; i<anim->bankNum; i++, bank++) {
-        bank->frame = (AnimFrameData *)((u32)bank->frame+(u32)data);
+        bank->frame = (ANIMFRAME *)((u32)bank->frame+(u32)data);
     }
     for(i=0; i<anim->patNum; i++, pat++) {
-        pat->layer = (AnimLayerData *)((u32)pat->layer+(u32)data);
+        pat->layer = (ANIMLAYER *)((u32)pat->layer+(u32)data);
     }
     for(i=0; i<anim->bmpNum; i++, bmp++) {
         bmp->palData = (void *)((u32)bmp->palData+(u32)data);
@@ -243,12 +243,12 @@ AnimData *HuSprAnimRead(void *data)
     return anim;
 }
 
-void HuSprAnimLock(AnimData *anim)
+void HuSprAnimLock(ANIMDATA *anim)
 {
     anim->useNum++;
 }
 
-s16 HuSprCreate(AnimData *anim, s16 prio, s16 bank)
+s16 HuSprCreate(ANIMDATA *anim, s16 prio, s16 bank)
 {
     HuSprite *sprite;
     s16 i;
@@ -395,7 +395,7 @@ void HuSprKill(s16 sprite)
     sprite_ptr->data = NULL;
 }
 
-void HuSprAnimKill(AnimData *anim)
+void HuSprAnimKill(ANIMDATA *anim)
 {
     if(--anim->useNum <= 0) {
         if(anim->bmpNum & ANIM_BMP_ALLOC) {
@@ -482,9 +482,9 @@ void HuSprSpeedSet(s16 group, s16 member, float speed)
 void HuSprBankSet(s16 group, s16 member, s16 bank)
 {
     HuSprite *sprite_ptr = &HuSprData[HuSprGrpData[group].members[member]];
-    AnimData *anim = sprite_ptr->data;
-    AnimBankData *bank_ptr = &anim->bank[sprite_ptr->bank];
-    AnimFrameData *frame_ptr = &bank_ptr->frame[sprite_ptr->frame];
+    ANIMDATA *anim = sprite_ptr->data;
+    ANIMBANK *bank_ptr = &anim->bank[sprite_ptr->bank];
+    ANIMFRAME *frame_ptr = &bank_ptr->frame[sprite_ptr->frame];
     sprite_ptr->bank = bank;
     if(sprite_ptr->attr & HUSPR_ATTR_REVERSE) {
         sprite_ptr->frame = bank_ptr->timeNum-1;
@@ -604,29 +604,29 @@ void HuSprScissorSet(s16 group, s16 member, s16 x, s16 y, s16 w, s16 h)
 
 static s16 bitSizeTbl[11] = { 32, 24, 16, 8, 4, 16, 8, 8, 4, 8, 4 };
 
-AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
+ANIMDATA *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
 {
-    AnimLayerData *layer;
-    AnimBmpData *bmp;
-    AnimData *anim;
-    AnimPatData *pat;
-    AnimFrameData *frame;
+    ANIMLAYER *layer;
+    ANIMBMP *bmp;
+    ANIMDATA *anim;
+    ANIMPAT *pat;
+    ANIMFRAME *frame;
     void *temp;
-    AnimBankData *bank;
-    AnimData *new_anim;
+    ANIMBANK *bank;
+    ANIMDATA *new_anim;
 
-    anim = new_anim = HuMemDirectMalloc(HEAP_DATA, sizeof(AnimData)+sizeof(AnimBankData)+sizeof(AnimFrameData)
-                                            +sizeof(AnimPatData)+sizeof(AnimLayerData)+sizeof(AnimBmpData));
+    anim = new_anim = HuMemDirectMalloc(HEAP_DATA, sizeof(ANIMDATA)+sizeof(ANIMBANK)+sizeof(ANIMFRAME)
+                                            +sizeof(ANIMPAT)+sizeof(ANIMLAYER)+sizeof(ANIMBMP));
 
     bank = temp = &new_anim[1];
     anim->bank = bank;
-    frame = temp = ((char *)temp+sizeof(AnimBankData));
+    frame = temp = ((char *)temp+sizeof(ANIMBANK));
     bank->frame = frame;
-    pat = temp = ((char *)temp+sizeof(AnimFrameData));
+    pat = temp = ((char *)temp+sizeof(ANIMFRAME));
     anim->pat = pat;
-    layer = temp = ((char *)temp+sizeof(AnimPatData));
+    layer = temp = ((char *)temp+sizeof(ANIMPAT));
     pat->layer = layer;
-    bmp = temp = ((char *)temp+sizeof(AnimLayerData));
+    bmp = temp = ((char *)temp+sizeof(ANIMLAYER));
     anim->bmp = bmp;
     anim->useNum = 0;
     anim->bankNum = 1;
@@ -667,13 +667,13 @@ AnimData *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     return anim;
 }
 
-void HuSprBGSet(s16 group, s16 member,  AnimData *bg, s16 bg_bank)
+void HuSprBGSet(s16 group, s16 member,  ANIMDATA *bg, s16 bg_bank)
 {
     s16 sprite = HuSprGrpData[group].members[member];
     HuSprSprBGSet(sprite, bg, bg_bank);
 }
 
-void HuSprSprBGSet(s16 sprite, AnimData *bg, s16 bg_bank)
+void HuSprSprBGSet(s16 sprite, ANIMDATA *bg, s16 bg_bank)
 {
     HuSprite *sprite_ptr = &HuSprData[sprite];
     sprite_ptr->bg = bg;
@@ -682,15 +682,15 @@ void HuSprSprBGSet(s16 sprite, AnimData *bg, s16 bg_bank)
     sprite_ptr->attr &= ~HUSPR_ATTR_LINEAR;
 }
 
-void AnimDebug(AnimData *anim)
+void AnimDebug(ANIMDATA *anim)
 {
-    AnimPatData *pat;
-    AnimLayerData *layer;
+    ANIMPAT *pat;
+    ANIMLAYER *layer;
     s16 i;
     s16 j;
-    AnimFrameData *frame;
-    AnimBankData *bank;
-    AnimBmpData *bmp;
+    ANIMFRAME *frame;
+    ANIMBANK *bank;
+    ANIMBMP *bmp;
     
     OSReport("patNum %d,bankNum %d,bmpNum %d\n", anim->patNum, anim->bankNum, anim->bmpNum & ANIM_BMP_NUM_MASK);
     pat = anim->pat;

@@ -40,7 +40,7 @@ typedef struct {
     s16 unk02;
     s16 unk04;
     char unk06[2];
-    AnimData *unk08;
+    ANIMDATA *unk08;
 } TicketWork;
 
 typedef struct {
@@ -78,9 +78,9 @@ static void ExecScratchPick(omObjData *arg0);
 static void InitScratchPick(void);
 static void InitTicketPrizes(void);
 static void ExecTicketFocus(s32 arg0);
-static BOOL ScratchTicketCheckDone(AnimBmpData *arg0);
+static BOOL ScratchTicketCheckDone(ANIMBMP *arg0);
 static u16 TicketGetPixel(u16 arg0, u16 arg1, u16 arg2);
-static s32 TicketUpdate(AnimBmpData *arg0, Vec *arg1, s32 arg2);
+static s32 TicketUpdate(ANIMBMP *arg0, Vec *arg1, s32 arg2);
 static void ExecCoinPrize(void);
 static void ExecItemPrize(void);
 static void KillCoin(void);
@@ -1157,7 +1157,7 @@ static void ExecScratchTicket(s32 arg0) {
     u16 var_r23;
     omObjData *var_r22;
     TicketWork *temp_r30;
-    AnimBmpData *temp_r31;
+    ANIMBMP *temp_r31;
 
     var_r24 = GWPlayer[GWSystem.player_curr].character;
     var_r22 = ticketObj[arg0];
@@ -1522,7 +1522,7 @@ static void ExecTicketFocus(s32 arg0) {
     }
 }
 
-static BOOL ScratchTicketCheckDone(AnimBmpData *arg0) {
+static BOOL ScratchTicketCheckDone(ANIMBMP *arg0) {
     s32 var_r29;
     s32 var_r31;
     s32 var_r30;
@@ -1556,7 +1556,7 @@ static u16 TicketGetPixel(u16 arg0, u16 arg1, u16 arg2) {
     return var_r29 + (var_r28 << 2) + ((var_r31 + var_r30 * (arg0 >> 2)) << 4);
 }
 
-static s32 TicketUpdate(AnimBmpData *arg0, Vec *arg1, s32 arg2) {
+static s32 TicketUpdate(ANIMBMP *arg0, Vec *arg1, s32 arg2) {
     Vec sp48;
     Vec sp3C;
     float temp_f25;

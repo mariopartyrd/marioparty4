@@ -45,7 +45,7 @@ BOOL LanguageMenuExec(void)
     s16 gid;
     s16 time;
     s16 choiceChange;
-    AnimData *anim;
+    ANIMDATA *anim;
     s16 sprid;
     s16 choice;
     omObjData *outView;

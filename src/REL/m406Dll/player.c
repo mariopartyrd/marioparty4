@@ -99,7 +99,7 @@ void fn_1_DE60(omObjData *object);
 void fn_1_E214(omObjData *object);
 void fn_1_F194(omObjData *object);
 void fn_1_F694(omObjData *object);
-void fn_1_FA50(ModelData *model, Mtx mtx);
+void fn_1_FA50(HU3DMODEL *model, Mtx mtx);
 
 Vec lbl_1_data_960[70] = {
     { -495.876f, 50.005f, -0.0f },
@@ -316,7 +316,7 @@ void fn_1_D65C(Process *arg0)
     s32 var_r29;
     HSFDATA *var_r28;
     omObjData **var_r26;
-    ModelData *var_r25;
+    HU3DMODEL *var_r25;
     s16 var_r24;
 
     lbl_1_bss_1CC = -1;
@@ -333,7 +333,7 @@ void fn_1_D65C(Process *arg0)
     for (var_r30 = 0; var_r30 < 6; var_r30++) {
         lbl_1_bss_1E8[var_r30] = lbl_1_bss_1DC[var_r30] = lbl_1_bss_1D0[var_r30] = -1;
         var_r25 = &Hu3DData[(*var_r26)->model[var_r30]];
-        var_r28 = var_r25->hsfData;
+        var_r28 = var_r25->hsf;
         for (var_r29 = 0; var_r29 < var_r28->materialNum; var_r29++) {
             var_r31 = &var_r28->material[var_r29];
             if (var_r31->color[0] == 0xFF && var_r31->color[1] == 0 && var_r31->color[2] == 0) {
@@ -383,7 +383,7 @@ void fn_1_D90C(omObjData *object)
         Hu3DModelHookSet(object->model[0], lbl_1_data_1068[var_r29], object->model[var_r29 + 1]);
     }
     Hu3DModelShadowSet(object->model[0]);
-    CharEffectLayerSet(Hu3DData[object->model[0]].layer + 1);
+    CharEffectLayerSet(Hu3DData[object->model[0]].layerNo + 1);
     object->model[5] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M406, 32));
     Hu3DModelHookSet(object->model[0], "test11_tex_we-itemhook-body", object->model[5]);
     Hu3DModelAttrSet(object->model[5], HU3D_ATTR_DISPOFF);
@@ -452,7 +452,7 @@ UnkM406PlayerStruct lbl_1_data_1218[3] = {
 
 void fn_1_DD7C(omObjData *object, s32 arg1, float arg8, u32 arg2)
 {
-    ModelData *spC;
+    HU3DMODEL *spC;
     M406PlayerWork *var_r31;
 
     var_r31 = object->data;
@@ -535,7 +535,7 @@ void fn_1_E214(omObjData *object)
 
     M406PlayerWork *var_r31;
     u16 var_r27;
-    ModelData *var_r26;
+    HU3DMODEL *var_r26;
     u16 var_r25;
     s32 var_r24;
     s16 var_r23;
@@ -680,7 +680,7 @@ void fn_1_E214(omObjData *object)
                 MTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
                 MTXConcat(sp64, sp94, sp34);
                 MTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
-                MTXConcat(sp94, sp34, var_r26->unk_F0);
+                MTXConcat(sp94, sp34, var_r26->mtx);
                 var_r27 = 6;
                 var_f31 = 2.0f;
                 var_r25 = 0;
@@ -704,21 +704,21 @@ void fn_1_E214(omObjData *object)
                 MTXRotRad(sp64, 0x78, 0.017453292f * var_r31->unk_50);
                 MTXConcat(sp64, sp94, sp34);
                 MTXTrans(sp94, var_r31->unk_68, var_r31->unk_6C, var_r31->unk_70);
-                MTXConcat(sp94, sp34, var_r26->unk_F0);
+                MTXConcat(sp94, sp34, var_r26->mtx);
                 if (var_r31->unk_5E != 0) {
                     MTXTrans(sp94, 100.0f * (0.2f * (((var_r31->unk_5E & 1) * 2) - 1)), 0.0f, 0.0f);
-                    MTXConcat(sp94, var_r26->unk_F0, var_r26->unk_F0);
+                    MTXConcat(sp94, var_r26->mtx, var_r26->mtx);
                     if (--var_r31->unk_5E == 0) {
                         if (++var_r31->unk_5C >= 4) {
                             var_r31->unk_00_field3 = 0;
                             var_r31->unk_12 = 0;
                             var_r31->unk_5C = 0;
                             Hu3DModelAttrSet(object->model[5], HU3D_ATTR_DISPOFF);
-                            Hu3DData[object->model[6]].unk_64 = 0.0f;
+                            Hu3DData[object->model[6]].motWork.time = 0.0f;
                             Hu3DModelPosSet(object->model[6], object->trans.x + var_r31->unk_68, object->trans.y + var_r31->unk_6C,
                                 object->trans.z + var_r31->unk_70);
                             Hu3DModelAttrReset(object->model[6], HU3D_ATTR_DISPOFF);
-                            MTXIdentity(var_r26->unk_F0);
+                            MTXIdentity(var_r26->mtx);
                             fn_1_117BC(var_r31->unk_14.x, 25.0f, &var_r31->unk_44, &var_r31->unk_2C);
                         }
                     }
@@ -743,7 +743,7 @@ void fn_1_E214(omObjData *object)
         if (fn_1_6A44(sp28) == 1) {
             var_r31->unk_00_field0 = 1;
             var_r26 = &Hu3DData[object->model[0]];
-            MTXIdentity(var_r26->unk_F0);
+            MTXIdentity(var_r26->mtx);
             omVibrate(var_r31->unk_02, 0xC, 4, 2);
             CharFXPlayPos(var_r31->unk_0C, 0x123, &object->trans);
             for (var_r24 = 0; var_r24 < 2; var_r24++) {
@@ -775,7 +775,7 @@ void fn_1_F194(omObjData *object)
     float var_f27;
 
     M406PlayerWork *var_r31;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
 
     var_r31 = object->data;
     var_r30 = &Hu3DData[object->model[0]];
@@ -852,7 +852,7 @@ void fn_1_F694(omObjData *object)
     float var_f28;
 
     M406PlayerWork *var_r31;
-    ModelData *var_r30;
+    HU3DMODEL *var_r30;
 
     var_r31 = object->data;
     var_r30 = &Hu3DData[object->model[0]];
@@ -904,7 +904,7 @@ void fn_1_F694(omObjData *object)
     }
 }
 
-void fn_1_FA50(ModelData *model, Mtx mtx)
+void fn_1_FA50(HU3DMODEL *model, Mtx mtx)
 {
     omObjData *sp2C[4];
     Vec sp20;
@@ -1168,7 +1168,7 @@ void fn_1_10744(omObjData *object)
     float var_f31;
 
     M406PlayerWork *var_r31;
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
     s32 var_r24;
 
     var_r31 = object->data;
@@ -1281,7 +1281,7 @@ void fn_1_10744(omObjData *object)
 
 void fn_1_11058(omObjData *object)
 {
-    ModelData *sp8;
+    HU3DMODEL *sp8;
 
     M406PlayerWork *var_r30;
     void *var_r29;
@@ -1327,7 +1327,7 @@ void fn_1_114A0(omObjData *object)
     Mtx sp6C;
     Mtx sp3C;
     Mtx spC;
-    ModelData *sp8;
+    HU3DMODEL *sp8;
     M406PlayerWork *var_r31;
 
     var_r31 = object->data;
@@ -1378,10 +1378,10 @@ void fn_1_114A0(omObjData *object)
     MTXConcat(sp9C, sp6C, sp9C);
     MTXCopy(sp9C, spC);
     mtxScaleCat(spC, 2.0f, 2.0f, 2.0f);
-    MTXCopy(spC, Hu3DData[object->model[5]].unk_F0);
+    MTXCopy(spC, Hu3DData[object->model[5]].mtx);
     MTXTrans(sp3C, 0.0f, 110.0f, 0.0f);
     MTXConcat(sp9C, sp3C, spC);
-    MTXCopy(spC, Hu3DData[object->model[7]].unk_F0);
+    MTXCopy(spC, Hu3DData[object->model[7]].mtx);
 }
 
 void fn_1_117BC(float arg8, float arg9, UnkM406PlayerStruct2 *arg0, Vec *arg1)
@@ -1683,7 +1683,7 @@ s32 fn_1_129E4(omObjData *object)
 
     s32 var_r31;
     omObjData **var_r30;
-    ModelData *var_r29;
+    HU3DMODEL *var_r29;
 
     var_r30 = omGetGroupMemberListEx(HuPrcCurrentGet(), 3);
     for (var_r31 = 0; var_r31 < var_r30[0]->mdlcnt; var_r31++) {
@@ -1736,7 +1736,7 @@ void fn_1_12BC4(omObjData *object)
     float var_f28;
 
     s32 var_r31;
-    CameraData *var_r30 = Hu3DCamera;
+    HU3DCAMERA *var_r30 = Hu3DCamera;
 
     if (lbl_1_bss_1C4 != 0) {
         if (fn_1_122C() == 4) {
@@ -1861,11 +1861,11 @@ void fn_1_13A88(s16 arg0, char *arg1, Mtx arg2)
 {
     Mtx sp14;
 
-    ModelData *var_r31;
+    HU3DMODEL *var_r31;
     HSFDATA *var_r30;
 
     var_r31 = &Hu3DData[arg0];
-    var_r30 = var_r31->hsfData;
+    var_r30 = var_r31->hsf;
     MTXIdentity(sp14);
     fn_1_136AC(var_r30->root, sp14, arg1, arg2);
 }
@@ -1917,7 +1917,7 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     s32 var_r22;
     s32 var_r21;
     omObjData **var_r20;
-    ModelData *var_r19;
+    HU3DMODEL *var_r19;
 
     var_r20 = omGetGroupMemberListEx(lbl_1_bss_1C8, 2);
     var_r21 = arg0->z / -10000.0f;
@@ -1931,7 +1931,7 @@ s32 fn_1_13C10(Vec *arg0, Vec *arg1)
     }
     var_r19 = &Hu3DData[(*var_r20)->model[var_r21]];
     var_f29 = 100000.0f;
-    var_r27 = var_r19->hsfData->root;
+    var_r27 = var_r19->hsf->root;
     if (var_r27->type != 2) {
 #ifdef NON_MATCHING
         return 1;
@@ -2067,7 +2067,7 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
     HSFBUFFER *var_r25;
     s32 var_r24;
     omObjData **var_r23;
-    ModelData *var_r22;
+    HU3DMODEL *var_r22;
     s32 var_r21;
 
 #ifdef NON_MATCHING
@@ -2081,7 +2081,7 @@ float fn_1_143F4(Vec *arg0, UnkM406PlayerStruct2 *arg1)
         return sp8;
     }
     var_r22 = &Hu3DData[var_r23[0]->model[var_r27]];
-    var_r30 = var_r22->hsfData->root;
+    var_r30 = var_r22->hsf->root;
     if (var_r30->type != 2) {
         return -100000.0f;
     }

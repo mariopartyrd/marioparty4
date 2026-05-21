@@ -44,7 +44,7 @@ void fn_1_7D74(omObjData *object);
 void fn_1_7F30(omObjData *object);
 void fn_1_83B4(omObjData *object);
 
-void fn_1_89BC(ModelData *model, Mtx mtx);
+void fn_1_89BC(HU3DMODEL *model, Mtx mtx);
 
 void fn_1_8EA0(void);
 void fn_1_8FF0(void);
@@ -110,7 +110,7 @@ void fn_1_7F30(omObjData *object)
     s16 temp_r26;
     s16 temp_r25;
     s16 temp_r24;
-    AnimData *temp_r23;
+    ANIMDATA *temp_r23;
     object->stat |= 0x100;
     for (temp_r30 = 0; temp_r30 < 2; temp_r30++) {
         if (temp_r30 == 0) {
@@ -166,7 +166,7 @@ void fn_1_83B4(omObjData *object)
     Vec *temp_r29;
     s32 temp_r28;
     s32 temp_r27;
-    ModelData *temp_r26;
+    HU3DMODEL *temp_r26;
 
     Mtx sp130[2];
     Mtx sp100;
@@ -234,7 +234,7 @@ void fn_1_8904(void *arg0, u8 arg1)
     DCFlushRange(arg0, lbl_1_bss_1184);
 }
 
-void fn_1_89BC(ModelData *model, Mtx mtx)
+void fn_1_89BC(HU3DMODEL *model, Mtx mtx)
 {
     Mtx44 sp34;
     GXTexObj sp14;
@@ -288,11 +288,11 @@ void fn_1_8EB4(s16 model)
     HSFMATERIAL *temp_r31;
     HSFDATA *temp_r30;
     s32 temp_r29;
-    ModelData *temp_r28;
+    HU3DMODEL *temp_r28;
     s16 *temp_r27;
     s16 temp_r26;
     temp_r28 = &Hu3DData[model];
-    temp_r30 = temp_r28->hsfData;
+    temp_r30 = temp_r28->hsf;
     temp_r26 = temp_r30->materialNum;
     temp_r27 = &lbl_1_bss_968[lbl_1_bss_1168][0];
     *temp_r27 = model;
@@ -309,7 +309,7 @@ void fn_1_8F60(float arg0)
     s32 temp_r30;
     temp_r31 = &lbl_1_bss_968[0][0];
     for (temp_r30 = 0; temp_r30 < lbl_1_bss_1168; temp_r31 += 4, temp_r30++) {
-        ModelData *sp8 = &Hu3DData[*temp_r31];
+        HU3DMODEL *sp8 = &Hu3DData[*temp_r31];
         Hu3DModelAmbSet(*temp_r31, arg0, arg0, arg0);
     }
 }

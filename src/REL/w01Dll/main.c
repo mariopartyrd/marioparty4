@@ -1024,7 +1024,7 @@ static void CoasterPathMotUpdate(void)
 {
     Vec diff;
     s16 modelId;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     HSFOBJECT *obj;
 
     coasterAccel += 0.002f;
@@ -1036,7 +1036,7 @@ static void CoasterPathMotUpdate(void)
     }
     modelId = BoardModelIDGet(coasterPathMdlId);
     modelP = &Hu3DData[modelId];
-    Hu3DMotionExec(modelId, modelP->unk_08, modelP->unk_64, 0);
+    Hu3DMotionExec(modelId, modelP->motId, modelP->motWork.time, 0);
     obj = Hu3DModelObjPtrGet(modelId, "looppath-cube1");
     coasterPosOld = coasterPos;
     coasterPos.x = obj->mesh.curr.pos.x;
@@ -2255,7 +2255,7 @@ static void CoasterPlayerChaseBegin(CoasterPlayerWork *work, omObjData *obj)
 
 static void CoasterPlayerChasePathSet(CoasterPlayerWork *work, omObjData *obj)
 {
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     HSFOBJECT *modelObj;
     Vec mdlCoasterPos;
     Vec dir;
@@ -2273,14 +2273,14 @@ static void CoasterPlayerChasePathSet(CoasterPlayerWork *work, omObjData *obj)
     motTime = BoardModelMotionTimeGet(coasterPathMdlId);
     modelId = BoardModelIDGet(coasterPathMdlId);
     modelP = &Hu3DData[modelId];
-    Hu3DMotionExec(modelId, modelP->unk_08, modelP->unk_64, 0);
+    Hu3DMotionExec(modelId, modelP->motId, modelP->motWork.time, 0);
     modelObj = Hu3DModelObjPtrGet(modelId, "looppath-cube1");
     objPos.x = modelObj->mesh.curr.pos.x;
     objPos.y = modelObj->mesh.curr.pos.y;
     objPos.z = modelObj->mesh.curr.pos.z;
     time = coasterTime;
     while (TRUE) {
-        Hu3DMotionExec(modelId, modelP->unk_08, modelP->unk_64, 0);
+        Hu3DMotionExec(modelId, modelP->motId, modelP->motWork.time, 0);
         modelObj = Hu3DModelObjPtrGet(modelId, "looppath-cube1");
         dir.x = objPos.x - modelObj->mesh.curr.pos.x;
         dir.y = objPos.y - modelObj->mesh.curr.pos.y;
@@ -2292,18 +2292,18 @@ static void CoasterPlayerChasePathSet(CoasterPlayerWork *work, omObjData *obj)
         objPos.x = modelObj->mesh.curr.pos.x;
         objPos.y = modelObj->mesh.curr.pos.y;
         objPos.z = modelObj->mesh.curr.pos.z;
-        modelP->unk_64 += work->speed;
+        modelP->motWork.time += work->speed;
     }
     BoardModelMotionStart(work->pathMdlId, 0, 0);
-    BoardModelMotionTimeSet(work->pathMdlId, modelP->unk_64);
-    BoardModelMotionSpeedSet(work->pathMdlId, modelP->unk_68);
+    BoardModelMotionTimeSet(work->pathMdlId, modelP->motWork.time);
+    BoardModelMotionSpeedSet(work->pathMdlId, modelP->motWork.speed);
     work->mode = 3;
     BoardModelMotionTimeSet(coasterPathMdlId, motTime);
 }
 
 static void CoasterPlayerChase(CoasterPlayerWork *work, omObjData *obj)
 {
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     HSFOBJECT *modelObj;
     Vec *pos;
     Vec *target;
@@ -2318,7 +2318,7 @@ static void CoasterPlayerChase(CoasterPlayerWork *work, omObjData *obj)
 
     modelId = BoardModelIDGet(work->pathMdlId);
     modelP = &Hu3DData[modelId];
-    Hu3DMotionExec(modelId, modelP->unk_08, modelP->unk_64, 0);
+    Hu3DMotionExec(modelId, modelP->motId, modelP->motWork.time, 0);
     modelObj = Hu3DModelObjPtrGet(modelId, "looppath-cube1");
     objPos.x = modelObj->mesh.curr.pos.x;
     objPos.y = modelObj->mesh.curr.pos.y;
@@ -2486,7 +2486,7 @@ static s32 CoasterPlayerLoopCheck(CoasterPlayerWork *arg0)
 static void CoasterPlayerTimeInit(CoasterPlayerWork *work)
 {
     HSFOBJECT *modelObj;
-    ModelData *modelP;
+    HU3DMODEL *modelP;
     Vec pos;
     Vec prevPos;
     Vec playerPos;
@@ -2507,14 +2507,14 @@ static void CoasterPlayerTimeInit(CoasterPlayerWork *work)
     BoardPlayerPosGet(work->playerNo, &playerPos);
     modelId = BoardModelIDGet(work->pathMdlId);
     modelP = &Hu3DData[modelId];
-    Hu3DMotionExec(modelId, modelP->unk_08, modelP->unk_64, 0);
+    Hu3DMotionExec(modelId, modelP->motId, modelP->motWork.time, 0);
     modelObj = Hu3DModelObjPtrGet(modelId, "looppath-cube1");
     prevPos.x = modelObj->mesh.curr.pos.x;
     prevPos.y = modelObj->mesh.curr.pos.y;
     prevPos.z = modelObj->mesh.curr.pos.z;
     time = 0.0f;
     while (TRUE) {
-        Hu3DMotionExec(modelId, modelP->unk_08, modelP->unk_64, 0);
+        Hu3DMotionExec(modelId, modelP->motId, modelP->motWork.time, 0);
         modelObj = Hu3DModelObjPtrGet(modelId, "looppath-cube1");
         pos.x = modelObj->mesh.curr.pos.x;
         pos.y = modelObj->mesh.curr.pos.y;
@@ -2525,7 +2525,7 @@ static void CoasterPlayerTimeInit(CoasterPlayerWork *work)
             break;
         }
         prevPos = pos;
-        modelP->unk_64 += modelP->unk_68;
+        modelP->motWork.time += modelP->motWork.speed;
     }
     work->time = time;
 }

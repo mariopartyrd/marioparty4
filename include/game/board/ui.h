@@ -21,7 +21,7 @@ void BoardStatusHammerShowSet(s32 arg0, s32 arg1);
 void BoardStatusHammerKill(s32 arg0);
 void BoardStatusKill(void);
 void BoardStatusCreate(void);
-void BoardSpriteCreate(s32 file, s32 prio, AnimData **anim, s16 *sprite);
+void BoardSpriteCreate(s32 file, s32 prio, ANIMDATA **anim, s16 *sprite);
 void BoardSpriteDigitUpdate(s16 arg0, s16 arg1, s32 arg2);
 void BoardPickerCreate(s32 arg0, s8 arg1, void *arg2, s8 arg3);
 void BoardPickerBackFlagSet(s32 arg0);

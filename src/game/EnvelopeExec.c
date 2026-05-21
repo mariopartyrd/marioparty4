@@ -203,7 +203,7 @@ static void SetEnvelop(HSFCENV *arg0) {
     u32 sp8;
     HSFCENVDUAL *var_r20;
     HSFCENVDUALWEIGHT *var_r30;
-    HsfCenvMulti *var_r19;
+    HSFCENVMULTI *var_r19;
     HSFCENVMULTIWEIGHT *var_r25;
     HSFCENVSINGLE *var_r27;
     Vec *temp_r22;

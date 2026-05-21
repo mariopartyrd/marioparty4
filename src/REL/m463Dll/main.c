@@ -78,7 +78,7 @@ omObjData *lbl_1_bss_358;
 omObjData *lbl_1_bss_354;
 omObjData *playerObjs[9];
 omObjData *lbl_1_bss_32C;
-HsfanimStruct00 lbl_1_bss_5C[9];
+HU3DPARMANPARAM lbl_1_bss_5C[9];
 s32 lbl_1_bss_58;
 s32 lbl_1_bss_54;
 s32 lbl_1_bss_50;           //// TODO: setup enum when what this is gets figured out
@@ -164,8 +164,8 @@ s32 lbl_1_data_184 = -1;
 
 void fn_1_4C8(omObjData *object)
 {
-    ModelData *model;
-    ModelData *model2;
+    HU3DMODEL *model;
+    HU3DMODEL *model2;
     float temp_f31;
     float temp_f30;
     float var_f28;
@@ -208,7 +208,7 @@ void fn_1_4C8(omObjData *object)
     s32 spA4;
     s32 spA0;
     M463PlayerData *sp9C;
-    ModelData *sp98;
+    HU3DMODEL *sp98;
     float sp94;
     float sp90;
     s32 sp8C;
@@ -830,8 +830,8 @@ void fn_1_3264(omObjData *arg0)
     float temp_f27;
     float temp_f28;
     M463PlayerData *spC[9];
-    ModelData *temp_r29;
-    ModelData *temp_r28;
+    HU3DMODEL *temp_r29;
+    HU3DMODEL *temp_r28;
     s32 var_r27;
     s32 i;
     s32 j;
@@ -913,11 +913,11 @@ void fn_1_3264(omObjData *arg0)
 
 s16 fn_1_4474(void)
 {
-    AnimData *var_r29;
+    ANIMDATA *var_r29;
     void *var_r28;
     s16 var_r31;
     s16 var_r30;
-    HsfanimStruct00 sp8 = { 0x96, { 0x00, 0x00 }, 50.0f, 0.0f, 65.0f, { 0.0f, -0.195f, 0.0f }, 80.0f, 0.99f, 40.0f, 0.999f, 4,
+    HU3DPARMANPARAM sp8 = { 0x96, { 0x00, 0x00 }, 50.0f, 0.0f, 65.0f, { 0.0f, -0.195f, 0.0f }, 80.0f, 0.99f, 40.0f, 0.999f, 4,
         { { 0xFF, 0xFF, 0x20, 0xFF }, { 0xFF, 0xFF, 0x00, 0xFF }, { 0xFF, 0xFF, 0x80, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF } },
         { { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 } } };
 
