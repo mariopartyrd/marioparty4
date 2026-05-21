@@ -23,7 +23,7 @@ static void HuDVDReadAsyncCallBack(s32 result, DVDFileInfo* fileInfo)
     CallBackStatus = 1;
 }
 
-static void *HuDvdDataReadWait(DVDFileInfo *file, int heap, int mode, int num, DVDCallback cb, BOOL skip_wait)
+static void *HuDvdDataReadWait(DVDFileInfo *file, int heap, int mode, int num, DVDCallback cb, BOOL async)
 {
     u32 len;
     void *buf;
@@ -50,7 +50,7 @@ static void *HuDvdDataReadWait(DVDFileInfo *file, int heap, int mode, int num, D
     OSReport("Rest Memory %x\n", HuMemHeapSizeGet(3)-HuMemUsedMallocSizeGet(3));
     CallBackStatus = 0;
     DVDReadAsync(file, buf, OSRoundUp32B(len), 0, cb);
-    if(!skip_wait) {
+    if(!async) {
         while(!CallBackStatus) {
             HuDvdErrorWatch();
         }
@@ -136,14 +136,14 @@ void *HuDvdDataFastReadNum(s32 entrynum, s32 num)
     return data;
 }
 
-void *HuDvdDataFastReadAsync(s32 entrynum, DataReadStat *stat)
+void *HuDvdDataFastReadAsync(s32 entrynum, HUDATASTAT *stat)
 {
     DVDFileInfo file;
     void *data = NULL;
-    if(!DVDFastOpen(entrynum, &stat->file_info)) {
+    if(!DVDFastOpen(entrynum, &stat->dvdFile)) {
         OSPanic("dvd.c", 274, "dvd.c: File Open Error");
     } else {
-        data = HuDvdDataReadWait(&stat->file_info, HEAP_DVD, 0, 0, HuDataDirReadAsyncCallBack, TRUE);
+        data = HuDvdDataReadWait(&stat->dvdFile, HEAP_DVD, 0, 0, HuDataDirReadAsyncCallBack, TRUE);
     }
     return data;
 }
