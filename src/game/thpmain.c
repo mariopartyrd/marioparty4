@@ -11,7 +11,7 @@
 
 static void THPTestProc(void);
 static void THPViewFunc(HU3DMODEL *arg0, Mtx arg1);
-static void THPViewSprFunc(HuSprite *arg0);
+static void THPViewSprFunc(HUSPRITE *arg0);
 static void THPDecodeFunc(void *param);
 
 static char THPFileName[64];
@@ -227,7 +227,7 @@ static void THPViewFunc(HU3DMODEL *arg0, Mtx arg1)
     }
 }
 
-static void THPViewSprFunc(HuSprite *arg0)
+static void THPViewSprFunc(HUSPRITE *arg0)
 {
     Vec spC = { 0.0f, 0.0f, 1.0f };
     GXColor sp8;
@@ -241,16 +241,16 @@ static void THPViewSprFunc(HuSprite *arg0)
         sp8.g = arg0->g;
         sp8.b = arg0->b;
         sp8.a = arg0->a;
-        if (arg0->z_rot != 0.0f) {
-            PSMTXRotAxisRad(sp18, &spC, MTXDegToRad(arg0->z_rot));
-            PSMTXScale(sp48, arg0->scale_x, arg0->scale_y, 1.0f);
+        if (arg0->zRot != 0.0f) {
+            PSMTXRotAxisRad(sp18, &spC, MTXDegToRad(arg0->zRot));
+            PSMTXScale(sp48, arg0->scale.x, arg0->scale.y, 1.0f);
             PSMTXConcat(sp18, sp48, sp48);
         }
         else {
-            PSMTXScale(sp48, arg0->scale_x, arg0->scale_y, 1.0f);
+            PSMTXScale(sp48, arg0->scale.x, arg0->scale.y, 1.0f);
         }
-        mtxTransCat(sp48, arg0->x, arg0->y, 0.0f);
-        PSMTXConcat(*arg0->group_mtx, sp48, sp48);
+        mtxTransCat(sp48, arg0->pos.x, arg0->pos.y, 0.0f);
+        PSMTXConcat(*arg0->groupMtx, sp48, sp48);
         temp_r30 = -((s32)audioTrack.unk00 / 2);
         temp_r29 = -((s32)audioTrack.unk04 / 2);
         GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);

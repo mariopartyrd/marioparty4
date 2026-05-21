@@ -793,7 +793,7 @@ s32 fn_1_16B30(void)
 
 void fn_1_17A5C(void)
 {
-    HuSprGrp *gp = &HuSprGrpData[lbl_1_bss_3A8];
+    HUSPRGRP *gp = &HuSprGrpData[lbl_1_bss_3A8];
     s16 j;
     s16 i;
     for (j = 0; j <= 30; j++) {

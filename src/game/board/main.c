@@ -2014,9 +2014,9 @@ void BoardLast5GfxInit(void)
             HuSprPosSet(work->group, i, last5GfxPosTbl[lastF][i][0], last5GfxPosTbl[lastF][i][1]);
         }
         if(!work->is_last) {
-            HuSprite *sprite = &HuSprData[HuSprGrpData[work->group].members[1]];
+            HUSPRITE *sprite = &HuSprData[HuSprGrpData[work->group].members[1]];
             HuSprBankSet(work->group, 1, 0);
-            sprite->frame = turn_remain;
+            sprite->animNo = turn_remain;
         } else {
             HuSprAttrSet(work->group, 1, HUSPR_ATTR_DISPOFF);
         }

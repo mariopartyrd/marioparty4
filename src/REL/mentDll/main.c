@@ -4483,7 +4483,7 @@ void fn_1_1850C(void)
         HuSprGrpPosSet(lbl_1_bss_35BC[0].unk_34, 16.0f, var_f31);
         if (var_r31 >= 0xF) {
             var_f31 = fn_1_254(210.0f, -500.0f, var_r31 - 0xF, 60.0f);
-            HuSprGrpData[lbl_1_bss_35BC[0].unk_38].y = (s32)fn_1_234(HuSprGrpData[lbl_1_bss_35BC[0].unk_38].y, var_f31, 10.0f);
+            HuSprGrpData[lbl_1_bss_35BC[0].unk_38].pos.y = (s32)fn_1_234(HuSprGrpData[lbl_1_bss_35BC[0].unk_38].pos.y, var_f31, 10.0f);
         }
     }
 }
@@ -4778,8 +4778,8 @@ void fn_1_19C98(omObjData *arg0, MentDllUnkBss35BCStruct *arg1)
         };
         lbl_1_bss_35BC[0].unk_08[3] = 0;
         var_r27 = arg1->unk_08[0];
-        sp8[0] = HuSprData[HuSprGrpData[var_r30].members[3]].x;
-        sp8[1] = HuSprData[HuSprGrpData[var_r30].members[4]].x;
+        sp8[0] = HuSprData[HuSprGrpData[var_r30].members[3]].pos.x;
+        sp8[1] = HuSprData[HuSprGrpData[var_r30].members[4]].pos.x;
         if ((HuPadBtnDown[lbl_1_bss_3114->unk_6C] & PAD_BUTTON_A) != 0) {
             arg1->unk_08[0]++;
             HuAudFXPlay(2);
@@ -5984,7 +5984,7 @@ void fn_1_1FA34(void)
         HuSprGrpPosSet(lbl_1_bss_35BC[0].unk_34, 16.0f, var_f31);
         if (var_r31 >= 0xF) {
             var_f31 = fn_1_254(210.0f, -500.0f, var_r31 - 0xF, 60.0f);
-            HuSprGrpData[lbl_1_bss_35BC[0].unk_38].y = (s32)fn_1_234(HuSprGrpData[lbl_1_bss_35BC[0].unk_38].y, var_f31, 10.0f);
+            HuSprGrpData[lbl_1_bss_35BC[0].unk_38].pos.y = (s32)fn_1_234(HuSprGrpData[lbl_1_bss_35BC[0].unk_38].pos.y, var_f31, 10.0f);
         }
     }
 }
@@ -6001,7 +6001,7 @@ void fn_1_1FC54(void)
         var_f31 = fn_1_254(40.0f, -500.0f, var_r31, 40.0f);
         HuSprGrpPosSet(lbl_1_bss_35BC[0].unk_34, 16.0f, var_f31);
         var_f31 = fn_1_254(210.0f, -500.0f, var_r31, 40.0f);
-        HuSprGrpData[lbl_1_bss_35BC[0].unk_38].y = (s32)fn_1_234(HuSprGrpData[lbl_1_bss_35BC[0].unk_38].y, var_f31, 10.0f);
+        HuSprGrpData[lbl_1_bss_35BC[0].unk_38].pos.y = (s32)fn_1_234(HuSprGrpData[lbl_1_bss_35BC[0].unk_38].pos.y, var_f31, 10.0f);
     }
 }
 
