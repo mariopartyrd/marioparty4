@@ -661,14 +661,14 @@ static inline void FixupObject(HSFOBJECT *object)
         case 8:
         {
             objdata_8 = &object->mesh;
-            object->type = HSF_OBJ_NONE2;
+            object->type = HSF_OBJ_LIGHT;
         }
         break;
         
         case 7:
         {
             objdata_7 = &object->mesh;
-            object->type = HSF_OBJ_NONE1;
+            object->type = HSF_OBJ_CAMERA;
         }
         break;
         
