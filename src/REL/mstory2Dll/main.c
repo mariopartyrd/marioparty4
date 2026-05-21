@@ -1172,13 +1172,13 @@ float lbl_1_data_368[8] = {
 void fn_1_7244(s16 modelId, char *objName, u32 constFlags, float ofs)
 {
     HSFOBJECT *obj = Hu3DModelObjPtrGet(modelId, objName);
-    HsfConstData *constData;
+    HSFCONSTDATA *constData;
     if(!obj->constData) {
         constData = ObjConstantMake(obj, Hu3DData[modelId].mallocNo);
     } else {
         constData = obj->constData;
     }
-    constData->flags |= constFlags;
+    constData->attr |= constFlags;
     if(constFlags & 0x10) {
         obj->mesh.curr.pos.x += ofs;
     }

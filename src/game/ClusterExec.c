@@ -105,7 +105,7 @@ void ClusterProc(HU3DMODEL *arg0) {
     s32 k;
     HSFDATA *temp_r27;
     HSFDATA *temp_r23;
-    MotionData *temp_r22;
+    HU3DMOTION *temp_r22;
     HSFCLUSTER *var_r29;
     HSFOBJECT *temp_r31;
 
@@ -113,7 +113,7 @@ void ClusterProc(HU3DMODEL *arg0) {
         temp_r24 = arg0->motIdCluster[i];
         if (temp_r24 != -1) {
             temp_r22 = &Hu3DMotion[temp_r24];
-            temp_r27 = temp_r22->unk_04;
+            temp_r27 = temp_r22->hsf;
             temp_r23 = arg0->hsf;
             var_r29 = temp_r27->cluster;
             for (j = 0; j < temp_r27->clusterNum; j++, var_r29++) {
@@ -147,14 +147,14 @@ void ClusterMotionExec(HU3DMODEL *arg0) {
     HSFMOTION *temp_r27; // ! - uninitialized
     HSFTRACK *var_r31;
     HSFTRACK *var_r30;
-    MotionData *var_r23;
+    HU3DMOTION *var_r23;
 
     var_r31 = temp_r27->track;
     for (i = 0; i < 4; i++) {
         if (arg0->motIdCluster[i] != -1) {
             var_r20 = arg0->motIdCluster[i];
             var_r23 = &Hu3DMotion[var_r20];
-            temp_r28 = var_r23->unk_04;
+            temp_r28 = var_r23->hsf;
             temp_r27 = temp_r28->motion;
             var_r31 = temp_r27->track;
             temp_f31 = arg0->clusterTime[i];

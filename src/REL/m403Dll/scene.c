@@ -506,7 +506,7 @@ static void fn_1_7A98(s16 arg0)
     HSFDATA *temp_r31;
     HSFOBJECT *var_r28;
     HSFOBJECT *var_r30;
-    HsfConstData *temp_r27;
+    HSFCONSTDATA *temp_r27;
 
     temp_r31 = Hu3DData[arg0].hsf;
     var_r28 = temp_r31->object;
@@ -514,7 +514,7 @@ static void fn_1_7A98(s16 arg0)
         var_r30 = var_r28;
         if (var_r30->constData) {
             temp_r27 = var_r30->constData;
-            temp_r27->flags &= ~8;
+            temp_r27->attr &= ~8;
         }
     }
 }

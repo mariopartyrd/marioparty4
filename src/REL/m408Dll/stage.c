@@ -22,9 +22,9 @@ omObjData *lbl_1_bss_13C;
 s32 lbl_1_bss_138;
 s32 lbl_1_bss_134;
 s32 lbl_1_bss_130;
-HsfConstData *lbl_1_bss_128[2];
+HSFCONSTDATA *lbl_1_bss_128[2];
 void *lbl_1_bss_120[2];
-HsfDrawData *lbl_1_bss_11C;
+HSFDRAWDATA *lbl_1_bss_11C;
 s16 lbl_1_bss_118;
 
 float lbl_1_data_198 = 1000;
@@ -822,7 +822,7 @@ typedef struct unk_fn_10484 {
 
 } UnkFn10484;
 
-void fn_1_10484(UnkFn10484 *arg0, HSFFACE *arg1, HsfDrawData *arg2, GXColor *arg3);
+void fn_1_10484(UnkFn10484 *arg0, HSFFACE *arg1, HSFDRAWDATA *arg2, GXColor *arg3);
 
 void fn_1_F8A0(HU3DMODEL *arg0, Mtx arg1)
 {
@@ -849,7 +849,7 @@ void fn_1_F8A0(HU3DMODEL *arg0, Mtx arg1)
     MTXInverse(spA0.unkC, sp70);
     MTXTranspose(sp70, sp40);
     GXLoadNrmMtxImm(sp40, GX_PNMTX0);
-    if (Hu3DShadowF && (lbl_1_bss_128[0]->flags & 0x8)) {
+    if (Hu3DShadowF && (lbl_1_bss_128[0]->attr & 0x8)) {
         MTXConcat(sp10, spA0.unkC, sp40);
         MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, sp70);
         MTXConcat(sp70, sp40, sp40);
@@ -913,7 +913,7 @@ void fn_1_FB98(HU3DMODEL *arg0, Mtx arg1)
     MTXInverse(sp120.unkC, spF0);
     MTXTranspose(spF0, spC0);
     GXLoadNrmMtxImm(spC0, GX_PNMTX0);
-    if (Hu3DShadowF && (lbl_1_bss_128[0]->flags & 0x8)) {
+    if (Hu3DShadowF && (lbl_1_bss_128[0]->attr & 0x8)) {
         MTXConcat(sp90, sp120.unkC, spC0);
         MTXConcat(Hu3DShadowData.projMtx, Hu3DShadowData.lookAtMtx, spF0);
         MTXConcat(spF0, spC0, spC0);
@@ -995,14 +995,14 @@ void fn_1_FB98(HU3DMODEL *arg0, Mtx arg1)
 void fn_1_10830(HU3DMODEL *arg0, HSFBITMAP *arg1, HSFATTRIBUTE *arg2, s16 arg3);
 void fn_1_10B60(UnkFn10484 *arg0, HSFMATERIAL *arg1);
 
-void fn_1_10484(UnkFn10484 *arg0, HSFFACE *arg1, HsfDrawData *arg2, GXColor *arg3)
+void fn_1_10484(UnkFn10484 *arg0, HSFFACE *arg1, HSFDRAWDATA *arg2, GXColor *arg3)
 {
     HSFMATERIAL *temp_r31;
     HSFOBJECT *temp_r30;
     HSFATTRIBUTE *temp_r29;
     s16 temp_r27;
     s16 temp_r25;
-    HsfdrawStruct01 *temp_r24;
+    HU3DATTRANIM *temp_r24;
     HU3DMODEL *temp_r23;
     HU3DTEXANIM *temp_r22;
     void *temp_r20;
@@ -1060,8 +1060,8 @@ void fn_1_10484(UnkFn10484 *arg0, HSFFACE *arg1, HsfDrawData *arg2, GXColor *arg
         temp_r29 = &temp_r30->mesh.attribute[temp_r31->attr[temp_r27]];
         if (temp_r29->animWorkP) {
             temp_r24 = temp_r29->animWorkP;
-            temp_r22 = &Hu3DTexAnimData[temp_r24->unk02];
-            if ((temp_r24->unk00 & 0x1) && !(temp_r22->attr & 0x4)) {
+            temp_r22 = &Hu3DTexAnimData[temp_r24->animId];
+            if ((temp_r24->attr & 0x1) && !(temp_r22->attr & 0x4)) {
                 if (Hu3DAnimSet(arg0->unk0, temp_r29, (s16)temp_r27)) {
                     continue;
                 }
@@ -1151,7 +1151,7 @@ void fn_1_10B60(UnkFn10484 *arg0, HSFMATERIAL *arg1)
     HSFATTRIBUTE *temp_r29;
     u16 temp_r28;
     HSFOBJECT *temp_r27;
-    HsfdrawStruct01 *temp_r26;
+    HU3DATTRANIM *temp_r26;
     u16 temp_r25;
     u16 temp_r24;
     s32 temp_r23;
@@ -1177,8 +1177,8 @@ void fn_1_10B60(UnkFn10484 *arg0, HSFMATERIAL *arg1)
         GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY);
         if (temp_r29->animWorkP) {
             temp_r26 = temp_r29->animWorkP;
-            if (temp_r26->unk00 & 0x2) {
-                GXLoadTexMtxImm(Hu3DTexScrData[temp_r26->unk04].texMtx, GX_TEXMTX0, GX_MTX2x4);
+            if (temp_r26->attr & 0x2) {
+                GXLoadTexMtxImm(Hu3DTexScrData[temp_r26->texScrId].texMtx, GX_TEXMTX0, GX_MTX2x4);
                 GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0);
             }
         }
@@ -1244,8 +1244,8 @@ void fn_1_10B60(UnkFn10484 *arg0, HSFMATERIAL *arg1)
             else {
                 if (temp_r29->animWorkP) {
                     temp_r26 = temp_r29->animWorkP;
-                    if (temp_r26->unk00 & 0x2) {
-                        GXLoadTexMtxImm(Hu3DTexScrData[temp_r26->unk04].texMtx, texMtxTbl[temp_r28], GX_MTX2x4);
+                    if (temp_r26->attr & 0x2) {
+                        GXLoadTexMtxImm(Hu3DTexScrData[temp_r26->texScrId].texMtx, texMtxTbl[temp_r28], GX_MTX2x4);
                         GXSetTexCoordGen(temp_r28, GX_TG_MTX2x4, GX_TG_TEX0, texMtxTbl[temp_r28]);
                         temp_r20 = (u16)temp_r28;
                         temp_r28++;

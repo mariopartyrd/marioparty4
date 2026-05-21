@@ -91,7 +91,7 @@ typedef struct HsfPalette_s {
 
 typedef struct HsfAttribute_s {
     char *name;
-    struct hsfdraw_struct_01 *animWorkP;
+    void *animWorkP;
     u8 unk8[4];
     float kColor;
     u8 unk10[4];
