@@ -196,7 +196,7 @@ void HuAMemDump(void) {
 }
 
 u32 HuAR_DVDtoARAM(u32 dir) {
-    DataReadStat *stat;
+    HUDATASTAT *stat;
     ARMEM_BLOCK *block;
     AMEM_PTR aMemP;
 
@@ -213,7 +213,7 @@ u32 HuAR_DVDtoARAM(u32 dir) {
     block = HuARInfoGet(aMemP);
     block->dir = (dir >> 16);
     arqCnt++;
-    ARQPostRequest(&arqReq, 0x1234, 0, 0, (u32) stat->dir, aMemP, DirDataSize, ArqCallBack);
+    ARQPostRequest(&arqReq, 0x1234, 0, 0, (u32) stat->dirP, aMemP, DirDataSize, ArqCallBack);
     OSReport("ARAM Trans %x\n", aMemP);
     while (HuARDMACheck());
     HuDataDirClose(dir);
@@ -231,12 +231,12 @@ AMEM_PTR HuAR_MRAMtoARAM(s32 dir) {
 
 AMEM_PTR HuAR_MRAMtoARAM2(void *dirPtr) {
     ARMEM_BLOCK *block;
-    DataReadStat *status;
+    HUDATASTAT *status;
     u32 size;
     AMEM_PTR aMemP;
 
     status = HuDataGetStatus(dirPtr);
-    aMemP = HuARDirCheck(status->dir_id << 16);
+    aMemP = HuARDirCheck(status->dirId << 16);
     if (aMemP) {
         return aMemP;
     }
@@ -247,7 +247,7 @@ AMEM_PTR HuAR_MRAMtoARAM2(void *dirPtr) {
         return 0;
     }
     block = HuARInfoGet(aMemP);
-    block->dir = status->dir_id;
+    block->dir = status->dirId;
     arqCnt++;
     ARQPostRequest(&arqReq, 0x1234, 0, 0, (u32)dirPtr, aMemP, size, ArqCallBack);
     return aMemP;

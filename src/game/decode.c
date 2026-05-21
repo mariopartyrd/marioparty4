@@ -1,16 +1,16 @@
 #include "game/data.h"
 #include "dolphin/os.h"
 
-struct decode_data
+typedef struct Decode_s
 {
     u8 *src;
     u8 *dst;
     u32 size;
-};
+} DECODE;
 
 static u8 textBuffer[1024];
 
-static void HuDecodeNone(struct decode_data *decode)
+static void HuDecodeNone(DECODE *decode)
 {
     while(decode->size) {
         *decode->dst++ = *decode->src++;
@@ -18,14 +18,13 @@ static void HuDecodeNone(struct decode_data *decode)
     }
 }
 
-static void HuDecodeLz(struct decode_data *decode)
+static void HuDecodeLz(DECODE *decode)
 {
     u16 flag, pos;
-    s32 i, j, copy_len;
+    s32 i, j, copyLen;
     flag = 0;
     pos = 958;
-    
-    
+
     for(i=0; i<1024; i++) {
         textBuffer[i] = 0;
     }
@@ -40,10 +39,10 @@ static void HuDecodeLz(struct decode_data *decode)
             decode->size--;
         } else {
             i = *decode->src++;
-            copy_len = *decode->src++;
-            i |= ((copy_len & ~0x3F) << 2);
-            copy_len = (copy_len & 0x3F)+3;
-            for(j=0; j<copy_len; j++) {
+            copyLen = *decode->src++;
+            i |= ((copyLen & ~0x3F) << 2);
+            copyLen = (copyLen & 0x3F)+3;
+            for(j=0; j<copyLen; j++) {
                 textBuffer[pos++] = *decode->dst++ = textBuffer[(i+j) & 0x3FF];
                 pos &= 0x3FF;
             }
@@ -52,7 +51,7 @@ static void HuDecodeLz(struct decode_data *decode)
     }
 }
 
-static inline void SlideReadHeader(struct decode_data *decode)
+static inline void SlideReadHeader(DECODE *decode)
 {
     s32 size;
     size = (*decode->src++) << 24;
@@ -61,21 +60,21 @@ static inline void SlideReadHeader(struct decode_data *decode)
     size += *decode->src++;
 }
 
-static void HuDecodeSlide(struct decode_data *decode)
+static void HuDecodeSlide(DECODE *decode)
 {
-    u8 *base_dst;
-    u32 num_bits, flag;
+    u8 *dstPOrig;
+    u32 flagLen, flag;
     SlideReadHeader(decode);
-    num_bits = 0;
+    flagLen = 0;
     flag = 0;
-    base_dst = decode->dst;
+    dstPOrig = decode->dst;
     while(decode->size) {
-        if(num_bits == 0) {
+        if(flagLen == 0) {
             flag = (*decode->src++) << 24;
             flag += (*decode->src++) << 16;
             flag += (*decode->src++) << 8;
             flag += *decode->src++;
-            num_bits = 32;
+            flagLen = 32;
         }
         if(flag >> 31) {
             *decode->dst++ = (s32)*decode->src++;
@@ -95,7 +94,7 @@ static void HuDecodeSlide(struct decode_data *decode)
             }
             decode->size -= len;
             while(len) {
-                if(src-1 < base_dst) {
+                if(src-1 < dstPOrig) {
                     *decode->dst++ = 0;
                 } else {
                     *decode->dst++ = src[-1];
@@ -104,25 +103,25 @@ static void HuDecodeSlide(struct decode_data *decode)
                 src++;
             }
         }
-        
+
         flag <<= 1;
-        num_bits--;
+        flagLen--;
     }
 }
 
-static void HuDecodeFslide(struct decode_data *decode)
+static void HuDecodeFslide(DECODE *decode)
 {
-    u32 num_bits, flag;
+    u32 flagLen, flag;
     SlideReadHeader(decode);
-    num_bits = 0;
+    flagLen = 0;
     flag = 0;
     while(decode->size) {
-        if(num_bits == 0) {
+        if(flagLen == 0) {
             flag = (*decode->src++) << 24;
             flag += (*decode->src++) << 16;
             flag += (*decode->src++) << 8;
             flag += *decode->src++;
-            num_bits = 32;
+            flagLen = 32;
         }
         if(flag >> 31) {
             *decode->dst++ = (s32)*decode->src++;
@@ -147,13 +146,13 @@ static void HuDecodeFslide(struct decode_data *decode)
                 src++;
             }
         }
-        
+
         flag <<= 1;
-        num_bits--;
+        flagLen--;
     }
 }
 
-static void HuDecodeRle(struct decode_data *decode)
+static void HuDecodeRle(DECODE *decode)
 {
     s32 i;
     while(decode->size) {
@@ -173,40 +172,40 @@ static void HuDecodeRle(struct decode_data *decode)
     }
 }
 
-void HuDecodeData(void *src, void *dst, u32 size, s32 decode_type)
+void HuDecodeData(void *src, void *dst, u32 size, s32 decodeType)
 {
-    struct decode_data decode;
-    struct decode_data *decode_ptr = &decode;
-    decode_ptr->src = src;
-    decode_ptr->dst = dst;
-    decode_ptr->size = size;
-    switch(decode_type) {
+    struct Decode_s decode;
+    struct Decode_s *decodeP = &decode;
+    decodeP->src = src;
+    decodeP->dst = dst;
+    decodeP->size = size;
+    switch(decodeType) {
         case DATA_DECODE_NONE:
-            HuDecodeNone(decode_ptr);
+            HuDecodeNone(decodeP);
             break;
-            
+
         case DATA_DECODE_LZ:
-            HuDecodeLz(decode_ptr);
+            HuDecodeLz(decodeP);
             break;
-            
+
         case DATA_DECODE_SLIDE:
-            HuDecodeSlide(decode_ptr);
+            HuDecodeSlide(decodeP);
             break;
-            
+
         case DATA_DECODE_FSLIDE_ALT:
-            HuDecodeFslide(decode_ptr);
+            HuDecodeFslide(decodeP);
             break;
-            
+
         case DATA_DECODE_FSLIDE:
-            HuDecodeFslide(decode_ptr);
+            HuDecodeFslide(decodeP);
             break;
-            
+
         case DATA_DECODE_RLE:
-            HuDecodeRle(decode_ptr);
+            HuDecodeRle(decodeP);
             break;
             
         default:
-            OSReport("decode tyep unknown.(%x)\n", decode_type);
+            OSReport("decode tyep unknown.(%x)\n", decodeType);
             break;
     }
     DCFlushRange(dst, size);

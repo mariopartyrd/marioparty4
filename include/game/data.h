@@ -13,45 +13,47 @@
 #define DATA_DECODE_RLE 5
 
 #define DATA_NUM_LISTEND -1U
+#define HU_DATANUM_NONE -1
+#define HU_DATA_STAT_NONE -1
 
 #include "dolphin/types.h"
 
 
-struct data_read_stat {
-    s32 dir_id;
-    void *dir;
-    void *file;
-    u32 raw_len;
-    u32 comp_type;
+struct HuDataStat_s {
+    s32 dirId;
+    void *dirP;
+    void *fileDataP;
+    u32 rawLen;
+    u32 decodeType;
     BOOL used;
     s32 num;
     u32 status;
-    DVDFileInfo file_info;
+    DVDFileInfo dvdFile;
 };
 
 void HuDataInit(void);
-s32 HuDataReadChk(s32 data_num);
-DataReadStat *HuDataGetStatus(void *dir_ptr);
-void *HuDataGetDirPtr(s32 data_num);
-DataReadStat *HuDataDirRead(s32 data_num);
-DataReadStat *HuDataDirSet(void *dir_ptr, s32 data_num);
+s32 HuDataReadChk(s32 dirNum);
+HUDATASTAT *HuDataGetStatus(void *dirP);
+void *HuDataGetDirPtr(s32 dirNum);
+HUDATASTAT *HuDataDirRead(s32 dataNum);
+HUDATASTAT *HuDataDirSet(void *dirP, s32 dataNum);
 void HuDataDirReadAsyncCallBack(s32 result, DVDFileInfo* fileInfo);
-s32 HuDataDirReadAsync(s32 data_num);
-s32 HuDataDirReadNumAsync(s32 data_num, s32 num);
-BOOL HuDataGetAsyncStat(s32 status);
-void *HuDataRead(s32 data_num);
-void *HuDataReadNum(s32 data_num, s32 num);
-void *HuDataSelHeapRead(s32 data_num, HeapID heap);
-void *HuDataSelHeapReadNum(s32 data_num, s32 num, HeapID heap);
-void **HuDataReadMulti(s32 *data_ids);
-s32 HuDataGetSize(s32 data_num);
+s32 HuDataDirReadAsync(s32 dataNum);
+s32 HuDataDirReadNumAsync(s32 dataNum, s32 num);
+BOOL HuDataGetAsyncStat(s32 statId);
+void *HuDataRead(s32 dataNum);
+void *HuDataReadNum(s32 dataNum, s32 num);
+void *HuDataSelHeapRead(s32 dataNum, HeapID heap);
+void *HuDataSelHeapReadNum(s32 dataNum, s32 num, HeapID heap);
+void **HuDataReadMulti(s32 *dataNum);
+s32 HuDataGetSize(s32 dataNum);
 void HuDataClose(void *ptr);
 void HuDataCloseMulti(void **ptrs);
-void HuDataDirClose(s32 data_id);
+void HuDataDirClose(s32 dataNum);
 void HuDataDirCloseNum(s32 num);
-void *HuDataReadNumHeapShortForce(s32 data_id, s32 num, HeapID heap);
+void *HuDataReadNumHeapShortForce(s32 dataNum, s32 num, HeapID heap);
 
-void HuDecodeData(void *src, void *dst, u32 size, s32 decode_type);
+void HuDecodeData(void *src, void *dst, u32 size, s32 decodeType);
 
 extern u32 DirDataSize;
 
