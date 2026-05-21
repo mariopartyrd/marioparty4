@@ -73,6 +73,55 @@
 #define HU3D_ATTR_ZCMP_OFF 0x400000
 #define HU3D_ATTR_CULL_FRONT 0x800000
 
+//Texture Animation Attributes
+#define HU3D_ANIM_ATTR_NONE 0
+#define HU3D_ANIM_ATTR_ANIMON (1 << 0)
+#define HU3D_ANIM_ATTR_LOOP (1 << 1)
+#define HU3D_ANIM_ATTR_NOUSE (1 << 2)
+#define HU3D_ANIM_ATTR_PAUSE (1 << 5)
+
+//Attribute Animation Attributes
+#define HU3D_ATTRANIM_ATTR_NONE 0
+#define HU3D_ATTRANIM_ATTR_ANIM2D (1 << 0)
+#define HU3D_ATTRANIM_ATTR_TEXMTX (1 << 1)
+#define HU3D_ATTRANIM_ATTR_ANIM3D (1 << 2)
+#define HU3D_ATTRANIM_ATTR_BMPANIM (1 << 3)
+
+//Texture Scroll Attributes
+#define HU3D_TEXSCR_ATTR_NONE 0
+#define HU3D_TEXSCR_ATTR_POSMOVE (1 << 0)
+#define HU3D_TEXSCR_ATTR_ROTMOVE (1 << 1)
+#define HU3D_TEXSCR_ATTR_SCALEMOVE (1 << 2)
+#define HU3D_TEXSCR_ATTR_PAUSEDISABLE (1 << 3)
+
+//Particle Attributes
+#define HU3D_PARTICLE_ATTR_NONE 0
+#define HU3D_PARTICLE_ATTR_RESETCNT (1 << 0)
+#define HU3D_PARTICLE_ATTR_STOPCNT (1 << 1)
+#define HU3D_PARTICLE_ATTR_ANIMON (1 << 3)
+
+//Particle Manager Attributes
+#define HU3D_PARMAN_ATTR_NONE 0
+#define HU3D_PARMAN_ATTR_TIMEUP (1 << 0)
+#define HU3D_PARMAN_ATTR_RANDSPEED90 (1 << 1)
+#define HU3D_PARMAN_ATTR_RANDSPEED70 (1 << 2)
+#define HU3D_PARMAN_ATTR_RANDSPEED100 (1 << 3)
+#define HU3D_PARMAN_ATTR_RANDSCALE90 (1 << 4)
+#define HU3D_PARMAN_ATTR_RANDSCALE70 (1 << 5)
+#define HU3D_PARMAN_ATTR_SCALEJITTER (1 << 6)
+#define HU3D_PARMAN_ATTR_PAUSE (1 << 7)
+
+#define HU3D_PARMAN_ATTR_RANDANGLE (1 << 8)
+#define HU3D_PARMAN_ATTR_VACUUM (1 << 9)
+#define HU3D_PARMAN_ATTR_RANDTIME90 (1 << 10)
+#define HU3D_PARMAN_ATTR_RANDTIME70 (1 << 11)
+#define HU3D_PARMAN_ATTR_RANDCOLOR (1 << 11)
+#define HU3D_PARMAN_ATTR_SETCOLOR (1 << 12)
+
+#define HU3D_PARTICLE_ATTR_RESETCNT (1 << 0)
+#define HU3D_PARTICLE_ATTR_STOPCNT (1 << 1)
+#define HU3D_PARTICLE_ATTR_ANIMON (1 << 3)
+
 #define HU3D_CAM0 (1 << 0)
 #define HU3D_CAM1 (1 << 1)
 #define HU3D_CAM2 (1 << 2)
@@ -89,6 +138,8 @@
 #define HU3D_CAM13 (1 << 13)
 #define HU3D_CAM14 (1 << 14)
 #define HU3D_CAM15 (1 << 15)
+#define HU3D_CAM_ALL 0xFFFF
+#define HU3D_CAM_NONE 0
 #define HU3D_CAM_MAX 16
 
 //Reflection types
@@ -602,52 +653,52 @@ void JointModel_Motion(s16 arg0, s16 arg1);
 void Hu3DMotionCalc(s16 arg0);
 
 void Hu3DAnimInit(void);
-s16 Hu3DAnimCreate(void *dataP, s16 modelId, char *bmpName);
-s16 Hu3DAnimLink(s16 linkAnimId, s16 modelId, char *bmpName);
-void Hu3DAnimKill(s16 animId);
-void Hu3DAnimModelKill(s16 modelId);
+HU3DANIMID Hu3DAnimCreate(void *dataP, HU3DMODELID modelId, char *bmpName);
+HU3DANIMID Hu3DAnimLink(HU3DANIMID linkAnimId, HU3DMODELID modelId, char *bmpName);
+void Hu3DAnimKill(HU3DANIMID animId);
+void Hu3DAnimModelKill(HU3DMODELID modelId);
 void Hu3DAnimAllKill(void);
-void Hu3DAnimAttrSet(s16 animId, u16 attr);
-void Hu3DAnimAttrReset(s16 animId, s32 attr);
-void Hu3DAnimSpeedSet(s16 animId, float speed);
-void Hu3DAnimBankSet(s16 animId, s32 bank);
-void Hu3DAnmNoSet(s16 animId, u16 anmNo);
-s32 Hu3DAnimSet(HU3DMODEL *arg0, HSFATTRIBUTE *arg1, s16 arg2);
+void Hu3DAnimAttrSet(HU3DANIMID animId, u16 attr);
+void Hu3DAnimAttrReset(HU3DANIMID animId, s32 attr);
+void Hu3DAnimSpeedSet(HU3DANIMID animId, float speed);
+void Hu3DAnimBankSet(HU3DANIMID animId, s32 bank);
+void Hu3DAnmNoSet(HU3DANIMID animId, u16 anmNo);
+s32 Hu3DAnimSet(HU3DMODEL *modelP, HSFATTRIBUTE *attrP, s16 texSlotNo);
 void Hu3DAnimExec(void);
-s16 Hu3DTexScrollCreate(s16 modelId, char *bmpName);
-void Hu3DTexScrollKill(s16 texSrcId);
+HU3DTEXSCRID Hu3DTexScrollCreate(HU3DMODELID modelId, char *bmpName);
+void Hu3DTexScrollKill(HU3DTEXSCRID texSrcId);
 void Hu3DTexScrollAllKill(void);
-void Hu3DTexScrollPosSet(s16 texScrId, float posX, float posY, float posZ);
-void Hu3DTexScrollPosMoveSet(s16 texScrId, float posX, float posY, float posZ);
-void Hu3DTexScrollRotSet(s16 texScrId, float rot);
-void Hu3DTexScrollRotMoveSet(s16 texScrId, float rot);
-void Hu3DTexScrollPauseDisableSet(s16 texScrId, BOOL pauseDisableF);
-s16 Hu3DParticleCreate(ANIMDATA *anim, s16 maxCnt);
-void Hu3DParticleScaleSet(s16 modelId, float scale);
-void Hu3DParticleZRotSet(s16 modelId, float zRot);
-void Hu3DParticleColSet(s16 modelId, u8 r, u8 g, u8 b);
-void Hu3DParticleTPLvlSet(s16 modelId, float tpLvl);
-void Hu3DParticleBlendModeSet(s16 modelId, u8 blendMode);
-void Hu3DParticleHookSet(s16 modelId, HU3DPARTICLEHOOK hook);
-void Hu3DParticleAttrSet(s16 modelId, u8 attr);
-void Hu3DParticleAttrReset(s16 modelId, u8 attr);
-void Hu3DParticleCntSet(s16 modelId, s16 count);
-void Hu3DParticleAnimModeSet(s16 modelId, s16 animBank);
+void Hu3DTexScrollPosSet(HU3DTEXSCRID texScrId, float posX, float posY, float posZ);
+void Hu3DTexScrollPosMoveSet(HU3DTEXSCRID texScrId, float posX, float posY, float posZ);
+void Hu3DTexScrollRotSet(HU3DTEXSCRID texScrId, float rot);
+void Hu3DTexScrollRotMoveSet(HU3DTEXSCRID texScrId, float rot);
+void Hu3DTexScrollPauseDisableSet(HU3DTEXSCRID texScrId, BOOL pauseDisableF);
+HU3DMODELID Hu3DParticleCreate(ANIMDATA *anim, s16 maxCnt);
+void Hu3DParticleScaleSet(HU3DMODELID modelId, float scale);
+void Hu3DParticleZRotSet(HU3DMODELID modelId, float zRot);
+void Hu3DParticleColSet(HU3DMODELID modelId, u8 r, u8 g, u8 b);
+void Hu3DParticleTPLvlSet(HU3DMODELID modelId, float tpLvl);
+void Hu3DParticleBlendModeSet(HU3DMODELID modelId, u8 blendMode);
+void Hu3DParticleHookSet(HU3DMODELID modelId, HU3DPARTICLEHOOK hook);
+void Hu3DParticleAttrSet(HU3DMODELID modelId, u8 attr);
+void Hu3DParticleAttrReset(HU3DMODELID modelId, u8 attr);
+void Hu3DParticleCntSet(HU3DMODELID modelId, s16 count);
+void Hu3DParticleAnimModeSet(HU3DMODELID modelId, s16 animBank);
 void Hu3DParManInit(void);
-s16 Hu3DParManCreate(ANIMDATA *anim, s16 maxCnt, HU3DPARMANPARAM *param);
-s16 Hu3DParManLink(s16 linkParManId, HU3DPARMANPARAM *param);
-void Hu3DParManKill(s16 parManId);
+HU3DPARMANID Hu3DParManCreate(ANIMDATA *anim, s16 maxCnt, HU3DPARMANPARAM *param);
+HU3DPARMANID Hu3DParManLink(HU3DPARMANID linkParManId, HU3DPARMANPARAM *param);
+void Hu3DParManKill(HU3DPARMANID parManId);
 void Hu3DParManAllKill(void);
-HU3DPARMAN *Hu3DParManPtrGet(s16 parManId);
-void Hu3DParManPosSet(s16 parManId, float posX, float posY, float posZ);
-void Hu3DParManVecSet(s16 parManId, float x, float y, float z);
-void Hu3DParManRotSet(s16 parManId, float rotX, float rotY, float rotZ);
-void Hu3DParManAttrSet(s16 parManId, s32 attr);
-void Hu3DParManAttrReset(s16 parManId, s32 attr);
-s16 Hu3DParManModelIDGet(s16 parManId);
-void Hu3DParManTimeLimitSet(s16 parManId, s32 timeLimit);
-void Hu3DParManVacumeSet(s16 parManId, float x, float y, float z, float speed);
-void Hu3DParManColorSet(s16 parManId, s16 color);
+HU3DPARMAN *Hu3DParManPtrGet(HU3DPARMANID parManId);
+void Hu3DParManPosSet(HU3DPARMANID parManId, float posX, float posY, float posZ);
+void Hu3DParManVecSet(HU3DPARMANID parManId, float x, float y, float z);
+void Hu3DParManRotSet(HU3DPARMANID parManId, float rotX, float rotY, float rotZ);
+void Hu3DParManAttrSet(HU3DPARMANID parManId, s32 attr);
+void Hu3DParManAttrReset(HU3DPARMANID parManId, s32 attr);
+s16 Hu3DParManModelIDGet(HU3DPARMANID parManId);
+void Hu3DParManTimeLimitSet(HU3DPARMANID parManId, s32 timeLimit);
+void Hu3DParManVacumeSet(HU3DPARMANID parManId, float x, float y, float z, float speed);
+void Hu3DParManColorSet(HU3DPARMANID parManId, s16 color);
 
 extern Vec PGMaxPos;
 extern Vec PGMinPos;
