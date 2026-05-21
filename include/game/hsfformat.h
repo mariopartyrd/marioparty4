@@ -5,6 +5,13 @@
 #include "game/animdata.h"
 #include "game/humath.h"
 
+//HSF Face Types
+#define HSF_FACE_TRI 2
+#define HSF_FACE_QUAD 3
+#define HSF_FACE_TRISTRIP 4
+#define HSF_FACE_MASK 0x7
+
+//HSF Object types
 #define HSF_OBJ_NULL1 0
 #define HSF_OBJ_REPLICA 1
 #define HSF_OBJ_MESH 2
@@ -12,10 +19,25 @@
 #define HSF_OBJ_JOINT 4
 #define HSF_OBJ_NULL2 5
 #define HSF_OBJ_NULL3 6
-#define HSF_OBJ_NONE1 7
-#define HSF_OBJ_NONE2 8
+#define HSF_OBJ_CAMERA 7
+#define HSF_OBJ_LIGHT 8
 #define HSF_OBJ_MAP 9
 
+//HSF Object Flags
+#define HSF_MATERIAL_BBOARD (1 << 0)
+#define HSF_MATERIAL_NOCULL (1 << 1)
+#define HSF_MATERIAL_SHADOW (1 << 2)
+#define HSF_MATERIAL_SHADOWMAP (1 << 3)
+#define HSF_MATERIAL_ADDCOL (1 << 4)
+#define HSF_MATERIAL_INVCOL (1 << 5)
+#define HSF_MATERIAL_HILITE (1 << 8)
+#define HSF_MATERIAL_DISABLE_ZWRITE (1 << 9)
+#define HSF_MATERIAL_DISPOFF (1 << 10)
+#define HSF_MATERIAL_NEAR (1 << 12)
+#define HSF_MATERIAL_MATHOOK (1 << 13)
+#define HSF_MATERIAL_REFLECTMODEL (1 << 14)
+
+//HSF Track Types
 #define HSF_TRACK_TRANSFORM 2
 #define HSF_TRACK_MORPH 3
 #define HSF_TRACK_CLUSTER 5
@@ -23,11 +45,35 @@
 #define HSF_TRACK_MATERIAL 9
 #define HSF_TRACK_ATTRIBUTE 10
 
+//HSF Curve Types
 #define HSF_CURVE_STEP 0
 #define HSF_CURVE_LINEAR 1
 #define HSF_CURVE_BEZIER 2
 #define HSF_CURVE_BITMAP 3
 #define HSF_CURVE_CONST 4
+
+//HSF Attribute Flags
+#define HSF_FLAG_NEAR 0x40
+#define HSF_FLAG_MIPMAP 0x80
+
+//HSF Bitmap Formats
+#define HSF_BMPFMT_I4 0
+#define HSF_BMPFMT_I8 1
+#define HSF_BMPFMT_IA4 2
+#define HSF_BMPFMT_IA8 3
+#define HSF_BMPFMT_RGB565 4
+#define HSF_BMPFMT_RGB5A3 5
+#define HSF_BMPFMT_RGBA8 6
+#define HSF_BMPFMT_CMPR 7
+#define HSF_BMPFMT_CI_RGB565 9
+#define HSF_BMPFMT_CI_RGB5A3 10
+#define HSF_BMPFMT_CI_IA8 11
+
+typedef struct HsfS8Vec_s {
+    s8 x;
+    s8 y;
+    s8 z;
+} HSFS8VEC;
 
 typedef struct HsfObject_s HSFOBJECT;
 
