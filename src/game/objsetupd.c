@@ -1,8 +1,7 @@
 #include "game/audio.h"
 #include "game/data.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/process.h"
-#include "game/hsfmotion.h"
 #include "game/esprite.h"
 
 #define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))

@@ -3,7 +3,7 @@
 #include "game/board/main.h"
 #include "game/board/model.h"
 #include "game/board/player.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 
 #include "game/board/window.h"

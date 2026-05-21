@@ -1,5 +1,5 @@
 #include "game/mapspace.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 
 #include "ext_math.h"
 

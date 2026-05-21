@@ -2,7 +2,7 @@
 
 #include "math.h"
 #include "ext_math.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/printfunc.h"
 #include "game/pad.h"
 

@@ -3,7 +3,7 @@
 
 #include "datadir_enum.h"
 #include "dolphin.h"
-#include "game/hsfanim.h"
+#include "game/hu3d.h"
 #include "version.h"
 
 typedef struct UnkM432DllBss0SubStruct {

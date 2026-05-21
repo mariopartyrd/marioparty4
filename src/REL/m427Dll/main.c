@@ -8,7 +8,7 @@
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfformat.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/wipe.h"

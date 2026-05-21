@@ -2,8 +2,7 @@
 
 #include "ext_math.h"
 #include "game/audio.h"
-#include "game/hsfanim.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/sprite.h"
 #include "game/wipe.h"

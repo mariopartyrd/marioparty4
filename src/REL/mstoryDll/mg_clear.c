@@ -3,13 +3,11 @@
 #include "game/data.h"
 #include "game/flag.h"
 #include "game/gamework.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/objsub.h"
 
 #ifndef __MWERKS__
 #include "game/audio.h"
-#include "game/hsfdraw.h"
 #include "game/msm.h"
 #endif
 

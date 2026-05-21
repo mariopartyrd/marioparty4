@@ -1,10 +1,8 @@
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/ClusterExec.h"
 #include "game/data.h"
 #include "game/EnvelopeExec.h"
-#include "game/hsfdraw.h"
 #include "game/hsfload.h"
-#include "game/hsfmotion.h"
 #include "game/init.h"
 #include "game/memory.h"
 #include "game/perf.h"
@@ -331,8 +329,8 @@ void Hu3DPauseSet(BOOL arg0) {
     Hu3DPauseF = arg0;
 }
 
-void Hu3DNoSyncSet(s32 arg0) {
-    NoSyncF = arg0;
+void Hu3DNoSyncSet(BOOL noSync) {
+    NoSyncF = noSync;
 }
 
 s16 Hu3DModelCreate(void *arg0) {

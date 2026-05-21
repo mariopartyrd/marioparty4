@@ -3,7 +3,7 @@
 #include "game/esprite.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/saveload.h"
 #include "game/sprite.h"
 #include "game/window.h"

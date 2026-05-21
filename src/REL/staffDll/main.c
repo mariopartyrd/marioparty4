@@ -1,7 +1,7 @@
 #include "game/animdata.h"
 #include "game/audio.h"
 #include "game/disp.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #ifndef __MWERKS__
 #include "game/minigame_seq.h"
 #endif

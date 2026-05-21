@@ -1,8 +1,7 @@
 #include "game/board/model.h"
 #include "game/board/main.h"
 #include "game/chrman.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/object.h"
 

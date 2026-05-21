@@ -4,7 +4,7 @@
 #include "dolphin.h"
 
 #include "ext_math.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 
 typedef void (*M418DllFunc)(void);

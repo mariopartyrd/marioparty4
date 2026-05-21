@@ -1,6 +1,6 @@
 #include "REL/w05Dll.h"
 
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/audio.h"
 #include "game/pad.h"
 #include "game/objsub.h"

@@ -6,8 +6,7 @@
 #endif
 
 #include "game/gamework_data.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/printfunc.h"
 #include "game/window.h"

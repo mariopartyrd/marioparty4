@@ -1,8 +1,7 @@
 #include "REL/m424Dll.h"
 
 #include "game/audio.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 
 #include "math.h"
 #include "version.h"

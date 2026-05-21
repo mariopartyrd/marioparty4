@@ -3,7 +3,7 @@
 
 #include "dolphin.h"
 
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 
 extern u8 texMtxTbl[];

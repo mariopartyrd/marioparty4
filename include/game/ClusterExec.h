@@ -2,7 +2,7 @@
 #define _GAME_CLUSTER_EXEC_H
 
 #include "game/hsfformat.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 
 float GetClusterCurve(HSFTRACK *arg0, float arg1);
 float GetClusterWeightCurve(HSFTRACK *arg0, float arg1);

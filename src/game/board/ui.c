@@ -13,7 +13,7 @@
 #include "game/gamework.h"
 #include "game/gamework_data.h"
 #include "game/hsfex.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/pad.h"
 #include "game/process.h"

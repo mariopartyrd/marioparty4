@@ -10,7 +10,7 @@
 #include "game/data.h"
 #include "game/flag.h"
 #include "game/gamework_data.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/objsub.h"
 #include "game/sprite.h"
 

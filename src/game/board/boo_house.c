@@ -11,7 +11,7 @@
 #include "game/board/view.h"
 #include "game/board/window.h"
 #include "game/gamework_data.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/msm.h"
 
 #include "ext_math.h"

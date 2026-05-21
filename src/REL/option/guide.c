@@ -1,8 +1,7 @@
 #include "REL/option.h"
 #include "game/chrman.h"
 #include "game/data.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 
 #include "dolphin.h"

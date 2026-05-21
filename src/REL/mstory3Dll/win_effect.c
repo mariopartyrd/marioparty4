@@ -1,8 +1,7 @@
 #include "REL/mstory3Dll.h"
 #include "game/data.h"
-#include "game/hsfanim.h"
 #include "game/hsfex.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/sprite.h"
 

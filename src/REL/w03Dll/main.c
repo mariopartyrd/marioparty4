@@ -19,7 +19,7 @@
 #include "game/board/map_object.h"
 
 #include "math.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 
 //function signatures
 void fn_1_E0(void);

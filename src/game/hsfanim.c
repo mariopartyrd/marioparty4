@@ -1,7 +1,6 @@
-#include "game/hsfanim.h"
+#include "game/hu3d.h"
 #include "dolphin/gx/GXStruct.h"
 #include "dolphin/gx/GXVert.h"
-#include "game/hsfdraw.h"
 #include "game/init.h"
 #include "game/memory.h"
 #include "game/process.h"

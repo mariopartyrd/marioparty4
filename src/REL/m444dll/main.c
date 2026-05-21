@@ -1,7 +1,6 @@
 #include "game/disp.h"
 #include "game/hsfex.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include "game/objsub.h"
 

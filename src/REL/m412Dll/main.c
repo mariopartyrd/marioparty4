@@ -5,7 +5,7 @@
 #include "game/chrman.h"
 #include "game/disp.h"
 #include "game/frand.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/mapspace.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"

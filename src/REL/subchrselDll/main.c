@@ -6,7 +6,7 @@
 #include "game/wipe.h"
 
 #ifndef __MWERKS__
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/minigame_seq.h"
 #endif
 

@@ -8,7 +8,7 @@
 #include "game/board/tutorial.h"
 #include "game/wipe.h"
 #include "game/gamework_data.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/hsfex.h"
 #include "game/objsub.h"
 #include "game/disp.h"

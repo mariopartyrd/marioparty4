@@ -1,8 +1,7 @@
 #include "ext_math.h"
 #include "game/audio.h"
 #include "game/disp.h"
-#include "game/hsfdraw.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/sprite.h"
 
 #include "REL/m417Dll.h"

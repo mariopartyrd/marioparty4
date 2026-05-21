@@ -5,7 +5,7 @@
 #include "game/board/player.h"
 #include "game/board/space.h"
 #include "game/chrman.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/minigame_seq.h"
 #include "game/object.h"
 #include "game/pad.h"

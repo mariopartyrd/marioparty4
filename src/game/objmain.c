@@ -2,8 +2,7 @@
 #include "game/chrman.h"
 #include "game/esprite.h"
 #include "game/flag.h"
-#include "game/hsfdraw.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/object.h"
 #include <game/sprite.h>
 #include "game/pad.h"

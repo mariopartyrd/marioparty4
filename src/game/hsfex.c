@@ -1,6 +1,5 @@
 #include "game/hsfex.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/disp.h"
 #include "game/process.h"
 

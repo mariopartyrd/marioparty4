@@ -1,10 +1,8 @@
-#include "game/hsfmotion.h"
 #include "game/ClusterExec.h"
 #include "game/EnvelopeExec.h"
 #include "game/ShapeExec.h"
-#include "game/hsfdraw.h"
 #include "game/hsfload.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/init.h"
 
 #include "ext_math.h"

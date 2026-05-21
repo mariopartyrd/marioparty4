@@ -4,7 +4,7 @@
 #include "game/board/audio.h"
 #include "game/board/window.h"
 #include "game/board/ui.h"
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 
 #include "game/object.h"
 #include "game/objsub.h"

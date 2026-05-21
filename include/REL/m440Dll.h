@@ -2,7 +2,7 @@
 #define REL_M440DLL_H
 
 #include "dolphin/types.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 
 #include "version.h"
 

@@ -2,7 +2,7 @@
 #include "game/chrman.h"
 #include "game/frand.h"
 #include "game/gamework_data.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 #include "game/objsub.h"
 #include "game/pad.h"
 #include "game/sprite.h"

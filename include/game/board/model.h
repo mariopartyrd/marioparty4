@@ -1,7 +1,7 @@
 #ifndef _BOARD_MODEL_H
 #define _BOARD_MODEL_H
 
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/data.h"
 
 typedef struct board_model_param {

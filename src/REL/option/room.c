@@ -1,6 +1,6 @@
 #include "REL/option.h"
 #include "game/audio.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/memory.h"
 #include "game/process.h"
 #include "game/window.h"

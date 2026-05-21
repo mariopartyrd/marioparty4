@@ -2,7 +2,7 @@
 #define REL_M416DLL_H
 
 #include "game/object.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 
 s32 fn_1_1240(void);
 void fn_1_1250(s32 arg0);

@@ -1,8 +1,7 @@
 #include "ext_math.h"
 #include "game/chrman.h"
 #include "game/data.h"
-#include "game/hsfman.h"
-#include "game/hsfmotion.h"
+#include "game/hu3d.h"
 
 #include "REL/present.h"
 

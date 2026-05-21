@@ -2,7 +2,7 @@
 
 #include "ext_math.h"
 #include "game/audio.h"
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "game/minigame_seq.h"
 #include "game/objsub.h"
 #include "game/wipe.h"

@@ -6,7 +6,7 @@
 #include "dolphin/mtx.h"
 
 #ifndef __MWERKS__
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #endif
 
 #define SPRITE_DIRTY_ATTR 0x1

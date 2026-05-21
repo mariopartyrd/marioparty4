@@ -2,7 +2,7 @@
 #define HUSPR_USE_OLD_DEFS
 #include "REL/m415Dll.h"
 
-#include "game/hsfdraw.h"
+#include "game/hu3d.h"
 #include "game/sprite.h"
 
 #include <string.h>

@@ -1,6 +1,6 @@
 #include "REL/m446Dll.h"
 
-#include "game/hsfman.h"
+#include "game/hu3d.h"
 #include "ext_math.h"
 
 // data
