@@ -813,7 +813,7 @@ static s32 SeqMakeWord(SeqWork *work, char *str, s16 flags)
     s16 grp_idx;
 #if VERSION_JP
     char *str_ptr;
-    AnimData **char_anim;
+    ANIMDATA **char_anim;
     s16 *char_pos;
 #else
     ANIMDATA **char_anim;
