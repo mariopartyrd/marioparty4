@@ -39,10 +39,10 @@ typedef struct board_model {
 } BoardModel;
 
 static s16 modelDataNum;
-static omObjData *modelMgrObj;
+static OMOBJ *modelMgrObj;
 static BoardModel *modelDataList;
 
-static void ModelMgrFunc(omObjData *object);
+static void ModelMgrFunc(OMOBJ *object);
 
 static BoardModel *SearchBoardModel(s16 id);
 static void KillBoardModel(BoardModel *model);
@@ -92,7 +92,7 @@ void BoardModelKillAll(void)
     }
 }
 
-static void ModelMgrFunc(omObjData *object)
+static void ModelMgrFunc(OMOBJ *object)
 {
     ModelMgrWork *work = OM_GET_WORK_PTR(modelMgrObj, ModelMgrWork);
     if (work->kill || BoardIsKill()) {

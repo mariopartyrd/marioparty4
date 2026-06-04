@@ -60,30 +60,30 @@ typedef struct {
     /* 0x40 */ s16 targetNo;
 } RocketWork; // Size 0x44
 
-static void SpaceAmidaMainUpdate(omObjData *obj);
+static void SpaceAmidaMainUpdate(OMOBJ *obj);
 static void SpaceAmidaStop(void);
 static void SpaceAmidaKill(void);
-static void SpaceAmidaRocketObjUpdate(omObjData *obj);
+static void SpaceAmidaRocketObjUpdate(OMOBJ *obj);
 static float SpaceAmidaMapLenGet(SpaceAmidaMap *obj);
-static void SpaceAmidaComChoiceSet(omObjData *obj);
-static void SpaceAmidaComInputGet(omObjData *obj, u16 *stkBtn, u16 *btn);
-static void SpaceAmidaGameOpen(omObjData *obj);
-static void SpaceAmidaGameUpdate(omObjData *obj);
-static void SpaceAmidaRocketJump(omObjData *obj);
-static void SpaceAmidaRocketKemuriExec(omObjData *obj);
-static void SpaceAmidaRocketWait(omObjData *obj);
-static void SpaceAmidaRocketUp(omObjData *obj);
+static void SpaceAmidaComChoiceSet(OMOBJ *obj);
+static void SpaceAmidaComInputGet(OMOBJ *obj, u16 *stkBtn, u16 *btn);
+static void SpaceAmidaGameOpen(OMOBJ *obj);
+static void SpaceAmidaGameUpdate(OMOBJ *obj);
+static void SpaceAmidaRocketJump(OMOBJ *obj);
+static void SpaceAmidaRocketKemuriExec(OMOBJ *obj);
+static void SpaceAmidaRocketWait(OMOBJ *obj);
+static void SpaceAmidaRocketUp(OMOBJ *obj);
 static void SpaceAmidaCoinWin(void);
-static void SpaceAmidaJumpDown(omObjData *obj);
+static void SpaceAmidaJumpDown(OMOBJ *obj);
 static void SpaceAmidaCoinRainMain(void);
 static void SpaceAmidaReturnWinMain(void);
-static void SpaceAmidaGameStop(omObjData *obj);
+static void SpaceAmidaGameStop(OMOBJ *obj);
 static void SpaceAmidaDirGet(Vec *a, Vec *b, Vec *result);
 static float SpaceAmidaAngleGet(Vec *dir);
 static u32 SpaceAmidaPlayerRotAdd(Vec *rocketPos, float delta);
 static void SpaceAmidaEffCreate(void);
 static void SpaceAmidaEffKill(void);
-static void SpaceAmidaEffUpdate(omObjData *arg0);
+static void SpaceAmidaEffUpdate(OMOBJ *arg0);
 static void SpaceAmidaEffParticleHook(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 static s32 spaceAmidaPadNo;
@@ -93,8 +93,8 @@ static s16 mapMdlId[3];
 static s16 rocketMdlId[3];
 static s16 spaceAmidaEffMdlId;
 static s16 coinMdlId[20];
-static Process *coinWinProc;
-static omObjData *spaceAmidaMainObj;
+static HUPROCESS *coinWinProc;
+static OMOBJ *spaceAmidaMainObj;
 static float spaceAmidaTime;
 static s16 kemuriMdlId;
 static s32 timerSec;
@@ -107,9 +107,9 @@ static s32 rocketWarpF;
 static u16 spaceAmidaStopF;
 static u16 spaceAmidaCoinNum;
 static s32 spaceAmidaSeNo;
-static omObjData *spaceAmidaGameObj;
-static omObjData *rocketObj[3];
-static omObjData *spaceAmidaEffObj;
+static OMOBJ *spaceAmidaGameObj;
+static OMOBJ *rocketObj[3];
+static OMOBJ *spaceAmidaEffObj;
 static ANIMDATA *spaceAmidaEffAnim;
 static s16 spaceAmidaSeqStopF;
 
@@ -225,7 +225,7 @@ void SpaceAmidaExec(void)
     }
 }
 
-static void SpaceAmidaMainUpdate(omObjData *obj)
+static void SpaceAmidaMainUpdate(OMOBJ *obj)
 {
     if (spaceAmidaStopF == 0) {
         return;
@@ -270,7 +270,7 @@ static void SpaceAmidaKill(void)
     Hu3DModelKill(kemuriMdlId);
 }
 
-static void SpaceAmidaRocketObjUpdate(omObjData *obj)
+static void SpaceAmidaRocketObjUpdate(OMOBJ *obj)
 {
     RocketWork *work;
     Vec scale;
@@ -448,7 +448,7 @@ static float SpaceAmidaMapLenGet(SpaceAmidaMap *arg0)
     return len;
 }
 
-static void SpaceAmidaComChoiceSet(omObjData *obj)
+static void SpaceAmidaComChoiceSet(OMOBJ *obj)
 {
     SpaceAmidaGameWork *work;
     u16 chance[] = { 20, 60, 120, 190 };
@@ -468,7 +468,7 @@ static void SpaceAmidaComChoiceSet(omObjData *obj)
     work->comDelay = rand8() % 20 + 20;
 }
 
-static void SpaceAmidaComInputGet(omObjData *obj, u16 *stkBtn, u16 *btn)
+static void SpaceAmidaComInputGet(OMOBJ *obj, u16 *stkBtn, u16 *btn)
 {
     SpaceAmidaGameWork *work;
 
@@ -508,17 +508,17 @@ static void SpaceAmidaComInputGet(omObjData *obj, u16 *stkBtn, u16 *btn)
     }
 }
 
-static void SpaceAmidaGameOpen(omObjData *obj)
+static void SpaceAmidaGameOpen(OMOBJ *obj)
 {
     if (BoardModelMotionTimeGet(spaceAmidaMdlId) >= BoardModelMotionMaxTimeGet(spaceAmidaMdlId)) {
         timerSeqId = MGSeqCreate(1, timerSec, 0x120, 0x40);
-        spaceAmidaGameObj->func = SpaceAmidaGameUpdate;
+        spaceAmidaGameObj->objFunc = SpaceAmidaGameUpdate;
         BoardMusStart(1, 0xF, 0x7F, 0);
         spaceAmidaSeNo = HuAudFXPlay(0x408);
     }
 }
 
-static void SpaceAmidaGameUpdate(omObjData *obj)
+static void SpaceAmidaGameUpdate(OMOBJ *obj)
 {
     SpaceAmidaGameWork *work;
     Vec rocketPos;
@@ -568,11 +568,11 @@ static void SpaceAmidaGameUpdate(omObjData *obj)
         work->jumpDir.z *= jumpDist / 30.0f;
         work->unk00 = 0;
         work->jumpTime = 0.0f;
-        obj->func = SpaceAmidaRocketJump;
+        obj->objFunc = SpaceAmidaRocketJump;
     }
 }
 
-static void SpaceAmidaRocketJump(omObjData *obj)
+static void SpaceAmidaRocketJump(OMOBJ *obj)
 {
     SpaceAmidaGameWork *work;
     Vec playerPos;
@@ -592,12 +592,12 @@ static void SpaceAmidaRocketJump(omObjData *obj)
         playerPos.y = rocketPos.y + 5.0f;
         BoardPlayerPosSetV(spaceAmidaPlayerNo, &playerPos);
         BoardPlayerMotionShiftSet(spaceAmidaPlayerNo, 2, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
-        obj->func = SpaceAmidaRocketKemuriExec;
+        obj->objFunc = SpaceAmidaRocketKemuriExec;
     }
     BoardPlayerPosSetV(spaceAmidaPlayerNo, &playerPos);
 }
 
-static void SpaceAmidaRocketKemuriExec(omObjData *obj)
+static void SpaceAmidaRocketKemuriExec(OMOBJ *obj)
 {
     SpaceAmidaGameWork *work;
     RocketWork *rocketWork;
@@ -625,25 +625,25 @@ static void SpaceAmidaRocketKemuriExec(omObjData *obj)
         rocketWork->kemuriTPLvl = 1.0f;
         rocketWork->unk3C = 0.0f;
         Hu3DModelScaleSet(kemuriMdlId, 1.4f, 1.4f, 1.4f);
-        obj->func = SpaceAmidaRocketWait;
+        obj->objFunc = SpaceAmidaRocketWait;
     }
 }
 
-static void SpaceAmidaRocketWait(omObjData *obj)
+static void SpaceAmidaRocketWait(OMOBJ *obj)
 {
     SpaceAmidaGameWork *work;
 
     work = obj->data;
     if (work->waitTime == 0) {
         rocketObj[spaceAmidaPath]->work[2] = 4;
-        obj->func = SpaceAmidaRocketUp;
+        obj->objFunc = SpaceAmidaRocketUp;
     }
     else {
         work->waitTime--;
     }
 }
 
-static void SpaceAmidaRocketUp(omObjData *obj)
+static void SpaceAmidaRocketUp(OMOBJ *obj)
 {
     SpaceAmidaGameWork *work;
 
@@ -651,14 +651,14 @@ static void SpaceAmidaRocketUp(omObjData *obj)
     if (rocketObj[spaceAmidaPath]->work[2] == 6) {
         coinWinProc = HuPrcCreate(SpaceAmidaCoinWin, 0x2004, 0x1000, 0);
         coinWinProc->user_data = obj;
-        obj->func = NULL;
+        obj->objFunc = NULL;
     }
 }
 
 static void SpaceAmidaCoinWin(void)
 {
     char mess[16]; // array size may range between 1 and 16 (inclusive)
-    omObjData *obj;
+    OMOBJ *obj;
     SpaceAmidaGameWork *work;
 
     BoardAudSeqFadeOut(1, 100);
@@ -674,14 +674,14 @@ static void SpaceAmidaCoinWin(void)
     work->jumpDir.z = 3.0f;
     work->jumpTime = 0.0f;
     BoardPlayerMotionShiftSet(spaceAmidaPlayerNo, 4, 0.0f, 10.0f, HU3D_MOTATTR_NONE);
-    obj->func = SpaceAmidaJumpDown;
+    obj->objFunc = SpaceAmidaJumpDown;
     HuPrcKill(NULL);
     while (TRUE) {
         HuPrcVSleep();
     }
 }
 
-static void SpaceAmidaJumpDown(omObjData *obj)
+static void SpaceAmidaJumpDown(OMOBJ *obj)
 {
     SpaceAmidaGameWork *work;
     Vec pos;
@@ -697,7 +697,7 @@ static void SpaceAmidaJumpDown(omObjData *obj)
         pos.y = spaceAmidaPos.y;
         coinWinProc = HuPrcCreate(SpaceAmidaCoinRainMain, 0x2004, 0x1000, 0);
         coinWinProc->user_data = obj;
-        obj->func = NULL;
+        obj->objFunc = NULL;
     }
     BoardPlayerPosSetV(spaceAmidaPlayerNo, &pos);
 }
@@ -773,20 +773,20 @@ static void SpaceAmidaCoinRainMain(void)
 
 static void SpaceAmidaReturnWinMain(void)
 {
-    omObjData *obj;
+    OMOBJ *obj;
 
     BoardWinCreate(2, MAKE_MESSID(11, 7), 0);
     BoardWinWait();
     BoardWinKill();
     obj = HuPrcCurrentGet()->user_data;
-    obj->func = SpaceAmidaGameStop;
+    obj->objFunc = SpaceAmidaGameStop;
     HuPrcKill(NULL);
     while (TRUE) {
         HuPrcVSleep();
     }
 }
 
-static void SpaceAmidaGameStop(omObjData *obj)
+static void SpaceAmidaGameStop(OMOBJ *obj)
 {
     SpaceAmidaStop();
     omDelObjEx(HuPrcCurrentGet(), obj);
@@ -894,22 +894,22 @@ static void SpaceAmidaEffCreate(void)
     spaceAmidaEffAnim = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_W01, 20));
     spaceAmidaEffObj = omAddObjEx(boardObjMan, 0x101, 1, 0, -1, SpaceAmidaEffUpdate);
     spaceAmidaEffObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, 12, MEMORY_DEFAULT_NUM);
-    spaceAmidaEffObj->model[0] = Hu3DParticleCreate(spaceAmidaEffAnim, 0x320);
-    Hu3DParticleColSet(spaceAmidaEffObj->model[0], 255, 0, 0);
-    Hu3DParticleScaleSet(spaceAmidaEffObj->model[0], 5.0f);
-    Hu3DParticleHookSet(spaceAmidaEffObj->model[0], SpaceAmidaEffParticleHook);
-    Hu3DParticleBlendModeSet(spaceAmidaEffObj->model[0], 1);
-    Hu3DModelAttrSet(spaceAmidaEffObj->model[0], HU3D_ATTR_DISPOFF);
+    spaceAmidaEffObj->mdlId[0] = Hu3DParticleCreate(spaceAmidaEffAnim, 0x320);
+    Hu3DParticleColSet(spaceAmidaEffObj->mdlId[0], 255, 0, 0);
+    Hu3DParticleScaleSet(spaceAmidaEffObj->mdlId[0], 5.0f);
+    Hu3DParticleHookSet(spaceAmidaEffObj->mdlId[0], SpaceAmidaEffParticleHook);
+    Hu3DParticleBlendModeSet(spaceAmidaEffObj->mdlId[0], 1);
+    Hu3DModelAttrSet(spaceAmidaEffObj->mdlId[0], HU3D_ATTR_DISPOFF);
     spaceAmidaEffObj->work[0] = 0;
 }
 
 static void SpaceAmidaEffKill(void)
 {
-    Hu3DModelKill(spaceAmidaEffObj->model[0]);
+    Hu3DModelKill(spaceAmidaEffObj->mdlId[0]);
     omDelObjEx(HuPrcCurrentGet(), spaceAmidaEffObj);
 }
 
-static void SpaceAmidaEffUpdate(omObjData *obj)
+static void SpaceAmidaEffUpdate(OMOBJ *obj)
 {
     void *work;
 
@@ -919,8 +919,8 @@ static void SpaceAmidaEffUpdate(omObjData *obj)
             break;
         case 1:
             obj->work[0] = 2;
-            Hu3DModelAttrReset(obj->model[0], HU3D_ATTR_DISPOFF);
-            Hu3DModelScaleSet(obj->model[0], 10.0f, 10.0f, 10.0f);
+            Hu3DModelAttrReset(obj->mdlId[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelScaleSet(obj->mdlId[0], 10.0f, 10.0f, 10.0f);
             break;
         case 2:
             break;

@@ -59,7 +59,7 @@ BoardMapObject lbl_1_data_0[MAPOBJ_MAX] = {
 
 static s32 *lbl_1_bss_10;
 static s16 lbl_1_bss_8[4];
-static Process *lbl_1_bss_4;
+static HUPROCESS *lbl_1_bss_4;
 UnkW04BoardData *lbl_1_bss_0;
 
 static s16 lbl_1_data_280 = -1;

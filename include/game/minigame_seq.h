@@ -89,7 +89,7 @@ void MGSeqStub(void);
 void MGSeqPauseInit(void);
 void MGSeqPauseEnableCtrl(s32 flag);
 void MGSeqPracticeInit(void);
-void MGSeqPracticeExitCheck(omObjData *object);
+void MGSeqPracticeExitCheck(OMOBJ *object);
 
 s32 MGSeqInitTimer(SeqWork *work, va_list params);
 s32 MGSeqUpdateTimer(SeqWork *work);

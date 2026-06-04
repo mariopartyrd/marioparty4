@@ -59,25 +59,25 @@ typedef struct M443DllUnkStruct {
     s16 unk_1C[0x10];
 } M443DllUnkStruct; /* size = 0x3C */
 
-void fn_1_1294(omObjData *);
-void fn_1_17D8(omObjData *arg0);
-omObjFunc fn_1_1C98(Process *arg0, omObjData *arg1);
-void fn_1_1D8C(omObjData *);
-omObjFunc fn_1_2490(Process *arg0, omObjData *arg1);
-void fn_1_25A4(omObjData *);
+void fn_1_1294(OMOBJ *);
+void fn_1_17D8(OMOBJ *arg0);
+OMOBJFUNC fn_1_1C98(HUPROCESS *arg0, OMOBJ *arg1);
+void fn_1_1D8C(OMOBJ *);
+OMOBJFUNC fn_1_2490(HUPROCESS *arg0, OMOBJ *arg1);
+void fn_1_25A4(OMOBJ *);
 void fn_1_2DD8(M443DllUnkStruct *arg0);
 void fn_1_2F54(M443DllUnkStruct *arg0);
-void fn_1_32C0(Process *arg0);
-void fn_1_3370(omObjData *object);
-void fn_1_3710(omObjData *);
-void fn_1_3770(omObjData *object);
+void fn_1_32C0(HUPROCESS *arg0);
+void fn_1_3370(OMOBJ *object);
+void fn_1_3710(OMOBJ *);
+void fn_1_3770(OMOBJ *object);
 void fn_1_3D78(HU3DMODEL *, float[3][4]);
-void fn_1_420(omObjData *object);
-void fn_1_584(omObjData *arg0);
-void fn_1_6D0(omObjData *);
-void fn_1_9B0(omObjData *);
-void fn_1_CE0(omObjData *);
-void fn_1_ECC(omObjData *);
+void fn_1_420(OMOBJ *object);
+void fn_1_584(OMOBJ *arg0);
+void fn_1_6D0(OMOBJ *);
+void fn_1_9B0(OMOBJ *);
+void fn_1_CE0(OMOBJ *);
+void fn_1_ECC(OMOBJ *);
 
 Vec lbl_1_data_0 = { 100.0f, 800.0f, -100.0f };
 
@@ -93,10 +93,10 @@ Vec lbl_1_data_34 = { 0.0f, 1.0f, 0.0f };
 
 Vec lbl_1_data_40 = { 0.0f, 0.0f, 0.0f };
 
-Process *lbl_1_bss_74;
-omObjData *lbl_1_bss_70;
-omObjData *lbl_1_bss_6C;
-omObjData *lbl_1_bss_68;
+HUPROCESS *lbl_1_bss_74;
+OMOBJ *lbl_1_bss_70;
+OMOBJ *lbl_1_bss_6C;
+OMOBJ *lbl_1_bss_68;
 s16 lbl_1_bss_64;
 s16 lbl_1_bss_5C[4];
 s16 lbl_1_bss_5A;
@@ -115,7 +115,7 @@ void ObjectSetup(void)
 {
     Vec sp14;
     Vec sp8;
-    Process *var_r31;
+    HUPROCESS *var_r31;
     HU3DLIGHT *var_r30;
 
     HuAudSndGrpSet(0x45);
@@ -162,7 +162,7 @@ void ObjectSetup(void)
     fn_1_5444(var_r31);
 }
 
-void fn_1_420(omObjData *object)
+void fn_1_420(OMOBJ *object)
 {
     M443DllWork *var_r31;
 
@@ -181,10 +181,10 @@ void fn_1_420(omObjData *object)
     var_r31->unk_54 = 2;
     var_r31->unk_58 = 0;
     var_r31->unk_5C = 0;
-    object->func = fn_1_6D0;
+    object->objFunc = fn_1_6D0;
 }
 
-void fn_1_4E4(omObjData *object)
+void fn_1_4E4(OMOBJ *object)
 {
     M443DllWork *var_r31;
 
@@ -200,7 +200,7 @@ void fn_1_4E4(omObjData *object)
     }
 }
 
-void fn_1_584(omObjData *object)
+void fn_1_584(OMOBJ *object)
 {
     M443DllWork *var_r31 = object->data;
 
@@ -211,42 +211,42 @@ void fn_1_584(omObjData *object)
                 lbl_1_bss_14.unk_00 = 1;
                 var_r31->unk_00 = 1;
                 var_r31->unk_10 = 0;
-                object->func = fn_1_1C98(lbl_1_bss_74, object);
+                object->objFunc = fn_1_1C98(lbl_1_bss_74, object);
                 break;
             case 1:
                 var_r31->unk_00 = 2;
                 var_r31->unk_18 = 0;
                 fn_1_3FE8(4);
-                object->func = fn_1_ECC;
+                object->objFunc = fn_1_ECC;
                 break;
             case 2:
                 var_r31->unk_00 = 3;
                 var_r31->unk_2C = 0;
-                object->func = fn_1_2490(lbl_1_bss_74, object);
+                object->objFunc = fn_1_2490(lbl_1_bss_74, object);
                 break;
             case 3:
             case 4:
                 var_r31->unk_08 = 1;
                 var_r31->unk_00 = 5;
-                object->func = fn_1_9B0;
+                object->objFunc = fn_1_9B0;
                 break;
             case 5:
             default:
                 var_r31->unk_00 = 5;
-                object->func = fn_1_CE0;
+                object->objFunc = fn_1_CE0;
                 break;
         }
         var_r31->unk_04 = 0;
     }
 }
 
-void fn_1_6D0(omObjData *object)
+void fn_1_6D0(OMOBJ *object)
 {
     fn_1_4E4(object);
     fn_1_584(object);
 }
 
-void fn_1_9B0(omObjData *object)
+void fn_1_9B0(OMOBJ *object)
 {
     M443DllWork *var_r27 = object->data;
 
@@ -263,7 +263,7 @@ void fn_1_9B0(omObjData *object)
     }
 }
 
-void fn_1_CE0(omObjData *object)
+void fn_1_CE0(OMOBJ *object)
 {
     fn_1_4E4(object);
 
@@ -276,7 +276,7 @@ void fn_1_CE0(omObjData *object)
     }
 }
 
-void fn_1_ECC(omObjData *object)
+void fn_1_ECC(OMOBJ *object)
 {
     M443DllWork *var_r29 = object->data;
 
@@ -307,13 +307,13 @@ void fn_1_ECC(omObjData *object)
             if ((MGSeqStatGet(lbl_1_bss_5A) == 0) && (var_r29->unk_08 == 0)) {
                 var_r29->unk_14 = 2;
                 var_r29->unk_18 = 0;
-                object->func = fn_1_1294;
+                object->objFunc = fn_1_1294;
             }
             break;
     }
 }
 
-void fn_1_1294(omObjData *object)
+void fn_1_1294(OMOBJ *object)
 {
     s32 sp8[4];
 
@@ -393,12 +393,12 @@ void fn_1_1294(omObjData *object)
         var_r31->unk_14 = 3;
         var_r31->unk_18 = 0;
         if (var_r31->unk_08 == 0) {
-            object->func = fn_1_17D8;
+            object->objFunc = fn_1_17D8;
         }
     }
 }
 
-void fn_1_17D8(omObjData *object)
+void fn_1_17D8(OMOBJ *object)
 {
     M443DllWork *var_r27 = object->data;
     s32 var_r25 = 0;
@@ -446,7 +446,7 @@ void fn_1_17D8(omObjData *object)
     }
 }
 
-omObjFunc fn_1_1C98(Process *process, omObjData *object)
+OMOBJFUNC fn_1_1C98(HUPROCESS *process, OMOBJ *object)
 {
     CRot.x = -80.5f;
     CRot.y = CRot.z = 0.0f;
@@ -485,7 +485,7 @@ s32 lbl_1_data_F0[6] = {
     REFRESH_RATE * 1.8, 0
 };
 
-void fn_1_1D8C(omObjData *object)
+void fn_1_1D8C(OMOBJ *object)
 {
     Vec sp8;
 
@@ -530,7 +530,7 @@ void fn_1_1D8C(omObjData *object)
     }
 }
 
-omObjFunc fn_1_2490(Process *process, omObjData *object)
+OMOBJFUNC fn_1_2490(HUPROCESS *process, OMOBJ *object)
 {
     M443DllCameraStruct *var_r31;
     M443DllWork *var_r30 = object->data;
@@ -557,7 +557,7 @@ omObjFunc fn_1_2490(Process *process, omObjData *object)
     return fn_1_25A4;
 }
 
-void fn_1_25A4(omObjData *object)
+void fn_1_25A4(OMOBJ *object)
 {
     M443DllWork *var_r28 = object->data;
     s32 var_r22 = 1;
@@ -729,7 +729,7 @@ void fn_1_2F54(M443DllUnkStruct *arg0)
     }
 }
 
-void fn_1_32C0(Process *process)
+void fn_1_32C0(HUPROCESS *process)
 {
     Hu3DCameraCreate(0x1F);
     lbl_1_bss_6C = omAddObjEx(process, 0x7FDA, 0, 0, -1, omOutViewMulti);
@@ -738,7 +738,7 @@ void fn_1_32C0(Process *process)
     lbl_1_bss_68->work[0] = 0;
 }
 
-void fn_1_3370(omObjData *object)
+void fn_1_3370(OMOBJ *object)
 {
     M443DllCameraStruct *var_r31;
     s32 var_r30;
@@ -756,9 +756,9 @@ void fn_1_3370(omObjData *object)
     object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 10 * sizeof(M443DllCameraStruct), MEMORY_DEFAULT_NUM);
     var_r28 = object->data;
     memset(var_r28, 0, 10 * sizeof(M443DllCameraStruct));
-    object->model[0] = Hu3DHookFuncCreate(fn_1_3D78);
-    Hu3DModelLayerSet(*object->model, 0);
-    Hu3DModelCameraSet(*object->model, 0x1E);
+    object->mdlId[0] = Hu3DHookFuncCreate(fn_1_3D78);
+    Hu3DModelLayerSet(*object->mdlId, 0);
+    Hu3DModelCameraSet(*object->mdlId, 0x1E);
     for (var_r31 = var_r28, var_r30 = 0; var_r30 < 5; var_r30++, var_r31++) {
         var_r31->unk_00 = 1;
         var_r31->unk_04 = var_r30 * 0x64;
@@ -797,17 +797,17 @@ void fn_1_3370(omObjData *object)
     }
     object->work[0]++;
     fn_1_3770(object);
-    object->func = fn_1_3710;
+    object->objFunc = fn_1_3710;
 }
 
-void fn_1_3710(omObjData *arg0)
+void fn_1_3710(OMOBJ *arg0)
 {
     M443DllWork *sp8 = arg0->data;
     s32 spC[4] = { 0x100, 0x200, 0x400, 0x800 };
     fn_1_3770(arg0);
 }
 
-void fn_1_3770(omObjData *arg0)
+void fn_1_3770(OMOBJ *arg0)
 {
     float var_f31;
 
@@ -849,10 +849,10 @@ void fn_1_3770(omObjData *arg0)
                 break;
         }
         if (var_r24 != 0) {
-            Hu3DModelAttrReset(arg0->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrReset(arg0->mdlId[0], HU3D_ATTR_DISPOFF);
         }
         else {
-            Hu3DModelAttrSet(arg0->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrSet(arg0->mdlId[0], HU3D_ATTR_DISPOFF);
         }
         for (var_r30 = 0; var_r30 < 4; var_r30++) {
             sp30[var_r30] = var_r28[var_r30 + 6].unk_04;

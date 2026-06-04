@@ -18,29 +18,29 @@
 #include "game/board/player.h"
 #include "game/board/window.h"
 
-static void fn_1_CF8C(omObjData *arg0);
+static void fn_1_CF8C(OMOBJ *arg0);
 static void fn_1_D0AC(void);
 static void fn_1_D0DC(void);
-static void fn_1_D174(omObjData *arg0);
-static void fn_1_D230(omObjData *arg0);
-static void fn_1_D2A4(omObjData *arg0);
-static void fn_1_D554(omObjData *arg0);
-static void fn_1_D6A8(omObjData *arg0);
-static void fn_1_D70C(omObjData *arg0);
+static void fn_1_D174(OMOBJ *arg0);
+static void fn_1_D230(OMOBJ *arg0);
+static void fn_1_D2A4(OMOBJ *arg0);
+static void fn_1_D554(OMOBJ *arg0);
+static void fn_1_D6A8(OMOBJ *arg0);
+static void fn_1_D70C(OMOBJ *arg0);
 static void fn_1_D770(void);
 static void fn_1_E004(void);
-static void fn_1_E144(omObjData *arg0);
-static void fn_1_E18C(omObjData *arg0);
-static void fn_1_E374(omObjData *arg0);
-static void fn_1_E4C0(omObjData *arg0);
-static void fn_1_E6AC(omObjData *arg0);
-static s16 fn_1_E880(omObjData *arg0);
+static void fn_1_E144(OMOBJ *arg0);
+static void fn_1_E18C(OMOBJ *arg0);
+static void fn_1_E374(OMOBJ *arg0);
+static void fn_1_E4C0(OMOBJ *arg0);
+static void fn_1_E6AC(OMOBJ *arg0);
+static s16 fn_1_E880(OMOBJ *arg0);
 
 static u16 lbl_1_bss_326;
 static s16 lbl_1_bss_324;
-static omObjData *lbl_1_bss_320;
-static omObjData *lbl_1_bss_31C;
-static omObjData *lbl_1_bss_318;
+static OMOBJ *lbl_1_bss_320;
+static OMOBJ *lbl_1_bss_31C;
+static OMOBJ *lbl_1_bss_318;
 static s16 lbl_1_bss_314;
 static Vec lbl_1_bss_308;
 static Vec lbl_1_bss_2FC;
@@ -195,7 +195,7 @@ void fn_1_C7D4(void) {
     lbl_1_bss_326 = 0;
 }
 
-static void fn_1_CF8C(omObjData *arg0) {
+static void fn_1_CF8C(OMOBJ *arg0) {
     s32 spC;
 
     if (lbl_1_data_588 != -1) {
@@ -233,7 +233,7 @@ static void fn_1_D0DC(void) {
     BoardMGDoneFlagSet(0);
 }
 
-static void fn_1_D174(omObjData *arg0) {
+static void fn_1_D174(OMOBJ *arg0) {
     MSM_MUSPARAM musParam;
 
     if (arg0->work[0] == 0) {
@@ -247,21 +247,21 @@ static void fn_1_D174(omObjData *arg0) {
         musParam.vol = 0x7F;
         musParam.chan = 1;
         lbl_1_data_588 = msmMusPlay(0x1D, &musParam);
-        arg0->func = fn_1_D230;
+        arg0->objFunc = fn_1_D230;
     }
 }
 
-static void fn_1_D230(omObjData *arg0) {
+static void fn_1_D230(OMOBJ *arg0) {
     s32 temp_r3;
 
     temp_r3 = HuAudSeqMidiCtrlGet(lbl_1_data_588, 0, 1);
     if (temp_r3 >= 10 && temp_r3 <= 19) {
         arg0->work[1]++;
-        arg0->func = fn_1_D2A4;
+        arg0->objFunc = fn_1_D2A4;
     }
 }
 
-static void fn_1_D2A4(omObjData *arg0) {
+static void fn_1_D2A4(OMOBJ *arg0) {
     Vec sp18;
     Vec spC;
     float sp8;
@@ -284,7 +284,7 @@ static void fn_1_D2A4(omObjData *arg0) {
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_14[7]), lbl_1_data_5BC[arg0->work[1]], &sp18);
         spC.x = sp18.x;
         BoardModelPosSetV(lbl_1_bss_14[9], &spC);
-        arg0->func = fn_1_D554;
+        arg0->objFunc = fn_1_D554;
         if (arg0->work[1] < 8) {
             BoardModelHookReset(lbl_1_bss_14[7]);
             BoardModelVisibilitySet(lbl_1_bss_2F8, 1);
@@ -293,13 +293,13 @@ static void fn_1_D2A4(omObjData *arg0) {
             Hu3DMotionExec(BoardModelIDGet(lbl_1_bss_2F8), temp_r30->motId, temp_r30->motWork.time, 0);
         }
         lbl_1_bss_31C->work[0] = 60;
-        lbl_1_bss_31C->unk10 = frandmod((REFRESH_RATE*2)/3) + (REFRESH_RATE/6);
+        lbl_1_bss_31C->mode = frandmod((REFRESH_RATE*2)/3) + (REFRESH_RATE/6);
         lbl_1_bss_31C->work[1] = arg0->work[1];
-        lbl_1_bss_31C->func = fn_1_E18C;
+        lbl_1_bss_31C->objFunc = fn_1_E18C;
     }
 }
 
-static void fn_1_D554(omObjData *arg0) {
+static void fn_1_D554(OMOBJ *arg0) {
     float sp8;
 
     sp8 = BoardModelRotYGet(lbl_1_bss_14[9]);
@@ -314,30 +314,30 @@ static void fn_1_D554(omObjData *arg0) {
         arg0->scale.x = 255.0f;
         BoardModelAlphaSet(lbl_1_bss_14[9], arg0->scale.x);
         if (arg0->work[1] == 8) {
-            arg0->func = fn_1_D70C;
+            arg0->objFunc = fn_1_D70C;
             lbl_1_bss_31C->work[2] = 1;
-            lbl_1_bss_31C->func = fn_1_E374;
+            lbl_1_bss_31C->objFunc = fn_1_E374;
         } else {
-            arg0->func = fn_1_D6A8;
+            arg0->objFunc = fn_1_D6A8;
         }
     }
 }
 
-static void fn_1_D6A8(omObjData *arg0) {
+static void fn_1_D6A8(OMOBJ *arg0) {
     if (arg0->work[0] != 0) {
         BoardModelHookReset(lbl_1_bss_14[7]);
         BoardModelVisibilitySet(lbl_1_bss_2F8, 0);
-        arg0->func = fn_1_D230;
+        arg0->objFunc = fn_1_D230;
     }
 }
 
-static void fn_1_D70C(omObjData *arg0) {
-    Process *var_r30;
+static void fn_1_D70C(OMOBJ *arg0) {
+    HUPROCESS *var_r30;
 
     if (arg0->work[0] == 1) {
         var_r30 = HuPrcCreate(fn_1_D770, 0x2004, 0x1800, 0);
         var_r30->user_data = arg0;
-        arg0->func = NULL;
+        arg0->objFunc = NULL;
     }
 }
 
@@ -354,8 +354,8 @@ static void fn_1_D770(void) {
     float var_f30;
     float var_f31;
     char sp8[4];
-    Process *temp_r3;
-    omObjData *var_r28;
+    HUPROCESS *temp_r3;
+    OMOBJ *var_r28;
     s32 var_r29;
     s32 i;
 
@@ -458,7 +458,7 @@ static void fn_1_D770(void) {
     }
     HuPrcKill(temp_r3);
     var_r28 = HuPrcCurrentGet()->user_data;
-    var_r28->func = fn_1_E144;
+    var_r28->objFunc = fn_1_E144;
     HuPrcEnd();
 }
 
@@ -489,13 +489,13 @@ static void fn_1_E004(void) {
     }
 }
 
-static void fn_1_E144(omObjData *arg0) {
+static void fn_1_E144(OMOBJ *arg0) {
     lbl_1_bss_326 = 1;
     BoardMGExit();
     omDelObjEx(boardObjMan, arg0);
 }
 
-static void fn_1_E18C(omObjData *arg0) {
+static void fn_1_E18C(OMOBJ *arg0) {
     s32 var_r29;
     s16 var_r28;
     s16 var_r30;
@@ -505,7 +505,7 @@ static void fn_1_E18C(omObjData *arg0) {
         var_r28 = GWPlayer[lbl_1_bss_324].port;
         var_r30 = 0;
         if (GWPlayer[lbl_1_bss_324].com) {
-            if (--arg0->unk10 == 0) {
+            if (--arg0->mode == 0) {
                 var_r30 = fn_1_E880(arg0);
             }
         } else {
@@ -518,18 +518,18 @@ static void fn_1_E18C(omObjData *arg0) {
                 arg0->work[2] = 0;
             }
             BoardModelVisibilitySet(lbl_1_bss_2F8, 0);
-            arg0->func = fn_1_E374;
+            arg0->objFunc = fn_1_E374;
         }
     } else {
         BoardModelVisibilitySet(lbl_1_bss_2F8, 0);
         arg0->work[2] = 0;
-        arg0->func = fn_1_E374;
+        arg0->objFunc = fn_1_E374;
         lbl_1_bss_318->work[0] = 1;
         fn_1_E374(arg0);
     }
 }
 
-static void fn_1_E374(omObjData *arg0) {
+static void fn_1_E374(OMOBJ *arg0) {
     Vec sp20;
     Vec sp14;
     Vec sp8;
@@ -549,11 +549,11 @@ static void fn_1_E374(omObjData *arg0) {
         arg0->scale.y = sp14.y;
         arg0->scale.z = sp14.z;
         BoardPlayerMotionShiftSet(lbl_1_bss_324, 4, 0.0f, 5.0f, HU3D_MOTATTR_NONE);
-        arg0->func = fn_1_E4C0;
+        arg0->objFunc = fn_1_E4C0;
     }
 }
 
-static void fn_1_E4C0(omObjData *arg0) {
+static void fn_1_E4C0(OMOBJ *arg0) {
     Vec sp2C;
     Vec sp20;
     Vec sp14;
@@ -583,17 +583,17 @@ static void fn_1_E4C0(omObjData *arg0) {
         BoardPlayerIdleSet(lbl_1_bss_324);
         arg0->work[3] = 0;
         if (arg0->work[2] != 0) {
-            arg0->func = fn_1_E6AC;
+            arg0->objFunc = fn_1_E6AC;
         } else {
             lbl_1_bss_318->work[0] = 1;
             HuAudFXPlay(0x475);
-            arg0->func = NULL;
+            arg0->objFunc = NULL;
         }
     }
     BoardPlayerPosSetV(lbl_1_bss_324, &sp2C);
 }
 
-static void fn_1_E6AC(omObjData *arg0) {
+static void fn_1_E6AC(OMOBJ *arg0) {
     Vec sp8;
     float var_f31;
 
@@ -617,10 +617,10 @@ static void fn_1_E6AC(omObjData *arg0) {
     }
     lbl_1_bss_318->work[0] = 1;
     BoardModelAttrSet(lbl_1_bss_14[7], 0x40000002);
-    arg0->func = NULL;
+    arg0->objFunc = NULL;
 }
 
-static s16 fn_1_E880(omObjData *arg0) {
+static s16 fn_1_E880(OMOBJ *arg0) {
     s16 temp_r28;
     s16 var_r30;
     s32 temp_r29;
@@ -635,7 +635,7 @@ static s16 fn_1_E880(omObjData *arg0) {
             } else if (temp_r29 < 90) {
                 var_r30 = -1;
             } else {
-                arg0->unk10 = 100;
+                arg0->mode = 100;
             }
             break;
         case 1:
@@ -644,7 +644,7 @@ static s16 fn_1_E880(omObjData *arg0) {
             } else if (temp_r29 < 90) {
                 var_r30 = -1;
             } else {
-                arg0->unk10 = 100;
+                arg0->mode = 100;
             }
             break;
         case 2:

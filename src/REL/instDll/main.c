@@ -23,9 +23,9 @@
 
 static s16 instMode = 1;
 
-static omObjData *lbl_1_bss_60;
-static omObjData *outViewObj;
-Process *objman;
+static OMOBJ *lbl_1_bss_60;
+static OMOBJ *outViewObj;
+HUPROCESS *objman;
 Vec cameraRot[2];
 Vec cameraPos[2];
 float cameraZoom[2];
@@ -45,13 +45,13 @@ static void InstPlayerMain(void);
 static void InstHostMain(void);
 static void InstWinMain(void);
 static void InstNameMain(void);
-static void CameraOutView(omObjData *object);
-static void CameraDebug(omObjData *object);
+static void CameraOutView(OMOBJ *object);
+static void CameraDebug(OMOBJ *object);
 
 void ObjectSetup(void)
 {
     s32 i;
-    omOvlHisData *his;
+    OMOVLHIS *his;
     s32 lightId;
     OSReport("******* INST ObjectSetup *********\n");
     objman = omInitObjMan(50, 8192);
@@ -79,7 +79,7 @@ void ObjectSetup(void)
     }
     HuDataDirClose(mgInfoTbl[instMgNo].data_dir);
     his = omOvlHisGet(0);
-    omOvlHisChg(0, DLL_resultdll, his->event, his->stat);
+    omOvlHisChg(0, DLL_resultdll, his->evtno, his->stat);
     if (omovlevtno == 0 && mgInfoTbl[instMgNo].ovl == DLL_m430dll) {
         s32 team_cnt[2];
         s32 team_players[2][2];
@@ -182,7 +182,7 @@ static void InstMain(void)
     Vec up;
 
     Vec rot;
-    Process *proc;
+    HUPROCESS *proc;
 
     s16 i;
     s16 model;
@@ -193,7 +193,7 @@ static void InstMain(void)
     s32 endF;
     s16 grpId;
     s32 picFile;
-    omOvlHisData *his;
+    OMOVLHIS *his;
     s16 sprId;
     ANIMDATA *anim;
     float z;
@@ -960,7 +960,7 @@ static void InstNameMain(void)
 }
 
 
-static void CameraOutView(omObjData *object)
+static void CameraOutView(OMOBJ *object)
 {
     s16 i;
     static u16 cameraMask[] = { HU3D_CAM0, HU3D_CAM1 };
@@ -985,7 +985,7 @@ static void CameraOutView(omObjData *object)
     }
 }
 
-static void CameraDebug(omObjData *object)
+static void CameraDebug(OMOBJ *object)
 {
     Vec pos;
     Vec offset;

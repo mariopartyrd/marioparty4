@@ -204,7 +204,7 @@ void fn_1_27418(void)
 void fn_1_2783C(s16 evtno)
 {
     s16 i;
-    omOvlHisData *his;
+    OMOVLHIS *his;
     for (i = 0; i < 4; i++) {
         GWPlayerCfg[i].character = lbl_1_bss_8.unk24[i].unk68;
         GWPlayerCfg[i].iscom = lbl_1_bss_8.unk24[i].unk60;

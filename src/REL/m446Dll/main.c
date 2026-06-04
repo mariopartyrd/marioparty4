@@ -14,8 +14,8 @@
 // bss
 s32 lbl_1_bss_14;
 s32 lbl_1_bss_10;
-Process *lbl_1_bss_C;
-omObjData *lbl_1_bss_8;
+HUPROCESS *lbl_1_bss_C;
+OMOBJ *lbl_1_bss_8;
 s32 lbl_1_bss_4;
 unkStruct *lbl_1_bss_0;
 
@@ -40,7 +40,7 @@ void ObjectSetup(void)
     lbl_1_bss_4 = 0;
 }
 
-void fn_1_13C(omObjData *arg0)
+void fn_1_13C(OMOBJ *arg0)
 {
     switch (lbl_1_bss_4) {
         case 0:

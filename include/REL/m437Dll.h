@@ -50,7 +50,7 @@ typedef struct {
     /* 0x8C */ s32 unk8C;
     /* 0x90 */ s32 unk90;
     /* 0x94 */ s32 unk94[20];
-    /* 0xE4 */ omObjData* unkE4;
+    /* 0xE4 */ OMOBJ* unkE4;
 } StructFn15CD0; // Size 0xE8
 
 float fn_1_11348(float arg0, float arg1, float arg2, float arg3);
@@ -62,17 +62,17 @@ void fn_1_11668(StructBss50* arg0, StructData204* arg1);
 s32 fn_1_116C4(StructBss50* arg0);
 s32 fn_1_117C0(StructBss50* arg0, s32 arg1);
 s32 fn_1_11854(StructBss50* arg0, s32 arg1);
-s32 fn_1_11890(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_119A0(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_11B18(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-s32 fn_1_11CE0(omObjData* arg0, Vec arg1, float arg2, float arg3, float arg4, float arg5, s32 arg6);
+s32 fn_1_11890(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_119A0(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_11B18(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 fn_1_11CE0(OMOBJ* arg0, Vec arg1, float arg2, float arg3, float arg4, float arg5, s32 arg6);
 void fn_1_12ABC(StructBss160* arg0);
 void fn_1_12E14(StructBss160* arg0, float arg1);
 void fn_1_13658(StructBss160* arg0, StructBss160* arg1, float arg2, float arg3, float arg4);
 void fn_1_15544(StructBss160* arg0, StructBss160* arg1, float arg2, float arg3, float arg4);
 void fn_1_15CD0(StructFn15CD0* arg0, s32 arg1);
 void fn_1_15DC8(StructFn15CD0* arg0);
-void fn_1_164B0(Process* arg0, StructFn15CD0* arg1, s32 arg2, const char* arg3);
-void fn_1_1660C(Process* arg0, StructFn15CD0* arg1, s32 arg2, s32 arg3);
+void fn_1_164B0(HUPROCESS* arg0, StructFn15CD0* arg1, s32 arg2, const char* arg3);
+void fn_1_1660C(HUPROCESS* arg0, StructFn15CD0* arg1, s32 arg2, s32 arg3);
 
 #endif

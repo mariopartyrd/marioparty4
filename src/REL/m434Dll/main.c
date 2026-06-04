@@ -31,11 +31,11 @@ Vec lbl_1_data_28 = { -700, 2500, 700 };
 Vec lbl_1_data_34 = { 0, 1, 0 };
 Vec lbl_1_data_40 = { 0, 0, 0 };
 
-omObjData *lbl_1_bss_3D4;
-omObjData *lbl_1_bss_3D0;
-omObjData *lbl_1_bss_3CC;
-omObjData *lbl_1_bss_3C8;
-omObjData *lbl_1_bss_3C4;
+OMOBJ *lbl_1_bss_3D4;
+OMOBJ *lbl_1_bss_3D0;
+OMOBJ *lbl_1_bss_3CC;
+OMOBJ *lbl_1_bss_3C8;
+OMOBJ *lbl_1_bss_3C4;
 s16 lbl_1_bss_3C2;
 s16 lbl_1_bss_3C0;
 s32 lbl_1_bss_3BC;
@@ -54,17 +54,17 @@ s32 lbl_1_bss_8[2];
 s32 lbl_1_bss_4;
 float lbl_1_bss_0;
 
-void fn_1_4FC(omObjData *object);
-void fn_1_CC8(omObjData *object);
+void fn_1_4FC(OMOBJ *object);
+void fn_1_CC8(OMOBJ *object);
 s32 fn_1_10F4(void);
-void fn_1_1104(Process *objman);
+void fn_1_1104(HUPROCESS *objman);
 void fn_1_1684(void);
 void fn_1_16B4(void);
 
 void ObjectSetup(void)
 {
     s32 i;
-    Process *objman;
+    HUPROCESS *objman;
     OSReport("******* M434ObjectSetup *********\n");
     objman = omInitObjMan(50, 8192);
     omGameSysInit(objman);
@@ -107,22 +107,22 @@ void ObjectSetup(void)
     fn_1_1104(objman);
 }
 
-void fn_1_558(omObjData *object);
+void fn_1_558(OMOBJ *object);
 
-void fn_1_4FC(omObjData *object)
+void fn_1_4FC(OMOBJ *object)
 {
     fn_1_1D64(0);
     lbl_1_bss_3AA = 0;
     lbl_1_bss_3A8 = 0;
-    object->func = fn_1_558;
+    object->objFunc = fn_1_558;
 }
 
 s32 lbl_1_data_70 = -1;
 
-void fn_1_C64(omObjData *object);
+void fn_1_C64(OMOBJ *object);
 void fn_1_1638(s32 arg0);
 
-void fn_1_558(omObjData *object)
+void fn_1_558(OMOBJ *object)
 {
     s32 temp_r31;
     s32 temp_r29;
@@ -227,7 +227,7 @@ void fn_1_558(omObjData *object)
         case 5:
             if (--lbl_1_bss_10[1] == 0) {
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
-                object->func = fn_1_C64;
+                object->objFunc = fn_1_C64;
             }
 
             break;
@@ -239,11 +239,11 @@ void fn_1_558(omObjData *object)
     }
     if (omSysExitReq && !WipeStatGet()) {
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
-        object->func = fn_1_C64;
+        object->objFunc = fn_1_C64;
     }
 }
 
-void fn_1_C64(omObjData *object)
+void fn_1_C64(OMOBJ *object)
 {
     if (WipeStatGet()) {
         return;
@@ -258,35 +258,35 @@ void fn_1_C64(omObjData *object)
     OSReport("******* M434Exit *********\n");
 }
 
-void fn_1_E44(omObjData *object);
+void fn_1_E44(OMOBJ *object);
 void fn_1_16D8(void);
 void fn_1_1950(float arg0, float arg1, float arg2, float arg3, float arg4, float arg5, float arg6);
 void fn_1_1A00(s32 arg0);
 void fn_1_1A10(float arg0);
 
-void fn_1_CC8(omObjData *object)
+void fn_1_CC8(OMOBJ *object)
 {
     lbl_1_bss_8[0] = 0;
     lbl_1_bss_8[1] = 140;
     fn_1_16D8();
     fn_1_1950(302, 0, 125, -188, -24, 28, 0);
     fn_1_1A00(1);
-    object->func = fn_1_E44;
+    object->objFunc = fn_1_E44;
     omSetStatBit(object, 0x100);
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x07));
-    Hu3DModelCameraSet(object->model[0], 4);
-    Hu3DModelLayerSet(object->model[0], 4);
-    Hu3DModelPosSet(object->model[0], -50, -40, -540);
-    Hu3DMotionSpeedSet(object->model[0], 1);
-    Hu3DModelRotSet(object->model[0], 0, 70, 0);
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x07));
+    Hu3DModelCameraSet(object->mdlId[0], 4);
+    Hu3DModelLayerSet(object->mdlId[0], 4);
+    Hu3DModelPosSet(object->mdlId[0], -50, -40, -540);
+    Hu3DMotionSpeedSet(object->mdlId[0], 1);
+    Hu3DModelRotSet(object->mdlId[0], 0, 70, 0);
 }
 
 s32 lbl_1_data_A4[] = { 74, 98 };
 float lbl_1_data_AC[] = { -120, -267.9 };
 
-void fn_1_10BC(omObjData *object);
+void fn_1_10BC(OMOBJ *object);
 
-void fn_1_E44(omObjData *object)
+void fn_1_E44(OMOBJ *object)
 {
     HU3DMODEL *temp_r31;
     s32 temp_r30;
@@ -294,12 +294,12 @@ void fn_1_E44(omObjData *object)
     switch (lbl_1_bss_8[0]) {
         case 0:
             if (--lbl_1_bss_8[1] == 0) {
-                Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
+                Hu3DModelAttrSet(object->mdlId[0], HU3D_ATTR_DISPOFF);
                 lbl_1_bss_8[0] = 1;
             }
             for (temp_r30 = 0; temp_r30 < 2u; temp_r30++) {
                 if (lbl_1_bss_4 == lbl_1_data_A4[temp_r30]) {
-                    temp_r31 = &Hu3DData[object->model[0]];
+                    temp_r31 = &Hu3DData[object->mdlId[0]];
                     sp8.x = temp_r31->pos.x + (lbl_1_data_AC[temp_r30] * cosd(temp_r31->rot.y));
                     sp8.y = -15.000001f;
                     sp8.z = temp_r31->pos.z - (lbl_1_data_AC[temp_r30] * sind(temp_r31->rot.y));
@@ -321,7 +321,7 @@ void fn_1_E44(omObjData *object)
             if (lbl_1_bss_0 >= 1.0f) {
                 lbl_1_bss_8[0] = 2;
                 lbl_1_bss_0 = 1.0f;
-                object->func = fn_1_10BC;
+                object->objFunc = fn_1_10BC;
             }
             fn_1_1A10(lbl_1_bss_0);
             break;
@@ -330,11 +330,11 @@ void fn_1_E44(omObjData *object)
 
 void fn_1_1788(void);
 
-void fn_1_10BC(omObjData *object)
+void fn_1_10BC(OMOBJ *object)
 {
     fn_1_1788();
     fn_1_1788();
-    object->func = NULL;
+    object->objFunc = NULL;
 }
 
 s32 fn_1_10F4(void)
@@ -342,7 +342,7 @@ s32 fn_1_10F4(void)
     return lbl_1_bss_8[0];
 }
 
-void fn_1_1150(omObjData *object);
+void fn_1_1150(OMOBJ *object);
 
 u16 lbl_1_data_B4[6] = { 0, 1, 2, 3, 4, 4 };
 
@@ -357,14 +357,14 @@ typedef struct work_1150 {
     u16 unk12;
 } Work1150;
 
-void fn_1_1104(Process *objman)
+void fn_1_1104(HUPROCESS *objman)
 {
     lbl_1_bss_3C4 = omAddObjEx(objman, 0, 0, 0, -1, fn_1_1150);
 }
 
-void fn_1_1470(omObjData *object);
+void fn_1_1470(OMOBJ *object);
 
-void fn_1_1150(omObjData *object)
+void fn_1_1150(OMOBJ *object)
 {
     Work1150 *temp_r31;
     u32 temp_r30;
@@ -413,10 +413,10 @@ void fn_1_1150(omObjData *object)
         temp_r31->unk0 = -1;
     }
     HuDataDirClose(DATADIR_MGCONST);
-    object->func = fn_1_1470;
+    object->objFunc = fn_1_1470;
 }
 
-void fn_1_1470(omObjData *object)
+void fn_1_1470(OMOBJ *object)
 {
     float temp_f31;
     Work1150 *temp_r31;

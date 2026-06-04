@@ -37,11 +37,11 @@ typedef struct bit_copy {
 #define COIN_CHG_MODE_DISAPPEAR 4
 
 static void CreateCoinChg(coinChg*, Vec*);
-static void UpdateCoinChg(omObjData*);
-static void CoinChgAppear(omObjData*, coinChg*);
-static void CoinChgSeparate(omObjData*, coinChg*);
-static void CoinChgShow(omObjData*, coinChg*);
-static void CoinChgDisappear(omObjData*, coinChg*);
+static void UpdateCoinChg(OMOBJ*);
+static void CoinChgAppear(OMOBJ*, coinChg*);
+static void CoinChgSeparate(OMOBJ*, coinChg*);
+static void CoinChgShow(OMOBJ*, coinChg*);
+static void CoinChgDisappear(OMOBJ*, coinChg*);
 
 extern void BoardCameraViewSet(s32);
 extern void BoardPlayerPosGet(s32, Vec*);
@@ -51,7 +51,7 @@ extern void BoardPlayerIdleSet(s32);
 extern void BoardCameraMotBlendSet(s32, s16, s16);
 extern s32 BoardPlayerMotBlendCheck(s32);
 
-static omObjData *coinChgObj[4] = {
+static OMOBJ *coinChgObj[4] = {
     NULL,
     NULL,
     NULL,
@@ -234,7 +234,7 @@ void BoardLandRedExec(s32 player, s32 space) {
  * @return The position of the Coin Change object in the array
  */
 s8 BoardCoinChgCreate(Vec *pos, s8 value) {
-    omObjData *obj = NULL;
+    OMOBJ *obj = NULL;
     coinChg *coin_chg;
     s8 i;
     
@@ -432,7 +432,7 @@ static void CreateCoinChg(coinChg *coin_chg, Vec *pos) {
  * 
  * @param [in, out] object Coin Change object
  */
-static void UpdateCoinChg(omObjData *object) {
+static void UpdateCoinChg(OMOBJ *object) {
     coinChg *coin_chg;
 
     coin_chg = OM_GET_WORK_PTR(object, coinChg);
@@ -501,7 +501,7 @@ static void UpdateCoinChg(omObjData *object) {
  * @param [in, out] object Coin Change object
  * @param [in, out] coin_chg Coin Change object data
  */
-static void CoinChgAppear(omObjData *object, coinChg *coin_chg) {
+static void CoinChgAppear(OMOBJ *object, coinChg *coin_chg) {
     f32 scale;
     f32 angle;
 
@@ -553,7 +553,7 @@ static void CoinChgAppear(omObjData *object, coinChg *coin_chg) {
  * @param [in, out] object Coin Change object
  * @param [in, out] coin_chg Coin Change object data
  */
-static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
+static void CoinChgSeparate(OMOBJ *object, coinChg *coin_chg) {
     f32 y_offset;
     f32 x_scale;
     f32 spacing;
@@ -629,7 +629,7 @@ static void CoinChgSeparate(omObjData *object, coinChg *coin_chg) {
  * @param [in, out] object Coin Change object
  * @param [in, out] coin_chg Coin Change object data
  */
-static void CoinChgShow(omObjData* object, coinChg* coin_chg) {
+static void CoinChgShow(OMOBJ* object, coinChg* coin_chg) {
     Vec pos;
     f32 angle;
     f32 y_pos;
@@ -687,7 +687,7 @@ static void CoinChgShow(omObjData* object, coinChg* coin_chg) {
  * @param [in, out] object Coin Change object
  * @param [in, out] coin_chg Coin Change object data
  */
-static void CoinChgDisappear(omObjData* object, coinChg* coin_chg) {
+static void CoinChgDisappear(OMOBJ* object, coinChg* coin_chg) {
     const u16 angle = ((coin_chg->angle * 2) % 180);
     f32 rot;
     

@@ -18,9 +18,9 @@
 s16 lbl_1_bss_C2[3];
 s16 lbl_1_bss_BC[3];
 float lbl_1_bss_B0[3];
-omObjData *lbl_1_bss_AC;
-omObjData *lbl_1_bss_A8;
-omObjData *lbl_1_bss_A4;
+OMOBJ *lbl_1_bss_AC;
+OMOBJ *lbl_1_bss_A8;
+OMOBJ *lbl_1_bss_A4;
 u16 lbl_1_bss_A0;
 Vec lbl_1_bss_94;
 Vec lbl_1_bss_88;
@@ -69,8 +69,8 @@ void fn_1_39F4(void)
     fn_1_51B4(&lbl_1_bss_94);
 }
 
-void fn_1_3F0C(omObjData *object);
-void fn_1_4050(omObjData *object);
+void fn_1_3F0C(OMOBJ *object);
+void fn_1_4050(OMOBJ *object);
 
 typedef struct work_mgcoin_player {
     float unk0[3];
@@ -101,8 +101,8 @@ void fn_1_3BF4(void)
     lbl_1_bss_AC = omAddObjEx(boardObjMan, 257, 0, 0, -1, fn_1_3F0C);
     lbl_1_bss_A4 = omAddObjEx(boardObjMan, 257, 0, 0, -1, fn_1_4050);
     lbl_1_bss_A8 = omAddObjEx(boardObjMan, 257, 0, 2, -1, NULL);
-    lbl_1_bss_A8->motion[0] = BoardPlayerMotionCreate(lbl_1_bss_86, lbl_1_data_3E4[GWPlayer[lbl_1_bss_86].character]);
-    lbl_1_bss_A8->motion[1] = BoardPlayerMotionCreate(lbl_1_bss_86, lbl_1_data_404[GWPlayer[lbl_1_bss_86].character]);
+    lbl_1_bss_A8->mtnId[0] = BoardPlayerMotionCreate(lbl_1_bss_86, lbl_1_data_3E4[GWPlayer[lbl_1_bss_86].character]);
+    lbl_1_bss_A8->mtnId[1] = BoardPlayerMotionCreate(lbl_1_bss_86, lbl_1_data_404[GWPlayer[lbl_1_bss_86].character]);
     lbl_1_bss_A4->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkMGCoinPlayer), MEMORY_DEFAULT_NUM);
     temp_r30 = lbl_1_bss_A4->data;
     for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
@@ -125,7 +125,7 @@ void fn_1_3BF4(void)
 
 void fn_1_3F94(void);
 
-void fn_1_3F0C(omObjData *object)
+void fn_1_3F0C(OMOBJ *object)
 {
     if (lbl_1_bss_A0 && BoardMGDoneFlagGet() == 1) {
         fn_1_3F94();
@@ -142,8 +142,8 @@ void fn_1_3F64(void)
 void fn_1_3F94(void)
 {
     s32 temp_r31;
-    BoardPlayerMotionKill(lbl_1_bss_86, lbl_1_bss_A8->motion[0]);
-    BoardPlayerMotionKill(lbl_1_bss_86, lbl_1_bss_A8->motion[1]);
+    BoardPlayerMotionKill(lbl_1_bss_86, lbl_1_bss_A8->mtnId[0]);
+    BoardPlayerMotionKill(lbl_1_bss_86, lbl_1_bss_A8->mtnId[1]);
     omDelObjEx(boardObjMan, lbl_1_bss_A8);
     for (temp_r31 = 0; temp_r31 < 20; temp_r31++) {
         BoardModelKill(lbl_1_bss_5C[temp_r31]);
@@ -151,9 +151,9 @@ void fn_1_3F94(void)
     BoardMGDoneFlagSet(0);
 }
 
-void fn_1_4100(omObjData *object);
+void fn_1_4100(OMOBJ *object);
 
-void fn_1_4050(omObjData *object)
+void fn_1_4050(OMOBJ *object)
 {
     if (object->work[0] == 0) {
         object->work[0] = MGSeqStartCreate();
@@ -162,31 +162,31 @@ void fn_1_4050(omObjData *object)
     if (MGSeqStatGet(object->work[0])) {
         return;
     }
-    object->func = fn_1_4100;
+    object->objFunc = fn_1_4100;
     BoardModelMotionTimeSet(lbl_1_bss_30[8], 0);
     BoardModelAttrReset(lbl_1_bss_30[8], 0x40000006);
     HuAudFXPlay(1062);
 }
 
-void fn_1_41B8(omObjData *object);
+void fn_1_41B8(OMOBJ *object);
 
-void fn_1_4100(omObjData *object)
+void fn_1_4100(OMOBJ *object)
 {
     if (BoardModelMotionTimeGet(lbl_1_bss_30[8]) >= BoardModelMotionMaxTimeGet(lbl_1_bss_30[8])) {
         object->work[0] = 0;
         object->work[1] = 0;
         object->work[2] = 1;
         object->work[3] = 0;
-        object->func = fn_1_41B8;
+        object->objFunc = fn_1_41B8;
         BoardModelAttrSet(lbl_1_bss_30[8], 0x40000004);
         lbl_1_bss_58 = HuAudFXPlay(1063);
     }
 }
 
-void fn_1_4378(omObjData *object);
-void fn_1_5290(omObjData *object);
+void fn_1_4378(OMOBJ *object);
+void fn_1_5290(OMOBJ *object);
 
-void fn_1_41B8(omObjData *object)
+void fn_1_41B8(OMOBJ *object)
 {
     Vec sp8;
     WorkMGCoinPlayer *temp_r30;
@@ -221,23 +221,23 @@ void fn_1_41B8(omObjData *object)
         }
     }
     if (temp_r28 == 3) {
-        object->func = fn_1_4378;
-        lbl_1_bss_A8->func = fn_1_5290;
+        object->objFunc = fn_1_4378;
+        lbl_1_bss_A8->objFunc = fn_1_5290;
     }
 }
 
-void fn_1_4698(omObjData *object);
+void fn_1_4698(OMOBJ *object);
 
 void fn_1_46E8(void);
 
-void fn_1_4378(omObjData *object)
+void fn_1_4378(OMOBJ *object)
 {
     Vec sp8;
     float temp_f31;
     WorkMGCoinPlayer *temp_r31;
     s32 temp_r30;
     s32 temp_r28;
-    Process *temp_r27;
+    HUPROCESS *temp_r27;
     temp_r31 = object->data;
     sp8.y = sp8.z = 0;
     for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
@@ -261,14 +261,14 @@ void fn_1_4378(omObjData *object)
                         temp_r31->unkC[temp_r30] = 0;
                         lbl_1_bss_A8->work[2] = REFRESH_RATE;
                         if (temp_r30 != 2) {
-                            lbl_1_bss_A8->func = fn_1_5290;
+                            lbl_1_bss_A8->objFunc = fn_1_5290;
                         }
                         else {
                             BoardAudSeqFadeOut(1, 100);
                             temp_r27 = HuPrcCreate(fn_1_46E8, 8196, 6144, 0);
                             temp_r27->user_data = object;
                             HuAudFXStop(lbl_1_bss_58);
-                            object->func = fn_1_4698;
+                            object->objFunc = fn_1_4698;
                         }
                     }
                 }
@@ -289,15 +289,15 @@ void fn_1_4378(omObjData *object)
     }
 }
 
-void fn_1_4698(omObjData *object)
+void fn_1_4698(OMOBJ *object)
 {
     if (msmMusGetStatus(1) == 0) {
         BoardAudSeqPause(0, 0, 1000);
-        object->func = NULL;
+        object->objFunc = NULL;
     }
 }
 
-void fn_1_511C(omObjData *object);
+void fn_1_511C(OMOBJ *object);
 
 void fn_1_46E8(void)
 {
@@ -314,7 +314,7 @@ void fn_1_46E8(void)
     s32 temp_r30;
     s32 temp_r29;
     s32 temp_r28;
-    omObjData *temp_r27;
+    OMOBJ *temp_r27;
     for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
         BoardModelRotGet(lbl_1_bss_C2[temp_r31], &sp24);
         sp30[temp_r31] = lbl_1_data_3C0[(int)(sp24.x / 40.0f)];
@@ -435,11 +435,11 @@ void fn_1_46E8(void)
     }
     W02MesExec(MAKE_MESSID(0x13, 0x14));
     temp_r27 = HuPrcCurrentGet()->user_data;
-    temp_r27->func = fn_1_511C;
+    temp_r27->objFunc = fn_1_511C;
     HuPrcEnd();
 }
 
-void fn_1_511C(omObjData *object)
+void fn_1_511C(OMOBJ *object)
 {
     Vec spC;
     s32 temp_r31;
@@ -465,9 +465,9 @@ void fn_1_51B4(Vec *arg0)
     }
 }
 
-void fn_1_53B8(omObjData *object);
+void fn_1_53B8(OMOBJ *object);
 
-void fn_1_5290(omObjData *object)
+void fn_1_5290(OMOBJ *object)
 {
     WorkMGCoin *temp_r31;
     float sp8[2];
@@ -482,16 +482,16 @@ void fn_1_5290(omObjData *object)
         HuWinBGTPLvlSet(temp_r31->unk1E, 0);
         HuWinMesSpeedSet(temp_r31->unk1E, 0);
         temp_r31->unk20 = frandmod(100) + 20;
-        object->func = fn_1_53B8;
+        object->objFunc = fn_1_53B8;
     }
     else {
         object->work[2]--;
     }
 }
 
-void fn_1_5634(omObjData *object);
+void fn_1_5634(OMOBJ *object);
 
-void fn_1_53B8(omObjData *object)
+void fn_1_53B8(OMOBJ *object)
 {
     Vec sp14;
     Vec sp8;
@@ -537,13 +537,13 @@ void fn_1_53B8(omObjData *object)
         VECSubtract(&sp8, &sp14, &temp_r31->unkC);
         VECScale(&temp_r31->unkC, &temp_r31->unkC, 0.05f);
         object->work[0] = 1;
-        object->func = fn_1_5634;
+        object->objFunc = fn_1_5634;
     }
 }
 
-void fn_1_5868(omObjData *object);
+void fn_1_5868(OMOBJ *object);
 
-void fn_1_5634(omObjData *object)
+void fn_1_5634(OMOBJ *object)
 {
     Vec sp14;
     Vec sp8;
@@ -565,7 +565,7 @@ void fn_1_5634(omObjData *object)
         VECSubtract(&sp8, &sp14, &sp14);
         temp_f31 = VECMag(&sp14);
         if (temp_f31 <= 1.0f) {
-            BoardPlayerMotionStart(lbl_1_bss_86, object->motion[0], 0);
+            BoardPlayerMotionStart(lbl_1_bss_86, object->mtnId[0], 0);
             object->work[0] = 0;
         }
     }
@@ -574,14 +574,14 @@ void fn_1_5634(omObjData *object)
             temp_r31->unk0 = -5;
             temp_r31->unk4 = 0;
             temp_r31->unkC.x = temp_r31->unkC.z = 0;
-            object->func = fn_1_5868;
+            object->objFunc = fn_1_5868;
         }
     }
 }
 
-void fn_1_5AC0(omObjData *object);
+void fn_1_5AC0(OMOBJ *object);
 
-void fn_1_5868(omObjData *object)
+void fn_1_5868(OMOBJ *object)
 {
     Vec sp14;
     Vec sp8;
@@ -601,7 +601,7 @@ void fn_1_5868(omObjData *object)
     if (sp14.y == sp8.y) {
         BoardModelMotionTimeSet(lbl_1_bss_BC[temp_r31->unk8], 0);
         BoardModelAttrReset(lbl_1_bss_BC[temp_r31->unk8], 0x40000002);
-        BoardPlayerMotionShiftSet(lbl_1_bss_86, object->motion[1], 0, 5, HU3D_MOTATTR_NONE);
+        BoardPlayerMotionShiftSet(lbl_1_bss_86, object->mtnId[1], 0, 5, HU3D_MOTATTR_NONE);
         lbl_1_bss_A4->work[3] |= 1 << temp_r31->unk8;
         temp_r31->unk0 = 5;
         temp_r31->unk4 = 0;
@@ -611,13 +611,13 @@ void fn_1_5868(omObjData *object)
         VECSubtract(&sp8, &sp14, &temp_r31->unkC);
         VECScale(&temp_r31->unkC, &temp_r31->unkC, 0.03f);
         HuAudFXPlay(1064);
-        object->func = fn_1_5AC0;
+        object->objFunc = fn_1_5AC0;
     }
 }
 
-void fn_1_5C84(omObjData *object);
+void fn_1_5C84(OMOBJ *object);
 
-void fn_1_5AC0(omObjData *object)
+void fn_1_5AC0(OMOBJ *object)
 {
     float temp_f31;
     float temp_f30;
@@ -646,24 +646,24 @@ void fn_1_5AC0(omObjData *object)
         sp14.z = object->trans.z;
         BoardPlayerIdleSet(lbl_1_bss_86);
         if (temp_r30->unk8 != 2) {
-            object->func = NULL;
+            object->objFunc = NULL;
         }
         else {
             object->work[1] = 8;
-            object->func = fn_1_5C84;
+            object->objFunc = fn_1_5C84;
         }
     }
     BoardPlayerPosSetV(lbl_1_bss_86, &sp14);
 }
 
-void fn_1_5C84(omObjData *object)
+void fn_1_5C84(OMOBJ *object)
 {
     WorkMGCoin *sp8;
     sp8 = object->data;
     if (object->work[1] != 0) {
         if (--object->work[1] == 0) {
             BoardPlayerMotBlendSet(lbl_1_bss_86, 0, 15);
-            object->func = NULL;
+            object->objFunc = NULL;
         }
         (void)object;
     }

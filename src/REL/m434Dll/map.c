@@ -47,7 +47,7 @@ StructData100 lbl_1_data_100[5] = {
     { 0, 0, 0, 0, 0 },
 };
 
-omObjData *lbl_1_bss_5868;
+OMOBJ *lbl_1_bss_5868;
 Vec lbl_1_bss_2868[1024];
 Bss2468Data lbl_1_bss_2468[64];
 s32 lbl_1_bss_2464;
@@ -61,9 +61,9 @@ Bss450Data lbl_1_bss_440;
 Bss3F0Data lbl_1_bss_3F0[4];
 Vec lbl_1_bss_3D8[2];
 
-void fn_1_1E64(omObjData *object);
+void fn_1_1E64(OMOBJ *object);
 
-void fn_1_1DB0(Process *objman)
+void fn_1_1DB0(HUPROCESS *objman)
 {
     "\0"; // Force lbl_1_data_132 to 0
     lbl_1_bss_5868 = omAddObjEx(objman, 10, 16, 0, -1, fn_1_1E64);
@@ -78,7 +78,7 @@ void fn_1_1E44(void)
     fn_1_28F0();
 }
 
-void fn_1_26A4(omObjData *object);
+void fn_1_26A4(OMOBJ *object);
 
 void fn_1_2978(HU3DMODEL *model, Mtx mtx);
 void fn_1_3004(void);
@@ -91,7 +91,7 @@ void fn_1_3CC8(HU3DMODEL *model, Mtx mtx);
 
 void fn_1_443C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
-void fn_1_1E64(omObjData *object)
+void fn_1_1E64(OMOBJ *object)
 {
     s32 temp_r30;
     Vec *temp_r29;
@@ -99,29 +99,29 @@ void fn_1_1E64(omObjData *object)
     s32 temp_r27;
     ANIMDATA *temp_r26;
 
-    object->model[9] = Hu3DHookFuncCreate(fn_1_3CC8);
-    Hu3DModelLayerSet(object->model[9], 1);
-    Hu3DModelCameraSet(object->model[9], 1);
-    object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x02));
-    Hu3DModelLayerSet(object->model[1], 2);
-    Hu3DModelCameraSet(object->model[1], 2);
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x00));
-    Hu3DModelLayerSet(object->model[0], 2);
-    Hu3DModelCameraSet(object->model[0], 8);
-    object->model[8] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x01));
-    Hu3DModelLayerSet(object->model[8], 2);
-    Hu3DModelCameraSet(object->model[8], 4);
-    object->model[3] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x08));
-    Hu3DModelClusterAttrSet(object->model[3], 0, 0xC0000001);
-    Hu3DModelLayerSet(object->model[3], 2);
-    Hu3DModelCameraSet(object->model[3], 8);
-    object->model[4] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x09));
-    Hu3DModelClusterAttrSet(object->model[4], 0, 0xC0000001);
-    Hu3DModelLayerSet(object->model[4], 2);
-    Hu3DModelCameraSet(object->model[4], 8);
-    object->model[2] = Hu3DHookFuncCreate(fn_1_2978);
-    Hu3DModelLayerSet(object->model[2], 3);
-    Hu3DModelCameraSet(object->model[2], 8);
+    object->mdlId[9] = Hu3DHookFuncCreate(fn_1_3CC8);
+    Hu3DModelLayerSet(object->mdlId[9], 1);
+    Hu3DModelCameraSet(object->mdlId[9], 1);
+    object->mdlId[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x02));
+    Hu3DModelLayerSet(object->mdlId[1], 2);
+    Hu3DModelCameraSet(object->mdlId[1], 2);
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x00));
+    Hu3DModelLayerSet(object->mdlId[0], 2);
+    Hu3DModelCameraSet(object->mdlId[0], 8);
+    object->mdlId[8] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x01));
+    Hu3DModelLayerSet(object->mdlId[8], 2);
+    Hu3DModelCameraSet(object->mdlId[8], 4);
+    object->mdlId[3] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x08));
+    Hu3DModelClusterAttrSet(object->mdlId[3], 0, 0xC0000001);
+    Hu3DModelLayerSet(object->mdlId[3], 2);
+    Hu3DModelCameraSet(object->mdlId[3], 8);
+    object->mdlId[4] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M434, 0x09));
+    Hu3DModelClusterAttrSet(object->mdlId[4], 0, 0xC0000001);
+    Hu3DModelLayerSet(object->mdlId[4], 2);
+    Hu3DModelCameraSet(object->mdlId[4], 8);
+    object->mdlId[2] = Hu3DHookFuncCreate(fn_1_2978);
+    Hu3DModelLayerSet(object->mdlId[2], 3);
+    Hu3DModelCameraSet(object->mdlId[2], 8);
     temp_r29 = lbl_1_bss_2868;
     for (temp_r30 = 0; temp_r30 < 32; temp_r30++) {
         for (temp_r27 = 0; temp_r27 < 32; temp_r29++, temp_r27++) {
@@ -161,22 +161,22 @@ void fn_1_1E64(omObjData *object)
         lbl_1_bss_3F0[temp_r30].unk0 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_3F0[temp_r30].unkC, MEMORY_DEFAULT_NUM);
         memset(lbl_1_bss_3F0[temp_r30].unk0, 0, lbl_1_bss_3F0[temp_r30].unkC);
     }
-    object->model[5] = Hu3DHookFuncCreate(fn_1_33A4);
-    Hu3DModelLayerSet(object->model[5], 3);
-    Hu3DModelCameraSet(object->model[5], 2);
-    object->model[6] = Hu3DHookFuncCreate(fn_1_349C);
-    Hu3DModelLayerSet(object->model[6], 3);
-    Hu3DModelCameraSet(object->model[6], 4);
-    object->model[7] = Hu3DHookFuncCreate(fn_1_3594);
-    Hu3DModelLayerSet(object->model[7], 5);
-    Hu3DModelCameraSet(object->model[7], 4);
+    object->mdlId[5] = Hu3DHookFuncCreate(fn_1_33A4);
+    Hu3DModelLayerSet(object->mdlId[5], 3);
+    Hu3DModelCameraSet(object->mdlId[5], 2);
+    object->mdlId[6] = Hu3DHookFuncCreate(fn_1_349C);
+    Hu3DModelLayerSet(object->mdlId[6], 3);
+    Hu3DModelCameraSet(object->mdlId[6], 4);
+    object->mdlId[7] = Hu3DHookFuncCreate(fn_1_3594);
+    Hu3DModelLayerSet(object->mdlId[7], 5);
+    Hu3DModelCameraSet(object->mdlId[7], 4);
     temp_r26 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M434, 0x0B));
-    object->model[10] = Hu3DParticleCreate(temp_r26, 100);
-    Hu3DParticleHookSet(object->model[10], fn_1_443C);
-    Hu3DModelAttrSet(object->model[10], HU3D_ATTR_DISPOFF);
-    Hu3DModelLayerSet(object->model[10], 4);
-    Hu3DModelCameraSet(object->model[10], 8);
-    object->func = fn_1_26A4;
+    object->mdlId[10] = Hu3DParticleCreate(temp_r26, 100);
+    Hu3DParticleHookSet(object->mdlId[10], fn_1_443C);
+    Hu3DModelAttrSet(object->mdlId[10], HU3D_ATTR_DISPOFF);
+    Hu3DModelLayerSet(object->mdlId[10], 4);
+    Hu3DModelCameraSet(object->mdlId[10], 8);
+    object->objFunc = fn_1_26A4;
 }
 
 HSFATTRIBUTE *fn_1_2608(s16 model, char *name)
@@ -201,7 +201,7 @@ HSFATTRIBUTE *fn_1_2608(s16 model, char *name)
     return temp_r30;
 }
 
-void fn_1_26A4(omObjData *object)
+void fn_1_26A4(OMOBJ *object)
 {
     s32 temp_r31;
     Bss2468Data *temp_r30;
@@ -212,7 +212,7 @@ void fn_1_26A4(omObjData *object)
     s32 temp_r22;
     Bss2468Data *sp8[64];
 
-    temp_r27 = fn_1_2608(object->model[1], "sora");
+    temp_r27 = fn_1_2608(object->mdlId[1], "sora");
     if (temp_r27 != NULL) {
         temp_r27->trans.x += 0.0001f;
         temp_r27->trans.y -= 0.00005f;
@@ -601,6 +601,6 @@ void fn_1_443C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 
 void fn_1_47EC(Vec *arg0)
 {
-    Hu3DModelPosSet(lbl_1_bss_5868->model[10], arg0->x, arg0->y, arg0->z);
-    Hu3DModelAttrReset(lbl_1_bss_5868->model[10], HU3D_ATTR_DISPOFF);
+    Hu3DModelPosSet(lbl_1_bss_5868->mdlId[10], arg0->x, arg0->y, arg0->z);
+    Hu3DModelAttrReset(lbl_1_bss_5868->mdlId[10], HU3D_ATTR_DISPOFF);
 }

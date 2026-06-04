@@ -37,7 +37,7 @@ static s32 fn_1_900(void);
 static s32 fn_1_984(void);
 static void fn_1_9C0(void);
 static void fn_1_B28(void);
-static void fn_1_B5C(omObjData *arg0);
+static void fn_1_B5C(OMOBJ *arg0);
 
 s16 lbl_1_bss_C[MAPOBJ_MAX];
 
@@ -50,7 +50,7 @@ static BoardMapObject lbl_1_data_0[MAPOBJ_MAX] = {
     { {   300.0f, 200.0f, -2850.0f }, { 0.0f,        0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, DATA_MAKE_NUM(DATADIR_BGUEST, 33) }
 };
 
-static omObjData *lbl_1_bss_8;
+static OMOBJ *lbl_1_bss_8;
 static s32 lbl_1_bss_4;
 UnkW06BoardData *lbl_1_bss_0;
 
@@ -244,7 +244,7 @@ static s32 fn_1_984(void) {
 static void fn_1_9C0(void) {
     Vec sp14;
     Vec sp8;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     Bss8Work *temp_r30;
     s32 i;
 
@@ -275,7 +275,7 @@ static void fn_1_B28(void) {
     }
 }
 
-static void fn_1_B5C(omObjData *arg0) {
+static void fn_1_B5C(OMOBJ *arg0) {
     Bss8Work *temp_r30;
     Vec sp14;
     Vec sp8;

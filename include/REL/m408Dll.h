@@ -44,10 +44,10 @@ void fn_1_C3C0(Vec *arg0, Vec *arg1);
 u32 fn_1_C43C(void);
 s32 fn_1_CE68(void);
 void fn_1_CEEC(void);
-void fn_1_8958(Process *objman);
-void fn_1_C44C(Process *objman);
+void fn_1_8958(HUPROCESS *objman);
+void fn_1_C44C(HUPROCESS *objman);
 s32 fn_1_11670(void);
-void fn_1_118D0(Process *objman);
+void fn_1_118D0(HUPROCESS *objman);
 s32 fn_1_162CC(Vec *arg0, Vec *arg1);
 
 extern s32 lbl_1_bss_44;

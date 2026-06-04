@@ -53,7 +53,7 @@ static s16 lbl_1_bss_282;
 static s16 lbl_1_bss_280;
 static s16 lbl_1_bss_27E;
 static s16 lbl_1_bss_27C;
-static Process *lbl_1_bss_278;
+static HUPROCESS *lbl_1_bss_278;
 static s16 lbl_1_bss_274;
 static s16 lbl_1_bss_272;
 static s16 lbl_1_bss_270;
@@ -64,7 +64,7 @@ static s16 lbl_1_bss_13A;
 static s16 lbl_1_bss_134[3];
 static s16 lbl_1_bss_114[4][4];
 static Vec lbl_1_bss_108;
-static Process *lbl_1_bss_104;
+static HUPROCESS *lbl_1_bss_104;
 static ANIMDATA *lbl_1_bss_100;
 
 static char *lbl_1_data_3CC[] = {

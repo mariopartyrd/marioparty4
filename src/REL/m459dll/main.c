@@ -159,8 +159,8 @@ void fn_1_6458(M459DllBss7CStruct *arg0);
 void fn_1_73C(void);
 void fn_1_E78(void);
 
-Process *lbl_1_bss_6E4;
-Process *lbl_1_bss_698[0x13];
+HUPROCESS *lbl_1_bss_6E4;
+HUPROCESS *lbl_1_bss_698[0x13];
 M459DllBss61CStruct lbl_1_bss_61C;
 M459DllBssCCStruct lbl_1_bss_CC[5];
 M459DllBss7CStruct lbl_1_bss_7C[5];

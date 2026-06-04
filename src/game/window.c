@@ -53,7 +53,7 @@ static ANIMDATA *iconAnim;
 static ANIMDATA *cursorAnim;
 static ANIMDATA *cardAnimA;
 static ANIMDATA *cardAnimB;
-static Process *winProc;
+static HUPROCESS *winProc;
 void *messDataPtr;
 static s32 messDataNo;
 static s16 winMaxWidth;

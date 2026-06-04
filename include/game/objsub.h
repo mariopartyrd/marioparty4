@@ -18,7 +18,7 @@ typedef struct mg_info {
 } MgInfo;
 
 s32 omMgIndexGet(s16 overlay);
-void omGameSysInit(Process *objman);
+void omGameSysInit(HUPROCESS *objman);
 void omVibrate(s16 player_cfg_index, s16 duration, s16 off, s16 on);
 
 

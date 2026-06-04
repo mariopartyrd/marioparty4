@@ -26,14 +26,14 @@ typedef struct M453MapUnkStruct {
     s32 unk_24[0xC];
 } M453MapUnkStruct; /* size = 0x54 */
 
-void fn_1_6768(omObjData *object);
-void fn_1_67EC(omObjData *object);
-void fn_1_67F0(omObjData *object);
-void fn_1_695C(omObjData *object);
-void fn_1_6C74(omObjData *object);
-void fn_1_6EB4(omObjData *object);
-void fn_1_6FC4(omObjData *object);
-void fn_1_73C4(omObjData *object);
+void fn_1_6768(OMOBJ *object);
+void fn_1_67EC(OMOBJ *object);
+void fn_1_67F0(OMOBJ *object);
+void fn_1_695C(OMOBJ *object);
+void fn_1_6C74(OMOBJ *object);
+void fn_1_6EB4(OMOBJ *object);
+void fn_1_6FC4(OMOBJ *object);
+void fn_1_73C4(OMOBJ *object);
 void fn_1_7978(void);
 void fn_1_7A74(s16 arg0);
 
@@ -326,9 +326,9 @@ Vec *lbl_1_data_B74[6][2] = {
 
 s32 lbl_1_data_BA4[6] = { 0x10, 0x10, 0xA, 0xA, 0x16, 0x16 };
 
-omObjData *lbl_1_bss_BC;
-omObjData *lbl_1_bss_B8;
-omObjData *lbl_1_bss_A4[5];
+OMOBJ *lbl_1_bss_BC;
+OMOBJ *lbl_1_bss_B8;
+OMOBJ *lbl_1_bss_A4[5];
 s32 lbl_1_bss_A0;
 s32 lbl_1_bss_9C;
 s32 lbl_1_bss_98;
@@ -342,7 +342,7 @@ s32 lbl_1_bss_7C;
 s32 lbl_1_bss_78;
 s32 lbl_1_bss_60[6];
 
-void fn_1_64E8(Process *process)
+void fn_1_64E8(HUPROCESS *process)
 {
     Vec sp20;
     Vec sp14;
@@ -383,33 +383,33 @@ void fn_1_6748(void)
     fn_1_7978();
 }
 
-void fn_1_6768(omObjData *object)
+void fn_1_6768(OMOBJ *object)
 {
     object->stat |= 0x100;
-    object->model[0] = Hu3DModelCreateFile(0x220010);
-    object->model[1] = Hu3DModelCreateFile(0x220011);
-    object->func = fn_1_67EC;
+    object->mdlId[0] = Hu3DModelCreateFile(0x220010);
+    object->mdlId[1] = Hu3DModelCreateFile(0x220011);
+    object->objFunc = fn_1_67EC;
 }
 
-void fn_1_67EC(omObjData *object) { }
+void fn_1_67EC(OMOBJ *object) { }
 
-void fn_1_67F0(omObjData *object)
+void fn_1_67F0(OMOBJ *object)
 {
     object->stat |= 0x100;
-    object->model[0] = Hu3DModelCreateFile(0x220000);
-    object->model[1] = Hu3DModelCreateFile(0x220003);
-    object->model[2] = Hu3DModelCreateFile(0x220001);
-    object->model[3] = Hu3DModelCreateFile(0x220002);
-    Hu3DMotionSpeedSet(object->model[2], 0.0f);
-    Hu3DModelShadowSet(object->model[1]);
-    Hu3DModelPosSet(object->model[1], 0.0f, 0.0f, -500.0f);
-    Hu3DData[object->model[3]].motShapeWork.time = 0.0f;
-    Hu3DData[object->model[3]].motShapeWork.speed = 2.0f;
+    object->mdlId[0] = Hu3DModelCreateFile(0x220000);
+    object->mdlId[1] = Hu3DModelCreateFile(0x220003);
+    object->mdlId[2] = Hu3DModelCreateFile(0x220001);
+    object->mdlId[3] = Hu3DModelCreateFile(0x220002);
+    Hu3DMotionSpeedSet(object->mdlId[2], 0.0f);
+    Hu3DModelShadowSet(object->mdlId[1]);
+    Hu3DModelPosSet(object->mdlId[1], 0.0f, 0.0f, -500.0f);
+    Hu3DData[object->mdlId[3]].motShapeWork.time = 0.0f;
+    Hu3DData[object->mdlId[3]].motShapeWork.speed = 2.0f;
     object->work[3] = 0x1E;
-    object->func = fn_1_695C;
+    object->objFunc = fn_1_695C;
 }
 
-void fn_1_695C(omObjData *object)
+void fn_1_695C(OMOBJ *object)
 {
     HU3DMODEL *var_r30;
     M453MapUnkStruct *var_r29;
@@ -418,7 +418,7 @@ void fn_1_695C(omObjData *object)
         if (lbl_1_bss_80 == 0) {
             if (object->work[0] < 60.0f) {
                 object->work[0] += 1;
-                var_r30 = &Hu3DData[object->model[1]];
+                var_r30 = &Hu3DData[object->mdlId[1]];
                 var_r30->rot.x = (-120.0f * object->work[0]) / 60.0f;
             }
             else {
@@ -428,7 +428,7 @@ void fn_1_695C(omObjData *object)
         }
         else if (object->work[0] != 0) {
             object->work[0] -= 1;
-            var_r30 = &Hu3DData[object->model[1]];
+            var_r30 = &Hu3DData[object->mdlId[1]];
             var_r30->rot.x = (-120.0f * object->work[0]) / 60.0f;
         }
         else {
@@ -457,7 +457,7 @@ void fn_1_695C(omObjData *object)
     }
 }
 
-void fn_1_6C74(omObjData *object)
+void fn_1_6C74(OMOBJ *object)
 {
     s32 var_r31;
     M453MapUnkStruct *var_r29;
@@ -472,8 +472,8 @@ void fn_1_6C74(omObjData *object)
         var_r29->unk_24[var_r31] = Hu3DModelCreateFile(lbl_1_data_A58[var_r31]);
         Hu3DModelAttrSet(var_r29->unk_24[var_r31], HU3D_ATTR_DISPOFF);
     }
-    object->model[0] = var_r29->unk_24[0];
-    Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
+    object->mdlId[0] = var_r29->unk_24[0];
+    Hu3DModelAttrReset(object->mdlId[0], HU3D_ATTR_DISPOFF);
     var_r29->unk_00_field0 = 0;
     var_r29->unk_04 = 4 - lbl_1_bss_A0;
     fn_1_6FC4(object);
@@ -485,28 +485,28 @@ void fn_1_6C74(omObjData *object)
             break;
         case 2:
             for (var_r31 = 0; var_r31 < 7; var_r31++) {
-                Hu3DModelShadowSet(object->model[var_r31]);
+                Hu3DModelShadowSet(object->mdlId[var_r31]);
             }
             break;
         case 3:
             for (var_r31 = 0; var_r31 < 7; var_r31++) {
-                Hu3DModelShadowMapSet(object->model[var_r31]);
+                Hu3DModelShadowMapSet(object->mdlId[var_r31]);
             }
             object->trans.y = 2.5f;
             break;
         case 4:
             for (var_r31 = 0; var_r31 < 7; var_r31++) {
-                Hu3DModelShadowMapSet(object->model[var_r31]);
+                Hu3DModelShadowMapSet(object->mdlId[var_r31]);
             }
             object->trans.y = 0.0f;
             break;
     }
     fn_1_6EB4(object);
     lbl_1_bss_A0++;
-    object->func = fn_1_73C4;
+    object->objFunc = fn_1_73C4;
 }
 
-void fn_1_6EB4(omObjData *object)
+void fn_1_6EB4(OMOBJ *object)
 {
     Mtx sp38;
     Mtx sp8;
@@ -518,12 +518,12 @@ void fn_1_6EB4(omObjData *object)
     for (var_r30 = 0; var_r30 < 6; var_r30++) {
         MTXTrans(sp8, lbl_1_data_A88[var_r30].x, lbl_1_data_A88[var_r30].y, lbl_1_data_A88[var_r30].z);
         MTXConcat(sp38, sp8, sp8);
-        Hu3DModelPosSet(object->model[var_r30 + 1], sp8[0][3], sp8[1][3], sp8[2][3]);
-        Hu3DModelRotSet(object->model[var_r30 + 1], object->rot.x, object->rot.y, object->rot.z);
+        Hu3DModelPosSet(object->mdlId[var_r30 + 1], sp8[0][3], sp8[1][3], sp8[2][3]);
+        Hu3DModelRotSet(object->mdlId[var_r30 + 1], object->rot.x, object->rot.y, object->rot.z);
     }
 }
 
-void fn_1_6FC4(omObjData *object)
+void fn_1_6FC4(OMOBJ *object)
 {
     s32 sp8[6];
 
@@ -584,17 +584,17 @@ void fn_1_6FC4(omObjData *object)
     }
     memcpy(lbl_1_bss_60, &var_r30->unk_0C, 0x18);
     for (var_r31 = 0; var_r31 < 6; var_r31++) {
-        if (object->model[var_r31 + 1] >= 0) {
-            Hu3DModelAttrSet(object->model[var_r31 + 1], HU3D_ATTR_DISPOFF);
+        if (object->mdlId[var_r31 + 1] >= 0) {
+            Hu3DModelAttrSet(object->mdlId[var_r31 + 1], HU3D_ATTR_DISPOFF);
         }
     }
     for (var_r31 = 0; var_r31 < 6; var_r31++) {
-        object->model[var_r31 + 1] = var_r30->unk_24[var_r30->unk_0C[var_r31]];
-        Hu3DModelAttrReset(object->model[var_r31 + 1], HU3D_ATTR_DISPOFF);
+        object->mdlId[var_r31 + 1] = var_r30->unk_24[var_r30->unk_0C[var_r31]];
+        Hu3DModelAttrReset(object->mdlId[var_r31 + 1], HU3D_ATTR_DISPOFF);
     }
 }
 
-void fn_1_73C4(omObjData *object)
+void fn_1_73C4(OMOBJ *object)
 {
     Mtx sp38;
     Mtx sp8;
@@ -606,7 +606,7 @@ void fn_1_73C4(omObjData *object)
     var_r30 = object->data;
     if (lbl_1_bss_90 == 0) {
         if ((lbl_1_bss_84 != 0) && (var_r30->unk_04 < 3)) {
-            var_r27 = &Hu3DData[lbl_1_bss_B8->model[1]];
+            var_r27 = &Hu3DData[lbl_1_bss_B8->mdlId[1]];
             object->rot.x = var_r27->rot.x;
             switch (var_r30->unk_04) {
                 case 0:
@@ -639,7 +639,7 @@ void fn_1_73C4(omObjData *object)
                     var_r30->unk_04++;
                     var_r30->unk_08 = 0.0f;
                     for (var_r29 = 0; var_r29 < 7; var_r29++) {
-                        Hu3DModelShadowSet(object->model[var_r29]);
+                        Hu3DModelShadowSet(object->mdlId[var_r29]);
                     }
                 }
                 break;
@@ -648,8 +648,8 @@ void fn_1_73C4(omObjData *object)
                     var_r30->unk_04 = var_r30->unk_04 + 1;
                     object->trans.y = 2.5f;
                     for (var_r29 = 0; var_r29 < 7; var_r29++) {
-                        Hu3DModelShadowReset(object->model[var_r29]);
-                        Hu3DModelShadowMapSet(object->model[var_r29]);
+                        Hu3DModelShadowReset(object->mdlId[var_r29]);
+                        Hu3DModelShadowMapSet(object->mdlId[var_r29]);
                     }
                 }
                 else {
@@ -676,7 +676,7 @@ void fn_1_73C4(omObjData *object)
                     object->trans.z = -497.5f;
                     object->rot.x = -120.0f;
                     for (var_r29 = 0; var_r29 < 7; var_r29++) {
-                        fn_1_7A74(object->model[var_r29]);
+                        fn_1_7A74(object->mdlId[var_r29]);
                     }
                     fn_1_6FC4(object);
                 }
@@ -689,15 +689,15 @@ void fn_1_73C4(omObjData *object)
     for (var_r28 = 0; var_r28 < 6; var_r28++) {
         MTXTrans(sp38, lbl_1_data_A88[var_r28].x, lbl_1_data_A88[var_r28].y, lbl_1_data_A88[var_r28].z);
         MTXConcat(sp8, sp38, sp38);
-        Hu3DModelPosSet(object->model[var_r28 + 1], sp38[0][3], sp38[1][3], sp38[2][3]);
-        Hu3DModelRotSet(object->model[var_r28 + 1], object->rot.x, object->rot.y, object->rot.z);
+        Hu3DModelPosSet(object->mdlId[var_r28 + 1], sp38[0][3], sp38[1][3], sp38[2][3]);
+        Hu3DModelRotSet(object->mdlId[var_r28 + 1], object->rot.x, object->rot.y, object->rot.z);
     }
 }
 
 void fn_1_7978(void)
 {
     s32 var_r31;
-    omObjData *var_r30;
+    OMOBJ *var_r30;
     M453MapUnkStruct *var_r29;
     s32 var_r28;
 
@@ -714,7 +714,7 @@ void fn_1_7978(void)
             lbl_1_bss_A4[var_r31]->data = NULL;
         }
         for (var_r31 = 0; var_r31 < var_r30->mdlcnt; var_r31++) {
-            var_r30->model[var_r31] = -1;
+            var_r30->mdlId[var_r31] = -1;
         }
     }
 }
@@ -795,7 +795,7 @@ void fn_1_7C3C(void)
         var_f31 = -1.6666666f;
     }
     var_f30 = var_f31;
-    Hu3DMotionSpeedSet(lbl_1_bss_B8->model[2], var_f30);
+    Hu3DMotionSpeedSet(lbl_1_bss_B8->mdlId[2], var_f30);
     HuAudFXPlay(0x524);
 }
 
@@ -805,7 +805,7 @@ s32 fn_1_7CE0(float arg8, float arg9, Vec *arg0)
     Mtx sp1C;
     Vec sp10;
 
-    omObjData *var_r31;
+    OMOBJ *var_r31;
     Vec *var_r30;
     s32 var_r28;
     s32 var_r27;
@@ -846,7 +846,7 @@ float fn_1_7F54(float arg8, float arg9)
 {
     float var_f31;
 
-    omObjData *var_r31 = lbl_1_bss_A4[lbl_1_bss_9C];
+    OMOBJ *var_r31 = lbl_1_bss_A4[lbl_1_bss_9C];
     float var_f30 = -(arg9 - var_r31->trans.z);
     if (cosd(var_r31->rot.x) <= 0.0) {
         var_f31 = 9999.0f;
@@ -893,7 +893,7 @@ s32 fn_1_82AC(Vec *arg0)
 {
     s32 sp8[6];
 
-    omObjData *var_r31;
+    OMOBJ *var_r31;
     s32 var_r30;
     M453MapUnkStruct *var_r28;
     s32 var_r27;
@@ -919,7 +919,7 @@ s32 fn_1_844C(Vec *arg0)
     Mtx sp20;
     s32 sp8[6];
 
-    omObjData *var_r30;
+    OMOBJ *var_r30;
     s32 var_r29;
     M453MapUnkStruct *var_r27;
     s32 var_r26;
@@ -976,7 +976,7 @@ s32 fn_1_867C(Vec *arg0, Vec *arg1)
     s32 var_r31;
     Vec *var_r30;
     Vec *var_r29;
-    omObjData *var_r28;
+    OMOBJ *var_r28;
     s32 var_r27;
     s32 var_r24;
     s32 var_r21;

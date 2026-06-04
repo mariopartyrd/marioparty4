@@ -34,11 +34,11 @@ extern Vec Center;
 extern float CZoom;
 void fn_1_29C();
 void fn_1_28F8(Vec *arg0, Vec *arg1);
-void fn_1_37DC(omObjData *);
-void fn_1_439C(omObjData *);
+void fn_1_37DC(OMOBJ *);
+void fn_1_439C(OMOBJ *);
 void fn_1_46F0();
 
-typedef void(omObjFunc2)(struct om_obj_data *);
+typedef void(omObjFunc2)(struct omObj_s *);
 omObjFunc2 fn_1_F9C;
 
 #endif

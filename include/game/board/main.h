@@ -64,10 +64,10 @@ typedef struct board_camera_data {
 } BoardCameraData;
 
 extern BoardCameraData boardCamera;
-extern Process *boardObjMan;
-extern Process *boardMainProc;
+extern HUPROCESS *boardObjMan;
+extern HUPROCESS *boardMainProc;
 extern u32 boardRandSeed;
-extern omObjData *boardMainObj;
+extern OMOBJ *boardMainObj;
 
 typedef void (*BoardFunc)(void);
 

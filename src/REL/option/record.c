@@ -40,8 +40,8 @@ typedef struct {
 } BoardRecordData; // Size 0x2C
 
 typedef struct {
-    /* 0x000 */ omObjData *system;
-    /* 0x004 */ omObjData *hand;
+    /* 0x000 */ OMOBJ *system;
+    /* 0x004 */ OMOBJ *hand;
     /* 0x008 */ OptionWindow *window[10];
     /* 0x030 */ s32 execMode;
     /* 0x034 */ s16 sprList[153];
@@ -64,31 +64,31 @@ typedef struct {
 #define MODE_DISABLED 0
 #define MODE_HANDLE_RECORD 1
 
-static void ExecRecord(omObjData *object);
-static omObjData *CreateSystem(void);
-static void KillSystem(omObjData *object);
-static void StartSystemMotion(omObjData *object, s32 type);
-static omObjData *CreateHand(void);
-static void KillHand(omObjData *object);
-static void CreateSpr(omObjData *object);
-static void KillSpr(omObjData *object);
+static void ExecRecord(OMOBJ *object);
+static OMOBJ *CreateSystem(void);
+static void KillSystem(OMOBJ *object);
+static void StartSystemMotion(OMOBJ *object, s32 type);
+static OMOBJ *CreateHand(void);
+static void KillHand(OMOBJ *object);
+static void CreateSpr(OMOBJ *object);
+static void KillSpr(OMOBJ *object);
 static s32 GetDigit(s32 value, s32 place);
-static void ShowBoard(omObjData *object, s32 board);
-static void HideBoard(omObjData *object);
-static void ShowTotal(omObjData *object);
-static void HideTotal(omObjData *object);
-static void ShowMG(omObjData *object, s32 page);
-static void HideMG(omObjData *object);
+static void ShowBoard(OMOBJ *object, s32 board);
+static void HideBoard(OMOBJ *object);
+static void ShowTotal(OMOBJ *object);
+static void HideTotal(OMOBJ *object);
+static void ShowMG(OMOBJ *object, s32 page);
+static void HideMG(OMOBJ *object);
 
-omObjData *optionRecord;
+OMOBJ *optionRecord;
 
 static const s32 mgRecordIdxTbl[] = { 0, 1, 2, 3, 5, 10 };
 
-static omObjFunc execModeTbl[] = { NULL, ExecRecord };
+static OMOBJFUNC execModeTbl[] = { NULL, ExecRecord };
 
-omObjData *OptionRecordCreate(void)
+OMOBJ *OptionRecordCreate(void)
 {
-    omObjData *object;
+    OMOBJ *object;
     RecordWork *work;
     s32 i;
     s32 character;
@@ -117,7 +117,7 @@ omObjData *OptionRecordCreate(void)
     return object;
 }
 
-void OptionRecordKill(omObjData *object)
+void OptionRecordKill(OMOBJ *object)
 {
     RecordWork *work = object->data;
 
@@ -127,30 +127,30 @@ void OptionRecordKill(omObjData *object)
     HuMemDirectFree(work);
 }
 
-void OptionRecordExecModeSet(omObjData *object, s32 execMode)
+void OptionRecordExecModeSet(OMOBJ *object, s32 execMode)
 {
     RecordWork *work = object->data;
 
     work->execMode = execMode;
-    object->func = execModeTbl[execMode];
-    object->unk10 = 0;
-    object->unk10 = 0;
+    object->objFunc = execModeTbl[execMode];
+    object->mode = 0;
+    object->mode = 0;
 }
 
-s32 OptionRecordExecModeGet(omObjData *object)
+s32 OptionRecordExecModeGet(OMOBJ *object)
 {
     RecordWork *work = object->data;
 
     return work->execMode;
 }
 
-static void ExecRecord(omObjData *object)
+static void ExecRecord(OMOBJ *object)
 {
     RecordWork *work = object->data;
     Vec pos;
     s32 i;
 
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
             work->window[0] = OptionWinCreate(0);
             work->window[1] = OptionWinCreate(1);
@@ -162,7 +162,7 @@ static void ExecRecord(omObjData *object)
             work->board = 0;
             work->mgPage = 0;
             work->cameraDoneF = 0;
-            object->unk10 = 1;
+            object->mode = 1;
             /* fallthrough */
         case 1:
             if (OptionCameraDoneCheck(optionCamera) != 0) {
@@ -178,7 +178,7 @@ static void ExecRecord(omObjData *object)
                 OptionFadeSprite(work->sprList[48], 1, 10);
                 work->changeTimer = 0;
             }
-            object->unk10 = 2;
+            object->mode = 2;
             /* fallthrough */
         case 2:
             HideBoard(object);
@@ -204,14 +204,14 @@ static void ExecRecord(omObjData *object)
             OptionWinAnimIn(work->window[1]);
             OptionWinMesSet(work->window[1], MAKE_MESSID(47, 169));
             if (!work->cameraDoneF) {
-                Hu3DModelAttrReset(work->hand->model[0], HU3D_ATTR_DISPOFF);
+                Hu3DModelAttrReset(work->hand->mdlId[0], HU3D_ATTR_DISPOFF);
                 work->cameraDoneF = TRUE;
             }
             pos.x = 505.0 * -sind(305);
             pos.z = 505.0 * cosd(305);
             pos.y = 144.0f - 14.0f * work->recordType;
             omSetTra(work->hand, pos.x, pos.y, pos.z);
-            object->unk10 = 3;
+            object->mode = 3;
             /* fallthrough */
         case 3:
             if (work->changeTimer > 0) {
@@ -220,7 +220,7 @@ static void ExecRecord(omObjData *object)
             }
             espBankSet(work->sprList[47], 0);
             espBankSet(work->sprList[48], 2);
-            object->unk10 = 4;
+            object->mode = 4;
             /* fallthrough */
         case 4:
             if (work->window[1]->state != 0) {
@@ -228,7 +228,7 @@ static void ExecRecord(omObjData *object)
             }
             if (OptionPadCheck(PAD_BUTTON_B)) {
                 HuAudFXPlay(3);
-                object->unk10 = 5;
+                object->mode = 5;
             }
             else if (OptionPadDStkRepCheck(8) != 0 && work->recordType == RECORD_TYPE_MG) {
                 work->recordType = RECORD_TYPE_BOARD;
@@ -238,7 +238,7 @@ static void ExecRecord(omObjData *object)
                 OptionFadeSprite(work->sprList[48], 1, 5);
                 work->changeTimer = 5;
                 HuAudFXPlay(0x83F);
-                object->unk10 = 2;
+                object->mode = 2;
             }
             else if (OptionPadDStkRepCheck(4) != 0 && work->recordType == RECORD_TYPE_BOARD) {
                 work->recordType = RECORD_TYPE_MG;
@@ -248,7 +248,7 @@ static void ExecRecord(omObjData *object)
                 OptionFadeSprite(work->sprList[48], 0, 5);
                 work->changeTimer = 5;
                 HuAudFXPlay(0x83F);
-                object->unk10 = 2;
+                object->mode = 2;
             }
             else {
                 switch (work->recordType) {
@@ -263,7 +263,7 @@ static void ExecRecord(omObjData *object)
                             HuAudFXPlay(0x840);
                             espBankSet(work->sprList[47], 1);
                             work->changeTimer = 10;
-                            object->unk10 = 2;
+                            object->mode = 2;
                             return;
                         }
                         if (OptionPadCheck(PAD_TRIGGER_R)) {
@@ -276,7 +276,7 @@ static void ExecRecord(omObjData *object)
                             HuAudFXPlay(0x840);
                             espBankSet(work->sprList[48], 3);
                             work->changeTimer = 10;
-                            object->unk10 = 2;
+                            object->mode = 2;
                         }
                         break;
                     case RECORD_TYPE_MG:
@@ -292,8 +292,8 @@ static void ExecRecord(omObjData *object)
             }
             OptionWinAnimOut(work->window[0]);
             OptionWinAnimOut(work->window[1]);
-            Hu3DModelAttrSet(work->hand->model[0], HU3D_ATTR_DISPOFF);
-            object->unk10 = 6;
+            Hu3DModelAttrSet(work->hand->mdlId[0], HU3D_ATTR_DISPOFF);
+            object->mode = 6;
             /* fallthrough */
         case 6:
             if (work->window[1]->state == 0 && OptionRumbleMotionCheck(optionRumble) == 0) {
@@ -311,31 +311,31 @@ static void ExecRecord(omObjData *object)
     }
 }
 
-static omObjData *CreateSystem(void)
+static OMOBJ *CreateSystem(void)
 {
-    omObjData *object;
+    OMOBJ *object;
 
     object = omAddObjEx(optionObjMan, 1003, 1, 0, 1, NULL);
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_OPTION, 1));
-    Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_PAUSE);
-    Hu3DModelLayerSet(object->model[0], 0);
-    Hu3DMotionStartEndSet(object->model[0], 0.0f, 6.0f);
-    Hu3DMotionTimeSet(object->model[0], 6.0f);
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_OPTION, 1));
+    Hu3DModelAttrSet(object->mdlId[0], HU3D_MOTATTR_PAUSE);
+    Hu3DModelLayerSet(object->mdlId[0], 0);
+    Hu3DMotionStartEndSet(object->mdlId[0], 0.0f, 6.0f);
+    Hu3DMotionTimeSet(object->mdlId[0], 6.0f);
     return object;
 }
 
-static void KillSystem(omObjData *object)
+static void KillSystem(OMOBJ *object)
 {
     s32 i;
 
     for (i = 0; i < 1; i++) {
-        Hu3DModelKill(object->model[i]);
+        Hu3DModelKill(object->mdlId[i]);
     }
 }
 
-static void StartSystemMotion(omObjData *object, s32 type)
+static void StartSystemMotion(OMOBJ *object, s32 type)
 {
-    s16 model = object->model[0];
+    s16 model = object->mdlId[0];
 
     switch (type) {
         case RECORD_TYPE_BOARD:
@@ -347,29 +347,29 @@ static void StartSystemMotion(omObjData *object, s32 type)
             Hu3DMotionTimeSet(model, 6.0f);
             break;
     }
-    Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_PAUSE);
+    Hu3DModelAttrReset(object->mdlId[0], HU3D_MOTATTR_PAUSE);
 }
 
-static omObjData *CreateHand(void)
+static OMOBJ *CreateHand(void)
 {
-    omObjData *object;
+    OMOBJ *object;
 
     object = omAddObjEx(optionObjMan, 1003, 1, 0, 1, NULL);
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_OPTION, 14));
-    Hu3DModelLayerSet(object->model[0], 2);
-    Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_OPTION, 14));
+    Hu3DModelLayerSet(object->mdlId[0], 2);
+    Hu3DModelAttrSet(object->mdlId[0], HU3D_MOTATTR_LOOP);
     omSetRot(object, 30.0f, 190.0f, 0.0f);
     omSetSca(object, 0.6f, 0.6f, 0.6f);
-    Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrSet(object->mdlId[0], HU3D_ATTR_DISPOFF);
     return object;
 }
 
-static void KillHand(omObjData *object)
+static void KillHand(OMOBJ *object)
 {
     s32 i;
 
     for (i = 0; i < 1; i++) {
-        Hu3DModelKill(object->model[i]);
+        Hu3DModelKill(object->mdlId[i]);
     }
 }
 
@@ -531,7 +531,7 @@ static const s32 sprTbl[SPR_TBL_SIZE] = {
     DATA_MAKE_NUM(DATADIR_OPTION, 54),
 };
 
-static void CreateSpr(omObjData *object)
+static void CreateSpr(OMOBJ *object)
 {
     RecordWork *work = object->data;
     s32 i;
@@ -546,7 +546,7 @@ static void CreateSpr(omObjData *object)
     HuSprExecLayerSet(0x40, 1);
 }
 
-static void KillSpr(omObjData *object)
+static void KillSpr(OMOBJ *object)
 {
     RecordWork *work = object->data;
     s32 i;
@@ -567,7 +567,7 @@ static s32 GetDigit(s32 value, s32 place)
     return (value % (i * 10)) / i;
 }
 
-static void ShowBoard(omObjData *object, s32 board)
+static void ShowBoard(OMOBJ *object, s32 board)
 {
     RecordWork *work = object->data;
     s32 value;
@@ -662,7 +662,7 @@ static void ShowBoard(omObjData *object, s32 board)
 static const s32 boardSprHideTbl[BOARD_SPR_HIDE_COUNT] = { 0, 1, 2, 3, 4, 5, 49, 50, 51, 52, 53, 54, 55, 56, 8, 9, 10, 11, 12, 13, 14, 23, 24, 25, 26,
     27, 28, 29, 30, 31, 32, 33, 34, 38, 39, 40, 35, 36, 37, 41, 42, 43, 44, 45, 46, 15, 16, 17, 18, 19, 20, 21, 22 };
 
-static void HideBoard(omObjData *object)
+static void HideBoard(OMOBJ *object)
 {
     RecordWork *work = object->data;
     s32 i;
@@ -675,7 +675,7 @@ static void HideBoard(omObjData *object)
     }
 }
 
-static void ShowTotal(omObjData *object)
+static void ShowTotal(OMOBJ *object)
 {
     RecordWork *work = object->data;
     s32 winCount;
@@ -710,7 +710,7 @@ static void ShowTotal(omObjData *object)
 static const s32 totalSprHideTbl[TOTAL_SPR_HIDE_COUNT]
     = { 6, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88 };
 
-static void HideTotal(omObjData *object)
+static void HideTotal(OMOBJ *object)
 {
     RecordWork *work = object->data;
     s32 i;
@@ -730,7 +730,7 @@ static const MGTable mgTbl[6] = {
     { 456, MAKE_MESSID(23, 54), DISPLAY_TYPE_TIME },
 };
 
-static void ShowMG(omObjData *object, s32 page)
+static void ShowMG(OMOBJ *object, s32 page)
 {
     RecordWork *work = object->data;
     s32 value;
@@ -835,7 +835,7 @@ static const s32 mgSprHideTbl[65] = { 7, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
     113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141,
     142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152 };
 
-static void HideMG(omObjData *object)
+static void HideMG(OMOBJ *object)
 {
     RecordWork *temp_r30 = object->data;
     s32 i;

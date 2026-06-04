@@ -29,7 +29,7 @@ static s8 warpImpactCnt;
 static s16 warpSpace;
 static f32 warpYFloor;
 static f32 warpYVel;
-static Process* warpProcess;
+static HUPROCESS* warpProcess;
 
 static s16 warpSpringMdl = -1;
 static s16 warpImpactMdl = -1;

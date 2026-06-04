@@ -207,7 +207,7 @@ static void fn_1_A7E8(void) {
     float var_f29;
     float var_f30;
     float var_f31;
-    Process *var_r20;
+    HUPROCESS *var_r20;
     s16 var_r30;
     s16 var_r28;
     s16 var_r27;

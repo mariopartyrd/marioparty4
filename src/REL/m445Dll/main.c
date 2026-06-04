@@ -114,8 +114,8 @@ typedef struct {
 
 void ObjectSetup(void);
 void fn_1_4B8(float arg0, float arg1, s32 arg2);
-void fn_1_50C(omObjData *arg0);
-void fn_1_510(omObjData *arg0);
+void fn_1_50C(OMOBJ *arg0);
+void fn_1_510(OMOBJ *arg0);
 BOOL fn_1_520(s32 arg0);
 void fn_1_550(void);
 float fn_1_1858(float arg0);
@@ -161,9 +161,9 @@ char lbl_1_bss_6C0_pad[4]; // Unused.
 UnkM445Struct_02 lbl_1_bss_588[2];
 UnkM445Struct_00 lbl_1_bss_288[8];
 UnkM445Struct_01 lbl_1_bss_58[10];
-Process *lbl_1_bss_54;
+HUPROCESS *lbl_1_bss_54;
 char lbl_1_bss_30_pad[0x24]; // Unused.
-omObjData *lbl_1_bss_2C;
+OMOBJ *lbl_1_bss_2C;
 Vec lbl_1_bss_20;
 Vec lbl_1_bss_14;
 Vec lbl_1_bss_8;
@@ -247,11 +247,11 @@ void fn_1_4B8(float arg0, float arg1, s32 arg2)
     HuAudFXEmiterPlay(arg2, &sp14);
 }
 
-void fn_1_50C(omObjData *arg0) { }
+void fn_1_50C(OMOBJ *arg0) { }
 
-void fn_1_510(omObjData *arg0)
+void fn_1_510(OMOBJ *arg0)
 {
-    arg0->func = fn_1_50C;
+    arg0->objFunc = fn_1_50C;
 }
 
 BOOL fn_1_520(s32 arg0)
@@ -267,8 +267,8 @@ void fn_1_550(void)
     UnkM445Struct_00 *temp_r26;
     UnkM445Struct_01 *temp_r25;
     UnkM445Struct_02 *temp_r31;
-    omObjData *temp_r24;
-    Process *var_r22;
+    OMOBJ *temp_r24;
+    HUPROCESS *var_r22;
     ANIMDATA *var_r20;
     ANIMDATA *sp38[4];
     void *var_r29;
@@ -298,7 +298,7 @@ void fn_1_550(void)
     Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
     temp_r24 = omAddObjEx(lbl_1_bss_54, 0x100, 1, 0, -1, fn_1_510);
     MapObject[nMap++] = temp_r24;
-    temp_r24->model[0] = var_r30;
+    temp_r24->mdlId[0] = var_r30;
     var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 26), MEMORY_DEFAULT_NUM, HEAP_DATA);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelLayerSet(var_r30, 0);
@@ -312,7 +312,7 @@ void fn_1_550(void)
     Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
     temp_r24 = omAddObjEx(lbl_1_bss_54, 0x100, 1, 0, -1, fn_1_510);
     MapObject[nMap++] = temp_r24;
-    temp_r24->model[0] = var_r30;
+    temp_r24->mdlId[0] = var_r30;
     var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 100), MEMORY_DEFAULT_NUM, HEAP_DATA);
     lbl_1_bss_6E0 = Hu3DModelCreate(var_r29);
     Hu3DModelAttrSet(lbl_1_bss_6E0, HU3D_ATTR_DISPOFF);
@@ -359,7 +359,7 @@ void fn_1_550(void)
         var_r30 = Hu3DModelCreate(var_r29);
         Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
         temp_r24 = MapObject[nMap++] = omAddObjEx(lbl_1_bss_54, 0x100, 1, 0, -1, fn_1_510);
-        temp_r24->model[0] = var_r30;
+        temp_r24->mdlId[0] = var_r30;
         temp_r24->trans.x = temp_r26->unk48;
         temp_r24->trans.y = 0.0f;
         temp_r24->trans.z = temp_r26->unk4C;

@@ -4,7 +4,7 @@
 #include "game/object.h"
 
 typedef struct PresentWindow {
-    /* 0x00 */ Process *process;
+    /* 0x00 */ HUPROCESS *process;
     /* 0x04 */ s16 window;
     /* 0x08 */ s32 id;
     /* 0x0C */ BOOL visible;
@@ -24,27 +24,27 @@ typedef struct PresentWindow {
 #define PRESENT_MODE_SELECT_PRESENT 2
 #define PRESENT_MODE_GET 3
 
-extern omObjData *present;
-extern omObjData *presentCamera;
-extern Process *presentObjMan;
+extern OMOBJ *present;
+extern OMOBJ *presentCamera;
+extern HUPROCESS *presentObjMan;
 
 void PresentFadeSprite(s16 sprite, BOOL inF, s32 duration);
 void FadeSpriteWithMultiplier(s16 model, BOOL inF, float tpMultiplier, s32 duration);
 BOOL PresentPadCheck(u16 btn);
 BOOL PresentPadDStkRepCheck(u16 dir);
 BOOL PresentPadDStkCheck(u16 dir);
-omObjData *PresentCameraCreate();
-void PresentCameraKill(omObjData *object);
-void PresentCameraTargetSet(omObjData *object, float x, float y, float z, s32 duration);
-void PresentCameraFocusSet(omObjData *object, float x, float y, float z, s32 duration);
-s32 PresentCameraDoneCheck(omObjData *object);
-omObjData *PresentCreate(void);
-void PresentKill(omObjData *object);
-void PresentExecModeSet(omObjData *object, s32 execMode);
-s32 PresentExecModeGet(omObjData *object);
-void PresentSelectedIDSet(omObjData *object, s32 id);
-void PresentStateKill(omObjData *object);
-omObjData *PresentStateCreate(void);
+OMOBJ *PresentCameraCreate();
+void PresentCameraKill(OMOBJ *object);
+void PresentCameraTargetSet(OMOBJ *object, float x, float y, float z, s32 duration);
+void PresentCameraFocusSet(OMOBJ *object, float x, float y, float z, s32 duration);
+s32 PresentCameraDoneCheck(OMOBJ *object);
+OMOBJ *PresentCreate(void);
+void PresentKill(OMOBJ *object);
+void PresentExecModeSet(OMOBJ *object, s32 execMode);
+s32 PresentExecModeGet(OMOBJ *object);
+void PresentSelectedIDSet(OMOBJ *object, s32 id);
+void PresentStateKill(OMOBJ *object);
+OMOBJ *PresentStateCreate(void);
 PresentWindow *PresentWinCreate(s32 id);
 void PresentWinKill(PresentWindow *work);
 void PresentWinAnimIn(PresentWindow *work);
@@ -52,9 +52,9 @@ void PresentWinAnimOut(PresentWindow *work);
 void PresentWinMesSet(PresentWindow *work, u32 mess);
 void PresentWinInsertMesSet(PresentWindow *work, u32 mess, s16 index);
 void PresentWinMesWait(PresentWindow *work);
-omObjData *PresentGuideCreate(void);
-void PresentGuideKill(omObjData *object);
-void PresentGuideExecModeSet(omObjData *object, s32 execMode);
-s32 PresentGuideExecModeGet(omObjData *object);
+OMOBJ *PresentGuideCreate(void);
+void PresentGuideKill(OMOBJ *object);
+void PresentGuideExecModeSet(OMOBJ *object, s32 execMode);
+s32 PresentGuideExecModeGet(OMOBJ *object);
 
 #endif

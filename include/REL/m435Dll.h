@@ -46,7 +46,7 @@ typedef struct {
 } StructBssE08; // Size 0x80
 
 typedef struct {
-    /* 0x000 */ omObjData* unk00;
+    /* 0x000 */ OMOBJ* unk00;
     /* 0x004 */ s32 unk04;
     /* 0x008 */ s32 unk08;
     /* 0x00C */ char unk0C[4];
@@ -70,22 +70,22 @@ void fn_1_154C4(StructBss84* arg0, StructData3A0* arg1);
 s32 fn_1_15520(StructBss84* arg0);
 void fn_1_1561C(StructBss84* arg0, s32 arg1);
 s32 fn_1_15670(StructBss84* arg0, s32 arg1);
-s32 fn_1_156AC(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_157BC(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_15934(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 fn_1_156AC(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_157BC(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_15934(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void fn_1_15E50(StructBssE08* arg0);
 void fn_1_161B0(StructBssE08* arg0, float arg1);
 void fn_1_169F4(StructBssE08* arg0, StructBssE08* arg1, float arg2, float arg3, float arg4);
 void fn_1_17804(StructBssE08* arg0, StructBssE08* arg1, float arg2, float arg3, float arg4);
 void fn_1_188E0(StructBssE08* arg0, StructBssE08* arg1, float arg2, float arg3, float arg4);
-void fn_1_19530(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6);
-void fn_1_195F4(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6);
-void fn_1_19658(omObjData* arg0, s32 arg1, float arg2, s32 arg3);
+void fn_1_19530(OMOBJ* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6);
+void fn_1_195F4(OMOBJ* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6);
+void fn_1_19658(OMOBJ* arg0, s32 arg1, float arg2, s32 arg3);
 void fn_1_19894(StructFn19894* arg0, s32 arg1);
 void fn_1_198F8(StructFn19894* arg0, s32 arg1);
 void fn_1_19960(StructFn19894* arg0, s32 arg1);
 void fn_1_19968(StructFn19894* arg0, s32 arg1);
 void fn_1_19974(StructFn19894* arg0, s32 arg1);
-void fn_1_1A33C(Process* arg0, StructFn19894* arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5);
+void fn_1_1A33C(HUPROCESS* arg0, StructFn19894* arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5);
 
 #endif

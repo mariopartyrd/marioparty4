@@ -68,14 +68,14 @@ static void DestroyShop(void);
 static void PopupShop(void);
 static void CloseShop(void);
 static void CreateShopWin(void);
-static void UpdateShopWin(omObjData *arg0);
-static void SetShopWinItem(ShopWinWork *arg0, omObjData *arg1);
+static void UpdateShopWin(OMOBJ *arg0);
+static void SetShopWinItem(ShopWinWork *arg0, OMOBJ *arg1);
 static void PauseShopWin(void);
 static void StartItemGive(void);
-static void ExecItemGive(omObjData *arg0);
-static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1);
-static void ShrinkItemGive(omObjData *arg0, ItemGiveWork *arg1);
-static void WaitItemGive(omObjData *arg0, ItemGiveWork *arg1);
+static void ExecItemGive(OMOBJ *arg0);
+static void MoveItemGive(OMOBJ *arg0, ItemGiveWork *arg1);
+static void ShrinkItemGive(OMOBJ *arg0, ItemGiveWork *arg1);
+static void WaitItemGive(OMOBJ *arg0, ItemGiveWork *arg1);
 static void GetShopItems(s32 arg0);
 static void GetDefaultShopItems(s32 arg0);
 static void SortShopItems(void);
@@ -86,9 +86,9 @@ static void WaitItemChoice(void);
 static void CreateShopItemChoice(s32 arg0, s32 arg1);
 static s32 GetShopItemChoice(void);
 static s32 GetShopItemWinChoice(void);
-static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1);
-static void UpdateShopItemChoice(omObjData *arg0);
-static void GetShopItemChoiceInput(ItemChoiceWork *arg0, omObjData *arg1, u32 *arg2);
+static void MoveShopItemChoice(OMOBJ *arg0, ItemChoiceWork *arg1);
+static void UpdateShopItemChoice(OMOBJ *arg0);
+static void GetShopItemChoiceInput(ItemChoiceWork *arg0, OMOBJ *arg1, u32 *arg2);
 
 static s32 activeItemTbl[5];
 static s32 choiceEnableTbl[6];
@@ -98,10 +98,10 @@ static s16 *shopMdlPtr;
 static s8 shopPlayer;
 static s16 angleVal;
 static s32 comF;
-static omObjData *itemChoiceObj;
-static omObjData *itemGiveObj;
-static omObjData *shopWinObj;
-static Process *shopProc;
+static OMOBJ *itemChoiceObj;
+static OMOBJ *itemGiveObj;
+static OMOBJ *shopWinObj;
+static HUPROCESS *shopProc;
 
 static s16 itemMdl = -1;
 static s8 itemChoice = -1;
@@ -463,7 +463,7 @@ static void CloseShop(void) {
 
 static void CreateShopWin(void) {
     Vec sp8;
-    omObjData *var_r31;
+    OMOBJ *var_r31;
     ShopWinWork *var_r30;
 
     var_r31 = omAddObjEx(boardObjMan, 0x109, 0, 0, -1, UpdateShopWin);
@@ -491,7 +491,7 @@ static void CreateShopWin(void) {
     var_r31->scale.x = var_r31->scale.y = var_r31->scale.z = 1.0f;
 }
 
-static void UpdateShopWin(omObjData *arg0) {
+static void UpdateShopWin(OMOBJ *arg0) {
     Vec spC;
     float var_f29;
     float var_f28;
@@ -557,7 +557,7 @@ static void UpdateShopWin(omObjData *arg0) {
     }
 }
 
-static void SetShopWinItem(ShopWinWork *arg0, omObjData *arg1) {
+static void SetShopWinItem(ShopWinWork *arg0, OMOBJ *arg1) {
     Vec spC;
     s32 var_r26;
     s8 temp_r28;
@@ -594,7 +594,7 @@ static void PauseShopWin(void) {
 void StartItemGive(void) {
     Vec sp14;
     Vec sp8;
-    omObjData *temp_r30;
+    OMOBJ *temp_r30;
     ItemGiveWork *temp_r29;
     Mtx sp20;
 
@@ -624,7 +624,7 @@ void StartItemGive(void) {
     itemGiveObj = temp_r30;
 }
 
-static void ExecItemGive(omObjData *arg0) {
+static void ExecItemGive(OMOBJ *arg0) {
     ItemGiveWork *temp_r29;
     float var_f30;
 
@@ -656,7 +656,7 @@ static void ExecItemGive(omObjData *arg0) {
     BoardModelRotYSet(itemMdl, var_f30);
 }
 
-static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1) {
+static void MoveItemGive(OMOBJ *arg0, ItemGiveWork *arg1) {
     Vec sp1C;
     Vec sp10;
     float temp_f27;
@@ -709,7 +709,7 @@ static void MoveItemGive(omObjData *arg0, ItemGiveWork *arg1) {
     arg1->unk02++;
 }
 
-static void ShrinkItemGive(omObjData *arg0, ItemGiveWork *arg1) {
+static void ShrinkItemGive(OMOBJ *arg0, ItemGiveWork *arg1) {
     float var_f30;
 
     if (arg1->unk02 == 0) {
@@ -736,7 +736,7 @@ static void ShrinkItemGive(omObjData *arg0, ItemGiveWork *arg1) {
     arg1->unk02 += 4;
 }
 
-static void WaitItemGive(omObjData *arg0, ItemGiveWork *arg1) {
+static void WaitItemGive(OMOBJ *arg0, ItemGiveWork *arg1) {
     if (arg1->unk02 > 20) {
         BoardModelVisibilitySet(itemMdl, 0);
     } else {
@@ -987,7 +987,7 @@ static void WaitItemChoice(void) {
 }
 
 static void CreateShopItemChoice(s32 arg0, s32 arg1) {
-    omObjData *temp_r30;
+    OMOBJ *temp_r30;
     ItemChoiceWork *var_r31;
     s16 spC;
     s16 i;
@@ -1053,7 +1053,7 @@ static s32 GetShopItemWinChoice(void) {
     return var_r31->unk02;
 }
 
-static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1) {
+static void MoveShopItemChoice(OMOBJ *arg0, ItemChoiceWork *arg1) {
     u32 sp8;
     s32 temp_r28;
     s32 temp_r29;
@@ -1111,7 +1111,7 @@ static void MoveShopItemChoice(omObjData *arg0, ItemChoiceWork *arg1) {
     }
 }
 
-static void UpdateShopItemChoice(omObjData *arg0) {
+static void UpdateShopItemChoice(OMOBJ *arg0) {
     ItemChoiceWork *temp_r31;
 
     temp_r31 = OM_GET_WORK_PTR(arg0, ItemChoiceWork);
@@ -1136,7 +1136,7 @@ static void UpdateShopItemChoice(omObjData *arg0) {
     HuSprPosSet(temp_r31->unk06, 0, arg0->trans.x, arg0->trans.y);
 }
 
-static void GetShopItemChoiceInput(ItemChoiceWork *arg0, omObjData *arg1, u32 *arg2) {
+static void GetShopItemChoiceInput(ItemChoiceWork *arg0, OMOBJ *arg1, u32 *arg2) {
     if (arg0->unk02 == arg0->unk03) {
         *arg2 = 0x100;
     } else {

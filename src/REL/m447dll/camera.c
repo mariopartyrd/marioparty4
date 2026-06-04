@@ -16,7 +16,7 @@ void fn_1_3564(void);
 void fn_1_3C7C(void);
 void fn_1_3EA8(void);
 
-Process* lbl_1_bss_90;
+HUPROCESS* lbl_1_bss_90;
 UnkM447Struct_05 lbl_1_bss_74;
 UnkM447Struct_05 lbl_1_bss_58;
 UnkM447Struct_05 lbl_1_bss_3C;

@@ -37,14 +37,14 @@ s32 e3NextEvent;
 u32 e3ExitMode;
 static s32 needCharDataClose;
 float e3CameraFov;
-omObjData *e3MenuMainObj;
-omObjData *e3ViewObj;
-omObjData *e3OvlWatchObj;
-static omObjData *cameraObj;
-static omObjData *lbl_2_bss_84[2];
-static omObjData *configModeObj[4];
-omObjData *e3BGObj;
-omObjData *lbl_2_bss_6C;
+OMOBJ *e3MenuMainObj;
+OMOBJ *e3ViewObj;
+OMOBJ *e3OvlWatchObj;
+static OMOBJ *cameraObj;
+static OMOBJ *lbl_2_bss_84[2];
+static OMOBJ *configModeObj[4];
+OMOBJ *e3BGObj;
+OMOBJ *lbl_2_bss_6C;
 static s16 lightE3;
 s16 lbl_2_bss_62[4];
 s16 lbl_2_bss_60;
@@ -129,18 +129,18 @@ void ObjectSetup(void)
 	}
 }
 
-static void InitCamera(omObjData *object);
-static void InitMenuControl(omObjData *object);
-static void InitPlayerCnt(omObjData *object);
-static void InitCharSel(omObjData *object);
-static void InitRumbleCfg(omObjData *object);
-static void InitModeSel(omObjData *object);
+static void InitCamera(OMOBJ *object);
+static void InitMenuControl(OMOBJ *object);
+static void InitPlayerCnt(OMOBJ *object);
+static void InitCharSel(OMOBJ *object);
+static void InitRumbleCfg(OMOBJ *object);
+static void InitModeSel(OMOBJ *object);
 
 void E3MainInit(void)
 {
 	s32 idx = E3PadRead();
 	s32 port;
-	Process *objman;
+	HUPROCESS *objman;
 	if(idx == 0) {
 		OSReport("No pad detected\n");
 		idx++;
@@ -316,23 +316,23 @@ float MotionShiftTimeGet(s16 arg0)
     return temp_r31->motShiftWork.time;
 }
 
-static void UpdateMenuControl(omObjData *object);
+static void UpdateMenuControl(OMOBJ *object);
 
-static void InitMenuControl(omObjData *object)
+static void InitMenuControl(OMOBJ *object)
 {
 	HuAudSeqPlay(43);
 	lbl_2_bss_3C = 0;
 	lbl_2_bss_3A = -1;
 	lbl_2_bss_36 = 30;
 	lbl_2_bss_34 = 0;
-	object->func = UpdateMenuControl;
+	object->objFunc = UpdateMenuControl;
 	worstVcount = 0;
 	object->work[0] = 0;
 	object->work[1] = 0;
 	object->work[3] = 0;
 }
 
-static void UpdateMenuControl(omObjData *object)
+static void UpdateMenuControl(OMOBJ *object)
 {
 	s32 pos;
 	
@@ -342,17 +342,17 @@ static void UpdateMenuControl(omObjData *object)
 	E3PadRead();
 	pos = object->work[1];
 	if(pos < 4) {
-		omObjData *config = configModeObj[pos];
+		OMOBJ *config = configModeObj[pos];
 		if(config->work[0] == 0) {
 			if(config->work[3]) {
 				pos++;
 			} else {
 				pos--;
 				if(pos < 0) {
-					omOvlHisData *his;
+					OMOVLHIS *his;
 					pos=0;
 					his = omOvlHisGet(1);
-					omOvlHisChg(1, his->overlay, 1, his->stat);
+					omOvlHisChg(1, his->ovl, 1, his->stat);
 					e3ExitMode = 0;
 					e3NextOvl = 0;
 					e3NextEvent = 0;
@@ -400,7 +400,7 @@ static void UpdateMenuControl(omObjData *object)
 	}
 }
 
-static void UpdateOvlWatch(omObjData *object)
+static void UpdateOvlWatch(OMOBJ *object)
 {
 	s32 i;
 	if(WipeStatGet()) {
@@ -425,14 +425,14 @@ static void UpdateOvlWatch(omObjData *object)
 	}
 }
 
-void E3OvlWatchInit(omObjData *object)
+void E3OvlWatchInit(OMOBJ *object)
 {
 	if(e3ExitEnableF) {
 		HuAudSeqAllFadeOut(2500);
 		WipeColorSet(0, 0, 0);
 		WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);
 		MGSeqKillAll();
-		object->func = UpdateOvlWatch;
+		object->objFunc = UpdateOvlWatch;
 	}
 }
 
@@ -462,7 +462,7 @@ static u32 playerCntMessTbl[] = {
 	MAKE_MESSID(0x22, 0x01)
 };
 
-static void UpdatePlayerCnt(omObjData *object)
+static void UpdatePlayerCnt(OMOBJ *object)
 {
 	E3PlayerCntWork *work = object->data;
 	s32 i;
@@ -545,7 +545,7 @@ static void UpdatePlayerCnt(omObjData *object)
 	}
 }
 
-static void InitPlayerCnt(omObjData *object)
+static void InitPlayerCnt(OMOBJ *object)
 {
 	E3PlayerCntWork *work;
 	s16 index2;
@@ -636,7 +636,7 @@ static void InitPlayerCnt(omObjData *object)
 		object->work[1] = 1;
 		object->work[2] = 1;
 	}
-	object->func = UpdatePlayerCnt;
+	object->objFunc = UpdatePlayerCnt;
 	(void)object;
 }
 
@@ -674,7 +674,7 @@ static s32 charComSfxTbl[] = {
 	742
 };
 
-static void UpdateCharSelCursor(omObjData *object, s32 backF)
+static void UpdateCharSelCursor(OMOBJ *object, s32 backF)
 {
 	s32 i;
 	E3CharSelWork *work;
@@ -721,7 +721,7 @@ static void UpdateCharSelCursor(omObjData *object, s32 backF)
 	}
 }
 
-static s32 UpdateCharSelPlayerCursor(omObjData *object)
+static s32 UpdateCharSelPlayerCursor(OMOBJ *object)
 {
 	E3CharSelWork *temp_r31;
 	s32 temp_r30;
@@ -823,7 +823,7 @@ static s32 UpdateCharSelPlayerCursor(omObjData *object)
 	return temp_r22;
 }
 
-static s32 UpdateCharSelComCursor(omObjData *object)
+static s32 UpdateCharSelComCursor(OMOBJ *object)
 {
 	E3CharSelWork *temp_r31;
 	s16 temp_r30;
@@ -923,7 +923,7 @@ static s32 UpdateCharSelComCursor(omObjData *object)
 	return temp_r21;
 }
 
-static s32 CheckCharSel(omObjData *object)
+static s32 CheckCharSel(OMOBJ *object)
 {
 	E3CharSelWork *work;
 	s32 result;
@@ -943,7 +943,7 @@ static s32 CheckCharSel(omObjData *object)
 	return result;
 }
 
-static void UpdateCharSel(omObjData *object)
+static void UpdateCharSel(OMOBJ *object)
 {
 	s32 i;
 	E3CharSelWork *work;
@@ -1032,7 +1032,7 @@ static s32 hiliteSprTbl[] = {
 	23
 };
 
-static void InitCharSel(omObjData *object)
+static void InitCharSel(OMOBJ *object)
 {
 	E3CharSelWork *work;
 	s32 i;
@@ -1127,7 +1127,7 @@ static void InitCharSel(omObjData *object)
 	object->work[1] = 0;
 	object->work[2] = 0;
 	object->work[3] = 0;
-	object->func = UpdateCharSel;
+	object->objFunc = UpdateCharSel;
 }
 
 typedef struct e3_rumble_cfg_work {
@@ -1150,7 +1150,7 @@ static u32 rumbleMess[] = {
 	MAKE_MESSID(0x22, 0x07)
 };
 
-static void UpdateRumbleCfg(omObjData *object)
+static void UpdateRumbleCfg(OMOBJ *object)
 {
 	E3RumbleCfgWork *work;
 	s32 i;
@@ -1226,7 +1226,7 @@ static void UpdateRumbleCfg(omObjData *object)
 	}
 }
 
-static void InitRumbleCfg(omObjData *object)
+static void InitRumbleCfg(OMOBJ *object)
 {
 	E3RumbleCfgWork *work;
 	s16 index2;
@@ -1307,7 +1307,7 @@ static void InitRumbleCfg(omObjData *object)
 	object->work[1] = 0;
 	object->work[2] = 0;
 	object->work[3] = 0;
-	object->func = UpdateRumbleCfg;
+	object->objFunc = UpdateRumbleCfg;
 	(void)object;
 }
 
@@ -1338,7 +1338,7 @@ static Vec2f boardSelCursorPosTbl[] = {
 	284, 418
 };
 
-static void UpdateModeSel(omObjData *object)
+static void UpdateModeSel(OMOBJ *object)
 {
 	E3ModeSelWork *work;
 	u16 btnDown;
@@ -1455,7 +1455,7 @@ static void UpdateModeSel(omObjData *object)
 	}
 }
 
-static void InitModeSel(omObjData *object)
+static void InitModeSel(OMOBJ *object)
 {
 	E3ModeSelWork *work;
 	s16 index2;
@@ -1528,7 +1528,7 @@ static void InitModeSel(omObjData *object)
 	object->work[1] = 0;
 	object->work[2] = 0;
 	object->work[3] = 0;
-	object->func = UpdateModeSel;
+	object->objFunc = UpdateModeSel;
 }
 
 #define E3_BG_SPEED 0.5f
@@ -1549,7 +1549,7 @@ typedef struct e3_bg_work {
 	E3BGTile tiles[E3_BG_MAX_TILE];
 } E3BGWork;
 
-static void E3BGUpdate(omObjData *object)
+static void E3BGUpdate(OMOBJ *object)
 {
 	E3BGTile *tile;
 	s32 i;
@@ -1571,7 +1571,7 @@ static void E3BGUpdate(omObjData *object)
 	}
 }
 
-void E3BGCreate(omObjData *object)
+void E3BGCreate(OMOBJ *object)
 {
 	E3BGTile *tile;
 	E3BGWork *work;
@@ -1613,7 +1613,7 @@ void E3BGCreate(omObjData *object)
 	object->work[1] = 0;
 	object->work[2] = 0;
 	object->work[3] = 0;
-	object->func = E3BGUpdate;
+	object->objFunc = E3BGUpdate;
 }
 
 typedef struct camera_view_params {
@@ -1644,9 +1644,9 @@ static CameraViewParams camViewTbl[] = {
 	}
 };
 
-static void UpdateCamera(omObjData *object);
+static void UpdateCamera(OMOBJ *object);
 
-static void InitCamera(omObjData *object)
+static void InitCamera(OMOBJ *object)
 {
 	u32 *work;
 	object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 3*sizeof(u32), MEMORY_DEFAULT_NUM);
@@ -1656,10 +1656,10 @@ static void InitCamera(omObjData *object)
 	object->work[1] = 0;
 	object->work[2] = 0;
 	object->work[3] = 0;
-	object->func = UpdateCamera;
+	object->objFunc = UpdateCamera;
 }
 
-static void UpdateCamera(omObjData *object)
+static void UpdateCamera(OMOBJ *object)
 {
 	u32 *work = object->data;
 	if(object->work[0]) {

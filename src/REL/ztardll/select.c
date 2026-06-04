@@ -12,10 +12,10 @@
 
 #include "REL/ztardll.h"
 
-typedef void (*ZtarUnkFunc)(omObjData *, ...);
+typedef void (*ZtarUnkFunc)(OMOBJ *, ...);
 
 typedef struct ZtarDllUnkStruct2 {
-    /* 0x00 */ omObjData *unk_00;
+    /* 0x00 */ OMOBJ *unk_00;
     /* 0x04 */ ZtarUnkFunc unk_04;
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
@@ -56,8 +56,8 @@ void fn_1_A610(void);
 void fn_1_A8E8(void);
 void fn_1_ABC4(void);
 void fn_1_AE94(void);
-void fn_1_AEE4(omObjData *object, ZtarDllUnkStruct2 *arg1);
-void fn_1_B468(omObjData *object, ZtarDllUnkStruct2 *arg1);
+void fn_1_AEE4(OMOBJ *object, ZtarDllUnkStruct2 *arg1);
+void fn_1_B468(OMOBJ *object, ZtarDllUnkStruct2 *arg1);
 void fn_1_BA40(void);
 void fn_1_BD7C(s32 arg0);
 void fn_1_BFF0(s32 arg0);
@@ -65,10 +65,10 @@ void fn_1_C06C(s32 arg0, s32 arg1);
 void fn_1_C4B8(s32 arg0);
 void fn_1_C8EC(s32 arg0);
 void fn_1_CAF0(void);
-void fn_1_D280(omObjData *arg0, ZtarDllUnkStruct2 *arg1);
+void fn_1_D280(OMOBJ *arg0, ZtarDllUnkStruct2 *arg1);
 void fn_1_DD8C(ZtarDllUnkStruct2 *arg0);
 void fn_1_E4AC(ZtarDllUnkStruct2 *arg0);
-void fn_1_E548(omObjData *arg0, ZtarDllUnkStruct2 *arg1);
+void fn_1_E548(OMOBJ *arg0, ZtarDllUnkStruct2 *arg1);
 s32 fn_1_F214(ZtarDllUnkStruct2 *arg0);
 void fn_1_FB38(void);
 void fn_1_FD90(s32 arg0);
@@ -101,7 +101,7 @@ ZtarDllUnkStruct2 lbl_1_bss_20C;
 ZtarDllUnkStruct2 lbl_1_bss_8C[4];
 s32 lbl_1_bss_78[5];
 s32 lbl_1_bss_74;
-Process *lbl_1_bss_70;
+HUPROCESS *lbl_1_bss_70;
 
 void fn_1_7C00(void)
 {
@@ -137,7 +137,7 @@ void fn_1_7C00(void)
     }
 }
 
-void fn_1_7D6C(Process *arg0)
+void fn_1_7D6C(HUPROCESS *arg0)
 {
     s32 var_r31;
 
@@ -1379,7 +1379,7 @@ void fn_1_AE94(void)
     HuSprAttrSet(var_r31, 2, 4);
 }
 
-void fn_1_AEE4(omObjData *object, ZtarDllUnkStruct2 *arg1)
+void fn_1_AEE4(OMOBJ *object, ZtarDllUnkStruct2 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -1488,7 +1488,7 @@ void fn_1_AEE4(omObjData *object, ZtarDllUnkStruct2 *arg1)
     lbl_1_bss_20C.unk_28 = 0;
 }
 
-void fn_1_B468(omObjData *object, ZtarDllUnkStruct2 *arg1)
+void fn_1_B468(OMOBJ *object, ZtarDllUnkStruct2 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -1900,7 +1900,7 @@ void fn_1_CAF0(void)
     }
 }
 
-void fn_1_D280(omObjData *arg0, ZtarDllUnkStruct2 *arg1)
+void fn_1_D280(OMOBJ *arg0, ZtarDllUnkStruct2 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -2227,7 +2227,7 @@ void fn_1_E4AC(ZtarDllUnkStruct2 *arg0)
     HuSprAttrSet(var_r30, arg0->unk_48 + 0x32, 4);
 }
 
-void fn_1_E548(omObjData *arg0, ZtarDllUnkStruct2 *arg1)
+void fn_1_E548(OMOBJ *arg0, ZtarDllUnkStruct2 *arg1)
 {
     s32 sp8;
     float var_f31;
@@ -2787,7 +2787,7 @@ void fn_1_108C8(s32 arg0)
 
 void fn_1_10A80(void)
 {
-    omObjData *var_r31;
+    OMOBJ *var_r31;
 
     var_r31 = NULL;
     var_r31 = omAddObjEx(lbl_1_bss_70, 0x1000, 8, 8, -1, NULL);
@@ -2804,7 +2804,7 @@ void fn_1_10A80(void)
 void fn_1_10B24(void)
 {
     s32 var_r31;
-    omObjData *var_r30;
+    OMOBJ *var_r30;
 
     var_r31 = lbl_1_bss_78[0];
     lbl_1_bss_78[0] = var_r31 + 1;

@@ -231,22 +231,22 @@ extern unkStruct5 lbl_1_bss_36C;
 
 // prototypes
 // main.c
-void fn_1_43C(omObjData *object);
-void fn_1_4B0(omObjData *object);
-void fn_1_7D8(omObjData *object);
-void fn_1_14C0(omObjData *object);
-void fn_1_15D0(omObjData *object);
-void fn_1_1960(omObjData *object);
-void fn_1_2B18(omObjData *object);
-void fn_1_2C14(omObjData *object);
+void fn_1_43C(OMOBJ *object);
+void fn_1_4B0(OMOBJ *object);
+void fn_1_7D8(OMOBJ *object);
+void fn_1_14C0(OMOBJ *object);
+void fn_1_15D0(OMOBJ *object);
+void fn_1_1960(OMOBJ *object);
+void fn_1_2B18(OMOBJ *object);
+void fn_1_2C14(OMOBJ *object);
 void fn_1_2E88(float, Vec *, Vec *, float);
-void fn_1_3208(omObjData *object);
-void fn_1_3640(omObjData *object);
-void fn_1_3764(omObjData *object);
-void fn_1_3B44(omObjData *object);
-void fn_1_4660(omObjData *object);
+void fn_1_3208(OMOBJ *object);
+void fn_1_3640(OMOBJ *object);
+void fn_1_3764(OMOBJ *object);
+void fn_1_3B44(OMOBJ *object);
+void fn_1_4660(OMOBJ *object);
 void fn_1_5B20(unkSubStruct2 *);
-void fn_1_6304(omObjData *object);
+void fn_1_6304(OMOBJ *object);
 void fn_1_6368(void);
 void *fn_1_63A8(s32);
 void fn_1_64DC(void);

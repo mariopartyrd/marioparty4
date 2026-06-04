@@ -124,7 +124,7 @@ void ResultBattleMain(void)
     s16 i;
     s16 winId;
     s16 btnDown;
-    Process *proc = HuPrcCurrentGet();
+    HUPROCESS *proc = HuPrcCurrentGet();
     HuAudSeqPlay(10);
     for (i = playerNo = 0; i < 4; i++) {
         if (GWPlayerCfg[i].iscom) {
@@ -229,7 +229,7 @@ static void ResultBattleCreate(void)
     Vec target;
     Vec up;
     s16 coinNum[5];
-    Process *proc = HuPrcCurrentGet();
+    HUPROCESS *proc = HuPrcCurrentGet();
     CRot.x = 0;
     CRot.y = 0;
     CRot.z = 0;
@@ -576,7 +576,7 @@ static void CoinEffectMain(void);
 static void CoinEffectInit(void)
 {
     s16 i;
-    Process *process = HuPrcCurrentGet();
+    HUPROCESS *process = HuPrcCurrentGet();
     for (i = 0; i < COIN_EFFECT_MAX; i++) {
         coinEffectData[i].playerNo = -1;
     }

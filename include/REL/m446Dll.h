@@ -25,7 +25,7 @@ typedef struct _unkStruct {
     struct _unkStruct4 *unk34;
     struct _unkStruct4 *unk38[23];
     s32 unk94;
-    Process *unk98;
+    HUPROCESS *unk98;
 } unkStruct;
 
 typedef struct _unkStruct2 {
@@ -177,7 +177,7 @@ typedef void (*m446Func8)(unkStruct8 *);
 ////// PROTOTYPES //////
 // main.c
 void ObjectSetup(void);
-void fn_1_13C(omObjData *);
+void fn_1_13C(OMOBJ *);
 unkStruct *m446FlowCreate(void);
 void fn_1_3FC(unkStruct *);
 void fn_1_4B4(unkStruct *);

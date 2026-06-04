@@ -23,8 +23,8 @@ typedef struct camera_view_params {
 
 CameraViewParams lbl_1_data_0[] = { { { 0, 0, 0 }, { 0, 0, 0 }, 1500 }, { { 0, 0, 0 }, { 0, 0, 0 }, 524 } };
 
-omObjData *lbl_1_bss_7C;
-Process *lbl_1_bss_78;
+OMOBJ *lbl_1_bss_7C;
+HUPROCESS *lbl_1_bss_78;
 s32 lbl_1_bss_70[2];
 Vec lbl_1_bss_64;
 Vec lbl_1_bss_58;
@@ -37,8 +37,8 @@ s32 lbl_1_bss_0;
 void fn_1_414(void);
 void fn_1_9F4(void);
 void fn_1_AF0(void);
-void fn_1_B8C(omObjData *object);
-void fn_1_F40(omObjData *object);
+void fn_1_B8C(OMOBJ *object);
+void fn_1_F40(OMOBJ *object);
 void fn_1_1B6C(void);
 
 void ObjectSetup(void)
@@ -142,7 +142,7 @@ void fn_1_414(void)
         }
         else {
             s16 i;
-            omOvlHisData *his;
+            OMOVLHIS *his;
             for (i = 0; i < 4; i++) {
                 GWPlayerCfg[i].pad_idx = i;
                 if (!HuPadStatGet(i)) {
@@ -153,7 +153,7 @@ void fn_1_414(void)
                 }
             }
             his = omOvlHisGet(0);
-            omOvlHisChg(0, his->overlay, 1, his->stat);
+            omOvlHisChg(0, his->ovl, 1, his->stat);
             _ClearFlag(FLAG_ID_MAKE(1, 0));
             _ClearFlag(FLAG_ID_MAKE(1, 8));
             _ClearFlag(FLAG_ID_MAKE(1, 12));
@@ -240,7 +240,7 @@ void fn_1_AF0(void)
 
 u16 lbl_1_data_6E[] = { 1, 2 };
 
-void fn_1_B8C(omObjData *object)
+void fn_1_B8C(OMOBJ *object)
 {
     s16 i;
     for (i = 0; i < 1; i++) {
@@ -264,7 +264,7 @@ void fn_1_B8C(omObjData *object)
     }
 }
 
-void fn_1_F40(omObjData *object)
+void fn_1_F40(OMOBJ *object)
 {
     Vec pos;
     Vec offset;

@@ -110,32 +110,32 @@ static void CreateBallView(void);
 static void SetBallView(s32 arg0);
 static void SetBallActive(s32 arg0);
 static s32 CheckBallKill(void);
-static void BallMain(omObjData *arg0);
+static void BallMain(OMOBJ *arg0);
 static void BallRenderHook(void);
-static void ExecBoo(omObjData *arg0);
-static void UpdateBallCamera(omObjData *arg0);
+static void ExecBoo(OMOBJ *arg0);
+static void UpdateBallCamera(OMOBJ *arg0);
 static void CreateBallPlayer(void);
 static s32 GetBallPlayerState(void);
 static void SetBallPlayerState(s32 arg0);
-static void ExecBallPlayer(omObjData *arg0);
-static void BallPlayerZoomOut(omObjData *arg0, BallPlayerWork *arg1);
-static void BallPlayerScare(omObjData *arg0, BallPlayerWork *arg1);
-static void BallPlayerTurn(omObjData *arg0, BallPlayerWork *arg1);
-static void BallPlayerPunch(omObjData *arg0, BallPlayerWork *arg1);
-static void BallPlayerUseLight(omObjData *arg0, BallPlayerWork *arg1);
-static void BallPlayerCatch(omObjData *arg0, BallPlayerWork *arg1);
+static void ExecBallPlayer(OMOBJ *arg0);
+static void BallPlayerZoomOut(OMOBJ *arg0, BallPlayerWork *arg1);
+static void BallPlayerScare(OMOBJ *arg0, BallPlayerWork *arg1);
+static void BallPlayerTurn(OMOBJ *arg0, BallPlayerWork *arg1);
+static void BallPlayerPunch(OMOBJ *arg0, BallPlayerWork *arg1);
+static void BallPlayerUseLight(OMOBJ *arg0, BallPlayerWork *arg1);
+static void BallPlayerCatch(OMOBJ *arg0, BallPlayerWork *arg1);
 static void BallBooCreate(void);
 static void SetBallBooState(s32 arg0);
 static s32 GetBallBooState(void);
-static void ExecBallBoo(omObjData *arg0);
-static void BallBooSpawn(omObjData *arg0, BallBooWork *arg1);
-static void BallBooChase(omObjData *arg0, BallBooWork *arg1);
-static void BallBooBattle(omObjData *arg0, BallBooWork *arg1);
-static void BallBooAttack(omObjData *arg0, BallBooWork *arg1);
-static void BallBooFlash(omObjData *arg0, BallBooWork *arg1);
+static void ExecBallBoo(OMOBJ *arg0);
+static void BallBooSpawn(OMOBJ *arg0, BallBooWork *arg1);
+static void BallBooChase(OMOBJ *arg0, BallBooWork *arg1);
+static void BallBooBattle(OMOBJ *arg0, BallBooWork *arg1);
+static void BallBooAttack(OMOBJ *arg0, BallBooWork *arg1);
+static void BallBooFlash(OMOBJ *arg0, BallBooWork *arg1);
 static void TakeBallCoin(void);
-static void ExecTakeBallCoin(omObjData *arg0);
-static void ExecTakeBallStar(omObjData *arg0);
+static void ExecTakeBallCoin(OMOBJ *arg0);
+static void ExecTakeBallStar(OMOBJ *arg0);
 static void TakeBallCoinPosSet(BallTakeCoinData *arg0, Vec *arg1);
 static void UpdatePlayerCoins(void);
 static BOOL CheckTakeBallStarDone(void);
@@ -151,12 +151,12 @@ static s8 stealAvail[3];
 static s8 starChoiceEnable[3];
 static s32 battleTimer;
 static s32 attackTimer;
-static omObjData *ballTakeCoinObj;
-static omObjData *ballPlayerObj;
-static omObjData *ballBooObj;
-static omObjData *ballCameraObj;
-static omObjData *ballObj;
-static omObjData *booEventObj;
+static OMOBJ *ballTakeCoinObj;
+static OMOBJ *ballPlayerObj;
+static OMOBJ *ballBooObj;
+static OMOBJ *ballCameraObj;
+static OMOBJ *ballObj;
+static OMOBJ *booEventObj;
 
 static s32 booPlayerMotTbl[8][6] = {
     { DATA_MAKE_NUM(DATADIR_BYOKODORI, 11), DATA_MAKE_NUM(DATADIR_BYOKODORI, 19), DATA_MAKE_NUM(DATADIR_BYOKODORI, 27), DATA_MAKE_NUM(DATADIR_BYOKODORI, 35), DATA_MAKE_NUM(DATADIR_BYOKODORI, 43), DATA_MAKE_NUM(DATADIR_BYOKODORI, 51) },
@@ -619,7 +619,7 @@ static s32 CheckBallKill(void) {
     }
 }
 
-static void BallMain(omObjData *arg0) {
+static void BallMain(OMOBJ *arg0) {
     BallWork *temp_r30 = OM_GET_WORK_PTR(arg0, BallWork);
     Vec sp2C;
     Vec sp20;
@@ -731,7 +731,7 @@ static void BallRenderHook(void) {
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 }
 
-static void ExecBoo(omObjData *arg0) {
+static void ExecBoo(OMOBJ *arg0) {
     BooEventWork *temp_r30 = OM_GET_WORK_PTR(arg0, BooEventWork);
     s32 i;
 
@@ -746,7 +746,7 @@ static void ExecBoo(omObjData *arg0) {
     }
 }
 
-static void UpdateBallCamera(omObjData *arg0) {
+static void UpdateBallCamera(OMOBJ *arg0) {
     BallCameraWork *var_r30 = OM_GET_WORK_PTR(arg0, BallCameraWork);
     Vec sp20;
     Vec sp14;
@@ -783,7 +783,7 @@ static void CreateBallPlayer(void) {
     s32 temp_r28;
     s32 var_r26;
     s32 i;
-    omObjData *temp_r31;
+    OMOBJ *temp_r31;
     BallPlayerData *temp_r30;
     BallPlayerWork *temp_r25;
 
@@ -851,7 +851,7 @@ static void SetBallPlayerState(s32 arg0) {
     temp_r31->unk02 = 0;
 }
 
-static void ExecBallPlayer(omObjData *arg0) {
+static void ExecBallPlayer(OMOBJ *arg0) {
     BallPlayerWork *temp_r30 = OM_GET_WORK_PTR(arg0, BallPlayerWork);
     BallPlayerData *temp_r29 = arg0->data;
     BallWork *temp_r27;
@@ -903,7 +903,7 @@ static void ExecBallPlayer(omObjData *arg0) {
     }
 }
 
-static void BallPlayerZoomOut(omObjData *arg0, BallPlayerWork *arg1) {
+static void BallPlayerZoomOut(OMOBJ *arg0, BallPlayerWork *arg1) {
     Vec sp14;
     Vec sp8;
     float temp_f31;
@@ -929,7 +929,7 @@ static void BallPlayerZoomOut(omObjData *arg0, BallPlayerWork *arg1) {
     }
 }
 
-static void BallPlayerScare(omObjData *arg0, BallPlayerWork *arg1) {
+static void BallPlayerScare(OMOBJ *arg0, BallPlayerWork *arg1) {
     BallPlayerData *temp_r29;
     float temp_f31;
 
@@ -946,14 +946,14 @@ static void BallPlayerScare(omObjData *arg0, BallPlayerWork *arg1) {
     }
 }
 
-static void BallPlayerTurn(omObjData *arg0, BallPlayerWork *arg1) {
+static void BallPlayerTurn(OMOBJ *arg0, BallPlayerWork *arg1) {
     if (BoardPlayerMotBlendCheck(stealTarget)) {
         SetBallPlayerState(0);
         arg1->unk00_field1 = 0;
     }
 }
 
-static void BallPlayerPunch(omObjData *arg0, BallPlayerWork *arg1) {
+static void BallPlayerPunch(OMOBJ *arg0, BallPlayerWork *arg1) {
     BallPlayerData *temp_r29;
     s32 temp_r30;
     u32 var_r31;
@@ -1003,7 +1003,7 @@ static void BallPlayerPunch(omObjData *arg0, BallPlayerWork *arg1) {
     }
 }
 
-static void BallPlayerUseLight(omObjData *arg0, BallPlayerWork *arg1) {
+static void BallPlayerUseLight(OMOBJ *arg0, BallPlayerWork *arg1) {
     BallPlayerData *temp_r31 = arg0->data;
 
     switch (arg1->unk02) {
@@ -1027,7 +1027,7 @@ static void BallPlayerUseLight(omObjData *arg0, BallPlayerWork *arg1) {
     }
 }
 
-static void BallPlayerCatch(omObjData *arg0, BallPlayerWork *arg1) {
+static void BallPlayerCatch(OMOBJ *arg0, BallPlayerWork *arg1) {
     s32 temp_r28;
     BallPlayerData *temp_r27 = arg0->data;
 
@@ -1153,7 +1153,7 @@ static s32 GetBallBooState(void) {
     return temp_r31->unk00_field1;
 }
 
-static void ExecBallBoo(omObjData *arg0) {
+static void ExecBallBoo(OMOBJ *arg0) {
     BallBooWork *temp_r30 = OM_GET_WORK_PTR(arg0, BallBooWork);
 
     if (booKillF != 0 || BoardIsKill()) {
@@ -1189,12 +1189,12 @@ static void ExecBallBoo(omObjData *arg0) {
     BoardModelScaleSet(temp_r30->unk04, arg0->scale.z, arg0->scale.z, arg0->scale.z);
 }
 
-static void BallBooSpawn(omObjData *arg0, BallBooWork *arg1) {
+static void BallBooSpawn(OMOBJ *arg0, BallBooWork *arg1) {
     BoardModelAlphaSet(arg1->unk04, 0xFF);
     SetBallBooState(0);
 }
 
-static void BallBooChase(omObjData *arg0, BallBooWork *arg1) {
+static void BallBooChase(OMOBJ *arg0, BallBooWork *arg1) {
     if (arg1->unk02 != 0) {
         arg1->unk02--;
         arg0->trans.x += arg0->rot.x;
@@ -1210,7 +1210,7 @@ static void BallBooChase(omObjData *arg0, BallBooWork *arg1) {
     }
 }
 
-static void BallBooBattle(omObjData *arg0, BallBooWork *arg1) {
+static void BallBooBattle(OMOBJ *arg0, BallBooWork *arg1) {
     s32 temp_r29;
 
     battleTimer++;
@@ -1240,7 +1240,7 @@ static void BallBooBattle(omObjData *arg0, BallBooWork *arg1) {
     }
 }
 
-static void BallBooAttack(omObjData *arg0, BallBooWork *arg1) {
+static void BallBooAttack(OMOBJ *arg0, BallBooWork *arg1) {
     float var_f29;
 
     if (arg1->unk02 < 90) {
@@ -1255,7 +1255,7 @@ static void BallBooAttack(omObjData *arg0, BallBooWork *arg1) {
     arg0->scale.z = 1.0 + sind(var_f29);
 }
 
-static void BallBooFlash(omObjData *arg0, BallBooWork *arg1) {
+static void BallBooFlash(OMOBJ *arg0, BallBooWork *arg1) {
     Vec sp8;
     float temp_f31;
 
@@ -1304,7 +1304,7 @@ static void TakeBallCoin(void) {
     }
 }
 
-static void ExecTakeBallCoin(omObjData *arg0) {
+static void ExecTakeBallCoin(OMOBJ *arg0) {
     BallTakeCoinData *var_r30;
     Vec sp8;
     s32 i;
@@ -1382,7 +1382,7 @@ static void TakeBallStar(void) {
     HuAudFXPlay(0x361);
 }
 
-static void ExecTakeBallStar(omObjData *arg0) {
+static void ExecTakeBallStar(OMOBJ *arg0) {
     BallTakeCoinWork *temp_r29 = OM_GET_WORK_PTR(arg0, BallTakeCoinWork);
     Vec sp8;
     float var_f30;

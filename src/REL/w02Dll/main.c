@@ -37,7 +37,7 @@ Vec lbl_1_bss_20;
 Vec lbl_1_bss_14;
 s32 *lbl_1_bss_10;
 s16 lbl_1_bss_8[ARRAY_COUNT(GWPlayer->items)]; // Item List
-Process *lbl_1_bss_4;
+HUPROCESS *lbl_1_bss_4;
 u8 *lbl_1_bss_0;
 
 /* DATA */

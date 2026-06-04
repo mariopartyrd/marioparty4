@@ -140,7 +140,7 @@ s32 lbl_1_bss_C;
 #endif
 s32 lbl_1_bss_8;
 s32 lbl_1_bss_4;
-Process *lbl_1_bss_0;
+HUPROCESS *lbl_1_bss_0;
 
 void fn_1_0(void)
 {
@@ -461,7 +461,7 @@ void fn_1_EC(void)
 				CharMotionInit(GWPlayerCfg[2].character);
 				CharMotionInit(GWPlayerCfg[3].character);
 				{
-					omOvlHisData *his = omOvlHisGet(0);
+					OMOVLHIS *his = omOvlHisGet(0);
 					omOvlHisChg(0, DLL_mstory3dll, 0, 0);
 					omOvlCallEx(boardOvlTbl[GWSystem.board], 1, 0, 0);
 				}
@@ -506,7 +506,7 @@ void fn_1_EC(void)
 				CharMotionInit(GWPlayerCfg[2].character);
 				CharMotionInit(GWPlayerCfg[3].character);
 				{
-					omOvlHisData *his = omOvlHisGet(0);
+					OMOVLHIS *his = omOvlHisGet(0);
 					omOvlHisChg(0, DLL_mstory3dll, 0, 0);
 					omOvlCallEx(boardOvlTbl[GWSystem.board], 1, 0, 0);
 				}

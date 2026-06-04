@@ -1,16 +1,16 @@
 #include "game/object.h"
 #include "math.h"
 
-void fn_1_68(omObjData *object);
+void fn_1_68(OMOBJ *object);
 
 void ObjectSetup(void)
 {
-    Process *process = omInitObjMan(0xA, 0x2000);
-    omObjData *object = omAddObjEx(process, 0, 0, 0, -1, fn_1_68);
+    HUPROCESS *process = omInitObjMan(0xA, 0x2000);
+    OMOBJ *object = omAddObjEx(process, 0, 0, 0, -1, fn_1_68);
     u32 *work = object->work;
 }
 
-void fn_1_68(omObjData *object)
+void fn_1_68(OMOBJ *object)
 {
     s8 *work = (s8 *)object->work;
     if (*work != 0) {

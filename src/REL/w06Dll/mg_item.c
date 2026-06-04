@@ -93,23 +93,23 @@ static void fn_1_20CC(s32 arg0);
 static s32 fn_1_2174(s32 arg0);
 static s16 fn_1_21CC(s32 arg0);
 static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2);
-static void fn_1_243C(omObjData *arg0);
+static void fn_1_243C(OMOBJ *arg0);
 static s32 fn_1_2A1C(s32 arg0);
 static void fn_1_2B60(s32 arg0);
 static void fn_1_2C18(void);
 static void fn_1_2D90(s32 arg0);
 static s32 fn_1_2DD0(void);
 static u32 fn_1_2E18(Bss24Work *arg0);
-static void fn_1_2EF4(omObjData *arg0);
+static void fn_1_2EF4(OMOBJ *arg0);
 static void fn_1_3470(void);
 static void fn_1_3560(s32 arg0);
 static s32 fn_1_35BC(void);
 static void fn_1_3604(s32 arg0);
 static void fn_1_3698(s8 arg0);
-static void fn_1_3974(omObjData *arg0);
+static void fn_1_3974(OMOBJ *arg0);
 static void fn_1_4070(void);
 static void fn_1_4124(void);
-static void fn_1_4194(omObjData *arg0);
+static void fn_1_4194(OMOBJ *arg0);
 static void fn_1_42AC(s16 arg0);
 static void fn_1_43DC(void);
 static void fn_1_4460(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
@@ -119,18 +119,18 @@ static s16 lbl_1_bss_36[3];
 static s16 lbl_1_bss_34;
 static s8 lbl_1_bss_33;
 static s8 lbl_1_bss_30[3];
-static omObjData *lbl_1_bss_2C;
-static omObjData *lbl_1_bss_28;
-static omObjData *lbl_1_bss_24;
+static OMOBJ *lbl_1_bss_2C;
+static OMOBJ *lbl_1_bss_28;
+static OMOBJ *lbl_1_bss_24;
 static ANIMDATA *lbl_1_bss_20;
 static s8 lbl_1_bss_1C;
-static Process *lbl_1_bss_18;
+static HUPROCESS *lbl_1_bss_18;
 
 static s16 lbl_1_data_1A8 = -1;
 static s8 lbl_1_data_1AA[3] = { -1, -1, -1 };
 static s8 lbl_1_data_1AD[3] = { 0, 0, 0 };
 static s16 lbl_1_data_1B0 = -1;
-static omObjData *lbl_1_data_1B4[3] = { NULL, NULL, NULL };
+static OMOBJ *lbl_1_data_1B4[3] = { NULL, NULL, NULL };
 
 void fn_1_D70(void)
 {
@@ -546,7 +546,7 @@ static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2)
 {
     Mtx sp18;
     Vec spC;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     Data1B4Work *temp_r31;
     s32 var_r28;
 
@@ -582,7 +582,7 @@ static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2)
     BoardModelLayerSet(temp_r31->unk06, 2);
 }
 
-static void fn_1_243C(omObjData *arg0)
+static void fn_1_243C(OMOBJ *arg0)
 {
     Vec sp14;
     Vec sp8;
@@ -741,7 +741,7 @@ static s32 fn_1_2A1C(s32 arg0)
 
 static void fn_1_2B60(s32 arg0)
 {
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     Bss24Work *temp_r31;
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_2EF4);
@@ -805,7 +805,7 @@ static u32 fn_1_2E18(Bss24Work *arg0)
     return var_r30;
 }
 
-static void fn_1_2EF4(omObjData *arg0)
+static void fn_1_2EF4(OMOBJ *arg0)
 {
     Vec sp14;
     Vec sp8;
@@ -923,7 +923,7 @@ static void fn_1_2EF4(omObjData *arg0)
 
 static void fn_1_3470(void)
 {
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     Bss28Work *temp_r31;
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_3974);
@@ -1030,7 +1030,7 @@ static void fn_1_3698(s8 arg0)
     BoardModelMotionSpeedSet(lbl_1_bss_C[4], 2.0f);
 }
 
-static void fn_1_3974(omObjData *arg0)
+static void fn_1_3974(OMOBJ *arg0)
 {
     Vec sp30;
     Vec sp24;
@@ -1134,7 +1134,7 @@ static void fn_1_4124(void)
     temp_r31->unk00_field0 = 1;
 }
 
-static void fn_1_4194(omObjData *arg0)
+static void fn_1_4194(OMOBJ *arg0)
 {
     Bss2CWork *temp_r31;
 

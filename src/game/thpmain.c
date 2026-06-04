@@ -24,7 +24,7 @@ static s16 THPLoopF;
 static s16 THPStat;
 static u32 THPFrame;
 static s16 THPStart;
-Process *THPProc;
+HUPROCESS *THPProc;
 
 s16 HuTHPSprCreateVol(char *path, s16 loop, s16 prio, float volume)
 {

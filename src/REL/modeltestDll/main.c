@@ -26,14 +26,14 @@ s32 lbl_1_data_0[8] = {
     DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x04),
 };
 
-omObjData *lbl_1_bss_9A4;
-omObjData *lbl_1_bss_9A0;
+OMOBJ *lbl_1_bss_9A4;
+OMOBJ *lbl_1_bss_9A0;
 
 // -------------------------------------------------------------------------- //
 
 void ObjectSetup(void)
 {
-    Process *prc;
+    HUPROCESS *prc;
     OSReport("******* MODELTESTObjectSetup *********\n");
 
     prc = omInitObjMan(0x32, 0x2000);
@@ -184,16 +184,16 @@ u8 lbl_1_bss_2C;
 f32 lbl_1_bss_28;
 s16 lbl_1_bss_24;
 f32 lbl_1_bss_20;
-Process *lbl_1_bss_18[2];
-Process *lbl_1_bss_14;
-Process *lbl_1_bss_10;
+HUPROCESS *lbl_1_bss_18[2];
+HUPROCESS *lbl_1_bss_14;
+HUPROCESS *lbl_1_bss_10;
 s32 lbl_1_bss_C;
 f32 lbl_1_bss_8;
 static u8 unk_bss[8];
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_29C(omObjData *arg0)
+void fn_1_29C(OMOBJ *arg0)
 {
     Vec sp20;
     Vec sp14;
@@ -313,7 +313,7 @@ void fn_1_29C(omObjData *arg0)
 
     lbl_1_bss_C = 0;
     Hu3DFogSet(5000.0f, 10000.0f, 0x20U, 0x10U, 0x30U);
-    arg0->func = fn_1_F9C;
+    arg0->objFunc = fn_1_F9C;
 }
 
 // -------------------------------------------------------------------------- //
@@ -361,7 +361,7 @@ const HuUnkF9C2 lbl_1_rodata_B8 = { { 8, 6, 4, 7, 9, 10, 11 } };
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_F9C(struct om_obj_data *omData)
+void fn_1_F9C(struct omObj_s *omData)
 {
     Vec sp3C;
     Vec sp30;

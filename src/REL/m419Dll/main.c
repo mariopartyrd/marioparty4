@@ -18,7 +18,7 @@
 #include "version.h"
 
 typedef struct {
-    /* 0x00 */ omObjData *unk00;
+    /* 0x00 */ OMOBJ *unk00;
     /* 0x04 */ char unk04[0xB4];
 } StructBssC8; // Size 0xB8
 
@@ -136,7 +136,7 @@ s32 lbl_1_bss_580;
 StructBss200 lbl_1_bss_200[4];
 StructBss1E8 lbl_1_bss_1E8[2];
 StructBss190 lbl_1_bss_190[2];
-Process *lbl_1_bss_180[4];
+HUPROCESS *lbl_1_bss_180[4];
 StructBssC8 lbl_1_bss_C8;
 Vec lbl_1_bss_BC;
 Vec lbl_1_bss_B0;
@@ -161,7 +161,7 @@ Vec lbl_1_data_5C[] = { { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.0f, 35.0f }, { 0.0f, 0.
 
 void ObjectSetup(void)
 {
-    Process *temp_r3;
+    HUPROCESS *temp_r3;
 
     temp_r3 = omInitObjMan(50, 0x2000);
     omGameSysInit(temp_r3);
@@ -335,7 +335,7 @@ void fn_1_F58(void)
     void *var_r29;
     StructBss1E8 *temp_r26;
     StructBss200 *temp_r31;
-    Process *var_r25;
+    HUPROCESS *var_r25;
     float temp_f31;
     s16 var_r30;
     s32 var_r22;
@@ -1068,7 +1068,7 @@ void fn_1_47E4(void)
     StructBss1E8 *var_r31;
     StructBss190 *var_r30;
     HU3DMODEL *temp_r29;
-    Process *temp_r3;
+    HUPROCESS *temp_r3;
     s32 var_r27;
 
     var_r31 = &lbl_1_bss_1E8[0];
@@ -1134,7 +1134,7 @@ void fn_1_4B20(void)
 {
     StructBss1E8 *var_r31;
     StructBss190 *var_r30;
-    Process *temp_r3;
+    HUPROCESS *temp_r3;
     HU3DMODEL *temp_r29;
     s32 var_r27;
 
@@ -2495,12 +2495,12 @@ void fn_1_DF98(void)
     s32 var_r29;
     s32 var_r28;
     s32 sp90;
-    Process *sp8C;
+    HUPROCESS *sp8C;
     s32 sp88;
     s32 sp84;
     s32 sp80;
     s32 sp7C;
-    Process *sp78;
+    HUPROCESS *sp78;
 
     temp_r31 = HuPrcCurrentGet()->user_data;
     temp_r31->unk34 = 0;

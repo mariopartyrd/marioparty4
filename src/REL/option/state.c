@@ -24,9 +24,9 @@ typedef struct UnkShadowDataStruct {
     /* 0x18 */ Vec camTarget;
 } UnkShadowDataStruct; /* size = 0x24 */
 
-static void ExecState(omObjData *object);
+static void ExecState(OMOBJ *object);
 
-omObjData *optionState;
+OMOBJ *optionState;
 
 static UnkLightDataStruct lightTbl = {
     { 0.0f, 300.0f, 0.0f },
@@ -40,11 +40,11 @@ static UnkShadowDataStruct shadowPosTbl = {
     { 0.0f, 0.0f, 0.0f },
 };
 
-omObjData *OptionStateCreate(void)
+OMOBJ *OptionStateCreate(void)
 {
     HU3DLIGHT *lightData;
 
-    omObjData *object = omAddObjEx(optionObjMan, 1000, 0, 0, 4, ExecState);
+    OMOBJ *object = omAddObjEx(optionObjMan, 1000, 0, 0, 4, ExecState);
     StateWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StateWork), MEMORY_DEFAULT_NUM);
     object->data = work;
     optionCamera = OptionCameraCreate();
@@ -60,7 +60,7 @@ omObjData *OptionStateCreate(void)
     return object;
 }
 
-void OptionStateKill(omObjData *object)
+void OptionStateKill(OMOBJ *object)
 {
     StateWork *work = object->data;
 
@@ -70,42 +70,42 @@ void OptionStateKill(omObjData *object)
     HuMemDirectFree(work);
 }
 
-static void ExecState(omObjData *object)
+static void ExecState(OMOBJ *object)
 {
     StateWork *work = object->data;
 
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
-            object->unk10 = 1;
+            object->mode = 1;
             /* fallthrough */
         case 1:
             WipeCreate(WIPE_MODE_IN, WIPE_TYPE_PREV, 60);
-            object->unk10 = 2;
+            object->mode = 2;
             break;
         case 2:
             if (WipeStatGet() != 0 || work->window->state != 0) {
                 break;
             }
             OptionRoomExecModeSet(optionRoom, 1);
-            object->unk10 = 3;
+            object->mode = 3;
             /* fallthrough */
         case 3:
             if (OptionRoomExecModeGet(optionRoom) != 0) {
                 break;
             }
-            object->unk10 = 4;
+            object->mode = 4;
             /* fallthrough */
         case 4:
             OptionWinAnimIn(work->window);
             OptionWinMesSet(work->window, MAKE_MESSID(47, 167)); // Would you like to leave?
-            object->unk10 = 5;
+            object->mode = 5;
             /* fallthrough */
         case 5:
             if (work->window->state != 0) {
                 break;
             }
             OptionWinChoiceSet(work->window, 1);
-            object->unk10 = 6;
+            object->mode = 6;
             /* fallthrough */
         case 6:
             if (work->window->state != 0) {
@@ -114,14 +114,14 @@ static void ExecState(omObjData *object)
             OptionWinAnimOut(work->window);
             if (work->window->choice == 0) {
                 work->quitTimer = 0;
-                object->unk10 = 7;
+                object->mode = 7;
             }
             else {
-                object->unk10 = 2;
+                object->mode = 2;
             }
             break;
         case 7:
-            object->unk10 = 8;
+            object->mode = 8;
             work->quitTimer = 0;
             /* fallthrough */
         case 8:

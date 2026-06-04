@@ -70,10 +70,10 @@ static void ExecBallPrize(void);
 static void ExecScratchTicket(s32 arg0);
 static void ExecScratch(void);
 static void KillScratch(void);
-static void ExecScratchSpr(omObjData *arg0);
+static void ExecScratchSpr(OMOBJ *arg0);
 static void HideScratchSpr(void);
 static void InitScratchSpr(void);
-static void ExecScratchPick(omObjData *arg0);
+static void ExecScratchPick(OMOBJ *arg0);
 static void InitScratchPick(void);
 static void InitTicketPrizes(void);
 static void ExecTicketFocus(s32 arg0);
@@ -100,9 +100,9 @@ static s8 comLotteryType;
 static s8 comLotteryWinType;
 static u8 comInputPos;
 static s32 handUpdateF;
-static omObjData *lotteryTicketPickObj;
+static OMOBJ *lotteryTicketPickObj;
 static s8 (*comInputDrawP)[2];
-static Process *lotteryProc;
+static HUPROCESS *lotteryProc;
 
 static s16 hostMdl = -1;
 static s16 lotteryMot[4] = { -1, -1, -1, -1 };
@@ -1002,7 +1002,7 @@ static void ExecBallGame(void) {
 }
 
 static void SetBallPrize(void) {
-    Process *sp8;
+    HUPROCESS *sp8;
     s32 temp_r31;
 
     while (1) {
@@ -1118,7 +1118,7 @@ static const s32 ticketSpr[] = {
     DATA_MAKE_NUM(DATADIR_BKUJIYA, 32)
 };
 
-static omObjData *ticketObj[12] = { NULL };
+static OMOBJ *ticketObj[12] = { NULL };
 static s8 ticketPrize[12] = { 0 };
 static Vec handLastPos = { 0.0f, 0.0f, 0.0f };
 
@@ -1154,7 +1154,7 @@ static void ExecScratchTicket(s32 arg0) {
     s32 var_r24;
     s32 temp_r27;
     u16 var_r23;
-    omObjData *var_r22;
+    OMOBJ *var_r22;
     TicketWork *temp_r30;
     ANIMBMP *temp_r31;
 
@@ -1275,7 +1275,7 @@ static void KillScratch(void) {
     memset(ticketObj, 0, sizeof(ticketObj));
 }
 
-static void ExecScratchSpr(omObjData *arg0) {
+static void ExecScratchSpr(OMOBJ *arg0) {
     Vec sp20;
     Vec sp14;
     Vec sp8;
@@ -1327,7 +1327,7 @@ static void HideScratchSpr(void) {
 static void InitScratchSpr(void) {
     Vec sp18;
     Vec spC;
-    omObjData *temp_r31;
+    OMOBJ *temp_r31;
     TicketWork *temp_r29;
     s32 temp_curr;
     s16 temp_r28;
@@ -1386,7 +1386,7 @@ static inline u32 ExecStratchPickInlineFunc(LotteryTicketPickWork *temp_r29) {
     return var_r26;
 }
 
-static void ExecScratchPick(omObjData *arg0) {
+static void ExecScratchPick(OMOBJ *arg0) {
     float var_f29;
     float var_f28;
     s8 var_r28;
@@ -1463,7 +1463,7 @@ static void ExecScratchPick(omObjData *arg0) {
 static void InitScratchPick(void) {
     float temp_f31 = 91.0f;
     float temp_f30 = 106.0f;
-    omObjData *temp_r30;
+    OMOBJ *temp_r30;
     LotteryTicketPickWork *var_r31;
 
     temp_r30 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, ExecScratchPick);
@@ -1500,7 +1500,7 @@ static void InitTicketPrizes(void) {
 static void ExecTicketFocus(s32 arg0) {
     float var_f31;
     float temp_f30;
-    omObjData *var_r30;
+    OMOBJ *var_r30;
     TicketWork *temp_r29;
     s32 i;
 

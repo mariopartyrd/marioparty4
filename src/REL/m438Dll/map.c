@@ -47,7 +47,7 @@ typedef struct M438MapStruct3 {
 } M438MapStruct3;
 
 // BSS
-omObjData *lbl_1_bss_108C[6];
+OMOBJ *lbl_1_bss_108C[6];
 HU3DPARTICLEDATA *lbl_1_bss_E34[0x96];
 s32 lbl_1_bss_E30;
 s32 lbl_1_bss_E2C;
@@ -59,8 +59,8 @@ char *lbl_1_data_848[] = { "iwa_s1", "iwa_s2", "iwa_s3", "iwa_s4", "iwa_s5", "iw
     "iwa_s26", "iwa_s27", "iwa_s28", "iwa_s29", "iwa_s30", "iwa_s31", "iwa_s32" };
 
 // PROTO
-void fn_1_B54C(omObjData *);
-void fn_1_BF20(omObjData *);
+void fn_1_B54C(OMOBJ *);
+void fn_1_BF20(OMOBJ *);
 void fn_1_CAB0(f32);
 void fn_1_C764(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 void fn_1_C8E8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
@@ -68,9 +68,9 @@ void fn_1_D3FC(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 void fn_1_D57C(Vec *, f32);
 void fn_1_E034(Mtx, Vec *);
 
-void fn_1_B4D8(Process *arg0)
+void fn_1_B4D8(HUPROCESS *arg0)
 {
-    omObjData *var_r31;
+    OMOBJ *var_r31;
 
     lbl_1_bss_E30 = 0;
     var_r31 = lbl_1_bss_108C[0] = omAddObjEx(arg0, 0x20, 8, 0, -1, fn_1_B54C);
@@ -79,7 +79,7 @@ void fn_1_B4D8(Process *arg0)
 
 void fn_1_B548(void) { }
 
-void fn_1_B54C(omObjData *arg0)
+void fn_1_B54C(OMOBJ *arg0)
 {
     Vec sp20;
     Vec sp14;
@@ -96,26 +96,26 @@ void fn_1_B54C(omObjData *arg0)
     arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M438MapStruct3), MEMORY_DEFAULT_NUM);
     temp_r23 = arg0->data;
     memset(temp_r23, 0, 0x108C);
-    arg0->model[0] = Hu3DModelCreateFile(0x450000);
-    Hu3DModelLayerSet(arg0->model[0], 0);
-    Hu3DModelAttrSet(arg0->model[0], 0x40000001);
-    Hu3DModelShadowMapSet(arg0->model[0]);
-    arg0->model[1] = Hu3DModelCreateFile(0x450001);
-    Hu3DModelLayerSet(arg0->model[1], 1);
-    Hu3DModelPosSet(arg0->model[1], 0.0f, -80.0f, 0.0f);
-    arg0->model[2] = Hu3DModelCreateFile(0x450002);
-    Hu3DModelLayerSet(arg0->model[2], 0);
-    Hu3DModelPosSet(arg0->model[2], 0.0f, -50.0f, 0.0f);
-    Hu3DModelAttrSet(arg0->model[2], 0x40000001);
-    Hu3DMotionSpeedSet(arg0->model[2], 0.1f);
-    var_r29 = Hu3DTexScrollCreate(arg0->model[1], "lavafall");
+    arg0->mdlId[0] = Hu3DModelCreateFile(0x450000);
+    Hu3DModelLayerSet(arg0->mdlId[0], 0);
+    Hu3DModelAttrSet(arg0->mdlId[0], 0x40000001);
+    Hu3DModelShadowMapSet(arg0->mdlId[0]);
+    arg0->mdlId[1] = Hu3DModelCreateFile(0x450001);
+    Hu3DModelLayerSet(arg0->mdlId[1], 1);
+    Hu3DModelPosSet(arg0->mdlId[1], 0.0f, -80.0f, 0.0f);
+    arg0->mdlId[2] = Hu3DModelCreateFile(0x450002);
+    Hu3DModelLayerSet(arg0->mdlId[2], 0);
+    Hu3DModelPosSet(arg0->mdlId[2], 0.0f, -50.0f, 0.0f);
+    Hu3DModelAttrSet(arg0->mdlId[2], 0x40000001);
+    Hu3DMotionSpeedSet(arg0->mdlId[2], 0.1f);
+    var_r29 = Hu3DTexScrollCreate(arg0->mdlId[1], "lavafall");
     Hu3DTexScrollPosMoveSet(var_r29, 0.0f, -1.5f * REFRESH_FREQ, 0.0f);
-    var_r29 = Hu3DTexScrollCreate(arg0->model[1], "lafall");
+    var_r29 = Hu3DTexScrollCreate(arg0->mdlId[1], "lafall");
     Hu3DTexScrollPosMoveSet(var_r29, 0.0f, -REFRESH_FREQ, 0.0f);
     var_r29 = 0;
   
     var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x45000C), 0x32);
-    arg0->model[3] = var_r27;
+    arg0->mdlId[3] = var_r27;
     Hu3DModelLayerSet(var_r27, 3);
     Hu3DParticleHookSet(var_r27, fn_1_C764);
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r29++) {
@@ -123,7 +123,7 @@ void fn_1_B54C(omObjData *arg0)
     }
 
     var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x45000D), 0x32);
-    arg0->model[4] = var_r27;
+    arg0->mdlId[4] = var_r27;
     Hu3DModelLayerSet(var_r27, 3);
     Hu3DParticleHookSet(var_r27, fn_1_C764);
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r29++) {
@@ -131,7 +131,7 @@ void fn_1_B54C(omObjData *arg0)
     }
 
     var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x45000E), 0x32);
-    arg0->model[5] = var_r27;
+    arg0->mdlId[5] = var_r27;
     Hu3DModelLayerSet(var_r27, 3);
     Hu3DParticleHookSet(var_r27, fn_1_C764);
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r29++) {
@@ -154,7 +154,7 @@ void fn_1_B54C(omObjData *arg0)
     }
   
     var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x45000F), 0x32);
-    arg0->model[6] = var_r27;
+    arg0->mdlId[6] = var_r27;
     Hu3DModelLayerSet(var_r27, 3);
     Hu3DParticleHookSet(var_r27, fn_1_C8E8);
     var_r25 = &((HU3DPARTICLE *)(Hu3DData[var_r27].hookData))->data[0];
@@ -165,7 +165,7 @@ void fn_1_B54C(omObjData *arg0)
     }
   
     var_r27 = Hu3DParticleCreate(HuSprAnimReadFile(0x450010), 0x1F4);
-    arg0->model[7] = var_r27;
+    arg0->mdlId[7] = var_r27;
     Hu3DModelLayerSet(var_r27, 2);
     Hu3DParticleBlendModeSet(var_r27, 1);
     Hu3DParticleHookSet(var_r27, fn_1_D3FC);
@@ -182,7 +182,7 @@ void fn_1_B54C(omObjData *arg0)
         var_r28->unkC = var_r28->unk10 = 0.0f;
         var_r28->unk14 = var_r28->unk18 = 0.0f;
         var_r28->unk1C = var_r28->unk20 = 0.0f;
-        var_r26 = Hu3DModelObjPtrGet(arg0->model[0], lbl_1_data_848[var_r30]);
+        var_r26 = Hu3DModelObjPtrGet(arg0->mdlId[0], lbl_1_data_848[var_r30]);
         var_r28->unk48 = var_r26;
         sp14.x = sp14.y = sp14.z = -100000.0f;
         sp8.x = sp8.y = sp8.z = 100000.0f;
@@ -229,7 +229,7 @@ void fn_1_B54C(omObjData *arg0)
         Hu3DModelAttrSet(var_r24->unk4, 1);
     }
     Hu3DModelKill(var_r27);
-    arg0->func = fn_1_BF20;
+    arg0->objFunc = fn_1_BF20;
 }
 
 Vec lbl_1_data_8D8[4][2] = {
@@ -251,7 +251,7 @@ Vec lbl_1_data_8D8[4][2] = {
     },
 };
 
-void fn_1_BF20(omObjData *arg0)
+void fn_1_BF20(OMOBJ *arg0)
 {
     Mtx sp5C;
     Mtx sp2C;
@@ -469,7 +469,7 @@ void fn_1_CAB0(f32 arg8)
                 break;
         }
     }
-    var_r31 = ((HU3DPARTICLE *)(Hu3DData[lbl_1_bss_108C[0]->model[6]].hookData))->data;
+    var_r31 = ((HU3DPARTICLE *)(Hu3DData[lbl_1_bss_108C[0]->mdlId[6]].hookData))->data;
     var_r29 = 0xF;
     for (var_r30 = 0; var_r30 < 0x32; var_r30++, var_r31++) {
         if (var_r31->time == 0) {
@@ -540,7 +540,7 @@ void fn_1_D57C(Vec *arg0, f32 arg1)
     s32 var_r30;
     u32 var_r29;
 
-    var_r31 = ((HU3DPARTICLE *)(Hu3DData[lbl_1_bss_108C[0]->model[7]].hookData))->data;
+    var_r31 = ((HU3DPARTICLE *)(Hu3DData[lbl_1_bss_108C[0]->mdlId[7]].hookData))->data;
     var_r29 = (u32)(3.0f + (15.0f * arg1));
 
     for (var_r30 = 0; var_r30 < 0x1F4; var_r30++, var_r31++) {

@@ -48,7 +48,7 @@ s32 lbl_1_data_14C = 0xFFFFFFFF;
 s16 lbl_1_bss_14[7];
 s32 *lbl_1_bss_10;
 s16 lbl_1_bss_8[4];
-Process *lbl_1_bss_4;
+HUPROCESS *lbl_1_bss_4;
 bitcopy *lbl_1_bss_0;
 
 void BoardCreate(void)

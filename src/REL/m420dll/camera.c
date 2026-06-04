@@ -10,7 +10,7 @@
 
 #include "REL/m420dll.h"
 
-Process *lbl_1_bss_A8;
+HUPROCESS *lbl_1_bss_A8;
 M420DllUnkStruct lbl_1_bss_8C;
 M420DllUnkStruct lbl_1_bss_70;
 M420DllUnkStruct lbl_1_bss_54;

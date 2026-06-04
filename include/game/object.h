@@ -18,46 +18,49 @@ typedef enum omOvl_e {
 
 #undef DLL
 
-#define OM_STAT_DELETED 0x1
-#define OM_STAT_DISABLED 0x2
-#define OM_STAT_ACTIVE 0x4
-#define OM_STAT_PAUSED 0x10
-#define OM_STAT_NOPAUSE 0x20
-#define OM_STAT_MODEL_PAUSED 0x100
+#define OM_STAT_DELETED (1 << 0)
+#define OM_STAT_DISABLED (1 << 1)
+#define OM_STAT_ACTIVE (1 << 2)
+#define OM_STAT_PAUSED (1 << 4)
+#define OM_STAT_NOPAUSE (1 << 5)
+#define OM_STAT_MODELPAUSE (1 << 8)
 
+#define OM_GRP_NONE -1
 
 #define OM_GET_WORK_PTR(object, type) ((type *)(&((object)->work[0])))
 #define OM_GET_DATA_PTR(object, type) ((type *)(((object)->data)))
 
-typedef void (*omObjFunc)(struct om_obj_data *);
+// typedef HUPROCESS OMOBJMAN;
+typedef struct omObj_s OMOBJ;
+typedef void (*OMOBJFUNC)(OMOBJ *obj);
 
-typedef struct om_ovl_his_data {
-    OMOVL overlay;
-    s32 event;
+typedef struct omOvlHis_s {
+    OMOVL ovl;
+    s32 evtno;
     s32 stat;
-} omOvlHisData;
+} OMOVLHIS;
 
-typedef struct om_obj_data {
+struct omObj_s {
 /* 0x00 */ u16 stat;
-/* 0x02 */ s16 next_idx_alloc;
+/* 0x02 */ s16 objNext;
 /* 0x04 */ s16 prio;
 /* 0x06 */ s16 prev;
 /* 0x08 */ s16 next;
-/* 0x0A */ s16 next_idx;
-/* 0x0C */ s16 group;
-/* 0x0E */ u16 group_idx;
-/* 0x10 */ u32 unk10;
-/* 0x14 */ omObjFunc func;
+/* 0x0A */ s16 nextNo;
+/* 0x0C */ s16 grpNo;
+/* 0x0E */ u16 memberNo;
+/* 0x10 */ u32 mode;
+/* 0x14 */ OMOBJFUNC objFunc;
 /* 0x18 */ Vec trans;
 /* 0x24 */ Vec rot;
 /* 0x30 */ Vec scale;
 /* 0x3C */ u16 mdlcnt;
-/* 0x40 */ s16 *model;
+/* 0x40 */ s16 *mdlId;
 /* 0x44 */ u16 mtncnt;
-/* 0x48 */ s16 *motion;
+/* 0x48 */ s16 *mtnId;
 /* 0x4C */ u32 work[4];
 /* 0x5C */ void *data;
-} omObjData;
+};
 
 typedef struct om_dll_data {
 	char *name;
@@ -72,20 +75,20 @@ void omOvlGotoEx(OMOVL overlay, s16 arg2, s32 event, s32 stat);
 void omOvlReturnEx(s16 level, s16 arg2);
 void omOvlKill(s16 arg);
 void omOvlHisChg(s32 level, OMOVL overlay, s32 event, s32 stat);
-omOvlHisData *omOvlHisGet(s32 level);
-Process *omInitObjMan(s16 max_objs, s32 prio);
+OMOVLHIS *omOvlHisGet(s32 level);
+HUPROCESS *omInitObjMan(s16 max_objs, s32 prio);
 void omDestroyObjMan(void);
-omObjData *omAddObjEx(Process *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, omObjFunc func);
-void omAddMember(Process *objman_process, u16 group, omObjData *object);
-void omDelObjEx(Process *objman_process, omObjData *object);
-void omDelMember(Process *objman_process, omObjData *object);
-void omMakeGroupEx(Process *objman_process, u16 group, u16 max_objs);
-omObjData **omGetGroupMemberListEx(Process *objman_process, s16 group);
-void omSetStatBit(omObjData *obj, u16 stat);
-void omResetStatBit(omObjData *obj, u16 stat);
-void omSetTra(omObjData *obj, float x, float y, float z);
-void omSetRot(omObjData *obj, float x, float y, float z);
-void omSetSca(omObjData *obj, float x, float y, float z);
+OMOBJ *omAddObjEx(HUPROCESS *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, OMOBJFUNC func);
+void omAddMember(HUPROCESS *objman_process, u16 group, OMOBJ *object);
+void omDelObjEx(HUPROCESS *objman_process, OMOBJ *object);
+void omDelMember(HUPROCESS *objman_process, OMOBJ *object);
+void omMakeGroupEx(HUPROCESS *objman_process, u16 group, u16 max_objs);
+OMOBJ **omGetGroupMemberListEx(HUPROCESS *objman_process, s16 group);
+void omSetStatBit(OMOBJ *obj, u16 stat);
+void omResetStatBit(OMOBJ *obj, u16 stat);
+void omSetTra(OMOBJ *obj, float x, float y, float z);
+void omSetRot(OMOBJ *obj, float x, float y, float z);
+void omSetSca(OMOBJ *obj, float x, float y, float z);
 void omMain(void);
 void omAllPause(BOOL pause);
 char omPauseChk(void);
@@ -103,15 +106,15 @@ s32 omDLLSearch(s16 overlay);
 void omDLLInfoDump(OSModuleInfo *module);
 void omDLLHeaderDump(OSModuleHeader *module);
 
-void omOutView(omObjData *object);
-void omOutViewMulti(omObjData *object);
-void omSystemKeyCheckSetup(Process *objman);
-void omSystemKeyCheck(omObjData *object);
+void omOutView(OMOBJ *object);
+void omOutViewMulti(OMOBJ *object);
+void omSystemKeyCheckSetup(HUPROCESS *objman);
+void omSystemKeyCheck(OMOBJ *object);
 void omSysPauseEnable(u8 flag);
 void omSysPauseCtrl(s16 flag);
 
-extern omObjData *omDBGSysKeyObj;
-extern Process *omwatchproc;
+extern OMOBJ *omDBGSysKeyObj;
+extern HUPROCESS *omwatchproc;
 extern OMOVL omnextovl;
 extern OMOVL omcurovl;
 extern s32 omcurdll;

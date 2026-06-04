@@ -46,7 +46,7 @@ static char *extCharNameTbl[7] = {
 
 void ObjectSetup(void)
 {
-    Process *sp8 = omInitObjMan(0x32, 0x2000);
+    HUPROCESS *sp8 = omInitObjMan(0x32, 0x2000);
     Hu3DBGColorSet(0, 0, 0);
     HuPrcChildCreate(SubchrMain, 4096, 12288, 0, HuPrcCurrentGet());
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, -1);

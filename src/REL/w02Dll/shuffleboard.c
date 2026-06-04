@@ -12,8 +12,8 @@
 #endif
 
 
-Process *lbl_1_bss_378;
-Process *lbl_1_bss_374;
+HUPROCESS *lbl_1_bss_378;
+HUPROCESS *lbl_1_bss_374;
 s16 lbl_1_bss_370;
 s16 lbl_1_bss_36E;
 s16 lbl_1_bss_36C;

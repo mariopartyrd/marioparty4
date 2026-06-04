@@ -82,22 +82,22 @@ typedef struct M456DllBss18Struct {
     s16 unk_20[0x10];
 } M456DllBss18Struct; /* size 0x40 */
 
-void fn_1_1304(omObjData *object);
-void fn_1_2040(omObjData *object);
+void fn_1_1304(OMOBJ *object);
+void fn_1_2040(OMOBJ *object);
 float fn_1_2090(float arg8, float arg9, float argA);
-void fn_1_2194(Process *process);
+void fn_1_2194(HUPROCESS *process);
 void fn_1_21F8(s32 arg0, s32 arg1, float arg8);
-void fn_1_2448(omObjData *object);
-void fn_1_2918(Process *process);
-void fn_1_2AC4(omObjData *object);
-void fn_1_3C0(omObjData *object);
-void fn_1_498(omObjData *);
-void fn_1_BE4(omObjData *);
-void fn_1_C40(Process *process);
+void fn_1_2448(OMOBJ *object);
+void fn_1_2918(HUPROCESS *process);
+void fn_1_2AC4(OMOBJ *object);
+void fn_1_3C0(OMOBJ *object);
+void fn_1_498(OMOBJ *);
+void fn_1_BE4(OMOBJ *);
+void fn_1_C40(HUPROCESS *process);
 void fn_1_CC4(void);
 s32 fn_1_D2C(void);
 s32 fn_1_F4C(void);
-void fn_1_FD0(omObjData *object);
+void fn_1_FD0(OMOBJ *object);
 
 M456DllData0Struct lbl_1_data_0[2] = {
     { 500.0f, 0.0f, 1000.0f, 0.0f, 40.0f, 0.0f, 0.0f },
@@ -109,9 +109,9 @@ GXColor lbl_1_data_50 = { 0xFF, 0xFF, 0xFF, 0xFF };
 Vec lbl_1_data_54 = { 200.0f, 15000.0f, -200.0f };
 Vec lbl_1_data_60 = { 0.0f, 1.0f, 0.0f };
 
-omObjData *lbl_1_bss_8C;
-omObjData *lbl_1_bss_88;
-omObjData *lbl_1_bss_84;
+OMOBJ *lbl_1_bss_8C;
+OMOBJ *lbl_1_bss_88;
+OMOBJ *lbl_1_bss_84;
 s32 lbl_1_bss_80;
 s32 lbl_1_bss_70[4];
 s32 lbl_1_bss_6C;
@@ -130,7 +130,7 @@ s32 lbl_1_bss_0;
 
 void ObjectSetup(void)
 {
-    Process *var_r31;
+    HUPROCESS *var_r31;
     HU3DCAMERA *var_r30;
     s16 var_r29;
 
@@ -181,7 +181,7 @@ s32 fn_1_3B0(void)
     return lbl_1_bss_80;
 }
 
-void fn_1_3C0(omObjData *object)
+void fn_1_3C0(OMOBJ *object)
 {
     HU3DCAMERA *var_r31 = Hu3DCamera;
     fn_1_3A0(0);
@@ -191,15 +191,15 @@ void fn_1_3C0(omObjData *object)
     lbl_1_bss_60 = REFRESH_RATE;
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 0x3C);
     var_r31->fov = 30.0f;
-    object->func = fn_1_498;
+    object->objFunc = fn_1_498;
 }
 
-void fn_1_498(omObjData *object)
+void fn_1_498(OMOBJ *object)
 {
     s16 sp8[4];
 
     s32 var_r31;
-    omObjData **var_r29;
+    OMOBJ **var_r29;
     M456DllMainWork *var_r28;
 
     switch (fn_1_3B0()) {
@@ -321,17 +321,17 @@ void fn_1_498(omObjData *object)
             if (--lbl_1_bss_6C == 0) {
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 0x3C);
                 HuAudFXStop(lbl_1_data_94);
-                object->func = fn_1_BE4;
+                object->objFunc = fn_1_BE4;
             }
             break;
     }
     if ((omSysExitReq != 0) && (WipeStatGet() == 0)) {
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 0x3C);
-        object->func = fn_1_BE4;
+        object->objFunc = fn_1_BE4;
     }
 }
 
-void fn_1_BE4(omObjData *object)
+void fn_1_BE4(OMOBJ *object)
 {
     if (WipeStatGet() == 0) {
         fn_1_CC4();
@@ -343,7 +343,7 @@ void fn_1_BE4(omObjData *object)
     }
 }
 
-void fn_1_C40(Process *process)
+void fn_1_C40(HUPROCESS *process)
 {
     s32 var_r31;
 
@@ -357,7 +357,7 @@ void fn_1_C40(Process *process)
 void fn_1_CC4(void)
 {
     s32 var_r31;
-    omObjData **var_r30;
+    OMOBJ **var_r30;
 
     var_r30 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
     if (var_r30 != NULL) {
@@ -375,7 +375,7 @@ s32 fn_1_D2C(void)
     M456DllMainWork *var_r30;
     s32 var_r29;
     u32 var_r28;
-    omObjData **var_r27;
+    OMOBJ **var_r27;
 
     var_r29 = 0;
     var_r28 = 0;
@@ -421,7 +421,7 @@ s32 fn_1_D2C(void)
 s32 fn_1_F4C(void)
 {
     s32 var_r31;
-    omObjData **var_r30;
+    OMOBJ **var_r30;
     M456DllMainWork *var_r29;
 
     var_r30 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
@@ -455,7 +455,7 @@ Vec lbl_1_data_134[4] = {
 float lbl_1_data_164[8] = { -50.0f, -50.0f, -50.0f, -50.0f, -50.0f, -50.0f, -50.0f, -50.0f };
 u16 lbl_1_data_184[2] = { 0x40, 0x20 };
 
-void fn_1_FD0(omObjData *object)
+void fn_1_FD0(OMOBJ *object)
 {
     M456DllMainWork *var_r31;
     u32 var_r29;
@@ -474,30 +474,30 @@ void fn_1_FD0(omObjData *object)
     var_r31->unk_16 = GWPlayerCfg[var_r31->unk_02].diff;
     var_r31->unk_18 = GWPlayerCfg[var_r31->unk_02].group;
     var_r31->unk_0C = -1;
-    object->model[0] = CharModelCreate(var_r28, 8);
-    Hu3DModelShadowSet(object->model[0]);
-    Hu3DModelLayerSet(object->model[0], 3);
-    Hu3DModelCameraSet(object->model[0], 1);
+    object->mdlId[0] = CharModelCreate(var_r28, 8);
+    Hu3DModelShadowSet(object->mdlId[0]);
+    Hu3DModelLayerSet(object->mdlId[0], 3);
+    Hu3DModelCameraSet(object->mdlId[0], 1);
     var_r31->unk_20 = 0;
     for (var_r29 = 0; var_r29 < 0xA; var_r29++) {
         if (lbl_1_data_E4[var_r29].unk_04 == 0) {
-            object->motion[var_r29] = CharMotionCreate(var_r31->unk_14, lbl_1_data_E4[var_r29].unk_00);
+            object->mtnId[var_r29] = CharMotionCreate(var_r31->unk_14, lbl_1_data_E4[var_r29].unk_00);
         }
         else {
-            object->motion[var_r29] = CharMotionCreate(var_r31->unk_14, var_r31->unk_14 + lbl_1_data_E4[var_r29].unk_00);
+            object->mtnId[var_r29] = CharMotionCreate(var_r31->unk_14, var_r31->unk_14 + lbl_1_data_E4[var_r29].unk_00);
         }
     }
-    Hu3DMotionSet(object->model[0], object->motion[var_r31->unk_20]);
-    Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP);
-    CharMotionVoiceOnSet(var_r31->unk_14, object->motion[5], 0);
-    CharMotionVoiceOnSet(var_r31->unk_14, object->motion[6], 0);
+    Hu3DMotionSet(object->mdlId[0], object->mtnId[var_r31->unk_20]);
+    Hu3DModelAttrSet(object->mdlId[0], HU3D_MOTATTR_LOOP);
+    CharMotionVoiceOnSet(var_r31->unk_14, object->mtnId[5], 0);
+    CharMotionVoiceOnSet(var_r31->unk_14, object->mtnId[6], 0);
     var_r31->unk_2E = REFRESH_RATE;
     object->trans.x = lbl_1_data_134[var_r31->unk_02].x;
     object->trans.y = lbl_1_data_134[var_r31->unk_02].y;
     object->trans.z = lbl_1_data_134[var_r31->unk_02].z;
     object->rot.y = 0.0f;
     CharModelDataClose(var_r31->unk_14);
-    object->func = fn_1_1304;
+    object->objFunc = fn_1_1304;
 }
 
 #if VERSION_PAL
@@ -506,7 +506,7 @@ void fn_1_FD0(omObjData *object)
 #define fn_1_1288_COND (var_r31->unk_16 + 4)
 #endif
 
-void fn_1_1288(omObjData *object)
+void fn_1_1288(OMOBJ *object)
 {
     M456DllMainWork *var_r31 = object->data;
 
@@ -519,7 +519,7 @@ void fn_1_1288(omObjData *object)
     }
 }
 
-void fn_1_1304(omObjData *var_r30)
+void fn_1_1304(OMOBJ *var_r30)
 {
     Vec sp14;
     Vec sp8;
@@ -530,7 +530,7 @@ void fn_1_1304(omObjData *var_r30)
     u32 var_r28;
     void *var_r27;
     s32 var_r26;
-    omObjData **var_r25;
+    OMOBJ **var_r25;
     s32 var_r24;
 
     var_r31 = var_r30->data;
@@ -719,7 +719,7 @@ void fn_1_1304(omObjData *var_r30)
             if (fn_1_3B0() == 0xB) {
                 var_r31->unk_1A = 7;
                 if (var_r31->unk_00_field3 != 0) {
-                    Hu3DMotionOverlaySet(var_r30->model[0], var_r30->motion[9]);
+                    Hu3DMotionOverlaySet(var_r30->mdlId[0], var_r30->mtnId[9]);
                     CharFXPlay(var_r31->unk_14, 0x124);
                 }
             }
@@ -728,9 +728,9 @@ void fn_1_1304(omObjData *var_r30)
             if (var_r31->unk_00_field3 != 0) {
                 var_r29 = 5;
                 var_r28 = 0x40000001;
-                if (73.0f <= Hu3DMotionOverlayTimeGet(var_r30->model[0])) {
-                    Hu3DMotionOverlayTimeSet(var_r30->model[0], 35.0f);
-                    Hu3DModelAttrReset(var_r30->model[0], HU3D_MOTATTR_OVL_PAUSE);
+                if (73.0f <= Hu3DMotionOverlayTimeGet(var_r30->mdlId[0])) {
+                    Hu3DMotionOverlayTimeSet(var_r30->mdlId[0], 35.0f);
+                    Hu3DModelAttrReset(var_r30->mdlId[0], HU3D_MOTATTR_OVL_PAUSE);
                 }
             }
             else if (var_r31->unk_00_field0 == 0) {
@@ -745,11 +745,11 @@ void fn_1_1304(omObjData *var_r30)
     if ((var_r29 != var_r31->unk_20) || (var_r28 != var_r31->unk_24)) {
         var_r31->unk_20 = var_r29;
         var_r31->unk_24 = var_r28;
-        CharMotionShiftSet(var_r31->unk_14, var_r30->motion[var_r31->unk_20], 0.0f, 8.0f, var_r28);
+        CharMotionShiftSet(var_r31->unk_14, var_r30->mtnId[var_r31->unk_20], 0.0f, 8.0f, var_r28);
     }
 }
 
-void fn_1_2040(omObjData *object)
+void fn_1_2040(OMOBJ *object)
 {
     M456DllMainWork *sp8 = object->data;
     if (object->data != NULL) {
@@ -777,7 +777,7 @@ float fn_1_2090(float var_f29, float sp8, float spC)
     return var_f30;
 }
 
-void fn_1_2194(Process *process)
+void fn_1_2194(HUPROCESS *process)
 {
     fn_1_21F8(0, 0, 0.0f);
     lbl_1_bss_8C = omAddObjEx(process, 0xA, 0, 0, -1, fn_1_2448);
@@ -796,7 +796,7 @@ void fn_1_21F8(s32 arg0, s32 arg1, float arg8)
 
 float lbl_1_data_1A8[2] = { 0.0f, 0.0f };
 
-void fn_1_2448(omObjData *object)
+void fn_1_2448(OMOBJ *object)
 {
     HU3DCAMERA *sp8 = Hu3DCamera;
 
@@ -869,11 +869,11 @@ Vec2f lbl_1_data_230[0x17] = {
     { 0.0f, 550.0f },
 };
 
-void fn_1_2918(Process *sp8)
+void fn_1_2918(HUPROCESS *sp8)
 {
     M456DllBss18Struct *var_r31;
     s32 var_r30;
-    omObjData *var_r29;
+    OMOBJ *var_r29;
 
     var_r29 = omAddObjEx(sp8, 0x7FD9, 0, 0, -1, fn_1_2AC4);
     var_r31 = &lbl_1_bss_18;
@@ -899,7 +899,7 @@ void fn_1_2918(Process *sp8)
     espBankSet(var_r31->unk_20[15], 0xA);
 }
 
-void fn_1_2AC4(omObjData *var_r26)
+void fn_1_2AC4(OMOBJ *var_r26)
 {
     u32 sp8[3];
 

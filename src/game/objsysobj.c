@@ -21,7 +21,7 @@ float CZoomM[16];
 
 s16 omDBGMenuButton;
 
-void omOutView(omObjData *object)
+void omOutView(OMOBJ *object)
 {
 	Vec pos, target, up;
 	float rot_x = CRot.x;
@@ -39,7 +39,7 @@ void omOutView(omObjData *object)
 	Hu3DCameraPosSet(1, pos.x, pos.y, pos.z, up.x, up.y, up.z, target.x, target.y, target.z);
 }
 
-void omOutViewMulti(omObjData *object)
+void omOutViewMulti(OMOBJ *object)
 {
 	u8 i;
 	for(i=0; i<object->work[0]; i++) {
@@ -61,9 +61,9 @@ void omOutViewMulti(omObjData *object)
 }
 
 
-void omSystemKeyCheckSetup(Process *objman)
+void omSystemKeyCheckSetup(HUPROCESS *objman)
 {
-	omObjData *object;
+	OMOBJ *object;
 	object = omAddObjEx(objman, 32731, 0, 0, -1, omSystemKeyCheck);
 	omDBGSysKeyObj = object;
 	omSetStatBit(object, 0xA0);
@@ -72,7 +72,7 @@ void omSystemKeyCheckSetup(Process *objman)
 	object->work[2] = 0;
 }
 
-void omSystemKeyCheck(omObjData *object)
+void omSystemKeyCheck(OMOBJ *object)
 {
 	if(!omSysPauseEnableFlag) {
 		return;

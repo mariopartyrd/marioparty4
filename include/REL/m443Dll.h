@@ -47,9 +47,9 @@ s32 fn_1_4368(s32 arg0);
 void fn_1_43AC(s32 arg0);
 void fn_1_43DC(s32 arg0);
 float fn_1_488C(float arg8, float arg9, float argA);
-void fn_1_4A5C(Process *arg0);
+void fn_1_4A5C(HUPROCESS *arg0);
 void fn_1_4AB0(void);
-void fn_1_5444(Process *arg0);
+void fn_1_5444(HUPROCESS *arg0);
 void fn_1_565C(void);
 
 #endif

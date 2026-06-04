@@ -861,7 +861,7 @@ void fn_1_12BEC(void);
 
 void fn_1_12B64(s16 arg0)
 {
-    Process *process;
+    HUPROCESS *process;
     s32 *data;
     process = HuPrcChildCreate(fn_1_12BEC, 100, 12288, 0, objman);
     data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(s32), MEMORY_DEFAULT_NUM);
@@ -883,7 +883,7 @@ void fn_1_12BEC(void)
     s16 temp_r24;
     s16 temp_r23;
     s16 temp_r22;
-    Process *temp_r21;
+    HUPROCESS *temp_r21;
     float temp_f31;
     Vec sp44[30];
     s16 sp8[30];

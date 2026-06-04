@@ -17,15 +17,15 @@ typedef struct unkDominationData4 {
 } unkDominationData4; // size of 0x20
 
 // function signatures
-void fn_1_4858(omObjData *arg0);
-void fn_1_485C(omObjData *arg0);
-void fn_1_46EC(omObjData *arg0);
-void fn_1_465C(omObjData *arg0, s32 arg1);
-void fn_1_4808(omObjData *arg0);
+void fn_1_4858(OMOBJ *arg0);
+void fn_1_485C(OMOBJ *arg0);
+void fn_1_46EC(OMOBJ *arg0);
+void fn_1_465C(OMOBJ *arg0, s32 arg1);
+void fn_1_4808(OMOBJ *arg0);
 
 // bss
-Process *lbl_1_bss_3970;
-omObjData *lbl_1_bss_37E0[100];
+HUPROCESS *lbl_1_bss_3970;
+OMOBJ *lbl_1_bss_37E0[100];
 
 // data
 s32 lbl_1_data_288[] = { DATA_MAKE_NUM(DATADIR_M407, 0x15), DATA_MAKE_NUM(DATADIR_M407, 0x16), DATA_MAKE_NUM(DATADIR_M407, 0x17),
@@ -36,9 +36,9 @@ ObjFuncs lbl_1_data_29C[] = {
     fn_1_485C,
 };
 
-void fn_1_41CC(Process *arg0)
+void fn_1_41CC(HUPROCESS *arg0)
 {
-    Process *sp8;
+    HUPROCESS *sp8;
     u32 i;
     u32 temp_r30;
 
@@ -95,7 +95,7 @@ void fn_1_44F4(void)
 
 void fn_1_4544(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
 {
-    omObjData *temp_r29;
+    OMOBJ *temp_r29;
     unkDominationData4 *temp_r31;
     u32 i;
 
@@ -117,7 +117,7 @@ void fn_1_4544(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4)
     }
 }
 
-void fn_1_465C(omObjData *arg0, s32 arg1)
+void fn_1_465C(OMOBJ *arg0, s32 arg1)
 {
     unkDominationData4 *temp_r31;
 
@@ -126,7 +126,7 @@ void fn_1_465C(omObjData *arg0, s32 arg1)
     temp_r31->unk_1C = 0;
 }
 
-void fn_1_4680(omObjData *arg0)
+void fn_1_4680(OMOBJ *arg0)
 {
     unkDominationData4 *temp_r31;
 
@@ -135,41 +135,41 @@ void fn_1_4680(omObjData *arg0)
     omSetTra(arg0, temp_r31->unk_10, temp_r31->unk_14, temp_r31->unk_18);
 }
 
-void fn_1_46EC(omObjData *arg0)
+void fn_1_46EC(OMOBJ *arg0)
 {
     unkDominationData4 *temp_r30;
 
-    arg0->func = fn_1_4680;
+    arg0->objFunc = fn_1_4680;
     arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkDominationData4), MEMORY_DEFAULT_NUM);
     temp_r30 = arg0->data;
     temp_r30->unk_00 = arg0->work[0];
     temp_r30->unk_08 = arg0->work[1];
     temp_r30->unk_1C = 0;
-    arg0->model[0] = Hu3DModelCreateFile(lbl_1_data_288[temp_r30->unk_08]);
-    Hu3DModelAttrSet(arg0->model[0], HU3D_ATTR_NOCULL);
-    Hu3DModelAttrSet(arg0->model[0], HU3D_MOTATTR_PAUSE);
-    Hu3DModelAttrSet(arg0->model[0], HU3D_ATTR_DISPOFF);
+    arg0->mdlId[0] = Hu3DModelCreateFile(lbl_1_data_288[temp_r30->unk_08]);
+    Hu3DModelAttrSet(arg0->mdlId[0], HU3D_ATTR_NOCULL);
+    Hu3DModelAttrSet(arg0->mdlId[0], HU3D_MOTATTR_PAUSE);
+    Hu3DModelAttrSet(arg0->mdlId[0], HU3D_ATTR_DISPOFF);
     temp_r30->unk_10 = 0.0f;
     temp_r30->unk_14 = 0.0f;
     temp_r30->unk_18 = 0.0f;
     fn_1_465C(arg0, 0);
 }
 
-void fn_1_4808(omObjData *arg0)
+void fn_1_4808(OMOBJ *arg0)
 {
     unkDominationData4 *sp8;
     sp8 = arg0->data;
 
-    Hu3DModelKill(arg0->model[0]);
+    Hu3DModelKill(arg0->mdlId[0]);
 
     if (arg0->data) {
         HuMemDirectFree(arg0->data);
     }
 }
 
-void fn_1_4858(omObjData *arg0) { }
+void fn_1_4858(OMOBJ *arg0) { }
 
-void fn_1_485C(omObjData *arg0)
+void fn_1_485C(OMOBJ *arg0)
 {
     unkDominationData4 *temp_r30;
 
@@ -179,19 +179,19 @@ void fn_1_485C(omObjData *arg0)
     }
 
     if (temp_r30->unk_1C == 0) {
-        Hu3DMotionTimeSet(*arg0->model, 0.0f);
-        Hu3DModelAttrReset(*arg0->model, HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrReset(*arg0->model, HU3D_MOTATTR_PAUSE);
-        Hu3DModelAttrSet(*arg0->model, HU3D_MOTATTR_LOOP);
+        Hu3DMotionTimeSet(*arg0->mdlId, 0.0f);
+        Hu3DModelAttrReset(*arg0->mdlId, HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrReset(*arg0->mdlId, HU3D_MOTATTR_PAUSE);
+        Hu3DModelAttrSet(*arg0->mdlId, HU3D_MOTATTR_LOOP);
         temp_r30->unk_1C++;
     }
     else if (temp_r30->unk_1C == 1) {
-        Hu3DModelAttrReset(arg0->model[0], HU3D_MOTATTR_LOOP);
+        Hu3DModelAttrReset(arg0->mdlId[0], HU3D_MOTATTR_LOOP);
         temp_r30->unk_1C++;
     }
 
-    if (Hu3DMotionEndCheck(*arg0->model) != 0) {
-        Hu3DModelAttrSet(*arg0->model, HU3D_ATTR_DISPOFF);
+    if (Hu3DMotionEndCheck(*arg0->mdlId) != 0) {
+        Hu3DModelAttrSet(*arg0->mdlId, HU3D_ATTR_DISPOFF);
         fn_1_465C(arg0, 0);
     }
 }

@@ -31,7 +31,7 @@ s32 fn_1_A74(void);
 void fn_1_AF8(void);
 void fn_1_DEC(void);
 void fn_1_10B0(void);
-void fn_1_10E4(omObjData* arg0);
+void fn_1_10E4(OMOBJ* arg0);
 s32 fn_1_12C8(void);
 s32 fn_1_2930(s32 arg0);
 
@@ -124,7 +124,7 @@ s32 lbl_1_data_26C[] = {
 
 //BSS
 s32 lbl_1_bss_8;
-omObjData* lbl_1_bss_4;
+OMOBJ* lbl_1_bss_4;
 w03State* lbl_1_bss_0;
 
 void fn_1_CF4(void);
@@ -393,7 +393,7 @@ void fn_1_DEC(void) {
     Vec sp20;
     Vec sp14;
     Vec sp8;
-    omObjData* temp_r3;
+    OMOBJ* temp_r3;
     s32 var_r31;
     s32 var_r31_2;
     w03UnkStruct2* temp_r29;
@@ -444,7 +444,7 @@ void fn_1_10B0(void) {
     }
 }
 
-void fn_1_10E4(omObjData* arg0) {
+void fn_1_10E4(OMOBJ* arg0) {
     Vec sp14;
     Vec sp8;
     s32 i;

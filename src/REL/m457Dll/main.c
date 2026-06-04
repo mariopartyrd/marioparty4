@@ -92,19 +92,19 @@ typedef struct SparkData {
     /* 0x08 */ float yOffset;
 } SparkData; // Size 0x0C
 
-static void M457Exit(omObjData *object);
+static void M457Exit(OMOBJ *object);
 
 static StructBss78 lbl_1_bss_78[5];
-static omObjData *mainObj;
-static omObjData *omViewObj;
-static omObjData *playerObj[2];
-static omObjData *gameObj;
+static OMOBJ *mainObj;
+static OMOBJ *omViewObj;
+static OMOBJ *playerObj[2];
+static OMOBJ *gameObj;
 static s32 lbl_1_bss_60;
 static s32 gameState;
 static char lbl_1_bss_58[4]; // unused
 static s32 lbl_1_bss_54;
 static s32 lbl_1_bss_50;
-static Process *objman;
+static HUPROCESS *objman;
 static s32 lightId;
 static s32 lbl_1_bss_44;
 static s32 lbl_1_bss_40;
@@ -177,7 +177,7 @@ static void CameraPrintDebug(void)
     print8(64, 424, 1.0f, "%f", CZoom);
 }
 
-static void M457PlayerExec(omObjData *object)
+static void M457PlayerExec(OMOBJ *object)
 {
     PlayerData *playerData = object->data;
     PlayerData *opponentData = playerObj[1 - object->work[0]]->data;
@@ -277,11 +277,11 @@ static void M457PlayerExec(omObjData *object)
     switch (gameState) {
         case 1001:
             if (lbl_1_bss_60 == 0) {
-                Hu3DModelAttrReset(object->model[MODEL_ID_PLAYER_PLAYER], HU3D_ATTR_DISPOFF);
+                Hu3DModelAttrReset(object->mdlId[MODEL_ID_PLAYER_PLAYER], HU3D_ATTR_DISPOFF);
             }
             if (lbl_1_bss_60 <= 30) {
                 if (playerData->character == CHARACTER_BOWSER) {
-                    Hu3DMotionTimeSet(object->model[MODEL_ID_PLAYER_PLAYER], 138.0f);
+                    Hu3DMotionTimeSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], 138.0f);
                 }
                 object->trans.y = 2400.0 * (1.0 - lbl_1_bss_60 / 30.0);
             }
@@ -293,7 +293,7 @@ static void M457PlayerExec(omObjData *object)
             }
             if (lbl_1_bss_60 == 45 && playerData->character == CHARACTER_BOWSER) {
                 var_r29 = 0;
-                Hu3DMotionShiftSet(object->model[MODEL_ID_PLAYER_PLAYER], object->motion[var_r29], lbl_1_data_184[var_r29], 35.0f, HU3D_MOTATTR_LOOP);
+                Hu3DMotionShiftSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], object->mtnId[var_r29], lbl_1_data_184[var_r29], 35.0f, HU3D_MOTATTR_LOOP);
                 playerData->unk40 = var_r29;
             }
             if (lbl_1_bss_60 == 30) {
@@ -607,7 +607,7 @@ static void M457PlayerExec(omObjData *object)
             s32 temp_r21;
             char *var_r18;
 
-            s32 temp_r19 = Hu3DMotionTimeGet(object->model[MODEL_ID_PLAYER_PLAYER]);
+            s32 temp_r19 = Hu3DMotionTimeGet(object->mdlId[MODEL_ID_PLAYER_PLAYER]);
             if ((opponentData->state != 4 && opponentData->state != 6) || opponentData->unk18 != 1) {
                 if ((temp_r19 + 1) % 11 != 0 || (playerData->state == 12 && temp_r19 + 1 > 11)) {
                     break;
@@ -624,10 +624,10 @@ static void M457PlayerExec(omObjData *object)
                     var_r18 = (temp_r21 % 2 == 0) ? sp1D8[0] : sp1D8[1];
                 }
             }
-            Hu3DModelObjPosGet(object->model[MODEL_ID_PLAYER_PLAYER], var_r18, &sp104);
-            Hu3DModelPosSet(gameObj->model[temp_r21 + 7], sp104.x + (playerData->group == 0 ? 1 : -1) * 50, sp104.y, 75.0f + sp104.z);
-            Hu3DMotionTimeSet(gameObj->model[temp_r21 + 7], 2.0f);
-            Hu3DModelAttrReset(gameObj->model[temp_r21 + 7], 1);
+            Hu3DModelObjPosGet(object->mdlId[MODEL_ID_PLAYER_PLAYER], var_r18, &sp104);
+            Hu3DModelPosSet(gameObj->mdlId[temp_r21 + 7], sp104.x + (playerData->group == 0 ? 1 : -1) * 50, sp104.y, 75.0f + sp104.z);
+            Hu3DMotionTimeSet(gameObj->mdlId[temp_r21 + 7], 2.0f);
+            Hu3DModelAttrReset(gameObj->mdlId[temp_r21 + 7], 1);
             if (lbl_1_bss_78[playerData->character == CHARACTER_BOWSER ? 1 : 0].unk00 < 3) {
                 lbl_1_bss_78[playerData->character == CHARACTER_BOWSER ? 1 : 0]
                     .unk04[lbl_1_bss_78[playerData->character == CHARACTER_BOWSER ? 1 : 0].unk00]
@@ -681,46 +681,46 @@ static void M457PlayerExec(omObjData *object)
     if (playerData->invinceTime > 0) {
         s32 sp20 = (playerData->character != CHARACTER_BOWSER) ? playerData->character : 8;
         // make the player shine
-        Hu3DModelPosSet(gameObj->model[MODEL_ID_GAME_INVINCE_SHINING],
+        Hu3DModelPosSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SHINING],
             object->trans.x + sparkDataTbl[sp20].xOffset * (playerData->group == 0 ? 1 : -1), object->trans.y + sparkDataTbl[sp20].yOffset,
             150.0f + object->trans.z);
-        Hu3DModelScaleSet(gameObj->model[MODEL_ID_GAME_INVINCE_SHINING], 0.75 * sparkDataTbl[sp20].scale, 0.75 * sparkDataTbl[sp20].scale,
+        Hu3DModelScaleSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SHINING], 0.75 * sparkDataTbl[sp20].scale, 0.75 * sparkDataTbl[sp20].scale,
             0.75 * sparkDataTbl[sp20].scale);
-        Hu3DModelAttrReset(gameObj->model[MODEL_ID_GAME_INVINCE_SHINING], 1);
-        Hu3DModelAttrSet(gameObj->model[MODEL_ID_GAME_INVINCE_SHINING], HU3D_ATTR_ZCMP_OFF);
+        Hu3DModelAttrReset(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SHINING], 1);
+        Hu3DModelAttrSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SHINING], HU3D_ATTR_ZCMP_OFF);
         // add sparks
-        Hu3DModelPosSet(gameObj->model[MODEL_ID_GAME_INVINCE_SPARKS],
+        Hu3DModelPosSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SPARKS],
             object->trans.x + sparkDataTbl[sp20].xOffset * (playerData->group == 0 ? 1 : -1), object->trans.y + sparkDataTbl[sp20].yOffset,
             150.0f + object->trans.z);
-        Hu3DModelScaleSet(gameObj->model[MODEL_ID_GAME_INVINCE_SPARKS], 0.75 * sparkDataTbl[sp20].scale, 0.75 * sparkDataTbl[sp20].scale,
+        Hu3DModelScaleSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SPARKS], 0.75 * sparkDataTbl[sp20].scale, 0.75 * sparkDataTbl[sp20].scale,
             0.75 * sparkDataTbl[sp20].scale);
-        Hu3DModelAttrReset(gameObj->model[MODEL_ID_GAME_INVINCE_SPARKS], 1);
-        Hu3DModelAttrSet(gameObj->model[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_ATTR_ZCMP_OFF);
+        Hu3DModelAttrReset(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SPARKS], 1);
+        Hu3DModelAttrSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_ATTR_ZCMP_OFF);
         playerData->invinceTime--;
         if (playerData->invinceTime == 0) {
             HuAudFXStop(invincibilitySeNo);
         }
     }
     else if (opponentData->invinceTime == 0) {
-        Hu3DModelAttrSet(gameObj->model[MODEL_ID_GAME_INVINCE_SHINING], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(gameObj->model[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SHINING], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(gameObj->mdlId[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_ATTR_DISPOFF);
     }
     if (playerData->unk44 >= 0) {
         var_r29 = playerData->unk44;
     }
     if (var_r29 >= 0 && var_r29 != playerData->unk40) {
         if (var_r26 == 0) {
-            Hu3DMotionSet(object->model[MODEL_ID_PLAYER_PLAYER], object->motion[var_r29]);
-            Hu3DMotionTimeSet(object->model[MODEL_ID_PLAYER_PLAYER], (var_r22 == -1) ? 0 : var_r22);
+            Hu3DMotionSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], object->mtnId[var_r29]);
+            Hu3DMotionTimeSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], (var_r22 == -1) ? 0 : var_r22);
         }
         else {
-            Hu3DMotionShiftSet(object->model[MODEL_ID_PLAYER_PLAYER], object->motion[var_r29], (var_r22 != -1) ? var_r22 : lbl_1_data_184[var_r29],
+            Hu3DMotionShiftSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], object->mtnId[var_r29], (var_r22 != -1) ? var_r22 : lbl_1_data_184[var_r29],
                 (var_r26 != -1) ? var_r26 : lbl_1_data_154[var_r29], lbl_1_data_148[var_r29] ? HU3D_MOTATTR_NONE : HU3D_MOTATTR_LOOP);
         }
         playerData->unk40 = var_r29;
     }
     if (playerData->group == 1) {
-        HU3DMODEL *playerModel = &Hu3DData[object->model[MODEL_ID_PLAYER_PLAYER]];
+        HU3DMODEL *playerModel = &Hu3DData[object->mdlId[MODEL_ID_PLAYER_PLAYER]];
     }
 }
 
@@ -729,13 +729,13 @@ float lbl_1_data_340 = 3500.0f;
 float lbl_1_data_344 = 100.0f;
 float lbl_1_data_348 = -59.0f;
 
-static void M457GameExec(omObjData *object)
+static void M457GameExec(OMOBJ *object)
 {
     PlayerData *sp158[2];
-    omObjData *sp150[2];
+    OMOBJ *sp150[2];
     PlayerData *sp148[2];
     s32 sp140[2];
-    omObjData *playerObjLocal[2];
+    OMOBJ *playerObjLocal[2];
     PlayerData *playerData[2];
     HU3DMODEL *temp_r24;
     HU3DMODEL *temp_r27;
@@ -773,14 +773,14 @@ static void M457GameExec(omObjData *object)
         case 1003:
             temp_f27 = 1800.0 * (1.0 - lbl_1_bss_60 / 30.0);
             temp_f27 = (temp_f27 < 0.0f) ? 0.0f : temp_f27;
-            Hu3DModelPosSet(gameObj->model[MODEL_ID_GAME_KOOPA_KID], 0.0f, temp_f27, 0.0f);
-            Hu3DModelAttrReset(gameObj->model[MODEL_ID_GAME_KOOPA_KID], HU3D_ATTR_DISPOFF);
+            Hu3DModelPosSet(gameObj->mdlId[MODEL_ID_GAME_KOOPA_KID], 0.0f, temp_f27, 0.0f);
+            Hu3DModelAttrReset(gameObj->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_ATTR_DISPOFF);
             if (lbl_1_bss_60 == 31) {
                 HuAudFXPlay(MSM_SE_KOOPA_KID_DROP);
             }
             if (lbl_1_bss_60 >= 31 && lbl_1_bss_60 <= 38) {
                 temp_f24 = 1.0 - (lbl_1_bss_60 - 31) / 7.0;
-                Hu3DModelRotSet(object->model[MODEL_ID_GAME_KOOPA_KID], 25.0 * (temp_f24 * 0.5 + temp_f24 * temp_f24 * 0.5), 0.0f, 0.0f);
+                Hu3DModelRotSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], 25.0 * (temp_f24 * 0.5 + temp_f24 * temp_f24 * 0.5), 0.0f, 0.0f);
             }
             break;
         case 1002:
@@ -802,16 +802,16 @@ static void M457GameExec(omObjData *object)
             break;
         case 1006:
             if (lbl_1_bss_60 == 0) {
-                Hu3DMotionSet(object->model[MODEL_ID_GAME_KOOPA_KID], object->motion[2]);
-                Hu3DModelAttrReset(object->model[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
+                Hu3DMotionSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], object->mtnId[2]);
+                Hu3DModelAttrReset(object->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
             }
             if (lbl_1_bss_60 == 15) {
-                Hu3DModelAttrSet(object->model[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_PAUSE);
+                Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_PAUSE);
             }
             break;
         case 1008:
             if (lbl_1_bss_60 == 1) {
-                Hu3DModelAttrReset(object->model[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_PAUSE);
+                Hu3DModelAttrReset(object->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_PAUSE);
                 for (i = 0; i < 16; i++) {
                     espDispOn(sprIdTbl[i]);
                 }
@@ -899,9 +899,9 @@ static void M457GameExec(omObjData *object)
                 case 0:
                     if (lbl_1_bss_40 == 0 && lbl_1_bss_18 == 0 && (playerObjLocal[0]->trans.x > -150.0f || playerObjLocal[1]->trans.x < 150.0f)) {
                         lbl_1_bss_18 = (-playerObjLocal[0]->trans.x < playerObjLocal[1]->trans.x ? 1 : 2);
-                        Hu3DModelPosSet(gameObj->model[9], 0.0f, 100.0f, 0.0f);
-                        Hu3DMotionTimeSet(gameObj->model[9], 0.0f);
-                        Hu3DModelAttrReset(gameObj->model[9], HU3D_ATTR_DISPOFF);
+                        Hu3DModelPosSet(gameObj->mdlId[9], 0.0f, 100.0f, 0.0f);
+                        Hu3DMotionTimeSet(gameObj->mdlId[9], 0.0f);
+                        Hu3DModelAttrReset(gameObj->mdlId[9], HU3D_ATTR_DISPOFF);
                         if (lbl_1_bss_78[4].unk00 < 3) {
                             lbl_1_bss_78[4].unk04[lbl_1_bss_78[4].unk00] = 0.0f;
                             lbl_1_bss_78[4].unk00++;
@@ -913,7 +913,7 @@ static void M457GameExec(omObjData *object)
                     /* fallthrough */
                 case 1:
                 case 2:
-                    temp_r27 = &Hu3DData[object->model[MODEL_ID_GAME_KOOPA_KID]];
+                    temp_r27 = &Hu3DData[object->mdlId[MODEL_ID_GAME_KOOPA_KID]];
                     temp_r27->rot.y += (lbl_1_bss_18 == 1 ? 18 : -18);
                     temp_r27->rot.z = (lbl_1_bss_18 == 1 ? -20 : 20);
                     temp_r27->pos.x += 5.130000000000001 * (lbl_1_bss_18 == 1 ? 1 : -1);
@@ -931,13 +931,13 @@ static void M457GameExec(omObjData *object)
                     if (lbl_1_data_2B8 != 0) {
                         break;
                     }
-                    Hu3DModelAttrReset(object->model[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
-                    Hu3DModelPosSet(object->model[MODEL_ID_GAME_MUSHROOM],
+                    Hu3DModelAttrReset(object->mdlId[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
+                    Hu3DModelPosSet(object->mdlId[MODEL_ID_GAME_MUSHROOM],
                         (lbl_1_bss_1C == 0) ? 0.0 : (2.0 * ((rand8() % 256) / 255.0 - 0.5) * 400.0), 1500.0f, 0.0f);
                     lbl_1_bss_1C = 1;
                     /* fallthrough */
                 case 1:
-                    mushroomModel = &Hu3DData[object->model[MODEL_ID_GAME_MUSHROOM]];
+                    mushroomModel = &Hu3DData[object->mdlId[MODEL_ID_GAME_MUSHROOM]];
                     // descend mushroom
                     mushroomModel->pos.y -= 10.0f;
                     if (mushroomModel->pos.y <= 225.0f) {
@@ -951,7 +951,7 @@ static void M457GameExec(omObjData *object)
                         }
                         if (playerDistsToMushroom[0] != playerDistsToMushroom[1]) {
                             invinciblePlayerId = (playerDistsToMushroom[0] < playerDistsToMushroom[1]) ? 0 : 1;
-                            Hu3DModelAttrSet(object->model[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
+                            Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
                             lbl_1_bss_1C = 2;
                             lbl_1_data_2B8 = 10 * REFRESH_RATE;
                             playerData[invinciblePlayerId]->invinceTime = 5 * REFRESH_RATE;
@@ -974,10 +974,10 @@ static void M457GameExec(omObjData *object)
                 case 3:
                     lbl_1_data_2B8++;
                     if (lbl_1_data_2B8 < REFRESH_RATE && lbl_1_data_2B8 % 2 == 0) {
-                        Hu3DModelAttrReset(object->model[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
+                        Hu3DModelAttrReset(object->mdlId[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
                     }
                     else {
-                        Hu3DModelAttrSet(object->model[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
+                        Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
                     }
                     break;
             }
@@ -987,34 +987,34 @@ static void M457GameExec(omObjData *object)
         case 1009:
             if (lbl_1_bss_40 == 0) {
                 if (lbl_1_bss_60 <= 30) {
-                    Hu3DModelPosSet(gameObj->model[MODEL_ID_GAME_KOOPA_KID], 0.0f, (30 - lbl_1_bss_60) * 50 * 0.94, 0.0f);
-                    Hu3DModelRotSet(gameObj->model[MODEL_ID_GAME_KOOPA_KID], 0.0f, 0.0f, lbl_1_bss_18 == 3 ? -20 : 20);
-                    Hu3DModelAttrReset(gameObj->model[MODEL_ID_GAME_KOOPA_KID], HU3D_ATTR_DISPOFF);
+                    Hu3DModelPosSet(gameObj->mdlId[MODEL_ID_GAME_KOOPA_KID], 0.0f, (30 - lbl_1_bss_60) * 50 * 0.94, 0.0f);
+                    Hu3DModelRotSet(gameObj->mdlId[MODEL_ID_GAME_KOOPA_KID], 0.0f, 0.0f, lbl_1_bss_18 == 3 ? -20 : 20);
+                    Hu3DModelAttrReset(gameObj->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_ATTR_DISPOFF);
                 }
                 if (lbl_1_bss_60 == 30) {
-                    Hu3DMotionSet(object->model[MODEL_ID_GAME_KOOPA_KID], object->motion[0]);
-                    Hu3DModelAttrReset(object->model[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
+                    Hu3DMotionSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], object->mtnId[0]);
+                    Hu3DModelAttrReset(object->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
                 }
                 if (lbl_1_bss_60 == 30) {
                     HuAudFXPlay(MSM_SE_KOOPA_KID_DROP);
                 }
                 if (lbl_1_bss_60 >= 30 && lbl_1_bss_60 <= 37) {
                     temp_f22 = 1.0 - (lbl_1_bss_60 - 30) / 7.0;
-                    Hu3DModelRotSet(object->model[MODEL_ID_GAME_KOOPA_KID], 25.0 * (temp_f22 * 0.5 + temp_f22 * temp_f22 * 0.5), 0.0f, 0.0f);
+                    Hu3DModelRotSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], 25.0 * (temp_f22 * 0.5 + temp_f22 * temp_f22 * 0.5), 0.0f, 0.0f);
                 }
             }
             else if (lbl_1_bss_18 == 0) {
-                Hu3DMotionSet(gameObj->model[MODEL_ID_GAME_KOOPA_KID], object->motion[0]);
-                Hu3DModelAttrReset(gameObj->model[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
+                Hu3DMotionSet(gameObj->mdlId[MODEL_ID_GAME_KOOPA_KID], object->mtnId[0]);
+                Hu3DModelAttrReset(gameObj->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
             }
             break;
         case 1010:
             if (lbl_1_bss_40 == 0) {
                 if (lbl_1_bss_60 == 1) {
-                    Hu3DMotionSet(object->model[MODEL_ID_GAME_KOOPA_KID], object->motion[3]);
-                    Hu3DModelAttrReset(object->model[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
+                    Hu3DMotionSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], object->mtnId[3]);
+                    Hu3DModelAttrReset(object->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
                 }
-                temp_r24 = &Hu3DData[object->model[MODEL_ID_GAME_KOOPA_KID]];
+                temp_r24 = &Hu3DData[object->mdlId[MODEL_ID_GAME_KOOPA_KID]];
                 temp_f20 = (playerObj[lbl_1_bss_44]->trans.x < 0.0f) ? -90 : 90;
                 temp_r24->rot.y = temp_f20 + 0.8 * (temp_r24->rot.y - temp_f20);
             }
@@ -1095,22 +1095,22 @@ static void M457GameExec(omObjData *object)
     }
     if (gameState >= 1008) {
         for (i = 0; i < 2; i++) {
-            temp_r29 = &Hu3DData[playerObj[i]->model[MODEL_ID_PLAYER_PLAYER]];
+            temp_r29 = &Hu3DData[playerObj[i]->mdlId[MODEL_ID_PLAYER_PLAYER]];
             var_r21 = (sp158[i]->character != CHARACTER_BOWSER) ? sp158[i]->character : 8;
-            var_r20 = (temp_r29->motId == playerObj[i]->motion[4]) ? 0
-                : (temp_r29->motId == playerObj[i]->motion[6])     ? 1
-                : (temp_r29->motId == playerObj[i]->motion[7])     ? 2
+            var_r20 = (temp_r29->motId == playerObj[i]->mtnId[4]) ? 0
+                : (temp_r29->motId == playerObj[i]->mtnId[6])     ? 1
+                : (temp_r29->motId == playerObj[i]->mtnId[7])     ? 2
                                                                     : -1;
-            var_r19 = (temp_r29->motIdShift == playerObj[i]->motion[4]) ? 0
-                : (temp_r29->motIdShift == playerObj[i]->motion[6])     ? 1
-                : (temp_r29->motIdShift == playerObj[i]->motion[7])     ? 2
+            var_r19 = (temp_r29->motIdShift == playerObj[i]->mtnId[4]) ? 0
+                : (temp_r29->motIdShift == playerObj[i]->mtnId[6])     ? 1
+                : (temp_r29->motIdShift == playerObj[i]->mtnId[7])     ? 2
                                                                     : -1;
             spA8 = (var_r20 == -1) ? 0.0f : lbl_1_data_1B4[var_r21][var_r20];
             spA4 = (var_r19 == -1) ? 0.0f : lbl_1_data_1B4[var_r21][var_r19];
             var_f19 = (temp_r29->motIdShift == -1) ? 0.0f : (temp_r29->motOvlWork.end == 0.0f) ? 1.0f : (temp_r29->motOvlWork.start / temp_r29->motOvlWork.end);
             sp158[i]->unk48 = (i == 0 ? 1 : -1) * (spA8 * (1.0f - var_f19) + spA4 * var_f19);
             playerObj[i]->trans.x += sp158[i]->unk48;
-            Hu3DModelPosSet(playerObj[i]->model[MODEL_ID_PLAYER_PLAYER], playerObj[i]->trans.x, playerObj[i]->trans.y, playerObj[i]->trans.z);
+            Hu3DModelPosSet(playerObj[i]->mdlId[MODEL_ID_PLAYER_PLAYER], playerObj[i]->trans.x, playerObj[i]->trans.y, playerObj[i]->trans.z);
         }
     }
 }
@@ -1236,7 +1236,7 @@ static void ShoveMesMain(void)
     HuPrcEnd();
 }
 
-static void M457Main(omObjData *object)
+static void M457Main(OMOBJ *object)
 {
     PlayerData *playerData[2];
     float spC[2];
@@ -1259,7 +1259,7 @@ static void M457Main(omObjData *object)
     }
     if (omSysExitReq != 0 && WipeStatGet() == 0) {
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
-        object->func = M457Exit;
+        object->objFunc = M457Exit;
     }
     switch (gameState) {
         case 1000:
@@ -1416,13 +1416,13 @@ static void M457Main(omObjData *object)
                 }
                 lbl_1_data_2A4 = -1;
                 WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
-                object->func = M457Exit;
+                object->objFunc = M457Exit;
             }
             break;
     }
 }
 
-static void M457GameSetup(omObjData *object)
+static void M457GameSetup(OMOBJ *object)
 {
     s32 i;
 
@@ -1430,48 +1430,48 @@ static void M457GameSetup(omObjData *object)
         PlayerData *playerData[2];
         playerData[i] = playerObj[i]->data;
     }
-    object->model[MODEL_ID_GAME_KOOPA_KID] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_BKOOPA, 14));
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
-    object->model[MODEL_ID_GAME_WAR_FAN] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 38));
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_WAR_FAN], HU3D_MOTATTR_LOOP);
-    Hu3DModelHookSet(object->model[MODEL_ID_GAME_KOOPA_KID], "g007m0-itemhook_r", object->model[MODEL_ID_GAME_WAR_FAN]);
-    Hu3DModelPosSet(object->model[MODEL_ID_GAME_KOOPA_KID], 0.0f, 0.0f, 0.0f);
-    Hu3DModelRotSet(object->model[MODEL_ID_GAME_KOOPA_KID], 15.0f, 0.0f, 0.0f);
-    object->motion[0] = Hu3DJointMotionFile(object->model[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 39));
-    object->motion[1] = Hu3DJointMotionFile(object->model[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 40));
-    object->motion[2] = Hu3DJointMotionFile(object->model[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 41));
-    object->motion[3] = Hu3DJointMotionFile(object->model[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 42));
-    Hu3DMotionSet(object->model[MODEL_ID_GAME_KOOPA_KID], object->motion[0]);
-    Hu3DModelLayerSet(object->model[MODEL_ID_GAME_WAR_FAN], 2);
-    Hu3DModelLayerSet(object->model[MODEL_ID_GAME_KOOPA_KID], 2);
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_KOOPA_KID], HU3D_ATTR_DISPOFF);
-    Hu3DModelShadowSet(object->model[MODEL_ID_GAME_WAR_FAN]);
-    Hu3DModelShadowSet(object->model[MODEL_ID_GAME_KOOPA_KID]);
-    object->model[MODEL_ID_GAME_SKY] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 16));
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_SKY], HU3D_MOTATTR_LOOP);
-    Hu3DMotionSpeedSet(object->model[MODEL_ID_GAME_SKY], 0.1f);
-    Hu3DModelLayerSet(object->model[MODEL_ID_GAME_SKY], 1);
-    object->model[MODEL_ID_GAME_RING] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 17));
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_RING], HU3D_MOTATTR_LOOP);
-    Hu3DModelShadowMapSet(object->model[MODEL_ID_GAME_RING]);
-    Hu3DModelLayerSet(object->model[MODEL_ID_GAME_RING], 1);
-    Hu3DModelScaleSet(object->model[MODEL_ID_GAME_RING], 1.0f, 1.0f, 1.0f);
-    object->model[MODEL_ID_GAME_MUSHROOM] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 21));
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_MUSHROOM], HU3D_MOTATTR_LOOP);
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
-    Hu3DModelLayerSet(object->model[MODEL_ID_GAME_MUSHROOM], 2);
-    object->model[MODEL_ID_GAME_INVINCE_SHINING] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 19));
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_INVINCE_SHINING], HU3D_MOTATTR_LOOP);
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_INVINCE_SHINING], HU3D_ATTR_DISPOFF);
-    Hu3DModelLayerSet(object->model[MODEL_ID_GAME_INVINCE_SHINING], 2);
-    object->model[MODEL_ID_GAME_INVINCE_SPARKS] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 20));
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_MOTATTR_LOOP);
-    Hu3DModelAttrSet(object->model[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_ATTR_DISPOFF);
-    Hu3DModelLayerSet(object->model[MODEL_ID_GAME_INVINCE_SPARKS], 4);
+    object->mdlId[MODEL_ID_GAME_KOOPA_KID] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_BKOOPA, 14));
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_MOTATTR_LOOP);
+    object->mdlId[MODEL_ID_GAME_WAR_FAN] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 38));
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_WAR_FAN], HU3D_MOTATTR_LOOP);
+    Hu3DModelHookSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], "g007m0-itemhook_r", object->mdlId[MODEL_ID_GAME_WAR_FAN]);
+    Hu3DModelPosSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], 0.0f, 0.0f, 0.0f);
+    Hu3DModelRotSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], 15.0f, 0.0f, 0.0f);
+    object->mtnId[0] = Hu3DJointMotionFile(object->mdlId[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 39));
+    object->mtnId[1] = Hu3DJointMotionFile(object->mdlId[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 40));
+    object->mtnId[2] = Hu3DJointMotionFile(object->mdlId[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 41));
+    object->mtnId[3] = Hu3DJointMotionFile(object->mdlId[MODEL_ID_GAME_KOOPA_KID], DATA_MAKE_NUM(DATADIR_M457, 42));
+    Hu3DMotionSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], object->mtnId[0]);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_GAME_WAR_FAN], 2);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], 2);
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID], HU3D_ATTR_DISPOFF);
+    Hu3DModelShadowSet(object->mdlId[MODEL_ID_GAME_WAR_FAN]);
+    Hu3DModelShadowSet(object->mdlId[MODEL_ID_GAME_KOOPA_KID]);
+    object->mdlId[MODEL_ID_GAME_SKY] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 16));
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_SKY], HU3D_MOTATTR_LOOP);
+    Hu3DMotionSpeedSet(object->mdlId[MODEL_ID_GAME_SKY], 0.1f);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_GAME_SKY], 1);
+    object->mdlId[MODEL_ID_GAME_RING] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 17));
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_RING], HU3D_MOTATTR_LOOP);
+    Hu3DModelShadowMapSet(object->mdlId[MODEL_ID_GAME_RING]);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_GAME_RING], 1);
+    Hu3DModelScaleSet(object->mdlId[MODEL_ID_GAME_RING], 1.0f, 1.0f, 1.0f);
+    object->mdlId[MODEL_ID_GAME_MUSHROOM] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 21));
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_MUSHROOM], HU3D_MOTATTR_LOOP);
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_MUSHROOM], HU3D_ATTR_DISPOFF);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_GAME_MUSHROOM], 2);
+    object->mdlId[MODEL_ID_GAME_INVINCE_SHINING] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 19));
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_INVINCE_SHINING], HU3D_MOTATTR_LOOP);
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_INVINCE_SHINING], HU3D_ATTR_DISPOFF);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_GAME_INVINCE_SHINING], 2);
+    object->mdlId[MODEL_ID_GAME_INVINCE_SPARKS] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 20));
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_MOTATTR_LOOP);
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_GAME_INVINCE_SPARKS], HU3D_ATTR_DISPOFF);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_GAME_INVINCE_SPARKS], 4);
     for (i = 0; i < 3; i++) {
-        object->model[i + 7] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 18));
-        Hu3DModelLayerSet(object->model[i + 7], 4);
-        Hu3DModelAttrSet(object->model[i + 7], HU3D_ATTR_DISPOFF);
+        object->mdlId[i + 7] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M457, 18));
+        Hu3DModelLayerSet(object->mdlId[i + 7], 4);
+        Hu3DModelAttrSet(object->mdlId[i + 7], HU3D_ATTR_DISPOFF);
     }
     for (i = 0; i < 16; i++) {
         s32 sp10[] = { 106, 469 };
@@ -1514,10 +1514,10 @@ static void M457GameSetup(omObjData *object)
         espPosSet(sprIdTbl[i], spFC[temp_r28], spA0[temp_r28]);
         espTPLvlSet(sprIdTbl[i], 1.0f);
     }
-    object->func = M457GameExec;
+    object->objFunc = M457GameExec;
 }
 
-static void M457PlayerSetup(omObjData *object)
+static void M457PlayerSetup(OMOBJ *object)
 {
     s32 opponentPlayerGroup;
     PlayerData *playerData;
@@ -1564,10 +1564,10 @@ static void M457PlayerSetup(omObjData *object)
     playerData->unk40 = 1;
     playerData->unk44 = -1;
     if (playerData->character != CHARACTER_BOWSER) {
-        object->model[MODEL_ID_PLAYER_PLAYER] = CharModelCreate(playerData->character, 1);
+        object->mdlId[MODEL_ID_PLAYER_PLAYER] = CharModelCreate(playerData->character, 1);
     }
     else {
-        object->model[MODEL_ID_PLAYER_PLAYER] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_BKOOPA, 7));
+        object->mdlId[MODEL_ID_PLAYER_PLAYER] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_BKOOPA, 7));
     }
     omSetTra(object, 0.0f, playerData->group == 0 ? 0 : 300, 0.0f);
     if (playerData->character != CHARACTER_BOWSER) {
@@ -1578,25 +1578,25 @@ static void M457PlayerSetup(omObjData *object)
     }
     for (i = 0; i < 12; i++) {
         if (playerData->character != CHARACTER_BOWSER) {
-            object->motion[i] = CharMotionCreate(playerData->character, lbl_1_data_B8[i] + (lbl_1_data_E8[i] != 0 ? playerData->character : 0));
+            object->mtnId[i] = CharMotionCreate(playerData->character, lbl_1_data_B8[i] + (lbl_1_data_E8[i] != 0 ? playerData->character : 0));
         }
         else if (lbl_1_data_118[i] != 0) {
-            object->motion[i] = Hu3DJointMotionFile(object->model[MODEL_ID_PLAYER_PLAYER], lbl_1_data_118[i]);
+            object->mtnId[i] = Hu3DJointMotionFile(object->mdlId[MODEL_ID_PLAYER_PLAYER], lbl_1_data_118[i]);
         }
     }
-    Hu3DMotionSet(object->model[MODEL_ID_PLAYER_PLAYER], object->motion[playerData->unk40]);
-    Hu3DMotionTimeSet(object->model[MODEL_ID_PLAYER_PLAYER], 10.0f);
-    Hu3DModelAttrReset(object->model[MODEL_ID_PLAYER_PLAYER], HU3D_MOTATTR_LOOP);
-    Hu3DModelShadowSet(object->model[MODEL_ID_PLAYER_PLAYER]);
-    Hu3DModelAttrSet(object->model[MODEL_ID_PLAYER_PLAYER], HU3D_ATTR_DISPOFF);
-    Hu3DModelLayerSet(object->model[MODEL_ID_PLAYER_PLAYER], 3);
+    Hu3DMotionSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], object->mtnId[playerData->unk40]);
+    Hu3DMotionTimeSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], 10.0f);
+    Hu3DModelAttrReset(object->mdlId[MODEL_ID_PLAYER_PLAYER], HU3D_MOTATTR_LOOP);
+    Hu3DModelShadowSet(object->mdlId[MODEL_ID_PLAYER_PLAYER]);
+    Hu3DModelAttrSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], HU3D_ATTR_DISPOFF);
+    Hu3DModelLayerSet(object->mdlId[MODEL_ID_PLAYER_PLAYER], 3);
     CharModelLayerSetAll2(4);
     object->rot.y = playerData->group * 180 + 90;
     object->trans.x = (playerData->group == 0 ? -1 : 1) * 300;
-    object->func = M457PlayerExec;
+    object->objFunc = M457PlayerExec;
 }
 
-static void M457Setup(omObjData *object)
+static void M457Setup(OMOBJ *object)
 {
     gameState = 1000;
     lbl_1_bss_60 = 0;
@@ -1607,12 +1607,12 @@ static void M457Setup(omObjData *object)
     }
     windSeNo = HuAudFXPlay(MSM_SE_WIND);
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
-    object->func = M457Main;
+    object->objFunc = M457Main;
 }
 
 void ObjectSetup(void)
 {
-    omObjData *object;
+    OMOBJ *object;
     s32 i;
 
     OSReport("******* M457 ObjectSetup *********\n");
@@ -1670,7 +1670,7 @@ void ObjectSetup(void)
     mainObj = omAddObjEx(objman, 103, 0, 0, -1, M457Setup);
 }
 
-static void M457Exit(omObjData *object)
+static void M457Exit(OMOBJ *object)
 {
     PlayerData *playerData;
     s32 i;

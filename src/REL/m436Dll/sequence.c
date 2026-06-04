@@ -38,17 +38,17 @@ float fn_1_112F4(float arg0, float arg1, float arg2, float arg3) {
     return arg0 + (arg1 - arg0) * (1.0 - cosd((90.0f / arg3) * arg2));
 }
 
-void fn_1_113CC(omObjData* arg0, s32 arg1, omObjData* arg2, s32 arg3) {
+void fn_1_113CC(OMOBJ* arg0, s32 arg1, OMOBJ* arg2, s32 arg3) {
     Vec sp2C;
     Vec sp20;
     Vec sp14;
     Vec sp8;
 
-    sp20.x = Hu3DData[arg0->model[arg1]].pos.x;
-    sp20.z = Hu3DData[arg0->model[arg1]].pos.z;
-    sp2C.x = Hu3DData[arg2->model[arg3]].pos.x;
-    sp2C.z = Hu3DData[arg2->model[arg3]].pos.z;
-    sp14.y = Hu3DData[arg0->model[arg1]].rot.y;
+    sp20.x = Hu3DData[arg0->mdlId[arg1]].pos.x;
+    sp20.z = Hu3DData[arg0->mdlId[arg1]].pos.z;
+    sp2C.x = Hu3DData[arg2->mdlId[arg3]].pos.x;
+    sp2C.z = Hu3DData[arg2->mdlId[arg3]].pos.z;
+    sp14.y = Hu3DData[arg0->mdlId[arg1]].rot.y;
     sp8.x = sp2C.x - sp20.x;
     sp8.z = sp2C.z - sp20.z;
     sp14.x = -(atan2d(sp8.z, sp8.x) - 90.0);
@@ -77,45 +77,45 @@ void fn_1_113CC(omObjData* arg0, s32 arg1, omObjData* arg2, s32 arg3) {
     if (arg1 == 0) {
         arg0->rot.y = sp14.y;
     } else {
-        Hu3DData[arg0->model[arg1]].rot.y = sp14.y;
+        Hu3DData[arg0->mdlId[arg1]].rot.y = sp14.y;
     }
 }
 
-s32 fn_1_11708(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    if (arg0->motion[arg2] == Hu3DMotionIDGet(arg0->model[0])) {
+s32 fn_1_11708(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    if (arg0->mtnId[arg2] == Hu3DMotionIDGet(arg0->mdlId[0])) {
         if (arg4 != 0) {
-            if (Hu3DMotionTimeGet(arg0->model[arg1]) >= arg3) {
+            if (Hu3DMotionTimeGet(arg0->mdlId[arg1]) >= arg3) {
                 return 1;
             }
-        } else if (Hu3DMotionTimeGet(arg0->model[arg1]) <= arg3) {
+        } else if (Hu3DMotionTimeGet(arg0->mdlId[arg1]) <= arg3) {
             return 1;
         }
     }
     return 0;
 }
 
-void fn_1_11818(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void fn_1_11818(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     switch (arg4) {
         case 0:
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, HU3D_MOTATTR_NONE);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, HU3D_MOTATTR_NONE);
             break;
         case 1:
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, HU3D_MOTATTR_LOOP);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, HU3D_MOTATTR_LOOP);
             break;
         case 2:
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, HU3D_MOTATTR_PAUSE);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, HU3D_MOTATTR_PAUSE);
             break;
     }
 }
 
-void fn_1_11990(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    arg0->work[3] = arg0->motion[arg2];
+void fn_1_11990(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    arg0->work[3] = arg0->mtnId[arg2];
     fn_1_11818(arg0, arg1, arg2, arg3, arg4);
 }
 
-void fn_1_11B18(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    if (arg0->work[3] != arg0->motion[arg2]) {
-        arg0->work[3] = arg0->motion[arg2];
+void fn_1_11B18(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    if (arg0->work[3] != arg0->mtnId[arg2]) {
+        arg0->work[3] = arg0->mtnId[arg2];
         fn_1_11990(arg0, arg1, arg2, arg3, arg4);
     }
 }

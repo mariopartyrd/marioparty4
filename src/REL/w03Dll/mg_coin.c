@@ -63,12 +63,12 @@ void fn_1_7C38(void);
 s32 fn_1_7D18(s32 arg0);
 void fn_1_8140(s32 arg0);
 void fn_1_81E0(s32 arg0);
-void fn_1_8530(omObjData *arg0);
+void fn_1_8530(OMOBJ *arg0);
 void fn_1_84A8(s32 arg0);
-void fn_1_8698(omObjData *arg0, someBits3 *arg1);
-void fn_1_8C08(omObjData *arg0, someBits3 *arg1);
-void fn_1_8E44(omObjData *arg0, someBits3 *arg1);
-void fn_1_9044(omObjData *arg0, someBits3 *arg1);
+void fn_1_8698(OMOBJ *arg0, someBits3 *arg1);
+void fn_1_8C08(OMOBJ *arg0, someBits3 *arg1);
+void fn_1_8E44(OMOBJ *arg0, someBits3 *arg1);
+void fn_1_9044(OMOBJ *arg0, someBits3 *arg1);
 void fn_1_91B8(void);
 void fn_1_9230(s32 arg0);
 void fn_1_9384(void);
@@ -87,9 +87,9 @@ s32 lbl_1_data_45C[] = { DATA_MAKE_NUM(DATADIR_W03, 0x21), DATA_MAKE_NUM(DATADIR
 char lbl_1_bss_150[0x30];
 s16 lbl_1_bss_14E;
 s8 lbl_1_bss_14C;
-omObjData *lbl_1_bss_148;
-omObjData *lbl_1_bss_144;
-Process *lbl_1_bss_140;
+OMOBJ *lbl_1_bss_148;
+OMOBJ *lbl_1_bss_144;
+HUPROCESS *lbl_1_bss_140;
 
 void fn_1_7ABC(void)
 {
@@ -270,7 +270,7 @@ s32 lbl_1_data_490[] = {
 void fn_1_81E0(s32 arg0)
 {
     Vec sp8;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     f32 temp_f31;
     s32 temp_r28;
     s32 temp_r5;
@@ -333,7 +333,7 @@ void fn_1_84A8(s32 arg0)
     }
 }
 
-void fn_1_8530(omObjData *arg0)
+void fn_1_8530(OMOBJ *arg0)
 {
     s32 temp_r0;
     someBits3 *temp_r31;
@@ -382,7 +382,7 @@ void fn_1_8530(omObjData *arg0)
     }
 }
 
-void fn_1_8698(omObjData *arg0, someBits3 *arg1)
+void fn_1_8698(OMOBJ *arg0, someBits3 *arg1)
 {
     s32 temp_r27;
     u32 var_r28;
@@ -507,7 +507,7 @@ void fn_1_8698(omObjData *arg0, someBits3 *arg1)
 s8 lbl_1_data_4B0 = -1;
 s32 lbl_1_data_4B4[] = { 0x00000440, 0x00000441, 0x00000442, 0x00000443, 0x00000444 };
 
-void fn_1_8C08(omObjData *arg0, someBits3 *arg1)
+void fn_1_8C08(OMOBJ *arg0, someBits3 *arg1)
 {
     Vec spC;
     f32 temp_f31;
@@ -543,7 +543,7 @@ void fn_1_8C08(omObjData *arg0, someBits3 *arg1)
     BoardPlayerMotionTimeSet(arg1->unk00_bit5, 2.0f * temp_f30);
 }
 
-void fn_1_8E44(omObjData *arg0, someBits3 *arg1)
+void fn_1_8E44(OMOBJ *arg0, someBits3 *arg1)
 {
     Vec sp8;
     f32 temp_f1;
@@ -582,7 +582,7 @@ void fn_1_8E44(omObjData *arg0, someBits3 *arg1)
     BoardModelPosSetV(lbl_1_data_456, &sp8);
 }
 
-void fn_1_9044(omObjData *arg0, someBits3 *arg1)
+void fn_1_9044(OMOBJ *arg0, someBits3 *arg1)
 {
     Vec sp8;
 
@@ -693,7 +693,7 @@ void fn_1_9474(s32 arg0)
     BoardModelMotionStart(lbl_1_bss_C[7], 0, 0x40000002);
 }
 
-void fn_1_95B8(omObjData *arg0)
+void fn_1_95B8(OMOBJ *arg0)
 {
     f32 temp_f31;
     s32 var_r25;
@@ -761,7 +761,7 @@ void fn_1_97F8(s32 arg0)
     f32 temp_f2;
     f32 var_f31;
     f64 temp_f1;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     s32 i;
     unkTemp2 *temp_r30;
     unkTemp *temp_r31;

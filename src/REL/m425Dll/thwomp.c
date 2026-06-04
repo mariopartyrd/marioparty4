@@ -113,7 +113,7 @@ typedef struct M425DllUnkStruct6 {
     UnkHook unk_4C;
 } M425DllUnkStruct6; /* size = 0x50 */
 
-void fn_1_6BD8(omObjData *object);
+void fn_1_6BD8(OMOBJ *object);
 s32 fn_1_6EC4(float arg8, float arg9, s16 arg0, s16 arg1);
 void fn_1_6DFC(s32 arg0, float arg8);
 void fn_1_E210(s32 arg0);
@@ -136,8 +136,8 @@ Vec lbl_1_data_118[2] = {
     { 300.0f, 1.0f, 0.0f },
 };
 
-Process *lbl_1_bss_6F0;
-omObjData *lbl_1_bss_6EC;
+HUPROCESS *lbl_1_bss_6F0;
+OMOBJ *lbl_1_bss_6EC;
 s32 lbl_1_bss_6E8;
 u8 *lbl_1_bss_6E4;
 ANIMDATA *lbl_1_bss_6E0;
@@ -152,9 +152,9 @@ GXLightObj lbl_1_bss_688;
 Vec lbl_1_bss_67C;
 Vec lbl_1_bss_670;
 
-omObjData *fn_1_6A0C(Process *process, s32 sp8)
+OMOBJ *fn_1_6A0C(HUPROCESS *process, s32 sp8)
 {
-    omObjData *object;
+    OMOBJ *object;
 
     lbl_1_bss_6F0 = process;
     object = omAddObjEx(process, sp8, 6, 0, -1, fn_1_6BD8);
@@ -163,8 +163,8 @@ omObjData *fn_1_6A0C(Process *process, s32 sp8)
     lbl_1_bss_6E8 = 0;
     lbl_1_bss_6D0 = 0x40;
     lbl_1_bss_6CC = 0;
-    object->model[0] = fn_1_6EC4(350.0f, 350.0f, 0x10, 0x10);
-    object->model[1] = fn_1_6EC4(350.0f, 350.0f, 0x10, 0x10);
+    object->mdlId[0] = fn_1_6EC4(350.0f, 350.0f, 0x10, 0x10);
+    object->mdlId[1] = fn_1_6EC4(350.0f, 350.0f, 0x10, 0x10);
     fn_1_6CD0(0, &lbl_1_data_118[0]);
     fn_1_6CD0(1, &lbl_1_data_118[1]);
     fn_1_6DFC(0, 30.0f);
@@ -176,7 +176,7 @@ omObjData *fn_1_6A0C(Process *process, s32 sp8)
     return lbl_1_bss_6EC;
 }
 
-void fn_1_6BD8(omObjData *object)
+void fn_1_6BD8(OMOBJ *object)
 {
     fn_1_E210(0);
     fn_1_E210(1);
@@ -185,7 +185,7 @@ void fn_1_6BD8(omObjData *object)
 
 void fn_1_6C08(void)
 {
-    omObjData *object = lbl_1_bss_6EC;
+    OMOBJ *object = lbl_1_bss_6EC;
     if (object) {
         HuMemDirectFree(lbl_1_bss_6E4);
         lbl_1_bss_6E4 = NULL;
@@ -195,7 +195,7 @@ void fn_1_6C08(void)
         lbl_1_bss_6DC = NULL;
         fn_1_11418();
         lbl_1_bss_6EC = NULL;
-        object->func = NULL;
+        object->objFunc = NULL;
         omDelObjEx(lbl_1_bss_6F0, object);
     }
 }
@@ -207,12 +207,12 @@ void fn_1_6CD0(s32 arg0, Vec *arg1)
     HU3DMODEL *var_r28;
 
     if (lbl_1_bss_6EC) {
-        var_r28 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+        var_r28 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
         var_r30 = var_r28->hookData;
         var_r30->unk_CC.x = arg1->x;
         var_r30->unk_CC.y = arg1->y;
         var_r30->unk_CC.z = arg1->z;
-        Hu3DModelPosSet(lbl_1_bss_6EC->model[arg0], arg1->x, arg1->y, arg1->z);
+        Hu3DModelPosSet(lbl_1_bss_6EC->mdlId[arg0], arg1->x, arg1->y, arg1->z);
         if ((lbl_1_bss_6CC == 0) && (arg0 == 0) && (arg1->y <= 0.0f)) {
             for (var_r29 = 0; var_r29 < 4; var_r29++) {
                 omVibrate(0, 0xC, 6, 6);
@@ -229,10 +229,10 @@ void fn_1_6DFC(s32 arg0, float arg8)
     M425DllUnkStruct4 *var_r30;
 
     if (lbl_1_bss_6EC) {
-        var_r31 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+        var_r31 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
         var_r30 = var_r31->hookData;
         var_r30->unk_D8 = arg8;
-        Hu3DModelRotSet(lbl_1_bss_6EC->model[arg0], 0.0f, arg8, 0.0f);
+        Hu3DModelRotSet(lbl_1_bss_6EC->mdlId[arg0], 0.0f, arg8, 0.0f);
     }
 }
 
@@ -310,7 +310,7 @@ s32 fn_1_6EC4(float var_f24, float sp8, s16 var_r22, s16 var_r24)
     var_r31->unk_F0[0] = -1;
     var_r31->unk_F0[1] = -1;
     var_r31->unk_F0[2] = -1;
-    lbl_1_bss_6EC->model[var_r31->unk_00 + 2] = var_r31->unk_04;
+    lbl_1_bss_6EC->mdlId[var_r31->unk_00 + 2] = var_r31->unk_04;
     if (var_r31->unk_00 == 0) {
         var_r31->unk_E0 = var_f22 = 302.0f;
         var_r31->unk_E4 = var_f27 = 193.0f;
@@ -1712,7 +1712,7 @@ void fn_1_E210(s32 arg0)
     s32 var_r26;
 
     if (lbl_1_bss_6EC) {
-        var_r27 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+        var_r27 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
         var_r31 = var_r27->hookData;
         for (var_r30 = 0, var_f31 = 0.0f; var_r30 < 6; var_r30++) {
             if ((var_r31->unk_84[var_r30] == -1) || (var_r31->unk_9C[var_r30] < 0.0f)) {
@@ -2196,7 +2196,7 @@ s32 fn_1_109EC(s32 arg0, s32 arg1, Vec *arg2, Vec *arg3, Vec *arg4, s32 arg5)
     if (!lbl_1_bss_6EC) {
         return;
     }
-    var_r26 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+    var_r26 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
     var_r31 = var_r26->hookData;
     if (var_r31->unk_0C != 0.0f) {
         var_f30 = var_r31->unk_08 / var_r31->unk_0C;
@@ -2264,7 +2264,7 @@ float fn_1_10CF4(s32 arg0)
     if (!lbl_1_bss_6EC) {
         return;
     }
-    var_r31 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+    var_r31 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
     var_r30 = var_r31->hookData;
     return var_r30->unk_08;
 }
@@ -2275,7 +2275,7 @@ void fn_1_10D54(s32 arg0, float arg8)
     M425DllUnkStruct4 *var_r30;
 
     if (lbl_1_bss_6EC) {
-        var_r31 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+        var_r31 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
         var_r30 = var_r31->hookData;
         var_r30->unk_08 = arg8;
     }
@@ -2287,7 +2287,7 @@ void fn_1_10DB4(s32 arg0)
     HU3DMODEL *var_r30;
 
     if (lbl_1_bss_6EC) {
-        var_r30 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+        var_r30 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
         var_r31 = var_r30->hookData;
         if (var_r31->unk_2C == 0) {
             var_r31->unk_28 = 0;
@@ -2305,7 +2305,7 @@ void fn_1_10E3C(s32 arg0)
 
     if (lbl_1_bss_6EC) {
         for (var_r30 = 0; var_r30 < 2; var_r30++) {
-            var_r29 = &Hu3DData[lbl_1_bss_6EC->model[var_r30]];
+            var_r29 = &Hu3DData[lbl_1_bss_6EC->mdlId[var_r30]];
             var_r31 = var_r29->hookData;
             if (arg0 != 0) {
                 var_r31->unk_110 = var_r31->unk_144[0x18] + var_r31->unk_112[24];
@@ -2336,7 +2336,7 @@ float fn_1_10EF8(s32 arg0, s32 arg1, float arg8, float arg9)
     if (!lbl_1_bss_6EC) {
         return 0.0f;
     }
-    var_r26 = &Hu3DData[lbl_1_bss_6EC->model[arg0]];
+    var_r26 = &Hu3DData[lbl_1_bss_6EC->mdlId[arg0]];
     var_r31 = var_r26->hookData;
     if ((arg1 >= 0) && (arg1 <= 2) && (var_r31->unk_F0[arg1] != -1)) {
         var_r28 = var_r31->unk_F0[arg1];

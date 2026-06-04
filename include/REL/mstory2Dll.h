@@ -34,8 +34,8 @@ typedef struct {
 } StructFn357C; // Size 0x34
 
 typedef struct {
-    /* 0x00 */ omObjData* unk00;
-    /* 0x04 */ void (*unk04)(omObjData*, ...);
+    /* 0x00 */ OMOBJ* unk00;
+    /* 0x04 */ void (*unk04)(OMOBJ*, ...);
     /* 0x08 */ s32 unk08;
     /* 0x0C */ s32 unk0C;
     /* 0x10 */ char unk10[0x18];
@@ -58,12 +58,12 @@ BOOL fn_1_1BA8(s32 arg0, s32 arg1);
 BOOL fn_1_1C64(s32 arg0);
 void fn_1_1D18(s32 arg0, s32 arg1);
 void fn_1_1D4C(s32 arg0, s32 arg1, s32 arg2);
-void fn_1_1DFC(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_2264(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3);
+void fn_1_1DFC(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_2264(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3);
 void fn_1_2750(void (*arg0)(void));
-void fn_1_2828(Process* arg0, void (*arg1)(void));
-void fn_1_2948(omObjData* arg0, s32 arg1, Vec arg2, float arg3, float arg4, float arg5);
-void fn_1_2D00(omObjData* arg0, s32 arg1, Vec arg2, float arg3, float arg4, float arg5);
+void fn_1_2828(HUPROCESS* arg0, void (*arg1)(void));
+void fn_1_2948(OMOBJ* arg0, s32 arg1, Vec arg2, float arg3, float arg4, float arg5);
+void fn_1_2D00(OMOBJ* arg0, s32 arg1, Vec arg2, float arg3, float arg4, float arg5);
 void fn_1_357C(StructFn357C* arg0, s32 arg1);
 void fn_1_42A0(StructBss24* arg0, StructBss24* arg1, float arg2, float arg3, float arg4);
 s32 fn_1_3668(s32 arg0);
@@ -74,8 +74,8 @@ void fn_1_4FEC(StructBss24* arg0, StructBss24* arg1, float arg2, float arg3, flo
 void fn_1_6004(StructBss24* arg0, StructBss24* arg1, float arg2, float arg3, float arg4);
 int fn_1_66CC(int modelId);
 
-void fn_1_6704(omObjData* arg0);
-void fn_1_67D8(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_6704(OMOBJ* arg0);
+void fn_1_67D8(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void fn_1_6A90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void fn_1_6D78(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void fn_1_6DBC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -85,25 +85,25 @@ void fn_1_7244(s16 modelId, char *objName, u32 constAttr, float ofs);
 void fn_1_7384(int modelId, int charNo, float ofs, s32 maxTime, BOOL flag);
 
 // board_clear.c
-void fn_1_7F54(Process* arg0, s32 arg1);
+void fn_1_7F54(HUPROCESS* arg0, s32 arg1);
 
 // board_clear.c
-void fn_1_B3E4(Process* arg0, s32 arg1);
+void fn_1_B3E4(HUPROCESS* arg0, s32 arg1);
 
 // board_miss.c
-void fn_1_EA2C(Process* arg0, s32 arg1);
+void fn_1_EA2C(HUPROCESS* arg0, s32 arg1);
 
 // mg_clear.c
-void fn_1_1256C(Process* arg0, s32 arg1);
+void fn_1_1256C(HUPROCESS* arg0, s32 arg1);
 
 // mg_miss.c
-void fn_1_16060(Process* arg0, s32 arg1);
+void fn_1_16060(HUPROCESS* arg0, s32 arg1);
 
 // ending.c
-void fn_1_188F0(Process* arg0, s32 arg1);
+void fn_1_188F0(HUPROCESS* arg0, s32 arg1);
 
 // ending.c
-void fn_1_1B90C(Process* arg0);
+void fn_1_1B90C(HUPROCESS* arg0);
 
 extern s32 lbl_1_bss_88[16];
 extern s32 lbl_1_bss_78[4];

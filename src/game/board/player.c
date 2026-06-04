@@ -26,7 +26,7 @@
 #include <string.h>
 
 static void InitJunction(s32, s32, f32);
-static void UpdateJunctionGfx(omObjData *);
+static void UpdateJunctionGfx(OMOBJ *);
 static void StopJunctionPlayer(s32);
 static void RestoreJunction(f32, s32);
 
@@ -34,17 +34,17 @@ static s32 GetDefaultDirection(f32, f32 *, s32);
 static s32 DoDebugMove(s32, s16 *);
 static s32 ExecJunction(s32, s16 *);
 
-static void PlayerPosLerpFunc(omObjData *);
-static void DiceJumpFunc(omObjData *);
+static void PlayerPosLerpFunc(OMOBJ *);
+static void DiceJumpFunc(OMOBJ *);
 
-static void UpdateRollSprite(omObjData *);
-static void UpdateRoll(omObjData *);
-static void MoveAwayObjFunc(omObjData *);
+static void UpdateRollSprite(OMOBJ *);
+static void UpdateRoll(OMOBJ *);
+static void MoveAwayObjFunc(OMOBJ *);
 
-static void MoveAwayObjFunc(omObjData *);
-static void UpdateBowserSuit(omObjData *);
+static void MoveAwayObjFunc(OMOBJ *);
+static void UpdateBowserSuit(OMOBJ *);
 
-static void MegaSquishFunc(omObjData *object);
+static void MegaSquishFunc(OMOBJ *object);
 
 static s32 DoSparkSpace(s32 player, s32 pause_cam);
 static void RemoveSparkSpace(s32 player);
@@ -76,19 +76,19 @@ static s16 playerMot[4];
 static s8 itemPrev;
 static s8 moveAwayPlayer[4];
 static s16 junctionArrowRot[4];
-static omObjData *moveAwayObj;
-static omObjData *rollObj;
-static omObjData *junctionObj;
+static OMOBJ *moveAwayObj;
+static OMOBJ *rollObj;
+static OMOBJ *junctionObj;
 static s32 junctionMask;
-static omObjData *bowserSuitObj;
+static OMOBJ *bowserSuitObj;
 static s32 megaDoubleDiceF;
 
 static s16 suitMdl = -1;
 static s16 suitPlayerMdl = -1;
 static s16 suitCurrMot = -1;
 
-static omObjData *diceJumpObj[4] = { 0, 0, 0, 0 };
-static omObjData *motDoneF[4] = { 0, 0, 0, 0 };
+static OMOBJ *diceJumpObj[4] = { 0, 0, 0, 0 };
+static OMOBJ *motDoneF[4] = { 0, 0, 0, 0 };
 static s16 bowserSuitMot[5] = { -1, -1, -1, -1, -1 };
 static char *eyeMatTbl[8][2]
     = { { "eye1", "eye2" }, { "eye1", "eye2" }, { "mat14", "mat16" }, { "eye1", "eye2" }, { "Clswario_eye_l1_AUTO14", "Clswario_eye_l1_AUTO15" },
@@ -187,7 +187,7 @@ static s32 boardSparkSfxTblAlt[] = {
     0x2E3,
 };
 
-static omObjData *megaSquishObj[4] = {};
+static OMOBJ *megaSquishObj[4] = {};
 
 static s32 megaSquishSfxTbl[] = {
     0x128,
@@ -1120,7 +1120,7 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8)
     f32 var_f27;
     f32 var_f28;
     f32 var_f29;
-    omObjData *var_r28;
+    OMOBJ *var_r28;
     s32 var_r20;
     bitcopy *temp_r29;
     s32 var_r27;
@@ -1209,7 +1209,7 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8)
     return;
 }
 
-static void UpdateJunctionGfx(omObjData *arg0)
+static void UpdateJunctionGfx(OMOBJ *arg0)
 {
     s32 var_r28;
     bitcopy *temp_r30;
@@ -1713,7 +1713,7 @@ void BoardPlayerPosLerpStart(s32 arg0, Vec *arg1, Vec *arg2, s16 arg3)
     f32 var_f26;
     f32 var_f29;
     f32 var_f30;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     s32 var_r25;
     PlayerState *temp_r21;
 
@@ -1779,7 +1779,7 @@ void BoardPlayerPosLerpStart(s32 arg0, Vec *arg1, Vec *arg2, s16 arg3)
     }
 }
 
-static void PlayerPosLerpFunc(omObjData *arg0)
+static void PlayerPosLerpFunc(OMOBJ *arg0)
 {
     f32 temp_f28;
     f32 temp_f27;
@@ -1880,7 +1880,7 @@ s32 BoardPlayerDiceJumpCheck(s32 arg0)
     return 1;
 }
 
-static void DiceJumpFunc(omObjData *arg0)
+static void DiceJumpFunc(OMOBJ *arg0)
 {
     Vec sp38;
     f32 temp_f31;
@@ -1943,7 +1943,7 @@ void BoardPlayerIdleSet(s32 arg0)
     BoardPlayerMotionShiftSet(arg0, 1, 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
 }
 
-static void ExecMotBlend(omObjData *arg0);
+static void ExecMotBlend(OMOBJ *arg0);
 
 void BoardPlayerMotBlendSet(s32 arg0, s16 arg1, s16 arg2)
 {
@@ -1955,7 +1955,7 @@ void BoardPlayerMotBlendSet(s32 arg0, s16 arg1, s16 arg2)
     f32 var_f22;
     f32 var_f21;
     f32 var_f19;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     s32 var_r22;
     s32 var_r20;
     s16 var_r19;
@@ -2032,7 +2032,7 @@ void BoardPlayerMotBlendSet(s32 arg0, s16 arg1, s16 arg2)
     }
 }
 
-static void ExecMotBlend(omObjData *arg0)
+static void ExecMotBlend(OMOBJ *arg0)
 {
     f32 sp48;
     f32 var_f27;
@@ -2094,7 +2094,7 @@ typedef struct bitcopy3 {
 
 void BoardRollCreate(s32 arg0, s32 arg1)
 {
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     s32 var_r30;
     bitcopy3 *temp_r31;
 
@@ -2158,7 +2158,7 @@ void BoardRollDispSet(s32 arg0)
     }
 }
 
-static void UpdateRollSprite(omObjData *arg0)
+static void UpdateRollSprite(OMOBJ *arg0)
 {
     Vec sp1C;
     s32 sp14[2];
@@ -2196,7 +2196,7 @@ static void UpdateRollSprite(omObjData *arg0)
     }
 }
 
-static void UpdateRoll(omObjData *arg0)
+static void UpdateRoll(OMOBJ *arg0)
 {
     f32 var_f30;
     bitcopy3 *temp_r30;
@@ -2325,7 +2325,7 @@ void BoardPlayerMoveAwayStartCurr(s32 arg0, s32 arg1)
     BoardPlayerMoveAwayStart(GWSystem.player_curr, arg0, arg1);
 }
 
-static void MoveAwayObjFunc(omObjData *arg0)
+static void MoveAwayObjFunc(OMOBJ *arg0)
 {
     s32 var_r31;
     bitcopy3 *temp_r30;
@@ -2350,7 +2350,7 @@ static void MoveAwayObjFunc(omObjData *arg0)
 
 void BoardBowserSuitInit(s32 arg0)
 {
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     s32 temp_r27;
     s32 var_r29;
     s32 temp;
@@ -2451,7 +2451,7 @@ void BoardBowserSuitPlayerModelKill(void)
     }
 }
 
-static void UpdateBowserSuit(omObjData *arg0)
+static void UpdateBowserSuit(OMOBJ *arg0)
 {
     s16 temp_r30;
     bitcopy3 *temp_r31;
@@ -2742,7 +2742,7 @@ typedef struct mega_squish_work {
     u16 hide_time;
 } MegaSquishWork;
 
-static void MegaSquishFunc(omObjData *object)
+static void MegaSquishFunc(OMOBJ *object)
 {
     MegaSquishWork *work = OM_GET_WORK_PTR(object, MegaSquishWork);
     Vec pos;
@@ -2849,7 +2849,7 @@ static s32 MegaPlayerPassFunc(s32 player, s32 space)
     s32 temp_r27;
     s32 temp_r26;
     s32 temp_r24;
-    omObjData *temp_r23;
+    OMOBJ *temp_r23;
     s32 spD0[4];
     Vec spC4;
     Vec spB8;
@@ -2962,7 +2962,7 @@ static s32 MegaExecJump(s32 player, s32 space)
     s32 temp_r26;
     s32 temp_r25;
     s32 temp_r24;
-    omObjData *temp_r23;
+    OMOBJ *temp_r23;
     s32 spD0[4];
     Vec spC4;
     Vec spB8;

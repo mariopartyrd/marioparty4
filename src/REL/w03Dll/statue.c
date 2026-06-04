@@ -61,7 +61,7 @@ char lbl_1_bss_38[12];
 void *lbl_1_bss_34;
 f32 lbl_1_bss_30;
 s8 lbl_1_bss_2C;
-Process *lbl_1_bss_28;
+HUPROCESS *lbl_1_bss_28;
 
 void fn_1_12C8(void)
 {

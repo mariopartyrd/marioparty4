@@ -19,7 +19,7 @@ static s32 winMess;
 static s32 winAttr;
 f32 lbl_801D3F70[2];
 static BoardWinComKeyFunc comKeyFunc;
-static Process* winProc;
+static HUPROCESS* winProc;
 static s32 choiceDisableTbl[0x10];
 static u32 winInsertMesTbl[8];
 

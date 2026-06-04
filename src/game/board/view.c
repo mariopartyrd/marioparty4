@@ -36,7 +36,7 @@ static void CreateButtonWin(void);
 static void DestroyButtonWin(void);
 static void InitOverheadView(void);
 static void DestroyOverheadView(void);
-static void UpdateOverheadView(omObjData *arg0);
+static void UpdateOverheadView(OMOBJ *arg0);
 static void WaitOverheadView(void);
 
 static Vec focusPos;
@@ -47,9 +47,9 @@ static s8 viewPlayer;
 static s8 viewMoveF;
 static s8 focusDestroyF;
 static u16 focusTimer;
-static omObjData *overheadObj;
+static OMOBJ *overheadObj;
 static s8 pauseDisableF;
-static Process *viewProc;
+static HUPROCESS *viewProc;
 
 static s16 buttonWin = -1;
 static s16 focusMdl = -1;
@@ -440,7 +440,7 @@ static void InitOverheadView(void) {
     Vec sp10;
     GXColor spA;
     s16 sp8;
-    omObjData *temp_r26;
+    OMOBJ *temp_r26;
     OverheadWork *temp_r31;
     float *temp_r30;
     s32 i;
@@ -511,7 +511,7 @@ static void DestroyOverheadView(void) {
     }
 }
 
-static void UpdateOverheadView(omObjData *arg0) {
+static void UpdateOverheadView(OMOBJ *arg0) {
     Vec sp20;
     Vec sp14;
     Vec sp8;

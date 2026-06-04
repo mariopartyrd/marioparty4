@@ -18,7 +18,7 @@ typedef struct om_obj_group {
     u16 max_objs;
     u16 num_objs;
     u16 *next;
-    omObjData **obj;
+    OMOBJ **obj;
 } omObjGroup;
 
 typedef struct om_obj_man {
@@ -28,12 +28,12 @@ typedef struct om_obj_man {
     s16 obj_last;
     s16 obj_first;
     s16 unkA;
-    omObjData *obj;
+    OMOBJ *obj;
     omObjGroup *group;
 } omObjMan;
 
-omObjData *omDBGSysKeyObj;
-Process *omwatchproc;
+OMOBJ *omDBGSysKeyObj;
+HUPROCESS *omwatchproc;
 OMOVL omnextovl;
 OMOVL omcurovl;
 s32 omcurdll;
@@ -46,13 +46,13 @@ char omUPauseFlag;
 s16 omSysExitReq;
 s16 omdispinfo;
 
-static omOvlHisData omovlhis[OM_OVL_HIS_MAX];
+static OMOVLHIS omovlhis[OM_OVL_HIS_MAX];
 
 u8 omSysPauseEnableFlag = TRUE;
 OMOVL omprevovl = DLL_NONE;
 
 static void omWatchOverlayProc(void);
-static void omInsertObj(Process *objman_process, omObjData *object);
+static void omInsertObj(HUPROCESS *objman_process, OMOBJ *object);
 
 void omMasterInit(s32 prio, FileListEntry *ovl_list, s32 ovl_count, OMOVL start_ovl)
 {
@@ -115,8 +115,8 @@ void omOvlCallEx(OMOVL overlay, s16 arg2, s32 event, s32 stat)
         OSReport("objman>OVL Call over error\n");
         return;
     }
-    omovlhis[++omovlhisidx].overlay = overlay;
-    omovlhis[omovlhisidx].event = event;
+    omovlhis[++omovlhisidx].ovl = overlay;
+    omovlhis[omovlhisidx].evtno = event;
     omovlhis[omovlhisidx].stat = stat;
     omOvlGotoEx(overlay, arg2, event, stat);
 }
@@ -140,7 +140,7 @@ void omOvlReturnEx(s16 level, s16 arg2)
         OSReport("objman>OVL under error\n");
         omovlhisidx = 0;
     }
-    omOvlGotoEx(omovlhis[omovlhisidx].overlay, arg2, omovlhis[omovlhisidx].event, omovlhis[omovlhisidx].stat);
+    omOvlGotoEx(omovlhis[omovlhisidx].ovl, arg2, omovlhis[omovlhisidx].evtno, omovlhis[omovlhisidx].stat);
 }
 
 void omOvlKill(s16 arg)
@@ -166,18 +166,18 @@ void omOvlKill(s16 arg)
 
 void omOvlHisChg(s32 level, OMOVL overlay, s32 event, s32 stat)
 {
-    omOvlHisData *history;
+    OMOVLHIS *history;
     if(omovlhisidx-level < 0 || omovlhisidx-level >= OM_OVL_HIS_MAX) {
         OSReport("objman> omOvlHisChg: overlay 実行履歴の範囲外を変更しようとしました\n");
         return;
     }
     history = &omovlhis[omovlhisidx-level];
-    history->overlay = overlay;
-    history->event = event;
+    history->ovl = overlay;
+    history->evtno = event;
     history->stat = stat;
 }
 
-omOvlHisData *omOvlHisGet(s32 level)
+OMOVLHIS *omOvlHisGet(s32 level)
 {
     if(omovlhisidx-level < 0 || omovlhisidx-level >= OM_OVL_HIS_MAX) {
         OSReport("objman> omOvlHisGet: overlay 実行履歴の範囲外を参照しようとしました\n");
@@ -186,14 +186,14 @@ omOvlHisData *omOvlHisGet(s32 level)
     return &omovlhis[omovlhisidx-level];
 }
 
-Process *omInitObjMan(s16 max_objs, s32 prio)
+HUPROCESS *omInitObjMan(s16 max_objs, s32 prio)
 {
     omObjGroup *group_all;
-    omObjData *obj_all;
-    omObjData *obj;
+    OMOBJ *obj_all;
+    OMOBJ *obj;
     s32 i;
     omObjMan *objman;
-    Process *process;
+    HUPROCESS *process;
     OSReport("objman>InitObjMan start\n");
     max_objs += 2;
     omSysExitReq = FALSE;
@@ -207,7 +207,7 @@ Process *omInitObjMan(s16 max_objs, s32 prio)
     objman->next_idx = 0;
     objman->obj_last = -1;
     objman->obj_first = -1;
-    obj_all = HuMemDirectMallocNum(HEAP_SYSTEM, max_objs*sizeof(omObjData), MEMORY_DEFAULT_NUM);
+    obj_all = HuMemDirectMallocNum(HEAP_SYSTEM, max_objs*sizeof(OMOBJ), MEMORY_DEFAULT_NUM);
     objman->obj =  obj_all;
     group_all = HuMemDirectMallocNum(HEAP_SYSTEM, OM_MAX_GROUPS*sizeof(omObjGroup), MEMORY_DEFAULT_NUM);
     objman->group = group_all;
@@ -215,14 +215,14 @@ Process *omInitObjMan(s16 max_objs, s32 prio)
         obj = &obj_all[i];
         obj->stat = 1;
         obj->prio = obj->prev =obj->next = -1;
-        obj->unk10 = 0;
+        obj->mode = 0;
         obj->trans.x = obj->trans.y = obj->trans.z = obj->rot.x = obj->rot.y = obj->rot.z = 0.0f;
         obj->scale.x = obj->scale.y = obj->scale.z = 1.0f;
-        obj->model = obj->motion = NULL;
-        obj->func = obj->data = NULL;
-        obj->next_idx = i+1;
+        obj->mdlId = obj->mtnId = NULL;
+        obj->objFunc = obj->data = NULL;
+        obj->nextNo = i+1;
         obj->mtncnt = 0;
-        obj->motion = NULL;
+        obj->mtnId = NULL;
     }
     for(i=0; i<OM_MAX_GROUPS;i++) {
         group_all[i].max_objs = 0;
@@ -239,55 +239,55 @@ Process *omInitObjMan(s16 max_objs, s32 prio)
 
 void omDestroyObjMan(void)
 {
-    Process *process = HuPrcCurrentGet();
+    HUPROCESS *process = HuPrcCurrentGet();
     omObjMan *objman = process->user_data;
     objman->obj_last = -1;
     OSReport("objman>Destory ObjMan\n");
 }
 
-omObjData *omAddObjEx(Process *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, omObjFunc func)
+OMOBJ *omAddObjEx(HUPROCESS *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt, s16 group, OMOBJFUNC func)
 {
     s32 i;
-    omObjData *object;
+    OMOBJ *object;
     s16 next_idx;
     omObjMan *objman = objman_process->user_data;
-    omObjData *obj_base = objman->obj;
+    OMOBJ *obj_base = objman->obj;
     if(objman->num_objs == objman->max_objs) {
         return NULL;
     }
     next_idx = objman->next_idx;
     object = &obj_base[next_idx];
-    object->next_idx_alloc = next_idx;
+    object->objNext = next_idx;
     object->prio = prio;
     omInsertObj(objman_process, object);
     if(mdlcnt) {
-        object->model = HuMemDirectMallocNum(HEAP_SYSTEM, mdlcnt*sizeof(s16), MEMORY_DEFAULT_NUM);
+        object->mdlId = HuMemDirectMallocNum(HEAP_SYSTEM, mdlcnt*sizeof(s16), MEMORY_DEFAULT_NUM);
         object->mdlcnt = mdlcnt;
         for(i=0; i<mdlcnt; i++) {
-            object->model[i] = -1;
+            object->mdlId[i] = -1;
         }
     } else {
-        object->model = NULL;
+        object->mdlId = NULL;
         object->mdlcnt = 0;
     }
     if(mtncnt) {
-        object->motion = HuMemDirectMallocNum(HEAP_SYSTEM, mtncnt*sizeof(s16), MEMORY_DEFAULT_NUM);
+        object->mtnId = HuMemDirectMallocNum(HEAP_SYSTEM, mtncnt*sizeof(s16), MEMORY_DEFAULT_NUM);
         object->mtncnt = mtncnt;
     } else {
-        object->motion = NULL;
+        object->mtnId = NULL;
         object->mtncnt = 0;
     }
     if(group >= 0) {
         omAddMember(objman_process, group, object);
     } else {
-        object->group = group;
-        object->group_idx = 0;
+        object->grpNo = group;
+        object->memberNo = 0;
     }
     object->stat = OM_STAT_ACTIVE;
-    object->unk10 = 0;
-    object->func = func;
+    object->mode = 0;
+    object->objFunc = func;
     object->work[0] = object->work[1] = object->work[2] = object->work[3] = 0;
-    objman->next_idx = object->next_idx;
+    objman->next_idx = object->nextNo;
     objman->num_objs++;
     omSetTra(object, 0.0f, 0.0f, 0.0f);
     omSetRot(object, 0.0f, 0.0f, 0.0f);
@@ -295,12 +295,12 @@ omObjData *omAddObjEx(Process *objman_process, s16 prio, u16 mdlcnt, u16 mtncnt,
     return object;
 }
 
-static void omInsertObj(Process *objman_process, omObjData *object)
+static void omInsertObj(HUPROCESS *objman_process, OMOBJ *object)
 {
-    omObjData *obj_new;
+    OMOBJ *obj_new;
     omObjMan *objman = objman_process->user_data;
-    omObjData *obj_all = objman->obj;
-    s16 next_idx_alloc = object->next_idx_alloc;
+    OMOBJ *obj_all = objman->obj;
+    s16 next_idx_alloc = object->objNext;
     s16 prio = object->prio;
     s16 obj_idx;
     s16 prev_idx;
@@ -336,38 +336,38 @@ static void omInsertObj(Process *objman_process, omObjData *object)
     }
 }
 
-void omAddMember(Process *objman_process, u16 group, omObjData *object)
+void omAddMember(HUPROCESS *objman_process, u16 group, OMOBJ *object)
 {
     omObjMan *objman = objman_process->user_data;
     omObjGroup *group_ptr = &objman->group[group];
     if(group_ptr->num_objs != group_ptr->max_objs) {
-        object->group = group;
-        object->group_idx = group_ptr->next_idx;
+        object->grpNo = group;
+        object->memberNo = group_ptr->next_idx;
         group_ptr->obj[group_ptr->next_idx] = object;
         group_ptr->next_idx = group_ptr->next[group_ptr->next_idx];
         group_ptr->num_objs++;
     }
 }
 
-void omDelObjEx(Process *objman_process, omObjData *object)
+void omDelObjEx(HUPROCESS *objman_process, OMOBJ *object)
 {
     omObjMan *objman = objman_process->user_data;
-    omObjData *obj_all = objman->obj;
-    s16 next_idx_alloc = object->next_idx_alloc;
+    OMOBJ *obj_all = objman->obj;
+    s16 next_idx_alloc = object->objNext;
     if(objman->num_objs == 0 || object->stat == 1) {
         return;
     }
     objman->num_objs--;
-    if(object->group >= 0) {
+    if(object->grpNo >= 0) {
         omDelMember(objman_process, object);
     }
-    if(object->motion != NULL) {
-        HuMemDirectFree(object->motion);
-        object->motion = NULL;
+    if(object->mtnId != NULL) {
+        HuMemDirectFree(object->mtnId);
+        object->mtnId = NULL;
     }
-    if(object->model != NULL) {
-        HuMemDirectFree(object->model);
-        object->model = NULL;
+    if(object->mdlId != NULL) {
+        HuMemDirectFree(object->mdlId);
+        object->mdlId = NULL;
     }
     if(object->data != NULL) {
         HuMemDirectFree(object->data);
@@ -382,33 +382,33 @@ void omDelObjEx(Process *objman_process, omObjData *object)
     }
     if(objman->num_objs != 0) {
         if(object->prev < 0) {
-            objman->obj_first = obj_all[object->next].next_idx_alloc;
+            objman->obj_first = obj_all[object->next].objNext;
         }
         if(object->next < 0) {
-            objman->obj_last = obj_all[object->prev].next_idx_alloc;
+            objman->obj_last = obj_all[object->prev].objNext;
         }
     } else {
         objman->obj_first = objman->obj_last = -1;
     }
-    object->next_idx = objman->next_idx;
+    object->nextNo = objman->next_idx;
     objman->next_idx = next_idx_alloc;
 }
 
-void omDelMember(Process *objman_process, omObjData *object)
+void omDelMember(HUPROCESS *objman_process, OMOBJ *object)
 {
-    if(object->group != -1) {
+    if(object->grpNo != -1) {
         omObjMan *objman = objman_process->user_data;
-        omObjData *obj_all = objman->obj;
-        omObjGroup *group = &objman->group[object->group];
-        group->obj[object->group_idx] = NULL;
-        group->next[object->group_idx] = group->next_idx;
-        group->next_idx = object->group_idx;
-        object->group = -1;
+        OMOBJ *obj_all = objman->obj;
+        omObjGroup *group = &objman->group[object->grpNo];
+        group->obj[object->memberNo] = NULL;
+        group->next[object->memberNo] = group->next_idx;
+        group->next_idx = object->memberNo;
+        object->grpNo = -1;
         group->num_objs--;
     }
 }
 
-void omMakeGroupEx(Process *objman_process, u16 group, u16 max_objs)
+void omMakeGroupEx(HUPROCESS *objman_process, u16 group, u16 max_objs)
 {
     s32 i;
     omObjMan *objman = objman_process->user_data;
@@ -422,7 +422,7 @@ void omMakeGroupEx(Process *objman_process, u16 group, u16 max_objs)
     group_ptr->next_idx = 0;
     group_ptr->max_objs = max_objs;
     group_ptr->num_objs = 0;
-    group_ptr->obj = HuMemDirectMallocNum(HEAP_SYSTEM, max_objs*sizeof(omObjData *), MEMORY_DEFAULT_NUM);
+    group_ptr->obj = HuMemDirectMallocNum(HEAP_SYSTEM, max_objs*sizeof(OMOBJ *), MEMORY_DEFAULT_NUM);
     group_ptr->next = HuMemDirectMallocNum(HEAP_SYSTEM, max_objs*sizeof(u16), MEMORY_DEFAULT_NUM);
     for(i=0; i<max_objs; i++) {
         group_ptr->obj[i] = NULL;
@@ -430,37 +430,37 @@ void omMakeGroupEx(Process *objman_process, u16 group, u16 max_objs)
     }
 }
 
-omObjData **omGetGroupMemberListEx(Process *objman_process, s16 group)
+OMOBJ **omGetGroupMemberListEx(HUPROCESS *objman_process, s16 group)
 {
     omObjMan *objman = objman_process->user_data;
     return objman->group[group].obj;
 }
 
-void omSetStatBit(omObjData *obj, u16 stat)
+void omSetStatBit(OMOBJ *obj, u16 stat)
 {
     obj->stat |= stat;
 }
 
-void omResetStatBit(omObjData *obj, u16 stat)
+void omResetStatBit(OMOBJ *obj, u16 stat)
 {
     obj->stat &= ~stat;
 }
 
-void omSetTra(omObjData *obj, float x, float y, float z)
+void omSetTra(OMOBJ *obj, float x, float y, float z)
 {
     obj->trans.x = x;
     obj->trans.y = y;
     obj->trans.z = z;
 }
 
-void omSetRot(omObjData *obj, float x, float y, float z)
+void omSetRot(OMOBJ *obj, float x, float y, float z)
 {
     obj->rot.x = x;
     obj->rot.y = y;
     obj->rot.z = z;
 }
 
-void omSetSca(omObjData *obj, float x, float y, float z)
+void omSetSca(OMOBJ *obj, float x, float y, float z)
 {
     obj->scale.x = x;
     obj->scale.y = y;
@@ -469,10 +469,10 @@ void omSetSca(omObjData *obj, float x, float y, float z)
 
 void omMain(void)
 {
-    Process *process = HuPrcCurrentGet();
+    HUPROCESS *process = HuPrcCurrentGet();
     omObjMan *objman = process->user_data;
-    omObjData *obj_all = objman->obj;
-    omObjData *object;
+    OMOBJ *obj_all = objman->obj;
+    OMOBJ *object;
     s16 obj_index;
     omDLLDBGOut();
     while(1) {
@@ -496,8 +496,8 @@ void omMain(void)
             object = &obj_all[obj_index];
             obj_index = object->prev;
             if((object->stat & (OM_STAT_DELETED|OM_STAT_DISABLED)) == 0) {
-                if(object->func != NULL && (object->stat & (0x40|0x8|OM_STAT_PAUSED)) == 0) {
-                    object->func(object);
+                if(object->objFunc != NULL && (object->stat & (0x40|0x8|OM_STAT_PAUSED)) == 0) {
+                    object->objFunc(object);
                 }
                 if(omcurovl == -1 || objman->obj_last == -1) {
                     break;
@@ -511,10 +511,10 @@ void omMain(void)
                     if((obj_all[obj_index].stat & (OM_STAT_DELETED|OM_STAT_DISABLED)) != 0) {
                         obj_index = object->prev;
                     }
-                    if(object->model != NULL && object->model[0] != -1 && !(object->stat & OM_STAT_MODEL_PAUSED)) {
-                        Hu3DModelPosSet(object->model[0], object->trans.x, object->trans.y, object->trans.z);
-                        Hu3DModelRotSet(object->model[0], object->rot.x, object->rot.y, object->rot.z);
-                        Hu3DModelScaleSet(object->model[0], object->scale.x, object->scale.y, object->scale.z);
+                    if(object->mdlId != NULL && object->mdlId[0] != -1 && !(object->stat & OM_STAT_MODELPAUSE)) {
+                        Hu3DModelPosSet(object->mdlId[0], object->trans.x, object->trans.y, object->trans.z);
+                        Hu3DModelRotSet(object->mdlId[0], object->rot.x, object->rot.y, object->rot.z);
+                        Hu3DModelScaleSet(object->mdlId[0], object->scale.x, object->scale.y, object->scale.z);
                     }
                 }
             }
@@ -524,17 +524,17 @@ void omMain(void)
 }
 
 //Dummy function to force string literals in binary
-static void omDumpObj(Process *objman_process)
+static void omDumpObj(HUPROCESS *objman_process)
 {
     omObjMan *objman = objman_process->user_data;
-    omObjData *obj_all = objman->obj;
+    OMOBJ *obj_all = objman->obj;
     s32 i;
     OSReport("=================== 現在登録されている OBJECT ==================\n");
     OSReport("STAT PRI GRPN MEMN PROG (TRA) (ROT) (SCA) mdlcnt mtncnt work[0] work[1] work[2] work[3] *data\n");
     for(i=0; i<objman->max_objs; i++) {
-        omObjData *object = &obj_all[i];
+        OMOBJ *object = &obj_all[i];
         OSReport("%04d:%04X %04X %d %d %08X (%.2f %.2f %.2f) (%.2f %.2f %.2f) (%.2f %.2f %.2f) %d %d %08X %08X %08X %08X %08X\n",
-            object->stat, object->stat, object->prio, object->group, object->unk10, object->func,
+            object->stat, object->stat, object->prio, object->grpNo, object->mode, object->objFunc,
             object->trans.x, object->trans.y, object->trans.z, 
             object->rot.x, object->rot.y, object->rot.z, 
             object->scale.x, object->scale.y, object->scale.z, 
@@ -545,7 +545,7 @@ static void omDumpObj(Process *objman_process)
 
 void omAllPause(BOOL pause)
 {
-    Process *objman_process = HuPrcCurrentGet();
+    HUPROCESS *objman_process = HuPrcCurrentGet();
     omObjMan *objman = objman_process->user_data;
     s32 i;
     if(pause) {

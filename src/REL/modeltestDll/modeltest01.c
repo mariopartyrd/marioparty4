@@ -22,19 +22,19 @@ typedef struct unk_bss_a18 {
     u8 unk1C[0x88];
 } UnkBssA18;
 
-omObjData *lbl_1_bss_AC4;
-omObjData *lbl_1_bss_AC0;
-omObjData *lbl_1_bss_ABC;
+OMOBJ *lbl_1_bss_AC4;
+OMOBJ *lbl_1_bss_AC0;
+OMOBJ *lbl_1_bss_ABC;
 UnkBssA18 lbl_1_bss_A18;
 s32 lbl_1_bss_A14;
 float lbl_1_bss_A10;
 float lbl_1_bss_A0C;
 s16 lbl_1_bss_A08;
-Process *lbl_1_bss_A04;
-Process *lbl_1_bss_A00;
+HUPROCESS *lbl_1_bss_A04;
+HUPROCESS *lbl_1_bss_A00;
 
-void fn_1_4DF8(omObjData *object);
-void fn_1_5A60(omObjData *object);
+void fn_1_4DF8(OMOBJ *object);
+void fn_1_5A60(OMOBJ *object);
 void fn_1_5DA8(void);
 void fn_1_6AE0(HU3DMODEL *model, Mtx mtx);
 void fn_1_83B4(void);
@@ -46,7 +46,7 @@ void fn_1_4AC8(void)
 {
     Vec sp14;
     Vec sp8;
-    Process *objman;
+    HUPROCESS *objman;
     OSReport("******* MODELTESTObjectSetup *********\n");
     objman = omInitObjMan(50, 8192);
     CRot.x = -22;
@@ -77,7 +77,7 @@ void fn_1_4AC8(void)
     msmSeSetListener(&sp14, &sp8, 2000, 1000, 0);
 }
 
-void fn_1_4DF8(omObjData *object)
+void fn_1_4DF8(OMOBJ *object)
 {
     float temp_f31;
     Vec pos;
@@ -147,7 +147,7 @@ void fn_1_4DF8(omObjData *object)
     Hu3DCameraPerspectiveSet(1, lbl_1_bss_A0C, 20, 5000, 1.2f);
 }
 
-void fn_1_5A60(omObjData *object)
+void fn_1_5A60(OMOBJ *object)
 {
     Mtx rotAxis;
     Vec pos, target, up;
@@ -609,7 +609,7 @@ u32 fn_1_82C8(void)
 void fn_1_83B4(void)
 {
     u32 temp_r29;
-    Process *temp_r28;
+    HUPROCESS *temp_r28;
     temp_r28 = HuPrcCurrentGet();
     HuPrcSetStat(temp_r28, 0xC);
     while (1) {

@@ -30,13 +30,13 @@ typedef struct UnkM417Struct {
     /* 0x64 */ s32 unk_64;
 } UnkM417Struct; /* size = 0x68 */
 
-void fn_1_4D8(omObjData *object);
-void fn_1_990(omObjData *object);
-void fn_1_EA8(omObjData *object);
-void fn_1_13DC(omObjData *object);
-void fn_1_17C0(omObjData *object);
-void fn_1_1CA8(omObjData *object);
-void fn_1_2158(omObjData *object);
+void fn_1_4D8(OMOBJ *object);
+void fn_1_990(OMOBJ *object);
+void fn_1_EA8(OMOBJ *object);
+void fn_1_13DC(OMOBJ *object);
+void fn_1_17C0(OMOBJ *object);
+void fn_1_1CA8(OMOBJ *object);
+void fn_1_2158(OMOBJ *object);
 s32 fn_1_27D0(void);
 
 Vec lbl_1_data_0 = { 100.0f, 800.0f, -100.0f };
@@ -47,9 +47,9 @@ Vec lbl_1_data_28 = { 50.0f, 150000.0f, 50.0f };
 Vec lbl_1_data_34 = { 0.0f, 1.0f, 0.0f };
 Vec lbl_1_data_40 = { 0.0f, 0.0f, 0.0f };
 
-Process *lbl_1_bss_20;
-omObjData *lbl_1_bss_1C;
-omObjData *lbl_1_bss_18;
+HUPROCESS *lbl_1_bss_20;
+OMOBJ *lbl_1_bss_1C;
+OMOBJ *lbl_1_bss_18;
 s16 lbl_1_bss_14;
 s16 lbl_1_bss_12;
 s16 lbl_1_bss_10;
@@ -65,7 +65,7 @@ void ObjectSetup(void)
     Vec sp14;
     Vec sp8;
 
-    Process *var_r31;
+    HUPROCESS *var_r31;
     HU3DLIGHT *var_r30;
 
     HuAudSndGrpSet(42);
@@ -109,7 +109,7 @@ void ObjectSetup(void)
     fn_1_7A34(var_r31);
 }
 
-void fn_1_4D8(omObjData *object)
+void fn_1_4D8(OMOBJ *object)
 {
     UnkM417Struct *var_r31;
 
@@ -129,10 +129,10 @@ void fn_1_4D8(omObjData *object)
     var_r31->unk_4C[0] = var_r31->unk_4C[1] = var_r31->unk_4C[2] = var_r31->unk_4C[3] = -1;
     var_r31->unk_60 = 0;
     var_r31->unk_64 = 0;
-    object->func = fn_1_990;
+    object->objFunc = fn_1_990;
 }
 
-void fn_1_5B0(omObjData *object)
+void fn_1_5B0(OMOBJ *object)
 {
     Vec sp14;
     Vec sp8;
@@ -157,7 +157,7 @@ void fn_1_5B0(omObjData *object)
     }
 }
 
-void fn_1_800(omObjData *object)
+void fn_1_800(OMOBJ *object)
 {
     UnkM417Struct *var_r31;
 
@@ -171,12 +171,12 @@ void fn_1_800(omObjData *object)
             Hu3DCameraPerspectiveSet(1, 35.0f, 5.0f, 5000.0f, 1.2f);
             var_r31->unk_00 = 1;
             var_r31->unk_10 = 0;
-            object->func = fn_1_BCAC(lbl_1_bss_20);
+            object->objFunc = fn_1_BCAC(lbl_1_bss_20);
             break;
         case 1:
             var_r31->unk_00 = 2;
             var_r31->unk_18 = 0;
-            object->func = fn_1_17C0;
+            object->objFunc = fn_1_17C0;
             break;
         case 2:
             if (lbl_1_bss_0 < 0) {
@@ -184,30 +184,30 @@ void fn_1_800(omObjData *object)
             }
             var_r31->unk_00 = 3;
             var_r31->unk_28 = 0;
-            object->func = fn_1_C658(lbl_1_bss_20, object);
+            object->objFunc = fn_1_C658(lbl_1_bss_20, object);
             break;
         case 3:
         case 4:
             var_r31->unk_08 = 1;
             var_r31->unk_00 = 5;
-            object->func = fn_1_EA8;
+            object->objFunc = fn_1_EA8;
             break;
         case 5:
         default:
             var_r31->unk_00 = 5;
-            object->func = fn_1_13DC;
+            object->objFunc = fn_1_13DC;
             break;
     }
     var_r31->unk_04 = 0;
 }
 
-void fn_1_990(omObjData *object)
+void fn_1_990(OMOBJ *object)
 {
     fn_1_5B0(object);
     fn_1_800(object);
 }
 
-void fn_1_EA8(omObjData *object)
+void fn_1_EA8(OMOBJ *object)
 {
     UnkM417Struct *var_r27;
 
@@ -221,7 +221,7 @@ void fn_1_EA8(omObjData *object)
     }
 }
 
-void fn_1_13DC(omObjData *object)
+void fn_1_13DC(OMOBJ *object)
 {
     fn_1_5B0(object);
     if (!WipeStatGet()) {
@@ -233,7 +233,7 @@ void fn_1_13DC(omObjData *object)
     }
 }
 
-void fn_1_17C0(omObjData *object)
+void fn_1_17C0(OMOBJ *object)
 {
     s16 sp8; // ! - uninitialized
 
@@ -259,7 +259,7 @@ void fn_1_17C0(omObjData *object)
                 lbl_1_bss_14 = MGSeqCreate(1, var_r30->unk_1C, -1, -1);
                 var_r30->unk_14 = 2;
                 var_r30->unk_18 = 0;
-                object->func = fn_1_1CA8;
+                object->objFunc = fn_1_1CA8;
             }
             break;
         default:
@@ -267,7 +267,7 @@ void fn_1_17C0(omObjData *object)
     }
 }
 
-void fn_1_1CA8(omObjData *object)
+void fn_1_1CA8(OMOBJ *object)
 {
     UnkM417Struct *var_r30;
     s32 var_r27;
@@ -296,13 +296,13 @@ void fn_1_1CA8(omObjData *object)
         var_r30->unk_14 = 3;
         var_r30->unk_18 = 0;
         if (var_r30->unk_08 == 0) {
-            object->func = fn_1_2158;
+            object->objFunc = fn_1_2158;
         }
     }
     MGSeqParamSet(lbl_1_bss_14, 1, var_r30->unk_1C);
 }
 
-void fn_1_2158(omObjData *object)
+void fn_1_2158(OMOBJ *object)
 {
     UnkM417Struct *var_r27;
 

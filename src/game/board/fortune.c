@@ -39,8 +39,8 @@ static s8 comPlayer1;
 static s8 comPrize;
 static s8 comCoin;
 static s8 comStar;
-static omObjData *fortunePlatformObj;
-static Process *fortuneProc;
+static OMOBJ *fortunePlatformObj;
+static HUPROCESS *fortuneProc;
 
 static void FortuneExec(void);
 static void DestroyFortune(void);
@@ -48,7 +48,7 @@ static void FortuneMain(void);
 static void FortunePostMG(void);
 
 static void CreateFortunePlatform(void);
-static void ExecFortunePlatform(omObjData *object);
+static void ExecFortunePlatform(OMOBJ *object);
 
 static void CameraCalcFortune(BoardCameraData *camera);
 
@@ -229,7 +229,7 @@ static void CameraCalcFortune(BoardCameraData *camera)
 	camera->target = camTargetFortune;
 }
 
-static void ExecFortunePlatform(omObjData *object)
+static void ExecFortunePlatform(OMOBJ *object)
 {
 	PlatformWork *work = OM_GET_WORK_PTR(object, PlatformWork);
 	if(work->kill || BoardIsKill()) {

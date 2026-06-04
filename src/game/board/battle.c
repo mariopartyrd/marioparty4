@@ -54,18 +54,18 @@ static void ExecBattle(void);
 static void TakeCoins(void);
 static void InitExplode(void);
 static s32 CheckExplode(void);
-static void UpdateExplode(omObjData *arg0);
+static void UpdateExplode(OMOBJ *arg0);
 static void CreateBattleMain(void);
-static void UpdateBattleMain(omObjData *arg0);
-static void DescendBattleBomb(BattleWork *arg0, omObjData *arg1);
-static void EndBattle(BattleWork *arg0, omObjData *arg1);
-static void ShowBattleGame(BattleWork *arg0, omObjData *arg1);
-static void RaiseBattleGame(BattleWork *arg0, omObjData *arg1);
-static void UpdateBattleCoin(BattleWork *arg0, omObjData *arg1);
-static void ShowBattleCoin(BattleWork *arg0, omObjData *arg1);
-static void InitBattleGameSpr(BattleWork *arg0, omObjData *arg1);
+static void UpdateBattleMain(OMOBJ *arg0);
+static void DescendBattleBomb(BattleWork *arg0, OMOBJ *arg1);
+static void EndBattle(BattleWork *arg0, OMOBJ *arg1);
+static void ShowBattleGame(BattleWork *arg0, OMOBJ *arg1);
+static void RaiseBattleGame(BattleWork *arg0, OMOBJ *arg1);
+static void UpdateBattleCoin(BattleWork *arg0, OMOBJ *arg1);
+static void ShowBattleCoin(BattleWork *arg0, OMOBJ *arg1);
+static void InitBattleGameSpr(BattleWork *arg0, OMOBJ *arg1);
 static void HideBattleSpr(void);
-static void VibratePad(BattleWork *arg0, omObjData *arg1);
+static void VibratePad(BattleWork *arg0, OMOBJ *arg1);
 static void StopBattleBomb(void);
 static s32 GetBattleBombState(void);
 static void SetBattleBombState(s32 arg0);
@@ -82,9 +82,9 @@ static s8 battleMGIdx[2];
 static char totalCoinStr[8];
 static float battleCoinSpeed;
 static float battleCoinPosF;
-static omObjData *explodeObj;
-static omObjData *battleObj;
-static Process *battleProc;
+static OMOBJ *explodeObj;
+static OMOBJ *battleObj;
+static HUPROCESS *battleProc;
 
 static const s8 battleCoinTbl[] = {
     5, 10, 20, 30, 50
@@ -430,7 +430,7 @@ static s32 CheckExplode(void) {
     return temp_r31->unk00_field1;
 }
 
-static void UpdateExplode(omObjData *arg0) {
+static void UpdateExplode(OMOBJ *arg0) {
     Vec sp14;
     Vec sp8;
     float temp_f31;
@@ -540,7 +540,7 @@ static void CreateBattleMain(void) {
     BoardFilterFadeInit(30, 0xA0);
 }
 
-static void UpdateBattleMain(omObjData *arg0) {
+static void UpdateBattleMain(OMOBJ *arg0) {
     BattleWork *temp_r30;
     ExplodeWork *temp_r29;
     float var_f31;
@@ -591,7 +591,7 @@ static void UpdateBattleMain(omObjData *arg0) {
     HuSprScaleSet(temp_r30->unk08, 0, arg0->trans.z, arg0->trans.z);
 }
 
-static void DescendBattleBomb(BattleWork *arg0, omObjData *arg1) {
+static void DescendBattleBomb(BattleWork *arg0, OMOBJ *arg1) {
     float temp_f31 = -132.0f - arg1->trans.x;
 
     if (temp_f31 < 0.1f) {
@@ -602,7 +602,7 @@ static void DescendBattleBomb(BattleWork *arg0, omObjData *arg1) {
     }
 }
 
-static void EndBattle(BattleWork *arg0, omObjData *arg1) {
+static void EndBattle(BattleWork *arg0, OMOBJ *arg1) {
     float temp_f31 = 548.0f - arg1->trans.x;
 
     if (temp_f31 < 0.1f) {
@@ -613,7 +613,7 @@ static void EndBattle(BattleWork *arg0, omObjData *arg1) {
     }
 }
 
-static void ShowBattleGame(BattleWork *arg0, omObjData *arg1) {
+static void ShowBattleGame(BattleWork *arg0, OMOBJ *arg1) {
     float var_r29;
 
     if (arg0->unk01 == 0) {
@@ -636,7 +636,7 @@ static void ShowBattleGame(BattleWork *arg0, omObjData *arg1) {
     arg0->unk01 += 4;
 }
 
-static void RaiseBattleGame(BattleWork *arg0, omObjData *arg1) {
+static void RaiseBattleGame(BattleWork *arg0, OMOBJ *arg1) {
     float temp_f31 = -60.0f - arg1->trans.y;
 
     if (ABS(temp_f31) < 0.1f) {
@@ -647,7 +647,7 @@ static void RaiseBattleGame(BattleWork *arg0, omObjData *arg1) {
     }
 }
 
-static void UpdateBattleCoin(BattleWork *arg0, omObjData *arg1) {
+static void UpdateBattleCoin(BattleWork *arg0, OMOBJ *arg1) {
     s8 temp_r28;
 
     if (arg0->unk00_field2 != 0) {
@@ -694,7 +694,7 @@ static void UpdateBattleCoin(BattleWork *arg0, omObjData *arg1) {
     arg1->rot.x = 50.0f;
 }
 
-static void ShowBattleCoin(BattleWork *arg0, omObjData *arg1) {
+static void ShowBattleCoin(BattleWork *arg0, OMOBJ *arg1) {
     float temp_f29;
     float var_f30;
 
@@ -718,7 +718,7 @@ static void ShowBattleCoin(BattleWork *arg0, omObjData *arg1) {
     HuSprScaleSet(arg0->unk08, 1, temp_f29, temp_f29);
 }
 
-static void InitBattleGameSpr(BattleWork *arg0, omObjData *arg1) {
+static void InitBattleGameSpr(BattleWork *arg0, OMOBJ *arg1) {
     s8 temp_r30;
     s8 temp_r29;
     float sp8[2][2] = {
@@ -749,7 +749,7 @@ static void HideBattleSpr(void) {
 }
 
 
-static void VibratePad(BattleWork *arg0, omObjData *arg1) {
+static void VibratePad(BattleWork *arg0, OMOBJ *arg1) {
     s32 i;
 
     for (i = 0; i < 4; i++) {

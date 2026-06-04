@@ -100,7 +100,7 @@ static int seqRecordVal;
 static s32 pauseWaitF;
 static s32 pauseExitF;
 static s32 pauseActiveF;
-static Process *pauseProcess;
+static HUPROCESS *pauseProcess;
 static s32 seqLanguage;
 
 void fn_80036BC8(void);
@@ -3526,7 +3526,7 @@ static s16 practiceTbl[][2] = {
 
 void MGSeqPracticeInit(void)
 {
-    Process *process;
+    HUPROCESS *process;
     s16 i;
     process = HuPrcCurrentGet();
     if (!_CheckFlag(FLAG_ID_MAKE(1, 12))) {
@@ -3618,7 +3618,7 @@ static void SeqPlayStartFX(void)
     HuAudFXPlay(seqStartFXTbl[i][1]);
 }
 
-void MGSeqPracticeExitCheck(omObjData *object)
+void MGSeqPracticeExitCheck(OMOBJ *object)
 {
     s16 input;
     s16 i;

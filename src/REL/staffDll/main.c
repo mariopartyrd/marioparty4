@@ -33,7 +33,7 @@ static s16 thpGroup;
 static s16 thpCoverGroup;
 static s32 staffSide;
 static s32 currImg;
-static omObjData *multiViewObj;
+static OMOBJ *multiViewObj;
 
 static StaffData staffData[] = {
     { 0x00340001, 0, 0.0f, 0, 0, 0 },
@@ -258,7 +258,7 @@ static void ShowPicture(void);
 
 void ObjectSetup(void)
 {
-    Process *process;
+    HUPROCESS *process;
 
     process = omInitObjMan(0x32, 0x2000);
     omGameSysInit(process);
@@ -565,7 +565,7 @@ static void MainProc(void)
     s32 var_r31;
     StaffData *var_r30;
     s32 var_r29;
-    Process *var_r28;
+    HUPROCESS *var_r28;
     s32 var_r27;
     float var_f29;
     float var_f30;

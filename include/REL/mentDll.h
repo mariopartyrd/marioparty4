@@ -36,16 +36,16 @@ s32 fn_1_1DD8(s32 arg0, s32 arg1, s32 arg2);
 s32 fn_1_2154(s32 arg0);
 void fn_1_2318(s32 arg0);
 void fn_1_2808(void (*arg0)(void));
-void fn_1_2844(Process *arg0, void (*arg1)(void));
+void fn_1_2844(HUPROCESS *arg0, void (*arg1)(void));
 void fn_1_29A0(MentDllUnkBss64Struct *arg0);
 void fn_1_4138(MentDllUnkBss64Struct *arg0, MentDllUnkBss64Struct *arg1, float arg8, float arg9, float argA);
 void fn_1_5150(MentDllUnkBss64Struct *arg0, MentDllUnkBss64Struct *arg1, float arg8, float arg9, float argA);
-void fn_1_5818(omObjData *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_59A0(omObjData *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_5C08(omObjData *arg0);
-void fn_1_5CDC(omObjData *arg0, s32 arg1, s32 arg2);
-void fn_1_5D38(omObjData *arg0, s32 arg1, Vec arg2, float arg8, float arg9, float argA, s32 arg3, s32 arg4);
+void fn_1_5818(OMOBJ *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_59A0(OMOBJ *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_5C08(OMOBJ *arg0);
+void fn_1_5CDC(OMOBJ *arg0, s32 arg1, s32 arg2);
+void fn_1_5D38(OMOBJ *arg0, s32 arg1, Vec arg2, float arg8, float arg9, float argA, s32 arg3, s32 arg4);
 void fn_1_6534(s32, s32, float, float);
-void fn_1_658C(Process *arg0);
+void fn_1_658C(HUPROCESS *arg0);
 
 #endif

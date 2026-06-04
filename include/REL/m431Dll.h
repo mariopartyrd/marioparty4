@@ -36,7 +36,7 @@ typedef struct bss_61C_work {
     Vec unk18;
     Vec unk24;
     float unk30;
-    omObjFunc unk34;
+    OMOBJFUNC unk34;
     s16 unk38;
     s16 unk3A;
 #if VERSION_PAL
@@ -117,7 +117,7 @@ typedef struct work_72B4 {
 
 extern s32 lbl_1_bss_4;
 extern Bss12CStruct lbl_1_bss_12C[4];
-extern omObjData *lbl_1_bss_61C[4];
+extern OMOBJ *lbl_1_bss_61C[4];
 extern float lbl_1_data_1D0;
 
 void fn_1_2000(s16 arg0);
@@ -133,7 +133,7 @@ void fn_1_5B70(float arg0, float arg1, float arg2, s16 arg3, unkHook72B4Data18 a
 void fn_1_6184(Vec *arg0, Bss12CInner *arg1);
 float fn_1_6504(float arg0, float arg1, float arg2);
 
-void fn_1_7ABC(Process *objman);
+void fn_1_7ABC(HUPROCESS *objman);
 s32 fn_1_7FB8(s16 arg0);
 void fn_1_A7D0(s16 arg0);
 void fn_1_A904(s16 arg0);

@@ -7,7 +7,7 @@
 
 s32 fn_1_7754(SeqWork *arg0, char *mess);
 void fn_1_7C00(void);
-void fn_1_7D6C(Process *arg0);
+void fn_1_7D6C(HUPROCESS *arg0);
 s32 fn_1_97D0(s32 arg0, s32 arg1);
 void fn_1_11020(void);
 void fn_1_111E0(void);

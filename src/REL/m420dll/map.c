@@ -114,9 +114,9 @@ static const s32 lbl_1_rodata_360[0x1B] = {
     DATA_MAKE_NUM(DATADIR_M420, 0x13),
 };
 
-Process *lbl_1_bss_A40;
-Process *lbl_1_bss_A3C;
-Process *lbl_1_bss_A2C[4];
+HUPROCESS *lbl_1_bss_A40;
+HUPROCESS *lbl_1_bss_A3C;
+HUPROCESS *lbl_1_bss_A2C[4];
 s32 lbl_1_bss_A28;
 s16 lbl_1_bss_9F0[0x1C];
 s16 lbl_1_bss_9EE;
@@ -416,7 +416,7 @@ s32 fn_1_4964(void)
 
 void fn_1_596C(void)
 {
-    Process *var_r30;
+    HUPROCESS *var_r30;
     s32 var_r31;
 
     for (var_r31 = 0; var_r31 < 4; var_r31++) {

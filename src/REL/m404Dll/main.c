@@ -82,10 +82,10 @@ typedef struct UnkM404Struct3 {
     s32 unk78[91];
 } UnkM404Struct3; // size 0x1E4
 
-omObjData *lbl_1_bss_58;
-omObjData *lbl_1_bss_54;
-omObjData *lbl_1_bss_50;
-omObjData *lbl_1_bss_4C;
+OMOBJ *lbl_1_bss_58;
+OMOBJ *lbl_1_bss_54;
+OMOBJ *lbl_1_bss_50;
+OMOBJ *lbl_1_bss_4C;
 s32 lbl_1_bss_48;
 s32 lbl_1_bss_38[4];
 s32 lbl_1_bss_28[4];
@@ -210,39 +210,39 @@ Vec lbl_1_data_78C = { 1500.0f, 3000.0f, -200.0f };
 Vec lbl_1_data_798 = { 0.0f, 1.0f, 0.0f };
 
 s32 fn_1_E48(void);
-void fn_1_39C(omObjData *object);
-void fn_1_400(omObjData *object);
-void fn_1_784(omObjData *object);
-void fn_1_7E0(omObjData *object);
-void fn_1_A9C(omObjData *object);
-void fn_1_D00(Process *arg0);
+void fn_1_39C(OMOBJ *object);
+void fn_1_400(OMOBJ *object);
+void fn_1_784(OMOBJ *object);
+void fn_1_7E0(OMOBJ *object);
+void fn_1_A9C(OMOBJ *object);
+void fn_1_D00(HUPROCESS *arg0);
 void fn_1_DEC(void);
 void fn_1_1160(void);
-void fn_1_1344(omObjData *object);
-void fn_1_1AFC(omObjData *object);
+void fn_1_1344(OMOBJ *object);
+void fn_1_1AFC(OMOBJ *object);
 float fn_1_2EBC(float arg0[], float arg8);
-void fn_1_4C7C(omObjData *object);
-void fn_1_44A0(omObjData *object);
-void fn_1_4F4C(omObjData *object);
-void fn_1_5278(omObjData *object);
-void fn_1_5598(Process *arg0);
-void fn_1_553C(omObjData *object);
+void fn_1_4C7C(OMOBJ *object);
+void fn_1_44A0(OMOBJ *object);
+void fn_1_4F4C(OMOBJ *object);
+void fn_1_5278(OMOBJ *object);
+void fn_1_5598(HUPROCESS *arg0);
+void fn_1_553C(OMOBJ *object);
 void fn_1_55F0(void);
-void fn_1_55F4(omObjData *object);
-void fn_1_57A0(omObjData *object);
+void fn_1_55F4(OMOBJ *object);
+void fn_1_57A0(OMOBJ *object);
 void fn_1_58E4(HU3DMODEL *modelData, Mtx arg1);
 ANIMDATA *fn_1_5D64(u16 arg0, u16 arg1, s32 arg2);
 void fn_1_5E74(ANIMDATA *arg0, u16 arg1, u16 arg2, u16 arg3);
 u16 fn_1_607C(ANIMDATA *arg0, u16 arg1, u16 arg2);
 s32 fn_1_6248(void *arg0, s32 arg1);
-void fn_1_6440(omObjData *object);
+void fn_1_6440(OMOBJ *object);
 void fn_1_648C(s32 arg0, s32 arg1, float arg8);
-void fn_1_66DC(omObjData *object);
+void fn_1_66DC(OMOBJ *object);
 
 void ObjectSetup(void)
 {
     HU3DCAMERA *var_r30;
-    Process *var_r31;
+    HUPROCESS *var_r31;
     s16 var_r29;
 
     var_r30 = Hu3DCamera;
@@ -284,15 +284,15 @@ s32 fn_1_38C(void)
     return lbl_1_bss_48;
 }
 
-void fn_1_39C(omObjData *object)
+void fn_1_39C(OMOBJ *object)
 {
     fn_1_37C(0);
     lbl_1_bss_24 = REFRESH_RATE;
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
-    object->func = fn_1_400;
+    object->objFunc = fn_1_400;
 }
 
-void fn_1_400(omObjData *object)
+void fn_1_400(OMOBJ *object)
 {
     switch (fn_1_38C()) {
         case 0:
@@ -371,18 +371,18 @@ void fn_1_400(omObjData *object)
                 break;
             }
             WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
-            object->func = fn_1_784;
+            object->objFunc = fn_1_784;
             break;
         default:
             break;
     }
     if (omSysExitReq && !WipeStatGet()) {
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
-        object->func = fn_1_784;
+        object->objFunc = fn_1_784;
     }
 }
 
-void fn_1_784(omObjData *object)
+void fn_1_784(OMOBJ *object)
 {
     if (!WipeStatGet()) {
         fn_1_DEC();
@@ -444,13 +444,13 @@ s32 lbl_1_data_8FC[][2] = {
     { DATA_MAKE_NUM(DATADIR_M404, 0x17), DATA_MAKE_NUM(DATADIR_M404, 0x18) },
 };
 
-void fn_1_7E0(omObjData *object)
+void fn_1_7E0(OMOBJ *object)
 {
     UnkM404Struct *var_r31;
     u32 var_r30;
     s32 var_r29;
     UnkM404Struct *var_r27;
-    omObjData **var_r26;
+    OMOBJ **var_r26;
 
     var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM404Struct) * 4, MEMORY_DEFAULT_NUM);
     object->data = var_r31;
@@ -471,7 +471,7 @@ void fn_1_7E0(omObjData *object)
                     espTPLvlSet(var_r31->unk_02[var_r30], 0.5f);
                     break;
                 case 2:
-#if defined(NON_MATCHING) 
+#if defined(NON_MATCHING)
                     // TODO 1 or 0?
                     var_r31->unk_02[var_r30] = espEntry(lbl_1_data_86C[var_r27->unk_02[5]], 0, 0);
 #else
@@ -495,16 +495,16 @@ void fn_1_7E0(omObjData *object)
     }
 
     HuDataDirClose(DATADIR_MGCONST);
-    object->func = fn_1_A9C;
+    object->objFunc = fn_1_A9C;
 }
 
-void fn_1_A9C(omObjData *object)
+void fn_1_A9C(OMOBJ *object)
 {
     s32 var_r31;
     UnkM404Struct *var_r30;
     s32 var_r29;
     UnkM404Struct3 *var_r28;
-    omObjData **var_r27;
+    OMOBJ **var_r27;
 
     var_r30 = object->data;
     switch (fn_1_38C()) {
@@ -545,7 +545,7 @@ void fn_1_CD0(void)
     HuMemDirectFree(lbl_1_bss_4C->data);
 }
 
-void fn_1_D00(Process *process)
+void fn_1_D00(HUPROCESS *process)
 {
     s32 var_r31;
 
@@ -562,7 +562,7 @@ void fn_1_D00(Process *process)
 void fn_1_DEC(void)
 {
     s32 var_r31;
-    omObjData **var_r30;
+    OMOBJ **var_r30;
 
     var_r30 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
 
@@ -574,7 +574,7 @@ void fn_1_DEC(void)
 s32 fn_1_E48(void)
 {
     s32 var_r31;
-    omObjData **var_r30;
+    OMOBJ **var_r30;
     UnkM404Struct3 *var_r29;
 
     var_r30 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
@@ -591,7 +591,7 @@ s32 fn_1_E48(void)
     return 1;
 }
 
-u16 fn_1_ED4(omObjData *object)
+u16 fn_1_ED4(OMOBJ *object)
 {
     UnkM404Struct3 *var_r31;
     s32 var_r30;
@@ -610,7 +610,7 @@ u16 fn_1_ED4(omObjData *object)
     return var_r28;
 }
 
-s32 fn_1_F70(omObjData *object, float arg8)
+s32 fn_1_F70(OMOBJ *object, float arg8)
 {
     UnkM404Struct3 *var_r31;
     s32 var_r30;
@@ -654,7 +654,7 @@ void fn_1_1160(void)
     s32 var_r31;
     s32 var_r30;
     UnkM404Struct3 *var_r29;
-    omObjData **var_r28;
+    OMOBJ **var_r28;
     s32 var_r27;
     s32 var_r26;
     UnkM404Struct3 *var_r25;
@@ -695,7 +695,7 @@ void fn_1_1160(void)
     }
 }
 
-void fn_1_1344(omObjData *object)
+void fn_1_1344(OMOBJ *object)
 {
     UnkM404Struct3 *var_r31;
     s32 var_r29;
@@ -712,30 +712,30 @@ void fn_1_1344(omObjData *object)
     var_r31->unk_0C = var_r24 = GWPlayerCfg[var_r31->unk_02].character;
     var_r31->unk_0E = GWPlayerCfg[var_r31->unk_02].diff;
     var_r31->unk_10 = GWPlayerCfg[var_r31->unk_02].group;
-    object->model[0] = CharModelCreate(var_r24, 2);
-    Hu3DModelShadowSet(object->model[0]);
-    object->model[1] = Hu3DModelCreateFile(lbl_1_data_8B8[var_r24]);
-    Hu3DModelHookSet(object->model[0], "test11_tex_we-itemhook-r", object->model[1]);
+    object->mdlId[0] = CharModelCreate(var_r24, 2);
+    Hu3DModelShadowSet(object->mdlId[0]);
+    object->mdlId[1] = Hu3DModelCreateFile(lbl_1_data_8B8[var_r24]);
+    Hu3DModelHookSet(object->mdlId[0], "test11_tex_we-itemhook-r", object->mdlId[1]);
     var_r31->unk_2C = 0;
 
     for (var_r29 = 0; var_r29 < (u32)5; var_r29++) {
         if (!lbl_1_data_890[var_r29][1]) {
-            object->motion[var_r29] = CharMotionCreate(var_r31->unk_0C, lbl_1_data_890[var_r29][0]);
+            object->mtnId[var_r29] = CharMotionCreate(var_r31->unk_0C, lbl_1_data_890[var_r29][0]);
         }
         else {
-            object->motion[var_r29] = CharMotionCreate(var_r31->unk_0C, var_r31->unk_0C + lbl_1_data_890[var_r29][0]);
+            object->mtnId[var_r29] = CharMotionCreate(var_r31->unk_0C, var_r31->unk_0C + lbl_1_data_890[var_r29][0]);
         }
     }
-    Hu3DMotionSet(object->model[0], object->motion[0]);
-    Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_LOOP | HU3D_MOTATTR_OVL_LOOP | HU3D_MOTATTR_OVL_PAUSE);
-    CharMotionVoiceOnSet(var_r24, object->motion[1], 0);
+    Hu3DMotionSet(object->mdlId[0], object->mtnId[0]);
+    Hu3DModelAttrSet(object->mdlId[0], HU3D_MOTATTR_LOOP | HU3D_MOTATTR_OVL_LOOP | HU3D_MOTATTR_OVL_PAUSE);
+    CharMotionVoiceOnSet(var_r24, object->mtnId[1], 0);
     object->trans.x = -90.0f;
     object->trans.y = 0.0f;
     object->trans.z = -450.0f + (300.0f * var_r31->unk_02);
     object->rot.y = 90.0f;
-    object->model[2] = Hu3DHookFuncCreate(fn_1_58E4);
-    Hu3DModelPosSet(object->model[2], 0.0f, object->trans.y, object->trans.z);
-    var_r22 = &Hu3DData[object->model[2]];
+    object->mdlId[2] = Hu3DHookFuncCreate(fn_1_58E4);
+    Hu3DModelPosSet(object->mdlId[2], 0.0f, object->trans.y, object->trans.z);
+    var_r22 = &Hu3DData[object->mdlId[2]];
     var_r22->hookData = object;
     var_r31->unk_4C = fn_1_5D64(960, 64, 1);
     var_r31->unk_48 = 4096;
@@ -749,7 +749,7 @@ void fn_1_1344(omObjData *object)
     var_r31->unk_40 = HuSprAnimReadFile(lbl_1_data_8FC[lbl_1_bss_1C][1]);
     var_r31->unk_50 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M404, 0x19));
     DCFlushRangeNoSync(var_r31->unk_50->bmp->data, (var_r31->unk_50->bmp->pixSize * (var_r31->unk_50->bmp->sizeX * var_r31->unk_50->bmp->sizeY)) / 8);
-    Hu3DMotionOverlaySet(object->model[0], object->motion[2]);
+    Hu3DMotionOverlaySet(object->mdlId[0], object->mtnId[2]);
     object->trans.y = 1500.0f;
     var_r31->unk_38 = var_r31->unk_02 * REFRESH_RATE / 2;
     CharModelDataClose(var_r31->unk_0C);
@@ -777,10 +777,10 @@ void fn_1_1344(omObjData *object)
     }
     var_r31->unk_14 = 90.0f;
     var_r31->unk_74 = -1;
-    object->func = fn_1_1AFC;
+    object->objFunc = fn_1_1AFC;
 }
 
-void fn_1_1AFC(omObjData *object)
+void fn_1_1AFC(OMOBJ *object)
 {
     UnkM404Struct3 *var_r31;
 
@@ -805,7 +805,7 @@ void fn_1_1AFC(omObjData *object)
                 return;
             }
             var_r31->unk_24 = 0.0f;
-            object->func = fn_1_44A0;
+            object->objFunc = fn_1_44A0;
             return;
         }
         if (var_r31->unk_38 == 0) {
@@ -951,7 +951,7 @@ float fn_1_3E2C(float arg8, float arg9, float argA) // same as in REL/m402Dll
     return var_f30;
 }
 
-void fn_1_3F30(omObjData *object)
+void fn_1_3F30(OMOBJ *object)
 {
     float var_f24;
     float var_f23;
@@ -992,7 +992,7 @@ void fn_1_445C(int seId, s16 vol)
     msmSeSetParam(seId, &param);
 }
 
-void fn_1_44A0(omObjData *object)
+void fn_1_44A0(OMOBJ *object)
 {
     Vec sp8;
     float var_f31;
@@ -1005,7 +1005,7 @@ void fn_1_44A0(omObjData *object)
     var_r31 = object->data;
     var_r28 = -1;
     if (fn_1_38C() == 6) {
-        object->func = fn_1_4C7C;
+        object->objFunc = fn_1_4C7C;
     }
     if (fn_1_38C() == 3 && !var_r31->unk_00_field0) {
         switch (var_r31->unk_12) {
@@ -1032,18 +1032,18 @@ void fn_1_44A0(omObjData *object)
                     else {
                         CharMotionSpeedSet(var_r31->unk_0C, -0.5f);
                     }
-                    Hu3DMotionOverlaySpeedSet(object->model[0], Hu3DData[object->model[0]].motWork.speed);
+                    Hu3DMotionOverlaySpeedSet(object->mdlId[0], Hu3DData[object->mdlId[0]].motWork.speed);
                     if (var_r31->unk_2C == 0) {
-                        Hu3DModelAttrReset(object->model[0], HU3D_MOTATTR_OVL_PAUSE);
-                        Hu3DMotionOverlayTimeSet(object->model[0], 0.0f);
+                        Hu3DModelAttrReset(object->mdlId[0], HU3D_MOTATTR_OVL_PAUSE);
+                        Hu3DMotionOverlayTimeSet(object->mdlId[0], 0.0f);
                     }
                 }
                 else {
                     var_r31->unk_20 = var_r31->unk_28 = 0.0f;
                     var_r28 = 0;
                     CharMotionSpeedSet(var_r31->unk_0C, 1.0f);
-                    Hu3DMotionOverlayTimeSet(object->model[0], 0.0f);
-                    Hu3DModelAttrSet(object->model[0], HU3D_MOTATTR_OVL_PAUSE);
+                    Hu3DMotionOverlayTimeSet(object->mdlId[0], 0.0f);
+                    Hu3DModelAttrSet(object->mdlId[0], HU3D_MOTATTR_OVL_PAUSE);
                 }
                 sp8.x = object->trans.x;
                 sp8.z = object->trans.z;
@@ -1067,7 +1067,7 @@ void fn_1_44A0(omObjData *object)
                     HuAudFXStop(var_r31->unk_74);
                     var_r31->unk_74 = -1;
                 }
-                var_r29 = &Hu3DData[object->model[2]];
+                var_r29 = &Hu3DData[object->mdlId[2]];
                 if (object->trans.z < (var_r29->pos.z - 100.0f)) {
                     object->trans.z = var_r29->pos.z - 100.0f;
                 }
@@ -1080,8 +1080,8 @@ void fn_1_44A0(omObjData *object)
                     var_r31->unk_2C = -1;
                     var_r28 = 1;
                     CharMotionSpeedSet(var_r31->unk_0C, 1.0f);
-                    Hu3DMotionOverlayReset(object->model[0]);
-                    Hu3DModelAttrSet(object->model[1], HU3D_ATTR_DISPOFF);
+                    Hu3DMotionOverlayReset(object->mdlId[0]);
+                    Hu3DModelAttrSet(object->mdlId[1], HU3D_ATTR_DISPOFF);
                     if (var_r31->unk_74 >= 0) {
                         HuAudFXStop(var_r31->unk_74);
                         var_r31->unk_74 = -1;
@@ -1117,12 +1117,12 @@ void fn_1_44A0(omObjData *object)
         }
         if (var_r28 >= 0 && var_r28 != var_r31->unk_2C) {
             var_r31->unk_2C = var_r28;
-            CharMotionShiftSet(var_r31->unk_0C, object->motion[var_r31->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
+            CharMotionShiftSet(var_r31->unk_0C, object->mtnId[var_r31->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
         }
     }
 }
 
-void fn_1_4C7C(omObjData *object)
+void fn_1_4C7C(OMOBJ *object)
 {
     UnkM404Struct3 *var_r30;
 
@@ -1131,16 +1131,16 @@ void fn_1_4C7C(omObjData *object)
     object->trans.z = -450.0f + (300.0f * var_r30->unk_02);
     object->rot.y = 0.0f;
     var_r30->unk_2C = -1;
-    CharMotionShiftSet(var_r30->unk_0C, *object->motion, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
+    CharMotionShiftSet(var_r30->unk_0C, *object->mtnId, 0.0f, 5.0f, HU3D_MOTATTR_LOOP);
     var_r30->unk_5A = 0;
     var_r30->unk_5C = fn_1_F70(object, 1.0f);
     var_r30->unk_5A = 0;
     var_r30->unk_54 = 0;
     var_r30->unk_74 = -1;
-    object->func = fn_1_4F4C;
+    object->objFunc = fn_1_4F4C;
 }
 
-void fn_1_4F4C(omObjData *object)
+void fn_1_4F4C(OMOBJ *object)
 {
     UnkM404Struct3 *var_r30;
     s32 var_r29;
@@ -1166,11 +1166,11 @@ void fn_1_4F4C(omObjData *object)
         else {
             var_r30->unk_2C = 4;
         }
-        CharMotionShiftSet(var_r30->unk_0C, object->motion[var_r30->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
+        CharMotionShiftSet(var_r30->unk_0C, object->mtnId[var_r30->unk_2C], 0.0f, 5.0f, HU3D_MOTATTR_NONE);
     }
 }
 
-void fn_1_5278(omObjData *object)
+void fn_1_5278(OMOBJ *object)
 {
     float var_f31;
     UnkM404Struct3 *var_r31;
@@ -1182,7 +1182,7 @@ void fn_1_5278(omObjData *object)
     u16 var_r25;
 
     var_r31 = object->data;
-    var_r27 = &Hu3DData[object->model[2]];
+    var_r27 = &Hu3DData[object->mdlId[2]];
     var_f31 = ((90.0f + object->trans.x) - var_r27->pos.x) / 3000.0f;
     var_f30 = (object->trans.z - (var_r27->pos.z - 100.0f)) / 200.0f;
 
@@ -1198,7 +1198,7 @@ void fn_1_5278(omObjData *object)
     DCFlushRangeNoSync(var_r31->unk_4C->bmp->data, var_r31->unk_4C->bmp->dataSize);
 }
 
-void fn_1_553C(omObjData *object)
+void fn_1_553C(OMOBJ *object)
 {
     UnkM404Struct3 *var_r30;
 
@@ -1210,7 +1210,7 @@ void fn_1_553C(omObjData *object)
     }
 }
 
-void fn_1_5598(Process *arg0)
+void fn_1_5598(HUPROCESS *arg0)
 {
     omMakeGroupEx(arg0, 1, 1);
     omAddObjEx(arg0, 10, 7, 0, 1, fn_1_55F4);
@@ -1235,25 +1235,25 @@ s32 lbl_1_data_9AC[][2] = { { 8, 4 }, { 7, 8 }, { 6, 8 }, { 5, 16 }, { 2, 16 }, 
 s32 lbl_1_data_9DC[] = { 8, 8, 8, 4, 4, 4 };
 s32 lbl_1_data_9F4[] = { 8, 8, 8, 4, 4, 4 };
 
-void fn_1_55F4(omObjData *object)
+void fn_1_55F4(OMOBJ *object)
 {
     s32 var_r30;
 
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M404, 0x09));
-    object->model[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M404, 0x0A));
-    Hu3DModelAttrSet(object->model[1], HU3D_MOTATTR_LOOP);
-    object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M404, 0x00));
-    Hu3DModelShadowMapSet(object->model[2]);
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M404, 0x09));
+    object->mdlId[1] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M404, 0x0A));
+    Hu3DModelAttrSet(object->mdlId[1], HU3D_MOTATTR_LOOP);
+    object->mdlId[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M404, 0x00));
+    Hu3DModelShadowMapSet(object->mdlId[2]);
 
     for (var_r30 = 0; var_r30 < 4; var_r30++) {
-        object->model[var_r30 + 3] = Hu3DModelCreateFile(lbl_1_data_930[GWPlayerCfg[var_r30].character]);
-        Hu3DModelPosSet(object->model[var_r30 + 3], 0.0f, 0.0f, lbl_1_data_99C[var_r30]);
-        Hu3DAnimCreate(HuSprAnimReadFile(lbl_1_data_950[GWPlayerCfg[var_r30].character]), object->model[2], lbl_1_data_98C[var_r30]);
+        object->mdlId[var_r30 + 3] = Hu3DModelCreateFile(lbl_1_data_930[GWPlayerCfg[var_r30].character]);
+        Hu3DModelPosSet(object->mdlId[var_r30 + 3], 0.0f, 0.0f, lbl_1_data_99C[var_r30]);
+        Hu3DAnimCreate(HuSprAnimReadFile(lbl_1_data_950[GWPlayerCfg[var_r30].character]), object->mdlId[2], lbl_1_data_98C[var_r30]);
     }
-    object->func = fn_1_57A0;
+    object->objFunc = fn_1_57A0;
 }
 
-void fn_1_57A0(omObjData *object) { }
+void fn_1_57A0(OMOBJ *object) { }
 
 void fn_1_57A4(s32 arg0, GXColor *arg1)
 {
@@ -1267,7 +1267,7 @@ void fn_1_58E4(HU3DMODEL *modelData, Mtx arg1)
 {
     GXTexObj sp3C;
     UnkM404Struct3 *var_r31;
-    omObjData *var_r30;
+    OMOBJ *var_r30;
     s32 var_r29;
 
     var_r30 = modelData->hookData;
@@ -1453,10 +1453,10 @@ s32 fn_1_6248(void *arg0, s32 arg1)
     return var_r31;
 }
 
-void fn_1_6440(omObjData *object)
+void fn_1_6440(OMOBJ *object)
 {
     fn_1_648C(0, 0, 0.0f);
-    object->func = fn_1_66DC;
+    object->objFunc = fn_1_66DC;
 }
 
 void fn_1_648C(s32 arg0, s32 arg1, float arg8)
@@ -1470,7 +1470,7 @@ void fn_1_648C(s32 arg0, s32 arg1, float arg8)
     CRot.z = lbl_1_data_738[arg0].unk_18 + arg8 * (lbl_1_data_738[arg1].unk_18 - lbl_1_data_738[arg0].unk_18);
 }
 
-void fn_1_66DC(omObjData *object)
+void fn_1_66DC(OMOBJ *object)
 {
     HU3DCAMERA *var_r31;
 

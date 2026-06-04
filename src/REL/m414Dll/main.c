@@ -113,17 +113,17 @@ s32 lbl_1_bss_930[2];
 float lbl_1_bss_920[4];
 float lbl_1_bss_910[4];
 UnkM414BssF0Struct lbl_1_bss_F0[4];
-Process *lbl_1_bss_E0[4];
-Process *lbl_1_bss_DC;
+HUPROCESS *lbl_1_bss_E0[4];
+HUPROCESS *lbl_1_bss_DC;
 Vec lbl_1_bss_A0[5];
 Vec lbl_1_bss_64[5];
 Vec lbl_1_bss_28[5];
-omObjData *lbl_1_bss_24;
+OMOBJ *lbl_1_bss_24;
 Vec lbl_1_bss_18;
 Vec lbl_1_bss_C;
 Vec lbl_1_bss_0;
 
-void fn_1_91C(omObjData *object);
+void fn_1_91C(OMOBJ *object);
 void fn_1_1388(HU3DMODEL *arg0, HU3DPARTICLE *arg1, Mtx arg2);
 void fn_1_13C4(HU3DMODEL *arg0, HU3DPARTICLE *arg1, Mtx arg2);
 void fn_1_1400(HU3DMODEL *arg0, HU3DPARTICLE *arg1, Mtx arg2);
@@ -179,7 +179,7 @@ void ObjectSetup(void)
 {
     s32 var_r31;
     s32 var_r30;
-    Process *var_r29;
+    HUPROCESS *var_r29;
     s32 var_r28;
     s32 var_r27;
     s32 var_r26;
@@ -262,7 +262,7 @@ void ObjectSetup(void)
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
 }
 
-void fn_1_91C(omObjData *object)
+void fn_1_91C(OMOBJ *object)
 {
     s32 var_r31;
 
@@ -309,7 +309,7 @@ void fn_1_CD8(s32 arg0, s32 arg1, float arg8)
 {
     UnkM414Struct3 sp14;
     UnkM414Struct3 *var_r31;
-    Process *var_r30;
+    HUPROCESS *var_r30;
 
     var_r31 = &sp14;
     var_r30 = HuPrcChildCreate(fn_1_B84, 8192, 8192, 0, HuPrcCurrentGet());
@@ -608,7 +608,7 @@ void fn_1_1E04(void)
     s32 var_r29;
     s32 var_r28;
     void *var_r27;
-    Process *var_r26;
+    HUPROCESS *var_r26;
     ANIMDATA *var_r25;
     s16 var_r24;
     s16 var_r23;
@@ -991,7 +991,7 @@ void fn_1_3D48(s32 arg0, s32 arg1)
 {
     UnkM414BssF0Struct *var_r31;
     s32 var_r30;
-    Process *var_r29;
+    HUPROCESS *var_r29;
     s32 var_r28;
 
     var_r31 = &lbl_1_bss_F0[arg0];
@@ -1729,7 +1729,7 @@ void fn_1_6644(void)
     UnkM414Struct2 sp8C;
 
     UnkM414BssF0Struct *var_r31;
-    Process *var_r30;
+    HUPROCESS *var_r30;
     s32 var_r29;
     s32 var_r28;
 
@@ -1991,7 +1991,7 @@ void fn_1_79A8(void)
     s32 var_r30;
     s32 var_r29;
     UnkM414BssF0Struct *var_r28;
-    Process *var_r27;
+    HUPROCESS *var_r27;
 
     HuAudFXPlay(lbl_1_data_8C[lbl_1_bss_978]);
     HuPrcSleep(REFRESH_RATE);
@@ -2196,7 +2196,7 @@ void fn_1_88D4(void)
 
 void fn_1_894C(void)
 {
-    Process *sp8[4];
+    HUPROCESS *sp8[4];
 
     s32 var_r31;
     s32 var_r30;
@@ -2251,7 +2251,7 @@ void fn_1_8A70(void)
     s16 var_r28;
     s16 var_r27;
     s32 var_r26;
-    Process *var_r25;
+    HUPROCESS *var_r25;
     s16 var_r24;
     UnkM414BssF0Struct *var_r23;
     s32 var_r22;

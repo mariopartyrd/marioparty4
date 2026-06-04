@@ -37,19 +37,19 @@ typedef struct M430DllMainWork {
     s32 unk_34;
 } M430DllMainWork; /* size = 0x38 */
 
-void fn_1_10FC(omObjData *object);
-void fn_1_168C(omObjData *object);
-void fn_1_1B04(omObjData *object);
-void fn_1_21E4(omObjData *object);
-void fn_1_2710(omObjData *object);
-omObjFunc fn_1_2D48(Process *process, omObjData *object);
-void fn_1_2E80(omObjData *object);
-omObjFunc fn_1_369C(Process *arg1, omObjData *object);
-void fn_1_3768(omObjData *object);
+void fn_1_10FC(OMOBJ *object);
+void fn_1_168C(OMOBJ *object);
+void fn_1_1B04(OMOBJ *object);
+void fn_1_21E4(OMOBJ *object);
+void fn_1_2710(OMOBJ *object);
+OMOBJFUNC fn_1_2D48(HUPROCESS *process, OMOBJ *object);
+void fn_1_2E80(OMOBJ *object);
+OMOBJFUNC fn_1_369C(HUPROCESS *arg1, OMOBJ *object);
+void fn_1_3768(OMOBJ *object);
 s32 fn_1_4030(void);
-void fn_1_65C(omObjData *object);
-void fn_1_A54(omObjData *arg0);
-void fn_1_B98(omObjData *object);
+void fn_1_65C(OMOBJ *object);
+void fn_1_A54(OMOBJ *arg0);
+void fn_1_B98(OMOBJ *object);
 
 Vec lbl_1_data_0 = { 100.0f, 800.0f, -100.0f };
 Vec lbl_1_data_C = { 0.3f, -0.8f, 0.3f };
@@ -59,9 +59,9 @@ Vec lbl_1_data_28 = { 50.0f, 150000.0f, 50.0f };
 Vec lbl_1_data_34 = { 0.0f, 1.0f, 0.0f };
 Vec lbl_1_data_40 = { 0.0f, 0.0f, 0.0f };
 
-Process *lbl_1_bss_38;
-omObjData *lbl_1_bss_34;
-omObjData *lbl_1_bss_30;
+HUPROCESS *lbl_1_bss_38;
+OMOBJ *lbl_1_bss_34;
+OMOBJ *lbl_1_bss_30;
 s16 lbl_1_bss_2C;
 char lbl_1_bss_28[4];
 s16 lbl_1_bss_26;
@@ -93,7 +93,7 @@ void ObjectSetup(void)
     Mtx sp20;
     Vec sp14;
     Vec sp8;
-    Process *var_r31;
+    HUPROCESS *var_r31;
     HU3DLIGHT *var_r30;
 
     HuAudSndGrpSet(0x37);
@@ -156,7 +156,7 @@ void ObjectSetup(void)
 #endif
 }
 
-void fn_1_65C(omObjData *object)
+void fn_1_65C(OMOBJ *object)
 {
     M430DllMainWork *work;
 
@@ -175,10 +175,10 @@ void fn_1_65C(omObjData *object)
     work->unk_2C = 0;
     work->unk_30 = 0;
     work->unk_34 = 0;
-    object->func = fn_1_B98;
+    object->objFunc = fn_1_B98;
 }
 
-void fn_1_720(omObjData *object)
+void fn_1_720(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     work->unk_04++;
@@ -209,7 +209,7 @@ void fn_1_720(omObjData *object)
     }
 }
 
-void fn_1_A54(omObjData *object)
+void fn_1_A54(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     if (work->unk_08 == 0) {
@@ -219,41 +219,41 @@ void fn_1_A54(omObjData *object)
                 lbl_1_bss_18 = 0;
                 work->unk_00 = 1;
                 work->unk_10 = 0;
-                object->func = fn_1_2D48(lbl_1_bss_38, object);
+                object->objFunc = fn_1_2D48(lbl_1_bss_38, object);
                 break;
             case 1:
                 work->unk_00 = 2;
                 work->unk_18 = 0;
-                object->func = fn_1_1B04;
+                object->objFunc = fn_1_1B04;
                 break;
             case 2:
                 work->unk_00 = 3;
                 work->unk_28 = 0;
-                object->func = fn_1_369C(lbl_1_bss_38, object);
+                object->objFunc = fn_1_369C(lbl_1_bss_38, object);
                 break;
             case 3:
             case 4:
                 work->unk_08 = 1;
                 work->unk_00 = 5;
-                object->func = fn_1_10FC;
+                object->objFunc = fn_1_10FC;
                 break;
             case 5:
             default:
                 work->unk_00 = 5;
-                object->func = fn_1_168C;
+                object->objFunc = fn_1_168C;
                 break;
         }
         work->unk_04 = 0;
     }
 }
 
-void fn_1_B98(omObjData *object)
+void fn_1_B98(OMOBJ *object)
 {
     fn_1_720(object);
     fn_1_A54(object);
 }
 
-void fn_1_10FC(omObjData *object)
+void fn_1_10FC(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     fn_1_720(object);
@@ -266,7 +266,7 @@ void fn_1_10FC(omObjData *object)
     }
 }
 
-void fn_1_168C(omObjData *object)
+void fn_1_168C(OMOBJ *object)
 {
     fn_1_720(object);
     if (WipeStatGet() == 0) {
@@ -278,7 +278,7 @@ void fn_1_168C(omObjData *object)
     }
 }
 
-void fn_1_1B04(omObjData *object)
+void fn_1_1B04(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     fn_1_720(object);
@@ -317,14 +317,14 @@ void fn_1_1B04(omObjData *object)
                     lbl_1_bss_2C = MGSeqCreate(1, work->unk_1C, -1, -1);
                     work->unk_14 = 2;
                     work->unk_18 = 0;
-                    object->func = fn_1_21E4;
+                    object->objFunc = fn_1_21E4;
                 }
             }
             break;
     }
 }
 
-void fn_1_21E4(omObjData *object)
+void fn_1_21E4(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     s32 var_r27 = 0;
@@ -344,13 +344,13 @@ void fn_1_21E4(omObjData *object)
         work->unk_14 = 3;
         work->unk_18 = 0;
         if (work->unk_08 == 0) {
-            object->func = fn_1_2710;
+            object->objFunc = fn_1_2710;
         }
     }
     MGSeqParamSet(lbl_1_bss_2C, 1, work->unk_1C);
 }
 
-void fn_1_2710(omObjData *object)
+void fn_1_2710(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     if (lbl_1_bss_2C >= 0) {
@@ -375,7 +375,7 @@ void fn_1_2710(omObjData *object)
     }
 }
 
-omObjFunc fn_1_2D48(Process *process, omObjData *object)
+OMOBJFUNC fn_1_2D48(HUPROCESS *process, OMOBJ *object)
 {
     CenterM->x = CenterM[1].x = 0.0f;
     CenterM->y = CenterM[1].y = 300.0f;
@@ -389,7 +389,7 @@ omObjFunc fn_1_2D48(Process *process, omObjData *object)
     return fn_1_2E80;
 }
 
-void fn_1_2E80(omObjData *object)
+void fn_1_2E80(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     fn_1_720(object);
@@ -416,7 +416,7 @@ void fn_1_2E80(omObjData *object)
     }
 }
 
-omObjFunc fn_1_369C(Process *arg0, omObjData *object)
+OMOBJFUNC fn_1_369C(HUPROCESS *arg0, OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
     s32 spC = 0;
@@ -433,7 +433,7 @@ omObjFunc fn_1_369C(Process *arg0, omObjData *object)
     return fn_1_3768;
 }
 
-void fn_1_3768(omObjData *object)
+void fn_1_3768(OMOBJ *object)
 {
     M430DllMainWork *work = object->data;
 
