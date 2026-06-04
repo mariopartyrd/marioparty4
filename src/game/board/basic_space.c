@@ -253,7 +253,7 @@ s8 BoardCoinChgCreate(Vec *pos, s8 value) {
     coinChgObj[i] = obj;
 
     // Setup and create object
-    coin_chg = OM_GET_WORK_PTR(obj, coinChg);
+    coin_chg = omObjGetWork(obj, coinChg);
     coin_chg->kill = 0;
     coin_chg->update = 0;
     coin_chg->minus = (value < 0) ? 1 : 0;
@@ -305,7 +305,7 @@ s32 BoardCoinChgKillCheck(s32 num) {
     // If Coin Change object at num exists, return 0
     if (coinChgObj[num - 1] != 0) {
         // possibly removed debug info for displaying object information
-        coin_chg = OM_GET_WORK_PTR(coinChgObj[num - 1], coinChg);
+        coin_chg = omObjGetWork(coinChgObj[num - 1], coinChg);
         return 0;
     }
 
@@ -331,7 +331,7 @@ void BoardCoinChgKill(s32 num) {
 
     // If object exists, mark it for deletion
     if (coinChgObj[num - 1] != 0) {
-        OM_GET_WORK_PTR(coinChgObj[num - 1], coinChg)->kill = 1;
+        omObjGetWork(coinChgObj[num - 1], coinChg)->kill = 1;
     }
 }
 
@@ -435,7 +435,7 @@ static void CreateCoinChg(coinChg *coin_chg, Vec *pos) {
 static void UpdateCoinChg(OMOBJ *object) {
     coinChg *coin_chg;
 
-    coin_chg = OM_GET_WORK_PTR(object, coinChg);
+    coin_chg = omObjGetWork(object, coinChg);
 
     // If the Coin Change object should be killed,
     // kill all models that exist, and clear value in array

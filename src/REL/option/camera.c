@@ -44,7 +44,7 @@ static s32 pad_04_00000018_data = -1;
 OMOBJ *OptionCameraCreate(void)
 {
     OMOBJ *object = omAddObjEx(optionObjMan, 1001, 0, 0, 3, ExecCameraObj);
-    CameraWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(CameraWork), MEMORY_DEFAULT_NUM);
+    CameraWork *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(CameraWork), HU_MEMNUM_OVL);
     object->data = work;
     work->pos.x = 0.0f;
     work->pos.y = 0.0f;

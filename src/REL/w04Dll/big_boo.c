@@ -1157,7 +1157,7 @@ static s16 fn_1_9F50(void) {
     s16 temp_r3_2;
 
     if (lbl_1_bss_100 == NULL) {
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 1), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 1), HU_MEMNUM_OVL, HEAP_MODEL);
         lbl_1_bss_100 = HuSprAnimRead(var_r29);
         HuSprAnimLock(lbl_1_bss_100);
     }

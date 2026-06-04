@@ -289,31 +289,31 @@ void fn_1_550(void)
     sp20.y = -0.5f;
     sp20.z = -1.0f;
     HuAudFXListnerSetEX(&sp2C, &sp20, 10000.0f, 34.0f*(1.0f/REFRESH_RATE), 0.0f, 300.0f, 300.0f);
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 24), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 24), HU_MEMNUM_OVL, HEAP_MODEL);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelLayerSet(var_r30, 0);
     Hu3DModelShadowMapSet(var_r30);
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 25), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 25), HU_MEMNUM_OVL, HEAP_MODEL);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
     temp_r24 = omAddObjEx(lbl_1_bss_54, 0x100, 1, 0, -1, fn_1_510);
     MapObject[nMap++] = temp_r24;
     temp_r24->mdlId[0] = var_r30;
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 26), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 26), HU_MEMNUM_OVL, HEAP_MODEL);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelLayerSet(var_r30, 0);
     Hu3DModelShadowSet(var_r30);
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 27), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 27), HU_MEMNUM_OVL, HEAP_MODEL);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelLayerSet(var_r30, 0);
     Hu3DModelShadowMapSet(var_r30);
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 28), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 28), HU_MEMNUM_OVL, HEAP_MODEL);
     var_r30 = Hu3DModelCreate(var_r29);
     Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
     temp_r24 = omAddObjEx(lbl_1_bss_54, 0x100, 1, 0, -1, fn_1_510);
     MapObject[nMap++] = temp_r24;
     temp_r24->mdlId[0] = var_r30;
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 100), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 100), HU_MEMNUM_OVL, HEAP_MODEL);
     lbl_1_bss_6E0 = Hu3DModelCreate(var_r29);
     Hu3DModelAttrSet(lbl_1_bss_6E0, HU3D_ATTR_DISPOFF);
     for (i = 0; i < 8; i++) {
@@ -321,11 +321,11 @@ void fn_1_550(void)
         temp_r26->unk14 = i;
         temp_r26->unk30 = 0;
         var_r23 = DATA_MAKE_NUM(DATADIR_M445, 38 + i * 5);
-        var_r29 = HuDataSelHeapReadNum(var_r23, MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(var_r23, HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         temp_r26->unk00 = var_r30;
         for (j = 0, var_r23++; j < 3; j++) {
-            var_r29 = HuDataSelHeapReadNum(var_r23++, MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(var_r23++, HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r26->unk02[j] = Hu3DJointMotion(var_r30, var_r29);
         }
         Hu3DModelShadowSet(var_r30);
@@ -338,24 +338,24 @@ void fn_1_550(void)
         temp_r26->unk50[1] = lbl_1_data_D0[i][0];
         temp_r26->unk58[1] = lbl_1_data_D0[i][1];
         if (i == 5) {
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 81), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 81), HU_MEMNUM_OVL, HEAP_MODEL);
             lbl_1_bss_6E2 = Hu3DJointMotion(var_r30, var_r29);
             Hu3DMotionSet(var_r30, lbl_1_bss_6E2);
             Hu3DMotionTimeSet(var_r30, 61.0f);
             Hu3DModelAttrSet(var_r30, HU3D_MOTATTR_PAUSE);
         }
         if (i == 6) {
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 78), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 78), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r26->unk0E = Hu3DJointMotion(var_r30, var_r29);
         }
         if (i == 7) {
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 79), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 79), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r26->unk0E = Hu3DJointMotion(var_r30, var_r29);
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 80), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 80), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r26->unk10 = Hu3DJointMotion(var_r30, var_r29);
         }
         temp_r26->unk18 = nMap;
-        var_r29 = HuDataSelHeapReadNum(var_r23, MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(var_r23, HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
         temp_r24 = MapObject[nMap++] = omAddObjEx(lbl_1_bss_54, 0x100, 1, 0, -1, fn_1_510);
@@ -371,35 +371,35 @@ void fn_1_550(void)
         temp_r25 = &lbl_1_bss_58[i];
         temp_r25->unk2C = i;
         temp_r25->unk30 = -1;
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 82), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 82), HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         temp_r25->unk00 = var_r30;
         for (j = 0; j < 4; j++) {
-            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 83), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 83), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r25->unk08[j] = Hu3DJointMotion(var_r30, var_r29);
         }
         Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 82), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 82), HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         temp_r25->unk04 = var_r30;
         for (j = 0; j < 4; j++) {
-            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 87), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 87), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r25->unk08[j + 4] = Hu3DJointMotion(var_r30, var_r29);
         }
         Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 91), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 91), HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         temp_r25->unk02 = var_r30;
         for (j = 0; j < 4; j++) {
-            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 92), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 92), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r25->unk08[j + 8] = Hu3DJointMotion(var_r30, var_r29);
         }
         Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 91), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 91), HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         temp_r25->unk06 = var_r30;
         for (j = 0; j < 4; j++) {
-            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 96), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 96), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r25->unk08[j + 12] = Hu3DJointMotion(var_r30, var_r29);
         }
         Hu3DModelAttrSet(var_r30, HU3D_ATTR_DISPOFF);
@@ -413,7 +413,7 @@ void fn_1_550(void)
             temp_r31->unk00 = CharModelCreate(lbl_1_data_0[GWPlayerCfg[i].character], 2);
         }
         else {
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 29), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 29), HU_MEMNUM_OVL, HEAP_MODEL);
             temp_r31->unk00 = Hu3DModelCreate(var_r29);
         }
         Hu3DModelLayerSet(temp_r31->unk00, 0);
@@ -446,14 +446,14 @@ void fn_1_550(void)
         Hu3DModelPosSet(temp_r31->unk00, temp_r31->unk34, temp_r31->unk38, temp_r31->unk3C);
         Hu3DModelRotSet(temp_r31->unk00, temp_r31->unk48, temp_r31->unk4C, temp_r31->unk50);
         Hu3DModelShadowSet(temp_r31->unk00);
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 37), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 37), HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         temp_r31->unk06 = var_r30;
         Hu3DModelLayerSet(var_r30, 0);
         Hu3DModelShadowSet(var_r30);
         Hu3DModelPosSet(var_r30, lbl_1_data_60[i].x, lbl_1_data_60[i].y, lbl_1_data_60[i].z);
         Hu3DModelRotSet(var_r30, lbl_1_data_78[i].x, lbl_1_data_78[i].y, lbl_1_data_78[i].z);
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 101), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 101), HU_MEMNUM_OVL, HEAP_MODEL);
         var_r30 = Hu3DModelCreate(var_r29);
         temp_r31->unk02 = var_r30;
         Hu3DMotionSpeedSet(var_r30, 1.4f);
@@ -471,7 +471,7 @@ void fn_1_550(void)
         }
         else {
             for (j = 0; j < 7; j++) {
-                var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 30), MEMORY_DEFAULT_NUM, HEAP_DATA);
+                var_r29 = HuDataSelHeapReadNum(j + DATA_MAKE_NUM(DATADIR_M445, 30), HU_MEMNUM_OVL, HEAP_MODEL);
                 temp_r31->unk08[j] = Hu3DJointMotion(temp_r31->unk00, var_r29);
             }
             Hu3DMotionSet(temp_r31->unk00, temp_r31->unk08[0]);
@@ -480,18 +480,18 @@ void fn_1_550(void)
         }
         Hu3DModelAttrSet(temp_r31->unk00, HU3D_MOTATTR_LOOP);
         if (i == 0) {
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 22), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 22), HU_MEMNUM_OVL, HEAP_MODEL);
             sp38[0] = HuSprAnimRead(var_r29);
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 23), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 23), HU_MEMNUM_OVL, HEAP_MODEL);
             sp38[1] = HuSprAnimRead(var_r29);
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 51), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 51), HU_MEMNUM_OVL, HEAP_MODEL);
             sp38[3] = HuSprAnimRead(var_r29);
         }
         if (fn_1_520(temp_r31->unk18) == FALSE) {
-            var_r29 = HuDataSelHeapReadNum(GWPlayerCfg[i].character + DATADIR_MGCONST, MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(GWPlayerCfg[i].character + DATADIR_MGCONST, HU_MEMNUM_OVL, HEAP_MODEL);
         }
         else {
-            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 102), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M445, 102), HU_MEMNUM_OVL, HEAP_MODEL);
         }
         sp38[2] = HuSprAnimRead(var_r29);
         temp_r31->unk04 = HuSprGrpCreate(5);
@@ -521,7 +521,7 @@ void fn_1_550(void)
         var_r22 = HuPrcChildCreate(fn_1_6268, 0x2000, 0x3000, 0, HuPrcCurrentGet());
         var_r22->user_data = temp_r31;
     }
-    var_r20 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 3), MEMORY_DEFAULT_NUM));
+    var_r20 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 3), HU_MEMNUM_OVL));
     var_r30 = Hu3DParticleCreate(var_r20, 3);
     Hu3DModelPosSet(var_r30, 0.0f, 0.0f, 0.0f);
     Hu3DModelScaleSet(var_r30, 1.0f, 1.0f, 1.0f);

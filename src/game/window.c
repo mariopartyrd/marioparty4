@@ -171,30 +171,30 @@ void HuWinInit(s32 mess_data_no)
         }
         if (!fontAnim) {
             if (LanguageNo == 0) {
-                anim_data = HuDataReadNum(WIN_FONTJ_ANM, MEMORY_DEFAULT_NUM);
+                anim_data = HuDataReadNum(WIN_FONTJ_ANM, HU_MEMNUM_OVL);
             }
             else {
-                anim_data = HuDataReadNum(WIN_FONTE_ANM, MEMORY_DEFAULT_NUM);
+                anim_data = HuDataReadNum(WIN_FONTE_ANM, HU_MEMNUM_OVL);
             }
             fontAnim = HuSprAnimRead(anim_data);
         }
         if (!iconAnim) {
-            anim_data = HuDataReadNum(WIN_ICON_ANM, MEMORY_DEFAULT_NUM);
+            anim_data = HuDataReadNum(WIN_ICON_ANM, HU_MEMNUM_OVL);
             iconAnim = HuSprAnimRead(anim_data);
             HuSprAnimLock(iconAnim);
         }
         if (!cursorAnim) {
-            anim_data = HuDataReadNum(WIN_CURSOR_ANM, MEMORY_DEFAULT_NUM);
+            anim_data = HuDataReadNum(WIN_CURSOR_ANM, HU_MEMNUM_OVL);
             cursorAnim = HuSprAnimRead(anim_data);
             HuSprAnimLock(cursorAnim);
         }
         if (!cardAnimA) {
-            anim_data = HuDataReadNum(WIN_CARDA_ANM, MEMORY_DEFAULT_NUM);
+            anim_data = HuDataReadNum(WIN_CARDA_ANM, HU_MEMNUM_OVL);
             cardAnimA = HuSprAnimRead(anim_data);
             HuSprAnimLock(cardAnimA);
         }
         if (!cardAnimB) {
-            anim_data = HuDataReadNum(WIN_CARDB_ANM, MEMORY_DEFAULT_NUM);
+            anim_data = HuDataReadNum(WIN_CARDB_ANM, HU_MEMNUM_OVL);
             cardAnimB = HuSprAnimRead(anim_data);
             HuSprAnimLock(cardAnimB);
         }
@@ -244,7 +244,7 @@ s16 HuWinCreate(float x, float y, s16 w, s16 h, s16 frame)
     }
     HuSprGrpCenterSet(group, w / 2, h / 2);
     HuSprGrpPosSet(group, window->pos_x, window->pos_y);
-    frame_data = HuAR_ARAMtoMRAMFileRead(frameFileTbl[frame], MEMORY_DEFAULT_NUM, HEAP_DATA);
+    frame_data = HuAR_ARAMtoMRAMFileRead(frameFileTbl[frame], HU_MEMNUM_OVL, HEAP_MODEL);
     window->frame = HuSprAnimRead(frame_data);
     sprite = window->sprite_id[0] = HuSprCreate(window->frame, winPrio, 0);
     HuSprGrpMemberSet(group, 0, sprite);
@@ -262,7 +262,7 @@ s16 HuWinCreate(float x, float y, s16 w, s16 h, s16 frame)
 #else
     window->max_chars = (w / 8) * (h / 24) * 4;
 #endif
-    window->char_data = HuMemDirectMalloc(HEAP_SYSTEM, window->max_chars * sizeof(WinChar));
+    window->char_data = HuMemDirectMalloc(HEAP_HEAP, window->max_chars * sizeof(WinChar));
     window->attr = 0;
     window->stat = 0;
     window->unk8C = 0;
@@ -485,7 +485,7 @@ static u8 winBGMake(ANIMDATA *bg, ANIMDATA *frame)
     h = bg->bmp->sizeY;
     block_w = (w + 7) & 0xF8;
     block_h = (h + 3) & 0xFC;
-    bmp_data = bg->bmp->data = HuMemDirectMallocNum(HEAP_SYSTEM, block_w * block_h, MEMORY_DEFAULT_NUM);
+    bmp_data = bg->bmp->data = HuMemDirectMallocNum(HEAP_HEAP, block_w * block_h, HU_MEMNUM_OVL);
     for (i = 0; i < h; i++) {
         if (i == 0) {
             for (j = 0; j < w; j++) {
@@ -1306,7 +1306,7 @@ void HuWinMesRead(s32 mess_data_no)
     mess_path = mesDataTbl[messDataNo + (LanguageNo * 2)];
 #endif
     dvd_mess = HuDvdDataRead(mess_path);
-    messDataPtr = HuMemDirectMalloc(HEAP_SYSTEM, DirDataSize);
+    messDataPtr = HuMemDirectMalloc(HEAP_HEAP, DirDataSize);
     memcpy(messDataPtr, dvd_mess, DirDataSize);
     HuMemDirectFree(dvd_mess);
 }
@@ -1898,7 +1898,7 @@ static void HuWinExCreatePortrait(s16 window, s16 portrait, float x, float y)
     WindowData *window_ptr;
     void *data;
 
-    data = HuAR_ARAMtoMRAMFileRead(winPortraitTbl[portrait], MEMORY_DEFAULT_NUM, 2);
+    data = HuAR_ARAMtoMRAMFileRead(winPortraitTbl[portrait], HU_MEMNUM_OVL, 2);
     anim = HuSprAnimRead(data);
     window_ptr = &winData[window];
     sprite = HuSprCreate(anim, window_ptr->prio - 1, 0);

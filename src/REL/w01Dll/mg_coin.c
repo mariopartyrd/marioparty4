@@ -186,7 +186,7 @@ void SpaceAmidaExec(void)
     BoardPlayerPosGet(spaceAmidaPlayerNo, &pos);
     spaceAmidaMainObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, SpaceAmidaMainUpdate);
     spaceAmidaGameObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, SpaceAmidaGameOpen);
-    spaceAmidaGameObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(SpaceAmidaGameWork), MEMORY_DEFAULT_NUM);
+    spaceAmidaGameObj->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(SpaceAmidaGameWork), HU_MEMNUM_OVL);
     gameObjWork = spaceAmidaGameObj->data;
     gameObjWork->unk02 = 0;
     gameObjWork->rocketPos = rocketPos;
@@ -197,7 +197,7 @@ void SpaceAmidaExec(void)
     Hu3DModelAttrSet(kemuriMdlId, HU3D_ATTR_DISPOFF);
     for (i = 0; i < 3; i++) {
         rocketObj[i] = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, SpaceAmidaRocketObjUpdate);
-        rocketObj[i]->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(RocketWork), MEMORY_DEFAULT_NUM);
+        rocketObj[i]->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(RocketWork), HU_MEMNUM_OVL);
         rocketObj[i]->work[0] = rocketMdlId[i];
         rocketObj[i]->work[1] = 0;
         rocketObj[i]->work[3] = 0;
@@ -893,7 +893,7 @@ static void SpaceAmidaEffCreate(void)
 {
     spaceAmidaEffAnim = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_W01, 20));
     spaceAmidaEffObj = omAddObjEx(boardObjMan, 0x101, 1, 0, -1, SpaceAmidaEffUpdate);
-    spaceAmidaEffObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, 12, MEMORY_DEFAULT_NUM);
+    spaceAmidaEffObj->data = HuMemDirectMallocNum(HEAP_HEAP, 12, HU_MEMNUM_OVL);
     spaceAmidaEffObj->mdlId[0] = Hu3DParticleCreate(spaceAmidaEffAnim, 0x320);
     Hu3DParticleColSet(spaceAmidaEffObj->mdlId[0], 255, 0, 0);
     Hu3DParticleScaleSet(spaceAmidaEffObj->mdlId[0], 5.0f);

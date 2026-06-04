@@ -60,7 +60,7 @@ void BoardModelInit(void)
 {
     ModelMgrWork *work;
     s32 i;
-    modelDataList = HuMemDirectMallocNum(HEAP_SYSTEM, BOARD_MODEL_MAX * sizeof(BoardModel), MEMORY_DEFAULT_NUM);
+    modelDataList = HuMemDirectMallocNum(HEAP_HEAP, BOARD_MODEL_MAX * sizeof(BoardModel), HU_MEMNUM_OVL);
     reflectMapNo = 0;
     modelDataNum = 0;
     memset(modelDataList, 0, BOARD_MODEL_MAX * sizeof(BoardModel));
@@ -69,7 +69,7 @@ void BoardModelInit(void)
         modelDataList[i].visible = 0;
     }
     modelMgrObj = omAddObjEx(boardObjMan, 32258, 0, 0, -1, ModelMgrFunc);
-    work = OM_GET_WORK_PTR(modelMgrObj, ModelMgrWork);
+    work = omObjGetWork(modelMgrObj, ModelMgrWork);
     work->kill = 0;
     omSetStatBit(modelMgrObj, OM_STAT_NOPAUSE | 0x80);
 }
@@ -77,7 +77,7 @@ void BoardModelInit(void)
 void BoardModelKillAll(void)
 {
     if (modelMgrObj) {
-        ModelMgrWork *work = OM_GET_WORK_PTR(modelMgrObj, ModelMgrWork);
+        ModelMgrWork *work = omObjGetWork(modelMgrObj, ModelMgrWork);
         work->kill = 1;
     }
     if (modelDataList) {
@@ -94,7 +94,7 @@ void BoardModelKillAll(void)
 
 static void ModelMgrFunc(OMOBJ *object)
 {
-    ModelMgrWork *work = OM_GET_WORK_PTR(modelMgrObj, ModelMgrWork);
+    ModelMgrWork *work = omObjGetWork(modelMgrObj, ModelMgrWork);
     if (work->kill || BoardIsKill()) {
         modelMgrObj = NULL;
         omDelObjEx(HuPrcCurrentGet(), object);
@@ -384,7 +384,7 @@ s32 BoardModelMotionCreate(s16 model, s32 data_num)
             }
         }
         if (model_ptr->character == -1) {
-            model_ptr->mot_data[i] = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
+            model_ptr->mot_data[i] = HuDataSelHeapReadNum(data_num, HU_MEMNUM_OVL, HEAP_MODEL);
             if (!model_ptr->mot_data[i]) {
                 return -1;
             }
@@ -1191,10 +1191,10 @@ static s32 CreateBoardModel(BoardModel *model, s32 data_num, s32 link)
         }
     }
     if (model->character == -1) {
-        model->data = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
+        model->data = HuDataSelHeapReadNum(data_num, HU_MEMNUM_OVL, HEAP_MODEL);
         if (!model->data) {
             s32 size_data, size_dvd;
-            size_data = HuMemHeapSizeGet(HEAP_DATA) - HuMemUsedMallocSizeGet(HEAP_DATA);
+            size_data = HuMemHeapSizeGet(HEAP_MODEL) - HuMemUsedMallocSizeGet(HEAP_MODEL);
             size_dvd = HuMemHeapSizeGet(HEAP_DVD) - HuMemUsedMallocSizeGet(HEAP_DVD);
             return -1;
         }
@@ -1231,7 +1231,7 @@ static s32 CreateBoardModelMotion(BoardModel *model, s32 count, s32 *data_num)
     for (i = 0; i < count; i++) {
         s16 index;
         if (model->character == -1) {
-            data = HuDataSelHeapReadNum(data_num[i], MEMORY_DEFAULT_NUM, HEAP_DATA);
+            data = HuDataSelHeapReadNum(data_num[i], HU_MEMNUM_OVL, HEAP_MODEL);
             if (!data) {
                 return -1;
             }

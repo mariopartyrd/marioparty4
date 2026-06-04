@@ -462,7 +462,7 @@ void fn_1_6C74(OMOBJ *object)
     s32 var_r31;
     M453MapUnkStruct *var_r29;
 
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x54, 0x10000000);
+    var_r29 = HuMemDirectMallocNum(HEAP_HEAP, 0x54, 0x10000000);
     object->data = var_r29;
     memset(object->data, 0, 0x54);
     for (var_r31 = 0; var_r31 < 0xC; var_r31++) {

@@ -166,7 +166,7 @@ unkStruct8 *m446PlayerCreate(s32 arg0, unkStruct6 *arg1)
     s32 var_r30;
     unkStruct8 *var_r31;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xCC, MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, 0xCC, HU_MEMNUM_OVL);
     if (!var_r31) {
         return NULL;
     }

@@ -153,7 +153,7 @@ static void FortuneMain(void)
 	_SetFlag(0x1000E);
 	BoardCameraPosCalcFuncSet(NULL);
 	if(fortunePlatformObj) {
-		OM_GET_WORK_PTR(fortunePlatformObj, PlatformWork)->kill = 1;
+		omObjGetWork(fortunePlatformObj, PlatformWork)->kill = 1;
 	}
 	while(fortunePlatformObj) {
 		HuPrcVSleep();
@@ -205,7 +205,7 @@ static void CreateFortunePlatform(void)
 	Vec pos, rot;
 	PlatformWork *work;
 	fortunePlatformObj = omAddObjEx(boardObjMan, 257, 0, 0, -1, ExecFortunePlatform);
-	work = OM_GET_WORK_PTR(fortunePlatformObj, PlatformWork);
+	work = omObjGetWork(fortunePlatformObj, PlatformWork);
 	work->kill = 0;
 	work->unk02 = 0;
 	work->model = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 3), NULL, 0);
@@ -231,7 +231,7 @@ static void CameraCalcFortune(BoardCameraData *camera)
 
 static void ExecFortunePlatform(OMOBJ *object)
 {
-	PlatformWork *work = OM_GET_WORK_PTR(object, PlatformWork);
+	PlatformWork *work = omObjGetWork(object, PlatformWork);
 	if(work->kill || BoardIsKill()) {
 		Vec pos;
 		fortunePlatformObj = NULL;

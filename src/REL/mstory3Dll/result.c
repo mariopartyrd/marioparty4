@@ -172,13 +172,13 @@ void fn_1_159A4(void) {
 }
 
 void fn_1_15C0C(void) {
-    lbl_1_bss_18EC[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 95), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_18EC[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 96), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_18D8[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 93), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_18D8[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 94), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_18D8[2] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 97), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_18E4[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 136), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_18E4[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 137), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_18EC[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 95), HU_MEMNUM_OVL));
+    lbl_1_bss_18EC[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 96), HU_MEMNUM_OVL));
+    lbl_1_bss_18D8[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 93), HU_MEMNUM_OVL));
+    lbl_1_bss_18D8[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 94), HU_MEMNUM_OVL));
+    lbl_1_bss_18D8[2] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 97), HU_MEMNUM_OVL));
+    lbl_1_bss_18E4[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 136), HU_MEMNUM_OVL));
+    lbl_1_bss_18E4[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 137), HU_MEMNUM_OVL));
 }
 
 void fn_1_15D08(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
@@ -777,7 +777,7 @@ void fn_1_1811C(OMOBJ* arg0, s32 arg1) {
     s32 i;
 
     arg0->work[0] = HuSprGrpCreate(1);
-    var_r29 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 75) + arg1, MEMORY_DEFAULT_NUM)), 1000, 0);
+    var_r29 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 75) + arg1, HU_MEMNUM_OVL)), 1000, 0);
     HuSprGrpMemberSet(arg0->work[0], 0, var_r29);
     // TODO: figure out the actual args of this fn_1_15D08 call.
     // It will match as long as the values (arg2 + arg4 / 2) and (arg3 + arg5 / 2) are preserved.
@@ -848,40 +848,40 @@ void fn_1_18668(OMOBJ* arg0, s32 arg1) {
     // TODO: figure out the actual args of fn_1_15D08 calls.
     // It will match as long as the values (arg2 + arg4 / 2) and (arg3 + arg5 / 2) are preserved.
     arg0->work[1] = HuSprGrpCreate(8);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 116), MEMORY_DEFAULT_NUM)), 900, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 116), HU_MEMNUM_OVL)), 900, 0);
     HuSprGrpMemberSet(arg0->work[1], 0, var_r30);
     fn_1_15D08(arg0->work[1], 0, 368, 171, 0, 0);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 117), MEMORY_DEFAULT_NUM)), 600, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 117), HU_MEMNUM_OVL)), 600, 0);
     HuSprGrpMemberSet(arg0->work[1], 1, var_r30);
     fn_1_15D08(arg0->work[1], 1, 292, 168, 0, 0);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 118), MEMORY_DEFAULT_NUM)), 500, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 118), HU_MEMNUM_OVL)), 500, 0);
     HuSprGrpMemberSet(arg0->work[1], 2, var_r30);
     fn_1_15D08(arg0->work[1], 2, 292, 168, 0, 0);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 119), MEMORY_DEFAULT_NUM)), 500, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 119), HU_MEMNUM_OVL)), 500, 0);
     HuSprGrpMemberSet(arg0->work[1], 3, var_r30);
     fn_1_15D08(arg0->work[1], 3, 292, 168, 0, 0);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(arg1 + DATA_MAKE_NUM(DATADIR_MSTORY3, 110), MEMORY_DEFAULT_NUM)), 500, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(arg1 + DATA_MAKE_NUM(DATADIR_MSTORY3, 110), HU_MEMNUM_OVL)), 500, 0);
     HuSprGrpMemberSet(arg0->work[1], 4, var_r30);
     fn_1_15D08(arg0->work[1], 4, 96, 53, 0, 0);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 138), MEMORY_DEFAULT_NUM)), 500, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 138), HU_MEMNUM_OVL)), 500, 0);
     HuSprGrpMemberSet(arg0->work[1], 5, var_r30);
     fn_1_15D08(arg0->work[1], 5, 407, 37, 0, 0);
     for (i = 0; i < 2; i++) {
-        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 139), MEMORY_DEFAULT_NUM)), 500, 0);
+        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 139), HU_MEMNUM_OVL)), 500, 0);
         HuSprGrpMemberSet(arg0->work[1], i + 6, var_r30);
     }
     // TODO: figure out the actual value of arg7. It will match as long as arg7 >= 2.
     fn_1_15DC8(arg0->work[1], 6, lbl_1_bss_1A0C.unk08, 293, 19, 36, 36, 2);
     arg0->work[2] = HuSprGrpCreate(2);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 120), MEMORY_DEFAULT_NUM)), 800, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 120), HU_MEMNUM_OVL)), 800, 0);
     HuSprGrpMemberSet(arg0->work[2], 0, var_r30);
     fn_1_15D08(arg0->work[2], 0, 34, 119, 0, 0);
-    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 121), MEMORY_DEFAULT_NUM)), 400, 0);
+    var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 121), HU_MEMNUM_OVL)), 400, 0);
     HuSprGrpMemberSet(arg0->work[2], 1, var_r30);
     fn_1_15D08(arg0->work[2], 1, 36, 121, 0, 0);
     arg0->work[3] = HuSprGrpCreate(12);
     for (i = 0; i < 12; i++) {
-        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(i + DATA_MAKE_NUM(DATADIR_MSTORY3, 124), MEMORY_DEFAULT_NUM)), 700, 0);
+        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(i + DATA_MAKE_NUM(DATADIR_MSTORY3, 124), HU_MEMNUM_OVL)), 700, 0);
         HuSprGrpMemberSet(arg0->work[3], i, var_r30);
         fn_1_15D08(arg0->work[3], i, i * 66, 16, 58, 0);
     }
@@ -1149,13 +1149,13 @@ void fn_1_1A008(OMOBJ* arg0, s32 arg1) {
         spCC = 10;
         spC8 = 65;
         if (arg1 <= 1) {
-            var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 81), MEMORY_DEFAULT_NUM)), 900, 0);
+            var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 81), HU_MEMNUM_OVL)), 900, 0);
         } else {
-            var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 82), MEMORY_DEFAULT_NUM)), 900, 0);
+            var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 82), HU_MEMNUM_OVL)), 900, 0);
         }
         HuSprGrpMemberSet(arg0->work[0], 0, var_r30);
         fn_1_15D08(arg0->work[0], 0, 40, spD0 + 36, 0, 0);
-        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 85) + temp_r27->unk10, MEMORY_DEFAULT_NUM)), 900, 0);
+        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 85) + temp_r27->unk10, HU_MEMNUM_OVL)), 900, 0);
         HuSprGrpMemberSet(arg0->work[0], 1, var_r30);
         if (arg1 % 2 == 0) {
             fn_1_15D08(arg0->work[0], 1, 119, spD0 + 34, 0, 0);
@@ -1237,10 +1237,10 @@ void fn_1_1A008(OMOBJ* arg0, s32 arg1) {
             fn_1_15DC8(arg0->work[0], 9, var_r29, 340, spC8 + 11, 26, 36, 0);
         }
     } else {
-        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 81) + temp_r27->unk18, MEMORY_DEFAULT_NUM)), 900, 0);
+        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 81) + temp_r27->unk18, HU_MEMNUM_OVL)), 900, 0);
         HuSprGrpMemberSet(arg0->work[0], 0, var_r30);
         fn_1_15D08(arg0->work[0], 0, 25, 37, 0, 0);
-        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 85) + temp_r27->unk10, MEMORY_DEFAULT_NUM)), 900, 0);
+        var_r30 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 85) + temp_r27->unk10, HU_MEMNUM_OVL)), 900, 0);
         HuSprGrpMemberSet(arg0->work[0], 1, var_r30);
         fn_1_15D08(arg0->work[0], 1, 87, 29, 0, 0);
         var_r30 = HuSprCreate(lbl_1_bss_18D8[0], 900, 0);
@@ -1361,7 +1361,7 @@ void fn_1_1C534(OMOBJ* arg0, s32 arg1) {
 
     temp_r25 = &lbl_1_bss_1A0C.unk38[arg1];
     arg0->work[1] = HuSprGrpCreate(1);
-    var_r22 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 122), MEMORY_DEFAULT_NUM)), 700, 0);
+    var_r22 = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY3, 122), HU_MEMNUM_OVL)), 700, 0);
     HuSprGrpMemberSet(arg0->work[1], 0, var_r22);
     HuSprBankSet(arg0->work[1], 0, temp_r25->unk10);
     // TODO: figure out the actual args of this fn_1_15D08 call.

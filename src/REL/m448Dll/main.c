@@ -158,9 +158,9 @@ void fn_1_38C(void)
 {
     lbl_1_bss_64 = GXGetTexBufferSize(640, 480, GX_TF_RGB565, GX_FALSE, 0);
     lbl_1_bss_60 = GXGetTexBufferSize(160, 120, GX_TF_RGB565, GX_FALSE, 0);
-    lbl_1_bss_28 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_64, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_28 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_64, HU_MEMNUM_OVL);
     memset(lbl_1_bss_28, 0, lbl_1_bss_64);
-    lbl_1_bss_2C = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_60, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_2C = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_60, HU_MEMNUM_OVL);
     memset(lbl_1_bss_2C, 0, lbl_1_bss_60);
 }
 
@@ -1640,7 +1640,7 @@ void fn_1_81C0(OMOBJ *arg0)
             }
         }
     }
-    arg0->mdlId[5] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M448, 30), MEMORY_DEFAULT_NUM)), 70);
+    arg0->mdlId[5] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M448, 30), HU_MEMNUM_OVL)), 70);
     Hu3DModelPosSet(arg0->mdlId[5], 0.0f, 0.0f, 0.0f);
     Hu3DModelScaleSet(arg0->mdlId[5], 1.0f, 1.0f, 1.0f);
     Hu3DModelLayerSet(arg0->mdlId[5], 3);
@@ -1777,9 +1777,9 @@ void fn_1_9508(OMOBJ *arg0)
     lbl_1_bss_74 = 0;
     lbl_1_bss_64 = GXGetTexBufferSize(640, 480, GX_TF_RGB565, GX_FALSE, 0);
     lbl_1_bss_60 = GXGetTexBufferSize(160, 120, GX_TF_RGB565, GX_FALSE, 0U);
-    lbl_1_bss_28 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_64, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_28 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_64, HU_MEMNUM_OVL);
     memset(lbl_1_bss_28, 0, lbl_1_bss_64);
-    lbl_1_bss_2C = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_60, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_2C = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_60, HU_MEMNUM_OVL);
     memset(lbl_1_bss_2C, 0, lbl_1_bss_60);
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
     arg0->objFunc = fn_1_7148;
@@ -1839,7 +1839,7 @@ void ObjectSetup(void)
     lbl_1_bss_88 = omAddObjEx(lbl_1_bss_70, 101, 47, 0, 1, fn_1_81C0);
     for (i = 0; i < 2; i++) {
         var_r30 = lbl_1_bss_8C[i] = omAddObjEx(lbl_1_bss_70, 100, 1, 11, 0, fn_1_8DD0);
-        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM448Struct_00), MEMORY_DEFAULT_NUM);
+        var_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM448Struct_00), HU_MEMNUM_OVL);
         var_r30->work[0] = i;
     }
     lbl_1_bss_94 = omAddObjEx(lbl_1_bss_70, 32730, 0, 0, -1, omOutView);

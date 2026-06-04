@@ -535,7 +535,7 @@ void fn_1_1248(OMOBJ *object)
 
 void fn_1_14F8(OMOBJ *object)
 {
-    M453DllWork *var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M453DllWork), MEMORY_DEFAULT_NUM);
+    M453DllWork *var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M453DllWork), HU_MEMNUM_OVL);
     object->data = var_r31;
     var_r31->unk_148 = var_r31->unk_144 = 0.0f;
     var_r31->unk_140 = 1.0f;
@@ -678,7 +678,7 @@ void fn_1_1BF0(OMOBJ *object)
     s32 var_r28;
     u32 var_r27;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M453DllWork2), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M453DllWork2), HU_MEMNUM_OVL);
     object->data = var_r31;
     var_r31->unk_00 = object->work[0];
     var_r31->unk_01 = GWPlayerCfg[var_r31->unk_00].character;

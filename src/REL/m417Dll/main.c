@@ -113,7 +113,7 @@ void fn_1_4D8(OMOBJ *object)
 {
     UnkM417Struct *var_r31;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x68, 268435456);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 0x68, 268435456);
     var_r31 = object->data;
     memset(var_r31, 0, 0x68);
     var_r31->unk_00 = 0;

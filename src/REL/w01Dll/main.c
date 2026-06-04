@@ -811,14 +811,14 @@ static void CoasterCameraObjKill(void)
     CoasterCameraWork *work;
 
     if (coasterCameraObj) {
-        work = OM_GET_WORK_PTR(coasterCameraObj, CoasterCameraWork);
+        work = omObjGetWork(coasterCameraObj, CoasterCameraWork);
         work->killF = TRUE;
     }
 }
 
 static void CoasterCameraObjMain(OMOBJ *obj)
 {
-    CoasterCameraWork *work = OM_GET_WORK_PTR(obj, CoasterCameraWork);
+    CoasterCameraWork *work = omObjGetWork(obj, CoasterCameraWork);
 
     if (work->killF != 0 || BoardIsKill()) {
         omDelObjEx(HuPrcCurrentGet(), obj);
@@ -1120,7 +1120,7 @@ static void CoasterExec(void)
     BoardPlayerPosSetV(eventPlayer, &coasterPos);
     BoardCameraPosCalcFuncSet(CoasterPosCalc);
     coasterCameraObj = omAddObjEx(boardObjMan, 0x7E02, 0, 0, -1, CoasterCameraObjMain);
-    camWork = OM_GET_WORK_PTR(coasterCameraObj, CoasterCameraWork);
+    camWork = omObjGetWork(coasterCameraObj, CoasterCameraWork);
     camWork->killF = FALSE;
     cameraRot.x = -40.0f;
     cameraRot.z = 0.0f;
@@ -1680,7 +1680,7 @@ static void CupObjCreate(void)
     }
     CupMotOnSet(0);
     cupObj = omAddObjEx(boardObjMan, 0x103, 0, 0, -1, CupObjMain);
-    work = OM_GET_WORK_PTR(cupObj, CupObjWork);
+    work = omObjGetWork(cupObj, CupObjWork);
     work->killF = 0;
     work->time = 0;
     work->delay = 0;
@@ -1696,7 +1696,7 @@ static void CupObjCreate(void)
 
 static void CupObjMain(OMOBJ *obj)
 {
-    CupObjWork *work = OM_GET_WORK_PTR(obj, CupObjWork);
+    CupObjWork *work = omObjGetWork(obj, CupObjWork);
 
     if (work->killF != 0 || BoardIsKill()) {
         cupObj = NULL;
@@ -2123,9 +2123,9 @@ static void CoasterPlayerManCreate(void)
     u32 spaceFlag;
 
     coasterPlayerManObj = omAddObjEx(boardObjMan, 0x103, 0, 0, -1, CoasterPlayerManUpdate);
-    work = OM_GET_WORK_PTR(coasterPlayerManObj, CoasterPlayerManWork);
+    work = omObjGetWork(coasterPlayerManObj, CoasterPlayerManWork);
     work->killF = 0;
-    work->player = HuMemDirectMallocNum(HEAP_SYSTEM, 4 * sizeof(CoasterPlayerWork), MEMORY_DEFAULT_NUM);
+    work->player = HuMemDirectMallocNum(HEAP_HEAP, 4 * sizeof(CoasterPlayerWork), HU_MEMNUM_OVL);
     memset(work->player, 0, 4 * sizeof(CoasterPlayerWork));
     coasterChasePlayer = -1;
     coasterPlayerChaseNum = 0;
@@ -2166,13 +2166,13 @@ static void CoasterPlayerManCreate(void)
 static void CoasterPlayerManKill(void)
 {
     if (coasterPlayerManObj) {
-        OM_GET_WORK_PTR(coasterPlayerManObj, CoasterPlayerManWork)->killF = 1;
+        omObjGetWork(coasterPlayerManObj, CoasterPlayerManWork)->killF = 1;
     }
 }
 
 static void CoasterPlayerManUpdate(OMOBJ *obj)
 {
-    CoasterPlayerManWork *work = OM_GET_WORK_PTR(obj, CoasterPlayerManWork);
+    CoasterPlayerManWork *work = omObjGetWork(obj, CoasterPlayerManWork);
     CoasterPlayerWork *workPlayer;
     s32 i;
 
@@ -2538,9 +2538,9 @@ static void CoasterEffCreate(void)
         return;
     }
     coasterEffObj = omAddObjEx(boardObjMan, 0x101, 1, 0, -1, CoasterEffUpdate);
-    work = OM_GET_WORK_PTR(coasterEffObj, CoasterEffWork);
+    work = omObjGetWork(coasterEffObj, CoasterEffWork);
     work->killF = 0;
-    work->data = HuMemDirectMallocNum(HEAP_SYSTEM, 20 * sizeof(CoasterEffData), MEMORY_DEFAULT_NUM);
+    work->data = HuMemDirectMallocNum(HEAP_HEAP, 20 * sizeof(CoasterEffData), HU_MEMNUM_OVL);
     data = work->data;
     for (i = 0; i < 20; data++, i++) {
         data->time = -1;
@@ -2552,7 +2552,7 @@ static void CoasterEffCreate(void)
 static void CoasterEffKill(void)
 {
     if (coasterEffObj) {
-        OM_GET_WORK_PTR(coasterEffObj, CoasterEffWork)->killF = TRUE;
+        omObjGetWork(coasterEffObj, CoasterEffWork)->killF = TRUE;
     }
 }
 
@@ -2561,7 +2561,7 @@ static void CoasterEffUpdate(OMOBJ *obj)
     CoasterEffWork *work;
     s32 i;
 
-    work = OM_GET_WORK_PTR(coasterEffObj, CoasterEffWork);
+    work = omObjGetWork(coasterEffObj, CoasterEffWork);
     if (work->killF != 0 || BoardIsKill()) {
         for (i = 0; i < 20; i++) {
             BoardModelKill(work->data[i].mdlId);

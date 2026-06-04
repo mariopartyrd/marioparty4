@@ -737,7 +737,7 @@ s16 fn_1_71AC(s32 arg0, s16 arg1, HU3DPARTICLEHOOK hook)
     M433DllUnkStruct *var_r27;
     ANIMDATA *var_r25;
 
-    var_r25 = HuSprAnimRead(HuDataReadNum(arg0, MEMORY_DEFAULT_NUM));
+    var_r25 = HuSprAnimRead(HuDataReadNum(arg0, HU_MEMNUM_OVL));
     var_r28 = Hu3DParticleCreate(var_r25, arg1);
     Hu3DParticleHookSet(var_r28, hook);
     var_r30 = Hu3DData[var_r28].hookData;
@@ -774,7 +774,7 @@ void *fn_1_72D4(s32 arg0)
     if (i == 0x20) {
         return NULL;
     }
-    lbl_1_bss_A8[i] = HuMemDirectMallocNum(HEAP_SYSTEM, arg0, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_A8[i] = HuMemDirectMallocNum(HEAP_HEAP, arg0, HU_MEMNUM_OVL);
     memset(lbl_1_bss_A8[i], 0, arg0);
     return lbl_1_bss_A8[i];
 }

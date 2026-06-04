@@ -316,7 +316,7 @@ static void CreatePlayerStart(void) {
         playerOrderOld[i] = i;
         boardObj = omAddObjEx(boardObjMan, 0x100, 0, 0, -1, ExecPlayerStart);
         playerStartObj[i] = boardObj;
-        boardData = OM_GET_WORK_PTR(boardObj, PlayerStartWork);
+        boardData = omObjGetWork(boardObj, PlayerStartWork);
         boardData->isBoardVisible = 0;
         boardData->index = i;
         boardData->_unused = -1;
@@ -350,7 +350,7 @@ static void CreatePlayerStart(void) {
 }
 
 static void ExecPlayerStart(OMOBJ *object) {
-    PlayerStartWork *data = OM_GET_WORK_PTR(object, PlayerStartWork);
+    PlayerStartWork *data = omObjGetWork(object, PlayerStartWork);
 
     if (data->isBoardVisible != 0 || BoardIsKill()) {
         if (hitFX[data->index] != -1) {
@@ -619,7 +619,7 @@ static void SetPlayerStartState(s32 player, s32 state) {
     OMOBJ *object;
 
     object = playerStartObj[player];
-    data = OM_GET_WORK_PTR(object, PlayerStartWork);
+    data = omObjGetWork(object, PlayerStartWork);
     data->state = state;
     data->time = 0;
     data->delay = 0;
@@ -640,7 +640,7 @@ static s32 GetPlayerStartState(s32 player) {
     OMOBJ *object;
 
     object = playerStartObj[player];
-    data = OM_GET_WORK_PTR(object, PlayerStartWork);
+    data = omObjGetWork(object, PlayerStartWork);
     return data->state;
 }
 
@@ -865,8 +865,8 @@ static void OrderPlayers(void) {
     s32 i;
     s32 j;
 
-    playerCfg = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GWPlayerCfg), MEMORY_DEFAULT_NUM);
-    state = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GWPlayer), MEMORY_DEFAULT_NUM);
+    playerCfg = HuMemDirectMallocNum(HEAP_HEAP, sizeof(GWPlayerCfg), HU_MEMNUM_OVL);
+    state = HuMemDirectMallocNum(HEAP_HEAP, sizeof(GWPlayer), HU_MEMNUM_OVL);
     for (i = 0; i < 4; i++) {
         playerOrderOld[i] = i;
         memcpy(playerCfg + i, &GWPlayerCfg[i], sizeof(PlayerConfig));

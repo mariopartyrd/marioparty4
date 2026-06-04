@@ -1136,7 +1136,7 @@ static void InitJunction(s32 arg0, s32 arg1, f32 arg8)
         if (sp38 > 1) {
             var_r28 = omAddObjEx(boardObjMan, 0x100, 0, 0, -1, UpdateJunctionGfx);
             junctionObj = var_r28;
-            temp_r29 = OM_GET_WORK_PTR(var_r28, bitcopy);
+            temp_r29 = omObjGetWork(var_r28, bitcopy);
             temp_r29->field00_bit0 = 0;
             temp_r29->field00_bit7 = 0;
             temp_r29->field00_bit1 = arg0;
@@ -1214,7 +1214,7 @@ static void UpdateJunctionGfx(OMOBJ *arg0)
     s32 var_r28;
     bitcopy *temp_r30;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0, bitcopy);
+    temp_r30 = omObjGetWork(arg0, bitcopy);
     if ((temp_r30->field00_bit0 != 0) || (BoardIsKill() != 0)) {
         for (var_r28 = 0; var_r28 < temp_r30->field00_bit3; var_r28++) {
             BoardModelKill(temp_r30->unk_06[var_r28]);
@@ -1246,7 +1246,7 @@ static void StopJunctionPlayer(s32 arg0)
     bitcopy *temp_r31;
 
     if (junctionObj != 0) {
-        temp_r31 = OM_GET_WORK_PTR(junctionObj, bitcopy);
+        temp_r31 = omObjGetWork(junctionObj, bitcopy);
         temp_r31->field00_bit7 = 1;
         temp_r31->unk_01 = 0;
         if (arg0 != 0) {
@@ -1265,7 +1265,7 @@ static void RestoreJunction(f32 arg8, s32 arg0)
     bitcopy *temp_r31;
 
     if (junctionObj != 0) {
-        temp_r31 = OM_GET_WORK_PTR(junctionObj, bitcopy);
+        temp_r31 = omObjGetWork(junctionObj, bitcopy);
         if (temp_r31->unk_01 == 0) {
             arg8 = 90.0f * (((90.0f + arg8) - 1.0f) / 90.0f);
 
@@ -1470,7 +1470,7 @@ static inline f32 JunctionArrowRotGetCurr(void)
         return 0.0f;
     }
     else {
-        juncObj = OM_GET_WORK_PTR(junctionObj, bitcopy);
+        juncObj = omObjGetWork(junctionObj, bitcopy);
         OSs16tof32(&(junctionArrowRot[juncObj->field00_bit5]), &ret);
         return ret;
     }
@@ -1485,7 +1485,7 @@ static inline s32 CheckArrowRot(float value)
         return 0;
     }
     else {
-        sp5C = OM_GET_WORK_PTR(junctionObj, bitcopy);
+        sp5C = omObjGetWork(junctionObj, bitcopy);
         OSf32tos16(&value, &spE);
         if (spE > 0x15E) {
             spE = 0;
@@ -1859,7 +1859,7 @@ void BoardPlayerDiceJumpStart(s32 arg0)
     }
     diceJumpObj[arg0] = omAddObjEx(boardObjMan, 0x100, 0, 0, -1, DiceJumpFunc);
     BoardModelPosGet(BoardPlayerModelGet(arg0), &sp8);
-    temp_r31 = OM_GET_WORK_PTR(diceJumpObj[arg0], bitcopy2);
+    temp_r31 = omObjGetWork(diceJumpObj[arg0], bitcopy2);
     temp_r31->field00_bit0 = 0;
     temp_r31->field00_bit1 = arg0;
     temp_r31->unk_04 = 0;
@@ -1874,7 +1874,7 @@ s32 BoardPlayerDiceJumpCheck(s32 arg0)
     if (!diceJumpObj[arg0]) {
         return 0;
     }
-    if (OM_GET_WORK_PTR(diceJumpObj[arg0], bitcopy2)->unk_04 == 0) {
+    if (omObjGetWork(diceJumpObj[arg0], bitcopy2)->unk_04 == 0) {
         return 0;
     }
     return 1;
@@ -1890,7 +1890,7 @@ static void DiceJumpFunc(OMOBJ *arg0)
     s32 var_r23;
     s32 var_r17;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, bitcopy2);
+    temp_r31 = omObjGetWork(arg0, bitcopy2);
     if ((temp_r31->field00_bit0 != 0) || (BoardIsKill() != 0)) {
         GWPlayer[temp_r31->field00_bit1].jump = 0;
         BoardPlayerIdleSet(temp_r31->field00_bit1);
@@ -1965,7 +1965,7 @@ void BoardPlayerMotBlendSet(s32 arg0, s16 arg1, s16 arg2)
     var_r20 = 0;
     if (motDoneF[arg0] != 0) {
         temp_r3 = motDoneF[arg0];
-        temp_r26 = OM_GET_WORK_PTR(temp_r3, bitcopy2);
+        temp_r26 = omObjGetWork(temp_r3, bitcopy2);
         temp_r26->field00_bit0 = 1;
 
         for (var_r19 = 0; var_r19 < 180U; var_r19++) {
@@ -1977,7 +1977,7 @@ void BoardPlayerMotBlendSet(s32 arg0, s16 arg1, s16 arg2)
     if (arg2 > 0) {
         var_r18 = GWPlayer[arg0].character;
         temp_r3 = omAddObjEx(boardObjMan, 0x100, 0, 0, -1, ExecMotBlend);
-        temp_r26 = OM_GET_WORK_PTR(temp_r3, bitcopy2);
+        temp_r26 = omObjGetWork(temp_r3, bitcopy2);
         temp_r26->field00_bit0 = 0;
         temp_r26->unk_02 = arg2;
         temp_r26->unk_01 = arg0;
@@ -2038,7 +2038,7 @@ static void ExecMotBlend(OMOBJ *arg0)
     f32 var_f27;
     bitcopy2 *temp_r30;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0, bitcopy2);
+    temp_r30 = omObjGetWork(arg0, bitcopy2);
     if ((temp_r30->field00_bit0 != 0) || (BoardIsKill() != 0)) {
         if (temp_r30->unk_04h > 0) {
             BoardPlayerMotionKill(temp_r30->unk_01, temp_r30->unk_04h);
@@ -2099,7 +2099,7 @@ void BoardRollCreate(s32 arg0, s32 arg1)
     bitcopy3 *temp_r31;
 
     temp_r3 = omAddObjEx(boardObjMan, 0x105, 0, 0, -1, &UpdateRoll);
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, bitcopy3);
+    temp_r31 = omObjGetWork(temp_r3, bitcopy3);
     temp_r31->field00_bit0 = 0;
     temp_r31->field00_bit1 = 1;
     temp_r31->unk_01 = 0;
@@ -2126,7 +2126,7 @@ void BoardRollUpdateSet(s32 arg0)
     bitcopy3 *temp_r31;
 
     if (rollObj != 0) {
-        temp_r31 = OM_GET_WORK_PTR(rollObj, bitcopy3);
+        temp_r31 = omObjGetWork(rollObj, bitcopy3);
         temp_r31->field00_bit0 = 1;
     }
 }
@@ -2137,7 +2137,7 @@ void BoardRollDispSet(s32 arg0)
     bitcopy3 *temp_r31;
 
     if (rollObj != 0) {
-        temp_r31 = OM_GET_WORK_PTR(rollObj, bitcopy3);
+        temp_r31 = omObjGetWork(rollObj, bitcopy3);
 
         for (var_r30 = 0; var_r30 < 2; var_r30++) {
             if (arg0 != 0) {
@@ -2167,7 +2167,7 @@ static void UpdateRollSprite(OMOBJ *arg0)
     s32 temp_r29;
     bitcopy3 *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, bitcopy3);
+    temp_r31 = omObjGetWork(arg0, bitcopy3);
     temp_r29 = GWPlayer[temp_r31->unk_02].roll;
     if (temp_r29 != 0) {
         sp14[0] = temp_r29 % 10;
@@ -2201,7 +2201,7 @@ static void UpdateRoll(OMOBJ *arg0)
     f32 var_f30;
     bitcopy3 *temp_r30;
 
-    temp_r30 = OM_GET_WORK_PTR(rollObj, bitcopy3);
+    temp_r30 = omObjGetWork(rollObj, bitcopy3);
     if ((temp_r30->field00_bit0 != 0) || (BoardIsKill() != 0)) {
         if (temp_r30->unk_04 != -1) {
             HuSprGrpKill(temp_r30->unk_04);
@@ -2315,7 +2315,7 @@ void BoardPlayerMoveAwayStart(s32 arg0, s32 arg1, s32 arg2)
     }
     if (arg2 == 0) {
         moveAwayObj = omAddObjEx(boardObjMan, 0x100, 0U, 0U, -1, &MoveAwayObjFunc);
-        temp_r25 = OM_GET_WORK_PTR(moveAwayObj, bitcopy3);
+        temp_r25 = omObjGetWork(moveAwayObj, bitcopy3);
         temp_r25->field00_bit0 = 0;
     }
 }
@@ -2330,7 +2330,7 @@ static void MoveAwayObjFunc(OMOBJ *arg0)
     s32 var_r31;
     bitcopy3 *temp_r30;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0, bitcopy3);
+    temp_r30 = omObjGetWork(arg0, bitcopy3);
     if ((temp_r30->field00_bit0 != 0) || (BoardIsKill() != 0)) {
         moveAwayObj = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);
@@ -2366,7 +2366,7 @@ void BoardBowserSuitInit(s32 arg0)
     GWPlayer[arg0].bowser_suit = 1;
     temp_r3 = omAddObjEx(boardObjMan, 0x100, 0U, 0U, -1, &UpdateBowserSuit);
     bowserSuitObj = temp_r3;
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, bitcopy3);
+    temp_r31 = omObjGetWork(temp_r3, bitcopy3);
     temp_r31->field00_bit0 = 0;
     temp_r31->unk_01 = arg0;
     temp_r31->unk_02 = 0;
@@ -2379,7 +2379,7 @@ void BoardBowserSuitKill(s32 arg0)
     bitcopy3 *temp;
 
     if (bowserSuitObj != 0) {
-        OM_GET_WORK_PTR(bowserSuitObj, bitcopy3)->field00_bit0 = 1;
+        omObjGetWork(bowserSuitObj, bitcopy3)->field00_bit0 = 1;
     }
     GWPlayer[arg0].bowser_suit = 0;
     BoardModelVoiceEnableSet(BoardPlayerModelGet(arg0), 3, 1);
@@ -2456,7 +2456,7 @@ static void UpdateBowserSuit(OMOBJ *arg0)
     s16 temp_r30;
     bitcopy3 *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, bitcopy3);
+    temp_r31 = omObjGetWork(arg0, bitcopy3);
     if ((temp_r31->field00_bit0 != 0) || (BoardIsKill() != 0)) {
         bowserSuitObj = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);
@@ -2744,7 +2744,7 @@ typedef struct mega_squish_work {
 
 static void MegaSquishFunc(OMOBJ *object)
 {
-    MegaSquishWork *work = OM_GET_WORK_PTR(object, MegaSquishWork);
+    MegaSquishWork *work = omObjGetWork(object, MegaSquishWork);
     Vec pos;
     if (work->kill || BoardIsKill()) {
         if (work->coinchg != -1) {
@@ -2870,7 +2870,7 @@ static s32 MegaPlayerPassFunc(s32 player, s32 space)
             BoardPlayerPosGet(temp_r29, &spA0);
             temp_r23 = omAddObjEx(boardObjMan, 256, 0, 0, -1, MegaSquishFunc);
             megaSquishObj[temp_r29] = temp_r23;
-            temp_r31 = OM_GET_WORK_PTR(temp_r23, MegaSquishWork);
+            temp_r31 = omObjGetWork(temp_r23, MegaSquishWork);
             temp_r31->kill = 0;
             temp_r31->player = temp_r29;
             temp_r31->gain_player = player;
@@ -2928,7 +2928,7 @@ static s32 MegaPlayerPassFunc(s32 player, s32 space)
         if (spB8.y <= 200.0f + spC4.y && temp_r24) {
             for (temp_r27 = 0; temp_r27 < 4; temp_r27++) {
                 if (megaSquishObj[temp_r27]) {
-                    temp_r28 = OM_GET_WORK_PTR(megaSquishObj[temp_r27], MegaSquishWork);
+                    temp_r28 = omObjGetWork(megaSquishObj[temp_r27], MegaSquishWork);
                     if ((s16)space == GWPlayer[temp_r28->player].space_curr && temp_r28->state != 1) {
                         temp_r28->state = 1;
                     }
@@ -2976,7 +2976,7 @@ static s32 MegaExecJump(s32 player, s32 space)
             BoardPlayerPosGet(temp_r29, &spA0);
             temp_r23 = omAddObjEx(boardObjMan, 256, 0, 0, -1, MegaSquishFunc);
             megaSquishObj[temp_r29] = temp_r23;
-            temp_r31 = OM_GET_WORK_PTR(temp_r23, MegaSquishWork);
+            temp_r31 = omObjGetWork(temp_r23, MegaSquishWork);
             temp_r31->kill = 0;
             temp_r31->player = temp_r29;
             temp_r31->gain_player = player;
@@ -3035,7 +3035,7 @@ static s32 MegaExecJump(s32 player, s32 space)
         if (spB8.y <= 200.0f + spC4.y && temp_r25) {
             for (temp_r27 = 0; temp_r27 < 4; temp_r27++) {
                 if (megaSquishObj[temp_r27]) {
-                    temp_r28 = OM_GET_WORK_PTR(megaSquishObj[temp_r27], MegaSquishWork);
+                    temp_r28 = omObjGetWork(megaSquishObj[temp_r27], MegaSquishWork);
                     if ((s16)space == GWPlayer[temp_r28->player].space_curr && temp_r28->state != 1) {
                         temp_r28->state = 1;
                     }
@@ -3120,7 +3120,7 @@ void BoardPlayerCopyMat(s32 arg0)
     modelID = BoardModelIDGet(BoardPlayerModelGet(arg0));
     model = &Hu3DData[modelID];
     temp_r31 = model->hsf;
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, temp_r31->materialNum * sizeof(HSFMATERIAL), MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_HEAP, temp_r31->materialNum * sizeof(HSFMATERIAL), HU_MEMNUM_OVL);
     memcpy(temp_r3, temp_r31->material, temp_r31->materialNum * sizeof(HSFMATERIAL));
     playerMatCopy[arg0] = temp_r3;
 }

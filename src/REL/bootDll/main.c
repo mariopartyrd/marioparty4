@@ -199,7 +199,7 @@ void BootExec(void)
         if (!SystemInitF) {
             void *group_samp;
             tick_prev = OSGetTick();
-            group_samp = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(0));
+            group_samp = HuMemDirectMalloc(HEAP_MODEL, msmSysGetSampSize(0));
             msmSysLoadGroup(0, group_samp, 0);
             HuMemDirectFree(group_samp);
             while (OSTicksToMilliseconds(OSGetTick() - tick_prev) < 3000) {
@@ -777,7 +777,7 @@ void *NintendoDataDecode(void)
 {
     u32 *src = (u32 *)nintendoData;
     u32 size = *src++;
-    void *dst = HuMemDirectMalloc(HEAP_DATA, size);
+    void *dst = HuMemDirectMalloc(HEAP_MODEL, size);
     int decode_type = *src++;
     if(dst) {
         HuDecodeData(src, dst, size, decode_type);

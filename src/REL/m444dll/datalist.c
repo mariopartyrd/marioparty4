@@ -117,7 +117,7 @@ void fn_1_D588(DataListModel *model_list)
 	}
 	for(i=0; list->datanum != DATA_NUM_LISTEND; list++, i++) {
 		if(list->type == 0) {
-			data = HuDataSelHeapReadNum(list->datanum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+			data = HuDataSelHeapReadNum(list->datanum, HU_MEMNUM_OVL, HEAP_MODEL);
 			model = Hu3DModelCreate(data);
 			lbl_1_bss_199C2[i] = model;
 			Hu3DModelAttrSet(model, list->attr);
@@ -129,7 +129,7 @@ void fn_1_D588(DataListModel *model_list)
 				lbl_1_bss_1990E[i] = model_ptr->motId;
 			}
 		} else if(list->type == 1) {
-			data = HuDataSelHeapReadNum(list->datanum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+			data = HuDataSelHeapReadNum(list->datanum, HU_MEMNUM_OVL, HEAP_MODEL);
 			lbl_1_bss_1990E[i] = Hu3DJointMotion(lbl_1_bss_199C2[list->mot_link], data);
 			
 		}

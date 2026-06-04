@@ -483,7 +483,7 @@ OMOBJ *OptionSoundCreate(void)
     s32 i;
 
     object = omAddObjEx(optionObjMan, 1003, 0, 0, 1, NULL);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(SoundWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(SoundWork), HU_MEMNUM_OVL);
     object->data = work;
     work->selectedOption = 0;
     work->doneF = FALSE;
@@ -1533,7 +1533,7 @@ static OMOBJ *CreateNoteObj(s32 type)
     NoteWork *noteWork;
 
     note = omAddObjEx(optionObjMan, 1003, 1, 0, 1, NULL);
-    noteWork = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(NoteWork), MEMORY_DEFAULT_NUM);
+    noteWork = HuMemDirectMallocNum(HEAP_HEAP, sizeof(NoteWork), HU_MEMNUM_OVL);
     note->data = noteWork;
     noteWork->enabled = FALSE;
     noteWork->type = type;

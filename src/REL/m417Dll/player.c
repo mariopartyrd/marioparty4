@@ -223,7 +223,7 @@ void fn_1_7C8C(OMOBJ *object)
     float sp34[4] = { 0.0f, 650.0f, 650.0f, 650.0f };
     float sp24[4] = { 180.0f, 180.0f, 300.0f, 60.0f };
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM417Struct10), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM417Struct10), HU_MEMNUM_OVL);
     var_r31 = object->data;
     memset(var_r31, 0, sizeof(UnkM417Struct10));
     object->stat |= 256;

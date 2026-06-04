@@ -212,7 +212,7 @@ s16 BoardBooCreate(s32 arg0, Vec *arg1) {
         spC.x = spC.y = spC.z = 0.0f;
     }
     booEventObj = omAddObjEx(boardObjMan, 0x1000, 0, 0, -1, ExecBoo);
-    temp_r31 = OM_GET_WORK_PTR(booEventObj, BooEventWork);
+    temp_r31 = omObjGetWork(booEventObj, BooEventWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk01 = 0;
     temp_r31->unk02 = arg0;
@@ -232,12 +232,12 @@ s16 BoardBooCreate(s32 arg0, Vec *arg1) {
 void BoardBooKill(void) {
     booKillF = 1;
     if (booEventObj) {
-        OM_GET_WORK_PTR(booEventObj, BooEventWork)->unk00_field0 = 1;
+        omObjGetWork(booEventObj, BooEventWork)->unk00_field0 = 1;
     }
 }
 
 s32 BoardBooStealTypeSet(s32 arg0) {
-    BooEventWork *temp_r29 = OM_GET_WORK_PTR(booEventObj, BooEventWork);
+    BooEventWork *temp_r29 = omObjGetWork(booEventObj, BooEventWork);
     s32 var_r25;
     s32 var_r27;
     s32 var_r26;
@@ -397,7 +397,7 @@ s32 BoardBooStealMain(void) {
     s32 var_r30;
 
     stealType == -1;
-    sp8 = OM_GET_WORK_PTR(booEventObj, BooEventWork);
+    sp8 = omObjGetWork(booEventObj, BooEventWork);
     if (stealType == 0) {
         SetBooMode(2);
     } else {
@@ -532,7 +532,7 @@ static void ExecLightSteal(void) {
 }
 
 static void SetBooMode(s32 arg0) {
-    OM_GET_WORK_PTR(booEventObj, BooEventWork)->unk01 = arg0;
+    omObjGetWork(booEventObj, BooEventWork)->unk01 = arg0;
 }
 
 static void CreateBallMdl(s16 *arg0, Vec *arg1) {
@@ -554,13 +554,13 @@ static void CreateBallView(void) {
     BallWork *temp_r31;
     BallCameraWork *temp_r30;
 
-    temp_r28 = OM_GET_WORK_PTR(booEventObj, BooEventWork);
+    temp_r28 = omObjGetWork(booEventObj, BooEventWork);
     ballObj = omAddObjEx(boardObjMan, 0x1001, 0, 0, -1, BallMain);
-    temp_r31 = OM_GET_WORK_PTR(ballObj, BallWork);
+    temp_r31 = omObjGetWork(ballObj, BallWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk08 = HuSprAnimMake(80, 80, 2);
     temp_r29 = temp_r31->unk08->bmp;
-    temp_r29->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x3200, MEMORY_DEFAULT_NUM);
+    temp_r29->data = HuMemDirectMallocNum(HEAP_HEAP, 0x3200, HU_MEMNUM_OVL);
     memset(temp_r29->data, 0, 0x3200);
     temp_r31->unk04 = Hu3DHookFuncCreate((void*) BallRenderHook);
     Hu3DModelLayerSet(temp_r31->unk04, 3);
@@ -569,7 +569,7 @@ static void CreateBallView(void) {
     Hu3DModelProjectionSet(BoardModelIDGet(temp_r28->unk04[1]), temp_r31->unk06);
     Hu3DProjectionTPLvlSet(temp_r31->unk06, 0.0f);
     ballCameraObj = omAddObjEx(boardObjMan, 0x7E03, 0, 0, -1, UpdateBallCamera);
-    temp_r30 = OM_GET_WORK_PTR(ballCameraObj, BallCameraWork);
+    temp_r30 = omObjGetWork(ballCameraObj, BallCameraWork);
     temp_r30->unk00_field0 = 0;
     temp_r30->unk02 = 1;
     ballCameraObj->rot.x = -8.0f;
@@ -600,7 +600,7 @@ static void SetBallView(s32 arg0) {
 }
 
 static void SetBallActive(s32 arg0) {
-    BallWork *temp_r31 = OM_GET_WORK_PTR(ballObj, BallWork);
+    BallWork *temp_r31 = omObjGetWork(ballObj, BallWork);
 
     temp_r31->unk01 = arg0 * 8;
 }
@@ -611,7 +611,7 @@ static s32 CheckBallKill(void) {
     if (!ballObj) {
         return 1;
     }
-    temp_r31 = OM_GET_WORK_PTR(ballObj, BallWork);
+    temp_r31 = omObjGetWork(ballObj, BallWork);
     if (temp_r31->unk01 != 0) {
         return 0;
     } else {
@@ -620,7 +620,7 @@ static s32 CheckBallKill(void) {
 }
 
 static void BallMain(OMOBJ *arg0) {
-    BallWork *temp_r30 = OM_GET_WORK_PTR(arg0, BallWork);
+    BallWork *temp_r30 = omObjGetWork(arg0, BallWork);
     Vec sp2C;
     Vec sp20;
     Vec sp14;
@@ -630,7 +630,7 @@ static void BallMain(OMOBJ *arg0) {
     s16 *temp_r29;
 
     if (booKillF != 0 || BoardIsKill() != 0) {
-        temp_r29 = OM_GET_WORK_PTR(booEventObj, BooEventWork)->unk04;
+        temp_r29 = omObjGetWork(booEventObj, BooEventWork)->unk04;
         Hu3DModelProjectionReset(BoardModelIDGet(temp_r29[1]), temp_r30->unk06);
         Hu3DProjectionKill(temp_r30->unk06);
         Hu3DModelKill(temp_r30->unk04);
@@ -675,7 +675,7 @@ static void BallRenderHook(void) {
     if (!ballObj) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(ballObj, BallWork);
+    temp_r31 = omObjGetWork(ballObj, BallWork);
     sp10.a = sp10.r = sp10.g = sp10.b = 0;
     GXSetCopyClear(sp10, -1);
     GXSetTexCopySrc(0, 0, 160, 160);
@@ -732,7 +732,7 @@ static void BallRenderHook(void) {
 }
 
 static void ExecBoo(OMOBJ *arg0) {
-    BooEventWork *temp_r30 = OM_GET_WORK_PTR(arg0, BooEventWork);
+    BooEventWork *temp_r30 = omObjGetWork(arg0, BooEventWork);
     s32 i;
 
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
@@ -747,7 +747,7 @@ static void ExecBoo(OMOBJ *arg0) {
 }
 
 static void UpdateBallCamera(OMOBJ *arg0) {
-    BallCameraWork *var_r30 = OM_GET_WORK_PTR(arg0, BallCameraWork);
+    BallCameraWork *var_r30 = omObjGetWork(arg0, BallCameraWork);
     Vec sp20;
     Vec sp14;
     Vec sp8;
@@ -788,8 +788,8 @@ static void CreateBallPlayer(void) {
     BallPlayerWork *temp_r25;
 
     ballPlayerObj = temp_r31 = omAddObjEx(boardObjMan, 0x1005, 0, 0, -1, ExecBallPlayer);
-    temp_r31->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(BallPlayerData), MEMORY_DEFAULT_NUM);
-    temp_r25 = OM_GET_WORK_PTR(temp_r31, BallPlayerWork);
+    temp_r31->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(BallPlayerData), HU_MEMNUM_OVL);
+    temp_r25 = omObjGetWork(temp_r31, BallPlayerWork);
     temp_r25->unk00_field0 = 0;
     SetBallPlayerState(1);
     temp_r31->trans.x = 0.0f;
@@ -839,20 +839,20 @@ static void CreateBallPlayer(void) {
 }
 
 static s32 GetBallPlayerState(void) {
-    BallPlayerWork *temp_r31 = OM_GET_WORK_PTR(ballPlayerObj, BallPlayerWork);
+    BallPlayerWork *temp_r31 = omObjGetWork(ballPlayerObj, BallPlayerWork);
 
     return temp_r31->unk01;
 }
 
 static void SetBallPlayerState(s32 arg0) {
-    BallPlayerWork *temp_r31 = OM_GET_WORK_PTR(ballPlayerObj, BallPlayerWork);
+    BallPlayerWork *temp_r31 = omObjGetWork(ballPlayerObj, BallPlayerWork);
 
     temp_r31->unk01 = arg0;
     temp_r31->unk02 = 0;
 }
 
 static void ExecBallPlayer(OMOBJ *arg0) {
-    BallPlayerWork *temp_r30 = OM_GET_WORK_PTR(arg0, BallPlayerWork);
+    BallPlayerWork *temp_r30 = omObjGetWork(arg0, BallPlayerWork);
     BallPlayerData *temp_r29 = arg0->data;
     BallWork *temp_r27;
     s32 i;
@@ -878,7 +878,7 @@ static void ExecBallPlayer(OMOBJ *arg0) {
         omDelObjEx(HuPrcCurrentGet(), arg0);
         return;
     }
-    temp_r27 = OM_GET_WORK_PTR(ballObj, BallWork);
+    temp_r27 = omObjGetWork(ballObj, BallWork);
     if (temp_r27->unk01 == 0) {
         switch (temp_r30->unk01) {
             case 1:
@@ -1077,7 +1077,7 @@ static void BallBooCreate(void) {
     float var_f29;
 
     ballBooObj = omAddObjEx(boardObjMan, 0x1004, 0, 0, -1, ExecBallBoo);
-    temp_r31 = OM_GET_WORK_PTR(ballBooObj, BallBooWork);
+    temp_r31 = omObjGetWork(ballBooObj, BallBooWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field2 = 0;
     temp_r31->unk01 = 0;
@@ -1116,7 +1116,7 @@ static void BallBooCreate(void) {
 }
 
 static void SetBallBooState(s32 arg0) {
-    BallBooWork *temp_r31 = OM_GET_WORK_PTR(ballBooObj, BallBooWork);
+    BallBooWork *temp_r31 = omObjGetWork(ballBooObj, BallBooWork);
     Vec sp8;
 
     temp_r31->unk00_field1 = arg0;
@@ -1148,13 +1148,13 @@ static void SetBallBooState(s32 arg0) {
 }
 
 static s32 GetBallBooState(void) {
-    BallBooWork *temp_r31 = OM_GET_WORK_PTR(ballBooObj, BallBooWork);
+    BallBooWork *temp_r31 = omObjGetWork(ballBooObj, BallBooWork);
 
     return temp_r31->unk00_field1;
 }
 
 static void ExecBallBoo(OMOBJ *arg0) {
-    BallBooWork *temp_r30 = OM_GET_WORK_PTR(arg0, BallBooWork);
+    BallBooWork *temp_r30 = omObjGetWork(arg0, BallBooWork);
 
     if (booKillF != 0 || BoardIsKill()) {
         BoardModelKill(temp_r30->unk04);
@@ -1280,7 +1280,7 @@ static void TakeBallCoin(void) {
     s32 i;
 
     ballTakeCoinObj = omAddObjEx(boardObjMan, 0x1002, 0, 0, -1, ExecTakeBallCoin);
-    ballTakeCoinObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(BallTakeCoinData) * 10, MEMORY_DEFAULT_NUM);
+    ballTakeCoinObj->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(BallTakeCoinData) * 10, HU_MEMNUM_OVL);
     memset(ballTakeCoinObj->data, 0, sizeof(BallTakeCoinData) * 10);
     BoardPlayerPosGet(stealTarget, &sp8);
     ballTakeCoinObj->trans.x = sp8.x;
@@ -1362,7 +1362,7 @@ static void TakeBallStar(void) {
     Vec sp8;
 
     ballTakeCoinObj = omAddObjEx(boardObjMan, 0x1003, 0, 0, -1, ExecTakeBallStar);
-    temp_r31 = OM_GET_WORK_PTR(ballTakeCoinObj, BallTakeCoinWork);
+    temp_r31 = omObjGetWork(ballTakeCoinObj, BallTakeCoinWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk01 = 0;
     temp_r31->unk02 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 11), 0, 0);
@@ -1383,7 +1383,7 @@ static void TakeBallStar(void) {
 }
 
 static void ExecTakeBallStar(OMOBJ *arg0) {
-    BallTakeCoinWork *temp_r29 = OM_GET_WORK_PTR(arg0, BallTakeCoinWork);
+    BallTakeCoinWork *temp_r29 = omObjGetWork(arg0, BallTakeCoinWork);
     Vec sp8;
     float var_f30;
 

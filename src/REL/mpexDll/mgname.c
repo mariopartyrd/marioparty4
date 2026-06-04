@@ -385,9 +385,9 @@ s32 fn_1_1CB80(SeqWork *arg0, char *arg1, s16 arg2)
     if (grpNo == 0x10) {
         return -1;
     }
-    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(ANIMDATA*)));
-    posX = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posX));
-    posY = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posY));
+    animP = HuMemDirectMalloc(HEAP_HEAP, (FONT_CHAR_MAX * sizeof(ANIMDATA*)));
+    posX = HuMemDirectMalloc(HEAP_HEAP, FONT_CHAR_MAX * sizeof(*posX));
+    posY = HuMemDirectMalloc(HEAP_HEAP, FONT_CHAR_MAX * sizeof(*posY));
 
     for (str = arg1, len = 0, charNum = 0; str[0] != 0; str++) {
         if (str[0] == 0x20 || str[0] == 0x10) {

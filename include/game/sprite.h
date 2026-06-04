@@ -24,7 +24,7 @@
 
 #include "game/animdata.h"
 
-#define HuSprAnimReadFile(data_id) (HuSprAnimRead(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
+#define HuSprAnimReadFile(data_id) (HuSprAnimRead(HuDataSelHeapReadNum((data_id), HU_MEMNUM_OVL, HEAP_MODEL)))
 
 typedef struct HuSprite_s HUSPRITE;
 

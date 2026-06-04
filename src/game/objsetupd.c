@@ -81,7 +81,7 @@ void fn_8003FF68(ModelSetupEntry* setupList) {
 
     for (j = 0; entry->dataNum != -1U; entry++, j++) {
         if (entry->type == 0) {
-            data = HuDataSelHeapReadNum(entry->dataNum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+            data = HuDataSelHeapReadNum(entry->dataNum, HU_MEMNUM_OVL, HEAP_MODEL);
             modelId = Hu3DModelCreate(data);
             modelTable[j] = modelId;
             Hu3DModelAttrSet(modelId, entry->attr);
@@ -93,7 +93,7 @@ void fn_8003FF68(ModelSetupEntry* setupList) {
                 motionTable[j] = modelData->motId;
             }
         } else if (entry->type == 1) {
-            data = HuDataSelHeapReadNum(entry->dataNum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+            data = HuDataSelHeapReadNum(entry->dataNum, HU_MEMNUM_OVL, HEAP_MODEL);
             motionTable[j] = Hu3DMotionCreate(data);
         }        
     }
@@ -169,7 +169,7 @@ void fn_80040374(s16 tableIdx, s16 animIdx, s16 modelIdx, s16 motionId) {
     FootstepWork* work;
 
     process = HuPrcChildCreate(fn_8004040C, 1, 0x1000, 0, HuPrcCurrentGet());
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FootstepWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(FootstepWork), HU_MEMNUM_OVL);
     process->user_data = work;
     work->tableIdx = tableIdx;
     work->animIdx = animIdx;

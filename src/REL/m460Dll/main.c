@@ -170,7 +170,7 @@ void fn_1_4C8(OMOBJ *var_r30)
 {
     M460DllWork *work;
 
-    var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M460DllWork), MEMORY_DEFAULT_NUM);
+    var_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M460DllWork), HU_MEMNUM_OVL);
     work = var_r30->data;
     memset(work, 0, sizeof(M460DllWork));
     work->unk_00 = 0;
@@ -567,7 +567,7 @@ void fn_1_337C(OMOBJ *object)
     s32 var_r29;
     M460DllCameraStruct *var_r28;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 10 * sizeof(M460DllCameraStruct), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 10 * sizeof(M460DllCameraStruct), HU_MEMNUM_OVL);
     var_r28 = object->data;
     memset(var_r28, 0, 10 * sizeof(M460DllCameraStruct));
     object->mdlId[0] = Hu3DHookFuncCreate(fn_1_3BC0);

@@ -621,7 +621,7 @@ void fn_1_26E4(OMOBJ *object)
     s32 temp_r27;
 
     float sp20[4] = { 0.25, 0.5, 0.75, 1.0 };
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work2FAC), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work2FAC), HU_MEMNUM_OVL);
     temp_r31 = object->data;
     memset(temp_r31, 0, sizeof(Work2FAC));
     temp_r31->unk0 = object->work[0];
@@ -1271,7 +1271,7 @@ void fn_1_61FC(OMOBJ *object)
     float sp28[][2] = { 0, 0, 0, 0, -54, -1, 2, 1, -20, 0, 42, 2, 22, 2 };
 
     object->stat |= 0x100;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 4 * sizeof(Work61FC), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 4 * sizeof(Work61FC), HU_MEMNUM_OVL);
     temp_r27 = object->data;
     memset(temp_r27, 0, 4 * sizeof(Work61FC));
     temp_r31 = temp_r27;

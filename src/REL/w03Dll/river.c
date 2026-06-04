@@ -54,7 +54,7 @@ s32 lbl_1_data_390[] = { DATA_MAKE_NUM(DATADIR_W03, 0x26), DATA_MAKE_NUM(DATADIR
 void fn_1_63F4(s32 arg0)
 {
     Vec spC;
-    unkWorkStruct *work = OM_GET_WORK_PTR(lbl_1_bss_12C, unkWorkStruct);
+    unkWorkStruct *work = omObjGetWork(lbl_1_bss_12C, unkWorkStruct);
 
     work->unk_04 = 0.0f;
 
@@ -87,7 +87,7 @@ void fn_1_6494(void)
     sp14.z = sp8.z + (400.0 * cos(-(M_PI / 2)));
     BoardModelPosSetV(lbl_1_data_388, &sp14);
     lbl_1_bss_12C = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, (void *)fn_1_767C);
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_12C, unkWorkStruct);
+    temp_r31 = omObjGetWork(lbl_1_bss_12C, unkWorkStruct);
     temp_r31->temp1 = 0;
     temp_r31->unk_04 = 0.0f;
     lbl_1_bss_124 = 0;
@@ -461,7 +461,7 @@ void fn_1_767C(OMOBJ *arg0)
     s32 temp_r30;
     unkWorkStruct *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, unkWorkStruct);
+    temp_r31 = omObjGetWork(arg0, unkWorkStruct);
 
     if ((temp_r31->temp1 != 0) || (BoardIsKill() != 0)) {
         lbl_1_bss_12C = NULL;

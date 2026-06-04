@@ -142,7 +142,7 @@ static void THPTestProc(void)
     THPSimpleGetVideoInfo(&audioTrack);
     temp_r29 = THPSimpleCalcNeedMemory();
     OSReport("Size %x\n", temp_r29);
-    temp_r30 = HuMemDirectMalloc(HEAP_DATA, temp_r29);
+    temp_r30 = HuMemDirectMalloc(HEAP_MODEL, temp_r29);
     memset(temp_r30, 0, temp_r29);
     DCFlushRange(temp_r30, temp_r29);
     if (temp_r30 == 0) {
@@ -154,7 +154,7 @@ static void THPTestProc(void)
         HuPrcVSleep();
     }
     HuPrcVSleep();
-    decodeStackP = HuMemDirectMalloc(HEAP_SYSTEM, THP_DECODE_STACK_SIZE);
+    decodeStackP = HuMemDirectMalloc(HEAP_HEAP, THP_DECODE_STACK_SIZE);
     decodeThread = OSSetIdleFunction(THPDecodeFunc, NULL, (decodeStackP + THP_DECODE_STACK_SIZE), THP_DECODE_STACK_SIZE);
     decodeRate = 0;
     THPStart = 1;

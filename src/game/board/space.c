@@ -946,7 +946,7 @@ s32 BoardSpaceRead(s32 layer, s32 data_num)
     u8 *data;
     s32 star_idx;
     u8 *data_base;
-    data_base = data = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
+    data_base = data = HuDataSelHeapReadNum(data_num, HU_MEMNUM_OVL, HEAP_MODEL);
     spaceCnt[layer] = *(u32 *)data;
     data += sizeof(u32);
     space = &spaceData[layer][0];
@@ -1017,7 +1017,7 @@ void BoardSpaceInit(s32 data_num)
         ANIMDATA *data;
         void *data_base;
         s32 size;
-        data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 29), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 29), HU_MEMNUM_OVL, HEAP_MODEL);
         data->bmp = (void *)((u32)data_base + (u32)data->bmp);
         data->pat = (void *)((u32)data_base + (u32)data->pat);
         data->bank = (void *)((u32)data_base + (u32)data->bank);
@@ -1037,7 +1037,7 @@ void BoardSpaceInit(s32 data_num)
                 spaceHiliteTexFmt = GX_TF_CMPR;
                 break;
         }
-        spaceHiliteTexData = HuMemDirectMallocNum(HEAP_SYSTEM, bmp->dataSize, MEMORY_DEFAULT_NUM);
+        spaceHiliteTexData = HuMemDirectMallocNum(HEAP_HEAP, bmp->dataSize, HU_MEMNUM_OVL);
         bmp->data = (void *)((u32)bmp->data + (u32)data_base);
         memcpy(spaceHiliteTexData, bmp->data, bmp->dataSize);
         HuDataClose(data_base);
@@ -1049,7 +1049,7 @@ void BoardSpaceInit(s32 data_num)
         ANIMDATA *data;
         void *data_base;
         s32 size;
-        data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 28), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        data = data_base = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 28), HU_MEMNUM_OVL, HEAP_MODEL);
         data->bmp = (void *)((u32)data_base + (u32)data->bmp);
         data->pat = (void *)((u32)data_base + (u32)data->pat);
         data->bank = (void *)((u32)data_base + (u32)data->bank);
@@ -1069,7 +1069,7 @@ void BoardSpaceInit(s32 data_num)
                 spaceTexFmt = GX_TF_CMPR;
                 break;
         }
-        spaceTexData = HuMemDirectMallocNum(HEAP_SYSTEM, bmp->dataSize, MEMORY_DEFAULT_NUM);
+        spaceTexData = HuMemDirectMallocNum(HEAP_HEAP, bmp->dataSize, HU_MEMNUM_OVL);
         bmp->data = (void *)((u32)bmp->data + (u32)data_base);
         memcpy(spaceTexData, bmp->data, bmp->dataSize);
         HuDataClose(data_base);

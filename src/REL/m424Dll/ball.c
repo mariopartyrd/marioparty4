@@ -209,7 +209,7 @@ void fn_1_28A0(OMOBJ *object)
         }
         else if (var_r31->unk1 == 5) {
             object->mtnId[var_r29]
-                = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(var_r31->unk1 + lbl_1_data_150[var_r29], 0x10000000, HEAP_DATA));
+                = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(var_r31->unk1 + lbl_1_data_150[var_r29], 0x10000000, HEAP_MODEL));
         }
         else {
             object->mtnId[var_r29] = object->mtnId[0];
@@ -574,7 +574,7 @@ void fn_1_4220(OMOBJ *object)
     object->mdlId[0] = var_r27 = Hu3DModelCreateFile(0x370012);
 
     for (var_r29 = 0; var_r29 < 3; var_r29++) {
-        object->mtnId[var_r29] = Hu3DJointMotion(var_r27, HuDataSelHeapReadNum(sp14[var_r29], 0x10000000, HEAP_DATA));
+        object->mtnId[var_r29] = Hu3DJointMotion(var_r27, HuDataSelHeapReadNum(sp14[var_r29], 0x10000000, HEAP_MODEL));
     }
     Hu3DMotionSet(var_r27, object->mtnId[0]);
     Hu3DModelAttrSet(var_r27, 0x40000001);
@@ -686,13 +686,13 @@ u8 fn_1_48D0(OMOBJ *object, u8 arg1, u8 arg2)
     temp_r31 = &lbl_1_bss_60[var_r28];
     memset(temp_r31, 0, 0x94);
     temp_r31->unk0 = object;
-    var_r30 = Hu3DModelCreate(HuDataSelHeapReadNum((arg1 * 2) + 0x370000, 0x10000000, HEAP_DATA));
+    var_r30 = Hu3DModelCreate(HuDataSelHeapReadNum((arg1 * 2) + 0x370000, 0x10000000, HEAP_MODEL));
     temp_r31->unk8 = var_r30;
     Hu3DModelLayerSet(var_r30, 2);
     Hu3DModelShadowMapSet(var_r30);
     Hu3DModelAttrSet(var_r30, 0x20000);
     Hu3DModelHiliteMapSet(var_r30, HuSprAnimRead(HuDataReadNum(0x370016, 0x10000000)));
-    var_r30 = Hu3DModelCreate(HuDataSelHeapReadNum((arg1 * 2) + 0x370001, 0x10000000, HEAP_DATA));
+    var_r30 = Hu3DModelCreate(HuDataSelHeapReadNum((arg1 * 2) + 0x370001, 0x10000000, HEAP_MODEL));
     temp_r31->unkA = var_r30;
     Hu3DModelLayerSet(var_r30, 1);
     Hu3DModelShadowSet(var_r30);
@@ -1085,7 +1085,7 @@ void *fn_1_6078(s32 arg0)
     if (var_r31 == 0x20) {
         return NULL;
     }
-    lbl_1_bss_5BC[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, arg0, 0x10000000);
+    lbl_1_bss_5BC[var_r31] = HuMemDirectMallocNum(HEAP_HEAP, arg0, 0x10000000);
     return lbl_1_bss_5BC[var_r31];
 }
 

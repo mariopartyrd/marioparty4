@@ -339,7 +339,7 @@ static void DiceCreate(s32 arg0)
     BoardModelMotionTimeSet(diceMdl[arg0], temp_f30);
     BoardModelScaleSet(diceMdl[arg0], 0.001f, 0.001f, 0.001f);
     temp_r31 = omAddObjEx(boardObjMan, 0x102, 0, 0, -1, DiceMain);
-    temp_r30 = OM_GET_WORK_PTR(temp_r31, DiceWork);
+    temp_r30 = omObjGetWork(temp_r31, DiceWork);
     temp_r30->unk00_field0 = 0;
     temp_r30->unk00_field1 = 0;
     temp_r30->unk00_field2 = 0;
@@ -417,7 +417,7 @@ static void DoInput(s32 arg0)
 
 static void DiceWaitFull(s32 arg0)
 {
-    DiceWork *temp_r31 = OM_GET_WORK_PTR(diceObj[arg0], DiceWork);
+    DiceWork *temp_r31 = omObjGetWork(diceObj[arg0], DiceWork);
 
     while (temp_r31->unk00_field2 != 1) {
         HuPrcVSleep();
@@ -426,7 +426,7 @@ static void DiceWaitFull(s32 arg0)
 
 static void DiceSetHit(s32 arg0)
 {
-    DiceWork *temp_r30 = OM_GET_WORK_PTR(diceObj[arg0], DiceWork);
+    DiceWork *temp_r30 = omObjGetWork(diceObj[arg0], DiceWork);
 
     temp_r30->unk00_field2 = 2;
     temp_r30->unk04 = 0;
@@ -455,7 +455,7 @@ static void RollDestroy(void)
 
 static void DiceMain(OMOBJ *arg0)
 {
-    DiceWork *temp_r29 = OM_GET_WORK_PTR(arg0, DiceWork);
+    DiceWork *temp_r29 = omObjGetWork(arg0, DiceWork);
     float temp_f29;
     float var_f28;
     float var_f27;
@@ -582,7 +582,7 @@ static void DicePause(s32 arg0)
     OMOBJ *temp_r31 = diceObj[arg0];
 
     if (temp_r31) {
-        OM_GET_WORK_PTR(temp_r31, DiceWork)->unk00_field0 = 1;
+        omObjGetWork(temp_r31, DiceWork)->unk00_field0 = 1;
     }
 }
 
@@ -600,7 +600,7 @@ s16 BoardDiceEffectCreate(void)
     ANIMDATA *temp_r29;
     void *temp_r28;
 
-    temp_r28 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 0x6B), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    temp_r28 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 0x6B), HU_MEMNUM_OVL, HEAP_MODEL);
     temp_r29 = HuSprAnimRead(temp_r28);
     temp_r31 = Hu3DParManCreate(temp_r29, 0x64, &diceEffParam);
     Hu3DParManAttrSet(temp_r31, 0x108);
@@ -636,7 +636,7 @@ void BoardDicePauseAll(void)
 
     for (i = 0; i < numDice; i++) {
         if (diceDigitObj[i]) {
-            temp_r30 = OM_GET_WORK_PTR(diceDigitObj[i], DiceDigitWork);
+            temp_r30 = omObjGetWork(diceDigitObj[i], DiceDigitWork);
             temp_r30->unk00_field1 = 1;
             temp_r30->unk00_field2 = 1;
             temp_r30->unk02 = 0;
@@ -651,7 +651,7 @@ BOOL BoardDiceDoneCheck(void)
 
     for (i = 0; i < numDice; i++) {
         if (diceDigitObj[i]) {
-            temp_r30 = OM_GET_WORK_PTR(diceDigitObj[i], DiceDigitWork);
+            temp_r30 = omObjGetWork(diceDigitObj[i], DiceDigitWork);
             if (temp_r30->unk00_field2 != 0) {
                 return FALSE;
             }
@@ -667,7 +667,7 @@ void BoardDiceStop(s32 arg0)
     if (!diceDigitObj[arg0]) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(diceDigitObj[arg0], DiceDigitWork);
+    temp_r31 = omObjGetWork(diceDigitObj[arg0], DiceDigitWork);
     temp_r31->unk00_field0 = 1;
 }
 
@@ -678,7 +678,7 @@ void BoardDiceVisibleSet(s32 arg0, s32 arg1)
     if (!diceDigitObj[arg0]) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(diceDigitObj[arg0], DiceDigitWork);
+    temp_r31 = omObjGetWork(diceDigitObj[arg0], DiceDigitWork);
     if ((temp_r31->unk01 / 10) == 0) {
         BoardModelVisibilitySet(temp_r31->unk04[1], 0);
     }
@@ -705,7 +705,7 @@ void BoardDiceValueSet(s32 arg0, s32 arg1)
     BoardPlayerPosGet(GWSystem.player_curr, &spC);
     spC.y += 300.0f;
     temp_r27 = omAddObjEx(boardObjMan, 0x102, 0, 0, -1, DiceDigitMain);
-    temp_r31 = OM_GET_WORK_PTR(temp_r27, DiceDigitWork);
+    temp_r31 = omObjGetWork(temp_r27, DiceDigitWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field1 = 0;
     temp_r31->unk00_field2 = 0;
@@ -730,7 +730,7 @@ void BoardDiceValueSet(s32 arg0, s32 arg1)
 
 static void DiceDigitMain(OMOBJ *arg0)
 {
-    DiceDigitWork *temp_r31 = OM_GET_WORK_PTR(arg0, DiceDigitWork);
+    DiceDigitWork *temp_r31 = omObjGetWork(arg0, DiceDigitWork);
 
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         DiceDigitKill(temp_r31);
@@ -760,7 +760,7 @@ static void DiceKill(void)
 
     for (i = 0; i < 3; i++) {
         if (diceDigitObj[i]) {
-            temp_r29 = OM_GET_WORK_PTR(diceDigitObj[i], DiceDigitWork);
+            temp_r29 = omObjGetWork(diceDigitObj[i], DiceDigitWork);
             DiceDigitKill(temp_r29);
         }
     }

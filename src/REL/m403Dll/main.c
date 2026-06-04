@@ -292,7 +292,7 @@ static void fn_1_444(OMOBJ *arg0)
             lbl_1_bss_30 = 5;
             lbl_1_bss_2E = lbl_1_bss_2C = -1;
             arg0->objFunc = fn_1_82C;
-            HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M403, 19), MEMORY_DEFAULT_NUM));
+            HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M403, 19), HU_MEMNUM_OVL));
             break;
     }
     if (omSysExitReq != 0 && WipeStatGet() == 0) {
@@ -553,7 +553,7 @@ static void fn_1_16D8(OMOBJ *arg0)
 {
     Unkm403Struct_00 *temp_r3;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r3), MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r3), HU_MEMNUM_OVL);
     arg0->data = temp_r3;
     temp_r3->unk148 = temp_r3->unk144 = 0.0f;
     temp_r3->unk140 = 1.0f;
@@ -687,7 +687,7 @@ static void fn_1_1DD0(OMOBJ *arg0)
     s32 i;
     s32 temp_r28;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r3), MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r3), HU_MEMNUM_OVL);
     arg0->data = temp_r3;
     temp_r3->unk00 = arg0->work[0];
     temp_r3->unk01 = GWPlayerCfg[temp_r3->unk00].character;
@@ -1289,7 +1289,7 @@ static s16 fn_1_400C(s32 arg0, s16 arg1, HU3DPARTICLEHOOK arg2)
     HU3DPARTICLE *temp_r31;
     s32 temp_r30;
 
-    var_r29 = HuSprAnimRead(HuDataReadNum(arg0, MEMORY_DEFAULT_NUM));
+    var_r29 = HuSprAnimRead(HuDataReadNum(arg0, HU_MEMNUM_OVL));
     temp_r30 = Hu3DParticleCreate(var_r29, arg1);
     Hu3DParticleHookSet(temp_r30, arg2);
     temp_r31 = Hu3DData[temp_r30].hookData;

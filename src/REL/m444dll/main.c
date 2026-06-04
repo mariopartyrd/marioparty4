@@ -993,7 +993,7 @@ void fn_1_55B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4)
             temp_f31 = -50;
             break;
     }
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work5774), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work5774), HU_MEMNUM_OVL);
     newProcess->user_data = work;
     work->unk0 = arg1;
     work->unk2 = arg2;
@@ -1259,7 +1259,7 @@ void fn_1_655C(void)
     up.y = 1;
     up.z = 0;
     Hu3DShadowPosSet(&pos, &up, &target);
-    Hu3DReflectMapSet(HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M444, 0x23), MEMORY_DEFAULT_NUM, HEAP_DATA));
+    Hu3DReflectMapSet(HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M444, 0x23), HU_MEMNUM_OVL, HEAP_MODEL));
     for (i = 0; i < 4; i++) {
         lbl_1_data_470[i + 47].datanum = lbl_1_data_470[i + 51].datanum = lbl_1_data_194[GWPlayerCfg[i].character];
     }

@@ -256,7 +256,7 @@ static void fn_1_6C98(OMOBJ *arg0)
     UnkBss9CData *var_r29;
     s32 i;
 
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*var_r29), MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*var_r29), HU_MEMNUM_OVL);
     arg0->data = var_r29;
     memset(arg0->data, 0, sizeof(*var_r29));
     for (i = 0; i < 12; i++) {

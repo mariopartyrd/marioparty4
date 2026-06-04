@@ -2063,7 +2063,7 @@ void fn_1_C6E0(OMOBJ *object)
         }
     }
     {
-        void *temp_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M413, 0x1F), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        void *temp_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M413, 0x1F), HU_MEMNUM_OVL, HEAP_MODEL);
         ANIMDATA *temp_r26 = HuSprAnimRead(temp_r27);
         lbl_1_bss_14 = HuSprGrpCreate(150);
         for (temp_r30 = 0; temp_r30 < 150; temp_r30++) {
@@ -2211,7 +2211,7 @@ void ObjectSetup(void)
     lbl_1_bss_30 = omAddObjEx(lbl_1_bss_24, 101, 63, 0, 1, fn_1_C6E0);
     for (i = 0; i < 4; i++) {
         OMOBJ *object = lbl_1_bss_34[i] = omAddObjEx(lbl_1_bss_24, 100, 6, 0, 0, fn_1_CBB4);
-        object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work19C8), MEMORY_DEFAULT_NUM);
+        object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work19C8), HU_MEMNUM_OVL);
         object->work[0] = i;
     }
     lbl_1_bss_44 = omAddObjEx(lbl_1_bss_24, 102, 0, 0, -1, fn_1_D340);

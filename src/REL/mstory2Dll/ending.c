@@ -335,14 +335,14 @@ void fn_1_19334(void)
                 languageOffset = 4;
                 break;
         }
-        sprid = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY2, 0x60) + languageOffset, MEMORY_DEFAULT_NUM)), 950, 0);
+        sprid = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY2, 0x60) + languageOffset, HU_MEMNUM_OVL)), 950, 0);
 #else
-        sprid = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY2, 0x60), MEMORY_DEFAULT_NUM)), 950, 0);
+        sprid = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY2, 0x60), HU_MEMNUM_OVL)), 950, 0);
 #endif
         HuSprGrpMemberSet(gid, 1, sprid);
         HuSprPosSet(gid, 1, 288, 226);
         HuSprAttrSet(gid, 1, HUSPR_ATTR_DISPOFF);
-        sprid = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x61 : 0x65), MEMORY_DEFAULT_NUM)), 950, 0);
+        sprid = HuSprCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY2, VERSION_NTSC ? 0x61 : 0x65), HU_MEMNUM_OVL)), 950, 0);
         HuSprGrpMemberSet(gid, 2, sprid);
         HuSprBankSet(gid, 2, lbl_1_bss_C0C.unk30[lbl_1_bss_C0C.unk00].unk10);
         if (GWLanguageGet() == 0 && lbl_1_bss_C0C.unk30[lbl_1_bss_C0C.unk00].unk10 == 5) {

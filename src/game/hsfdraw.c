@@ -2368,7 +2368,7 @@ void MakeDisplayList(HU3DMODELID modelId, u32 no) {
     modelP = &Hu3DData[modelId];
     curModelID = modelId;
     mallocNo = no;
-    faceNumBuf = HuMemDirectMallocNum(HEAP_DATA, 0x800 * sizeof(u16), mallocNo);
+    faceNumBuf = HuMemDirectMallocNum(HEAP_MODEL, 0x800 * sizeof(u16), mallocNo);
     MDObjCall(hsf, hsf->root);
     HuMemDirectFree(faceNumBuf);
     if (modelP->attr & HU3D_ATTR_SHADOW) {
@@ -2415,9 +2415,9 @@ static void MDObjMesh(HSFDATA *hsf, HSFOBJECT *objPtr) {
     }
     DLTotalNum = (DLTotalNum + 0x40) & ~0x1F;
     Hu3DObjInfoP = ObjConstantMake(objPtr, mallocNo);
-    Hu3DObjInfoP->drawData = DrawData = HuMemDirectMallocNum(HEAP_DATA, matChgCnt * sizeof(HSFDRAWDATA), mallocNo);
+    Hu3DObjInfoP->drawData = DrawData = HuMemDirectMallocNum(HEAP_MODEL, matChgCnt * sizeof(HSFDRAWDATA), mallocNo);
     memset(DrawData, 0, matChgCnt * sizeof(HSFDRAWDATA));
-    DLBufP = DLBufStartP = HuMemDirectMallocNum(HEAP_DATA, DLTotalNum, mallocNo);
+    DLBufP = DLBufStartP = HuMemDirectMallocNum(HEAP_MODEL, DLTotalNum, mallocNo);
     DCInvalidateRange(DLBufStartP, DLTotalNum);
     DLFirstF = 0;
     materialBak = PTR_INVALID;
@@ -2451,7 +2451,7 @@ static void MDObjMesh(HSFDATA *hsf, HSFOBJECT *objPtr) {
 }
 
 HSFCONSTDATA *ObjConstantMake(HSFOBJECT *object, u32 no) {
-    HSFCONSTDATA *constDataP = HuMemDirectMallocNum(HEAP_DATA, sizeof(HSFCONSTDATA), no);
+    HSFCONSTDATA *constDataP = HuMemDirectMallocNum(HEAP_MODEL, sizeof(HSFCONSTDATA), no);
     object->constData = constDataP;
     constDataP->attr = HU3D_CONST_NONE;
     constDataP->hookMdlId = HU3D_MODELID_NONE;
@@ -2989,7 +2989,7 @@ void Hu3DModelObjMtxGet(HU3DMODELID modelId, char *objName, Mtx mtx) {
     CancelTRXF = FALSE;
     PGFinishF = FALSE;
     hookIdx = HU3D_MODELID_NONE;
-    PGName = HuMemDirectMallocNum(HEAP_SYSTEM, 0x200, MEMORY_DEFAULT_NUM);
+    PGName = HuMemDirectMallocNum(HEAP_HEAP, 0x200, HU_MEMNUM_OVL);
     strcpy((char*) PGName, MakeObjectName(objName));
     if (modelP->motId != -1) {
         attachMotionF = 1;
@@ -3162,7 +3162,7 @@ HSFOBJECT *Hu3DObjDuplicate(HSFDATA *hsf, u32 mallocNo) {
     s16 i;
     s16 j;
 
-    objPtr = HuMemDirectMallocNum(HEAP_DATA, hsf->objectNum * sizeof(HSFOBJECT), mallocNo);
+    objPtr = HuMemDirectMallocNum(HEAP_MODEL, hsf->objectNum * sizeof(HSFOBJECT), mallocNo);
     objBuf = objPtr;
     srcObj = hsf->object;
     memcpy(objBuf, srcObj, hsf->objectNum * sizeof(HSFOBJECT));
@@ -3171,9 +3171,9 @@ HSFOBJECT *Hu3DObjDuplicate(HSFDATA *hsf, u32 mallocNo) {
             if (objPtr->mesh.parent) {
                 objPtr->mesh.parent = (HSFOBJECT*) ((u8*) objBuf + ((u32) srcObj->mesh.parent - (u32) hsf->object));
             }
-            objPtr->mesh.children = HuMemDirectMallocNum(HEAP_DATA, srcObj->mesh.childrenCount * sizeof(HSFOBJECT *), mallocNo);
+            objPtr->mesh.children = HuMemDirectMallocNum(HEAP_MODEL, srcObj->mesh.childrenCount * sizeof(HSFOBJECT *), mallocNo);
             if (srcObj->constData) {
-                objPtr->constData = HuMemDirectMallocNum(HEAP_DATA, sizeof(HSFCONSTDATA), mallocNo);
+                objPtr->constData = HuMemDirectMallocNum(HEAP_MODEL, sizeof(HSFCONSTDATA), mallocNo);
                 memcpy(objPtr->constData, srcObj->constData, sizeof(HSFCONSTDATA));
             }
             for (j = 0; j < srcObj->mesh.childrenCount; j++) {

@@ -76,7 +76,7 @@ void fn_1_6928(OMOBJ *arg0)
     s32 var_r30;
     s32 var_r28;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkStruct7), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(unkStruct7), HU_MEMNUM_OVL);
     arg0->data = var_r31;
     var_r31->unk0 = arg0->work[0];
     var_r31->unk1 = GWPlayerCfg[var_r31->unk0].character;
@@ -696,7 +696,7 @@ void fn_1_91C0(OMOBJ *arg0)
 
     for (var_r30 = 0; var_r30 < 3; var_r30++) {
         arg0->mtnId[var_r30]
-            = Hu3DJointMotion(var_r28, HuDataSelHeapReadNum(var_r30 + DATA_MAKE_NUM(DATADIR_M409, 0x0F), MEMORY_DEFAULT_NUM, HEAP_DATA));
+            = Hu3DJointMotion(var_r28, HuDataSelHeapReadNum(var_r30 + DATA_MAKE_NUM(DATADIR_M409, 0x0F), HU_MEMNUM_OVL, HEAP_MODEL));
     }
     Hu3DMotionSet(var_r28, arg0->mtnId[0]);
     omSetTra(arg0, 419.99997f, 250.0f, -180.0f);

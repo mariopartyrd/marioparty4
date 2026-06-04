@@ -100,7 +100,7 @@ void fn_1_6A88(OMOBJ *object)
     s32 temp_r30;
     s32 temp_r28;
     Work6A88 *temp_r27;
-    temp_r27 = HuMemDirectMallocNum(HEAP_SYSTEM, 20 * sizeof(Work6A88), MEMORY_DEFAULT_NUM);
+    temp_r27 = HuMemDirectMallocNum(HEAP_HEAP, 20 * sizeof(Work6A88), HU_MEMNUM_OVL);
     object->data = temp_r27;
     memset(temp_r27, 0, 20 * sizeof(Work6A88));
     for (temp_r30 = 0; temp_r30 < 2; temp_r30++) {

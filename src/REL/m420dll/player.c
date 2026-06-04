@@ -175,7 +175,7 @@ M420DllPlayerStruct *fn_1_1B8C(s32 arg0, s32 arg1)
     M420DllPlayerStruct *var_r31;
     s32 var_r30;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M420DllPlayerStruct), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M420DllPlayerStruct), HU_MEMNUM_OVL);
     if (!var_r31) {
         OSReport("M420PlayerCreate ERROR...\n");
         return NULL;

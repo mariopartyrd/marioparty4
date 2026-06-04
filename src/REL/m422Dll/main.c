@@ -1610,7 +1610,7 @@ void fn_1_9900(OMOBJ *arg0)
     for (i = 0; i < 4; i++) {
         s32 temp_r26 = i + 39;
 
-        arg0->mdlId[temp_r26] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 3), MEMORY_DEFAULT_NUM)), 40);
+        arg0->mdlId[temp_r26] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 3), HU_MEMNUM_OVL)), 40);
         Hu3DModelPosSet(arg0->mdlId[temp_r26], 2000.0f, -2000.0f, -2000.0f);
         Hu3DModelScaleSet(arg0->mdlId[temp_r26], 1.0f, 1.0f, 1.0f);
         Hu3DModelLayerSet(arg0->mdlId[temp_r26], 3);
@@ -1739,7 +1739,7 @@ void ObjectSetup(void)
     lbl_1_bss_38 = omAddObjEx(lbl_1_bss_30, 101, 103, 34, 1, fn_1_9900);
     for (i = 0; i < 4; i++) {
         var_r30 = lbl_1_bss_3C[i] = omAddObjEx(lbl_1_bss_30, 100, 2, 8, 0, fn_1_AC4C);
-        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StructBss3CData), MEMORY_DEFAULT_NUM);
+        var_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(StructBss3CData), HU_MEMNUM_OVL);
         var_r30->work[0] = i;
     }
     lbl_1_bss_4C = omAddObjEx(lbl_1_bss_30, 0x7FDA, 0, 0, -1, omOutView);

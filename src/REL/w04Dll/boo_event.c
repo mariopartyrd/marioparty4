@@ -317,7 +317,7 @@ static void fn_1_2C10(void)
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(BssE4Data), MEMORY_DEFAULT_NUM);
+        temp_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(BssE4Data), HU_MEMNUM_OVL);
         temp_r31->unk04 = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W04, 3), NULL, 0);
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_14[3]), lbl_1_data_348[i], &sp8);
         BoardModelLayerSet(temp_r31->unk04, 2);

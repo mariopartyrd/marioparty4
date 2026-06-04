@@ -52,7 +52,7 @@ void PresentFadeSprite(s16 sprite, BOOL inF, s32 duration)
 {
     HUPROCESS *process;
 
-    FaderWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
+    FaderWork *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(FaderWork), HU_MEMNUM_OVL);
     work->id = sprite;
     work->speed = 1.0f / duration;
     if (inF) {
@@ -100,7 +100,7 @@ void FadeSpriteWithMultiplier(s16 model, BOOL inF, float tpMultiplier, s32 durat
 {
     HUPROCESS *process;
     //  bug: wrong struct in sizeof
-    FaderWork2 *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
+    FaderWork2 *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(FaderWork), HU_MEMNUM_OVL);
     work->id = model;
     work->speed = 1.0f / duration;
     work->tpMultiplier = tpMultiplier;

@@ -401,7 +401,7 @@ static void DestroyStar(void) {
 static void GiveStarMain(OMOBJ *arg0) {
     GiveStarWork *temp_r30;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0, GiveStarWork);
+    temp_r30 = omObjGetWork(arg0, GiveStarWork);
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
         KillGiveStarEffect();
         BoardModelKill(temp_r30->unk0C);
@@ -537,7 +537,7 @@ static void StopGiveStar(void) {
     GiveStarWork *temp_r31;
 
     if (giveStarObj) {
-        temp_r31 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
+        temp_r31 = omObjGetWork(giveStarObj, GiveStarWork);
         temp_r31->unk00_field0 = 1;
     }
 }
@@ -546,7 +546,7 @@ static void InitGiveStarEffect(void) {
     s16 temp_r3;
     void *var_r30;
 
-    var_r30 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 1), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r30 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 1), HU_MEMNUM_OVL, HEAP_MODEL);
     starEffAnim = HuSprAnimRead(var_r30);
     starParman = Hu3DParManCreate(starEffAnim, 0x64, &starEffParam);
     Hu3DParManAttrSet(starParman, 0x64);
@@ -566,13 +566,13 @@ static void KillGiveStarEffect(void) {
 }
 
 static inline void StarInlineFunc00(void) {
-    GiveStarWork *temp_r28 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
+    GiveStarWork *temp_r28 = omObjGetWork(giveStarObj, GiveStarWork);
 
     temp_r28->unk01 = 0;
 }
 
 static inline void StarInlineFunc01(void) {
-    GiveStarWork *temp_r27 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
+    GiveStarWork *temp_r27 = omObjGetWork(giveStarObj, GiveStarWork);
 
     while (temp_r27->unk01 != 4) {
         HuPrcVSleep();
@@ -580,7 +580,7 @@ static inline void StarInlineFunc01(void) {
 }
 
 static inline void StarInlineFunc02(void) {
-    GiveStarWork *temp_r29 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
+    GiveStarWork *temp_r29 = omObjGetWork(giveStarObj, GiveStarWork);
 
     temp_r29->unk00_field1 = 1;
     temp_r29->unk04 = 45;
@@ -599,7 +599,7 @@ void BoardStarGive(s32 arg0, Vec *arg1) {
     starCharPos = *arg1;
     giveStarObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, GiveStarMain);
     BoardCameraRotGet(&sp8);
-    temp_r31 = OM_GET_WORK_PTR(giveStarObj, GiveStarWork);
+    temp_r31 = omObjGetWork(giveStarObj, GiveStarWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field1 = 0;
     temp_r31->unk00_field2 = 0;
@@ -791,7 +791,7 @@ void BoardStarShowNext(s32 arg0) {
 }
 
 static void ShowNextUpdate(OMOBJ *arg0) {
-    ShowNextWork *temp_r30 = OM_GET_WORK_PTR(arg0, ShowNextWork);
+    ShowNextWork *temp_r30 = omObjGetWork(arg0, ShowNextWork);
     Vec sp8;
 
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
@@ -820,7 +820,7 @@ static void ShowNextUpdate(OMOBJ *arg0) {
 }
 
 static void HideNextHost(s32 arg0) {
-    ShowNextWork *temp_r31 = OM_GET_WORK_PTR(showNextObj, ShowNextWork);
+    ShowNextWork *temp_r31 = omObjGetWork(showNextObj, ShowNextWork);
 
     temp_r31->unk01 = arg0;
 }

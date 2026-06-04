@@ -3,15 +3,14 @@
 
 #include "dolphin/types.h"
 
-// TODO rename to HU_MEMNUM_OVL
-#define MEMORY_DEFAULT_NUM 0x10000000
+#define HU_MEMNUM_OVL 0x10000000
 
 typedef enum {
-    HEAP_SYSTEM,
-    HEAP_MUSIC,
-    HEAP_DATA,
+    HEAP_HEAP,
+    HEAP_SOUND,
+    HEAP_MODEL,
     HEAP_DVD,
-    HEAP_MISC,
+    HEAP_SPACE,
     HEAP_MAX
 } HeapID;
 

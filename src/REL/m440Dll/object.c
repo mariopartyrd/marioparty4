@@ -64,7 +64,7 @@ void fn_1_AEE4(OMOBJ *arg0)
     s16 var_r29;
     unkObjStruct *temp_r31;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x78, MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_HEAP, 0x78, HU_MEMNUM_OVL);
     temp_r31 = (unkObjStruct *)arg0->data;
     memset(temp_r31, 0, 0x78);
     arg0->stat |= 0x100;

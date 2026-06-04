@@ -13,7 +13,7 @@ OptionWindow *OptionWinCreate(s32 id)
 {
     OptionWindow *work;
 
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(OptionWindow), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(OptionWindow), HU_MEMNUM_OVL);
     work->messToBeSet = 0;
     work->messWaitSignal = 0;
     work->choiceSignal = 0;

@@ -322,8 +322,8 @@ static void DetermineMGList(bitcopy* arg0) {
         }
     }
     mgListAll[var_r24] = -1;
-    temp_r26 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r27 * 4, MEMORY_DEFAULT_NUM);
-    temp_r25 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r27 * 2, MEMORY_DEFAULT_NUM);
+    temp_r26 = HuMemDirectMallocNum(HEAP_HEAP, var_r27 * 4, HU_MEMNUM_OVL);
+    temp_r25 = HuMemDirectMallocNum(HEAP_HEAP, var_r27 * 2, HU_MEMNUM_OVL);
     var_r31 = mgInfoTbl;
     
     for (var_r29 = var_r30 = 0; var_r30 < var_r27; var_r30++, var_r31++) {
@@ -633,7 +633,7 @@ static void CreateMGSetup(void) {
     temp_r29->unk_02 = 0;
     temp_r29->unk_03 = 0;
     temp_r29->unk_04 = 0;
-    temp_r28->unk_0C = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkSubstructR31), MEMORY_DEFAULT_NUM);
+    temp_r28->unk_0C = HuMemDirectMallocNum(HEAP_HEAP, sizeof(unkSubstructR31), HU_MEMNUM_OVL);
     temp_r31 = temp_r28->unk_0C;
     temp_r31->unk_00[0] = HuSprGrpCreate(0xD);
     

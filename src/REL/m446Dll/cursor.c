@@ -69,7 +69,7 @@ unkStruct7 *m446CursorCreate(s32 arg0)
     unkStruct7 *var_r31;
     unkStruct3 *var_r29;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x54, MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, 0x54, HU_MEMNUM_OVL);
     if (!var_r31) {
         return NULL;
     }

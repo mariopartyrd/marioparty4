@@ -166,7 +166,7 @@ void fn_1_420(OMOBJ *object)
 {
     M443DllWork *var_r31;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M443DllWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M443DllWork), HU_MEMNUM_OVL);
     var_r31 = object->data;
     memset(var_r31, 0, sizeof(M443DllWork));
     var_r31->unk_00 = 0;
@@ -753,7 +753,7 @@ void fn_1_3370(OMOBJ *object)
     };
     s32 sp8[5] = { 1, 2, 4, 8, 16 };
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 10 * sizeof(M443DllCameraStruct), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 10 * sizeof(M443DllCameraStruct), HU_MEMNUM_OVL);
     var_r28 = object->data;
     memset(var_r28, 0, 10 * sizeof(M443DllCameraStruct));
     object->mdlId[0] = Hu3DHookFuncCreate(fn_1_3D78);

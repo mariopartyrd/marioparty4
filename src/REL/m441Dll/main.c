@@ -83,7 +83,7 @@ void fn_1_24(u16 arg0, s16 arg1)
     UnkBss1F8Struct *temp_r30;
     UnkBss1F8Struct *temp_r29;
 
-    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r31), MEMORY_DEFAULT_NUM);
+    temp_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r31), HU_MEMNUM_OVL);
     temp_r31->unk00 = arg0;
     temp_r31->unk02 = arg1;
     temp_r30 = &lbl_1_bss_1F8;
@@ -134,11 +134,11 @@ void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 arg4, Vec
     UnkBss1E0Struct *temp_r28;
     s32 i;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*var_r31), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*var_r31), HU_MEMNUM_OVL);
     var_r31->unk00 = arg1;
     var_r31->unk08 = arg3;
     var_r31->unk0C = arg4;
-    var_r31->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, arg4 * sizeof(*var_r31->unk04), MEMORY_DEFAULT_NUM);
+    var_r31->unk04 = HuMemDirectMallocNum(HEAP_HEAP, arg4 * sizeof(*var_r31->unk04), HU_MEMNUM_OVL);
     for (i = 0; i < arg4; i++, arg5++) {
         var_r31->unk04[i] = Hu3DParManLink(arg0, arg1);
         if (var_r31->unk04[i] >= 0) {
@@ -718,8 +718,8 @@ void fn_1_2454(OMOBJ *object)
     }
     print8(24, 32, 1.5f, "COUNT:%d MODE:%d MES:%d", lbl_1_bss_1A8, lbl_1_bss_4C->work[0], lbl_1_bss_19E);
     print8(24, 48, 1.5f, "%f %f %f", lbl_1_bss_0, lbl_1_bss_8, lbl_1_bss_4);
-    print8(24, 64, 1.5f, "%x %x", HuMemHeapSizeGet(HEAP_SYSTEM) - HuMemUsedMallocSizeGet(HEAP_SYSTEM),
-        HuMemHeapSizeGet(HEAP_DATA) - HuMemUsedMallocSizeGet(HEAP_DATA));
+    print8(24, 64, 1.5f, "%x %x", HuMemHeapSizeGet(HEAP_HEAP) - HuMemUsedMallocSizeGet(HEAP_HEAP),
+        HuMemHeapSizeGet(HEAP_MODEL) - HuMemUsedMallocSizeGet(HEAP_MODEL));
     lbl_1_bss_4 -= HuPadSubStkX[0] / 59.0f;
     lbl_1_bss_8 -= 4.0f * (HuPadSubStkY[0] / 59.0f);
     lbl_1_bss_0 -= (HuPadTrigL[0] / 150.0f) * 4.0f;
@@ -1621,7 +1621,7 @@ void fn_1_74F4(s32 arg0)
     lbl_1_bss_18[no]++;
     object = omAddObjEx(lbl_1_bss_1DC, 101, 1, 0, 1, fn_1_713C);
     object->work[0] = no;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work713C), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work713C), HU_MEMNUM_OVL);
     work = object->data;
     work->unk34 = arg0;
     work->unk18.z = 0;
@@ -1790,7 +1790,7 @@ void fn_1_892C(s16 arg0, s16 arg1, Vec *arg2)
     lbl_1_bss_1E++;
     object = omAddObjEx(lbl_1_bss_1DC, 102, 1, 0, 2, fn_1_8518);
     object->work[0] = arg1;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work713C), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work713C), HU_MEMNUM_OVL);
     work = object->data;
     fn_1_40A8InlineFunc(&work->unk0, arg2->x, arg2->y + 10, arg2->z + 8);
     fn_1_40A8InlineFunc(&work->unkC, arg2->x, 250, arg2->z);
@@ -1904,7 +1904,7 @@ void fn_1_8D58(OMOBJ *object)
             }
             else {
                 for (i = 0; i < 4; i++) {
-                    if (OM_GET_DATA_PTR(lbl_1_bss_48[i], Work53E8)->unk98 != 2007) {
+                    if (omObjGetDataAs(lbl_1_bss_48[i], Work53E8)->unk98 != 2007) {
                         break;
                     }
                 }
@@ -1926,10 +1926,10 @@ void fn_1_8D58(OMOBJ *object)
                 lbl_1_bss_28 = 2.0f * REFRESH_RATE;
                 for (i = 0; i < 4; i++) {
                     float temp;
-                    if (OM_GET_DATA_PTR(lbl_1_bss_48[i], Work53E8)->unk98 != 2010) {
+                    if (omObjGetDataAs(lbl_1_bss_48[i], Work53E8)->unk98 != 2010) {
                         break;
                     }
-                    temp = OM_GET_DATA_PTR(lbl_1_bss_48[i], Work53E8)->unk58;
+                    temp = omObjGetDataAs(lbl_1_bss_48[i], Work53E8)->unk58;
                     if (2.0f < temp && 358.0f > temp) {
                         break;
                     }
@@ -1943,7 +1943,7 @@ void fn_1_8D58(OMOBJ *object)
 
         case 1007:
             for (i = 0; i < 4; i++) {
-                if (OM_GET_DATA_PTR(lbl_1_bss_48[i], Work53E8)->unk98 != 2014) {
+                if (omObjGetDataAs(lbl_1_bss_48[i], Work53E8)->unk98 != 2014) {
                     break;
                 }
             }
@@ -1954,7 +1954,7 @@ void fn_1_8D58(OMOBJ *object)
                     if (lbl_1_bss_20 == 0) {
                         HuAudSStreamPlay(4);
                         for (i = 0; i < 4; i++) {
-                            OM_GET_DATA_PTR(lbl_1_bss_48[i], Work53E8)->unkC0 = 4;
+                            omObjGetDataAs(lbl_1_bss_48[i], Work53E8)->unkC0 = 4;
                         }
                     }
                     else {
@@ -1975,14 +1975,14 @@ void fn_1_8D58(OMOBJ *object)
                             }
                             temp_r29 = lbl_1_bss_48[temp_r26]->data;
                             temp_r29->unkC0 = i + 1;
-                            if (temp_r27 >= 0 && temp_r29->unkBC == OM_GET_DATA_PTR(lbl_1_bss_48[temp_r27], Work53E8)->unkBC) {
-                                temp_r29->unkC0 = OM_GET_DATA_PTR(lbl_1_bss_48[temp_r27], Work53E8)->unkC0;
+                            if (temp_r27 >= 0 && temp_r29->unkBC == omObjGetDataAs(lbl_1_bss_48[temp_r27], Work53E8)->unkBC) {
+                                temp_r29->unkC0 = omObjGetDataAs(lbl_1_bss_48[temp_r27], Work53E8)->unkC0;
                             }
                             temp_r27 = temp_r26;
                         }
                     }
                     for (i = 0; i < 4; i++) {
-                        GWPlayerCoinWinSet(OM_GET_DATA_PTR(lbl_1_bss_48[i], Work53E8)->unkB0, OM_GET_DATA_PTR(lbl_1_bss_48[i], Work53E8)->unkC0 - 1);
+                        GWPlayerCoinWinSet(omObjGetDataAs(lbl_1_bss_48[i], Work53E8)->unkB0, omObjGetDataAs(lbl_1_bss_48[i], Work53E8)->unkC0 - 1);
                     }
                 }
             }
@@ -2079,7 +2079,7 @@ void ObjectSetup(void)
     lbl_1_bss_48 = omGetGroupMemberListEx(lbl_1_bss_1DC, 0);
     for (i = 0; i < 4; i++) {
         object = omAddObjEx(lbl_1_bss_1DC, 100, 3, 16, 0, fn_1_53E8);
-        object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work53E8), MEMORY_DEFAULT_NUM);
+        object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work53E8), HU_MEMNUM_OVL);
         object->work[0] = i;
     }
     fn_1_0();

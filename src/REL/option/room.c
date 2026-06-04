@@ -40,7 +40,7 @@ OMOBJ *OptionRoomCreate(void)
     RoomWork *work;
 
     object = omAddObjEx(optionObjMan, 1003, 0, 0, 1, NULL);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(RoomWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(RoomWork), HU_MEMNUM_OVL);
     object->data = work;
     work->optionIdx = 0;
     work->unk20 = -1;

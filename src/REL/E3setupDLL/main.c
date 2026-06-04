@@ -557,31 +557,31 @@ static void InitPlayerCnt(OMOBJ *object)
 	float size[2]; //FIXME: Change to Vec2f
 	
 	omSetStatBit(object, 0x100);
-	object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(E3PlayerCntWork), MEMORY_DEFAULT_NUM);
+	object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(E3PlayerCntWork), HU_MEMNUM_OVL);
 	work = object->data;
 	index = 0;
 	group = HuSprGrpCreate(3);
 	work->frameGroup = group;
 	HuSprGrpPosSet(group, 288, 80);
-	anim = HuSprAnimRead(HuDataReadNum(2, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(2, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 30008, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	HuSprTPLvlSet(group, index, 0.5f);
 	index++;
-	anim = HuSprAnimRead(HuDataReadNum(1, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(1, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 30000, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	index++;
-	anim = HuSprAnimRead(HuDataReadNum(3, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(3, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 1, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	HuSprTPLvlSet(group, index, 0.4f);
-	anim = HuSprAnimRead(HuDataReadNum(12, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(12, HU_MEMNUM_OVL));
 	work->arrow = anim;
-	work->arrowHilite = HuSprAnimRead(HuDataReadNum(13, MEMORY_DEFAULT_NUM));
+	work->arrowHilite = HuSprAnimRead(HuDataReadNum(13, HU_MEMNUM_OVL));
 	group = HuSprGrpCreate(2);
 	work->arrowGroupL = group;
 	HuSprGrpPosSet(group, 140, 96);
@@ -1043,25 +1043,25 @@ static void InitCharSel(OMOBJ *object)
 	s16 j;
 	s16 x;
 	omSetStatBit(object, 0x100);
-	object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(E3CharSelWork), MEMORY_DEFAULT_NUM);
+	object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(E3CharSelWork), HU_MEMNUM_OVL);
 	work = object->data;
 	i=0;
 	member=0;
 	group = HuSprGrpCreate(3);
 	work->frameGroup = group;
 	HuSprGrpPosSet(group, 288, 200);
-	anim = HuSprAnimRead(HuDataReadNum(2, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(2, HU_MEMNUM_OVL));
 	work->anims[member] = anim;
 	sprite = HuSprCreate(anim, 30008, 0);
 	HuSprGrpMemberSet(group, member, sprite);
 	HuSprTPLvlSet(group, member, 0.5f);
 	member++;
-	anim = HuSprAnimRead(HuDataReadNum(1, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(1, HU_MEMNUM_OVL));
 	work->anims[member] = anim;
 	sprite = HuSprCreate(anim, 30000, 0);
 	HuSprGrpMemberSet(group, member, sprite);
 	member++;
-	anim = HuSprAnimRead(HuDataReadNum(3, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(3, HU_MEMNUM_OVL));
 	work->anims[member] = anim;
 	sprite = HuSprCreate(anim, 1, 0);
 	HuSprGrpMemberSet(group, member, sprite);
@@ -1072,14 +1072,14 @@ static void InitCharSel(OMOBJ *object)
 	HuSprGrpPosSet(group, 288, 200);
 	x = -203;
 	for(j=0; j<8; j++, member++) {
-		anim = HuSprAnimRead(HuDataReadNum(charSpriteTbl[j], MEMORY_DEFAULT_NUM));
+		anim = HuSprAnimRead(HuDataReadNum(charSpriteTbl[j], HU_MEMNUM_OVL));
 		work->anims[member] = anim;
 		sprite = HuSprCreate(anim, 28010, 0);
 		HuSprGrpMemberSet(group, j, sprite);
 		HuSprPosSet(group, j, x, 0);
 		x += 58;
 	}
-	anim = HuSprAnimRead(HuDataReadNum(24, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(24, HU_MEMNUM_OVL));
 	work->anims[member] = anim;
 	member++;
 	x = -203;
@@ -1098,7 +1098,7 @@ static void InitCharSel(OMOBJ *object)
 	HuSprGrpPosSet(group, 0, 0);
 	for(i=0; i<7; i++) {
 		if(i < 5) {
-			anim = HuSprAnimRead(HuDataReadNum(cursorSpriteTbl[i], MEMORY_DEFAULT_NUM));
+			anim = HuSprAnimRead(HuDataReadNum(cursorSpriteTbl[i], HU_MEMNUM_OVL));
 			work->anims[member] = anim;
 			member++;
 		}
@@ -1111,7 +1111,7 @@ static void InitCharSel(OMOBJ *object)
 	HuSprGrpPosSet(group, 0, 0);
 	for(i=0; i<7; i++) {
 		if(i < 5) {
-			anim = HuSprAnimRead(HuDataReadNum(hiliteSprTbl[i], MEMORY_DEFAULT_NUM));
+			anim = HuSprAnimRead(HuDataReadNum(hiliteSprTbl[i], HU_MEMNUM_OVL));
 			work->anims[member] = anim;
 			member++;
 		}
@@ -1238,31 +1238,31 @@ static void InitRumbleCfg(OMOBJ *object)
 	float size[2]; //FIXME: Change to Vec2f
 	
 	omSetStatBit(object, 0x100);
-	object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(E3RumbleCfgWork), MEMORY_DEFAULT_NUM);
+	object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(E3RumbleCfgWork), HU_MEMNUM_OVL);
 	work = object->data;
 	index = 0;
 	group = HuSprGrpCreate(3);
 	work->frameGroup = group;
 	HuSprGrpPosSet(group, 288, 303);
-	anim = HuSprAnimRead(HuDataReadNum(8, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(8, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 30008, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	HuSprTPLvlSet(group, index, 0.5f);
 	index++;
-	anim = HuSprAnimRead(HuDataReadNum(7, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(7, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 30000, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	index++;
-	anim = HuSprAnimRead(HuDataReadNum(9, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(9, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 1, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	HuSprTPLvlSet(group, index, 0.4f);
-	anim = HuSprAnimRead(HuDataReadNum(12, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(12, HU_MEMNUM_OVL));
 	work->arrow = anim;
-	work->arrowHilite = HuSprAnimRead(HuDataReadNum(13, MEMORY_DEFAULT_NUM));
+	work->arrowHilite = HuSprAnimRead(HuDataReadNum(13, HU_MEMNUM_OVL));
 	group = HuSprGrpCreate(2);
 	work->arrowGroupL = group;
 	HuSprGrpPosSet(group, 240, 319);
@@ -1465,24 +1465,24 @@ static void InitModeSel(OMOBJ *object)
 	float size[2]; //FIXME: Change to Vec2f
 	
 	omSetStatBit(object, 0x100);
-	object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(E3ModeSelWork), MEMORY_DEFAULT_NUM);
+	object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(E3ModeSelWork), HU_MEMNUM_OVL);
 	work = object->data;
 	index = 0;
 	group = HuSprGrpCreate(3);
 	work->frameGroup = group;
 	HuSprGrpPosSet(group, 288, 398);
-	anim = HuSprAnimRead(HuDataReadNum(5, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(5, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 30008, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	HuSprTPLvlSet(group, index, 0.5f);
 	index++;
-	anim = HuSprAnimRead(HuDataReadNum(4, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(4, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 30000, 0);
 	HuSprGrpMemberSet(group, index, index2);
 	index++;
-	anim = HuSprAnimRead(HuDataReadNum(6, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(6, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 1, 0);
 	HuSprGrpMemberSet(group, index, index2);
@@ -1493,12 +1493,12 @@ static void InitModeSel(OMOBJ *object)
 	group = HuSprGrpCreate(2);
 	work->cursorGroup = group;
 	HuSprGrpPosSet(group, modeSelCursorPosTbl[work->mode].x, modeSelCursorPosTbl[work->mode].y);
-	anim = HuSprAnimRead(HuDataReadNum(10, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(10, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 10000, 0);
 	HuSprGrpMemberSet(group, 0, index2);
 	index++;
-	anim = HuSprAnimRead(HuDataReadNum(11, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(11, HU_MEMNUM_OVL));
 	work->frame[index] = anim;
 	index2 = HuSprCreate(anim, 10008, 0);
 	HuSprGrpMemberSet(group, 1, index2);
@@ -1585,11 +1585,11 @@ void E3BGCreate(OMOBJ *object)
 	float y;
 	
 	omSetStatBit(object, 0x100);
-	object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(E3BGWork), MEMORY_DEFAULT_NUM);
+	object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(E3BGWork), HU_MEMNUM_OVL);
 	work = object->data;
 	group = HuSprGrpCreate(E3_BG_MAX_TILE);
 	work->group = group;
-	anim = HuSprAnimRead(HuDataReadNum(0, MEMORY_DEFAULT_NUM));
+	anim = HuSprAnimRead(HuDataReadNum(0, HU_MEMNUM_OVL));
 	work->anim =anim;
 	tile = &work->tiles[0];
 	tile_idx = 0;
@@ -1649,7 +1649,7 @@ static void UpdateCamera(OMOBJ *object);
 static void InitCamera(OMOBJ *object)
 {
 	u32 *work;
-	object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 3*sizeof(u32), MEMORY_DEFAULT_NUM);
+	object->data = HuMemDirectMallocNum(HEAP_HEAP, 3*sizeof(u32), HU_MEMNUM_OVL);
 	work = object->data;
 	work[0] = 0;
 	object->work[0] = 0;

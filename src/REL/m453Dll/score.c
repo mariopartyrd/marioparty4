@@ -48,7 +48,7 @@ void fn_1_8F48(HUPROCESS *arg0, s16 arg1)
 
     lbl_1_bss_C4 = arg0;
     lbl_1_bss_C0 = omAddObjEx(lbl_1_bss_C4, 0x800, 0, 0, 7, fn_1_92F0);
-    lbl_1_bss_C0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M453ScoreUnkStruct), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_C0->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M453ScoreUnkStruct), HU_MEMNUM_OVL);
     var_r31 = lbl_1_bss_C0->data;
     var_r31->unk_08 = arg1;
     var_r31->unk_0A = 0;

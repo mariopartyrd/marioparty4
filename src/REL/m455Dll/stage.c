@@ -140,7 +140,7 @@ void fn_1_4E64(HU3DMODEL *model, Mtx matrix);
 OMOBJ *fn_1_347C(void)
 {
     OMOBJ *object = omAddObjEx(lbl_1_bss_70, 127, 15, 0, -1, fn_1_3DDC);
-    Work347C *work = object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work347C), MEMORY_DEFAULT_NUM);
+    Work347C *work = object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work347C), HU_MEMNUM_OVL);
     Work347C *work2 = work;
     Work347CUnk74 *workUnk74 = &work->unk74[0];
     Work347CUnk4 *workUnk4;
@@ -161,22 +161,22 @@ OMOBJ *fn_1_347C(void)
     Hu3DModelLayerSet(id, 5);
     modelP = &Hu3DData[id];
     modelP->hookData = work;
-    work->unkA1C[4] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 21), MEMORY_DEFAULT_NUM));
-    work->unkA1C[5] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 22), MEMORY_DEFAULT_NUM));
-    work->unkA1C[6] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 23), MEMORY_DEFAULT_NUM));
-    work->unkA1C[7] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 24), MEMORY_DEFAULT_NUM));
-    work->unkA1C[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 17), MEMORY_DEFAULT_NUM));
-    work->unkA1C[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 18), MEMORY_DEFAULT_NUM));
-    work->unkA1C[2] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 19), MEMORY_DEFAULT_NUM));
-    work->unkA1C[3] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 20), MEMORY_DEFAULT_NUM));
-    work->unkA1C[8] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 25), MEMORY_DEFAULT_NUM));
+    work->unkA1C[4] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 21), HU_MEMNUM_OVL));
+    work->unkA1C[5] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 22), HU_MEMNUM_OVL));
+    work->unkA1C[6] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 23), HU_MEMNUM_OVL));
+    work->unkA1C[7] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 24), HU_MEMNUM_OVL));
+    work->unkA1C[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 17), HU_MEMNUM_OVL));
+    work->unkA1C[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 18), HU_MEMNUM_OVL));
+    work->unkA1C[2] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 19), HU_MEMNUM_OVL));
+    work->unkA1C[3] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 20), HU_MEMNUM_OVL));
+    work->unkA1C[8] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 25), HU_MEMNUM_OVL));
     object->mdlId[1] = id = Hu3DHookFuncCreate(fn_1_4180);
     Hu3DModelCameraSet(id, HU3D_CAM0);
     Hu3DModelLayerSet(id, 0);
     modelP = &Hu3DData[id];
     modelP->hookData = work;
     work2->unkA18 = 16384;
-    work2->unkA14 = HuMemDirectMallocNum(HEAP_SYSTEM, work2->unkA18, MEMORY_DEFAULT_NUM);
+    work2->unkA14 = HuMemDirectMallocNum(HEAP_HEAP, work2->unkA18, HU_MEMNUM_OVL);
     DCFlushRange(work2->unkA14, 16384);
     GXBeginDisplayList(work2->unkA14, work2->unkA18);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
@@ -241,7 +241,7 @@ OMOBJ *fn_1_347C(void)
         workUnk4->unk18 = lbl_1_data_20C[i].unkC;
         workUnk4->unk8 = lbl_1_data_20C[i].unk10;
         workUnk4->unk4 = GXGetTexBufferSize(workUnk4->unk14, workUnk4->unk18, GX_TF_RGB565, GX_FALSE, GX_FALSE);
-        workUnk4->unk0 = HuMemDirectMallocNum(HEAP_DATA, workUnk4->unk4, modelP->mallocNo);
+        workUnk4->unk0 = HuMemDirectMallocNum(HEAP_MODEL, workUnk4->unk4, modelP->mallocNo);
         memset(workUnk4->unk0, 0, workUnk4->unk4);
         DCFlushRange(workUnk4->unk0, workUnk4->unk4);
     }
@@ -1059,9 +1059,9 @@ void fn_1_6914(OMOBJ *object)
     Work6914 *work;
     s32 i;
     ANIMDATA *anim;
-    work = object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work6914)*8, MEMORY_DEFAULT_NUM);
+    work = object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work6914)*8, HU_MEMNUM_OVL);
     memset(work, 0, sizeof(Work6914)*8);
-    anim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 26), MEMORY_DEFAULT_NUM));
+    anim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 26), HU_MEMNUM_OVL));
     for(i=0; i<8; i++, work++) {
         work->unk10 = anim;
         work->unk0 = i;
@@ -1250,7 +1250,7 @@ void fn_1_75C0(OMOBJ *object)
     HU3DPARTICLEDATA *temp_r29;
     s32 i;
     HU3DMODEL *modelP;
-    ANIMDATA *anim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 26), MEMORY_DEFAULT_NUM));
+    ANIMDATA *anim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 26), HU_MEMNUM_OVL));
 
     object->data = anim;
     object->mdlId[0] = Hu3DParticleCreate(anim, 64);
@@ -1345,7 +1345,7 @@ void fn_1_8050(OMOBJ *object);
 
 void fn_1_7C48(OMOBJ *object)
 {
-    Work7C48 *workBase = object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work7C48)*8, MEMORY_DEFAULT_NUM);
+    Work7C48 *workBase = object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work7C48)*8, HU_MEMNUM_OVL);
     Work7C48 *workP = workBase;
     s32 i;
     memset(workP, 0, 8*sizeof(Work7C48));
@@ -1521,7 +1521,7 @@ void fn_1_891C(OMOBJ *object)
     float angle;
     float ofsZ;
     s32 i;
-    object->data = workBase = HuMemDirectMallocNum(HEAP_SYSTEM, num*sizeof(Work891C), MEMORY_DEFAULT_NUM);
+    object->data = workBase = HuMemDirectMallocNum(HEAP_HEAP, num*sizeof(Work891C), HU_MEMNUM_OVL);
     memset(workBase, 0, num*sizeof(Work891C));
     modelId = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M455, 8));
     ofsZ = 1500;
@@ -1577,16 +1577,16 @@ void fn_1_91B8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 void fn_1_8EAC(void)
 {
-    StructBss48 *workP = lbl_1_bss_48 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StructBss48), MEMORY_DEFAULT_NUM);
+    StructBss48 *workP = lbl_1_bss_48 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(StructBss48), HU_MEMNUM_OVL);
     HU3DPARTICLE *particle;
     HU3DMODEL *modelP;
     s16 *newWork;
     s32 modelId;
     memset(workP, 0, sizeof(StructBss48));
-    workP->unk0[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 13), MEMORY_DEFAULT_NUM));
-    workP->unk0[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 14), MEMORY_DEFAULT_NUM));
-    workP->unk0[2] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 15), MEMORY_DEFAULT_NUM));
-    workP->unk0[3] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 16), MEMORY_DEFAULT_NUM));
+    workP->unk0[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 13), HU_MEMNUM_OVL));
+    workP->unk0[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 14), HU_MEMNUM_OVL));
+    workP->unk0[2] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 15), HU_MEMNUM_OVL));
+    workP->unk0[3] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M455, 16), HU_MEMNUM_OVL));
     workP->unk20.y = 1;
     workP->unk20.z = 0;
     workP->unk10[0] = modelId = Hu3DParticleCreate(workP->unk0[0], 1);
@@ -1595,7 +1595,7 @@ void fn_1_8EAC(void)
     particle = modelP->hookData;
     particle->blendMode = 1;
     particle->hook = fn_1_91B8;
-    newWork = particle->work = HuMemDirectMallocNum(HEAP_DATA, sizeof(s16)*4, modelP->mallocNo);
+    newWork = particle->work = HuMemDirectMallocNum(HEAP_MODEL, sizeof(s16)*4, modelP->mallocNo);
     memset(newWork, 0, 4*sizeof(s16));
     newWork[1] = 0;
     workP->unk10[1] = modelId = Hu3DParticleCreate(workP->unk0[3], 10);
@@ -1604,7 +1604,7 @@ void fn_1_8EAC(void)
     particle = modelP->hookData;
     particle->blendMode = 1;
     particle->hook = fn_1_91B8;
-    newWork = particle->work = HuMemDirectMallocNum(HEAP_DATA, sizeof(s16)*4, modelP->mallocNo);
+    newWork = particle->work = HuMemDirectMallocNum(HEAP_MODEL, sizeof(s16)*4, modelP->mallocNo);
     memset(newWork, 0, 4*sizeof(s16));
     newWork[1] = 1;
     workP->unk10[2] = modelId = Hu3DParticleCreate(workP->unk0[2], 4);
@@ -1613,7 +1613,7 @@ void fn_1_8EAC(void)
     particle = modelP->hookData;
     particle->blendMode = 1;
     particle->hook = fn_1_91B8;
-    newWork = particle->work = HuMemDirectMallocNum(HEAP_DATA, sizeof(s16)*4, modelP->mallocNo);
+    newWork = particle->work = HuMemDirectMallocNum(HEAP_MODEL, sizeof(s16)*4, modelP->mallocNo);
     memset(newWork, 0, 4*sizeof(s16));
     newWork[1] = 2;
     workP->unk10[3] = modelId = Hu3DParticleCreate(workP->unk0[1], 6);
@@ -1622,7 +1622,7 @@ void fn_1_8EAC(void)
     particle = modelP->hookData;
     particle->blendMode = 1;
     particle->hook = fn_1_91B8;
-    newWork = particle->work = HuMemDirectMallocNum(HEAP_DATA, sizeof(s16)*4, modelP->mallocNo);
+    newWork = particle->work = HuMemDirectMallocNum(HEAP_MODEL, sizeof(s16)*4, modelP->mallocNo);
     memset(newWork, 0, 4*sizeof(s16));
     newWork[1] = 3;
 }

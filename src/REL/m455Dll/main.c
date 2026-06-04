@@ -366,7 +366,7 @@ void fn_1_D14(OMOBJ *object)
     M455Player *player;
     s32 charNo;
     u32 i;
-    player = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M455Player), MEMORY_DEFAULT_NUM);
+    player = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M455Player), HU_MEMNUM_OVL);
     object->data = player;
     memset(player, 0, sizeof(M455Player));
     player->unk2 = lbl_1_bss_28++;

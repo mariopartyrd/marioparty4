@@ -402,7 +402,7 @@ static void InitExplode(void) {
 
     BoardPlayerPosGet(currPlayer, &sp14);
     explodeObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, UpdateExplode);
-    temp_r31 = OM_GET_WORK_PTR(explodeObj, ExplodeWork);
+    temp_r31 = omObjGetWork(explodeObj, ExplodeWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field1 = 0;
     temp_r31->unk01 = 0x10;
@@ -425,7 +425,7 @@ static void InitExplode(void) {
 }
 
 static s32 CheckExplode(void) {
-    ExplodeWork *temp_r31 = OM_GET_WORK_PTR(explodeObj, ExplodeWork);
+    ExplodeWork *temp_r31 = omObjGetWork(explodeObj, ExplodeWork);
 
     return temp_r31->unk00_field1;
 }
@@ -439,7 +439,7 @@ static void UpdateExplode(OMOBJ *arg0) {
     s32 i;
 
     (void) 1000.0f; // TODO: 1000.0f needs to appear right before 20.0f in sdata2 to match.
-    temp_r30 = OM_GET_WORK_PTR(arg0, ExplodeWork);
+    temp_r30 = omObjGetWork(arg0, ExplodeWork);
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
         BoardModelKill(temp_r30->unk02);
         for (i = 0; i < 4; i++) {
@@ -515,7 +515,7 @@ static void CreateBattleMain(void) {
     };
 
     battleObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, UpdateBattleMain);
-    temp_r31 = OM_GET_WORK_PTR(battleObj, BattleWork);
+    temp_r31 = omObjGetWork(battleObj, BattleWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field2 = 0;
     temp_r31->unk01 = 0;
@@ -545,7 +545,7 @@ static void UpdateBattleMain(OMOBJ *arg0) {
     ExplodeWork *temp_r29;
     float var_f31;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0, BattleWork);
+    temp_r30 = omObjGetWork(arg0, BattleWork);
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
         HuSprGrpKill(temp_r30->unk08);
         battleObj = NULL;
@@ -581,7 +581,7 @@ static void UpdateBattleMain(OMOBJ *arg0) {
             break;
     }
     var_f31 = arg0->trans.x + 240.0f;
-    temp_r29 = OM_GET_WORK_PTR(explodeObj, ExplodeWork);
+    temp_r29 = omObjGetWork(explodeObj, ExplodeWork);
     if (temp_r29->unk00_field1 == 2) {
         explodeObj->scale.x = 288.0f;
         explodeObj->scale.y = var_f31;
@@ -740,7 +740,7 @@ static void InitBattleGameSpr(BattleWork *arg0, OMOBJ *arg1) {
 }
 
 static void HideBattleSpr(void) {
-    BattleWork *temp_r30 = OM_GET_WORK_PTR(battleObj, BattleWork);
+    BattleWork *temp_r30 = omObjGetWork(battleObj, BattleWork);
     s32 i;
 
     for (i = 0; i < 11; i++) {
@@ -760,16 +760,16 @@ static void VibratePad(BattleWork *arg0, OMOBJ *arg1) {
 
 static void StopBattleBomb(void) {
     if (battleObj) {
-        OM_GET_WORK_PTR(battleObj, BattleWork)->unk00_field0 = 1;
+        omObjGetWork(battleObj, BattleWork)->unk00_field0 = 1;
     }
 }
 
 static s32 GetBattleBombState(void) {
-    return OM_GET_WORK_PTR(battleObj, BattleWork)->unk00_field1;
+    return omObjGetWork(battleObj, BattleWork)->unk00_field1;
 }
 
 static void SetBattleBombState(s32 arg0) {
-    BattleWork *var_r31 = OM_GET_WORK_PTR(battleObj, BattleWork);
+    BattleWork *var_r31 = omObjGetWork(battleObj, BattleWork);
 
     var_r31->unk00_field1 = arg0;
     var_r31->unk01 = 0;

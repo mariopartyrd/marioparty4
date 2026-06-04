@@ -257,7 +257,7 @@ void fn_1_29C(OMOBJ *arg0)
     Hu3DModelScaleSet(var_r31, 5.0f, 5.0f, 5.0f);
     Hu3DModelShadowMapSet(var_r31);
     var_r31 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M407, 0x1E));
-    temp_r27 = Hu3DJointMotion(var_r31, HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M407, 0x2F), MEMORY_DEFAULT_NUM, 2));
+    temp_r27 = Hu3DJointMotion(var_r31, HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_M407, 0x2F), HU_MEMNUM_OVL, 2));
     Hu3DMotionSet(var_r31, temp_r27);
     Hu3DModelAttrSet(var_r31, HU3D_MOTATTR_LOOP);
 
@@ -273,7 +273,7 @@ void fn_1_29C(OMOBJ *arg0)
         Hu3DModelAttrSet(lbl_1_bss_664[var_r31], HU3D_ATTR_NOCULL);
         Hu3DModelAttrSet(lbl_1_bss_664[var_r31], HU3D_MOTATTR_LOOP);
     }
-    temp_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_SAF, 0x13), MEMORY_DEFAULT_NUM, 2);
+    temp_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_SAF, 0x13), HU_MEMNUM_OVL, 2);
     temp_r28 = HuSprAnimRead(temp_r29);
     lbl_1_bss_99C = HuSprGrpCreate(0x14);
 
@@ -287,7 +287,7 @@ void fn_1_29C(OMOBJ *arg0)
     HuSprGrpDrawNoSet(lbl_1_bss_99C, 0x40);
     lbl_1_bss_458 = 0x293;
     lbl_1_bss_45A[0] = MGSeqTimerCreate(lbl_1_bss_458 / 60);
-    temp_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 0x01), MEMORY_DEFAULT_NUM, 2);
+    temp_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 0x01), HU_MEMNUM_OVL, 2);
     temp_r28 = HuSprAnimRead(temp_r29);
     lbl_1_bss_888 = Hu3DParManCreate(temp_r28, 0x3E8, &lbl_1_data_208);
     Hu3DParManAttrSet(lbl_1_bss_888, 0x45);
@@ -300,7 +300,7 @@ void fn_1_29C(OMOBJ *arg0)
     Hu3DParManVecSet(lbl_1_bss_884, 0.0f, 1.0f, 0.0f);
     Hu3DParManVacumeSet(lbl_1_bss_884, 500.0f, 0.0f, 0.0f, 1.0f);
     Hu3DParManColorSet(lbl_1_bss_884, 0);
-    temp_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 0x02), MEMORY_DEFAULT_NUM, 2);
+    temp_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 0x02), HU_MEMNUM_OVL, 2);
     temp_r28 = HuSprAnimRead(temp_r29);
 
     for (var_r31 = 0; var_r31 < 10; ++var_r31) {
@@ -755,7 +755,7 @@ void fn_1_2B68(HU3DMODEL *mdl, Mtx arg1)
     f32 var_f27; // ! - uninitialized
 
     if (!lbl_1_bss_30[0]) {
-        lbl_1_bss_30[0] = HuMemDirectMallocNum(HEAP_SYSTEM, FB_SIZE(640, 480), MEMORY_DEFAULT_NUM);
+        lbl_1_bss_30[0] = HuMemDirectMallocNum(HEAP_HEAP, FB_SIZE(640, 480), HU_MEMNUM_OVL);
     }
 
     GXSetTexCopySrc(0, 0, 640, 480);

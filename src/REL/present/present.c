@@ -364,7 +364,7 @@ OMOBJ *PresentCreate(void)
     HU3DLIGHT *lightData;
 
     OMOBJ *object = omAddObjEx(presentObjMan, 1003, 0, 0, 1, NULL);
-    PresentWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(PresentWork), MEMORY_DEFAULT_NUM);
+    PresentWork *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(PresentWork), HU_MEMNUM_OVL);
     object->data = work;
     work->room = 0;
     work->idxInRoom = 0;

@@ -190,13 +190,13 @@ static void ExecBowser(void)
     }
     BoardAudSeqPause(0, 0, 1000);
     if(bowserObj) {
-        OM_GET_WORK_PTR(bowserObj, BowserWork)->kill = 1;
+        omObjGetWork(bowserObj, BowserWork)->kill = 1;
     }
     if(miniBowserObj) {
-        OM_GET_WORK_PTR(miniBowserObj, MiniBowserWork)->kill = 1;
+        omObjGetWork(miniBowserObj, MiniBowserWork)->kill = 1;
     }
     if(bowserEventObj) {
-        OM_GET_WORK_PTR(bowserEventObj, BowserEventWork)->kill = 1;
+        omObjGetWork(bowserEventObj, BowserEventWork)->kill = 1;
     }
     GWPlayer[eventPlayer].show_next = 1;
     BoardCameraMotionStartEx(-1, NULL, NULL, 2100.0f, -1.0f, 21);
@@ -667,7 +667,7 @@ static void StartSuitGive(void)
     Vec pos;
     object = omAddObjEx(boardObjMan, 258, 0, 0, -1, SuitGiveMain);
     suitGiveObj = object;
-    work = OM_GET_WORK_PTR(suitGiveObj, SuitGiveWork);
+    work = omObjGetWork(suitGiveObj, SuitGiveWork);
     work->kill = 0;
     work->state = 0;
     work->idle_timer = 0;
@@ -691,7 +691,7 @@ static void StartSuitGive(void)
 
 static void SuitGiveMain(OMOBJ *object)
 {
-    SuitGiveWork *work = OM_GET_WORK_PTR(object, SuitGiveWork);
+    SuitGiveWork *work = omObjGetWork(object, SuitGiveWork);
     s32 effect_active;
     Vec pos;
     if(work->kill || BoardIsKill()) {
@@ -766,7 +766,7 @@ static void CreateBowserObj(void)
     BowserWork *work;
     Vec pos;
     bowserObj = omAddObjEx(boardObjMan, 257, 0, 0, -1, ExecBowserObj);
-    work = OM_GET_WORK_PTR(bowserObj, BowserWork);
+    work = omObjGetWork(bowserObj, BowserWork);
     work->kill = 0;
     work->jump_state = 0;
     work->idle_timer = 0;
@@ -811,7 +811,7 @@ static void ExecBowserJump(BowserWork *work, OMOBJ *object);
 
 static void ExecBowserObj(OMOBJ *object)
 {
-    BowserWork *work = OM_GET_WORK_PTR(bowserObj, BowserWork);
+    BowserWork *work = omObjGetWork(bowserObj, BowserWork);
     Vec pos;
     Vec rot;
 
@@ -993,7 +993,7 @@ static void ExecBowserPowerUp(BowserWork *work, OMOBJ *object)
 
 static void SetBowserState(s32 state)
 {
-    BowserWork *work = OM_GET_WORK_PTR(bowserObj, BowserWork);
+    BowserWork *work = omObjGetWork(bowserObj, BowserWork);
     work->state = state;
     work->jump_state = 0;
 }
@@ -1004,7 +1004,7 @@ static s32 CheckBowserIdle(void)
     if(!bowserObj) {
         return 1;
     }
-    work = OM_GET_WORK_PTR(bowserObj, BowserWork);
+    work = omObjGetWork(bowserObj, BowserWork);
     if(work->state != 0 || work->idle_timer != 0) {
         return 0;
     } else {
@@ -1018,7 +1018,7 @@ static void CreateMiniBowser(void)
     MiniBowserWork *work;
     object = omAddObjEx(boardObjMan, 257, 0, 0, -1, ExecMiniBowser);
     miniBowserObj = object;
-    work = OM_GET_WORK_PTR(object, MiniBowserWork);
+    work = omObjGetWork(object, MiniBowserWork);
     work->kill = 0;
     work->angle = 0;
     work->group = HuSprGrpCreate(1);
@@ -1040,7 +1040,7 @@ static s32 CheckMiniBowser(void)
 
 static void ExecMiniBowser(OMOBJ *object)
 {
-    MiniBowserWork *work = OM_GET_WORK_PTR(object, MiniBowserWork);
+    MiniBowserWork *work = omObjGetWork(object, MiniBowserWork);
     float alpha;
     if(work->kill || BoardIsKill()) {
         HuSprGrpKill(work->group);
@@ -1080,7 +1080,7 @@ static void CreateBowserEvent(void)
     BowserEventWork *work;
     s32 sprite;
     bowserEventObj = omAddObjEx(boardObjMan, 257, 0, 0, -1, ExecBowserEvent);
-    work = OM_GET_WORK_PTR(bowserEventObj, BowserEventWork);
+    work = omObjGetWork(bowserEventObj, BowserEventWork);
     work->kill = 0;
     work->state = 0;
     work->timer = 0;
@@ -1108,7 +1108,7 @@ static void CreateBowserEvent(void)
 
 static s32 CheckBowserEvent(void)
 {
-    BowserEventWork *work = OM_GET_WORK_PTR(bowserEventObj, BowserEventWork);
+    BowserEventWork *work = omObjGetWork(bowserEventObj, BowserEventWork);
 
     if(work->state != 2) {
         return 0;
@@ -1119,7 +1119,7 @@ static s32 CheckBowserEvent(void)
 
 static void StopBowserEvent(void)
 {
-    BowserEventWork *work = OM_GET_WORK_PTR(bowserEventObj, BowserEventWork);
+    BowserEventWork *work = omObjGetWork(bowserEventObj, BowserEventWork);
     work->state = 1;
 }
 
@@ -1128,7 +1128,7 @@ static void HideBowserEvent(BowserEventWork *work, OMOBJ *object);
 
 static void ExecBowserEvent(OMOBJ *object)
 {
-    BowserEventWork *work = OM_GET_WORK_PTR(object, BowserEventWork);
+    BowserEventWork *work = omObjGetWork(object, BowserEventWork);
     BowserEventData *data = &bowserEvent;
     if(work->kill || BoardIsKill()) {
         HuSprGrpKill(data->group);
@@ -1662,18 +1662,18 @@ static const s32 miniBowserMotTbl[] = {
 static void MiniBowserBalloonStop(void)
 {
     if(miniBowserBalloonObj) {
-        OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork)->kill = 1;
+        omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork)->kill = 1;
     }
 }
 
 static s32 GetMiniBowserBalloonState(void)
 {
-    return OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork)->state;
+    return omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork)->state;
 }
 
 static void SetMiniBowserBalloonState(s32 state)
 {
-    OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork)->state = state;
+    omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork)->state = state;
 }
 
 static void CreateMiniBowserBalloon(void)
@@ -1682,13 +1682,13 @@ static void CreateMiniBowserBalloon(void)
     s16 *models;
     Vec pos;
     miniBowserBalloonObj = omAddObjEx(boardObjMan, 257, 0, 0, -1, ExecMiniBowserBalloon);
-    work = OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork);
+    work = omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork);
     work->kill = 0;
     work->state = 0;
     work->timer = 0;
     work->offset = 0;
     work->angle = 0;
-    work->models = HuMemDirectMallocNum(HEAP_SYSTEM, 9*sizeof(s16), MEMORY_DEFAULT_NUM);
+    work->models = HuMemDirectMallocNum(HEAP_HEAP, 9*sizeof(s16), HU_MEMNUM_OVL);
     models = work->models;
     models[0] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BKOOPA, 14), (s32 *)miniBowserMotTbl, 0);
     models[1] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BKOOPA, 0), NULL, 0);
@@ -1707,7 +1707,7 @@ static void ExecMiniBowserBalloon(OMOBJ *object)
 {
     MiniBowserBalloonWork *work;
     s16 *models;
-    work = OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork);
+    work = omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork);
     models = work->models;
     if(work->kill || BoardIsKill()) {
         BoardModelKill(models[0]);
@@ -1779,7 +1779,7 @@ static void SetMiniBowserMotion(s32 mot, u8 end, s32 pause)
     u32 attr;
     float shift_end;
     MiniBowserBalloonWork *work;
-    work = OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork);
+    work = omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork);
     models = work->models;
     if(pause) {
         attr = HU3D_MOTATTR_LOOP;
@@ -1798,7 +1798,7 @@ static void SetMiniBowserMotionPause(s32 flag)
 {
     s16 *models;
     MiniBowserBalloonWork *work;
-    work = OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork);
+    work = omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork);
     models = work->models;
     if(flag) {
         BoardModelAttrSet(models[0], 0x40000001);
@@ -1811,7 +1811,7 @@ static void WaitMiniBowserMotion(void)
 {
     s16 *models;
     MiniBowserBalloonWork *work;
-    work = OM_GET_WORK_PTR(miniBowserBalloonObj, MiniBowserBalloonWork);
+    work = omObjGetWork(miniBowserBalloonObj, MiniBowserBalloonWork);
     models = work->models;
     BoardModelAttrReset(models[0], 0x40000001);
     while(!BoardModelMotionEndCheck(models[0])) {

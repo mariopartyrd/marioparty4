@@ -968,7 +968,7 @@ void SetObjAttrMotion(s16 arg0, HSFTRACK *arg1, float arg2) {
         case 0x21:
         case 0x43:
             if (temp_r30->animWorkP == 0) {
-                var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(HU3DATTRANIM), (u32) Hu3DData[arg0].mallocNo);
+                var_r31 = HuMemDirectMallocNum(HEAP_MODEL, sizeof(HU3DATTRANIM), (u32) Hu3DData[arg0].mallocNo);
                 temp_r30->animWorkP = var_r31;
                 var_r31->attr = 0;
                 var_r31->trans3D.x = var_r31->trans3D.y = var_r31->trans3D.z = 0.0f;

@@ -1224,25 +1224,25 @@ s32 fn_1_524C(s32 arg0)
         }
     }
     var_r27 = HuSprGrpCreate(5);
-    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 67), MEMORY_DEFAULT_NUM));
+    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 67), HU_MEMNUM_OVL));
     var_r25 = HuSprCreate(var_r26, 0x32, 0);
     HuSprGrpMemberSet(var_r27, 0, var_r25);
     HuSprTPLvlSet(var_r27, 0, 0.9f);
     HuSprPosSet(var_r27, 0, 0.0f, 0.0f);
     HuSprScaleSet(var_r27, 0, 1.1f, 1.0f);
-    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 65), MEMORY_DEFAULT_NUM));
+    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 65), HU_MEMNUM_OVL));
     var_r25 = HuSprCreate(var_r26, 0x28, 0);
     HuSprGrpMemberSet(var_r27, 1, var_r25);
     HuSprPosSet(var_r27, 1, 0.0f, -90.0f);
-    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 66), MEMORY_DEFAULT_NUM));
+    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 66), HU_MEMNUM_OVL));
     var_r25 = HuSprCreate(var_r26, 0x28, 0);
     HuSprGrpMemberSet(var_r27, 2, var_r25);
     HuSprPosSet(var_r27, 2, 0.0f, 0.0f);
-    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 68), MEMORY_DEFAULT_NUM));
+    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 68), HU_MEMNUM_OVL));
     var_r25 = HuSprCreate(var_r26, 0x28, 1);
     HuSprGrpMemberSet(var_r27, 3, var_r25);
     HuSprPosSet(var_r27, 3, 180.0f, 0.0f);
-    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 68), MEMORY_DEFAULT_NUM));
+    var_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_ZTAR, 68), HU_MEMNUM_OVL));
     var_r25 = HuSprCreate(var_r26, 0x28, 0);
     HuSprGrpMemberSet(var_r27, 4, var_r25);
     HuSprPosSet(var_r27, 4, -180.0f, 0.0f);

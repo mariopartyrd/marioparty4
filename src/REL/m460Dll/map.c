@@ -90,7 +90,7 @@ void fn_1_6818(OMOBJ *object)
     UnkM460MapWork *var_r28;
     HU3DPARTICLEDATA *var_r27;
 
-    var_r28 = object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM460MapWork), MEMORY_DEFAULT_NUM);
+    var_r28 = object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM460MapWork), HU_MEMNUM_OVL);
     memset(var_r28, 0, sizeof(UnkM460MapWork));
     omSetTra(object, 0.0f, 0.0f, 0.0f);
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
@@ -134,7 +134,7 @@ void fn_1_6818(OMOBJ *object)
     Hu3DModelCameraSet(var_r30, 2);
     Hu3DModelLayerSet(var_r30, 7);
     var_r28->unk_58 = GXGetTexBufferSize(0x280, 0x1E0, 5, 0, 0);
-    var_r28->unk_5C = HuMemDirectMallocNum(HEAP_SYSTEM, var_r28->unk_58, MEMORY_DEFAULT_NUM);
+    var_r28->unk_5C = HuMemDirectMallocNum(HEAP_HEAP, var_r28->unk_58, HU_MEMNUM_OVL);
     DCFlushRange(var_r28->unk_5C, var_r28->unk_58);
     var_r30 = Hu3DParticleCreate(HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M460, 0x23)), 0x100);
     object->mdlId[15] = var_r30;

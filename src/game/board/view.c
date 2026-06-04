@@ -457,7 +457,7 @@ static void InitOverheadView(void) {
 
     temp_r26 = omAddObjEx(boardObjMan, 0x1000, 0, 0, -1, UpdateOverheadView);
     overheadObj = temp_r26;
-    temp_r31 = OM_GET_WORK_PTR(temp_r26, OverheadWork);
+    temp_r31 = omObjGetWork(temp_r26, OverheadWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk01 = 1;
     temp_r31->unk02 = HuSprGrpCreate(9);
@@ -507,7 +507,7 @@ static void InitOverheadView(void) {
 
 static void DestroyOverheadView(void) {
     if (overheadObj) {
-        OM_GET_WORK_PTR(overheadObj, OverheadWork)->unk00_field0 = 1;
+        omObjGetWork(overheadObj, OverheadWork)->unk00_field0 = 1;
     }
 }
 
@@ -526,7 +526,7 @@ static void UpdateOverheadView(OMOBJ *arg0) {
     Mtx sp5C;
     Mtx sp2C;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, OverheadWork);
+    temp_r31 = omObjGetWork(arg0, OverheadWork);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         if (temp_r31->unk02 != -1) {
             HuSprGrpKill(temp_r31->unk02);

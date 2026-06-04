@@ -166,7 +166,7 @@ void fn_1_1794(m02GenDice *arg0)
 {
     WorkGenDice *temp_r30;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0->unk3C[arg0->unk96], WorkGenDice);
+    temp_r30 = omObjGetWork(arg0->unk3C[arg0->unk96], WorkGenDice);
     while (temp_r30->unk3 != 1) {
         HuPrcVSleep();
     }
@@ -178,7 +178,7 @@ s32 fn_1_17F4(m02GenDice *arg0)
     if (arg0->unk96 < 0) {
         return 0;
     }
-    temp = OM_GET_WORK_PTR(arg0->unk3C[arg0->unk96], WorkGenDice);
+    temp = omObjGetWork(arg0->unk3C[arg0->unk96], WorkGenDice);
     if (temp->unk3 != 1) {
         return 0;
     }
@@ -195,7 +195,7 @@ void fn_1_1850(OMOBJ *object)
     float temp_f28;
     float temp_f27;
     temp_r27 = (m02GenDice *)object->mode;
-    temp_r29 = OM_GET_WORK_PTR(object, WorkGenDice);
+    temp_r29 = omObjGetWork(object, WorkGenDice);
     if (temp_r29->unk7 || BoardIsKill()) {
         fn_1_1F94(temp_r27, temp_r29->unk1);
         temp_r27->unk3C[temp_r29->unk1] = NULL;
@@ -335,7 +335,7 @@ void fn_1_2100(m02GenDice *arg0, s32 arg1)
     s16 temp_r29;
     ANIMDATA *temp_r28;
     void *temp_r27;
-    temp_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 0x01), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    temp_r27 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 0x01), HU_MEMNUM_OVL, HEAP_MODEL);
     temp_r28 = HuSprAnimRead(temp_r27);
     arg0->unk48[arg1] = Hu3DParManCreate(temp_r28, 100, &lbl_1_data_2D8);
     Hu3DParManAttrSet(arg0->unk48[arg1], 0x108);
@@ -351,7 +351,7 @@ void fn_1_2220(m02GenDice *arg0)
     s32 temp_r30;
     WorkGenDice *temp_r29;
     temp_r30 = arg0->unk96;
-    temp_r29 = OM_GET_WORK_PTR(arg0->unk3C[temp_r30], WorkGenDice);
+    temp_r29 = omObjGetWork(arg0->unk3C[temp_r30], WorkGenDice);
     temp_r29->unk3 = 2;
     temp_r29->unk04 = 0;
     BoardModelMotionSpeedSet(arg0->unk30[temp_r30], 0);
@@ -376,7 +376,7 @@ void fn_1_22BC(m02GenDice *arg0)
     WorkGenDiceNum *temp_r30;
     for (temp_r31 = 0; temp_r31 < arg0->unk00; temp_r31++) {
         if (arg0->unk50[temp_r31]) {
-            temp_r30 = OM_GET_WORK_PTR(arg0->unk50[temp_r31], WorkGenDiceNum);
+            temp_r30 = omObjGetWork(arg0->unk50[temp_r31], WorkGenDiceNum);
             temp_r30->field0_bit1 = 1;
             temp_r30->field0_bit2 = 1;
             temp_r30->unk02 = 0;
@@ -392,7 +392,7 @@ s32 fn_1_233C(m02GenDice *arg0)
         if (!arg0->unk50[temp_r31]) {
             continue;
         }
-        temp_r30 = OM_GET_WORK_PTR(arg0->unk50[temp_r31], WorkGenDiceNum);
+        temp_r30 = omObjGetWork(arg0->unk50[temp_r31], WorkGenDiceNum);
         if (temp_r30->field0_bit2) {
             return 0;
         }
@@ -406,7 +406,7 @@ void fn_1_23B4(m02GenDice *arg0, s32 arg1)
     if (!arg0->unk50[arg1]) {
         return;
     }
-    work = OM_GET_WORK_PTR(arg0->unk50[arg1], WorkGenDiceNum);
+    work = omObjGetWork(arg0->unk50[arg1], WorkGenDiceNum);
     work->field0_bit0 = 1;
 }
 
@@ -431,7 +431,7 @@ void fn_1_23FC(m02GenDice *arg0, s32 arg1)
     spC.y += 300.0f;
     temp_r28 = omAddObjEx(boardObjMan, 258, 0, 0, -1, fn_1_25D0);
     temp_r28->mode = (u32)arg0;
-    temp_r31 = OM_GET_WORK_PTR(temp_r28, WorkGenDiceNum);
+    temp_r31 = omObjGetWork(temp_r28, WorkGenDiceNum);
     temp_r31->field0_bit0 = 0;
     temp_r31->field0_bit1 = 0;
     temp_r31->field0_bit2 = 0;
@@ -459,7 +459,7 @@ void fn_1_25D0(OMOBJ *object)
     WorkGenDiceNum *temp_r31;
     m02GenDice *temp_r30;
     temp_r30 = (m02GenDice *)object->mode;
-    temp_r31 = OM_GET_WORK_PTR(object, WorkGenDiceNum);
+    temp_r31 = omObjGetWork(object, WorkGenDiceNum);
     if (temp_r31->field0_bit0 || BoardIsKill()) {
         fn_1_2694(temp_r31);
         temp_r30->unk50[temp_r31->field0_bit3] = NULL;
@@ -496,7 +496,7 @@ void fn_1_272C(m02GenDice *arg0)
         if (!arg0->unk50[i]) {
             continue;
         }
-        work = OM_GET_WORK_PTR(arg0->unk50[i], WorkGenDiceNum);
+        work = omObjGetWork(arg0->unk50[i], WorkGenDiceNum);
         for (j = 0; j < 2; j++) {
             if (work->unk04[j] == -1) {
                 continue;

@@ -42,7 +42,7 @@ void fn_1_12FC(void) {
     for (i = 0; i < 3; i++) {
         lbl_1_bss_3C[i] = HuPrcChildCreate(fn_1_1E60, 0x2003, 0x1000, 0, boardMainProc);
         HuPrcDestructorSet2(lbl_1_bss_3C[i], fn_1_2008);
-        temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, 5 * sizeof(s16), MEMORY_DEFAULT_NUM);
+        temp_r3 = HuMemDirectMallocNum(HEAP_HEAP, 5 * sizeof(s16), HU_MEMNUM_OVL);
         lbl_1_bss_3C[i]->user_data = temp_r3;
         temp_r3[0] = i;
         temp_r3[1] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W04, 31), lbl_1_data_298, 1);

@@ -326,7 +326,7 @@ void fn_1_B4C(OMOBJ *object)
 
     for (var_r30 = 8; var_r30 < 11; var_r30++) {
         object->mdlId[var_r30] = Hu3DModelCreateFile(0x31002A);
-        object->mtnId[var_r30] = Hu3DJointMotion(object->mdlId[var_r30], HuDataSelHeapReadNum(0x31002E, MEMORY_DEFAULT_NUM, HEAP_DATA));
+        object->mtnId[var_r30] = Hu3DJointMotion(object->mdlId[var_r30], HuDataSelHeapReadNum(0x31002E, HU_MEMNUM_OVL, HEAP_MODEL));
         Hu3DModelPosSet(object->mdlId[var_r30], -350.0f + 360.0f * (var_r30 - 8), -200.0f, -660.0f);
         fn_1_ABC4(object, var_r30, var_r30, 0, 1);
     }
@@ -1181,8 +1181,8 @@ void fn_1_4F60(OMOBJ *object)
     object->mtnId[6] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x18));
     object->mtnId[7] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x1B));
     object->mtnId[8] = CharMotionCreate(temp_r30->unk14, DATA_MAKE_NUM(DATADIR_MARIOMOT, 0x2A));
-    object->mtnId[9] = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(temp_r30->unk14 + 0x310000, 0x10000000, HEAP_DATA));
-    object->mtnId[10] = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(temp_r30->unk14 + 0x310008, 0x10000000, HEAP_DATA));
+    object->mtnId[9] = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(temp_r30->unk14 + 0x310000, 0x10000000, HEAP_MODEL));
+    object->mtnId[10] = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(temp_r30->unk14 + 0x310008, 0x10000000, HEAP_MODEL));
     object->mdlId[1] = Hu3DModelCreateFile(0x310017);
     Hu3DModelPosSet(object->mdlId[1], 0.0f, -5000.0f, 0.0f);
     Hu3DModelShadowSet(object->mdlId[0]);

@@ -94,7 +94,7 @@ OMOBJ *OptionRecordCreate(void)
     s32 character;
 
     object = omAddObjEx(optionObjMan, 1003, 0, 0, 1, NULL);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(RecordWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(RecordWork), HU_MEMNUM_OVL);
     object->data = work;
     for (i = 0; i < BOARDS_MAX; i++) {
         work->boardRecord[i].playCount = GWBoardPlayCountGet(i);

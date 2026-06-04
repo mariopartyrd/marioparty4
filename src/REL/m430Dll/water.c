@@ -163,11 +163,11 @@ void fn_1_4A80(HUPROCESS *process)
 {
     OMOBJ *object;
 
-    lbl_1_bss_150 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x19), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_14C = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x1A), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_148 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x14), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_144 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x17), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_140 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x18), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_150 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x19), HU_MEMNUM_OVL));
+    lbl_1_bss_14C = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x1A), HU_MEMNUM_OVL));
+    lbl_1_bss_148 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x14), HU_MEMNUM_OVL));
+    lbl_1_bss_144 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x17), HU_MEMNUM_OVL));
+    lbl_1_bss_140 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x18), HU_MEMNUM_OVL));
     object = lbl_1_bss_58 = omAddObjEx(process, 0x1E, 0x68, 0, -1, fn_1_4CB4);
     object->work[0] = 0;
     object = lbl_1_bss_54 = omAddObjEx(process, 0x1E, 7, 0, -1, fn_1_803C);
@@ -216,7 +216,7 @@ void fn_1_4CB4(OMOBJ *object)
     s32 spA0[6] = { 0, 3, 2, 1, 2, 3 };
 
     object->stat |= 0x100;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(M430DllWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(M430DllWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, 2 * sizeof(M430DllWork));
     for (var_r30 = work, var_r31 = 0; var_r31 < 2; var_r31++, var_r30++) {
@@ -704,7 +704,7 @@ M430DllUnkStruct2 *fn_1_70AC(OMOBJ *arg0, s32 var_r27, s16 var_r28)
 
     u32 sp10[2] = { DATA_MAKE_NUM(DATADIR_M430, 0x11), DATA_MAKE_NUM(DATADIR_M430, 0x12) };
     s32 sp8[2] = { 1, 2 };
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r28 * sizeof(M430DllUnkStruct2), MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_HEAP, var_r28 * sizeof(M430DllUnkStruct2), HU_MEMNUM_OVL);
     memset(var_r29, 0, var_r28 * 0x3C);
     var_f31 = -90.0f;
     for (var_r31 = var_r29, var_r30 = 0; var_r30 < var_r28; var_r30++, var_r31++) {
@@ -805,7 +805,7 @@ void fn_1_7848(OMOBJ *object)
     s32 var_r26;
 
     var_r30 = 0x20;
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, var_r30 * sizeof(M430DllWork2), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, var_r30 * sizeof(M430DllWork2), HU_MEMNUM_OVL);
     object->data = work;
     memset(work, 0, var_r30 * sizeof(M430DllWork2));
     var_r26 = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M430, 0x13));
@@ -967,24 +967,24 @@ void fn_1_82F4(OMOBJ *object, M430DllBss60Struct *var_r31)
 
     s32 sp8[8] = { 0, 0x16, 1, 0x17, 1, 0, 0x17, 0x16 };
 
-    var_r31->unk_2C = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1B8 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-    var_r31->unk_30 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1B8 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-    var_r31->unk_34 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x14A0, MEMORY_DEFAULT_NUM);
-    var_r31->unk_38 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x6E0, MEMORY_DEFAULT_NUM);
+    var_r31->unk_2C = HuMemDirectMallocNum(HEAP_HEAP, 0x1B8 * sizeof(Vec), HU_MEMNUM_OVL);
+    var_r31->unk_30 = HuMemDirectMallocNum(HEAP_HEAP, 0x1B8 * sizeof(Vec), HU_MEMNUM_OVL);
+    var_r31->unk_34 = HuMemDirectMallocNum(HEAP_HEAP, 0x14A0, HU_MEMNUM_OVL);
+    var_r31->unk_38 = HuMemDirectMallocNum(HEAP_HEAP, 0x6E0, HU_MEMNUM_OVL);
     var_r31->unk_40 = 0;
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
-        var_r31->unk_44[var_r30] = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1B8 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-        var_r31->unk_54[var_r30] = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1B8 * sizeof(GXColor), MEMORY_DEFAULT_NUM);
+        var_r31->unk_44[var_r30] = HuMemDirectMallocNum(HEAP_HEAP, 0x1B8 * sizeof(Vec), HU_MEMNUM_OVL);
+        var_r31->unk_54[var_r30] = HuMemDirectMallocNum(HEAP_HEAP, 0x1B8 * sizeof(GXColor), HU_MEMNUM_OVL);
     }
     var_r31->unk_5C = 0x12D0;
-    var_r31->unk_60 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r31->unk_5C, MEMORY_DEFAULT_NUM);
+    var_r31->unk_60 = HuMemDirectMallocNum(HEAP_HEAP, var_r31->unk_5C, HU_MEMNUM_OVL);
     DCFlushRange(var_r31->unk_60, var_r31->unk_5C);
     var_r31->unk_64 = 0;
     var_r31->unk_68 = GXGetTexBufferSize(0x140, 0x1E0, 5, 0, 0);
     if (var_r31->unk_00 == 0) {
         var_r31->unk_68 *= 2;
     }
-    var_r31->unk_6C = HuMemDirectMallocNum(HEAP_SYSTEM, var_r31->unk_68, MEMORY_DEFAULT_NUM);
+    var_r31->unk_6C = HuMemDirectMallocNum(HEAP_HEAP, var_r31->unk_68, HU_MEMNUM_OVL);
     DCFlushRange(var_r31->unk_6C, var_r31->unk_68);
     var_r31->unk_1C = 0;
     var_r31->unk_20 = 0;

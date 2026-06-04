@@ -270,7 +270,7 @@ static s32 fn_1_8490(s32 arg0, s8 arg1) {
     }
     var_r26 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_8A58);
     lbl_1_bss_CC = var_r26;
-    temp_r29 = OM_GET_WORK_PTR(var_r26, BssCCWork);
+    temp_r29 = omObjGetWork(var_r26, BssCCWork);
     temp_r29->unk00_field0 = 0;
     temp_r29->unk00_field1 = 0;
     temp_r29->unk00_field2 = 0;
@@ -326,7 +326,7 @@ static void fn_1_8A58(OMOBJ *arg0) {
     BoardSpace *var_r29;
     BssCCWork *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, BssCCWork);
+    temp_r31 = omObjGetWork(arg0, BssCCWork);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         lbl_1_bss_CC = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);

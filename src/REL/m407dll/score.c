@@ -37,7 +37,7 @@ void fn_1_5C5C(HUPROCESS *arg0, s16 arg1)
 
     lbl_1_bss_398C = arg0;
     lbl_1_bss_3988 = omAddObjEx(lbl_1_bss_398C, 0x800, 0, 0, 7, fn_1_5FE4);
-    lbl_1_bss_3988->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkDominationData6), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_3988->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(unkDominationData6), HU_MEMNUM_OVL);
     temp_r31 = lbl_1_bss_3988->data;
     temp_r31->unk_08 = arg1;
     temp_r31->unk_0A = 0;

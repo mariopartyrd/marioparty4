@@ -39,7 +39,7 @@ void fn_1_8CAC(HUPROCESS *process, s16 arg1)
 
     lbl_1_bss_54 = process;
     lbl_1_bss_50 = omAddObjEx(lbl_1_bss_54, 0x800, 0, 0, 7, fn_1_9050);
-    lbl_1_bss_50->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM460DllScoreWork), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_50->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM460DllScoreWork), HU_MEMNUM_OVL);
     var_r31 = lbl_1_bss_50->data;
     var_r31->unk_08 = arg1;
     var_r31->unk_0A = 0;

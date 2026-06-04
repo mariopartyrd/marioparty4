@@ -51,7 +51,7 @@ OMOBJ *OptionGuideCreate(void)
     s32 i;
 
     object = omAddObjEx(optionObjMan, 1002, 1, 3, 2, NULL);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GuideWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(GuideWork), HU_MEMNUM_OVL);
     object->data = work;
     work->pos.x = -298.59f;
     work->pos.z = 298.21f;

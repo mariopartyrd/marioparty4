@@ -96,11 +96,11 @@ omDllData *omDLLLink(omDllData **dll_ptr, s16 overlay, s16 flag)
 	omDllData *dll;
 	FileListEntry *dllFile = &omDLLFileList[overlay];
 	OSReport("objdll>Link DLL:%s\n", dllFile->name);
-	dll = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(omDllData));
+	dll = HuMemDirectMalloc(HEAP_HEAP, sizeof(omDllData));
 	*dll_ptr = dll;
 	dll->name = dllFile->name;
-	dll->module = HuDvdDataReadDirect(dllFile->name, HEAP_SYSTEM);
-	dll->bss = HuMemDirectMalloc(HEAP_SYSTEM, dll->module->bssSize);
+	dll->module = HuDvdDataReadDirect(dllFile->name, HEAP_HEAP);
+	dll->bss = HuMemDirectMalloc(HEAP_HEAP, dll->module->bssSize);
 	if(OSLink(&dll->module->info, dll->bss) != TRUE) {
 		OSReport("objdll>++++++++++++++++ DLL Link Failed\n");
 	}

@@ -328,7 +328,7 @@ void fn_1_C040(void)
     lbl_1_bss_17C = 1;
     omMakeGroupEx(lbl_1_bss_178, 0, 4);
     omGetGroupMemberListEx(lbl_1_bss_178, 0);
-    lbl_1_bss_174 = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(M430PlayerBss174Struct), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_174 = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(M430PlayerBss174Struct), HU_MEMNUM_OVL);
     memset(lbl_1_bss_174, 0, 2 * sizeof(M430PlayerBss174Struct));
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
         spC[var_r31] = -1;
@@ -368,7 +368,7 @@ void fn_1_C1E4(OMOBJ *object)
     HU3DMODEL *var_r24;
     s32 var_r23;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M430PlayerWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M430PlayerWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M430PlayerWork));
     var_r27 = object->work[0];
@@ -1480,7 +1480,7 @@ void fn_1_100A0(void)
     void *var_r27;
     void *var_r26;
 
-    var_r31 = lbl_1_bss_170 = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(M430PlayerBss170Struct), MEMORY_DEFAULT_NUM);
+    var_r31 = lbl_1_bss_170 = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(M430PlayerBss170Struct), HU_MEMNUM_OVL);
     memset(var_r31, 0, 2 * sizeof(M430PlayerBss170Struct));
     for (var_r28 = 0; var_r28 < 2; var_r31++) {
         var_r31->unk_00 = var_r28;
@@ -1497,14 +1497,14 @@ void fn_1_100A0(void)
         var_r31->unk_34 = var_r31->unk_38 = var_r31->unk_3C = 0.0f;
         var_r31->unk_40 = var_r31->unk_44 = var_r31->unk_48 = 1000.0f;
         var_r31->unk_58 = 0;
-        var_r31->unk_4C = HuMemDirectMallocNum(HEAP_SYSTEM, 0xC0, MEMORY_DEFAULT_NUM);
+        var_r31->unk_4C = HuMemDirectMallocNum(HEAP_HEAP, 0xC0, HU_MEMNUM_OVL);
         memset(var_r31->unk_4C, 0, 0xC0);
-        var_r31->unk_50 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xC0, MEMORY_DEFAULT_NUM);
+        var_r31->unk_50 = HuMemDirectMallocNum(HEAP_HEAP, 0xC0, HU_MEMNUM_OVL);
         memset(var_r31->unk_50, 0, 0xC0);
-        var_r31->unk_54 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x80, MEMORY_DEFAULT_NUM);
+        var_r31->unk_54 = HuMemDirectMallocNum(HEAP_HEAP, 0x80, HU_MEMNUM_OVL);
         memset(var_r31->unk_54, 0, 0x80);
         var_r30 = &Hu3DData[var_r31->unk_04];
-        var_r27 = HuMemDirectMallocNum(HEAP_DATA, 0x200, var_r30->mallocNo);
+        var_r27 = HuMemDirectMallocNum(HEAP_MODEL, 0x200, var_r30->mallocNo);
         var_r26 = var_r27;
         DCFlushRange(var_r27, 0x200);
         GXBeginDisplayList(var_r26, 0x200);
@@ -1515,7 +1515,7 @@ void fn_1_100A0(void)
             GXUnknownu16(var_r29);
         }
         var_r31->unk_5C = GXEndDisplayList();
-        var_r31->unk_60 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_5C, var_r30->mallocNo);
+        var_r31->unk_60 = HuMemDirectMallocNum(HEAP_MODEL, var_r31->unk_5C, var_r30->mallocNo);
         memcpy(var_r31->unk_60, var_r27, var_r31->unk_5C);
         DCFlushRange(var_r31->unk_60, var_r31->unk_5C);
         HuMemDirectFree(var_r27);
@@ -1659,7 +1659,7 @@ void fn_1_10B88(void)
     M430PlayerBss16CStruct *var_r31;
     s32 var_r30;
 
-    var_r31 = lbl_1_bss_16C = HuMemDirectMallocNum(HEAP_SYSTEM, 0x10 * sizeof(M430PlayerBss16CStruct), MEMORY_DEFAULT_NUM);
+    var_r31 = lbl_1_bss_16C = HuMemDirectMallocNum(HEAP_HEAP, 0x10 * sizeof(M430PlayerBss16CStruct), HU_MEMNUM_OVL);
     memset(var_r31, 0, 0x10 * sizeof(M430PlayerBss16CStruct));
     for (var_r30 = 0; var_r30 < 0x10; var_r30++, var_r31++) {
         var_r31->unk_00 = var_r30;
@@ -1842,7 +1842,7 @@ void fn_1_113AC(void)
     M430PlayerBss168Struct *var_r31;
     s32 var_r30;
 
-    var_r31 = lbl_1_bss_168 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x20 * sizeof(M430PlayerBss168Struct), MEMORY_DEFAULT_NUM);
+    var_r31 = lbl_1_bss_168 = HuMemDirectMallocNum(HEAP_HEAP, 0x20 * sizeof(M430PlayerBss168Struct), HU_MEMNUM_OVL);
     memset(var_r31, 0, 0x20 * sizeof(M430PlayerBss168Struct));
     for (var_r30 = 0; var_r30 < 0x20; var_r31++) {
         var_r31->unk_00 = var_r30;
@@ -2013,11 +2013,11 @@ void fn_1_11C1C(void)
     M430PlayerBss164Struct *var_r31;
     s32 var_r30;
 
-    var_r31 = lbl_1_bss_164 = HuMemDirectMallocNum(HEAP_SYSTEM, 8 * sizeof(M430PlayerBss164Struct), MEMORY_DEFAULT_NUM);
+    var_r31 = lbl_1_bss_164 = HuMemDirectMallocNum(HEAP_HEAP, 8 * sizeof(M430PlayerBss164Struct), HU_MEMNUM_OVL);
     memset(var_r31, 0, 8 * sizeof(M430PlayerBss164Struct));
     for (var_r30 = 0; var_r30 < 8; var_r30++, var_r31++) {
         if (var_r30 == 0) {
-            var_r31->unk_14 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x26), MEMORY_DEFAULT_NUM));
+            var_r31->unk_14 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M430, 0x26), HU_MEMNUM_OVL));
         }
         else {
             var_r31->unk_14 = lbl_1_bss_164[0].unk_14;
@@ -2175,7 +2175,7 @@ void fn_1_125C4(void)
     s32 var_r30;
     s32 var_r29;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(M430PlayerBss160Struct), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(M430PlayerBss160Struct), HU_MEMNUM_OVL);
     lbl_1_bss_160 = var_r31;
     for (var_r29 = 0; var_r29 < 2; var_r29++, var_r31++) {
         if (var_r29 == 0) {

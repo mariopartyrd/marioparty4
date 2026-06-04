@@ -89,10 +89,10 @@ void BoardTutorialWorkSave(void) {
     if (playerCfgCopy) {
         HuMemDirectFree(playerCfgCopy);
     }
-    gameStatCopy = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(GWGameStat));
-    systemCopy = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(GWSystem));
-    playerCopy = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(GWPlayer));
-    playerCfgCopy = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(GWPlayerCfg));
+    gameStatCopy = HuMemDirectMalloc(HEAP_HEAP, sizeof(GWGameStat));
+    systemCopy = HuMemDirectMalloc(HEAP_HEAP, sizeof(GWSystem));
+    playerCopy = HuMemDirectMalloc(HEAP_HEAP, sizeof(GWPlayer));
+    playerCfgCopy = HuMemDirectMalloc(HEAP_HEAP, sizeof(GWPlayerCfg));
     memcpy(gameStatCopy, &GWGameStat, sizeof(GWGameStat));
     memcpy(systemCopy, &GWSystem, sizeof(GWSystem));
     memcpy(playerCopy, GWPlayer, sizeof(GWPlayer));

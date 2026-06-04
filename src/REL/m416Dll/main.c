@@ -439,7 +439,7 @@ void fn_1_156C(OMOBJ *object)
 {
     Bss930Work *work;
     s32 player;
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Bss930Work), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Bss930Work), HU_MEMNUM_OVL);
     object->data = work;
     memset(work, 0, sizeof(Bss930Work));
     work->unk02 = lbl_1_bss_92E++;
@@ -565,12 +565,12 @@ void fn_1_1ADC(OMOBJ *object)
     fn_1_6DEC(object->mdlId[2], 16);
     Hu3DModelAttrSet(object->mdlId[2], HU3D_ATTR_DISPOFF);
     Hu3DMotionSpeedSet(object->mdlId[2], 0);
-    Hu3DAnimCreate(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M416, 0x07), MEMORY_DEFAULT_NUM), object->mdlId[2], "sb00");
+    Hu3DAnimCreate(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M416, 0x07), HU_MEMNUM_OVL), object->mdlId[2], "sb00");
     object->mdlId[3] = Hu3DParticleCreate(lbl_1_bss_914, 50);
     Hu3DParticleHookSet(object->mdlId[3], fn_1_6640);
     Hu3DModelLayerSet(object->mdlId[3], 3);
     Hu3DModelAttrSet(object->mdlId[3], HU3D_ATTR_DISPOFF);
-    work->unk4C = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Bss930Work4C), MEMORY_DEFAULT_NUM);
+    work->unk4C = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Bss930Work4C), HU_MEMNUM_OVL);
     memset(work->unk4C, 0, sizeof(Bss930Work4C));
 
     work->unk48 = fn_1_2EA4;

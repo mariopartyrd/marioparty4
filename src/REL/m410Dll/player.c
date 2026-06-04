@@ -144,7 +144,7 @@ void fn_1_7E30(HUPROCESS *objman)
         var_r27->work[0] = var_r31;
     }
     lbl_1_bss_74 = omAddObjEx(objman, 10, 1, 0, -1, fn_1_A0A4);
-    lbl_1_bss_70 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M410, 19), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_70 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M410, 19), HU_MEMNUM_OVL));
 }
 
 void fn_1_806C(void)
@@ -163,7 +163,7 @@ void fn_1_80A0(OMOBJ *object)
     s32 var_r27;
 
     UnkM410Struct6 spC = { { 0.0f, 0.13f, 0.26f, 0.4f } };
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 148, MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 148, HU_MEMNUM_OVL);
     var_r31 = object->data;
     memset(var_r31, 0, 148);
     var_r27 = object->work[0];
@@ -805,11 +805,11 @@ void fn_1_A0A4(OMOBJ *object)
 
     float sp8[4][2] = { { 36.0f, 64.0f }, { 476.0f, 64.0f }, { 36.0f, 416.0f }, { 476.0f, 416.0f } };
     object->stat |= 256;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM410Struct14), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM410Struct14), HU_MEMNUM_OVL);
     var_r30 = object->data;
     memset(var_r30, 0, sizeof(UnkM410Struct14));
     var_r30->unk_F80 = GXGetTexBufferSize(640, 480, GX_TF_RGB5A3, GX_FALSE, 0);
-    var_r30->unk_F84 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r30->unk_F80, MEMORY_DEFAULT_NUM);
+    var_r30->unk_F84 = HuMemDirectMallocNum(HEAP_HEAP, var_r30->unk_F80, HU_MEMNUM_OVL);
     DCFlushRange(var_r30->unk_F84, var_r30->unk_F80);
     fn_1_A9A4(&var_r30->unk_120);
     var_r31 = var_r30->unk_00;
@@ -1043,7 +1043,7 @@ void fn_1_A9A4(UnkM410Struct13 *arg0)
         arg0->unk_E40[var_r31].a = 255;
     }
     arg0->unk_E54 = 0x6C0;
-    arg0->unk_E5C = HuMemDirectMallocNum(HEAP_SYSTEM, arg0->unk_E54, MEMORY_DEFAULT_NUM);
+    arg0->unk_E5C = HuMemDirectMallocNum(HEAP_HEAP, arg0->unk_E54, HU_MEMNUM_OVL);
     DCFlushRange(arg0->unk_E5C, arg0->unk_E54);
     GXBeginDisplayList(arg0->unk_E5C, arg0->unk_E54);
 

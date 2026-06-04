@@ -45,7 +45,7 @@ OMOBJ *OptionStateCreate(void)
     HU3DLIGHT *lightData;
 
     OMOBJ *object = omAddObjEx(optionObjMan, 1000, 0, 0, 4, ExecState);
-    StateWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StateWork), MEMORY_DEFAULT_NUM);
+    StateWork *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(StateWork), HU_MEMNUM_OVL);
     object->data = work;
     optionCamera = OptionCameraCreate();
     optionRoom = OptionRoomCreate();

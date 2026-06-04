@@ -45,7 +45,7 @@ void HuAudInit(void)
     s32 result;
     s16 i;
 
-    msmInit.heap = HuMemDirectMalloc(HEAP_MUSIC, HUMSMHEAP_SIZE);
+    msmInit.heap = HuMemDirectMalloc(HEAP_SOUND, HUMSMHEAP_SIZE);
     msmInit.heapSize = HUMSMHEAP_SIZE;
     msmInit.msmPath = MSM_FILE_PATH;
     msmInit.pdtPath = PDT_FILE_PATH;
@@ -508,7 +508,7 @@ void HuAudSndGrpSetSet(s16 grpSet) {
         OSReport("GroupSet %d\n", grpSet);
         sndGroupBak = grpSet;
         result = msmSysDelGroupAll();
-        buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(1));
+        buf = HuMemDirectMalloc(HEAP_MODEL, msmSysGetSampSize(1));
         result = msmSysLoadGroupSet(grpSet, buf);\
         OSReport("***********GroupSet Error %d\n", result);
         HuMemDirectFree(buf);
@@ -518,7 +518,7 @@ void HuAudSndGrpSetSet(s16 grpSet) {
 void HuAudSndGrpSet(s16 grpId) {
     void *buf;
 
-    buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grpId));
+    buf = HuMemDirectMalloc(HEAP_MODEL, msmSysGetSampSize(grpId));
     msmSysLoadGroup(grpId, buf, FALSE);
     HuMemDirectFree(buf);
 }
@@ -543,7 +543,7 @@ void HuAudSndCommonGrpSet(s16 grp, BOOL delGrpF) {
             OSReport("Del Group Error %d\n", result);
         }
     }
-    buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grp));
+    buf = HuMemDirectMalloc(HEAP_MODEL, msmSysGetSampSize(grp));
     msmSysLoadGroupBase(grp, buf);
     HuMemDirectFree(buf);
     sndGroupBak = MSM_GRPSET_NONE;
@@ -612,7 +612,7 @@ void HuAudSndCharGrpSet(s16 ovl) {
             if (charNo >= 0 && charNo < CHARNO_MAX && charNo != 0xFF) {
                 charVoiceGroupStat[charNo] = 1;
                 grpSet = charNo + 10;
-                buf = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(grpSet));
+                buf = HuMemDirectMalloc(HEAP_MODEL, msmSysGetSampSize(grpSet));
                 #if VERSION_NTSC
                 msmSysLoadGroupBase(grpSet, buf);
                 #else

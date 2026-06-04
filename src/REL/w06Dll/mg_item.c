@@ -498,7 +498,7 @@ static void fn_1_2048(s32 arg0, s32 arg1)
 
     for (i = 0; i < 3; i++) {
         if ((arg0 == i || arg0 == -1) && lbl_1_data_1B4[i]) {
-            temp_r30 = OM_GET_WORK_PTR(lbl_1_data_1B4[i], Data1B4Work);
+            temp_r30 = omObjGetWork(lbl_1_data_1B4[i], Data1B4Work);
             temp_r30->unk02 = arg1;
             temp_r30->unk08 = 0;
         }
@@ -512,7 +512,7 @@ static void fn_1_20CC(s32 arg0)
 
     for (i = 0; i < 3; i++) {
         if ((arg0 == i || arg0 == -1) && lbl_1_data_1B4[i]) {
-            temp_r30 = OM_GET_WORK_PTR(lbl_1_data_1B4[i], Data1B4Work);
+            temp_r30 = omObjGetWork(lbl_1_data_1B4[i], Data1B4Work);
             if (temp_r30->unk0C == -1) {
                 temp_r30->unk0C = HuAudFXPlay(0x35F);
             }
@@ -527,7 +527,7 @@ static s32 fn_1_2174(s32 arg0)
     if (!lbl_1_data_1B4[arg0]) {
         return -1;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_data_1B4[arg0], Data1B4Work);
+    temp_r31 = omObjGetWork(lbl_1_data_1B4[arg0], Data1B4Work);
     return temp_r31->unk02;
 }
 
@@ -538,7 +538,7 @@ static s16 fn_1_21CC(s32 arg0)
     if (!lbl_1_data_1B4[arg0]) {
         return -1;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_data_1B4[arg0], Data1B4Work);
+    temp_r31 = omObjGetWork(lbl_1_data_1B4[arg0], Data1B4Work);
     return temp_r31->unk06;
 }
 
@@ -552,7 +552,7 @@ static void fn_1_2220(s32 arg0, s32 arg1, s32 arg2)
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_243C);
     lbl_1_data_1B4[arg1] = temp_r3;
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, Data1B4Work);
+    temp_r31 = omObjGetWork(temp_r3, Data1B4Work);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk02 = 2;
     temp_r31->unk03 = 0;
@@ -588,7 +588,7 @@ static void fn_1_243C(OMOBJ *arg0)
     Vec sp8;
     Data1B4Work *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, Data1B4Work);
+    temp_r31 = omObjGetWork(arg0, Data1B4Work);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         if (temp_r31->unk0C != -1) {
             HuAudFXStop(temp_r31->unk0C);
@@ -746,7 +746,7 @@ static void fn_1_2B60(s32 arg0)
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_2EF4);
     lbl_1_bss_24 = temp_r3;
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, Bss24Work);
+    temp_r31 = omObjGetWork(temp_r3, Bss24Work);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field2 = 0;
     temp_r31->unk00_field1 = arg0;
@@ -760,7 +760,7 @@ static void fn_1_2C18(void)
     Bss24Work *var_r27;
 
     if (lbl_1_bss_24) {
-        var_r27 = OM_GET_WORK_PTR(lbl_1_bss_24, Bss24Work);
+        var_r27 = omObjGetWork(lbl_1_bss_24, Bss24Work);
         var_r27->unk03 = fn_1_2A1C(var_r27->unk00_field1);
     }
 }
@@ -770,7 +770,7 @@ static void fn_1_2D90(s32 arg0)
     Bss24Work *var_r31;
 
     if (lbl_1_bss_24) {
-        var_r31 = OM_GET_WORK_PTR(lbl_1_bss_24, Bss24Work);
+        var_r31 = omObjGetWork(lbl_1_bss_24, Bss24Work);
         var_r31->unk01 = arg0;
     }
 }
@@ -782,7 +782,7 @@ static s32 fn_1_2DD0(void)
     if (!lbl_1_bss_24) {
         return 4;
     }
-    var_r31 = OM_GET_WORK_PTR(lbl_1_bss_24, Bss24Work);
+    var_r31 = omObjGetWork(lbl_1_bss_24, Bss24Work);
     return var_r31->unk01;
 }
 
@@ -818,7 +818,7 @@ static void fn_1_2EF4(OMOBJ *arg0)
     Bss24Work *temp_r30;
 
     var_r29 = 0;
-    temp_r30 = OM_GET_WORK_PTR(arg0, Bss24Work);
+    temp_r30 = omObjGetWork(arg0, Bss24Work);
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
         lbl_1_bss_24 = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);
@@ -928,7 +928,7 @@ static void fn_1_3470(void)
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_3974);
     lbl_1_bss_28 = temp_r3;
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, Bss28Work);
+    temp_r31 = omObjGetWork(temp_r3, Bss28Work);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field1 = 0;
     temp_r31->unk03 = 0;
@@ -946,7 +946,7 @@ static void fn_1_3560(s32 arg0)
     if (!lbl_1_bss_28) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_28, Bss28Work);
+    temp_r31 = omObjGetWork(lbl_1_bss_28, Bss28Work);
     temp_r31->unk00_field1 = arg0;
     if (arg0 != 1) {
         (void)0;
@@ -963,7 +963,7 @@ static s32 fn_1_35BC(void)
     if (!lbl_1_bss_28) {
         return 5;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_28, Bss28Work);
+    temp_r31 = omObjGetWork(lbl_1_bss_28, Bss28Work);
     return temp_r31->unk00_field1;
 }
 
@@ -974,7 +974,7 @@ static void fn_1_3604(s32 arg0)
     if (!lbl_1_bss_28) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_28, Bss28Work);
+    temp_r31 = omObjGetWork(lbl_1_bss_28, Bss28Work);
     switch (arg0) {
         case 0:
             temp_r31->unk01[0] = 1;
@@ -1003,7 +1003,7 @@ static void fn_1_3698(s8 arg0)
     if (!lbl_1_bss_28) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_28, Bss28Work);
+    temp_r31 = omObjGetWork(lbl_1_bss_28, Bss28Work);
     BoardModelPosGet(lbl_1_bss_C[4], &sp24);
     BoardModelPosGet(lbl_1_bss_3C[1], &sp18);
     lbl_1_bss_28->trans.x = arg0 - 1;
@@ -1038,7 +1038,7 @@ static void fn_1_3974(OMOBJ *arg0)
     Bss28Work *temp_r31;
 
     sp8 = 0;
-    temp_r31 = OM_GET_WORK_PTR(arg0, Bss28Work);
+    temp_r31 = omObjGetWork(arg0, Bss28Work);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         lbl_1_bss_28 = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);
@@ -1114,7 +1114,7 @@ static void fn_1_4070(void)
 
     lbl_1_bss_1C = 0;
     lbl_1_bss_2C = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_4194);
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_2C, Bss2CWork);
+    temp_r31 = omObjGetWork(lbl_1_bss_2C, Bss2CWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk01 = 5;
     temp_r31->unk02 = 60;
@@ -1128,7 +1128,7 @@ static void fn_1_4124(void)
     if (!lbl_1_bss_2C) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_2C, Bss2CWork);
+    temp_r31 = omObjGetWork(lbl_1_bss_2C, Bss2CWork);
     MGSeqParamSet(temp_r31->unk04, 2, -1);
     temp_r31->unk04 = -1;
     temp_r31->unk00_field0 = 1;
@@ -1138,7 +1138,7 @@ static void fn_1_4194(OMOBJ *arg0)
 {
     Bss2CWork *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, Bss2CWork);
+    temp_r31 = omObjGetWork(arg0, Bss2CWork);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         if (temp_r31->unk04 != -1) {
             MGSeqParamSet(temp_r31->unk04, 2, -1);

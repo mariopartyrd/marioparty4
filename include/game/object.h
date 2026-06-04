@@ -27,8 +27,8 @@ typedef enum omOvl_e {
 
 #define OM_GRP_NONE -1
 
-#define OM_GET_WORK_PTR(object, type) ((type *)(&((object)->work[0])))
-#define OM_GET_DATA_PTR(object, type) ((type *)(((object)->data)))
+#define omObjGetWork(object, type) ((type *)(&((object)->work[0])))
+#define omObjGetDataAs(object, type) ((type *)(((object)->data)))
 
 // typedef HUPROCESS OMOBJMAN;
 typedef struct omObj_s OMOBJ;

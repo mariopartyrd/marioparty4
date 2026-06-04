@@ -560,7 +560,7 @@ static void SMCharInit(OMOBJ *object)
 {
     s32 i;
     for (i = 0; i < 8; i++) {
-        void *data = HuDataSelHeapReadNum(charMdlTbl[i], MEMORY_DEFAULT_NUM, HEAP_DATA);
+        void *data = HuDataSelHeapReadNum(charMdlTbl[i], HU_MEMNUM_OVL, HEAP_MODEL);
         charModelID[i] = Hu3DModelCreate(data);
         Hu3DModelPosSet(charModelID[i], 0.0f, 0.0f, 0.0f);
         Hu3DModelAttrSet(charModelID[i], HU3D_MOTATTR_LOOP);

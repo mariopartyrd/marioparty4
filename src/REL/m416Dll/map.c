@@ -79,7 +79,7 @@ void fn_1_7A74(OMOBJ *object)
     object->mdlId[1] = Hu3DHookFuncCreate(fn_1_89BC);
     Hu3DModelLayerSet(object->mdlId[1], 1);
     lbl_1_bss_1184 = GXGetTexBufferSize(640, 480, GX_TF_RGBA8, GX_FALSE, 0);
-    lbl_1_bss_1180 = HuMemDirectMallocNum(HEAP_DATA, lbl_1_bss_1184, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_1180 = HuMemDirectMallocNum(HEAP_MODEL, lbl_1_bss_1184, HU_MEMNUM_OVL);
     memset(lbl_1_bss_1180, 0, lbl_1_bss_1184);
     object->objFunc = fn_1_7D74;
 }

@@ -108,7 +108,7 @@ void fn_1_1E13C(s32 arg0, s32 arg1, StructBss1CF8* arg2, Vec* arg3) {
         }
     }
     arg2->unk20 = var_r26;
-    var_r22 = arg2->unk00 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r26 * sizeof(*var_r22), MEMORY_DEFAULT_NUM);
+    var_r22 = arg2->unk00 = HuMemDirectMallocNum(HEAP_HEAP, var_r26 * sizeof(*var_r22), HU_MEMNUM_OVL);
     arg2->unk1C = temp_r31->sizeX;
     arg2->unk1E = temp_r31->sizeY;
     Hu3D2Dto3D(arg3, 1, &arg2->unk10);

@@ -500,8 +500,8 @@ void fn_1_C414(OMOBJ* arg0, s32 arg1) {
     Hu3DModelHookSet(arg0->mdlId[5], "partybox_fix2-effect_fook1", arg0->mdlId[6]);
     Hu3DModelAttrSet(arg0->mdlId[6], HU3D_ATTR_DISPOFF);
     fn_1_1DCC(arg0, 6, 6, 0, 2);
-    lbl_1_bss_330[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 65 + arg1 * 2), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_330[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 66 + arg1 * 2), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_330[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 65 + arg1 * 2), HU_MEMNUM_OVL));
+    lbl_1_bss_330[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 66 + arg1 * 2), HU_MEMNUM_OVL));
     Hu3DAnimCreate(lbl_1_bss_330[0], lbl_1_bss_400.unk00->mdlId[5], "ys26_p0");
     Hu3DAnimCreate(lbl_1_bss_330[1], lbl_1_bss_400.unk00->mdlId[5], "ys26_p1");
 }

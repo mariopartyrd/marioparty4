@@ -133,9 +133,9 @@ s32 fn_1_7754(SeqWork *work, char *mess)
         return -1;
     }
 
-    animP = HuMemDirectMalloc(HEAP_SYSTEM, (FONT_CHAR_MAX * sizeof(ANIMDATA*)));
-    posX = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posX));
-    posY = HuMemDirectMalloc(HEAP_SYSTEM, FONT_CHAR_MAX * sizeof(*posY));
+    animP = HuMemDirectMalloc(HEAP_HEAP, (FONT_CHAR_MAX * sizeof(ANIMDATA*)));
+    posX = HuMemDirectMalloc(HEAP_HEAP, FONT_CHAR_MAX * sizeof(*posX));
+    posY = HuMemDirectMalloc(HEAP_HEAP, FONT_CHAR_MAX * sizeof(*posY));
 
     for (str = mess, len = 0, charNum = 0; str[0] != 0; str++) {
         if (str[0] == 0x20 || str[0] == 0x10) {

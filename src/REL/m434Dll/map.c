@@ -142,11 +142,11 @@ void fn_1_1E64(OMOBJ *object)
     memset(lbl_1_bss_2468, 0, sizeof(lbl_1_bss_2468));
     lbl_1_bss_2464 = 0;
     lbl_1_bss_450.unk4 = 16384;
-    lbl_1_bss_450.unk0 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_450.unk4, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_450.unk0 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_450.unk4, HU_MEMNUM_OVL);
     DCInvalidateRange(lbl_1_bss_450.unk0, lbl_1_bss_450.unk4);
     fn_1_3004();
     lbl_1_bss_440.unk4 = 16384;
-    lbl_1_bss_440.unk0 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_440.unk4, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_440.unk0 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_440.unk4, HU_MEMNUM_OVL);
     fn_1_3128();
     lbl_1_bss_45C = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M430, 0x19));
     lbl_1_bss_458 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M434, 0x0A));
@@ -158,7 +158,7 @@ void fn_1_1E64(OMOBJ *object)
         lbl_1_bss_3F0[temp_r30].unkA = lbl_1_data_100[temp_r30].unk6;
         lbl_1_bss_3F0[temp_r30].unk10 = lbl_1_data_100[temp_r30].unk8;
         lbl_1_bss_3F0[temp_r30].unkC = GXGetTexBufferSize(lbl_1_bss_3F0[temp_r30].unk8, lbl_1_bss_3F0[temp_r30].unkA, GX_TF_RGB565, GX_FALSE, 0);
-        lbl_1_bss_3F0[temp_r30].unk0 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_3F0[temp_r30].unkC, MEMORY_DEFAULT_NUM);
+        lbl_1_bss_3F0[temp_r30].unk0 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_3F0[temp_r30].unkC, HU_MEMNUM_OVL);
         memset(lbl_1_bss_3F0[temp_r30].unk0, 0, lbl_1_bss_3F0[temp_r30].unkC);
     }
     object->mdlId[5] = Hu3DHookFuncCreate(fn_1_33A4);

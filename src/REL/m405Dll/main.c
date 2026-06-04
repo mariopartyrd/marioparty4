@@ -276,7 +276,7 @@ void fn_1_24(u16 arg0, s16 arg1)
     UnkBss790Struct *temp_r30;
     UnkBss790Struct *temp_r29;
 
-    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r31), MEMORY_DEFAULT_NUM);
+    temp_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r31), HU_MEMNUM_OVL);
     temp_r31->unk00 = arg0;
     temp_r31->unk02 = arg1;
     temp_r30 = &lbl_1_bss_790;
@@ -327,11 +327,11 @@ void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 arg4, Vec
     UnkBss778Struct *temp_r28;
     s32 i;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*var_r31), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*var_r31), HU_MEMNUM_OVL);
     var_r31->unk00 = arg1;
     var_r31->unk08 = arg3;
     var_r31->unk0C = arg4;
-    var_r31->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, arg4 * sizeof(*var_r31->unk04), MEMORY_DEFAULT_NUM);
+    var_r31->unk04 = HuMemDirectMallocNum(HEAP_HEAP, arg4 * sizeof(*var_r31->unk04), HU_MEMNUM_OVL);
     for (i = 0; i < arg4; i++, arg5++) {
         var_r31->unk04[i] = Hu3DParManLink(arg0, arg1);
         if (var_r31->unk04[i] >= 0) {
@@ -817,21 +817,21 @@ void fn_1_2AAC(OMOBJ *arg0)
     lbl_1_bss_5E0 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M405, 59));
     lbl_1_bss_5DC = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M405, 60));
     lbl_1_bss_5D8 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M405, 61));
-    lbl_1_bss_5AC.unk00 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk00), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk04), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk08 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk08), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk14 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk14), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk18 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk18), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk1C = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk1C), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk20 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk20), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk0C = HuMemDirectMallocNum(HEAP_SYSTEM, 841 * sizeof(*lbl_1_bss_5AC.unk0C), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_5AC.unk10 = HuMemDirectMallocNum(HEAP_SYSTEM, 8 * sizeof(*lbl_1_bss_5AC.unk10), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_5AC.unk00 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk00), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk04 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk04), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk08 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk08), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk14 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk14), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk18 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk18), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk1C = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk1C), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk20 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk20), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk0C = HuMemDirectMallocNum(HEAP_HEAP, 841 * sizeof(*lbl_1_bss_5AC.unk0C), HU_MEMNUM_OVL);
+    lbl_1_bss_5AC.unk10 = HuMemDirectMallocNum(HEAP_HEAP, 8 * sizeof(*lbl_1_bss_5AC.unk10), HU_MEMNUM_OVL);
     for (i = 0; i < 8; i++) {
-        lbl_1_bss_5AC.unk10[i].unk30 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk10[i].unk30), MEMORY_DEFAULT_NUM);
-        lbl_1_bss_5AC.unk10[i].unk34 = HuMemDirectMallocNum(HEAP_SYSTEM, 900 * sizeof(*lbl_1_bss_5AC.unk10[i].unk34), MEMORY_DEFAULT_NUM);
+        lbl_1_bss_5AC.unk10[i].unk30 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk10[i].unk30), HU_MEMNUM_OVL);
+        lbl_1_bss_5AC.unk10[i].unk34 = HuMemDirectMallocNum(HEAP_HEAP, 900 * sizeof(*lbl_1_bss_5AC.unk10[i].unk34), HU_MEMNUM_OVL);
     }
     lbl_1_bss_5AC.unk28 = 0x10000;
-    lbl_1_bss_5AC.unk24 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_5AC.unk28, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_5AC.unk24 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_5AC.unk28, HU_MEMNUM_OVL);
     DCFlushRange(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
     var_r25 = lbl_1_bss_5AC.unk00;
     for (i = 0; i < 30; i++) {
@@ -902,7 +902,7 @@ void fn_1_2AAC(OMOBJ *arg0)
     for (i = 0; i < 3; i++) {
         temp_r26 = &lbl_1_data_10[i];
         temp_r26->unk04 = GXGetTexBufferSize(temp_r26->unk08, temp_r26->unk0A, GX_TF_RGB565, GX_FALSE, 0);
-        temp_r26->unk00 = HuMemDirectMallocNum(HEAP_DATA, temp_r26->unk04, MEMORY_DEFAULT_NUM);
+        temp_r26->unk00 = HuMemDirectMallocNum(HEAP_MODEL, temp_r26->unk04, HU_MEMNUM_OVL);
     }
     fn_1_280C(arg0);
     GXBeginDisplayList(lbl_1_bss_5AC.unk24, lbl_1_bss_5AC.unk28);
@@ -2356,7 +2356,7 @@ void ObjectSetup(void)
     lbl_1_bss_A4 = omGetGroupMemberListEx(lbl_1_bss_774, 0);
     for (i = 0; i < 4; i++) {
         temp_r30 = omAddObjEx(lbl_1_bss_774, 100, 1, 8, 0, fn_1_81B4);
-        temp_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkBssA4Data), MEMORY_DEFAULT_NUM);
+        temp_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkBssA4Data), HU_MEMNUM_OVL);
         temp_r30->work[0] = i;
     }
     lbl_1_bss_A0 = omAddObjEx(lbl_1_bss_774, 101, 2, 2, -1, fn_1_5B28);

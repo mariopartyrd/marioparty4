@@ -366,7 +366,7 @@ void fn_1_D90C(OMOBJ *object)
     s32 var_r29;
     s32 var_r28;
 
-    object->data = var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M406PlayerWork), MEMORY_DEFAULT_NUM);
+    object->data = var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M406PlayerWork), HU_MEMNUM_OVL);
     memset(var_r31, 0, sizeof(M406PlayerWork));
     var_r31->unk_02 = lbl_1_bss_1F6++;
     var_r31->unk_00_field0 = 0;

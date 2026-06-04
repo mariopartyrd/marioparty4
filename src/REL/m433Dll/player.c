@@ -478,7 +478,7 @@ void fn_1_5B98(OMOBJ *object)
     s32 var_r27;
 
     float spC[4] = { 0.25f, 0.5f, 0.75f, 1.0f };
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M433PlayerWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M433PlayerWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M433PlayerWork));
     var_r27 = object->work[0];
@@ -2142,7 +2142,7 @@ void fn_1_BD48(OMOBJ *object)
     s32 var_r28;
     HU3DPARTICLEDATA *var_r27;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M433PlayerWork2), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M433PlayerWork2), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M433PlayerWork2));
     object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M433, 0));
@@ -2163,7 +2163,7 @@ void fn_1_BD48(OMOBJ *object)
     Hu3DModelAttrSet(object->mdlId[7], HU3D_ATTR_DISPOFF);
     Hu3DModelScaleSet(object->mdlId[7], 0.75f, 0.75f, 0.75f);
     Hu3DModelLayerSet(object->mdlId[7], 2);
-    var_r28 = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(0x120002, MEMORY_DEFAULT_NUM)), 1);
+    var_r28 = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(0x120002, HU_MEMNUM_OVL)), 1);
     object->mdlId[8] = var_r28;
     Hu3DModelLayerSet(var_r28, 2);
     Hu3DParticleHookSet(var_r28, fn_1_DE28);
@@ -2365,7 +2365,7 @@ s32 fn_1_C6B0(OMOBJ *object)
                 }
                 #if VERSION_PAL
                 for(var_r28=0; var_r28<4; var_r28++) {
-                    OM_GET_DATA_PTR(lbl_1_bss_7D0[var_r28], M433PlayerWork)->unk_64 = 0;
+                    omObjGetDataAs(lbl_1_bss_7D0[var_r28], M433PlayerWork)->unk_64 = 0;
                 }
                 #endif
             }
@@ -2692,7 +2692,7 @@ void fn_1_DF44(OMOBJ *object)
 {
     M433PlayerWork3 *work;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M433PlayerWork3), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M433PlayerWork3), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M433PlayerWork3));
     work->uGameEvent = 0;
@@ -2841,7 +2841,7 @@ void fn_1_E11C(OMOBJ *object)
             var_r27 = 0;
             for (var_r29 = 0; var_r29 < 4; var_r29++) {
                 spC[var_r29] = -1;
-                if (work->sWinGrp == OM_GET_DATA_PTR(lbl_1_bss_7D0[var_r29], M433PlayerWork)->unk_14) {
+                if (work->sWinGrp == omObjGetDataAs(lbl_1_bss_7D0[var_r29], M433PlayerWork)->unk_14) {
                     spC[var_r27++] = lbl_1_bss_7D0[var_r29]->work[0];
                 }
             }

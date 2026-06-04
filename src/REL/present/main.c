@@ -35,7 +35,7 @@ static void ExecWindow(void);
 OMOBJ *PresentStateCreate(void)
 {
     OMOBJ *object = omAddObjEx(presentObjMan, 1000, 0, 0, 4, NULL);
-    StateWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StateWork), MEMORY_DEFAULT_NUM);
+    StateWork *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(StateWork), HU_MEMNUM_OVL);
     object->data = work;
 
     work->quitTimer = 0;
@@ -185,7 +185,7 @@ static void ExecPresentGet(OMOBJ *object)
 
 PresentWindow *PresentWinCreate(s32 id)
 {
-    PresentWindow *var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(PresentWindow), MEMORY_DEFAULT_NUM);
+    PresentWindow *var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(PresentWindow), HU_MEMNUM_OVL);
 
     var_r31->messToBeSet = 0;
     var_r31->messWaitSignal = 0;

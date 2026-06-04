@@ -467,7 +467,7 @@ static void CreateShopWin(void) {
     ShopWinWork *var_r30;
 
     var_r31 = omAddObjEx(boardObjMan, 0x109, 0, 0, -1, UpdateShopWin);
-    var_r30 = OM_GET_WORK_PTR(var_r31, ShopWinWork);
+    var_r30 = omObjGetWork(var_r31, ShopWinWork);
     var_r30->unk00_field0 = 0;
     var_r30->unk06 = -1;
     var_r30->unk00_field1 = 0xFF;
@@ -499,7 +499,7 @@ static void UpdateShopWin(OMOBJ *arg0) {
     Mtx sp48;
     Mtx sp18;
 
-    temp_r28 = OM_GET_WORK_PTR(arg0, ShopWinWork);
+    temp_r28 = omObjGetWork(arg0, ShopWinWork);
     if (temp_r28->unk00_field0 != 0 || BoardIsKill()) {
         if (temp_r28->unk06 != -1) {
             HuWinKill(temp_r28->unk06);
@@ -586,7 +586,7 @@ static void SetShopWinItem(ShopWinWork *arg0, OMOBJ *arg1) {
 
 static void PauseShopWin(void) {
     if (shopWinObj) {
-        OM_GET_WORK_PTR(shopWinObj, ShopWinWork)->unk00_field0 = 1;
+        omObjGetWork(shopWinObj, ShopWinWork)->unk00_field0 = 1;
         shopWinObj = NULL;
     }
 }
@@ -600,7 +600,7 @@ void StartItemGive(void) {
 
     temp_r30 = omAddObjEx(boardObjMan, 0x109, 0, 0, -1, ExecItemGive);
     itemGiveObj = temp_r30;
-    temp_r29 = OM_GET_WORK_PTR(temp_r30, ItemGiveWork);
+    temp_r29 = omObjGetWork(temp_r30, ItemGiveWork);
     temp_r29->unk00_field0 = 0;
     temp_r29->unk00_field1 = 0;
     temp_r29->unk04 = 0;
@@ -628,7 +628,7 @@ static void ExecItemGive(OMOBJ *arg0) {
     ItemGiveWork *temp_r29;
     float var_f30;
 
-    temp_r29 = OM_GET_WORK_PTR(arg0, ItemGiveWork);
+    temp_r29 = omObjGetWork(arg0, ItemGiveWork);
     if (temp_r29->unk00_field0 != 0 || BoardIsKill()) {
         itemGiveObj = NULL;
         BoardModelVisibilitySet(itemMdl, 0);
@@ -999,7 +999,7 @@ static void CreateShopItemChoice(s32 arg0, s32 arg1) {
     temp_r30 = omAddObjEx(boardObjMan, 0x7E01, 0, 0, -1, UpdateShopItemChoice);
     itemChoiceObj = temp_r30;
     itemChoice = -1;
-    var_r31 = OM_GET_WORK_PTR(temp_r30, ItemChoiceWork);
+    var_r31 = omObjGetWork(temp_r30, ItemChoiceWork);
     var_r31->unk00_field0 = 0;
     var_r31->unk00_field1 = arg0;
     var_r31->unk01 = 0xA;
@@ -1049,7 +1049,7 @@ static s32 GetShopItemWinChoice(void) {
     if (!itemChoiceObj) {
         return -1;
     }
-    var_r31 = OM_GET_WORK_PTR(itemChoiceObj, ItemChoiceWork);
+    var_r31 = omObjGetWork(itemChoiceObj, ItemChoiceWork);
     return var_r31->unk02;
 }
 
@@ -1114,7 +1114,7 @@ static void MoveShopItemChoice(OMOBJ *arg0, ItemChoiceWork *arg1) {
 static void UpdateShopItemChoice(OMOBJ *arg0) {
     ItemChoiceWork *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, ItemChoiceWork);
+    temp_r31 = omObjGetWork(arg0, ItemChoiceWork);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         HuSprGrpKill(temp_r31->unk06);
         itemChoiceObj = NULL;

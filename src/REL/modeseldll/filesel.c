@@ -678,7 +678,7 @@ void fn_1_5BAC(s16 arg0, s32 arg1)
     HUPROCESS *parent;
     parent = HuPrcCurrentGet();
     child = HuPrcChildCreate(fn_1_5850, 50, 8192, 0, parent);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkFilesel), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkFilesel), HU_MEMNUM_OVL);
     child->user_data = work;
     work->index = arg0;
     work->param = arg1;
@@ -1171,7 +1171,7 @@ void fn_1_7628(s16 boxno, s32 flag)
 
     parent = HuPrcCurrentGet();
     child = HuPrcChildCreate(fn_1_72DC, 50, 8192, 0, parent);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkFilesel), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkFilesel), HU_MEMNUM_OVL);
     child->user_data = work;
     work->index = boxno;
     work->param = flag;
@@ -1510,9 +1510,9 @@ s32 fn_1_8540(s16 boxno)
         }
         Hu3DAnimKill(lbl_1_bss_13A[boxno]);
         Hu3DAnimKill(lbl_1_bss_134[boxno]);
-        sprite = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[8], MEMORY_DEFAULT_NUM));
+        sprite = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[8], HU_MEMNUM_OVL));
         lbl_1_bss_13A[boxno] = Hu3DAnimCreate(sprite, lbl_1_bss_19A[boxno + 8], "star");
-        sprite = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[17], MEMORY_DEFAULT_NUM));
+        sprite = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[17], HU_MEMNUM_OVL));
         lbl_1_bss_134[boxno] = Hu3DAnimCreate(sprite, lbl_1_bss_19A[boxno + 11], "star");
         lbl_1_bss_EE[boxno] = -1;
         Hu3DModelTPLvlSet(lbl_1_bss_19A[boxno + 8], 0.6f);
@@ -1715,9 +1715,9 @@ s32 fn_1_8C30(s16 boxno)
                                 temp_r25 = 8;
                             }
                             (void)temp_r25;
-                            temp_r19 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r25], MEMORY_DEFAULT_NUM));
+                            temp_r19 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r25], HU_MEMNUM_OVL));
                             lbl_1_bss_13A[temp_r31] = Hu3DAnimCreate(temp_r19, lbl_1_bss_19A[temp_r31 + 8], "star");
-                            temp_r19 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r25], MEMORY_DEFAULT_NUM));
+                            temp_r19 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r25], HU_MEMNUM_OVL));
                             lbl_1_bss_134[temp_r31] = Hu3DAnimCreate(temp_r19, lbl_1_bss_19A[temp_r31 + 11], "star");
                             Hu3DModelAttrReset(lbl_1_bss_19A[temp_r31 + 11], HU3D_ATTR_DISPOFF);
                             Hu3DModelAttrSet(lbl_1_bss_19A[temp_r31 + 8], HU3D_ATTR_DISPOFF);
@@ -1804,10 +1804,10 @@ s32 fn_1_9E4C(void)
             HuSprGrpKill(lbl_1_bss_110[temp_r31]);
         }
     }
-    lbl_1_bss_FC = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x22), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_F8 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x23), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_F4 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x25), MEMORY_DEFAULT_NUM));
-    temp_r22 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x24), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_FC = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x22), HU_MEMNUM_OVL));
+    lbl_1_bss_F8 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x23), HU_MEMNUM_OVL));
+    lbl_1_bss_F4 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x25), HU_MEMNUM_OVL));
+    temp_r22 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x24), HU_MEMNUM_OVL));
     for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
         Hu3DModelAttrSet(lbl_1_bss_19A[temp_r31 + 8], HU3D_ATTR_DISPOFF);
         Hu3DModelAttrReset(lbl_1_bss_19A[temp_r31 + 11], HU3D_ATTR_DISPOFF);
@@ -1821,9 +1821,9 @@ s32 fn_1_9E4C(void)
         if (lbl_1_bss_134[temp_r31] != -1) {
             Hu3DAnimKill(lbl_1_bss_134[temp_r31]);
         }
-        temp_r24 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r27], MEMORY_DEFAULT_NUM));
+        temp_r24 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r27], HU_MEMNUM_OVL));
         lbl_1_bss_13A[temp_r31] = Hu3DAnimCreate(temp_r24, lbl_1_bss_19A[temp_r31 + 8], "star");
-        temp_r24 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r27 + 9], MEMORY_DEFAULT_NUM));
+        temp_r24 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r27 + 9], HU_MEMNUM_OVL));
         lbl_1_bss_134[temp_r31] = Hu3DAnimCreate(temp_r24, lbl_1_bss_19A[temp_r31 + 11], "star");
         if (!lbl_1_bss_140[temp_r31]) {
             Hu3DModelTPLvlSet(lbl_1_bss_19A[temp_r31 + 8], 0.6f);

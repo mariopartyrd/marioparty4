@@ -604,7 +604,7 @@ void fn_1_9440(OMOBJ *object)
     Bss61CWork *temp_r31;
     Bss12CStruct *temp_r29;
     s16 temp_r28;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Bss61CWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Bss61CWork), HU_MEMNUM_OVL);
     temp_r31 = object->data;
     memset(temp_r31, 0, sizeof(Bss61CWork));
     object->stat |= 0x100;

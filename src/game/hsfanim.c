@@ -62,7 +62,7 @@ HU3DANIMID Hu3DAnimCreate(void *dataP, HU3DMODELID modelId, char *bmpName) {
         if (strcmp(bmpName, attrP->bitmap->name) == 0) {
             HU3DATTRANIM *attrAnimP;
             if (!attrP->animWorkP) {
-                attrAnimP = HuMemDirectMallocNum(HEAP_DATA, sizeof(*attrAnimP), (u32) Hu3DData[modelId].mallocNo);
+                attrAnimP = HuMemDirectMallocNum(HEAP_MODEL, sizeof(*attrAnimP), (u32) Hu3DData[modelId].mallocNo);
                 attrP->animWorkP = attrAnimP;
                 attrAnimP->attr = 0;
             } else {
@@ -118,7 +118,7 @@ s16 Hu3DAnimLink(HU3DANIMID linkAnimId, HU3DMODELID modelId, char *bmpName) {
         if (strcmp(bmpName, attrP->bitmap->name) == 0) {
             HU3DATTRANIM *attrAnimP;
             if (!attrP->animWorkP) {
-                attrAnimP = HuMemDirectMallocNum(HEAP_DATA, sizeof(*attrAnimP), (u32) Hu3DData[modelId].mallocNo);
+                attrAnimP = HuMemDirectMallocNum(HEAP_MODEL, sizeof(*attrAnimP), (u32) Hu3DData[modelId].mallocNo);
                 attrP->animWorkP = attrAnimP;
             } else {
                 attrAnimP = attrP->animWorkP;
@@ -365,7 +365,7 @@ s16 Hu3DTexScrollCreate(HU3DMODELID modelId, char *bmpName) {
         if (strcmp(bmpName, attrP->bitmap->name) == 0) {
             HU3DATTRANIM *attrAnimP;
             if (!attrP->animWorkP) {
-                attrAnimP = HuMemDirectMallocNum(HEAP_DATA, sizeof(*attrAnimP), (u32) Hu3DData[modelId].mallocNo);
+                attrAnimP = HuMemDirectMallocNum(HEAP_MODEL, sizeof(*attrAnimP), (u32) Hu3DData[modelId].mallocNo);
                 attrP->animWorkP = attrAnimP;
                 attrAnimP->attr = 0;
             } else {
@@ -480,7 +480,7 @@ s16 Hu3DParticleCreate(ANIMDATA *anim, s16 maxCnt) {
     modelId = Hu3DHookFuncCreate(particleFunc);
     modelP = &Hu3DData[modelId];
     Hu3DModelAttrSet(modelId, HU3D_ATTR_PARTICLE_KILL);
-    particleP = HuMemDirectMallocNum(HEAP_DATA, sizeof(HU3DPARTICLE), modelP->mallocNo);
+    particleP = HuMemDirectMallocNum(HEAP_MODEL, sizeof(HU3DPARTICLE), modelP->mallocNo);
     modelP->hookData = particleP;
     particleP->anim = anim;
     anim->useNum++;
@@ -491,7 +491,7 @@ s16 Hu3DParticleCreate(ANIMDATA *anim, s16 maxCnt) {
     particleP->attr = HU3D_PARTICLE_ATTR_NONE;
     particleP->prevCount = 0;
     particleP->dataCnt = particleP->emitCnt = 0;
-    particleDataP = HuMemDirectMallocNum(HEAP_DATA, maxCnt * sizeof(HU3DPARTICLEDATA), modelP->mallocNo);
+    particleDataP = HuMemDirectMallocNum(HEAP_MODEL, maxCnt * sizeof(HU3DPARTICLEDATA), modelP->mallocNo);
     particleP->data = particleDataP;
     particleP->prevCounter = -1;
     for (i = 0; i < maxCnt; i++, particleDataP++) {
@@ -504,12 +504,12 @@ s16 Hu3DParticleCreate(ANIMDATA *anim, s16 maxCnt) {
         particleDataP->pos.z = ((s32) (frand() & 0x7F) - 64) * 20;
         particleDataP->color.r = particleDataP->color.g = particleDataP->color.b = particleDataP->color.a = 0xFF;
     }
-    vtxBuf = HuMemDirectMallocNum(HEAP_DATA, maxCnt * sizeof(Vec) * 4, modelP->mallocNo);
+    vtxBuf = HuMemDirectMallocNum(HEAP_MODEL, maxCnt * sizeof(Vec) * 4, modelP->mallocNo);
     particleP->vtxBuf = vtxBuf;
     for (i = 0; i < maxCnt * 4; i++, vtxBuf++) {
         vtxBuf->x = vtxBuf->y = vtxBuf->z = 0.0f;
     }
-    dlBuf = HuMemDirectMallocNum(HEAP_DATA, maxCnt * 0x60 + 0x80, modelP->mallocNo);
+    dlBuf = HuMemDirectMallocNum(HEAP_MODEL, maxCnt * 0x60 + 0x80, modelP->mallocNo);
     particleP->dlBuf = dlBuf;
     DCInvalidateRange(dlBuf, maxCnt * 0x60 + 0x80);
     GXBeginDisplayList(dlBuf, 0x20000);
@@ -865,7 +865,7 @@ s16 Hu3DParManCreate(ANIMDATA *anim, s16 maxCnt, HU3DPARMANPARAM *param) {
         particleDataP->scale = 0.0f;
     }
     parManProc[parManId] = HuPrcCreate(ParManFunc, 100, 0x1000, 0);
-    parManP = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(HU3DPARMAN), MEMORY_DEFAULT_NUM);
+    parManP = HuMemDirectMallocNum(HEAP_HEAP, sizeof(HU3DPARMAN), HU_MEMNUM_OVL);
     parManProc[parManId]->user_data = parManP;
     parManP->modelId = modelId;
     parManP->param = param;
@@ -899,7 +899,7 @@ HU3DPARMANID Hu3DParManLink(HU3DPARMANID linkParManId, HU3DPARMANPARAM *param) {
     }
     linkParManP = parManProc[linkParManId]->user_data;
     parManProc[parManId] = HuPrcCreate(ParManFunc, 100, 0x1000, 0);
-    parManP = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(HU3DPARMAN), MEMORY_DEFAULT_NUM);
+    parManP = HuMemDirectMallocNum(HEAP_HEAP, sizeof(HU3DPARMAN), HU_MEMNUM_OVL);
     parManProc[parManId]->user_data = parManP;
     parManP->modelId = linkParManP->modelId;
     parManP->param = param;
