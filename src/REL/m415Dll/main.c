@@ -392,7 +392,7 @@ void fn_1_15D0(OMOBJ *object)
     Hu3DModelRotSetV(var_r31, &sp8);
     lbl_1_bss_338 = Hu3DAnimCreate(HuDataReadNum(0x2E000A, 0x10000000), var_r31, "dummy");
     var_r28 = 0x57E40;
-    lbl_1_bss_334 = HuMemDirectMallocNum(HEAP_DATA, var_r28, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_334 = HuMemDirectMallocNum(HEAP_MODEL, var_r28, HU_MEMNUM_OVL);
     memset(lbl_1_bss_334, 0, var_r28);
     (void)var_r28;
     memset(&lbl_1_bss_234, 0, 0x100);
@@ -775,9 +775,9 @@ void fn_1_3208(OMOBJ *object)
     CharModelStepFxSet(var_r31->unk1, 1);
     CharMotionVoiceOnSet(var_r31->unk1, object->mtnId[2], 0);
     object->mdlId[2] = var_r29 = Hu3DModelCreateFile(var_r31->unk0 + 0x2E0003);
-    object->mdlId[3] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0007, 0x10000000, HEAP_DATA));
-    object->mdlId[4] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0008, 0x10000000, HEAP_DATA));
-    object->mdlId[5] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0009, 0x10000000, HEAP_DATA));
+    object->mdlId[3] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0007, 0x10000000, HEAP_MODEL));
+    object->mdlId[4] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0008, 0x10000000, HEAP_MODEL));
+    object->mdlId[5] = Hu3DJointMotion(var_r29, HuDataSelHeapReadNum(0x2E0009, 0x10000000, HEAP_MODEL));
     Hu3DModelPosSet(var_r29, var_r31->unk2C.x, var_r31->unk2C.y, var_r31->unk2C.z);
     Hu3DModelHookSet(var_r29, "stamp00", object->mdlId[0]);
     Hu3DMotionSet(object->mdlId[2], object->mdlId[4]);
@@ -1476,7 +1476,7 @@ void *fn_1_63A8(s32 arg0)
     if (var_r31 == 0x80) {
         return NULL;
     }
-    lbl_1_bss_34[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, arg0, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_34[var_r31] = HuMemDirectMallocNum(HEAP_HEAP, arg0, HU_MEMNUM_OVL);
     return lbl_1_bss_34[var_r31];
 }
 

@@ -248,7 +248,7 @@ void CreatePauseScreen(void) {
     sp14 = boardObjMan->user_data;
     temp_r27 = omAddObjEx(boardObjMan, 0x108, 0, 0, -1, PauseConfigObjFunc);
     configObj = temp_r27;
-    temp_r29 = OM_GET_WORK_PTR(temp_r27, ConfigWork);
+    temp_r29 = omObjGetWork(temp_r27, ConfigWork);
     temp_r29->unk00_field0 = 0;
     temp_r29->unk02 = 0;
     temp_r29->unk03 = 0;
@@ -445,7 +445,7 @@ static void DeletePauseScreen(void) {
     s32 i;
 
     if (configObj) {
-        temp_r30 = OM_GET_WORK_PTR(configObj, ConfigWork);
+        temp_r30 = omObjGetWork(configObj, ConfigWork);
         temp_r30->unk00_field0 = 1;
     }
     for (i = 0; i < 8; i++) {
@@ -487,7 +487,7 @@ static void PauseConfigObjFunc(OMOBJ *arg0) {
     s16 temp_r28;
     s32 var_r29;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, ConfigWork);
+    temp_r31 = omObjGetWork(arg0, ConfigWork);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         configObj = NULL;
         omDelObjEx(HuPrcCurrentGet(), arg0);

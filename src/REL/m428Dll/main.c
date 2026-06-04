@@ -705,7 +705,7 @@ void fn_1_2ACC(s32 arg0)
     lbl_1_bss_0 = var_r24 = Hu3DHookFuncCreate(fn_1_2C90);
     var_r28 = &Hu3DData[var_r24];
     Hu3DModelLayerSet(var_r24, 0);
-    var_r27 = var_r28->hookData = HuMemDirectMallocNum(HEAP_DATA, sizeof(M428DllUnkStruct), var_r28->mallocNo);
+    var_r27 = var_r28->hookData = HuMemDirectMallocNum(HEAP_MODEL, sizeof(M428DllUnkStruct), var_r28->mallocNo);
     memset(var_r27, 0, sizeof(M428DllUnkStruct));
     var_r27->unk_FC0 = Hu3DShadowData;
     for (var_r30 = 0; var_r30 < 0x10; var_r30++) {
@@ -725,7 +725,7 @@ void fn_1_2ACC(s32 arg0)
             }
             else {
                 var_r25 = var_r31->size;
-                var_r31->buf = HuMemDirectMallocNum(HEAP_DATA, var_r25 * var_r25, var_r28->mallocNo);
+                var_r31->buf = HuMemDirectMallocNum(HEAP_MODEL, var_r25 * var_r25, var_r28->mallocNo);
             }
         }
         else {

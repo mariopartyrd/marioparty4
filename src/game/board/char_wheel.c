@@ -89,7 +89,7 @@ s32 BoardCharWheelInit(s32 arg0, s32 arg1) {
 
     arg1 = 3;
     charWheelObj = omAddObjEx(boardObjMan, 0x104, 0, 0, -1, ExecCharWheel);
-    temp_r31 = OM_GET_WORK_PTR(charWheelObj, CharWheelWork);
+    temp_r31 = omObjGetWork(charWheelObj, CharWheelWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field2 = 0;
     temp_r31->unk00_field1 = (arg1 == 3) ? 0 : 1;
@@ -129,7 +129,7 @@ void BoardCharWheelSpeedSet(float arg0) {
 static void ExecCharWheel(OMOBJ *arg0) {
     CharWheelWork *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, CharWheelWork);;
+    temp_r31 = omObjGetWork(arg0, CharWheelWork);;
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         KillCharWheelSpr();
         #if VERSION_PAL
@@ -469,7 +469,7 @@ static s32 GetInput(CharWheelWork *arg0) {
     }
     var_r28 = GetComInput(arg0);
     if (targetF != 0) {
-        var_r27 = OM_GET_WORK_PTR(charWheelObj, CharWheelWork);
+        var_r27 = omObjGetWork(charWheelObj, CharWheelWork);
         OSs16tof32(&var_r27->unk06, &temp_f26);
         OSs16tof32(&var_r27->unk08, &temp_f27);
         temp_f26 = temp_f26 * 0.0625f;

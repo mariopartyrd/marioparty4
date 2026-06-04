@@ -35,7 +35,7 @@ static void ExecCamera(OMOBJ *object);
 OMOBJ *PresentCameraCreate(void)
 {
     OMOBJ *object = omAddObjEx(presentObjMan, 1001, 0, 0, 3, ExecCameraObj);
-    CameraWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, 156, MEMORY_DEFAULT_NUM);
+    CameraWork *work = HuMemDirectMallocNum(HEAP_HEAP, 156, HU_MEMNUM_OVL);
     object->data = work;
 
     work->pos.x = 0.0f;

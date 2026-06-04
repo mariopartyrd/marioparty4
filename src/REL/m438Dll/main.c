@@ -2293,7 +2293,7 @@ void *fn_1_7BFC(s32 arg0)
     if (var_r31 == 0x80) {
         return NULL;
     }
-    lbl_1_bss_BA4[var_r31] = HuMemDirectMallocNum(HEAP_SYSTEM, arg0, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_BA4[var_r31] = HuMemDirectMallocNum(HEAP_HEAP, arg0, HU_MEMNUM_OVL);
     return lbl_1_bss_BA4[var_r31];
 }
 
@@ -2815,7 +2815,7 @@ f32 fn_1_A14C(Vec *arg0, Vec *arg1, Vec *arg2, Vec *arg3)
 
 void fn_1_A60C(OMOBJ *object)
 {
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x900, MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 0x900, HU_MEMNUM_OVL);
     memset(object->data, 0, 0x900);
     object->mdlId[0] = Hu3DHookFuncCreate(fn_1_A68C);
     Hu3DModelLayerSet(object->mdlId[0], 7);
@@ -2884,7 +2884,7 @@ u32 lbl_1_data_584[25] = {
 };
 
 #define getData(v, off)                                                                                                                              \
-    &(&(*OM_GET_DATA_PTR(lbl_1_bss_DBC, M438UnkType))[(u32)(0.028235294f * (v.x - off))])[(u32)(0.028235294f * (v.z - off)) * 0x30]
+    &(&(*omObjGetDataAs(lbl_1_bss_DBC, M438UnkType))[(u32)(0.028235294f * (v.x - off))])[(u32)(0.028235294f * (v.z - off)) * 0x30]
 
 void fn_1_A68C(HU3DMODEL *model, Mtx matrix)
 {
@@ -3087,7 +3087,7 @@ s32 fn_1_AE18(u32 arg0, f32 arg8, Vec *arg1, Vec *arg2)
     sp40 = *arg1;
     sp10 = 0.028235294f * (sp40.x - -850.0f);
     sp14 = 0.028235294f * (sp40.z - -850.0f);
-    temp_r17 = &(&(*OM_GET_DATA_PTR(lbl_1_bss_DBC, M438UnkType))[sp10])[sp14 * 0x30];
+    temp_r17 = &(&(*omObjGetDataAs(lbl_1_bss_DBC, M438UnkType))[sp10])[sp14 * 0x30];
     sp40.y = 0.0f;
     *arg2 = sp40;
     var_r25 = lbl_1_bss_DC4[arg0]->data;

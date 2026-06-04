@@ -553,7 +553,7 @@ void fn_1_1954(void) {
     s32 var_r31;
     M427DllStruct2* var_r30;
 
-    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xA4, 0x10000000);
+    var_r30 = HuMemDirectMallocNum(HEAP_HEAP, 0xA4, 0x10000000);
     lbl_1_bss_40 = var_r30;
     var_r30->unk9C = 0;
     var_r30->unkA0 = 0;

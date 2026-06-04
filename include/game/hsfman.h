@@ -144,9 +144,9 @@
 #define HU3D_LIGHT_TYPE_STATIC 0x8000
 #define HU3D_LIGHT_TYPE_NONE -1
 
-#define Hu3DModelCreateFile(data_id) (Hu3DModelCreate(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
-#define Hu3DMotionCreateFile(data_id) (Hu3DMotionCreate(HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
-#define Hu3DJointMotionFile(model, data_id) (Hu3DJointMotion((model), HuDataSelHeapReadNum((data_id), MEMORY_DEFAULT_NUM, HEAP_DATA)))
+#define Hu3DModelCreateFile(data_id) (Hu3DModelCreate(HuDataSelHeapReadNum((data_id), HU_MEMNUM_OVL, HEAP_MODEL)))
+#define Hu3DMotionCreateFile(data_id) (Hu3DMotionCreate(HuDataSelHeapReadNum((data_id), HU_MEMNUM_OVL, HEAP_MODEL)))
+#define Hu3DJointMotionFile(model, data_id) (Hu3DJointMotion((model), HuDataSelHeapReadNum((data_id), HU_MEMNUM_OVL, HEAP_MODEL)))
 
 
 //Typedefs for various IDs

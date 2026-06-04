@@ -250,7 +250,7 @@ static void fn_1_9C0(void) {
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_B5C);
     lbl_1_bss_8 = temp_r3;
-    temp_r30 = OM_GET_WORK_PTR(temp_r3, Bss8Work);
+    temp_r30 = omObjGetWork(temp_r3, Bss8Work);
     temp_r30->unk00_field0 = 0;
     BoardCameraPosGet(&sp14);
     BoardCameraDirGet(&sp8);
@@ -271,7 +271,7 @@ static void fn_1_9C0(void) {
 
 static void fn_1_B28(void) {
     if (lbl_1_bss_8) {
-        OM_GET_WORK_PTR(lbl_1_bss_8, Bss8Work)->unk00_field0 = 1;
+        omObjGetWork(lbl_1_bss_8, Bss8Work)->unk00_field0 = 1;
     }
 }
 
@@ -283,7 +283,7 @@ static void fn_1_B5C(OMOBJ *arg0) {
     s16 var_r29;
     s16 i;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0, Bss8Work);
+    temp_r30 = omObjGetWork(arg0, Bss8Work);
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
         HuAudFXListnerKill();
         lbl_1_bss_8 = NULL;

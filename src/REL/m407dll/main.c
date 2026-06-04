@@ -85,7 +85,7 @@ void fn_1_4980(HUPROCESS* arg0) {
 
     lbl_1_bss_3980 = arg0;
     lbl_1_bss_397C = omAddObjEx(lbl_1_bss_3980, 0x40, 0, 0, 0, fn_1_4C6C);
-    lbl_1_bss_397C->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkDominationData5), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_397C->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(unkDominationData5), HU_MEMNUM_OVL);
     temp_r31 = lbl_1_bss_397C->data;
     Hu3DShadowCreate(45.0f, 10.0f, 10000.0f);
     Hu3DShadowTPLvlSet(0.6f);

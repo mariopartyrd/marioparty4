@@ -160,7 +160,7 @@ void fn_1_65C(OMOBJ *object)
 {
     M430DllMainWork *work;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M430DllMainWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M430DllMainWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M430DllMainWork));
     work->unk_00 = 0;
@@ -457,43 +457,43 @@ s32 fn_1_4030(void)
 
 u32 fn_1_4040(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_00;
+    return omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_00;
 }
 
 u32 fn_1_4058(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_0C;
+    return omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_0C;
 }
 
 u32 fn_1_4070(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_14;
+    return omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_14;
 }
 
 u32 fn_1_4088(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_24;
+    return omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_24;
 }
 
 void fn_1_40A0(s32 arg0)
 {
-    OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_2C = arg0;
+    omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_2C = arg0;
 }
 
 s32 fn_1_40B8(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_2C;
+    return omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_2C;
 }
 
 void fn_1_40D0(s32 arg0)
 {
 
-    OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_30 |= (1 << ((arg0 & 3) * 4));
+    omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_30 |= (1 << ((arg0 & 3) * 4));
 }
 
 void fn_1_4100(s32 arg0)
 {
-    OM_GET_DATA_PTR(lbl_1_bss_34, M430DllMainWork)->unk_34 |= (1 << ((arg0 & 3) * 4));
+    omObjGetDataAs(lbl_1_bss_34, M430DllMainWork)->unk_34 |= (1 << ((arg0 & 3) * 4));
 }
 
 float fn_1_4130(void)

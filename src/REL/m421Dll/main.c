@@ -152,7 +152,7 @@ void fn_1_4A0(OMOBJ *object)
 {
     M421DllWork *work;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M421DllWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M421DllWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M421DllWork));
     work->unk_00 = 0;
@@ -494,7 +494,7 @@ void fn_1_30D0(OMOBJ *object)
     s32 var_r29;
     M421DllCameraStruct *var_r28;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 10 * sizeof(M421DllCameraStruct), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 10 * sizeof(M421DllCameraStruct), HU_MEMNUM_OVL);
     var_r28 = object->data;
     memset(var_r28, 0, 10 * sizeof(M421DllCameraStruct));
     object->mdlId[0] = Hu3DHookFuncCreate(fn_1_38FC);

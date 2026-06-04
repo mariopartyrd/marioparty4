@@ -279,7 +279,7 @@ void fn_1_81E0(s32 arg0)
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, fn_1_8530);
     lbl_1_bss_144 = temp_r3;
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, someBits3);
+    temp_r31 = omObjGetWork(temp_r3, someBits3);
     temp_r31->unk00_bit0 = 0;
     temp_r31->unk00_bit5 = arg0;
     temp_r31->unk00_bit1 = 4; //?
@@ -325,7 +325,7 @@ void fn_1_84A8(s32 arg0)
     someBits3 *temp_r31;
 
     if (lbl_1_bss_144) {
-        temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_144, someBits3);
+        temp_r31 = omObjGetWork(lbl_1_bss_144, someBits3);
         temp_r31->unk00_bit1 = arg0;
         if (arg0 == 0) {
             temp_r31->unk_04 = MGSeqTimerCreateXY(temp_r31->unk2, 288, 64);
@@ -338,7 +338,7 @@ void fn_1_8530(OMOBJ *arg0)
     s32 temp_r0;
     someBits3 *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, someBits3);
+    temp_r31 = omObjGetWork(arg0, someBits3);
 
     if ((temp_r31->unk00_bit0 != 0) || (BoardIsKill() != 0)) {
         if (temp_r31->unk_04 != -1) {
@@ -705,7 +705,7 @@ void fn_1_95B8(OMOBJ *arg0)
     s32 i;
     s32 temp;
 
-    temp_r29 = OM_GET_WORK_PTR(arg0, unkTemp2);
+    temp_r29 = omObjGetWork(arg0, unkTemp2);
 
     if ((temp_r29->unk00_bit0 != 0) || (BoardIsKill() != 0)) {
         fn_1_9A1C(temp_r29);
@@ -768,10 +768,10 @@ void fn_1_97F8(s32 arg0)
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, fn_1_95B8);
     lbl_1_bss_148 = temp_r3;
-    temp_r30 = OM_GET_WORK_PTR(temp_r3, unkTemp2);
+    temp_r30 = omObjGetWork(temp_r3, unkTemp2);
     temp_r30->unk00_bit0 = 0;
     temp_r30->unk4 = arg0;
-    temp_r30->unk_0C = HuMemDirectMallocNum(0, 0x190, MEMORY_DEFAULT_NUM);
+    temp_r30->unk_0C = HuMemDirectMallocNum(0, 0x190, HU_MEMNUM_OVL);
     BoardPlayerPosGet(arg0, &sp8);
     temp_r30->unk8 = (80.0f + sp8.y);
     memset(temp_r30->unk_0C, 0, 0x190);

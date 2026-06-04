@@ -139,7 +139,7 @@ void fn_1_4C08(OMOBJ *object)
         { 0.0f, 0.0f, -350.0f },
         { 450.0f, 0.0f, -50.0f },
     };
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM460DllPlayerWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM460DllPlayerWork), HU_MEMNUM_OVL);
     var_r31 = object->data;
     memset(var_r31, 0, sizeof(UnkM460DllPlayerWork));
     object->stat |= 0x100;

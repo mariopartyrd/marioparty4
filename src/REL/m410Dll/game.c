@@ -905,7 +905,7 @@ void fn_1_67D4(OMOBJ *arg0)
     s16 var_r28;
 
     arg0->stat |= 0x100;
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM410Struct2) * 60, MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM410Struct2) * 60, HU_MEMNUM_OVL);
     arg0->data = var_r29;
     memset(var_r29, 0, 4320);
 
@@ -1026,7 +1026,7 @@ void fn_1_6DB4(OMOBJ *object)
     s16 var_r28;
 
     object->stat |= 0x100;
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM410Struct2) * 18, MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM410Struct2) * 18, HU_MEMNUM_OVL);
     object->data = var_r31;
     memset(var_r31, 0, sizeof(UnkM410Struct2) * 18);
 
@@ -1127,7 +1127,7 @@ void fn_1_7494(void)
 {
     ANIMDATA *var_r31;
 
-    var_r31 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 2), MEMORY_DEFAULT_NUM));
+    var_r31 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_EFFECT, 2), HU_MEMNUM_OVL));
     lbl_1_bss_38 = Hu3DParticleCreate(var_r31, 60);
     Hu3DParticleHookSet(lbl_1_bss_38, fn_1_75A0);
     Hu3DModelAttrSet(lbl_1_bss_38, HU3D_ATTR_DISPOFF);

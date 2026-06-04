@@ -401,7 +401,7 @@ s16 Hu3DModelCreate(void *arg0) {
     var_r31->tick = (u8) var_r30;
     PSMTXIdentity(var_r31->mtx);
     layerNum[0] += 1;
-    HuMemDCFlush(HEAP_DATA);
+    HuMemDCFlush(HEAP_MODEL);
     if ((var_r31->hsf->sceneNum != 0) && ((var_r31->hsf->scene->fogStart) || (var_r31->hsf->scene->fogEnd))) {
         Hu3DFogSet(var_r31->hsf->scene->fogStart, var_r31->hsf->scene->fogEnd, var_r31->hsf->scene->color.r, var_r31->hsf->scene->color.g, var_r31->hsf->scene->color.b);
     }
@@ -432,7 +432,7 @@ s16 Hu3DModelLink(s16 arg0) {
         return -1;
     }
     var_r31->hsfLink = temp_r30->hsf;
-    var_r31->hsf = HuMemDirectMallocNum(HEAP_DATA, 0x80, var_r31->mallocNoLink);
+    var_r31->hsf = HuMemDirectMallocNum(HEAP_MODEL, 0x80, var_r31->mallocNoLink);
     var_r31->mallocNoLink = (u32)var_r31->hsf;
     *var_r31->hsf = *temp_r30->hsf;
     temp_r3_2 = Hu3DObjDuplicate(var_r31->hsf, var_r31->mallocNoLink);
@@ -544,14 +544,14 @@ void Hu3DModelKill(s16 arg0) {
         layerNum[temp_r31->layerNo] -= 1;
 
         if ((temp_r31->attr & HU3D_ATTR_HOOKFUNC) != 0) {
-            HuMemDirectFreeNum(HEAP_DATA, temp_r31->mallocNo);
+            HuMemDirectFreeNum(HEAP_MODEL, temp_r31->mallocNo);
             if ((temp_r31->attr & HU3D_ATTR_PARTICLE_KILL) != 0) {
                 copy = temp_r31->hookData;
                 HuSprAnimKill(copy->anim);
             }
             temp_r31->hsf = NULL;
             if (modelKillAllF == 0) {
-                HuMemDCFlush(HEAP_DATA);
+                HuMemDCFlush(HEAP_MODEL);
             }
             return;
         }
@@ -559,14 +559,14 @@ void Hu3DModelKill(s16 arg0) {
             if (temp_r31->motId != -1) {
                 Hu3DMotionKill(temp_r31->motId);
             }
-            HuMemDirectFreeNum(HEAP_DATA, temp_r31->mallocNo);
+            HuMemDirectFreeNum(HEAP_MODEL, temp_r31->mallocNo);
             temp_r31->hsf = NULL;
             return;
         }
         Hu3DAnimModelKill(arg0);
         if (temp_r31->linkMdlId != -1) {
             HuMemDirectFree(temp_r31->hsf);
-            HuMemDirectFreeNum(HEAP_DATA, temp_r31->mallocNoLink);
+            HuMemDirectFreeNum(HEAP_MODEL, temp_r31->mallocNoLink);
             var_r28 = temp_r31->hsfLink;
             temp_r31->hsf = var_r28;
         }
@@ -588,21 +588,21 @@ void Hu3DModelKill(s16 arg0) {
                 }
             }
             if (modelKillAllF == 0) {
-                HuMemDCFlush(HEAP_DATA);
+                HuMemDCFlush(HEAP_MODEL);
             }
             return;
         }
         if (temp_r31->motIdSrc != -1 && Hu3DMotionKill(temp_r31->motIdSrc) == 0) {
             Hu3DMotion[temp_r31->motIdSrc].modelId = -1;
-            HuMemDirectFreeNum(HEAP_DATA, temp_r31->mallocNo);
+            HuMemDirectFreeNum(HEAP_MODEL, temp_r31->mallocNo);
             temp_r31->hsf = NULL;
             if (modelKillAllF == 0) {
-                HuMemDCFlush(HEAP_DATA);
+                HuMemDCFlush(HEAP_MODEL);
             }
             return;
         }
         HuMemDirectFree(temp_r31->hsf);
-        HuMemDirectFreeNum(HEAP_DATA, temp_r31->mallocNo);
+        HuMemDirectFreeNum(HEAP_MODEL, temp_r31->mallocNo);
         for (i = 0; i < temp_r31->lightNum; i++) {
             Hu3DGLightKill(temp_r31->lightId[i]);
         }
@@ -613,7 +613,7 @@ void Hu3DModelKill(s16 arg0) {
         }
         temp_r31->hsf = NULL;
         if (modelKillAllF == 0) {
-            HuMemDCFlush(HEAP_DATA);
+            HuMemDCFlush(HEAP_MODEL);
         }
     }
 }
@@ -637,7 +637,7 @@ void Hu3DModelAllKill(void) {
         layerHook[i] = NULL;
     }
     Hu3DParManAllKill();
-    HuMemDCFlush(HEAP_DATA);
+    HuMemDCFlush(HEAP_MODEL);
 }
 
 void Hu3DModelPosSet(s16 index, f32 x, f32 y, f32 z) {
@@ -1879,7 +1879,7 @@ void Hu3DFogClear(void) {
 void Hu3DShadowCreate(f32 arg8, f32 arg9, f32 argA) {
     Hu3DShadowData.size = 0xC0;
     if (Hu3DShadowData.buf == 0) {
-        Hu3DShadowData.buf = HuMemDirectMalloc(HEAP_DATA, SHADOW_HEAP_SIZE);
+        Hu3DShadowData.buf = HuMemDirectMalloc(HEAP_MODEL, SHADOW_HEAP_SIZE);
     }
     Hu3DShadowData.fov = arg8;
     Hu3DShadowData.nnear = arg9;
@@ -1912,7 +1912,7 @@ void Hu3DShadowSizeSet(u16 arg0) {
     if (Hu3DShadowData.buf != 0) {
         HuMemDirectFree(Hu3DShadowData.buf);
     }
-    Hu3DShadowData.buf = HuMemDirectMalloc(HEAP_DATA, arg0 * arg0);
+    Hu3DShadowData.buf = HuMemDirectMalloc(HEAP_MODEL, arg0 * arg0);
 }
 
 void Hu3DShadowExec(void) {
@@ -2111,7 +2111,7 @@ void Hu3DMipMapSet(char* arg0, s16 arg1, char *arg2, f32 arg8) {
     for ( i = 0, var_r24 = i; i < temp_r3->bmpNum; i++, var_r30++) {
         var_r24 += var_r30->dataSize;
     }
-    var_r23 = HuMemDirectMallocNum(HEAP_DATA, var_r24, temp_r25->mallocNo);
+    var_r23 = HuMemDirectMallocNum(HEAP_MODEL, var_r24, temp_r25->mallocNo);
     temp_r22 = var_r23;
     var_r30 = temp_r3->bmp;
     temp_r31->data = temp_r22;

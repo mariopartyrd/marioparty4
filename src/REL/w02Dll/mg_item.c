@@ -107,8 +107,8 @@ void fn_1_5D28(void)
     lbl_1_bss_104 = omAddObjEx(boardObjMan, 257, 0, 0, -1, fn_1_5F08);
     lbl_1_bss_108 = omAddObjEx(boardObjMan, 257, 0, 0, -1, fn_1_606C);
     lbl_1_bss_10C = omAddObjEx(boardObjMan, 257, 0, 0, -1, NULL);
-    lbl_1_bss_108->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkMGItemPlayer), MEMORY_DEFAULT_NUM);
-    lbl_1_bss_10C->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkMGItem), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_108->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkMGItemPlayer), HU_MEMNUM_OVL);
+    lbl_1_bss_10C->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkMGItem), HU_MEMNUM_OVL);
     sp8 = lbl_1_bss_10C->data;
     lbl_1_bss_198 = 0;
 }

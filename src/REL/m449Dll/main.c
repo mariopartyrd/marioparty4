@@ -1986,7 +1986,7 @@ void ObjectSetup(void)
     lbl_1_bss_50 = omAddObjEx(lbl_1_bss_38, 0x64, 3, 0, 1, fn_1_7ECC);
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
         var_r30 = (&lbl_1_bss_54)[var_r31] = omAddObjEx(lbl_1_bss_38, 0x65, 0x14, 4, 0, fn_1_8538);
-        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M449DllWork), MEMORY_DEFAULT_NUM);
+        var_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M449DllWork), HU_MEMNUM_OVL);
         var_r30->work[0] = var_r31;
     }
     lbl_1_bss_5C = omAddObjEx(lbl_1_bss_38, 0x7FDA, 0, 0, -1, omOutView);

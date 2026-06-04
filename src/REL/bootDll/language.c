@@ -86,7 +86,7 @@ BOOL LanguageMenuExec(void)
     if(!SystemInitF) {
         void *group_samp;
         HuWindowInit();
-        group_samp = HuMemDirectMalloc(HEAP_DATA, msmSysGetSampSize(0));
+        group_samp = HuMemDirectMalloc(HEAP_MODEL, msmSysGetSampSize(0));
         msmSysLoadGroup(0, group_samp, 0);
         HuMemDirectFree(group_samp);
     }

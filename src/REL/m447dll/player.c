@@ -98,7 +98,7 @@ UnkM447Struct_04 *fn_1_3FC4(s32 arg0)
     s16 var_r27;
     s32 i;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r3), MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r3), HU_MEMNUM_OVL);
     if (!temp_r3) {
         OSReport("M447PlayerCreate ERROR...\n");
         return NULL;

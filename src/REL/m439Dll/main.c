@@ -310,7 +310,7 @@ void fn_1_A18(HUPROCESS *objman)
     for (i = 0; i < 4; i++) {
         omAddObjEx(objman, 5, 3, 50, 0, fn_1_D0C);
     }
-    lbl_1_bss_40 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M439, 0x16), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_40 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M439, 0x16), HU_MEMNUM_OVL));
 }
 
 void fn_1_4978(OMOBJ *object);
@@ -412,7 +412,7 @@ void fn_1_2BB4(OMOBJ *object);
 
 void fn_1_D0C(OMOBJ *object)
 {
-    WorkD0C *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkD0C), MEMORY_DEFAULT_NUM);
+    WorkD0C *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkD0C), HU_MEMNUM_OVL);
     u32 i;
     s32 charNo;
     object->data = work;
@@ -1176,7 +1176,7 @@ void fn_1_4AA8(OMOBJ *object)
 {
     Work4AA8 *work;
     u32 i;
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work4AA8), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work4AA8), HU_MEMNUM_OVL);
     object->data = work;
     memset(work, 0, sizeof(Work4AA8));
     work->unk2 = lbl_1_bss_140;
@@ -1401,7 +1401,7 @@ void fn_1_5CB0(OMOBJ *object)
     s32 temp_r25;
     s32 temp_r24;
     omSetStatBit(object, 0x100);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work5CB0) * 14, MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work5CB0) * 14, HU_MEMNUM_OVL);
     object->data = work;
     memset(work, 0, sizeof(Work5CB0) * 14);
     for (i = 0; i < 100; i++) {
@@ -1726,7 +1726,7 @@ void fn_1_73F4(HUPROCESS *objman)
     s32 dataSize = Hu3DShadowData.size * Hu3DShadowData.size;
     lbl_1_bss_128 = objman;
     for (i = 0; i < 3; i++) {
-        lbl_1_bss_11C[i] = HuMemDirectMallocNum(HEAP_SYSTEM, dataSize, MEMORY_DEFAULT_NUM);
+        lbl_1_bss_11C[i] = HuMemDirectMallocNum(HEAP_HEAP, dataSize, HU_MEMNUM_OVL);
         memset(lbl_1_bss_11C[i], 0, dataSize);
         lbl_1_bss_D4[i].x = Hu3DShadowData.camTarget.x;
         lbl_1_bss_D4[i].y = Hu3DShadowData.camTarget.y;

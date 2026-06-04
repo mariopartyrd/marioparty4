@@ -93,7 +93,7 @@ void fn_1_B54C(OMOBJ *arg0)
     M438MapStruct *var_r24;
     M438MapStruct3 *temp_r23;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M438MapStruct3), MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M438MapStruct3), HU_MEMNUM_OVL);
     temp_r23 = arg0->data;
     memset(temp_r23, 0, 0x108C);
     arg0->mdlId[0] = Hu3DModelCreateFile(0x450000);

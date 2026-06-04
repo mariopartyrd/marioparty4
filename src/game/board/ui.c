@@ -589,7 +589,7 @@ void BoardSpriteCreate(s32 file, s32 prio, ANIMDATA **anim, s16 *sprite) {
     void *temp_r27;
     ANIMDATA *temp_r31;
 
-    temp_r27 = HuDataSelHeapReadNum(file, MEMORY_DEFAULT_NUM, HEAP_DATA);
+    temp_r27 = HuDataSelHeapReadNum(file, HU_MEMNUM_OVL, HEAP_MODEL);
     temp_r31 = HuSprAnimRead(temp_r27);
     temp_r28 = HuSprCreate(temp_r31, prio, 0);
     if (anim) {
@@ -720,7 +720,7 @@ void BoardPickerCreate(s32 arg0, s8 arg1, void *arg2, s8 arg3) {
     temp_r28 = GWPlayer[arg0].character;
     temp_r30 = omAddObjEx(boardObjMan, 0x107, 0, 0, -1, &UpdatePicker);
     pickerObj = temp_r30;
-    temp_r31 = OM_GET_WORK_PTR(temp_r30, UnkUiWork01);
+    temp_r31 = omObjGetWork(temp_r30, UnkUiWork01);
     temp_r31->unk00_bit0 = 0;
     temp_r31->unk00_bit6 = 0;
     temp_r31->unk00_bit5 = arg0;
@@ -756,8 +756,8 @@ void BoardPickerBackFlagSet(s32 arg0) {
             pickerBackF = 1;
         }
         if (arg0 == 0) {
-            KillPickerWindow(OM_GET_WORK_PTR(pickerObj, UnkUiWork01));
-            CreatePickerWindow(OM_GET_WORK_PTR(pickerObj, UnkUiWork01), 0);
+            KillPickerWindow(omObjGetWork(pickerObj, UnkUiWork01));
+            CreatePickerWindow(omObjGetWork(pickerObj, UnkUiWork01), 0);
         }
     }
 }
@@ -785,7 +785,7 @@ s32 BoardPickerChoiceGet(void) {
 }
 
 static void UpdatePicker(OMOBJ *arg0) {
-    UnkUiWork01 *temp_r31 = OM_GET_WORK_PTR(arg0, UnkUiWork01);
+    UnkUiWork01 *temp_r31 = omObjGetWork(arg0, UnkUiWork01);
 
     if (temp_r31->unk00_bit0 || BoardIsKill()) {
         HuWinKill(temp_r31->unk06);
@@ -914,7 +914,7 @@ void BoardYourTurnExec(s32 arg0) {
 
     temp_r29 = GWPlayer[arg0].character;
     yourTurnObj = omAddObjEx(boardObjMan, 0x10B, 0, 0, -1, &UpdateYourTurn);
-    temp_r31 = OM_GET_WORK_PTR(yourTurnObj, UnkUiWork02);
+    temp_r31 = omObjGetWork(yourTurnObj, UnkUiWork02);
     temp_r31->unk00_bit0 = 0;
     temp_r31->unk00_bit5 = arg0;
     temp_r31->unk00_bit3 = 0;
@@ -934,7 +934,7 @@ void BoardYourTurnExec(s32 arg0) {
 }
 
 static void UpdateYourTurn(OMOBJ *arg0) {
-    UnkUiWork02 *temp_r31 = OM_GET_WORK_PTR(arg0, UnkUiWork02);
+    UnkUiWork02 *temp_r31 = omObjGetWork(arg0, UnkUiWork02);
 
     if (temp_r31->unk00_bit0 || BoardIsKill()) {
         HuSprGrpKill(yourTurnSprGrp);
@@ -1199,7 +1199,7 @@ void BoardMakeRandomItem(void) {
 }
 
 static inline void TeamItemPosSetInlineFunc01(s32 arg0, s32 arg1, Vec *arg2) {
-    UnkUiWork03 *temp_r29 = OM_GET_WORK_PTR(itemPickObj, UnkUiWork03);
+    UnkUiWork03 *temp_r29 = omObjGetWork(itemPickObj, UnkUiWork03);
     Vec (*temp_r31)[6] = (void*) temp_r29->unk04;
 
     temp_r31[arg0][arg1 + 2].x = arg2->x;
@@ -1208,7 +1208,7 @@ static inline void TeamItemPosSetInlineFunc01(s32 arg0, s32 arg1, Vec *arg2) {
 }
 
 static inline void TeamItemPosSetInlineFunc02(s32 arg0, s32 arg1, Vec *arg2) {
-    UnkUiWork03 *temp_r29 = OM_GET_WORK_PTR(itemPickObj, UnkUiWork03);
+    UnkUiWork03 *temp_r29 = omObjGetWork(itemPickObj, UnkUiWork03);
     Vec (*temp_r31)[6] = (void*) temp_r29->unk04;
 
     (temp_r31 + 4)[arg0][arg1 + 2].x = arg2->x;
@@ -1260,7 +1260,7 @@ static inline void ExecItemPickInlineFunc02(s32 arg0, s8 arg1, s32 arg2) {
 
     BoardPickerCreate(arg0, arg1, itemPosTemp, arg2);
     CreateItemWindow(arg0, arg1);
-    sp10 = OM_GET_WORK_PTR(pickerObj, UnkUiWork03);
+    sp10 = omObjGetWork(pickerObj, UnkUiWork03);
     pickerObj->objFunc = UpdateItemPickGfx;
     while (!CheckItemWindow()) {
         HuPrcVSleep();
@@ -1284,8 +1284,8 @@ static void ExecItemPick(void) {
         BoardTutorialHostHide(0);
     }
     itemPickObj = omAddObjEx(boardObjMan, 0x7E03, 0, 0, -1, &UpdateItemPick);
-    temp_r27 = OM_GET_WORK_PTR(itemPickObj, UnkUiWork03);
-    temp_r27->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, 8 * sizeof(Vec[6]), MEMORY_DEFAULT_NUM);
+    temp_r27 = omObjGetWork(itemPickObj, UnkUiWork03);
+    temp_r27->unk04 = HuMemDirectMallocNum(HEAP_HEAP, 8 * sizeof(Vec[6]), HU_MEMNUM_OVL);
     temp_r27->unk00_bit0 = 0;
     temp_r27->unk01 = 0;
     temp_r27->unk02 = 0;
@@ -1345,7 +1345,7 @@ static void ExecItemPick(void) {
 }
 
 static void UpdateItemPick(OMOBJ *arg0) {
-    UnkUiWork03 *temp_r28 = OM_GET_WORK_PTR(arg0, UnkUiWork03);
+    UnkUiWork03 *temp_r28 = omObjGetWork(arg0, UnkUiWork03);
     UnkUiStatusStruct *temp_r26;
     Vec (*temp_r27)[6];
     Vec sp14;
@@ -1465,7 +1465,7 @@ static void MakeItemPickSpace(UnkUiWork03 *arg0) {
 }
 
 static void SetItemUIStatus(s32 arg0) {
-    UnkUiWork03 *temp_r27 = OM_GET_WORK_PTR(itemPickObj, UnkUiWork03);
+    UnkUiWork03 *temp_r27 = omObjGetWork(itemPickObj, UnkUiWork03);
     Vec (*temp_r28)[6] = (void*) temp_r27->unk04;
     float var_f31;
     float var_f30;
@@ -1595,7 +1595,7 @@ void BoardItemStatusKill(s32 arg0) {
 }
 
 static void UpdateItemPickGfx(OMOBJ *arg0) {
-    UnkUiWork01 *temp_r30 = OM_GET_WORK_PTR(arg0, UnkUiWork01);
+    UnkUiWork01 *temp_r30 = omObjGetWork(arg0, UnkUiWork01);
 
     if (temp_r30->unk00_bit0 || BoardIsKill()) {
         HuWinKill(temp_r30->unk06);
@@ -1631,7 +1631,7 @@ static void UpdateItemPickGfx(OMOBJ *arg0) {
 }
 
 static void UpdateItemPickup(OMOBJ *arg0) {
-    UnkUiWork01 *temp_r31 = OM_GET_WORK_PTR(arg0, UnkUiWork01);
+    UnkUiWork01 *temp_r31 = omObjGetWork(arg0, UnkUiWork01);
     Vec sp50;
     Vec sp44;
     Vec sp38;
@@ -1761,7 +1761,7 @@ static BOOL CheckItemWindow(void) {
     if (pickerObj == 0) {
         return TRUE;
     }
-    temp_r31 = OM_GET_WORK_PTR(pickerObj, UnkUiWork01);
+    temp_r31 = omObjGetWork(pickerObj, UnkUiWork01);
     if (temp_r31->unk00_bit3 == 6) {
         return TRUE;
     } else {
@@ -1773,7 +1773,7 @@ static void HideItemWindow(void) {
     UnkUiWork01 *temp_r31;
 
     if (pickerObj) {
-        temp_r31 = OM_GET_WORK_PTR(pickerObj, UnkUiWork01);
+        temp_r31 = omObjGetWork(pickerObj, UnkUiWork01);
         temp_r31->unk00_bit0 = 1;
     }
 }
@@ -1793,12 +1793,12 @@ static void CreateItemWindow(s32 arg0, s32 arg1) {
     temp_f31 = 0.25f;
     temp_r26 = omAddObjEx(boardObjMan, 0x107, 0, 0, -1, UpdateItemWindow);
     itemWindowObj = temp_r26;
-    temp_r29 = OM_GET_WORK_PTR(temp_r26, UnkUiWork04);
+    temp_r29 = omObjGetWork(temp_r26, UnkUiWork04);
     temp_r29->unk00_bit0 = 0;
     temp_r29->unk01 = 0;
     temp_r29->unk03 = 0;
     temp_r29->unk02 = arg1;
-    temp_r29->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkUiWindowStruct), MEMORY_DEFAULT_NUM);
+    temp_r29->unk04 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkUiWindowStruct), HU_MEMNUM_OVL);
     temp_r26->trans.x = 0.0f;
     if (GWTeamGet()) {
         var_f30 = 32.0f;
@@ -1859,7 +1859,7 @@ static BOOL CheckItemWindowSlide(void) {
     if (itemWindowObj == 0) {
         return TRUE;
     }
-    temp_r31 = OM_GET_WORK_PTR(itemWindowObj, UnkUiWork04);
+    temp_r31 = omObjGetWork(itemWindowObj, UnkUiWork04);
     return (temp_r31->unk03 != 0) ? FALSE : TRUE;
 }
 
@@ -1867,7 +1867,7 @@ static void KillItemWindow(void) {
     UnkUiWork04 *temp_r31;
 
     if (itemWindowObj) {
-        temp_r31 = OM_GET_WORK_PTR(itemWindowObj, UnkUiWork04);
+        temp_r31 = omObjGetWork(itemWindowObj, UnkUiWork04);
         temp_r31->unk00_bit0 = 1;
     }
 }
@@ -1877,7 +1877,7 @@ static void SetItemWindowCurr(s32 arg0) {
     UnkUiWindowStruct *temp_r30;
 
     if (itemWindowObj) {
-        temp_r31 = OM_GET_WORK_PTR(itemWindowObj, UnkUiWork04);
+        temp_r31 = omObjGetWork(itemWindowObj, UnkUiWork04);
         if (temp_r31->unk02 > 1 && arg0 != temp_r31->unk01) {
             temp_r30 = temp_r31->unk04;
             temp_r30->unk74[temp_r31->unk01].x = -576.0f;
@@ -1899,7 +1899,7 @@ static void UpdateItemWindow(OMOBJ *arg0) {
     Mtx sp5C;
     Mtx sp2C;
 
-    temp_r29 = OM_GET_WORK_PTR(arg0, UnkUiWork04);
+    temp_r29 = omObjGetWork(arg0, UnkUiWork04);
     temp_r31 = temp_r29->unk04;
     if (temp_r29->unk00_bit0 || (BoardIsKill() != 0)) {
         for (i = 0; i < temp_r29->unk02; i++) {

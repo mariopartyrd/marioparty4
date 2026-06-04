@@ -125,7 +125,7 @@ void fn_1_4E4(OMOBJ *object)
 {
     UnkM410Struct *var_r31;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM410Struct), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM410Struct), HU_MEMNUM_OVL);
     var_r31 = object->data;
     memset(var_r31, 0, sizeof(UnkM410Struct));
     var_r31->unk_00 = 0;

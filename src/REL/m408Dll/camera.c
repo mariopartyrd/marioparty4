@@ -248,7 +248,7 @@ void fn_1_9770(OMOBJ *object)
     Work99C8 *temp_r31;
     s32 temp_r29;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work99C8), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work99C8), HU_MEMNUM_OVL);
     temp_r31 = object->data;
     object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M408, 0x0A));
     Hu3DModelAttrSet(object->mdlId[0], HU3D_MOTATTR_LOOP);

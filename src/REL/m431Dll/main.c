@@ -257,31 +257,31 @@ void fn_1_A44(OMOBJ *object)
     s16 temp_r25;
 
     ANIMDATA *temp_r24;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkA44), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkA44), HU_MEMNUM_OVL);
     temp_r26 = object->data;
     temp_r26->unk0 = 4;
     temp_r26->unk6[0] = 0;
     temp_r26->unkA = 15 * REFRESH_RATE;
     temp_r26->unk10 = -1;
-    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M431, 0x1A), MEMORY_DEFAULT_NUM));
+    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M431, 0x1A), HU_MEMNUM_OVL));
     object->mdlId[0] = fn_1_6C74(temp_r27, 1024, 25, 64, 64);
     fn_1_7244(object->mdlId[0], fn_1_6030);
     Hu3DModelLayerSet(object->mdlId[0], 7);
     temp_r30 = HuSprGrpCreate(4);
     object->mdlId[3] = temp_r30;
-    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1B), MEMORY_DEFAULT_NUM));
+    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1B), HU_MEMNUM_OVL));
     temp_r28 = HuSprCreate(temp_r27, 16, 0);
     HuSprGrpMemberSet(temp_r30, 0, temp_r28);
     HuSprAttrSet(temp_r30, 0, HUSPR_ATTR_DISPOFF);
-    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1D), MEMORY_DEFAULT_NUM));
+    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1D), HU_MEMNUM_OVL));
     temp_r28 = HuSprCreate(temp_r27, 32, 0);
     HuSprGrpMemberSet(temp_r30, 2, temp_r28);
     HuSprAttrSet(temp_r30, 2, HUSPR_ATTR_DISPOFF);
-    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1C), MEMORY_DEFAULT_NUM));
+    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1C), HU_MEMNUM_OVL));
     temp_r28 = HuSprCreate(temp_r27, 16, 0);
     HuSprGrpMemberSet(temp_r30, 1, temp_r28);
     HuSprAttrSet(temp_r30, 1, HUSPR_ATTR_DISPOFF);
-    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1D), MEMORY_DEFAULT_NUM));
+    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x1D), HU_MEMNUM_OVL));
     temp_r28 = HuSprCreate(temp_r27, 32, 0);
     HuSprGrpMemberSet(temp_r30, 3, temp_r28);
     HuSprAttrSet(temp_r30, 3, HUSPR_ATTR_DISPOFF);
@@ -294,8 +294,8 @@ void fn_1_A44(OMOBJ *object)
     HuSprPosSet(temp_r30, 3, temp_f31 + 198, 64);
     HuSprTPLvlSet(temp_r30, 3, 88);
     HuSprColorSet(temp_r30, 3, 0, 0, 0);
-    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x0B), MEMORY_DEFAULT_NUM));
-    temp_r24 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x0A), MEMORY_DEFAULT_NUM));
+    temp_r27 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x0B), HU_MEMNUM_OVL));
+    temp_r24 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MGCONST, 0x0A), HU_MEMNUM_OVL));
     temp_r30 = HuSprGrpCreate(6);
     object->mdlId[1] = temp_r30;
     for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
@@ -684,7 +684,7 @@ void fn_1_2110(OMOBJ *object)
     s16 temp_r25;
 
     object->stat |= 0x100;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(Work2110), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(Work2110), HU_MEMNUM_OVL);
     temp_r28 = object->data;
     object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M431, 0x00));
     Hu3DModelLayerSet(object->mdlId[0], 0);
@@ -773,11 +773,11 @@ void fn_1_2110(OMOBJ *object)
     Hu3DModelShadowMapObjSet(object->mdlId[0], "field");
     Hu3DModelShadowMapSet(object->mdlId[1]);
     Hu3DModelShadowMapSet(object->mdlId[2]);
-    temp_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M431, 0x1B), MEMORY_DEFAULT_NUM));
+    temp_r26 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M431, 0x1B), HU_MEMNUM_OVL));
     lbl_1_bss_5C.unk0[0] = fn_1_6C74(temp_r26, 1, 140, 0, 0);
     Hu3DModelLayerSet(lbl_1_bss_5C.unk0[0], 7);
     for (temp_r31 = 0; temp_r31 < 5; temp_r31++) {
-        temp_r26 = HuSprAnimRead(HuDataReadNum(lbl_1_data_148[temp_r31], MEMORY_DEFAULT_NUM));
+        temp_r26 = HuSprAnimRead(HuDataReadNum(lbl_1_data_148[temp_r31], HU_MEMNUM_OVL));
         lbl_1_bss_5C.unk0[temp_r31 + 1] = fn_1_6C74(temp_r26, 2, 45, 0, 0);
         Hu3DModelLayerSet(lbl_1_bss_5C.unk0[temp_r31 + 1], 7);
     }
@@ -1906,30 +1906,30 @@ s16 fn_1_6C74(ANIMDATA *arg0, s16 arg1, float arg2, s16 arg3, s16 arg4)
     void *temp_r18;
     temp_r20 = Hu3DHookFuncCreate(fn_1_72B4);
     temp_r28 = &Hu3DData[temp_r20];
-    temp_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(Work72B4), temp_r28->mallocNo);
+    temp_r31 = HuMemDirectMallocNum(HEAP_MODEL, sizeof(Work72B4), temp_r28->mallocNo);
     temp_r28->hookData = temp_r31;
     arg0->useNum++;
     temp_r31->unk10 = arg0;
     temp_r31->unk0 = arg1;
     temp_r31->unk8 = 0;
     temp_r31->unkC = 0;
-    temp_r24 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(Unk72B4Data18), temp_r28->mallocNo);
+    temp_r24 = HuMemDirectMallocNum(HEAP_MODEL, arg1 * sizeof(Unk72B4Data18), temp_r28->mallocNo);
     temp_r31->unk18 = temp_r24;
     for (temp_r30 = 0; temp_r30 < arg1; temp_r30++, temp_r24++) {
         temp_r24->unk54 = -1;
         temp_r24->unk56 = 0;
     }
-    temp_r25 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(Vec) * 4, temp_r28->mallocNo);
+    temp_r25 = HuMemDirectMallocNum(HEAP_MODEL, arg1 * sizeof(Vec) * 4, temp_r28->mallocNo);
     temp_r31->unk1C = temp_r25;
     for (temp_r30 = 0; temp_r30 < arg1 * 4; temp_r30++, temp_r25++) {
         temp_r25->x = temp_r25->y = temp_r25->z = 0;
     }
-    temp_r27 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(GXColor), temp_r28->mallocNo);
+    temp_r27 = HuMemDirectMallocNum(HEAP_MODEL, arg1 * sizeof(GXColor), temp_r28->mallocNo);
     temp_r31->unk24 = temp_r27;
     for (temp_r30 = 0; temp_r30 < arg1; temp_r30++, temp_r27++) {
         temp_r27->r = temp_r27->g = temp_r27->b = temp_r27->a = 255;
     }
-    temp_r29 = HuMemDirectMallocNum(HEAP_DATA, arg1 * sizeof(HuVec2f) * 4, temp_r28->mallocNo);
+    temp_r29 = HuMemDirectMallocNum(HEAP_MODEL, arg1 * sizeof(HuVec2f) * 4, temp_r28->mallocNo);
     temp_r31->unk20 = temp_r29;
     for (temp_r30 = 0; temp_r30 < arg1; temp_r30++) {
         temp_r29->x = 0;
@@ -1958,12 +1958,12 @@ s16 fn_1_6C74(ANIMDATA *arg0, s16 arg1, float arg2, s16 arg3, s16 arg4)
         temp_r31->unk60 = 1;
         temp_r31->unk64 = 1;
     }
-    temp_r31->unk5C = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk14 * sizeof(HuVec2f), temp_r28->mallocNo);
+    temp_r31->unk5C = HuMemDirectMallocNum(HEAP_MODEL, temp_r31->unk14 * sizeof(HuVec2f), temp_r28->mallocNo);
     fn_1_7824(temp_r31->unk5C, temp_r31->unk14, temp_r22, temp_r31->unk60, temp_r31->unk64);
     temp_r31->unk2C[0].x = temp_r31->unk2C[3].x = temp_r31->unk2C[2].y = temp_r31->unk2C[3].y = -arg2;
     temp_r31->unk2C[1].x = temp_r31->unk2C[2].x = temp_r31->unk2C[0].y = temp_r31->unk2C[1].y = arg2;
     temp_r31->unk2C[0].z = temp_r31->unk2C[1].z = temp_r31->unk2C[2].z = temp_r31->unk2C[3].z = 0;
-    temp_r21 = HuMemDirectMallocNum(HEAP_DATA, 0x20000, temp_r28->mallocNo);
+    temp_r21 = HuMemDirectMallocNum(HEAP_MODEL, 0x20000, temp_r28->mallocNo);
     temp_r18 = temp_r21;
     DCFlushRange(temp_r21, 0x20000);
     GXBeginDisplayList(temp_r18, 0x20000);
@@ -1983,7 +1983,7 @@ s16 fn_1_6C74(ANIMDATA *arg0, s16 arg1, float arg2, s16 arg3, s16 arg4)
         GXTexCoord1x16((temp_r30 * 4) + 3);
     }
     temp_r31->unk4 = GXEndDisplayList();
-    temp_r31->unk28 = HuMemDirectMallocNum(HEAP_DATA, temp_r31->unk4, temp_r28->mallocNo);
+    temp_r31->unk28 = HuMemDirectMallocNum(HEAP_MODEL, temp_r31->unk4, temp_r28->mallocNo);
     memcpy(temp_r31->unk28, temp_r21, temp_r31->unk4);
     DCFlushRange(temp_r31->unk28, temp_r31->unk4);
     HuMemDirectFree(temp_r21);

@@ -1160,7 +1160,7 @@ static void ExecScratchTicket(s32 arg0) {
 
     var_r24 = GWPlayer[GWSystem.player_curr].character;
     var_r22 = ticketObj[arg0];
-    temp_r30 = OM_GET_WORK_PTR(var_r22, TicketWork);
+    temp_r30 = omObjGetWork(var_r22, TicketWork);
     lotteryMdl[4] = BoardModelCreate(handMdl[var_r24], NULL, 0);
     BoardModelLayerSet(lotteryMdl[4], 6);
     BoardModelPassSet(lotteryMdl[4], 0);
@@ -1252,7 +1252,7 @@ static void ExecScratch(void) {
     LotteryInlineFunc00(1, 0);
     ExecScratchTicket(temp_r31);
     LotteryInlineFunc00(1, 1);
-    temp_r28 = OM_GET_WORK_PTR(ticketObj[temp_r31], TicketWork);
+    temp_r28 = omObjGetWork(ticketObj[temp_r31], TicketWork);
     for (var_f31 = 1.0f; var_f31 > 0.0f; var_f31 -= 0.078125f) {
         if (var_f31 < 0.0f) {
             var_f31 = 0.0f;
@@ -1270,7 +1270,7 @@ static void KillScratch(void) {
         ticketSprGrp = -1;
     }
     if (lotteryTicketPickObj) {
-        OM_GET_WORK_PTR(lotteryTicketPickObj, LotteryTicketPickWork)->unk00_field0 = 1;
+        omObjGetWork(lotteryTicketPickObj, LotteryTicketPickWork)->unk00_field0 = 1;
     }
     memset(ticketObj, 0, sizeof(ticketObj));
 }
@@ -1282,7 +1282,7 @@ static void ExecScratchSpr(OMOBJ *arg0) {
     s32 temp_r29;
     TicketWork *temp_r30;
 
-    temp_r30 = OM_GET_WORK_PTR(arg0, TicketWork);
+    temp_r30 = omObjGetWork(arg0, TicketWork);
     if (temp_r30->unk00_field0 != 0 || BoardIsKill()) {
         temp_r29 = temp_r30->unk00_field2;
         HuSprAttrSet(ticketSprGrp, temp_r29, 4);
@@ -1319,7 +1319,7 @@ static void HideScratchSpr(void) {
 
     for (i = 0; i < 12; i++) {
         if (ticketObj[i]) {
-            OM_GET_WORK_PTR(ticketObj[i], TicketWork)->unk00_field0 = 1;
+            omObjGetWork(ticketObj[i], TicketWork)->unk00_field0 = 1;
         }
     }
 }
@@ -1343,7 +1343,7 @@ static void InitScratchSpr(void) {
     for (i = 0; i < 12; i++) {
         temp_r31 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, ExecScratchSpr);
         ticketObj[i] = temp_r31;
-        temp_r29 = OM_GET_WORK_PTR(temp_r31, TicketWork);
+        temp_r29 = omObjGetWork(temp_r31, TicketWork);
         temp_r29->unk00_field0 = 0;
         temp_r29->unk00_field2 = i;
         temp_r29->unk01 = (i / 4) * 2;
@@ -1395,7 +1395,7 @@ static void ExecScratchPick(OMOBJ *arg0) {
     u32 var_r26;
     LotteryTicketPickWork *temp_r29;
 
-    temp_r29 = OM_GET_WORK_PTR(arg0, LotteryTicketPickWork);
+    temp_r29 = omObjGetWork(arg0, LotteryTicketPickWork);
     if (temp_r29->unk00_field0 || BoardIsKill()) {
         HuSprGrpKill(temp_r29->unk08);
         lotteryTicketPickObj = 0;
@@ -1468,7 +1468,7 @@ static void InitScratchPick(void) {
 
     temp_r30 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, ExecScratchPick);
     lotteryTicketPickObj = temp_r30;
-    var_r31 = OM_GET_WORK_PTR(temp_r30, LotteryTicketPickWork);
+    var_r31 = omObjGetWork(temp_r30, LotteryTicketPickWork);
     var_r31->unk02 = var_r31->unk03 = 0;
     var_r31->unk04 = 6;
     var_r31->unk00_field0 = 0;
@@ -1509,10 +1509,10 @@ static void ExecTicketFocus(s32 arg0) {
     var_r30->trans.y = 240.0f;
     for (i = 0; i < 12; i++) {
         if (i != arg0) {
-            OM_GET_WORK_PTR(ticketObj[i], TicketWork)->unk00_field0 = 1;
+            omObjGetWork(ticketObj[i], TicketWork)->unk00_field0 = 1;
         }
     }
-    temp_r29 = OM_GET_WORK_PTR(ticketObj[arg0], TicketWork);
+    temp_r29 = omObjGetWork(ticketObj[arg0], TicketWork);
     for (var_f31 = 0.0f; var_f31 < 90.0f; var_f31 += 2.0f) {
         temp_f30 = 1.0 + 1.3f * sind(var_f31);
         HuSprScaleSet(ticketSprGrp, temp_r29->unk00_field2, temp_f30, temp_f30);

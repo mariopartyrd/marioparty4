@@ -1663,7 +1663,7 @@ void ObjectSetup(void)
     gameObj = omAddObjEx(objman, 101, 10, 4, 1, M457GameSetup);
     for (i = 0; i < 2; i++) {
         object = playerObj[i] = omAddObjEx(objman, 100, 1, 12, 0, M457PlayerSetup);
-        object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(PlayerData), MEMORY_DEFAULT_NUM);
+        object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(PlayerData), HU_MEMNUM_OVL);
         object->work[0] = i;
     }
     omViewObj = omAddObjEx(objman, 0x7FDA, 0, 0, -1, omOutView);

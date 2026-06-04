@@ -452,7 +452,7 @@ void fn_1_7E0(OMOBJ *object)
     UnkM404Struct *var_r27;
     OMOBJ **var_r26;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM404Struct) * 4, MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM404Struct) * 4, HU_MEMNUM_OVL);
     object->data = var_r31;
     memset(object->data, 0, 136);
     var_r26 = omGetGroupMemberListEx(HuPrcCurrentGet(), 0);
@@ -703,7 +703,7 @@ void fn_1_1344(OMOBJ *object)
     s32 var_r24;
     HU3DMODEL *var_r22;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM404Struct3), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM404Struct3), HU_MEMNUM_OVL);
     object->data = var_r31;
     memset(var_r31, 0, 484);
     var_r31->unk_02 = lbl_1_bss_20++;
@@ -739,7 +739,7 @@ void fn_1_1344(OMOBJ *object)
     var_r22->hookData = object;
     var_r31->unk_4C = fn_1_5D64(960, 64, 1);
     var_r31->unk_48 = 4096;
-    var_r31->unk_44 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r31->unk_48, MEMORY_DEFAULT_NUM);
+    var_r31->unk_44 = HuMemDirectMallocNum(HEAP_HEAP, var_r31->unk_48, HU_MEMNUM_OVL);
     DCInvalidateRange(var_r31->unk_44, var_r31->unk_48);
     var_r31->unk_48 = fn_1_6248(var_r31->unk_44, var_r31->unk_48);
     var_r31->unk_3C = HuSprAnimReadFile(lbl_1_data_8FC[lbl_1_bss_1C][0]);
@@ -756,7 +756,7 @@ void fn_1_1344(OMOBJ *object)
     if (GWPlayerCfg[var_r31->unk_02].iscom == 1) {
         var_r28 = lbl_1_data_8E8[lbl_1_bss_1C];
         var_r31->unk_6C = lbl_1_data_8F4[lbl_1_bss_1C];
-        var_r31->unk_70 = HuMemDirectMallocNum(HEAP_SYSTEM, (var_r31->unk_6C + 3) * 8, MEMORY_DEFAULT_NUM);
+        var_r31->unk_70 = HuMemDirectMallocNum(HEAP_HEAP, (var_r31->unk_6C + 3) * 8, HU_MEMNUM_OVL);
 
         for (var_r29 = 0; var_r29 < var_r31->unk_6C; var_r29++, var_r28++) {
             var_r31->unk_70[var_r29][0] = 3000.0f * var_r28[0][0];
@@ -1320,15 +1320,15 @@ ANIMDATA *fn_1_5D64(u16 sizeX, u16 sizeY, s32 arg2)
     ANIMBMP *bmp;
     ANIMDATA *anim;
 
-    anim = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(ANIMBMP), MEMORY_DEFAULT_NUM);
-    bmp = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(ANIMDATA), MEMORY_DEFAULT_NUM);
+    anim = HuMemDirectMallocNum(HEAP_HEAP, sizeof(ANIMBMP), HU_MEMNUM_OVL);
+    bmp = HuMemDirectMallocNum(HEAP_HEAP, sizeof(ANIMDATA), HU_MEMNUM_OVL);
     anim->bmp = bmp;
     bmp->sizeX = sizeX;
     bmp->sizeY = sizeY;
     bmp->dataFmt = lbl_1_data_9AC[arg2][0];
     bmp->pixSize = lbl_1_data_9AC[arg2][1];
     bmp->dataSize = (bmp->pixSize * (bmp->sizeX * bmp->sizeY)) / 8;
-    bmp->data = HuMemDirectMallocNum(HEAP_SYSTEM, bmp->dataSize, MEMORY_DEFAULT_NUM);
+    bmp->data = HuMemDirectMallocNum(HEAP_HEAP, bmp->dataSize, HU_MEMNUM_OVL);
     memset(bmp->data, 0, bmp->dataSize);
     DCFlushRangeNoSync(bmp->data, bmp->dataSize);
     return anim;

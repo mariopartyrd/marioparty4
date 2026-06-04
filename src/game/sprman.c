@@ -308,7 +308,7 @@ s16 HuSprGrpCreate(s16 capacity)
     if(i == HUSPR_GRP_MAX) {
         return HUSPR_GRP_NONE;
     }
-    group->members = HuMemDirectMalloc(HEAP_SYSTEM, sizeof(s16)*capacity);
+    group->members = HuMemDirectMalloc(HEAP_HEAP, sizeof(s16)*capacity);
     for(j=0; j<capacity; j++) {
         group->members[j] = HUSPR_NONE;
     }
@@ -615,7 +615,7 @@ ANIMDATA *HuSprAnimMake(s16 sizeX, s16 sizeY, s16 dataFmt)
     ANIMBANK *bank;
     ANIMDATA *new_anim;
 
-    anim = new_anim = HuMemDirectMalloc(HEAP_DATA, sizeof(ANIMDATA)+sizeof(ANIMBANK)+sizeof(ANIMFRAME)
+    anim = new_anim = HuMemDirectMalloc(HEAP_MODEL, sizeof(ANIMDATA)+sizeof(ANIMBANK)+sizeof(ANIMFRAME)
                                             +sizeof(ANIMPAT)+sizeof(ANIMLAYER)+sizeof(ANIMBMP));
 
     bank = temp = &new_anim[1];

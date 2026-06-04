@@ -154,7 +154,7 @@ void fn_1_94D0(OMOBJ *arg0)
     s32 var_r29;
     M424DllClawStruct *var_r31;
 
-    var_r31 = arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x1B0, 0x10000000);
+    var_r31 = arg0->data = HuMemDirectMallocNum(HEAP_HEAP, 0x1B0, 0x10000000);
     memset(var_r31, 0, 0x1B0);
     var_r31->unk0 = lbl_1_bss_24[3];
     var_r31->unk2 = GWPlayerCfg[var_r31->unk0].character;

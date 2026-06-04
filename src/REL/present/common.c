@@ -38,7 +38,7 @@ OMOBJ *PresentGuideCreate(void)
     s32 var_r29;
 
     OMOBJ *object = omAddObjEx(presentObjMan, 1002, 1, 3, 2, NULL);
-    GuideWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GuideWork), MEMORY_DEFAULT_NUM);
+    GuideWork *work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(GuideWork), HU_MEMNUM_OVL);
     object->data = work;
 
     work->pos.x = 0.0f;
@@ -51,7 +51,7 @@ OMOBJ *PresentGuideCreate(void)
     work->posDelta.x = 0.0f;
     work->posDelta.z = 0.0f;
     work->posDelta.y = 0.0f;
-    object->mdlId[0] = Hu3DModelCreate(HuDataReadNum(DATA_MAKE_NUM(DATADIR_PRESENT, 136), MEMORY_DEFAULT_NUM));
+    object->mdlId[0] = Hu3DModelCreate(HuDataReadNum(DATA_MAKE_NUM(DATADIR_PRESENT, 136), HU_MEMNUM_OVL));
     Hu3DModelLayerSet(object->mdlId[0], 1);
 
     for (var_r29 = 0; var_r29 < 3; var_r29++) {

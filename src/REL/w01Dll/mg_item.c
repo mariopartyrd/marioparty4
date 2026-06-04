@@ -125,7 +125,7 @@ void RoundItemInit(s16 *itemTbl)
     s32 i;
     s32 j;
 
-    itemAnim = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_W01, 28), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    itemAnim = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_W01, 28), HU_MEMNUM_OVL, HEAP_MODEL);
     BoardModelPosGet(mapObjMdlId[MAPOBJ_ROUNDITEM], &roundItemPos);
     itemMdlId[0] = BoardModelIDGet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM]);
     BoardModelVisibilitySet(mapObjMdlId[MAPOBJ_ROUNDITEM_ITEM], 1);
@@ -681,7 +681,7 @@ static void ItemGetCreate(s16 itemNo)
     obj->mdlId[0] = itemObj[itemNo]->mdlId[1];
     Hu3DModelAttrReset(obj->mdlId[0], HU3D_ATTR_DISPOFF);
     itemGetObj->work[1] = itemObj[itemNo]->work[1];
-    itemGetObj->data = HuMemDirectMallocNum(HEAP_SYSTEM, 3 * sizeof(float), MEMORY_DEFAULT_NUM);
+    itemGetObj->data = HuMemDirectMallocNum(HEAP_HEAP, 3 * sizeof(float), HU_MEMNUM_OVL);
     data = itemGetObj->data;
     omSetRot(obj, 0.0f, 0.0f, 0.0f);
     omSetSca(obj, 0.0f, 0.0f, 0.0f);

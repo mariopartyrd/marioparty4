@@ -221,7 +221,7 @@ void fn_1_5680(OMOBJ *object)
     M443DllWorkStruct *temp_r31;
     HU3DPARTICLEDATA *var_r28;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x134, MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, 0x134, HU_MEMNUM_OVL);
     temp_r31 = object->data;
     memset(temp_r31, 0, 0x134);
     object->stat |= 0x100;
@@ -248,7 +248,7 @@ void fn_1_5680(OMOBJ *object)
         }
         else {
             object->mtnId[var_r29]
-                = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(temp_r27 + lbl_1_data_2C4[var_r29], 0x10000000, HEAP_DATA));
+                = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(temp_r27 + lbl_1_data_2C4[var_r29], 0x10000000, HEAP_MODEL));
         }
     }
     CharMotionDataClose(temp_r27);

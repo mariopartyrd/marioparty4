@@ -28,15 +28,15 @@ void fn_1_A0(void)
 {
     if (HuPadBtnDown[0] & PAD_BUTTON_Y) {
         OSReport("\n###################################################################### HEAP\n\n");
-        HuMemHeapDump(HuMemHeapPtrGet(HEAP_SYSTEM), -1);
+        HuMemHeapDump(HuMemHeapPtrGet(HEAP_HEAP), -1);
         OSReport("\n###################################################################### SOUND\n\n");
-        HuMemHeapDump(HuMemHeapPtrGet(HEAP_MUSIC), -1);
+        HuMemHeapDump(HuMemHeapPtrGet(HEAP_SOUND), -1);
         OSReport("\n###################################################################### MODEL\n\n");
-        HuMemHeapDump(HuMemHeapPtrGet(HEAP_DATA), -1);
+        HuMemHeapDump(HuMemHeapPtrGet(HEAP_MODEL), -1);
         OSReport("\n###################################################################### DVD\n\n");
         HuMemHeapDump(HuMemHeapPtrGet(HEAP_DVD), -1);
         OSReport("\n###################################################################### SPACE\n\n");
-        HuMemHeapDump(HuMemHeapPtrGet(HEAP_MISC), -1);
+        HuMemHeapDump(HuMemHeapPtrGet(HEAP_SPACE), -1);
         OSReport("\n###################################################################### ARAM\n\n");
         HuAMemDump();
     }

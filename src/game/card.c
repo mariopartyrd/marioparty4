@@ -11,7 +11,7 @@ static void MountCallBack(s32 chan, s32 result);
 void HuCardInit(void)
 {
 	CARDInit();
-	cardWork = HuMemDirectMalloc(HEAP_SYSTEM, CARD_WORKAREA_SIZE);
+	cardWork = HuMemDirectMalloc(HEAP_HEAP, CARD_WORKAREA_SIZE);
 }
 
 s32 HuCardCheck(void)

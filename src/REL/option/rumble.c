@@ -46,7 +46,7 @@ OMOBJ *OptionRumbleCreate(void)
     RumbleWork *work;
 
     object = omAddObjEx(optionObjMan, 1003, 0, 0, 1, NULL);
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(RumbleWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(RumbleWork), HU_MEMNUM_OVL);
     object->data = work;
     work->rumbleF = GWGameStat.rumble;
     work->system = CreateSystem();

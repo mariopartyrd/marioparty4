@@ -663,14 +663,14 @@ void fn_1_48EC(s32 arg0)
 
     obj = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, fn_1_50D4);
     lbl_1_bss_74 = obj;
-    temp_r31 = OM_GET_WORK_PTR(obj, w03StructUnk2);
+    temp_r31 = omObjGetWork(obj, w03StructUnk2);
     temp_r31->unkbit_00 = 0;
     temp_r31->unk_01 = 0;
     temp_r31->unkbit_03 = 0;
     temp_r31->unkbit_04 = 0;
     temp_r31->unk_02 = -1;
     temp_r31->unkbit_01 = arg0;
-    temp_r31->unk_08 = HuMemDirectMallocNum(HEAP_SYSTEM, 0xA00, MEMORY_DEFAULT_NUM);
+    temp_r31->unk_08 = HuMemDirectMallocNum(HEAP_HEAP, 0xA00, HU_MEMNUM_OVL);
     Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_C[2]), "coin", &spC);
     temp_r31->model = BoardModelCreate(DATA_MAKE_NUM(DATADIR_W03, 0x07), NULL, 0);
     BoardModelVisibilitySet(temp_r31->model, 0);
@@ -690,7 +690,7 @@ void fn_1_48EC(s32 arg0)
 
 void fn_1_4A9C(void)
 {
-    OM_GET_WORK_PTR(lbl_1_bss_74, w03UnkStruct4)->unk00_bit0 = 1;
+    omObjGetWork(lbl_1_bss_74, w03UnkStruct4)->unk00_bit0 = 1;
 }
 
 void fn_1_4ABC(w03StructUnk2 *arg0)
@@ -758,7 +758,7 @@ s32 fn_1_4D0C(w03StructUnk3 **arg0, s16 *arg1)
         return 0;
     }
 
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_74, w03StructUnk2);
+    temp_r31 = omObjGetWork(lbl_1_bss_74, w03StructUnk2);
     *arg0 = temp_r31->unk_08;
     *arg1 = temp_r31->unk_03;
     return 1;
@@ -857,7 +857,7 @@ void fn_1_50D4(OMOBJ *arg0)
     w03StructUnk2 *temp_r31;
     w03StructUnk3 *temp;
 
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_74, w03StructUnk2);
+    temp_r31 = omObjGetWork(lbl_1_bss_74, w03StructUnk2);
 
     if ((temp_r31->unkbit_00 != 0) || (BoardIsKill() != 0)) {
         for (i = 0; i < 80; i++) {
@@ -947,7 +947,7 @@ void fn_1_5838(s32 arg0)
 
     obj = omAddObjEx(boardObjMan, 0x7E01, 0, 0, -1, &fn_1_5AC8);
     lbl_1_bss_78 = obj;
-    temp_r31 = OM_GET_WORK_PTR(obj, w03UnkStruct5);
+    temp_r31 = omObjGetWork(obj, w03UnkStruct5);
     temp_r31->unk00_bit0 = 0;
     temp_r31->unk00_bit1 = arg0;
     temp_r31->unk00_bit4 = 1;
@@ -991,7 +991,7 @@ void fn_1_5AC8(OMOBJ *arg0)
     s32 temp_r0;
     w03UnkStruct5 *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, w03UnkStruct5);
+    temp_r31 = omObjGetWork(arg0, w03UnkStruct5);
 
     if ((temp_r31->unk00_bit0 != 0) || (BoardIsKill() != 0)) {
         lbl_1_bss_78 = NULL;
@@ -1143,7 +1143,7 @@ f32 fn_1_61A4(OMOBJ *arg0, w03UnkStruct5 *arg1)
     f32 *temp_r31;
 
     if (lbl_1_bss_74) {
-        temp_r29 = OM_GET_WORK_PTR(lbl_1_bss_74, w03StructUnk2);
+        temp_r29 = omObjGetWork(lbl_1_bss_74, w03StructUnk2);
         sp8 = temp_r29->unk_08;
         var_r28 = temp_r29->unk_03;
     }
@@ -1163,13 +1163,13 @@ f32 fn_1_61A4(OMOBJ *arg0, w03UnkStruct5 *arg1)
 
 void fn_1_629C(s8 arg0)
 {
-    w03UnkStruct5 *temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_78, w03UnkStruct5);
+    w03UnkStruct5 *temp_r31 = omObjGetWork(lbl_1_bss_78, w03UnkStruct5);
     temp_r31->unk00_bit4 = arg0;
 }
 
 s32 fn_1_62D0(void)
 {
-    w03UnkStruct5 *temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_78, w03UnkStruct5);
+    w03UnkStruct5 *temp_r31 = omObjGetWork(lbl_1_bss_78, w03UnkStruct5);
     return temp_r31->unk00_bit4;
 }
 

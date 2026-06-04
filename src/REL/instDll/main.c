@@ -204,7 +204,7 @@ static void InstMain(void)
     proc = HuPrcCurrentGet();
     statId = -1;
     grpId = HuSprGrpCreate(1);
-    anim = HuSprAnimRead(HuDataReadNum(instBackFile[mgInfoTbl[instMgNo].type], MEMORY_DEFAULT_NUM));
+    anim = HuSprAnimRead(HuDataReadNum(instBackFile[mgInfoTbl[instMgNo].type], HU_MEMNUM_OVL));
     sprId = HuSprCreate(anim, 0, 0);
     HuSprGrpMemberSet(grpId, 0, sprId);
     HuSprGrpDrawNoSet(grpId, 127);
@@ -215,7 +215,7 @@ static void InstMain(void)
     else {
         picFile = mgInfoTbl[instMgNo].inst_pic[GWMGTypeGet()];
     }
-    instPicAnim = HuSprAnimRead(HuDataReadNumHeapShortForce(picFile, MEMORY_DEFAULT_NUM, HEAP_DATA));
+    instPicAnim = HuSprAnimRead(HuDataReadNumHeapShortForce(picFile, HU_MEMNUM_OVL, HEAP_MODEL));
     Hu3DShadowCreate(20, 500, 8000);
     Hu3DShadowTPLvlSet(0);
     Hu3DShadowSizeSet(192);

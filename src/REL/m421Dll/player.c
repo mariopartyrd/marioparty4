@@ -259,7 +259,7 @@ void fn_1_48D4(OMOBJ *object)
     float spC[2][2] = { { 100.0f, 143.0f }, { 100.0f, 100.0f } };
     Vec sp2C[4] = { 0.0f, 1500.0f, 300.0f, -450.0f, 0.0f, -50.0f, 0.0f, 0.0f, -350.0f, 450.0f, 0.0f, -50.0f };
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M421DllPlayerWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M421DllPlayerWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M421DllPlayerWork));
     object->stat |= 0x100;
@@ -309,7 +309,7 @@ void fn_1_48D4(OMOBJ *object)
         var_r28->time = 0;
     }
     if (work->unk_0C == 0) {
-        work->unk_148 = HuMemDirectMallocNum(HEAP_SYSTEM, 441 * sizeof(float), MEMORY_DEFAULT_NUM);
+        work->unk_148 = HuMemDirectMallocNum(HEAP_HEAP, 441 * sizeof(float), HU_MEMNUM_OVL);
         memset(work->unk_148, 0, 441 * sizeof(float));
     }
     object->trans.x = work->unk_CC.x = sp2C[work->unk_0C].x;
@@ -1688,11 +1688,11 @@ void fn_1_A528(OMOBJ *object)
     s32 i;
 
     object->stat |= 0x100;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M421DllPlayerDLWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M421DllPlayerDLWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M421DllPlayerDLWork));
     work->unk_2F0 = GXGetTexBufferSize(0x280, 0x1E0, 5, 0, 0);
-    work->unk_2F4 = HuMemDirectMallocNum(HEAP_SYSTEM, work->unk_2F0, MEMORY_DEFAULT_NUM);
+    work->unk_2F4 = HuMemDirectMallocNum(HEAP_HEAP, work->unk_2F0, HU_MEMNUM_OVL);
     DCFlushRange(work->unk_2F4, work->unk_2F0);
     for (i = 0; i < 4; i++) {
         work->unk_40[i].r = work->unk_40[i].g = work->unk_40[i].b = 0xFF;

@@ -369,7 +369,7 @@ void fn_1_1150(OMOBJ *object)
     Work1150 *temp_r31;
     u32 temp_r30;
     s32 temp_r29;
-    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(Work1150), MEMORY_DEFAULT_NUM);
+    temp_r31 = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(Work1150), HU_MEMNUM_OVL);
     object->data = temp_r31;
     memset(object->data, 0, 2 * sizeof(Work1150));
     for (temp_r29 = 0; temp_r29 < 2; temp_r31++, temp_r29++) {

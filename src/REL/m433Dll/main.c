@@ -106,7 +106,7 @@ void fn_1_4C0(OMOBJ *object)
 {
     M433DllWork *work;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M433DllWork), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M433DllWork), HU_MEMNUM_OVL);
     work = object->data;
     memset(work, 0, sizeof(M433DllWork));
     work->unk_00 = 0;
@@ -342,22 +342,22 @@ void fn_1_1A48(OMOBJ *object)
 
 s32 fn_1_213C(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_00;
+    return omObjGetDataAs(lbl_1_bss_24, M433DllWork)->unk_00;
 }
 
 s32 fn_1_2154(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_0C;
+    return omObjGetDataAs(lbl_1_bss_24, M433DllWork)->unk_0C;
 }
 
 u32 fn_1_216C(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_14;
+    return omObjGetDataAs(lbl_1_bss_24, M433DllWork)->unk_14;
 }
 
 u32 fn_1_2184(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_24;
+    return omObjGetDataAs(lbl_1_bss_24, M433DllWork)->unk_24;
 }
 
 void fn_1_219C(s32 arg0, s32 arg1, s32 arg2)
@@ -370,17 +370,17 @@ void fn_1_219C(s32 arg0, s32 arg1, s32 arg2)
 
 s32 fn_1_21CC(void)
 {
-    return OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_34;
+    return omObjGetDataAs(lbl_1_bss_24, M433DllWork)->unk_34;
 }
 
 void fn_1_21E4(s32 arg0)
 {
-    OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_38 |= (1 << ((arg0 & 7) * 4));
+    omObjGetDataAs(lbl_1_bss_24, M433DllWork)->unk_38 |= (1 << ((arg0 & 7) * 4));
 }
 
 void fn_1_2214(s32 arg0)
 {
-    OM_GET_DATA_PTR(lbl_1_bss_24, M433DllWork)->unk_3C |= (1 << ((arg0 & 3) * 4));
+    omObjGetDataAs(lbl_1_bss_24, M433DllWork)->unk_3C |= (1 << ((arg0 & 3) * 4));
 }
 
 s32 fn_1_2244(void)

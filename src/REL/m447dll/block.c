@@ -38,7 +38,7 @@ UnkM447Struct_01 *fn_1_8DF8(void)
 {
     UnkM447Struct_01 *temp_r3;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r3), MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r3), HU_MEMNUM_OVL);
     if (!temp_r3) {
         OSReport("M447BlockCreate ERROR...\n");
         return NULL;

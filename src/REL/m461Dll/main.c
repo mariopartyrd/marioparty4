@@ -80,7 +80,7 @@ void fn_1_24(u16 arg0, s16 arg1)
     UnkBss254Struct *temp_r30;
     UnkBss254Struct *temp_r29;
 
-    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r31), MEMORY_DEFAULT_NUM);
+    temp_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r31), HU_MEMNUM_OVL);
     temp_r31->unk00 = arg0;
     temp_r31->unk02 = arg1;
     temp_r30 = &lbl_1_bss_254;
@@ -131,11 +131,11 @@ void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 arg4, Vec
     UnkBss23CStruct *temp_r28;
     s32 i;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*var_r31), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*var_r31), HU_MEMNUM_OVL);
     var_r31->unk00 = arg1;
     var_r31->unk08 = arg3;
     var_r31->unk0C = arg4;
-    var_r31->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, arg4 * sizeof(*var_r31->unk04), MEMORY_DEFAULT_NUM);
+    var_r31->unk04 = HuMemDirectMallocNum(HEAP_HEAP, arg4 * sizeof(*var_r31->unk04), HU_MEMNUM_OVL);
     for (i = 0; i < arg4; i++, arg5++) {
         var_r31->unk04[i] = Hu3DParManLink(arg0, arg1);
         if (var_r31->unk04[i] >= 0) {
@@ -1231,8 +1231,8 @@ void fn_1_512C(void)
     print8(24, 32, 1.5f, "COUNT:%d MODE:%d MES:%d %d/%d %02x", lbl_1_bss_204, lbl_1_bss_A0->work[0], lbl_1_bss_1FA, lbl_1_bss_20, lbl_1_bss_24,
         lbl_1_bss_28);
     print8(24, 48, 1.5f, "%f %f %f", lbl_1_bss_0, lbl_1_bss_8, lbl_1_bss_4);
-    print8(24, 64, 1.5f, "%x %x", HuMemHeapSizeGet(HEAP_SYSTEM) - HuMemUsedMallocSizeGet(HEAP_SYSTEM),
-        HuMemHeapSizeGet(HEAP_DATA) - HuMemUsedMallocSizeGet(HEAP_DATA));
+    print8(24, 64, 1.5f, "%x %x", HuMemHeapSizeGet(HEAP_HEAP) - HuMemUsedMallocSizeGet(HEAP_HEAP),
+        HuMemHeapSizeGet(HEAP_MODEL) - HuMemUsedMallocSizeGet(HEAP_MODEL));
     lbl_1_bss_4 -= HuPadSubStkX[0] / 59.0f;
     lbl_1_bss_8 -= 4.0f * (HuPadSubStkY[0] / 59.0f);
     lbl_1_bss_0 -= (HuPadTrigL[0] / 150.0f) * 4.0f;
@@ -1506,7 +1506,7 @@ void fn_1_7328(OMOBJ *obj)
 {
     WorkPlayer *player;
     s32 i;
-    obj->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkPlayer), MEMORY_DEFAULT_NUM);
+    obj->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkPlayer), HU_MEMNUM_OVL);
     player = obj->data;
     player->unk5C = GWPlayerCfg[lbl_1_bss_18].character;
     player->unk60 = GWPlayerCfg[lbl_1_bss_18].pad_idx;
@@ -1791,7 +1791,7 @@ void fn_1_956C(Vec *pos, float rotY, s32 type, s32 mode, s32 time)
     OMOBJ *obj;
     lbl_1_bss_20++;
     obj = omAddObjEx(lbl_1_bss_238, 101, 3, 4, -1, fn_1_9164);
-    obj->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkBomhei), MEMORY_DEFAULT_NUM);
+    obj->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkBomhei), HU_MEMNUM_OVL);
     bomhei = obj->data;
     bomhei->unk0 = *pos;
     bomhei->unkC.x = rotY;
@@ -1905,7 +1905,7 @@ WorkBomhei2 *fn_1_9CAC(OMOBJFUNC func, s32 prio)
     WorkBomhei2 *bomhei;
     s32 i;
     s32 modelId;
-    obj->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkBomhei2), MEMORY_DEFAULT_NUM);
+    obj->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkBomhei2), HU_MEMNUM_OVL);
     bomhei = obj->data;
     bomhei->unk38 = 1;
     bomhei->unk3C = 0;

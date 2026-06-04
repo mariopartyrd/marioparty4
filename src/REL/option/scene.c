@@ -47,7 +47,7 @@ void OptionFadeSprite(s16 sprite, BOOL inF, s32 duration)
     FaderWork *work;
     HUPROCESS *process;
 
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(FaderWork), HU_MEMNUM_OVL);
     work->id = sprite;
     work->speed = 1.0f / duration;
     if (inF) {
@@ -94,7 +94,7 @@ void OptionFadeModel(s16 model, BOOL inF, s32 duration)
     FaderWork *work;
     HUPROCESS *process;
 
-    work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(FaderWork), HU_MEMNUM_OVL);
     work->id = model;
     work->speed = 1.0f / duration;
     if (inF) {

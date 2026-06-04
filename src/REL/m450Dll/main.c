@@ -95,7 +95,7 @@ void fn_1_24(u16 arg0, s16 arg1)
     UnkBss358Struct *temp_r30;
     UnkBss358Struct *temp_r29;
 
-    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r31), MEMORY_DEFAULT_NUM);
+    temp_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r31), HU_MEMNUM_OVL);
     temp_r31->unk00 = arg0;
     temp_r31->unk02 = arg1;
     temp_r30 = &lbl_1_bss_358;
@@ -146,11 +146,11 @@ void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 arg4, Vec
     UnkBss340Struct *temp_r28;
     s32 i;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*var_r31), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*var_r31), HU_MEMNUM_OVL);
     var_r31->unk00 = arg1;
     var_r31->unk08 = arg3;
     var_r31->unk0C = arg4;
-    var_r31->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, arg4 * sizeof(*var_r31->unk04), MEMORY_DEFAULT_NUM);
+    var_r31->unk04 = HuMemDirectMallocNum(HEAP_HEAP, arg4 * sizeof(*var_r31->unk04), HU_MEMNUM_OVL);
     for (i = 0; i < arg4; i++, arg5++) {
         var_r31->unk04[i] = Hu3DParManLink(arg0, arg1);
         if (var_r31->unk04[i] >= 0) {
@@ -1685,7 +1685,7 @@ s16 fn_1_5ED8(ANIMDATA *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
 
     var_r18 = Hu3DHookFuncCreate(fn_1_56C4);
     var_r28 = &Hu3DData[var_r18];
-    var_r28->hookData = HuMemDirectMallocNum(HEAP_DATA, sizeof(UnkM450Struct), var_r28->mallocNo);
+    var_r28->hookData = HuMemDirectMallocNum(HEAP_MODEL, sizeof(UnkM450Struct), var_r28->mallocNo);
     var_r31 = var_r28->hookData;
     arg0->useNum++;
     var_r31->unk_04 = arg0;
@@ -1696,25 +1696,25 @@ s16 fn_1_5ED8(ANIMDATA *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
     var_r31->unk_00 = 0;
     var_r31->unk_66 = arg3;
     var_r31->unk_6B = 0;
-    var_r31->unk_10 = HuMemDirectMallocNum(HEAP_DATA, arg3 * 0x40, var_r28->mallocNo);
+    var_r31->unk_10 = HuMemDirectMallocNum(HEAP_MODEL, arg3 * 0x40, var_r28->mallocNo);
     for (var_r24 = var_r31->unk_10, var_r30 = 0; var_r30 < arg3; var_r30++, var_r24++) {
         var_r24->unk_3E = -1;
         var_r24->unk_3C = -1;
     }
-    var_r31->unk_14 = HuMemDirectMallocNum(HEAP_DATA, arg3 * sizeof(Vec) * 4, var_r28->mallocNo);
+    var_r31->unk_14 = HuMemDirectMallocNum(HEAP_MODEL, arg3 * sizeof(Vec) * 4, var_r28->mallocNo);
     for (var_r25 = var_r31->unk_14, var_r30 = 0; var_r30 < (arg3 * 4); var_r30++, var_r25++) {
         var_r25->x = 0.0f;
         var_r25->y = 0.0f;
         var_r25->z = 0.0f;
     }
-    var_r31->unk_20 = HuMemDirectMallocNum(HEAP_DATA, arg3 * sizeof(GXColor), var_r28->mallocNo);
+    var_r31->unk_20 = HuMemDirectMallocNum(HEAP_MODEL, arg3 * sizeof(GXColor), var_r28->mallocNo);
     for (var_r26 = var_r31->unk_20, var_r30 = 0; var_r30 < arg3; var_r30++, var_r26++) {
         var_r26->r = 0xFF;
         var_r26->g = 0xFF;
         var_r26->b = 0xFF;
         var_r26->a = 0xFF;
     }
-    var_r31->unk_18 = HuMemDirectMallocNum(HEAP_DATA, arg3 * sizeof(Vec2f) * 4, var_r28->mallocNo);
+    var_r31->unk_18 = HuMemDirectMallocNum(HEAP_MODEL, arg3 * sizeof(Vec2f) * 4, var_r28->mallocNo);
     var_r29 = var_r31->unk_18;
     for (var_r30 = 0; var_r30 < arg3; var_r30++) {
         var_r29->x = 0.0f;
@@ -1743,7 +1743,7 @@ s16 fn_1_5ED8(ANIMDATA *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
         var_r31->unk_5C = 1.0f;
         var_r31->unk_60 = 1.0f;
     }
-    var_r31->unk_1C = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_68 * sizeof(Vec2f), var_r28->mallocNo);
+    var_r31->unk_1C = HuMemDirectMallocNum(HEAP_MODEL, var_r31->unk_68 * sizeof(Vec2f), var_r28->mallocNo);
     fn_1_5E0C(var_r31->unk_1C, var_r31->unk_68, var_r21, var_r31->unk_5C, var_r31->unk_60);
     var_r31->unk_28.x = var_r31->unk_4C = var_r31->unk_44 = var_r31->unk_50 = -arg8;
     var_r31->unk_38 = arg8;
@@ -1751,7 +1751,7 @@ s16 fn_1_5ED8(ANIMDATA *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
     var_r31->unk_40 = arg8;
     var_r31->unk_34 = arg8;
     var_r31->unk_28.z = var_r31->unk_3C = var_r31->unk_48 = var_r31->unk_54 = 0.0f;
-    var_r19 = HuMemDirectMallocNum(HEAP_DATA, 0x20000, var_r28->mallocNo);
+    var_r19 = HuMemDirectMallocNum(HEAP_MODEL, 0x20000, var_r28->mallocNo);
     sp1C = var_r19;
     GXBeginDisplayList(sp1C, 0x20000);
     GXBegin(GX_QUADS, GX_VTXFMT0, arg3 * 4);
@@ -1775,7 +1775,7 @@ s16 fn_1_5ED8(ANIMDATA *arg0, Vec *arg1, float *arg2, s16 arg3, float arg8, s16 
     }
     var_r31->unk_58 = GXEndDisplayList();
     DCFlushRangeNoSync(var_r19, var_r31->unk_58);
-    var_r31->unk_24 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_58, var_r28->mallocNo);
+    var_r31->unk_24 = HuMemDirectMallocNum(HEAP_MODEL, var_r31->unk_58, var_r28->mallocNo);
     memcpy(var_r31->unk_24, var_r19, var_r31->unk_58);
     DCFlushRangeNoSync(var_r31->unk_24, var_r31->unk_58);
     HuMemDirectFree(var_r19);
@@ -3315,7 +3315,7 @@ void fn_1_DBF0(OMOBJ *object)
     UnkM450Struct3 *var_r31;
     s32 var_r29;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM450Struct3), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM450Struct3), HU_MEMNUM_OVL);
     var_r31 = object->data;
     var_r31->unk_150 = 0xBB8;
     var_r31->unk_154 = 0;
@@ -3335,7 +3335,7 @@ void fn_1_DBF0(OMOBJ *object)
         Hu3DModelShadowSet(object->mdlId[var_r29]);
     }
     for (var_r29 = 0; var_r29 < 0x13; var_r29++) {
-        object->mtnId[var_r29] = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(lbl_1_data_B4[var_r29], MEMORY_DEFAULT_NUM, HEAP_DATA));
+        object->mtnId[var_r29] = Hu3DJointMotion(object->mdlId[0], HuDataSelHeapReadNum(lbl_1_data_B4[var_r29], HU_MEMNUM_OVL, HEAP_MODEL));
     }
     Hu3DMotionSet(object->mdlId[0], object->mtnId[0]);
     CharNpcDustSet(object->mdlId[0], object->mtnId[1], 2, 8);
@@ -3871,7 +3871,7 @@ void fn_1_11D5C(OMOBJ *object)
     (void)var_r27;
     (void)var_r27;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM450Struct3), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM450Struct3), HU_MEMNUM_OVL);
     var_r31 = object->data;
     var_r31->unk_150 = 0xFA0;
     var_r31->unk_154 = 0;
@@ -3957,7 +3957,7 @@ void fn_1_12234(void)
     lbl_1_data_A0C[0].unk_0C = lbl_1_data_9EC[GWPlayerCfg[lbl_1_bss_120].character];
     for (var_r31 = lbl_1_data_A0C, var_r29 = 0; var_r29 < 2; var_r29++, var_r31++) {
         var_r27 = var_r31->unk_10 + 3;
-        var_r31->unk_18 = HuMemDirectMallocNum(HEAP_SYSTEM, var_r27 * 4, MEMORY_DEFAULT_NUM);
+        var_r31->unk_18 = HuMemDirectMallocNum(HEAP_HEAP, var_r27 * 4, HU_MEMNUM_OVL);
         var_r31->unk_18[0] = espEntry(var_r31->unk_00, 0, 0);
         var_r31->unk_18[1] = espEntry(var_r31->unk_04, 0, 0);
         var_r31->unk_18[2] = espEntry(var_r31->unk_0C, 0, 0);
@@ -4606,10 +4606,10 @@ void fn_1_13560(UnkData1380Struct *arg0, s32 *arg1, s32 arg2)
     s32 var_r30;
     Vec *var_r28;
 
-    arg0->unk_30 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0->unk_08 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-    arg0->unk_34 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0->unk_08 * sizeof(Vec), MEMORY_DEFAULT_NUM);
-    arg0->unk_24 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0->unk_08 * sizeof(s32), MEMORY_DEFAULT_NUM);
-    arg0->unk_28 = HuMemDirectMallocNum(HEAP_SYSTEM, arg0->unk_08 * sizeof(s32), MEMORY_DEFAULT_NUM);
+    arg0->unk_30 = HuMemDirectMallocNum(HEAP_HEAP, arg0->unk_08 * sizeof(Vec), HU_MEMNUM_OVL);
+    arg0->unk_34 = HuMemDirectMallocNum(HEAP_HEAP, arg0->unk_08 * sizeof(Vec), HU_MEMNUM_OVL);
+    arg0->unk_24 = HuMemDirectMallocNum(HEAP_HEAP, arg0->unk_08 * sizeof(s32), HU_MEMNUM_OVL);
+    arg0->unk_28 = HuMemDirectMallocNum(HEAP_HEAP, arg0->unk_08 * sizeof(s32), HU_MEMNUM_OVL);
     arg0->unk_2C = arg1;
     for (var_r30 = 0; var_r30 < arg0->unk_08; var_r30++) {
         arg0->unk_24[var_r30] = *arg1++;
@@ -5279,7 +5279,7 @@ void fn_1_16BC4(Vec *arg0, Vec *arg1, s32 arg2)
         }
     }
     var_r29 = omAddObjEx(lbl_1_bss_33C, 0x6A, 2, 0, -1, fn_1_16910);
-    var_r29->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM450Struct4), MEMORY_DEFAULT_NUM);
+    var_r29->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM450Struct4), HU_MEMNUM_OVL);
     spC = &lbl_1_data_1380;
     var_r31 = var_r29->data;
     var_r31->unk_74 = 1;
@@ -5385,7 +5385,7 @@ void fn_1_17360(Vec *arg0, float arg8)
         }
     }
     var_r29 = omAddObjEx(lbl_1_bss_33C, 0x6B, 1, 0, -1, fn_1_171C4);
-    var_r29->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM450Struct4), MEMORY_DEFAULT_NUM);
+    var_r29->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM450Struct4), HU_MEMNUM_OVL);
     var_r31 = var_r29->data;
     var_r31->unk_78 = 0;
     var_r31->unk_7C = 0;
@@ -5481,7 +5481,7 @@ void fn_1_17970(s32 arg0, s32 arg1, float arg8)
 
     HuAudFXPlay(0x3A);
     var_r31 = omAddObjEx(lbl_1_bss_33C, 0x6C, 1, 0, -1, fn_1_17474);
-    var_r31->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM450Struct4), MEMORY_DEFAULT_NUM);
+    var_r31->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM450Struct4), HU_MEMNUM_OVL);
     var_r30 = var_r31->data;
     var_r30->unk_40 = 1.0f;
     var_r30->unk_50 = 0.0f;
@@ -5624,7 +5624,7 @@ void fn_1_18424(s32 arg0, Vec *arg1)
     UnkM450Struct4 *var_r30;
 
     var_r31 = omAddObjEx(lbl_1_bss_33C, 0x6C, 1, 0, -1, fn_1_17BBC);
-    var_r31->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM450Struct4), MEMORY_DEFAULT_NUM);
+    var_r31->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM450Struct4), HU_MEMNUM_OVL);
     var_r30 = var_r31->data;
     var_r30->unk_54 = arg0;
     var_r30->unk_40 = 1.0f;
@@ -6102,8 +6102,8 @@ void fn_1_1A714(void)
     print8(0x18, 0x20, 1.5f, "%d COUNT:%d MODE:%d MES:%d CAM:%d", GWMGTypeGet(), lbl_1_bss_308, lbl_1_bss_1A4->work[0], lbl_1_bss_2FE, lbl_1_bss_110);
     print8(0x18, 0x30, 1.5f, "%f %f %f", lbl_1_bss_330.x, lbl_1_bss_330.y, lbl_1_bss_330.z);
     print8(0x18, 0x40, 1.5f, "%f %f %f", lbl_1_bss_318.x, lbl_1_bss_318.y, lbl_1_bss_318.z);
-    print8(0x18, 0x50, 1.5f, "H:%x M:%x", HuMemHeapSizeGet(HEAP_SYSTEM) - HuMemUsedMallocSizeGet(HEAP_SYSTEM),
-        HuMemHeapSizeGet(HEAP_DATA) - HuMemUsedMallocSizeGet(HEAP_DATA));
+    print8(0x18, 0x50, 1.5f, "H:%x M:%x", HuMemHeapSizeGet(HEAP_HEAP) - HuMemUsedMallocSizeGet(HEAP_HEAP),
+        HuMemHeapSizeGet(HEAP_MODEL) - HuMemUsedMallocSizeGet(HEAP_MODEL));
     var_r31 = lbl_1_bss_138->data;
     print8(0x18, 0x60, 1.5f, "%f (%f %f %f)", var_r31->unk_00.unk_A8, var_r31->unk_00.unk_6C.x, var_r31->unk_00.unk_6C.y, var_r31->unk_00.unk_6C.z);
     print8(0x18, 0x70, 1.5f, "%d %d", var_r31->unk_104, var_r31->unk_108);
@@ -7145,7 +7145,7 @@ void fn_1_23330(OMOBJ *object)
     s32 var_r27;
     s32 var_r26;
 
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkM450Struct5), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkM450Struct5), HU_MEMNUM_OVL);
     var_r31 = object->data;
     var_r31->unk_FC = 0;
     var_r31->unk_11C = GWPlayerCfg[lbl_1_bss_120].character;

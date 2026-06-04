@@ -920,7 +920,7 @@ s16 fn_1_4474(void)
         { { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 }, { 0xFF, 0xFF, 0xFF, 0x00 } } };
 
     lbl_1_bss_5C[lbl_1_bss_58] = sp8;
-    var_r28 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 107), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r28 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_BOARD, 107), HU_MEMNUM_OVL, HEAP_MODEL);
     var_r29 = HuSprAnimRead(var_r28);
     var_r31 = Hu3DParManCreate(var_r29, 40, &lbl_1_bss_5C[lbl_1_bss_58]);
     Hu3DParManAttrSet(var_r31, 8 | 0x100);
@@ -1360,7 +1360,7 @@ void ObjectSetup(void)
     lbl_1_bss_32C = omAddObjEx(lbl_1_bss_40, 0x65, 10, 0, 1, fn_1_53A0);
     for (i = 0; i < 9; i++) {
         var_r30 = playerObjs[i] = omAddObjEx(lbl_1_bss_40, 100, 11, 9, 0, fn_1_5850);
-        var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M463PlayerData), MEMORY_DEFAULT_NUM);
+        var_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M463PlayerData), HU_MEMNUM_OVL);
         var_r30->work[0] = i;
     }
     lbl_1_bss_354 = omAddObjEx(lbl_1_bss_40, 0x7FDA, 0, 0, -1, omOutView);

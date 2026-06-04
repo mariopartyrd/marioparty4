@@ -48,7 +48,7 @@ UnkM447Struct_06 *fn_1_1D90(void)
     UnkM447Struct_06 *temp_r3;
     s32 i;
 
-    temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r3), MEMORY_DEFAULT_NUM);
+    temp_r3 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r3), HU_MEMNUM_OVL);
     if (!temp_r3) {
         return NULL;
     }

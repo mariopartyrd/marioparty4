@@ -610,7 +610,7 @@ s32 fn_1_2930(s32 arg0)
 void fn_1_2A40(void)
 {
     lbl_1_bss_30 = 0.0f;
-    lbl_1_bss_34 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x96000, MEMORY_DEFAULT_NUM);
+    lbl_1_bss_34 = HuMemDirectMallocNum(HEAP_HEAP, 0x96000, HU_MEMNUM_OVL);
     lbl_1_data_286 = Hu3DHookFuncCreate((void *)&fn_1_2B44);
     Hu3DModelLayerSet(lbl_1_data_286, 3);
 }

@@ -138,7 +138,7 @@ void fn_1_4988(OMOBJ *object)
     float sp1C[4] = { 0.5f, 0.65f, 0.8f, 1.0f };
     s32 spC[4] = { 1, 1, 2, 2 };
     s32 sp8;
-    object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(Work4988), MEMORY_DEFAULT_NUM);
+    object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(Work4988), HU_MEMNUM_OVL);
     temp_r31 = object->data;
     memset(temp_r31, 0, sizeof(Work4988));
     temp_r27 = object->work[0];

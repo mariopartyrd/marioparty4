@@ -435,9 +435,9 @@ void fn_1_A90(HUPROCESS *arg0)
     for (var_r31 = 0; var_r31 < 1; var_r31++) {
         omAddObjEx(arg0, 5, 0xA, 0x32, 0, fn_1_E88);
     }
-    lbl_1_bss_11F00 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 0x0A), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_11F00 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 0x0A), HU_MEMNUM_OVL));
     for (var_r31 = 0; var_r31 < 4; var_r31++) {
-        lbl_1_bss_11EEC[var_r31] = HuSprAnimRead(HuDataReadNum(sp8[var_r31], MEMORY_DEFAULT_NUM));
+        lbl_1_bss_11EEC[var_r31] = HuSprAnimRead(HuDataReadNum(sp8[var_r31], HU_MEMNUM_OVL));
     }
     memset(lbl_1_bss_C084, 0, 0x974);
     for (var_r31 = 0; var_r31 < 9; var_r31++) {
@@ -505,7 +505,7 @@ void fn_1_E88(OMOBJ *object)
     HU3DMODEL *var_r27;
     s32 var_r26;
 
-    var_r30 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M442MainWork), MEMORY_DEFAULT_NUM);
+    var_r30 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M442MainWork), HU_MEMNUM_OVL);
     object->data = var_r30;
     memset(var_r30, 0, sizeof(M442MainWork));
     var_r30->unk_02 = lbl_1_bss_11F20++;
@@ -1383,11 +1383,11 @@ void fn_1_3EC0(OMOBJ *object)
     object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M442, 0));
     Hu3DModelLayerSet(object->mdlId[0], 1);
     Hu3DModelShadowMapObjSet(object->mdlId[0], "oasis-grid4");
-    object->mdlId[1] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 12), MEMORY_DEFAULT_NUM)), 1);
+    object->mdlId[1] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 12), HU_MEMNUM_OVL)), 1);
     Hu3DModelLayerSet(object->mdlId[1], 7);
     Hu3DParticleHookSet(object->mdlId[1], fn_1_64B4);
     var_r28 = Hu3DData[object->mdlId[1]].hookData;
-    object->mdlId[2] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 13), MEMORY_DEFAULT_NUM)), 20);
+    object->mdlId[2] = Hu3DParticleCreate(HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 13), HU_MEMNUM_OVL)), 20);
     Hu3DModelLayerSet(object->mdlId[2], 7);
     var_r28->work = Hu3DData[object->mdlId[2]].hookData;
     var_r29 = espEntry(0x49000E, 0x8000, 0);
@@ -1402,7 +1402,7 @@ void fn_1_3EC0(OMOBJ *object)
         lbl_1_bss_C05C[var_r31].unk_0A = lbl_1_data_18A[var_r31][3];
         lbl_1_bss_C05C[var_r31].unk_10 = lbl_1_data_18A[var_r31][4];
         lbl_1_bss_C05C[var_r31].unk_0C = GXGetTexBufferSize(lbl_1_bss_C05C[var_r31].unk_08, lbl_1_bss_C05C[var_r31].unk_0A, 4, GX_FALSE, 0);
-        lbl_1_bss_C05C[var_r31].unk_00 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_C05C[var_r31].unk_0C, MEMORY_DEFAULT_NUM);
+        lbl_1_bss_C05C[var_r31].unk_00 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_C05C[var_r31].unk_0C, HU_MEMNUM_OVL);
         memset(lbl_1_bss_C05C[var_r31].unk_00, 0, lbl_1_bss_C05C[var_r31].unk_0C);
     }
     for (var_r31 = 0; var_r31 < 1024; var_r31++) {
@@ -1900,7 +1900,7 @@ void fn_1_6BB4(HUPROCESS *arg0)
             *(lbl_1_bss_11C6D + (var_r31 * 0x19) + var_r30) = 1;
         }
     }
-    lbl_1_bss_11EFC = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 15), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_11EFC = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M442, 15), HU_MEMNUM_OVL));
 }
 
 void fn_1_6CC8(void)
@@ -1931,7 +1931,7 @@ void fn_1_6D24(OMOBJ *object)
     u8 var_r26;
     u8 var_r25;
 
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M442MainWork2), MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M442MainWork2), HU_MEMNUM_OVL);
     object->data = var_r29;
     memset(var_r29, 0, sizeof(M442MainWork2));
     var_r29->unk_16 = lbl_1_bss_11EE0++;

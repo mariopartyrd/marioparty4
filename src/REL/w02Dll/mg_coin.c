@@ -103,7 +103,7 @@ void fn_1_3BF4(void)
     lbl_1_bss_A8 = omAddObjEx(boardObjMan, 257, 0, 2, -1, NULL);
     lbl_1_bss_A8->mtnId[0] = BoardPlayerMotionCreate(lbl_1_bss_86, lbl_1_data_3E4[GWPlayer[lbl_1_bss_86].character]);
     lbl_1_bss_A8->mtnId[1] = BoardPlayerMotionCreate(lbl_1_bss_86, lbl_1_data_404[GWPlayer[lbl_1_bss_86].character]);
-    lbl_1_bss_A4->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkMGCoinPlayer), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_A4->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkMGCoinPlayer), HU_MEMNUM_OVL);
     temp_r30 = lbl_1_bss_A4->data;
     for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
         temp_r30->unk0[temp_r31] = lbl_1_bss_B0[temp_r31];
@@ -111,7 +111,7 @@ void fn_1_3BF4(void)
         temp_r30->unk18[temp_r31] = 0;
         temp_r30->unk24[temp_r31] = 0;
     }
-    lbl_1_bss_A8->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkMGCoin), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_A8->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkMGCoin), HU_MEMNUM_OVL);
     BoardPlayerPosGet(lbl_1_bss_86, &sp8);
     lbl_1_bss_A8->trans.x = sp8.x;
     lbl_1_bss_A8->trans.y = sp8.y;

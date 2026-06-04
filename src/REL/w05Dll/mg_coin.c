@@ -157,7 +157,7 @@ void fn_1_9D0C(OMOBJ *arg0)
     s32 var_r30;
     dataCopy2 *temp_r31;
 
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0x34, MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_HEAP, 0x34, HU_MEMNUM_OVL);
     temp_r31 = arg0->data;
     temp_r31->unk_02 = 5;
     temp_r31->unk_04 = 0x3C;
@@ -318,7 +318,7 @@ void fn_1_A5B0(OMOBJ *arg0)
         BoardModelVisibilitySet(lbl_1_bss_D4, 1);
         BoardModelMotionTimeSet(lbl_1_bss_D4, 110.0f);
         lbl_1_bss_C8 = temp_r29 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_B3C4);
-        temp_r29->data = HuMemDirectMallocNum(HEAP_SYSTEM, 0xC, MEMORY_DEFAULT_NUM);
+        temp_r29->data = HuMemDirectMallocNum(HEAP_HEAP, 0xC, HU_MEMNUM_OVL);
         temp_r31 = temp_r29->data;
         lbl_1_bss_C8->work[1] = 1;
         Hu3DModelObjPosGet(BoardModelIDGet(lbl_1_bss_14[1]), "fish", &sp14);

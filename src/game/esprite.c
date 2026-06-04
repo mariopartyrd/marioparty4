@@ -65,7 +65,7 @@ s16 espEntry(unsigned int dataNum, s16 prio, s16 bank) {
         if (animFree == NULL) {
             return -1;
         }
-        data = HuDataSelHeapReadNum(dataNum, MEMORY_DEFAULT_NUM, HEAP_DATA);
+        data = HuDataSelHeapReadNum(dataNum, HU_MEMNUM_OVL, HEAP_MODEL);
         if (data == NULL) {
             return -1;
         }

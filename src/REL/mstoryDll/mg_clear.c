@@ -462,8 +462,8 @@ void fn_1_FDD0(OMOBJ* arg0, s32 arg1) {
     Hu3DModelShadowSet(arg0->mdlId[9]);
     fn_1_1DCC(arg0, 9, 9, 0, 2);
     Hu3DModelHookSet(arg0->mdlId[9], "carrier2-target0", arg0->mdlId[5]);
-    lbl_1_bss_560[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 85 + arg1 * 2), MEMORY_DEFAULT_NUM));
-    lbl_1_bss_560[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 86 + arg1 * 2), MEMORY_DEFAULT_NUM));
+    lbl_1_bss_560[0] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 85 + arg1 * 2), HU_MEMNUM_OVL));
+    lbl_1_bss_560[1] = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_MSTORY, 86 + arg1 * 2), HU_MEMNUM_OVL));
     Hu3DAnimCreate(lbl_1_bss_560[0], lbl_1_bss_5B8.unk00->mdlId[5], "cylinder3");
     Hu3DAnimCreate(lbl_1_bss_560[1], lbl_1_bss_5B8.unk00->mdlId[5], "wakuwaku");
 }

@@ -250,7 +250,7 @@ void fn_1_2B7C(OMOBJ *arg0)
     unkDominationData7 *temp_r30;
 
     arg0->objFunc = fn_1_2930;
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkDominationData7), MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(unkDominationData7), HU_MEMNUM_OVL);
     temp_r30 = arg0->data;
 
     for (i = 0; i < 3; i++) {

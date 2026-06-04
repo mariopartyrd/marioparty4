@@ -324,7 +324,7 @@ static void CreateStaff(void)
     currImg = 0;
 
     for (var_r31 = 0; var_r31 < 26; var_r31++) {
-        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_STAFF, var_r31), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_STAFF, var_r31), HU_MEMNUM_OVL, HEAP_MODEL);
         var_r28 = HuSprAnimRead(var_r29);
         var_r30 = HuSprCreate(var_r28, 16386, 0);
         imgGroup[var_r31] = HuSprGrpCreate(1);
@@ -341,7 +341,7 @@ static void CreateStaff(void)
     for (var_r31 = 0; var_r31 < 3; var_r31++) {
         int languageNo;
         #if VERSION_NTSC
-        var_r29 = HuDataSelHeapReadNum(var_r31 + DATA_MAKE_NUM(DATADIR_STAFF, 0x1A), MEMORY_DEFAULT_NUM, HEAP_DATA);
+        var_r29 = HuDataSelHeapReadNum(var_r31 + DATA_MAKE_NUM(DATADIR_STAFF, 0x1A), HU_MEMNUM_OVL, HEAP_MODEL);
         #else
         if(var_r31 == 2) {
             switch(GWGameStat.language) {
@@ -363,9 +363,9 @@ static void CreateStaff(void)
                     
             }
             
-            var_r29 = HuDataSelHeapReadNum(var_r31 + DATA_MAKE_NUM(DATADIR_STAFF, 0x1A) + languageNo, MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(var_r31 + DATA_MAKE_NUM(DATADIR_STAFF, 0x1A) + languageNo, HU_MEMNUM_OVL, HEAP_MODEL);
         } else {
-            var_r29 = HuDataSelHeapReadNum(var_r31 + DATA_MAKE_NUM(DATADIR_STAFF, 0x1A), MEMORY_DEFAULT_NUM, HEAP_DATA);
+            var_r29 = HuDataSelHeapReadNum(var_r31 + DATA_MAKE_NUM(DATADIR_STAFF, 0x1A), HU_MEMNUM_OVL, HEAP_MODEL);
         }
         #endif
         
@@ -383,9 +383,9 @@ static void CreateStaff(void)
     HuSprAttrSet(thpGroup, 0, HUSPR_ATTR_DISPOFF);
     HuTHPStop();
     #if VERSION_NTSC
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_STAFF, 0x1D), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_STAFF, 0x1D), HU_MEMNUM_OVL, HEAP_MODEL);
     #else
-    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_STAFF, 0x20), MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r29 = HuDataSelHeapReadNum(DATA_MAKE_NUM(DATADIR_STAFF, 0x20), HU_MEMNUM_OVL, HEAP_MODEL);
     #endif
     var_r28 = HuSprAnimRead(var_r29);
     var_r30 = HuSprCreate(var_r28, 16385, 0);

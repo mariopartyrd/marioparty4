@@ -183,8 +183,8 @@ s32 fn_1_2490(void)
         Hu3DModelPosSet(lbl_1_bss_19A[14], 0, -70.0f - (100.0f * temp_f31), 0);
         HuPrcVSleep();
     }
-    temp_r23 = HuSprAnimRead(HuDataReadNum(lbl_1_data_8C[lbl_1_bss_80], MEMORY_DEFAULT_NUM));
-    temp_r22 = HuSprAnimRead(HuDataReadNum(lbl_1_data_A4[lbl_1_bss_80], MEMORY_DEFAULT_NUM));
+    temp_r23 = HuSprAnimRead(HuDataReadNum(lbl_1_data_8C[lbl_1_bss_80], HU_MEMNUM_OVL));
+    temp_r22 = HuSprAnimRead(HuDataReadNum(lbl_1_data_A4[lbl_1_bss_80], HU_MEMNUM_OVL));
     Hu3DAnimCreate(temp_r23, lbl_1_bss_19A[22], "ys002_a1");
     Hu3DAnimCreate(temp_r22, lbl_1_bss_19A[22], "ys002_a2");
     Hu3DModelAttrSet(lbl_1_bss_19A[lbl_1_data_80[lbl_1_bss_80]], HU3D_ATTR_DISPOFF);

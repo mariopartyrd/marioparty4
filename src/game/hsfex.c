@@ -69,7 +69,7 @@ void CamMotionEx(s16 arg0, s16 arg1, Vec *arg2, Vec *arg3, Vec *arg4, float arg5
     temp_r27 = &Hu3DCamera[var_r25];
     temp_f29 = temp_r26->maxTime;
     sp1A = 0.5f + (temp_f29 / 6.0f) + 1.0f;
-    var_r31 = temp_r21 = HuMemDirectMallocNum(HEAP_SYSTEM, (sp1A + 1) * sizeof(HsfexStruct02), MEMORY_DEFAULT_NUM);
+    var_r31 = temp_r21 = HuMemDirectMallocNum(HEAP_HEAP, (sp1A + 1) * sizeof(HsfexStruct02), HU_MEMNUM_OVL);
     var_r31->unk00 = 0.0f;
     var_r31->unk08 = *arg2;
     var_r31->unk20 = *arg4;

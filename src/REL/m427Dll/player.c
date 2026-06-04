@@ -274,9 +274,9 @@ void fn_1_E98C(HUPROCESS *sp8)
             break;
         }
     }
-    lbl_1_bss_578 = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(M427DllPlayerWork), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_578 = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(M427DllPlayerWork), HU_MEMNUM_OVL);
     memset(lbl_1_bss_578, 0, 0xE0);
-    lbl_1_bss_574 = HuMemDirectMallocNum(HEAP_SYSTEM, 4 * sizeof(M427DllPlayerWork2), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_574 = HuMemDirectMallocNum(HEAP_HEAP, 4 * sizeof(M427DllPlayerWork2), HU_MEMNUM_OVL);
     memset(lbl_1_bss_574, 0, 0x1D0);
     memset(lbl_1_bss_56C, 0, 8);
     memset(lbl_1_bss_55C, 0, 0x10);
@@ -1530,14 +1530,14 @@ void fn_1_12B08(void)
     M427DllBss57CStruct *var_r29;
 
     lbl_1_bss_580 = 0x1D;
-    lbl_1_bss_584 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_580 * sizeof(Vec), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_584 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_580 * sizeof(Vec), HU_MEMNUM_OVL);
     memset(lbl_1_bss_584, 0, lbl_1_bss_580 * sizeof(Vec));
     for (var_r30 = 0; var_r30 < lbl_1_bss_580; var_r30++) {
         lbl_1_bss_584[var_r30].x = 0.5f * (lbl_1_data_260[var_r30].x + lbl_1_data_3BC[var_r30].x);
         lbl_1_bss_584[var_r30].y = 0.5f * (lbl_1_data_260[var_r30].y + lbl_1_data_3BC[var_r30].y);
         lbl_1_bss_584[var_r30].z = 0.5f * (lbl_1_data_260[var_r30].z + lbl_1_data_3BC[var_r30].z);
     }
-    lbl_1_bss_58C = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_580 * sizeof(Vec), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_58C = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_580 * sizeof(Vec), HU_MEMNUM_OVL);
     memset(lbl_1_bss_58C, 0, lbl_1_bss_580 * sizeof(Vec));
     for (var_r30 = 0; var_r30 < lbl_1_bss_580; var_r30++) {
         VECSubtract(&lbl_1_bss_584[var_r30], &lbl_1_data_260[var_r30], &lbl_1_bss_58C[var_r30]);
@@ -1545,7 +1545,7 @@ void fn_1_12B08(void)
         VECScale(&lbl_1_bss_58C[var_r30], &lbl_1_bss_58C[var_r30], 200.0f);
         VECAdd(&lbl_1_bss_58C[var_r30], &lbl_1_data_260[var_r30], &lbl_1_bss_58C[var_r30]);
     }
-    lbl_1_bss_588 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_580 * sizeof(Vec), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_588 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_580 * sizeof(Vec), HU_MEMNUM_OVL);
     memset(lbl_1_bss_588, 0, lbl_1_bss_580 * sizeof(Vec));
     for (var_r30 = 0; var_r30 < lbl_1_bss_580; var_r30++) {
         VECSubtract(&lbl_1_bss_584[var_r30], &lbl_1_data_3BC[var_r30], &lbl_1_bss_588[var_r30]);
@@ -1553,7 +1553,7 @@ void fn_1_12B08(void)
         VECScale(&lbl_1_bss_588[var_r30], &lbl_1_bss_588[var_r30], 200.0f);
         VECAdd(&lbl_1_bss_588[var_r30], &lbl_1_data_3BC[var_r30], &lbl_1_bss_588[var_r30]);
     }
-    var_r31 = lbl_1_bss_590 = HuMemDirectMallocNum(HEAP_SYSTEM, lbl_1_bss_580 * sizeof(M427DllBss590Struct), MEMORY_DEFAULT_NUM);
+    var_r31 = lbl_1_bss_590 = HuMemDirectMallocNum(HEAP_HEAP, lbl_1_bss_580 * sizeof(M427DllBss590Struct), HU_MEMNUM_OVL);
     memset(lbl_1_bss_590, 0, lbl_1_bss_580 * sizeof(M427DllBss590Struct));
     for (var_r30 = 0; var_r30 < lbl_1_bss_580; var_r30++, var_r31++) {
         var_r31->unk_00 = var_r30;
@@ -1638,7 +1638,7 @@ void fn_1_12B08(void)
     lbl_1_bss_558 = lbl_1_data_260;
     lbl_1_bss_554 = lbl_1_data_3BC;
     lbl_1_bss_550 = lbl_1_bss_584;
-    var_r29 = HuMemDirectMallocNum(HEAP_SYSTEM, 0x40 * sizeof(M427DllBss57CStruct), MEMORY_DEFAULT_NUM);
+    var_r29 = HuMemDirectMallocNum(HEAP_HEAP, 0x40 * sizeof(M427DllBss57CStruct), HU_MEMNUM_OVL);
     lbl_1_bss_57C = var_r29;
     memset(lbl_1_bss_57C, 0, 0x40 * sizeof(M427DllBss57CStruct));
     for (var_r30 = 0; var_r30 < 0x40; var_r30++, var_r29++) {

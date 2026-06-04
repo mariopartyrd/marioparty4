@@ -110,7 +110,7 @@ static void BlockProc(void)
     omVibrate(player, 12, 12, 0);
     CreateBlockObj(player);
 
-    work = OM_GET_WORK_PTR(blockObj, BlockWork);
+    work = omObjGetWork(blockObj, BlockWork);
     while (work->state != BLOCK_HIT) {
         HuPrcVSleep();
     }
@@ -207,7 +207,7 @@ static void CreateBlockObj(s32 arg0)
 
     blockObj = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, ExecBlockObj);
 
-    work = OM_GET_WORK_PTR(blockObj, BlockWork);
+    work = omObjGetWork(blockObj, BlockWork);
     work->kill = 0;
     work->unk00_field2 = 0;
     work->opened = 0;
@@ -252,7 +252,7 @@ static void ExecBlockObj(OMOBJ *arg0)
 {
     BlockWork *work;
 
-    work = OM_GET_WORK_PTR(arg0, BlockWork);
+    work = omObjGetWork(arg0, BlockWork);
 
     if (work->kill != 0 || BoardIsKill() != 0) {
         DestroyBlockObj(work, arg0);
@@ -363,7 +363,7 @@ static void SetBlockOpen(void)
 {
     BlockWork *work;
 
-    work = OM_GET_WORK_PTR(blockObj, BlockWork);
+    work = omObjGetWork(blockObj, BlockWork);
     work->state = BLOCK_OPEN;
 }
 
@@ -371,7 +371,7 @@ static void SetBlockStop(void)
 {
     BlockWork *work;
 
-    work = OM_GET_WORK_PTR(blockObj, BlockWork);
+    work = omObjGetWork(blockObj, BlockWork);
     work->unk00_field5 = 1;
 }
 
@@ -379,7 +379,7 @@ static void WaitBlockHit(void)
 {
     BlockWork *work;
 
-    work = OM_GET_WORK_PTR(blockObj, BlockWork);
+    work = omObjGetWork(blockObj, BlockWork);
 
     while (work->state != BLOCK_HIT) {
         HuPrcVSleep();
@@ -438,7 +438,7 @@ static void PopupCoin(void)
     } while (model_index == -1);
 
     coinObj = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, PopupCoinExec);
-    work = OM_GET_WORK_PTR(coinObj, CoinWork);
+    work = omObjGetWork(coinObj, CoinWork);
 
     work->kill = 0;
     work->lifetime = 10;
@@ -459,7 +459,7 @@ static void PopupCoinExec(OMOBJ *obj)
     Vec coin_rot;
     CoinWork *work;
 
-    work = OM_GET_WORK_PTR(obj, CoinWork);
+    work = omObjGetWork(obj, CoinWork);
 
     if (work->kill != 0 || BoardIsKill() != 0) {
         BoardModelVisibilitySet(work->model, 0);

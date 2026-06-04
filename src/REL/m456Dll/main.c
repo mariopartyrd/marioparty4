@@ -462,7 +462,7 @@ void fn_1_FD0(OMOBJ *object)
     s32 var_r28;
     s32 var_r27;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M456DllMainWork), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M456DllMainWork), HU_MEMNUM_OVL);
     object->data = var_r31;
     memset(var_r31, 0, sizeof(M456DllMainWork));
     var_r31->unk_02 = lbl_1_bss_68++;

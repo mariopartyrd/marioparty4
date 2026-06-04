@@ -334,7 +334,7 @@ void fn_1_64C(OMOBJ *arg0)
     u32 i;
 
     arg0->objFunc = fn_1_A1C;
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkDominationData), MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(unkDominationData), HU_MEMNUM_OVL);
     temp_r31 = arg0->data;
     temp_r29 = arg0->work[0];
     temp_r31->unk_00 = temp_r29;

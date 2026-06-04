@@ -431,9 +431,9 @@ OMOBJ *fn_1_9F5C(HUPROCESS *process)
 
     lbl_1_bss_2D0 = process;
     lbl_1_bss_2A4 = 0;
-    lbl_1_bss_2AC = HuMemDirectMallocNum(HEAP_SYSTEM, 2 * sizeof(M428DllPlayerWork), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_2AC = HuMemDirectMallocNum(HEAP_HEAP, 2 * sizeof(M428DllPlayerWork), HU_MEMNUM_OVL);
     memset(lbl_1_bss_2AC, 0, 2 * sizeof(M428DllPlayerWork));
-    lbl_1_bss_2A8 = HuMemDirectMallocNum(HEAP_SYSTEM, 4 * sizeof(M428DllPlayerWork2), MEMORY_DEFAULT_NUM);
+    lbl_1_bss_2A8 = HuMemDirectMallocNum(HEAP_HEAP, 4 * sizeof(M428DllPlayerWork2), HU_MEMNUM_OVL);
     memset(lbl_1_bss_2A8, 0, 4 * sizeof(M428DllPlayerWork2));
     for (var_r31 = 0; var_r31 < 2; var_r31++) {
         lbl_1_bss_2C8[var_r31] = omAddObjEx(process, 0x40, 1, 0, -1, fn_1_A108);
@@ -2050,10 +2050,10 @@ s32 fn_1_FB8C(Vec *arg0, Vec *arg1, float arg8, s32 arg2, s32 arg3)
     var_r26 = Hu3DHookFuncCreate(fn_1_102A8);
     var_r28 = &Hu3DData[var_r26];
     Hu3DModelLayerSet(var_r26, 2);
-    var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(M428DllPlayerUnk120Struct), var_r28->mallocNo);
+    var_r31 = HuMemDirectMallocNum(HEAP_MODEL, sizeof(M428DllPlayerUnk120Struct), var_r28->mallocNo);
     var_r28->hookData = var_r31;
     memset(var_r31, 0, sizeof(M428DllPlayerUnk120Struct));
-    var_r30 = HuMemDirectMallocNum(HEAP_DATA, arg2 * sizeof(M428DllPlayerUnkStruct), var_r28->mallocNo);
+    var_r30 = HuMemDirectMallocNum(HEAP_MODEL, arg2 * sizeof(M428DllPlayerUnkStruct), var_r28->mallocNo);
     var_r31->unk_54 = var_r30;
     memset(var_r30, 0, arg2 * sizeof(M428DllPlayerUnkStruct));
     var_r31->unk_00 = var_r26;
@@ -2352,7 +2352,7 @@ void fn_1_10A88(void)
     s32 var_r25;
 
     var_r30 = lbl_1_bss_2B4 = omAddObjEx(lbl_1_bss_2D0, 0x42, 0xA, 0, -1, fn_1_11014);
-    var_r31 = var_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M428DllPlayerWork3), MEMORY_DEFAULT_NUM);
+    var_r31 = var_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M428DllPlayerWork3), HU_MEMNUM_OVL);
     memset(var_r31, 0, sizeof(M428DllPlayerWork3));
     var_r29 = espEntry(DATA_MAKE_NUM(DATADIR_M428, 0x0E), 0x80, 0);
     var_r31->unk_00 = var_r29;
@@ -2394,8 +2394,8 @@ void fn_1_10A88(void)
     espTPLvlSet(var_r29, 0.0);
     var_r31->unk_24[0][0] = var_r31->unk_24[0][1] = 0.0f;
     var_r31->unk_24[1][0] = var_r31->unk_24[1][1] = 0.0f;
-    var_r31->unk_34 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M428, 0x0A), MEMORY_DEFAULT_NUM));
-    var_r31->unk_38 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M428, 0x0B), MEMORY_DEFAULT_NUM));
+    var_r31->unk_34 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M428, 0x0A), HU_MEMNUM_OVL));
+    var_r31->unk_38 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M428, 0x0B), HU_MEMNUM_OVL));
     var_r30->mdlId[0] = fn_1_12CD4(var_r31->unk_34, 2);
     Hu3DModelCameraSet(var_r30->mdlId[0], 1);
     Hu3DModelLayerSet(var_r30->mdlId[0], 5);
@@ -2592,9 +2592,9 @@ void fn_1_11930(void)
     ANIMDATA *var_r25;
 
     var_r28 = lbl_1_bss_2B0 = omAddObjEx(lbl_1_bss_2D0, 0xBF, 0, 0, -1, fn_1_11A60);
-    var_r31 = var_r28->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M428DllPlayerWork4), MEMORY_DEFAULT_NUM);
+    var_r31 = var_r28->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M428DllPlayerWork4), HU_MEMNUM_OVL);
     memset(var_r31, 0, sizeof(M428DllPlayerWork4));
-    var_r25 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M428, 0x0F), MEMORY_DEFAULT_NUM));
+    var_r25 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATADIR_M428, 0x0F), HU_MEMNUM_OVL));
     var_r31->unk_10 = var_r25;
     for (var_r30 = 0; var_r30 < 2; var_r30++) {
         var_r29 = fn_1_12CD4(var_r25, 0x200);
@@ -2898,7 +2898,7 @@ s16 fn_1_12CD4(ANIMDATA *sp8, s16 var_r26)
 
     s16 var_r23 = Hu3DHookFuncCreate(fn_1_134C0);
     HU3DMODEL *var_r27 = &Hu3DData[var_r23];
-    M428DllPlayerUnk120Struct2 *var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(M428DllPlayerUnk120Struct2), var_r27->mallocNo);
+    M428DllPlayerUnk120Struct2 *var_r31 = HuMemDirectMallocNum(HEAP_MODEL, sizeof(M428DllPlayerUnk120Struct2), var_r27->mallocNo);
     var_r27->hookData = var_r31;
     var_r31->unk_38 = sp8;
     var_r31->unk_26 = var_r26;
@@ -2911,7 +2911,7 @@ s16 fn_1_12CD4(ANIMDATA *sp8, s16 var_r26)
     var_r31->unk_23 = 0;
     var_r31->unk_30 = 0;
     var_r31->unk_00 = var_r31->unk_02 = 0;
-    var_r29 = HuMemDirectMallocNum(HEAP_DATA, var_r26 * sizeof(M428DllPlayerUnkStruct2), var_r27->mallocNo);
+    var_r29 = HuMemDirectMallocNum(HEAP_MODEL, var_r26 * sizeof(M428DllPlayerUnkStruct2), var_r27->mallocNo);
     var_r31->unk_3C = var_r29;
     memset(var_r29, 0, var_r26 * sizeof(M428DllPlayerUnkStruct2));
     for (var_r30 = 0; var_r30 < var_r26; var_r30++, var_r29++) {
@@ -2925,12 +2925,12 @@ s16 fn_1_12CD4(ANIMDATA *sp8, s16 var_r26)
         var_r29->unk_44.r = var_r29->unk_44.g = var_r29->unk_44.b = var_r29->unk_44.a = 0xFF;
         var_r29->unk_48 = 0;
     }
-    var_r25 = HuMemDirectMallocNum(HEAP_DATA, var_r26 * sizeof(Vec) * 4, var_r27->mallocNo);
+    var_r25 = HuMemDirectMallocNum(HEAP_MODEL, var_r26 * sizeof(Vec) * 4, var_r27->mallocNo);
     var_r31->unk_40 = var_r25;
     for (var_r30 = 0; var_r30 < (var_r26 * 4); var_r30++, var_r25++) {
         var_r25->x = var_r25->y = var_r25->z = 0.0f;
     }
-    var_r28 = HuMemDirectMallocNum(HEAP_DATA, var_r26 * sizeof(Vec2f) * 4, var_r27->mallocNo);
+    var_r28 = HuMemDirectMallocNum(HEAP_MODEL, var_r26 * sizeof(Vec2f) * 4, var_r27->mallocNo);
     var_r31->unk_44 = var_r28;
     for (var_r30 = 0; var_r30 < var_r26; var_r30++) {
         var_r28->x = 0.0f;
@@ -2946,7 +2946,7 @@ s16 fn_1_12CD4(ANIMDATA *sp8, s16 var_r26)
         var_r28->y = 1.0f;
         var_r28++;
     }
-    var_r24 = HuMemDirectMallocNum(HEAP_DATA, 0x10000, var_r27->mallocNo);
+    var_r24 = HuMemDirectMallocNum(HEAP_MODEL, 0x10000, var_r27->mallocNo);
     var_r22 = var_r24;
     DCFlushRange(var_r24, 0x10000);
     GXBeginDisplayList(var_r22, 0x10000);
@@ -2966,7 +2966,7 @@ s16 fn_1_12CD4(ANIMDATA *sp8, s16 var_r26)
         GXUnknownu16(var_r30 * 4 + 3);
     }
     var_r31->unk_34 = GXEndDisplayList();
-    var_r31->unk_48 = HuMemDirectMallocNum(HEAP_DATA, var_r31->unk_34, var_r27->mallocNo);
+    var_r31->unk_48 = HuMemDirectMallocNum(HEAP_MODEL, var_r31->unk_34, var_r27->mallocNo);
     memcpy(var_r31->unk_48, var_r24, var_r31->unk_34);
     DCFlushRange(var_r31->unk_48, var_r31->unk_34);
     HuMemDirectFree(var_r24);
@@ -2992,7 +2992,7 @@ s16 fn_1_13184(s16 sp8)
     var_r26 = var_r23->hookData;
     var_r22 = Hu3DHookFuncCreate(var_r23->hookFunc);
     var_r27 = &Hu3DData[var_r22];
-    var_r31 = HuMemDirectMallocNum(HEAP_DATA, sizeof(M428DllPlayerUnk120Struct2), var_r27->mallocNo);
+    var_r31 = HuMemDirectMallocNum(HEAP_MODEL, sizeof(M428DllPlayerUnk120Struct2), var_r27->mallocNo);
     var_r27->hookData = var_r31;
     var_r31->unk_38 = var_r26->unk_38;
     var_r31->unk_26 = var_r26->unk_26;
@@ -3005,7 +3005,7 @@ s16 fn_1_13184(s16 sp8)
     var_r31->unk_21 = 0;
     var_r31->unk_30 = 0;
     var_r31->unk_00 = var_r31->unk_02 = 0;
-    var_r30 = HuMemDirectMallocNum(HEAP_DATA, var_r24 * sizeof(M428DllPlayerUnkStruct2), var_r27->mallocNo);
+    var_r30 = HuMemDirectMallocNum(HEAP_MODEL, var_r24 * sizeof(M428DllPlayerUnkStruct2), var_r27->mallocNo);
     var_r31->unk_3C = var_r30;
     for (var_r28 = 0; var_r28 < var_r24; var_r28++, var_r30++) {
         var_r30->unk_30 = 0.0f;
@@ -3018,12 +3018,12 @@ s16 fn_1_13184(s16 sp8)
         var_r30->unk_44.r = var_r30->unk_44.g = var_r30->unk_44.b = var_r30->unk_44.a = 0xFF;
         var_r30->unk_48 = 0;
     }
-    var_r25 = HuMemDirectMallocNum(HEAP_DATA, var_r24 * sizeof(Vec) * 4, var_r27->mallocNo);
+    var_r25 = HuMemDirectMallocNum(HEAP_MODEL, var_r24 * sizeof(Vec) * 4, var_r27->mallocNo);
     var_r31->unk_40 = var_r25;
     for (var_r28 = 0; var_r28 < (var_r24 * 4); var_r28++, var_r25++) {
         var_r25->x = var_r25->y = var_r25->z = 0.0f;
     }
-    var_r29 = HuMemDirectMallocNum(HEAP_DATA, var_r24 * sizeof(Vec2f) * 4, var_r27->mallocNo);
+    var_r29 = HuMemDirectMallocNum(HEAP_MODEL, var_r24 * sizeof(Vec2f) * 4, var_r27->mallocNo);
     var_r31->unk_44 = var_r29;
     for (var_r28 = 0; var_r28 < var_r24; var_r28++) {
         var_r29->x = 0.0f;

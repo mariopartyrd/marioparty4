@@ -180,7 +180,7 @@ OMOBJ *fn_2_10A88(Vec *arg0, s16 arg1)
         temp_r31 = omAddObjEx(HuPrcCurrentGet(), 0x514, 3, 0, temp_r22, NULL);
     }
 
-    temp_r31->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkWork10A88), MEMORY_DEFAULT_NUM);
+    temp_r31->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkWork10A88), HU_MEMNUM_OVL);
     temp_r27 = temp_r31->data;
     temp_r27->unk0 = *arg0;
     for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {

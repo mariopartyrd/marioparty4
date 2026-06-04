@@ -171,7 +171,7 @@ void fn_1_9B30(void)
     }
 
     if (lbl_1_bss_184) {
-        OM_GET_WORK_PTR(lbl_1_bss_184, someBits2)->unk00_bit0 = 1;
+        omObjGetWork(lbl_1_bss_184, someBits2)->unk00_bit0 = 1;
     }
 
     if (lbl_1_data_4E0 != -1) {
@@ -928,7 +928,7 @@ s32 fn_1_BB48(void)
 
 void fn_1_BB74(s8 *arg0)
 {
-    someBits2 *bits = OM_GET_WORK_PTR(lbl_1_bss_184, someBits2);
+    someBits2 *bits = omObjGetWork(lbl_1_bss_184, someBits2);
     s32 i;
 
     for (i = 0; i < ARRAY_COUNT(bits->unk3); i++) {
@@ -938,7 +938,7 @@ void fn_1_BB74(s8 *arg0)
 
 s32 fn_1_BBC4(void)
 {
-    someBits2 *bits = OM_GET_WORK_PTR(lbl_1_bss_184, someBits2);
+    someBits2 *bits = omObjGetWork(lbl_1_bss_184, someBits2);
     return bits->unk3[bits->unk2];
 }
 

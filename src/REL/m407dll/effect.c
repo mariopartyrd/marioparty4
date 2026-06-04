@@ -140,7 +140,7 @@ void fn_1_46EC(OMOBJ *arg0)
     unkDominationData4 *temp_r30;
 
     arg0->objFunc = fn_1_4680;
-    arg0->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(unkDominationData4), MEMORY_DEFAULT_NUM);
+    arg0->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(unkDominationData4), HU_MEMNUM_OVL);
     temp_r30 = arg0->data;
     temp_r30->unk_00 = arg0->work[0];
     temp_r30->unk_08 = arg0->work[1];

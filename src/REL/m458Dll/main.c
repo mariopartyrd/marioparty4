@@ -999,7 +999,7 @@ s16 fn_1_4BE8(void)
 
     HU3DPARMANPARAM sp8 = lbl_1_rodata_2A0;
     lbl_1_bss_3C = sp8;
-    var_r28 = HuDataSelHeapReadNum(0x7006B, MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r28 = HuDataSelHeapReadNum(0x7006B, HU_MEMNUM_OVL, HEAP_MODEL);
     var_r29 = HuSprAnimRead(var_r28);
     var_r31 = Hu3DParManCreate(var_r29, 0x64, &lbl_1_bss_3C);
     Hu3DParManAttrSet(var_r31, 0x108);
@@ -1366,7 +1366,7 @@ void fn_1_59DC(OMOBJ *object)
         HU3DPARMANPARAM sp20 = lbl_1_rodata_2A0;
         lbl_1_bss_3C = sp20;
     }
-    var_r26 = HuDataSelHeapReadNum(0x7006B, MEMORY_DEFAULT_NUM, HEAP_DATA);
+    var_r26 = HuDataSelHeapReadNum(0x7006B, HU_MEMNUM_OVL, HEAP_MODEL);
     var_r25 = HuSprAnimRead(var_r26);
     var_r29 = Hu3DParManCreate(var_r25, 0x64, &lbl_1_bss_3C);
     Hu3DParManAttrSet(var_r29, 0x108);
@@ -1516,7 +1516,7 @@ void ObjectSetup(void)
     lbl_1_bss_B8 = omAddObjEx(lbl_1_bss_A0, 0x65, 0x18, 2, 1, fn_1_59DC);
     for (i = 0; i < 2; i++) {
         object = (&lbl_1_bss_BC)[i] = omAddObjEx(lbl_1_bss_A0, 0x64, 0xB, 0xA, 0, fn_1_6314);
-        object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(M458DllWork), MEMORY_DEFAULT_NUM);
+        object->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(M458DllWork), HU_MEMNUM_OVL);
         object->work[0] = i;
     }
     lbl_1_bss_C4 = omAddObjEx(lbl_1_bss_A0, 0x7FDA, 0, 0, -1, omOutView);

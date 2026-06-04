@@ -1558,7 +1558,7 @@ void BoardFilterFadeOut(s16 len)
     if(len <= 0) {
         len = 1;
     }
-    work = OM_GET_WORK_PTR(filterObj, FilterWork);
+    work = omObjGetWork(filterObj, FilterWork);
     work->len = len;
     OSs16tof32(&len, &speed);
     work->speed = -(work->color.a)/speed;
@@ -1570,7 +1570,7 @@ void BoardFilterFadeInit(s16 len, u8 max_alpha)
 {
     FilterWork *work;
     if(filterObj) {
-        work = OM_GET_WORK_PTR(filterObj, FilterWork);
+        work = omObjGetWork(filterObj, FilterWork);
         work->kill = 1;
         while(filterObj) {
             HuPrcVSleep();
@@ -1581,7 +1581,7 @@ void BoardFilterFadeInit(s16 len, u8 max_alpha)
     if(len <= 0) {
         len = 1;
     }
-    work = OM_GET_WORK_PTR(filterObj, FilterWork);
+    work = omObjGetWork(filterObj, FilterWork);
     work->kill = 0;
     work->paused = 0;
     work->color.r = 0;
@@ -1602,7 +1602,7 @@ s32 BoardFilterFadePauseCheck(void)
     if(!filterObj) {
         return 1;
     }
-    work = OM_GET_WORK_PTR(filterObj, FilterWork);
+    work = omObjGetWork(filterObj, FilterWork);
     return (work->paused) ? 1 : 0;
 }
 
@@ -1614,7 +1614,7 @@ s32 BoardFilterFadeCheck(void)
 static void UpdateFilter(OMOBJ *object)
 {
     float alpha;
-    FilterWork *work = OM_GET_WORK_PTR(object, FilterWork);
+    FilterWork *work = omObjGetWork(object, FilterWork);
     if(work->kill || BoardIsKill()) {
         if(work->model != -1) {
             Hu3DModelKill(work->model);
@@ -1652,7 +1652,7 @@ static void DrawFilter(HU3DMODEL *model, Mtx matrix)
     if(!filterObj) {
         return;
     }
-    work = OM_GET_WORK_PTR(filterObj, FilterWork);
+    work = omObjGetWork(filterObj, FilterWork);
     x1 = 0.0f;
     x2 = HU_FB_WIDTH;
     y1 = 0.0f;
@@ -1730,7 +1730,7 @@ void BoardConfettiCreate(Vec *pos, s16 count, float range)
     }
     object = omAddObjEx(boardObjMan, 257, 0, 0, -1, UpdateConfetti);
     confettiObj = object;
-    work = OM_GET_WORK_PTR(object, ConfettiWork);
+    work = omObjGetWork(object, ConfettiWork);
     work->kill = 0;
     work->paused = 0;
     work->count = count;
@@ -1738,7 +1738,7 @@ void BoardConfettiCreate(Vec *pos, s16 count, float range)
     work->time = 0;
     work->delay = 10;
     work->draw_mdl = Hu3DHookFuncCreate(DrawConfetti);
-    work->data = HuMemDirectMallocNum(HEAP_SYSTEM, work->count*sizeof(ConfettiParticle), MEMORY_DEFAULT_NUM);
+    work->data = HuMemDirectMallocNum(HEAP_HEAP, work->count*sizeof(ConfettiParticle), HU_MEMNUM_OVL);
     object->trans.x = pos->x;
     object->trans.y = pos->y;
     object->trans.z = pos->z;
@@ -1760,7 +1760,7 @@ void BoardConfettiCreate(Vec *pos, s16 count, float range)
 void BoardConfettiKill(void)
 {
     if(confettiObj) {
-        OM_GET_WORK_PTR(confettiObj, ConfettiWork)->kill = 1;
+        omObjGetWork(confettiObj, ConfettiWork)->kill = 1;
     }
 }
 
@@ -1769,7 +1769,7 @@ void BoardConfettiStop(void)
     if(confettiObj) {
         s32 i;
         ConfettiParticle *particle;
-        ConfettiWork *work = OM_GET_WORK_PTR(confettiObj, ConfettiWork);
+        ConfettiWork *work = omObjGetWork(confettiObj, ConfettiWork);
         work->paused = 1;
         particle = work->data;
         for(i=0; i<work->count; i++, particle++) {
@@ -1784,7 +1784,7 @@ void BoardConfettiStop(void)
 
 static void UpdateConfetti(OMOBJ *object)
 {
-    ConfettiWork *work = OM_GET_WORK_PTR(object, ConfettiWork);
+    ConfettiWork *work = omObjGetWork(object, ConfettiWork);
     if(work->kill || BoardIsKill()) {
         BoardModelKill(work->gfx_mdl);
         Hu3DModelKill(work->draw_mdl);
@@ -1799,7 +1799,7 @@ static void UpdateConfetti(OMOBJ *object)
 
 static void SpawnConfetti(OMOBJ *object)
 {
-    ConfettiWork *work = OM_GET_WORK_PTR(object, ConfettiWork);
+    ConfettiWork *work = omObjGetWork(object, ConfettiWork);
     s32 i;
     if(work->paused) {
         return;
@@ -1844,7 +1844,7 @@ static void SpawnConfetti(OMOBJ *object)
 
 static void MoveConfetti(OMOBJ *object)
 {
-    ConfettiWork *work = OM_GET_WORK_PTR(object, ConfettiWork);
+    ConfettiWork *work = omObjGetWork(object, ConfettiWork);
     s32 i;
     s32 existF;
     ConfettiParticle *particle;
@@ -1897,7 +1897,7 @@ static void DrawConfetti(HU3DMODEL *model, Mtx matrix)
     if(!confettiObj || BoardIsKill()) {
         return;
     } else {
-        ConfettiWork *work = OM_GET_WORK_PTR(confettiObj, ConfettiWork);
+        ConfettiWork *work = omObjGetWork(confettiObj, ConfettiWork);
         HU3DMODEL *model = &Hu3DData[work->gfx_mdl];
         ConfettiParticle *particle;
         s32 i;
@@ -1979,7 +1979,7 @@ void BoardLast5GfxInit(void)
         turn_remain = 4-turn_remain;
         object = omAddObjEx(boardObjMan, 0, 0, 0, -1, UpdateLast5Gfx);
         last5GfxObj = object;
-        work = OM_GET_WORK_PTR(object, Last5GfxWork);
+        work = omObjGetWork(object, Last5GfxWork);
         work->kill = 0;
         work->stop_time = 0;
         work->time = 0;
@@ -2031,7 +2031,7 @@ void BoardLast5GfxInit(void)
 
 static void UpdateLast5Gfx(OMOBJ *object)
 {
-    Last5GfxWork *work = OM_GET_WORK_PTR(object, Last5GfxWork);
+    Last5GfxWork *work = omObjGetWork(object, Last5GfxWork);
     if(work->kill || BoardIsKill()) {
         HuSprGrpKill(work->group);
         last5GfxObj = NULL;
@@ -2094,7 +2094,7 @@ void BoardLast5GfxShowSet(s32 show)
         return;
     }
 
-    work = OM_GET_WORK_PTR(last5GfxObj, Last5GfxWork);
+    work = omObjGetWork(last5GfxObj, Last5GfxWork);
     for(i=0; i<3; i++) {
         if(show) {
             HuSprAttrReset(work->group, i, HUSPR_ATTR_DISPOFF);
@@ -2141,7 +2141,7 @@ void BoardTauntKill(void)
     if(!tauntObj) {
         return;
     }
-    work = OM_GET_WORK_PTR(tauntObj, TauntWork);
+    work = omObjGetWork(tauntObj, TauntWork);
     work->kill = 1;
     _SetFlag(FLAG_ID_MAKE(1, 14));
 }
@@ -2152,7 +2152,7 @@ static void TauntUpdate(OMOBJ *object)
     s32 port;
     s32 character;
     TauntWork *work;
-    work = OM_GET_WORK_PTR(object, TauntWork);
+    work = omObjGetWork(object, TauntWork);
     if(work->kill || BoardIsKill()) {
         for(i=0; i<4; i++) {
             if(tauntActiveFXTbl[i] >= 0) {

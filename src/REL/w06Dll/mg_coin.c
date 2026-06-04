@@ -327,7 +327,7 @@ static void fn_1_5490(s32 arg0) {
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_56CC);
     lbl_1_bss_4C = temp_r3;
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, Bss4CWork);
+    temp_r31 = omObjGetWork(temp_r3, Bss4CWork);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk02 = 0;
     temp_r31->unk00_field2 = 0;
@@ -354,7 +354,7 @@ static void fn_1_5490(s32 arg0) {
 static void fn_1_56CC(OMOBJ *arg0) {
     Bss4CWork *temp_r31;
 
-    temp_r31 = OM_GET_WORK_PTR(arg0, Bss4CWork);
+    temp_r31 = omObjGetWork(arg0, Bss4CWork);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         BoardModelKill(temp_r31->unk04);
         lbl_1_bss_4C = NULL;
@@ -422,7 +422,7 @@ static void fn_1_5968(Vec *arg0) {
     Bss4CWork *temp_r31;
 
     if (lbl_1_bss_4C && arg0) {
-        temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_4C, Bss4CWork);
+        temp_r31 = omObjGetWork(lbl_1_bss_4C, Bss4CWork);
         BoardModelPosGet(temp_r31->unk04, arg0);
     }
 }
@@ -433,7 +433,7 @@ static void fn_1_59D0(s32 arg0) {
     if (!lbl_1_bss_4C) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_4C, Bss4CWork);
+    temp_r31 = omObjGetWork(lbl_1_bss_4C, Bss4CWork);
     temp_r31->unk00_field1 = arg0;
     if (arg0 == 1) {
         lbl_1_bss_4C->trans.x = 0.96666666f * sind(90);
@@ -456,7 +456,7 @@ static s32 fn_1_5B0C(void) {
     Bss4CWork *temp_r31;
 
     if (lbl_1_bss_4C) {
-        temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_4C, Bss4CWork);
+        temp_r31 = omObjGetWork(lbl_1_bss_4C, Bss4CWork);
         return temp_r31->unk00_field1;
     }
     return -1;
@@ -481,7 +481,7 @@ static void fn_1_5B54(s32 arg0) {
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_606C);
     lbl_1_bss_50 = temp_r3;
-    temp_r31 = OM_GET_WORK_PTR(temp_r3, Bss50Work);
+    temp_r31 = omObjGetWork(temp_r3, Bss50Work);
     temp_r31->unk00_field0 = 0;
     temp_r31->unk00_field1 = arg0;
     temp_r31->unk01 = 0;
@@ -508,7 +508,7 @@ static void fn_1_5CE4(s32 arg0) {
     if (!lbl_1_bss_50) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_50, Bss50Work);
+    temp_r31 = omObjGetWork(lbl_1_bss_50, Bss50Work);
     temp_r31->unk00_field2 = arg0;
     if (arg0 == 2) {
         temp_r31->unk01 = 60;
@@ -539,7 +539,7 @@ static s32 fn_1_5EBC(void) {
     if (!lbl_1_bss_50) {
         return;
     }
-    temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_50, Bss50Work);
+    temp_r31 = omObjGetWork(lbl_1_bss_50, Bss50Work);
     return temp_r31->unk00_field2;
 }
 
@@ -547,7 +547,7 @@ static void fn_1_5EFC(Vec *arg0) {
     Bss50Work *temp_r31;
 
     if (lbl_1_bss_50) {
-        temp_r31 = OM_GET_WORK_PTR(lbl_1_bss_50, Bss50Work);
+        temp_r31 = omObjGetWork(lbl_1_bss_50, Bss50Work);
         BoardPlayerPosGet(temp_r31->unk00_field1, arg0);
     }
 }
@@ -594,7 +594,7 @@ static void fn_1_606C(OMOBJ *arg0) {
     Bss50Work *temp_r31;
 
     var_r18 = 0;
-    temp_r31 = OM_GET_WORK_PTR(arg0, Bss50Work);
+    temp_r31 = omObjGetWork(arg0, Bss50Work);
     if (temp_r31->unk00_field0 != 0 || BoardIsKill()) {
         BoardPlayerMotionKill(temp_r31->unk00_field1, temp_r31->unk02);
         BoardModelKill(temp_r31->unk04);
@@ -667,7 +667,7 @@ static void fn_1_6A0C(OMOBJ *arg0) {
     s32 var_r27;
     s32 i;
 
-    temp_r29 = OM_GET_WORK_PTR(arg0, Bss54Work);
+    temp_r29 = omObjGetWork(arg0, Bss54Work);
     if (temp_r29->unk00_field0 != 0 || BoardIsKill()) {
         fn_1_6E90(temp_r29);
         HuMemDirectFree(temp_r29->unk0C);
@@ -722,10 +722,10 @@ static void fn_1_6C4C(s32 arg0) {
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_6A0C);
     lbl_1_bss_54 = temp_r3;
-    temp_r30 = OM_GET_WORK_PTR(temp_r3, Bss54Work);
+    temp_r30 = omObjGetWork(temp_r3, Bss54Work);
     temp_r30->unk00_field0 = 0;
     temp_r30->unk04 = arg0;
-    temp_r30->unk0C = HuMemDirectMallocNum(HEAP_SYSTEM, 20 * sizeof(Bss54WorkData), MEMORY_DEFAULT_NUM);
+    temp_r30->unk0C = HuMemDirectMallocNum(HEAP_HEAP, 20 * sizeof(Bss54WorkData), HU_MEMNUM_OVL);
     BoardPlayerPosGet(arg0, &sp8);
     temp_r30->unk08 = sp8.y + 80.0f;
     memset(temp_r30->unk0C, 0, 20 * sizeof(Bss54WorkData));

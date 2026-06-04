@@ -283,7 +283,7 @@ static void fn_1_24(u16 arg0, s16 arg1)
     UnkBss204Struct *temp_r30;
     UnkBss204Struct *temp_r29;
 
-    temp_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r31), MEMORY_DEFAULT_NUM);
+    temp_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r31), HU_MEMNUM_OVL);
     temp_r31->unk00 = arg0;
     temp_r31->unk02 = arg1;
     temp_r30 = &lbl_1_bss_204;
@@ -334,11 +334,11 @@ static void fn_1_174(s16 arg0, HU3DPARMANPARAM *arg1, s32 arg2, s32 arg3, s32 ar
     UnkBss1ECStruct *temp_r28;
     s32 i;
 
-    var_r31 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*var_r31), MEMORY_DEFAULT_NUM);
+    var_r31 = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*var_r31), HU_MEMNUM_OVL);
     var_r31->unk00 = arg1;
     var_r31->unk08 = arg3;
     var_r31->unk0C = arg4;
-    var_r31->unk04 = HuMemDirectMallocNum(HEAP_SYSTEM, arg4 * sizeof(*var_r31->unk04), MEMORY_DEFAULT_NUM);
+    var_r31->unk04 = HuMemDirectMallocNum(HEAP_HEAP, arg4 * sizeof(*var_r31->unk04), HU_MEMNUM_OVL);
     for (i = 0; i < arg4; i++, arg5++) {
         var_r31->unk04[i] = Hu3DParManLink(arg0, arg1);
         if (var_r31->unk04[i] >= 0) {
@@ -697,8 +697,8 @@ static void fn_1_2454(void)
     }
     print8(24, 32, 1.5f, "%f COUNT:%d MES:%d WIN:%d", lbl_1_bss_38, lbl_1_bss_1B4, lbl_1_bss_1AA, lbl_1_bss_26);
     print8(24, 48, 1.5f, "%f %f %f", lbl_1_bss_4, lbl_1_bss_C, lbl_1_bss_8);
-    print8(24, 64, 1.5f, "%x %x", HuMemHeapSizeGet(HEAP_SYSTEM) - HuMemUsedMallocSizeGet(HEAP_SYSTEM),
-        HuMemHeapSizeGet(HEAP_DATA) - HuMemUsedMallocSizeGet(HEAP_DATA));
+    print8(24, 64, 1.5f, "%x %x", HuMemHeapSizeGet(HEAP_HEAP) - HuMemUsedMallocSizeGet(HEAP_HEAP),
+        HuMemHeapSizeGet(HEAP_MODEL) - HuMemUsedMallocSizeGet(HEAP_MODEL));
     lbl_1_bss_8 -= HuPadSubStkX[0] / 59.0f;
     lbl_1_bss_C -= (HuPadSubStkY[0] / 59.0f) * 4.0f;
     lbl_1_bss_4 -= (HuPadTrigL[0] / 150.0f) * 4.0f;
@@ -1539,7 +1539,7 @@ static void fn_1_7AEC(s32 arg0, Vec *arg1, Vec *arg2)
         lbl_1_bss_24++;
         temp_r3 = omAddObjEx(lbl_1_bss_1E8, 105, 1, 1, 5, fn_1_7950);
         temp_r3->work[0] = arg0;
-        temp_r3->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r31), MEMORY_DEFAULT_NUM);
+        temp_r3->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(*temp_r31), HU_MEMNUM_OVL);
         temp_r31 = temp_r3->data;
         temp_r31->unk0C = 0.0f;
         temp_r31->unk10 = 0.0f;
@@ -1845,7 +1845,7 @@ void ObjectSetup(void)
     lbl_1_bss_4C = omGetGroupMemberListEx(lbl_1_bss_1E8, 2);
     for (i = 0; i < 4; i++) {
         temp_r30 = omAddObjEx(lbl_1_bss_1E8, 102, 1, 11, 2, fn_1_63C8);
-        temp_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkFn27A8Struct), MEMORY_DEFAULT_NUM);
+        temp_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkFn27A8Struct), HU_MEMNUM_OVL);
         temp_r30->work[0] = i;
     }
     omMakeGroupEx(lbl_1_bss_1E8, 3, 4);
@@ -1858,7 +1858,7 @@ void ObjectSetup(void)
     lbl_1_bss_44 = omGetGroupMemberListEx(lbl_1_bss_1E8, 4);
     for (i = 0; i < 2; i++) {
         temp_r30 = omAddObjEx(lbl_1_bss_1E8, 104, 1, 2, 4, fn_1_6E64);
-        temp_r30->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(UnkFn6AB4Struct), MEMORY_DEFAULT_NUM);
+        temp_r30->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkFn6AB4Struct), HU_MEMNUM_OVL);
         temp_r30->work[0] = i;
     }
     fn_1_0();
