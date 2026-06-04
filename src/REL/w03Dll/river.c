@@ -19,19 +19,19 @@
 
 // BSS
 char lbl_1_bss_130[8];
-omObjData *lbl_1_bss_12C;
+OMOBJ *lbl_1_bss_12C;
 s16 lbl_1_bss_128;
 s32 lbl_1_bss_124;
-Process *lbl_1_bss_120;
+HUPROCESS *lbl_1_bss_120;
 
 // function signatures
 void fn_1_67F8(void);
 void fn_1_6884(void);
-void fn_1_767C(omObjData *arg0);
+void fn_1_767C(OMOBJ *arg0);
 s32 fn_1_6898(s32 arg0);
 void fn_1_6B98(s32 arg0);
 void fn_1_6F9C(s32 arg0);
-void fn_1_767C(omObjData *arg0);
+void fn_1_767C(OMOBJ *arg0);
 void fn_1_735C(s32 arg0);
 void fn_1_77E4(s32 arg0);
 
@@ -455,7 +455,7 @@ void fn_1_735C(s32 arg0)
     BoardWinKill();
 }
 
-void fn_1_767C(omObjData *arg0)
+void fn_1_767C(OMOBJ *arg0)
 {
     Vec sp8;
     s32 temp_r30;

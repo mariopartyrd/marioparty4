@@ -104,7 +104,7 @@ static s8 stealTarget;
 static s8 comStarStealTarget;
 static s32 comCoinStealTarget;
 static char stealAmountStr[8];
-static Process *houseProc;
+static HUPROCESS *houseProc;
 
 // sdata
 static s16 houseShowMot = 0xFFFF;

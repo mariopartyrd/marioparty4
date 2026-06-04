@@ -46,7 +46,7 @@ typedef struct {
     /* 0x18 */ float unk18;
     /* 0x1C */ float unk1C;
     /* 0x20 */ Vec unk20;
-    /* 0x2C */ Process *unk2C;
+    /* 0x2C */ HUPROCESS *unk2C;
 } BssE4Data; // Size 0x30
 
 static void fn_1_20EC(void);
@@ -72,14 +72,14 @@ static void fn_1_5648(void);
 static void fn_1_5828(void);
 static s16 fn_1_58A4(Vec *arg0);
 static void fn_1_5980(s16 arg0);
-static void fn_1_59C4(omObjData *arg0);
+static void fn_1_59C4(OMOBJ *arg0);
 static void fn_1_5A2C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
 static s16 lbl_1_bss_FA;
 static s16 lbl_1_bss_F4[3];
-static Process *lbl_1_bss_E4[4];
-static Process *lbl_1_bss_D4[4];
-static omObjData *lbl_1_bss_C4[4];
+static HUPROCESS *lbl_1_bss_E4[4];
+static HUPROCESS *lbl_1_bss_D4[4];
+static OMOBJ *lbl_1_bss_C4[4];
 static s16 lbl_1_bss_C2;
 static s16 lbl_1_bss_BA[4];
 static s16 lbl_1_bss_B2[4];
@@ -94,7 +94,7 @@ static s16 lbl_1_bss_6A;
 static s16 lbl_1_bss_52[4][3];
 static s16 lbl_1_bss_50;
 static ANIMDATA *lbl_1_bss_4C;
-static Process *lbl_1_bss_48;
+static HUPROCESS *lbl_1_bss_48;
 
 static s32 lbl_1_data_2D0[8] = { DATADIR_MARIOMOT, DATADIR_LUIGIMOT, DATADIR_PEACHMOT, DATADIR_YOSHIMOT, DATADIR_WARIOMOT, DATADIR_DONKEYMOT,
     DATADIR_DAISYMOT, DATADIR_WALUIGIMOT };
@@ -246,7 +246,7 @@ static void fn_1_28BC(void)
     s16 var_r29;
     s32 var_r31;
     s32 i;
-    Process *var_r27;
+    HUPROCESS *var_r27;
     float *var_r26;
 
     var_r27 = HuPrcChildCreate(fn_1_45A8, 0x2001, 0x800, 0, boardMainProc);
@@ -417,7 +417,7 @@ static void fn_1_30A4(void)
     float temp_f31;
     BssE4Data *temp_r31;
     BoardSpace *var_r28;
-    Process *var_r27;
+    HUPROCESS *var_r27;
     s16 var_r29;
     s16 temp_r22;
     s32 i;
@@ -992,7 +992,7 @@ static void fn_1_5018(void)
     Vec sp18;
     Vec spC;
     float var_f29;
-    Process *temp_r3;
+    HUPROCESS *temp_r3;
     s32 i;
 
     BoardModelPosGet(lbl_1_bss_FA, &spC);
@@ -1093,13 +1093,13 @@ static void fn_1_5648(void)
     lbl_1_bss_4C = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_W04, 6));
     for (i = 0; i < 4; i++) {
         lbl_1_bss_C4[i] = omAddObjEx(boardObjMan, 0x101, 1, 0, -1, fn_1_59C4);
-        lbl_1_bss_C4[i]->model[0] = Hu3DParticleCreate(lbl_1_bss_4C, 100);
-        Hu3DParticleColSet(lbl_1_bss_C4[i]->model[0], 0x40, 0xD2, 0xFF);
-        Hu3DParticleScaleSet(lbl_1_bss_C4[i]->model[0], 5.0f);
-        Hu3DParticleHookSet(lbl_1_bss_C4[i]->model[0], fn_1_5A2C);
-        Hu3DParticleBlendModeSet(lbl_1_bss_C4[i]->model[0], 1);
-        Hu3DModelAttrSet(lbl_1_bss_C4[i]->model[0], HU3D_ATTR_DISPOFF);
-        var_r30 = Hu3DData[lbl_1_bss_C4[i]->model[0]].hookData;
+        lbl_1_bss_C4[i]->mdlId[0] = Hu3DParticleCreate(lbl_1_bss_4C, 100);
+        Hu3DParticleColSet(lbl_1_bss_C4[i]->mdlId[0], 0x40, 0xD2, 0xFF);
+        Hu3DParticleScaleSet(lbl_1_bss_C4[i]->mdlId[0], 5.0f);
+        Hu3DParticleHookSet(lbl_1_bss_C4[i]->mdlId[0], fn_1_5A2C);
+        Hu3DParticleBlendModeSet(lbl_1_bss_C4[i]->mdlId[0], 1);
+        Hu3DModelAttrSet(lbl_1_bss_C4[i]->mdlId[0], HU3D_ATTR_DISPOFF);
+        var_r30 = Hu3DData[lbl_1_bss_C4[i]->mdlId[0]].hookData;
         var_r30->work = lbl_1_bss_C4[i];
     }
 }
@@ -1109,7 +1109,7 @@ static void fn_1_5828(void)
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        Hu3DModelKill(lbl_1_bss_C4[i]->model[0]);
+        Hu3DModelKill(lbl_1_bss_C4[i]->mdlId[0]);
         omDelObjEx(boardObjMan, lbl_1_bss_C4[i]);
     }
 }
@@ -1136,14 +1136,14 @@ static void fn_1_5980(s16 arg0)
     lbl_1_bss_C4[arg0]->work[2] = 0;
 }
 
-static void fn_1_59C4(omObjData *arg0)
+static void fn_1_59C4(OMOBJ *arg0)
 {
     if (arg0->work[0] != 0) {
-        Hu3DModelAttrReset(arg0->model[0], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrReset(arg0->mdlId[0], HU3D_ATTR_DISPOFF);
     }
     if (arg0->work[2] != 0) {
         arg0->work[0] = 0;
-        Hu3DModelAttrSet(arg0->model[0], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(arg0->mdlId[0], HU3D_ATTR_DISPOFF);
     }
 }
 

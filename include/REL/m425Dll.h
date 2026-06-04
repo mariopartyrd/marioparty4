@@ -3,7 +3,7 @@
 
 #include "game/object.h"
 
-omObjData *fn_1_6A0C(Process *process, s32 arg1);
+OMOBJ *fn_1_6A0C(HUPROCESS *process, s32 arg1);
 void fn_1_6C08(void);
 void fn_1_6CD0(s32 arg0, Vec *arg1);
 s32 fn_1_109EC(s32 arg0, s32 arg1, Vec *arg2, Vec *arg3, Vec *arg4, s32 arg5);

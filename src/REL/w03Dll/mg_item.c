@@ -78,20 +78,20 @@ s32 fn_1_BBC4(void);
 void fn_1_BB74(s8 *arg0);
 s32 fn_1_BB48(void);
 void fn_1_B8E8(s32 arg0);
-void fn_1_B748(omObjData *arg0, someBits2 *arg1);
-void fn_1_B688(omObjData *arg0, someBits2 *arg1);
-void fn_1_B4AC(omObjData *arg0, someBits2 *arg1);
-void fn_1_B350(omObjData *arg0);
+void fn_1_B748(OMOBJ *arg0, someBits2 *arg1);
+void fn_1_B688(OMOBJ *arg0, someBits2 *arg1);
+void fn_1_B4AC(OMOBJ *arg0, someBits2 *arg1);
+void fn_1_B350(OMOBJ *arg0);
 void fn_1_B0A4(s32 arg0);
 u32 fn_1_AF24(s32 arg0);
 s32 fn_1_AE4C(s32 arg0, s8 *arg1);
 s32 fn_1_AE20(void);
 void fn_1_ACD8(s32 arg0);
-void fn_1_ABD0(omObjData *arg0, someBits *arg1);
-void fn_1_AB18(omObjData *arg0, someBits *arg1);
+void fn_1_ABD0(OMOBJ *arg0, someBits *arg1);
+void fn_1_AB18(OMOBJ *arg0, someBits *arg1);
 void fn_1_A8AC(s32 arg0);
 void fn_1_A7A0(s32 arg0);
-void fn_1_A994(omObjData *arg0);
+void fn_1_A994(OMOBJ *arg0);
 void fn_1_A5E0(s32 arg0);
 void fn_1_A6B0(void);
 void fn_1_A44C(s32 arg0);
@@ -138,9 +138,9 @@ s32 lbl_1_data_514[] = {
 s8 lbl_1_bss_194[3];
 ANIMDATA *lbl_1_bss_190;
 s8 lbl_1_bss_18C;
-omObjData *lbl_1_bss_188;
-omObjData *lbl_1_bss_184;
-Process *lbl_1_bss_180;
+OMOBJ *lbl_1_bss_188;
+OMOBJ *lbl_1_bss_184;
+HUPROCESS *lbl_1_bss_180;
 
 void fn_1_9A7C(void)
 {
@@ -442,7 +442,7 @@ void fn_1_A6B0(void)
 void fn_1_A7A0(s32 arg0)
 {
     someBits *temp_r31;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, (void *)fn_1_A994);
     lbl_1_bss_188 = temp_r3;
@@ -481,7 +481,7 @@ void fn_1_A8AC(s32 arg0)
     }
 }
 
-void fn_1_A994(omObjData *arg0)
+void fn_1_A994(OMOBJ *arg0)
 {
     s32 temp_r0;
     someBits *temp_r31;
@@ -530,7 +530,7 @@ void fn_1_A994(omObjData *arg0)
     }
 }
 
-void fn_1_AB18(omObjData *arg0, someBits *arg1)
+void fn_1_AB18(OMOBJ *arg0, someBits *arg1)
 {
     u32 var_r31 = 0;
 
@@ -546,7 +546,7 @@ void fn_1_AB18(omObjData *arg0, someBits *arg1)
 }
 
 // TODO properly use inlines
-void fn_1_ABD0(omObjData *arg0, someBits *arg1)
+void fn_1_ABD0(OMOBJ *arg0, someBits *arg1)
 {
     s16 boardModelID;
     PlayerState *playerStateCopy;
@@ -705,7 +705,7 @@ void fn_1_B0A4(s32 arg0)
     s32 var_r31_2;
     s32 temp_r29;
     someBits2 *temp_r30;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
 
     temp_r3 = omAddObjEx(boardObjMan, 0x101, 0U, 0U, -1, (void *)fn_1_B350);
     lbl_1_bss_184 = (void *)temp_r3;
@@ -758,7 +758,7 @@ void fn_1_B0A4(s32 arg0)
     }
 }
 
-void fn_1_B350(omObjData *arg0)
+void fn_1_B350(OMOBJ *arg0)
 {
     s32 i;
     someBits2 *temp_r31;
@@ -797,7 +797,7 @@ void fn_1_B350(omObjData *arg0)
     }
 }
 
-void fn_1_B4AC(omObjData *arg0, someBits2 *arg1)
+void fn_1_B4AC(OMOBJ *arg0, someBits2 *arg1)
 {
     Vec sp20;
     Vec sp14;
@@ -830,7 +830,7 @@ void fn_1_B4AC(omObjData *arg0, someBits2 *arg1)
     fn_1_BC7C(arg1->unk_06[arg1->unk2]);
 }
 
-void fn_1_B688(omObjData *arg0, someBits2 *arg1)
+void fn_1_B688(OMOBJ *arg0, someBits2 *arg1)
 {
     Vec sp8;
 
@@ -846,7 +846,7 @@ void fn_1_B688(omObjData *arg0, someBits2 *arg1)
     fn_1_B8E8(0);
 }
 
-void fn_1_B748(omObjData *arg0, someBits2 *arg1)
+void fn_1_B748(OMOBJ *arg0, someBits2 *arg1)
 {
     Vec sp14;
     Vec sp8;

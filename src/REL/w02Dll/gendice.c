@@ -28,7 +28,7 @@ typedef struct {
 void fn_1_13D0(void);
 void fn_1_1574(m02GenDice *arg0);
 void fn_1_1794(m02GenDice *arg0);
-void fn_1_1850(omObjData *object);
+void fn_1_1850(OMOBJ *object);
 void fn_1_1F94(m02GenDice *arg0, s32 arg1);
 void fn_1_2030(m02GenDice *arg0);
 void fn_1_2100(m02GenDice *arg0, s32 arg1);
@@ -127,7 +127,7 @@ void fn_1_1574(m02GenDice *arg0)
 {
     Vec sp8;
     f32 temp_f0;
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     s32 temp_r28;
     WorkGenDice *temp_r29;
 
@@ -148,7 +148,7 @@ void fn_1_1574(m02GenDice *arg0)
     temp_r29->unk04 = 0;
     temp_r29->unk01 = 3;
     temp_r29->unk02 = 0;
-    temp_r3->unk10 = (u32)arg0;
+    temp_r3->mode = (u32)arg0;
     arg0->unk3C[temp_r28] = temp_r3;
     sp8 = arg0->unk0C;
     sp8.y += (250.0f * arg0->unk24);
@@ -185,7 +185,7 @@ s32 fn_1_17F4(m02GenDice *arg0)
     return 1;
 }
 
-void fn_1_1850(omObjData *object)
+void fn_1_1850(OMOBJ *object)
 {
     WorkGenDice *temp_r29;
     m02GenDice *temp_r27;
@@ -194,7 +194,7 @@ void fn_1_1850(omObjData *object)
     float temp_f29;
     float temp_f28;
     float temp_f27;
-    temp_r27 = (m02GenDice *)object->unk10;
+    temp_r27 = (m02GenDice *)object->mode;
     temp_r29 = OM_GET_WORK_PTR(object, WorkGenDice);
     if (temp_r29->unk7 || BoardIsKill()) {
         fn_1_1F94(temp_r27, temp_r29->unk1);
@@ -410,7 +410,7 @@ void fn_1_23B4(m02GenDice *arg0, s32 arg1)
     work->field0_bit0 = 1;
 }
 
-void fn_1_25D0(omObjData *object);
+void fn_1_25D0(OMOBJ *object);
 
 void fn_1_23FC(m02GenDice *arg0, s32 arg1)
 {
@@ -418,7 +418,7 @@ void fn_1_23FC(m02GenDice *arg0, s32 arg1)
     s16 sp8[2];
     WorkGenDiceNum *temp_r31;
     s16 temp_r29;
-    omObjData *temp_r28;
+    OMOBJ *temp_r28;
     s32 temp_r26;
     s16 temp_r25;
     temp_r26 = arg0->unk96;
@@ -430,7 +430,7 @@ void fn_1_23FC(m02GenDice *arg0, s32 arg1)
     spC = arg0->unk0C;
     spC.y += 300.0f;
     temp_r28 = omAddObjEx(boardObjMan, 258, 0, 0, -1, fn_1_25D0);
-    temp_r28->unk10 = (u32)arg0;
+    temp_r28->mode = (u32)arg0;
     temp_r31 = OM_GET_WORK_PTR(temp_r28, WorkGenDiceNum);
     temp_r31->field0_bit0 = 0;
     temp_r31->field0_bit1 = 0;
@@ -454,11 +454,11 @@ void fn_1_2694(WorkGenDiceNum *arg0);
 void fn_1_2830(m02GenDice *arg0, WorkGenDiceNum *arg1, s32 arg2);
 void fn_1_2BE4(m02GenDice *arg0, WorkGenDiceNum *arg1, s32 arg2);
 
-void fn_1_25D0(omObjData *object)
+void fn_1_25D0(OMOBJ *object)
 {
     WorkGenDiceNum *temp_r31;
     m02GenDice *temp_r30;
-    temp_r30 = (m02GenDice *)object->unk10;
+    temp_r30 = (m02GenDice *)object->mode;
     temp_r31 = OM_GET_WORK_PTR(object, WorkGenDiceNum);
     if (temp_r31->field0_bit0 || BoardIsKill()) {
         fn_1_2694(temp_r31);

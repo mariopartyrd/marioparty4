@@ -55,13 +55,13 @@ static void ExecStart(void);
 static void ShowLogo(void);
 static void FocusStart(void);
 static void CreatePlayerStart(void);
-static void ExecPlayerStart(omObjData *arg0);
-static void PlayerFall(omObjData *arg0, PlayerStartWork *arg1);
-static void PlayerWaitSpeak(omObjData *arg0, PlayerStartWork *arg1);
-static void PlayerDiceFall(omObjData *arg0, PlayerStartWork *arg1);
-static void PlayerDiceRoll(omObjData *arg0, PlayerStartWork *arg1);
-static void PlayerDiceNumShow(omObjData *arg0, PlayerStartWork *arg1);
-static void PlayerDiceNumHide(omObjData *arg0, PlayerStartWork *arg1);
+static void ExecPlayerStart(OMOBJ *arg0);
+static void PlayerFall(OMOBJ *arg0, PlayerStartWork *arg1);
+static void PlayerWaitSpeak(OMOBJ *arg0, PlayerStartWork *arg1);
+static void PlayerDiceFall(OMOBJ *arg0, PlayerStartWork *arg1);
+static void PlayerDiceRoll(OMOBJ *arg0, PlayerStartWork *arg1);
+static void PlayerDiceNumShow(OMOBJ *arg0, PlayerStartWork *arg1);
+static void PlayerDiceNumHide(OMOBJ *arg0, PlayerStartWork *arg1);
 static void SetPlayerStartState(s32 arg0, s32 arg1);
 static s32 GetPlayerStartState(s32 arg0);
 static void ExecStartRoll(void);
@@ -77,7 +77,7 @@ static s16 hostMdl;
 static s16 startSpace;
 static s8 playerOrderNew[4];
 static s8 playerOrderOld[4];
-static Process *startProc;
+static HUPROCESS *startProc;
 
 static s16 logoSprGrp = -1;
 static s16 logoSpr = -1;
@@ -89,7 +89,7 @@ static s8 tutorialRollTbl[] = {
     0x02, 0x08, 0x06, 0x00
 };
 
-static omObjData *playerStartObj[4] = {
+static OMOBJ *playerStartObj[4] = {
     NULL, NULL, NULL, NULL
 };
 
@@ -307,7 +307,7 @@ static void FocusStart(void) {
 static void CreatePlayerStart(void) {
     Vec boardPos;
     float offsetX;
-    omObjData *boardObj;
+    OMOBJ *boardObj;
     PlayerStartWork *boardData;
     s8 i;
 
@@ -349,7 +349,7 @@ static void CreatePlayerStart(void) {
     }
 }
 
-static void ExecPlayerStart(omObjData *object) {
+static void ExecPlayerStart(OMOBJ *object) {
     PlayerStartWork *data = OM_GET_WORK_PTR(object, PlayerStartWork);
 
     if (data->isBoardVisible != 0 || BoardIsKill()) {
@@ -389,7 +389,7 @@ static void ExecPlayerStart(omObjData *object) {
     }
 }
 
-static void PlayerFall(omObjData *object, PlayerStartWork *data) {
+static void PlayerFall(OMOBJ *object, PlayerStartWork *data) {
     float fall_duration;
 
     if (data->isActionable != 0) {
@@ -416,7 +416,7 @@ static void PlayerFall(omObjData *object, PlayerStartWork *data) {
     BoardPlayerPosSet(playerOrderOld[data->index], object->trans.x, object->trans.y, object->trans.z);
 }
 
-static void PlayerWaitSpeak(omObjData *object, PlayerStartWork *data) {
+static void PlayerWaitSpeak(OMOBJ *object, PlayerStartWork *data) {
     float yRot;
 
     if (data->time == 0) {
@@ -431,7 +431,7 @@ static void PlayerWaitSpeak(omObjData *object, PlayerStartWork *data) {
     }
 }
 
-static void PlayerDiceFall(omObjData *object, PlayerStartWork *data) {
+static void PlayerDiceFall(OMOBJ *object, PlayerStartWork *data) {
     Vec boardPos;
     float max;
     float min;
@@ -479,7 +479,7 @@ static s32 playerOrderMesTbl[3] = {
     MAKE_MESSID(0x15, 0x15)
 };
 
-static void PlayerDiceRoll(omObjData *object, PlayerStartWork *data) {
+static void PlayerDiceRoll(OMOBJ *object, PlayerStartWork *data) {
     Vec boardPos;
     float time;
     u32 jumpCheck;
@@ -557,7 +557,7 @@ static void PlayerDiceRoll(omObjData *object, PlayerStartWork *data) {
     data->time++;
 }
 
-static void PlayerDiceNumShow(omObjData *object, PlayerStartWork *data) {
+static void PlayerDiceNumShow(OMOBJ *object, PlayerStartWork *data) {
     float yRot;
 
     data->yRot -= 18;
@@ -572,7 +572,7 @@ static void PlayerDiceNumShow(omObjData *object, PlayerStartWork *data) {
     BoardModelRotYSet(data->model, yRot);
 }
 
-static void PlayerDiceNumHide(omObjData *object, PlayerStartWork *data) {
+static void PlayerDiceNumHide(OMOBJ *object, PlayerStartWork *data) {
     float yRot;
 
     switch (data->time) {
@@ -616,7 +616,7 @@ static void PlayerDiceNumHide(omObjData *object, PlayerStartWork *data) {
 
 static void SetPlayerStartState(s32 player, s32 state) {
     PlayerStartWork *data;
-    omObjData *object;
+    OMOBJ *object;
 
     object = playerStartObj[player];
     data = OM_GET_WORK_PTR(object, PlayerStartWork);
@@ -637,7 +637,7 @@ static void SetPlayerStartState(s32 player, s32 state) {
 
 static s32 GetPlayerStartState(s32 player) {
     PlayerStartWork *data;
-    omObjData *object;
+    OMOBJ *object;
 
     object = playerStartObj[player];
     data = OM_GET_WORK_PTR(object, PlayerStartWork);

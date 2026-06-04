@@ -24,11 +24,11 @@ typedef struct {
 static void FadeSprite(void);
 static void fn_1_354(s16 arg0, s32 arg1, s32 arg2);
 static void FadeModel(void);
-static void SceneMain(omObjData *arg0);
+static void SceneMain(OMOBJ *arg0);
 static void KillScene(void);
 
-Process *optionObjMan;
-static omObjData *scene;
+HUPROCESS *optionObjMan;
+static OMOBJ *scene;
 static s32 rumbleF;
 
 void ObjectSetup(void)
@@ -38,14 +38,14 @@ void ObjectSetup(void)
     HuWinInit(1);
     rumbleF = GWGameStat.rumble;
     scene = omAddObjEx(optionObjMan, 1000, 0, 0, 0, SceneMain);
-    scene->unk10 = 0;
+    scene->mode = 0;
     optionState = OptionStateCreate();
 }
 
 void OptionFadeSprite(s16 sprite, BOOL inF, s32 duration)
 {
     FaderWork *work;
-    Process *process;
+    HUPROCESS *process;
 
     work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
     work->id = sprite;
@@ -92,7 +92,7 @@ static void FadeSprite(void)
 void OptionFadeModel(s16 model, BOOL inF, s32 duration)
 {
     FaderWork *work;
-    Process *process;
+    HUPROCESS *process;
 
     work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
     work->id = model;
@@ -157,22 +157,22 @@ BOOL OptionPadDStkCheck(u16 dir)
     return (temp_r31 != 0);
 }
 
-static void SceneMain(omObjData *object)
+static void SceneMain(OMOBJ *object)
 {
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
-            object->unk10 = 1;
+            object->mode = 1;
             /* fallthrough */
         case 1:
             if (!omSysExitReq) {
                 break;
             }
-            object->unk10 = 2;
+            object->mode = 2;
             /* fallthrough */
         case 2:
             WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
             HuAudFadeOut(1000);
-            object->unk10 = 3;
+            object->mode = 3;
             /* fallthrough */
         case 3:
             if (WipeStatGet() == 0) {

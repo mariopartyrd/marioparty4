@@ -79,35 +79,35 @@ s32 fn_1_15670(StructBss84* arg0, s32 arg1) {
     return 0;
 }
 
-s32 fn_1_156AC(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    if (arg0->motion[arg2] == Hu3DMotionIDGet(arg0->model[0])) {
+s32 fn_1_156AC(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    if (arg0->mtnId[arg2] == Hu3DMotionIDGet(arg0->mdlId[0])) {
         if (arg4 != 0) {
-            if (Hu3DMotionTimeGet(arg0->model[arg1]) >= arg3) {
+            if (Hu3DMotionTimeGet(arg0->mdlId[arg1]) >= arg3) {
                 return 1;
             }
-        } else if (Hu3DMotionTimeGet(arg0->model[arg1]) <= arg3) {
+        } else if (Hu3DMotionTimeGet(arg0->mdlId[arg1]) <= arg3) {
             return 1;
         }
     }
     return 0;
 }
 
-void fn_1_157BC(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void fn_1_157BC(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     switch (arg4) {
         case 0:
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, HU3D_MOTATTR_NONE);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, HU3D_MOTATTR_NONE);
             break;
         case 1:
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, HU3D_MOTATTR_LOOP);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, HU3D_MOTATTR_LOOP);
             break;
         case 2:
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, HU3D_MOTATTR_PAUSE);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, HU3D_MOTATTR_PAUSE);
             break;
     }
 }
 
-void fn_1_15934(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    if (arg0->motion[arg2] != Hu3DMotionIDGet(arg0->model[arg1]) && arg0->motion[arg2] != Hu3DMotionShiftIDGet(arg0->model[arg1])) {
+void fn_1_15934(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    if (arg0->mtnId[arg2] != Hu3DMotionIDGet(arg0->mdlId[arg1]) && arg0->mtnId[arg2] != Hu3DMotionShiftIDGet(arg0->mdlId[arg1])) {
         fn_1_157BC(arg0, arg1, arg2, arg3, arg4);
     }
 }
@@ -244,7 +244,7 @@ void fn_1_188E0(StructBssE08* arg0, StructBssE08* arg1, float arg2, float arg3, 
     fn_1_15E9C(arg0, arg1, arg4);
 }
 
-void fn_1_1906C(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+void fn_1_1906C(OMOBJ* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
     Vec sp2C;
     Vec sp20;
     Vec sp14;
@@ -259,7 +259,7 @@ void fn_1_1906C(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 a
     sp20.x = arg3->x;
     sp20.y = arg3->y;
     sp20.z = arg3->z;
-    var_f31 = Hu3DData[arg0->model[arg1]].rot.y;
+    var_f31 = Hu3DData[arg0->mdlId[arg1]].rot.y;
     if (var_f31 < 0.0f) {
         var_f31 += 360.0f;
     } else if (var_f31 >= 360.0f) {
@@ -274,7 +274,7 @@ void fn_1_1906C(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 a
         if (arg1 == 0) {
             omSetTra(arg0, sp14.x, sp14.y, sp14.z);
         } else {
-            Hu3DModelPosSet(arg0->model[arg1], sp14.x, sp14.y, sp14.z);
+            Hu3DModelPosSet(arg0->mdlId[arg1], sp14.x, sp14.y, sp14.z);
         }
     }
     if (arg8 == 0) {
@@ -305,27 +305,27 @@ void fn_1_1906C(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 a
     if (arg1 == 0) {
         arg0->rot.y = var_f31;
     } else {
-        Hu3DData[arg0->model[arg1]].rot.y = var_f31;
+        Hu3DData[arg0->mdlId[arg1]].rot.y = var_f31;
     }
 }
 
-void fn_1_19530(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6) {
+void fn_1_19530(OMOBJ* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6) {
     fn_1_1906C(arg0, arg1, arg2, arg3, 0, arg5, arg6, 1, 0);
 }
 
-void fn_1_19590(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6) {
+void fn_1_19590(OMOBJ* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6) {
     fn_1_1906C(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 0, 1);
 }
 
-void fn_1_195F4(omObjData* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6) {
+void fn_1_195F4(OMOBJ* arg0, s32 arg1, Vec* arg2, Vec* arg3, s32 arg4, s32 arg5, s32 arg6) {
     fn_1_1906C(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1, 1);
 }
 
-void fn_1_19658(omObjData* arg0, s32 arg1, float arg2, s32 arg3) {
+void fn_1_19658(OMOBJ* arg0, s32 arg1, float arg2, s32 arg3) {
     float var_f31;
     float var_f30;
 
-    var_f31 = Hu3DData[arg0->model[arg1]].rot.y;
+    var_f31 = Hu3DData[arg0->mdlId[arg1]].rot.y;
     if (var_f31 < 0.0f) {
         var_f31 += 360.0f;
     } else if (var_f31 >= 360.0f) {
@@ -356,7 +356,7 @@ void fn_1_19658(omObjData* arg0, s32 arg1, float arg2, s32 arg3) {
     if (arg1 == 0) {
         arg0->rot.y = var_f31;
     } else {
-        Hu3DData[arg0->model[arg1]].rot.y = var_f31;
+        Hu3DData[arg0->mdlId[arg1]].rot.y = var_f31;
     }
 }
 
@@ -470,7 +470,7 @@ float fn_1_19CC0(s32 arg0, s32 arg1) {
     return sqrtf(spC.x * spC.x + spC.z * spC.z);
 }
 
-void fn_1_19E50(omObjData* arg0) {
+void fn_1_19E50(OMOBJ* arg0) {
     StructFn19894* temp_r31;
     float var_f30;
     float var_f27;
@@ -521,7 +521,7 @@ void fn_1_19E50(omObjData* arg0) {
     }
 }
 
-void fn_1_1A33C(Process* arg0, StructFn19894* arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5) {
+void fn_1_1A33C(HUPROCESS* arg0, StructFn19894* arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5) {
     fn_1_19974(arg1, 1);
     arg1->unk08 = arg2;
     strcpy(arg1->unk10, arg3);

@@ -40,11 +40,11 @@ typedef struct camera_view {
     s16 fov;
 } CameraView;
 
-omObjData *boardMainObj;
+OMOBJ *boardMainObj;
 u32 boardRandSeed;
-static omObjData *last5GfxObj;
-static omObjData *confettiObj;
-static omObjData *filterObj;
+static OMOBJ *last5GfxObj;
+static OMOBJ *confettiObj;
+static OMOBJ *filterObj;
 BoardTurnStartHook boardTurnStartFunc;
 BoardBowserHook boardBowserHook;
 void (*boardStarShowNextHook)(void);
@@ -55,10 +55,10 @@ BoardLightHook boardLightSetHook;
 static BoardFunc destroyFunc;
 static BoardFunc createFunc;
 static s32 cameraUseBackup;
-static omObjData *tauntObj;
-static omObjData *cameraObj;
-Process *boardObjMan;
-Process *boardMainProc;
+static OMOBJ *tauntObj;
+static OMOBJ *cameraObj;
+HUPROCESS *boardObjMan;
+HUPROCESS *boardMainProc;
 
 BoardCameraData boardCamera;
 static BoardCameraData cameraBackup;
@@ -77,10 +77,10 @@ static CameraView camViewTbl[] = {
 
 extern void BoardMGSetupPlayClear(void);
 
-static void InitBoardFunc(omObjData *object);
-static void ExecBoardFunc(omObjData *object);
-static void KillBoardFunc(omObjData *object);
-static void UpdateCamera(omObjData *object);
+static void InitBoardFunc(OMOBJ *object);
+static void ExecBoardFunc(OMOBJ *object);
+static void KillBoardFunc(OMOBJ *object);
+static void UpdateCamera(OMOBJ *object);
 
 static void CalcCameraTarget(BoardCameraData *camera);
 static void CalcCameraPos(BoardCameraData *camera);
@@ -173,14 +173,14 @@ void BoardObjectSetup(BoardFunc create, BoardFunc destroy)
     }
 }
 
-static void InitBoardFunc(omObjData *object)
+static void InitBoardFunc(OMOBJ *object)
 {
     boardMainProc = HuPrcChildCreate(MainFunc, 8194, 0x6000, 0, boardObjMan);
     HuPrcDestructorSet2(boardMainProc, DestroyMainFunc);
-    object->func = ExecBoardFunc;
+    object->objFunc = ExecBoardFunc;
 }
 
-static void ExecBoardFunc(omObjData *object)
+static void ExecBoardFunc(OMOBJ *object)
 {
     if(!_CheckFlag(FLAG_ID_MAKE(1, 16))) {
         return;
@@ -199,11 +199,11 @@ static void ExecBoardFunc(omObjData *object)
         if(boardMainProc) {
             HuPrcKill(boardMainProc);
         }
-        object->func = KillBoardFunc;
+        object->objFunc = KillBoardFunc;
     }
 }
 
-static void KillBoardFunc(omObjData *object)
+static void KillBoardFunc(OMOBJ *object)
 {
     if(boardMainProc) {
         return;
@@ -1188,7 +1188,7 @@ static inline void CalcCameraView(void)
     CalcCameraPos(camera);
 }
 
-static void UpdateCamera(omObjData *object)
+static void UpdateCamera(OMOBJ *object)
 {
     BoardCameraData *camera;
     Vec *target;
@@ -1324,7 +1324,7 @@ void BoardMGExit(void)
     _ClearFlag(FLAG_ID_MAKE(1, 19));
 }
 
-static void KillBoardMG(omObjData *object)
+static void KillBoardMG(OMOBJ *object)
 {
     if(!BoardMGDoneFlagGet()) {
         BoardEventFlagReset();
@@ -1332,7 +1332,7 @@ static void KillBoardMG(omObjData *object)
     }
 }
 
-static void ExecBoardMG(omObjData *object)
+static void ExecBoardMG(OMOBJ *object)
 {
     if(_CheckFlag(FLAG_ID_MAKE(1, 19))) {
         return;
@@ -1341,7 +1341,7 @@ static void ExecBoardMG(omObjData *object)
         BoardPlayerMotionShiftSet(GWSystem.player_curr, 1, 0.0f, 10.0f, HU3D_MOTATTR_LOOP);
         if(!_CheckFlag(FLAG_ID_MAKE(1, 21))) {
             _SetFlag(FLAG_ID_MAKE(1, 20));
-            object->func = KillBoardMG;
+            object->objFunc = KillBoardMG;
         }
     }
 }
@@ -1545,7 +1545,7 @@ typedef struct filter_work {
     float speed;
 } FilterWork;
 
-static void UpdateFilter(omObjData *object);
+static void UpdateFilter(OMOBJ *object);
 static void DrawFilter(HU3DMODEL *model, Mtx matrix);
 
 void BoardFilterFadeOut(s16 len)
@@ -1611,7 +1611,7 @@ s32 BoardFilterFadeCheck(void)
     return (filterObj != NULL) ? 0 : 1;
 }
 
-static void UpdateFilter(omObjData *object)
+static void UpdateFilter(OMOBJ *object)
 {
     float alpha;
     FilterWork *work = OM_GET_WORK_PTR(object, FilterWork);
@@ -1714,15 +1714,15 @@ typedef struct confetti_work {
     ConfettiParticle *data;
 } ConfettiWork;
 
-static void UpdateConfetti(omObjData *object);
-static void SpawnConfetti(omObjData *object);
-static void MoveConfetti(omObjData *object);
+static void UpdateConfetti(OMOBJ *object);
+static void SpawnConfetti(OMOBJ *object);
+static void MoveConfetti(OMOBJ *object);
 static void DrawConfetti(HU3DMODEL *model, Mtx matrix);
 
 
 void BoardConfettiCreate(Vec *pos, s16 count, float range)
 {
-    omObjData *object;
+    OMOBJ *object;
     ConfettiWork *work;
     if(confettiObj) {
         BoardConfettiStop();
@@ -1782,7 +1782,7 @@ void BoardConfettiStop(void)
     }
 }
 
-static void UpdateConfetti(omObjData *object)
+static void UpdateConfetti(OMOBJ *object)
 {
     ConfettiWork *work = OM_GET_WORK_PTR(object, ConfettiWork);
     if(work->kill || BoardIsKill()) {
@@ -1797,7 +1797,7 @@ static void UpdateConfetti(omObjData *object)
     }
 }
 
-static void SpawnConfetti(omObjData *object)
+static void SpawnConfetti(OMOBJ *object)
 {
     ConfettiWork *work = OM_GET_WORK_PTR(object, ConfettiWork);
     s32 i;
@@ -1842,7 +1842,7 @@ static void SpawnConfetti(omObjData *object)
     }
 }
 
-static void MoveConfetti(omObjData *object)
+static void MoveConfetti(OMOBJ *object)
 {
     ConfettiWork *work = OM_GET_WORK_PTR(object, ConfettiWork);
     s32 i;
@@ -1963,12 +1963,12 @@ static float last5GfxPosTbl[2][3][2] = {
     }
 };
 
-static void UpdateLast5Gfx(omObjData *object);
+static void UpdateLast5Gfx(OMOBJ *object);
 
 void BoardLast5GfxInit(void)
 {
     Last5GfxWork *work;
-    omObjData *object;
+    OMOBJ *object;
     s32 turn_remain;
     s32 lastF;
     turn_remain = GWSystem.max_turn-GWSystem.turn;
@@ -2029,7 +2029,7 @@ void BoardLast5GfxInit(void)
     }
 }
 
-static void UpdateLast5Gfx(omObjData *object)
+static void UpdateLast5Gfx(OMOBJ *object)
 {
     Last5GfxWork *work = OM_GET_WORK_PTR(object, Last5GfxWork);
     if(work->kill || BoardIsKill()) {
@@ -2123,7 +2123,7 @@ typedef struct taunt_work {
     u8 kill : 1;
 } TauntWork;
 
-static void TauntUpdate(omObjData *object);
+static void TauntUpdate(OMOBJ *object);
 
 void BoardTauntInit(void)
 {
@@ -2146,7 +2146,7 @@ void BoardTauntKill(void)
     _SetFlag(FLAG_ID_MAKE(1, 14));
 }
 
-static void TauntUpdate(omObjData *object)
+static void TauntUpdate(OMOBJ *object)
 {
     s32 i;
     s32 port;

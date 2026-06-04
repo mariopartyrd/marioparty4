@@ -31,8 +31,8 @@ typedef struct datalist_sprite {
 } DataListSprite; // Size 0x14
 
 typedef struct struct_bss8_24 {
-    omObjData *unk0;
-    void (*unk4)(omObjData *, ...);
+    OMOBJ *unk0;
+    void (*unk4)(OMOBJ *, ...);
     u8 unk8[0x50];
     s32 unk58;
     s32 unk5C;
@@ -71,7 +71,7 @@ extern s16 lbl_1_bss_20C0[10][70];
 extern s16 lbl_1_bss_20AC[10];
 extern s16 lbl_1_bss_20AA;
 
-extern Process *objman;
+extern HUPROCESS *objman;
 
 extern s16 lbl_1_bss_2E4;
 
@@ -91,7 +91,7 @@ void fn_1_D8D0(void);
 s32 fn_1_E72C(void);
 s32 fn_1_13418(void);
 
-void fn_1_18DF8(Process *arg0, StructBss8 *arg1);
+void fn_1_18DF8(HUPROCESS *arg0, StructBss8 *arg1);
 
 void fn_1_19018(void);
 s32 fn_1_194C8(s32 arg0);

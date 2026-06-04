@@ -10,7 +10,7 @@
 #include "game/wipe.h"
 
 s32 lbl_1_bss_8BC;
-Process *lbl_1_bss_8B8;
+HUPROCESS *lbl_1_bss_8B8;
 
 s32 fn_1_13B48(s32 arg0)
 {
@@ -121,7 +121,7 @@ void fn_1_13E2C(void)
     }
 }
 
-void fn_1_14150(Process *arg0)
+void fn_1_14150(HUPROCESS *arg0)
 {
     lbl_1_bss_8B8 = arg0;
     HuPrcChildCreate(fn_1_13E2C, 100, 0x2000, 0, HuPrcCurrentGet());

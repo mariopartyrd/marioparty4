@@ -100,8 +100,8 @@ static s16 mgPlayBattle[2];
 static u8 hiliteTimer;
 static u8 hiliteBlinkLen;
 static u8 hiliteShowF;
-static omObjData* mgSetupObj;
-static Process* mgSetupProc;
+static OMOBJ* mgSetupObj;
+static HUPROCESS* mgSetupProc;
 
 
 // sdata
@@ -116,15 +116,15 @@ static void SetupStatusLayout(void);
 static s32 GetMGType(void);
 static s32 GetMGTypeTeam(void);
 static void CreateMGSetup(void);
-static void UpdateMGSetup(omObjData*);
-static void CenterStatus(bitcopy*, omObjData*);
-static void SeparateStatus(bitcopy*, omObjData*);
-static void PopupVS(bitcopy*, omObjData*);
-static void FallMGType(bitcopy*, omObjData*);
-static void LuckyMGFall(bitcopy*, omObjData*);
+static void UpdateMGSetup(OMOBJ*);
+static void CenterStatus(bitcopy*, OMOBJ*);
+static void SeparateStatus(bitcopy*, OMOBJ*);
+static void PopupVS(bitcopy*, OMOBJ*);
+static void FallMGType(bitcopy*, OMOBJ*);
+static void LuckyMGFall(bitcopy*, OMOBJ*);
 static void HideLuckyValue(void);
-static void UpdateLuckyValue(bitcopy*, omObjData*);
-static void UpdateMGList(bitcopy*, omObjData*);
+static void UpdateLuckyValue(bitcopy*, OMOBJ*);
+static void UpdateMGList(bitcopy*, OMOBJ*);
 
 // FUNCTIONS //
 
@@ -647,7 +647,7 @@ static void CreateMGSetup(void) {
     HuSprGrpPosSet(temp_r31->unk_00[0], 288.0f, 240.0f);
 }
 
-static void UpdateMGSetup(omObjData* arg0) {
+static void UpdateMGSetup(OMOBJ* arg0) {
     bitcopy* var_r31;
     s32 var_r29;
 
@@ -695,7 +695,7 @@ static void UpdateMGSetup(omObjData* arg0) {
     }
 }
 
-static void CenterStatus(bitcopy* arg0, omObjData* arg1) {
+static void CenterStatus(bitcopy* arg0, OMOBJ* arg1) {
     s32 var_r31;
     bitcopy* temp_r30;
 
@@ -736,7 +736,7 @@ static void CenterStatus(bitcopy* arg0, omObjData* arg1) {
     temp_r30->unk_04 = 0;
 }
 
-static void SeparateStatus(bitcopy* arg0, omObjData* arg1) {
+static void SeparateStatus(bitcopy* arg0, OMOBJ* arg1) {
     Vec sp8;
     f32 temp_f30;
     f32 temp_f29;
@@ -782,7 +782,7 @@ static void SeparateStatus(bitcopy* arg0, omObjData* arg1) {
     }
 }
 
-static void PopupVS(bitcopy* arg0, omObjData* arg1) {
+static void PopupVS(bitcopy* arg0, OMOBJ* arg1) {
     f32 var_f30;
     f32 temp_f31;
     bitcopy* temp_r28;
@@ -823,7 +823,7 @@ static void PopupVS(bitcopy* arg0, omObjData* arg1) {
     }
 }
 
-static void FallMGType(bitcopy* arg0, omObjData* arg1) {
+static void FallMGType(bitcopy* arg0, OMOBJ* arg1) {
     Vec sp10;
     s16 sp8[3] = { 3, 1, 2 };
     Vec* temp_r4;
@@ -855,7 +855,7 @@ static void FallMGType(bitcopy* arg0, omObjData* arg1) {
     HuSprPosSet(temp_r31->unk_00[0], temp_r30, temp_r31->unk_1C[0][temp_r30].x, temp_r31->unk_1C[0][temp_r30].y);
 }
 
-static void LuckyMGFall(bitcopy* arg0, omObjData* arg1) {
+static void LuckyMGFall(bitcopy* arg0, OMOBJ* arg1) {
     u16 spC;
     u16 spA;
     s16 sp8[3] = { 3, 1, 2 };
@@ -926,7 +926,7 @@ static void HideLuckyValue(void) {
     HuSprAttrSet(temp_r31->unk_00[0], 9, 4);
 }
 
-static void UpdateLuckyValue(bitcopy* arg0, omObjData* arg1) {
+static void UpdateLuckyValue(bitcopy* arg0, OMOBJ* arg1) {
     s32 var_r23;
     f32 temp_f29;
     s32 temp_r3;
@@ -1028,7 +1028,7 @@ static GXColor hiliteColTbl[3] = {
     { 0xF8, 0xF2, 0x13, 0x00 }
 };
 
-static void UpdateMGList(bitcopy* arg0, omObjData* arg1) {
+static void UpdateMGList(bitcopy* arg0, OMOBJ* arg1) {
     f32 sp18[2];
     s32 sp14;
     f32 var_f26;

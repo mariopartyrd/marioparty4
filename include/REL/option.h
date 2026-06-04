@@ -6,7 +6,7 @@
 #include "dolphin/types.h"
 
 typedef struct {
-    /* 0x00 */ Process *process;
+    /* 0x00 */ HUPROCESS *process;
     /* 0x04 */ s16 window;
     /* 0x08 */ s32 id;
     /* 0x0C */ BOOL visible;
@@ -24,47 +24,47 @@ BOOL OptionPadCheck(u16 btn);
 BOOL OptionPadDStkRepCheck(u16 arg0);
 BOOL OptionPadDStkCheck(u16 arg0);
 
-omObjData *OptionCameraCreate(void);
-void OptionCameraKill(omObjData *object);
-void OptionCameraTargetSet(omObjData *object, float x, float y, float z, s32 duration);
-void OptionCameraFocusSet(omObjData *object, float x, float y, float z, s32 duration);
-void OptionCameraViewSet(omObjData *object, float zoom, float rot, float y, s32 duration);
-float OptionCameraZoomGet(omObjData *object);
-float OptionCameraRotGet(omObjData *object);
-void OptionCameraPosGet(omObjData *object, float *x, float *y, float *z);
+OMOBJ *OptionCameraCreate(void);
+void OptionCameraKill(OMOBJ *object);
+void OptionCameraTargetSet(OMOBJ *object, float x, float y, float z, s32 duration);
+void OptionCameraFocusSet(OMOBJ *object, float x, float y, float z, s32 duration);
+void OptionCameraViewSet(OMOBJ *object, float zoom, float rot, float y, s32 duration);
+float OptionCameraZoomGet(OMOBJ *object);
+float OptionCameraRotGet(OMOBJ *object);
+void OptionCameraPosGet(OMOBJ *object, float *x, float *y, float *z);
 
-void OptionCameraTargetGet(omObjData *object, float *x, float *y, float *z);
-s32 OptionCameraDoneCheck(omObjData *object);
+void OptionCameraTargetGet(OMOBJ *object, float *x, float *y, float *z);
+s32 OptionCameraDoneCheck(OMOBJ *object);
 
-omObjData *OptionRoomCreate(void);
-void OptionRoomKill(omObjData *object);
-void OptionRoomExecModeSet(omObjData *object, s32 execMode);
-s32 OptionRoomExecModeGet(omObjData *object);
+OMOBJ *OptionRoomCreate(void);
+void OptionRoomKill(OMOBJ *object);
+void OptionRoomExecModeSet(OMOBJ *object, s32 execMode);
+s32 OptionRoomExecModeGet(OMOBJ *object);
 
-omObjData *OptionGuideCreate(void);
-void OptionGuideKill(omObjData *object);
-void OptionGuideWalkExec(omObjData *object, float angleEnd, float camDist, s32 duration);
+OMOBJ *OptionGuideCreate(void);
+void OptionGuideKill(OMOBJ *object);
+void OptionGuideWalkExec(OMOBJ *object, float angleEnd, float camDist, s32 duration);
 
-omObjData *OptionStateCreate(void);
-void OptionStateKill(omObjData *object);
+OMOBJ *OptionStateCreate(void);
+void OptionStateKill(OMOBJ *object);
 
-omObjData *OptionRumbleCreate(void);
-void OptionRumbleKill(omObjData *object);
-void OptionRumbleExecModeSet(omObjData *object, s32 execMode);
-s32 OptionRumbleExecModeGet(omObjData *object);
-void OptionRumbleMotionShowStart(omObjData *object);
-void OptionRumbleMotionHideStart(omObjData *object);
-BOOL OptionRumbleMotionCheck(omObjData *object);
+OMOBJ *OptionRumbleCreate(void);
+void OptionRumbleKill(OMOBJ *object);
+void OptionRumbleExecModeSet(OMOBJ *object, s32 execMode);
+s32 OptionRumbleExecModeGet(OMOBJ *object);
+void OptionRumbleMotionShowStart(OMOBJ *object);
+void OptionRumbleMotionHideStart(OMOBJ *object);
+BOOL OptionRumbleMotionCheck(OMOBJ *object);
 
-omObjData *OptionSoundCreate(void);
-void OptionSoundKill(omObjData *object);
-void OptionSoundExecModeSet(omObjData *object, s32 execMode);
-s32 OptionSoundExecModeGet(omObjData *object);
+OMOBJ *OptionSoundCreate(void);
+void OptionSoundKill(OMOBJ *object);
+void OptionSoundExecModeSet(OMOBJ *object, s32 execMode);
+s32 OptionSoundExecModeGet(OMOBJ *object);
 
-omObjData *OptionRecordCreate(void);
-void OptionRecordKill(omObjData *object);
-void OptionRecordExecModeSet(omObjData *object, s32 execMode);
-s32 OptionRecordExecModeGet(omObjData *object);
+OMOBJ *OptionRecordCreate(void);
+void OptionRecordKill(OMOBJ *object);
+void OptionRecordExecModeSet(OMOBJ *object, s32 execMode);
+s32 OptionRecordExecModeGet(OMOBJ *object);
 
 OptionWindow *OptionWinCreate(s32 id);
 void OptionWinKill(OptionWindow *work);
@@ -79,13 +79,13 @@ void OptionWinChoiceSet(OptionWindow *work, s32 choice);
 void fn_1_A860(OptionWindow *work);
 void fn_1_A880(OptionWindow *work, s32 choice);
 
-extern Process *optionObjMan;
-extern omObjData *optionCamera;
-extern omObjData *optionRoom;
-extern omObjData *optionGuide;
-extern omObjData *optionState;
-extern omObjData *optionRumble;
-extern omObjData *optionSound;
-extern omObjData *optionRecord;
+extern HUPROCESS *optionObjMan;
+extern OMOBJ *optionCamera;
+extern OMOBJ *optionRoom;
+extern OMOBJ *optionGuide;
+extern OMOBJ *optionState;
+extern OMOBJ *optionRumble;
+extern OMOBJ *optionSound;
+extern OMOBJ *optionRecord;
 
 #endif

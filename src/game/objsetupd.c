@@ -165,7 +165,7 @@ void fn_800402FC(void) {
 }
 
 void fn_80040374(s16 tableIdx, s16 animIdx, s16 modelIdx, s16 motionId) {
-    Process* process;
+    HUPROCESS* process;
     FootstepWork* work;
 
     process = HuPrcChildCreate(fn_8004040C, 1, 0x1000, 0, HuPrcCurrentGet());
@@ -181,7 +181,7 @@ void fn_8004040C(void) {
     HU3DMODEL* modelData;
     s16* frames;
     FootstepWork* work;
-    Process* process;
+    HUPROCESS* process;
 
     process = HuPrcCurrentGet();
     work = (FootstepWork*)process->user_data;

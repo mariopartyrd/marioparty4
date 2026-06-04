@@ -5,7 +5,7 @@
 
 #include "dolphin.h"
 
-void fn_1_650C(Process *arg0);
+void fn_1_650C(HUPROCESS *arg0);
 void fn_1_676C(void);
 void fn_1_7C30(float arg0);
 void fn_1_7C50(s32 arg0);

@@ -11,10 +11,10 @@
 
 #include "REL/mpexDll.h"
 
-typedef void (*MpexDllUnkFunc2)(omObjData *, ...);
+typedef void (*MpexDllUnkFunc2)(OMOBJ *, ...);
 
 typedef struct MpexDllUnkStruct4 {
-    /* 0x00 */ omObjData *unk_00;
+    /* 0x00 */ OMOBJ *unk_00;
     /* 0x04 */ MpexDllUnkFunc2 unk_04;
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
@@ -50,10 +50,10 @@ void fn_1_168F0(s32 arg0, s32 arg1);
 void fn_1_16D3C(s32 arg0);
 void fn_1_17170(s32);
 void fn_1_17374(void);
-void fn_1_17B04(omObjData *arg0, MpexDllUnkStruct4 *arg1);
+void fn_1_17B04(OMOBJ *arg0, MpexDllUnkStruct4 *arg1);
 void fn_1_18610(MpexDllUnkStruct4 *arg0);
 void fn_1_18D30(MpexDllUnkStruct4 *arg0);
-void fn_1_18DCC(omObjData *arg0, MpexDllUnkStruct4 *arg1);
+void fn_1_18DCC(OMOBJ *arg0, MpexDllUnkStruct4 *arg1);
 s32 fn_1_19A98(MpexDllUnkStruct4 *arg0);
 void fn_1_1A3BC(void);
 void fn_1_1A5A4(s32 arg0);
@@ -85,9 +85,9 @@ MpexDllUnkStruct4 lbl_1_bss_5DC;
 MpexDllUnkStruct4 lbl_1_bss_45C[4];
 s32 lbl_1_bss_448[5];
 s32 lbl_1_bss_444;
-Process *lbl_1_bss_440;
+HUPROCESS *lbl_1_bss_440;
 
-void fn_1_1264C(Process *arg0)
+void fn_1_1264C(HUPROCESS *arg0)
 {
     s32 var_r31;
 
@@ -1834,7 +1834,7 @@ void fn_1_17374(void)
     }
 }
 
-void fn_1_17B04(omObjData *arg0, MpexDllUnkStruct4 *arg1)
+void fn_1_17B04(OMOBJ *arg0, MpexDllUnkStruct4 *arg1)
 {
     float var_f31;
     float var_f30;
@@ -2152,7 +2152,7 @@ void fn_1_18D30(struct MpexDllUnkStruct4 *arg0)
     HuSprAttrSet(var_r30, arg0->unk_48 + 0x32, 4);
 }
 
-void fn_1_18DCC(omObjData *arg0, MpexDllUnkStruct4 *arg1)
+void fn_1_18DCC(OMOBJ *arg0, MpexDllUnkStruct4 *arg1)
 {
     s32 sp8;
     float var_f31;
@@ -2715,7 +2715,7 @@ void fn_1_1B0DC(s32 arg0)
 
 void fn_1_1B294(void)
 {
-    omObjData *var_r31;
+    OMOBJ *var_r31;
 
     var_r31 = NULL;
     var_r31 = omAddObjEx(lbl_1_bss_440, 0x1000, 8, 8, -1, NULL);
@@ -2733,7 +2733,7 @@ void fn_1_1B294(void)
 void fn_1_1B338(void)
 {
     s32 var_r31;
-    omObjData *var_r30;
+    OMOBJ *var_r30;
 
     var_r31 = lbl_1_bss_448[0];
     lbl_1_bss_448[0] = var_r31 + 1;

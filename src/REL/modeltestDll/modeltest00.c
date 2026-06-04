@@ -8,19 +8,19 @@
 
 // -------------------------------------------------------------------------- //
 
-omObjData *unk_bss_9FC;
-omObjData *lbl_1_bss_9F8;
-omObjData *lbl_1_bss_9F4;
+OMOBJ *unk_bss_9FC;
+OMOBJ *lbl_1_bss_9F8;
+OMOBJ *lbl_1_bss_9F4;
 s16 lbl_1_bss_9EC[4];
 s16 lbl_1_bss_9AC[4][8];
-Process *lbl_1_bss_9A8;
+HUPROCESS *lbl_1_bss_9A8;
 u16 lbl_1_data_358[4] = { 1, 2, 4, 8 };
 
 // -------------------------------------------------------------------------- //
 
 void fn_1_34B0()
 {
-    Process *temp_r30;
+    HUPROCESS *temp_r30;
     s16 var_r31;
 
     OSReport("******* MODELTESTObjectSetup *********\n");
@@ -72,7 +72,7 @@ static inline void HuControlCamCenter(Vec *sp18, Vec *sp30)
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_37DC(omObjData *)
+void fn_1_37DC(OMOBJ *)
 {
     Vec sp3C;
     Vec sp30;
@@ -135,7 +135,7 @@ void fn_1_37DC(omObjData *)
 
 // -------------------------------------------------------------------------- //
 
-void fn_1_439C(omObjData *)
+void fn_1_439C(OMOBJ *)
 {
     s16 var_r31;
     f32 temp_f30;

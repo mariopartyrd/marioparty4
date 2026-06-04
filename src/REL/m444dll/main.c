@@ -66,8 +66,8 @@ s32 lbl_1_data_194[] = {
     DATA_MAKE_NUM(DATADIR_M444, 0x2B),
 };
 
-omObjData *lbl_1_bss_30C;
-Process *lbl_1_bss_308;
+OMOBJ *lbl_1_bss_30C;
+HUPROCESS *lbl_1_bss_308;
 s32 lbl_1_bss_300[2];
 s32 lbl_1_bss_2FC;
 Vec lbl_1_bss_2F0;
@@ -92,8 +92,8 @@ s32 lbl_1_bss_0;
 
 void fn_1_470(void);
 void fn_1_6E3C(void);
-void fn_1_6EDC(omObjData *object);
-void fn_1_7290(omObjData *object);
+void fn_1_6EDC(OMOBJ *object);
+void fn_1_7290(OMOBJ *object);
 
 void ObjectSetup(void)
 {
@@ -965,7 +965,7 @@ void fn_1_5E68(void);
 void fn_1_55B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4)
 {
     Work5774 *work;
-    Process *newProcess;
+    HUPROCESS *newProcess;
     float temp_f31;
 
     if (arg3 == 0) {
@@ -1010,7 +1010,7 @@ void fn_1_5774(void)
     Work5774 *temp_r31;
     s16 temp_r30;
     s16 temp_r29;
-    Process *temp_r28;
+    HUPROCESS *temp_r28;
     s16 temp_r27;
     s16 temp_r26;
     s16 temp_r25;
@@ -1129,7 +1129,7 @@ void fn_1_5E68(void)
     Work5774 *temp_r31;
     s16 temp_r30;
     s16 temp_r29;
-    Process *temp_r28;
+    HUPROCESS *temp_r28;
     s16 temp_r27;
     s16 temp_r26;
     s16 temp_r25;
@@ -1376,7 +1376,7 @@ void fn_1_6E3C(void)
 
 u16 lbl_1_data_240[] = { 1, 2 };
 
-void fn_1_6EDC(omObjData *object)
+void fn_1_6EDC(OMOBJ *object)
 {
     s16 i;
     for (i = 0; i < 1; i++) {
@@ -1401,7 +1401,7 @@ void fn_1_6EDC(omObjData *object)
 }
 
 void fn_1_7EBC(void);
-void fn_1_7290(omObjData *object)
+void fn_1_7290(OMOBJ *object)
 {
     Vec pos;
     Vec offset;

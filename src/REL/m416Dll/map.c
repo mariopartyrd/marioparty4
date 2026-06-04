@@ -27,8 +27,8 @@ Vec lbl_1_data_26C[8] = {
 Vec lbl_1_data_2CC[2] = { { 370, 615, -245 }, { -370, 615, -245 } };
 float lbl_1_data_2E4[2] = { 0, 1 };
 
-omObjData *lbl_1_bss_118C;
-omObjData *lbl_1_bss_1188;
+OMOBJ *lbl_1_bss_118C;
+OMOBJ *lbl_1_bss_1188;
 u32 lbl_1_bss_1184;
 void *lbl_1_bss_1180;
 float lbl_1_bss_117C;
@@ -37,17 +37,17 @@ float lbl_1_bss_116C[2];
 s16 lbl_1_bss_1168;
 s16 lbl_1_bss_968[256][4];
 
-void fn_1_7A74(omObjData *object);
-void fn_1_7D74(omObjData *object);
-void fn_1_7F30(omObjData *object);
-void fn_1_83B4(omObjData *object);
+void fn_1_7A74(OMOBJ *object);
+void fn_1_7D74(OMOBJ *object);
+void fn_1_7F30(OMOBJ *object);
+void fn_1_83B4(OMOBJ *object);
 
 void fn_1_89BC(HU3DMODEL *model, Mtx mtx);
 
 void fn_1_8EA0(void);
 void fn_1_8FF0(void);
 
-void fn_1_79D0(Process *objman)
+void fn_1_79D0(HUPROCESS *objman)
 {
     lbl_1_bss_118C = omAddObjEx(objman, 20, 2, 0, -1, fn_1_7A74);
     lbl_1_bss_1188 = omAddObjEx(objman, 20, 10, 0, -1, fn_1_7F30);
@@ -59,36 +59,36 @@ void fn_1_7A54(void)
     fn_1_8FF0();
 }
 
-void fn_1_7A74(omObjData *object)
+void fn_1_7A74(OMOBJ *object)
 {
     s16 i;
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M416, 0x00));
-    Hu3DModelShadowMapSet(object->model[0]);
-    Hu3DModelLayerSet(object->model[0], 0);
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M416, 0x00));
+    Hu3DModelShadowMapSet(object->mdlId[0]);
+    Hu3DModelLayerSet(object->mdlId[0], 0);
     object->trans.x = 0;
     object->trans.y = 0;
     object->trans.z = 0;
-    fn_1_8EB4(object->model[0]);
+    fn_1_8EB4(object->mdlId[0]);
     for (i = 0; i < 2; i++) {
-        lbl_1_bss_1174[i + 2] = Hu3DLLightCreate(object->model[0], 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        Hu3DLLightStaticSet(object->model[0], lbl_1_bss_1174[i + 2], 1);
-        Hu3DLLightPointSet(object->model[0], lbl_1_bss_1174[i + 2], 45, 0.8, 3);
-        Hu3DLLightColorSet(object->model[0], lbl_1_bss_1174[i + 2], 255, 160, 0, 255);
-        Hu3DLLightPosSet(object->model[0], lbl_1_bss_1174[i + 2], lbl_1_data_2CC[i].x, 475, lbl_1_data_2CC[i].z, 0, 1, 0);
+        lbl_1_bss_1174[i + 2] = Hu3DLLightCreate(object->mdlId[0], 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Hu3DLLightStaticSet(object->mdlId[0], lbl_1_bss_1174[i + 2], 1);
+        Hu3DLLightPointSet(object->mdlId[0], lbl_1_bss_1174[i + 2], 45, 0.8, 3);
+        Hu3DLLightColorSet(object->mdlId[0], lbl_1_bss_1174[i + 2], 255, 160, 0, 255);
+        Hu3DLLightPosSet(object->mdlId[0], lbl_1_bss_1174[i + 2], lbl_1_data_2CC[i].x, 475, lbl_1_data_2CC[i].z, 0, 1, 0);
     }
-    object->model[1] = Hu3DHookFuncCreate(fn_1_89BC);
-    Hu3DModelLayerSet(object->model[1], 1);
+    object->mdlId[1] = Hu3DHookFuncCreate(fn_1_89BC);
+    Hu3DModelLayerSet(object->mdlId[1], 1);
     lbl_1_bss_1184 = GXGetTexBufferSize(640, 480, GX_TF_RGBA8, GX_FALSE, 0);
     lbl_1_bss_1180 = HuMemDirectMallocNum(HEAP_DATA, lbl_1_bss_1184, MEMORY_DEFAULT_NUM);
     memset(lbl_1_bss_1180, 0, lbl_1_bss_1184);
-    object->func = fn_1_7D74;
+    object->objFunc = fn_1_7D74;
 }
 
-void fn_1_7D74(omObjData *object)
+void fn_1_7D74(OMOBJ *object)
 {
     s32 i;
     for (i = 0; i < 2; i++) {
-        Hu3DLLightPointSet(object->model[0], lbl_1_bss_1174[i + 2], (15 * sind(object->work[i])) + 45, 0.8, 3);
+        Hu3DLLightPointSet(object->mdlId[0], lbl_1_bss_1174[i + 2], (15 * sind(object->work[i])) + 45, 0.8, 3);
         object->work[i] += 8.0f;
         if (object->work[i] > 360.0f) {
             object->work[i] -= 360.0f;
@@ -96,7 +96,7 @@ void fn_1_7D74(omObjData *object)
     }
 }
 
-void fn_1_7F30(omObjData *object)
+void fn_1_7F30(OMOBJ *object)
 {
     Mtx sp68;
     Mtx sp38;
@@ -119,10 +119,10 @@ void fn_1_7F30(omObjData *object)
             temp_r24 = Hu3DModelLink(temp_r25);
             temp_r26 = temp_r24;
         }
-        object->model[temp_r30] = temp_r26;
+        object->mdlId[temp_r30] = temp_r26;
         Hu3DModelLayerSet(temp_r26, 2);
-        fn_1_8EB4(object->model[temp_r30]);
-        Hu3DModelPosSet(object->model[temp_r30], lbl_1_data_2CC[temp_r30].x, lbl_1_data_2CC[temp_r30].y, lbl_1_data_2CC[temp_r30].z);
+        fn_1_8EB4(object->mdlId[temp_r30]);
+        Hu3DModelPosSet(object->mdlId[temp_r30], lbl_1_data_2CC[temp_r30].x, lbl_1_data_2CC[temp_r30].y, lbl_1_data_2CC[temp_r30].z);
     }
     temp_r23 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M416, 0x06));
     temp_r29 = &lbl_1_data_26C[0];
@@ -130,33 +130,33 @@ void fn_1_7F30(omObjData *object)
         for (temp_r27 = 0; temp_r27 < 4; temp_r27++, temp_r29++) {
             temp_r28 = (temp_r30 * 4) + 2;
             temp_r28 = temp_r27 + temp_r28;
-            object->model[temp_r28] = Hu3DParticleCreate(temp_r23, 50);
-            Hu3DParticleHookSet(object->model[temp_r28], fn_1_613C);
-            Hu3DParticleBlendModeSet(object->model[temp_r28], 1);
-            Hu3DModelLayerSet(object->model[temp_r28], 6);
-            Hu3DModelScaleSet(object->model[temp_r28], 0.5f, 0.7f, 0.5f);
+            object->mdlId[temp_r28] = Hu3DParticleCreate(temp_r23, 50);
+            Hu3DParticleHookSet(object->mdlId[temp_r28], fn_1_613C);
+            Hu3DParticleBlendModeSet(object->mdlId[temp_r28], 1);
+            Hu3DModelLayerSet(object->mdlId[temp_r28], 6);
+            Hu3DModelScaleSet(object->mdlId[temp_r28], 0.5f, 0.7f, 0.5f);
             MTXTrans(sp68, lbl_1_data_2CC[temp_r30].x, lbl_1_data_2CC[temp_r30].y, lbl_1_data_2CC[temp_r30].z);
             MTXTrans(sp38, 0, -150, 0);
             MTXConcat(sp68, sp38, sp68);
             MTXTrans(sp8, temp_r29->x, temp_r29->y, temp_r29->z);
             MTXConcat(sp68, sp8, sp68);
-            Hu3DModelPosSet(object->model[temp_r28], sp68[0][3], sp68[1][3], sp68[2][3]);
+            Hu3DModelPosSet(object->mdlId[temp_r28], sp68[0][3], sp68[1][3], sp68[2][3]);
         }
     }
     for (temp_r30 = 0; temp_r30 < 2; temp_r30++) {
-        lbl_1_bss_1174[temp_r30] = Hu3DLLightCreate(object->model[temp_r30], 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        Hu3DLLightStaticSet(object->model[temp_r30], lbl_1_bss_1174[temp_r30], 1);
-        Hu3DLLightPointSet(object->model[temp_r30], lbl_1_bss_1174[temp_r30], 1000, 0.8, 3);
-        Hu3DLLightColorSet(object->model[temp_r30], lbl_1_bss_1174[temp_r30], 255, 160, 0, 255);
-        Hu3DLLightPosSet(object->model[temp_r30], lbl_1_bss_1174[temp_r30], lbl_1_data_2CC[temp_r30].x, 475, lbl_1_data_2CC[temp_r30].z, 0, 1, 0);
+        lbl_1_bss_1174[temp_r30] = Hu3DLLightCreate(object->mdlId[temp_r30], 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Hu3DLLightStaticSet(object->mdlId[temp_r30], lbl_1_bss_1174[temp_r30], 1);
+        Hu3DLLightPointSet(object->mdlId[temp_r30], lbl_1_bss_1174[temp_r30], 1000, 0.8, 3);
+        Hu3DLLightColorSet(object->mdlId[temp_r30], lbl_1_bss_1174[temp_r30], 255, 160, 0, 255);
+        Hu3DLLightPosSet(object->mdlId[temp_r30], lbl_1_bss_1174[temp_r30], lbl_1_data_2CC[temp_r30].x, 475, lbl_1_data_2CC[temp_r30].z, 0, 1, 0);
     }
     object->work[0] = 0;
     object->work[1] = 45;
     lbl_1_bss_117C = 0;
-    object->func = fn_1_83B4;
+    object->objFunc = fn_1_83B4;
 }
 
-void fn_1_83B4(omObjData *object)
+void fn_1_83B4(OMOBJ *object)
 {
     float temp_f31;
 
@@ -189,7 +189,7 @@ void fn_1_83B4(omObjData *object)
         for (temp_r31 = 0; temp_r31 < 2; temp_r31++) {
             temp_f31 = sp8[temp_r31] - lbl_1_bss_116C[temp_r31];
             if (temp_f31 * lbl_1_data_2E4[temp_r31] <= 0.0f) {
-                temp_r26 = &Hu3DData[object->model[temp_r31]];
+                temp_r26 = &Hu3DData[object->mdlId[temp_r31]];
                 HuAudFXEmiterPlay(1467, &temp_r26->pos);
             }
             lbl_1_data_2E4[temp_r31] = temp_f31;
@@ -209,13 +209,13 @@ void fn_1_83B4(omObjData *object)
             MTXTrans(sp40, temp_r29->x, temp_r29->y, temp_r29->z);
             MTXConcat(sp130[temp_r31], sp40, sp10);
             MTXConcat(spA0, sp10, spA0);
-            Hu3DModelPosSet(object->model[temp_r27], spA0[0][3], spA0[1][3], spA0[2][3]);
+            Hu3DModelPosSet(object->mdlId[temp_r27], spA0[0][3], spA0[1][3], spA0[2][3]);
         }
     }
-    Hu3DModelRotSet(object->model[0], 0, lbl_1_bss_116C[0], 0);
-    Hu3DModelRotSet(object->model[1], 0, lbl_1_bss_116C[1], 0);
+    Hu3DModelRotSet(object->mdlId[0], 0, lbl_1_bss_116C[0], 0);
+    Hu3DModelRotSet(object->mdlId[1], 0, lbl_1_bss_116C[1], 0);
     for (temp_r31 = 0; temp_r31 < 2; temp_r31++) {
-        Hu3DLLightPointSet(object->model[temp_r31], lbl_1_bss_1174[temp_r31], (15 * sind(object->work[temp_r31])) + 45, 0.9, 3);
+        Hu3DLLightPointSet(object->mdlId[temp_r31], lbl_1_bss_1174[temp_r31], (15 * sind(object->work[temp_r31])) + 45, 0.9, 3);
         object->work[temp_r31] += 8.0f;
         if (object->work[temp_r31] > 360.0f) {
             object->work[temp_r31] -= 360.0f;

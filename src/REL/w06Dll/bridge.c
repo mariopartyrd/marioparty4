@@ -34,15 +34,15 @@ typedef struct {
 static void fn_1_8320(void);
 static void fn_1_8420(void);
 static s32 fn_1_8490(s32 arg0, s8 arg1);
-static void fn_1_8A58(omObjData *arg0);
+static void fn_1_8A58(OMOBJ *arg0);
 
 static s8 lbl_1_bss_E6;
 static s16 lbl_1_bss_E4;
 static s16 lbl_1_bss_E2;
 static s16 lbl_1_bss_D6[3][2];
 static s16 lbl_1_bss_D0[3];
-static omObjData *lbl_1_bss_CC;
-static Process *lbl_1_bss_C8;
+static OMOBJ *lbl_1_bss_CC;
+static HUPROCESS *lbl_1_bss_C8;
 
 static s16 lbl_1_data_418 = -1;
 
@@ -220,7 +220,7 @@ static s32 fn_1_8490(s32 arg0, s8 arg1) {
     float var_f29;
     float var_f28;
     s32 temp_r27;
-    omObjData *var_r26;
+    OMOBJ *var_r26;
     BssCCWork *temp_r29;
     s8 var_r28;
 
@@ -320,7 +320,7 @@ static s32 fn_1_8490(s32 arg0, s8 arg1) {
     return 0;
 }
 
-static void fn_1_8A58(omObjData *arg0) {
+static void fn_1_8A58(OMOBJ *arg0) {
     Vec sp8;
     u8 var_r30;
     BoardSpace *var_r29;

@@ -29,13 +29,13 @@ s32 flagFileTbl[] = {
 
 extern int SystemInitF;
 
-extern Process *objman;
+extern HUPROCESS *objman;
 extern Vec debugCamRot[2];
 extern Vec debugCamPos[2];
 extern float debugCamZoom[2];
 
-void DebugCamOutView(omObjData *obj);
-void DebugCamUpdate(omObjData *obj);
+void DebugCamOutView(OMOBJ *obj);
+void DebugCamUpdate(OMOBJ *obj);
 
 BOOL LanguageMenuExec(void)
 {
@@ -47,8 +47,8 @@ BOOL LanguageMenuExec(void)
     ANIMDATA *anim;
     s16 sprid;
     s16 choice;
-    omObjData *outView;
-    omObjData *updateCamera;
+    OMOBJ *outView;
+    OMOBJ *updateCamera;
     s16 modelId[5];
     s16 winId[5];
     

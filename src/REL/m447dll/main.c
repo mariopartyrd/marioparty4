@@ -50,8 +50,8 @@ void fn_1_1D34(UnkM447Struct_00* arg0);
 UnkM447Struct_06* lbl_1_bss_10;
 char lbl_1_bss_C_pad[4];
 UnkM447Struct_00* lbl_1_bss_8;
-Process* lbl_1_bss_4;
-Process* lbl_1_bss_0;
+HUPROCESS* lbl_1_bss_4;
+HUPROCESS* lbl_1_bss_0;
 
 const s32 lbl_1_rodata_10[] = {
     DATA_MAKE_NUM(DATADIR_M447, 53),
@@ -663,7 +663,7 @@ void fn_1_1884(UnkM447Struct_00* arg0) {
 
 void fn_1_1AFC(UnkM447Struct_00* arg0, s32 arg1, s32 arg2) {
     UnkM447Struct_03* temp_r3;
-    Process* var_r30;
+    HUPROCESS* var_r30;
 
     temp_r3 = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(*temp_r3), MEMORY_DEFAULT_NUM);
     temp_r3->unk00 = arg0->unk34[arg2 + 7 + arg1 * 6];

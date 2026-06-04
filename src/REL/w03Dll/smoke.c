@@ -11,11 +11,11 @@ typedef struct w03UnkWorkStruct {
 } w03UnkWorkStruct;
 
 extern w03State* lbl_1_bss_0;
-omObjData* lbl_1_bss_138[2];
-extern Process *boardObjMan;
+OMOBJ* lbl_1_bss_138[2];
+extern HUPROCESS *boardObjMan;
 extern s16 lbl_1_data_1E0;
 
-void fn_1_79E0(omObjData* arg0);
+void fn_1_79E0(OMOBJ* arg0);
 
 char* kemuri_strings[] = {
 	"kemuri1", "kemuri2", "kemuri3",
@@ -52,7 +52,7 @@ void fn_1_785C(void) {
     }
 }
 
-void fn_1_79E0(omObjData* arg0) {
+void fn_1_79E0(OMOBJ* arg0) {
     s32 var_r29;
     s32 i;
     w03UnkWorkStruct* temp_r30;

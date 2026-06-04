@@ -31,7 +31,7 @@ static s16 lbl_1_bss_C0;
 static s32 lbl_1_bss_BC;
 static s32 lbl_1_bss_B8;
 static u8 lbl_1_bss_94_gap[0x24];
-static Process *lbl_1_bss_90;
+static HUPROCESS *lbl_1_bss_90;
 
 static s32 lbl_1_data_208[8] = {
     0x00000123,

@@ -276,18 +276,18 @@ static s8 numTickets;
 static s8 last5Player;
 static s16 last5Space;
 static s16 hostMdl;
-static omObjData *last5RouletteObj;
-static Process *last5Proc;
-static omObjData *teamResultObj;
-static omObjData *hostMoveObj;
-static omObjData *lotteryDrawObj;
-static omObjData *lotteryDrawWheelObj;
+static OMOBJ *last5RouletteObj;
+static HUPROCESS *last5Proc;
+static OMOBJ *teamResultObj;
+static OMOBJ *hostMoveObj;
+static OMOBJ *lotteryDrawObj;
+static OMOBJ *lotteryDrawWheelObj;
 
 static Vec spacePos;
 static Vec focusPos;
 static Vec hostPos;
 static s16 hostMot[8];
-static omObjData *lotteryTicketObj[4];
+static OMOBJ *lotteryTicketObj[4];
 
 static void DestroyLast5(void);
 
@@ -304,30 +304,30 @@ static s32 CheckJump(s32 player);
 
 static void CreateLotteryDrawWheel(void);
 static void CreateLotteryDraw(Vec *pos);
-static void UpdateLotteryDraw(omObjData *object);
+static void UpdateLotteryDraw(OMOBJ *object);
 static void SetLotteryDrawState(s32 state);
 static s32 GetLotteryDrawState();
 static void KillLotteryDrawWheel(void);
-static void UpdateLotteryDrawWheel(omObjData *object);
+static void UpdateLotteryDrawWheel(OMOBJ *object);
 static void SetLotteryDrawWheelState(s32 state);
 static void ExecLotteryDraw(void);
 
 static void KillLotteryTicket(void);
 static void InitLotteryTicket(void);
-static void UpdateLotteryTicket(omObjData *object);
+static void UpdateLotteryTicket(OMOBJ *object);
 static void SetLotteryTicketState(s32 player, s32 state);
 static s32 GetLotteryTicketPlayer(void);
 static s32 CheckLotteryTicket(void);
 static void UpdateLotteryTicketMatch(s32 progress, s32 character);
 
 static void StartHostMove(Vec *from, Vec *to, s16 time);
-static void ExecHostMove(omObjData *object);
+static void ExecHostMove(OMOBJ *object);
 static s32 CheckHostMove(void);
 
 static void CreateStopWin(void);
 
 static void CreateLast5Roulette(void);
-static void UpdateLast5Roulette(omObjData *object);
+static void UpdateLast5Roulette(OMOBJ *object);
 
 static void SetLast5RouletteFade(s32 flag);
 static void SetLast5RouletteState(s32 state);
@@ -338,7 +338,7 @@ static void CreateTeamResult(void);
 static void GetTeamResultTarget(s32 team, Vec *pos);
 static void SetTeamResultTarget(s32 team, Vec *pos);
 static void KillTeamResult(void);
-static void UpdateTeamResult(omObjData *object);
+static void UpdateTeamResult(OMOBJ *object);
 
 void BoardLast5Exec()
 {
@@ -778,7 +778,7 @@ typedef struct lottery_draw_work {
 
 static void CreateLotteryDrawWheel(void)
 {
-	omObjData *object;
+	OMOBJ *object;
 	DrawWheelWork *work;
 	DrawWheelMdl *mdl;
 	s32 i;
@@ -811,7 +811,7 @@ static void CreateLotteryDrawWheel(void)
 
 static void CreateLotteryDraw(Vec *pos)
 {
-	omObjData *object;
+	OMOBJ *object;
 	LotteryDrawWork *work;
 	object = omAddObjEx(boardObjMan, 257, 0, 0, -1, UpdateLotteryDraw);
 	lotteryDrawObj = object;
@@ -826,7 +826,7 @@ static void CreateLotteryDraw(Vec *pos)
 	BoardModelAlphaSet(work->block_mdl, 255);
 }
 
-static void UpdateLotteryDraw(omObjData *object)
+static void UpdateLotteryDraw(OMOBJ *object)
 {
 	LotteryDrawWork *work = OM_GET_WORK_PTR(object, LotteryDrawWork);
 	Vec pos;
@@ -901,7 +901,7 @@ static void KillLotteryDrawWheel(void)
 	SetLotteryDrawWheelState(5);
 }
 
-static void UpdateLotteryDrawWheel(omObjData *object)
+static void UpdateLotteryDrawWheel(OMOBJ *object)
 {
 	DrawWheelWork *work = OM_GET_WORK_PTR(object, DrawWheelWork);
 	DrawWheelMdl *mdl = work->mdl;
@@ -1260,7 +1260,7 @@ static void InitLotteryTicket(void)
 	s16 sprite;
 	s32 member;
 	u8 ticket_player;
-	omObjData *object;
+	OMOBJ *object;
 	TicketWork *work;
 	currTicket = 0;
 	lotteryTicketObj[0] = lotteryTicketObj[1] = lotteryTicketObj[2] = lotteryTicketObj[3] = NULL;
@@ -1320,7 +1320,7 @@ static void InitLotteryTicket(void)
 	}
 }
 
-static void UpdateLotteryTicket(omObjData *object)
+static void UpdateLotteryTicket(OMOBJ *object)
 {
 	TicketWork *work = OM_GET_WORK_PTR(object, TicketWork);
 	if(work->kill || BoardIsKill()) {
@@ -1385,7 +1385,7 @@ static void UpdateLotteryTicket(omObjData *object)
 static void SetLotteryTicketState(s32 player, s32 state)
 {
 	TicketWork *work;
-	omObjData *object;
+	OMOBJ *object;
 	s32 i;
 	for(i=0; i<numTickets; i++) {
 		object = lotteryTicketObj[i];
@@ -1436,7 +1436,7 @@ static s32 GetLotteryTicketPlayer(void)
 {
 	s32 i;
 	for(i=0; i<numTickets; i++) {
-		omObjData *object = lotteryTicketObj[i];
+		OMOBJ *object = lotteryTicketObj[i];
 		TicketWork *work = OM_GET_WORK_PTR(object, TicketWork);
 		if(!work->done) {
 			return work->player;
@@ -1448,7 +1448,7 @@ static s32 GetLotteryTicketPlayer(void)
 static s32 CheckLotteryTicket(void)
 {
 	TicketWork *work;
-	omObjData *object;
+	OMOBJ *object;
 	
 	s32 i;
 	for(i=0; i<numTickets; i++) {
@@ -1465,7 +1465,7 @@ static void UpdateLotteryTicketMatch(s32 progress, s32 character)
 {
 	s32 i;
 	TicketWork *work;
-	omObjData *object;
+	OMOBJ *object;
 	s32 match_state;
 	
 	for(i=0; i<numTickets; i++) {
@@ -1496,7 +1496,7 @@ typedef struct host_move_work {
 static void StartHostMove(Vec *from, Vec *to, s16 time)
 {
 	HostMoveWork *work;
-	omObjData *object;
+	OMOBJ *object;
 	float duration;
 	float angle;
 	if(time <= 0) {
@@ -1520,7 +1520,7 @@ static void StartHostMove(Vec *from, Vec *to, s16 time)
 	BoardModelMotionSpeedSet(hostMdl, 3.0f);
 }
 
-static void ExecHostMove(omObjData *object)
+static void ExecHostMove(OMOBJ *object)
 {
 	HostMoveWork *work = OM_GET_WORK_PTR(object, HostMoveWork);
 	float angle;
@@ -1610,7 +1610,7 @@ typedef struct last5_roulette_work {
 static void CreateLast5Roulette(void)
 {
 	Last5RouletteWork *work;
-	omObjData *object;
+	OMOBJ *object;
 	s32 choice1, choice2;
 	Vec pos;
 	object = omAddObjEx(boardObjMan, 257, 0, 0, -1, UpdateLast5Roulette);
@@ -1641,7 +1641,7 @@ static void CreateLast5Roulette(void)
 	BoardModelMotionSpeedSet(work->model, 0);
 }
 
-static void UpdateLast5Roulette(omObjData *object)
+static void UpdateLast5Roulette(OMOBJ *object)
 {
 	Last5RouletteWork *work = OM_GET_WORK_PTR(object, Last5RouletteWork);
 	if(work->kill || BoardIsKill()) {
@@ -1765,7 +1765,7 @@ static void CreateTeamResultWork(TeamResultWork *work);
 static void CreateTeamResult(void)
 {
 	TeamResultWork *work;
-	omObjData *object;
+	OMOBJ *object;
 	s32 i;
 	s32 j;
 	s32 coins[2];
@@ -1927,7 +1927,7 @@ static void KillTeamResult(void)
 	work->kill = 1;
 }
 
-static void UpdateTeamResult(omObjData *object)
+static void UpdateTeamResult(OMOBJ *object)
 {
 	TeamResultWork *work;
 	s32 i, j;

@@ -129,8 +129,8 @@ static char *dvdMusTbl[] = { "sound/mu_016a.dvd", "sound/mu_047a.dvd", "sound/mu
 
 static s16 smPage;
 static s16 smSelectPosBackup[SM_PAGE_MAX];
-static omObjData *smMainObj;
-static omObjData *outViewObj;
+static OMOBJ *smMainObj;
+static OMOBJ *outViewObj;
 static PlayerConfig smPlayerCfg[4];
 static s16 smSelectPos;
 static s16 smSelectPosExit = -1;
@@ -142,14 +142,14 @@ static u16 keyDStkAll[4];
 static u16 keyDStkAllDown[4];
 static u16 keyDStkAllPrev[4] = {};
 
-static void SMInit(omObjData *object);
-static void SMRand8Tick(omObjData *object);
+static void SMInit(OMOBJ *object);
+static void SMRand8Tick(OMOBJ *object);
 
 void ObjectSetup(void)
 {
     static char *funcId = "SMOBJECTSETUP\n";
     s32 i;
-    Process *objman;
+    HUPROCESS *objman;
     Vec pos, dir;
 
     OSReport("ObjectSetup:%08x\n", ObjectSetup);
@@ -310,9 +310,9 @@ static void MoveSMCursor(s16 amount)
 }
 
 static s16 SMChangeChar(s16 player, s16 offset);
-static void SMUpdate(omObjData *object);
+static void SMUpdate(OMOBJ *object);
 
-static void SMInit(omObjData *object)
+static void SMInit(OMOBJ *object)
 {
     s32 i, j;
     OSReport("SMinit:%08x\n", SMInit);
@@ -351,15 +351,15 @@ static void SMInit(omObjData *object)
             }
         }
     }
-    object->func = SMUpdate;
+    object->objFunc = SMUpdate;
 }
 
 static void SMGroupGen(s32 index);
-static void SMCharInit(omObjData *object);
-static void SMPlayerCfgInit(omObjData *object);
-static void SMSound3DInit(omObjData *object);
+static void SMCharInit(OMOBJ *object);
+static void SMPlayerCfgInit(OMOBJ *object);
+static void SMSound3DInit(OMOBJ *object);
 
-static void SMUpdate(omObjData *object)
+static void SMUpdate(OMOBJ *object)
 {
     CalcBtns();
     DrawPage();
@@ -384,15 +384,15 @@ static void SMUpdate(omObjData *object)
         return;
     }
     if ((btnDown & PAD_BUTTON_A) || (btnDown & PAD_BUTTON_START)) {
-        object->func = SMCharInit;
+        object->objFunc = SMCharInit;
         return;
     }
     if (btnDown & PAD_BUTTON_Y) {
-        object->func = SMPlayerCfgInit;
+        object->objFunc = SMPlayerCfgInit;
         return;
     }
     if (btnDown & PAD_TRIGGER_Z) {
-        object->func = SMSound3DInit;
+        object->objFunc = SMSound3DInit;
         return;
     }
     if (btnDown & PAD_BUTTON_X) {
@@ -553,10 +553,10 @@ static void CharRandomize(void)
     }
 }
 
-static void SMCharUpdate(omObjData *object);
-static void SMExit(omObjData *object);
+static void SMCharUpdate(OMOBJ *object);
+static void SMExit(OMOBJ *object);
 
-static void SMCharInit(omObjData *object)
+static void SMCharInit(OMOBJ *object)
 {
     s32 i;
     for (i = 0; i < 8; i++) {
@@ -570,10 +570,10 @@ static void SMCharInit(omObjData *object)
         playerDoneF[i] = 0;
     }
     SMChangeChar(0, 0);
-    object->func = SMCharUpdate;
+    object->objFunc = SMCharUpdate;
 }
 
-static void SMCharUpdate(omObjData *object)
+static void SMCharUpdate(OMOBJ *object)
 {
     s32 i;
 
@@ -621,7 +621,7 @@ static void SMCharUpdate(omObjData *object)
             CharMotionInit(GWPlayerCfg[3].character);
         }
         WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 20);
-        object->func = SMExit;
+        object->objFunc = SMExit;
     }
     CalcBtns();
     for (i = 0; i < 4; i++) {
@@ -643,7 +643,7 @@ static void SMCharUpdate(omObjData *object)
             }
             else {
                 SMCharDataClose();
-                object->func = SMUpdate;
+                object->objFunc = SMUpdate;
                 return;
             }
         }
@@ -687,7 +687,7 @@ static void SMCharUpdate(omObjData *object)
     }
 }
 
-static void SMExit(omObjData *object)
+static void SMExit(OMOBJ *object)
 {
     s32 mg;
     if (WipeStatGet()) {
@@ -788,17 +788,17 @@ static void SMPlayerCfgDraw(void)
 }
 
 #undef DO_HILITE
-static void SMPlayerCfgUpdate(omObjData *object);
+static void SMPlayerCfgUpdate(OMOBJ *object);
 
-static void SMPlayerCfgInit(omObjData *object)
+static void SMPlayerCfgInit(OMOBJ *object)
 {
     playerCfgSelF = 0;
     playerCfgPlayerPos = 0;
     playerCfgOptionPos = 0;
-    object->func = SMPlayerCfgUpdate;
+    object->objFunc = SMPlayerCfgUpdate;
 }
 
-static void SMPlayerCfgUpdate(omObjData *object)
+static void SMPlayerCfgUpdate(OMOBJ *object)
 {
     s32 offset;
     SMPlayerCfgDraw();
@@ -829,7 +829,7 @@ static void SMPlayerCfgUpdate(omObjData *object)
             return;
         }
         if ((btnDown & PAD_BUTTON_B) || (btnDown & PAD_BUTTON_Y)) {
-            object->func = SMUpdate;
+            object->objFunc = SMUpdate;
         }
     }
     else if (keyDStkDown & SM_KEY_UP) {
@@ -896,11 +896,11 @@ static void SMPlayerCfgUpdate(omObjData *object)
         playerCfgSelF = 0;
     }
     else if (btnDown & PAD_BUTTON_Y) {
-        object->func = SMUpdate;
+        object->objFunc = SMUpdate;
     }
 }
 
-static void SMRand8Tick(omObjData *object)
+static void SMRand8Tick(OMOBJ *object)
 {
     rand8();
 }
@@ -912,17 +912,17 @@ static s16 emiCompVal;
 static s16 smSound3DPos;
 s16 lbl_1_bss_0;
 
-static void SMSound3DUpdate(omObjData *object);
+static void SMSound3DUpdate(OMOBJ *object);
 static void SMSound3DDraw(void);
 
-static void SMSound3DInit(omObjData *object)
+static void SMSound3DInit(OMOBJ *object)
 {
     s8 *data = msmSeGetIndexPtr(emiCompDataNo);
     emiCompVal = data[12];
-    object->func = SMSound3DUpdate;
+    object->objFunc = SMSound3DUpdate;
 }
 
-static void SMSound3DUpdate(omObjData *object)
+static void SMSound3DUpdate(OMOBJ *object)
 {
     float increment;
     s8 *data;
@@ -1040,7 +1040,7 @@ static void SMSound3DUpdate(omObjData *object)
     }
 
     if (btnDown & PAD_BUTTON_B) {
-        object->func = SMUpdate;
+        object->objFunc = SMUpdate;
     }
     SMSound3DDraw();
 }

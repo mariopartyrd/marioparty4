@@ -42,7 +42,7 @@ typedef struct PresentWork {
     /* 0x04 */ BOOL roomNotEmptyF;
     /* 0x08 */ BOOL constellationSelF;
     /* 0x0C */ s32 execMode;
-    /* 0x10 */ omObjData *object[PRESENT_MDL_MAX];
+    /* 0x10 */ OMOBJ *object[PRESENT_MDL_MAX];
     /* 0x228 */ PresentWindow *presentDescWindow;
     /* 0x22C */ PresentWindow *btnLegendWindow;
     /* 0x230 */ s16 cursor;
@@ -86,19 +86,19 @@ typedef struct PresentDistanceStruct {
     /* 0x04 */ float distance;
 } PresentDistanceStruct; /* size = 0x08 */
 
-static void ExecSelectRoom(omObjData *object);
-static void ChangeRoom(omObjData *object, s32 direction);
-static void ExecSelectPresent(omObjData *object);
-static void GetCursorPos(omObjData *object, float *x, float *y, float *z);
-static void SetCameraRot(omObjData *object, float rot, s32 duration);
-static void RotateCamera(omObjData *object);
-static BOOL CameraRotationDoneCheck(omObjData *object);
-static void ShowHidePresents(omObjData *object);
-static BOOL PresentUnlocked(omObjData *object, s32 room, s32 present);
-static s32 UnlockedPresents(omObjData *object, s32 room);
-static s32 MoveCursor(omObjData *object, s32 arg1);
+static void ExecSelectRoom(OMOBJ *object);
+static void ChangeRoom(OMOBJ *object, s32 direction);
+static void ExecSelectPresent(OMOBJ *object);
+static void GetCursorPos(OMOBJ *object, float *x, float *y, float *z);
+static void SetCameraRot(OMOBJ *object, float rot, s32 duration);
+static void RotateCamera(OMOBJ *object);
+static BOOL CameraRotationDoneCheck(OMOBJ *object);
+static void ShowHidePresents(OMOBJ *object);
+static BOOL PresentUnlocked(OMOBJ *object, s32 room, s32 present);
+static s32 UnlockedPresents(OMOBJ *object, s32 room);
+static s32 MoveCursor(OMOBJ *object, s32 arg1);
 static s32 TotalPresentsInRoom(s32 room);
-static void ExecPresentGet(omObjData *object);
+static void ExecPresentGet(OMOBJ *object);
 static s32 fn_1_393C(s32 arg0, s32 arg1);
 
 static UnkLightDataStruct lightTbl = {
@@ -106,7 +106,7 @@ static UnkLightDataStruct lightTbl = {
     { 0.0f, -400.0f, -500.0f },
     { 255, 255, 255, 255 },
 };
-static omObjFunc execModeTbl[] = { NULL, ExecSelectRoom, ExecSelectPresent, ExecPresentGet };
+static OMOBJFUNC execModeTbl[] = { NULL, ExecSelectRoom, ExecSelectPresent, ExecPresentGet };
 
 static const s32 presentMdlTbl[PRESENT_MDL_MAX] = {
     DATA_MAKE_NUM(DATADIR_PRESENT, 108),
@@ -356,14 +356,14 @@ static const RoomData roomTbl[10] = {
     },
 };
 
-omObjData *PresentCreate(void)
+OMOBJ *PresentCreate(void)
 {
     s32 i;
     s32 j;
     s16 lightId;
     HU3DLIGHT *lightData;
 
-    omObjData *object = omAddObjEx(presentObjMan, 1003, 0, 0, 1, NULL);
+    OMOBJ *object = omAddObjEx(presentObjMan, 1003, 0, 0, 1, NULL);
     PresentWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(PresentWork), MEMORY_DEFAULT_NUM);
     object->data = work;
     work->room = 0;
@@ -393,17 +393,17 @@ omObjData *PresentCreate(void)
 
     for (i = 0; i < PRESENT_MDL_MAX; i++) {
         work->object[i] = omAddObjEx(presentObjMan, 1003, 1, 0, 1, NULL);
-        work->object[i]->model[0] = Hu3DModelCreateFile(presentMdlTbl[i]);
-        Hu3DModelLayerSet(work->object[i]->model[0], 0);
-        Hu3DModelAttrSet(work->object[i]->model[0], HU3D_ATTR_DISPOFF);
+        work->object[i]->mdlId[0] = Hu3DModelCreateFile(presentMdlTbl[i]);
+        Hu3DModelLayerSet(work->object[i]->mdlId[0], 0);
+        Hu3DModelAttrSet(work->object[i]->mdlId[0], HU3D_ATTR_DISPOFF);
     }
 
     for (j = 0; j < 8; j++) {
         for (i = 0; i < 6; i++) {
-            Hu3DModelLayerSet(work->object[i + 2 + j * 6 * 2]->model[0], 1);
+            Hu3DModelLayerSet(work->object[i + 2 + j * 6 * 2]->mdlId[0], 1);
         }
     }
-    Hu3DModelShadowMapSet(work->object[0]->model[0]);
+    Hu3DModelShadowMapSet(work->object[0]->mdlId[0]);
     ShowHidePresents(object);
     work->cursor = espEntry(DATA_MAKE_NUM(DATADIR_PRESENT, 135), 0, 0);
     espDispOff(work->cursor);
@@ -417,7 +417,7 @@ omObjData *PresentCreate(void)
     return object;
 }
 
-void PresentKill(omObjData *object)
+void PresentKill(OMOBJ *object)
 {
     s32 i;
 
@@ -426,23 +426,23 @@ void PresentKill(omObjData *object)
     PresentWinKill(work->btnLegendWindow);
 
     for (i = 0; i < PRESENT_MDL_MAX; i++) {
-        Hu3DModelKill(work->object[i]->model[0]);
+        Hu3DModelKill(work->object[i]->mdlId[0]);
     }
     espKill(work->cursor);
     HuMemDirectFree(work);
 }
 
-void PresentExecModeSet(omObjData *object, s32 execMode)
+void PresentExecModeSet(OMOBJ *object, s32 execMode)
 {
     PresentWork *work = object->data;
 
     work->execMode = execMode;
-    object->func = execModeTbl[execMode];
-    object->unk10 = 0;
-    object->unk10 = 0;
+    object->objFunc = execModeTbl[execMode];
+    object->mode = 0;
+    object->mode = 0;
 }
 
-s32 PresentExecModeGet(omObjData *object)
+s32 PresentExecModeGet(OMOBJ *object)
 {
     PresentWork *work = object->data;
     return work->execMode;
@@ -459,7 +459,7 @@ static const s32 roomIdxTbl[CHARACTERS_MAX] = {
     ROOM_WALUIGI,
 };
 
-void PresentSelectedIDSet(omObjData *object, s32 id)
+void PresentSelectedIDSet(OMOBJ *object, s32 id)
 {
     PresentWork *work = object->data;
 
@@ -479,18 +479,18 @@ void PresentSelectedIDSet(omObjData *object, s32 id)
 
 static const s32 roomMessTbl[] = { 0, 1, 2, 3, 4, 0, 5, 6, 7, 0 };
 
-static void ExecSelectRoom(omObjData *object)
+static void ExecSelectRoom(OMOBJ *object)
 {
     Vec cursorPos;
     s32 mess;
 
     PresentWork *work = object->data;
 
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
             work->cursorVisibleF = FALSE;
             work->constellationSelF = FALSE;
-            object->unk10 = 1;
+            object->mode = 1;
         case 1:
             if (work->constellationSelF) {
                 PresentCameraTargetSet(presentCamera, 0.0f, 220.0f, 250.0f, 30);
@@ -500,7 +500,7 @@ static void ExecSelectRoom(omObjData *object)
                 PresentCameraTargetSet(presentCamera, 0.0f, 220.0f, 250.0f, 30);
                 PresentCameraFocusSet(presentCamera, 0.0f, 0.0f, -600.0f, 30);
             }
-            object->unk10 = 2;
+            object->mode = 2;
         case 2:
             if (!PresentCameraDoneCheck(presentCamera) && !work->presentDescWindow->state && !CameraRotationDoneCheck(object)) {
                 PresentWinAnimIn(work->presentDescWindow);
@@ -580,7 +580,7 @@ static void ExecSelectRoom(omObjData *object)
                     PresentFadeSprite(work->cursor, TRUE, 5);
                     work->cursorVisibleF = TRUE;
                 }
-                object->unk10 = 3;
+                object->mode = 3;
             }
             break;
         case 3:
@@ -591,7 +591,7 @@ static void ExecSelectRoom(omObjData *object)
                     PresentWinAnimOut(work->presentDescWindow);
                     PresentWinAnimOut(work->btnLegendWindow);
                     HuAudFXPlay(3);
-                    object->unk10 = 4;
+                    object->mode = 4;
                 }
                 else if (PresentPadCheck(PAD_BUTTON_A) && !work->constellationSelF) {
                     if (work->room != ROOM_TROPHY) {
@@ -611,7 +611,7 @@ static void ExecSelectRoom(omObjData *object)
                         PresentWinAnimOut(work->presentDescWindow);
                         PresentWinAnimOut(work->btnLegendWindow);
                         HuAudFXPlay(0);
-                        object->unk10 = 1;
+                        object->mode = 1;
                     }
                 }
                 else if (PresentPadDStkRepCheck(PAD_BUTTON_DOWN) && work->constellationSelF) {
@@ -621,17 +621,17 @@ static void ExecSelectRoom(omObjData *object)
                     PresentWinAnimOut(work->presentDescWindow);
                     PresentWinAnimOut(work->btnLegendWindow);
                     HuAudFXPlay(0);
-                    object->unk10 = 1;
+                    object->mode = 1;
                 }
                 else if (PresentPadDStkRepCheck(PAD_BUTTON_LEFT)) {
                     ChangeRoom(object, ROOM_CHANGE_LEFT);
                     HuAudFXPlay(0);
-                    object->unk10 = 2;
+                    object->mode = 2;
                 }
                 else if (PresentPadDStkRepCheck(PAD_BUTTON_RIGHT)) {
                     ChangeRoom(object, ROOM_CHANGE_RIGHT);
                     HuAudFXPlay(0);
-                    object->unk10 = 2;
+                    object->mode = 2;
                 }
             }
             break;
@@ -642,7 +642,7 @@ static void ExecSelectRoom(omObjData *object)
     RotateCamera(object);
 }
 
-static void ChangeRoom(omObjData *object, s32 direction)
+static void ChangeRoom(OMOBJ *object, s32 direction)
 {
     float rotAbs;
     float rot;
@@ -689,7 +689,7 @@ static void ChangeRoom(omObjData *object, s32 direction)
     SetCameraRot(object, rotTarget, duration);
 }
 
-static void ExecSelectPresent(omObjData *object)
+static void ExecSelectPresent(OMOBJ *object)
 {
     float cursorX;
     float cursorY;
@@ -697,7 +697,7 @@ static void ExecSelectPresent(omObjData *object)
     PresentWork *work = object->data;
     s32 idxInRoom = work->idxInRoom;
     s32 room = work->room;
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
             PresentCameraTargetSet(presentCamera, 0.0f, 220.0f, -120.0f, 30);
             PresentCameraFocusSet(presentCamera, 0.0f, 0.0f, -600.0f, 30);
@@ -715,7 +715,7 @@ static void ExecSelectPresent(omObjData *object)
                     }
                 }
             }
-            object->unk10 = 1;
+            object->mode = 1;
         case 1:
             if (PresentCameraDoneCheck(presentCamera)) {
                 break;
@@ -750,10 +750,10 @@ static void ExecSelectPresent(omObjData *object)
                 }
                 work->newCursorPos.x = cursorPos.x;
                 work->newCursorPos.y = cursorPos.y;
-                object->unk10 = 2;
+                object->mode = 2;
             }
             else {
-                object->unk10 = 3;
+                object->mode = 3;
                 break;
             }
         case 2:
@@ -764,13 +764,13 @@ static void ExecSelectPresent(omObjData *object)
                 break;
             }
             espPosSet(work->cursor, work->newCursorPos.x, work->newCursorPos.y);
-            object->unk10 = 3;
+            object->mode = 3;
         case 3:
             if (PresentPadCheck(PAD_BUTTON_B)) {
                 PresentWinAnimOut(work->presentDescWindow);
                 PresentWinAnimOut(work->btnLegendWindow);
                 HuAudFXPlay(3);
-                object->unk10 = 4;
+                object->mode = 4;
             }
             else if (work->roomNotEmptyF) {
                 if (PresentPadDStkRepCheck(PAD_BUTTON_LEFT) && PresentPadDStkCheck(PAD_BUTTON_UP)) {
@@ -806,7 +806,7 @@ static void ExecSelectPresent(omObjData *object)
             }
             if (idxInRoom != work->idxInRoom) {
                 work->idxInRoom = idxInRoom;
-                object->unk10 = 1;
+                object->mode = 1;
                 HuAudFXPlay(0);
             }
             break;
@@ -821,17 +821,17 @@ static void ExecSelectPresent(omObjData *object)
     }
 }
 
-static void GetCursorPos(omObjData *object, float *x, float *y, float *z)
+static void GetCursorPos(OMOBJ *object, float *x, float *y, float *z)
 {
     Mtx sp8;
 
-    Hu3DModelObjMtxGet(object->model[0], "cursor", sp8);
+    Hu3DModelObjMtxGet(object->mdlId[0], "cursor", sp8);
     *x = sp8[0][3];
     *y = sp8[1][3];
     *z = sp8[2][3];
 }
 
-static void SetCameraRot(omObjData *object, float rot, s32 duration)
+static void SetCameraRot(OMOBJ *object, float rot, s32 duration)
 {
     PresentWork *work = object->data;
 
@@ -841,7 +841,7 @@ static void SetCameraRot(omObjData *object, float rot, s32 duration)
     work->rotSpeed = 1.0f / duration;
 }
 
-static void RotateCamera(omObjData *object)
+static void RotateCamera(OMOBJ *object)
 {
     s32 i;
     PresentWork *work = object->data;
@@ -866,7 +866,7 @@ static void RotateCamera(omObjData *object)
     }
 }
 
-static BOOL CameraRotationDoneCheck(omObjData *object)
+static BOOL CameraRotationDoneCheck(OMOBJ *object)
 {
     PresentWork *work = object->data;
     return work->timeRot < 1.0f;
@@ -883,58 +883,58 @@ s32 roomIdxTbl2[CHARACTERS_MAX] = {
     ROOM_WALUIGI,
 };
 
-static void ShowHidePresents(omObjData *object)
+static void ShowHidePresents(OMOBJ *object)
 {
     PresentWork *work = object->data;
     s32 character;
     s32 i;
 
-    Hu3DModelAttrReset(work->object[0]->model[0], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrReset(work->object[0]->mdlId[0], HU3D_ATTR_DISPOFF);
 
     for (character = 0; character < CHARACTERS_MAX; character++) {
         s32 j;
         if (UnlockedPresents(object, roomIdxTbl2[character]) > 0) {
-            Hu3DModelAttrReset(work->object[character + 109]->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrReset(work->object[character + 109]->mdlId[0], HU3D_ATTR_DISPOFF);
         }
 
         for (j = 0, i = 0; i < PRESENT_COUNT_CHAR_ROOM; i++) {
             if (PresentUnlocked(object, roomIdxTbl2[character], i)) {
-                Hu3DModelAttrReset(work->object[character * PRESENT_COUNT_CHAR_ROOM * 2 + 2 + i]->model[0], HU3D_ATTR_DISPOFF);
-                Hu3DModelAttrReset(work->object[character * PRESENT_COUNT_CHAR_ROOM * 2 + 8 + i]->model[0], HU3D_ATTR_DISPOFF);
+                Hu3DModelAttrReset(work->object[character * PRESENT_COUNT_CHAR_ROOM * 2 + 2 + i]->mdlId[0], HU3D_ATTR_DISPOFF);
+                Hu3DModelAttrReset(work->object[character * PRESENT_COUNT_CHAR_ROOM * 2 + 8 + i]->mdlId[0], HU3D_ATTR_DISPOFF);
                 j++;
             }
         }
         if (j >= 6) {
-            Hu3DModelAttrReset(work->object[character + 118]->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrReset(work->object[character + 118]->mdlId[0], HU3D_ATTR_DISPOFF);
         }
     }
     if (UnlockedPresents(object, ROOM_MG) > 0) {
-        Hu3DModelAttrReset(work->object[117]->model[0], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrReset(work->object[117]->mdlId[0], HU3D_ATTR_DISPOFF);
     }
     for (i = 0; i < PRESENT_COUNT_MG_ROOM; i++) {
         if (PresentUnlocked(object, ROOM_MG, i)) {
-            Hu3DModelAttrReset(work->object[i + 98]->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrReset(work->object[i + 98]->mdlId[0], HU3D_ATTR_DISPOFF);
         }
     }
     if (PresentUnlocked(object, ROOM_TROPHY, 0)) {
-        Hu3DModelAttrReset(work->object[1]->model[0], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrReset(work->object[1]->mdlId[0], HU3D_ATTR_DISPOFF);
     }
     for (i = 0; i < CHARACTERS_MAX; i++) {
         if (PresentUnlocked(object, roomIdxTbl2[i], PRESENT_CONSTELLATION)) {
-            Hu3DModelAttrReset(work->object[i + 126]->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrReset(work->object[i + 126]->mdlId[0], HU3D_ATTR_DISPOFF);
         }
     }
 }
 
 static const s32 roomPresentOffsetTbl[] = { 0, 6, 12, 18, 24, 59, 30, 36, 42, 48 };
 
-static BOOL PresentUnlocked(omObjData *object, s32 room, s32 present)
+static BOOL PresentUnlocked(OMOBJ *object, s32 room, s32 present)
 {
     PresentWork *work = object->data;
     return work->presentUnlockedF[roomPresentOffsetTbl[room] + present] != 0;
 }
 
-static s32 UnlockedPresents(omObjData *object, s32 room)
+static s32 UnlockedPresents(OMOBJ *object, s32 room)
 {
     s32 i;
     s32 unlockedPresents;
@@ -950,7 +950,7 @@ static s32 UnlockedPresents(omObjData *object, s32 room)
 }
 
 /* Returns the index of the newly selected present inside the room */
-static s32 MoveCursor(omObjData *object, s32 arg1)
+static s32 MoveCursor(OMOBJ *object, s32 arg1)
 {
     PresentDistanceStruct availablePresents[10];
     Vec cursorPos;
@@ -1066,27 +1066,27 @@ static const s32 lbl_1_rodata_B18[10] = { 8, 20, 32, 44, 56, 0, 68, 80, 92, 0 };
 static const s32 constellationIdxTbl[10] = { 126, 127, 128, 129, 130, 0, 131, 132, 133, 0 };
 static const s32 roofIdxTbl[10] = { 118, 119, 120, 121, 122, 0, 123, 124, 125, 0 };
 
-static void ExecPresentGet(omObjData *object)
+static void ExecPresentGet(OMOBJ *object)
 {
     f32 weight;
     f32 rot;
 
     PresentWork *work = object->data;
 
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
             rot = 36.0f * work->room;
             SetCameraRot(object, rot, 1);
             RotateCamera(object);
-            Hu3DModelAttrSet(work->object[work->idxInRoom + lbl_1_rodata_B18[work->room]]->model[0], HU3D_ATTR_DISPOFF);
-            Hu3DModelAttrSet(work->object[roofIdxTbl[work->room]]->model[0], HU3D_ATTR_DISPOFF);
-            Hu3DModelAttrSet(work->object[constellationIdxTbl[work->room]]->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrSet(work->object[work->idxInRoom + lbl_1_rodata_B18[work->room]]->mdlId[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrSet(work->object[roofIdxTbl[work->room]]->mdlId[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrSet(work->object[constellationIdxTbl[work->room]]->mdlId[0], HU3D_ATTR_DISPOFF);
             work->presentFallingTime = 0.0f;
             work->presentFallingSpeed = 1.0f / 360.0f;
-            object->unk10 = 1;
+            object->mode = 1;
         case 1:
             WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 120);
-            object->unk10 = 2;
+            object->mode = 2;
         case 2:
             weight = sind(90.0f * work->presentFallingTime);
             weight *= weight;
@@ -1097,23 +1097,23 @@ static void ExecPresentGet(omObjData *object)
                 return;
             }
             if (fn_1_393C(work->room, work->idxInRoom)) {
-                FadeSpriteWithMultiplier(work->object[work->idxInRoom + lbl_1_rodata_B18[work->room]]->model[0], 1, 0.4f, 30);
+                FadeSpriteWithMultiplier(work->object[work->idxInRoom + lbl_1_rodata_B18[work->room]]->mdlId[0], 1, 0.4f, 30);
             }
-            object->unk10 = 3;
+            object->mode = 3;
         case 3:
             PresentWinAnimIn(work->presentDescWindow);
             PresentWinInsertMesSet(work->presentDescWindow, roomTbl[work->room].presentData[work->idxInRoom].nameMess, 0);
             PresentWinMesSet(work->presentDescWindow, MAKE_MESSID(0x32, 0x04));
             PresentWinMesWait(work->presentDescWindow);
-            object->unk10 = 4;
+            object->mode = 4;
         case 4:
             if (work->presentDescWindow->state) {
                 break;
             }
-            object->unk10 = 5;
+            object->mode = 5;
         case 5:
             PresentWinAnimOut(work->presentDescWindow);
-            object->unk10 = 6;
+            object->mode = 6;
         case 6:
             if (!work->presentDescWindow->state) {
                 PresentExecModeSet(object, PRESENT_MODE_NONE);

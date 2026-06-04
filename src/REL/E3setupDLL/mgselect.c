@@ -17,9 +17,9 @@ void HuSysVWaitSet(s16 vcount);
 #endif
 
 static s16 mgDefault;
-static omObjData *mgInterfaceObj;
-static omObjData *mgSelectObj;
-static omObjData *mgPicObj;
+static OMOBJ *mgInterfaceObj;
+static OMOBJ *mgSelectObj;
+static OMOBJ *mgPicObj;
 
 s32 lbl_2_bss_14;
 s16 lbl_2_bss_10;
@@ -30,18 +30,18 @@ static s16 lbl_2_bss_0[5];
 
 float lbl_2_data_0[] = { 0, 12000, 0, 0, 0, 0, 0, 0, -1 };
 
-static void StartMGSelect(omObjData *object);
-static void UpdatePad(omObjData *object);
-static void CreateMGSelect(omObjData *object);
-static void CreateMGPic(omObjData *object);
-static void UpdateMGInterface(omObjData *object);
-static void CreateMGInterface(omObjData *object);
+static void StartMGSelect(OMOBJ *object);
+static void UpdatePad(OMOBJ *object);
+static void CreateMGSelect(OMOBJ *object);
+static void CreateMGPic(OMOBJ *object);
+static void UpdateMGInterface(OMOBJ *object);
+static void CreateMGInterface(OMOBJ *object);
 
 void E3MGSelectInit()
 {
     s32 var_r29;
     s32 var_r30;
-    Process *var_r31;
+    HUPROCESS *var_r31;
 
     for (var_r29 = 0, var_r30 = 0; var_r29 < 4; var_r29++) {
         if (HuPadStatGet(var_r29) == 0) {
@@ -149,20 +149,20 @@ static float cursorYOfsTbl[] = { -100.0f, -50.0f, 0.0f, 50.0f, 100.0f };
 
 static s32 mgPicTbl[] = { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52 };
 
-static void StartMGSelect(omObjData *object)
+static void StartMGSelect(OMOBJ *object)
 {
     HuAudSeqPlay(0x2B);
     lbl_2_bss_14 = 0;
     lbl_2_bss_10 = -1;
     lbl_2_bss_C = 0x1E;
     lbl_2_bss_A = 0;
-    object->func = UpdatePad;
+    object->objFunc = UpdatePad;
     worstVcount = 0;
     object->work[0] = 0;
     object->work[1] = 0;
 }
 
-static void UpdatePad(omObjData *object)
+static void UpdatePad(OMOBJ *object)
 {
     s32 i;
     s32 players;
@@ -178,7 +178,7 @@ static void UpdatePad(omObjData *object)
     }
 }
 
-static void UpdateMGSelect(omObjData *object)
+static void UpdateMGSelect(OMOBJ *object)
 {
     mgSelect *var_r31;
     s32 var_r30;
@@ -315,7 +315,7 @@ static void UpdateMGSelect(omObjData *object)
     }
 }
 
-static void CreateMGSelect(omObjData *object)
+static void CreateMGSelect(OMOBJ *object)
 {
     mgSelect *temp_r31;
     s16 temp_r30;
@@ -329,7 +329,7 @@ static void CreateMGSelect(omObjData *object)
     ANIMDATA *temp_r23;
     float sp8[2];
 
-    omSetStatBit(object, OM_STAT_MODEL_PAUSED);
+    omSetStatBit(object, OM_STAT_MODELPAUSE);
     object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(mgSelect), MEMORY_DEFAULT_NUM);
     temp_r31 = object->data;
     index2 = 0;
@@ -410,10 +410,10 @@ static void CreateMGSelect(omObjData *object)
         var_r26++;
     }
     object->work[3] = 1;
-    object->func = UpdateMGSelect;
+    object->objFunc = UpdateMGSelect;
 }
 
-static void UpdateMGPic(omObjData *object)
+static void UpdateMGPic(OMOBJ *object)
 {
     mgPic *temp_r30 = (mgPic *)object->data;
     s16 temp_r29;
@@ -426,7 +426,7 @@ static void UpdateMGPic(omObjData *object)
     }
 }
 
-static void CreateMGPic(omObjData *object)
+static void CreateMGPic(OMOBJ *object)
 {
     mgPic *temp_r28;
     ANIMDATA *temp_r3_2;
@@ -436,7 +436,7 @@ static void CreateMGPic(omObjData *object)
     s16 index2;
     s16 group;
 
-    omSetStatBit(object, OM_STAT_MODEL_PAUSED);
+    omSetStatBit(object, OM_STAT_MODELPAUSE);
     object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(mgPic), MEMORY_DEFAULT_NUM);
     temp_r28 = object->data;
     index2 = 0;
@@ -461,12 +461,12 @@ static void CreateMGPic(omObjData *object)
     index2++;
     object->work[1] = object->work[0];
     HuSprAttrReset(temp_r3, object->work[1], HUSPR_ATTR_DISPOFF);
-    object->func = UpdateMGPic;
+    object->objFunc = UpdateMGPic;
 }
 
-static void UpdateMGInterface(omObjData *object) { void *sp8 = object->data; }
+static void UpdateMGInterface(OMOBJ *object) { void *sp8 = object->data; }
 
-static void CreateMGInterface(omObjData *object)
+static void CreateMGInterface(OMOBJ *object)
 {
     mgInterface *unkStruct;
     s16 index;
@@ -475,7 +475,7 @@ static void CreateMGInterface(omObjData *object)
     ANIMDATA *temp_r3_2;
     float sp8[2];
 
-    omSetStatBit(object, OM_STAT_MODEL_PAUSED);
+    omSetStatBit(object, OM_STAT_MODELPAUSE);
     object->data = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(mgInterface), MEMORY_DEFAULT_NUM);
     unkStruct = object->data;
     index2 = 0;
@@ -502,5 +502,5 @@ static void CreateMGInterface(omObjData *object)
     HuWinBGTPLvlSet(index, 0.0f);
     HuWinMesSpeedSet(index, 0);
     HuWinMesSet(index, MAKE_MESSID_PTR("\013\016\r PRESS START"));
-    object->func = UpdateMGInterface;
+    object->objFunc = UpdateMGInterface;
 }

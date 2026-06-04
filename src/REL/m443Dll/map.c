@@ -6,49 +6,49 @@
 #include "REL/m443Dll.h"
 #include "version.h"
 
-void fn_1_4AB4(omObjData *object);
-void fn_1_4D14(omObjData *object);
+void fn_1_4AB4(OMOBJ *object);
+void fn_1_4D14(OMOBJ *object);
 
 s32 lbl_1_data_240[5] = { 1, 2, 4, 8, 0x10 };
 
-void fn_1_4A5C(Process *process)
+void fn_1_4A5C(HUPROCESS *process)
 {
-    omObjData *var_r31 = omAddObjEx(process, 0x1E, 0xD, 0, -1, fn_1_4AB4);
+    OMOBJ *var_r31 = omAddObjEx(process, 0x1E, 0xD, 0, -1, fn_1_4AB4);
     var_r31->work[0] = 0;
 }
 
 void fn_1_4AB0(void) { }
 
-void fn_1_4AB4(omObjData *object)
+void fn_1_4AB4(OMOBJ *object)
 {
     s32 var_r30;
 
     omSetTra(object, 0.0f, 0.0f, 0.0f);
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 0));
-    Hu3DModelLayerSet(object->model[0], 2);
-    object->model[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 2));
-    Hu3DModelLayerSet(object->model[2], 2);
-    Hu3DModelAttrSet(object->model[2], HU3D_ATTR_DISPOFF);
-    object->model[3] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 4));
-    Hu3DModelLayerSet(object->model[3], 2);
-    Hu3DMotionSpeedSet(object->model[3], 0.0f);
-    object->model[4] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 3));
-    Hu3DModelLayerSet(object->model[4], 2);
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 0));
+    Hu3DModelLayerSet(object->mdlId[0], 2);
+    object->mdlId[2] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 2));
+    Hu3DModelLayerSet(object->mdlId[2], 2);
+    Hu3DModelAttrSet(object->mdlId[2], HU3D_ATTR_DISPOFF);
+    object->mdlId[3] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 4));
+    Hu3DModelLayerSet(object->mdlId[3], 2);
+    Hu3DMotionSpeedSet(object->mdlId[3], 0.0f);
+    object->mdlId[4] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 3));
+    Hu3DModelLayerSet(object->mdlId[4], 2);
     for (var_r30 = 0; var_r30 < 4; var_r30++) {
-        object->model[var_r30 + 5] = Hu3DModelLink(object->model[4]);
-        Hu3DModelLayerSet(object->model[var_r30 + 5], 2);
-        Hu3DModelScaleSet(object->model[var_r30 + 5], 0.93f, 0.93f, 0.93f);
+        object->mdlId[var_r30 + 5] = Hu3DModelLink(object->mdlId[4]);
+        Hu3DModelLayerSet(object->mdlId[var_r30 + 5], 2);
+        Hu3DModelScaleSet(object->mdlId[var_r30 + 5], 0.93f, 0.93f, 0.93f);
     }
     for (var_r30 = 0; var_r30 < 4; var_r30++) {
-        object->model[var_r30 + 9] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 1));
-        Hu3DModelLayerSet(object->model[var_r30 + 9], 2);
-        Hu3DMotionSpeedSet(object->model[var_r30 + 9], 0.0f);
+        object->mdlId[var_r30 + 9] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M443, 1));
+        Hu3DModelLayerSet(object->mdlId[var_r30 + 9], 2);
+        Hu3DMotionSpeedSet(object->mdlId[var_r30 + 9], 0.0f);
     }
     object->work[0] = 0;
     object->work[1] = 0;
     object->work[2] = 0;
     object->work[3] = 0;
-    object->func = fn_1_4D14;
+    object->objFunc = fn_1_4D14;
 }
 
 typedef struct M443DllMapUnkStruct {
@@ -56,7 +56,7 @@ typedef struct M443DllMapUnkStruct {
     float unk_30;
 } M443DllMapUnkStruct; /* size = 0x34 */
 
-void fn_1_4D14(omObjData *object)
+void fn_1_4D14(OMOBJ *object)
 {
     float var_f31;
     float var_f30;
@@ -83,8 +83,8 @@ void fn_1_4D14(omObjData *object)
             sp20.x = var_r30->unk_1C.x + (var_r30->unk_34 * (sind(var_r30->unk_28.y) * cosd(var_r30->unk_28.x)));
             sp20.y = var_r30->unk_1C.y + (var_r30->unk_34 * -sind(var_r30->unk_28.x));
             sp20.z = var_r30->unk_1C.z + (var_r30->unk_34 * (cosd(var_r30->unk_28.y) * cosd(var_r30->unk_28.x)));
-            Hu3DModelPosSetV(object->model[var_r29 + 4], &sp20);
-            fn_1_421C(object->model[var_r29 + 4], lbl_1_data_240[var_r29]);
+            Hu3DModelPosSetV(object->mdlId[var_r29 + 4], &sp20);
+            fn_1_421C(object->mdlId[var_r29 + 4], lbl_1_data_240[var_r29]);
         }
         object->work[1] += 1;
         var_f31 = 150.0f;
@@ -136,18 +136,18 @@ void fn_1_4D14(omObjData *object)
             sp2C[var_r29].y += var_f31;
             MTXMultVec(sp5C, &sp2C[var_r29], &sp14);
             VECAdd(&sp20, &sp14, &sp20);
-            Hu3DModelPosSetV(object->model[var_r29 + 9], &sp20);
-            Hu3DModelRotSet(object->model[var_r29 + 9], var_r30->unk_28.x, var_r30->unk_28.y, 0.0f);
-            Hu3DModelScaleSet(object->model[var_r29 + 9], 0.15f, 0.15f, 0.15f);
-            fn_1_421C(object->model[var_r29 + 9], lbl_1_data_240[var_r29 + 1]);
+            Hu3DModelPosSetV(object->mdlId[var_r29 + 9], &sp20);
+            Hu3DModelRotSet(object->mdlId[var_r29 + 9], var_r30->unk_28.x, var_r30->unk_28.y, 0.0f);
+            Hu3DModelScaleSet(object->mdlId[var_r29 + 9], 0.15f, 0.15f, 0.15f);
+            fn_1_421C(object->mdlId[var_r29 + 9], lbl_1_data_240[var_r29 + 1]);
             if (fn_1_42E4() >= 1) {
                 if (object->work[2] == 0) {
                     object->work[2] = 1;
                     object->work[3] = 0;
                 }
-                Hu3DMotionSpeedSet(object->model[var_r29 + 9], 0.95f);
+                Hu3DMotionSpeedSet(object->mdlId[var_r29 + 9], 0.95f);
                 if (var_r28 == 0) {
-                    Hu3DModelAttrSet(object->model[var_r29 + 9], HU3D_ATTR_DISPOFF);
+                    Hu3DModelAttrSet(object->mdlId[var_r29 + 9], HU3D_ATTR_DISPOFF);
                 }
             }
         }
@@ -168,15 +168,15 @@ void fn_1_4D14(omObjData *object)
             }
         }
         if (fn_1_42E4() == 2) {
-            Hu3DMotionSpeedSet(object->model[3], 1.0f);
+            Hu3DMotionSpeedSet(object->mdlId[3], 1.0f);
         }
         else if (fn_1_42E4() == 5) {
-            Hu3DModelAttrSet(object->model[3], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrSet(object->mdlId[3], HU3D_ATTR_DISPOFF);
         }
         if (fn_1_42E4() == 5) {
-            Hu3DModelAttrReset(object->model[2], HU3D_ATTR_DISPOFF);
-            Hu3DModelShadowMapSet(object->model[0]);
-            Hu3DModelShadowMapSet(object->model[2]);
+            Hu3DModelAttrReset(object->mdlId[2], HU3D_ATTR_DISPOFF);
+            Hu3DModelShadowMapSet(object->mdlId[0]);
+            Hu3DModelShadowMapSet(object->mdlId[2]);
         }
     }
 }

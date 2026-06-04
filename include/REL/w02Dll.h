@@ -26,13 +26,13 @@ typedef struct m02_dice {
     /* 0x24 */ float unk24;
     /* 0x28 */ s16 unk28;
     /* 0x2A */ u8 unk2A[0x2];
-    /* 0x2C */ Process *unk2C;
+    /* 0x2C */ HUPROCESS *unk2C;
     /* 0x30 */ s16 unk30[3];
     /* 0x36 */ s16 unk36[3];
-    /* 0x3C */ omObjData *unk3C[3];
+    /* 0x3C */ OMOBJ *unk3C[3];
     /* 0x48 */ s16 unk48[3];
     /* 0x4E */ u8 unk4E[0x2];
-    /* 0x50 */ omObjData *unk50[3];
+    /* 0x50 */ OMOBJ *unk50[3];
     /* 0x5C */ u8 unk5C[0x08];
     /* 0x64 */ Vec unk64[2];
     /* 0x7C */ Vec unk7C;

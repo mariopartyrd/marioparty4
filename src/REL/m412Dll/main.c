@@ -30,7 +30,7 @@ unkStruct3 lbl_1_bss_4D4[4];
 unkStruct2 lbl_1_bss_33C[6];
 unkStruct2 lbl_1_bss_2F8;
 unkStruct *lbl_1_bss_278[0x20];
-Process *lbl_1_bss_274;
+HUPROCESS *lbl_1_bss_274;
 Vec lbl_1_bss_268;
 Vec lbl_1_bss_25C;
 Vec lbl_1_bss_250;
@@ -166,15 +166,15 @@ void fn_1_7BC(void)
     }
 }
 
-void fn_1_894(omObjData *object)
+void fn_1_894(OMOBJ *object)
 {
     return;
 }
 
-void fn_1_898(omObjData *object)
+void fn_1_898(OMOBJ *object)
 {
-    object->model[0] = lbl_1_bss_79C;
-    object->func = &fn_1_894;
+    object->mdlId[0] = lbl_1_bss_79C;
+    object->objFunc = &fn_1_894;
 }
 
 void fn_1_8BC(void)
@@ -192,7 +192,7 @@ void fn_1_8BC(void)
     s32 var_r26;
     unkStruct2 *temp_r25;
     HSFTRANSFORM *temp_r24;
-    Process *var_r23;
+    HUPROCESS *var_r23;
     s32 temp_r22;
     ANIMDATA *var_r21;
     s16 var_r20;
@@ -573,7 +573,7 @@ void fn_1_2064(void)
     Vec sp10;
     f32 spC;
     f32 sp8;
-    Process *temp_r26;
+    HUPROCESS *temp_r26;
     s32 var_r30;
     unkStruct *temp_r28;
     unkStruct3 *temp_r29;
@@ -756,7 +756,7 @@ void fn_1_2A1C(void)
     unkStruct3 *temp_r27;
     unkStruct2 *temp_r31;
     s32 var_r21;
-    Process *var_r20;
+    HUPROCESS *var_r20;
 
     temp_r31 = HuPrcCurrentGet()->user_data;
     switch (temp_r31->unk24) {
@@ -944,7 +944,7 @@ void fn_1_3950(void)
     unkStruct3 *temp_r27;
     unkStruct2 *temp_r31;
     s32 var_r23;
-    Process *var_r22;
+    HUPROCESS *var_r22;
 
     temp_r31 = HuPrcCurrentGet()->user_data;
 loop_1:
@@ -2026,7 +2026,7 @@ void fn_1_ADC8(void)
     Vec sp8;
     f32 var_f31;
     void *temp_r28;
-    Process *var_r29;
+    HUPROCESS *var_r29;
     s32 var_r31;
     unkStruct3 *temp_r30;
 

@@ -23,8 +23,8 @@ typedef struct _M424DllMapStruct {
 } M424DllMapStruct; // sizeof 0x54
 
 // BSS
-Process *lbl_1_bss_54;
-omObjData *lbl_1_bss_50;
+HUPROCESS *lbl_1_bss_54;
+OMOBJ *lbl_1_bss_50;
 
 // DATA
 Vec lbl_1_data_E0 = { 0.0f, 3000.0f, 1.0f };
@@ -32,12 +32,12 @@ Vec lbl_1_data_EC = { 0.0f, 1.0f, 0.0f };
 Vec lbl_1_data_F8 = { 0.0f, 0.0f, 0.0f };
 
 // PROTO
-void fn_1_1BB8(omObjData *);
-void fn_1_1E1C(omObjData *);
-void fn_1_2130(omObjData *);
+void fn_1_1BB8(OMOBJ *);
+void fn_1_1E1C(OMOBJ *);
+void fn_1_2130(OMOBJ *);
 void fn_1_2438(f32);
 
-omObjData *fn_1_1AB8(Process *arg0)
+OMOBJ *fn_1_1AB8(HUPROCESS *arg0)
 {
     lbl_1_bss_54 = arg0;
     lbl_1_bss_50 = omAddObjEx(arg0, 0x7F, 6, 0, -1, fn_1_1BB8);
@@ -53,7 +53,7 @@ void fn_1_1B8C(void)
     fn_1_2130(lbl_1_bss_50);
 }
 
-void fn_1_1BB8(omObjData *arg0)
+void fn_1_1BB8(OMOBJ *arg0)
 {
     M424DllMapStruct *var_r30;
 
@@ -68,27 +68,27 @@ void fn_1_1BB8(omObjData *arg0)
     var_r30->unk48 = 0;
     var_r30->unk4C = 0;
     var_r30->unk50 = -1;
-    arg0->model[0] = Hu3DModelCreateFile(0x370017);
-    arg0->model[1] = Hu3DModelCreateFile(0x370018);
-    arg0->model[2] = Hu3DModelCreateFile(0x370019);
-    arg0->model[3] = Hu3DModelCreateFile(0x37001A);
-    arg0->model[4] = Hu3DModelCreateFile(0x37001B);
-    arg0->model[5] = Hu3DModelCreateFile(0x37001C);
-    Hu3DModelAttrSet(arg0->model[4], 1);
-    Hu3DMotionSpeedSet(arg0->model[1], var_r30->unk0);
-    Hu3DModelAttrSet(arg0->model[1], 0x40000001);
-    Hu3DMotionSpeedSet(arg0->model[0], 0.15f);
-    Hu3DModelAttrSet(arg0->model[0], 0x40000001);
-    Hu3DModelPosSet(arg0->model[2], 847.135f, 0.0f, 424.56f);
-    Hu3DMotionSpeedSet(arg0->model[4], 2.0f);
-    Hu3DModelAttrSet(arg0->model[4], 0x40000001);
-    Hu3DModelShadowMapSet(arg0->model[0]);
-    Hu3DModelShadowMapSet(arg0->model[1]);
-    Hu3DModelShadowMapSet(arg0->model[2]);
-    arg0->func = fn_1_1E1C;
+    arg0->mdlId[0] = Hu3DModelCreateFile(0x370017);
+    arg0->mdlId[1] = Hu3DModelCreateFile(0x370018);
+    arg0->mdlId[2] = Hu3DModelCreateFile(0x370019);
+    arg0->mdlId[3] = Hu3DModelCreateFile(0x37001A);
+    arg0->mdlId[4] = Hu3DModelCreateFile(0x37001B);
+    arg0->mdlId[5] = Hu3DModelCreateFile(0x37001C);
+    Hu3DModelAttrSet(arg0->mdlId[4], 1);
+    Hu3DMotionSpeedSet(arg0->mdlId[1], var_r30->unk0);
+    Hu3DModelAttrSet(arg0->mdlId[1], 0x40000001);
+    Hu3DMotionSpeedSet(arg0->mdlId[0], 0.15f);
+    Hu3DModelAttrSet(arg0->mdlId[0], 0x40000001);
+    Hu3DModelPosSet(arg0->mdlId[2], 847.135f, 0.0f, 424.56f);
+    Hu3DMotionSpeedSet(arg0->mdlId[4], 2.0f);
+    Hu3DModelAttrSet(arg0->mdlId[4], 0x40000001);
+    Hu3DModelShadowMapSet(arg0->mdlId[0]);
+    Hu3DModelShadowMapSet(arg0->mdlId[1]);
+    Hu3DModelShadowMapSet(arg0->mdlId[2]);
+    arg0->objFunc = fn_1_1E1C;
 }
 
-void fn_1_1E1C(omObjData *arg0)
+void fn_1_1E1C(OMOBJ *arg0)
 {
     f32 temp_f31;
     M424DllMapStruct *temp_r31;
@@ -146,12 +146,12 @@ void fn_1_1E1C(omObjData *arg0)
         else {
             temp_r31->unk48 = (temp_r31->unk48 - 1);
             if (temp_r31->unk48 != 0) {
-                Hu3DModelAttrReset(arg0->model[4], 1);
-                Hu3DModelAttrSet(arg0->model[5], 1);
+                Hu3DModelAttrReset(arg0->mdlId[4], 1);
+                Hu3DModelAttrSet(arg0->mdlId[5], 1);
             }
             else {
-                Hu3DModelAttrSet(arg0->model[4], 1);
-                Hu3DModelAttrReset(arg0->model[5], 1);
+                Hu3DModelAttrSet(arg0->mdlId[4], 1);
+                Hu3DModelAttrReset(arg0->mdlId[5], 1);
                 if (temp_r31->unk50 != -1) {
                     HuAudFXStop(temp_r31->unk50);
                     temp_r31->unk50 = -1;
@@ -161,12 +161,12 @@ void fn_1_1E1C(omObjData *arg0)
     }
     temp_r31->unk4 = (20.0f * temp_r31->unk0);
     MTXRotRad(temp_r31->unk8, 0x59, MTXDegToRad(temp_r31->unk4));
-    Hu3DMotionSpeedSet(arg0->model[1], temp_r31->unk0);
+    Hu3DMotionSpeedSet(arg0->mdlId[1], temp_r31->unk0);
 }
 
-void fn_1_2130(omObjData *arg0)
+void fn_1_2130(OMOBJ *arg0)
 {
-    arg0->func = NULL;
+    arg0->objFunc = NULL;
 }
 
 f32 fn_1_213C(void)
@@ -219,12 +219,12 @@ void fn_1_2438(f32 arg0)
     HSFDATA *temp_r29;
     s32 var_r28;
     HSFBITMAP *var_r27;
-    omObjData *var_r26;
+    OMOBJ *var_r26;
 
     if (lbl_1_bss_50 && lbl_1_bss_50->data) {
         var_r26 = lbl_1_bss_50;
         spC = lbl_1_bss_50->data;
-        temp_r30 = &Hu3DData[var_r26->model[2]];
+        temp_r30 = &Hu3DData[var_r26->mdlId[2]];
         temp_r29 = temp_r30->hsf;
         var_r31 = temp_r30->hsf->attribute;
         for (var_r28 = 0; var_r28 < temp_r29->attributeNum; var_r28++, var_r31++) {
@@ -240,7 +240,7 @@ void fn_1_2438(f32 arg0)
 
 void fn_1_252C(f32 arg8, s32 arg0)
 {
-    omObjData *sp10;
+    OMOBJ *sp10;
     M424DllMapStruct *temp_r31;
 
     if (lbl_1_bss_50 && lbl_1_bss_50->data) {
@@ -254,7 +254,7 @@ void fn_1_252C(f32 arg8, s32 arg0)
 
 f32 fn_1_25C0(void)
 {
-    omObjData *sp8;
+    OMOBJ *sp8;
     M424DllMapStruct *temp_r31;
 
     if (!lbl_1_bss_50) {
@@ -273,7 +273,7 @@ f32 fn_1_25C0(void)
 
 void fn_1_2670(s32 arg0, s32 arg1)
 {
-    omObjData *temp_r30;
+    OMOBJ *temp_r30;
     M424DllMapStruct *temp_r31;
 
     if (lbl_1_bss_50 && lbl_1_bss_50->data) {
@@ -282,7 +282,7 @@ void fn_1_2670(s32 arg0, s32 arg1)
         temp_r31->unk50 = HuAudFXPlay(0x629);
         temp_r31->unk48 = arg0;
         temp_r31->unk4C = arg1;
-        Hu3DMotionTimeSet(temp_r30->model[4], 0.0f);
+        Hu3DMotionTimeSet(temp_r30->mdlId[4], 0.0f);
     }
 }
 

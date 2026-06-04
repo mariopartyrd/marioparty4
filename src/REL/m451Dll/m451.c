@@ -66,8 +66,8 @@ s32 lbl_1_bss_B58;
 s32 lbl_1_bss_B54;
 Bss348Data lbl_1_bss_348[1];
 s32 lbl_1_bss_C[207];
-omObjData *lbl_1_bss_8;
-Process *lbl_1_bss_4[1];
+OMOBJ *lbl_1_bss_8;
+HUPROCESS *lbl_1_bss_4[1];
 s32 lbl_1_bss_0;
 
 CameraViewParams lbl_1_data_0[3]
@@ -232,7 +232,7 @@ void ObjectSetup(void)
     Vec up;
     Vec target;
     s32 i;
-    Process *objman;
+    HUPROCESS *objman;
     s32 type;
     type = GWSystem.mg_type;
     lbl_1_bss_B60 = type;
@@ -380,7 +380,7 @@ void fn_1_B2C(void)
     HSFTRANSFORM *temp_r27;
     s16 temp_r26;
     HSFTRANSFORM *temp_r25;
-    Process *temp_r18;
+    HUPROCESS *temp_r18;
     s32 temp_r17;
     ANIMDATA *sp2C[4];
     s32 sp10;
@@ -1133,7 +1133,7 @@ void fn_1_37C4(void)
     HSFTRANSFORM *temp_r28;
     s32 temp_r26;
     HSFTRANSFORM *temp_r25;
-    Process *temp_r24;
+    HUPROCESS *temp_r24;
     s32 temp_r23;
     Vec spCC;
     Vec spC0;

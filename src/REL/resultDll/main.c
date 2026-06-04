@@ -56,9 +56,9 @@ static StageSprite resultSprite[] = {
 
 static s16 rankNewGrpId = -1;
 
-omObjData *lbl_1_bss_188;
-static omObjData *outViewObj;
-Process *objman;
+OMOBJ *lbl_1_bss_188;
+static OMOBJ *outViewObj;
+HUPROCESS *objman;
 s16 resultMgNo;
 s32 resultReadEndF;
 s32 resultFastF;
@@ -147,7 +147,7 @@ static void ResultMain(void)
     s16 i;
     s16 winId;
     s16 btnDown;
-    Process *proc = HuPrcCurrentGet();
+    HUPROCESS *proc = HuPrcCurrentGet();
     HuAudSeqPlay(57);
     for (i = player = 0; i < 4; i++) {
         if (GWPlayerCfg[i].iscom) {
@@ -1243,7 +1243,7 @@ static void ResultTeamExec(void)
     HuWinKill(winId);
 }
 
-void CameraDebug(omObjData *object)
+void CameraDebug(OMOBJ *object)
 {
     Vec pos;
     Vec offset;

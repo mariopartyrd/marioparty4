@@ -21,7 +21,7 @@ typedef struct bss_7480_struct {
     Vec unk14;
 } Bss7480Struct;
 
-omObjData *lbl_1_bss_7880;
+OMOBJ *lbl_1_bss_7880;
 Bss7480Struct lbl_1_bss_7480[32];
 float lbl_1_bss_6480[1024];
 u8 lbl_1_bss_6080[1024];
@@ -29,16 +29,16 @@ u16 lbl_1_bss_5880[1024];
 
 s32 lbl_1_data_2C0[] = { 0x410005, 0x410006 };
 
-void fn_1_6A88(omObjData *object);
+void fn_1_6A88(OMOBJ *object);
 
-void fn_1_6860(Process *objman)
+void fn_1_6860(HUPROCESS *objman)
 {
     float temp_f31;
     Vec spC;
     s32 temp_r31;
     s32 temp_r30;
     s32 temp_r29;
-    omObjData *temp_r28;
+    OMOBJ *temp_r28;
     for (temp_r31 = 0; temp_r31 < 32; temp_r31++) {
         lbl_1_bss_7480[temp_r31].unk4 = lbl_1_bss_7480[temp_r31].unk0 = 0;
         lbl_1_bss_7480[temp_r31].unkC = lbl_1_bss_7480[temp_r31].unk10 = 0;
@@ -87,11 +87,11 @@ typedef struct work_6A88 {
 } Work6A88;
 
 void fn_1_6D7C(HU3DMODEL *model, Mtx mtx);
-void fn_1_6DB8(omObjData *object);
+void fn_1_6DB8(OMOBJ *object);
 
 s32 fn_1_8254(s32 arg0, Vec *arg1);
 
-void fn_1_6A88(omObjData *object)
+void fn_1_6A88(OMOBJ *object)
 {
     float temp_f31;
     float temp_f30;
@@ -138,13 +138,13 @@ void fn_1_6A88(omObjData *object)
         }
     }
     object->work[1] = 140;
-    object->model[0] = Hu3DHookFuncCreate(fn_1_6D7C);
-    Hu3DModelCameraSet(object->model[0], 8);
-    Hu3DModelLayerSet(object->model[0], 7);
-    object->func = fn_1_6DB8;
+    object->mdlId[0] = Hu3DHookFuncCreate(fn_1_6D7C);
+    Hu3DModelCameraSet(object->mdlId[0], 8);
+    Hu3DModelLayerSet(object->mdlId[0], 7);
+    object->objFunc = fn_1_6DB8;
 }
 
-void fn_1_6DBC(omObjData *object);
+void fn_1_6DBC(OMOBJ *object);
 
 void fn_1_6D7C(HU3DMODEL *model, Mtx mtx)
 {
@@ -153,13 +153,13 @@ void fn_1_6D7C(HU3DMODEL *model, Mtx mtx)
     }
 }
 
-void fn_1_6DB8(omObjData *object) { }
+void fn_1_6DB8(OMOBJ *object) { }
 
 void fn_1_7DF0(void);
 s32 fn_1_84D0(Work6A88 *arg0);
 void fn_1_85C4(Work6A88 *arg0, Vec *arg1);
 
-void fn_1_6DBC(omObjData *object)
+void fn_1_6DBC(OMOBJ *object)
 {
     Vec sp8;
     float temp_f31;

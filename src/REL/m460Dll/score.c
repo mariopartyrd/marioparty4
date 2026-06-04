@@ -21,18 +21,18 @@ typedef struct UnkM460DllScoreWork {
 typedef void (*UnkM460DllScoreFunc)(void);
 
 void fn_1_9020(s32 arg0);
-void fn_1_9050(omObjData *object);
+void fn_1_9050(OMOBJ *object);
 void fn_1_916C(void);
 void fn_1_91E4(void);
 void fn_1_9270(void);
 
 UnkM460DllScoreFunc lbl_1_data_380[3] = { fn_1_916C, fn_1_91E4, fn_1_9270 };
 
-Process *lbl_1_bss_54;
-omObjData *lbl_1_bss_50;
+HUPROCESS *lbl_1_bss_54;
+OMOBJ *lbl_1_bss_50;
 // ? lbl_1_rodata_3D0;
 
-void fn_1_8CAC(Process *process, s16 arg1)
+void fn_1_8CAC(HUPROCESS *process, s16 arg1)
 {
     UnkM460DllScoreWork *var_r31;
     u32 var_r30;
@@ -104,7 +104,7 @@ void fn_1_9020(s32 arg0)
     var_r31->unk_04 = 0;
 }
 
-void fn_1_9050(omObjData *arg0)
+void fn_1_9050(OMOBJ *arg0)
 {
     UnkM460DllScoreWork *var_r31;
     s16 var_r30;

@@ -29,12 +29,12 @@ typedef struct CameraWork {
     /* 0x98 */ float rotSpeed;
 } CameraWork; /* size = 0x9C */ // same as in option/camera.c
 
-static void ExecCameraObj(omObjData *object);
-static void ExecCamera(omObjData *object);
+static void ExecCameraObj(OMOBJ *object);
+static void ExecCamera(OMOBJ *object);
 
-omObjData *PresentCameraCreate(void)
+OMOBJ *PresentCameraCreate(void)
 {
-    omObjData *object = omAddObjEx(presentObjMan, 1001, 0, 0, 3, ExecCameraObj);
+    OMOBJ *object = omAddObjEx(presentObjMan, 1001, 0, 0, 3, ExecCameraObj);
     CameraWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, 156, MEMORY_DEFAULT_NUM);
     object->data = work;
 
@@ -63,12 +63,12 @@ omObjData *PresentCameraCreate(void)
     return object;
 }
 
-void PresentCameraKill(omObjData *object)
+void PresentCameraKill(OMOBJ *object)
 {
     HuMemDirectFree(object->data);
 }
 
-void PresentCameraTargetSet(omObjData *object, float x, float y, float z, s32 duration)
+void PresentCameraTargetSet(OMOBJ *object, float x, float y, float z, s32 duration)
 {
     CameraWork *work = object->data;
 
@@ -81,7 +81,7 @@ void PresentCameraTargetSet(omObjData *object, float x, float y, float z, s32 du
     work->eyeSpeed = 1.0f / duration;
 }
 
-void PresentCameraFocusSet(omObjData *object, float x, float y, float z, s32 duration)
+void PresentCameraFocusSet(OMOBJ *object, float x, float y, float z, s32 duration)
 {
     CameraWork *work = object->data;
 
@@ -94,7 +94,7 @@ void PresentCameraFocusSet(omObjData *object, float x, float y, float z, s32 dur
     work->targetSpeed = 1.0f / duration;
 }
 
-void PresentCameraViewSet(omObjData *object, float zoom, float rot, float y, s32 duration)
+void PresentCameraViewSet(OMOBJ *object, float zoom, float rot, float y, s32 duration)
 {
     CameraWork *work = object->data;
 
@@ -109,7 +109,7 @@ void PresentCameraViewSet(omObjData *object, float zoom, float rot, float y, s32
     work->rotSpeed = 1.0f / duration;
 }
 
-float PresentCameraZoomGet(omObjData *object)
+float PresentCameraZoomGet(OMOBJ *object)
 {
     CameraWork *work = object->data;
 
@@ -117,7 +117,7 @@ float PresentCameraZoomGet(omObjData *object)
     return zoom;
 }
 
-float PresentCameraRotGet(omObjData *object)
+float PresentCameraRotGet(OMOBJ *object)
 {
     CameraWork *work = object->data;
 
@@ -125,7 +125,7 @@ float PresentCameraRotGet(omObjData *object)
     return rot;
 }
 
-void PresentCameraPosGet(omObjData *object, float *x, float *y, float *z)
+void PresentCameraPosGet(OMOBJ *object, float *x, float *y, float *z)
 {
     CameraWork *work = object->data;
 
@@ -134,7 +134,7 @@ void PresentCameraPosGet(omObjData *object, float *x, float *y, float *z)
     *z = work->pos.z;
 }
 
-void PresentCameraTargetGet(omObjData *object, float *x, float *y, float *z)
+void PresentCameraTargetGet(OMOBJ *object, float *x, float *y, float *z)
 {
     CameraWork *work = object->data;
 
@@ -143,7 +143,7 @@ void PresentCameraTargetGet(omObjData *object, float *x, float *y, float *z)
     *z = work->target.z;
 }
 
-s32 PresentCameraDoneCheck(omObjData *object)
+s32 PresentCameraDoneCheck(OMOBJ *object)
 {
     CameraWork *work = object->data;
 
@@ -159,12 +159,12 @@ s32 PresentCameraDoneCheck(omObjData *object)
     return var_r30;
 }
 
-static void ExecCameraObj(omObjData *object)
+static void ExecCameraObj(OMOBJ *object)
 {
     ExecCamera(object);
 }
 
-static void ExecCamera(omObjData *object)
+static void ExecCamera(OMOBJ *object)
 {
     CameraWork *work = object->data;
     float weight;
@@ -216,7 +216,7 @@ static void ExecCamera(omObjData *object)
     Hu3DCameraPosSet(1, work->pos.x, work->pos.y, work->pos.z, work->up.x, work->up.y, work->up.z, work->target.x, work->target.y, work->target.z);
 }
 
-static void CameraExecDebug(omObjData *object)
+static void CameraExecDebug(OMOBJ *object)
 {
     if (HuPadBtn[0] & PAD_BUTTON_B) {
         CameraWork *work = object->data;
@@ -230,7 +230,7 @@ static void CameraExecDebug(omObjData *object)
     }
 }
 
-static void CameraPrintDebug(omObjData *object)
+static void CameraPrintDebug(OMOBJ *object)
 {
     CameraWork *work = object->data;
     print8(32, 64, 1.5f, "AT  : x=%.2f y=%.2f z=%.2f", work->target.x, work->target.y, work->target.z);

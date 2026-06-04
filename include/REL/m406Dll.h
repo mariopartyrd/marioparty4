@@ -17,7 +17,7 @@ void fn_1_1274(s32 arg0);
 void fn_1_1284(void);
 void fn_1_12BC(void);
 
-omObjData *fn_1_2308(Process *arg0);
+OMOBJ *fn_1_2308(HUPROCESS *arg0);
 void fn_1_2BEC(void);
 void fn_1_3064(s32 arg0);
 void fn_1_696C(float arg8);
@@ -30,7 +30,7 @@ s32 fn_1_94C0(Mtx arg0, s32 arg1, s32 arg2);
 void fn_1_B104(float arg8);
 void fn_1_B25C(void);
 void fn_1_B41C(void);
-void fn_1_D65C(Process *arg0);
+void fn_1_D65C(HUPROCESS *arg0);
 void fn_1_D8B0(void);
 
 extern UnkM406Struct2 *lbl_1_bss_B8;

@@ -52,11 +52,11 @@ static void DoInput(s32 arg0);
 static void DiceWaitFull(s32 arg0);
 static void DiceSetHit(s32 arg0);
 static void RollDestroy(void);
-static void DiceMain(omObjData *arg0);
+static void DiceMain(OMOBJ *arg0);
 static void DicePause(s32 arg0);
 static void DicePauseAll(void);
 static void DiceHideEffect(s32 arg0, s32 arg1);
-static void DiceDigitMain(omObjData *arg0);
+static void DiceDigitMain(OMOBJ *arg0);
 static void DiceDigitKill(DiceDigitWork *arg0);
 static void DiceKill(void);
 static void DiceDigitMove(DiceDigitWork *arg0, s32 arg1);
@@ -77,14 +77,14 @@ static s8 diceSize;
 s32 lbl_801D4098;
 static char sameRollCoinStr[8];
 static s8 tutorialRollF;
-static Process *rollProc;
+static HUPROCESS *rollProc;
 
 static s16 diceMdl[3] = { -1, -1, -1 };
 static s16 diceEff[3] = { -1, -1, -1 };
 static s16 rollWin = -1;
 
-static omObjData *diceObj[3] = { NULL, NULL, NULL };
-static omObjData *diceDigitObj[3] = { NULL, NULL, NULL };
+static OMOBJ *diceObj[3] = { NULL, NULL, NULL };
+static OMOBJ *diceDigitObj[3] = { NULL, NULL, NULL };
 static s32 diceSndStatus[3] = { -1, -1, -1 };
 
 static HU3DPARMANPARAM diceEffParam = { 0x0096, { 0x00, 0x00 }, // padding?
@@ -323,7 +323,7 @@ static void DiceCreate(s32 arg0)
     Vec sp1C;
     float temp_f30;
     float var_f31;
-    omObjData *temp_r31;
+    OMOBJ *temp_r31;
     DiceWork *temp_r30;
     s32 sp8;
     s32 spC[4] = { DATA_MAKE_NUM(DATADIR_BOARD, 0x18), DATA_MAKE_NUM(DATADIR_BOARD, 0x19), DATA_MAKE_NUM(DATADIR_BOARD, 0x1A),
@@ -453,7 +453,7 @@ static void RollDestroy(void)
     rollProc = NULL;
 }
 
-static void DiceMain(omObjData *arg0)
+static void DiceMain(OMOBJ *arg0)
 {
     DiceWork *temp_r29 = OM_GET_WORK_PTR(arg0, DiceWork);
     float temp_f29;
@@ -579,7 +579,7 @@ static void DiceMain(omObjData *arg0)
 
 static void DicePause(s32 arg0)
 {
-    omObjData *temp_r31 = diceObj[arg0];
+    OMOBJ *temp_r31 = diceObj[arg0];
 
     if (temp_r31) {
         OM_GET_WORK_PTR(temp_r31, DiceWork)->unk00_field0 = 1;
@@ -690,7 +690,7 @@ void BoardDiceVisibleSet(s32 arg0, s32 arg1)
 
 void BoardDiceValueSet(s32 arg0, s32 arg1)
 {
-    omObjData *temp_r27;
+    OMOBJ *temp_r27;
     DiceDigitWork *temp_r31;
     Vec spC;
     s16 sp8[2];
@@ -728,7 +728,7 @@ void BoardDiceValueSet(s32 arg0, s32 arg1)
     diceDigitObj[arg0] = temp_r27;
 }
 
-static void DiceDigitMain(omObjData *arg0)
+static void DiceDigitMain(OMOBJ *arg0)
 {
     DiceDigitWork *temp_r31 = OM_GET_WORK_PTR(arg0, DiceDigitWork);
 

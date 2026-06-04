@@ -23,7 +23,7 @@ typedef struct M420DllPlayerStruct {
     /* 0x1C */ Vec unk_1C;
     /* 0x28 */ Vec unk_28;
     /* 0x34 */ Vec unk_34;
-    /* 0x40 */ Process *unk_40;
+    /* 0x40 */ HUPROCESS *unk_40;
     /* 0x44 */ char unk44[4];
     /* 0x48 */ s32 unk_48;
     /* 0x4C */ s32 unk_4C;
@@ -63,6 +63,6 @@ s32 fn_1_8944(void);
 M420DllPlayerStruct *fn_1_1B8C(s32, s32);
 void fn_1_1E14(M420DllPlayerStruct *);
 
-extern Process *lbl_1_bss_4;
+extern HUPROCESS *lbl_1_bss_4;
 
 #endif

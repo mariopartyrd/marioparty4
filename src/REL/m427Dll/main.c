@@ -41,8 +41,8 @@ typedef struct M427DllStruct3 {
     f32 zoom;
 } M427DllStruct3;
 
-Process* lbl_1_bss_8C;
-omObjData* lbl_1_bss_88;
+HUPROCESS* lbl_1_bss_8C;
+OMOBJ* lbl_1_bss_88;
 s32 lbl_1_bss_84;
 s32 lbl_1_bss_80;
 s32 lbl_1_bss_7C;
@@ -57,15 +57,15 @@ s32 lbl_1_bss_58;
 s32 lbl_1_bss_54;
 s32 lbl_1_bss_50;
 s32 lbl_1_bss_4C;
-omObjData* lbl_1_bss_48;
+OMOBJ* lbl_1_bss_48;
 s32 lbl_1_bss_44;
 M427DllStruct2* lbl_1_bss_40;
 M427DllStruct lbl_1_bss_0[8];
 
-void fn_1_29C(omObjData*);
-void fn_1_300(omObjData*);
-void fn_1_1664(omObjData*);
-void fn_1_16C4(omObjData*);
+void fn_1_29C(OMOBJ*);
+void fn_1_300(OMOBJ*);
+void fn_1_1664(OMOBJ*);
+void fn_1_16C4(OMOBJ*);
 void fn_1_1864(s32);
 void fn_1_1954(void);
 void fn_1_1F34(void);
@@ -76,7 +76,7 @@ void fn_1_2518(s32);
 void fn_1_2704(void);
 void fn_1_272C(void);
 void fn_1_2790(void);
-void fn_1_2B20(omObjData* object);
+void fn_1_2B20(OMOBJ* object);
 void fn_1_2B28(void);
 void fn_1_2CE8(f32);
 void fn_1_2EE0(void);
@@ -107,7 +107,7 @@ M427DllStruct3 lbl_1_data_0[4] = {
 };
 
 void ObjectSetup(void) {
-    Process* var_r30;
+    HUPROCESS* var_r30;
     s32 var_r31;
 
     OSReport("******* M426ObjectSetup *********\n");
@@ -143,15 +143,15 @@ void ObjectSetup(void) {
     }
 }
 
-void fn_1_29C(omObjData* arg0) {
+void fn_1_29C(OMOBJ* arg0) {
     fn_1_32F4(lbl_1_bss_8C);
     fn_1_E98C(lbl_1_bss_8C);
     fn_1_1954();
     fn_1_21E8(0, 1);
-    arg0->func = fn_1_300;
+    arg0->objFunc = fn_1_300;
 }
 
-void fn_1_300(omObjData* arg0) {
+void fn_1_300(OMOBJ* arg0) {
     s32 sp10[2];
     s32 sp8[2];
     f32 var_f31;
@@ -455,14 +455,14 @@ void fn_1_300(omObjData* arg0) {
             }
             break;
         case 14:
-            arg0->func = fn_1_1664;
+            arg0->objFunc = fn_1_1664;
             break;
     }
     fn_1_1F34();
     fn_1_16C4(arg0);
 }
 
-void fn_1_1664(omObjData* arg0) {
+void fn_1_1664(OMOBJ* arg0) {
     if (WipeStatGet() == 0) {
         fn_1_EC54();
         fn_1_3A88();
@@ -475,11 +475,11 @@ void fn_1_1664(omObjData* arg0) {
     }
 }
 
-void fn_1_16C4(omObjData* arg0) {
+void fn_1_16C4(OMOBJ* arg0) {
     s32 var_r30;
 
     var_r30 = 0;
-    if ((WipeStatGet() != 0) || (arg0->func == fn_1_1664)) {
+    if ((WipeStatGet() != 0) || (arg0->objFunc == fn_1_1664)) {
         return;
     }
     if (omSysExitReq != 0) {
@@ -491,7 +491,7 @@ void fn_1_16C4(omObjData* arg0) {
         }
         lbl_1_bss_4C = 1;
         HuAudStreamFadeOut(0x1E);
-        arg0->func = fn_1_1664;
+        arg0->objFunc = fn_1_1664;
     }
 }
 
@@ -862,7 +862,7 @@ void fn_1_272C(void) {
 }
 
 void fn_1_2790(void) {
-    omObjData* var_r30;
+    OMOBJ* var_r30;
     s32 var_r31;
 
     Hu3DCameraCreate(1);
@@ -893,7 +893,7 @@ void fn_1_2790(void) {
     omAddObjEx(lbl_1_bss_8C, 0x3F, 0, 0, -1, fn_1_2B20);
 }
 
-void fn_1_2B20(omObjData* object) {}
+void fn_1_2B20(OMOBJ* object) {}
 
 void fn_1_2B24(void) {}
 

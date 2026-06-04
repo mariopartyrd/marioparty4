@@ -42,8 +42,8 @@ typedef struct M418DllUnkStruct7 {
 float fn_1_A920(float, float, float);
 float fn_1_A940(float, float, float, float);
 float fn_1_AA30(float, float, float, float);
-void fn_1_ABC4(omObjData *, s32, s32, s32, s32);
-void fn_1_AD14(omObjData *, s32, s32, s32, s32);
+void fn_1_ABC4(OMOBJ *, s32, s32, s32, s32);
+void fn_1_AD14(OMOBJ *, s32, s32, s32, s32);
 void fn_1_AEDC(M418DllUnkStruct7 *, M418DllUnkStruct8 *);
 s32 fn_1_AF38(M418DllUnkStruct7 *);
 s32 fn_1_B034(M418DllUnkStruct7 *, s32);

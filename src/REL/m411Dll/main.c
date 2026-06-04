@@ -90,7 +90,7 @@ typedef struct {
     /* 0x0C */ s32 *unk0C;
 } UnkFn64A3Struct; // Size unknown
 
-void fn_1_E80(omObjData *arg0);
+void fn_1_E80(OMOBJ *arg0);
 void fn_1_F8C(float arg0);
 void fn_1_1074(void);
 void fn_1_1498(s16 layer);
@@ -157,8 +157,8 @@ s32 lbl_1_bss_E28;
 float lbl_1_bss_E24;
 UnkBss474Struct lbl_1_bss_474[4];
 UnkBss138Struct lbl_1_bss_138;
-omObjData *lbl_1_bss_134;
-Process *lbl_1_bss_124[4];
+OMOBJ *lbl_1_bss_134;
+HUPROCESS *lbl_1_bss_124[4];
 Vec lbl_1_bss_C4[8];
 Vec lbl_1_bss_64[8];
 Vec lbl_1_bss_4[8];
@@ -203,7 +203,7 @@ void ObjectSetup(void)
     float temp_f31;
     float temp_f30;
     float sp8;
-    Process *temp_r3;
+    HUPROCESS *temp_r3;
     s32 var_r29;
     s32 i;
 
@@ -320,7 +320,7 @@ void ObjectSetup(void)
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
 }
 
-void fn_1_E80(omObjData *arg0)
+void fn_1_E80(OMOBJ *arg0)
 {
     s32 i;
 
@@ -401,7 +401,7 @@ s32 fn_1_1520(void)
     UnkBss138Struct *var_r30;
     UnkBss138InnerStruct00 *var_r31;
     UnkBss138InnerStruct00 *temp_r28;
-    Process *var_r23;
+    HUPROCESS *var_r23;
     void *var_r26;
     s16 var_r27;
     s16 var_r24;
@@ -535,7 +535,7 @@ s32 fn_1_1C4C(void)
     s16 var_r31;
     s16 sp8;
     s16 temp_r27;
-    Process *var_r26;
+    HUPROCESS *var_r26;
     void *var_r28;
 
     var_r30 = &lbl_1_bss_138;
@@ -611,7 +611,7 @@ s32 fn_1_20C8(void)
 {
     UnkBss138Struct *var_r31;
     UnkBss138InnerStruct00 *temp_r29;
-    Process *var_r26;
+    HUPROCESS *var_r26;
     void *var_r28;
     s16 var_r30;
     s16 var_r25;
@@ -702,7 +702,7 @@ void fn_1_25D0(void)
     HSFTRANSFORM *temp_r26;
     ANIMDATA *var_r21;
     ANIMDATA *var_r20;
-    Process *var_r23;
+    HUPROCESS *var_r23;
     s16 temp_r25;
     s32 var_r22;
     s32 i;
@@ -1038,7 +1038,7 @@ void fn_1_3F34(void)
     float temp_f30;
     float var_f29;
     UnkBss138InnerStruct00 *temp_r31;
-    Process *var_r30;
+    HUPROCESS *var_r30;
 
     temp_r31 = HuPrcCurrentGet()->user_data;
     temp_r31->unk10.x = -500.0f + 1000.0f * frandf();
@@ -1274,9 +1274,9 @@ void fn_1_4968(void)
 void fn_1_4BB0(void)
 {
     UnkBss138Struct *temp_r28;
-    Process *sp24[5];
-    Process *sp10[5];
-    Process *sp8[2];
+    HUPROCESS *sp24[5];
+    HUPROCESS *sp10[5];
+    HUPROCESS *sp8[2];
     s32 var_r30;
     s32 var_r29;
     s32 var_r27;
@@ -1462,7 +1462,7 @@ void fn_1_507C(void)
 void fn_1_5384(void)
 {
     UnkBss138Struct *temp_r30;
-    Process *var_r31;
+    HUPROCESS *var_r31;
 
     temp_r30 = HuPrcCurrentGet()->user_data;
     var_r31 = HuPrcChildCreate(fn_1_507C, 0x2000, 0x2000, 0, HuPrcCurrentGet());
@@ -1595,7 +1595,7 @@ void fn_1_5910(void)
 {
     float var_f31;
     UnkBss138Struct *spC;
-    Process *var_r29;
+    HUPROCESS *var_r29;
     UnkBss138InnerStruct00 *var_r31;
     UnkBss474Struct *sp8;
     s32 i;
@@ -2144,7 +2144,7 @@ void fn_1_7738(void)
 {
     f32 temp_f26;
     f32 temp_f27;
-    Process *var_r24;
+    HUPROCESS *var_r24;
     UnkBss474Struct *temp_r31;
     HSFTRANSFORM *temp_r30;
     s32 var_r29;
@@ -2406,7 +2406,7 @@ void fn_1_9BC0(s32 arg0)
     s32 var_r29;
     UnkBss474Struct *temp_r31;
     UnkBss474Struct *var_r26;
-    Process *var_r28;
+    HUPROCESS *var_r28;
     UnkBss138InnerStruct00 *var_r27;
     s32 i;
 

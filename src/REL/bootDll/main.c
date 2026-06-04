@@ -24,8 +24,8 @@
 
 extern int SystemInitF;
 
-static omObjData *debugOutView;
-Process *objman;
+static OMOBJ *debugOutView;
+HUPROCESS *objman;
 Vec debugCamRot[2];
 Vec debugCamPos[2];
 float debugCamZoom[2];
@@ -55,7 +55,7 @@ void *NintendoDataDecode(void);
 
 void ObjectSetup(void)
 {
-    omOvlHisData *history;
+    OMOVLHIS *history;
     OSReport("******* Boot ObjectSetup *********\n");
     objman = omInitObjMan(50, 8192);
     debugCamRot[0].x = -67;
@@ -71,7 +71,7 @@ void ObjectSetup(void)
     HuPrcCreate(BootExec, 100, 12288, 0);
     Hu3DBGColorSet(0, 0, 0);
     history = omOvlHisGet(0);
-    omOvlHisChg(0, history->overlay, 1, history->stat);
+    omOvlHisChg(0, history->ovl, 1, history->stat);
     #if VERSION_PAL
     if(SystemInitF == FALSE) {
         initLanguageF = FALSE;
@@ -94,7 +94,7 @@ void BootExec(void)
     s16 sprite_hudson;
     s16 i;
     OSTick tick_prev;
-    Process *curr = HuPrcCurrentGet();
+    HUPROCESS *curr = HuPrcCurrentGet();
     #if VERSION_NTSC
     if (omovlevtno == 0) {
         BootProgExec();
@@ -434,7 +434,7 @@ void BootProgExec(void)
 
 static u16 debugCamTbl[] = { 1, 2 };
 
-void DebugCamOutView(omObjData *obj)
+void DebugCamOutView(OMOBJ *obj)
 {
     s16 i;
     for (i = 0; i < 1; i++) {
@@ -458,7 +458,7 @@ void DebugCamOutView(omObjData *obj)
     }
 }
 
-void DebugCamUpdate(omObjData *obj)
+void DebugCamUpdate(OMOBJ *obj)
 {
     Vec pos;
     Vec offset;

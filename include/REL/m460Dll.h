@@ -52,12 +52,12 @@ s32 fn_1_4358(void);
 u32 fn_1_4370(void);
 float fn_1_47D0(float arg8, float arg9, float argA);
 
-void fn_1_49A0(Process *process);
+void fn_1_49A0(HUPROCESS *process);
 void fn_1_4BE4(void);
-void fn_1_67B4(Process *process);
+void fn_1_67B4(HUPROCESS *process);
 void fn_1_6814(void);
 void fn_1_8BA0(float arg8);
-void fn_1_8CAC(Process *process, s16 arg1);
+void fn_1_8CAC(HUPROCESS *process, s16 arg1);
 void fn_1_8F38(void);
 void fn_1_8FAC(s32 arg0);
 

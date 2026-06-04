@@ -32,30 +32,30 @@ f32 fn_1_AAEC(f32 arg8, f32 arg9, f32 argA, f32 argB) {
     return (arg8 + (arg9 - arg8) * (1.0 - cosd((90.0f / argB) * argA)));
 }
 
-void fn_1_ABC4(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void fn_1_ABC4(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     if (arg4 == 1) {
-        Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, 0x40000001);
+        Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, 0x40000001);
         return;
     }
     if (arg4 == 2) {
-        Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, 0x40000002);
+        Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, 0x40000002);
         return;
     }
-    Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, 0);
+    Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, 0);
 }
 
-void fn_1_AD14(omObjData* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    if (arg0->work[3] != arg0->motion[arg2]) {
-        arg0->work[3] = arg0->motion[arg2];
+void fn_1_AD14(OMOBJ* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    if (arg0->work[3] != arg0->mtnId[arg2]) {
+        arg0->work[3] = arg0->mtnId[arg2];
         if (arg4 == 1) {
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, 0x40000001);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, 0x40000001);
             return;
         }
         if (arg4 == 2) {
-            Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, 0x40000002);
+            Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, 0x40000002);
             return;
         }
-        Hu3DMotionShiftSet(arg0->model[arg1], arg0->motion[arg2], 0.0f, arg3, 0);
+        Hu3DMotionShiftSet(arg0->mdlId[arg1], arg0->mtnId[arg2], 0.0f, arg3, 0);
     }
 }
 

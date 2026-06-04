@@ -31,17 +31,17 @@ typedef struct M453ScoreUnkStruct {
 typedef void (*M453ScoreUnkFunc)(void);
 
 void fn_1_92C0(s32 arg0);
-void fn_1_92F0(omObjData *object);
+void fn_1_92F0(OMOBJ *object);
 void fn_1_940C(void);
 void fn_1_9484(void);
 void fn_1_9510(void);
 
 M453ScoreUnkFunc lbl_1_data_BC0[3] = { fn_1_940C, fn_1_9484, fn_1_9510 };
 
-Process *lbl_1_bss_C4;
-omObjData *lbl_1_bss_C0;
+HUPROCESS *lbl_1_bss_C4;
+OMOBJ *lbl_1_bss_C0;
 
-void fn_1_8F48(Process *arg0, s16 arg1)
+void fn_1_8F48(HUPROCESS *arg0, s16 arg1)
 {
     M453ScoreUnkStruct *var_r31;
     u32 var_r30;
@@ -111,7 +111,7 @@ void fn_1_92C0(s32 arg0)
     var_r31->unk_04 = 0;
 }
 
-void fn_1_92F0(omObjData *arg0)
+void fn_1_92F0(OMOBJ *arg0)
 {
     s16 var_r30;
 

@@ -26,17 +26,17 @@ typedef struct FaderWork2 {
     /* 0x0C */ float speed;
 } FaderWork2; /* size = 0x10 */
 
-omObjData *presentState;
-omObjData *lbl_1_bss_14;
-omObjData *present;
-omObjData *lbl_1_bss_C;
-omObjData *presentCamera;
-Process *presentObjMan;
-static omObjData *scene;
+OMOBJ *presentState;
+OMOBJ *lbl_1_bss_14;
+OMOBJ *present;
+OMOBJ *lbl_1_bss_C;
+OMOBJ *presentCamera;
+HUPROCESS *presentObjMan;
+static OMOBJ *scene;
 
 static void FadeSprite(void);
 static void FadeModel(void);
-static void SceneMain(omObjData *object);
+static void SceneMain(OMOBJ *object);
 
 void ObjectSetup(void)
 {
@@ -44,13 +44,13 @@ void ObjectSetup(void)
     omGameSysInit(presentObjMan);
     HuWinInit(1);
     scene = omAddObjEx(presentObjMan, 1000, 0, 0, 0, SceneMain);
-    scene->unk10 = 0;
+    scene->mode = 0;
     presentState = PresentStateCreate();
 }
 
 void PresentFadeSprite(s16 sprite, BOOL inF, s32 duration)
 {
-    Process *process;
+    HUPROCESS *process;
 
     FaderWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
     work->id = sprite;
@@ -98,7 +98,7 @@ static void FadeSprite(void)
 
 void FadeSpriteWithMultiplier(s16 model, BOOL inF, float tpMultiplier, s32 duration)
 {
-    Process *process;
+    HUPROCESS *process;
     //  bug: wrong struct in sizeof
     FaderWork2 *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(FaderWork), MEMORY_DEFAULT_NUM);
     work->id = model;
@@ -164,20 +164,20 @@ BOOL PresentPadDStkCheck(u16 dir)
     return pressed != 0;
 }
 
-static void SceneMain(omObjData *object)
+static void SceneMain(OMOBJ *object)
 {
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
-            object->unk10 = 1;
+            object->mode = 1;
         case 1:
             if (!omSysExitReq) {
                 break;
             }
-            object->unk10 = 2;
+            object->mode = 2;
         case 2:
             WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 60);
             HuAudFadeOut(1000);
-            object->unk10 = 3;
+            object->mode = 3;
             break;
         case 3:
             if (!WipeStatGet()) {

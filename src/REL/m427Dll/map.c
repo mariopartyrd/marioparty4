@@ -306,7 +306,7 @@ typedef struct M427DllMapStruct7 {
 
 GXColor lbl_1_data_E8 = { 0xFF, 0xFF, 0xFF, 0xFF };
 
-omObjData *lbl_1_bss_548;
+OMOBJ *lbl_1_bss_548;
 M427DllMapStruct3 lbl_1_bss_158;
 M427DllMapStruct2 lbl_1_bss_F8[0x10];
 ANIMDATA *lbl_1_bss_F4;
@@ -320,7 +320,7 @@ s8 lbl_1_bss_91;
 s8 lbl_1_bss_90;
 
 void fn_1_372C(void);
-void fn_1_4218(omObjData *object);
+void fn_1_4218(OMOBJ *object);
 void fn_1_44F4(f32, f32, f32, f32, f32);
 void fn_1_48EC(HU3DMODEL *model, Mtx matrix);
 void fn_1_4D7C(HU3DMODEL *model, Mtx matrix);
@@ -328,7 +328,7 @@ void fn_1_50A0(HU3DMODEL *model, Mtx matrix);
 void fn_1_510C(s32, s16, s16);
 void fn_1_558C(M427DllMapStruct4 *);
 void fn_1_618C(HU3DMODEL *model, Mtx matrix);
-void fn_1_6760(omObjData *object);
+void fn_1_6760(OMOBJ *object);
 void fn_1_C2C8(Vec *arg0, Vec *arg1, Vec *arg2, Vec *arg3);
 void fn_1_D22C(HU3DMODEL *model, struct M427DllMapStruct7 *arg1, Mtx matrix);
 s16 fn_1_D63C(ANIMDATA *arg0, s16 arg1, float arg8, s16 arg2, s16 arg3);
@@ -336,7 +336,7 @@ void fn_1_DB80(s16);
 void fn_1_DC64(s16, M427DllHook);
 void fn_1_DC9C(s16, u8);
 
-void fn_1_72E4(omObjData *arg0);
+void fn_1_72E4(OMOBJ *arg0);
 void fn_1_73BC(void);
 void fn_1_794C(M427DllMapSubstruct3 *arg0, s16 arg1);
 void fn_1_7C34(void);
@@ -345,7 +345,7 @@ void fn_1_7F38(void);
 void fn_1_85D4(s16 arg0, M427DllMapSubstruct3 *arg1);
 void fn_1_8768(M427DllMapSubstruct3 *arg0, M427DllMapUNKB8 *arg1, s16 arg2, float arg8, float arg9);
 void fn_1_8E1C(u8 arg0, M427DllMapSubstruct3 *arg1, M427DllMapUNKB8 *arg2);
-void fn_1_8F90(omObjData *object);
+void fn_1_8F90(OMOBJ *object);
 void fn_1_9240(void);
 void fn_1_9318(s16 *arg0, s16 arg1);
 void fn_1_93EC(s32 arg0, s32 arg1, float arg8, float arg9, float argA, float argB);
@@ -378,7 +378,7 @@ void fn_1_E2B0(Vec2f *arg0, s16 arg1, s16 arg2, float arg8, float arg9);
 void fn_1_E37C(Vec2f *arg0, Vec2f *arg1, s16 arg2, float arg8, float arg9);
 void fn_1_E420(Vec *arg0, Vec *arg1, Vec *arg2, s16 arg3);
 
-void fn_1_32F4(Process *arg0)
+void fn_1_32F4(HUPROCESS *arg0)
 {
     s16 var_r31;
     ANIMDATA *temp_r30;
@@ -551,7 +551,7 @@ void fn_1_3DBC(void)
     }
 }
 
-void fn_1_3E58(omObjData *arg0)
+void fn_1_3E58(OMOBJ *arg0)
 {
     s32 sp8[8];
     M427DllMapStruct *var_r26;
@@ -621,10 +621,10 @@ void fn_1_3E58(omObjData *arg0)
         lbl_1_bss_E4[var_r28].unk10 = -1.0f;
     }
     fn_1_510C(0, 0x32, 0x32);
-    arg0->func = fn_1_4218;
+    arg0->objFunc = fn_1_4218;
 }
 
-void fn_1_4218(omObjData *arg0)
+void fn_1_4218(OMOBJ *arg0)
 {
     f32 var_f31;
     f32 temp_f30;
@@ -1098,7 +1098,7 @@ s32 lbl_1_data_FC[0xC] = {
 s32 lbl_1_data_12C[2] = { 0x3A000C, 0x3A000D };
 s32 lbl_1_data_134[4] = { 0x3A000E, 0x3A000F, 0x3F800000, 0x01000000 };
 
-void fn_1_6760(omObjData *object)
+void fn_1_6760(OMOBJ *object)
 {
     s16 sp14[2][0x20];
     s16 sp10[2];
@@ -1246,17 +1246,17 @@ void fn_1_6760(omObjData *object)
         sp14[var_r28][sp10[var_r28]++] = var_r31->unk1A;
         fn_1_9318(sp14[var_r28], sp10[var_r28]);
     }
-    object->func = fn_1_72E4;
+    object->objFunc = fn_1_72E4;
 }
 
-void fn_1_72E4(omObjData *object)
+void fn_1_72E4(OMOBJ *object)
 {
     float var_f31;
     M427DllMapStruct2 *var_r31;
     s16 var_r30;
 
     if (fn_1_1788() == 7) {
-        object->func = fn_1_3E58;
+        object->objFunc = fn_1_3E58;
     }
     fn_1_73BC();
     fn_1_7C34();
@@ -1724,7 +1724,7 @@ void fn_1_8E1C(u8 arg0, M427DllMapSubstruct3 *arg1, M427DllMapUNKB8 *arg2)
     }
 }
 
-void fn_1_8F90(omObjData *object)
+void fn_1_8F90(OMOBJ *object)
 {
     Vec sp14;
     Vec sp8;

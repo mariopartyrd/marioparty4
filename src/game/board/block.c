@@ -42,19 +42,19 @@ typedef struct {
 
 static void BlockProc(void);
 static void DestroyBlock(void);
-static void ExecBlockObj(omObjData *arg0);
+static void ExecBlockObj(OMOBJ *arg0);
 static void CreateBlockObj(s32 arg0);
-static void DestroyBlockObj(BlockWork *unused0, omObjData *unused1);
-static void SpawnBlock(BlockWork *arg0, omObjData *arg1);
-static void HitBlock(BlockWork *arg0, omObjData *arg1);
-static void OpenBlock(BlockWork *arg0, omObjData *arg1);
+static void DestroyBlockObj(BlockWork *unused0, OMOBJ *unused1);
+static void SpawnBlock(BlockWork *arg0, OMOBJ *arg1);
+static void HitBlock(BlockWork *arg0, OMOBJ *arg1);
+static void OpenBlock(BlockWork *arg0, OMOBJ *arg1);
 static void SetBlockOpen(void);
 static void SetBlockStop(void);
 static void WaitBlockHit(void);
 static void CreateCoinMdl(void);
 static void KillCoinMdl(void);
 static void PopupCoin(void);
-static void PopupCoinExec(omObjData *arg0);
+static void PopupCoinExec(OMOBJ *arg0);
 
 extern s8 boardTutorialBlockF;
 extern s8 boardTutorialBlockItem;
@@ -66,8 +66,8 @@ static f32 rotMax;
 static f32 scaleAngle;
 static f32 rotY;
 
-static omObjData *blockObj;
-static Process *blockProc;
+static OMOBJ *blockObj;
+static HUPROCESS *blockProc;
 
 static s16 coinMdl[10] = { -1, -1, -1, -1 };
 static s32 coinF[10];
@@ -248,7 +248,7 @@ static void CreateBlockObj(s32 arg0)
     }
 }
 
-static void ExecBlockObj(omObjData *arg0)
+static void ExecBlockObj(OMOBJ *arg0)
 {
     BlockWork *work;
 
@@ -282,7 +282,7 @@ static void ExecBlockObj(omObjData *arg0)
     BoardModelScaleSet(starMdl, arg0->scale.x, arg0->scale.y, arg0->scale.z);
 }
 
-static void DestroyBlockObj(BlockWork *unused0, omObjData *unused1)
+static void DestroyBlockObj(BlockWork *unused0, OMOBJ *unused1)
 {
     if (starMdl != -1) {
         BoardModelKill(starMdl);
@@ -290,7 +290,7 @@ static void DestroyBlockObj(BlockWork *unused0, omObjData *unused1)
     }
 }
 
-static void SpawnBlock(BlockWork *arg0, omObjData *arg1)
+static void SpawnBlock(BlockWork *arg0, OMOBJ *arg1)
 {
     if (scaleAngle < 90.0f) {
         scaleAngle += 3.75f;
@@ -319,7 +319,7 @@ static void SpawnBlock(BlockWork *arg0, omObjData *arg1)
     arg1->scale.x = arg1->scale.y = arg1->scale.z = sind(scaleAngle);
 }
 
-static void HitBlock(BlockWork *arg0, omObjData *arg1)
+static void HitBlock(BlockWork *arg0, OMOBJ *arg1)
 {
     float var_f30;
 
@@ -332,7 +332,7 @@ static void HitBlock(BlockWork *arg0, omObjData *arg1)
     arg1->trans.y += 0.2f * sind(var_f30);
 }
 
-static void OpenBlock(BlockWork *arg0, omObjData *arg1)
+static void OpenBlock(BlockWork *arg0, OMOBJ *arg1)
 {
     f32 target_y_pos;
 
@@ -427,7 +427,7 @@ static inline s32 FindCoinModel(s16 *out_model)
 static void PopupCoin(void)
 {
     Vec star_pos;
-    omObjData *coinObj;
+    OMOBJ *coinObj;
     s32 model_index;
     s16 model;
     CoinWork *work;
@@ -453,7 +453,7 @@ static void PopupCoin(void)
     BoardModelVisibilitySet(work->model, 1);
 }
 
-static void PopupCoinExec(omObjData *obj)
+static void PopupCoinExec(OMOBJ *obj)
 {
     Vec coin_pos;
     Vec coin_rot;

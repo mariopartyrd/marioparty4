@@ -98,7 +98,7 @@ void fn_1_4034(s32 arg0)
     s16 var_r30;
     s32 var_r27;
     BoardSpace *var_r25;
-    omObjData *temp_r24;
+    OMOBJ *temp_r24;
     BoardSpace *var_r28;
     s32 var_r31;
     s32 temp_r26;
@@ -314,8 +314,8 @@ void fn_1_4EB4(s32 arg1, s32 arg2, Vec *arg3)
     f32 var_f22;
     f32 var_f24;
     f32 var_f28;
-    omObjData *temp_r30;
-    omObjData *temp_r29;
+    OMOBJ *temp_r30;
+    OMOBJ *temp_r29;
     s32 temp_r28;
 
     temp_f23 = 10.0f;
@@ -427,16 +427,16 @@ void fn_1_5794(s32 arg0, s32 arg1, Vec *arg2)
     Vec sp28;
     Vec sp1C;
     f32 sp18;
-    Process *temp_r23;
+    HUPROCESS *temp_r23;
     f32 temp_f18;
     f32 temp_f22;
     f32 var_f27;
     f32 var_f23;
     f32 var_f28;
-    omObjData *temp_r27;
-    omObjData *var_r26;
-    omObjData *temp_r25;
-    omObjData *var_r24;
+    OMOBJ *temp_r27;
+    OMOBJ *var_r26;
+    OMOBJ *temp_r25;
+    OMOBJ *var_r24;
     s32 var_r28;
     s32 var_r29;
     s32 var_r30;
@@ -657,10 +657,10 @@ void fn_1_6670(void)
     }
 }
 
-omObjData *fn_1_66C0(u32 arg0, Vec *arg1)
+OMOBJ *fn_1_66C0(u32 arg0, Vec *arg1)
 {
     Vec sp8;
-    omObjData *temp_r31;
+    OMOBJ *temp_r31;
     f32 temp_f31;
 
     temp_r31 = omAddObjEx(boardObjMan, 0x101, 0, 0, -1, fn_1_6914);
@@ -704,7 +704,7 @@ omObjData *fn_1_66C0(u32 arg0, Vec *arg1)
     return temp_r31;
 }
 
-void fn_1_6914(omObjData *arg0)
+void fn_1_6914(OMOBJ *arg0)
 {
     Vec sp8;
 

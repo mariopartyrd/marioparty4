@@ -5,8 +5,8 @@
 #include "game/process.h"
 
 typedef struct {
-    /* 0x00 */ Process* unk00;
-    /* 0x04 */ Process* unk04;
+    /* 0x00 */ HUPROCESS* unk00;
+    /* 0x04 */ HUPROCESS* unk04;
     /* 0x08 */ s32 unk08;
     /* 0x0C */ s32 unk0C;
     /* 0x10 */ s32 unk10;
@@ -36,7 +36,7 @@ typedef struct {
     /* 0x50 */ ANIMDATA* unk50;
     /* 0x54 */ s32 unk54[5];
     /* 0x68 */ s32 unk68[5];
-    /* 0x7C */ Process* unk7C;
+    /* 0x7C */ HUPROCESS* unk7C;
 } UnkM447Struct_06; // Size 0x80
 
 typedef struct {
@@ -65,7 +65,7 @@ typedef struct {
     /* 0x98 */ float unk98;
     /* 0x9C */ float unk9C;
     /* 0xA0 */ ANIMDATA* unkA0;
-    /* 0xA4 */ Process* unkA4;
+    /* 0xA4 */ HUPROCESS* unkA4;
     /* 0xA8 */ Vec unkA8;
     /* 0xB4 */ float unkB4;
     /* 0xB8 */ float unkB8;
@@ -109,9 +109,9 @@ typedef struct {
     /* 0x80 */ char unk80[0x24];
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ UnkM447Struct_01* unkA8;
-    /* 0xAC */ Process* unkAC;
-    /* 0xB0 */ Process* unkB0;
-    /* 0xB4 */ Process* unkB4;
+    /* 0xAC */ HUPROCESS* unkAC;
+    /* 0xB0 */ HUPROCESS* unkB0;
+    /* 0xB4 */ HUPROCESS* unkB4;
 } UnkM447Struct_04; // Size 0xB8
 
 UnkM447Struct_06* fn_1_1D90(void);
@@ -150,7 +150,7 @@ s32 fn_1_A240(void);
 
 extern UnkM447Struct_06* lbl_1_bss_10;
 extern UnkM447Struct_00* lbl_1_bss_8;
-extern Process* lbl_1_bss_4;
+extern HUPROCESS* lbl_1_bss_4;
 extern UnkM447Struct_04* lbl_1_bss_98[2];
 extern const float lbl_1_rodata_648[20];
 extern UnkM447Struct_01* lbl_1_bss_A4[5];

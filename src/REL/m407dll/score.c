@@ -19,18 +19,18 @@ typedef struct unkDominationData6 {
 void fn_1_61A0(void);
 void fn_1_6218(void);
 void fn_1_62A0(void);
-void fn_1_5FE4(omObjData *arg0);
+void fn_1_5FE4(OMOBJ *arg0);
 void fn_1_5FB4(s32 arg0);
 s16 fn_1_28D4(void);
 
 // bss
-Process *lbl_1_bss_398C;
-omObjData *lbl_1_bss_3988;
+HUPROCESS *lbl_1_bss_398C;
+OMOBJ *lbl_1_bss_3988;
 
 // data
 VoidFuncs lbl_1_data_360[] = { fn_1_61A0, fn_1_6218, fn_1_62A0 };
 
-void fn_1_5C5C(Process *arg0, s16 arg1)
+void fn_1_5C5C(HUPROCESS *arg0, s16 arg1)
 {
     unkDominationData6 *temp_r31;
     u32 i;
@@ -104,7 +104,7 @@ void fn_1_5FB4(s32 arg0)
     temp_r31->unk_04 = 0;
 }
 
-void fn_1_5FE4(omObjData *arg0)
+void fn_1_5FE4(OMOBJ *arg0)
 {
     s16 temp_r31;
     unkDominationData6 *temp_r30;

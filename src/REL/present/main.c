@@ -18,7 +18,7 @@ typedef struct UnkShadowDataStruct {
     /* 0x18 */ Vec camTarget;
 } UnkShadowDataStruct; /* size = 0x24 */
 
-omObjData *presentGuide;
+OMOBJ *presentGuide;
 
 static UnkShadowDataStruct shadow = {
     { 0.0f, 3000.0f, 1.0f },
@@ -26,15 +26,15 @@ static UnkShadowDataStruct shadow = {
     { 0.0f, 0.0f, 0.0f },
 };
 
-static void ExecPresentView(omObjData *object);
-static void ExecPresentGet(omObjData *object);
+static void ExecPresentView(OMOBJ *object);
+static void ExecPresentGet(OMOBJ *object);
 void PresentWinDispOff(PresentWindow *work);
 void PresentWinChoiceSet(PresentWindow *work, s32 choice);
 static void ExecWindow(void);
 
-omObjData *PresentStateCreate(void)
+OMOBJ *PresentStateCreate(void)
 {
-    omObjData *object = omAddObjEx(presentObjMan, 1000, 0, 0, 4, NULL);
+    OMOBJ *object = omAddObjEx(presentObjMan, 1000, 0, 0, 4, NULL);
     StateWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(StateWork), MEMORY_DEFAULT_NUM);
     object->data = work;
 
@@ -49,19 +49,19 @@ omObjData *PresentStateCreate(void)
 
     if (omovlevtno > 0) {
         OSReport("*** PRESENTROOM ( PRESENT GET MODE ) ***\n");
-        object->func = ExecPresentGet;
-        object->unk10 = 0;
+        object->objFunc = ExecPresentGet;
+        object->mode = 0;
     }
     else {
         OSReport("*** PRESENTROOM ( PRESENT VIEW MODE ) ***\n");
-        object->func = ExecPresentView;
-        object->unk10 = 0;
+        object->objFunc = ExecPresentView;
+        object->mode = 0;
     }
 
     return object;
 }
 
-void PresentStateKill(omObjData *object)
+void PresentStateKill(OMOBJ *object)
 {
     PresentWindow **var_r31 = object->data;
 
@@ -72,46 +72,46 @@ void PresentStateKill(omObjData *object)
     HuMemDirectFree(var_r31);
 }
 
-static void ExecPresentView(omObjData *object)
+static void ExecPresentView(OMOBJ *object)
 {
     StateWork *work = object->data;
 
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
             WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 60);
-            object->unk10 = 1;
+            object->mode = 1;
         case 1:
             if (WipeStatGet()) {
                 return;
             }
-            object->unk10 = 2;
+            object->mode = 2;
         case 2:
             PresentExecModeSet(present, 1);
-            object->unk10 = 3;
+            object->mode = 3;
         case 3:
             if (PresentExecModeGet(present)) {
                 return;
             }
-            object->unk10 = 4;
+            object->mode = 4;
         case 4:
             PresentGuideExecModeSet(presentGuide, PRESENT_GUIDE_MODE_ENTER);
-            object->unk10 = 5;
+            object->mode = 5;
         case 5:
             if (PresentGuideExecModeGet(presentGuide)) {
                 return;
             }
-            object->unk10 = 6;
+            object->mode = 6;
         case 6:
             HuAudFXPlay(66);
             PresentWinAnimIn(work->window);
             PresentWinMesSet(work->window, MAKE_MESSID(0x32, 0x02));
-            object->unk10 = 7;
+            object->mode = 7;
         case 7:
             if (work->window->state) {
                 return;
             }
             PresentWinChoiceSet(work->window, 1);
-            object->unk10 = 8;
+            object->mode = 8;
         case 8:
             if (work->window->state) {
                 return;
@@ -119,25 +119,25 @@ static void ExecPresentView(omObjData *object)
             PresentWinAnimOut(work->window);
             if (!work->window->choice) {
                 work->quitTimer = 0;
-                object->unk10 = 11;
+                object->mode = 11;
                 return;
             }
             else {
-                object->unk10 = 9;
+                object->mode = 9;
                 return;
             }
         case 9:
             PresentGuideExecModeSet(presentGuide, PRESENT_GUIDE_MODE_LEAVE);
-            object->unk10 = 10;
+            object->mode = 10;
             return;
         case 10:
             if (PresentGuideExecModeGet(presentGuide)) {
                 return;
             }
-            object->unk10 = 2;
+            object->mode = 2;
             return;
         case 11:
-            object->unk10 = 12;
+            object->mode = 12;
             work->quitTimer = 0;
         case 12:
             if (work->window->state) {
@@ -145,38 +145,38 @@ static void ExecPresentView(omObjData *object)
             }
             if (work->quitTimer++ >= 60) {
                 omSysExitReq = 1;
-                object->func = NULL;
-                object->unk10 = 0;
+                object->objFunc = NULL;
+                object->mode = 0;
             }
         default:
             break;
     }
 }
 
-static void ExecPresentGet(omObjData *object)
+static void ExecPresentGet(OMOBJ *object)
 {
     void *sp8 = object->data;
 
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
             PresentSelectedIDSet(present, omovlevtno - 1);
-            object->unk10 = 1;
+            object->mode = 1;
         case 1:
             PresentExecModeSet(present, PRESENT_MODE_GET);
-            object->unk10 = 2;
+            object->mode = 2;
         case 2:
             if (PresentExecModeGet(present) == PRESENT_MODE_NONE) {
-                object->unk10 = 3;
+                object->mode = 3;
             }
             else {
                 break;
             }
         case 3:
-            object->unk10 = 4;
+            object->mode = 4;
         case 4:
             omSysExitReq = 1;
-            object->func = NULL;
-            object->unk10 = 0;
+            object->objFunc = NULL;
+            object->mode = 0;
             break;
         default:
             break;

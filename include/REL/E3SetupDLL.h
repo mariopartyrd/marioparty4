@@ -60,17 +60,17 @@ extern OMOVL e3NextOvl;
 extern s32 e3NextEvent;
 extern u32 e3ExitMode;
 extern float e3CameraFov;
-extern omObjData *e3MenuMainObj;
-extern omObjData *e3ViewObj;
-extern omObjData *e3OvlWatchObj;
-extern omObjData *e3BGObj;
+extern OMOBJ *e3MenuMainObj;
+extern OMOBJ *e3ViewObj;
+extern OMOBJ *e3OvlWatchObj;
+extern OMOBJ *e3BGObj;
 
 void E3MainInit(void);
 void E3MGSelectInit(void);
 s16 E3PadRead(void);
 u16 E3PadUpdate(s16 player, E3Pad *pad);
-void E3OvlWatchInit(omObjData *object);
-void E3BGCreate(omObjData *object);
+void E3OvlWatchInit(OMOBJ *object);
+void E3BGCreate(OMOBJ *object);
 void E3LightInit(void);
 
 #endif

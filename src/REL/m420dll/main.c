@@ -25,15 +25,15 @@ void fn_1_10EC(float arg8, s32 arg0);
 void fn_1_118(void);
 
 s32 lbl_1_bss_2C;
-Process *lbl_1_bss_28;
+HUPROCESS *lbl_1_bss_28;
 M420DllPlayerStruct *lbl_1_bss_18[4];
 s16 lbl_1_bss_14;
 s16 lbl_1_bss_12;
 s16 lbl_1_bss_10;
 s32 lbl_1_bss_C;
 s32 lbl_1_bss_8;
-Process *lbl_1_bss_4;
-Process *lbl_1_bss_0;
+HUPROCESS *lbl_1_bss_4;
+HUPROCESS *lbl_1_bss_0;
 
 static const M420DllUnkStruct lbl_1_rodata_10[3] = {
     { { 0.0f, 1040.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 680.0f },

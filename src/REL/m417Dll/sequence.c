@@ -19,16 +19,16 @@ typedef struct UnkM417Struct7 {
     /* 0x5C */ u32 unk_5C;
 } UnkM417Struct7; /* size = unknown */
 
-void fn_1_BD9C(omObjData *object);
-void fn_1_BFB0(omObjData *object);
-void fn_1_C050(omObjData *object);
-void fn_1_C434(omObjData *object);
-void fn_1_C78C(omObjData *object);
+void fn_1_BD9C(OMOBJ *object);
+void fn_1_BFB0(OMOBJ *object);
+void fn_1_C050(OMOBJ *object);
+void fn_1_C434(OMOBJ *object);
+void fn_1_C78C(OMOBJ *object);
 
-extern omObjData *lbl_1_bss_8AC;
+extern OMOBJ *lbl_1_bss_8AC;
 extern s32 lbl_1_bss_8A8;
 
-omObjFunc fn_1_BCAC(Process *arg0)
+OMOBJFUNC fn_1_BCAC(HUPROCESS *arg0)
 {
     CRot.x = -80.5f;
     CRot.y = CRot.z = 0.0f;
@@ -40,7 +40,7 @@ omObjFunc fn_1_BCAC(Process *arg0)
     return fn_1_BD9C;
 }
 
-void fn_1_BD9C(omObjData *object)
+void fn_1_BD9C(OMOBJ *object)
 {
     Vec sp8;
 
@@ -80,18 +80,18 @@ void fn_1_BD9C(omObjData *object)
     }
 }
 
-void fn_1_BFB0(omObjData *object)
+void fn_1_BFB0(OMOBJ *object)
 {
-    object->model[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M417, 5));
+    object->mdlId[0] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M417, 5));
     object->trans.x = -300.0f;
     object->trans.z = -200.0f;
     object->trans.y = 0.0f;
     object->rot.y = 20.0f;
     object->work[0] = object->work[1] = 0;
-    object->func = fn_1_C050;
+    object->objFunc = fn_1_C050;
 }
 
-void fn_1_C050(omObjData *object)
+void fn_1_C050(OMOBJ *object)
 {
     float var_f31;
     float var_f30;
@@ -135,13 +135,13 @@ void fn_1_C050(omObjData *object)
             break;
         default:
             object->work[2] = 0;
-            object->func = fn_1_C434;
+            object->objFunc = fn_1_C434;
             break;
     }
     object->trans.y += 0.05f * (fn_1_78BC(object->trans.x, 0.0f, object->trans.z) - object->trans.y);
 }
 
-void fn_1_C434(omObjData *object)
+void fn_1_C434(OMOBJ *object)
 {
     float var_f31;
 
@@ -157,7 +157,7 @@ void fn_1_C434(omObjData *object)
     object->trans.y += 0.1f * ((var_f31 + fn_1_78BC(object->trans.x, 0.0f, object->trans.z)) - object->trans.y);
 }
 
-omObjFunc fn_1_C658(Process *arg0, omObjData *object)
+OMOBJFUNC fn_1_C658(HUPROCESS *arg0, OMOBJ *object)
 {
     UnkM417Struct7 *var_r31;
     s32 var_r30;
@@ -187,7 +187,7 @@ omObjFunc fn_1_C658(Process *arg0, omObjData *object)
     return fn_1_C78C;
 }
 
-void fn_1_C78C(omObjData *object)
+void fn_1_C78C(OMOBJ *object)
 {
     UnkM417Struct7 *var_r31;
 

@@ -153,7 +153,7 @@ typedef struct M438StructBssDE4 {
 
 extern M438StructBssDE4 lbl_1_bss_DE4;
 
-void fn_1_B4D8(Process *arg0);
+void fn_1_B4D8(HUPROCESS *arg0);
 void fn_1_B548();
 s32 fn_1_DA64(float arg8);
 s32 fn_1_DEA0(float arg8);

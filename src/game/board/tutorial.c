@@ -19,7 +19,7 @@ s8 boardTutorialBlockF;
 s8 boardTutorialUseItem;
 static s16 hostMdl;
 s8 boardTutorialF;
-static Process *tutorialProcess;
+static HUPROCESS *tutorialProcess;
 static void *playerCfgCopy;
 static void *playerCopy;
 static void *systemCopy;

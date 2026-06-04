@@ -20,11 +20,11 @@ typedef struct MpexDllUnkStruct {
 void fn_1_374(void);
 void fn_1_298(void);
 void fn_1_910(MpexDllUnkFunc arg0);
-void fn_1_25C4(omObjData *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_28E0(omObjData *arg0, s32 arg1, Vec arg2, float arg8, float arg9, float argA, s32 arg3, s32 arg4);
-Process *fn_1_3044(Process *arg0);
+void fn_1_25C4(OMOBJ *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void fn_1_28E0(OMOBJ *arg0, s32 arg1, Vec arg2, float arg8, float arg9, float argA, s32 arg3, s32 arg4);
+HUPROCESS *fn_1_3044(HUPROCESS *arg0);
 
-void fn_1_1264C(Process *arg0);
+void fn_1_1264C(HUPROCESS *arg0);
 s32 fn_1_140B0(s32 arg0, s32 arg1);
 void fn_1_148BC(s32 arg0);
 void fn_1_148E4(s32 arg0);

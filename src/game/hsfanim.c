@@ -21,7 +21,7 @@ extern u32 GlobalCounter;
 
 HU3DTEXANIM Hu3DTexAnimData[HU3D_TEXANIM_MAX];
 HU3DTEXSCROLL Hu3DTexScrData[HU3D_TEXSCROLL_MAX];
-static Process *parManProc[64];
+static HUPROCESS *parManProc[64];
 
 void Hu3DAnimInit(void) {
     HU3DTEXANIM *texAnimP;
@@ -1037,7 +1037,7 @@ void Hu3DParManColorSet(HU3DPARMANID parManId, s16 color) {
 }
 
 static void ParManFunc(void) {
-    Process *processP;
+    HUPROCESS *processP;
     HU3DPARMAN *parManP;
     HU3DPARMANPARAM *param;
     HU3DMODEL *modelP;

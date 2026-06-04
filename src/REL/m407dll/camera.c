@@ -27,13 +27,13 @@ typedef struct unkDominationData2 {
 void fn_1_1CAC(f32, f32, f32);
 void fn_1_1D08(f32, f32, f32);
 void fn_1_1D64(f32);
-void fn_1_2024(omObjData *);
+void fn_1_2024(OMOBJ *);
 
 // bss
-Process *lbl_1_bss_34;
-omObjData *lbl_1_bss_30;
+HUPROCESS *lbl_1_bss_34;
+OMOBJ *lbl_1_bss_30;
 
-void fn_1_1B1C(Process *arg0)
+void fn_1_1B1C(HUPROCESS *arg0)
 {
     unkDominationData2 *unkData;
 
@@ -122,7 +122,7 @@ f32 fn_1_1F1C(f32 arg8, f32 arg9)
     return abs(arg8) + abs(arg9);
 }
 
-void fn_1_2024(omObjData *arg0)
+void fn_1_2024(OMOBJ *arg0)
 {
     Vec sp14;
     Vec sp8;

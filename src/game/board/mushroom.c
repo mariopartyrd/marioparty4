@@ -27,12 +27,12 @@ static void MarkKillBox(void);
 static void InitBox(s32 arg0);
 
 static const float boxOfs[2] = {-150.0f, 150.0f};
-static omObjData *boxObj[2] = {};
+static OMOBJ *boxObj[2] = {};
 static s16 itemMdl = -1;
 static s8 itemResult;
 static u8 pickerChoice;
-static omObjData* itemGiveObj;
-static Process* mushroomProc;
+static OMOBJ* itemGiveObj;
+static HUPROCESS* mushroomProc;
 
 void BoardMushroomExec(s32 arg0) {
     omVibrate(arg0, 0xC, 6, 6);
@@ -234,13 +234,13 @@ typedef struct {
     f32 unk_08;
 } itemObjWork;
 
-static void CenterBox(ItemGiveWork2*, omObjData*);
-static void ExitBox(ItemGiveWork2* arg0, omObjData* arg1);
-static void HideBox(ItemGiveWork2*, omObjData*);
-static void ShowBox(ItemGiveWork2*, omObjData*);
+static void CenterBox(ItemGiveWork2*, OMOBJ*);
+static void ExitBox(ItemGiveWork2* arg0, OMOBJ* arg1);
+static void HideBox(ItemGiveWork2*, OMOBJ*);
+static void ShowBox(ItemGiveWork2*, OMOBJ*);
 
 
-static void BoxMain(omObjData* arg0) {
+static void BoxMain(OMOBJ* arg0) {
     s32 temp_r0;
     ItemGiveWork2* temp_r30;
 
@@ -270,7 +270,7 @@ static void BoxMain(omObjData* arg0) {
     BoardModelRotSet(temp_r30->unk_02, arg0->rot.x, arg0->rot.y, arg0->rot.z);
 }
 
-static void ShowBox(ItemGiveWork2* arg0, omObjData* arg1) {
+static void ShowBox(ItemGiveWork2* arg0, OMOBJ* arg1) {
     Vec sp8;
 
     BoardPlayerPosGet(arg0->unk00_field5, &sp8);
@@ -289,7 +289,7 @@ static void ShowBox(ItemGiveWork2* arg0, omObjData* arg1) {
 }
 
 
-static void ExitBox(ItemGiveWork2* arg0, omObjData* arg1) {
+static void ExitBox(ItemGiveWork2* arg0, OMOBJ* arg1) {
     Vec spC;
     s16 sp8;
     f32 temp;
@@ -310,7 +310,7 @@ static void ExitBox(ItemGiveWork2* arg0, omObjData* arg1) {
     arg0->unk_06 -= 30;
 }
 
-static void HideBox(ItemGiveWork2* arg0, omObjData* arg1) {
+static void HideBox(ItemGiveWork2* arg0, OMOBJ* arg1) {
     arg0->unk_04 -= 4;
 
     if (arg0->unk_04 < 0) {
@@ -321,7 +321,7 @@ static void HideBox(ItemGiveWork2* arg0, omObjData* arg1) {
     BoardModelAlphaSet(arg0->unk_02, arg0->unk_04);
 }
 
-static void CenterBox(ItemGiveWork2* arg0, omObjData* arg1) {
+static void CenterBox(ItemGiveWork2* arg0, OMOBJ* arg1) {
     Vec sp20;
     Vec sp14;
     Vec sp8;
@@ -465,7 +465,7 @@ static s32 CheckBox(void) {
     return 1;
 }
 
-static void DoItemGive(omObjData* arg0) {
+static void DoItemGive(OMOBJ* arg0) {
     Vec sp28;
     Vec sp1C;
     Vec sp10;

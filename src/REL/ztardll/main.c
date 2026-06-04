@@ -34,8 +34,8 @@ s32 fn_1_524C(s32 arg0);
 void fn_1_66F8(void);
 void fn_1_7414(HU3DMODEL *model, Mtx matrix);
 
-omObjData *lbl_1_bss_6C;
-Process *lbl_1_bss_68;
+OMOBJ *lbl_1_bss_6C;
+HUPROCESS *lbl_1_bss_68;
 s32 lbl_1_bss_64;
 s32 lbl_1_bss_60;
 s16 lbl_1_bss_5E;
@@ -56,7 +56,7 @@ s16 lbl_1_bss_3E[2];
 s16 lbl_1_bss_36[4];
 s16 lbl_1_bss_E[4][5];
 s16 lbl_1_bss_C;
-Process *lbl_1_bss_8;
+HUPROCESS *lbl_1_bss_8;
 s16 lbl_1_bss_4;
 s32 lbl_1_bss_0;
 
@@ -1104,7 +1104,7 @@ void fn_1_4948(void)
 void fn_1_51BC(s16 arg0)
 {
     s16 var_r31;
-    omOvlHisData *var_r30;
+    OMOVLHIS *var_r30;
     u32 var_r29;
 
     WipeColorSet(0xFF, 0xFF, 0xFF);

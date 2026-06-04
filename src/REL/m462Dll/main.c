@@ -92,7 +92,7 @@ s32 lbl_1_bss_3D8;
 StructBss340 lbl_1_bss_340[1];
 StructBss70 lbl_1_bss_70[10];
 StructBss70 lbl_1_bss_28;
-omObjData *lbl_1_bss_24;
+OMOBJ *lbl_1_bss_24;
 Vec lbl_1_bss_18;
 Vec lbl_1_bss_C;
 Vec lbl_1_bss_0;
@@ -113,7 +113,7 @@ float lbl_1_data_FC[] = { 0.3f, 0.5f, 0.7f, 0.9f, 1.0f };
 
 void ObjectSetup(void)
 {
-    Process *temp_r3;
+    HUPROCESS *temp_r3;
 
     temp_r3 = omInitObjMan(50, 0x2000);
     omGameSysInit(temp_r3);
@@ -158,7 +158,7 @@ void fn_1_4A0(void)
     void *var_r27;
     StructBss340 *temp_r31;
     StructBss70 *temp_r29;
-    Process *var_r25;
+    HUPROCESS *var_r25;
     ANIMDATA *var_r24;
     ANIMDATA *spC[4];
     s16 var_r30;
@@ -1351,7 +1351,7 @@ void fn_1_69C0(void)
     s16 var_r29;
     s32 var_r24;
     s32 var_r23;
-    Process *var_r22;
+    HUPROCESS *var_r22;
     s32 var_r26;
     s32 var_r25;
     s32 var_r28;

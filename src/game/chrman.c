@@ -33,7 +33,7 @@ typedef struct CharWork_s {
     /* 0xB0 */ s8 stepFx;
     /* 0xB4 */ HuVecF pos;
     /* 0xC0 */ AMEM_PTR motAMemP;
-    /* 0xC4 */ Process *process;
+    /* 0xC4 */ HUPROCESS *process;
 } CHARWORK; // Size 0xC8
 
 typedef struct EffectData_s {
@@ -78,7 +78,7 @@ static s32 PlayStepVoice(s16 charNo, s16 seId, u8 voiceFlag);
 static CHARWORK charWork[CHARNO_MAX];
 static s16 effectMdl[CHAR_EFFECT_AND_PARTICLE_MAX];
 static EFFECTPARAM *particleData[CHAR_EFFECT_AND_PARTICLE_MAX];
-static Process *itemHookProcess[CHAR_MOT_MAX];
+static HUPROCESS *itemHookProcess[CHAR_MOT_MAX];
 //holds normal characters 0-7, then more characters 8-14
 static u16 dustFlags[CHARNO_MAX  + CHAR_NPC_MAX];
 static u8 lbl_801975CE[0x82]; // Unused?
@@ -1280,7 +1280,7 @@ void CharEffectLayerSet(s16 layerNo)
     }
 }
 
-static inline Process *CharModelItemHookCreateInlineFunc(void)
+static inline HUPROCESS *CharModelItemHookCreateInlineFunc(void)
 {
     s16 i;
 
@@ -1309,7 +1309,7 @@ void CharModelHookDustCreate(s16 charNo, char *objName)
     HU3DMODEL *modelP = &Hu3DData[workP->modelId];
     HSFOBJECT *objPtr = Hu3DModelObjPtrGet(workP->modelId, objName);
     HSFCONSTDATA *constData;
-    Process *process;
+    HUPROCESS *process;
     HOOKDUSTWORK *hookDustWork;
     s16 hookMdlId;
     Mtx hookMtx;
@@ -1342,7 +1342,7 @@ static void CreateHookDust(void)
 {
     Mtx rootMtx;
     HuVecF pos;
-    Process *process;
+    HUPROCESS *process;
     s16 j;
     s16 i;
     HOOKDUSTWORK *hookDustWork = HuPrcCurrentGet()->user_data;
@@ -1699,8 +1699,8 @@ typedef struct NpcDustWork_s {
 
 s32 CharNpcDustSet(HU3DMODELID modelId, HU3DMOTID motId, s16 type, s16 npcNo)
 {
-    Process *parent = HuPrcCurrentGet();
-    Process *process = HuPrcChildCreate(UpdateNpcDust, 0x64, 0x2000, 0, parent);
+    HUPROCESS *parent = HuPrcCurrentGet();
+    HUPROCESS *process = HuPrcChildCreate(UpdateNpcDust, 0x64, 0x2000, 0, parent);
     
     if (process) {
         NPCDUSTWORK *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(NPCDUSTWORK), MEMORY_DEFAULT_NUM);

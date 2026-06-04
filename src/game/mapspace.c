@@ -19,7 +19,7 @@ static BOOL GetPolygonCircleMtx(s16 *arg0, Vec *arg1, float *arg2, float *arg3);
 static s32 PrecalcPntToTriangle(Vec *arg0, Vec *arg1, Vec *arg2, Vec* arg3, Vec *arg4, Vec *arg5);
 static void DefSetHitFace(float arg0, float arg1, float arg2);
 
-omObjData *MapObject[16];
+OMOBJ *MapObject[16];
 Mtx MapMT;
 Mtx MapMTR;
 static Vec MTRAdd;
@@ -45,7 +45,7 @@ void MapWall(float arg0, float arg1, float arg2, float arg3) {
     float var_f31;
     float var_f30;
     float var_f29;
-    omObjData *var_r25;
+    OMOBJ *var_r25;
     HU3DMODEL *var_r26;
     HSFDATA *temp_r29;
     HSFMAPATTR *sp14;
@@ -56,7 +56,7 @@ void MapWall(float arg0, float arg1, float arg2, float arg3) {
 
     for (i = 0; i < nMap; i++) {
         var_r25 = MapObject[i];
-        temp_r24 = MapObject[i]->model[0];
+        temp_r24 = MapObject[i]->mdlId[0];
         sp18[0] = sp28[0] = arg1;
         sp18[1] = sp28[1] = arg2;
         sp18[2] = sp28[2] = arg3;
@@ -117,7 +117,7 @@ float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4) {
     float var_f28;
     HSFMAPATTR *var_r29;
     HU3DMODEL *var_r24;
-    omObjData *temp_r27;
+    OMOBJ *temp_r27;
     s32 i;
     s32 j;
     HSFDATA *temp_r25;
@@ -127,7 +127,7 @@ float MapPos(float arg0, float arg1, float arg2, float arg3, Vec *arg4) {
     ColisionCount = 0;
     for (i = 0; i < nMap; i++) {
         temp_r27 = MapObject[i];
-        var_r24 = &Hu3DData[*temp_r27->model];
+        var_r24 = &Hu3DData[*temp_r27->mdlId];
         temp_r25 = var_r24->hsf;
         sp14.x = arg0;
         sp14.y = arg1;
@@ -906,7 +906,7 @@ void AppendAddXZ(float x_comp, float z_comp, float scale) {
     AddZ += dir_vec.z * scale;
 }
 
-void CharRotInv(Mtx arg0, Mtx arg1, Vec *arg2, omObjData *arg3) {
+void CharRotInv(Mtx arg0, Mtx arg1, Vec *arg2, OMOBJ *arg3) {
     Mtx sp8;
 
     PSMTXTrans(arg0, arg3->trans.x, arg3->trans.y, arg3->trans.z);

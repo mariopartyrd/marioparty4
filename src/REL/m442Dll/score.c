@@ -4,7 +4,7 @@
 #include "REL/m442Dll.h"
 
 s32 fn_1_9520(s32 arg0);
-void fn_1_9550(omObjData *object);
+void fn_1_9550(OMOBJ *object);
 void fn_1_970C(void);
 void fn_1_9784(void);
 void fn_1_980C(void);
@@ -13,8 +13,8 @@ typedef void (*M442ScoreFunc)(void);
 
 M442ScoreFunc lbl_1_data_268[3] = { fn_1_970C, fn_1_9784, fn_1_980C };
 
-Process *lbl_1_bss_11F4C;
-omObjData *lbl_1_bss_11F48;
+HUPROCESS *lbl_1_bss_11F4C;
+OMOBJ *lbl_1_bss_11F48;
 
 typedef struct M442ScoreWork {
     /* 0x00 */ s32 unk_00;
@@ -28,7 +28,7 @@ typedef struct M442ScoreWork {
     /* 0x20 */ float unk_20;
 } M442ScoreWork; /* size = 0x24 */
 
-s32 fn_1_91AC(Process *arg0, s16 arg1)
+s32 fn_1_91AC(HUPROCESS *arg0, s16 arg1)
 {
     M442ScoreWork *var_r31;
     u32 var_r30;
@@ -101,7 +101,7 @@ s32 fn_1_9520(s32 arg0)
     var_r31->unk_04 = 0;
 }
 
-void fn_1_9550(omObjData *arg0)
+void fn_1_9550(OMOBJ *arg0)
 {
     s16 temp_r31;
     M442ScoreWork* temp_r30;

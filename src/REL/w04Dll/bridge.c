@@ -23,8 +23,8 @@ static void fn_1_1E60(void);
 static void fn_1_2008(void);
 static void fn_1_2044(void);
 
-static Process *lbl_1_bss_3C[3];
-static Process *lbl_1_bss_38;
+static HUPROCESS *lbl_1_bss_3C[3];
+static HUPROCESS *lbl_1_bss_38;
 
 static s32 lbl_1_data_298[] = {
     DATA_MAKE_NUM(DATADIR_W04, 32),

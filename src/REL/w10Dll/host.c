@@ -11,7 +11,7 @@
 
 static s16 hostMdl;
 static s16 hostPos;
-static Process *hostProc;
+static HUPROCESS *hostProc;
 
 static s32 hostMot[2] = {
     DATA_MAKE_NUM(DATADIR_W10, 16),

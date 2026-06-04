@@ -68,7 +68,7 @@ static void ItemDestroy(void);
 static void RestoreDestroy(void);
 static void ItemSizeShowAnim(void);
 static void ItemRotProc(void);
-static Process *ItemShowProc(UnkItemShowProcStruct *arg0, Vec *arg1);
+static HUPROCESS *ItemShowProc(UnkItemShowProcStruct *arg0, Vec *arg1);
 static s16 ItemGetTarget(void);
 static void ItemSizeSet(s32 arg0);
 static void ExecItemMini(void);
@@ -117,7 +117,7 @@ static char booCoinStr[8];
 static float genieFov;
 static ANIMDATA *genieParticleAnim;
 static s16 geniePlayerMot[3];
-static Process *itemProc;
+static HUPROCESS *itemProc;
 
 static s32 itemMotTbl[2] = { DATA_MAKE_NUM(DATADIR_BOARD, 117), -1 };
 
@@ -394,16 +394,16 @@ static inline void BoardUiInlineFunc03(s32 arg0)
     BoardPlayerIdleSet(arg0);
 }
 
-static inline void BoardUiInlineFunc04(Process *arg0, s32 arg1)
+static inline void BoardUiInlineFunc04(HUPROCESS *arg0, s32 arg1)
 {
     UnkItemShowProcStruct *temp_r19 = arg0->user_data;
 
     temp_r19->unk00 = arg1;
 }
 
-static inline Process *BoardUiInlineFunc05(UnkItemShowProcStruct *arg0)
+static inline HUPROCESS *BoardUiInlineFunc05(UnkItemShowProcStruct *arg0)
 {
-    Process *temp_r27;
+    HUPROCESS *temp_r27;
 
     temp_r27 = HuPrcCreate(ItemRotProc, 0x2004, 0x1000, 0);
     temp_r27->user_data = arg0;
@@ -411,12 +411,12 @@ static inline Process *BoardUiInlineFunc05(UnkItemShowProcStruct *arg0)
     return temp_r27;
 }
 
-static Process *ItemShowProc(UnkItemShowProcStruct *arg0, Vec *arg1)
+static HUPROCESS *ItemShowProc(UnkItemShowProcStruct *arg0, Vec *arg1)
 {
     Vec sp20;
     Vec sp14;
     Vec sp8;
-    Process *var_r29;
+    HUPROCESS *var_r29;
 
     var_r29 = NULL;
     BoardPlayerPosGet(currItemRestore, &sp20);
@@ -1684,8 +1684,8 @@ static void ExecItemBooBall(void)
     UnkItemShowProcStruct sp80;
     Vec sp74;
     Vec sp68;
-    Process *temp_r17;
-    Process *sp1C;
+    HUPROCESS *temp_r17;
+    HUPROCESS *sp1C;
     s16 spC;
     s16 spA;
     s32 sp18;
@@ -2161,7 +2161,7 @@ static void GenieSceneExec(void)
     Vec sp38;
     Vec sp2C;
     Vec sp20;
-    Process *temp_r21;
+    HUPROCESS *temp_r21;
     float temp_f30;
     float var_f31;
     s16 temp_r25;
@@ -2358,7 +2358,7 @@ static void ExecItemGenie(void)
     Vec sp18;
     Vec spC;
     HU3DPARTICLE *sp8;
-    Process *temp_r27;
+    HUPROCESS *temp_r27;
     float var_f29;
     float var_f31;
     float var_f30;
@@ -2543,7 +2543,7 @@ static void ExecItemBagShow(void)
     Vec sp14;
     Vec sp8;
     float var_f31;
-    Process *temp_r31;
+    HUPROCESS *temp_r31;
     UnkItemShowProcStruct *temp_r30;
     UnkItemShowProcStruct *temp_r29;
 
@@ -2587,8 +2587,8 @@ static void ExecItemBag(void)
     s16 temp_r23;
     s16 i;
     u16 var_r25;
-    Process *temp_r29;
-    Process *temp_r24;
+    HUPROCESS *temp_r29;
+    HUPROCESS *temp_r24;
 
     for (i = 0; i < 3; i++) {
         if (itemBagItems[i] == -1) {

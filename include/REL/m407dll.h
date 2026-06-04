@@ -4,9 +4,9 @@
 #include "game/object.h"
 
 typedef void (*VoidFuncs)(void);
-typedef void (*ObjFuncs)(omObjData *);
+typedef void (*ObjFuncs)(OMOBJ *);
 
-void fn_1_F4(Process *arg0);
+void fn_1_F4(HUPROCESS *arg0);
 void fn_1_194(void);
 void fn_1_1E4(void);
 void fn_1_238(void);
@@ -23,17 +23,17 @@ s32 fn_1_508(u8);
 s32 fn_1_53C(u8);
 void fn_1_568(s16, s16, s16);
 
-void fn_1_14F0(Process *arg0, s32 arg1);
+void fn_1_14F0(HUPROCESS *arg0, s32 arg1);
 void fn_1_15D8(void);
 
-void fn_1_1B1C(Process *arg0);
+void fn_1_1B1C(HUPROCESS *arg0);
 void fn_1_1CA8(void);
 void fn_1_1CAC(float, float, float);
 void fn_1_1CD4(float *arg0, float *arg1, float *arg2);
 s32 fn_1_1D88(void);
 void fn_1_1DB0(Vec *arg0, Vec *arg1, float *arg2, s32 arg3, s32 arg4);
 
-void fn_1_2354(Process *arg0);
+void fn_1_2354(HUPROCESS *arg0);
 void fn_1_2564(void);
 void fn_1_25C0(void);
 s32 fn_1_2880(void);
@@ -43,16 +43,16 @@ s16 fn_1_28B8(u8 arg0);
 s16 fn_1_28D4(void);
 #endif
 
-void fn_1_3AC8(Process *arg0);
+void fn_1_3AC8(HUPROCESS *arg0);
 void fn_1_3B68(void);
 
-void fn_1_41CC(Process *arg0);
+void fn_1_41CC(HUPROCESS *arg0);
 void fn_1_44F4(void);
 
-void fn_1_4980(Process *arg0);
-void fn_1_4C6C(omObjData *obj);
+void fn_1_4980(HUPROCESS *arg0);
+void fn_1_4C6C(OMOBJ *obj);
 
-void fn_1_5C5C(Process *arg0, s16 arg1);
+void fn_1_5C5C(HUPROCESS *arg0, s16 arg1);
 void fn_1_5ECC(void);
 void fn_1_5F40(s32 arg0);
 

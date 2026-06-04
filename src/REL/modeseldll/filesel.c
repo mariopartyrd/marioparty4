@@ -1,3 +1,4 @@
+#include "dolphin/card.h"
 #include "game/audio.h"
 #include "game/card.h"
 #include "game/gamework.h"
@@ -93,8 +94,8 @@ s32 fn_1_37DC(void)
     s16 result;
     WindowData *window;
     s16 fxstat;
-    Process *process = HuPrcCurrentGet();
-    Process *child;
+    HUPROCESS *process = HuPrcCurrentGet();
+    HUPROCESS *child;
     float winSize[2];
     for (i = 0; i < 3; i++) {
         lbl_1_bss_13A[i] = lbl_1_bss_134[i] = -1;
@@ -165,7 +166,7 @@ s32 fn_1_3AAC(void)
 {
     s16 temp_r31;
     s16 temp_r30;
-    s32 temp_r29;
+    s32 errorF;
     s32 temp_r28;
     s16 temp_r27;
     s16 temp_r26;
@@ -236,7 +237,7 @@ repeat:
             temp_r27 = HuWinChoiceGet(lbl_1_bss_148, 1);
             if (temp_r27 == 0) {
                 SLSaveFlagSet(0);
-                temp_r29 = 1;
+                errorF = 1;
                 goto cleanup;
             }
             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x52), 0);
@@ -263,7 +264,7 @@ repeat:
             temp_r27 = HuWinChoiceGet(lbl_1_bss_148, 1);
             if (temp_r27 == 0) {
                 SLSaveFlagSet(0);
-                temp_r29 = 1;
+                errorF = 1;
                 goto cleanup;
             }
             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x52), 0);
@@ -348,29 +349,29 @@ loop_exit:
     lbl_1_bss_11C = temp_r31;
     SLCurSlotNoSet(temp_r31);
     temp_r28 = HuCardMount(temp_r31);
-    if (temp_r28 == 0) {
+    if (temp_r28 == CARD_RESULT_READY) {
         SLSerialNoGet();
         temp_r28 = HuCardOpen(temp_r31, SaveFileNameTbl[0], &sp34);
         if (temp_r28 != 0 && temp_r28 != -4) {
-            temp_r29 = 1;
+            errorF = 1;
         }
         else {
-            temp_r29 = 0;
+            errorF = 0;
         }
         HuCardClose(&sp34);
     }
     else {
-        if (temp_r28 == -3) {
+        if (temp_r28 == CARD_RESULT_NOCARD) {
             goto repeat;
         }
-        temp_r29 = 1;
+        errorF = 1;
     }
     temp_r27 = HuCardSectorSizeGet(curSlotNo);
     if (temp_r27 > 0 && temp_r27 != 8192) {
         HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
         HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
         HuWinMesWait(lbl_1_bss_148);
-        temp_r29 = 1;
+        errorF = 1;
         goto skip_check;
     }
     else {
@@ -378,7 +379,7 @@ loop_exit:
             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
             HuWinMesWait(lbl_1_bss_148);
-            temp_r29 = 1;
+            errorF = 1;
             goto skip_check;
         }
         else {
@@ -397,7 +398,7 @@ loop_exit:
 
                 if (temp_r30 > 20) {
                     temp_f31 = (temp_r30 - 20) / 20.0f;
-                    if (temp_r29) {
+                    if (errorF) {
                         sp28.x = 288.0f + ((1.0 - temp_f31) * (100 * GET_ZEROSIGN(temp_r31)));
                         sp28.y = 250.0 - (100.0 * sind(180.0f * temp_f31));
                         sp28.z = 600.0f;
@@ -429,13 +430,13 @@ loop_exit:
                 }
                 HuPrcVSleep();
             }
-            if (temp_r29 == 0) {
+            if (errorF == 0) {
                 HuWinKill(lbl_1_bss_146);
                 return 1;
             }
             HuWinDispOff(lbl_1_bss_146);
-            temp_r29 = 0;
-            if (temp_r28 == -2) {
+            errorF = 0;
+            if (temp_r28 == CARD_RESULT_WRONGDEVICE) {
                 HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[temp_r31]), 0);
                 #if VERSION_PAL
                 HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
@@ -443,20 +444,20 @@ loop_exit:
                 HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
                 #endif
                 HuWinMesWait(lbl_1_bss_148);
-                temp_r29 = 1;
+                errorF = 1;
             }
-            else if (temp_r28 == -128) {
+            else if (temp_r28 == CARD_RESULT_FATAL_ERROR) {
                 HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[temp_r31]), 0);
                 HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
                 HuWinMesWait(lbl_1_bss_148);
-                temp_r29 = 1;
+                errorF = 1;
             }
-            else if (temp_r28 == -3) {
+            else if (temp_r28 == CARD_RESULT_NOCARD) {
                 HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
                 HuWinMesWait(lbl_1_bss_148);
-                temp_r29 = 1;
+                errorF = 1;
             }
-            else if (temp_r28 == -6) {
+            else if (temp_r28 == CARD_RESULT_BROKEN) {
                 UnMountCnt = 0;
                 HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[temp_r31]), 0);
                 HuWinAttrSet(lbl_1_bss_148, 0x10);
@@ -476,43 +477,43 @@ loop_exit:
                             fn_1_BA20();
                             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
                             HuWinMesWait(lbl_1_bss_148);
-                            temp_r29 = 1;
+                            errorF = 1;
                             goto cleanup;
                         }
                         else {
                             _SetFlag(0x30000);
                             temp_r28 = HuCardFormat(temp_r31);
                             _ClearFlag(FLAG_ID_MAKE(3, 0));
-                            if (temp_r28 == 0) {
+                            if (temp_r28 == CARD_RESULT_READY) {
                                 SLSerialNoGet();
                             }
                             fn_1_BA20();
-                            if (temp_r28 == -128) {
+                            if (temp_r28 == CARD_RESULT_FATAL_ERROR) {
                                 HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x36));
                                 HuWinMesWait(lbl_1_bss_148);
                                 HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
                                 HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
                                 HuWinMesWait(lbl_1_bss_148);
-                                temp_r29 = 1;
+                                errorF = 1;
                             }
-                            else if (temp_r28 == -3) {
+                            else if (temp_r28 == CARD_RESULT_NOCARD) {
                                 HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
                                 HuWinMesWait(lbl_1_bss_148);
-                                temp_r29 = 1;
+                                errorF = 1;
                             }
                         }
                     }
                     else {
-                        temp_r29 = 1;
+                        errorF = 1;
                     }
                 }
                 else {
-                    temp_r29 = 1;
+                    errorF = 1;
                 }
             }
         }
     }
-    if (temp_r29 == 0) {
+    if (errorF == 0) {
         goto cleanup;
     }
 skip_check:
@@ -537,7 +538,7 @@ cleanup:
     lbl_1_bss_8C += 720.0f;
     for (temp_r30 = 0; temp_r30 <= 20; temp_r30++) {
         temp_f31 = temp_r30 / 20.0f;
-        if (temp_r29) {
+        if (errorF) {
             temp_f31 = 1.5 * cosd(90.0f * temp_f31);
             Hu3DModelScaleSet(lbl_1_bss_19A[0], temp_f31, temp_f31, temp_f31);
             Hu3DModelScaleSet(lbl_1_bss_19A[1], temp_f31, temp_f31, temp_f31);
@@ -569,7 +570,7 @@ cleanup:
         }
         HuPrcVSleep();
     }
-    if (temp_r29 && SLSaveFlagGet()) {
+    if (errorF && SLSaveFlagGet()) {
         goto repeat;
     }
     HuWinKill(lbl_1_bss_146);
@@ -629,7 +630,7 @@ void fn_1_5850(void)
     WorkFilesel *work;
     s16 i;
     s32 param;
-    Process *curr;
+    HUPROCESS *curr;
     curr = HuPrcCurrentGet();
     work = curr->user_data;
     index = work->index;
@@ -673,8 +674,8 @@ void fn_1_5850(void)
 void fn_1_5BAC(s16 arg0, s32 arg1)
 {
     WorkFilesel *work;
-    Process *child;
-    Process *parent;
+    HUPROCESS *child;
+    HUPROCESS *parent;
     parent = HuPrcCurrentGet();
     child = HuPrcChildCreate(fn_1_5850, 50, 8192, 0, parent);
     work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(WorkFilesel), MEMORY_DEFAULT_NUM);
@@ -1120,7 +1121,7 @@ void fn_1_72DC(void)
     WorkFilesel *work;
     s16 i;
     s32 param;
-    Process *curr;
+    HUPROCESS *curr;
     curr = HuPrcCurrentGet();
     work = curr->user_data;
     index = work->index;
@@ -1165,8 +1166,8 @@ void fn_1_72DC(void)
 void fn_1_7628(s16 boxno, s32 flag)
 {
     WorkFilesel *work;
-    Process *parent;
-    Process *child;
+    HUPROCESS *parent;
+    HUPROCESS *child;
 
     parent = HuPrcCurrentGet();
     child = HuPrcChildCreate(fn_1_72DC, 50, 8192, 0, parent);
@@ -1185,15 +1186,15 @@ s32 fn_1_76B4(char *name, s16 slotno)
     while (1) {
         filecnt++;
         result = HuCardMount(slotno);
-        if (result == 0) {
+        if (result == CARD_RESULT_READY) {
             result = HuCardOpen(slotno, name, &curFileInfo);
-            if (result == 0 || result == -4) {
+            if (result == CARD_RESULT_READY || result == CARD_RESULT_NOFILE) {
                 if (SLSerialNoCheck()) {
                     return result;
                 }
             }
         }
-        if (result == -2) {
+        if (result == CARD_RESULT_WRONGDEVICE) {
             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[slotno]), 0);
             #if VERSION_PAL
             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
@@ -1203,25 +1204,25 @@ s32 fn_1_76B4(char *name, s16 slotno)
             HuWinMesWait(lbl_1_bss_148);
             return result;
         }
-        if (result == -128 || filecnt > 3) {
+        if (result == CARD_RESULT_FATAL_ERROR || filecnt > 3) {
             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[slotno]), 0);
             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
             HuWinMesWait(lbl_1_bss_148);
             return result;
         }
-        else if (result == -3) {
+        else if (result == CARD_RESULT_NOCARD) {
             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
             HuWinMesWait(lbl_1_bss_148);
             return result;
         }
-        else if (result == -4 || !SLSerialNoCheck()) {
+        else if (result == CARD_RESULT_NOFILE || !SLSerialNoCheck()) {
             OSReport("Card Open Error:No File\n");
             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
             HuWinMesWait(lbl_1_bss_148);
             break;
         }
-        else if (result == -6) {
+        else if (result == CARD_RESULT_BROKEN) {
             UnMountCnt = 0;
             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[slotno]), 0);
             HuWinAttrSet(lbl_1_bss_148, 0x10);
@@ -1246,11 +1247,11 @@ s32 fn_1_76B4(char *name, s16 slotno)
                         _SetFlag(0x30000);
                         result = HuCardFormat(slotno);
                         _ClearFlag(0x30000);
-                        if (result == 0) {
+                        if (result == CARD_RESULT_READY) {
                             SLSerialNoGet();
                         }
                         fn_1_BA20();
-                        if (result == -128) {
+                        if (result == CARD_RESULT_FATAL_ERROR) {
                             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x36));
                             HuWinMesWait(lbl_1_bss_148);
                             HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
@@ -1258,7 +1259,7 @@ s32 fn_1_76B4(char *name, s16 slotno)
                             HuWinMesWait(lbl_1_bss_148);
                             return result;
                         }
-                        else if (result == -3) {
+                        else if (result == CARD_RESULT_NOCARD) {
                             HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
                             HuWinMesWait(lbl_1_bss_148);
                             return result;
@@ -1335,14 +1336,14 @@ s32 fn_1_7B74(s16 boxno)
                     }
                     _SetFlag(0x30000);
                     result = HuCardCreate(curSlotNo, SaveFileNameTbl[boxno], SAVE_BUF_SIZE, &curFileInfo);
-                    if (result == -3) {
+                    if (result == CARD_RESULT_NOCARD) {
                         _ClearFlag(0x30000);
                         fn_1_BA20();
                         OSReport("File Create Error:No Card\n");
                         HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
                         HuWinMesWait(lbl_1_bss_148);
                     }
-                    else if (result == -2) {
+                    else if (result == CARD_RESULT_WRONGDEVICE) {
                         _ClearFlag(0x30000);
                         fn_1_BA20();
                         HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
@@ -1377,12 +1378,12 @@ s32 fn_1_812C(void)
     _SetFlag(0x30000);
     result = HuCardWrite(&curFileInfo, &saveBuf.buf[0], SAVE_BUF_SIZE, 0);
     _ClearFlag(0x30000);
-    if (result == -3) {
+    if (result == CARD_RESULT_NOCARD) {
         HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
         HuWinMesWait(lbl_1_bss_148);
         return 0;
     }
-    if (result == -2) {
+    if (result == CARD_RESULT_WRONGDEVICE) {
         HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
         HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
         HuWinMesWait(lbl_1_bss_148);
@@ -1395,12 +1396,12 @@ s32 fn_1_812C(void)
         return 0;
     }
     result = SLStatSet(0);
-    if (result == -3) {
+    if (result == CARD_RESULT_NOCARD) {
         HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
         HuWinMesWait(lbl_1_bss_148);
         return 0;
     }
-    if (result == -2) {
+    if (result == CARD_RESULT_WRONGDEVICE) {
         HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
         HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
         HuWinMesWait(lbl_1_bss_148);
@@ -1542,7 +1543,7 @@ s32 fn_1_8C30(s16 boxno)
     Vec sp3C;
     s32 sp38;
     s32 sp34;
-    Process *sp30;
+    HUPROCESS *sp30;
     HU3DMODEL *sp2C;
     sp30 = HuPrcCurrentGet();
     OSReport("Card Copy Seq.:Open\n");

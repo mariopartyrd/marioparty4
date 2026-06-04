@@ -6,12 +6,12 @@
 #include "REL/m407dll.h"
 
 // function signatures
-void fn_1_162C(omObjData *);
-void fn_1_1A8C(omObjData *);
+void fn_1_162C(OMOBJ *);
+void fn_1_1A8C(OMOBJ *);
 
 // bss
-Process *lbl_1_bss_2C;
-omObjData *lbl_1_bss_28;
+HUPROCESS *lbl_1_bss_2C;
+OMOBJ *lbl_1_bss_28;
 s16 lbl_1_bss_24;
 s32 lbl_1_bss_20;
 
@@ -39,7 +39,7 @@ Vec lbl_1_data_208 = { -0.5f, -0.5f, -0.5f };
 GXColor lbl_1_data_214 = { 255, 255, 255, 255 };
 Vec lbl_1_data_218 = { 0.0f, 1.0f, 0.0f };
 
-void fn_1_14F0(Process *arg0, s32 arg1)
+void fn_1_14F0(HUPROCESS *arg0, s32 arg1)
 {
     HU3DLIGHT *sp10;
 
@@ -58,11 +58,11 @@ void fn_1_15D8(void)
     s32 i;
 
     for (i = 0; i < 13; i++) {
-        Hu3DModelKill(lbl_1_bss_28->model[i]);
+        Hu3DModelKill(lbl_1_bss_28->mdlId[i]);
     }
 }
 
-void fn_1_162C(omObjData *arg0)
+void fn_1_162C(OMOBJ *arg0)
 {
     s32 var_r30;
     s32 var_r30_2;
@@ -70,52 +70,52 @@ void fn_1_162C(omObjData *arg0)
     s32 var_r30_4;
     s32 i;
 
-    arg0->func = fn_1_1A8C;
-    arg0->model[0] = Hu3DModelCreateFile(lbl_1_data_198[2]);
-    Hu3DModelShadowMapSet(arg0->model[0]);
-    Hu3DModelAmbSet(arg0->model[0], 1.0f, 1.0f, 1.0f);
-    arg0->model[1] = Hu3DModelCreateFile(lbl_1_data_198[3]);
-    Hu3DModelAmbSet(arg0->model[1], 1.0f, 1.0f, 1.0f);
-    Hu3DModelAttrSet(arg0->model[1], HU3D_ATTR_DISPOFF);
+    arg0->objFunc = fn_1_1A8C;
+    arg0->mdlId[0] = Hu3DModelCreateFile(lbl_1_data_198[2]);
+    Hu3DModelShadowMapSet(arg0->mdlId[0]);
+    Hu3DModelAmbSet(arg0->mdlId[0], 1.0f, 1.0f, 1.0f);
+    arg0->mdlId[1] = Hu3DModelCreateFile(lbl_1_data_198[3]);
+    Hu3DModelAmbSet(arg0->mdlId[1], 1.0f, 1.0f, 1.0f);
+    Hu3DModelAttrSet(arg0->mdlId[1], HU3D_ATTR_DISPOFF);
     for (i = 0; i < ARRAY_COUNT(GWPlayerCfg); i++) {
-        arg0->model[i + 2] = Hu3DModelCreateFile(lbl_1_data_198[GWPlayerCfg[i].character + 4]);
-        Hu3DModelAmbSet(arg0->model[i + 2], 1.0f, 1.0f, 1.0f);
-        Hu3DModelShadowMapSet(arg0->model[i + 2]);
+        arg0->mdlId[i + 2] = Hu3DModelCreateFile(lbl_1_data_198[GWPlayerCfg[i].character + 4]);
+        Hu3DModelAmbSet(arg0->mdlId[i + 2], 1.0f, 1.0f, 1.0f);
+        Hu3DModelShadowMapSet(arg0->mdlId[i + 2]);
     }
 
     for (i = 0; i < 5; i++) {
         if (i == 0) {
-            arg0->model[i + 6] = Hu3DModelCreateFile(lbl_1_data_198[0]);
+            arg0->mdlId[i + 6] = Hu3DModelCreateFile(lbl_1_data_198[0]);
         }
         else {
-            arg0->model[i + 6] = Hu3DModelLink(arg0->model[6]);
+            arg0->mdlId[i + 6] = Hu3DModelLink(arg0->mdlId[6]);
         }
-        Hu3DModelAmbSet(arg0->model[i + 6], 1.0f, 1.0f, 1.0f);
-        Hu3DModelShadowMapSet(arg0->model[i + 6]);
+        Hu3DModelAmbSet(arg0->mdlId[i + 6], 1.0f, 1.0f, 1.0f);
+        Hu3DModelShadowMapSet(arg0->mdlId[i + 6]);
     }
 
-    arg0->model[11] = Hu3DModelCreateFile(lbl_1_data_198[12]);
-    arg0->model[12] = Hu3DModelCreateFile(lbl_1_data_198[1]);
+    arg0->mdlId[11] = Hu3DModelCreateFile(lbl_1_data_198[12]);
+    arg0->mdlId[12] = Hu3DModelCreateFile(lbl_1_data_198[1]);
 
     for (i = 0; i < 4; i++) {
-        Hu3DModelPosSetV(arg0->model[i + 2], &lbl_1_data_1CC[i]);
+        Hu3DModelPosSetV(arg0->mdlId[i + 2], &lbl_1_data_1CC[i]);
     }
 
     for (i = 0; i < 5; i++) {
-        Hu3DModelPosSet(arg0->model[i + 6], 0.0f, 0.0f, -2000.0f + (8000.0f * (f32)i));
+        Hu3DModelPosSet(arg0->mdlId[i + 6], 0.0f, 0.0f, -2000.0f + (8000.0f * (f32)i));
     }
 
-    Hu3DModelPosSet(arg0->model[11], 0.0f, 0.0f, -3900.0f);
-    Hu3DModelPosSet(arg0->model[12], 0.0f, 0.0f, 0.0f);
-    Hu3DModelAttrSet(arg0->model[12], HU3D_MOTATTR_LOOP);
+    Hu3DModelPosSet(arg0->mdlId[11], 0.0f, 0.0f, -3900.0f);
+    Hu3DModelPosSet(arg0->mdlId[12], 0.0f, 0.0f, 0.0f);
+    Hu3DModelAttrSet(arg0->mdlId[12], HU3D_MOTATTR_LOOP);
 
     if (lbl_1_bss_20 > 0) {
-        Hu3DModelPosSet(arg0->model[1], 0.0f, 0.0f, 200.0f * (f32)lbl_1_bss_20);
-        Hu3DModelAttrReset(arg0->model[1], HU3D_ATTR_DISPOFF);
+        Hu3DModelPosSet(arg0->mdlId[1], 0.0f, 0.0f, 200.0f * (f32)lbl_1_bss_20);
+        Hu3DModelAttrReset(arg0->mdlId[1], HU3D_ATTR_DISPOFF);
     }
 }
 
-void fn_1_1A8C(omObjData *arg0)
+void fn_1_1A8C(OMOBJ *arg0)
 {
     Vec sp8;
 

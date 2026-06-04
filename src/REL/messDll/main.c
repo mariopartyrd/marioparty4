@@ -10,22 +10,22 @@
 
 #include "ext_math.h"
 
-static void fn_1_2BC(omObjData *arg0);
-static void fn_1_300(omObjData *arg0);
+static void fn_1_2BC(OMOBJ *arg0);
+static void fn_1_300(OMOBJ *arg0);
 static void fn_1_E88(void);
 #if VERSION_PAL
 static void fn_1_1174();
 #endif
 static s32 fn_1_11B0(s16 arg0, s16 arg1);
 
-static Process *lbl_1_bss_34;
-static omObjData *lbl_1_bss_30;
-static omObjData *lbl_1_bss_2C;
+static HUPROCESS *lbl_1_bss_34;
+static OMOBJ *lbl_1_bss_30;
+static OMOBJ *lbl_1_bss_2C;
 static u8 lbl_1_bss_pad[0x20];
 #if VERSION_PAL
-static Process *lbl_1_bss_C;
+static HUPROCESS *lbl_1_bss_C;
 #endif
-static Process *lbl_1_bss_8;
+static HUPROCESS *lbl_1_bss_8;
 #if VERSION_PAL
 static s16 lbl_1_bss_4;
 #else
@@ -62,13 +62,13 @@ void ObjectSetup(void)
         = HuPrcChildCreate(fn_1_E88, 100, 0x3000, 0, lbl_1_bss_34);
 }
 
-static void fn_1_2BC(omObjData *arg0)
+static void fn_1_2BC(OMOBJ *arg0)
 {
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 10);
-    arg0->func = fn_1_300;
+    arg0->objFunc = fn_1_300;
 }
 
-static void fn_1_300(omObjData *arg0)
+static void fn_1_300(OMOBJ *arg0)
 {
     Vec sp2C;
     Vec sp20;

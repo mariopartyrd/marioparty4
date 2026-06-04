@@ -27,7 +27,7 @@ typedef struct {
     s16 unk08;
 } CharWheelWork;
 
-static void ExecCharWheel(omObjData *arg0);
+static void ExecCharWheel(OMOBJ *arg0);
 static void InitCharWheel(CharWheelWork *arg0);
 static void UpdateCharWheel(CharWheelWork *arg0);
 static void StopCharWheel(CharWheelWork *arg0);
@@ -46,7 +46,7 @@ static float wheelSpeed;
 static s16 targetVal;
 static float angleOfs;
 static s16 targetF;
-static omObjData *charWheelObj;
+static OMOBJ *charWheelObj;
 
 static s8 wheelPos = -1;
 static s16 wheelSprGrp = -1;
@@ -126,7 +126,7 @@ void BoardCharWheelSpeedSet(float arg0) {
     wheelSpeed = arg0;
 }
 
-static void ExecCharWheel(omObjData *arg0) {
+static void ExecCharWheel(OMOBJ *arg0) {
     CharWheelWork *temp_r31;
 
     temp_r31 = OM_GET_WORK_PTR(arg0, CharWheelWork);;

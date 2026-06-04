@@ -106,34 +106,34 @@ static s32 UpdateBoardStatus(void);
 static void BoardStatusProc(void);
 static void MoveBoardStatus(s32 arg0);
 static void UpdateStatusItem(UnkUiStatusStruct *arg0, s32 arg1, s32 arg2);
-static void UpdatePicker(omObjData *arg0);
-static void UpdatePickerInput(UnkUiWork01 *arg0, omObjData *arg1);
-static void MovePicker(UnkUiWork01 *arg0, omObjData *arg1);
-static void UpdateComPickerButton(UnkUiWork01 *arg0, omObjData *arg1, s32 *arg2);
-static BOOL CheckPickerButton(UnkUiWork01 *arg0, omObjData *arg1, u32 arg2);
-static void UpdateYourTurn(omObjData *arg0);
-static void GrowYourTurn(UnkUiWork02 *arg0, omObjData *arg1);
-static void WaitYourTurn(UnkUiWork02 *arg0, omObjData *arg1);
-static void ShrinkYourTurn(UnkUiWork02 *arg0, omObjData *arg1);
+static void UpdatePicker(OMOBJ *arg0);
+static void UpdatePickerInput(UnkUiWork01 *arg0, OMOBJ *arg1);
+static void MovePicker(UnkUiWork01 *arg0, OMOBJ *arg1);
+static void UpdateComPickerButton(UnkUiWork01 *arg0, OMOBJ *arg1, s32 *arg2);
+static BOOL CheckPickerButton(UnkUiWork01 *arg0, OMOBJ *arg1, u32 arg2);
+static void UpdateYourTurn(OMOBJ *arg0);
+static void GrowYourTurn(UnkUiWork02 *arg0, OMOBJ *arg1);
+static void WaitYourTurn(UnkUiWork02 *arg0, OMOBJ *arg1);
+static void ShrinkYourTurn(UnkUiWork02 *arg0, OMOBJ *arg1);
 static void ItemUseTeamProc(s32 arg0);
 static void ItemUseProc(void);
 static void FinishItemUse(s16 arg0, s32 arg1);
 static void DestroyItemUse(void);
 static void TeamItemPosSet(s32 arg0, s32 arg1, Vec *arg2);
 static void ExecItemPick(void);
-static void UpdateItemPick(omObjData *arg0);
+static void UpdateItemPick(OMOBJ *arg0);
 static void MakeItemPickSpace(UnkUiWork03 *arg0);
 static void SetItemUIStatus(s32 arg0);
 static void ItemGetPos(s32 arg0, Vec *arg1);
-static void UpdateItemPickGfx(omObjData *arg0);
-static void UpdateItemPickup(omObjData *arg0);
+static void UpdateItemPickGfx(OMOBJ *arg0);
+static void UpdateItemPickup(OMOBJ *arg0);
 static BOOL CheckItemWindow(void);
 static void HideItemWindow(void);
 static void CreateItemWindow(s32 arg0, s32 arg1);
 static BOOL CheckItemWindowSlide(void);
 static void KillItemWindow(void);
 static void SetItemWindowCurr(s32 arg0);
-static void UpdateItemWindow(omObjData *arg0);
+static void UpdateItemWindow(OMOBJ *arg0);
 static void CreatePickerWindow(UnkUiWork01 *arg0, s32 arg1);
 static void KillPickerWindow(UnkUiWork01 *arg0);
 
@@ -154,12 +154,12 @@ static s8 itemUsed;
 static s8 teamItemPlayer;
 static s16 itemRandTbl[ARRAY_COUNT(GWPlayer->items)];
 static float itemPickupPos;
-static omObjData *itemPickObj;
-static Process *itemUseProc;
-static omObjData *yourTurnObj;
-static omObjData *pickerObj;
-static omObjData *itemWindowObj;
-static Process *statusProc;
+static OMOBJ *itemPickObj;
+static HUPROCESS *itemUseProc;
+static OMOBJ *yourTurnObj;
+static OMOBJ *pickerObj;
+static OMOBJ *itemWindowObj;
+static HUPROCESS *statusProc;
 
 static s16 itemPickupMdlId = -1;
 static s16 yourTurnSprGrp = -1;
@@ -703,7 +703,7 @@ static void UpdateStatusItem(UnkUiStatusStruct *arg0, s32 arg1, s32 arg2) {
 
 void BoardPickerCreate(s32 arg0, s8 arg1, void *arg2, s8 arg3) {
     UnkUiWork01 *temp_r31;
-    omObjData *temp_r30;
+    OMOBJ *temp_r30;
     s32 temp_r28;
     s16 sp12;
     s32 sp14[] = {
@@ -784,7 +784,7 @@ s32 BoardPickerChoiceGet(void) {
     return pickerChoice;
 }
 
-static void UpdatePicker(omObjData *arg0) {
+static void UpdatePicker(OMOBJ *arg0) {
     UnkUiWork01 *temp_r31 = OM_GET_WORK_PTR(arg0, UnkUiWork01);
 
     if (temp_r31->unk00_bit0 || BoardIsKill()) {
@@ -805,7 +805,7 @@ static void UpdatePicker(omObjData *arg0) {
     }
 }
 
-static void UpdatePickerInput(UnkUiWork01 *arg0, omObjData *arg1) {
+static void UpdatePickerInput(UnkUiWork01 *arg0, OMOBJ *arg1) {
     s32 sp8;
     s32 temp_r29;
 
@@ -825,7 +825,7 @@ static void UpdatePickerInput(UnkUiWork01 *arg0, omObjData *arg1) {
     }
 }
 
-static void MovePicker(UnkUiWork01 *arg0, omObjData *arg1) {
+static void MovePicker(UnkUiWork01 *arg0, OMOBJ *arg1) {
     float temp_f31 = 0.5f;
     Vec sp14;
     Vec sp8;
@@ -852,7 +852,7 @@ static void MovePicker(UnkUiWork01 *arg0, omObjData *arg1) {
     }
 }
 
-static void UpdateComPickerButton(UnkUiWork01 *arg0, omObjData *arg1, s32 *arg2) {
+static void UpdateComPickerButton(UnkUiWork01 *arg0, OMOBJ *arg1, s32 *arg2) {
     if (arg0->unk02 == arg0->unk01) {
         *arg2 = 0x100;
     } else {
@@ -860,7 +860,7 @@ static void UpdateComPickerButton(UnkUiWork01 *arg0, omObjData *arg1, s32 *arg2)
     }
 }
 
-static BOOL CheckPickerButton(UnkUiWork01 *arg0, omObjData *arg1, u32 arg2) {
+static BOOL CheckPickerButton(UnkUiWork01 *arg0, OMOBJ *arg1, u32 arg2) {
     BOOL var_r30 = FALSE;
 
     if (arg2 == 0x100) {
@@ -933,7 +933,7 @@ void BoardYourTurnExec(s32 arg0) {
     }
 }
 
-static void UpdateYourTurn(omObjData *arg0) {
+static void UpdateYourTurn(OMOBJ *arg0) {
     UnkUiWork02 *temp_r31 = OM_GET_WORK_PTR(arg0, UnkUiWork02);
 
     if (temp_r31->unk00_bit0 || BoardIsKill()) {
@@ -956,7 +956,7 @@ static void UpdateYourTurn(omObjData *arg0) {
     }
 }
 
-static void GrowYourTurn(UnkUiWork02 *arg0, omObjData *arg1) {
+static void GrowYourTurn(UnkUiWork02 *arg0, OMOBJ *arg1) {
     float temp_f30;
 
     arg0->unk01 += 7;
@@ -969,7 +969,7 @@ static void GrowYourTurn(UnkUiWork02 *arg0, omObjData *arg1) {
     HuSprScaleSet(yourTurnSprGrp, 0, temp_f30, temp_f30);
 }
 
-static void WaitYourTurn(UnkUiWork02 *arg0, omObjData *arg1) {
+static void WaitYourTurn(UnkUiWork02 *arg0, OMOBJ *arg1) {
     float temp_f30;
 
     arg0->unk01 += 7;
@@ -983,7 +983,7 @@ static void WaitYourTurn(UnkUiWork02 *arg0, omObjData *arg1) {
     HuSprTPLvlSet(yourTurnSprGrp, 0, 1.0f - temp_f30);
 }
 
-static void ShrinkYourTurn(UnkUiWork02 *arg0, omObjData *arg1) {
+static void ShrinkYourTurn(UnkUiWork02 *arg0, OMOBJ *arg1) {
     s32 temp_r30 = GWPlayer[arg0->unk00_bit5].port;
 
     if ((HuPadBtnDown[temp_r30] & 0x100) || GWPlayer[arg0->unk00_bit5].com || _CheckFlag(FLAG_ID_MAKE(1, 11))) {
@@ -1261,7 +1261,7 @@ static inline void ExecItemPickInlineFunc02(s32 arg0, s8 arg1, s32 arg2) {
     BoardPickerCreate(arg0, arg1, itemPosTemp, arg2);
     CreateItemWindow(arg0, arg1);
     sp10 = OM_GET_WORK_PTR(pickerObj, UnkUiWork03);
-    pickerObj->func = UpdateItemPickGfx;
+    pickerObj->objFunc = UpdateItemPickGfx;
     while (!CheckItemWindow()) {
         HuPrcVSleep();
     }
@@ -1344,7 +1344,7 @@ static void ExecItemPick(void) {
     ExecItemPickInlineFunc02(itemPlayer, var_r23, sp18);
 }
 
-static void UpdateItemPick(omObjData *arg0) {
+static void UpdateItemPick(OMOBJ *arg0) {
     UnkUiWork03 *temp_r28 = OM_GET_WORK_PTR(arg0, UnkUiWork03);
     UnkUiStatusStruct *temp_r26;
     Vec (*temp_r27)[6];
@@ -1594,7 +1594,7 @@ void BoardItemStatusKill(s32 arg0) {
     }
 }
 
-static void UpdateItemPickGfx(omObjData *arg0) {
+static void UpdateItemPickGfx(OMOBJ *arg0) {
     UnkUiWork01 *temp_r30 = OM_GET_WORK_PTR(arg0, UnkUiWork01);
 
     if (temp_r30->unk00_bit0 || BoardIsKill()) {
@@ -1620,7 +1620,7 @@ static void UpdateItemPickGfx(omObjData *arg0) {
                 HuSprBankSet(temp_r30->unk04, 0, 1);
                 HuSprAttrSet(temp_r30->unk04, 0, HUSPR_ATTR_LOOP);
                 HuSprAttrReset(temp_r30->unk04, 0, HUSPR_ATTR_NOANIM);
-                arg0->func = UpdateItemPickup;
+                arg0->objFunc = UpdateItemPickup;
                 HuWinDispOff(temp_r30->unk06);
             } else {
                 itemUsed = -1;
@@ -1630,7 +1630,7 @@ static void UpdateItemPickGfx(omObjData *arg0) {
     }
 }
 
-static void UpdateItemPickup(omObjData *arg0) {
+static void UpdateItemPickup(OMOBJ *arg0) {
     UnkUiWork01 *temp_r31 = OM_GET_WORK_PTR(arg0, UnkUiWork01);
     Vec sp50;
     Vec sp44;
@@ -1786,7 +1786,7 @@ static void CreateItemWindow(s32 arg0, s32 arg1) {
     s32 var_r27;
     s32 temp_r28;
     s32 i;
-    omObjData *temp_r26;
+    OMOBJ *temp_r26;
     UnkUiWork04 *temp_r29;
     UnkUiWindowStruct *temp_r31;
 
@@ -1888,7 +1888,7 @@ static void SetItemWindowCurr(s32 arg0) {
     }
 }
 
-static void UpdateItemWindow(omObjData *arg0) {
+static void UpdateItemWindow(OMOBJ *arg0) {
     Vec sp20;
     Vec sp14;
     Vec sp8;

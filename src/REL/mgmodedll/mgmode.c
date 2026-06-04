@@ -28,8 +28,8 @@ typedef struct camera_view_params {
 
 CameraViewParams lbl_1_data_0[1] = { { { -5, 0, 0 }, { 0, 125, 0 }, 1750 } };
 
-omObjData *outViewObj;
-Process *objman;
+OMOBJ *outViewObj;
+HUPROCESS *objman;
 s32 lbl_1_bss_2D4;
 s32 lbl_1_bss_2D0;
 s16 lbl_1_bss_2CE;
@@ -1182,7 +1182,7 @@ void fn_1_54F4(void)
 
 static u16 lbl_1_data_8C[2] = { 1, 2 };
 
-void fn_1_55C0(omObjData *object)
+void fn_1_55C0(OMOBJ *object)
 {
     s16 i;
     for (i = 0; i < 1; i++) {
@@ -1208,7 +1208,7 @@ void fn_1_55C0(omObjData *object)
 
 void fn_1_66B0(void);
 
-void fn_1_5974(omObjData *object)
+void fn_1_5974(OMOBJ *object)
 {
     Vec pos;
     Vec offset;

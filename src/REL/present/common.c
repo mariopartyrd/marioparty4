@@ -20,12 +20,12 @@ typedef struct GuideWork {
     /* 0x54 */ s32 unk_54;
 } GuideWork; /* size = 0x58 */
 
-static void ExecGuideEnter(omObjData *object);
-static void ExecGuideLeave(omObjData *object);
-static void UpdateGuide(omObjData *object);
+static void ExecGuideEnter(OMOBJ *object);
+static void ExecGuideLeave(OMOBJ *object);
+static void UpdateGuide(OMOBJ *object);
 static float LerpAngle(float start, float end, float time);
 
-static omObjFunc execModeTbl[] = { NULL, ExecGuideEnter, ExecGuideLeave };
+static OMOBJFUNC execModeTbl[] = { NULL, ExecGuideEnter, ExecGuideLeave };
 
 static const s32 guideMotTbl[] = {
     DATA_MAKE_NUM(DATADIR_PRESENT, 137),
@@ -33,11 +33,11 @@ static const s32 guideMotTbl[] = {
     DATA_MAKE_NUM(DATADIR_PRESENT, 139),
 };
 
-omObjData *PresentGuideCreate(void)
+OMOBJ *PresentGuideCreate(void)
 {
     s32 var_r29;
 
-    omObjData *object = omAddObjEx(presentObjMan, 1002, 1, 3, 2, NULL);
+    OMOBJ *object = omAddObjEx(presentObjMan, 1002, 1, 3, 2, NULL);
     GuideWork *work = HuMemDirectMallocNum(HEAP_SYSTEM, sizeof(GuideWork), MEMORY_DEFAULT_NUM);
     object->data = work;
 
@@ -51,69 +51,69 @@ omObjData *PresentGuideCreate(void)
     work->posDelta.x = 0.0f;
     work->posDelta.z = 0.0f;
     work->posDelta.y = 0.0f;
-    object->model[0] = Hu3DModelCreate(HuDataReadNum(DATA_MAKE_NUM(DATADIR_PRESENT, 136), MEMORY_DEFAULT_NUM));
-    Hu3DModelLayerSet(object->model[0], 1);
+    object->mdlId[0] = Hu3DModelCreate(HuDataReadNum(DATA_MAKE_NUM(DATADIR_PRESENT, 136), MEMORY_DEFAULT_NUM));
+    Hu3DModelLayerSet(object->mdlId[0], 1);
 
     for (var_r29 = 0; var_r29 < 3; var_r29++) {
-        object->motion[var_r29] = Hu3DJointMotionFile(object->model[0], guideMotTbl[var_r29]);
+        object->mtnId[var_r29] = Hu3DJointMotionFile(object->mdlId[0], guideMotTbl[var_r29]);
     }
-    Hu3DMotionShiftSet(object->model[0], object->motion[work->motion = 0], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
-    work->unk_50 = CharNpcDustSet(object->model[0], object->motion[2], 1, 10);
-    work->unk_54 = CharNpcDustSet(object->model[0], object->motion[1], 0, 10);
+    Hu3DMotionShiftSet(object->mdlId[0], object->mtnId[work->motion = 0], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
+    work->unk_50 = CharNpcDustSet(object->mdlId[0], object->mtnId[2], 1, 10);
+    work->unk_54 = CharNpcDustSet(object->mdlId[0], object->mtnId[1], 0, 10);
     CharEffectLayerSet(1);
-    Hu3DModelShadowSet(object->model[0]);
+    Hu3DModelShadowSet(object->mdlId[0]);
     PresentGuideExecModeSet(object, PRESENT_GUIDE_MODE_NONE);
     UpdateGuide(object);
-    Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrSet(object->mdlId[0], HU3D_ATTR_DISPOFF);
 
     return object;
 }
 
-void PresentGuideKill(omObjData *object)
+void PresentGuideKill(OMOBJ *object)
 {
     void *work = object->data;
 
     s32 i;
     for (i = 0; i < 1; i++) {
-        Hu3DModelKill(object->model[i]);
+        Hu3DModelKill(object->mdlId[i]);
     }
 
     for (i = 0; i < 3; i++) {
-        Hu3DMotionKill(object->motion[i]);
+        Hu3DMotionKill(object->mtnId[i]);
     }
     HuMemDirectFree(work);
 }
 
-void PresentGuideExecModeSet(omObjData *object, s32 execMode)
+void PresentGuideExecModeSet(OMOBJ *object, s32 execMode)
 {
     GuideWork *work = object->data;
 
     work->execMode = execMode;
-    object->func = execModeTbl[execMode];
-    object->unk10 = 0;
-    object->unk10 = 0;
+    object->objFunc = execModeTbl[execMode];
+    object->mode = 0;
+    object->mode = 0;
 }
 
-s32 PresentGuideExecModeGet(omObjData *object)
+s32 PresentGuideExecModeGet(OMOBJ *object)
 {
     GuideWork *work = object->data;
 
     return work->execMode;
 }
 
-static void ExecGuideEnter(omObjData *object)
+static void ExecGuideEnter(OMOBJ *object)
 {
     float var_f31;
     GuideWork *work = object->data;
 
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
-            Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrReset(object->mdlId[0], HU3D_ATTR_DISPOFF);
             work->pos.x = -300.0f;
             work->pos.z = -180.0f;
             work->time = 0.0f;
             work->speed = 0.025f;
-            object->unk10 = 1;
+            object->mode = 1;
         case 1:
             var_f31 = sind(90.0f * work->time);
             var_f31 *= var_f31;
@@ -125,7 +125,7 @@ static void ExecGuideEnter(omObjData *object)
             work->pos.x = 0.0f;
             work->time = 0.0f;
             work->speed = 0.05f;
-            object->unk10 = 2;
+            object->mode = 2;
         case 2:
             work->posDelta.x = 0.0f;
             work->posDelta.z = 0.01f;
@@ -136,7 +136,7 @@ static void ExecGuideEnter(omObjData *object)
             work->posDelta.x = 0.0f;
             work->posDelta.y = 0.0f;
             work->posDelta.z = 0.0f;
-            object->unk10 = 3;
+            object->mode = 3;
         case 3:
             PresentGuideExecModeSet(object, PRESENT_GUIDE_MODE_NONE);
             break;
@@ -146,17 +146,17 @@ static void ExecGuideEnter(omObjData *object)
     UpdateGuide(object);
 }
 
-static void ExecGuideLeave(omObjData *object)
+static void ExecGuideLeave(OMOBJ *object)
 {
     float weight;
 
     GuideWork *work = object->data;
-    switch (object->unk10) {
+    switch (object->mode) {
         case 0:
             work->time = 0.0f;
             work->speed = 0.025f;
-            Hu3DModelAttrReset(object->model[0], HU3D_ATTR_DISPOFF);
-            object->unk10 = 1;
+            Hu3DModelAttrReset(object->mdlId[0], HU3D_ATTR_DISPOFF);
+            object->mode = 1;
         case 1:
             weight = sind(90.0f * work->time);
             weight *= weight;
@@ -165,9 +165,9 @@ static void ExecGuideLeave(omObjData *object)
             if ((work->time += work->speed) < 1.0f) {
                 break;
             }
-            object->unk10 = 2;
+            object->mode = 2;
         case 2:
-            Hu3DModelAttrSet(object->model[0], HU3D_ATTR_DISPOFF);
+            Hu3DModelAttrSet(object->mdlId[0], HU3D_ATTR_DISPOFF);
             PresentGuideExecModeSet(object, PRESENT_GUIDE_MODE_NONE);
             break;
         default:
@@ -177,7 +177,7 @@ static void ExecGuideLeave(omObjData *object)
     (void)object;
 }
 
-static void UpdateGuide(omObjData *object)
+static void UpdateGuide(OMOBJ *object)
 {
     GuideWork *work = object->data;
     s16 motion = 0;
@@ -203,7 +203,7 @@ static void UpdateGuide(omObjData *object)
     work->pos.x += work->posDelta.x;
     work->pos.z += work->posDelta.z;
     if (work->motion != motion) {
-        Hu3DMotionShiftSet(object->model[0], object->motion[work->motion = motion], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
+        Hu3DMotionShiftSet(object->mdlId[0], object->mtnId[work->motion = motion], 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
     }
     omSetTra(object, work->pos.x, work->pos.y, work->pos.z);
     omSetRot(object, work->rot.x, work->rot.y, work->rot.z);

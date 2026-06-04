@@ -43,7 +43,7 @@ static void fn_1_A408(s32 arg0);
 static void fn_1_AB4C(s32 arg0, s32 arg1);
 static void fn_1_B27C(s32 arg0);
 static void fn_1_B6A0(float arg0, s16 arg1);
-static void fn_1_B8E0(omObjData *arg0);
+static void fn_1_B8E0(OMOBJ *arg0);
 static void fn_1_BB10(s32 arg0);
 static void fn_1_BD08(s32 arg0);
 static void fn_1_BD44(void);
@@ -55,8 +55,8 @@ static void fn_1_CACC(void);
 
 static s8 lbl_1_bss_F4;
 static s32 lbl_1_bss_F0;
-static omObjData *lbl_1_bss_EC;
-static Process *lbl_1_bss_E8;
+static OMOBJ *lbl_1_bss_EC;
+static HUPROCESS *lbl_1_bss_E8;
 
 static s16 lbl_1_data_498 = -1;
 static s16 lbl_1_data_49A = -1;
@@ -122,7 +122,7 @@ static s32 lbl_1_data_510[8] = {
 };
 
 void fn_1_8F20(void) {
-    omObjData *temp_r3;
+    OMOBJ *temp_r3;
     BssECWork *temp_r31;
     s32 var_r28;
     s32 i;
@@ -883,7 +883,7 @@ static void fn_1_B6A0(float arg0, s16 arg1) {
     BoardModelMotionShiftSet(lbl_1_data_498, 1, 0.0f, 8.0f, HU3D_MOTATTR_LOOP);
 }
 
-static void fn_1_B8E0(omObjData *arg0) {
+static void fn_1_B8E0(OMOBJ *arg0) {
     Mtx sp14;
     Vec sp8;
     float temp_f30;

@@ -48,20 +48,20 @@ static void PauseProcess(void);
 static void CreatePauseScreen(void);
 static void DeletePauseScreen(void);
 static void SetBoxVisible(s32 arg0);
-static void PauseConfigObjFunc(omObjData *arg0);
+static void PauseConfigObjFunc(OMOBJ *arg0);
 static void UpdatePauseText(s32 arg0);
-static void InitPauseQuit(omObjData *arg0, ConfigWork *arg1);
+static void InitPauseQuit(OMOBJ *arg0, ConfigWork *arg1);
 static void PauseQuitProcess(void);
 static void DeletePauseQuit(void);
-static s32 UpdatePadConfig(omObjData *arg0, ConfigWork *arg1);
-static void CreatePadConfig(omObjData *arg0, ConfigWork *arg1);
-static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1);
-static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1);
-static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1);
-static void ScrollOutPadConfig(omObjData *arg0, ConfigWork *arg1);
-static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2);
-static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2);
-static s32 ExecPauseConfig(omObjData *arg0, ConfigWork *arg1);
+static s32 UpdatePadConfig(OMOBJ *arg0, ConfigWork *arg1);
+static void CreatePadConfig(OMOBJ *arg0, ConfigWork *arg1);
+static void ScrollInPadConfig(OMOBJ *arg0, ConfigWork *arg1);
+static void CursorMovePadConfig(OMOBJ *arg0, ConfigWork *arg1);
+static void ChangeDiffPadConfig(OMOBJ *arg0, ConfigWork *arg1);
+static void ScrollOutPadConfig(OMOBJ *arg0, ConfigWork *arg1);
+static s32 UpdatePauseBox(OMOBJ *arg0, ConfigWork *arg1, s32 arg2);
+static s32 UpdatePauseBoxExt(OMOBJ *arg0, ConfigWork *arg1, s32 arg2);
+static s32 ExecPauseConfig(OMOBJ *arg0, ConfigWork *arg1);
 static void CreatePauseControlWin(void);
 static void DeletePauseControlWin(void);
 static s32 WaitPauseInput(void);
@@ -81,9 +81,9 @@ static u8 hostOldLayer;
 static s16 hostMdl;
 static s8 cursorPos;
 static s8 boxState[8];
-static omObjData *configObj;
-static Process *quitProcess;
-static Process *mainProcess;
+static OMOBJ *configObj;
+static HUPROCESS *quitProcess;
+static HUPROCESS *mainProcess;
 
 static s8 pausePad = -1;
 static s16 pauseSprGrp = -1;
@@ -239,7 +239,7 @@ void CreatePauseScreen(void) {
     float temp_f30;
     float var_f31;
     void *sp14;
-    omObjData *temp_r27;
+    OMOBJ *temp_r27;
     ConfigWork *temp_r29;
     s16 sp8;
     s32 var_r28;
@@ -482,7 +482,7 @@ static void SetBoxVisible(s32 arg0) {
     }
 }
 
-static void PauseConfigObjFunc(omObjData *arg0) {
+static void PauseConfigObjFunc(OMOBJ *arg0) {
     ConfigWork *temp_r31;
     s16 temp_r28;
     s32 var_r29;
@@ -681,7 +681,7 @@ static void UpdatePauseText(s32 arg0) {
     }
 }
 
-static void InitPauseQuit(omObjData *arg0, ConfigWork *arg1) {
+static void InitPauseQuit(OMOBJ *arg0, ConfigWork *arg1) {
     float var_f31;
 
     switch (arg1->unk01) {
@@ -760,7 +760,7 @@ static void DeletePauseQuit(void) {
     quitProcess = NULL;
 }
 
-static s32 UpdatePadConfig(omObjData *arg0, ConfigWork *arg1) {
+static s32 UpdatePadConfig(OMOBJ *arg0, ConfigWork *arg1) {
     switch (arg1->unk01) {
         case 0:
             CreatePadConfig(arg0, arg1);
@@ -785,7 +785,7 @@ static s32 UpdatePadConfig(omObjData *arg0, ConfigWork *arg1) {
     }
 }
 
-static void CreatePadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void CreatePadConfig(OMOBJ *arg0, ConfigWork *arg1) {
     Vec sp14;
     Vec sp8;
     s32 i;
@@ -820,7 +820,7 @@ static void CreatePadConfig(omObjData *arg0, ConfigWork *arg1) {
     arg1->unk01 = 1;
 }
 
-static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void ScrollInPadConfig(OMOBJ *arg0, ConfigWork *arg1) {
     Vec sp8;
     s32 i;
 
@@ -851,7 +851,7 @@ static void ScrollInPadConfig(omObjData *arg0, ConfigWork *arg1) {
     arg1->unk07--;
 }
 
-static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void CursorMovePadConfig(OMOBJ *arg0, ConfigWork *arg1) {
     float sp8[4];
     s32 temp_r29;
     u32 temp_r30;
@@ -894,7 +894,7 @@ static void CursorMovePadConfig(omObjData *arg0, ConfigWork *arg1) {
     }
 }
 
-static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void ChangeDiffPadConfig(OMOBJ *arg0, ConfigWork *arg1) {
     s32 temp_r29;
     s32 var_r28;
     s32 var_r26;
@@ -981,7 +981,7 @@ static void ChangeDiffPadConfig(omObjData *arg0, ConfigWork *arg1) {
     HuSprBankSet(padConfigSprGrp, arg1->unk04 + 4, var_r26);
 }
 
-static void ScrollOutPadConfig(omObjData *arg0, ConfigWork *arg1) {
+static void ScrollOutPadConfig(OMOBJ *arg0, ConfigWork *arg1) {
     Vec sp14;
     Vec sp8;
 
@@ -1006,7 +1006,7 @@ static void ScrollOutPadConfig(omObjData *arg0, ConfigWork *arg1) {
     arg1->unk00_field2 = 1;
 }
 
-static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
+static s32 UpdatePauseBox(OMOBJ *arg0, ConfigWork *arg1, s32 arg2) {
     float var_f31;
     float var_f30;
     float var_f29;
@@ -1094,7 +1094,7 @@ static s32 UpdatePauseBox(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
     return 0;
 }
 
-static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
+static s32 UpdatePauseBoxExt(OMOBJ *arg0, ConfigWork *arg1, s32 arg2) {
     float var_f31;
     float var_f30;
     float var_f29;
@@ -1194,7 +1194,7 @@ static s32 UpdatePauseBoxExt(omObjData *arg0, ConfigWork *arg1, s32 arg2) {
     return 0;
 }
 
-static s32 ExecPauseConfig(omObjData *arg0, ConfigWork *arg1) {
+static s32 ExecPauseConfig(OMOBJ *arg0, ConfigWork *arg1) {
     s32 var_r27;
     s32 var_r26;
     s32 var_r29;

@@ -51,12 +51,12 @@ static s16 fireParMan;
 static ANIMDATA *fireAnim;
 static char coinStealStrAll[8];
 static char coinStealStr[8];
-static omObjData *suitGiveObj;
-static omObjData *miniBowserBalloonObj;
-static omObjData *bowserEventObj;
-static omObjData *miniBowserObj;
-static omObjData *bowserObj;
-static Process *bowserProc;
+static OMOBJ *suitGiveObj;
+static OMOBJ *miniBowserBalloonObj;
+static OMOBJ *bowserEventObj;
+static OMOBJ *miniBowserObj;
+static OMOBJ *bowserObj;
+static HUPROCESS *bowserProc;
 
 static s16 jumpMot = -1;
 static s16 scareMot = -1;
@@ -78,22 +78,22 @@ static void ExecBowserSuit(void);
 
 static s32 CheckSuitGive(void);
 static void StartSuitGive(void);
-static void SuitGiveMain(omObjData *object);
+static void SuitGiveMain(OMOBJ *object);
 
 static void CreateBowserObj(void);
-static void ExecBowserObj(omObjData *object);
+static void ExecBowserObj(OMOBJ *object);
 static void SetBowserState(s32 state);
 static s32 CheckBowserIdle(void);
 
 static void CreateBowserEvent(void);
 static s32 CheckBowserEvent(void);
 static void StopBowserEvent(void);
-static void ExecBowserEvent(omObjData *object);
+static void ExecBowserEvent(OMOBJ *object);
 static void ConfigBowserEvent(void);
 
 static void CreateMiniBowser(void);
 static s32 CheckMiniBowser(void);
-static void ExecMiniBowser(omObjData *object);
+static void ExecMiniBowser(OMOBJ *object);
 
 
 static void CreatePlayerMot(void);
@@ -662,7 +662,7 @@ static s32 CheckSuitGive(void)
 
 static void StartSuitGive(void)
 {
-    omObjData *object;
+    OMOBJ *object;
     SuitGiveWork *work;
     Vec pos;
     object = omAddObjEx(boardObjMan, 258, 0, 0, -1, SuitGiveMain);
@@ -689,7 +689,7 @@ static void StartSuitGive(void)
     BoardModelPosSetV(work->model, &pos);
 }
 
-static void SuitGiveMain(omObjData *object)
+static void SuitGiveMain(OMOBJ *object)
 {
     SuitGiveWork *work = OM_GET_WORK_PTR(object, SuitGiveWork);
     s32 effect_active;
@@ -803,13 +803,13 @@ static void CreateBowserObj(void)
     }
 }
 
-static void ExecBowserFall(BowserWork *work, omObjData *object);
-static void ExecBowserLaugh(BowserWork *work, omObjData *object);
-static void ExecBowserPowerUp(BowserWork *work, omObjData *object);
-static void ExecBowserFire(BowserWork *work, omObjData *object);
-static void ExecBowserJump(BowserWork *work, omObjData *object);
+static void ExecBowserFall(BowserWork *work, OMOBJ *object);
+static void ExecBowserLaugh(BowserWork *work, OMOBJ *object);
+static void ExecBowserPowerUp(BowserWork *work, OMOBJ *object);
+static void ExecBowserFire(BowserWork *work, OMOBJ *object);
+static void ExecBowserJump(BowserWork *work, OMOBJ *object);
 
-static void ExecBowserObj(omObjData *object)
+static void ExecBowserObj(OMOBJ *object)
 {
     BowserWork *work = OM_GET_WORK_PTR(bowserObj, BowserWork);
     Vec pos;
@@ -869,7 +869,7 @@ static void ExecBowserObj(omObjData *object)
     BoardModelPosSetV(suitItemMdl, &pos);
 }
 
-static void ExecBowserFall(BowserWork *work, omObjData *object)
+static void ExecBowserFall(BowserWork *work, OMOBJ *object)
 {
     Vec pos;
     Vec pos_space;
@@ -920,20 +920,20 @@ static void ExecBowserFall(BowserWork *work, omObjData *object)
 
 }
 
-static void ExecBowserLaugh(BowserWork *work, omObjData *object)
+static void ExecBowserLaugh(BowserWork *work, OMOBJ *object)
 {
     BoardModelMotionStart(bowserMdl, 3, 0);
     work->mot_active = 1;
     work->state = 0;
 }
 
-static void ExecBowserFire(BowserWork *work, omObjData *object)
+static void ExecBowserFire(BowserWork *work, OMOBJ *object)
 {
     BoardModelMotionStart(bowserMdl, 5, 0);
     work->state = 0;
 }
 
-static void ExecBowserJump(BowserWork *work, omObjData *object)
+static void ExecBowserJump(BowserWork *work, OMOBJ *object)
 {
     switch(work->jump_state) {
         case 0:
@@ -971,7 +971,7 @@ static void ExecBowserJump(BowserWork *work, omObjData *object)
     }
 }
 
-static void ExecBowserPowerUp(BowserWork *work, omObjData *object)
+static void ExecBowserPowerUp(BowserWork *work, OMOBJ *object)
 {
     Vec pos;
     if(work->jump_state == 0) {
@@ -1014,7 +1014,7 @@ static s32 CheckBowserIdle(void)
 
 static void CreateMiniBowser(void)
 {
-    omObjData *object;
+    OMOBJ *object;
     MiniBowserWork *work;
     object = omAddObjEx(boardObjMan, 257, 0, 0, -1, ExecMiniBowser);
     miniBowserObj = object;
@@ -1038,7 +1038,7 @@ static s32 CheckMiniBowser(void)
     }
 }
 
-static void ExecMiniBowser(omObjData *object)
+static void ExecMiniBowser(OMOBJ *object)
 {
     MiniBowserWork *work = OM_GET_WORK_PTR(object, MiniBowserWork);
     float alpha;
@@ -1123,10 +1123,10 @@ static void StopBowserEvent(void)
     work->state = 1;
 }
 
-static void ShowBowserEvent(BowserEventWork *work, omObjData *object);
-static void HideBowserEvent(BowserEventWork *work, omObjData *object);
+static void ShowBowserEvent(BowserEventWork *work, OMOBJ *object);
+static void HideBowserEvent(BowserEventWork *work, OMOBJ *object);
 
-static void ExecBowserEvent(omObjData *object)
+static void ExecBowserEvent(OMOBJ *object)
 {
     BowserEventWork *work = OM_GET_WORK_PTR(object, BowserEventWork);
     BowserEventData *data = &bowserEvent;
@@ -1155,7 +1155,7 @@ static void ExecBowserEvent(omObjData *object)
     }
 }
 
-static void ShowBowserEvent(BowserEventWork *work, omObjData *object)
+static void ShowBowserEvent(BowserEventWork *work, OMOBJ *object)
 {
     BowserEventData *data;
     s32 i;
@@ -1190,7 +1190,7 @@ static void ShowBowserEvent(BowserEventWork *work, omObjData *object)
     }
 }
 
-static void HideBowserEvent(BowserEventWork *work, omObjData *object)
+static void HideBowserEvent(BowserEventWork *work, OMOBJ *object)
 {
     BowserEventData *data = &bowserEvent;
     float angle;
@@ -1425,10 +1425,10 @@ static s32 GetMiniBowserBalloonState(void);
 static void SetMiniBowserBalloonState(s32 state);
 static void CreateMiniBowserBalloon(void);
 
-static void ExecMiniBowserBalloon(omObjData *object);
-static void MiniBowserBalloonHover(MiniBowserBalloonWork *work, omObjData *object);
-static void MiniBowserBalloonFall(MiniBowserBalloonWork *work, omObjData *object);
-static void MiniBowserBalloonRaise(MiniBowserBalloonWork *work, omObjData *object);
+static void ExecMiniBowserBalloon(OMOBJ *object);
+static void MiniBowserBalloonHover(MiniBowserBalloonWork *work, OMOBJ *object);
+static void MiniBowserBalloonFall(MiniBowserBalloonWork *work, OMOBJ *object);
+static void MiniBowserBalloonRaise(MiniBowserBalloonWork *work, OMOBJ *object);
 
 
 static void SetMiniBowserMotion(s32 mot, u8 end, s32 pause);
@@ -1703,7 +1703,7 @@ static void CreateMiniBowserBalloon(void)
     SetMiniBowserMotion(1, 0, 1);
 }
 
-static void ExecMiniBowserBalloon(omObjData *object)
+static void ExecMiniBowserBalloon(OMOBJ *object)
 {
     MiniBowserBalloonWork *work;
     s16 *models;
@@ -1737,7 +1737,7 @@ static void ExecMiniBowserBalloon(omObjData *object)
     BoardModelPosSet(models[1], object->trans.x, object->trans.y+work->offset, object->trans.z);
 }
 
-static void MiniBowserBalloonHover(MiniBowserBalloonWork *work, omObjData *object)
+static void MiniBowserBalloonHover(MiniBowserBalloonWork *work, OMOBJ *object)
 {
     float angle;
     work->angle++;
@@ -1748,7 +1748,7 @@ static void MiniBowserBalloonHover(MiniBowserBalloonWork *work, omObjData *objec
     work->offset = 10.0*sind(angle);
 }
 
-static void MiniBowserBalloonFall(MiniBowserBalloonWork *work, omObjData *object)
+static void MiniBowserBalloonFall(MiniBowserBalloonWork *work, OMOBJ *object)
 {
     Vec pos;
     BoardPlayerPosGet(eventPlayer, &pos);
@@ -1761,7 +1761,7 @@ static void MiniBowserBalloonFall(MiniBowserBalloonWork *work, omObjData *object
     }
 }
 
-static void MiniBowserBalloonRaise(MiniBowserBalloonWork *work, omObjData *object)
+static void MiniBowserBalloonRaise(MiniBowserBalloonWork *work, OMOBJ *object)
 {
     Vec pos;
     BoardPlayerPosGet(eventPlayer, &pos);

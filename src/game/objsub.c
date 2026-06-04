@@ -1163,7 +1163,7 @@ MgInfo mgInfoTbl[] = {
     },
 };
 
-void MGSeqPracticeExitCheck(omObjData *);
+void MGSeqPracticeExitCheck(OMOBJ *);
 
 s16 mgTypeCurr;
 s16 mgBattleStar[4];
@@ -1196,10 +1196,10 @@ s32 omMgIndexGet(s16 overlay)
     return -1;
 }
 
-void omGameSysInit(Process *objman)
+void omGameSysInit(HUPROCESS *objman)
 {
     s32 i;
-    omObjData *obj;
+    OMOBJ *obj;
 
     omSystemKeyCheckSetup(objman);
     Hu3DCameraScissorSet(1, 0, 0, 0x280, 0x1E0);

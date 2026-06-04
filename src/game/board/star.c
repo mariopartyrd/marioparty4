@@ -55,25 +55,25 @@ typedef struct {
 
 static void ExecStar(void);
 static void DestroyStar(void);
-static void GiveStarMain(omObjData *arg0);
-static void UpdateStarAngle(GiveStarWork *arg0, omObjData *arg1);
-static void InitGiveStar(GiveStarWork *arg0, omObjData *arg1);
-static void MoveGiveStar(GiveStarWork *arg0, omObjData *arg1);
-static void ShrinkGiveStar(GiveStarWork *arg0, omObjData *arg1);
+static void GiveStarMain(OMOBJ *arg0);
+static void UpdateStarAngle(GiveStarWork *arg0, OMOBJ *arg1);
+static void InitGiveStar(GiveStarWork *arg0, OMOBJ *arg1);
+static void MoveGiveStar(GiveStarWork *arg0, OMOBJ *arg1);
+static void ShrinkGiveStar(GiveStarWork *arg0, OMOBJ *arg1);
 static void StopGiveStar(void);
 static void InitGiveStarEffect(void);
 static void KillGiveStarEffect(void);
-static void ShowNextUpdate(omObjData *arg0);
+static void ShowNextUpdate(OMOBJ *arg0);
 static void HideNextHost(s32 arg0);
 
 static Vec starCharPos;
 
 static s16 hostMot[2];
-static omObjData *showNextObj;
+static OMOBJ *showNextObj;
 static s16 starDoneF;
 static ANIMDATA *starEffAnim;
-static omObjData *giveStarObj;
-static Process *starProc;
+static OMOBJ *giveStarObj;
+static HUPROCESS *starProc;
 
 static s16 starParman = -1;
 static s16 hostMdl = -1;
@@ -398,7 +398,7 @@ static void DestroyStar(void) {
     starProc = NULL;
 }
 
-static void GiveStarMain(omObjData *arg0) {
+static void GiveStarMain(OMOBJ *arg0) {
     GiveStarWork *temp_r30;
 
     temp_r30 = OM_GET_WORK_PTR(arg0, GiveStarWork);
@@ -435,7 +435,7 @@ static void GiveStarMain(omObjData *arg0) {
     }
 }
 
-static void UpdateStarAngle(GiveStarWork *arg0, omObjData *arg1) {
+static void UpdateStarAngle(GiveStarWork *arg0, OMOBJ *arg1) {
     float var_f31;
 
     if (arg0->unk00_field1 != 0) {
@@ -450,7 +450,7 @@ static void UpdateStarAngle(GiveStarWork *arg0, omObjData *arg1) {
     }
 }
 
-static void InitGiveStar(GiveStarWork *arg0, omObjData *arg1) {
+static void InitGiveStar(GiveStarWork *arg0, OMOBJ *arg1) {
     Vec sp8;
 
     BoardPlayerPosGet(arg0->unk00_field3, &sp8);
@@ -469,7 +469,7 @@ static void InitGiveStar(GiveStarWork *arg0, omObjData *arg1) {
     InitGiveStarEffect();
 }
 
-static void MoveGiveStar(GiveStarWork *arg0, omObjData *arg1) {
+static void MoveGiveStar(GiveStarWork *arg0, OMOBJ *arg1) {
     Vec sp8;
     float temp_f31;
 
@@ -495,7 +495,7 @@ static void MoveGiveStar(GiveStarWork *arg0, omObjData *arg1) {
     }
 }
 
-static void ShrinkGiveStar(GiveStarWork *arg0, omObjData *arg1) {
+static void ShrinkGiveStar(GiveStarWork *arg0, OMOBJ *arg1) {
     Vec sp8;
     float var_f30;
 
@@ -790,7 +790,7 @@ void BoardStarShowNext(s32 arg0) {
     _ClearFlag(FLAG_ID_MAKE(1, 28));
 }
 
-static void ShowNextUpdate(omObjData *arg0) {
+static void ShowNextUpdate(OMOBJ *arg0) {
     ShowNextWork *temp_r30 = OM_GET_WORK_PTR(arg0, ShowNextWork);
     Vec sp8;
 
