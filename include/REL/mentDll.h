@@ -2,7 +2,7 @@
 #define REL_MENTDLL_H
 
 #include "game/object.h"
-extern s32 lbl_1_data_0[][4];
+extern s32 menuSoundFXTbl[][4];
 
 // the prev and current struct member might be vice versa
 typedef struct MentDllUnkBss64Struct {
@@ -14,38 +14,38 @@ typedef struct MentDllUnkBss64Struct {
     /* 0x2C */ Vec prevRot;
     /* 0x38 */ float zoom;
     /* 0x3C */ float prevZoom;
-    /* 0x40 */ s32 unk_40;
-} MentDllUnkBss64Struct; /* size = 0x44 */
-extern MentDllUnkBss64Struct lbl_1_bss_64;
+    /* 0x40 */ s32 frames;
+} MenuCamera; /* size = 0x44 */
+extern MenuCamera menuCamera;
 
-float fn_1_20C(float arg8, float arg9, float argA, float argB);
-float fn_1_234(float arg8, float arg9, float argA);
-float fn_1_254(float arg8, float arg9, float argA, float argB);
-float fn_1_32C(float arg8, float arg9, float argA, float argB);
-float fn_1_3F4(float arg8, float arg9, float argA, float argB);
-void fn_1_4B0(s32 arg0);
-void fn_1_4D8(void);
-void fn_1_50C(void);
-void fn_1_5E8(s32 arg0);
-void fn_1_6D0(void);
-s32 fn_1_1434(s32 arg0, s32 arg1, s32 arg2);
-void fn_1_16AC(s32 arg0);
-void fn_1_1968(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 fn_1_1A5C(s32 arg0, s32 arg1, s32 arg2);
-s32 fn_1_1DD8(s32 arg0, s32 arg1, s32 arg2);
-s32 fn_1_2154(s32 arg0);
-void fn_1_2318(s32 arg0);
-void fn_1_2808(void (*arg0)(void));
-void fn_1_2844(HUPROCESS *arg0, void (*arg1)(void));
-void fn_1_29A0(MentDllUnkBss64Struct *arg0);
-void fn_1_4138(MentDllUnkBss64Struct *arg0, MentDllUnkBss64Struct *arg1, float arg8, float arg9, float argA);
-void fn_1_5150(MentDllUnkBss64Struct *arg0, MentDllUnkBss64Struct *arg1, float arg8, float arg9, float argA);
-void fn_1_5818(OMOBJ *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_59A0(OMOBJ *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void fn_1_5C08(OMOBJ *arg0);
-void fn_1_5CDC(OMOBJ *arg0, s32 arg1, s32 arg2);
-void fn_1_5D38(OMOBJ *arg0, s32 arg1, Vec arg2, float arg8, float arg9, float argA, s32 arg3, s32 arg4);
-void fn_1_6534(s32, s32, float, float);
-void fn_1_658C(HUPROCESS *arg0);
+float LerpClamped(float start, float end, float weight, float max_weight);
+float WeightedBlend(float start, float end, float weight);
+float CosEaseClamped(float start, float end, float progress, float maxProgress);
+float SinEaseClamped(float start, float end, float progress, float maxProgress);
+float SinOscillateClamped(float start, float end, float progress, float maxProgress);
+void MenuPrcSleep(s32 time);
+void MenuPrcVSleep(void);
+void MenuLightInit(void);
+void MenuShadowInit(s32 eventNo);
+void MenuWinInit(void);
+s32 OpenWindowBottom(s32 xAlign, s32 arg1, s32 arg2);
+void DestroyWin(s32 winId);
+void WinSetMessAndWait(s32 winId, s32 mess, s32 maxWaits, s32 sleepDur);
+s32 OpenConfirmDlgYesDef(s32 mess, s32 mode, s32 arg2);
+s32 OpenConfirmDlgNoDef(s32 mess, s32 mode, s32 arg2);
+s32 OpenAvailControlsWin(s32 mess);
+void destroyAvailControlsWin(s32 arg0);
+void moveCameraWithMethod(void (*cameraMoveMethod)(void));
+void MenuCameraInit(HUPROCESS *objman, void (*cameraIntroMethod)(void));
+void MenuCameraSnapshot(MenuCamera *menuCamera);
+void MenuCameraSinEaseFollow(MenuCamera *srcCamera, MenuCamera *targetCamera, f32 progress, f32 maxProgress, f32 weight);
+void MenuCameraCosEaseFollow(MenuCamera *srcCamera, MenuCamera *targetCamera, f32 progress, f32 maxProgress, f32 weight);
+void motionShift(OMOBJ *obj, s32 mdlId, s32 mtnId, s32 shiftTime, s32 attr);
+void motionShiftIfChanged(OMOBJ *obj, s32 mdlId, s32 mtnId, s32 shiftTime, s32 attr);
+void motionShiftTick(OMOBJ *obj);
+void WaitAnimEnd(OMOBJ *obj, s32 mdlId, s32 initialDelay);
+void MenuMoveChar(OMOBJ *obj, s32 mdlId, Vec targePos, float endRotAngle, float speed, float rotDur, s32 enableMove, s32 enableRot);
+void sprPosSetYPad(s32 grpId, s32 memberNo, float posX, float posY);
+void MenuMain(HUPROCESS *objman);
 
 #endif
