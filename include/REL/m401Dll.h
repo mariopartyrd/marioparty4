@@ -33,7 +33,7 @@ typedef struct m401_work_player {
 	s16 unk6C;
 	s16 unk6E;
 	s16 unk70;
-	s16 unk72;
+	s16 coinCnt;
 	s16 unk74;
 	s16 unk76;
 	s16 unk78;
