@@ -338,7 +338,7 @@ void fn_2_113AC(OMOBJ *object)
         float dist;
         temp_r27 = lbl_2_bss_118[temp_r29];
         plr = temp_r27->data;
-        if (plr->coinCnt != 0) {
+        if (plr->unk78 != 0) {
             continue;
         }
         dist = VECDistanceXYZ(&object->trans, &temp_r27->trans);
