@@ -318,7 +318,7 @@ void fn_2_113AC(OMOBJ *object)
 {
     UnkWork10A88 *temp_r30;
     s32 temp_r29;
-    M401WorkPlayer *temp_r28;
+    M401WorkPlayer *plr;
     OMOBJ *temp_r27;
     HU3DPARTICLE *temp_r25;
     s16 temp_r24;
@@ -337,8 +337,8 @@ void fn_2_113AC(OMOBJ *object)
     for (temp_r29 = 0; temp_r29 < 4; temp_r29++) {
         float dist;
         temp_r27 = lbl_2_bss_118[temp_r29];
-        temp_r28 = temp_r27->data;
-        if (temp_r28->unk78 != 0) {
+        plr = temp_r27->data;
+        if (plr->unk78 != 0) {
             continue;
         }
         dist = VECDistanceXYZ(&object->trans, &temp_r27->trans);
@@ -347,17 +347,17 @@ void fn_2_113AC(OMOBJ *object)
             HuAudFXPlay(1288);
             if (temp_r30->unk18 == 0) {
                 HuAudFXPlay(9);
-                temp_r28->unk72++;
-                omVibrate(temp_r28->unk4, 12, 6, 6);
+                plr->coinCnt++;
+                omVibrate(plr->unk4, 12, 6, 6);
             }
             else {
                 HuAudFXPlay(1292);
-                temp_r28->unk74 = 3;
-                temp_r28->unk72 += 3;
-                fn_2_169C(temp_r28->unk4);
-                omVibrate(temp_r28->unk4, 12, 4, 2);
+                plr->unk74 = 3;
+                plr->coinCnt += 3;
+                fn_2_169C(plr->unk4);
+                omVibrate(plr->unk4, 12, 4, 2);
             }
-            temp_r28->unk84 = 50;
+            plr->unk84 = 50;
             for (temp_r29 = 0; temp_r29 < 3; temp_r29++) {
                 temp_r25 = Hu3DData[object->mdlId[temp_r29]].hookData;
                 temp_r25->emitCnt = 0;
