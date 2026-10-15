@@ -21,12 +21,12 @@ s32 msmSysGetOutputMode(void);
 #include "game/hsfex.h"
 #endif
 
-s16 lbl_1_data_100 = -1;
-float lbl_1_data_104[] = { -55, 0, 0, 0, 60, -57, 806, -71, 0, 0, 0, 100, -131, 900, -87, 0, 0, 0, 46, -117, 566, -87, 0, 0, 0, 46, -117, 566, -90, 0,
+s16 fileSelectFxId = -1;
+float fileSelectCameraViewTbl[] = { -55, 0, 0, 0, 60, -57, 806, -71, 0, 0, 0, 100, -131, 900, -87, 0, 0, 0, 46, -117, 566, -87, 0, 0, 0, 46, -117, 566, -90, 0,
     0, -22, 39, -153, 432, -40, 0, 0, 0, 130, -186, 6530, -23, 0, 0, -9, 1, -70, 1318, -25, 0, 0, 0, 242, 90, 343, -30, 0, 0, 0, 223, -60, 505, -23,
     0, 0, 0, 65, -97, 1318 };
 
-s32 lbl_1_data_21C[] = {
+s32 fileSelectCharAnimTbl[] = {
     DATA_MAKE_NUM(DATADIR_MODESEL, 0x0D),
     DATA_MAKE_NUM(DATADIR_MODESEL, 0x0E),
     DATA_MAKE_NUM(DATADIR_MODESEL, 0x0F),
@@ -47,48 +47,48 @@ s32 lbl_1_data_21C[] = {
     DATA_MAKE_NUM(DATADIR_MODESEL, 0x1E),
 };
 
-char *lbl_1_data_26C[] = { "\x0E\x16", "\x0E\x17" };
+char *fileSelectSlotIconTbl[] = { "\x0E\x16", "\x0E\x17" };
 
-char *lbl_1_data_278[] = { "A", "B" };
+char *fileSelectSlotNameTbl[] = { "A", "B" };
 
-char *lbl_1_data_288[] = { "1", "2", "3" };
+char *fileSelectBoxNameTbl[] = { "1", "2", "3" };
 
-s32 lbl_1_bss_14C;
-s16 lbl_1_bss_148;
-s16 lbl_1_bss_146;
-s16 lbl_1_bss_140[3];
-s16 lbl_1_bss_13A[3];
-s16 lbl_1_bss_134[3];
-s32 lbl_1_bss_12C[2];
-s32 lbl_1_bss_120[3];
-s16 lbl_1_bss_11C;
-s16 lbl_1_bss_116[3];
-s16 lbl_1_bss_110[3];
-float lbl_1_bss_108[2];
-float lbl_1_bss_100[2];
-ANIMDATA *lbl_1_bss_FC;
-ANIMDATA *lbl_1_bss_F8;
-ANIMDATA *lbl_1_bss_F4;
-s16 lbl_1_bss_EE[3];
-s16 lbl_1_bss_E8[3];
-OSTime lbl_1_bss_D0[3];
-s32 lbl_1_bss_C4[3];
-s32 lbl_1_bss_B8[3];
-s32 lbl_1_bss_AC[3];
-s16 lbl_1_bss_A4[3];
-s16 lbl_1_bss_9E[3];
-s16 lbl_1_bss_98[3];
-s16 lbl_1_bss_92[3];
-s16 lbl_1_bss_90;
-float lbl_1_bss_8C;
-s16 lbl_1_bss_88;
+s32 fileSelectCardBit;
+s16 fileSelectWinId;
+s16 fileSelectHelpWinId;
+s16 fileSelectBoxPresentF[3];
+s16 fileSelectBoxCharAnimId[3];
+s16 fileSelectBoxCharBackAnimId[3];
+s32 fileSelectSlotLabelF[2];
+s32 fileSelectBoxLabelF[3];
+s16 fileSelectSlotNo;
+s16 fileSelectStarSprGrpId[3];
+s16 fileSelectDateSprGrpId[3];
+float fileSelectCardRotScale[2];
+float fileSelectCardTiltScale[2];
+ANIMDATA *fileSelectStarAnim;
+ANIMDATA *fileSelectDigitAnim;
+ANIMDATA *fileSelectStarMaxAnim;
+s16 fileSelectBoxStars[3];
+s16 fileSelectBoxCharNo[3];
+OSTime fileSelectBoxCreateTime[3];
+s32 fileSelectStoryContinueF[3];
+s32 fileSelectPartyContinueF[3];
+s32 fileSelectStoryClearF[3];
+s16 fileSelectStoryBoardNo[3];
+s16 fileSelectPartyBoardNo[3];
+s16 fileSelectPartyTurn[3];
+s16 fileSelectPartyMaxTurn[3];
+s16 fileSelectCopySourceBox;
+float fileSelectCardRot;
+s16 fileSelectBoxNum;
 
-s32 fn_1_3AAC(void);
-void fn_1_5D30(void);
-s32 fn_1_61B4(void);
-void fn_1_AAB8(void);
+s32 FileSelectCardExec(void);
+void FileSelectCardInit(void);
+s32 FileSelectBoxExec(void);
+void FileSelectDisplayMain(void);
 
-s32 fn_1_37DC(void)
+s32 FileSelectExec(void)
 {
     s16 i;
     s16 result;
@@ -98,32 +98,32 @@ s32 fn_1_37DC(void)
     HUPROCESS *child;
     float winSize[2];
     for (i = 0; i < 3; i++) {
-        lbl_1_bss_13A[i] = lbl_1_bss_134[i] = -1;
-        lbl_1_bss_116[i] = -1;
-        lbl_1_bss_110[i] = -1;
+        fileSelectBoxCharAnimId[i] = fileSelectBoxCharBackAnimId[i] = -1;
+        fileSelectStarSprGrpId[i] = -1;
+        fileSelectDateSprGrpId[i] = -1;
     }
-    lbl_1_bss_FC = lbl_1_bss_F8 = lbl_1_bss_F4 = NULL;
+    fileSelectStarAnim = fileSelectDigitAnim = fileSelectStarMaxAnim = NULL;
     curSlotNo = 0;
-    fn_1_1EC0(0);
-    fn_1_5D30();
-    child = HuPrcChildCreate(fn_1_AAB8, 10, 8192, 0, process);
+    ModeSelCameraViewSet(0);
+    FileSelectCardInit();
+    child = HuPrcChildCreate(FileSelectDisplayMain, 10, 8192, 0, process);
     winSize[0] = 457;
     winSize[1] = 94;
-    lbl_1_bss_148 = HuWinExCreateStyled(-10000, 448 - winSize[1], winSize[0], winSize[1], -1, 0);
-    window = &winData[lbl_1_bss_148];
+    fileSelectWinId = HuWinExCreateStyled(-10000, 448 - winSize[1], winSize[0], winSize[1], -1, 0);
+    window = &winData[fileSelectWinId];
     window->active_pad = 1;
-    HuWinPushKeySet(lbl_1_bss_148, 0x300);
-    HuWinMesSpeedSet(lbl_1_bss_148, 0);
-    HuWinDispOn(lbl_1_bss_148);
+    HuWinPushKeySet(fileSelectWinId, 0x300);
+    HuWinMesSpeedSet(fileSelectWinId, 0);
+    HuWinDispOn(fileSelectWinId);
     fxstat = HuAudFXPlay(2098);
-    lbl_1_data_100 = fxstat;
+    fileSelectFxId = fxstat;
     WipeCreate(WIPE_MODE_IN, WIPE_TYPE_NORMAL, 30);
     while (WipeStatGet()) {
         HuPrcVSleep();
     }
     HuAudSeqPlay(43);
     while (1) {
-        result = fn_1_3AAC();
+        result = FileSelectCardExec();
         if (!result) {
             break;
         }
@@ -137,7 +137,7 @@ s32 fn_1_37DC(void)
             break;
         }
         else {
-            if (fn_1_61B4()) {
+            if (FileSelectBoxExec()) {
                 break;
             }
         }
@@ -145,8 +145,8 @@ s32 fn_1_37DC(void)
     if (result == 0) {
         HuAudFXStop(fxstat);
     }
-    HuWinExAnimOut(lbl_1_bss_148);
-    HuWinExCleanup(lbl_1_bss_148);
+    HuWinExAnimOut(fileSelectWinId);
+    HuWinExCleanup(fileSelectWinId);
     HuPrcKill(child);
     HuCardUnMount(0);
     HuCardUnMount(1);
@@ -155,178 +155,178 @@ s32 fn_1_37DC(void)
 
 #define GET_ZEROSIGN(x) (((x) == 0) ? (-1) : (1))
 
-s32 fn_1_562C(void);
-void fn_1_57C8(s16 arg0);
-void fn_1_5BAC(s16 arg0, s32 arg1);
-s32 fn_1_5C38(void);
-void fn_1_B8CC(u32 arg0);
-void fn_1_BA20(void);
+s32 FileSelectCardErrorCheck(void);
+void FileSelectModelMaterialReset(s16 mdlId);
+void FileSelectCardAnimStart(s16 slotNo, s32 selectF);
+s32 FileSelectCardCheck(void);
+void FileSelectProgressWinOpen(u32 messId);
+void FileSelectProgressWinClose(void);
 
-s32 fn_1_3AAC(void)
+s32 FileSelectCardExec(void)
 {
-    s16 temp_r31;
-    s16 temp_r30;
+    s16 slotNo;
+    s16 frame;
     s32 errorF;
-    s32 temp_r28;
-    s16 temp_r27;
-    s16 temp_r26;
-    s16 temp_r25;
-    s16 temp_r24;
-    WindowData *temp_r23;
-    float temp_f31;
-    CARDFileInfo sp34;
-    Vec sp28;
-    Vec sp1C;
-    Vec sp10;
-    float sp8[2];
+    s32 cardResult;
+    s16 choice;
+    s16 otherSlotNo;
+    s16 formatChoice;
+    s16 prevSlotNo;
+    WindowData *window;
+    float time;
+    CARDFileInfo fileInfo;
+    Vec screenPos;
+    Vec pos;
+    Vec targetPos;
+    float helpWinSize[2];
 
-    fn_1_1EC0(0);
-    temp_r23 = &winData[lbl_1_bss_148];
-    HuWinMesMaxSizeGet(1, sp8, MAKE_MESSID(0x10, 0x0C));
-    lbl_1_bss_146 = HuWinExCreateStyled(-10000.0f, 316.0f, sp8[0], sp8[1], -1, 0);
-    HuWinBGTPLvlSet(lbl_1_bss_146, 0);
-    HuWinMesSpeedSet(lbl_1_bss_146, 0);
+    ModeSelCameraViewSet(0);
+    window = &winData[fileSelectWinId];
+    HuWinMesMaxSizeGet(1, helpWinSize, MAKE_MESSID(0x10, 0x0C));
+    fileSelectHelpWinId = HuWinExCreateStyled(-10000.0f, 316.0f, helpWinSize[0], helpWinSize[1], -1, 0);
+    HuWinBGTPLvlSet(fileSelectHelpWinId, 0);
+    HuWinMesSpeedSet(fileSelectHelpWinId, 0);
 repeat:
-    sp28.x = 188;
-    sp28.y = 250;
-    sp28.z = 600;
-    Hu3D2Dto3D(&sp28, 1, &sp1C);
-    Hu3DModelPosSetV(lbl_1_bss_19A[2], &sp1C);
-    Hu3DModelPosSetV(lbl_1_bss_19A[4], &sp1C);
-    Hu3DModelPosSetV(lbl_1_bss_19A[0], &sp1C);
-    sp28.x = 388;
-    Hu3D2Dto3D(&sp28, 1, &sp1C);
-    Hu3DModelPosSetV(lbl_1_bss_19A[3], &sp1C);
-    Hu3DModelPosSetV(lbl_1_bss_19A[5], &sp1C);
-    Hu3DModelPosSetV(lbl_1_bss_19A[1], &sp1C);
-    Hu3DModelAttrReset(lbl_1_bss_19A[2], HU3D_ATTR_DISPOFF);
-    Hu3DModelAttrSet(lbl_1_bss_19A[4], HU3D_ATTR_DISPOFF);
-    Hu3DModelAttrReset(lbl_1_bss_19A[3], HU3D_ATTR_DISPOFF);
-    Hu3DModelAttrSet(lbl_1_bss_19A[5], HU3D_ATTR_DISPOFF);
-    Hu3DModelRotSet(lbl_1_bss_19A[2], 0, 0, 0);
-    Hu3DModelRotSet(lbl_1_bss_19A[3], 0, 0, 0);
-    fn_1_57C8(lbl_1_bss_19A[4]);
-    fn_1_57C8(lbl_1_bss_19A[5]);
-    lbl_1_bss_12C[0] = lbl_1_bss_12C[1] = 1;
-    lbl_1_bss_108[0] = lbl_1_bss_108[1] = lbl_1_bss_100[0] = lbl_1_bss_100[1] = 1.0f;
-    lbl_1_bss_11C = -1;
-    fn_1_5C38();
-    for (temp_r30 = 0; temp_r30 <= 20; temp_r30++) {
-        temp_f31 = temp_r30 / 20.0;
-        temp_f31 = sind(90.0f * temp_f31);
-        Hu3DModelScaleSet(lbl_1_bss_19A[0], temp_f31, temp_f31, temp_f31);
-        Hu3DModelScaleSet(lbl_1_bss_19A[1], temp_f31, temp_f31, temp_f31);
-        Hu3DModelScaleSet(lbl_1_bss_19A[2], temp_f31, temp_f31, temp_f31);
-        Hu3DModelScaleSet(lbl_1_bss_19A[3], temp_f31, temp_f31, temp_f31);
-        Hu3DModelScaleSet(lbl_1_bss_19A[4], temp_f31, temp_f31, temp_f31);
-        Hu3DModelScaleSet(lbl_1_bss_19A[5], temp_f31, temp_f31, temp_f31);
+    screenPos.x = 188;
+    screenPos.y = 250;
+    screenPos.z = 600;
+    Hu3D2Dto3D(&screenPos, 1, &pos);
+    Hu3DModelPosSetV(modeSelMdlId[2], &pos);
+    Hu3DModelPosSetV(modeSelMdlId[4], &pos);
+    Hu3DModelPosSetV(modeSelMdlId[0], &pos);
+    screenPos.x = 388;
+    Hu3D2Dto3D(&screenPos, 1, &pos);
+    Hu3DModelPosSetV(modeSelMdlId[3], &pos);
+    Hu3DModelPosSetV(modeSelMdlId[5], &pos);
+    Hu3DModelPosSetV(modeSelMdlId[1], &pos);
+    Hu3DModelAttrReset(modeSelMdlId[2], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrSet(modeSelMdlId[4], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrReset(modeSelMdlId[3], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrSet(modeSelMdlId[5], HU3D_ATTR_DISPOFF);
+    Hu3DModelRotSet(modeSelMdlId[2], 0, 0, 0);
+    Hu3DModelRotSet(modeSelMdlId[3], 0, 0, 0);
+    FileSelectModelMaterialReset(modeSelMdlId[4]);
+    FileSelectModelMaterialReset(modeSelMdlId[5]);
+    fileSelectSlotLabelF[0] = fileSelectSlotLabelF[1] = 1;
+    fileSelectCardRotScale[0] = fileSelectCardRotScale[1] = fileSelectCardTiltScale[0] = fileSelectCardTiltScale[1] = 1.0f;
+    fileSelectSlotNo = -1;
+    FileSelectCardCheck();
+    for (frame = 0; frame <= 20; frame++) {
+        time = frame / 20.0;
+        time = sind(90.0f * time);
+        Hu3DModelScaleSet(modeSelMdlId[0], time, time, time);
+        Hu3DModelScaleSet(modeSelMdlId[1], time, time, time);
+        Hu3DModelScaleSet(modeSelMdlId[2], time, time, time);
+        Hu3DModelScaleSet(modeSelMdlId[3], time, time, time);
+        Hu3DModelScaleSet(modeSelMdlId[4], time, time, time);
+        Hu3DModelScaleSet(modeSelMdlId[5], time, time, time);
         HuPrcVSleep();
     }
     while (1) {
     repeat_loop:
-        HuWinDispOff(lbl_1_bss_146);
-        temp_r28 = fn_1_562C();
-        if (temp_r28 == 0 && fn_1_5C38() == 0) {
-            if (fn_1_5C38() == 0) {
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-                HuWinMesWait(lbl_1_bss_148);
+        HuWinDispOff(fileSelectHelpWinId);
+        cardResult = FileSelectCardErrorCheck();
+        if (cardResult == 0 && FileSelectCardCheck() == 0) {
+            if (FileSelectCardCheck() == 0) {
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+                HuWinMesWait(fileSelectWinId);
             }
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4F));
-            HuWinAttrSet(lbl_1_bss_148, 0x10);
-            HuWinMesWait(lbl_1_bss_148);
-            temp_r27 = HuWinChoiceGet(lbl_1_bss_148, 1);
-            if (temp_r27 == 0) {
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4F));
+            HuWinAttrSet(fileSelectWinId, 0x10);
+            HuWinMesWait(fileSelectWinId);
+            choice = HuWinChoiceGet(fileSelectWinId, 1);
+            if (choice == 0) {
                 SLSaveFlagSet(0);
                 errorF = 1;
                 goto cleanup;
             }
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x52), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4C));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x52), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4C));
+            HuWinMesWait(fileSelectWinId);
             while (!(HuPadBtnDown[0] & PAD_BUTTON_A)) {
                 HuPrcVSleep();
             }
         }
-        while (!fn_1_5C38()) {
-            temp_r28 = fn_1_562C();
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-            HuWinMesWait(lbl_1_bss_148);
-            if (temp_r23->key_down & PAD_BUTTON_B) {
+        while (!FileSelectCardCheck()) {
+            cardResult = FileSelectCardErrorCheck();
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+            HuWinMesWait(fileSelectWinId);
+            if (window->key_down & PAD_BUTTON_B) {
                 HuAudFXPlay(3);
                 return 0;
             }
-            if (fn_1_5C38()) {
+            if (FileSelectCardCheck()) {
                 break;
             }
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4B));
-            HuWinAttrSet(lbl_1_bss_148, 0x10);
-            HuWinMesWait(lbl_1_bss_148);
-            temp_r27 = HuWinChoiceGet(lbl_1_bss_148, 1);
-            if (temp_r27 == 0) {
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4B));
+            HuWinAttrSet(fileSelectWinId, 0x10);
+            HuWinMesWait(fileSelectWinId);
+            choice = HuWinChoiceGet(fileSelectWinId, 1);
+            if (choice == 0) {
                 SLSaveFlagSet(0);
                 errorF = 1;
                 goto cleanup;
             }
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x52), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4C));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x52), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4C));
+            HuWinMesWait(fileSelectWinId);
             while (!(HuPadBtnDown[0] & PAD_BUTTON_A)) {
                 HuPrcVSleep();
             }
         }
         SLSaveFlagSet(1);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x01));
-        HuWinMesWait(lbl_1_bss_148);
-        HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x0C));
-        HuWinDispOn(lbl_1_bss_146);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x01));
+        HuWinMesWait(fileSelectWinId);
+        HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x0C));
+        HuWinDispOn(fileSelectHelpWinId);
         if (curSlotNo == 0) {
-            if (lbl_1_bss_14C & 0x1) {
-                temp_r31 = 0;
+            if (fileSelectCardBit & 0x1) {
+                slotNo = 0;
             }
             else {
-                temp_r31 = 1;
+                slotNo = 1;
             }
         }
         else {
-            if (lbl_1_bss_14C & 0x2) {
-                temp_r31 = 1;
+            if (fileSelectCardBit & 0x2) {
+                slotNo = 1;
             }
             else {
-                temp_r31 = 0;
+                slotNo = 0;
             }
         }
-        fn_1_5BAC(temp_r31, 1);
+        FileSelectCardAnimStart(slotNo, 1);
         HuPrcSleep(10);
-        temp_r24 = temp_r31;
+        prevSlotNo = slotNo;
         while (1) {
-            if (!fn_1_5C38()) {
-                fn_1_5BAC(temp_r31, 0);
+            if (!FileSelectCardCheck()) {
+                FileSelectCardAnimStart(slotNo, 0);
                 HuPrcSleep(10);
                 goto repeat_loop;
             }
             else {
-                if ((HuPadDStkRep[0] & 0x1) && (lbl_1_bss_14C & 0x1)) {
-                    temp_r31 = 0;
+                if ((HuPadDStkRep[0] & 0x1) && (fileSelectCardBit & 0x1)) {
+                    slotNo = 0;
                 }
-                else if ((HuPadDStkRep[0] & 0x2) && (lbl_1_bss_14C & 0x2)) {
-                    temp_r31 = 1;
+                else if ((HuPadDStkRep[0] & 0x2) && (fileSelectCardBit & 0x2)) {
+                    slotNo = 1;
                 }
-                else if (!(lbl_1_bss_14C & (1 << temp_r31))) {
-                    if (!(lbl_1_bss_14C & (1 << ((temp_r31 + 1) & 0x1)))) {
-                        fn_1_5BAC(temp_r31, 0);
+                else if (!(fileSelectCardBit & (1 << slotNo))) {
+                    if (!(fileSelectCardBit & (1 << ((slotNo + 1) & 0x1)))) {
+                        FileSelectCardAnimStart(slotNo, 0);
                         HuPrcSleep(10);
                         goto repeat_loop;
                     }
                     else {
-                        temp_r31 = (temp_r31 + 1) & 0x1;
+                        slotNo = (slotNo + 1) & 0x1;
                     }
                 }
-                if (temp_r24 != temp_r31) {
+                if (prevSlotNo != slotNo) {
                     HuAudFXPlay(0);
-                    fn_1_5BAC(temp_r31, 1);
-                    fn_1_5BAC((temp_r31 + 1) & 0x1, 0);
+                    FileSelectCardAnimStart(slotNo, 1);
+                    FileSelectCardAnimStart((slotNo + 1) & 0x1, 0);
                     HuPrcSleep(10);
-                    temp_r24 = temp_r31;
+                    prevSlotNo = slotNo;
                 }
                 if (HuPadBtnDown[0] & PAD_BUTTON_A) {
                     HuAudFXPlay(2096);
@@ -341,164 +341,164 @@ repeat:
         }
     }
 loop_exit:
-    HuWinHomeClear(lbl_1_bss_148);
-    temp_r26 = (temp_r31 + 1) & 0x1;
-    Hu3DMotionSet(lbl_1_bss_19A[temp_r31 + 4], lbl_1_bss_16A[7]);
-    Hu3DMotionSpeedSet(lbl_1_bss_19A[temp_r31 + 4], 2.0f);
-    lbl_1_bss_12C[0] = lbl_1_bss_12C[1] = 0;
-    lbl_1_bss_11C = temp_r31;
-    SLCurSlotNoSet(temp_r31);
-    temp_r28 = HuCardMount(temp_r31);
-    if (temp_r28 == CARD_RESULT_READY) {
+    HuWinHomeClear(fileSelectWinId);
+    otherSlotNo = (slotNo + 1) & 0x1;
+    Hu3DMotionSet(modeSelMdlId[slotNo + 4], modeSelMotId[7]);
+    Hu3DMotionSpeedSet(modeSelMdlId[slotNo + 4], 2.0f);
+    fileSelectSlotLabelF[0] = fileSelectSlotLabelF[1] = 0;
+    fileSelectSlotNo = slotNo;
+    SLCurSlotNoSet(slotNo);
+    cardResult = HuCardMount(slotNo);
+    if (cardResult == CARD_RESULT_READY) {
         SLSerialNoGet();
-        temp_r28 = HuCardOpen(temp_r31, SaveFileNameTbl[0], &sp34);
-        if (temp_r28 != 0 && temp_r28 != -4) {
+        cardResult = HuCardOpen(slotNo, SaveFileNameTbl[0], &fileInfo);
+        if (cardResult != 0 && cardResult != -4) {
             errorF = 1;
         }
         else {
             errorF = 0;
         }
-        HuCardClose(&sp34);
+        HuCardClose(&fileInfo);
     }
     else {
-        if (temp_r28 == CARD_RESULT_NOCARD) {
+        if (cardResult == CARD_RESULT_NOCARD) {
             goto repeat;
         }
         errorF = 1;
     }
-    temp_r27 = HuCardSectorSizeGet(curSlotNo);
-    if (temp_r27 > 0 && temp_r27 != 8192) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
-        HuWinMesWait(lbl_1_bss_148);
+    choice = HuCardSectorSizeGet(curSlotNo);
+    if (choice > 0 && choice != 8192) {
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x39));
+        HuWinMesWait(fileSelectWinId);
         errorF = 1;
         goto skip_check;
     }
     else {
-        if (temp_r27 == -128) {
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-            HuWinMesWait(lbl_1_bss_148);
+        if (choice == -128) {
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+            HuWinMesWait(fileSelectWinId);
             errorF = 1;
             goto skip_check;
         }
         else {
-            lbl_1_bss_8C += 720.0f;
-            for (temp_r30 = 0; temp_r30 <= 40; temp_r30++) {
-                if (temp_r30 <= 30) {
-                    temp_f31 = temp_r30 / 30.0f;
-                    sp28.x = 288.0 + (GET_ZEROSIGN(temp_r26) * (100.0 + (250.0 * sind(90.0f * temp_f31))));
-                    sp28.y = 250.0 - (100.0 * sind(180.0f * temp_f31));
-                    sp28.z = (temp_r30 * 100) + 600;
-                    Hu3D2Dto3D(&sp28, 1, &sp1C);
-                    Hu3DModelPosSetV(lbl_1_bss_19A[temp_r26 + 2], &sp1C);
-                    Hu3DModelPosSetV(lbl_1_bss_19A[temp_r26], &sp1C);
-                    Hu3DModelRotSet(lbl_1_bss_19A[temp_r26 + 2], temp_r30 * 20, temp_r30 * 10, 0);
+            fileSelectCardRot += 720.0f;
+            for (frame = 0; frame <= 40; frame++) {
+                if (frame <= 30) {
+                    time = frame / 30.0f;
+                    screenPos.x = 288.0 + (GET_ZEROSIGN(otherSlotNo) * (100.0 + (250.0 * sind(90.0f * time))));
+                    screenPos.y = 250.0 - (100.0 * sind(180.0f * time));
+                    screenPos.z = (frame * 100) + 600;
+                    Hu3D2Dto3D(&screenPos, 1, &pos);
+                    Hu3DModelPosSetV(modeSelMdlId[otherSlotNo + 2], &pos);
+                    Hu3DModelPosSetV(modeSelMdlId[otherSlotNo], &pos);
+                    Hu3DModelRotSet(modeSelMdlId[otherSlotNo + 2], frame * 20, frame * 10, 0);
                 }
 
-                if (temp_r30 > 20) {
-                    temp_f31 = (temp_r30 - 20) / 20.0f;
+                if (frame > 20) {
+                    time = (frame - 20) / 20.0f;
                     if (errorF) {
-                        sp28.x = 288.0f + ((1.0 - temp_f31) * (100 * GET_ZEROSIGN(temp_r31)));
-                        sp28.y = 250.0 - (100.0 * sind(180.0f * temp_f31));
-                        sp28.z = 600.0f;
-                        Hu3D2Dto3D(&sp28, 1, &sp1C);
-                        Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31], &sp1C);
-                        temp_f31 = (0.5 * sind(90.0f * temp_f31)) + 1.0;
-                        Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31], temp_f31, temp_f31, temp_f31);
+                        screenPos.x = 288.0f + ((1.0 - time) * (100 * GET_ZEROSIGN(slotNo)));
+                        screenPos.y = 250.0 - (100.0 * sind(180.0f * time));
+                        screenPos.z = 600.0f;
+                        Hu3D2Dto3D(&screenPos, 1, &pos);
+                        Hu3DModelPosSetV(modeSelMdlId[slotNo], &pos);
+                        time = (0.5 * sind(90.0f * time)) + 1.0;
+                        Hu3DModelScaleSet(modeSelMdlId[slotNo], time, time, time);
                     }
                     else {
-                        sp28.x = 288.0f + (100 * GET_ZEROSIGN(temp_r31));
-                        sp28.y = 250;
-                        sp28.z = 600;
-                        Hu3D2Dto3D(&sp28, 1, &sp1C);
-                        sp28.x = 60;
-                        sp28.y = 90;
-                        sp28.z = 600;
-                        Hu3D2Dto3D(&sp28, 1, &sp10);
-                        VECSubtract(&sp10, &sp1C, &sp28);
-                        sp28.x *= sind(90.0f * temp_f31);
-                        sp28.y *= 1.0 - cosd(90.0f * temp_f31);
-                        sp28.z = 0;
-                        VECAdd(&sp28, &sp1C, &sp1C);
-                        Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31], &sp1C);
-                        lbl_1_bss_108[temp_r31] *= cosd(90.0f * temp_f31);
-                        lbl_1_bss_100[temp_r31] = 1.0 - temp_f31;
-                        temp_f31 = 1.0 + (0.3 * cosd(90.0f * temp_f31));
-                        Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31], temp_f31, temp_f31, temp_f31);
+                        screenPos.x = 288.0f + (100 * GET_ZEROSIGN(slotNo));
+                        screenPos.y = 250;
+                        screenPos.z = 600;
+                        Hu3D2Dto3D(&screenPos, 1, &pos);
+                        screenPos.x = 60;
+                        screenPos.y = 90;
+                        screenPos.z = 600;
+                        Hu3D2Dto3D(&screenPos, 1, &targetPos);
+                        VECSubtract(&targetPos, &pos, &screenPos);
+                        screenPos.x *= sind(90.0f * time);
+                        screenPos.y *= 1.0 - cosd(90.0f * time);
+                        screenPos.z = 0;
+                        VECAdd(&screenPos, &pos, &pos);
+                        Hu3DModelPosSetV(modeSelMdlId[slotNo], &pos);
+                        fileSelectCardRotScale[slotNo] *= cosd(90.0f * time);
+                        fileSelectCardTiltScale[slotNo] = 1.0 - time;
+                        time = 1.0 + (0.3 * cosd(90.0f * time));
+                        Hu3DModelScaleSet(modeSelMdlId[slotNo], time, time, time);
                     }
                 }
                 HuPrcVSleep();
             }
             if (errorF == 0) {
-                HuWinKill(lbl_1_bss_146);
+                HuWinKill(fileSelectHelpWinId);
                 return 1;
             }
-            HuWinDispOff(lbl_1_bss_146);
+            HuWinDispOff(fileSelectHelpWinId);
             errorF = 0;
-            if (temp_r28 == CARD_RESULT_WRONGDEVICE) {
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[temp_r31]), 0);
+            if (cardResult == CARD_RESULT_WRONGDEVICE) {
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[slotNo]), 0);
                 #if VERSION_PAL
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x39));
                 #else
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x37));
                 #endif
-                HuWinMesWait(lbl_1_bss_148);
+                HuWinMesWait(fileSelectWinId);
                 errorF = 1;
             }
-            else if (temp_r28 == CARD_RESULT_FATAL_ERROR) {
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[temp_r31]), 0);
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-                HuWinMesWait(lbl_1_bss_148);
+            else if (cardResult == CARD_RESULT_FATAL_ERROR) {
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[slotNo]), 0);
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+                HuWinMesWait(fileSelectWinId);
                 errorF = 1;
             }
-            else if (temp_r28 == CARD_RESULT_NOCARD) {
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-                HuWinMesWait(lbl_1_bss_148);
+            else if (cardResult == CARD_RESULT_NOCARD) {
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+                HuWinMesWait(fileSelectWinId);
                 errorF = 1;
             }
-            else if (temp_r28 == CARD_RESULT_BROKEN) {
+            else if (cardResult == CARD_RESULT_BROKEN) {
                 UnMountCnt = 0;
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[temp_r31]), 0);
-                HuWinAttrSet(lbl_1_bss_148, 0x10);
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x04));
-                HuWinMesWait(lbl_1_bss_148);
-                temp_r25 = HuWinChoiceGet(lbl_1_bss_148, 1);
-                if (temp_r25 == 0) {
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4E));
-                    HuWinMesWait(lbl_1_bss_148);
-                    temp_r25 = HuWinChoiceGet(lbl_1_bss_148, 1);
-                    if (temp_r25 == 0) {
-                        fn_1_B8CC(MAKE_MESSID(16, 0x38));
-                        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x0B));
-                        HuWinMesWait(lbl_1_bss_148);
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[slotNo]), 0);
+                HuWinAttrSet(fileSelectWinId, 0x10);
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x04));
+                HuWinMesWait(fileSelectWinId);
+                formatChoice = HuWinChoiceGet(fileSelectWinId, 1);
+                if (formatChoice == 0) {
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4E));
+                    HuWinMesWait(fileSelectWinId);
+                    formatChoice = HuWinChoiceGet(fileSelectWinId, 1);
+                    if (formatChoice == 0) {
+                        FileSelectProgressWinOpen(MAKE_MESSID(16, 0x38));
+                        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x0B));
+                        HuWinMesWait(fileSelectWinId);
                         HuPrcSleep(60);
-                        if (UnMountCnt & (1 << temp_r31)) {
-                            fn_1_BA20();
-                            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-                            HuWinMesWait(lbl_1_bss_148);
+                        if (UnMountCnt & (1 << slotNo)) {
+                            FileSelectProgressWinClose();
+                            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+                            HuWinMesWait(fileSelectWinId);
                             errorF = 1;
                             goto cleanup;
                         }
                         else {
                             _SetFlag(0x30000);
-                            temp_r28 = HuCardFormat(temp_r31);
+                            cardResult = HuCardFormat(slotNo);
                             _ClearFlag(FLAG_ID_MAKE(3, 0));
-                            if (temp_r28 == CARD_RESULT_READY) {
+                            if (cardResult == CARD_RESULT_READY) {
                                 SLSerialNoGet();
                             }
-                            fn_1_BA20();
-                            if (temp_r28 == CARD_RESULT_FATAL_ERROR) {
-                                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x36));
-                                HuWinMesWait(lbl_1_bss_148);
-                                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-                                HuWinMesWait(lbl_1_bss_148);
+                            FileSelectProgressWinClose();
+                            if (cardResult == CARD_RESULT_FATAL_ERROR) {
+                                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x36));
+                                HuWinMesWait(fileSelectWinId);
+                                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+                                HuWinMesWait(fileSelectWinId);
                                 errorF = 1;
                             }
-                            else if (temp_r28 == CARD_RESULT_NOCARD) {
-                                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-                                HuWinMesWait(lbl_1_bss_148);
+                            else if (cardResult == CARD_RESULT_NOCARD) {
+                                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+                                HuWinMesWait(fileSelectWinId);
                                 errorF = 1;
                             }
                         }
@@ -517,67 +517,67 @@ loop_exit:
         goto cleanup;
     }
 skip_check:
-    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4F));
-    HuWinAttrSet(lbl_1_bss_148, 0x10);
-    HuWinMesWait(lbl_1_bss_148);
-    temp_r27 = HuWinChoiceGet(lbl_1_bss_148, 1);
-    if (temp_r27 == 0) {
+    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4F));
+    HuWinAttrSet(fileSelectWinId, 0x10);
+    HuWinMesWait(fileSelectWinId);
+    choice = HuWinChoiceGet(fileSelectWinId, 1);
+    if (choice == 0) {
         SLSaveFlagSet(0);
         goto cleanup;
     }
     else {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x52), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4C));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x52), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4C));
+        HuWinMesWait(fileSelectWinId);
         while (!(HuPadBtnDown[0] & PAD_BUTTON_A)) {
             HuPrcVSleep();
         }
     }
 cleanup:
-    HuWinDispOff(lbl_1_bss_146);
-    lbl_1_bss_8C += 720.0f;
-    for (temp_r30 = 0; temp_r30 <= 20; temp_r30++) {
-        temp_f31 = temp_r30 / 20.0f;
+    HuWinDispOff(fileSelectHelpWinId);
+    fileSelectCardRot += 720.0f;
+    for (frame = 0; frame <= 20; frame++) {
+        time = frame / 20.0f;
         if (errorF) {
-            temp_f31 = 1.5 * cosd(90.0f * temp_f31);
-            Hu3DModelScaleSet(lbl_1_bss_19A[0], temp_f31, temp_f31, temp_f31);
-            Hu3DModelScaleSet(lbl_1_bss_19A[1], temp_f31, temp_f31, temp_f31);
-            Hu3DModelScaleSet(lbl_1_bss_19A[2], 0.7 * temp_f31, 0.7 * temp_f31, 0.7 * temp_f31);
-            Hu3DModelScaleSet(lbl_1_bss_19A[3], 0.7 * temp_f31, 0.7 * temp_f31, 0.7 * temp_f31);
+            time = 1.5 * cosd(90.0f * time);
+            Hu3DModelScaleSet(modeSelMdlId[0], time, time, time);
+            Hu3DModelScaleSet(modeSelMdlId[1], time, time, time);
+            Hu3DModelScaleSet(modeSelMdlId[2], 0.7 * time, 0.7 * time, 0.7 * time);
+            Hu3DModelScaleSet(modeSelMdlId[3], 0.7 * time, 0.7 * time, 0.7 * time);
             if (!SLSaveFlagGet()) {
-                espScaleSet(lbl_1_bss_152[1], temp_f31, temp_f31);
+                espScaleSet(modeSelSprId[1], time, time);
             }
         }
         else {
-            sp28.x = 288;
-            sp28.y = 250;
-            sp28.z = 600;
-            Hu3D2Dto3D(&sp28, 1, &sp1C);
-            sp28.x = 60;
-            sp28.y = 90;
-            sp28.z = 600;
-            Hu3D2Dto3D(&sp28, 1, &sp10);
-            VECSubtract(&sp10, &sp1C, &sp28);
-            sp28.x *= sind(90.0f * temp_f31);
-            sp28.y *= 1.0 - cosd(90.0f * temp_f31);
-            sp28.z = 0.0f;
-            VECAdd(&sp28, &sp1C, &sp1C);
-            Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31], &sp1C);
-            lbl_1_bss_108[temp_r31] *= cosd(90.0f * temp_f31);
-            lbl_1_bss_100[temp_r31] = 1.0 - temp_f31;
-            temp_f31 = 1.0 + (0.5 * cosd(90.0f * temp_f31));
-            Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31], temp_f31, temp_f31, temp_f31);
+            screenPos.x = 288;
+            screenPos.y = 250;
+            screenPos.z = 600;
+            Hu3D2Dto3D(&screenPos, 1, &pos);
+            screenPos.x = 60;
+            screenPos.y = 90;
+            screenPos.z = 600;
+            Hu3D2Dto3D(&screenPos, 1, &targetPos);
+            VECSubtract(&targetPos, &pos, &screenPos);
+            screenPos.x *= sind(90.0f * time);
+            screenPos.y *= 1.0 - cosd(90.0f * time);
+            screenPos.z = 0.0f;
+            VECAdd(&screenPos, &pos, &pos);
+            Hu3DModelPosSetV(modeSelMdlId[slotNo], &pos);
+            fileSelectCardRotScale[slotNo] *= cosd(90.0f * time);
+            fileSelectCardTiltScale[slotNo] = 1.0 - time;
+            time = 1.0 + (0.5 * cosd(90.0f * time));
+            Hu3DModelScaleSet(modeSelMdlId[slotNo], time, time, time);
         }
         HuPrcVSleep();
     }
     if (errorF && SLSaveFlagGet()) {
         goto repeat;
     }
-    HuWinKill(lbl_1_bss_146);
+    HuWinKill(fileSelectHelpWinId);
     return 1;
 }
 
-s32 fn_1_562C(void)
+s32 FileSelectCardErrorCheck(void)
 {
     s16 i;
     s16 result;
@@ -586,30 +586,30 @@ s32 fn_1_562C(void)
     for (i = 0; i < 2; i++) {
         result = HuCardSlotCheck((s32)i);
         if (result == -2) {
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[i]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[i]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x37));
+            HuWinMesWait(fileSelectWinId);
             ret = 0;
         }
         else if (result > 0 && result != 8192) {
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[i]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[i]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x39));
+            HuWinMesWait(fileSelectWinId);
             ret = 0;
         }
         else if (result == -128) {
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[i]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[i]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+            HuWinMesWait(fileSelectWinId);
             ret = 0;
         }
     }
     return ret;
 }
 
-void fn_1_57C8(s16 arg0)
+void FileSelectModelMaterialReset(s16 mdlId)
 {
-    HU3DMODEL *model = &Hu3DData[arg0];
+    HU3DMODEL *model = &Hu3DData[mdlId];
     HSFDATA *hsf = model->hsf;
     HSFMATERIAL *mat = hsf->material;
     s16 i;
@@ -619,50 +619,50 @@ void fn_1_57C8(s16 arg0)
     }
 }
 
-typedef struct work_filesel {
+typedef struct file_select_anim_work {
     s16 index;
-    s32 param;
-} WorkFilesel;
+    s32 selectF;
+} FileSelectAnimWork;
 
-void fn_1_5850(void)
+void FileSelectCardAnimMain(void)
 {
     s16 index;
-    WorkFilesel *work;
+    FileSelectAnimWork *work;
     s16 i;
-    s32 param;
+    s32 selectF;
     HUPROCESS *curr;
     curr = HuPrcCurrentGet();
     work = curr->user_data;
     index = work->index;
-    param = work->param;
-    Hu3DModelAttrSet(lbl_1_bss_19A[index + 2], HU3D_ATTR_DISPOFF);
-    Hu3DModelAttrReset(lbl_1_bss_19A[index + 4], HU3D_ATTR_DISPOFF);
-    Hu3DMotionSet(lbl_1_bss_19A[index + 4], lbl_1_bss_16A[6]);
-    Hu3DMotionSpeedSet(lbl_1_bss_19A[index + 4], 2.0f);
-    if (param) {
-        Hu3DModelAttrReset(lbl_1_bss_19A[index + 4], HU3D_MOTATTR_REV);
+    selectF = work->selectF;
+    Hu3DModelAttrSet(modeSelMdlId[index + 2], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrReset(modeSelMdlId[index + 4], HU3D_ATTR_DISPOFF);
+    Hu3DMotionSet(modeSelMdlId[index + 4], modeSelMotId[6]);
+    Hu3DMotionSpeedSet(modeSelMdlId[index + 4], 2.0f);
+    if (selectF) {
+        Hu3DModelAttrReset(modeSelMdlId[index + 4], HU3D_MOTATTR_REV);
     }
     else {
-        Hu3DModelAttrSet(lbl_1_bss_19A[index + 4], HU3D_MOTATTR_REV);
-        Hu3DMotionTimeSet(lbl_1_bss_19A[index + 4], Hu3DMotionMaxTimeGet(lbl_1_bss_19A[6]));
+        Hu3DModelAttrSet(modeSelMdlId[index + 4], HU3D_MOTATTR_REV);
+        Hu3DMotionTimeSet(modeSelMdlId[index + 4], Hu3DMotionMaxTimeGet(modeSelMdlId[6]));
     }
     for (i = 0; i < 10; i++) {
         float scale;
         float time = i / 10.0;
-        if (param) {
+        if (selectF) {
             scale = 1.0 + (0.3 * sind(90.0f * time));
         }
         else {
             scale = 1.0 + (0.3 * cosd(90.0f * time));
         }
-        Hu3DModelScaleSet(lbl_1_bss_19A[index + 2], scale, scale, scale);
-        Hu3DModelScaleSet(lbl_1_bss_19A[index + 4], scale, scale, scale);
-        Hu3DModelScaleSet(lbl_1_bss_19A[index], scale, scale, scale);
+        Hu3DModelScaleSet(modeSelMdlId[index + 2], scale, scale, scale);
+        Hu3DModelScaleSet(modeSelMdlId[index + 4], scale, scale, scale);
+        Hu3DModelScaleSet(modeSelMdlId[index], scale, scale, scale);
         HuPrcVSleep();
     }
-    if (!param) {
-        Hu3DModelAttrReset(lbl_1_bss_19A[index + 2], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(lbl_1_bss_19A[index + 4], HU3D_ATTR_DISPOFF);
+    if (!selectF) {
+        Hu3DModelAttrReset(modeSelMdlId[index + 2], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(modeSelMdlId[index + 4], HU3D_ATTR_DISPOFF);
     }
     HuMemDirectFree(work);
     HuPrcEnd();
@@ -671,362 +671,362 @@ void fn_1_5850(void)
     }
 }
 
-void fn_1_5BAC(s16 arg0, s32 arg1)
+void FileSelectCardAnimStart(s16 slotNo, s32 selectF)
 {
-    WorkFilesel *work;
+    FileSelectAnimWork *work;
     HUPROCESS *child;
     HUPROCESS *parent;
     parent = HuPrcCurrentGet();
-    child = HuPrcChildCreate(fn_1_5850, 50, 8192, 0, parent);
-    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkFilesel), HU_MEMNUM_OVL);
+    child = HuPrcChildCreate(FileSelectCardAnimMain, 50, 8192, 0, parent);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(FileSelectAnimWork), HU_MEMNUM_OVL);
     child->user_data = work;
-    work->index = arg0;
-    work->param = arg1;
+    work->index = slotNo;
+    work->selectF = selectF;
 }
 
-s32 fn_1_5C38(void)
+s32 FileSelectCardCheck(void)
 {
     s32 result;
-    lbl_1_bss_14C = 0;
+    fileSelectCardBit = 0;
     result = HuCardSlotCheck(0);
     if (result == 8192) {
-        Hu3DModelAttrReset(lbl_1_bss_19A[0], HU3D_ATTR_DISPOFF);
-        lbl_1_bss_14C |= 1;
+        Hu3DModelAttrReset(modeSelMdlId[0], HU3D_ATTR_DISPOFF);
+        fileSelectCardBit |= 1;
     }
     else {
-        Hu3DModelAttrSet(lbl_1_bss_19A[0], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(modeSelMdlId[0], HU3D_ATTR_DISPOFF);
     }
     result = HuCardSlotCheck(1);
     if (result == 8192) {
-        Hu3DModelAttrReset(lbl_1_bss_19A[1], HU3D_ATTR_DISPOFF);
-        lbl_1_bss_14C |= 2;
+        Hu3DModelAttrReset(modeSelMdlId[1], HU3D_ATTR_DISPOFF);
+        fileSelectCardBit |= 2;
     }
     else {
-        Hu3DModelAttrSet(lbl_1_bss_19A[1], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(modeSelMdlId[1], HU3D_ATTR_DISPOFF);
     }
-    return lbl_1_bss_14C;
+    return fileSelectCardBit;
 }
 
-void fn_1_5D30(void)
+void FileSelectCardInit(void)
 {
     HU3DMODEL *model;
     Vec pos_2d;
     Vec pos_3d;
     Mtx scale;
-    espAttrReset(lbl_1_bss_152[0], HUSPR_ATTR_DISPOFF);
-    espDrawNoSet(lbl_1_bss_152[0], 127);
-    espAttrReset(lbl_1_bss_152[1], HUSPR_ATTR_DISPOFF);
-    Hu3DModelAttrReset(lbl_1_bss_19A[2], HU3D_ATTR_DISPOFF);
+    espAttrReset(modeSelSprId[0], HUSPR_ATTR_DISPOFF);
+    espDrawNoSet(modeSelSprId[0], 127);
+    espAttrReset(modeSelSprId[1], HUSPR_ATTR_DISPOFF);
+    Hu3DModelAttrReset(modeSelMdlId[2], HU3D_ATTR_DISPOFF);
     pos_2d.x = 188;
     pos_2d.y = 250;
     pos_2d.z = 600;
     Hu3D2Dto3D(&pos_2d, 1, &pos_3d);
-    Hu3DModelPosSetV(lbl_1_bss_19A[2], &pos_3d);
-    Hu3DModelPosSetV(lbl_1_bss_19A[4], &pos_3d);
-    Hu3DModelPosSetV(lbl_1_bss_19A[0], &pos_3d);
+    Hu3DModelPosSetV(modeSelMdlId[2], &pos_3d);
+    Hu3DModelPosSetV(modeSelMdlId[4], &pos_3d);
+    Hu3DModelPosSetV(modeSelMdlId[0], &pos_3d);
     MTXScale(scale, 0.5f, 0.5f, 0.5f);
-    model = &Hu3DData[lbl_1_bss_19A[2]];
+    model = &Hu3DData[modeSelMdlId[2]];
     MTXCopy(scale, model->mtx);
-    model = &Hu3DData[lbl_1_bss_19A[4]];
+    model = &Hu3DData[modeSelMdlId[4]];
     MTXCopy(scale, model->mtx);
-    model = &Hu3DData[lbl_1_bss_19A[0]];
+    model = &Hu3DData[modeSelMdlId[0]];
     MTXCopy(scale, model->mtx);
-    Hu3DModelAttrReset(lbl_1_bss_19A[3], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrReset(modeSelMdlId[3], HU3D_ATTR_DISPOFF);
     pos_2d.x = 388;
     Hu3D2Dto3D(&pos_2d, 1, &pos_3d);
-    Hu3DModelPosSetV(lbl_1_bss_19A[3], &pos_3d);
-    Hu3DModelPosSetV(lbl_1_bss_19A[5], &pos_3d);
-    Hu3DModelPosSetV(lbl_1_bss_19A[1], &pos_3d);
-    model = &Hu3DData[lbl_1_bss_19A[3]];
+    Hu3DModelPosSetV(modeSelMdlId[3], &pos_3d);
+    Hu3DModelPosSetV(modeSelMdlId[5], &pos_3d);
+    Hu3DModelPosSetV(modeSelMdlId[1], &pos_3d);
+    model = &Hu3DData[modeSelMdlId[3]];
     MTXCopy(scale, model->mtx);
-    model = &Hu3DData[lbl_1_bss_19A[5]];
+    model = &Hu3DData[modeSelMdlId[5]];
     MTXCopy(scale, model->mtx);
-    model = &Hu3DData[lbl_1_bss_19A[1]];
+    model = &Hu3DData[modeSelMdlId[1]];
     MTXCopy(scale, model->mtx);
-    Hu3DModelScaleSet(lbl_1_bss_19A[0], 0, 0, 0);
-    Hu3DModelScaleSet(lbl_1_bss_19A[1], 0, 0, 0);
-    Hu3DModelScaleSet(lbl_1_bss_19A[2], 0, 0, 0);
-    Hu3DModelScaleSet(lbl_1_bss_19A[3], 0, 0, 0);
-    Hu3DModelScaleSet(lbl_1_bss_19A[4], 0, 0, 0);
-    Hu3DModelScaleSet(lbl_1_bss_19A[5], 0, 0, 0);
-    fn_1_5C38();
+    Hu3DModelScaleSet(modeSelMdlId[0], 0, 0, 0);
+    Hu3DModelScaleSet(modeSelMdlId[1], 0, 0, 0);
+    Hu3DModelScaleSet(modeSelMdlId[2], 0, 0, 0);
+    Hu3DModelScaleSet(modeSelMdlId[3], 0, 0, 0);
+    Hu3DModelScaleSet(modeSelMdlId[4], 0, 0, 0);
+    Hu3DModelScaleSet(modeSelMdlId[5], 0, 0, 0);
+    FileSelectCardCheck();
 }
 
-void fn_1_7628(s16 boxno, s32 flag);
+void FileSelectBoxAnimStart(s16 boxno, s32 flag);
 
-s32 fn_1_76B4(char *name, s16 slotno);
-s32 fn_1_7B74(s16 boxno);
-s32 fn_1_812C(void);
-s32 fn_1_83B4(void);
-s32 fn_1_8540(s16 boxno);
-s32 fn_1_8C30(s16 boxno);
-s32 fn_1_9E14(void);
-s32 fn_1_9E4C(void);
+s32 FileSelectFileOpen(char *name, s16 slotno);
+s32 FileSelectFileCreate(s16 boxno);
+s32 FileSelectFileWrite(void);
+s32 FileSelectFileRead(void);
+s32 FileSelectFileDelete(s16 boxno);
+s32 FileSelectFileCopy(s16 boxno);
+s32 FileSelectFileClose(void);
+s32 FileSelectBoxInit(void);
 
-void fn_1_A8C0(s16 boxno);
-void fn_1_BA80(s16 boxno);
+void FileSelectBoxInfoLoad(s16 boxno);
+void FileSelectBoxInfoSet(s16 boxno);
 
-s32 fn_1_61B4(void)
+s32 FileSelectBoxExec(void)
 {
-    float temp_f31;
-    s16 temp_r31;
-    s16 temp_r30;
-    s16 temp_r29;
-    s16 temp_r28;
-    s32 temp_r27;
-    s16 temp_r26;
-    float sp10[2];
-    OSTime sp8;
-    HuWinMesMaxSizeGet(1, sp10, MAKE_MESSID(0x10, 0x3D));
-    lbl_1_bss_146 = HuWinExCreateStyled(-10000, 316, sp10[0], sp10[1], -1, 0);
-    HuWinAttrSet(lbl_1_bss_146, 0x800);
-    HuWinBGTPLvlSet(lbl_1_bss_146, 0);
-    HuWinMesSpeedSet(lbl_1_bss_146, 0);
-    temp_r30 = -1;
-    for (temp_r29 = lbl_1_bss_88 = 0; temp_r29 < 3; temp_r29++) {
-        lbl_1_bss_EE[temp_r29] = -1;
-        lbl_1_bss_E8[temp_r29] = -1;
-        lbl_1_bss_140[temp_r29] = 0;
-        temp_r27 = fn_1_76B4(SaveFileNameTbl[temp_r29], curSlotNo);
-        if (temp_r27 == 0) {
-            temp_r27 = fn_1_83B4();
-            if (temp_r27 == 0) {
-                lbl_1_bss_140[temp_r29] = 1;
-                if (lbl_1_bss_88 == 0) {
-                    temp_r30 = temp_r29;
+    float scale;
+    s16 result;
+    s16 boxNo;
+    s16 i;
+    s16 modelNo;
+    s32 cardResult;
+    s16 move;
+    float helpWinSize[2];
+    OSTime createTime;
+    HuWinMesMaxSizeGet(1, helpWinSize, MAKE_MESSID(0x10, 0x3D));
+    fileSelectHelpWinId = HuWinExCreateStyled(-10000, 316, helpWinSize[0], helpWinSize[1], -1, 0);
+    HuWinAttrSet(fileSelectHelpWinId, 0x800);
+    HuWinBGTPLvlSet(fileSelectHelpWinId, 0);
+    HuWinMesSpeedSet(fileSelectHelpWinId, 0);
+    boxNo = -1;
+    for (i = fileSelectBoxNum = 0; i < 3; i++) {
+        fileSelectBoxStars[i] = -1;
+        fileSelectBoxCharNo[i] = -1;
+        fileSelectBoxPresentF[i] = 0;
+        cardResult = FileSelectFileOpen(SaveFileNameTbl[i], curSlotNo);
+        if (cardResult == 0) {
+            cardResult = FileSelectFileRead();
+            if (cardResult == 0) {
+                fileSelectBoxPresentF[i] = 1;
+                if (fileSelectBoxNum == 0) {
+                    boxNo = i;
                 }
-                lbl_1_bss_88++;
+                fileSelectBoxNum++;
                 if (SLCheckSumCheck()) {
-                    fn_1_A8C0(temp_r29);
+                    FileSelectBoxInfoLoad(i);
                 }
             }
-            fn_1_9E14();
+            FileSelectFileClose();
         }
-        if (temp_r27 != 0 && temp_r27 != -4) {
-            HuWinKill(lbl_1_bss_146);
+        if (cardResult != 0 && cardResult != -4) {
+            HuWinKill(fileSelectHelpWinId);
             return 0;
         }
     }
-    fn_1_9E4C();
-    if (temp_r30 == -1) {
-        temp_r30 = 0;
+    FileSelectBoxInit();
+    if (boxNo == -1) {
+        boxNo = 0;
     }
-    lbl_1_bss_120[0] = lbl_1_bss_120[1] = lbl_1_bss_120[2] = 1;
+    fileSelectBoxLabelF[0] = fileSelectBoxLabelF[1] = fileSelectBoxLabelF[2] = 1;
     UnMountCnt = 0;
-    for (temp_r29 = 0; temp_r29 <= 20; temp_r29++) {
-        temp_f31 = sind(90.0f * (temp_r29 / 20.0f));
-        for (temp_r28 = 0; temp_r28 < 3; temp_r28++) {
-            Hu3DModelScaleSet(lbl_1_bss_19A[temp_r28 + 8], temp_f31, temp_f31, temp_f31);
-            Hu3DModelScaleSet(lbl_1_bss_19A[temp_r28 + 11], temp_f31, temp_f31, temp_f31);
+    for (i = 0; i <= 20; i++) {
+        scale = sind(90.0f * (i / 20.0f));
+        for (modelNo = 0; modelNo < 3; modelNo++) {
+            Hu3DModelScaleSet(modeSelMdlId[modelNo + 8], scale, scale, scale);
+            Hu3DModelScaleSet(modeSelMdlId[modelNo + 11], scale, scale, scale);
         }
         HuPrcVSleep();
     }
-    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x07));
-    HuWinMesWait(lbl_1_bss_148);
-    fn_1_7628(temp_r30, 1);
-    if (lbl_1_bss_88 == 0) {
-        HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x40));
+    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x07));
+    HuWinMesWait(fileSelectWinId);
+    FileSelectBoxAnimStart(boxNo, 1);
+    if (fileSelectBoxNum == 0) {
+        HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x40));
     }
     else {
-        if (lbl_1_bss_88 == 3) {
-            HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3F));
+        if (fileSelectBoxNum == 3) {
+            HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3F));
         }
         else {
-            HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3D));
+            HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3D));
         }
     }
-    HuWinDispOn(lbl_1_bss_146);
-    fn_1_BA80(temp_r30);
+    HuWinDispOn(fileSelectHelpWinId);
+    FileSelectBoxInfoSet(boxNo);
     if (UnMountCnt & (1 << curSlotNo)) {
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-        HuWinMesWait(lbl_1_bss_148);
-        temp_r31 = 0;
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+        HuWinMesWait(fileSelectWinId);
+        result = 0;
     }
     else {
         UnMountCnt = 0;
         while (1) {
             HuPrcVSleep();
             if (UnMountCnt & (1 << curSlotNo)) {
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-                HuWinMesWait(lbl_1_bss_148);
-                temp_r31 = 0;
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+                HuWinMesWait(fileSelectWinId);
+                result = 0;
                 break;
             }
-            temp_r26 = 0;
+            move = 0;
             if (HuPadDStkRep[0] & 0x1) {
-                temp_r26 = -1;
+                move = -1;
             }
             else if (HuPadDStkRep[0] & 0x2) {
-                temp_r26 = 1;
+                move = 1;
             }
-            if (temp_r26) {
-                fn_1_7628(temp_r30, 0);
-                temp_r30 += temp_r26;
-                if (temp_r30 < 0) {
-                    temp_r30 = 2;
+            if (move) {
+                FileSelectBoxAnimStart(boxNo, 0);
+                boxNo += move;
+                if (boxNo < 0) {
+                    boxNo = 2;
                 }
-                else if (temp_r30 >= 3) {
-                    temp_r30 = 0;
+                else if (boxNo >= 3) {
+                    boxNo = 0;
                 }
                 HuAudFXPlay(0);
-                fn_1_7628(temp_r30, 1);
-                fn_1_BA80(temp_r30);
+                FileSelectBoxAnimStart(boxNo, 1);
+                FileSelectBoxInfoSet(boxNo);
                 HuPrcSleep(10);
             }
-            if ((HuPadBtnDown[0] & PAD_BUTTON_X) && lbl_1_bss_140[temp_r30]) {
+            if ((HuPadBtnDown[0] & PAD_BUTTON_X) && fileSelectBoxPresentF[boxNo]) {
                 UnMountCnt = 0;
-                temp_r31 = fn_1_76B4(SaveFileNameTbl[temp_r30], curSlotNo);
-                if (temp_r31 < 0) {
-                    temp_r31 = 0;
+                result = FileSelectFileOpen(SaveFileNameTbl[boxNo], curSlotNo);
+                if (result < 0) {
+                    result = 0;
                     break;
                 }
-                if (!lbl_1_bss_140[temp_r30]) {
+                if (!fileSelectBoxPresentF[boxNo]) {
                     continue;
                 }
-                HuWinDispOff(lbl_1_bss_146);
+                HuWinDispOff(fileSelectHelpWinId);
                 HuAudFXPlay(2);
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_288[temp_r30]), 1);
-                HuWinAttrSet(lbl_1_bss_148, 0x10);
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x08));
-                HuWinMesWait(lbl_1_bss_148);
-                temp_r31 = HuWinChoiceGet(lbl_1_bss_148, 1);
-                if (temp_r31 == 0) {
-                    temp_r31 = fn_1_8540(temp_r30);
-                    if (temp_r31 == 0) {
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectBoxNameTbl[boxNo]), 1);
+                HuWinAttrSet(fileSelectWinId, 0x10);
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x08));
+                HuWinMesWait(fileSelectWinId);
+                result = HuWinChoiceGet(fileSelectWinId, 1);
+                if (result == 0) {
+                    result = FileSelectFileDelete(boxNo);
+                    if (result == 0) {
                         break;
                     }
                 }
                 if (UnMountCnt & (1 << curSlotNo)) {
                     continue;
                 }
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x07));
-                HuWinMesWait(lbl_1_bss_148);
-                if (lbl_1_bss_88 == 0) {
-                    HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x40));
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x07));
+                HuWinMesWait(fileSelectWinId);
+                if (fileSelectBoxNum == 0) {
+                    HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x40));
                 }
-                else if (lbl_1_bss_88 == 3) {
-                    HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3F));
+                else if (fileSelectBoxNum == 3) {
+                    HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3F));
                 }
                 else {
-                    HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3D));
+                    HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3D));
                 }
-                HuWinDispOn(lbl_1_bss_146);
-                fn_1_BA80(temp_r30);
+                HuWinDispOn(fileSelectHelpWinId);
+                FileSelectBoxInfoSet(boxNo);
                 continue;
             }
             else if (HuPadBtnDown[0] & PAD_BUTTON_Y) {
                 UnMountCnt = 0;
                 if (HuCardSlotCheck(curSlotNo) < 0) {
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-                    HuWinMesWait(lbl_1_bss_148);
-                    temp_r31 = 0;
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+                    HuWinMesWait(fileSelectWinId);
+                    result = 0;
                     break;
                 }
-                if (!lbl_1_bss_140[temp_r30]) {
+                if (!fileSelectBoxPresentF[boxNo]) {
                     continue;
                 }
-                for (temp_r29 = 0; temp_r29 < 3; temp_r29++) {
-                    if (!lbl_1_bss_140[temp_r29]) {
+                for (i = 0; i < 3; i++) {
+                    if (!fileSelectBoxPresentF[i]) {
                         break;
                     }
                 }
-                if (temp_r29 == 3) {
+                if (i == 3) {
                     continue;
                 }
-                HuWinDispOff(lbl_1_bss_146);
+                HuWinDispOff(fileSelectHelpWinId);
                 HuAudFXPlay(2);
-                if (fn_1_8C30(temp_r30) == 0) {
-                    temp_r31 = 0;
+                if (FileSelectFileCopy(boxNo) == 0) {
+                    result = 0;
                     break;
                 }
                 if (UnMountCnt & (1 << curSlotNo)) {
                     continue;
                 }
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x07));
-                HuWinMesWait(lbl_1_bss_148);
-                if (lbl_1_bss_88 == 0) {
-                    HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x40));
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x07));
+                HuWinMesWait(fileSelectWinId);
+                if (fileSelectBoxNum == 0) {
+                    HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x40));
                 }
-                else if (lbl_1_bss_88 == 3) {
-                    HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3F));
+                else if (fileSelectBoxNum == 3) {
+                    HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3F));
                 }
                 else {
-                    HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3D));
+                    HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3D));
                 }
-                HuWinDispOn(lbl_1_bss_146);
-                fn_1_BA80(temp_r30);
+                HuWinDispOn(fileSelectHelpWinId);
+                FileSelectBoxInfoSet(boxNo);
                 continue;
             }
             else if (HuPadBtnDown[0] & PAD_BUTTON_A) {
                 UnMountCnt = 0;
-                HuWinDispOff(lbl_1_bss_146);
+                HuWinDispOff(fileSelectHelpWinId);
                 HuCardMount(curSlotNo);
                 if (HuCardSlotCheck(curSlotNo) < 0) {
                     HuAudFXPlay(4);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-                    HuWinMesWait(lbl_1_bss_148);
-                    temp_r31 = 0;
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+                    HuWinMesWait(fileSelectWinId);
+                    result = 0;
                     break;
                 }
                 if (SLSerialNoCheck() == 0) {
                     HuAudFXPlay(4);
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
-                    HuWinMesWait(lbl_1_bss_148);
-                    temp_r31 = 0;
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x45));
+                    HuWinMesWait(fileSelectWinId);
+                    result = 0;
                     break;
                 }
                 HuAudFXPlay(2097);
-                SLCurBoxNoSet(temp_r30);
-                if (!lbl_1_bss_140[temp_r30]) {
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x0B));
-                    HuWinMesWait(lbl_1_bss_148);
-                    sp8 = OSGetTime();
-                    SLSaveDataMake(1, &sp8);
+                SLCurBoxNoSet(boxNo);
+                if (!fileSelectBoxPresentF[boxNo]) {
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x0B));
+                    HuWinMesWait(fileSelectWinId);
+                    createTime = OSGetTime();
+                    SLSaveDataMake(1, &createTime);
                     GWGameStatReset();
                     #if VERSION_PAL
                     _ClearFlag(0x1000B);
                     #endif
                     GWGameStat.sound_mode = msmSysGetOutputMode();
                     SLCommonSet();
-                    fn_1_B8CC(MAKE_MESSID(16, 0x3C));
+                    FileSelectProgressWinOpen(MAKE_MESSID(16, 0x3C));
                     HuPrcSleep(20);
                     if (UnMountCnt & (1 << curSlotNo)) {
-                        fn_1_BA20();
-                        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-                        HuWinMesWait(lbl_1_bss_148);
-                        temp_r31 = 0;
+                        FileSelectProgressWinClose();
+                        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+                        HuWinMesWait(fileSelectWinId);
+                        result = 0;
                         break;
                     }
-                    temp_r27 = fn_1_7B74(temp_r30);
-                    fn_1_BA20();
-                    if (temp_r27 != 0) {
-                        temp_r31 = 1;
+                    cardResult = FileSelectFileCreate(boxNo);
+                    FileSelectProgressWinClose();
+                    if (cardResult != 0) {
+                        result = 1;
                         break;
                     }
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4F));
-                    HuWinAttrSet(lbl_1_bss_148, 0x10);
-                    HuWinMesWait(lbl_1_bss_148);
-                    temp_r31 = HuWinChoiceGet(lbl_1_bss_148, 1);
-                    if (temp_r31 == 0) {
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4F));
+                    HuWinAttrSet(fileSelectWinId, 0x10);
+                    HuWinMesWait(fileSelectWinId);
+                    result = HuWinChoiceGet(fileSelectWinId, 1);
+                    if (result == 0) {
                         SLSaveFlagSet(0);
-                        temp_r31 = 1;
+                        result = 1;
                         break;
                     }
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x52), 0);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4C));
-                    HuWinMesWait(lbl_1_bss_148);
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x52), 0);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4C));
+                    HuWinMesWait(fileSelectWinId);
                     while (!(HuPadBtnDown[0] & PAD_BUTTON_A)) {
                         HuPrcVSleep();
                     }
-                    temp_r31 = 0;
+                    result = 0;
                     break;
                 }
                 else {
-                    if (!fn_1_76B4(SaveFileNameTbl[temp_r30], curSlotNo)) {
-                        if (!fn_1_83B4()) {
+                    if (!FileSelectFileOpen(SaveFileNameTbl[boxNo], curSlotNo)) {
+                        if (!FileSelectFileRead()) {
                             if (SLCheckSumCheck()) {
-                                fn_1_9E14();
+                                FileSelectFileClose();
                                 SLLoadGameStat();
                                 #if VERSION_PAL
                                 if(GwLanguageSave != -1) {
@@ -1035,110 +1035,110 @@ s32 fn_1_61B4(void)
                                 GwLanguage = GWGameStat.language;
                                 _ClearFlag(0x1000B);
                                 #endif
-                                temp_r31 = 1;
+                                result = 1;
                                 break;
                             }
-                            HuWinHomeClear(lbl_1_bss_148);
+                            HuWinHomeClear(fileSelectWinId);
                             HuPrcSleep(60);
                             if (UnMountCnt & (1 << curSlotNo)) {
-                                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-                                HuWinMesWait(lbl_1_bss_148);
-                                temp_r31 = 0;
+                                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+                                HuWinMesWait(fileSelectWinId);
+                                result = 0;
                                 break;
                             }
-                            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_288[temp_r30]), 0);
-                            HuWinAttrSet(lbl_1_bss_148, 0x10);
-                            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x3A));
-                            HuWinMesWait(lbl_1_bss_148);
-                            temp_r31 = HuWinChoiceGet(lbl_1_bss_148, 1);
-                            if (!temp_r31) {
-                                temp_r31 = fn_1_8540(temp_r30);
-                                if (temp_r31 == 0) {
+                            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectBoxNameTbl[boxNo]), 0);
+                            HuWinAttrSet(fileSelectWinId, 0x10);
+                            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x3A));
+                            HuWinMesWait(fileSelectWinId);
+                            result = HuWinChoiceGet(fileSelectWinId, 1);
+                            if (!result) {
+                                result = FileSelectFileDelete(boxNo);
+                                if (result == 0) {
                                     break;
                                 }
                                 if (HuCardMount(curSlotNo) < 0) {
-                                    temp_r31 = 0;
+                                    result = 0;
                                     break;
                                 }
                             }
                         }
                         else {
-                            temp_r31 = 0;
+                            result = 0;
                         }
                     }
                     else {
-                        temp_r31 = 0;
+                        result = 0;
                     }
-                    if (temp_r31 == 0) {
+                    if (result == 0) {
                         break;
                     }
                     if (UnMountCnt & (1 << curSlotNo)) {
                         continue;
                     }
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x07));
-                    HuWinMesWait(lbl_1_bss_148);
-                    if (lbl_1_bss_88 == 0) {
-                        HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x40));
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x07));
+                    HuWinMesWait(fileSelectWinId);
+                    if (fileSelectBoxNum == 0) {
+                        HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x40));
                     }
-                    else if (lbl_1_bss_88 == 3) {
-                        HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3F));
+                    else if (fileSelectBoxNum == 3) {
+                        HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3F));
                     }
                     else {
-                        HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x3D));
+                        HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x3D));
                     }
-                    HuWinDispOn(lbl_1_bss_146);
-                    fn_1_BA80(temp_r30);
+                    HuWinDispOn(fileSelectHelpWinId);
+                    FileSelectBoxInfoSet(boxNo);
                     continue;
                 }
             }
             else if (HuPadBtnDown[0] & PAD_BUTTON_B) {
                 HuAudFXPlay(3);
-                temp_r31 = 0;
+                result = 0;
                 break;
             }
         }
     }
-    HuWinDispOff(lbl_1_bss_146);
-    for (temp_r29 = 0; temp_r29 <= 20; temp_r29++) {
-        temp_f31 = cosd(90.0 * (temp_r29 / 20.0));
-        Hu3DModelScaleSet(lbl_1_bss_19A[curSlotNo], temp_f31, temp_f31, temp_f31);
-        for (temp_r28 = 0; temp_r28 < 3; temp_r28++) {
-            Hu3DModelScaleSet(lbl_1_bss_19A[temp_r28 + 8], temp_f31, temp_f31, temp_f31);
-            Hu3DModelScaleSet(lbl_1_bss_19A[temp_r28 + 11], temp_f31, temp_f31, temp_f31);
+    HuWinDispOff(fileSelectHelpWinId);
+    for (i = 0; i <= 20; i++) {
+        scale = cosd(90.0 * (i / 20.0));
+        Hu3DModelScaleSet(modeSelMdlId[curSlotNo], scale, scale, scale);
+        for (modelNo = 0; modelNo < 3; modelNo++) {
+            Hu3DModelScaleSet(modeSelMdlId[modelNo + 8], scale, scale, scale);
+            Hu3DModelScaleSet(modeSelMdlId[modelNo + 11], scale, scale, scale);
         }
-        if (temp_r31) {
-            espScaleSet(lbl_1_bss_152[1], temp_f31, temp_f31);
+        if (result) {
+            espScaleSet(modeSelSprId[1], scale, scale);
         }
         HuPrcVSleep();
     }
-    HuWinKill(lbl_1_bss_146);
-    return temp_r31;
+    HuWinKill(fileSelectHelpWinId);
+    return result;
 }
 
-void fn_1_72DC(void)
+void FileSelectBoxAnimMain(void)
 {
     s16 index;
-    WorkFilesel *work;
+    FileSelectAnimWork *work;
     s16 i;
-    s32 param;
+    s32 selectF;
     HUPROCESS *curr;
     curr = HuPrcCurrentGet();
     work = curr->user_data;
     index = work->index;
-    param = work->param;
-    if (param) {
-        Hu3DModelAttrReset(lbl_1_bss_19A[index + 8], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(lbl_1_bss_19A[index + 11], HU3D_ATTR_DISPOFF);
+    selectF = work->selectF;
+    if (selectF) {
+        Hu3DModelAttrReset(modeSelMdlId[index + 8], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(modeSelMdlId[index + 11], HU3D_ATTR_DISPOFF);
     }
     else {
-        Hu3DModelAttrSet(lbl_1_bss_19A[index + 8], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrReset(lbl_1_bss_19A[index + 11], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(modeSelMdlId[index + 8], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrReset(modeSelMdlId[index + 11], HU3D_ATTR_DISPOFF);
     }
     for (i = 0; i <= 10; i++) {
         float scale;
         Vec pos_2d;
         Vec pos_3d;
-        if (param) {
+        if (selectF) {
             scale = sind(90.0f * (i / 10.0f));
         }
         else {
@@ -1149,10 +1149,10 @@ void fn_1_72DC(void)
         pos_2d.z = 800;
         Hu3D2Dto3D(&pos_2d, 1, &pos_3d);
         pos_3d.z = 800 + (100.0f * scale);
-        Hu3DModelPosSetV(lbl_1_bss_19A[index + 8], &pos_3d);
-        Hu3DModelPosSetV(lbl_1_bss_19A[index + 11], &pos_3d);
-        Hu3DModelScaleSet(lbl_1_bss_19A[index + 8], 1, 1, 1);
-        Hu3DModelScaleSet(lbl_1_bss_19A[index + 11], 1, 1, 1);
+        Hu3DModelPosSetV(modeSelMdlId[index + 8], &pos_3d);
+        Hu3DModelPosSetV(modeSelMdlId[index + 11], &pos_3d);
+        Hu3DModelScaleSet(modeSelMdlId[index + 8], 1, 1, 1);
+        Hu3DModelScaleSet(modeSelMdlId[index + 11], 1, 1, 1);
         HuPrcVSleep();
     }
     (void)curr;
@@ -1163,21 +1163,21 @@ void fn_1_72DC(void)
     }
 }
 
-void fn_1_7628(s16 boxno, s32 flag)
+void FileSelectBoxAnimStart(s16 boxno, s32 flag)
 {
-    WorkFilesel *work;
+    FileSelectAnimWork *work;
     HUPROCESS *parent;
     HUPROCESS *child;
 
     parent = HuPrcCurrentGet();
-    child = HuPrcChildCreate(fn_1_72DC, 50, 8192, 0, parent);
-    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(WorkFilesel), HU_MEMNUM_OVL);
+    child = HuPrcChildCreate(FileSelectBoxAnimMain, 50, 8192, 0, parent);
+    work = HuMemDirectMallocNum(HEAP_HEAP, sizeof(FileSelectAnimWork), HU_MEMNUM_OVL);
     child->user_data = work;
     work->index = boxno;
-    work->param = flag;
+    work->selectF = flag;
 }
 
-s32 fn_1_76B4(char *name, s16 slotno)
+s32 FileSelectFileOpen(char *name, s16 slotno)
 {
     s32 result;
     s16 choice;
@@ -1195,53 +1195,53 @@ s32 fn_1_76B4(char *name, s16 slotno)
             }
         }
         if (result == CARD_RESULT_WRONGDEVICE) {
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[slotno]), 0);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[slotno]), 0);
             #if VERSION_PAL
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x39));
             #else
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x37));
             #endif
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinMesWait(fileSelectWinId);
             return result;
         }
         if (result == CARD_RESULT_FATAL_ERROR || filecnt > 3) {
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[slotno]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[slotno]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+            HuWinMesWait(fileSelectWinId);
             return result;
         }
         else if (result == CARD_RESULT_NOCARD) {
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+            HuWinMesWait(fileSelectWinId);
             return result;
         }
         else if (result == CARD_RESULT_NOFILE || !SLSerialNoCheck()) {
             OSReport("Card Open Error:No File\n");
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x45));
+            HuWinMesWait(fileSelectWinId);
             break;
         }
         else if (result == CARD_RESULT_BROKEN) {
             UnMountCnt = 0;
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[slotno]), 0);
-            HuWinAttrSet(lbl_1_bss_148, 0x10);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x04));
-            HuWinMesWait(lbl_1_bss_148);
-            choice = HuWinChoiceGet(lbl_1_bss_148, 1);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[slotno]), 0);
+            HuWinAttrSet(fileSelectWinId, 0x10);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x04));
+            HuWinMesWait(fileSelectWinId);
+            choice = HuWinChoiceGet(fileSelectWinId, 1);
             if (choice == 0) {
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4E));
-                HuWinMesWait(lbl_1_bss_148);
-                choice = HuWinChoiceGet(lbl_1_bss_148, 1);
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4E));
+                HuWinMesWait(fileSelectWinId);
+                choice = HuWinChoiceGet(fileSelectWinId, 1);
                 if (choice == 0) {
-                    fn_1_B8CC(MAKE_MESSID(16, 0x38));
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x0B));
-                    HuWinMesWait(lbl_1_bss_148);
+                    FileSelectProgressWinOpen(MAKE_MESSID(16, 0x38));
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x0B));
+                    HuWinMesWait(fileSelectWinId);
                     HuPrcSleep(60);
                     if (UnMountCnt & (1 << curSlotNo)) {
-                        fn_1_BA20();
-                        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-                        HuWinMesWait(lbl_1_bss_148);
+                        FileSelectProgressWinClose();
+                        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+                        HuWinMesWait(fileSelectWinId);
                     }
                     else {
                         _SetFlag(0x30000);
@@ -1250,18 +1250,18 @@ s32 fn_1_76B4(char *name, s16 slotno)
                         if (result == CARD_RESULT_READY) {
                             SLSerialNoGet();
                         }
-                        fn_1_BA20();
+                        FileSelectProgressWinClose();
                         if (result == CARD_RESULT_FATAL_ERROR) {
-                            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x36));
-                            HuWinMesWait(lbl_1_bss_148);
-                            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-                            HuWinMesWait(lbl_1_bss_148);
+                            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x36));
+                            HuWinMesWait(fileSelectWinId);
+                            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+                            HuWinMesWait(fileSelectWinId);
                             return result;
                         }
                         else if (result == CARD_RESULT_NOCARD) {
-                            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-                            HuWinMesWait(lbl_1_bss_148);
+                            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+                            HuWinMesWait(fileSelectWinId);
                             return result;
                         }
                     }
@@ -1278,87 +1278,87 @@ s32 fn_1_76B4(char *name, s16 slotno)
     return result;
 }
 
-s32 fn_1_7B74(s16 boxno)
+s32 FileSelectFileCreate(s16 boxno)
 {
     s32 result;
     s32 i;
     result = HuCardMount(curSlotNo);
     if (result == 0 && !SLSerialNoCheck()) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x45));
+        HuWinMesWait(fileSelectWinId);
     }
     else {
         result = HuCardSectorSizeGet(curSlotNo);
         if (result == -3) {
-            fn_1_BA20();
+            FileSelectProgressWinClose();
             OSReport("SectorSize Check Error:No Card %d\n", curSlotNo);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+            HuWinMesWait(fileSelectWinId);
         }
         else {
             if (result != 8192) {
-                fn_1_BA20();
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x39));
-                HuWinMesWait(lbl_1_bss_148);
+                FileSelectProgressWinClose();
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x39));
+                HuWinMesWait(fileSelectWinId);
             }
             else {
                 u32 byteNotUsed;
                 u32 filesNotUsed;
                 result = HuCardFreeSpaceGet(curSlotNo, &byteNotUsed, &filesNotUsed);
                 if (filesNotUsed == 0 && byteNotUsed < SAVE_BUF_SIZE) {
-                    fn_1_BA20();
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4A));
-                    HuWinMesWait(lbl_1_bss_148);
+                    FileSelectProgressWinClose();
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4A));
+                    HuWinMesWait(fileSelectWinId);
                 }
                 else if (filesNotUsed == 0) {
-                    fn_1_BA20();
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4A));
-                    HuWinMesWait(lbl_1_bss_148);
+                    FileSelectProgressWinClose();
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4A));
+                    HuWinMesWait(fileSelectWinId);
                 }
                 else if (byteNotUsed < SAVE_BUF_SIZE) {
-                    fn_1_BA20();
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4A));
-                    HuWinMesWait(lbl_1_bss_148);
+                    FileSelectProgressWinClose();
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4A));
+                    HuWinMesWait(fileSelectWinId);
                 }
                 else {
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x0B));
-                    HuWinMesWait(lbl_1_bss_148);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x0B));
+                    HuWinMesWait(fileSelectWinId);
                     for (i = 0; i <= 40; i++) {
                         float time = i / 40.0;
-                        Hu3DModelTPLvlSet(lbl_1_bss_19A[boxno + 8], 0.6 + (0.4 * time));
-                        Hu3DModelTPLvlSet(lbl_1_bss_19A[boxno + 11], 0.3 + (0.7 * time));
+                        Hu3DModelTPLvlSet(modeSelMdlId[boxno + 8], 0.6 + (0.4 * time));
+                        Hu3DModelTPLvlSet(modeSelMdlId[boxno + 11], 0.3 + (0.7 * time));
                         HuPrcVSleep();
                     }
                     _SetFlag(0x30000);
                     result = HuCardCreate(curSlotNo, SaveFileNameTbl[boxno], SAVE_BUF_SIZE, &curFileInfo);
                     if (result == CARD_RESULT_NOCARD) {
                         _ClearFlag(0x30000);
-                        fn_1_BA20();
+                        FileSelectProgressWinClose();
                         OSReport("File Create Error:No Card\n");
-                        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-                        HuWinMesWait(lbl_1_bss_148);
+                        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+                        HuWinMesWait(fileSelectWinId);
                     }
                     else if (result == CARD_RESULT_WRONGDEVICE) {
                         _ClearFlag(0x30000);
-                        fn_1_BA20();
-                        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
-                        HuWinMesWait(lbl_1_bss_148);
+                        FileSelectProgressWinClose();
+                        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x37));
+                        HuWinMesWait(fileSelectWinId);
                     }
                     else if (result < 0) {
                         _ClearFlag(0x30000);
-                        fn_1_BA20();
-                        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-                        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-                        HuWinMesWait(lbl_1_bss_148);
+                        FileSelectProgressWinClose();
+                        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+                        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+                        HuWinMesWait(fileSelectWinId);
                     }
                     else {
-                        result = fn_1_812C();
+                        result = FileSelectFileWrite();
                         _ClearFlag(0x30000);
                         if (result != 0) {
                             return 1;
@@ -1371,7 +1371,7 @@ s32 fn_1_7B74(s16 boxno)
     return 0;
 }
 
-s32 fn_1_812C(void)
+s32 FileSelectFileWrite(void)
 {
     s32 result;
     SLCheckSumSet();
@@ -1379,68 +1379,68 @@ s32 fn_1_812C(void)
     result = HuCardWrite(&curFileInfo, &saveBuf.buf[0], SAVE_BUF_SIZE, 0);
     _ClearFlag(0x30000);
     if (result == CARD_RESULT_NOCARD) {
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     if (result == CARD_RESULT_WRONGDEVICE) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x37));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     if (result < 0) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     result = SLStatSet(0);
     if (result == CARD_RESULT_NOCARD) {
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     if (result == CARD_RESULT_WRONGDEVICE) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x37));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x37));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     if (result < 0) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     return 1;
 }
 
-s32 fn_1_83B4(void)
+s32 FileSelectFileRead(void)
 {
     s32 result;
     result = HuCardRead(&curFileInfo, &saveBuf.buf[0], SAVE_BUF_SIZE, 0);
     if (result == -3) {
         OSReport("Card Read Error:No Card\n");
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+        HuWinMesWait(fileSelectWinId);
     }
     else if (result == -4 || !SLSerialNoCheck()) {
         OSReport("Card Read Error:No File\n", result);
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x45));
+        HuWinMesWait(fileSelectWinId);
     }
     else if (result < 0) {
         OSReport("Card Read Error:Fatal Error %d\n", result);
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+        HuWinMesWait(fileSelectWinId);
     }
     return result;
 }
 
-s32 fn_1_8540(s16 boxno)
+s32 FileSelectFileDelete(s16 boxno)
 {
     float scale;
     s32 result;
@@ -1449,208 +1449,208 @@ s32 fn_1_8540(s16 boxno)
     result = HuCardMount(curSlotNo);
     if (result == -3) {
         OSReport("Card Delete Error:No Card\n");
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     if (result == -4 || !SLSerialNoCheck()) {
         OSReport("Card Delete Error:No File\n", result);
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x45));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     if (result < 0) {
         OSReport("Card Delete Error:Fatal Error %d\n", result);
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
 
-    fn_1_B8CC(MAKE_MESSID(16, 0x3B));
-    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x0B));
-    HuWinMesWait(lbl_1_bss_148);
+    FileSelectProgressWinOpen(MAKE_MESSID(16, 0x3B));
+    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x0B));
+    HuWinMesWait(fileSelectWinId);
     HuPrcSleep(60);
     if (UnMountCnt & (1 << curSlotNo)) {
-        fn_1_BA20();
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-        HuWinMesWait(lbl_1_bss_148);
+        FileSelectProgressWinClose();
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
     else {
         _SetFlag(0x30000);
         result = HuCardDelete(curSlotNo, SaveFileNameTbl[boxno]);
         _ClearFlag(0x30000);
-        fn_1_BA20();
+        FileSelectProgressWinClose();
         if (result == -3) {
             OSReport("Card Delete Error:No Card\n");
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x02));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x02));
+            HuWinMesWait(fileSelectWinId);
             return 0;
         }
         if (result == -4 || !SLSerialNoCheck()) {
             OSReport("Card Delete Error:No File\n", result);
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x45));
+            HuWinMesWait(fileSelectWinId);
             return 0;
         }
         if (result < 0) {
             OSReport("Card Delete Error:Fatal Error %d\n", result);
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x53));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x53));
+            HuWinMesWait(fileSelectWinId);
             return 0;
         }
         for (time = 0; time <= 10; time++) {
             scale = cosd(90.0 * (time / 10.0));
-            Hu3DModelScaleSet(lbl_1_bss_19A[boxno + 8], scale, scale, scale);
+            Hu3DModelScaleSet(modeSelMdlId[boxno + 8], scale, scale, scale);
             HuPrcVSleep();
         }
-        Hu3DAnimKill(lbl_1_bss_13A[boxno]);
-        Hu3DAnimKill(lbl_1_bss_134[boxno]);
-        sprite = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[8], HU_MEMNUM_OVL));
-        lbl_1_bss_13A[boxno] = Hu3DAnimCreate(sprite, lbl_1_bss_19A[boxno + 8], "star");
-        sprite = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[17], HU_MEMNUM_OVL));
-        lbl_1_bss_134[boxno] = Hu3DAnimCreate(sprite, lbl_1_bss_19A[boxno + 11], "star");
-        lbl_1_bss_EE[boxno] = -1;
-        Hu3DModelTPLvlSet(lbl_1_bss_19A[boxno + 8], 0.6f);
-        Hu3DModelTPLvlSet(lbl_1_bss_19A[boxno + 11], 0.3f);
+        Hu3DAnimKill(fileSelectBoxCharAnimId[boxno]);
+        Hu3DAnimKill(fileSelectBoxCharBackAnimId[boxno]);
+        sprite = HuSprAnimRead(HuDataReadNum(fileSelectCharAnimTbl[8], HU_MEMNUM_OVL));
+        fileSelectBoxCharAnimId[boxno] = Hu3DAnimCreate(sprite, modeSelMdlId[boxno + 8], "star");
+        sprite = HuSprAnimRead(HuDataReadNum(fileSelectCharAnimTbl[17], HU_MEMNUM_OVL));
+        fileSelectBoxCharBackAnimId[boxno] = Hu3DAnimCreate(sprite, modeSelMdlId[boxno + 11], "star");
+        fileSelectBoxStars[boxno] = -1;
+        Hu3DModelTPLvlSet(modeSelMdlId[boxno + 8], 0.6f);
+        Hu3DModelTPLvlSet(modeSelMdlId[boxno + 11], 0.3f);
         for (time = 0; time <= 20; time++) {
             scale = sind(90.0 * (time / 20.0));
-            Hu3DModelScaleSet(lbl_1_bss_19A[boxno + 8], scale, scale, scale);
+            Hu3DModelScaleSet(modeSelMdlId[boxno + 8], scale, scale, scale);
             HuPrcVSleep();
         }
-        lbl_1_bss_140[boxno] = 0;
-        lbl_1_bss_88--;
+        fileSelectBoxPresentF[boxno] = 0;
+        fileSelectBoxNum--;
         return 1;
     }
 }
 
-s32 fn_1_8C30(s16 boxno)
+s32 FileSelectFileCopy(s16 boxno)
 {
-    float temp_f31;
-    s16 temp_r31;
-    s16 temp_r30;
-    s32 temp_r29;
-    s16 temp_r26;
-    s16 temp_r25;
-    ANIMDATA *temp_r19;
-    Vec sp60;
-    Vec sp54;
-    Vec sp48;
-    Vec sp3C;
-    s32 sp38;
-    s32 sp34;
-    HUPROCESS *sp30;
-    HU3DMODEL *sp2C;
-    sp30 = HuPrcCurrentGet();
+    float time;
+    s16 destBoxNo;
+    s16 i;
+    s32 result;
+    s16 move;
+    s16 charNo;
+    ANIMDATA *charAnim;
+    Vec screenPos;
+    Vec srcPos;
+    Vec destPos;
+    Vec delta;
+    s32 freeFiles;
+    s32 freeBytes;
+    HUPROCESS *process;
+    HU3DMODEL *model;
+    process = HuPrcCurrentGet();
     OSReport("Card Copy Seq.:Open\n");
-    temp_r29 = fn_1_76B4(SaveFileNameTbl[boxno], curSlotNo);
-    if (temp_r29 < 0 || !SLSerialNoCheck()) {
+    result = FileSelectFileOpen(SaveFileNameTbl[boxno], curSlotNo);
+    if (result < 0 || !SLSerialNoCheck()) {
         return 0;
     }
     OSReport("Card Copy Seq.:Read\n");
-    temp_r29 = fn_1_83B4();
-    if (temp_r29 != 0) {
+    result = FileSelectFileRead();
+    if (result != 0) {
         return 0;
     }
     OSReport("Card Copy Seq.:CheckSum Check\n");
     if (!SLCheckSumCheck()) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_288[boxno]), 0);
-        HuWinAttrSet(lbl_1_bss_148, 0x10);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x3A));
-        HuWinMesWait(lbl_1_bss_148);
-        temp_r29 = HuWinChoiceGet(lbl_1_bss_148, 1);
-        if (temp_r29 != 0) {
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectBoxNameTbl[boxno]), 0);
+        HuWinAttrSet(fileSelectWinId, 0x10);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x3A));
+        HuWinMesWait(fileSelectWinId);
+        result = HuWinChoiceGet(fileSelectWinId, 1);
+        if (result != 0) {
             return 1;
         }
         else {
-            temp_r29 = fn_1_8540(boxno);
-            return temp_r29;
+            result = FileSelectFileDelete(boxno);
+            return result;
         }
     }
     if (!SLSerialNoCheck()) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x45));
-        HuWinMesWait(lbl_1_bss_148);
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x45));
+        HuWinMesWait(fileSelectWinId);
         return 0;
     }
-    temp_r29 = HuCardFreeSpaceGet(curSlotNo, (u32 *)&sp34, (u32 *)&sp38);
-    if (sp38 == 0 && sp34 < SAVE_BUF_SIZE) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4A));
-        HuWinMesWait(lbl_1_bss_148);
+    result = HuCardFreeSpaceGet(curSlotNo, (u32 *)&freeBytes, (u32 *)&freeFiles);
+    if (freeFiles == 0 && freeBytes < SAVE_BUF_SIZE) {
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4A));
+        HuWinMesWait(fileSelectWinId);
         return 1;
     }
-    else if (sp38 == 0) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4A));
-        HuWinMesWait(lbl_1_bss_148);
+    else if (freeFiles == 0) {
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4A));
+        HuWinMesWait(fileSelectWinId);
         return 1;
     }
-    else if (sp34 < SAVE_BUF_SIZE) {
-        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x4A));
-        HuWinMesWait(lbl_1_bss_148);
+    else if (freeBytes < SAVE_BUF_SIZE) {
+        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x4A));
+        HuWinMesWait(fileSelectWinId);
         return 1;
     }
-    for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-        if (!lbl_1_bss_140[temp_r30]) {
+    for (i = 0; i < 3; i++) {
+        if (!fileSelectBoxPresentF[i]) {
             break;
         }
     }
-    if (temp_r30 == 3) {
+    if (i == 3) {
         return 1;
     }
-    temp_r31 = temp_r30;
-    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x09));
-    HuWinMesWait(lbl_1_bss_148);
-    HuWinMesSet(lbl_1_bss_146, MAKE_MESSID(16, 0x35));
-    HuWinDispOn(lbl_1_bss_146);
-    lbl_1_bss_90 = boxno;
-    Hu3DModelAttrReset(lbl_1_bss_19A[23], HU3D_ATTR_DISPOFF);
-    sp2C = &Hu3DData[lbl_1_bss_19A[boxno + 8]];
-    Hu3DModelPosSetV(lbl_1_bss_19A[23], &sp2C->pos);
-    for (temp_r30 = 1; temp_r30 <= 10; temp_r30++) {
-        temp_f31 = 0.7 + (0.3 * (temp_r30 / 10.0));
-        Hu3DModelScaleSet(lbl_1_bss_19A[23], temp_f31, temp_f31, temp_f31);
+    destBoxNo = i;
+    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x09));
+    HuWinMesWait(fileSelectWinId);
+    HuWinMesSet(fileSelectHelpWinId, MAKE_MESSID(16, 0x35));
+    HuWinDispOn(fileSelectHelpWinId);
+    fileSelectCopySourceBox = boxno;
+    Hu3DModelAttrReset(modeSelMdlId[23], HU3D_ATTR_DISPOFF);
+    model = &Hu3DData[modeSelMdlId[boxno + 8]];
+    Hu3DModelPosSetV(modeSelMdlId[23], &model->pos);
+    for (i = 1; i <= 10; i++) {
+        time = 0.7 + (0.3 * (i / 10.0));
+        Hu3DModelScaleSet(modeSelMdlId[23], time, time, time);
         HuPrcVSleep();
     }
-    fn_1_7628(temp_r31, 1);
+    FileSelectBoxAnimStart(destBoxNo, 1);
     while (1) {
         HuPrcVSleep();
         if (UnMountCnt & (1 << curSlotNo)) {
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-            HuWinMesWait(lbl_1_bss_148);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+            HuWinMesWait(fileSelectWinId);
             break;
         }
         else {
-            temp_r26 = 0;
+            move = 0;
             if (HuPadDStkRep[0] & 0x1) {
-                temp_r26 = -1;
+                move = -1;
             }
             else if (HuPadDStkRep[0] & 0x2) {
-                temp_r26 = 1;
+                move = 1;
             }
-            (void)temp_r26;
-            if (temp_r26) {
+            (void)move;
+            if (move) {
                 HuAudFXPlay(0);
-                fn_1_7628(temp_r31, 0);
+                FileSelectBoxAnimStart(destBoxNo, 0);
                 while (1) {
-                    temp_r31 += temp_r26;
-                    if (temp_r31 < 0) {
-                        temp_r31 = 2;
+                    destBoxNo += move;
+                    if (destBoxNo < 0) {
+                        destBoxNo = 2;
                     }
-                    else if (temp_r31 >= 3) {
-                        temp_r31 = 0;
+                    else if (destBoxNo >= 3) {
+                        destBoxNo = 0;
                     }
-                    if (lbl_1_bss_140[temp_r31] == 0) {
+                    if (fileSelectBoxPresentF[destBoxNo] == 0) {
                         break;
                     }
                 }
-                fn_1_7628(temp_r31, 1);
+                FileSelectBoxAnimStart(destBoxNo, 1);
                 HuPrcSleep(10);
             }
             if (HuPadBtnDown[0] & PAD_BUTTON_A) {
@@ -1661,91 +1661,91 @@ s32 fn_1_8C30(s16 boxno)
             }
             else {
                 HuAudFXPlay(3);
-                Hu3DModelAttrSet(lbl_1_bss_19A[23], HU3D_ATTR_DISPOFF);
-                Hu3DModelAttrReset(lbl_1_bss_19A[boxno + 8], HU3D_ATTR_DISPOFF);
-                fn_1_7628(temp_r31, 0);
-                HuWinDispOff(lbl_1_bss_146);
+                Hu3DModelAttrSet(modeSelMdlId[23], HU3D_ATTR_DISPOFF);
+                Hu3DModelAttrReset(modeSelMdlId[boxno + 8], HU3D_ATTR_DISPOFF);
+                FileSelectBoxAnimStart(destBoxNo, 0);
+                HuWinDispOff(fileSelectHelpWinId);
                 return 1;
             }
-            HuWinDispOff(lbl_1_bss_146);
-            temp_r29 = fn_1_76B4(SaveFileNameTbl[boxno], curSlotNo);
-            if (temp_r29 >= 0 && SLSerialNoCheck()) {
-                fn_1_B8CC(MAKE_MESSID(16, 0x0A));
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x0B));
-                HuWinMesWait(lbl_1_bss_148);
-                Hu3DModelAttrReset(lbl_1_bss_19A[boxno + 8], HU3D_ATTR_DISPOFF);
+            HuWinDispOff(fileSelectHelpWinId);
+            result = FileSelectFileOpen(SaveFileNameTbl[boxno], curSlotNo);
+            if (result >= 0 && SLSerialNoCheck()) {
+                FileSelectProgressWinOpen(MAKE_MESSID(16, 0x0A));
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x0B));
+                HuWinMesWait(fileSelectWinId);
+                Hu3DModelAttrReset(modeSelMdlId[boxno + 8], HU3D_ATTR_DISPOFF);
                 OSReport("CheckSum Check\n");
                 if (!SLCheckSumCheck()) {
                     HuPrcSleep(60);
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(lbl_1_data_288[boxno]), 0);
-                    HuWinAttrSet(lbl_1_bss_148, 0x10);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x3A));
-                    HuWinMesWait(lbl_1_bss_148);
-                    temp_r29 = HuWinChoiceGet(lbl_1_bss_148, 1);
-                    if (temp_r29 == 0) {
-                        temp_r29 = fn_1_8540(boxno);
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(fileSelectBoxNameTbl[boxno]), 0);
+                    HuWinAttrSet(fileSelectWinId, 0x10);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x3A));
+                    HuWinMesWait(fileSelectWinId);
+                    result = HuWinChoiceGet(fileSelectWinId, 1);
+                    if (result == 0) {
+                        result = FileSelectFileDelete(boxno);
                     }
                 }
                 else {
-                    fn_1_9E14();
-                    for (temp_r30 = 0; temp_r30 <= 10; temp_r30++) {
-                        temp_f31 = cosd(90.0 * (temp_r30 / 10.0));
-                        Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 8], temp_f31, temp_f31, temp_f31);
+                    FileSelectFileClose();
+                    for (i = 0; i <= 10; i++) {
+                        time = cosd(90.0 * (i / 10.0));
+                        Hu3DModelScaleSet(modeSelMdlId[destBoxNo + 8], time, time, time);
                         HuPrcVSleep();
                     }
-                    Hu3DModelAttrSet(lbl_1_bss_19A[23], HU3D_ATTR_DISPOFF);
-                    Hu3DModelAttrReset(lbl_1_bss_19A[boxno + 8], HU3D_ATTR_DISPOFF);
+                    Hu3DModelAttrSet(modeSelMdlId[23], HU3D_ATTR_DISPOFF);
+                    Hu3DModelAttrReset(modeSelMdlId[boxno + 8], HU3D_ATTR_DISPOFF);
                     if (UnMountCnt & (1 << curSlotNo)) {
-                        fn_1_BA20();
-                        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x50));
-                        HuWinMesWait(lbl_1_bss_148);
+                        FileSelectProgressWinClose();
+                        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x50));
+                        HuWinMesWait(fileSelectWinId);
                     }
                     else {
                         OSReport("File Create\n");
-                        SLCurBoxNoSet(temp_r31);
+                        SLCurBoxNoSet(destBoxNo);
                         SLLoadGameStat();
                         SLSaveDataMake(0, &GWGameStat.create_time);
-                        if (fn_1_7B74(temp_r31)) {
-                            fn_1_9E14();
-                            fn_1_A8C0(temp_r31);
-                            Hu3DAnimKill(lbl_1_bss_13A[temp_r31]);
-                            Hu3DAnimKill(lbl_1_bss_134[temp_r31]);
-                            temp_r25 = lbl_1_bss_E8[temp_r31];
-                            if (temp_r25 < 0) {
-                                temp_r25 = 8;
+                        if (FileSelectFileCreate(destBoxNo)) {
+                            FileSelectFileClose();
+                            FileSelectBoxInfoLoad(destBoxNo);
+                            Hu3DAnimKill(fileSelectBoxCharAnimId[destBoxNo]);
+                            Hu3DAnimKill(fileSelectBoxCharBackAnimId[destBoxNo]);
+                            charNo = fileSelectBoxCharNo[destBoxNo];
+                            if (charNo < 0) {
+                                charNo = 8;
                             }
-                            (void)temp_r25;
-                            temp_r19 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r25], HU_MEMNUM_OVL));
-                            lbl_1_bss_13A[temp_r31] = Hu3DAnimCreate(temp_r19, lbl_1_bss_19A[temp_r31 + 8], "star");
-                            temp_r19 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r25], HU_MEMNUM_OVL));
-                            lbl_1_bss_134[temp_r31] = Hu3DAnimCreate(temp_r19, lbl_1_bss_19A[temp_r31 + 11], "star");
-                            Hu3DModelAttrReset(lbl_1_bss_19A[temp_r31 + 11], HU3D_ATTR_DISPOFF);
-                            Hu3DModelAttrSet(lbl_1_bss_19A[temp_r31 + 8], HU3D_ATTR_DISPOFF);
-                            sp60.x = 158.0f + (boxno * 130);
-                            sp60.y = 230;
-                            sp60.z = 800;
-                            Hu3D2Dto3D(&sp60, 1, &sp54);
-                            sp54.z = 900;
-                            sp60.x = 158.0f + (temp_r31 * 130);
-                            Hu3D2Dto3D(&sp60, 1, &sp48);
-                            sp48.z = 800;
-                            VECSubtract(&sp48, &sp54, &sp3C);
-                            Hu3DModelTPLvlSet(lbl_1_bss_19A[temp_r31 + 8], 1.0f);
-                            Hu3DModelTPLvlSet(lbl_1_bss_19A[temp_r31 + 11], 1.0f);
-                            lbl_1_bss_120[temp_r31] = 0;
-                            for (temp_r30 = 1; temp_r30 <= 30; temp_r30++) {
-                                temp_f31 = temp_r30 / 30.0;
-                                sp60.x = sp3C.x * temp_f31;
-                                sp60.y = sp3C.y * temp_f31;
-                                sp60.z = (sp3C.z * temp_f31) + (-300 * sind(180.0f * temp_f31));
-                                VECAdd(&sp60, &sp54, &sp60);
-                                Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31 + 11], &sp60);
+                            (void)charNo;
+                            charAnim = HuSprAnimRead(HuDataReadNum(fileSelectCharAnimTbl[charNo], HU_MEMNUM_OVL));
+                            fileSelectBoxCharAnimId[destBoxNo] = Hu3DAnimCreate(charAnim, modeSelMdlId[destBoxNo + 8], "star");
+                            charAnim = HuSprAnimRead(HuDataReadNum(fileSelectCharAnimTbl[charNo], HU_MEMNUM_OVL));
+                            fileSelectBoxCharBackAnimId[destBoxNo] = Hu3DAnimCreate(charAnim, modeSelMdlId[destBoxNo + 11], "star");
+                            Hu3DModelAttrReset(modeSelMdlId[destBoxNo + 11], HU3D_ATTR_DISPOFF);
+                            Hu3DModelAttrSet(modeSelMdlId[destBoxNo + 8], HU3D_ATTR_DISPOFF);
+                            screenPos.x = 158.0f + (boxno * 130);
+                            screenPos.y = 230;
+                            screenPos.z = 800;
+                            Hu3D2Dto3D(&screenPos, 1, &srcPos);
+                            srcPos.z = 900;
+                            screenPos.x = 158.0f + (destBoxNo * 130);
+                            Hu3D2Dto3D(&screenPos, 1, &destPos);
+                            destPos.z = 800;
+                            VECSubtract(&destPos, &srcPos, &delta);
+                            Hu3DModelTPLvlSet(modeSelMdlId[destBoxNo + 8], 1.0f);
+                            Hu3DModelTPLvlSet(modeSelMdlId[destBoxNo + 11], 1.0f);
+                            fileSelectBoxLabelF[destBoxNo] = 0;
+                            for (i = 1; i <= 30; i++) {
+                                time = i / 30.0;
+                                screenPos.x = delta.x * time;
+                                screenPos.y = delta.y * time;
+                                screenPos.z = (delta.z * time) + (-300 * sind(180.0f * time));
+                                VECAdd(&screenPos, &srcPos, &screenPos);
+                                Hu3DModelPosSetV(modeSelMdlId[destBoxNo + 11], &screenPos);
                                 HuPrcVSleep();
                             }
-                            lbl_1_bss_120[temp_r31] = 1;
-                            fn_1_BA20();
-                            lbl_1_bss_140[temp_r31] = 1;
-                            lbl_1_bss_88++;
+                            fileSelectBoxLabelF[destBoxNo] = 1;
+                            FileSelectProgressWinClose();
+                            fileSelectBoxPresentF[destBoxNo] = 1;
+                            fileSelectBoxNum++;
                             return 1;
                         }
                     }
@@ -1754,395 +1754,395 @@ s32 fn_1_8C30(s16 boxno)
             break;
         }
     }
-    fn_1_BA20();
-    Hu3DModelAttrSet(lbl_1_bss_19A[23], HU3D_ATTR_DISPOFF);
-    Hu3DModelAttrReset(lbl_1_bss_19A[boxno + 8], HU3D_ATTR_DISPOFF);
-    for (temp_r30 = 0; temp_r30 <= 10; temp_r30++) {
-        temp_f31 = sind(90.0 * (temp_r30 / 10.0));
-        Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 8], temp_f31, temp_f31, temp_f31);
+    FileSelectProgressWinClose();
+    Hu3DModelAttrSet(modeSelMdlId[23], HU3D_ATTR_DISPOFF);
+    Hu3DModelAttrReset(modeSelMdlId[boxno + 8], HU3D_ATTR_DISPOFF);
+    for (i = 0; i <= 10; i++) {
+        time = sind(90.0 * (i / 10.0));
+        Hu3DModelScaleSet(modeSelMdlId[destBoxNo + 8], time, time, time);
         HuPrcVSleep();
     }
-    fn_1_7628(temp_r31, 0);
+    FileSelectBoxAnimStart(destBoxNo, 0);
     return 0;
 }
 
-s32 fn_1_9E14(void)
+s32 FileSelectFileClose(void)
 {
     s32 result = HuCardClose(&curFileInfo);
     return result;
 }
 
-s16 lbl_1_data_400[] = { 15, 15, 13, 15, 15, 8, 15, 15, 8, 15, 15 };
+s16 fileSelectDateCharWidthTbl[] = { 15, 15, 13, 15, 15, 8, 15, 15, 8, 15, 15 };
 
-s32 fn_1_9E4C(void)
+s32 FileSelectBoxInit(void)
 {
-    s16 temp_r31;
-    s16 temp_r30;
-    s16 temp_r29;
-    HU3DMODEL *temp_r28;
-    s16 temp_r27;
-    s16 temp_r26;
-    s16 temp_r25;
-    ANIMDATA *temp_r24;
-    s16 temp_r23;
-    ANIMDATA *temp_r22;
-    Mtx sp24;
-    Vec sp18;
-    Vec spC;
-    WindowData *sp8;
-    temp_r23 = -1;
-    sp8 = &winData[lbl_1_bss_148];
+    s16 boxNo;
+    s16 i;
+    s16 sprId;
+    HU3DMODEL *model;
+    s16 charNo;
+    s16 x;
+    s16 width;
+    ANIMDATA *charAnim;
+    s16 result;
+    ANIMDATA *dateAnim;
+    Mtx scale;
+    Vec pos;
+    Vec screenPos;
+    WindowData *window;
+    result = -1;
+    window = &winData[fileSelectWinId];
     OSReport("Init\n");
-    MTXScale(sp24, 0.5f, 0.5f, 0.5f);
-    for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
-        if (lbl_1_bss_116[temp_r31] != -1) {
-            HuSprGrpKill(lbl_1_bss_116[temp_r31]);
+    MTXScale(scale, 0.5f, 0.5f, 0.5f);
+    for (boxNo = 0; boxNo < 3; boxNo++) {
+        if (fileSelectStarSprGrpId[boxNo] != -1) {
+            HuSprGrpKill(fileSelectStarSprGrpId[boxNo]);
         }
     }
-    for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
-        if (lbl_1_bss_110[temp_r31] != -1) {
-            HuSprGrpKill(lbl_1_bss_110[temp_r31]);
+    for (boxNo = 0; boxNo < 3; boxNo++) {
+        if (fileSelectDateSprGrpId[boxNo] != -1) {
+            HuSprGrpKill(fileSelectDateSprGrpId[boxNo]);
         }
     }
-    lbl_1_bss_FC = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x22), HU_MEMNUM_OVL));
-    lbl_1_bss_F8 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x23), HU_MEMNUM_OVL));
-    lbl_1_bss_F4 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x25), HU_MEMNUM_OVL));
-    temp_r22 = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x24), HU_MEMNUM_OVL));
-    for (temp_r31 = 0; temp_r31 < 3; temp_r31++) {
-        Hu3DModelAttrSet(lbl_1_bss_19A[temp_r31 + 8], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrReset(lbl_1_bss_19A[temp_r31 + 11], HU3D_ATTR_DISPOFF);
-        temp_r27 = lbl_1_bss_E8[temp_r31];
-        if (temp_r27 < 0 || temp_r27 >= 8) {
-            temp_r27 = 8;
+    fileSelectStarAnim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x22), HU_MEMNUM_OVL));
+    fileSelectDigitAnim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x23), HU_MEMNUM_OVL));
+    fileSelectStarMaxAnim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x25), HU_MEMNUM_OVL));
+    dateAnim = HuSprAnimRead(HuDataReadNum(DATA_MAKE_NUM(DATA_MAKE_NUM(DATADIR_MODESEL, 0x00), 0x24), HU_MEMNUM_OVL));
+    for (boxNo = 0; boxNo < 3; boxNo++) {
+        Hu3DModelAttrSet(modeSelMdlId[boxNo + 8], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrReset(modeSelMdlId[boxNo + 11], HU3D_ATTR_DISPOFF);
+        charNo = fileSelectBoxCharNo[boxNo];
+        if (charNo < 0 || charNo >= 8) {
+            charNo = 8;
         }
-        if (lbl_1_bss_13A[temp_r31] != -1) {
-            Hu3DAnimKill(lbl_1_bss_13A[temp_r31]);
+        if (fileSelectBoxCharAnimId[boxNo] != -1) {
+            Hu3DAnimKill(fileSelectBoxCharAnimId[boxNo]);
         }
-        if (lbl_1_bss_134[temp_r31] != -1) {
-            Hu3DAnimKill(lbl_1_bss_134[temp_r31]);
+        if (fileSelectBoxCharBackAnimId[boxNo] != -1) {
+            Hu3DAnimKill(fileSelectBoxCharBackAnimId[boxNo]);
         }
-        temp_r24 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r27], HU_MEMNUM_OVL));
-        lbl_1_bss_13A[temp_r31] = Hu3DAnimCreate(temp_r24, lbl_1_bss_19A[temp_r31 + 8], "star");
-        temp_r24 = HuSprAnimRead(HuDataReadNum(lbl_1_data_21C[temp_r27 + 9], HU_MEMNUM_OVL));
-        lbl_1_bss_134[temp_r31] = Hu3DAnimCreate(temp_r24, lbl_1_bss_19A[temp_r31 + 11], "star");
-        if (!lbl_1_bss_140[temp_r31]) {
-            Hu3DModelTPLvlSet(lbl_1_bss_19A[temp_r31 + 8], 0.6f);
-            Hu3DModelTPLvlSet(lbl_1_bss_19A[temp_r31 + 11], 0.3f);
+        charAnim = HuSprAnimRead(HuDataReadNum(fileSelectCharAnimTbl[charNo], HU_MEMNUM_OVL));
+        fileSelectBoxCharAnimId[boxNo] = Hu3DAnimCreate(charAnim, modeSelMdlId[boxNo + 8], "star");
+        charAnim = HuSprAnimRead(HuDataReadNum(fileSelectCharAnimTbl[charNo + 9], HU_MEMNUM_OVL));
+        fileSelectBoxCharBackAnimId[boxNo] = Hu3DAnimCreate(charAnim, modeSelMdlId[boxNo + 11], "star");
+        if (!fileSelectBoxPresentF[boxNo]) {
+            Hu3DModelTPLvlSet(modeSelMdlId[boxNo + 8], 0.6f);
+            Hu3DModelTPLvlSet(modeSelMdlId[boxNo + 11], 0.3f);
         }
         else {
-            Hu3DModelTPLvlSet(lbl_1_bss_19A[temp_r31 + 8], 1.0f);
-            Hu3DModelTPLvlSet(lbl_1_bss_19A[temp_r31 + 11], 1.0f);
+            Hu3DModelTPLvlSet(modeSelMdlId[boxNo + 8], 1.0f);
+            Hu3DModelTPLvlSet(modeSelMdlId[boxNo + 11], 1.0f);
         }
-        sp18.x = 158.0f + (temp_r31 * 130);
-        sp18.y = 230;
-        sp18.z = 800;
-        Hu3D2Dto3D(&sp18, 1, &spC);
-        spC.z = 800;
-        Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31 + 8], &spC);
-        Hu3DModelPosSetV(lbl_1_bss_19A[temp_r31 + 11], &spC);
-        Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 8], 0, 0, 0);
-        Hu3DModelScaleSet(lbl_1_bss_19A[temp_r31 + 11], 0, 0, 0);
-        temp_r28 = &Hu3DData[lbl_1_bss_19A[temp_r31 + 8]];
-        MTXCopy(sp24, temp_r28->mtx);
-        temp_r28 = &Hu3DData[lbl_1_bss_19A[temp_r31 + 11]];
-        MTXCopy(sp24, temp_r28->mtx);
-        lbl_1_bss_116[temp_r31] = HuSprGrpCreate(9);
-        temp_r29 = HuSprCreate(lbl_1_bss_FC, 3000, 0);
-        HuSprGrpMemberSet(lbl_1_bss_116[temp_r31], 0, temp_r29);
-        HuSprPosSet(lbl_1_bss_116[temp_r31], 0, -48, 0);
-        for (temp_r30 = 0; temp_r30 < 4; temp_r30++) {
-            temp_r29 = HuSprCreate(lbl_1_bss_F8, 3000, 0);
-            HuSprGrpMemberSet(lbl_1_bss_116[temp_r31], temp_r30 + 1, temp_r29);
-            HuSprPosSet(lbl_1_bss_116[temp_r31], temp_r30 + 1, (temp_r30 * 24) - 24, 0);
+        pos.x = 158.0f + (boxNo * 130);
+        pos.y = 230;
+        pos.z = 800;
+        Hu3D2Dto3D(&pos, 1, &screenPos);
+        screenPos.z = 800;
+        Hu3DModelPosSetV(modeSelMdlId[boxNo + 8], &screenPos);
+        Hu3DModelPosSetV(modeSelMdlId[boxNo + 11], &screenPos);
+        Hu3DModelScaleSet(modeSelMdlId[boxNo + 8], 0, 0, 0);
+        Hu3DModelScaleSet(modeSelMdlId[boxNo + 11], 0, 0, 0);
+        model = &Hu3DData[modeSelMdlId[boxNo + 8]];
+        MTXCopy(scale, model->mtx);
+        model = &Hu3DData[modeSelMdlId[boxNo + 11]];
+        MTXCopy(scale, model->mtx);
+        fileSelectStarSprGrpId[boxNo] = HuSprGrpCreate(9);
+        sprId = HuSprCreate(fileSelectStarAnim, 3000, 0);
+        HuSprGrpMemberSet(fileSelectStarSprGrpId[boxNo], 0, sprId);
+        HuSprPosSet(fileSelectStarSprGrpId[boxNo], 0, -48, 0);
+        for (i = 0; i < 4; i++) {
+            sprId = HuSprCreate(fileSelectDigitAnim, 3000, 0);
+            HuSprGrpMemberSet(fileSelectStarSprGrpId[boxNo], i + 1, sprId);
+            HuSprPosSet(fileSelectStarSprGrpId[boxNo], i + 1, (i * 24) - 24, 0);
         }
-        temp_r29 = HuSprCreate(lbl_1_bss_F4, 3000, 0);
-        HuSprGrpMemberSet(lbl_1_bss_116[temp_r31], 5, temp_r29);
-        HuSprPosSet(lbl_1_bss_116[temp_r31], 5, 16, 0);
-        HuSprGrpScissorSet(lbl_1_bss_116[temp_r31], 0, 16, 640, 448);
-        lbl_1_bss_110[temp_r31] = HuSprGrpCreate(11);
-        for (temp_r30 = temp_r25 = 0; temp_r30 < 11; temp_r30++) {
-            temp_r25 += lbl_1_data_400[temp_r30];
+        sprId = HuSprCreate(fileSelectStarMaxAnim, 3000, 0);
+        HuSprGrpMemberSet(fileSelectStarSprGrpId[boxNo], 5, sprId);
+        HuSprPosSet(fileSelectStarSprGrpId[boxNo], 5, 16, 0);
+        HuSprGrpScissorSet(fileSelectStarSprGrpId[boxNo], 0, 16, 640, 448);
+        fileSelectDateSprGrpId[boxNo] = HuSprGrpCreate(11);
+        for (i = width = 0; i < 11; i++) {
+            width += fileSelectDateCharWidthTbl[i];
         }
-        for (temp_r30 = temp_r26 = 0; temp_r30 < 11; temp_r30++) {
-            temp_r29 = HuSprCreate(temp_r22, 3000, 0);
-            HuSprGrpMemberSet(lbl_1_bss_110[temp_r31], temp_r30, temp_r29);
-            HuSprPosSet(lbl_1_bss_110[temp_r31], temp_r30, -(temp_r25 / 2) + 8 + temp_r26, 0);
-            temp_r26 += lbl_1_data_400[temp_r30];
+        for (i = x = 0; i < 11; i++) {
+            sprId = HuSprCreate(dateAnim, 3000, 0);
+            HuSprGrpMemberSet(fileSelectDateSprGrpId[boxNo], i, sprId);
+            HuSprPosSet(fileSelectDateSprGrpId[boxNo], i, -(width / 2) + 8 + x, 0);
+            x += fileSelectDateCharWidthTbl[i];
         }
-        HuSprAttrSet(lbl_1_bss_110[temp_r31], 5, 4);
-        HuSprBankSet(lbl_1_bss_110[temp_r31], 2, 10);
-        HuSprBankSet(lbl_1_bss_110[temp_r31], 8, 11);
-        HuSprGrpScissorSet(lbl_1_bss_110[temp_r31], 0, 16, 640, 448);
+        HuSprAttrSet(fileSelectDateSprGrpId[boxNo], 5, 4);
+        HuSprBankSet(fileSelectDateSprGrpId[boxNo], 2, 10);
+        HuSprBankSet(fileSelectDateSprGrpId[boxNo], 8, 11);
+        HuSprGrpScissorSet(fileSelectDateSprGrpId[boxNo], 0, 16, 640, 448);
     }
-    MTXScale(sp24, 0.45f, 0.45f, 0.45f);
-    temp_r28 = &Hu3DData[lbl_1_bss_19A[23]];
-    Hu3DModelAttrSet(lbl_1_bss_19A[23], HU3D_MOTATTR_LOOP);
-    MTXCopy(sp24, temp_r28->mtx);
-    return temp_r23;
+    MTXScale(scale, 0.45f, 0.45f, 0.45f);
+    model = &Hu3DData[modeSelMdlId[23]];
+    Hu3DModelAttrSet(modeSelMdlId[23], HU3D_MOTATTR_LOOP);
+    MTXCopy(scale, model->mtx);
+    return result;
 }
 
-void fn_1_A8C0(s16 boxno)
+void FileSelectBoxInfoLoad(s16 boxno)
 {
     SLLoadGameStat();
     SLLoadBoardStory();
-    lbl_1_bss_EE[boxno] = GWGameStat.total_stars;
-    lbl_1_bss_D0[boxno] = GWGameStat.create_time;
-    lbl_1_bss_E8[boxno] = GWSystem.storyChar;
-    lbl_1_bss_C4[boxno] = GWGameStat.story_continue;
-    lbl_1_bss_B8[boxno] = GWGameStat.party_continue;
+    fileSelectBoxStars[boxno] = GWGameStat.total_stars;
+    fileSelectBoxCreateTime[boxno] = GWGameStat.create_time;
+    fileSelectBoxCharNo[boxno] = GWSystem.storyChar;
+    fileSelectStoryContinueF[boxno] = GWGameStat.story_continue;
+    fileSelectPartyContinueF[boxno] = GWGameStat.party_continue;
     if (GWGameStat.story_continue) {
         SLLoadBoardStory();
-        lbl_1_bss_A4[boxno] = GWSystem.board;
-        lbl_1_bss_AC[boxno] = 0;
+        fileSelectStoryBoardNo[boxno] = GWSystem.board;
+        fileSelectStoryClearF[boxno] = 0;
     }
     if (GWGameStat.party_continue) {
         SLLoadBoard();
-        lbl_1_bss_9E[boxno] = GWSystem.board;
-        lbl_1_bss_98[boxno] = GWSystem.turn;
-        lbl_1_bss_92[boxno] = GWSystem.max_turn;
+        fileSelectPartyBoardNo[boxno] = GWSystem.board;
+        fileSelectPartyTurn[boxno] = GWSystem.turn;
+        fileSelectPartyMaxTurn[boxno] = GWSystem.max_turn;
     }
 }
 
-void fn_1_AAB8(void)
+void FileSelectDisplayMain(void)
 {
-    float temp_f31;
-    float temp_f30;
-    float temp_f29;
-    HU3DMODEL *temp_r31;
-    s16 temp_r30;
-    s16 temp_r29;
-    s16 temp_r28;
-    Mtx sp48;
-    OSCalendarTime sp20;
-    Vec sp14;
-    Vec sp8;
-    for (temp_r30 = 0; temp_r30 < 2; temp_r30++) {
-        lbl_1_bss_12C[temp_r30] = 1;
+    float scale;
+    float baseHeight;
+    float height;
+    HU3DMODEL *model;
+    s16 i;
+    s16 digit;
+    s16 j;
+    Mtx matrix;
+    OSCalendarTime calendar;
+    Vec screenPos;
+    Vec pos;
+    for (i = 0; i < 2; i++) {
+        fileSelectSlotLabelF[i] = 1;
     }
     while (1) {
-        for (temp_r30 = 0; temp_r30 < 2; temp_r30++) {
-            MTXScale(sp48, 0.5f, 0.5f, 0.5f);
-            mtxRotCat(sp48, 0.0f, 0.0f, 15.0f * lbl_1_bss_100[temp_r30]);
-            temp_r31 = &Hu3DData[lbl_1_bss_19A[temp_r30]];
-            MTXCopy(sp48, temp_r31->mtx);
-            Hu3DModelRotSet(lbl_1_bss_19A[temp_r30], 0, lbl_1_bss_8C * lbl_1_bss_108[temp_r30] * GET_ZEROSIGN(temp_r30 == 0), 0);
-            if (!lbl_1_bss_12C[temp_r30]) {
-                espAttrSet(lbl_1_bss_152[temp_r30 + 2], HUSPR_ATTR_DISPOFF);
+        for (i = 0; i < 2; i++) {
+            MTXScale(matrix, 0.5f, 0.5f, 0.5f);
+            mtxRotCat(matrix, 0.0f, 0.0f, 15.0f * fileSelectCardTiltScale[i]);
+            model = &Hu3DData[modeSelMdlId[i]];
+            MTXCopy(matrix, model->mtx);
+            Hu3DModelRotSet(modeSelMdlId[i], 0, fileSelectCardRot * fileSelectCardRotScale[i] * GET_ZEROSIGN(i == 0), 0);
+            if (!fileSelectSlotLabelF[i]) {
+                espAttrSet(modeSelSprId[i + 2], HUSPR_ATTR_DISPOFF);
             }
             else {
-                temp_r31 = &Hu3DData[lbl_1_bss_19A[temp_r30 + 2]];
-                if (temp_r31->attr & 0x1) {
-                    temp_r31 = &Hu3DData[lbl_1_bss_19A[temp_r30 + 4]];
+                model = &Hu3DData[modeSelMdlId[i + 2]];
+                if (model->attr & 0x1) {
+                    model = &Hu3DData[modeSelMdlId[i + 4]];
                 }
-                if (temp_r31->attr & 0x1) {
-                    espAttrSet(lbl_1_bss_152[temp_r30 + 2], HUSPR_ATTR_DISPOFF);
+                if (model->attr & 0x1) {
+                    espAttrSet(modeSelSprId[i + 2], HUSPR_ATTR_DISPOFF);
                 }
                 else {
-                    espAttrReset(lbl_1_bss_152[temp_r30 + 2], HUSPR_ATTR_DISPOFF);
+                    espAttrReset(modeSelSprId[i + 2], HUSPR_ATTR_DISPOFF);
                 }
-                sp8 = temp_r31->pos;
-                sp8.y -= 30.0f * temp_r31->scale.x;
-                Hu3D3Dto2D(&sp8, 1, &sp14);
-                espPosSet(lbl_1_bss_152[temp_r30 + 2], sp14.x, sp14.y);
-                espScaleSet(lbl_1_bss_152[temp_r30 + 2], temp_r31->scale.x, temp_r31->scale.x);
+                pos = model->pos;
+                pos.y -= 30.0f * model->scale.x;
+                Hu3D3Dto2D(&pos, 1, &screenPos);
+                espPosSet(modeSelSprId[i + 2], screenPos.x, screenPos.y);
+                espScaleSet(modeSelSprId[i + 2], model->scale.x, model->scale.x);
             }
         }
-        lbl_1_bss_8C += 3.0f;
-        if (lbl_1_bss_8C > 1080.0f) {
-            lbl_1_bss_8C -= 360;
+        fileSelectCardRot += 3.0f;
+        if (fileSelectCardRot > 1080.0f) {
+            fileSelectCardRot -= 360;
         }
-        if (lbl_1_bss_11C == -1) {
-            espAttrSet(lbl_1_bss_152[4], HUSPR_ATTR_DISPOFF);
+        if (fileSelectSlotNo == -1) {
+            espAttrSet(modeSelSprId[4], HUSPR_ATTR_DISPOFF);
         }
         else {
-            temp_r31 = &Hu3DData[lbl_1_bss_19A[lbl_1_bss_11C]];
-            if (temp_r31->attr & 0x1) {
-                espAttrSet(lbl_1_bss_152[4], HUSPR_ATTR_DISPOFF);
+            model = &Hu3DData[modeSelMdlId[fileSelectSlotNo]];
+            if (model->attr & 0x1) {
+                espAttrSet(modeSelSprId[4], HUSPR_ATTR_DISPOFF);
             }
             else {
-                espBankSet(lbl_1_bss_152[4], lbl_1_bss_11C);
-                espAttrReset(lbl_1_bss_152[4], HUSPR_ATTR_DISPOFF);
-                sp8 = temp_r31->pos;
-                sp8.y += 5.0f * temp_r31->scale.x;
-                Hu3D3Dto2D(&sp8, 1, &sp14);
-                espPosSet(lbl_1_bss_152[4], sp14.x, sp14.y);
-                espScaleSet(lbl_1_bss_152[4], temp_r31->scale.x, temp_r31->scale.x);
+                espBankSet(modeSelSprId[4], fileSelectSlotNo);
+                espAttrReset(modeSelSprId[4], HUSPR_ATTR_DISPOFF);
+                pos = model->pos;
+                pos.y += 5.0f * model->scale.x;
+                Hu3D3Dto2D(&pos, 1, &screenPos);
+                espPosSet(modeSelSprId[4], screenPos.x, screenPos.y);
+                espScaleSet(modeSelSprId[4], model->scale.x, model->scale.x);
             }
         }
-        for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-            if (!lbl_1_bss_120[temp_r30]) {
-                espAttrSet(lbl_1_bss_152[temp_r30 + 5], HUSPR_ATTR_DISPOFF);
+        for (i = 0; i < 3; i++) {
+            if (!fileSelectBoxLabelF[i]) {
+                espAttrSet(modeSelSprId[i + 5], HUSPR_ATTR_DISPOFF);
                 continue;
             }
-            temp_r31 = &Hu3DData[lbl_1_bss_19A[temp_r30 + 8]];
-            if (temp_r31->attr & 0x1) {
-                temp_r31 = &Hu3DData[lbl_1_bss_19A[temp_r30 + 11]];
+            model = &Hu3DData[modeSelMdlId[i + 8]];
+            if (model->attr & 0x1) {
+                model = &Hu3DData[modeSelMdlId[i + 11]];
             }
-            temp_f30 = (900.0 + (50.0 * temp_r31->scale.x)) * sin(M_PI / 12);
-            temp_f29 = (temp_r31->pos.z + (50.0 * temp_r31->scale.x)) * sin(M_PI / 12);
-            temp_f31 = temp_r31->scale.x * (temp_f29 / temp_f30);
-            if (temp_r31->attr & 0x1) {
-                espAttrSet(lbl_1_bss_152[temp_r30 + 5], HUSPR_ATTR_DISPOFF);
-            }
-            else {
-                espAttrReset(lbl_1_bss_152[temp_r30 + 5], HUSPR_ATTR_DISPOFF);
-            }
-            sp8 = temp_r31->pos;
-            sp8.y += 40.0 * temp_r31->scale.x;
-            sp8.z += 50.0 * temp_r31->scale.x;
-            Hu3D3Dto2D(&sp8, 1, &sp14);
-            espPosSet(lbl_1_bss_152[temp_r30 + 5], sp14.x, sp14.y);
-            espScaleSet(lbl_1_bss_152[temp_r30 + 5], temp_f31, temp_f31);
-            if (lbl_1_bss_EE[temp_r30] == -1) {
-                HuSprGrpPosSet(lbl_1_bss_116[temp_r30], 0, -500);
+            baseHeight = (900.0 + (50.0 * model->scale.x)) * sin(M_PI / 12);
+            height = (model->pos.z + (50.0 * model->scale.x)) * sin(M_PI / 12);
+            scale = model->scale.x * (height / baseHeight);
+            if (model->attr & 0x1) {
+                espAttrSet(modeSelSprId[i + 5], HUSPR_ATTR_DISPOFF);
             }
             else {
-                sp8 = temp_r31->pos;
-                sp8.y -= 30.0 * temp_r31->scale.x;
-                sp8.z += 50.0 * temp_r31->scale.x;
-                Hu3D3Dto2D(&sp8, 1, &sp14);
-                HuSprGrpPosSet(lbl_1_bss_116[temp_r30], sp14.x, sp14.y);
-                HuSprGrpScaleSet(lbl_1_bss_116[temp_r30], temp_f31, temp_f31);
-                if (lbl_1_bss_EE[temp_r30] > 9999) {
-                    for (temp_r28 = 0; temp_r28 < 4; temp_r28++) {
-                        HuSprAttrSet(lbl_1_bss_116[temp_r30], temp_r28 + 1, HUSPR_ATTR_DISPOFF);
+                espAttrReset(modeSelSprId[i + 5], HUSPR_ATTR_DISPOFF);
+            }
+            pos = model->pos;
+            pos.y += 40.0 * model->scale.x;
+            pos.z += 50.0 * model->scale.x;
+            Hu3D3Dto2D(&pos, 1, &screenPos);
+            espPosSet(modeSelSprId[i + 5], screenPos.x, screenPos.y);
+            espScaleSet(modeSelSprId[i + 5], scale, scale);
+            if (fileSelectBoxStars[i] == -1) {
+                HuSprGrpPosSet(fileSelectStarSprGrpId[i], 0, -500);
+            }
+            else {
+                pos = model->pos;
+                pos.y -= 30.0 * model->scale.x;
+                pos.z += 50.0 * model->scale.x;
+                Hu3D3Dto2D(&pos, 1, &screenPos);
+                HuSprGrpPosSet(fileSelectStarSprGrpId[i], screenPos.x, screenPos.y);
+                HuSprGrpScaleSet(fileSelectStarSprGrpId[i], scale, scale);
+                if (fileSelectBoxStars[i] > 9999) {
+                    for (j = 0; j < 4; j++) {
+                        HuSprAttrSet(fileSelectStarSprGrpId[i], j + 1, HUSPR_ATTR_DISPOFF);
                     }
-                    HuSprAttrReset(lbl_1_bss_116[temp_r30], 5, HUSPR_ATTR_DISPOFF);
+                    HuSprAttrReset(fileSelectStarSprGrpId[i], 5, HUSPR_ATTR_DISPOFF);
                 }
                 else {
-                    for (temp_r28 = 0; temp_r28 < 4; temp_r28++) {
-                        HuSprAttrReset(lbl_1_bss_116[temp_r30], temp_r28 + 1, HUSPR_ATTR_DISPOFF);
+                    for (j = 0; j < 4; j++) {
+                        HuSprAttrReset(fileSelectStarSprGrpId[i], j + 1, HUSPR_ATTR_DISPOFF);
                     }
-                    HuSprAttrSet(lbl_1_bss_116[temp_r30], 5, HUSPR_ATTR_DISPOFF);
-                    temp_r29 = lbl_1_bss_EE[temp_r30];
-                    HuSprBankSet(lbl_1_bss_116[temp_r30], 1, temp_r29 / 1000);
-                    temp_r29 -= (temp_r29 / 1000) * 1000;
-                    HuSprBankSet(lbl_1_bss_116[temp_r30], 2, temp_r29 / 100);
-                    temp_r29 -= (temp_r29 / 100) * 100;
-                    HuSprBankSet(lbl_1_bss_116[temp_r30], 3, temp_r29 / 10);
-                    temp_r29 -= (temp_r29 / 10) * 10;
-                    HuSprBankSet(lbl_1_bss_116[temp_r30], 4, temp_r29);
+                    HuSprAttrSet(fileSelectStarSprGrpId[i], 5, HUSPR_ATTR_DISPOFF);
+                    digit = fileSelectBoxStars[i];
+                    HuSprBankSet(fileSelectStarSprGrpId[i], 1, digit / 1000);
+                    digit -= (digit / 1000) * 1000;
+                    HuSprBankSet(fileSelectStarSprGrpId[i], 2, digit / 100);
+                    digit -= (digit / 100) * 100;
+                    HuSprBankSet(fileSelectStarSprGrpId[i], 3, digit / 10);
+                    digit -= (digit / 10) * 10;
+                    HuSprBankSet(fileSelectStarSprGrpId[i], 4, digit);
                 }
-                sp8 = temp_r31->pos;
-                sp8.y -= 40.0 * temp_r31->scale.x;
-                sp8.z += 50.0 * temp_r31->scale.x;
-                Hu3D3Dto2D(&sp8, 1, &sp14);
-                HuSprGrpPosSet(lbl_1_bss_110[temp_r30], sp14.x, sp14.y);
-                HuSprGrpScaleSet(lbl_1_bss_110[temp_r30], temp_f31, temp_f31);
-                OSTicksToCalendarTime(lbl_1_bss_D0[temp_r30], &sp20);
+                pos = model->pos;
+                pos.y -= 40.0 * model->scale.x;
+                pos.z += 50.0 * model->scale.x;
+                Hu3D3Dto2D(&pos, 1, &screenPos);
+                HuSprGrpPosSet(fileSelectDateSprGrpId[i], screenPos.x, screenPos.y);
+                HuSprGrpScaleSet(fileSelectDateSprGrpId[i], scale, scale);
+                OSTicksToCalendarTime(fileSelectBoxCreateTime[i], &calendar);
                 #if VERSION_PAL
-                temp_r29 = sp20.mday;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 0, temp_r29 / 10);
-                temp_r29 -= (temp_r29 / 10) * 10;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 1, temp_r29);
-                temp_r29 = sp20.mon+1;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 3, temp_r29 / 10);
-                temp_r29 -= (temp_r29 / 10) * 10;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 4, temp_r29);
+                digit = calendar.mday;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 0, digit / 10);
+                digit -= (digit / 10) * 10;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 1, digit);
+                digit = calendar.mon+1;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 3, digit / 10);
+                digit -= (digit / 10) * 10;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 4, digit);
                 #else
-                temp_r29 = sp20.mon + 1;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 0, temp_r29 / 10);
-                temp_r29 -= (temp_r29 / 10) * 10;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 1, temp_r29);
-                temp_r29 = sp20.mday;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 3, temp_r29 / 10);
-                temp_r29 -= (temp_r29 / 10) * 10;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 4, temp_r29);
+                digit = calendar.mon + 1;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 0, digit / 10);
+                digit -= (digit / 10) * 10;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 1, digit);
+                digit = calendar.mday;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 3, digit / 10);
+                digit -= (digit / 10) * 10;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 4, digit);
                 #endif
-                temp_r29 = sp20.hour;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 6, temp_r29 / 10);
-                temp_r29 -= (temp_r29 / 10) * 10;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 7, temp_r29);
-                temp_r29 = sp20.min;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 9, temp_r29 / 10);
-                temp_r29 -= (temp_r29 / 10) * 10;
-                HuSprBankSet(lbl_1_bss_110[temp_r30], 10, temp_r29);
+                digit = calendar.hour;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 6, digit / 10);
+                digit -= (digit / 10) * 10;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 7, digit);
+                digit = calendar.min;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 9, digit / 10);
+                digit -= (digit / 10) * 10;
+                HuSprBankSet(fileSelectDateSprGrpId[i], 10, digit);
             }
         }
         HuPrcVSleep();
     }
 }
 
-s16 lbl_1_data_41C = -1;
+s16 fileSelectProgressWinId = -1;
 
-void fn_1_B8CC(u32 arg0)
+void FileSelectProgressWinOpen(u32 messId)
 {
     float size[2];
-    if (lbl_1_data_41C != -1) {
-        HuWinExCleanup(lbl_1_data_41C);
+    if (fileSelectProgressWinId != -1) {
+        HuWinExCleanup(fileSelectProgressWinId);
     }
-    HuWinInsertMesSizeGet(MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-    HuWinMesMaxSizeGet(1, size, arg0);
-    lbl_1_data_41C = HuWinExCreateStyled(-10000, 308, size[0], size[1], -1, 2);
-    HuWinMesSpeedSet(lbl_1_data_41C, 0);
-    HuWinExAnimIn(lbl_1_data_41C);
-    HuWinInsertMesSet(lbl_1_data_41C, MAKE_MESSID_PTR(lbl_1_data_278[curSlotNo]), 0);
-    HuWinMesSet(lbl_1_data_41C, arg0);
-    HuWinMesWait(lbl_1_data_41C);
+    HuWinInsertMesSizeGet(MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+    HuWinMesMaxSizeGet(1, size, messId);
+    fileSelectProgressWinId = HuWinExCreateStyled(-10000, 308, size[0], size[1], -1, 2);
+    HuWinMesSpeedSet(fileSelectProgressWinId, 0);
+    HuWinExAnimIn(fileSelectProgressWinId);
+    HuWinInsertMesSet(fileSelectProgressWinId, MAKE_MESSID_PTR(fileSelectSlotNameTbl[curSlotNo]), 0);
+    HuWinMesSet(fileSelectProgressWinId, messId);
+    HuWinMesWait(fileSelectProgressWinId);
 }
 
-void fn_1_BA20(void)
+void FileSelectProgressWinClose(void)
 {
-    if (lbl_1_data_41C != -1) {
-        HuWinExAnimOut(lbl_1_data_41C);
-        HuWinExCleanup(lbl_1_data_41C);
-        lbl_1_data_41C = -1;
+    if (fileSelectProgressWinId != -1) {
+        HuWinExAnimOut(fileSelectProgressWinId);
+        HuWinExCleanup(fileSelectProgressWinId);
+        fileSelectProgressWinId = -1;
     }
 }
 
-void fn_1_BA80(s16 boxno)
+void FileSelectBoxInfoSet(s16 boxno)
 {
     char mesMaxTurn[4];
     char mesTurn[4];
     char mesDummy[1] = { 0 };
-    if (lbl_1_bss_EE[boxno] < 0) {
-        HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x11));
+    if (fileSelectBoxStars[boxno] < 0) {
+        HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x11));
     }
     else {
-        if (!lbl_1_bss_C4[boxno] && !lbl_1_bss_B8[boxno]) {
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x11), 0);
-            HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesDummy), 1);
-            HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x43));
+        if (!fileSelectStoryContinueF[boxno] && !fileSelectPartyContinueF[boxno]) {
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x11), 0);
+            HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesDummy), 1);
+            HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x43));
         }
         else {
-            if (!lbl_1_bss_C4[boxno]) {
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x11), 0);
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesDummy), 1);
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x12) + lbl_1_bss_9E[boxno], 2);
-                sprintf(mesMaxTurn, "%2d", lbl_1_bss_98[boxno]);
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesMaxTurn), 3);
-                sprintf(mesTurn, "%2d", lbl_1_bss_92[boxno]);
-                HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesTurn), 4);
-                HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x42));
+            if (!fileSelectStoryContinueF[boxno]) {
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x11), 0);
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesDummy), 1);
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x12) + fileSelectPartyBoardNo[boxno], 2);
+                sprintf(mesMaxTurn, "%2d", fileSelectPartyTurn[boxno]);
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesMaxTurn), 3);
+                sprintf(mesTurn, "%2d", fileSelectPartyMaxTurn[boxno]);
+                HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesTurn), 4);
+                HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x42));
             }
             else {
-                if (!lbl_1_bss_B8[boxno]) {
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x12) + lbl_1_bss_A4[boxno], 0);
-                    if (lbl_1_bss_AC[boxno]) {
-                        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x18), 1);
+                if (!fileSelectPartyContinueF[boxno]) {
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x12) + fileSelectStoryBoardNo[boxno], 0);
+                    if (fileSelectStoryClearF[boxno]) {
+                        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x18), 1);
                     }
                     else {
-                        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesDummy), 1);
+                        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesDummy), 1);
                     }
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x43));
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x43));
                 }
                 else {
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x12) + lbl_1_bss_A4[boxno], 0);
-                    if (lbl_1_bss_AC[boxno]) {
-                        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x18), 1);
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x12) + fileSelectStoryBoardNo[boxno], 0);
+                    if (fileSelectStoryClearF[boxno]) {
+                        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x18), 1);
                     }
                     else {
-                        HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesDummy), 1);
+                        HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesDummy), 1);
                     }
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x12) + lbl_1_bss_9E[boxno], 2);
-                    sprintf(mesMaxTurn, "%2d", lbl_1_bss_98[boxno]);
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesMaxTurn), 3);
-                    sprintf(mesTurn, "%2d", lbl_1_bss_92[boxno]);
-                    HuWinInsertMesSet(lbl_1_bss_148, MAKE_MESSID_PTR(mesTurn), 4);
-                    HuWinMesSet(lbl_1_bss_148, MAKE_MESSID(16, 0x42));
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID(16, 0x12) + fileSelectPartyBoardNo[boxno], 2);
+                    sprintf(mesMaxTurn, "%2d", fileSelectPartyTurn[boxno]);
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesMaxTurn), 3);
+                    sprintf(mesTurn, "%2d", fileSelectPartyMaxTurn[boxno]);
+                    HuWinInsertMesSet(fileSelectWinId, MAKE_MESSID_PTR(mesTurn), 4);
+                    HuWinMesSet(fileSelectWinId, MAKE_MESSID(16, 0x42));
                 }
             }
         }
     }
-    HuWinMesWait(lbl_1_bss_148);
+    HuWinMesWait(fileSelectWinId);
 }
