@@ -21,53 +21,53 @@ typedef struct camera_view_params {
     float zoom;
 } CameraViewParams;
 
-CameraViewParams lbl_1_data_0[] = { { { 0, 0, 0 }, { 0, 0, 0 }, 1500 }, { { 0, 0, 0 }, { 0, 0, 0 }, 524 } };
+CameraViewParams cameraViewTbl[] = { { { 0, 0, 0 }, { 0, 0, 0 }, 1500 }, { { 0, 0, 0 }, { 0, 0, 0 }, 524 } };
 
-OMOBJ *lbl_1_bss_7C;
-HUPROCESS *lbl_1_bss_78;
-s32 lbl_1_bss_70[2];
-Vec lbl_1_bss_64;
-Vec lbl_1_bss_58;
-float lbl_1_bss_54;
-Vec lbl_1_bss_24[4];
-Vec lbl_1_bss_C[2];
-float lbl_1_bss_4[2];
-s32 lbl_1_bss_0;
+OMOBJ *cameraObj;
+HUPROCESS *modeSelObjMan;
+s32 exitF[2];
+Vec cameraRotTarget;
+Vec cameraPosTarget;
+float cameraZoomTarget;
+Vec cameraRot[4];
+Vec cameraPos[2];
+float cameraZoom[2];
+s32 cameraDebugF;
 
-void fn_1_414(void);
-void fn_1_9F4(void);
-void fn_1_AF0(void);
-void fn_1_B8C(OMOBJ *object);
-void fn_1_F40(OMOBJ *object);
-void fn_1_1B6C(void);
+void ModeSelMain(void);
+void ModeSelSceneInit(void);
+void ModeSelExitMain(void);
+void ModeSelCameraUpdate(OMOBJ *object);
+void ModeSelCameraDebugUpdate(OMOBJ *object);
+void ModeSelCameraMove(void);
 
 void ObjectSetup(void)
 {
     s32 light;
     OSReport("******* MS ObjectSetup *********\n");
-    lbl_1_bss_78 = omInitObjMan(50, 8192);
-    omGameSysInit(lbl_1_bss_78);
-    lbl_1_bss_24[0].x = -70;
-    lbl_1_bss_24[0].y = 0;
-    lbl_1_bss_24[0].z = 0;
-    lbl_1_bss_C[0].x = 0;
-    lbl_1_bss_C[0].y = 130;
-    lbl_1_bss_C[0].z = -186;
-    lbl_1_bss_4[0] = 1360;
-    lbl_1_bss_64 = lbl_1_bss_24[0];
-    lbl_1_bss_58 = lbl_1_bss_C[0];
-    lbl_1_bss_54 = lbl_1_bss_4[0];
-    lbl_1_bss_70[0] = 0;
+    modeSelObjMan = omInitObjMan(50, 8192);
+    omGameSysInit(modeSelObjMan);
+    cameraRot[0].x = -70;
+    cameraRot[0].y = 0;
+    cameraRot[0].z = 0;
+    cameraPos[0].x = 0;
+    cameraPos[0].y = 130;
+    cameraPos[0].z = -186;
+    cameraZoom[0] = 1360;
+    cameraRotTarget = cameraRot[0];
+    cameraPosTarget = cameraPos[0];
+    cameraZoomTarget = cameraZoom[0];
+    exitF[0] = 0;
     Hu3DCameraCreate(1);
     Hu3DCameraPerspectiveSet(1, 30, 20, 8000, 1.2f);
     Hu3DCameraViewportSet(1, 0, 0, 640, 480, 0, 1);
     Hu3DCameraScissorSet(1, 0, 16, 640, 448);
     light = Hu3DGLightCreate(0, 100, 1000, 0, -0.5, -1, 255, 255, 255);
     Hu3DGLightInfinitytSet(light);
-    HuPrcChildCreate(fn_1_414, 100, 16384, 0, lbl_1_bss_78);
-    HuPrcChildCreate(fn_1_AF0, 200, 4096, 0, lbl_1_bss_78);
-    lbl_1_bss_7C = omAddObjEx(lbl_1_bss_78, 32730, 0, 0, -1, fn_1_B8C);
-    omAddObjEx(lbl_1_bss_78, 0, 32, 32, -1, fn_1_F40);
+    HuPrcChildCreate(ModeSelMain, 100, 16384, 0, modeSelObjMan);
+    HuPrcChildCreate(ModeSelExitMain, 200, 4096, 0, modeSelObjMan);
+    cameraObj = omAddObjEx(modeSelObjMan, 32730, 0, 0, -1, ModeSelCameraUpdate);
+    omAddObjEx(modeSelObjMan, 0, 32, 32, -1, ModeSelCameraDebugUpdate);
     Hu3DBGColorSet(0, 0, 0);
     mgBoardHostEnableF = 0;
     HuWinInit(1);
@@ -75,14 +75,14 @@ void ObjectSetup(void)
     mgQuitExtraF = 0;
 }
 
-void fn_1_414(void)
+void ModeSelMain(void)
 {
-    fn_1_9F4();
+    ModeSelSceneInit();
     if (omovlevtno) {
         HuAudSeqPlay(43);
     }
     else {
-        if (!fn_1_37DC()) {
+        if (!FileSelectExec()) {
             WipeColorSet(0, 0, 0);
             WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, 20);
             HuAudSeqAllFadeOut(1000);
@@ -114,8 +114,8 @@ void fn_1_414(void)
             HuSprPosSet(grpId, 0, 288, 240);
             HuSprDrawNoSet(grpId, 0, 127);
             HuPrcSleep(2);
-            espAttrSet(lbl_1_bss_152[0], HUSPR_ATTR_DISPOFF);
-            HuAudFXStop(lbl_1_data_100);
+            espAttrSet(modeSelSprId[0], HUSPR_ATTR_DISPOFF);
+            HuAudFXStop(fileSelectFxId);
             while (!HuTHPEndCheck()) {
                 HuPrcVSleep();
             }
@@ -123,10 +123,10 @@ void fn_1_414(void)
             HuSprGrpKill(grpId);
         }
     }
-    espAttrReset(lbl_1_bss_152[9], HUSPR_ATTR_DISPOFF);
-    espDrawNoSet(lbl_1_bss_152[9], 127);
+    espAttrReset(modeSelSprId[9], HUSPR_ATTR_DISPOFF);
+    espDrawNoSet(modeSelSprId[9], 127);
     {
-        s16 result = fn_1_2490();
+        s16 result = ModeSelExec();
         if (result == -1) {
             HuAudSeqAllFadeOut(1000);
             WipeColorSet(0, 0, 0);
@@ -201,7 +201,7 @@ void fn_1_414(void)
     }
 }
 
-void fn_1_9F4(void)
+void ModeSelSceneInit(void)
 {
     Vec pos;
     Vec target;
@@ -217,15 +217,15 @@ void fn_1_9F4(void)
     up.y = 1;
     up.z = 0;
     Hu3DShadowPosSet(&pos, &up, &target);
-    fn_1_BED8(lbl_1_data_428);
-    fn_1_C168(lbl_1_data_93C);
+    ModeSelModelCreate(modeSelModelTbl);
+    ModeSelSpriteCreate(modeSelSpriteTbl);
 }
 
-void fn_1_AF0(void)
+void ModeSelExitMain(void)
 {
     s16 i;
     while (1) {
-        if (lbl_1_bss_70[0] || omSysExitReq) {
+        if (exitF[0] || omSysExitReq) {
             break;
         }
         HuPrcVSleep();
@@ -238,33 +238,33 @@ void fn_1_AF0(void)
     HuPrcEnd();
 }
 
-u16 lbl_1_data_6E[] = { 1, 2 };
+u16 cameraBitTbl[] = { 1, 2 };
 
-void fn_1_B8C(OMOBJ *object)
+void ModeSelCameraUpdate(OMOBJ *object)
 {
     s16 i;
     for (i = 0; i < 1; i++) {
         Vec pos, target, up;
         float x, y, z;
 
-        x = lbl_1_bss_24[i].x;
-        y = lbl_1_bss_24[i].y;
-        z = lbl_1_bss_24[i].z;
+        x = cameraRot[i].x;
+        y = cameraRot[i].y;
+        z = cameraRot[i].z;
 
-        pos.x = (((sind(y) * cosd(x)) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].x);
-        pos.y = (-sind(x) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].y;
-        pos.z = ((cosd(y) * cosd(x)) * lbl_1_bss_4[i]) + lbl_1_bss_C[i].z;
-        target.x = lbl_1_bss_C[i].x;
-        target.y = lbl_1_bss_C[i].y;
-        target.z = lbl_1_bss_C[i].z;
+        pos.x = (((sind(y) * cosd(x)) * cameraZoom[i]) + cameraPos[i].x);
+        pos.y = (-sind(x) * cameraZoom[i]) + cameraPos[i].y;
+        pos.z = ((cosd(y) * cosd(x)) * cameraZoom[i]) + cameraPos[i].z;
+        target.x = cameraPos[i].x;
+        target.y = cameraPos[i].y;
+        target.z = cameraPos[i].z;
         up.x = sind(y) * sind(x);
         up.y = cosd(x);
         up.z = cosd(y) * sind(x);
-        Hu3DCameraPosSet(lbl_1_data_6E[i], pos.x, pos.y, pos.z, up.x, up.y, up.z, target.x, target.y, target.z);
+        Hu3DCameraPosSet(cameraBitTbl[i], pos.x, pos.y, pos.z, up.x, up.y, up.z, target.x, target.y, target.z);
     }
 }
 
-void fn_1_F40(OMOBJ *object)
+void ModeSelCameraDebugUpdate(OMOBJ *object)
 {
     Vec pos;
     Vec offset;
@@ -274,32 +274,32 @@ void fn_1_F40(OMOBJ *object)
     f32 z_rot;
     s8 stick_pos;
 
-    if (!lbl_1_bss_0) {
-        fn_1_1B6C();
+    if (!cameraDebugF) {
+        ModeSelCameraMove();
         return;
     }
-    lbl_1_bss_24[0].y += 0.1f * HuPadStkX[0];
-    lbl_1_bss_24[0].x += 0.1f * HuPadStkY[0];
-    lbl_1_bss_4[0] += HuPadTrigL[0] / 2;
-    lbl_1_bss_4[0] -= HuPadTrigR[0] / 2;
+    cameraRot[0].y += 0.1f * HuPadStkX[0];
+    cameraRot[0].x += 0.1f * HuPadStkY[0];
+    cameraZoom[0] += HuPadTrigL[0] / 2;
+    cameraZoom[0] -= HuPadTrigR[0] / 2;
     if (HuPadBtnDown[0] & PAD_BUTTON_B) {
-        OSReport("%f,%f,%f\n", lbl_1_bss_24[0].x, lbl_1_bss_24[0].y, lbl_1_bss_24[0].z);
-        OSReport("%f,%f,%f\n", lbl_1_bss_C[0].x, lbl_1_bss_C[0].y, lbl_1_bss_C[0].z);
-        OSReport("%f\n", lbl_1_bss_4[0]);
+        OSReport("%f,%f,%f\n", cameraRot[0].x, cameraRot[0].y, cameraRot[0].z);
+        OSReport("%f,%f,%f\n", cameraPos[0].x, cameraPos[0].y, cameraPos[0].z);
+        OSReport("%f\n", cameraZoom[0]);
     }
-    if (lbl_1_bss_4[0] < 100.0f) {
-        lbl_1_bss_4[0] = 100.0f;
+    if (cameraZoom[0] < 100.0f) {
+        cameraZoom[0] = 100.0f;
     }
-    pos.x = lbl_1_bss_C[0].x + (lbl_1_bss_4[0] * (sind(lbl_1_bss_24[0].y) * cosd(lbl_1_bss_24[0].x)));
-    pos.y = (lbl_1_bss_C[0].y + (lbl_1_bss_4[0] * -sind(lbl_1_bss_24[0].x)));
-    pos.z = (lbl_1_bss_C[0].z + (lbl_1_bss_4[0] * (cosd(lbl_1_bss_24[0].y) * cosd(lbl_1_bss_24[0].x))));
-    offset.x = lbl_1_bss_C[0].x - pos.x;
-    offset.y = lbl_1_bss_C[0].y - pos.y;
-    offset.z = lbl_1_bss_C[0].z - pos.z;
-    dir.x = (sind(lbl_1_bss_24[0].y) * sind(lbl_1_bss_24[0].x));
-    dir.y = cosd(lbl_1_bss_24[0].x);
-    dir.z = (cosd(lbl_1_bss_24[0].y) * sind(lbl_1_bss_24[0].x));
-    z_rot = lbl_1_bss_24[0].z;
+    pos.x = cameraPos[0].x + (cameraZoom[0] * (sind(cameraRot[0].y) * cosd(cameraRot[0].x)));
+    pos.y = (cameraPos[0].y + (cameraZoom[0] * -sind(cameraRot[0].x)));
+    pos.z = (cameraPos[0].z + (cameraZoom[0] * (cosd(cameraRot[0].y) * cosd(cameraRot[0].x))));
+    offset.x = cameraPos[0].x - pos.x;
+    offset.y = cameraPos[0].y - pos.y;
+    offset.z = cameraPos[0].z - pos.z;
+    dir.x = (sind(cameraRot[0].y) * sind(cameraRot[0].x));
+    dir.y = cosd(cameraRot[0].x);
+    dir.z = (cosd(cameraRot[0].y) * sind(cameraRot[0].x));
+    z_rot = cameraRot[0].z;
     y_offset.x = dir.x * (offset.x * offset.x + (1.0f - offset.x * offset.x) * cosd(z_rot))
         + dir.y * (offset.x * offset.y * (1.0f - cosd(z_rot)) - offset.z * sind(z_rot))
         + dir.z * (offset.x * offset.z * (1.0f - cosd(z_rot)) + offset.y * sind(z_rot));
@@ -316,72 +316,72 @@ void fn_1_F40(OMOBJ *object)
     VECNormalize(&offset, &offset);
     stick_pos = (HuPadSubStkX[0] & 0xF8);
     if (stick_pos != 0) {
-        lbl_1_bss_C[0].x += 0.05f * (offset.x * stick_pos);
-        lbl_1_bss_C[0].y += 0.05f * (offset.y * stick_pos);
-        lbl_1_bss_C[0].z += 0.05f * (offset.z * stick_pos);
+        cameraPos[0].x += 0.05f * (offset.x * stick_pos);
+        cameraPos[0].y += 0.05f * (offset.y * stick_pos);
+        cameraPos[0].z += 0.05f * (offset.z * stick_pos);
     }
     VECNormalize(&y_offset, &offset);
     stick_pos = -(HuPadSubStkY[0] & 0xF8);
     if (stick_pos != 0) {
-        lbl_1_bss_C[0].x += 0.05f * (offset.x * stick_pos);
-        lbl_1_bss_C[0].y += 0.05f * (offset.y * stick_pos);
-        lbl_1_bss_C[0].z += 0.05f * (offset.z * stick_pos);
+        cameraPos[0].x += 0.05f * (offset.x * stick_pos);
+        cameraPos[0].y += 0.05f * (offset.y * stick_pos);
+        cameraPos[0].z += 0.05f * (offset.z * stick_pos);
     }
 }
 
-void fn_1_1B6C(void)
+void ModeSelCameraMove(void)
 {
     Vec delta_vec;
     float delta_zoom;
-    if (lbl_1_bss_70[0]) {
+    if (exitF[0]) {
         return;
     }
-    VECSubtract(&lbl_1_bss_64, &lbl_1_bss_24[0], &delta_vec);
+    VECSubtract(&cameraRotTarget, &cameraRot[0], &delta_vec);
     if (VECMag(&delta_vec) > 0.2) {
         VECScale(&delta_vec, &delta_vec, 0.05f);
-        VECAdd(&lbl_1_bss_24[0], &delta_vec, &lbl_1_bss_24[0]);
+        VECAdd(&cameraRot[0], &delta_vec, &cameraRot[0]);
     }
     else {
-        lbl_1_bss_24[0] = lbl_1_bss_64;
+        cameraRot[0] = cameraRotTarget;
     }
-    VECSubtract(&lbl_1_bss_58, &lbl_1_bss_C[0], &delta_vec);
+    VECSubtract(&cameraPosTarget, &cameraPos[0], &delta_vec);
     if (VECMag(&delta_vec) > 0.2) {
         VECScale(&delta_vec, &delta_vec, 0.05f);
-        VECAdd(&lbl_1_bss_C[0], &delta_vec, &lbl_1_bss_C[0]);
+        VECAdd(&cameraPos[0], &delta_vec, &cameraPos[0]);
     }
     else {
-        lbl_1_bss_C[0] = lbl_1_bss_58;
+        cameraPos[0] = cameraPosTarget;
     }
-    delta_zoom = lbl_1_bss_54 - lbl_1_bss_4[0];
+    delta_zoom = cameraZoomTarget - cameraZoom[0];
     if (sqrtf(delta_zoom * delta_zoom) > 0.2) {
         delta_zoom *= 0.05f;
-        lbl_1_bss_4[0] += delta_zoom;
+        cameraZoom[0] += delta_zoom;
     }
     else {
-        lbl_1_bss_4[0] = lbl_1_bss_54;
+        cameraZoom[0] = cameraZoomTarget;
     }
 }
 
-void fn_1_1E30(s16 view)
+void ModeSelCameraViewMove(s16 view)
 {
-    lbl_1_bss_64 = lbl_1_data_0[view].rot;
-    lbl_1_bss_58 = lbl_1_data_0[view].pos;
-    lbl_1_bss_54 = lbl_1_data_0[view].zoom;
+    cameraRotTarget = cameraViewTbl[view].rot;
+    cameraPosTarget = cameraViewTbl[view].pos;
+    cameraZoomTarget = cameraViewTbl[view].zoom;
 }
 
-void fn_1_1EC0(s16 view)
+void ModeSelCameraViewSet(s16 view)
 {
     s16 i;
-    lbl_1_bss_24[0] = lbl_1_data_0[view].rot;
-    lbl_1_bss_64 = lbl_1_bss_24[0];
-    lbl_1_bss_C[0] = lbl_1_data_0[view].pos;
-    lbl_1_bss_58 = lbl_1_bss_C[0];
-    lbl_1_bss_54 = lbl_1_bss_4[0] = lbl_1_data_0[view].zoom;
-    fn_1_B8C(NULL);
+    cameraRot[0] = cameraViewTbl[view].rot;
+    cameraRotTarget = cameraRot[0];
+    cameraPos[0] = cameraViewTbl[view].pos;
+    cameraPosTarget = cameraPos[0];
+    cameraZoomTarget = cameraZoom[0] = cameraViewTbl[view].zoom;
+    ModeSelCameraUpdate(NULL);
 }
 
-float fn_1_2368(void)
+float ModeSelCameraZoomDistGet(void)
 {
-    float delta_zoom = lbl_1_bss_54 - lbl_1_bss_4[0];
+    float delta_zoom = cameraZoomTarget - cameraZoom[0];
     return sqrtf(delta_zoom * delta_zoom);
 }

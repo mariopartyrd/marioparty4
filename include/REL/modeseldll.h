@@ -27,22 +27,22 @@ typedef struct datalist_sprite {
 } DataListSprite;
 
 #ifndef __MWERKS__
-void fn_1_1EC0(s16 view);
+void ModeSelCameraViewSet(s16 view);
 #endif
 
-s32 fn_1_2490(void);
-s32 fn_1_37DC(void);
+s32 ModeSelExec(void);
+s32 FileSelectExec(void);
 
-void fn_1_BED8(DataListModel *model_list);
-void fn_1_C168(DataListSprite *sprite_list);
-void fn_1_C2BC(void);
+void ModeSelModelCreate(DataListModel *model_list);
+void ModeSelSpriteCreate(DataListSprite *sprite_list);
+void ModeSelSpriteKill(void);
 
-extern s16 lbl_1_bss_19A[24];
-extern s16 lbl_1_bss_16A[24];
-extern s16 lbl_1_bss_152[12];
-extern s16 lbl_1_bss_150;
-extern s16 lbl_1_data_100;
-extern DataListModel lbl_1_data_428[];
-extern DataListSprite lbl_1_data_93C[];
+extern s16 modeSelMdlId[24];
+extern s16 modeSelMotId[24];
+extern s16 modeSelSprId[12];
+extern s16 modeSelSprGrpId;
+extern s16 fileSelectFxId;
+extern DataListModel modeSelModelTbl[];
+extern DataListSprite modeSelSpriteTbl[];
 
 #endif
