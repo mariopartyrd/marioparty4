@@ -17,7 +17,7 @@ typedef struct m401_work_player {
 	s16 unk0;
 	s32 unk4;
 	s32 unk8;
-	Vec unkC;
+	Vec pos;
 	Vec unk18;
 	Vec unk24;
 	Vec unk30;
@@ -33,7 +33,7 @@ typedef struct m401_work_player {
 	s16 unk6C;
 	s16 unk6E;
 	s16 unk70;
-	s16 unk72;
+	s16 coinCnt;
 	s16 unk74;
 	s16 unk76;
 	s16 unk78;
@@ -43,7 +43,7 @@ typedef struct m401_work_player {
 	float unk80;
 	s16 unk84;
 	s16 unk86;
-	float unk88;
+	float swimSpeed;
 	s16 unk8C;
 	s16 unk8E;
 	s16 unk90;
