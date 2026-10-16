@@ -4,77 +4,77 @@
 #include "game/object.h"
 #include "dolphin.h"
 
-extern float lbl_2_bss_12C;
-extern float lbl_2_bss_128;
-extern float lbl_2_bss_124;
-extern s16 lbl_2_bss_120;
-extern Vec lbl_2_bss_6C;
-extern Vec lbl_2_bss_60;
-extern float lbl_2_bss_50;
-extern OMOBJ **lbl_2_bss_118;
+extern float camera_field_of_view;
+extern float camera_near_plane;
+extern float camera_far_plane;
+extern s16 camera_aspect_ratio;
+extern Vec camera_position;
+extern Vec camera_target;
+extern float camera_move_distance;
+extern OMOBJ **player_objects;
 
-typedef struct m401_work_player {
-	s16 unk0;
-	s32 unk4;
-	s32 unk8;
-	Vec unkC;
-	Vec unk18;
-	Vec unk24;
-	Vec unk30;
-	Vec unk3C;
-	OMOBJ *unk48;
-	OMOBJ *unk4C;
-	OMOBJ *unk50;
-	OMOBJ *unk54;
-	Vec unk58;
-	float unk64;
-	s16 unk68;
-	s16 unk6A;
-	s16 unk6C;
-	s16 unk6E;
-	s16 unk70;
-	s16 unk72;
-	s16 unk74;
-	s16 unk76;
-	s16 unk78;
-	s16 unk7A;
-	s16 unk7C;
-	s16 unk7E;
-	float unk80;
-	s16 unk84;
-	s16 unk86;
-	float unk88;
-	s16 unk8C;
-	s16 unk8E;
-	s16 unk90;
-	s16 unk92;
-	Vec unk94;
-	s8 unkA0;
-	s8 unkA1;
+typedef struct m401_player_work {
+	s16 player_state;
+	s32 player_index;
+	s32 controller_index;
+	Vec world_position;
+	Vec effect_anchor_position;
+	Vec target_position;
+	Vec movement_origin;
+	Vec reserved_vector_3c;
+	OMOBJ *trail_effect;
+	OMOBJ *landing_effect;
+	OMOBJ *score_effect;
+	OMOBJ *target_object;
+	Vec movement_parameters;
+	float facing_angle;
+	s16 is_round_winner;
+	s16 is_walking;
+	s16 state_initialized;
+	s16 state_timer;
+	s16 reserved_state_70;
+	s16 score;
+	s16 score_popup_value;
+	s16 reserved_state_76;
+	s16 is_stunned;
+	s16 stun_timer;
+	s16 ai_decision_timer;
+	s16 ai_behavior;
+	float animation_angle;
+	s16 collision_cooldown;
+	s16 character_model_index;
+	float jump_velocity;
+	s16 run_timer;
+	s16 idle_timer;
+	s16 ai_input_cooldown;
+	s16 ai_avoidance_flags;
+	Vec reserved_vector_94;
+	s8 reserved_byte_a0;
+	s8 reserved_byte_a1;
 } M401WorkPlayer;
 
-typedef struct unkwork_10A88 {
-	Vec unk0;
-	OMOBJ *unkC;
-	s16 unk10;
-	s16 unk12;
-	s16 unk14;
-	s32 unk18;
-	float unk1C;
-} UnkWork10A88;
+typedef struct score_particle_work {
+	Vec particle_position;
+	OMOBJ *owner_object;
+	s16 active_model_callbacks;
+	s16 pool_slot_index;
+	s16 fade_out_requested;
+	s32 particle_variant;
+	float opacity;
+} ScoreParticleWork;
 
-void fn_2_169C(s16 arg0);
+void show_score_gain_popup(s16 player_index);
 
-void fn_2_A8A4(OMOBJ *object, float x, float y, float z);
+void set_object_position(OMOBJ *object, float x, float y, float z);
 
-void fn_2_10240(Vec *arg0, Vec *arg1);
-void fn_2_1041C(void);
-void fn_2_10710(void);
+void project_world_position_to_screen(Vec *world_position, Vec *screen_position);
+void load_score_particle_resources(void);
+void free_score_particle_resources(void);
 
-void fn_2_1079C(void);
-OMOBJ *fn_2_10A88(Vec *arg0, s16 arg1);
+void create_score_particle_model_pool(void);
+OMOBJ *create_score_particle_effect(Vec *spawn_position, s16 particle_variant);
 
-OMOBJ *fn_2_141B0(void);
-OMOBJ *fn_2_14640(HUPROCESS *objman);
+OMOBJ *create_particle_effect_controller(void);
+OMOBJ *create_particle_model_manager(HUPROCESS *object_manager);
 
 #endif
