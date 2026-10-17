@@ -13,601 +13,601 @@
 extern s32 rand8(void);
 #endif
 
-struct Bss13EData {
-    s16 unk0;
-    s16 unk2[3];
+struct ScoreParticlePoolEntry {
+    s16 isAllocated;
+    s16 particleModelIds[3];
 };
 
-ANIMDATA *lbl_2_bss_250;
-ANIMDATA *lbl_2_bss_24C;
-ANIMDATA *lbl_2_bss_248;
-ANIMDATA *lbl_2_bss_244;
-ANIMDATA *lbl_2_bss_240;
-ANIMDATA *lbl_2_bss_23C;
-ANIMDATA *lbl_2_bss_238;
-ANIMDATA *lbl_2_bss_220[2][3];
-struct Bss13EData lbl_2_bss_13E[28];
-s16 lbl_2_bss_136[4];
-s16 lbl_2_bss_134;
-float lbl_2_bss_130;
-float lbl_2_bss_12C;
-float lbl_2_bss_128;
-float lbl_2_bss_124;
-s16 lbl_2_bss_120;
+ANIMDATA *scoreParticleAnimationA;
+ANIMDATA *scoreParticleAnimationB;
+ANIMDATA *scoreParticleAnimationC;
+ANIMDATA *scoreParticleBonusAnimation;
+ANIMDATA *scoreParticleAnimationD;
+ANIMDATA *scoreParticleAnimationE;
+ANIMDATA *scoreParticleAnimationF;
+ANIMDATA *scoreParticleAnimationTable[2][3];
+struct ScoreParticlePoolEntry scoreParticlePool[28];
+s16 scoreParticleModelIds[4];
+s16 nextScoreParticlePoolSlot;
+float unusedParticleParameter;
+float cameraFieldOfView;
+float cameraNearPlane;
+float cameraFarPlane;
+s16 cameraAspectRatio;
 
-void fn_2_10240(Vec *arg0, Vec *arg1)
+void ProjectWorldPositionToScreen(Vec *worldPosition, Vec *screenPosition)
 {
     HU3DCAMERA *camera;
     Mtx lookat;
     Mtx44 proj;
     float coord[4];
-    arg0->y = -arg0->y;
+    worldPosition->y = -worldPosition->y;
     camera = &Hu3DCamera[0];
     MTXLookAt(lookat, &camera->pos, &camera->up, &camera->target);
-    MTXMultVec(lookat, arg0, arg0);
+    MTXMultVec(lookat, worldPosition, worldPosition);
     MTXPerspective(proj, camera->fov, camera->aspect, camera->near, camera->far);
-    coord[0] = (arg0->x * proj[0][0]) + (arg0->y * proj[0][1]) + (arg0->z * proj[0][2]) + proj[0][3];
-    coord[1] = (arg0->x * proj[1][0]) + (arg0->y * proj[1][1]) + (arg0->z * proj[1][2]) + proj[1][3];
-    coord[2] = (arg0->x * proj[2][0]) + (arg0->y * proj[2][1]) + (arg0->z * proj[2][2]) + proj[2][3];
-    coord[3] = (arg0->x * proj[3][0]) + (arg0->y * proj[3][1]) + (arg0->z * proj[3][2]) + proj[3][3];
-    arg1->x = ((coord[0] / coord[3]) * 320.0f) + 320.0f;
-    arg1->y = ((coord[1] / coord[3]) * 240.0f) + 240.0f;
-    arg1->z = coord[2] / coord[3];
+    coord[0] = (worldPosition->x * proj[0][0]) + (worldPosition->y * proj[0][1]) + (worldPosition->z * proj[0][2]) + proj[0][3];
+    coord[1] = (worldPosition->x * proj[1][0]) + (worldPosition->y * proj[1][1]) + (worldPosition->z * proj[1][2]) + proj[1][3];
+    coord[2] = (worldPosition->x * proj[2][0]) + (worldPosition->y * proj[2][1]) + (worldPosition->z * proj[2][2]) + proj[2][3];
+    coord[3] = (worldPosition->x * proj[3][0]) + (worldPosition->y * proj[3][1]) + (worldPosition->z * proj[3][2]) + proj[3][3];
+    screenPosition->x = ((coord[0] / coord[3]) * 320.0f) + 320.0f;
+    screenPosition->y = ((coord[1] / coord[3]) * 240.0f) + 240.0f;
+    screenPosition->z = coord[2] / coord[3];
 }
 
-void fn_2_1041C(void)
+void LoadScoreParticleResources(void)
 {
     s32 i;
-    lbl_2_bss_250 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x11));
-    lbl_2_bss_24C = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x12));
-    lbl_2_bss_248 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x13));
-    lbl_2_bss_240 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x14));
-    lbl_2_bss_23C = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x15));
-    lbl_2_bss_238 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x16));
-    HuSprAnimLock(lbl_2_bss_250);
-    HuSprAnimLock(lbl_2_bss_24C);
-    HuSprAnimLock(lbl_2_bss_248);
-    HuSprAnimLock(lbl_2_bss_240);
-    HuSprAnimLock(lbl_2_bss_23C);
-    HuSprAnimLock(lbl_2_bss_238);
-    lbl_2_bss_244 = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x26));
-    HuSprAnimLock(lbl_2_bss_244);
-    lbl_2_bss_220[0][0] = lbl_2_bss_250;
-    lbl_2_bss_220[0][1] = lbl_2_bss_24C;
-    lbl_2_bss_220[0][2] = lbl_2_bss_248;
-    lbl_2_bss_220[1][0] = lbl_2_bss_240;
-    lbl_2_bss_220[1][1] = lbl_2_bss_23C;
-    lbl_2_bss_220[1][2] = lbl_2_bss_238;
+    scoreParticleAnimationA = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x11));
+    scoreParticleAnimationB = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x12));
+    scoreParticleAnimationC = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x13));
+    scoreParticleAnimationD = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x14));
+    scoreParticleAnimationE = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x15));
+    scoreParticleAnimationF = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x16));
+    HuSprAnimLock(scoreParticleAnimationA);
+    HuSprAnimLock(scoreParticleAnimationB);
+    HuSprAnimLock(scoreParticleAnimationC);
+    HuSprAnimLock(scoreParticleAnimationD);
+    HuSprAnimLock(scoreParticleAnimationE);
+    HuSprAnimLock(scoreParticleAnimationF);
+    scoreParticleBonusAnimation = HuSprAnimReadFile(DATA_MAKE_NUM(DATADIR_M401, 0x26));
+    HuSprAnimLock(scoreParticleBonusAnimation);
+    scoreParticleAnimationTable[0][0] = scoreParticleAnimationA;
+    scoreParticleAnimationTable[0][1] = scoreParticleAnimationB;
+    scoreParticleAnimationTable[0][2] = scoreParticleAnimationC;
+    scoreParticleAnimationTable[1][0] = scoreParticleAnimationD;
+    scoreParticleAnimationTable[1][1] = scoreParticleAnimationE;
+    scoreParticleAnimationTable[1][2] = scoreParticleAnimationF;
     for (i = 0; i < 4; i++) {
-        lbl_2_bss_136[i] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M401, 0x17));
-        Hu3DModelAttrSet(lbl_2_bss_136[i], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(lbl_2_bss_136[i], HU3D_MOTATTR_LOOP);
-        Hu3DModelScaleSet(lbl_2_bss_136[i], 1.5f, 1.5f, 1.0f);
-        Hu3DModelLayerSet(lbl_2_bss_136[i], 2);
+        scoreParticleModelIds[i] = Hu3DModelCreateFile(DATA_MAKE_NUM(DATADIR_M401, 0x17));
+        Hu3DModelAttrSet(scoreParticleModelIds[i], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(scoreParticleModelIds[i], HU3D_MOTATTR_LOOP);
+        Hu3DModelScaleSet(scoreParticleModelIds[i], 1.5f, 1.5f, 1.0f);
+        Hu3DModelLayerSet(scoreParticleModelIds[i], 2);
     }
 }
 
-void fn_2_10710(void)
+void FreeScoreParticleResources(void)
 {
-    HuSprAnimKill(lbl_2_bss_250);
-    HuSprAnimKill(lbl_2_bss_24C);
-    HuSprAnimKill(lbl_2_bss_248);
-    HuSprAnimKill(lbl_2_bss_240);
-    HuSprAnimKill(lbl_2_bss_23C);
-    HuSprAnimKill(lbl_2_bss_238);
-    HuSprAnimKill(lbl_2_bss_244);
+    HuSprAnimKill(scoreParticleAnimationA);
+    HuSprAnimKill(scoreParticleAnimationB);
+    HuSprAnimKill(scoreParticleAnimationC);
+    HuSprAnimKill(scoreParticleAnimationD);
+    HuSprAnimKill(scoreParticleAnimationE);
+    HuSprAnimKill(scoreParticleAnimationF);
+    HuSprAnimKill(scoreParticleBonusAnimation);
 }
 
-void fn_2_1079C(void)
+void CreateScoreParticleModelPool(void)
 {
     s32 i;
     for (i = 0; i < 28; i++) {
-        lbl_2_bss_13E[i].unk0 = 0;
-        lbl_2_bss_13E[i].unk2[0] = Hu3DParticleCreate(lbl_2_bss_250, 80);
-        lbl_2_bss_13E[i].unk2[1] = Hu3DParticleCreate(lbl_2_bss_24C, 80);
-        lbl_2_bss_13E[i].unk2[2] = Hu3DParticleCreate(lbl_2_bss_248, 80);
-        Hu3DModelAttrSet(lbl_2_bss_13E[i].unk2[0], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(lbl_2_bss_13E[i].unk2[1], HU3D_ATTR_DISPOFF);
-        Hu3DModelAttrSet(lbl_2_bss_13E[i].unk2[2], HU3D_ATTR_DISPOFF);
+        scoreParticlePool[i].isAllocated = 0;
+        scoreParticlePool[i].particleModelIds[0] = Hu3DParticleCreate(scoreParticleAnimationA, 80);
+        scoreParticlePool[i].particleModelIds[1] = Hu3DParticleCreate(scoreParticleAnimationB, 80);
+        scoreParticlePool[i].particleModelIds[2] = Hu3DParticleCreate(scoreParticleAnimationC, 80);
+        Hu3DModelAttrSet(scoreParticlePool[i].particleModelIds[0], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(scoreParticlePool[i].particleModelIds[1], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(scoreParticlePool[i].particleModelIds[2], HU3D_ATTR_DISPOFF);
     }
-    lbl_2_bss_134 = 0;
+    nextScoreParticlePoolSlot = 0;
 }
 
-s16 fn_2_108C8(void)
+s16 AcquireScoreParticlePoolSlot(void)
 {
     s32 i;
     s32 j;
     for (i = 0; i < 28; i++) {
-        if (!lbl_2_bss_13E[i].unk0) {
+        if (!scoreParticlePool[i].isAllocated) {
             for (j = 0; j < 3; j++) {
-                Hu3DModelAttrReset(lbl_2_bss_13E[i].unk2[j], HU3D_ATTR_DISPOFF);
+                Hu3DModelAttrReset(scoreParticlePool[i].particleModelIds[j], HU3D_ATTR_DISPOFF);
             }
-            lbl_2_bss_13E[i].unk0 = 1;
+            scoreParticlePool[i].isAllocated = 1;
             return i;
         }
     }
     return -1;
 }
 
-void fn_2_10980(s16 arg0)
+void ReleaseScoreParticlePoolSlot(s16 poolSlotIndex)
 {
     s32 i;
-    lbl_2_bss_13E[arg0].unk0 = 0;
+    scoreParticlePool[poolSlotIndex].isAllocated = 0;
     for (i = 0; i < 3; i++) {
-        Hu3DModelAttrSet(lbl_2_bss_13E[arg0].unk2[i], HU3D_ATTR_DISPOFF);
+        Hu3DModelAttrSet(scoreParticlePool[poolSlotIndex].particleModelIds[i], HU3D_ATTR_DISPOFF);
     }
 }
 
-s16 fn_2_10A08(void)
+s16 AcquireScoreParticleModel(void)
 {
-    s16 temp_r31 = lbl_2_bss_136[lbl_2_bss_134];
-    lbl_2_bss_134 = (lbl_2_bss_134 + 1) & 0x3;
-    Hu3DModelTPLvlSet(temp_r31, 1.0f);
-    return temp_r31;
+    s16 particleModelId = scoreParticleModelIds[nextScoreParticlePoolSlot];
+    nextScoreParticlePoolSlot = (nextScoreParticlePoolSlot + 1) & 0x3;
+    Hu3DModelTPLvlSet(particleModelId, 1.0f);
+    return particleModelId;
 }
 
-void fn_2_113AC(OMOBJ *object);
-void fn_2_11A68(OMOBJ *object);
-void fn_2_11B78(OMOBJ *object);
-void fn_2_11C30(OMOBJ *object);
-void fn_2_11D40(OMOBJ *object);
-void fn_2_11E44(OMOBJ *object);
-void fn_2_11EFC(OMOBJ *object);
+void UpdateScoreParticleEffect(OMOBJ *object);
+void UpdateScoreParticleLayerOne(OMOBJ *object);
+void UpdateScoreParticleLayerTwo(OMOBJ *object);
+void UpdateScoreParticleLayerThree(OMOBJ *object);
+void UpdateScoreParticleLayerFour(OMOBJ *object);
+void UpdateScoreParticleLayerFive(OMOBJ *object);
+void UpdateScoreParticleLayerSix(OMOBJ *object);
 
-void fn_2_11FB4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
-void fn_2_126C8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
-void fn_2_126F4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
-void fn_2_12B30(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
-void fn_2_1301C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
-void fn_2_1350C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
-void fn_2_13B7C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleModel(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleModelVisibility(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleModelMotion(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleSparkle(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleTrail(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleBurst(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleFade(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
-OMOBJ *fn_2_10A88(Vec *arg0, s16 arg1)
+OMOBJ *CreateScoreParticleEffect(Vec *spawnPosition, s16 particleVariant)
 {
-    OMOBJ *temp_r31;
-    s32 temp_r30;
-    HU3DPARTICLE *temp_r28;
-    UnkWork10A88 *temp_r27;
-    s16 temp_r24 = fn_2_108C8();
-    if (temp_r24 < 0) {
+    OMOBJ *particleObject;
+    s32 particleIndex;
+    HU3DPARTICLE *particleData;
+    ScoreParticleWork *particleWork;
+    s16 particlePoolIndex = AcquireScoreParticlePoolSlot();
+    if (particlePoolIndex < 0) {
         return NULL;
     }
     {
-        s16 temp_r22 = -1;
-        if (arg1 == 0) {
-            temp_r22 = 1;
+        s16 priority = -1;
+        if (particleVariant == 0) {
+            priority = 1;
         }
-        temp_r31 = omAddObjEx(HuPrcCurrentGet(), 0x514, 3, 0, temp_r22, NULL);
+        particleObject = omAddObjEx(HuPrcCurrentGet(), 0x514, 3, 0, priority, NULL);
     }
 
-    temp_r31->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(UnkWork10A88), HU_MEMNUM_OVL);
-    temp_r27 = temp_r31->data;
-    temp_r27->unk0 = *arg0;
-    for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-        temp_r31->mdlId[temp_r30] = lbl_2_bss_13E[temp_r24].unk2[temp_r30];
-        temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-        Hu3DParticleCntSet(temp_r31->mdlId[temp_r30], 0);
-        Hu3DParticleAnimModeSet(temp_r31->mdlId[temp_r30], 0);
-        Hu3DModelLayerSet(temp_r31->mdlId[temp_r30], 1);
-        if (arg1 == 1) {
-            temp_r31->mode = fn_2_10A08();
-            Hu3DModelAttrReset(temp_r31->mode, HU3D_ATTR_DISPOFF);
-            temp_r28->anim = lbl_2_bss_220[1][temp_r30];
-            temp_r27->unk1C = 1.0f;
-            temp_r31->work[3] = 45;
-            Hu3DModelTPLvlSet(temp_r31->mode, temp_r27->unk1C);
+    particleObject->data = HuMemDirectMallocNum(HEAP_HEAP, sizeof(ScoreParticleWork), HU_MEMNUM_OVL);
+    particleWork = particleObject->data;
+    particleWork->particlePosition = *spawnPosition;
+    for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+        particleObject->mdlId[particleIndex] = scoreParticlePool[particlePoolIndex].particleModelIds[particleIndex];
+        particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+        Hu3DParticleCntSet(particleObject->mdlId[particleIndex], 0);
+        Hu3DParticleAnimModeSet(particleObject->mdlId[particleIndex], 0);
+        Hu3DModelLayerSet(particleObject->mdlId[particleIndex], 1);
+        if (particleVariant == 1) {
+            particleObject->mode = AcquireScoreParticleModel();
+            Hu3DModelAttrReset(particleObject->mode, HU3D_ATTR_DISPOFF);
+            particleData->anim = scoreParticleAnimationTable[1][particleIndex];
+            particleWork->opacity = 1.0f;
+            particleObject->work[3] = 45;
+            Hu3DModelTPLvlSet(particleObject->mode, particleWork->opacity);
         }
         else {
-            temp_r28->anim = lbl_2_bss_220[0][temp_r30];
+            particleData->anim = scoreParticleAnimationTable[0][particleIndex];
         }
     }
-    temp_r27->unk10 = 3;
-    temp_r27->unk12 = temp_r24;
-    temp_r27->unk18 = arg1;
-    switch (arg1) {
+    particleWork->activeModelCallbacks = 3;
+    particleWork->poolSlotIndex = particlePoolIndex;
+    particleWork->particleVariant = particleVariant;
+    switch (particleVariant) {
         case 1:
-            Hu3DModelPosSet(temp_r31->mode, arg0->x, arg0->y, lbl_2_bss_60.z + arg0->z);
+            Hu3DModelPosSet(particleObject->mode, spawnPosition->x, spawnPosition->y, cameraTarget.z + spawnPosition->z);
 
         case 0:
-            temp_r31->trans.x = arg0->x;
-            temp_r31->trans.y = arg0->y;
-            temp_r31->trans.z = lbl_2_bss_60.z + arg0->z;
-            for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-                Hu3DParticleHookSet(temp_r31->mdlId[temp_r30], fn_2_11FB4);
-                Hu3DParticleColSet(temp_r31->mdlId[temp_r30], 255, 255, 255);
-                Hu3DModelPosSet(temp_r31->mdlId[temp_r30], temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
-                temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-                Hu3DParticleBlendModeSet(temp_r31->mdlId[temp_r30], 0);
-                temp_r28->dataCnt = (temp_r30 * 4.5f) / 3.0f;
-                temp_r28->emitCnt = 0;
-                temp_r28->work = temp_r31;
+            particleObject->trans.x = spawnPosition->x;
+            particleObject->trans.y = spawnPosition->y;
+            particleObject->trans.z = cameraTarget.z + spawnPosition->z;
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                Hu3DParticleHookSet(particleObject->mdlId[particleIndex], UpdateScoreParticleModel);
+                Hu3DParticleColSet(particleObject->mdlId[particleIndex], 255, 255, 255);
+                Hu3DModelPosSet(particleObject->mdlId[particleIndex], particleObject->trans.x, particleObject->trans.y, particleObject->trans.z);
+                particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+                Hu3DParticleBlendModeSet(particleObject->mdlId[particleIndex], 0);
+                particleData->dataCnt = (particleIndex * 4.5f) / 3.0f;
+                particleData->emitCnt = 0;
+                particleData->work = particleObject;
             }
-            temp_r27->unk14 = 0;
-            temp_r31->objFunc = fn_2_113AC;
+            particleWork->fadeOutRequested = 0;
+            particleObject->objFunc = UpdateScoreParticleEffect;
             break;
 
         case 2:
-            fn_2_A8A4(temp_r31, arg0->x, arg0->y, arg0->z);
-            for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-                Hu3DParticleHookSet(temp_r31->mdlId[temp_r30], fn_2_126C8);
-                Hu3DParticleColSet(temp_r31->mdlId[temp_r30], 255, 255, 255);
-                Hu3DModelPosSet(temp_r31->mdlId[temp_r30], temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
-                Hu3DParticleBlendModeSet(temp_r31->mdlId[temp_r30], 0);
-                temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-                temp_r28->dataCnt = (temp_r30 * 2) + (frand() & 0x7);
-                temp_r28->work = temp_r31;
+            SetObjectPosition(particleObject, spawnPosition->x, spawnPosition->y, spawnPosition->z);
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                Hu3DParticleHookSet(particleObject->mdlId[particleIndex], UpdateScoreParticleModelVisibility);
+                Hu3DParticleColSet(particleObject->mdlId[particleIndex], 255, 255, 255);
+                Hu3DModelPosSet(particleObject->mdlId[particleIndex], particleObject->trans.x, particleObject->trans.y, particleObject->trans.z);
+                Hu3DParticleBlendModeSet(particleObject->mdlId[particleIndex], 0);
+                particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+                particleData->dataCnt = (particleIndex * 2) + (frand() & 0x7);
+                particleData->work = particleObject;
             }
-            temp_r31->objFunc = fn_2_11A68;
+            particleObject->objFunc = UpdateScoreParticleLayerOne;
             break;
 
         case 3:
-            for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-                Hu3DParticleHookSet(temp_r31->mdlId[temp_r30], fn_2_126F4);
-                Hu3DParticleColSet(temp_r31->mdlId[temp_r30], 255, 255, 255);
-                Hu3DModelPosSet(temp_r31->mdlId[temp_r30], arg0->x, arg0->y, arg0->z);
-                Hu3DParticleBlendModeSet(temp_r31->mdlId[temp_r30], 0);
-                temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-                temp_r28->dataCnt = (temp_r30 * 2) + (frand() & 0x7);
-                temp_r28->work = temp_r31;
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                Hu3DParticleHookSet(particleObject->mdlId[particleIndex], UpdateScoreParticleModelMotion);
+                Hu3DParticleColSet(particleObject->mdlId[particleIndex], 255, 255, 255);
+                Hu3DModelPosSet(particleObject->mdlId[particleIndex], spawnPosition->x, spawnPosition->y, spawnPosition->z);
+                Hu3DParticleBlendModeSet(particleObject->mdlId[particleIndex], 0);
+                particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+                particleData->dataCnt = (particleIndex * 2) + (frand() & 0x7);
+                particleData->work = particleObject;
             }
-            temp_r31->objFunc = fn_2_11B78;
+            particleObject->objFunc = UpdateScoreParticleLayerTwo;
             break;
 
         case 4:
-            fn_2_A8A4(temp_r31, arg0->x, arg0->y, arg0->z);
-            for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-                Hu3DParticleHookSet(temp_r31->mdlId[temp_r30], fn_2_12B30);
-                Hu3DParticleColSet(temp_r31->mdlId[temp_r30], 255, 255, 255);
-                Hu3DModelPosSet(temp_r31->mdlId[temp_r30], temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
-                Hu3DParticleBlendModeSet(temp_r31->mdlId[temp_r30], 0);
-                temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-                temp_r28->dataCnt = (temp_r30 * 2) + (frand() & 0x7);
-                temp_r28->work = temp_r31;
+            SetObjectPosition(particleObject, spawnPosition->x, spawnPosition->y, spawnPosition->z);
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                Hu3DParticleHookSet(particleObject->mdlId[particleIndex], UpdateScoreParticleSparkle);
+                Hu3DParticleColSet(particleObject->mdlId[particleIndex], 255, 255, 255);
+                Hu3DModelPosSet(particleObject->mdlId[particleIndex], particleObject->trans.x, particleObject->trans.y, particleObject->trans.z);
+                Hu3DParticleBlendModeSet(particleObject->mdlId[particleIndex], 0);
+                particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+                particleData->dataCnt = (particleIndex * 2) + (frand() & 0x7);
+                particleData->work = particleObject;
             }
-            temp_r31->objFunc = fn_2_11C30;
+            particleObject->objFunc = UpdateScoreParticleLayerThree;
             break;
 
         case 5:
-            fn_2_A8A4(temp_r31, arg0->x, arg0->y, arg0->z);
-            for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-                Hu3DParticleHookSet(temp_r31->mdlId[temp_r30], fn_2_1301C);
-                Hu3DParticleColSet(temp_r31->mdlId[temp_r30], 255, 255, 255);
-                Hu3DModelPosSet(temp_r31->mdlId[temp_r30], temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
-                Hu3DParticleBlendModeSet(temp_r31->mdlId[temp_r30], 1);
-                temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-                temp_r28->dataCnt = (temp_r30 * 2) + (frand() & 0x7);
-                temp_r28->work = temp_r31;
+            SetObjectPosition(particleObject, spawnPosition->x, spawnPosition->y, spawnPosition->z);
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                Hu3DParticleHookSet(particleObject->mdlId[particleIndex], UpdateScoreParticleTrail);
+                Hu3DParticleColSet(particleObject->mdlId[particleIndex], 255, 255, 255);
+                Hu3DModelPosSet(particleObject->mdlId[particleIndex], particleObject->trans.x, particleObject->trans.y, particleObject->trans.z);
+                Hu3DParticleBlendModeSet(particleObject->mdlId[particleIndex], 1);
+                particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+                particleData->dataCnt = (particleIndex * 2) + (frand() & 0x7);
+                particleData->work = particleObject;
             }
-            temp_r31->objFunc = fn_2_11D40;
+            particleObject->objFunc = UpdateScoreParticleLayerFour;
             break;
 
         case 6:
-            omSetTra(temp_r31, arg0->x, arg0->y, arg0->z);
-            for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-                Hu3DParticleHookSet(temp_r31->mdlId[temp_r30], fn_2_1350C);
-                Hu3DParticleColSet(temp_r31->mdlId[temp_r30], 255, 255, 255);
-                Hu3DModelPosSet(temp_r31->mdlId[temp_r30], temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
-                temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-                Hu3DParticleBlendModeSet(temp_r31->mdlId[temp_r30], 1);
+            omSetTra(particleObject, spawnPosition->x, spawnPosition->y, spawnPosition->z);
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                Hu3DParticleHookSet(particleObject->mdlId[particleIndex], UpdateScoreParticleBurst);
+                Hu3DParticleColSet(particleObject->mdlId[particleIndex], 255, 255, 255);
+                Hu3DModelPosSet(particleObject->mdlId[particleIndex], particleObject->trans.x, particleObject->trans.y, particleObject->trans.z);
+                particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+                Hu3DParticleBlendModeSet(particleObject->mdlId[particleIndex], 1);
             }
-            temp_r31->objFunc = fn_2_11E44;
+            particleObject->objFunc = UpdateScoreParticleLayerFive;
             break;
 
         case 7:
-            omSetTra(temp_r31, arg0->x, arg0->y, arg0->z);
-            for (temp_r30 = 0; temp_r30 < 3; temp_r30++) {
-                Hu3DParticleHookSet(temp_r31->mdlId[temp_r30], fn_2_13B7C);
-                Hu3DParticleColSet(temp_r31->mdlId[temp_r30], 255, 255, 255);
-                Hu3DModelPosSet(temp_r31->mdlId[temp_r30], temp_r31->trans.x, temp_r31->trans.y, temp_r31->trans.z);
-                temp_r28 = Hu3DData[temp_r31->mdlId[temp_r30]].hookData;
-                Hu3DParticleBlendModeSet(temp_r31->mdlId[temp_r30], 1);
+            omSetTra(particleObject, spawnPosition->x, spawnPosition->y, spawnPosition->z);
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                Hu3DParticleHookSet(particleObject->mdlId[particleIndex], UpdateScoreParticleFade);
+                Hu3DParticleColSet(particleObject->mdlId[particleIndex], 255, 255, 255);
+                Hu3DModelPosSet(particleObject->mdlId[particleIndex], particleObject->trans.x, particleObject->trans.y, particleObject->trans.z);
+                particleData = Hu3DData[particleObject->mdlId[particleIndex]].hookData;
+                Hu3DParticleBlendModeSet(particleObject->mdlId[particleIndex], 1);
             }
-            temp_r31->objFunc = fn_2_11EFC;
+            particleObject->objFunc = UpdateScoreParticleLayerSix;
             break;
 
         default:
             break;
     }
-    return temp_r31;
+    return particleObject;
 }
 
-void fn_2_118B0(OMOBJ *object);
-void fn_2_123F8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void FadeScoreParticleEffect(OMOBJ *object);
+void UpdateScoreParticleBonusModel(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
-void fn_2_113AC(OMOBJ *object)
+void UpdateScoreParticleEffect(OMOBJ *object)
 {
-    UnkWork10A88 *temp_r30;
-    s32 temp_r29;
-    M401WorkPlayer *temp_r28;
-    OMOBJ *temp_r27;
-    HU3DPARTICLE *temp_r25;
-    s16 temp_r24;
-    temp_r30 = object->data;
-    temp_r30->unk0.z += (lbl_2_bss_50 * 0.5f);
-    object->trans.x = temp_r30->unk0.x;
-    object->trans.y = temp_r30->unk0.y;
-    object->trans.z = lbl_2_bss_60.z + temp_r30->unk0.z;
+    ScoreParticleWork *particleWork;
+    s32 particleIndex;
+    M401WorkPlayer *playerWork;
+    OMOBJ *playerObject;
+    HU3DPARTICLE *particleData;
+    s16 playerId;
+    particleWork = object->data;
+    particleWork->particlePosition.z += (cameraMoveDistance * 0.5f);
+    object->trans.x = particleWork->particlePosition.x;
+    object->trans.y = particleWork->particlePosition.y;
+    object->trans.z = cameraTarget.z + particleWork->particlePosition.z;
     if (object->mode != 0) {
         Hu3DModelPosSet(object->mode, object->trans.x, object->trans.y, object->trans.z);
     }
-    for (temp_r29 = 1; temp_r29 < 3; temp_r29++) {
-        Hu3DModelRotSet(object->mdlId[temp_r29], object->rot.x, object->rot.y, object->rot.z);
-        Hu3DModelPosSet(object->mdlId[temp_r29], object->trans.x, object->trans.y, object->trans.z);
+    for (particleIndex = 1; particleIndex < 3; particleIndex++) {
+        Hu3DModelRotSet(object->mdlId[particleIndex], object->rot.x, object->rot.y, object->rot.z);
+        Hu3DModelPosSet(object->mdlId[particleIndex], object->trans.x, object->trans.y, object->trans.z);
     }
-    for (temp_r29 = 0; temp_r29 < 4; temp_r29++) {
+    for (particleIndex = 0; particleIndex < 4; particleIndex++) {
         float dist;
-        temp_r27 = lbl_2_bss_118[temp_r29];
-        temp_r28 = temp_r27->data;
-        if (temp_r28->unk78 != 0) {
+        playerObject = playerObjects[particleIndex];
+        playerWork = playerObject->data;
+        if (playerWork->isStunned != 0) {
             continue;
         }
-        dist = VECDistanceXYZ(&object->trans, &temp_r27->trans);
+        dist = VECDistanceXYZ(&object->trans, &playerObject->trans);
         if (dist < 108.00001f) {
-            Hu3DMotionShiftSet(lbl_2_bss_118[temp_r29]->mdlId[0], lbl_2_bss_118[temp_r29]->mtnId[6], 0, 10, HU3D_MOTATTR_NONE);
+            Hu3DMotionShiftSet(playerObjects[particleIndex]->mdlId[0], playerObjects[particleIndex]->mtnId[6], 0, 10, HU3D_MOTATTR_NONE);
             HuAudFXPlay(1288);
-            if (temp_r30->unk18 == 0) {
+            if (particleWork->particleVariant == 0) {
                 HuAudFXPlay(9);
-                temp_r28->unk72++;
-                omVibrate(temp_r28->unk4, 12, 6, 6);
+                playerWork->score++;
+                omVibrate(playerWork->playerIndex, 12, 6, 6);
             }
             else {
                 HuAudFXPlay(1292);
-                temp_r28->unk74 = 3;
-                temp_r28->unk72 += 3;
-                fn_2_169C(temp_r28->unk4);
-                omVibrate(temp_r28->unk4, 12, 4, 2);
+                playerWork->scorePopupValue = 3;
+                playerWork->score += 3;
+                ShowScoreGainPopup(playerWork->playerIndex);
+                omVibrate(playerWork->playerIndex, 12, 4, 2);
             }
-            temp_r28->unk84 = 50;
-            for (temp_r29 = 0; temp_r29 < 3; temp_r29++) {
-                temp_r25 = Hu3DData[object->mdlId[temp_r29]].hookData;
-                temp_r25->emitCnt = 0;
-                Hu3DParticleHookSet(object->mdlId[temp_r29], fn_2_123F8);
+            playerWork->collisionCooldown = 50;
+            for (particleIndex = 0; particleIndex < 3; particleIndex++) {
+                particleData = Hu3DData[object->mdlId[particleIndex]].hookData;
+                particleData->emitCnt = 0;
+                Hu3DParticleHookSet(object->mdlId[particleIndex], UpdateScoreParticleBonusModel);
             }
-            object->objFunc = fn_2_118B0;
+            object->objFunc = FadeScoreParticleEffect;
             break;
         }
     }
-    if (temp_r30->unk0.z > 850.0f) {
-        temp_r30->unk14 = 1;
+    if (particleWork->particlePosition.z > 850.0f) {
+        particleWork->fadeOutRequested = 1;
     }
     if (object->mode) {
         if (object->work[3] != 0) {
             object->work[3]--;
         }
         else {
-            temp_r30->unk1C -= 0.033333335f;
-            if (temp_r30->unk1C < 0) {
-                temp_r30->unk1C = 0;
+            particleWork->opacity -= 0.033333335f;
+            if (particleWork->opacity < 0) {
+                particleWork->opacity = 0;
             }
-            Hu3DModelTPLvlSet(object->mode, temp_r30->unk1C);
+            Hu3DModelTPLvlSet(object->mode, particleWork->opacity);
         }
     }
-    if (temp_r30->unk10 == 0) {
+    if (particleWork->activeModelCallbacks == 0) {
         if (object->mode) {
             Hu3DModelAttrSet(object->mode, HU3D_ATTR_DISPOFF);
         }
-        fn_2_10980(temp_r30->unk12);
+        ReleaseScoreParticlePoolSlot(particleWork->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_118B0(OMOBJ *object)
+void FadeScoreParticleEffect(OMOBJ *object)
 {
-    UnkWork10A88 *temp_r30;
-    s32 temp_r29;
+    ScoreParticleWork *particleWork;
+    s32 particleIndex;
 
-    temp_r30 = object->data;
-    temp_r30->unk0.z += (lbl_2_bss_50 * 0.5f);
-    object->trans.x = temp_r30->unk0.x;
-    object->trans.y = temp_r30->unk0.y;
-    object->trans.z = lbl_2_bss_60.z + temp_r30->unk0.z;
-    for (temp_r29 = 1; temp_r29 < 3; temp_r29++) {
-        Hu3DModelPosSet(object->mdlId[temp_r29], object->trans.x, object->trans.y, object->trans.z);
+    particleWork = object->data;
+    particleWork->particlePosition.z += (cameraMoveDistance * 0.5f);
+    object->trans.x = particleWork->particlePosition.x;
+    object->trans.y = particleWork->particlePosition.y;
+    object->trans.z = cameraTarget.z + particleWork->particlePosition.z;
+    for (particleIndex = 1; particleIndex < 3; particleIndex++) {
+        Hu3DModelPosSet(object->mdlId[particleIndex], object->trans.x, object->trans.y, object->trans.z);
     }
     if (object->mode != 0) {
         Hu3DModelPosSet(object->mode, object->trans.x, object->trans.y, object->trans.z);
-        temp_r30->unk1C -= 0.033333335f;
-        if (temp_r30->unk1C < 0) {
-            temp_r30->unk1C = 0;
+        particleWork->opacity -= 0.033333335f;
+        if (particleWork->opacity < 0) {
+            particleWork->opacity = 0;
         }
-        Hu3DModelTPLvlSet(object->mode, temp_r30->unk1C);
+        Hu3DModelTPLvlSet(object->mode, particleWork->opacity);
     }
 
-    if (temp_r30->unk10 == 0) {
+    if (particleWork->activeModelCallbacks == 0) {
         if (object->mode) {
             Hu3DModelAttrSet(object->mode, HU3D_ATTR_DISPOFF);
         }
-        fn_2_10980(temp_r30->unk12);
+        ReleaseScoreParticlePoolSlot(particleWork->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_11A68(OMOBJ *object)
+void UpdateScoreParticleLayerOne(OMOBJ *object)
 {
-    s32 temp_r30;
-    UnkWork10A88 *temp_r29;
-    UnkWork10A88 *sp8;
-    temp_r29 = object->data;
-    sp8 = temp_r29->unkC->data;
+    s32 modelIndex;
+    ScoreParticleWork *particleWork;
+    ScoreParticleWork *parentParticleWork;
+    particleWork = object->data;
+    parentParticleWork = particleWork->ownerObject->data;
     omSetTra(object, 0, 0, 0);
-    for (temp_r30 = 1; temp_r30 < 3; temp_r30++) {
-        Hu3DModelPosSet(object->mdlId[temp_r30], object->trans.x, object->trans.y, object->trans.z);
+    for (modelIndex = 1; modelIndex < 3; modelIndex++) {
+        Hu3DModelPosSet(object->mdlId[modelIndex], object->trans.x, object->trans.y, object->trans.z);
     }
     if (object->work[0] == 1) {
-        fn_2_10980(temp_r29->unk12);
+        ReleaseScoreParticlePoolSlot(particleWork->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_11B78(OMOBJ *object)
+void UpdateScoreParticleLayerTwo(OMOBJ *object)
 {
-    UnkWork10A88 *temp_r29;
-    temp_r29 = object->data;
+    ScoreParticleWork *particleIndex;
+    particleIndex = object->data;
     if (object->work[0] == 1) {
-        fn_2_10980(temp_r29->unk12);
+        ReleaseScoreParticlePoolSlot(particleIndex->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_11C30(OMOBJ *object)
+void UpdateScoreParticleLayerThree(OMOBJ *object)
 {
-    s32 temp_r30;
-    UnkWork10A88 *temp_r29;
-    UnkWork10A88 *sp8;
-    temp_r29 = object->data;
-    sp8 = temp_r29->unkC->data;
+    s32 modelIndex;
+    ScoreParticleWork *particleWork;
+    ScoreParticleWork *parentParticleWork;
+    particleWork = object->data;
+    parentParticleWork = particleWork->ownerObject->data;
     omSetTra(object, 0, 0, 0);
-    for (temp_r30 = 1; temp_r30 < 3; temp_r30++) {
-        Hu3DModelPosSet(object->mdlId[temp_r30], object->trans.x, object->trans.y, object->trans.z);
+    for (modelIndex = 1; modelIndex < 3; modelIndex++) {
+        Hu3DModelPosSet(object->mdlId[modelIndex], object->trans.x, object->trans.y, object->trans.z);
     }
     if (object->work[1] == 1) {
-        fn_2_10980(temp_r29->unk12);
+        ReleaseScoreParticlePoolSlot(particleWork->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_11D40(OMOBJ *object)
+void UpdateScoreParticleLayerFour(OMOBJ *object)
 {
-    s32 temp_r30;
-    UnkWork10A88 *temp_r29;
-    UnkWork10A88 *sp8;
-    temp_r29 = object->data;
-    sp8 = temp_r29->unkC->data;
-    omSetTra(object, temp_r29->unkC->trans.x, temp_r29->unkC->trans.y, temp_r29->unkC->trans.z);
-    for (temp_r30 = 1; temp_r30 < 3; temp_r30++) {
-        Hu3DModelPosSet(object->mdlId[temp_r30], object->trans.x, object->trans.y, object->trans.z);
+    s32 modelIndex;
+    ScoreParticleWork *particleWork;
+    ScoreParticleWork *parentParticleWork;
+    particleWork = object->data;
+    parentParticleWork = particleWork->ownerObject->data;
+    omSetTra(object, particleWork->ownerObject->trans.x, particleWork->ownerObject->trans.y, particleWork->ownerObject->trans.z);
+    for (modelIndex = 1; modelIndex < 3; modelIndex++) {
+        Hu3DModelPosSet(object->mdlId[modelIndex], object->trans.x, object->trans.y, object->trans.z);
     }
     if (object->work[1] == 1) {
-        fn_2_10980(temp_r29->unk12);
+        ReleaseScoreParticlePoolSlot(particleWork->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_11E44(OMOBJ *object)
+void UpdateScoreParticleLayerFive(OMOBJ *object)
 {
-    UnkWork10A88 *temp_r29;
-    temp_r29 = object->data;
+    ScoreParticleWork *particleIndex;
+    particleIndex = object->data;
     if (object->work[0] == 1) {
-        fn_2_10980(temp_r29->unk12);
+        ReleaseScoreParticlePoolSlot(particleIndex->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_11EFC(OMOBJ *object)
+void UpdateScoreParticleLayerSix(OMOBJ *object)
 {
-    UnkWork10A88 *temp_r29;
-    temp_r29 = object->data;
+    ScoreParticleWork *particleIndex;
+    particleIndex = object->data;
     if (object->work[0] == 1) {
-        fn_2_10980(temp_r29->unk12);
+        ReleaseScoreParticlePoolSlot(particleIndex->poolSlotIndex);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_11FB4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleModel(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    float temp_f31;
-    float temp_f30;
-    float temp_f29;
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    UnkWork10A88 *temp_r28;
-    s32 temp_r27;
-    temp_r28 = ((OMOBJ *)(particle->work))->data;
+    float particleAlpha;
+    float particleHeight;
+    float particleAngleStep;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    ScoreParticleWork *activeParticleCount;
+    s32 particleWork;
+    activeParticleCount = ((OMOBJ *)(particle->work))->data;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        temp_f29 = 360.0f / (particle->maxCnt / 2);
-        temp_f31 = particle->dataCnt;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt / 2; temp_r29++, temp_r31++) {
-            temp_f30 = (0.1f * (rand8() % 50)) + 50;
-            temp_r31->scale = (0.1f * (rand8() % 41)) + 8.0f;
-            temp_r31->vel.x = temp_f31;
-            temp_r31->vel.y = temp_f30;
-            temp_r31->vel.z = 0;
-            temp_r31->accel.x = (10.0f / 255.0f) * ((u8)frand());
-            temp_r31->color.a = 180;
-            temp_f31 += temp_f29;
-            temp_r31->pos.z = 0;
+        particleData = particle->data;
+        particleAngleStep = 360.0f / (particle->maxCnt / 2);
+        particleAlpha = particle->dataCnt;
+        for (particleIndex = 0; particleIndex < particle->maxCnt / 2; particleIndex++, particleData++) {
+            particleHeight = (0.1f * (rand8() % 50)) + 50;
+            particleData->scale = (0.1f * (rand8() % 41)) + 8.0f;
+            particleData->vel.x = particleAlpha;
+            particleData->vel.y = particleHeight;
+            particleData->vel.z = 0;
+            particleData->accel.x = (10.0f / 255.0f) * ((u8)frand());
+            particleData->color.a = 180;
+            particleAlpha += particleAngleStep;
+            particleData->pos.z = 0;
         }
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt / 2; temp_r29++, temp_r31++) {
-            temp_r31->scale = 0;
-            temp_r31->color.a = 0;
+        for (particleIndex = 0; particleIndex < particle->maxCnt / 2; particleIndex++, particleData++) {
+            particleData->scale = 0;
+            particleData->color.a = 0;
         }
     }
-    temp_r31 = particle->data;
-    temp_r27 = 0;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt / 2; temp_r29++, temp_r31++) {
-        if (temp_r31->color.a != 0) {
-            temp_r27++;
-            temp_f30 = (6.0 * sind(temp_r31->vel.z)) + temp_r31->vel.y;
-            temp_r31->pos.x = temp_f30 * cosd(temp_r31->vel.x);
-            temp_r31->pos.y = temp_f30 * sind(temp_r31->vel.x);
-            temp_r31->vel.z += temp_r31->accel.x;
-            if (temp_r31->vel.z >= 360.0f) {
-                temp_r31->vel.z -= 360.0f;
+    particleData = particle->data;
+    particleWork = 0;
+    for (particleIndex = 0; particleIndex < particle->maxCnt / 2; particleIndex++, particleData++) {
+        if (particleData->color.a != 0) {
+            particleWork++;
+            particleHeight = (6.0 * sind(particleData->vel.z)) + particleData->vel.y;
+            particleData->pos.x = particleHeight * cosd(particleData->vel.x);
+            particleData->pos.y = particleHeight * sind(particleData->vel.x);
+            particleData->vel.z += particleData->accel.x;
+            if (particleData->vel.z >= 360.0f) {
+                particleData->vel.z -= 360.0f;
             }
-            temp_f31 = temp_r31->color.a;
-            if (temp_r28->unk14) {
-                temp_f31 -= 3.0f;
-                if (temp_f31 < 0.0f) {
-                    temp_f31 = 0.0f;
+            particleAlpha = particleData->color.a;
+            if (activeParticleCount->fadeOutRequested) {
+                particleAlpha -= 3.0f;
+                if (particleAlpha < 0.0f) {
+                    particleAlpha = 0.0f;
                 }
             }
-            temp_r31->color.a = temp_f31;
+            particleData->color.a = particleAlpha;
         }
     }
-    if (!temp_r27) {
-        temp_r28->unk10--;
+    if (!particleWork) {
+        activeParticleCount->activeModelCallbacks--;
     }
 }
 
-void fn_2_123F8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleBonusModel(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    float temp_f31;
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    s32 temp_r28;
-    UnkWork10A88 *temp_r27;
+    float particleAlpha;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    s32 activeParticleCount;
+    ScoreParticleWork *particleWork;
     if (!particle->emitCnt) {
         particle->emitCnt = 1;
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt / 2; temp_r29++, temp_r31++) {
-            temp_r31->vel.x = temp_r31->pos.x;
-            temp_r31->accel.x = 0;
-            temp_r31->accel.y = 5.0f + ((35.0f / 255.0f) * ((u8)frand()));
-            temp_r31->accel.z = 8.0f + ((8.0f / 255.0f) * ((u8)frand()));
-            temp_r31->colorIdx = 3.0f + ((5.0f / 255.0f) * ((u8)frand()));
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt / 2; particleIndex++, particleData++) {
+            particleData->vel.x = particleData->pos.x;
+            particleData->accel.x = 0;
+            particleData->accel.y = 5.0f + ((35.0f / 255.0f) * ((u8)frand()));
+            particleData->accel.z = 8.0f + ((8.0f / 255.0f) * ((u8)frand()));
+            particleData->colorIdx = 3.0f + ((5.0f / 255.0f) * ((u8)frand()));
         }
     }
-    temp_r31 = particle->data;
-    temp_r28 = 0;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt / 2; temp_r29++, temp_r31++) {
-        if (temp_r31->color.a != 0) {
-            temp_r28++;
-            temp_r31->pos.x = temp_r31->vel.x + (temp_r31->accel.z * sind(temp_r31->accel.x));
-            temp_r31->accel.x += temp_r31->accel.y;
-            if (temp_r31->accel.x >= 360.0f) {
-                temp_r31->accel.x -= 360.0f;
+    particleData = particle->data;
+    activeParticleCount = 0;
+    for (particleIndex = 0; particleIndex < particle->maxCnt / 2; particleIndex++, particleData++) {
+        if (particleData->color.a != 0) {
+            activeParticleCount++;
+            particleData->pos.x = particleData->vel.x + (particleData->accel.z * sind(particleData->accel.x));
+            particleData->accel.x += particleData->accel.y;
+            if (particleData->accel.x >= 360.0f) {
+                particleData->accel.x -= 360.0f;
             }
-            temp_r31->pos.y += temp_r31->colorIdx;
-            temp_f31 = temp_r31->color.a;
-            temp_f31 -= 3.0f;
-            if (temp_f31 < 0.0f) {
-                temp_f31 = 0.0f;
+            particleData->pos.y += particleData->colorIdx;
+            particleAlpha = particleData->color.a;
+            particleAlpha -= 3.0f;
+            if (particleAlpha < 0.0f) {
+                particleAlpha = 0.0f;
             }
-            temp_r31->color.a = temp_f31;
+            particleData->color.a = particleAlpha;
         }
     }
-    if (temp_r28 == 0) {
-        UnkWork10A88 *temp_r27 = ((OMOBJ *)(particle->work))->data;
-        temp_r27->unk10--;
+    if (activeParticleCount == 0) {
+        ScoreParticleWork *particleWork = ((OMOBJ *)(particle->work))->data;
+        particleWork->activeModelCallbacks--;
     }
 }
 
-// Here exclusively to match fn_2_126C8
-static inline void DummyInline(s32 arg0)
+// Here exclusively to match update_score_particle_model_visibility
+static inline void PreserveParticleCallbackMatch(s32 value)
 {
     s32 temp1, temp2, temp3, temp4, temp5;
-    if (arg0 != 0) {
+    if (value != 0) {
         temp1 = 1;
         temp2 = temp1 * 2;
         temp3 = temp2 * 3;
@@ -617,330 +617,330 @@ static inline void DummyInline(s32 arg0)
     }
 }
 
-void fn_2_126C8(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleModelVisibility(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    DummyInline(0);
+    PreserveParticleCallbackMatch(0);
 }
 
-void fn_2_126F4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleModelMotion(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    s32 temp_r28;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    s32 freeParticleIndex;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-            temp_r31->color.a = 0;
-            temp_r31->scale = 0;
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+            particleData->color.a = 0;
+            particleData->scale = 0;
         }
         particle->dataCnt = 0;
     }
     if (particle->dataCnt == 0) {
-        for (temp_r29 = 0; temp_r29 < 2; temp_r29++) {
-            temp_r31 = particle->data;
-            for (temp_r28 = 0; temp_r28 < particle->maxCnt; temp_r28++, temp_r31++) {
-                if (temp_r31->color.a == 0) {
+        for (particleIndex = 0; particleIndex < 2; particleIndex++) {
+            particleData = particle->data;
+            for (freeParticleIndex = 0; freeParticleIndex < particle->maxCnt; freeParticleIndex++, particleData++) {
+                if (particleData->color.a == 0) {
                     break;
                 }
             }
-            if (temp_r28 == particle->maxCnt) {
+            if (freeParticleIndex == particle->maxCnt) {
                 continue;
             }
-            temp_r31->vel.x = -50.0f + (0.3921569f * ((u8)frand()));
-            temp_r31->vel.y = 0.058823533f * ((u8)frand());
-            temp_r31->accel.x = (90.0f / 255.0f) * ((u8)frand());
-            temp_r31->accel.y = 5.0f + (0.098039225f * ((u8)frand()));
-            temp_r31->accel.z = (float)(frand() % 10) + 8.0f;
-            temp_r31->pos.z = -5.0f + ((11.0f / 255.0f) * ((u8)frand()));
-            temp_r31->pos.y = (float)(frand() % 31) + -5.0f;
-            temp_r31->scale = temp_r31->vel.y + 35.0f;
-            temp_r31->color.a = 210;
-            temp_r31->vel.y = (0.2 * temp_r31->vel.y) + 5.0;
+            particleData->vel.x = -50.0f + (0.3921569f * ((u8)frand()));
+            particleData->vel.y = 0.058823533f * ((u8)frand());
+            particleData->accel.x = (90.0f / 255.0f) * ((u8)frand());
+            particleData->accel.y = 5.0f + (0.098039225f * ((u8)frand()));
+            particleData->accel.z = (float)(frand() % 10) + 8.0f;
+            particleData->pos.z = -5.0f + ((11.0f / 255.0f) * ((u8)frand()));
+            particleData->pos.y = (float)(frand() % 31) + -5.0f;
+            particleData->scale = particleData->vel.y + 35.0f;
+            particleData->color.a = 210;
+            particleData->vel.y = (0.2 * particleData->vel.y) + 5.0;
             particle->dataCnt = (frand() % 10) + 10;
         }
     }
     else {
         particle->dataCnt--;
     }
-    temp_r31 = particle->data;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-        if (temp_r31->color.a == 0) {
+    particleData = particle->data;
+    for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+        if (particleData->color.a == 0) {
             continue;
         }
-        temp_r31->pos.x = (temp_r31->accel.z * sind(temp_r31->accel.x)) + temp_r31->vel.x;
-        temp_r31->accel.x += temp_r31->accel.y;
-        if (temp_r31->accel.x >= 360.0f) {
-            temp_r31->accel.x -= 360.0f;
+        particleData->pos.x = (particleData->accel.z * sind(particleData->accel.x)) + particleData->vel.x;
+        particleData->accel.x += particleData->accel.y;
+        if (particleData->accel.x >= 360.0f) {
+            particleData->accel.x -= 360.0f;
         }
-        temp_r31->pos.y += temp_r31->vel.y;
-        temp_r31->color.a--;
+        particleData->pos.y += particleData->vel.y;
+        particleData->color.a--;
     }
 }
 
-void fn_2_12B30(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleSparkle(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    M401WorkPlayer *temp_r28;
-    OMOBJ *temp_r27;
-    s32 temp_r26;
-    s32 temp_r25;
-    UnkWork10A88 *temp_r24;
-    temp_r27 = particle->work;
-    temp_r24 = ((OMOBJ *)(particle->work))->data;
-    temp_r28 = temp_r24->unkC->data;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    M401WorkPlayer *playerWork;
+    OMOBJ *particleObject;
+    s32 freeParticleIndex;
+    s32 activeParticleCount;
+    ScoreParticleWork *particleWork;
+    particleObject = particle->work;
+    particleWork = ((OMOBJ *)(particle->work))->data;
+    playerWork = particleWork->ownerObject->data;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-            temp_r31->color.a = 0;
-            temp_r31->scale = 0;
-            temp_r31->speedDecay = 0;
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+            particleData->color.a = 0;
+            particleData->scale = 0;
+            particleData->speedDecay = 0;
         }
         particle->dataCnt = 0;
     }
-    if (particle->dataCnt == 0 && temp_r27->work[0] == 0) {
-        for (temp_r29 = 0; temp_r29 < 10; temp_r29++) {
-            temp_r31 = particle->data;
-            for (temp_r26 = 0; temp_r26 < particle->maxCnt; temp_r26++, temp_r31++) {
-                if (temp_r31->speedDecay == 0) {
+    if (particle->dataCnt == 0 && particleObject->work[0] == 0) {
+        for (particleIndex = 0; particleIndex < 10; particleIndex++) {
+            particleData = particle->data;
+            for (freeParticleIndex = 0; freeParticleIndex < particle->maxCnt; freeParticleIndex++, particleData++) {
+                if (particleData->speedDecay == 0) {
                     break;
                 }
             }
-            if (temp_r26 == particle->maxCnt) {
+            if (freeParticleIndex == particle->maxCnt) {
                 continue;
             }
-            temp_r31->vel.x = (((40.0f / 255.0f) * ((u8)frand())) + (temp_r28->unk18.x - 20.0f));
-            temp_r31->vel.y = (frand() % 5) + 3;
-            temp_r31->accel.x = ((90.0f / 255.0f) * ((u8)frand()));
-            temp_r31->accel.y = 5.0f + ((45.0f / 255.0f) * ((u8)frand()));
-            temp_r31->accel.z = 2.0f + (0.011764707f * ((u8)frand()));
-            temp_r31->color.a = 180;
-            temp_r31->pos.z = ((0.121568635f * ((u8)frand())) + (temp_r28->unk18.z + 70.0f));
-            temp_r31->pos.y = ((0.20000002f * ((u8)frand())) + (temp_r28->unk18.y - 25.0f));
+            particleData->vel.x = (((40.0f / 255.0f) * ((u8)frand())) + (playerWork->effectAnchorPosition.x - 20.0f));
+            particleData->vel.y = (frand() % 5) + 3;
+            particleData->accel.x = ((90.0f / 255.0f) * ((u8)frand()));
+            particleData->accel.y = 5.0f + ((45.0f / 255.0f) * ((u8)frand()));
+            particleData->accel.z = 2.0f + (0.011764707f * ((u8)frand()));
+            particleData->color.a = 180;
+            particleData->pos.z = ((0.121568635f * ((u8)frand())) + (playerWork->effectAnchorPosition.z + 70.0f));
+            particleData->pos.y = ((0.20000002f * ((u8)frand())) + (playerWork->effectAnchorPosition.y - 25.0f));
             particle->dataCnt = (frand() % 6) + 5;
-            temp_r31->speedDecay = 1;
-            temp_r31->scale = 11;
+            particleData->speedDecay = 1;
+            particleData->scale = 11;
         }
     }
     else {
         particle->dataCnt--;
     }
-    temp_r31 = particle->data;
-    temp_r25 = 0;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-        if (temp_r31->color.a != 0) {
-            float temp_f31;
-            temp_r31->pos.x = (temp_r31->accel.z * sind(temp_r31->accel.x)) + temp_r31->vel.x;
-            temp_r31->accel.x += temp_r31->accel.y;
-            if (temp_r31->accel.x >= 360.0f) {
-                temp_r31->accel.x -= 360.0f;
+    particleData = particle->data;
+    activeParticleCount = 0;
+    for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+        if (particleData->color.a != 0) {
+            float remainingAlpha;
+            particleData->pos.x = (particleData->accel.z * sind(particleData->accel.x)) + particleData->vel.x;
+            particleData->accel.x += particleData->accel.y;
+            if (particleData->accel.x >= 360.0f) {
+                particleData->accel.x -= 360.0f;
             }
-            temp_r31->pos.y += 3.0f;
-            temp_f31 = temp_r31->color.a;
-            temp_f31 -= temp_r31->vel.y;
-            if (temp_f31 < 0.0f) {
-                temp_f31 = 0.0f;
-                temp_r31->speedDecay = 0;
+            particleData->pos.y += 3.0f;
+            remainingAlpha = particleData->color.a;
+            remainingAlpha -= particleData->vel.y;
+            if (remainingAlpha < 0.0f) {
+                remainingAlpha = 0.0f;
+                particleData->speedDecay = 0;
             }
 
-            temp_r31->color.a = temp_f31;
-            temp_r25++;
+            particleData->color.a = remainingAlpha;
+            activeParticleCount++;
         }
     }
-    if (temp_r25 == 0 && temp_r27->work[0] == 1) {
-        temp_r27->work[1] = 1;
+    if (activeParticleCount == 0 && particleObject->work[0] == 1) {
+        particleObject->work[1] = 1;
     }
 }
 
-void fn_2_1301C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleTrail(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    M401WorkPlayer *temp_r28;
-    OMOBJ *temp_r27;
-    s32 temp_r26;
-    s32 temp_r25;
-    UnkWork10A88 *temp_r24;
-    temp_r27 = particle->work;
-    temp_r24 = (temp_r27)->data;
-    temp_r28 = temp_r24->unkC->data;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    M401WorkPlayer *playerWork;
+    OMOBJ *particleObject;
+    s32 freeParticleIndex;
+    s32 activeParticleCount;
+    ScoreParticleWork *particleWork;
+    particleObject = particle->work;
+    particleWork = (particleObject)->data;
+    playerWork = particleWork->ownerObject->data;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-            temp_r31->color.a = 0;
-            temp_r31->scale = 0;
-            temp_r31->speedDecay = 0;
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+            particleData->color.a = 0;
+            particleData->scale = 0;
+            particleData->speedDecay = 0;
         }
         particle->dataCnt = 0;
     }
-    if (particle->dataCnt == 0 && temp_r27->work[0] == 0) {
-        for (temp_r29 = 0; temp_r29 < 10; temp_r29++) {
-            temp_r31 = particle->data;
-            for (temp_r26 = 0; temp_r26 < particle->maxCnt; temp_r26++, temp_r31++) {
-                if (temp_r31->speedDecay == 0) {
+    if (particle->dataCnt == 0 && particleObject->work[0] == 0) {
+        for (particleIndex = 0; particleIndex < 10; particleIndex++) {
+            particleData = particle->data;
+            for (freeParticleIndex = 0; freeParticleIndex < particle->maxCnt; freeParticleIndex++, particleData++) {
+                if (particleData->speedDecay == 0) {
                     break;
                 }
             }
-            if (temp_r26 == particle->maxCnt) {
+            if (freeParticleIndex == particle->maxCnt) {
                 continue;
             }
-            temp_r31->vel.x = (((80.0f / 255.0f) * ((u8)frand())) + (-40.0f));
-            temp_r31->vel.y = (frand() % 10) + 7;
-            temp_r31->accel.x = ((90.0f / 255.0f) * ((u8)frand()));
-            temp_r31->accel.y = 5.0f + ((45.0f / 255.0f) * ((u8)frand()));
-            temp_r31->accel.z = 2.0f + (frand() % 3);
-            temp_r31->color.a = 180;
-            temp_r31->pos.z = ((0.121568635f * ((u8)frand())) + (85.0f));
-            temp_r31->pos.y = ((0.2392157f * ((u8)frand())) + (-30.0f));
+            particleData->vel.x = (((80.0f / 255.0f) * ((u8)frand())) + (-40.0f));
+            particleData->vel.y = (frand() % 10) + 7;
+            particleData->accel.x = ((90.0f / 255.0f) * ((u8)frand()));
+            particleData->accel.y = 5.0f + ((45.0f / 255.0f) * ((u8)frand()));
+            particleData->accel.z = 2.0f + (frand() % 3);
+            particleData->color.a = 180;
+            particleData->pos.z = ((0.121568635f * ((u8)frand())) + (85.0f));
+            particleData->pos.y = ((0.2392157f * ((u8)frand())) + (-30.0f));
             particle->dataCnt = (frand() % 3) + 3;
-            temp_r31->speedDecay = 1;
-            temp_r31->scale = 11;
+            particleData->speedDecay = 1;
+            particleData->scale = 11;
         }
     }
     else {
         particle->dataCnt--;
     }
-    temp_r31 = particle->data;
-    temp_r25 = 0;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-        if (temp_r31->color.a != 0) {
-            float temp_f31;
-            temp_r31->pos.x = (temp_r31->accel.z * sind(temp_r31->accel.x)) + temp_r31->vel.x;
-            temp_r31->accel.x += temp_r31->accel.y;
-            if (temp_r31->accel.x >= 360.0f) {
-                temp_r31->accel.x -= 360.0f;
+    particleData = particle->data;
+    activeParticleCount = 0;
+    for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+        if (particleData->color.a != 0) {
+            float remainingAlpha;
+            particleData->pos.x = (particleData->accel.z * sind(particleData->accel.x)) + particleData->vel.x;
+            particleData->accel.x += particleData->accel.y;
+            if (particleData->accel.x >= 360.0f) {
+                particleData->accel.x -= 360.0f;
             }
-            temp_r31->pos.y += 3.0f;
-            temp_r31->pos.z -= 1.0f;
-            temp_f31 = temp_r31->color.a;
-            temp_f31 -= temp_r31->vel.y;
-            if (temp_f31 < 0.0f) {
-                temp_f31 = 0.0f;
-                temp_r31->speedDecay = 0;
+            particleData->pos.y += 3.0f;
+            particleData->pos.z -= 1.0f;
+            remainingAlpha = particleData->color.a;
+            remainingAlpha -= particleData->vel.y;
+            if (remainingAlpha < 0.0f) {
+                remainingAlpha = 0.0f;
+                particleData->speedDecay = 0;
             }
 
-            temp_r31->color.a = temp_f31;
-            temp_r25++;
+            particleData->color.a = remainingAlpha;
+            activeParticleCount++;
         }
     }
-    if (temp_r25 == 0 && temp_r27->work[0] == 1) {
-        temp_r27->work[1] = 1;
+    if (activeParticleCount == 0 && particleObject->work[0] == 1) {
+        particleObject->work[1] = 1;
     }
 }
 
-void fn_2_1350C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleBurst(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    float temp_f31;
-    float temp_f30;
-    float temp_f29;
-    float temp_f28;
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    s32 temp_r28;
+    float particleLifetime;
+    float horizontalAngle;
+    float launchSpeed;
+    float verticalAngle;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    s32 freeParticleIndex;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-            temp_r31->scale = 0;
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+            particleData->scale = 0;
         }
         particle->work = (void *)1;
         particle->emitCnt = 0;
         particle->dataCnt = 0;
     }
     if (particle->dataCnt == 0) {
-        for (temp_r29 = 0; temp_r29 < 16; temp_r29++) {
-            temp_r31 = particle->data;
-            for (temp_r28 = 0; temp_r28 < particle->maxCnt; temp_r28++, temp_r31++) {
-                if (temp_r31->scale == 0) {
+        for (particleIndex = 0; particleIndex < 16; particleIndex++) {
+            particleData = particle->data;
+            for (freeParticleIndex = 0; freeParticleIndex < particle->maxCnt; freeParticleIndex++, particleData++) {
+                if (particleData->scale == 0) {
                     break;
                 }
             }
-            if (temp_r28 == particle->maxCnt) {
+            if (freeParticleIndex == particle->maxCnt) {
                 continue;
             }
-            temp_f30 = (360.0f / 255.0f) * ((u8)frand());
-            temp_r31->speedDecay = 45 * sind(temp_f30);
-            temp_r31->scaleBase = 45 * cosd(temp_f30);
-            temp_r31->colorIdx = 0;
-            temp_f28 = 0.098039225f * ((u8)frand()) + 50.0f;
-            temp_f29 = (2.0f / 255.0f) * ((u8)frand()) + 2.5f;
-            temp_r31->vel.x = temp_f29 * sind(temp_f30) * cosd(temp_f28);
-            temp_r31->vel.y = 0.8f * (temp_f29 * sind(temp_f28));
-            temp_r31->vel.z = temp_f29 * cosd(temp_f30) * cosd(temp_f28);
-            temp_r31->accel.x = 1;
-            temp_r31->accel.y = 255;
-            temp_r31->scale = (4.0f / 255.0f) * ((u8)frand()) + 3.0f;
-            temp_r31->color.r = (155.0f / 255.0f) * ((u8)frand()) + 100.0f;
-            temp_r31->color.g = 0.21568629f * ((u8)frand()) + 200.0f;
-            temp_r31->color.b = 255;
-            temp_r31->color.a = temp_r31->accel.y;
+            horizontalAngle = (360.0f / 255.0f) * ((u8)frand());
+            particleData->speedDecay = 45 * sind(horizontalAngle);
+            particleData->scaleBase = 45 * cosd(horizontalAngle);
+            particleData->colorIdx = 0;
+            verticalAngle = 0.098039225f * ((u8)frand()) + 50.0f;
+            launchSpeed = (2.0f / 255.0f) * ((u8)frand()) + 2.5f;
+            particleData->vel.x = launchSpeed * sind(horizontalAngle) * cosd(verticalAngle);
+            particleData->vel.y = 0.8f * (launchSpeed * sind(verticalAngle));
+            particleData->vel.z = launchSpeed * cosd(horizontalAngle) * cosd(verticalAngle);
+            particleData->accel.x = 1;
+            particleData->accel.y = 255;
+            particleData->scale = (4.0f / 255.0f) * ((u8)frand()) + 3.0f;
+            particleData->color.r = (155.0f / 255.0f) * ((u8)frand()) + 100.0f;
+            particleData->color.g = 0.21568629f * ((u8)frand()) + 200.0f;
+            particleData->color.b = 255;
+            particleData->color.a = particleData->accel.y;
         }
         particle->dataCnt = 0.058823533f * ((u8)frand()) + 30.0f;
     }
     else {
         particle->dataCnt--;
     }
-    temp_r31 = particle->data;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-        if (temp_r31->scale != 0) {
-            temp_f31 = temp_r31->accel.x;
-            temp_r31->pos.x = (temp_r31->vel.x * temp_f31) + temp_r31->speedDecay;
-            temp_r31->pos.z = (temp_r31->vel.z * temp_f31) + temp_r31->scaleBase;
-            temp_r31->pos.y = ((temp_r31->vel.y * temp_f31) + temp_r31->colorIdx) - (0.2 * temp_f31 * temp_f31);
-            temp_r31->accel.y -= 3.5f;
-            temp_r31->color.a = temp_r31->accel.y;
-            if (temp_r31->scale < 0 || temp_r31->accel.y < 10.0f || temp_r31->pos.y <= 0.0f) {
-                temp_r31->scale = 0;
+    particleData = particle->data;
+    for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+        if (particleData->scale != 0) {
+            particleLifetime = particleData->accel.x;
+            particleData->pos.x = (particleData->vel.x * particleLifetime) + particleData->speedDecay;
+            particleData->pos.z = (particleData->vel.z * particleLifetime) + particleData->scaleBase;
+            particleData->pos.y = ((particleData->vel.y * particleLifetime) + particleData->colorIdx) - (0.2 * particleLifetime * particleLifetime);
+            particleData->accel.y -= 3.5f;
+            particleData->color.a = particleData->accel.y;
+            if (particleData->scale < 0 || particleData->accel.y < 10.0f || particleData->pos.y <= 0.0f) {
+                particleData->scale = 0;
                 particle->emitCnt++;
             }
 
-            temp_r31->accel.x += 0.7f;
+            particleData->accel.x += 0.7f;
         }
     }
 }
 
-void fn_2_13B7C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleFade(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    float temp_f31;
-    float temp_f30;
-    float temp_f29;
-    float temp_f28;
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    s32 temp_r28;
+    float particleLifetime;
+    float horizontalAngle;
+    float launchSpeed;
+    float verticalAngle;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    s32 freeParticleIndex;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-            temp_r31->scale = 0;
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+            particleData->scale = 0;
         }
         particle->work = (void *)1;
         particle->emitCnt = 0;
         particle->dataCnt = 0;
     }
     if (particle->work) {
-        for (temp_r29 = 0; temp_r29 < 20; temp_r29++) {
-            temp_r31 = particle->data;
-            for (temp_r28 = 0; temp_r28 < particle->maxCnt; temp_r28++, temp_r31++) {
-                if (temp_r31->scale == 0) {
+        for (particleIndex = 0; particleIndex < 20; particleIndex++) {
+            particleData = particle->data;
+            for (freeParticleIndex = 0; freeParticleIndex < particle->maxCnt; freeParticleIndex++, particleData++) {
+                if (particleData->scale == 0) {
                     break;
                 }
             }
-            if (temp_r28 != particle->maxCnt) {
-                temp_f30 = (360.0f / 255.0f) * ((u8)frand());
-                temp_r31->speedDecay = 40 * sind(temp_f30);
-                temp_r31->scaleBase = 40 * cosd(temp_f30);
-                temp_r31->colorIdx = 0;
-                temp_f28 = (20.0f / 255.0f) * ((u8)frand()) + 70.0f;
-                temp_f29 = (4.0f / 255.0f) * ((u8)frand()) + 5.0f;
-                temp_r31->vel.x = temp_f29 * sind(temp_f30) * cosd(temp_f28);
-                temp_r31->vel.y = temp_f29 * sind(temp_f28);
-                temp_r31->vel.z = temp_f29 * cosd(temp_f30) * cosd(temp_f28);
-                temp_r31->accel.x = 1;
-                temp_r31->accel.y = 255;
-                temp_r31->scale = (4.0f / 255.0f) * ((u8)frand()) + 5.0f;
-                temp_r31->color.r = (155.0f / 255.0f) * ((u8)frand()) + 100.0f;
-                temp_r31->color.g = 0.21568629f * ((u8)frand()) + 200.0f;
-                temp_r31->color.b = 255;
-                temp_r31->color.a = temp_r31->accel.y;
+            if (freeParticleIndex != particle->maxCnt) {
+                horizontalAngle = (360.0f / 255.0f) * ((u8)frand());
+                particleData->speedDecay = 40 * sind(horizontalAngle);
+                particleData->scaleBase = 40 * cosd(horizontalAngle);
+                particleData->colorIdx = 0;
+                verticalAngle = (20.0f / 255.0f) * ((u8)frand()) + 70.0f;
+                launchSpeed = (4.0f / 255.0f) * ((u8)frand()) + 5.0f;
+                particleData->vel.x = launchSpeed * sind(horizontalAngle) * cosd(verticalAngle);
+                particleData->vel.y = launchSpeed * sind(verticalAngle);
+                particleData->vel.z = launchSpeed * cosd(horizontalAngle) * cosd(verticalAngle);
+                particleData->accel.x = 1;
+                particleData->accel.y = 255;
+                particleData->scale = (4.0f / 255.0f) * ((u8)frand()) + 5.0f;
+                particleData->color.r = (155.0f / 255.0f) * ((u8)frand()) + 100.0f;
+                particleData->color.g = 0.21568629f * ((u8)frand()) + 200.0f;
+                particleData->color.b = 255;
+                particleData->color.a = particleData->accel.y;
             }
             else {
                 particle->work = NULL;
@@ -948,20 +948,20 @@ void fn_2_13B7C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
             }
         }
     }
-    temp_r31 = particle->data;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-        if (temp_r31->scale != 0) {
-            temp_f31 = temp_r31->accel.x;
-            temp_r31->pos.x = (temp_r31->vel.x * temp_f31) + temp_r31->speedDecay;
-            temp_r31->pos.z = (temp_r31->vel.z * temp_f31) + temp_r31->scaleBase;
-            temp_r31->pos.y = ((temp_r31->vel.y * temp_f31) + temp_r31->colorIdx) - (0.2 * temp_f31 * temp_f31);
-            temp_r31->accel.y -= 3.5f;
-            temp_r31->color.a = temp_r31->accel.y;
-            if (temp_r31->scale < 0 || temp_r31->accel.y < 10.0f || temp_r31->pos.y <= 0.0f) {
-                temp_r31->scale = 0;
+    particleData = particle->data;
+    for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+        if (particleData->scale != 0) {
+            particleLifetime = particleData->accel.x;
+            particleData->pos.x = (particleData->vel.x * particleLifetime) + particleData->speedDecay;
+            particleData->pos.z = (particleData->vel.z * particleLifetime) + particleData->scaleBase;
+            particleData->pos.y = ((particleData->vel.y * particleLifetime) + particleData->colorIdx) - (0.2 * particleLifetime * particleLifetime);
+            particleData->accel.y -= 3.5f;
+            particleData->color.a = particleData->accel.y;
+            if (particleData->scale < 0 || particleData->accel.y < 10.0f || particleData->pos.y <= 0.0f) {
+                particleData->scale = 0;
                 particle->emitCnt++;
             }
-            temp_r31->accel.x += 1.0f;
+            particleData->accel.x += 1.0f;
         }
     }
     if (particle->emitCnt >= particle->maxCnt && particle->work == NULL) {
@@ -969,16 +969,16 @@ void fn_2_13B7C(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
     }
 }
 
-void fn_2_142D0(OMOBJ *object);
-void fn_2_142D4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void EmptyScoreParticleCallback(OMOBJ *object);
+void UpdateScoreParticleDisplayModel(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
-OMOBJ *fn_2_141B0(void)
+OMOBJ *CreateParticleEffectController(void)
 {
-    OMOBJ *object = omAddObjEx(HuPrcCurrentGet(), 1300, 5, 0, -1, fn_2_142D0);
+    OMOBJ *object = omAddObjEx(HuPrcCurrentGet(), 1300, 5, 0, -1, EmptyScoreParticleCallback);
     HU3DPARTICLE *particle;
     omSetStatBit(object, 0x100);
-    object->mdlId[0] = Hu3DParticleCreate(lbl_2_bss_244, 200);
-    Hu3DParticleHookSet(object->mdlId[0], fn_2_142D4);
+    object->mdlId[0] = Hu3DParticleCreate(scoreParticleBonusAnimation, 200);
+    Hu3DParticleHookSet(object->mdlId[0], UpdateScoreParticleDisplayModel);
     Hu3DParticleColSet(object->mdlId[0], 255, 255, 255);
     Hu3DModelPosSet(object->mdlId[0], 0, 0, 0);
     Hu3DParticleAnimModeSet(object->mdlId[0], 0);
@@ -988,67 +988,67 @@ OMOBJ *fn_2_141B0(void)
     return object;
 }
 
-void fn_2_142D0(OMOBJ *object) { }
+void EmptyScoreParticleCallback(OMOBJ *object) { }
 
-void fn_2_142D4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleDisplayModel(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    s32 temp_r28;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    s32 freeParticleIndex;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-            temp_r31->scale = 0;
-            temp_r31->pos.y = 950;
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+            particleData->scale = 0;
+            particleData->pos.y = 950;
         }
     }
     if (particle->dataCnt == 0) {
-        for (temp_r29 = 0; temp_r29 < 30; temp_r29++) {
-            temp_r31 = particle->data;
-            for (temp_r28 = 0; temp_r28 < particle->maxCnt; temp_r28++, temp_r31++) {
-                if (temp_r31->scale == 0) {
+        for (particleIndex = 0; particleIndex < 30; particleIndex++) {
+            particleData = particle->data;
+            for (freeParticleIndex = 0; freeParticleIndex < particle->maxCnt; freeParticleIndex++, particleData++) {
+                if (particleData->scale == 0) {
                     break;
                 }
             }
-            if (temp_r28 == particle->maxCnt) {
+            if (freeParticleIndex == particle->maxCnt) {
                 continue;
             }
-            temp_r31->scale = 1;
-            temp_r31->color.a = 150;
-            temp_r31->pos.x = ((11.764707f * ((u8)frand())) + (-1500.0f));
-            temp_r31->pos.z = ((6.666667f * ((u8)frand())) + (-2000.0f));
-            temp_r31->vel.x = 0;
-            temp_r31->vel.y = (((5.0f / 255.0f) * ((u8)frand())) + (5.0f));
-            temp_r31->vel.z = ((0.011764707f * ((u8)frand())) + (18.0f));
+            particleData->scale = 1;
+            particleData->color.a = 150;
+            particleData->pos.x = ((11.764707f * ((u8)frand())) + (-1500.0f));
+            particleData->pos.z = ((6.666667f * ((u8)frand())) + (-2000.0f));
+            particleData->vel.x = 0;
+            particleData->vel.y = (((5.0f / 255.0f) * ((u8)frand())) + (5.0f));
+            particleData->vel.z = ((0.011764707f * ((u8)frand())) + (18.0f));
         }
         particle->dataCnt = (frand() % 5) + 4;
     }
     else {
         particle->dataCnt--;
     }
-    temp_r31 = particle->data;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-        if (temp_r31->scale != 0) {
-            temp_r31->pos.x += 1.1f;
-            temp_r31->pos.z += 1.1f;
-            temp_r31->scale = (temp_r31->vel.z * sind(temp_r31->vel.x)) + 1.0;
-            temp_r31->vel.x += temp_r31->vel.y;
-            if (temp_r31->vel.x >= 180.0f) {
-                temp_r31->scale = 0.0f;
+    particleData = particle->data;
+    for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+        if (particleData->scale != 0) {
+            particleData->pos.x += 1.1f;
+            particleData->pos.z += 1.1f;
+            particleData->scale = (particleData->vel.z * sind(particleData->vel.x)) + 1.0;
+            particleData->vel.x += particleData->vel.y;
+            if (particleData->vel.x >= 180.0f) {
+                particleData->scale = 0.0f;
             }
         }
     }
 }
 
-void fn_2_14738(OMOBJ *object);
-void fn_2_147B4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
+void UpdateScoreParticleDisplay(OMOBJ *object);
+void UpdateScoreParticleDisplayModelMotion(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix);
 
-OMOBJ *fn_2_14640(HUPROCESS *objman)
+OMOBJ *CreateParticleModelManager(HUPROCESS *objman)
 {
     OMOBJ *object;
-    object = omAddObjEx(objman, 1300, 1, 0, -1, fn_2_14738);
-    object->mdlId[0] = Hu3DParticleCreate(lbl_2_bss_250, 450);
-    Hu3DParticleHookSet(object->mdlId[0], fn_2_147B4);
+    object = omAddObjEx(objman, 1300, 1, 0, -1, UpdateScoreParticleDisplay);
+    object->mdlId[0] = Hu3DParticleCreate(scoreParticleAnimationA, 450);
+    Hu3DParticleHookSet(object->mdlId[0], UpdateScoreParticleDisplayModelMotion);
     Hu3DParticleColSet(object->mdlId[0], 255, 255, 255);
     Hu3DModelPosSet(object->mdlId[0], 0, -6000, -21000);
     Hu3DParticleAnimModeSet(object->mdlId[0], 0);
@@ -1057,81 +1057,81 @@ OMOBJ *fn_2_14640(HUPROCESS *objman)
     return object;
 }
 
-void fn_2_14738(OMOBJ *object)
+void UpdateScoreParticleDisplay(OMOBJ *object)
 {
-    omSetTra(object, lbl_2_bss_6C.x, lbl_2_bss_6C.y, lbl_2_bss_6C.z);
+    omSetTra(object, cameraPosition.x, cameraPosition.y, cameraPosition.z);
     if (object->work[0] == 1) {
         Hu3DModelAttrSet(object->mdlId[0], HU3D_ATTR_DISPOFF);
         omDelObjEx(HuPrcCurrentGet(), object);
     }
 }
 
-void fn_2_147B4(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
+void UpdateScoreParticleDisplayModelMotion(HU3DMODEL *model, HU3DPARTICLE *particle, Mtx matrix)
 {
-    float temp_f31;
-    float temp_f30;
-    HU3DPARTICLEDATA *temp_r31;
-    s32 temp_r29;
-    s32 temp_r28;
+    float remainingAlpha;
+    float particleAngle;
+    HU3DPARTICLEDATA *particleData;
+    s32 particleIndex;
+    s32 freeParticleIndex;
     if (particle->count == 0) {
-        temp_r31 = particle->data;
-        for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-            temp_r31->color.a = 180;
-            temp_r31->vel.x = ((3.9215689f * ((u8)frand())) + (-500.0f));
-            temp_r31->vel.y = ((3.529412f * ((u8)frand())) + (-500.0f));
-            temp_r31->vel.z = (-300.0f) - ((3.9215689f * ((u8)frand())));
-            temp_r31->accel.x = (360.0f / 255.0f) * ((u8)frand());
-            temp_r31->accel.y = (4.0f / 255.0f) * ((u8)frand());
-            temp_r31->scale = 2;
+        particleData = particle->data;
+        for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+            particleData->color.a = 180;
+            particleData->vel.x = ((3.9215689f * ((u8)frand())) + (-500.0f));
+            particleData->vel.y = ((3.529412f * ((u8)frand())) + (-500.0f));
+            particleData->vel.z = (-300.0f) - ((3.9215689f * ((u8)frand())));
+            particleData->accel.x = (360.0f / 255.0f) * ((u8)frand());
+            particleData->accel.y = (4.0f / 255.0f) * ((u8)frand());
+            particleData->scale = 2;
         }
         particle->dataCnt = 0;
     }
     if (particle->dataCnt == 0) {
-        for (temp_r29 = 0; temp_r29 < 2; temp_r29++) {
-            temp_r31 = particle->data;
-            for (temp_r28 = 0; temp_r28 < particle->maxCnt; temp_r28++, temp_r31++) {
-                if (temp_r31->color.a == 0) {
+        for (particleIndex = 0; particleIndex < 2; particleIndex++) {
+            particleData = particle->data;
+            for (freeParticleIndex = 0; freeParticleIndex < particle->maxCnt; freeParticleIndex++, particleData++) {
+                if (particleData->color.a == 0) {
                     break;
                 }
             }
-            if (temp_r28 == particle->maxCnt) {
+            if (freeParticleIndex == particle->maxCnt) {
                 continue;
             }
-            temp_r31->color.a = 180;
-            temp_r31->vel.x = -50.0f + (0.3921569f * ((u8)frand()));
-            temp_r31->vel.y = 0.058823533f * ((u8)frand());
-            temp_r31->accel.x = (90.0f / 255.0f) * ((u8)frand());
-            temp_r31->accel.y = 5.0f + (0.098039225f * ((u8)frand()));
-            temp_r31->accel.z = (float)(frand() % 10) + 8.0f;
-            temp_r31->pos.z = -5.0f + ((11.0f / 255.0f) * ((u8)frand()));
-            temp_r31->pos.y = (float)(frand() % 31) + -5.0f;
-            temp_r31->scale = temp_r31->vel.y + 35.0f;
-            temp_r31->color.a = 210;
-            temp_r31->vel.y = (0.2 * temp_r31->vel.y) + 5.0;
+            particleData->color.a = 180;
+            particleData->vel.x = -50.0f + (0.3921569f * ((u8)frand()));
+            particleData->vel.y = 0.058823533f * ((u8)frand());
+            particleData->accel.x = (90.0f / 255.0f) * ((u8)frand());
+            particleData->accel.y = 5.0f + (0.098039225f * ((u8)frand()));
+            particleData->accel.z = (float)(frand() % 10) + 8.0f;
+            particleData->pos.z = -5.0f + ((11.0f / 255.0f) * ((u8)frand()));
+            particleData->pos.y = (float)(frand() % 31) + -5.0f;
+            particleData->scale = particleData->vel.y + 35.0f;
+            particleData->color.a = 210;
+            particleData->vel.y = (0.2 * particleData->vel.y) + 5.0;
             particle->dataCnt = (frand() % 10) + 10;
         }
     }
     else {
         particle->dataCnt--;
     }
-    temp_r31 = particle->data;
-    temp_f30 = lbl_2_bss_50 * 0.3f;
-    for (temp_r29 = 0; temp_r29 < particle->maxCnt; temp_r29++, temp_r31++) {
-        if (temp_r31->color.a == 0) {
+    particleData = particle->data;
+    particleAngle = cameraMoveDistance * 0.3f;
+    for (particleIndex = 0; particleIndex < particle->maxCnt; particleIndex++, particleData++) {
+        if (particleData->color.a == 0) {
             continue;
         }
-        temp_r31->pos.x = temp_r31->vel.x;
-        temp_r31->pos.y = temp_r31->vel.y;
-        temp_r31->pos.z = temp_r31->vel.z;
-        temp_r31->vel.x -= 0.5 * sind(temp_r31->accel.x);
-        temp_r31->vel.z -= -temp_f30;
-        temp_r31->accel.x += temp_r31->accel.y;
-        if (temp_r31->accel.x >= 360.0f) {
-            temp_r31->accel.x -= 360.0f;
+        particleData->pos.x = particleData->vel.x;
+        particleData->pos.y = particleData->vel.y;
+        particleData->pos.z = particleData->vel.z;
+        particleData->vel.x -= 0.5 * sind(particleData->accel.x);
+        particleData->vel.z -= -particleAngle;
+        particleData->accel.x += particleData->accel.y;
+        if (particleData->accel.x >= 360.0f) {
+            particleData->accel.x -= 360.0f;
         }
-        if (temp_r31->vel.z >= 0.0f) {
-            temp_f31 = 800.0f + ((300.0f / 255.0f) * ((u8)frand()));
-            temp_r31->vel.z -= temp_f31;
+        if (particleData->vel.z >= 0.0f) {
+            remainingAlpha = 800.0f + ((300.0f / 255.0f) * ((u8)frand()));
+            particleData->vel.z -= remainingAlpha;
         }
     }
 }
