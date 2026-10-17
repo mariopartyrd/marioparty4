@@ -72,9 +72,9 @@ void LoadScoreParticleResources(void);
 void FreeScoreParticleResources(void);
 
 void CreateScoreParticleModelPool(void);
-OMOBJ *createScoreParticleEffect(Vec *spawnPosition, s16 particleVariant);
+OMOBJ *CreateScoreParticleEffect(Vec *spawnPosition, s16 particleVariant);
 
-OMOBJ *createParticleEffectController(void);
-OMOBJ *createParticleModelManager(HUPROCESS *objectManager);
+OMOBJ *CreateParticleEffectController(void);
+OMOBJ *CreateParticleModelManager(HUPROCESS *objectManager);
 
 #endif
