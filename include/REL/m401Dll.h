@@ -4,77 +4,77 @@
 #include "game/object.h"
 #include "dolphin.h"
 
-extern float camera_field_of_view;
-extern float camera_near_plane;
-extern float camera_far_plane;
-extern s16 camera_aspect_ratio;
-extern Vec camera_position;
-extern Vec camera_target;
-extern float camera_move_distance;
-extern OMOBJ **player_objects;
+extern float cameraFieldOfView;
+extern float cameraNearPlane;
+extern float cameraFarPlane;
+extern s16 cameraAspectRatio;
+extern Vec cameraPosition;
+extern Vec cameraTarget;
+extern float cameraMoveDistance;
+extern OMOBJ **playerObjects;
 
-typedef struct m401_player_work {
-	s16 player_state;
-	s32 player_index;
-	s32 controller_index;
-	Vec world_position;
-	Vec effect_anchor_position;
-	Vec target_position;
-	Vec movement_origin;
-	Vec reserved_vector_3c;
-	OMOBJ *trail_effect;
-	OMOBJ *landing_effect;
-	OMOBJ *score_effect;
-	OMOBJ *target_object;
-	Vec movement_parameters;
-	float facing_angle;
-	s16 is_round_winner;
-	s16 is_walking;
-	s16 state_initialized;
-	s16 state_timer;
-	s16 reserved_state_70;
+typedef struct M401PlayerWork {
+	s16 playerState;
+	s32 playerIndex;
+	s32 controllerIndex;
+	Vec worldPosition;
+	Vec effectAnchorPosition;
+	Vec targetPosition;
+	Vec movementOrigin;
+	Vec reservedVector3c;
+	OMOBJ *trailEffect;
+	OMOBJ *landingEffect;
+	OMOBJ *scoreEffect;
+	OMOBJ *targetObject;
+	Vec movementParameters;
+	float facingAngle;
+	s16 isRoundWinner;
+	s16 isWalking;
+	s16 stateInitialized;
+	s16 stateTimer;
+	s16 reservedState70;
 	s16 score;
-	s16 score_popup_value;
-	s16 reserved_state_76;
-	s16 is_stunned;
-	s16 stun_timer;
-	s16 ai_decision_timer;
-	s16 ai_behavior;
-	float animation_angle;
-	s16 collision_cooldown;
-	s16 character_model_index;
-	float jump_velocity;
-	s16 run_timer;
-	s16 idle_timer;
-	s16 ai_input_cooldown;
-	s16 ai_avoidance_flags;
-	Vec reserved_vector_94;
-	s8 reserved_byte_a0;
-	s8 reserved_byte_a1;
+	s16 scorePopupValue;
+	s16 reservedState76;
+	s16 isStunned;
+	s16 stunTimer;
+	s16 aiDecisionTimer;
+	s16 aiBehavior;
+	float animationAngle;
+	s16 collisionCooldown;
+	s16 characterModelIndex;
+	float jumpVelocity;
+	s16 runTimer;
+	s16 idleTimer;
+	s16 aiInputCooldown;
+	s16 aiAvoidanceFlags;
+	Vec reservedVector94;
+	s8 reservedByteA0;
+	s8 reservedByteA1;
 } M401WorkPlayer;
 
-typedef struct score_particle_work {
-	Vec particle_position;
-	OMOBJ *owner_object;
-	s16 active_model_callbacks;
-	s16 pool_slot_index;
-	s16 fade_out_requested;
-	s32 particle_variant;
+typedef struct ScoreParticleWork {
+	Vec particlePosition;
+	OMOBJ *ownerObject;
+	s16 activeModelCallbacks;
+	s16 poolSlotIndex;
+	s16 fadeOutRequested;
+	s32 particleVariant;
 	float opacity;
 } ScoreParticleWork;
 
-void show_score_gain_popup(s16 player_index);
+void ShowScoreGainPopup(s16 playerIndex);
 
-void set_object_position(OMOBJ *object, float x, float y, float z);
+void SetObjectPosition(OMOBJ *object, float x, float y, float z);
 
-void project_world_position_to_screen(Vec *world_position, Vec *screen_position);
-void load_score_particle_resources(void);
-void free_score_particle_resources(void);
+void ProjectWorldPositionToScreen(Vec *worldPosition, Vec *screenPosition);
+void LoadScoreParticleResources(void);
+void FreeScoreParticleResources(void);
 
-void create_score_particle_model_pool(void);
-OMOBJ *create_score_particle_effect(Vec *spawn_position, s16 particle_variant);
+void CreateScoreParticleModelPool(void);
+OMOBJ *createScoreParticleEffect(Vec *spawnPosition, s16 particleVariant);
 
-OMOBJ *create_particle_effect_controller(void);
-OMOBJ *create_particle_model_manager(HUPROCESS *object_manager);
+OMOBJ *createParticleEffectController(void);
+OMOBJ *createParticleModelManager(HUPROCESS *objectManager);
 
 #endif
